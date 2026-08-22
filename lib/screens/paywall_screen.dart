@@ -23,8 +23,10 @@ const _perks = [
 ];
 
 /// Knowit+ — the plans are selectable and the copy follows the choice.
-/// There is no billing behind the CTA: it reports that checkout is not
-/// connected rather than pretending to charge.
+///
+/// There is no billing wired up. The CTA starts the trial locally so the
+/// three gated perks (archive, image export, topic mix) can be used, and says
+/// plainly that no payment was taken.
 class PaywallScreen extends StatefulWidget {
   final AppState app;
   const PaywallScreen({super.key, required this.app});
@@ -36,9 +38,12 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
-  String get _cta => _plan == Plan.year
-      ? 'Try 7 days free, then €24,99/yr'
-      : 'Try 7 days free, then €3,99/mo';
+  String get _cta {
+    if (widget.app.isPlus) return 'Knowit+ is active';
+    return _plan == Plan.year
+        ? 'Try 7 days free, then €24,99/yr'
+        : 'Try 7 days free, then €3,99/mo';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,19 +186,29 @@ class _PaywallScreenState extends State<PaywallScreen> {
             SizedBox(
               height: 54,
               child: ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'Checkout is not connected in this build.',
-                      ),
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
-                },
+                onPressed: widget.app.isPlus
+                    ? null
+                    : () async {
+                        await widget.app.startPlusTrial();
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Trial started. No payment is connected in '
+                              'this build.',
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.blue,
                   foregroundColor: Colors.white,
+                  disabledBackgroundColor: AppColors.blue.withValues(
+                    alpha: 0.35,
+                  ),
+                  disabledForegroundColor: Colors.white.withValues(alpha: 0.7),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
@@ -210,13 +225,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
               ),
             ),
             const SizedBox(height: 14),
-            Text(
-              'Cancel any time · Restore purchase',
-              textAlign: TextAlign.center,
-              style: AppText.figtree(
-                size: 11.5,
-                height: 1.4,
-                color: Colors.white.withValues(alpha: 0.35),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: widget.app.isPlus
+                  ? () async {
+                      await widget.app.endPlus();
+                      if (context.mounted) Navigator.of(context).pop();
+                    }
+                  : null,
+              child: Text(
+                widget.app.isPlus
+                    ? 'Cancel the trial'
+                    : 'Cancel any time · Restore purchase',
+                textAlign: TextAlign.center,
+                style: AppText.figtree(
+                  size: 11.5,
+                  height: 1.4,
+                  color: Colors.white.withValues(alpha: 0.35),
+                ),
               ),
             ),
           ],

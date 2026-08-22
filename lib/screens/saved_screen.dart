@@ -4,6 +4,7 @@ import '../data/pills_data.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
@@ -50,11 +51,15 @@ class SavedScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (routeContext) => ArchiveScreen(
-                        app: app,
-                        onBack: () => Navigator.of(routeContext).pop(),
+                  onTap: () => requirePlus(
+                    context,
+                    app,
+                    () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (routeContext) => ArchiveScreen(
+                          app: app,
+                          onBack: () => Navigator.of(routeContext).pop(),
+                        ),
                       ),
                     ),
                   ),
@@ -76,6 +81,7 @@ class SavedScreen extends StatelessWidget {
                             color: AppColors.blue,
                           ),
                         ),
+                        PlusLock(locked: !app.isPlus),
                       ],
                     ),
                   ),
@@ -103,7 +109,11 @@ class SavedScreen extends StatelessWidget {
                       itemBuilder: (context, i) => _SavedRow(
                         pill: saved[i],
                         onUnsave: () => app.toggleSaved(saved[i].id),
-                        onShare: () => showShareSheet(context, saved[i]),
+                        onShare: () => requirePlus(
+                          context,
+                          app,
+                          () => showShareSheet(context, saved[i]),
+                        ),
                         onOpen: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) =>

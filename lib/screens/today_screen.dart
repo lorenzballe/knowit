@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
-import '../widgets/share_sheet.dart';
 import 'recap_view.dart';
 
 const _weekdayNames = [
@@ -126,7 +125,6 @@ class TodayScreen extends StatelessWidget {
                       onAdvance: () => app.advance(),
                       isSaved: app.isSaved,
                       onToggleSaved: (id) => app.toggleSaved(id),
-                      onShare: (pill) => showShareSheet(context, pill),
                     ),
             ),
             if (!app.todayCompleted) ...[

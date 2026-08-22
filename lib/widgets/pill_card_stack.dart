@@ -13,7 +13,6 @@ class PillCardStack extends StatefulWidget {
   final VoidCallback onAdvance;
   final bool Function(String id) isSaved;
   final void Function(String id) onToggleSaved;
-  final void Function(Pill pill) onShare;
 
   const PillCardStack({
     super.key,
@@ -22,7 +21,6 @@ class PillCardStack extends StatefulWidget {
     required this.onAdvance,
     required this.isSaved,
     required this.onToggleSaved,
-    required this.onShare,
   });
 
   @override
@@ -133,7 +131,6 @@ class _PillCardStackState extends State<PillCardStack>
         flipped: isTop && _flipped,
         saved: widget.isSaved(pill.id),
         onToggleSaved: isTop ? () => widget.onToggleSaved(pill.id) : null,
-        onShare: isTop ? () => widget.onShare(pill) : null,
       );
 
       final translateY = isTop ? 0.0 : d * 16.0;

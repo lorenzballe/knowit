@@ -137,7 +137,8 @@ class RecapView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Container(
+            if (!app.isPlus)
+              Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(

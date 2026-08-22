@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/premium.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'how_screen.dart';
@@ -126,7 +127,9 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Free plan · ${app.pickedTopics.length} topics',
+                      app.isPlus
+                          ? 'Knowit+ · ${app.pickedTopics.length} topics'
+                          : 'Free plan · ${app.pickedTopics.length} topics',
                       style: AppText.figtree(
                         size: 12.5,
                         color: Colors.black.withValues(alpha: 0.45),
@@ -208,14 +211,23 @@ class ProfileScreen extends StatelessWidget {
               const Eyebrow('Your topics'),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => _editTopics(context),
-                child: Text(
-                  'Edit',
-                  style: AppText.figtree(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: AppColors.blue,
-                  ),
+                onTap: () => requirePlus(
+                  context,
+                  app,
+                  () => _editTopics(context),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      'Edit',
+                      style: AppText.figtree(
+                        size: 12.5,
+                        weight: FontWeight.w500,
+                        color: AppColors.blue,
+                      ),
+                    ),
+                    PlusLock(locked: !app.isPlus),
+                  ],
                 ),
               ),
             ],
@@ -250,7 +262,8 @@ class ProfileScreen extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 24),
-          Container(
+          if (!app.isPlus)
+            Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
@@ -314,11 +327,16 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 24),
           _LinkRow(
             label: 'Archive',
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (routeContext) => ArchiveScreen(
-                  app: app,
-                  onBack: () => Navigator.of(routeContext).pop(),
+            locked: !app.isPlus,
+            onTap: () => requirePlus(
+              context,
+              app,
+              () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (routeContext) => ArchiveScreen(
+                    app: app,
+                    onBack: () => Navigator.of(routeContext).pop(),
+                  ),
                 ),
               ),
             ),
@@ -389,11 +407,13 @@ class _LinkRow extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
   final bool muted;
+  final bool locked;
 
   const _LinkRow({
     required this.label,
     required this.onTap,
     this.muted = false,
+    this.locked = false,
   });
 
   @override
@@ -410,18 +430,18 @@ class _LinkRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(
-              child: Text(
-                label,
-                style: AppText.figtree(
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: muted
-                      ? Colors.black.withValues(alpha: 0.45)
-                      : AppColors.ink,
-                ),
+            Text(
+              label,
+              style: AppText.figtree(
+                size: 14,
+                weight: FontWeight.w500,
+                color: muted
+                    ? Colors.black.withValues(alpha: 0.45)
+                    : AppColors.ink,
               ),
             ),
+            PlusLock(locked: locked),
+            const Spacer(),
             Icon(
               Icons.chevron_right_rounded,
               size: 20,

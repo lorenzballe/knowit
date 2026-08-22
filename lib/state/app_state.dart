@@ -23,6 +23,7 @@ class AppState extends ChangeNotifier {
   static const _kPillsRead = 'knowit.pillsRead';
   static const _kComebackSeen = 'knowit.comebackSeenDate';
   static const _kName = 'knowit.name';
+  static const _kPlus = 'knowit.plus';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -39,6 +40,8 @@ class AppState extends ChangeNotifier {
   Set<String> pickedTopics = kTopicOrder.toSet();
   bool notificationsOn = true;
   String notifyTime = '08:30';
+  /// Knowit+ — gates the archive, image export and the topic mix.
+  bool isPlus = false;
   String name = 'You';
   Plan plan = Plan.year;
 
@@ -77,6 +80,7 @@ class AppState extends ChangeNotifier {
     notificationsOn = _prefs.getBool(_kNotifications) ?? true;
     notifyTime = _prefs.getString(_kNotifyHour) ?? '08:30';
     name = _prefs.getString(_kName) ?? 'You';
+    isPlus = _prefs.getBool(_kPlus) ?? false;
 
     todaysDeck = pillsForDate(today, topics: pickedTopics);
 
@@ -226,6 +230,20 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Unlocks the Knowit+ screens locally. No billing is wired up, so this
+  /// only flips a stored flag — the paywall says as much when it calls it.
+  Future<void> startPlusTrial() async {
+    isPlus = true;
+    await _prefs.setBool(_kPlus, true);
+    notifyListeners();
+  }
+
+  Future<void> endPlus() async {
+    isPlus = false;
+    await _prefs.setBool(_kPlus, false);
+    notifyListeners();
+  }
+
   /// Wipes local state — used by "Sign out" on the profile.
   Future<void> signOut() async {
     await _prefs.clear();
@@ -241,6 +259,7 @@ class AppState extends ChangeNotifier {
     notificationsOn = true;
     notifyTime = '08:30';
     name = 'You';
+    isPlus = false;
     todaysDeck = pillsForDate(today, topics: pickedTopics);
     notifyListeners();
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'screens/comeback_screen.dart';
-import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
 import 'screens/sign_in_screen.dart';
 import 'screens/today_screen.dart';
-import 'screens/topics_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
@@ -31,7 +29,7 @@ class KnowitApp extends StatelessWidget {
 
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
-enum _Stage { welcome, signIn, topics, notifications, comeback, shell }
+enum _Stage { welcome, signIn, comeback, shell }
 
 class KnowitRoot extends StatefulWidget {
   const KnowitRoot({super.key});
@@ -95,7 +93,9 @@ class _KnowitRootState extends State<KnowitRoot> {
     switch (_stage) {
       case _Stage.welcome:
         return WelcomeScreen(
-          onStart: () => _go(_Stage.topics),
+          // Picking a topic mix is a Knowit+ perk, so the free first run
+          // goes straight to today's five on the default mix.
+          onStart: _finishOnboarding,
           onSignIn: () => _go(_Stage.signIn),
         );
 
@@ -104,29 +104,6 @@ class _KnowitRootState extends State<KnowitRoot> {
           onBack: () => _go(_Stage.welcome),
           onSignedIn: (name) async {
             await _app.setName(name);
-            if (mounted) _go(_Stage.topics);
-          },
-        );
-
-      case _Stage.topics:
-        return TopicsScreen(
-          initial: _app.pickedTopics,
-          onDone: (picked) async {
-            await _app.setTopics(picked);
-            if (mounted) _go(_Stage.notifications);
-          },
-        );
-
-      case _Stage.notifications:
-        return NotificationScreen(
-          previewPill: _app.todaysDeck.first,
-          time: _app.notifyTime,
-          onEnable: () async {
-            await _app.setNotifications(true);
-            await _finishOnboarding();
-          },
-          onSkip: () async {
-            await _app.setNotifications(false);
             await _finishOnboarding();
           },
         );
