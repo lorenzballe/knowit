@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import '../widgets/ui.dart';
 
-/// Sign in. There is no backend behind this yet: any provider, or a valid
-/// e-mail, takes the reader straight into the flow under the name they gave.
+/// Sign in. There is no account backend: the profile lives on this device
+/// only. The provider buttons say so rather than miming a real sign-in, and
+/// the e-mail path just names the local profile.
 class SignInScreen extends StatefulWidget {
   final void Function(String name) onSignedIn;
   final VoidCallback onBack;
@@ -36,6 +37,19 @@ class _SignInScreenState extends State<SignInScreen> {
     final local = _email.text.trim().split('@').first;
     if (local.isEmpty) return 'You';
     return local[0].toUpperCase() + local.substring(1);
+  }
+
+  void _continueLocally(String provider) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          '$provider sign-in is not connected. Continuing with a profile '
+          'kept on this device.',
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+    widget.onSignedIn('You');
   }
 
   void _sendLink() {
@@ -83,7 +97,7 @@ class _SignInScreenState extends State<SignInScreen> {
               label: 'Continue with Apple',
               dark: true,
               leading: const Icon(Icons.apple, size: 19, color: Colors.white),
-              onTap: () => widget.onSignedIn('You'),
+              onTap: () => _continueLocally('Apple'),
             ),
             const SizedBox(height: 10),
             _ProviderButton(
@@ -97,7 +111,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   color: AppColors.blue,
                 ),
               ),
-              onTap: () => widget.onSignedIn('You'),
+              onTap: () => _continueLocally('Google'),
             ),
             const SizedBox(height: 18),
             Row(
@@ -159,7 +173,9 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             const SizedBox(height: 10),
             PrimaryButton(
-              label: _linkSent ? 'Link sent — signing you in' : 'Send me a login link',
+              label: _linkSent
+                  ? 'Link sent — signing you in'
+                  : 'Send me a login link',
               background: _emailValid
                   ? AppColors.blue
                   : Colors.black.withValues(alpha: 0.12),
@@ -170,7 +186,8 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             const SizedBox(height: 24),
             Text(
-              'By continuing you accept the Terms and the Privacy Policy.',
+              'No account is created. Your streak and saved pills stay on '
+              'this device.',
               textAlign: TextAlign.center,
               style: AppText.figtree(
                 size: 11.5,

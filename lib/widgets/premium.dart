@@ -17,9 +17,8 @@ Future<void> requirePlus(
     action();
     return;
   }
-  await Navigator.of(
-    context,
-  ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app)));
+  await Navigator.of(context)
+      .push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app)));
   // Coming back with the trial started, go straight through to what they
   // were reaching for.
   if (app.isPlus && context.mounted) action();

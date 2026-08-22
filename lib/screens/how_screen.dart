@@ -7,13 +7,15 @@ const _steps = [
   (
     n: '01',
     title: 'A topic comes up',
-    sub: 'Rotated from the twelve you picked, weighted so you never get the '
+    sub:
+        'Rotated from the twelve you picked, weighted so you never get the '
         'same one twice in a day.',
   ),
   (
     n: '02',
     title: 'The model drafts a pill',
-    sub: 'One question, one answer under 60 words, one reason it is worth '
+    sub:
+        'One question, one answer under 60 words, one reason it is worth '
         'saying out loud.',
   ),
   (

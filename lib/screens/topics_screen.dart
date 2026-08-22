@@ -169,7 +169,9 @@ class _TopicChip extends StatelessWidget {
           color: on ? color : Colors.white,
           borderRadius: BorderRadius.circular(999),
           border: Border.all(
-            color: on ? Colors.transparent : Colors.black.withValues(alpha: 0.12),
+            color: on
+                ? Colors.transparent
+                : Colors.black.withValues(alpha: 0.12),
           ),
         ),
         child: Row(

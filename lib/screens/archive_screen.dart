@@ -108,15 +108,19 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                           ),
                         ),
                         if (_query.isNotEmpty)
-                          GestureDetector(
-                            onTap: () {
-                              _controller.clear();
-                              setState(() => _query = '');
-                            },
-                            child: Icon(
-                              Icons.close_rounded,
-                              size: 17,
-                              color: Colors.black.withValues(alpha: 0.35),
+                          Semantics(
+                            button: true,
+                            label: 'Clear search',
+                            child: GestureDetector(
+                              onTap: () {
+                                _controller.clear();
+                                setState(() => _query = '');
+                              },
+                              child: Icon(
+                                Icons.close_rounded,
+                                size: 17,
+                                color: Colors.black.withValues(alpha: 0.35),
+                              ),
                             ),
                           ),
                       ],
@@ -131,9 +135,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       final on = _topicFilter == key;
                       return GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap: () => setState(
-                          () => _topicFilter = on ? null : key,
-                        ),
+                        onTap: () =>
+                            setState(() => _topicFilter = on ? null : key),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 13,

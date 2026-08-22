@@ -91,25 +91,29 @@ class BackCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onPressed,
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: dark
-                ? Colors.white.withValues(alpha: 0.18)
-                : Colors.black.withValues(alpha: 0.12),
+    return Semantics(
+      button: true,
+      label: 'Back',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onPressed,
+        child: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: dark
+                  ? Colors.white.withValues(alpha: 0.18)
+                  : Colors.black.withValues(alpha: 0.12),
+            ),
           ),
-        ),
-        alignment: Alignment.center,
-        child: Icon(
-          Icons.arrow_back_rounded,
-          size: 17,
-          color: dark ? Colors.white : AppColors.ink,
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.arrow_back_rounded,
+            size: 17,
+            color: dark ? Colors.white : AppColors.ink,
+          ),
         ),
       ),
     );
@@ -241,25 +245,29 @@ class NudgeSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => onChanged(!value),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        width: 50,
-        height: 30,
-        padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-          color: value ? AppColors.ink : Colors.black.withValues(alpha: 0.18),
-          borderRadius: BorderRadius.circular(999),
-        ),
-        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
-        child: Container(
-          width: 24,
-          height: 24,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
+    return Semantics(
+      toggled: value,
+      label: 'Daily nudge',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onChanged(!value),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 50,
+          height: 30,
+          padding: const EdgeInsets.all(3),
+          decoration: BoxDecoration(
+            color: value ? AppColors.ink : Colors.black.withValues(alpha: 0.18),
+            borderRadius: BorderRadius.circular(999),
+          ),
+          alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
           ),
         ),
       ),

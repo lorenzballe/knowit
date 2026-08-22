@@ -25,18 +25,45 @@ flutter run -d chrome   # web
 flutter run              # any connected device/simulator
 ```
 
+## Screens
+
+**Free** — first run (welcome, optional sign-in), Today with the card stack,
+the end-of-day recap, Saved with its empty state, Profile (stats, daily nudge,
+topic chips), the come-back screen after a lapsed streak, and the disclosure
+page on how pills are written.
+
+**Knowit+** — the paywall names four perks, and three of them gate real
+screens: the searchable **Archive**, **share as image**, and the **topic
+picker**. On the free plan those entry points carry a lock chip and open the
+paywall instead. The fourth, a second set of five pills a day, is handed over
+from the recap once the first five are done.
+
 ## Project structure
 
 ```
 lib/
-  data/        topic palette + the pill content pool
+  data/        topic palette, the pill pool, and the daily dealer
   models/      Pill
-  state/       AppState — streak, saved pills, today's deck position (persisted)
-  widgets/     the draggable card stack + card faces
-  screens/     Today, Saved, Profile
+  state/       AppState — streak, saved pills, reading history, plan (persisted)
+  utils/       PNG download, web-only with a no-op elsewhere
+  widgets/     card stack, share sheet, shared UI, the Knowit+ gate
+  screens/     the screens listed above
 ```
 
-## What's stubbed
+Today's deck is dealt deterministically from the date, so it does not reshuffle
+mid-day, and it is stored by id so a restart resumes the same five. Pills
+already read are kept out of later days until the pool runs dry.
 
-`Knowit+` (the paywall) and push notifications are UI-only placeholders for now —
-tapping them shows a "coming soon" message rather than doing anything.
+## What is not real yet
+
+These are declared in the UI rather than faked:
+
+- **No billing.** The paywall's call to action starts the trial locally so the
+  gated screens can be used, and says no payment was taken.
+- **No account backend.** Sign-in keeps a profile on the device; the Apple and
+  Google buttons say they are not connected.
+- **No notification delivery.** The daily nudge is stored as a preference;
+  actually scheduling it needs a local-notifications plugin and a mobile build.
+
+The content pool is small (24 pills, two per topic), so a heavy reader will
+work through it in under a week.

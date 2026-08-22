@@ -62,6 +62,7 @@ class PillCard extends StatelessWidget {
                   if (onToggleSaved != null) ...[
                     const SizedBox(width: 10),
                     _SaveButton(
+                      label: saved ? 'Remove from saved' : 'Save this pill',
                       saved: saved,
                       ink: pill.ink,
                       onTap: onToggleSaved!,
@@ -86,30 +87,47 @@ class _FrontFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          pill.question,
-          style: AppText.outfit(
-            size: 34,
-            weight: FontWeight.w600,
-            height: 1.12,
-            spacing: -1.0,
-            color: pill.ink,
+    // A long question on a narrow card wraps to many lines, so the type steps
+    // down on short cards and the whole face scrolls rather than overflowing.
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tall = constraints.maxHeight;
+        final size = tall < 260
+            ? 24.0
+            : tall < 340
+            ? 28.0
+            : 34.0;
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: tall),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pill.question,
+                  style: AppText.outfit(
+                    size: size,
+                    weight: FontWeight.w600,
+                    height: 1.12,
+                    spacing: -1.0,
+                    color: pill.ink,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Tap to reveal',
+                  style: AppText.figtree(
+                    size: 13,
+                    weight: FontWeight.w500,
+                    color: pill.ink.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'Tap to reveal',
-          style: AppText.figtree(
-            size: 13,
-            weight: FontWeight.w500,
-            color: pill.ink.withValues(alpha: 0.6),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
@@ -121,7 +139,6 @@ class _BackFace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -187,21 +204,27 @@ class _SaveButton extends StatelessWidget {
   final bool saved;
   final Color ink;
   final VoidCallback onTap;
+  final String label;
   const _SaveButton({
     required this.saved,
     required this.ink,
     required this.onTap,
+    required this.label,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      behavior: HitTestBehavior.opaque,
-      child: Icon(
-        saved ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-        size: 18,
-        color: saved ? ink : ink.withValues(alpha: 0.65),
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: Icon(
+          saved ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+          size: 18,
+          color: saved ? ink : ink.withValues(alpha: 0.65),
+        ),
       ),
     );
   }

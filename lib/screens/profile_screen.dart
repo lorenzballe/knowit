@@ -211,11 +211,8 @@ class ProfileScreen extends StatelessWidget {
               const Eyebrow('Your topics'),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => requirePlus(
-                  context,
-                  app,
-                  () => _editTopics(context),
-                ),
+                onTap: () =>
+                    requirePlus(context, app, () => _editTopics(context)),
                 child: Row(
                   children: [
                     Text(
@@ -236,94 +233,91 @@ class ProfileScreen extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: kTopicOrder
-                .where(app.pickedTopics.contains)
-                .map((key) {
-                  final style = kTopics[key]!;
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 9,
-                    ),
-                    decoration: BoxDecoration(
-                      color: style.color,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    child: Text(
-                      style.name,
-                      style: AppText.figtree(
-                        size: 12.5,
-                        weight: FontWeight.w500,
-                        color: style.ink,
-                      ),
-                    ),
-                  );
-                })
-                .toList(),
+            children: kTopicOrder.where(app.pickedTopics.contains).map((key) {
+              final style = kTopics[key]!;
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 13,
+                  vertical: 9,
+                ),
+                decoration: BoxDecoration(
+                  color: style.color,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  style.name,
+                  style: AppText.figtree(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: style.ink,
+                  ),
+                ),
+              );
+            }).toList(),
           ),
           const SizedBox(height: 24),
           if (!app.isPlus)
             Container(
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [AppColors.lime, AppColors.limeDark],
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [AppColors.lime, AppColors.limeDark],
+                ),
+                borderRadius: BorderRadius.circular(22),
               ),
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Knowit+',
-                        style: AppText.outfit(
-                          size: 17,
-                          weight: FontWeight.w600,
-                          color: AppColors.limeInk,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Knowit+',
+                          style: AppText.outfit(
+                            size: 17,
+                            weight: FontWeight.w600,
+                            color: AppColors.limeInk,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '5 extra pills a day, full archive.',
-                        style: AppText.figtree(
-                          size: 12.5,
-                          color: AppColors.limeInk.withValues(alpha: 0.72),
+                        const SizedBox(height: 4),
+                        Text(
+                          '5 extra pills a day, full archive.',
+                          style: AppText.figtree(
+                            size: 12.5,
+                            color: AppColors.limeInk.withValues(alpha: 0.72),
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => PaywallScreen(app: app),
                       ),
-                    ],
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => PaywallScreen(app: app),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.limeInk,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                    ),
+                    child: Text(
+                      'Upgrade',
+                      style: AppText.figtree(
+                        size: 13,
+                        weight: FontWeight.w600,
+                        color: const Color(0xFFE9FFC4),
+                      ),
                     ),
                   ),
-                  style: TextButton.styleFrom(
-                    backgroundColor: AppColors.limeInk,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 10,
-                    ),
-                  ),
-                  child: Text(
-                    'Upgrade',
-                    style: AppText.figtree(
-                      size: 13,
-                      weight: FontWeight.w600,
-                      color: const Color(0xFFE9FFC4),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
           const SizedBox(height: 24),
           _LinkRow(
             label: 'Archive',
@@ -343,15 +337,15 @@ class ProfileScreen extends StatelessWidget {
           ),
           _LinkRow(
             label: 'Manage subscription',
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => PaywallScreen(app: app)),
-            ),
+            onTap: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
           ),
           _LinkRow(
             label: 'How pills are written',
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const HowScreen()),
-            ),
+            onTap: () =>
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => const HowScreen())),
           ),
           _LinkRow(
             label: 'Sign out',

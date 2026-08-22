@@ -7,13 +7,24 @@ import 'topics.dart';
 String dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-/// Deterministic "5 pills for today" — same date always yields the same set
-/// and order, so the deck doesn't reshuffle mid-day or across devices.
+/// How many pills a free day holds. Knowit+ unlocks a second set of the same
+/// size once the first is done.
+const int kPillsPerDay = 5;
+
+/// Deterministic pills for a day — the same date, topic mix and reading
+/// history always yield the same set and order, so the deck doesn't reshuffle
+/// mid-day or across devices.
 ///
-/// [topics] restricts the mix to the topic keys the reader picked. When fewer
-/// than five pills match, the rest of the pool tops the deck back up so the
-/// day is never short.
-List<Pill> pillsForDate(DateTime date, {Set<String>? topics}) {
+/// [topics] restricts the mix to the topic keys the reader picked. [exclude]
+/// holds the ids already read on earlier days, which are kept out until the
+/// pool runs dry. When too few pills match, the rest of the pool tops the deck
+/// back up so a day is never short.
+List<Pill> pillsForDate(
+  DateTime date, {
+  Set<String>? topics,
+  Set<String> exclude = const {},
+  int count = kPillsPerDay,
+}) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = List<Pill>.from(kPillPool);
   pool.shuffle(Random(seed));
@@ -24,13 +35,28 @@ List<Pill> pillsForDate(DateTime date, {Set<String>? topics}) {
     if (style != null) wanted.add(style.name);
   }
 
-  final preferred = wanted.isEmpty
-      ? pool
-      : pool.where((p) => wanted.contains(p.topic)).toList();
-  final fallback = pool.where((p) => !preferred.contains(p)).toList();
+  bool onTopic(Pill p) => wanted.isEmpty || wanted.contains(p.topic);
 
-  final ordered = [..._oneTopicFirst(preferred), ..._oneTopicFirst(fallback)];
-  return ordered.take(5).toList();
+  // Best to worst: unread and on-topic, unread anything, then read again once
+  // the pool cannot cover a fresh day.
+  final tiers = [
+    pool.where((p) => onTopic(p) && !exclude.contains(p.id)).toList(),
+    pool.where((p) => !onTopic(p) && !exclude.contains(p.id)).toList(),
+    pool.where((p) => onTopic(p) && exclude.contains(p.id)).toList(),
+    pool.where((p) => !onTopic(p) && exclude.contains(p.id)).toList(),
+  ];
+
+  final ordered = [for (final tier in tiers) ..._oneTopicFirst(tier)];
+  return ordered.take(count).toList();
+}
+
+/// Looks pills back up by id — used to restore a day's deck across restarts.
+List<Pill> pillsByIds(List<String> ids) {
+  final byId = {for (final p in kPillPool) p.id: p};
+  return [
+    for (final id in ids)
+      if (byId[id] != null) byId[id]!,
+  ];
 }
 
 /// Front-loads one pill per topic so a day never opens with two in a row from

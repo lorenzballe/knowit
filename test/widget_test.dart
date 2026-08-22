@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:knowit/data/pills_data.dart';
+import 'package:knowit/data/pills_repository.dart';
 import 'package:knowit/main.dart';
 import 'package:knowit/widgets/ui.dart';
 
@@ -28,6 +30,22 @@ Future<void> _openProfile(WidgetTester tester) async {
 void main() {
   setUpAll(() {
     GoogleFonts.config.allowRuntimeFetching = false;
+  });
+
+  // Run against a real handset surface rather than the 800x600 default, so
+  // layouts are exercised at the size they actually ship at.
+  setUp(() {
+    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
+        .first;
+    view.physicalSize = const Size(402, 874) * 3;
+    view.devicePixelRatio = 3;
+  });
+
+  tearDown(() {
+    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
+        .first;
+    view.resetPhysicalSize();
+    view.resetDevicePixelRatio();
   });
 
   testWidgets('a fresh install opens on the welcome screen', (tester) async {
@@ -61,9 +79,6 @@ void main() {
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    // The welcome screen scrolls on a short test viewport.
-    await tester.ensureVisible(find.text('I already have an account'));
-    await _settle(tester);
     await tester.tap(find.text('I already have an account'));
     await _settle(tester);
     expect(find.text('Welcome back.'), findsOneWidget);
@@ -209,6 +224,69 @@ void main() {
     await tester.tap(find.byType(NudgeSwitch));
     await _settle(tester);
     expect(prefs.getBool('knowit.notifications'), isTrue);
+  });
+
+  testWidgets('Knowit+ hands over the second set once the day is done', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed(plus: true));
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.text('Next pill'));
+      await _settle(tester);
+    }
+
+    expect(find.text('Your second set is ready'), findsOneWidget);
+    // The recap scrolls; the button sits below the fold.
+    await tester.ensureVisible(find.text('Read 5 more'));
+    await _settle(tester);
+    await tester.tap(find.text('Read 5 more'));
+    await _settle(tester);
+
+    // Back to reading, on pill six of ten.
+    expect(find.text('Next pill'), findsOneWidget);
+    expect(find.text('06 / 10'), findsOneWidget);
+  });
+
+  testWidgets('the free plan is offered the upsell instead', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.text('Next pill'));
+      await _settle(tester);
+    }
+
+    await tester.ensureVisible(find.text('Want 5 more?'));
+    await _settle(tester);
+    expect(find.text('Want 5 more?'), findsOneWidget);
+    expect(find.text('Read 5 more'), findsNothing);
+  });
+
+  test('a day never deals a pill already read', () {
+    // Four mornings in a row, each dealt with the history so far.
+    final seen = <String>{};
+    for (var day = 1; day <= 4; day++) {
+      final deck = pillsForDate(DateTime(2026, 1, day), exclude: seen);
+      expect(deck, hasLength(5));
+      expect(
+        deck.map((p) => p.id).where(seen.contains),
+        isEmpty,
+        reason: 'day $day re-dealt a pill already read',
+      );
+      seen.addAll(deck.map((p) => p.id));
+    }
+    expect(seen, hasLength(20));
+  });
+
+  test('the dealer falls back to read pills once the pool runs dry', () {
+    final everything = kPillPool.map((p) => p.id).toSet();
+    final deck = pillsForDate(DateTime(2026, 1, 1), exclude: everything);
+    // Still a full day rather than an empty one.
+    expect(deck, hasLength(5));
   });
 
   testWidgets('the come-back screen appears after a lapsed streak', (

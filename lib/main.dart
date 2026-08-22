@@ -23,6 +23,45 @@ class KnowitApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: buildKnowitTheme(),
       home: const KnowitRoot(),
+      builder: (context, child) => _PhoneFrame(child: child),
+    );
+  }
+}
+
+/// Knowit is a phone app served from a web page, so on anything wider than a
+/// handset it sits in a centred column at handset width rather than stretching
+/// a card across a desktop monitor.
+class _PhoneFrame extends StatelessWidget {
+  final Widget? child;
+  const _PhoneFrame({required this.child});
+
+  static const double _maxWidth = 460;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = child ?? const SizedBox.shrink();
+    final width = MediaQuery.sizeOf(context).width;
+    if (width <= _maxWidth) return content;
+
+    return ColoredBox(
+      color: AppColors.bg,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: _maxWidth),
+          child: ClipRect(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                border: Border.symmetric(
+                  vertical: BorderSide(
+                    color: Colors.black.withValues(alpha: 0.06),
+                  ),
+                ),
+              ),
+              child: content,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -133,11 +172,7 @@ class KnowitShell extends StatefulWidget {
   final AppState app;
   final VoidCallback onSignedOut;
 
-  const KnowitShell({
-    super.key,
-    required this.app,
-    required this.onSignedOut,
-  });
+  const KnowitShell({super.key, required this.app, required this.onSignedOut});
 
   @override
   State<KnowitShell> createState() => _KnowitShellState();

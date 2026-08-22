@@ -36,30 +36,35 @@ class TodayScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$weekday · ${deck.length} pills',
-                      style: AppText.mono(
-                        size: 11,
-                        spacing: 1.3,
-                        color: Colors.black.withValues(alpha: 0.42),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '$weekday · ${deck.length} pills',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.mono(
+                          size: 11,
+                          spacing: 1.3,
+                          color: Colors.black.withValues(alpha: 0.42),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 7),
-                    Text(
-                      'Today',
-                      style: AppText.outfit(
-                        size: 33,
-                        weight: FontWeight.w700,
-                        height: 1.05,
-                        spacing: -1.3,
-                        color: AppColors.ink,
+                      const SizedBox(height: 7),
+                      Text(
+                        'Today',
+                        style: AppText.outfit(
+                          size: 33,
+                          weight: FontWeight.w700,
+                          height: 1.05,
+                          spacing: -1.3,
+                          color: AppColors.ink,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                const SizedBox(width: 12),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,

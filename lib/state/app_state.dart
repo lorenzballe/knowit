@@ -24,6 +24,9 @@ class AppState extends ChangeNotifier {
   static const _kComebackSeen = 'knowit.comebackSeenDate';
   static const _kName = 'knowit.name';
   static const _kPlus = 'knowit.plus';
+  static const _kSeenIds = 'knowit.seenIds';
+  static const _kDeckIds = 'knowit.todayDeckIds';
+  static const _kExtraOpen = 'knowit.extraSetDate';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -36,10 +39,17 @@ class AppState extends ChangeNotifier {
   int todayIndex = 0;
   int pillsRead = 0;
 
+  /// Every pill id already read, so later days open on something new.
+  Set<String> seenIds = {};
+
+  /// True once the Knowit+ second set has been unlocked today.
+  bool extraSetOpen = false;
+
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
   bool notificationsOn = true;
   String notifyTime = '08:30';
+
   /// Knowit+ — gates the archive, image export and the topic mix.
   bool isPlus = false;
   String name = 'You';
@@ -81,20 +91,36 @@ class AppState extends ChangeNotifier {
     notifyTime = _prefs.getString(_kNotifyHour) ?? '08:30';
     name = _prefs.getString(_kName) ?? 'You';
     isPlus = _prefs.getBool(_kPlus) ?? false;
-
-    todaysDeck = pillsForDate(today, topics: pickedTopics);
+    seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
+    extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
 
     final storedDay = _prefs.getString(_kTodayDate);
-    if (storedDay == dateKey(today)) {
+    final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
+    if (storedDay == dateKey(today) && storedDeck.isNotEmpty) {
+      // Restore the exact deck this day started with: recomputing it would
+      // shuffle under the reader as their history grows.
+      todaysDeck = pillsByIds(storedDeck);
       todayIndex = _prefs.getInt(_kTodayIndex) ?? 0;
     } else {
-      todayIndex = 0;
-      await _prefs.setString(_kTodayDate, dateKey(today));
-      await _prefs.setInt(_kTodayIndex, 0);
+      await _startNewDay();
     }
 
     ready = true;
     notifyListeners();
+  }
+
+  /// Deals a fresh day and records it, so a restart resumes the same deck.
+  Future<void> _startNewDay() async {
+    todaysDeck = pillsForDate(
+      today,
+      topics: pickedTopics,
+      exclude: seenIds,
+      count: extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay,
+    );
+    todayIndex = 0;
+    await _prefs.setString(_kTodayDate, dateKey(today));
+    await _prefs.setInt(_kTodayIndex, 0);
+    await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
   }
 
   // ── Streak ────────────────────────────────────────────────────────────
@@ -137,10 +163,12 @@ class AppState extends ChangeNotifier {
 
   Future<void> advance() async {
     if (todayCompleted) return;
+    seenIds.add(todaysDeck[todayIndex].id);
     todayIndex += 1;
     pillsRead += 1;
     await _prefs.setInt(_kTodayIndex, todayIndex);
     await _prefs.setInt(_kPillsRead, pillsRead);
+    await _prefs.setStringList(_kSeenIds, seenIds.toList());
     if (todayCompleted) {
       await _completeToday();
     }
@@ -184,20 +212,9 @@ class AppState extends ChangeNotifier {
   Future<void> setTopics(Set<String> topics) async {
     pickedTopics = topics;
     await _prefs.setStringList(_kTopics, topics.toList());
-    // The deck follows the topic mix, so rebuild it — but only rewind the
-    // day's progress when the pills actually changed.
-    final rebuilt = pillsForDate(today, topics: topics);
-    final sameDeck =
-        rebuilt.length == todaysDeck.length &&
-        List.generate(
-          rebuilt.length,
-          (i) => rebuilt[i].id == todaysDeck[i].id,
-        ).every((x) => x);
-    todaysDeck = rebuilt;
-    if (!sameDeck && todayIndex > todaysDeck.length) {
-      todayIndex = todaysDeck.length;
-      await _prefs.setInt(_kTodayIndex, todayIndex);
-    }
+    // The mix only takes effect on pills not yet dealt: re-dealing a day in
+    // progress would drop what the reader is part-way through. Leave today's
+    // remaining cards alone and let tomorrow follow the new mix.
     notifyListeners();
   }
 
@@ -238,6 +255,27 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// True when the reader is on Knowit+, has finished the day and has a
+  /// second set still waiting.
+  bool get canOpenExtraSet => isPlus && todayCompleted && !extraSetOpen;
+
+  /// Unlocks the second set of the day — the "5 extra pills" Knowit+ perk.
+  Future<void> openExtraSet() async {
+    if (!canOpenExtraSet) return;
+    extraSetOpen = true;
+    await _prefs.setString(_kExtraOpen, dateKey(today));
+
+    final extra = pillsForDate(
+      today,
+      topics: pickedTopics,
+      exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+      count: kPillsPerDay,
+    );
+    todaysDeck = [...todaysDeck, ...extra];
+    await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    notifyListeners();
+  }
+
   Future<void> endPlus() async {
     isPlus = false;
     await _prefs.setBool(_kPlus, false);
@@ -260,7 +298,9 @@ class AppState extends ChangeNotifier {
     notifyTime = '08:30';
     name = 'You';
     isPlus = false;
-    todaysDeck = pillsForDate(today, topics: pickedTopics);
+    seenIds = {};
+    extraSetOpen = false;
+    await _startNewDay();
     notifyListeners();
   }
 

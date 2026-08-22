@@ -55,21 +55,25 @@ class _PaywallScreenState extends State<PaywallScreen> {
           children: [
             Align(
               alignment: Alignment.centerRight,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.close_rounded,
-                    size: 17,
-                    color: Colors.white.withValues(alpha: 0.6),
+              child: Semantics(
+                button: true,
+                label: 'Close',
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.close_rounded,
+                      size: 17,
+                      color: Colors.white.withValues(alpha: 0.6),
+                    ),
                   ),
                 ),
               ),
@@ -114,9 +118,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(
-                      color: Colors.white.withValues(alpha: 0.1),
-                    ),
+                    top: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
                   ),
                 ),
                 child: Row(

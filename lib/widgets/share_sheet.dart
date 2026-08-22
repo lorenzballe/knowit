@@ -66,8 +66,10 @@ class _ShareSheetState extends State<_ShareSheet> {
         _toast('Could not render the card.');
         return;
       }
-      final name =
-          'knowit-${widget.pill.id}.png'.replaceAll(RegExp(r'[^\w.-]'), '-');
+      final name = 'knowit-${widget.pill.id}.png'.replaceAll(
+        RegExp(r'[^\w.-]'),
+        '-',
+      );
       final saved = await savePng(bytes, name);
       if (saved) {
         _toast('Image saved.');

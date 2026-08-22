@@ -39,6 +39,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 Row(
                   children: [
                     _RoundAction(
+                      label: saved ? 'Remove from saved' : 'Save this pill',
                       icon: saved
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
@@ -50,6 +51,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                     ),
                     const SizedBox(width: 8),
                     _RoundAction(
+                      label: 'Share this pill',
                       icon: Icons.ios_share_rounded,
                       color: AppColors.ink,
                       onTap: () => requirePlus(
@@ -156,27 +158,33 @@ class _RoundAction extends StatelessWidget {
   final IconData icon;
   final Color color;
   final VoidCallback onTap;
+  final String label;
 
   const _RoundAction({
     required this.icon,
     required this.color,
     required this.onTap,
+    required this.label,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.black.withValues(alpha: 0.12)),
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.black.withValues(alpha: 0.12)),
+          ),
+          alignment: Alignment.center,
+          child: Icon(icon, size: 17, color: color),
         ),
-        alignment: Alignment.center,
-        child: Icon(icon, size: 17, color: color),
       ),
     );
   }

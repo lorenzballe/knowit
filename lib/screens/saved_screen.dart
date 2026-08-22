@@ -39,14 +39,16 @@ class SavedScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  'Saved',
-                  style: AppText.outfit(
-                    size: 33,
-                    weight: FontWeight.w700,
-                    height: 1.05,
-                    spacing: -1.3,
-                    color: AppColors.ink,
+                Expanded(
+                  child: Text(
+                    'Saved',
+                    style: AppText.outfit(
+                      size: 33,
+                      weight: FontWeight.w700,
+                      height: 1.05,
+                      spacing: -1.3,
+                      color: AppColors.ink,
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -345,6 +347,7 @@ class _SavedRow extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: onUnsave,
+                  tooltip: 'Remove from saved',
                   icon: const Icon(Icons.favorite_rounded, size: 18),
                   color: pill.color,
                   splashRadius: 18,
@@ -352,6 +355,7 @@ class _SavedRow extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: onShare,
+                  tooltip: 'Share this pill',
                   icon: const Icon(Icons.ios_share_rounded, size: 17),
                   color: Colors.black.withValues(alpha: 0.35),
                   splashRadius: 18,
