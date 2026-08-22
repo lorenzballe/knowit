@@ -11,6 +11,7 @@ class PillCard extends StatelessWidget {
   final bool flipped;
   final bool saved;
   final VoidCallback? onToggleSaved;
+  final VoidCallback? onShare;
 
   const PillCard({
     super.key,
@@ -19,6 +20,7 @@ class PillCard extends StatelessWidget {
     required this.flipped,
     required this.saved,
     this.onToggleSaved,
+    this.onShare,
   });
 
   @override
@@ -65,6 +67,21 @@ class PillCard extends StatelessWidget {
                       saved: saved,
                       ink: pill.ink,
                       onTap: onToggleSaved!,
+                    ),
+                  ],
+                  if (onShare != null) ...[
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: onShare,
+                      behavior: HitTestBehavior.opaque,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Icon(
+                          Icons.ios_share_rounded,
+                          size: 17,
+                          color: pill.ink.withValues(alpha: 0.8),
+                        ),
+                      ),
                     ),
                   ],
                 ],

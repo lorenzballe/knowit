@@ -8,6 +8,9 @@ class AppColors {
   static const dark = Color(0xFF0D0D0F);
   static const lime = Color(0xFFC6F24E);
   static const limeDark = Color(0xFFA8E02C);
+  static const blue = Color(0xFF2B4BFF);
+  static const red = Color(0xFFFF4E2D);
+  static const limeInk = Color(0xFF17200A);
 }
 
 class AppText {
@@ -41,11 +44,13 @@ class AppText {
     required double size,
     FontWeight weight = FontWeight.w500,
     double? spacing,
+    double? height,
     Color? color,
   }) => GoogleFonts.jetBrainsMono(
     fontSize: size,
     fontWeight: weight,
     letterSpacing: spacing,
+    height: height,
     color: color,
   );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../state/app_state.dart';
 import '../theme.dart';
+import 'paywall_screen.dart';
 
 const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
@@ -172,15 +173,11 @@ class RecapView extends StatelessWidget {
                     height: 48,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Knowit+ isn't live yet — coming soon.",
-                            ),
-                          ),
-                        );
-                      },
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => PaywallScreen(app: app),
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF17200A),
                         foregroundColor: const Color(0xFFE9FFC4),

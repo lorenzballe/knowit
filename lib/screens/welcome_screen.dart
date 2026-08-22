@@ -1,0 +1,173 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../theme.dart';
+import '../widgets/ui.dart';
+
+/// First run — the fanned card hero and the two ways in.
+class WelcomeScreen extends StatelessWidget {
+  final VoidCallback onStart;
+  final VoidCallback onSignIn;
+
+  const WelcomeScreen({
+    super.key,
+    required this.onStart,
+    required this.onSignIn,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.paper,
+      body: SafeArea(
+        child: FlexPage(
+          padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Knowit',
+                style: AppText.outfit(
+                  size: 20,
+                  weight: FontWeight.w700,
+                  spacing: -0.6,
+                  color: AppColors.ink,
+                ),
+              ),
+              const SizedBox(height: 26),
+              const _FannedCards(),
+              const SizedBox(height: 26),
+              Text(
+                'Five things worth saying out loud.',
+                style: AppText.outfit(
+                  size: 34,
+                  weight: FontWeight.w700,
+                  height: 1.06,
+                  spacing: -1.4,
+                  color: AppColors.ink,
+                ),
+              ),
+              const SizedBox(height: 11),
+              Text(
+                'Every morning, five short pills across twelve topics. '
+                'Written fresh, checked against a source, and built to '
+                'survive a conversation at the bar.',
+                style: AppText.figtree(
+                  size: 15,
+                  height: 1.5,
+                  color: Colors.black.withValues(alpha: 0.55),
+                ),
+              ),
+              const Spacer(),
+              PrimaryButton(label: 'Get my first five', onPressed: onStart),
+              const SizedBox(height: 4),
+              QuietButton(
+                label: 'I already have an account',
+                onPressed: onSignIn,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Three cards fanned out behind each other, the blue one on top.
+class _FannedCards extends StatelessWidget {
+  const _FannedCards();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 288,
+      child: Stack(
+        children: [
+          Positioned(
+            left: 22,
+            right: 22,
+            top: 26,
+            child: Transform.rotate(
+              angle: -7 * math.pi / 180,
+              child: Container(
+                height: 224,
+                decoration: BoxDecoration(
+                  color: AppColors.lime,
+                  borderRadius: BorderRadius.circular(28),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 14,
+            right: 14,
+            top: 14,
+            child: Transform.rotate(
+              angle: 4 * math.pi / 180,
+              child: Container(
+                height: 234,
+                decoration: BoxDecoration(
+                  color: AppColors.red,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: Container(
+              height: 246,
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: AppColors.blue,
+                borderRadius: BorderRadius.circular(32),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x33000000),
+                    blurRadius: 44,
+                    offset: Offset(0, 20),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'SPACE',
+                    style: AppText.mono(
+                      size: 10.5,
+                      spacing: 1.4,
+                      color: Colors.white.withValues(alpha: 0.72),
+                    ),
+                  ),
+                  Text(
+                    'Why do we only ever see one face of the Moon?',
+                    style: AppText.outfit(
+                      size: 26,
+                      weight: FontWeight.w600,
+                      height: 1.14,
+                      spacing: -0.9,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'tap to reveal',
+                    style: AppText.figtree(
+                      size: 12.5,
+                      weight: FontWeight.w500,
+                      color: Colors.white.withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

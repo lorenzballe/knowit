@@ -88,3 +88,27 @@ const Map<String, TopicStyle> kTopics = {
     tint: Color(0xFFF3E1FB),
   ),
 };
+
+/// Display order used by the topic picker and the profile chips.
+const List<String> kTopicOrder = [
+  'science',
+  'space',
+  'psychology',
+  'economics',
+  'technology',
+  'history',
+  'human_body',
+  'philosophy',
+  'pop_culture',
+  'nature',
+  'language',
+  'weird_facts',
+];
+
+/// Reverse lookup, display name -> key.
+String? topicKeyForName(String name) {
+  for (final e in kTopics.entries) {
+    if (e.value.name == name) return e.key;
+  }
+  return null;
+}

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'screens/comeback_screen.dart';
+import 'screens/notification_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
+import 'screens/sign_in_screen.dart';
 import 'screens/today_screen.dart';
+import 'screens/topics_screen.dart';
+import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
 
@@ -19,21 +24,26 @@ class KnowitApp extends StatelessWidget {
       title: 'Knowit',
       debugShowCheckedModeBanner: false,
       theme: buildKnowitTheme(),
-      home: const KnowitShell(),
+      home: const KnowitRoot(),
     );
   }
 }
 
-class KnowitShell extends StatefulWidget {
-  const KnowitShell({super.key});
+/// Where the first-run flow lives. Everything before [_Stage.shell] runs once
+/// per install; after that the app opens straight on the tab bar.
+enum _Stage { welcome, signIn, topics, notifications, comeback, shell }
+
+class KnowitRoot extends StatefulWidget {
+  const KnowitRoot({super.key});
 
   @override
-  State<KnowitShell> createState() => _KnowitShellState();
+  State<KnowitRoot> createState() => _KnowitRootState();
 }
 
-class _KnowitShellState extends State<KnowitShell> {
+class _KnowitRootState extends State<KnowitRoot> {
   final AppState _app = AppState();
-  int _tab = 0;
+  _Stage _stage = _Stage.welcome;
+  bool _stageResolved = false;
 
   @override
   void initState() {
@@ -43,13 +53,34 @@ class _KnowitShellState extends State<KnowitShell> {
   }
 
   void _onAppStateChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    setState(() {
+      // The opening stage is decided once, the first time state is ready:
+      // after that the flow drives itself and must not be reset under it.
+      if (_app.ready && !_stageResolved) {
+        _stageResolved = true;
+        if (!_app.onboarded) {
+          _stage = _Stage.welcome;
+        } else if (_app.shouldShowComeback) {
+          _stage = _Stage.comeback;
+        } else {
+          _stage = _Stage.shell;
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     _app.removeListener(_onAppStateChanged);
     super.dispose();
+  }
+
+  void _go(_Stage stage) => setState(() => _stage = stage);
+
+  Future<void> _finishOnboarding() async {
+    await _app.completeOnboarding();
+    if (mounted) _go(_Stage.shell);
   }
 
   @override
@@ -61,10 +92,92 @@ class _KnowitShellState extends State<KnowitShell> {
       );
     }
 
+    switch (_stage) {
+      case _Stage.welcome:
+        return WelcomeScreen(
+          onStart: () => _go(_Stage.topics),
+          onSignIn: () => _go(_Stage.signIn),
+        );
+
+      case _Stage.signIn:
+        return SignInScreen(
+          onBack: () => _go(_Stage.welcome),
+          onSignedIn: (name) async {
+            await _app.setName(name);
+            if (mounted) _go(_Stage.topics);
+          },
+        );
+
+      case _Stage.topics:
+        return TopicsScreen(
+          initial: _app.pickedTopics,
+          onDone: (picked) async {
+            await _app.setTopics(picked);
+            if (mounted) _go(_Stage.notifications);
+          },
+        );
+
+      case _Stage.notifications:
+        return NotificationScreen(
+          previewPill: _app.todaysDeck.first,
+          time: _app.notifyTime,
+          onEnable: () async {
+            await _app.setNotifications(true);
+            await _finishOnboarding();
+          },
+          onSkip: () async {
+            await _app.setNotifications(false);
+            await _finishOnboarding();
+          },
+        );
+
+      case _Stage.comeback:
+        return ComebackScreen(
+          app: _app,
+          onContinue: () async {
+            await _app.dismissComeback();
+            if (mounted) _go(_Stage.shell);
+          },
+        );
+
+      case _Stage.shell:
+        return KnowitShell(
+          app: _app,
+          onSignedOut: () => setState(() {
+            _stageResolved = true;
+            _stage = _Stage.welcome;
+          }),
+        );
+    }
+  }
+}
+
+class KnowitShell extends StatefulWidget {
+  final AppState app;
+  final VoidCallback onSignedOut;
+
+  const KnowitShell({
+    super.key,
+    required this.app,
+    required this.onSignedOut,
+  });
+
+  @override
+  State<KnowitShell> createState() => _KnowitShellState();
+}
+
+class _KnowitShellState extends State<KnowitShell> {
+  int _tab = 0;
+
+  @override
+  Widget build(BuildContext context) {
     final screens = [
-      TodayScreen(app: _app),
-      SavedScreen(app: _app),
-      ProfileScreen(app: _app),
+      TodayScreen(app: widget.app),
+      SavedScreen(
+        app: widget.app,
+        onBackToToday: () => setState(() => _tab = 0),
+      ),
+      ProfileScreen(app: widget.app, onSignedOut: widget.onSignedOut),
     ];
 
     return Scaffold(
