@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:knowit/data/pills_data.dart';
 import 'package:knowit/data/pills_repository.dart';
 import 'package:knowit/main.dart';
+import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/theme.dart';
@@ -663,6 +664,53 @@ void main() {
       await tester.tap(find.text('Explain it like I am three'));
       await tester.pumpAndSettle();
       expect(find.text(pill.simply), findsOneWidget);
+    });
+  });
+
+  group('The reveal is the same everywhere', () {
+    testWidgets('a worked problem shows its solution, not its last line', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      final pill = kPillPool.firstWhere((p) => p.hasSteps);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildKnowitTheme(),
+          home: PillDetailScreen(pill: pill, app: app),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Every step, not just pill.answer — which is the last one.
+      for (final step in pill.steps) {
+        expect(find.text(step), findsOneWidget, reason: 'missing: \$step');
+      }
+      expect(find.text(pill.barMove), findsOneWidget);
+    });
+
+    testWidgets('a debate offers its counterpoint on the detail screen too', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      final pill = kPillPool.firstWhere((p) => p.hasCounterpoint);
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildKnowitTheme(),
+          home: PillDetailScreen(pill: pill, app: app),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text(pill.counterpoint), findsNothing);
+      await tester.tap(find.text('What the other side says'));
+      await tester.pumpAndSettle();
+      expect(find.text(pill.counterpoint), findsOneWidget);
     });
   });
 

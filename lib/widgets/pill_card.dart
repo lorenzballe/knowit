@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
+import 'reveal_body.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
 /// carrying a Bar move line and a source once flipped.
@@ -168,24 +169,13 @@ class _FrontFace extends StatelessWidget {
   }
 }
 
-class _BackFace extends StatefulWidget {
+class _BackFace extends StatelessWidget {
   final Pill pill;
   final Answer? given;
   const _BackFace({required this.pill, this.given});
 
   @override
-  State<_BackFace> createState() => _BackFaceState();
-}
-
-class _BackFaceState extends State<_BackFace> {
-  bool _simplyOpen = false;
-  bool _counterOpen = false;
-
-  @override
   Widget build(BuildContext context) {
-    final pill = widget.pill;
-    final given = widget.given;
-
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         child: ConstrainedBox(
@@ -198,9 +188,9 @@ class _BackFaceState extends State<_BackFace> {
               if (pill.isGraded && given != null) ...[
                 _Verdict(
                   pill: pill,
-                  right: pill.challenge.accepts(given.response),
-                  given: pill.challenge.describe(given.response),
-                  confidence: given.confidence,
+                  right: pill.challenge.accepts(given!.response),
+                  given: pill.challenge.describe(given!.response),
+                  confidence: given!.confidence,
                 ),
                 const SizedBox(height: 14),
               ],
@@ -215,101 +205,7 @@ class _BackFaceState extends State<_BackFace> {
                 ),
               ),
               const SizedBox(height: 16),
-              if (pill.hasSteps)
-                _Steps(pill: pill)
-              else
-                Text(
-                  pill.answer,
-                  style: AppText.body(
-                    size: 16,
-                    weight: FontWeight.w400,
-                    height: 1.5,
-                    color: pill.ink.withValues(alpha: 0.92),
-                  ),
-                ),
-              if (pill.hasSimply) ...[
-                const SizedBox(height: 14),
-                if (_simplyOpen)
-                  _Panel(pill: pill, label: 'PUT SIMPLY', body: pill.simply)
-                else
-                  _TextAction(
-                    pill: pill,
-                    icon: Icons.child_care_rounded,
-                    label: 'Explain it like I am three',
-                    onTap: () => setState(() => _simplyOpen = true),
-                  ),
-              ],
-              if (pill.hasCounterpoint) ...[
-                const SizedBox(height: 14),
-                if (_counterOpen)
-                  _Panel(
-                    pill: pill,
-                    label: 'WHAT THE OTHER SIDE SAYS',
-                    body: pill.counterpoint,
-                  )
-                else
-                  _TextAction(
-                    pill: pill,
-                    icon: Icons.swap_horiz_rounded,
-                    label: 'What the other side says',
-                    onTap: () => setState(() => _counterOpen = true),
-                  ),
-              ],
-              if (pill.asksSomething && pill.trap.isNotEmpty) ...[
-                const SizedBox(height: 12),
-                Text(
-                  'The trap: ${pill.trap}',
-                  style: AppText.body(
-                    size: 13.5,
-                    weight: FontWeight.w500,
-                    height: 1.45,
-                    color: pill.ink.withValues(alpha: 0.75),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 20),
-              // The bar move is the reason to open the app at all, so it gets
-              // its own panel rather than a line under a rule.
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
-                decoration: BoxDecoration(
-                  color: pill.wash,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'BAR MOVE',
-                      style: AppText.label(
-                        size: 10.5,
-                        spacing: 1.2,
-                        color: pill.ink.withValues(alpha: 0.7),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      pill.barMove,
-                      style: AppText.body(
-                        size: 14.5,
-                        weight: FontWeight.w500,
-                        height: 1.4,
-                        color: pill.ink,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 13),
-              Text(
-                'Source · ${pill.source}',
-                style: AppText.body(
-                  size: 11.5,
-                  weight: FontWeight.w400,
-                  color: pill.ink.withValues(alpha: 0.6),
-                ),
-              ),
+              RevealBody.onCard(pill),
             ],
           ),
         ),
@@ -365,50 +261,6 @@ class _Verdict extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// The solution, one move per line, so a long derivation stays followable.
-class _Steps extends StatelessWidget {
-  final Pill pill;
-  const _Steps({required this.pill});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(pill.steps.length, (i) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: i == pill.steps.length - 1 ? 0 : 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: 20,
-                child: Text(
-                  '${i + 1}',
-                  style: AppText.label(
-                    size: 11,
-                    height: 1.55,
-                    color: pill.ink.withValues(alpha: 0.5),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  pill.steps[i],
-                  style: AppText.body(
-                    size: 15,
-                    height: 1.45,
-                    color: pill.ink.withValues(alpha: 0.92),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }),
     );
   }
 }
@@ -758,92 +610,6 @@ class _ChoiceButton extends StatelessWidget {
               color: ink,
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-/// A labelled panel on the card — the shape a hint, a plain-words retelling
-/// and a counterpoint all take.
-class _Panel extends StatelessWidget {
-  final Pill pill;
-  final String label;
-  final String body;
-
-  const _Panel({required this.pill, required this.label, required this.body});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(15, 13, 15, 14),
-      decoration: BoxDecoration(
-        color: pill.wash,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppText.label(
-              size: 10.5,
-              spacing: 1.2,
-              color: pill.ink.withValues(alpha: 0.6),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            body,
-            style: AppText.body(
-              size: 14,
-              height: 1.45,
-              color: pill.ink.withValues(alpha: 0.92),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The closed state of one of those panels: an icon and a line to tap.
-class _TextAction extends StatelessWidget {
-  final Pill pill;
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  const _TextAction({
-    required this.pill,
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Row(
-          children: [
-            Icon(icon, size: 16, color: pill.ink.withValues(alpha: 0.65)),
-            const SizedBox(width: 7),
-            Flexible(
-              child: Text(
-                label,
-                style: AppText.body(
-                  size: 13,
-                  weight: FontWeight.w500,
-                  color: pill.ink.withValues(alpha: 0.65),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

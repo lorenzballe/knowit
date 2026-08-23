@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
 
@@ -24,6 +25,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
     final pill = widget.pill;
     final saved = widget.app.isSaved(pill.id);
     final onCard = pill.ink;
+    final answered = widget.app.answerFor(pill.id);
 
     return Scaffold(
       backgroundColor: pill.tint,
@@ -99,45 +101,14 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
               ),
             ),
             const SizedBox(height: 22),
-            SelectableText(
-              pill.answer,
-              style: AppText.body(size: 16, height: 1.55, color: AppColors.ink),
-            ),
-            const SizedBox(height: 22),
-            PaperCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Eyebrow('Bar move'),
-                  const SizedBox(height: 8),
-                  Text(
-                    pill.barMove,
-                    style: AppText.body(
-                      size: 14.5,
-                      weight: FontWeight.w500,
-                      height: 1.45,
-                      color: AppColors.ink,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 14),
-            Row(
-              children: [
-                TopicDot(pill.color, size: 7),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    pill.source,
-                    style: AppText.body(
-                      size: 12,
-                      color: Colors.black.withValues(alpha: 0.45),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            if (answered != null) ...[
+              _AnsweredLine(pill: pill, given: answered),
+              const SizedBox(height: 16),
+            ],
+            // The same reveal the card shows. This used to print pill.answer
+            // alone, which on a worked problem is the last line of the
+            // solution and on a debate is one side of it.
+            RevealBody.onPaper(pill),
           ],
         ),
       ),
@@ -177,6 +148,54 @@ class _RoundAction extends StatelessWidget {
           child: Icon(icon, size: 17, color: color),
         ),
       ),
+    );
+  }
+}
+
+/// What the reader said when they met this card, and how it went.
+class _AnsweredLine extends StatelessWidget {
+  final Pill pill;
+  final Answer given;
+  const _AnsweredLine({required this.pill, required this.given});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!pill.isGraded) {
+      return Text(
+        'You took the side: ${pill.challenge.describe(given.response)}',
+        style: AppText.body(
+          size: 13,
+          weight: FontWeight.w500,
+          color: Colors.black.withValues(alpha: 0.55),
+        ),
+      );
+    }
+
+    final right = pill.challenge.accepts(given.response);
+    final sure = given.confidence == null
+        ? ''
+        : ' at ${given.confidence}% sure';
+    return Row(
+      children: [
+        Icon(
+          right ? Icons.check_circle_rounded : Icons.cancel_rounded,
+          size: 16,
+          color: right ? AppColors.ink : AppColors.red,
+        ),
+        const SizedBox(width: 8),
+        Flexible(
+          child: Text(
+            right
+                ? 'You got this one$sure'
+                : 'You said ${pill.challenge.describe(given.response)}$sure',
+            style: AppText.body(
+              size: 13,
+              weight: FontWeight.w500,
+              color: Colors.black.withValues(alpha: 0.6),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -35,10 +35,31 @@ class _ShareSheetState extends State<_ShareSheet> {
 
   /// Shared text carries the source and where it came from — a card in
   /// someone else's chat is the only free distribution this app has.
-  String get _shareText =>
-      '${widget.pill.question}\n\n${widget.pill.answer}\n\n'
-      '${widget.pill.barMove}\n\nSource: ${widget.pill.source}\n'
-      '— Knowit · lorenzballe.github.io/knowit';
+  ///
+  /// The body has to follow the kind of card: a worked problem's `answer` is
+  /// the last line of its solution and a debate's is one side of it, so
+  /// neither can be pasted on its own.
+  String get _shareText {
+    final pill = widget.pill;
+    final buffer = StringBuffer(pill.question)..write('\n\n');
+
+    if (pill.hasSteps) {
+      for (var i = 0; i < pill.steps.length; i++) {
+        buffer.writeln('${i + 1}. ${pill.steps[i]}');
+      }
+    } else {
+      buffer.writeln(pill.answer);
+    }
+
+    if (pill.hasCounterpoint) {
+      buffer
+        ..write('\nThe other side: ')
+        ..writeln(pill.counterpoint);
+    }
+
+    return '$buffer\n${pill.barMove}\n\nSource: ${pill.source}\n'
+        '— Knowit · lorenzballe.github.io/knowit';
+  }
 
   void _toast(String message) {
     if (!mounted) return;
