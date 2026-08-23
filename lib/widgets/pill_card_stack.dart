@@ -14,18 +14,18 @@ class PillCardStack extends StatefulWidget {
   final int index;
   final VoidCallback onAdvance;
 
-  /// Puzzle only: what the reader has already answered, and where to record
-  /// a new answer.
-  final int? Function(String id) chosenFor;
-  final void Function(String id, int choice) onChoose;
+  /// What the reader has already committed to, and where to record a new
+  /// commitment. Raw strings: the challenge knows how to read its own.
+  final String? Function(String id) answerFor;
+  final void Function(String id, String response) onAnswer;
 
   const PillCardStack({
     super.key,
     required this.deck,
     required this.index,
     required this.onAdvance,
-    required this.chosenFor,
-    required this.onChoose,
+    required this.answerFor,
+    required this.onAnswer,
   });
 
   @override
@@ -98,7 +98,7 @@ class _PillCardStackState extends State<PillCardStack>
       // A puzzle turns over when the reader commits, not on a stray tap —
       // otherwise the answer can be reached without ever guessing.
       final top = widget.deck[widget.index];
-      if (top.isPuzzle && widget.chosenFor(top.id) == null) return;
+      if (top.asksSomething && widget.answerFor(top.id) == null) return;
       HapticFeedback.selectionClick();
       setState(() => _flipped = !_flipped);
     } else {
@@ -136,7 +136,7 @@ class _PillCardStackState extends State<PillCardStack>
           '${(widget.index + d + 1).toString().padLeft(2, '0')} / '
           '${widget.deck.length.toString().padLeft(2, '0')}';
 
-      final chosen = widget.chosenFor(pill.id);
+      final given = widget.answerFor(pill.id);
 
       Widget card = isTop
           ? FlipCard(
@@ -145,10 +145,10 @@ class _PillCardStackState extends State<PillCardStack>
                 pill: pill,
                 indexLabel: num,
                 flipped: false,
-                chosenIndex: chosen,
-                onChoose: (i) {
+                given: given,
+                onAnswer: (response) {
                   HapticFeedback.mediumImpact();
-                  widget.onChoose(pill.id, i);
+                  widget.onAnswer(pill.id, response);
                   setState(() => _flipped = true);
                 },
               ),
@@ -156,7 +156,7 @@ class _PillCardStackState extends State<PillCardStack>
                 pill: pill,
                 indexLabel: num,
                 flipped: true,
-                chosenIndex: chosen,
+                given: given,
               ),
             )
           : PillCard(pill: pill, indexLabel: num, flipped: false);

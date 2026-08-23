@@ -325,15 +325,36 @@ void main() {
     test('every pill is complete and the answer stays short', () {
       for (final p in kPillPool) {
         expect(p.question.trim(), isNotEmpty, reason: '${p.id} has no question');
-        expect(p.answer.trim(), isNotEmpty, reason: '${p.id} has no answer');
+        expect(
+          p.answer.trim().isNotEmpty || p.hasSteps,
+          isTrue,
+          reason: '${p.id} has neither an answer nor a worked solution',
+        );
         expect(p.barMove.trim(), isNotEmpty, reason: '${p.id} has no bar move');
         expect(p.source.trim(), isNotEmpty, reason: '${p.id} has no source');
-        expect(
-          p.answer.split(RegExp(r'\s+')).length,
-          lessThanOrEqualTo(60),
-          reason: '${p.id} runs past sixty words',
-        );
-        expect(p.question, endsWith('?'), reason: '${p.id} is not a question');
+        if (!p.hasSteps) {
+          expect(
+            p.answer.split(RegExp(r'\s+')).length,
+            lessThanOrEqualTo(60),
+            reason: '${p.id} runs past sixty words',
+          );
+        }
+        if (p.challenge case TypeNumber()) {
+          expect(p.hasHint, isTrue, reason: '${p.id} has no hint');
+          expect(p.hasSteps, isTrue, reason: '${p.id} has no solution');
+        }
+        // A fact card is always a question. A competition problem is often
+        // an instruction — "Add up every whole number to 100." — so it only
+        // has to be a finished sentence.
+        if (p.asksSomething) {
+          expect(
+            p.question.endsWith('?') || p.question.endsWith('.'),
+            isTrue,
+            reason: '${p.id} is not a finished prompt',
+          );
+        } else {
+          expect(p.question, endsWith('?'), reason: '${p.id} is not a question');
+        }
       }
     });
   });
@@ -415,27 +436,28 @@ void main() {
   });
 
   group('The card', () {
-    Widget host(List<Pill> deck, Map<String, int> chosen) {
+    Widget host(List<Pill> deck, Map<String, String> given) {
       return MaterialApp(
         theme: buildKnowitTheme(),
         home: Scaffold(
           backgroundColor: AppColors.dark,
           body: SizedBox(
-            height: 600,
+            height: 620,
             child: PillCardStack(
               deck: deck,
               index: 0,
               onAdvance: () {},
-              chosenFor: (id) => chosen[id],
-              onChoose: (id, choice) => chosen[id] = choice,
+              answerFor: (id) => given[id],
+              onAnswer: (id, response) => given[id] = response,
             ),
           ),
         ),
       );
     }
 
-    final fact = kPillPool.firstWhere((p) => !p.isPuzzle);
-    final puzzle = kPillPool.firstWhere((p) => p.isPuzzle);
+    final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
+    final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+    final number = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
 
     testWidgets('a fact turns over on a tap', (tester) async {
       await tester.pumpWidget(host([fact], {}));
@@ -446,74 +468,137 @@ void main() {
 
       await tester.tap(find.text('Tap to reveal'));
       await tester.pumpAndSettle();
-
       expect(find.text('BAR MOVE'), findsOneWidget);
     });
 
-    testWidgets('a puzzle will not turn over until you commit', (
+    testWidgets('a card that asks will not turn over until you commit', (
       tester,
     ) async {
-      await tester.pumpWidget(host([puzzle], {}));
+      await tester.pumpWidget(host([pick], {}));
       await tester.pumpAndSettle();
 
-      expect(find.text('Commit before you turn it over.'), findsOneWidget);
-      for (final choice in puzzle.choices) {
-        expect(find.text(choice), findsOneWidget);
-      }
+      expect(find.textContaining('commit before you turn it over'), findsOneWidget);
 
       // Tapping the question is not an answer, so the card stays put.
-      await tester.tap(find.text(puzzle.question));
+      await tester.tap(find.text(pick.question));
       await tester.pumpAndSettle();
       expect(find.text('BAR MOVE'), findsNothing);
     });
 
-    testWidgets('choosing turns the card and reports the outcome', (
-      tester,
-    ) async {
-      final chosen = <String, int>{};
-      await tester.pumpWidget(host([puzzle], chosen));
+    testWidgets('picking the right option turns the card', (tester) async {
+      final given = <String, String>{};
+      final challenge = pick.challenge as PickOne;
+      await tester.pumpWidget(host([pick], given));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text(puzzle.correctChoice));
+      await tester.tap(find.text(challenge.correctOption));
       await tester.pumpAndSettle();
 
-      expect(chosen[puzzle.id], puzzle.correctIndex);
+      expect(given[pick.id], '${challenge.correct}');
       expect(find.text('You got it'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsOneWidget);
     });
 
-    testWidgets('a wrong answer names the trap', (tester) async {
-      final wrong = puzzle.correctIndex == 0 ? 1 : 0;
-      final chosen = <String, int>{};
-      await tester.pumpWidget(host([puzzle], chosen));
+    testWidgets('a wrong pick names the trap', (tester) async {
+      final challenge = pick.challenge as PickOne;
+      final wrong = challenge.correct == 0 ? 1 : 0;
+      await tester.pumpWidget(host([pick], {}));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text(puzzle.choices[wrong]));
+      await tester.tap(find.text(challenge.options[wrong]));
       await tester.pumpAndSettle();
 
       expect(find.text('Almost everyone gets this wrong'), findsOneWidget);
       expect(find.textContaining('The trap:'), findsOneWidget);
     });
+
+    testWidgets('a number problem takes a typed answer', (tester) async {
+      final given = <String, String>{};
+      final challenge = number.challenge as TypeNumber;
+      await tester.pumpWidget(host([number], given));
+      await tester.pumpAndSettle();
+
+      // An empty box must not commit.
+      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+      expect(given, isEmpty);
+
+      await tester.enterText(find.byType(TextField), '${challenge.answer}');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+
+      expect(given[number.id], '${challenge.answer}');
+      expect(find.text('You got it'), findsOneWidget);
+      // A worked solution, not one paragraph.
+      expect(find.text(number.steps.first), findsOneWidget);
+    });
+
+    testWidgets('a wrong number says what it was', (tester) async {
+      final challenge = number.challenge as TypeNumber;
+      await tester.pumpWidget(host([number], {}));
+      await tester.pumpAndSettle();
+
+      await tester.enterText(find.byType(TextField), '1');
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.textContaining('it is ${challenge.answerLabel}'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a nudge is there before the answer is', (tester) async {
+      await tester.pumpWidget(host([number], {}));
+      await tester.pumpAndSettle();
+
+      expect(find.text(number.hint), findsNothing);
+      await tester.tap(find.text('Give me a nudge'));
+      await tester.pumpAndSettle();
+
+      expect(find.text(number.hint), findsOneWidget);
+      // A hint is not the answer: the card has not turned.
+      expect(find.text('BAR MOVE'), findsNothing);
+    });
   });
 
-  group('Puzzle scoring', () {
+  group('Grading', () {
+    test('each challenge grades its own answers', () {
+      const pick = PickOne(options: ['a', 'b', 'c'], correct: 1);
+      expect(pick.accepts('1'), isTrue);
+      expect(pick.accepts('2'), isFalse);
+      expect(pick.accepts('nonsense'), isFalse);
+      expect(pick.describe('2'), 'c');
+
+      const number = TypeNumber(answer: 5050);
+      expect(number.accepts('5050'), isTrue);
+      expect(number.accepts(' 5050 '), isTrue);
+      expect(number.accepts('5051'), isFalse);
+      expect(number.accepts(''), isFalse);
+
+      // Either decimal separator, within the stated slack.
+      const loose = TypeNumber(answer: 3.14, tolerance: 0.01);
+      expect(loose.accepts('3,14'), isTrue);
+      expect(loose.accepts('3.15'), isTrue);
+      expect(loose.accepts('3.2'), isFalse);
+    });
+
     testWidgets('the first answer is the one that stands', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
-      await _settle(tester);
-
-      final puzzle = kPillPool.firstWhere((p) => p.isPuzzle);
       final app = AppState();
       await app.init();
 
-      await app.recordPuzzleChoice(puzzle.id, puzzle.correctIndex);
+      final pill = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
+      final challenge = pill.challenge as TypeNumber;
+
+      await app.recordAnswer(pill.id, '${challenge.answer}');
       expect(app.puzzlesRight, 1);
       expect(app.puzzlesAnswered, 1);
 
       // Meeting the card again must not let the score be retaken.
-      final wrong = puzzle.correctIndex == 0 ? 1 : 0;
-      await app.recordPuzzleChoice(puzzle.id, wrong);
-      expect(app.puzzleChoice(puzzle.id), puzzle.correctIndex);
+      await app.recordAnswer(pill.id, '0');
+      expect(app.answerFor(pill.id), '${challenge.answer}');
       expect(app.puzzlesRight, 1);
     });
   });

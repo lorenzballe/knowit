@@ -10,18 +10,18 @@ class PillCard extends StatelessWidget {
   final String indexLabel;
   final bool flipped;
 
-  /// Puzzle only: which option the reader committed to, and what to do when
-  /// they pick one. Null while untouched.
-  final int? chosenIndex;
-  final ValueChanged<int>? onChoose;
+  /// What the reader committed to, and where to send a new commitment.
+  /// Null while untouched.
+  final String? given;
+  final ValueChanged<String>? onAnswer;
 
   const PillCard({
     super.key,
     required this.pill,
     required this.indexLabel,
     required this.flipped,
-    this.chosenIndex,
-    this.onChoose,
+    this.given,
+    this.onAnswer,
   });
 
   @override
@@ -64,14 +64,26 @@ class PillCard extends StatelessWidget {
           ),
           Expanded(
             child: flipped
-                ? _BackFace(pill: pill, chosenIndex: chosenIndex)
-                : pill.isPuzzle
-                ? _PuzzleFace(
-                    pill: pill,
-                    chosenIndex: chosenIndex,
-                    onChoose: onChoose,
-                  )
-                : _FrontFace(pill: pill),
+                ? _BackFace(pill: pill, given: given)
+                // The challenge decides the front. A new kind of challenge
+                // will not compile until it is given a face here.
+                : switch (pill.challenge) {
+                    NoChallenge() => _FrontFace(pill: pill),
+                    PickOne(:final options) => _AskFace(
+                      pill: pill,
+                      onAnswer: onAnswer,
+                      input: _PickInput(
+                        pill: pill,
+                        options: options,
+                        onAnswer: onAnswer,
+                      ),
+                    ),
+                    TypeNumber() => _AskFace(
+                      pill: pill,
+                      onAnswer: onAnswer,
+                      input: _NumberInput(pill: pill, onAnswer: onAnswer),
+                    ),
+                  },
           ),
         ],
       ),
@@ -134,8 +146,8 @@ class _FrontFace extends StatelessWidget {
 
 class _BackFace extends StatelessWidget {
   final Pill pill;
-  final int? chosenIndex;
-  const _BackFace({required this.pill, this.chosenIndex});
+  final String? given;
+  const _BackFace({required this.pill, this.given});
 
   @override
   Widget build(BuildContext context) {
@@ -148,14 +160,18 @@ class _BackFace extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (pill.isPuzzle && chosenIndex != null) ...[
-                _Verdict(pill: pill, right: chosenIndex == pill.correctIndex),
+              if (pill.asksSomething && given != null) ...[
+                _Verdict(
+                  pill: pill,
+                  right: pill.challenge.accepts(given!),
+                  given: given!,
+                ),
                 const SizedBox(height: 14),
               ],
               Text(
                 pill.question,
                 style: AppText.display(
-                  size: pill.isPuzzle ? 18 : 20,
+                  size: pill.asksSomething ? 18 : 20,
                   weight: FontWeight.w600,
                   height: 1.28,
                   spacing: -0.4,
@@ -163,16 +179,19 @@ class _BackFace extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
-                pill.answer,
-                style: AppText.body(
-                  size: 16,
-                  weight: FontWeight.w400,
-                  height: 1.5,
-                  color: pill.ink.withValues(alpha: 0.92),
+              if (pill.hasSteps)
+                _Steps(pill: pill)
+              else
+                Text(
+                  pill.answer,
+                  style: AppText.body(
+                    size: 16,
+                    weight: FontWeight.w400,
+                    height: 1.5,
+                    color: pill.ink.withValues(alpha: 0.92),
+                  ),
                 ),
-              ),
-              if (pill.isPuzzle && pill.trap.isNotEmpty) ...[
+              if (pill.asksSomething && pill.trap.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
                   'The trap: ${pill.trap}',
@@ -239,7 +258,22 @@ class _BackFace extends StatelessWidget {
 class _Verdict extends StatelessWidget {
   final Pill pill;
   final bool right;
-  const _Verdict({required this.pill, required this.right});
+  final String given;
+  const _Verdict({
+    required this.pill,
+    required this.right,
+    required this.given,
+  });
+
+  String get _line {
+    if (right) return 'You got it';
+    return switch (pill.challenge) {
+      // A wrong number is a slip; a wrong pick is usually the trap working.
+      TypeNumber(:final answerLabel) =>
+        'You said ${pill.challenge.describe(given)} · it is $answerLabel',
+      _ => 'Almost everyone gets this wrong',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -253,7 +287,7 @@ class _Verdict extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            right ? 'You got it' : 'Almost everyone gets this wrong',
+            _line,
             style: AppText.label(
               size: 11,
               spacing: 1.2,
@@ -266,21 +300,74 @@ class _Verdict extends StatelessWidget {
   }
 }
 
-/// A puzzle asks before it tells: the options are the front of the card, and
-/// picking one is what turns it over.
-class _PuzzleFace extends StatelessWidget {
+/// The solution, one move per line, so a long derivation stays followable.
+class _Steps extends StatelessWidget {
   final Pill pill;
-  final int? chosenIndex;
-  final ValueChanged<int>? onChoose;
-
-  const _PuzzleFace({
-    required this.pill,
-    required this.chosenIndex,
-    required this.onChoose,
-  });
+  const _Steps({required this.pill});
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(pill.steps.length, (i) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: i == pill.steps.length - 1 ? 0 : 10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 20,
+                child: Text(
+                  '${i + 1}',
+                  style: AppText.label(
+                    size: 11,
+                    height: 1.55,
+                    color: pill.ink.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  pill.steps[i],
+                  style: AppText.body(
+                    size: 15,
+                    height: 1.45,
+                    color: pill.ink.withValues(alpha: 0.92),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+}
+
+/// A card that asks before it tells: the question, whatever input the
+/// challenge needs, and an optional nudge for when the reader is stuck.
+class _AskFace extends StatefulWidget {
+  final Pill pill;
+  final Widget input;
+  final ValueChanged<String>? onAnswer;
+
+  const _AskFace({
+    required this.pill,
+    required this.input,
+    required this.onAnswer,
+  });
+
+  @override
+  State<_AskFace> createState() => _AskFaceState();
+}
+
+class _AskFaceState extends State<_AskFace> {
+  bool _hintOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final pill = widget.pill;
+
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         child: ConstrainedBox(
@@ -301,31 +388,225 @@ class _PuzzleFace extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 22),
-              ...List.generate(pill.choices.length, (i) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 9),
-                  child: _ChoiceButton(
-                    label: pill.choices[i],
-                    ink: pill.ink,
-                    fill: pill.wash,
-                    edge: pill.washEdge,
-                    onTap: onChoose == null ? null : () => onChoose!(i),
+              widget.input,
+              if (pill.hasHint) ...[
+                const SizedBox(height: 12),
+                if (_hintOpen)
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(14, 12, 14, 13),
+                    decoration: BoxDecoration(
+                      color: pill.wash,
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'HINT',
+                          style: AppText.label(
+                            size: 10.5,
+                            spacing: 1.2,
+                            color: pill.ink.withValues(alpha: 0.6),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          pill.hint,
+                          style: AppText.body(
+                            size: 14,
+                            height: 1.4,
+                            color: pill.ink.withValues(alpha: 0.9),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => setState(() => _hintOpen = true),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.lightbulb_outline_rounded,
+                          size: 15,
+                          color: pill.ink.withValues(alpha: 0.65),
+                        ),
+                        const SizedBox(width: 7),
+                        Text(
+                          'Give me a nudge',
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w500,
+                            color: pill.ink.withValues(alpha: 0.65),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              }),
-              const SizedBox(height: 4),
+              ],
+              const SizedBox(height: 14),
               Text(
-                'Commit before you turn it over.',
+                '${pill.difficulty.label} · commit before you turn it over.',
                 style: AppText.body(
                   size: 12.5,
                   weight: FontWeight.w500,
-                  color: pill.ink.withValues(alpha: 0.6),
+                  color: pill.ink.withValues(alpha: 0.55),
                 ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+/// One tap per option — the answer is the option's index.
+class _PickInput extends StatelessWidget {
+  final Pill pill;
+  final List<String> options;
+  final ValueChanged<String>? onAnswer;
+
+  const _PickInput({
+    required this.pill,
+    required this.options,
+    required this.onAnswer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(options.length, (i) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: i == options.length - 1 ? 0 : 9),
+          child: _ChoiceButton(
+            label: options[i],
+            ink: pill.ink,
+            fill: pill.wash,
+            edge: pill.washEdge,
+            onTap: onAnswer == null ? null : () => onAnswer!('$i'),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+/// Type the number you worked out. Nothing is graded until you commit, and an
+/// empty box will not commit.
+class _NumberInput extends StatefulWidget {
+  final Pill pill;
+  final ValueChanged<String>? onAnswer;
+
+  const _NumberInput({required this.pill, required this.onAnswer});
+
+  @override
+  State<_NumberInput> createState() => _NumberInputState();
+}
+
+class _NumberInputState extends State<_NumberInput> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool get _ready => TypeNumber.parse(_controller.text) != null;
+
+  void _submit() {
+    if (!_ready || widget.onAnswer == null) return;
+    widget.onAnswer!(_controller.text.trim());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pill = widget.pill;
+    final unit = (pill.challenge as TypeNumber).unit;
+
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 54,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: pill.wash,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: pill.washEdge),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    onChanged: (_) => setState(() {}),
+                    onSubmitted: (_) => _submit(),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                      signed: true,
+                    ),
+                    textInputAction: TextInputAction.done,
+                    style: AppText.display(
+                      size: 22,
+                      weight: FontWeight.w600,
+                      color: pill.ink,
+                    ),
+                    decoration: InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                      hintText: 'Your answer',
+                      hintStyle: AppText.body(
+                        size: 15,
+                        color: pill.ink.withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
+                ),
+                if (unit.isNotEmpty)
+                  Text(
+                    unit,
+                    style: AppText.body(
+                      size: 14,
+                      color: pill.ink.withValues(alpha: 0.5),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Semantics(
+          button: true,
+          label: 'Check my answer',
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _submit,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 160),
+              opacity: _ready ? 1 : 0.35,
+              child: Container(
+                width: 54,
+                height: 54,
+                decoration: BoxDecoration(
+                  color: pill.ink,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 20,
+                  color: pill.color,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

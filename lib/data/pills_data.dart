@@ -47,10 +47,41 @@ Pill _q(
     answer: a,
     barMove: bar,
     source: src,
-    kind: PillKind.puzzle,
-    choices: choices,
-    correctIndex: correct,
+    challenge: PickOne(options: choices, correct: correct),
     trap: trap,
+    difficulty: Difficulty.medium,
+  );
+}
+
+/// Builds a competition-style problem: the reader works out a number and
+/// types it. [steps] is the solution, one move per line.
+Pill _n(
+  String id,
+  String topicKey,
+  String q,
+  num answer,
+  String unit,
+  String hint,
+  List<String> steps,
+  String bar,
+  String src, {
+  Difficulty difficulty = Difficulty.medium,
+}) {
+  final t = kTopics[topicKey]!;
+  return Pill(
+    id: id,
+    topic: t.name,
+    color: t.color,
+    ink: t.ink,
+    tint: t.tint,
+    question: q,
+    answer: steps.isEmpty ? '' : steps.last,
+    barMove: bar,
+    source: src,
+    challenge: TypeNumber(answer: answer, unit: unit),
+    hint: hint,
+    steps: steps,
+    difficulty: difficulty,
   );
 }
 
@@ -714,5 +745,105 @@ final List<Pill> kPillPool = [
     'The rule was simply "increasing numbers". People proposed only sequences fitting their guess, got yes every time, and declared themselves right. The informative move is to test something you expect to fail.',
     'If every test you run says yes, you are not testing anything.',
     'Confirmation bias; Wason, 1960',
+  ),
+
+  // ── Thinking: competition problems. The answer is a number you work out,
+  // so the card asks for it rather than offering options to guess between.
+  _n(
+    'thinking-n1',
+    'thinking',
+    'Add up every whole number from 1 to 100.',
+    5050,
+    '',
+    'Do not add them in order. Pair the first with the last.',
+    [
+      'Pair 1 with 100, 2 with 99, 3 with 98. Every pair sums to 101.',
+      'There are 100 numbers, so there are 50 such pairs.',
+      '50 × 101 = 5,050.',
+    ],
+    'Gauss is said to have done this in seconds, aged about nine.',
+    'Arithmetic series, n(n+1)/2',
+    difficulty: Difficulty.easy,
+  ),
+  _n(
+    'thinking-n2',
+    'thinking',
+    'Ten people are in a room. Everyone shakes hands with everyone else exactly once. How many handshakes?',
+    45,
+    'handshakes',
+    'Count what each person does, then notice you have counted each shake twice.',
+    [
+      'Each of the 10 people shakes 9 hands, which suggests 90.',
+      'But every handshake was counted from both sides.',
+      '90 ÷ 2 = 45.',
+    ],
+    'The same arithmetic tells you how many pairs there are in any group.',
+    'Combinations, C(10,2)',
+    difficulty: Difficulty.easy,
+  ),
+  _n(
+    'thinking-n3',
+    'thinking',
+    'A snail climbs a 10 m well: 3 m up each day, sliding 2 m back each night. Which day does it get out?',
+    8,
+    'days',
+    'The last climb is different from all the others. Why?',
+    [
+      'Net progress is 1 m per full day, so after 7 days the snail is at 7 m.',
+      'On day 8 it climbs 3 m, reaching 10 m — and it is out.',
+      'It never slides back, so the answer is day 8, not day 10.',
+    ],
+    'The trick is that the final step ends the process before the setback.',
+    'Classic competition problem',
+    difficulty: Difficulty.medium,
+  ),
+  _n(
+    'thinking-n4',
+    'thinking',
+    'How many squares of any size are on a standard 8×8 chessboard?',
+    204,
+    'squares',
+    'There are 64 of one size. Now count the 2×2s, then the 3×3s.',
+    [
+      'A k×k square can sit in (9−k)² positions on an 8×8 board.',
+      'So the total is 8² + 7² + 6² + … + 1².',
+      '64+49+36+25+16+9+4+1 = 204.',
+    ],
+    'Sixty-four is the answer to a different question than the one asked.',
+    'Sum of squares, n(n+1)(2n+1)/6',
+    difficulty: Difficulty.medium,
+  ),
+  _n(
+    'thinking-n5',
+    'thinking',
+    'How many zeros are at the end of 100! (100 factorial)?',
+    24,
+    'zeros',
+    'A trailing zero needs a 2 and a 5. Which of the two runs out first?',
+    [
+      'Each trailing zero comes from a factor 10, that is a 2 paired with a 5.',
+      'Twos are plentiful, so count the fives: 100÷5 = 20.',
+      'But 25, 50, 75 and 100 each carry a second five: +4.',
+      '20 + 4 = 24.',
+    ],
+    'You can answer a question about a 158-digit number without computing it.',
+    "Legendre's formula",
+    difficulty: Difficulty.hard,
+  ),
+  _n(
+    'thinking-n6',
+    'thinking',
+    'In 12 hours, how many times do the hour and minute hands of a clock overlap?',
+    11,
+    'times',
+    'They meet just after 1:05, just after 2:10 … but check what happens near 11.',
+    [
+      'The minute hand gains a full lap on the hour hand every 12/11 hours.',
+      'In 12 hours it gains exactly 11 laps, so they meet 11 times.',
+      'The near-12 overlap is the one at 12 o\'clock itself, not a twelfth.',
+    ],
+    'Twelve is the obvious answer and it is one too many.',
+    'Relative angular speed',
+    difficulty: Difficulty.hard,
   ),
 ];

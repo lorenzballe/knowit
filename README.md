@@ -70,14 +70,31 @@ These are declared in the UI rather than faked:
 - **No notification delivery.** The daily nudge is stored as a preference;
   actually scheduling it needs a local-notifications plugin and a mobile build.
 
-The pool holds 75 cards: 60 facts, five per topic, plus 15 reasoning puzzles
-under **Thinking** — about fifteen days for a free reader before anything
-repeats.
+The pool holds 81 cards: 60 facts, 15 reasoning puzzles and 6 competition
+problems, the last two under **Thinking**.
 
-A puzzle asks before it tells. The options are the front of the card, and
-committing to one is what turns it over; a stray tap will not. Getting it wrong
-on purpose is the part that teaches, so the reveal names the trap you fell into
-before it explains the answer. Your first answer is the one that counts.
+## How a card asks
+
+A card either tells you something or asks you something first, and that is
+modelled as a sealed `Challenge` rather than a kind flag with a drawer of
+nullable fields:
+
+| Challenge | The front of the card | Graded by |
+|---|---|---|
+| `NoChallenge` | the question, tap to turn it over | — |
+| `PickOne` | the options | index matches |
+| `TypeNumber` | a number field and a unit | value within tolerance |
+
+Each case carries only the data it needs and grades its own answers, so adding
+a way to ask means a new subclass — and the switch that picks a card's face
+stops compiling until that case is handled. Answers are stored as the raw
+string the reader committed, so one store serves every kind.
+
+Committing is what turns the card over; a stray tap will not, or the answer
+could be reached without ever guessing. Getting it wrong on purpose is the part
+that teaches, so the reveal names the trap before it explains. Competition
+problems add a hint you can ask for without giving up, and a worked solution
+shown as numbered steps rather than one paragraph. Your first answer stands.
 
 Every puzzle is either arithmetic the reader can redo (Monty Hall, base rates,
 the birthday problem) or a result that has held up under repeated testing
