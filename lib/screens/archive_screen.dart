@@ -184,10 +184,13 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
               child: results.isEmpty
                   ? _NoResults(query: _query)
                   : ListView.builder(
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
                       padding: const EdgeInsets.fromLTRB(22, 6, 22, 24),
                       itemCount: results.length,
                       itemBuilder: (context, i) => _ResultRow(
                         pill: results[i],
+                        saved: widget.app.isSaved(results[i].id),
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) => PillDetailScreen(
@@ -209,7 +212,12 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
 class _ResultRow extends StatelessWidget {
   final Pill pill;
   final VoidCallback onTap;
-  const _ResultRow({required this.pill, required this.onTap});
+  final bool saved;
+  const _ResultRow({
+    required this.pill,
+    required this.onTap,
+    required this.saved,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -255,6 +263,15 @@ class _ResultRow extends StatelessWidget {
                 ],
               ),
             ),
+            if (saved)
+              Padding(
+                padding: const EdgeInsets.only(left: 10, top: 3),
+                child: Icon(
+                  Icons.favorite_rounded,
+                  size: 14,
+                  color: pill.color,
+                ),
+              ),
           ],
         ),
       ),

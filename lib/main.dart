@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'screens/comeback_screen.dart';
 import 'screens/profile_screen.dart';
@@ -10,7 +12,28 @@ import 'state/app_state.dart';
 import 'theme.dart';
 
 void main() {
+  // Dark status-bar icons: every screen the bar sits over is light.
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+    ),
+  );
   runApp(const KnowitApp());
+}
+
+/// On the web a list should follow the mouse the way it follows a finger.
+class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
+  const _DragAnywhereScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => const {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+  };
 }
 
 class KnowitApp extends StatelessWidget {
@@ -23,6 +46,7 @@ class KnowitApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: buildKnowitTheme(),
       home: const KnowitRoot(),
+      scrollBehavior: const _DragAnywhereScrollBehavior(),
       builder: (context, child) => _PhoneFrame(child: child),
     );
   }
@@ -122,13 +146,27 @@ class _KnowitRootState extends State<KnowitRoot> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_app.ready) {
-      return const Scaffold(
-        backgroundColor: AppColors.paper,
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
+    if (!_app.ready) return const _Splash();
 
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 320),
+      switchInCurve: Curves.easeOutCubic,
+      switchOutCurve: Curves.easeIn,
+      transitionBuilder: (child, animation) => FadeTransition(
+        opacity: animation,
+        child: SlideTransition(
+          position: Tween(
+            begin: const Offset(0, 0.02),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        ),
+      ),
+      child: KeyedSubtree(key: ValueKey(_stage), child: _stageScreen()),
+    );
+  }
+
+  Widget _stageScreen() {
     switch (_stage) {
       case _Stage.welcome:
         return WelcomeScreen(
@@ -165,6 +203,44 @@ class _KnowitRootState extends State<KnowitRoot> {
           }),
         );
     }
+  }
+}
+
+/// The opening frame: the wordmark on paper, so the app never shows a bare
+/// spinner while stored state loads.
+class _Splash extends StatelessWidget {
+  const _Splash();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.paper,
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Knowit',
+              style: AppText.outfit(
+                size: 30,
+                weight: FontWeight.w700,
+                spacing: -1,
+                color: AppColors.ink,
+              ),
+            ),
+            const SizedBox(height: 18),
+            SizedBox(
+              width: 26,
+              height: 26,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.ink.withValues(alpha: 0.35),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -221,47 +297,77 @@ class _KnowitTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.9),
+        color: Colors.white.withValues(alpha: 0.94),
         border: Border(
           top: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
         ),
       ),
       padding: EdgeInsets.fromLTRB(
-        30,
-        12,
-        30,
-        MediaQuery.of(context).padding.bottom + 12,
+        18,
+        10,
+        18,
+        MediaQuery.of(context).padding.bottom + 10,
       ),
       child: Row(
         children: List.generate(_tabs.length, (i) {
           final selected = i == index;
           final tab = _tabs[i];
+          final tint = selected
+              ? AppColors.ink
+              : Colors.black.withValues(alpha: 0.32);
+
           return Expanded(
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => onChanged(i),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    tab.icon,
-                    size: 20,
-                    color: selected
-                        ? AppColors.ink
-                        : Colors.black.withValues(alpha: 0.32),
+            child: Semantics(
+              button: true,
+              selected: selected,
+              label: tab.label,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  if (selected) return;
+                  HapticFeedback.selectionClick();
+                  onChanged(i);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 2),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // The selected tab sits in a soft pill, and the icon
+                      // lifts slightly — enough to read at a glance.
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 220),
+                        curve: Curves.easeOut,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: selected
+                              ? AppColors.lime.withValues(alpha: 0.35)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: AnimatedScale(
+                          duration: const Duration(milliseconds: 220),
+                          curve: Curves.easeOutBack,
+                          scale: selected ? 1.08 : 1,
+                          child: Icon(tab.icon, size: 20, color: tint),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      AnimatedDefaultTextStyle(
+                        duration: const Duration(milliseconds: 220),
+                        style: AppText.figtree(
+                          size: 10.5,
+                          weight: selected ? FontWeight.w600 : FontWeight.w500,
+                          color: tint,
+                        ),
+                        child: Text(tab.label),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    tab.label,
-                    style: AppText.figtree(
-                      size: 10.5,
-                      weight: FontWeight.w500,
-                      color: selected
-                          ? AppColors.ink
-                          : Colors.black.withValues(alpha: 0.32),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           );

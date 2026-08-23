@@ -104,7 +104,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
               ),
             ),
             const SizedBox(height: 22),
-            Text(
+            SelectableText(
               pill.answer,
               style: AppText.figtree(
                 size: 16,

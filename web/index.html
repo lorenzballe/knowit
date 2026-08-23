@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,12 +18,22 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="One smart pill a day, five ways to sound interesting at the bar.">
-  <meta name="theme-color" content="#0D0D0F">
+  <meta name="theme-color" content="#F5F3EE">
+
+  <!-- Link previews -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Knowit">
+  <meta property="og:description" content="Five things worth saying out loud. Every morning.">
+  <meta property="og:url" content="https://lorenzballe.github.io/knowit/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Knowit">
+  <meta name="twitter:description" content="Five things worth saying out loud. Every morning.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Knowit">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
@@ -32,16 +42,116 @@
 
   <title>Knowit</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #F5F3EE;
+      /* The app owns its own scrolling; stop iOS rubber-banding the page. */
+      overscroll-behavior: none;
+    }
+
+    /* Shown until Flutter paints its first frame, so the page is never a
+       blank white rectangle on a slow connection. */
+    #boot {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      background: #F5F3EE;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      transition: opacity .35s ease;
+      z-index: 10;
+    }
+    #boot.done { opacity: 0; pointer-events: none; }
+
+    #boot .mark {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: #131316;
+    }
+
+    #boot .bar {
+      width: 120px;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(19, 19, 22, .1);
+      overflow: hidden;
+    }
+    #boot .bar i {
+      display: block;
+      width: 40%;
+      height: 100%;
+      border-radius: 999px;
+      background: #C6F24E;
+      animation: slide 1.1s ease-in-out infinite;
+    }
+    @keyframes slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(350%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #boot .bar i { animation: none; width: 100%; }
+    }
+
+    noscript .msg {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      color: #4A4A44;
+      font: 15px/1.5 -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F5F3EE;
+      z-index: 20;
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+  <div id="boot">
+    <div class="mark">Knowit</div>
+    <div class="bar"><i></i></div>
+  </div>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <noscript>
+    <div class="msg">Knowit needs JavaScript to run. Turn it on and reload.</div>
+  </noscript>
+
+  <script>
+    // Flutter does not announce its first frame, so watch for the view it
+    // mounts and clear the boot screen once something has actually painted.
+    (function () {
+      var boot = document.getElementById('boot');
+      if (!boot) return;
+
+      function clear() {
+        boot.classList.add('done');
+        setTimeout(function () { boot.remove(); }, 400);
+      }
+
+      var observer = new MutationObserver(function () {
+        if (document.querySelector('flutter-view, flt-glass-pane')) {
+          observer.disconnect();
+          // A frame or two of grace so the app paints before the fade.
+          setTimeout(clear, 120);
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      // Never leave the boot screen stuck over a working app.
+      setTimeout(function () { observer.disconnect(); clear(); }, 12000);
+    })();
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

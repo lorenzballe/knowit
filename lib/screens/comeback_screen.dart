@@ -135,10 +135,7 @@ class ComebackScreen extends StatelessWidget {
                   await app.setNotifyTime(next);
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Daily nudge moved to $next.'),
-                      behavior: SnackBarBehavior.floating,
-                    ),
+                    SnackBar(content: Text('Daily nudge moved to $next.')),
                   );
                 },
               ),

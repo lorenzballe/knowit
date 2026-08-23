@@ -35,7 +35,9 @@ class AppState extends ChangeNotifier {
   int bestStreak = 0;
   String? lastCompletionDate;
   List<String> completedDates = [];
-  Set<String> savedIds = {};
+
+  /// Saved pill ids, most recently kept first.
+  List<String> savedIds = [];
   int todayIndex = 0;
   int pillsRead = 0;
 
@@ -79,7 +81,7 @@ class AppState extends ChangeNotifier {
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
     completedDates = _prefs.getStringList(_kCompletedDates) ?? [];
-    savedIds = (_prefs.getStringList(_kSavedIds) ?? []).toSet();
+    savedIds = _prefs.getStringList(_kSavedIds) ?? [];
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
@@ -201,9 +203,17 @@ class AppState extends ChangeNotifier {
     if (savedIds.contains(pillId)) {
       savedIds.remove(pillId);
     } else {
-      savedIds.add(pillId);
+      savedIds.insert(0, pillId);
     }
-    await _prefs.setStringList(_kSavedIds, savedIds.toList());
+    await _prefs.setStringList(_kSavedIds, savedIds);
+    notifyListeners();
+  }
+
+  /// Puts a pill back where it was — the undo behind the "removed" message.
+  Future<void> restoreSaved(String pillId, int at) async {
+    if (savedIds.contains(pillId)) return;
+    savedIds.insert(at.clamp(0, savedIds.length), pillId);
+    await _prefs.setStringList(_kSavedIds, savedIds);
     notifyListeners();
   }
 
@@ -289,7 +299,7 @@ class AppState extends ChangeNotifier {
     bestStreak = 0;
     lastCompletionDate = null;
     completedDates = [];
-    savedIds = {};
+    savedIds = [];
     todayIndex = 0;
     pillsRead = 0;
     onboarded = false;

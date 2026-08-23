@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../theme.dart';
 
 /// The full-width dark pill button used as the primary action on almost every
 /// screen in the flow.
-class PrimaryButton extends StatelessWidget {
+class PrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
   final Color background;
@@ -21,32 +22,59 @@ class PrimaryButton extends StatelessWidget {
   });
 
   @override
+  State<PrimaryButton> createState() => _PrimaryButtonState();
+}
+
+class _PrimaryButtonState extends State<PrimaryButton> {
+  bool _down = false;
+
+  void _setDown(bool value) {
+    if (widget.onPressed == null || _down == value) return;
+    setState(() => _down = value);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final enabled = onPressed != null;
-    return SizedBox(
-      height: height,
-      width: double.infinity,
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 180),
-        opacity: enabled ? 1 : 0.999,
-        child: ElevatedButton(
-          onPressed: onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: background,
-            foregroundColor: foreground,
-            disabledBackgroundColor: background,
-            disabledForegroundColor: foreground,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(999),
+    return Listener(
+      onPointerDown: (_) => _setDown(true),
+      onPointerUp: (_) => _setDown(false),
+      onPointerCancel: (_) => _setDown(false),
+      child: AnimatedScale(
+        // The press dip is what makes a button feel physical.
+        scale: _down ? 0.97 : 1,
+        duration: const Duration(milliseconds: 110),
+        curve: Curves.easeOut,
+        child: SizedBox(
+          height: widget.height,
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: widget.onPressed == null
+                ? null
+                : () {
+                    HapticFeedback.lightImpact();
+                    widget.onPressed!();
+                  },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.background,
+              foregroundColor: widget.foreground,
+              disabledBackgroundColor: widget.background,
+              disabledForegroundColor: widget.foreground,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(999),
+              ),
             ),
-          ),
-          child: Text(
-            label,
-            style: AppText.figtree(
-              size: 15,
-              weight: FontWeight.w600,
-              color: foreground,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 220),
+              child: Text(
+                widget.label,
+                key: ValueKey(widget.label),
+                style: AppText.figtree(
+                  size: 15,
+                  weight: FontWeight.w600,
+                  color: widget.foreground,
+                ),
+              ),
             ),
           ),
         ),

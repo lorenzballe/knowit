@@ -46,7 +46,6 @@ class _SignInScreenState extends State<SignInScreen> {
           '$provider sign-in is not connected. Continuing with a profile '
           'kept on this device.',
         ),
-        behavior: SnackBarBehavior.floating,
       ),
     );
     widget.onSignedIn('You');

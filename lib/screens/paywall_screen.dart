@@ -199,7 +199,6 @@ class _PaywallScreenState extends State<PaywallScreen> {
                               'Trial started. No payment is connected in '
                               'this build.',
                             ),
-                            behavior: SnackBarBehavior.floating,
                           ),
                         );
                         Navigator.of(context).pop();

@@ -1,8 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
+import 'flip_card.dart';
 import 'pill_card.dart';
 
 /// Drag sideways to advance, tap to flip — a stack of up to three cards
@@ -79,6 +81,7 @@ class _PillCardStackState extends State<PillCardStack>
     _dragging = false;
     final dx = _dx;
     if (dx.abs() > 78) {
+      HapticFeedback.lightImpact();
       await _animateTo(dx < 0 ? -480 : 480);
       if (!mounted) return;
       setState(() {
@@ -89,6 +92,7 @@ class _PillCardStackState extends State<PillCardStack>
     } else if (_dragTotalMove < 7) {
       await _animateTo(0);
       if (!mounted) return;
+      HapticFeedback.selectionClick();
       setState(() => _flipped = !_flipped);
     } else {
       await _animateTo(0);
@@ -125,13 +129,30 @@ class _PillCardStackState extends State<PillCardStack>
           '${(widget.index + d + 1).toString().padLeft(2, '0')} / '
           '${widget.deck.length.toString().padLeft(2, '0')}';
 
-      Widget card = PillCard(
-        pill: pill,
-        indexLabel: num,
-        flipped: isTop && _flipped,
-        saved: widget.isSaved(pill.id),
-        onToggleSaved: isTop ? () => widget.onToggleSaved(pill.id) : null,
-      );
+      Widget card = isTop
+          ? FlipCard(
+              showBack: _flipped,
+              front: PillCard(
+                pill: pill,
+                indexLabel: num,
+                flipped: false,
+                saved: widget.isSaved(pill.id),
+                onToggleSaved: () => widget.onToggleSaved(pill.id),
+              ),
+              back: PillCard(
+                pill: pill,
+                indexLabel: num,
+                flipped: true,
+                saved: widget.isSaved(pill.id),
+                onToggleSaved: () => widget.onToggleSaved(pill.id),
+              ),
+            )
+          : PillCard(
+              pill: pill,
+              indexLabel: num,
+              flipped: false,
+              saved: widget.isSaved(pill.id),
+            );
 
       final translateY = isTop ? 0.0 : d * 16.0;
       final scale = isTop ? 1.0 : 1 - d * 0.035;

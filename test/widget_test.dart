@@ -289,6 +289,76 @@ void main() {
     expect(deck, hasLength(5));
   });
 
+  group('Saved list', () {
+    testWidgets('keeps the most recently saved pill first', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const KnowitApp());
+      await _settle(tester);
+
+      // Save the first two pills of the day.
+      final first = find.byIcon(Icons.favorite_border_rounded);
+      await tester.tap(first.first);
+      await _settle(tester);
+      await tester.tap(find.text('Next pill'));
+      await _settle(tester);
+      await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
+      await _settle(tester);
+
+      final prefs = await SharedPreferences.getInstance();
+      final order = prefs.getStringList('knowit.savedIds')!;
+      expect(order, hasLength(2));
+
+      await tester.tap(find.text('Saved').last);
+      await _settle(tester);
+
+      // The list follows that order, newest at the top.
+      final rows = tester
+          .widgetList<Text>(find.byType(Text))
+          .map((t) => t.data)
+          .toList();
+      expect(rows, contains('2 pills'));
+    });
+
+    testWidgets('removing a pill can be undone', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const KnowitApp());
+      await _settle(tester);
+
+      await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
+      await _settle(tester);
+
+      await tester.tap(find.text('Saved').last);
+      await _settle(tester);
+      expect(find.text('1 pill'), findsOneWidget);
+
+      await tester.tap(find.byIcon(Icons.favorite_rounded).first);
+      await _settle(tester);
+      expect(find.text('Removed from saved.'), findsOneWidget);
+      expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
+
+      await tester.tap(find.text('Undo'));
+      await _settle(tester);
+      expect(find.text('1 pill'), findsOneWidget);
+    });
+  });
+
+  testWidgets('tapping a card turns it over to the answer', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    // Three cards are stacked, so three fronts are in the tree.
+    expect(find.text('Tap to reveal'), findsNWidgets(3));
+    expect(find.text('BAR MOVE'), findsNothing);
+
+    await tester.tap(find.text('Tap to reveal').first);
+    await tester.pumpAndSettle();
+
+    // The top card has turned; the two behind it are untouched.
+    expect(find.text('BAR MOVE'), findsOneWidget);
+    expect(find.text('Tap to reveal'), findsNWidgets(2));
+  });
+
   testWidgets('the come-back screen appears after a lapsed streak', (
     tester,
   ) async {

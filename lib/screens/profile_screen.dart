@@ -196,7 +196,6 @@ class ProfileScreen extends StatelessWidget {
                               ? 'Nudge on. Delivery needs the mobile build.'
                               : 'Nudge off.',
                         ),
-                        behavior: SnackBarBehavior.floating,
                       ),
                     );
                   },

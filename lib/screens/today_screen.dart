@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -15,12 +16,33 @@ const _weekdayNames = [
   'Sunday',
 ];
 
-class TodayScreen extends StatelessWidget {
+class TodayScreen extends StatefulWidget {
   final AppState app;
   const TodayScreen({super.key, required this.app});
 
   @override
+  State<TodayScreen> createState() => _TodayScreenState();
+}
+
+class _TodayScreenState extends State<TodayScreen> {
+  bool _celebrated = false;
+
+  /// Finishing the day is the one moment worth marking. Fired after the frame
+  /// so the feedback is a side effect of the state, not of painting.
+  void _markCompletion(bool completed) {
+    if (completed == _celebrated) return;
+    _celebrated = completed;
+    if (!completed) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      HapticFeedback.heavyImpact();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final app = widget.app;
+    _markCompletion(app.todayCompleted);
+
     final deck = app.todaysDeck;
     final index = app.todayIndex;
     final weekday = _weekdayNames[app.today.weekday - 1];
@@ -105,7 +127,9 @@ class TodayScreen extends StatelessWidget {
               children: List.generate(deck.length, (i) {
                 final done = i <= index - 1 || (app.todayCompleted);
                 return Expanded(
-                  child: Container(
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 260 + i * 40),
+                    curve: Curves.easeOut,
                     margin: EdgeInsets.only(
                       right: i == deck.length - 1 ? 0 : 5,
                     ),
@@ -122,15 +146,27 @@ class TodayScreen extends StatelessWidget {
             ),
             const SizedBox(height: 18),
             Expanded(
-              child: app.todayCompleted
-                  ? RecapView(app: app)
-                  : PillCardStack(
-                      deck: deck,
-                      index: index,
-                      onAdvance: () => app.advance(),
-                      isSaved: app.isSaved,
-                      onToggleSaved: (id) => app.toggleSaved(id),
-                    ),
+              child: Center(
+                child: ConstrainedBox(
+                  // On a tall window an uncapped card stretches into a
+                  // column of flat colour; a card should stay a card.
+                  constraints: const BoxConstraints(maxHeight: 620),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 420),
+                    switchInCurve: Curves.easeOutCubic,
+                    child: app.todayCompleted
+                        ? RecapView(key: const ValueKey('recap'), app: app)
+                        : PillCardStack(
+                            key: const ValueKey('deck'),
+                            deck: deck,
+                            index: index,
+                            onAdvance: () => app.advance(),
+                            isSaved: app.isSaved,
+                            onToggleSaved: (id) => app.toggleSaved(id),
+                          ),
+                  ),
+                ),
+              ),
             ),
             if (!app.todayCompleted) ...[
               const SizedBox(height: 14),

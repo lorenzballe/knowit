@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
@@ -200,7 +203,7 @@ class _BackFace extends StatelessWidget {
   }
 }
 
-class _SaveButton extends StatelessWidget {
+class _SaveButton extends StatefulWidget {
   final bool saved;
   final Color ink;
   final VoidCallback onTap;
@@ -213,17 +216,62 @@ class _SaveButton extends StatelessWidget {
   });
 
   @override
+  State<_SaveButton> createState() => _SaveButtonState();
+}
+
+class _SaveButtonState extends State<_SaveButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pop = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 340),
+  );
+
+  @override
+  void didUpdateWidget(covariant _SaveButton old) {
+    super.didUpdateWidget(old);
+    // Only celebrate on the way in, not when the pill is dropped.
+    if (widget.saved && !old.saved) _pop.forward(from: 0);
+  }
+
+  @override
+  void dispose() {
+    _pop.dispose();
+    super.dispose();
+  }
+
+  void _handleTap() {
+    HapticFeedback.mediumImpact();
+    widget.onTap();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: label,
+      label: widget.label,
       child: GestureDetector(
-        onTap: onTap,
+        onTap: _handleTap,
         behavior: HitTestBehavior.opaque,
-        child: Icon(
-          saved ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-          size: 18,
-          color: saved ? ink : ink.withValues(alpha: 0.65),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+          child: AnimatedBuilder(
+            animation: _pop,
+            builder: (context, child) {
+              // Overshoot then settle, so the heart lands with a bit of weight.
+              final t = _pop.value;
+              final scale = 1 + math.sin(t * math.pi) * 0.45;
+              return Transform.scale(scale: scale, child: child);
+            },
+            child: Icon(
+              widget.saved
+                  ? Icons.favorite_rounded
+                  : Icons.favorite_border_rounded,
+              size: 18,
+              color: widget.saved
+                  ? widget.ink
+                  : widget.ink.withValues(alpha: 0.65),
+            ),
+          ),
         ),
       ),
     );

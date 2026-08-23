@@ -20,9 +20,32 @@ class SavedScreen extends StatelessWidget {
     required this.onBackToToday,
   });
 
+  /// Dropping a pill is undoable — the row comes back where it was.
+  Future<void> _unsave(BuildContext context, Pill pill, int at) async {
+    final messenger = ScaffoldMessenger.of(context);
+    await app.toggleSaved(pill.id);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: const Text('Removed from saved.'),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => app.restoreSaved(pill.id, at),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final saved = kPillPool.where((p) => app.isSaved(p.id)).toList();
+    // Most recently kept first, rather than whatever order the pool happens
+    // to be in.
+    final byId = {for (final p in kPillPool) p.id: p};
+    final saved = [
+      for (final id in app.savedIds)
+        if (byId[id] != null) byId[id]!,
+    ];
 
     return SafeArea(
       bottom: false,
@@ -110,7 +133,7 @@ class SavedScreen extends StatelessWidget {
                       separatorBuilder: (_, _) => const SizedBox(height: 10),
                       itemBuilder: (context, i) => _SavedRow(
                         pill: saved[i],
-                        onUnsave: () => app.toggleSaved(saved[i].id),
+                        onUnsave: () => _unsave(context, saved[i], i),
                         onShare: () => requirePlus(
                           context,
                           app,
