@@ -5,7 +5,6 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
-import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import 'recap_view.dart';
 
@@ -83,11 +82,7 @@ class _TodayScreenState extends State<TodayScreen> {
             _ActionRow(
               saved: app.isSaved(pill.id),
               onSave: () => app.toggleSaved(pill.id),
-              onShare: () => requirePlus(
-                context,
-                app,
-                () => showShareSheet(context, pill),
-              ),
+              onShare: () => showShareSheet(context, pill),
               onNext: () => app.advance(),
             ),
           ],

@@ -34,11 +34,14 @@ the end-of-day recap, Saved with its empty state, Profile (stats, daily nudge,
 topic chips), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
-**Knowit+** — the paywall names four perks, and three of them gate real
-screens: the searchable **Archive**, **share as image**, and the **topic
-picker**. On the free plan those entry points carry a lock chip and open the
-paywall instead. The fourth, a second set of five pills a day, is handed over
-from the recap once the first five are done.
+**Knowit+** — three perks, all delivered: the searchable **Archive**, the
+**topic picker**, and a **second set of five pills** handed over from the recap
+once the first five are done. On the free plan the first two carry a lock chip
+and open the paywall instead.
+
+Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
+the only free distribution the app has, so charging for it would mean charging
+readers to advertise it.
 
 ## Project structure
 

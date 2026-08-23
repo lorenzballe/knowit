@@ -134,11 +134,7 @@ class SavedScreen extends StatelessWidget {
                       itemBuilder: (context, i) => _SavedRow(
                         pill: saved[i],
                         onUnsave: () => _unsave(context, saved[i], i),
-                        onShare: () => requirePlus(
-                          context,
-                          app,
-                          () => showShareSheet(context, saved[i]),
-                        ),
+                        onShare: () => showShareSheet(context, saved[i]),
                         onOpen: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (_) =>

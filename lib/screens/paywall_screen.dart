@@ -13,10 +13,6 @@ const _perks = [
     sub: 'Every pill you have ever read, searchable by topic.',
   ),
   (
-    title: 'Share as image',
-    sub: 'Export any card as a clean square for stories.',
-  ),
-  (
     title: 'Pick your own topics',
     sub: 'Weight the mix toward what you actually like.',
   ),

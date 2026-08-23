@@ -182,6 +182,35 @@ void main() {
     });
   });
 
+  testWidgets('sharing is free — it is how the app spreads', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    await tester.tap(find.byIcon(Icons.ios_share_rounded));
+    await _settle(tester);
+
+    // The share sheet, not the paywall.
+    expect(find.text('Share this pill'), findsOneWidget);
+    expect(find.text('Ten pills a day, and nothing gets lost.'), findsNothing);
+  });
+
+  testWidgets('the paywall sells only what it delivers', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    await _openProfile(tester);
+    await tester.tap(find.text('Upgrade'));
+    await _settle(tester);
+
+    expect(find.text('5 extra pills every day'), findsOneWidget);
+    expect(find.text('The full archive'), findsOneWidget);
+    expect(find.text('Pick your own topics'), findsOneWidget);
+    // Sharing left the paywall when it became free.
+    expect(find.text('Share as image'), findsNothing);
+  });
+
   testWidgets('the paywall plan choice rewrites the call to action', (
     tester,
   ) async {

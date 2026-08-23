@@ -33,9 +33,12 @@ class _ShareSheetState extends State<_ShareSheet> {
   final GlobalKey _cardKey = GlobalKey();
   bool _busy = false;
 
+  /// Shared text carries the source and where it came from — a card in
+  /// someone else's chat is the only free distribution this app has.
   String get _shareText =>
       '${widget.pill.question}\n\n${widget.pill.answer}\n\n'
-      '${widget.pill.barMove}\n\nSource: ${widget.pill.source}\n— Knowit';
+      '${widget.pill.barMove}\n\nSource: ${widget.pill.source}\n'
+      '— Knowit · lorenzballe.github.io/knowit';
 
   void _toast(String message) {
     if (!mounted) return;

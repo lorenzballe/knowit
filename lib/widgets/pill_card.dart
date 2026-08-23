@@ -152,34 +152,47 @@ class _BackFace extends StatelessWidget {
                   color: pill.ink.withValues(alpha: 0.92),
                 ),
               ),
-              const SizedBox(height: 18),
-              Container(height: 1, color: pill.ink.withValues(alpha: 0.22)),
-              const SizedBox(height: 16),
-              Text(
-                'BAR MOVE',
-                style: AppText.label(
-                  size: 10.5,
-                  spacing: 1.2,
-                  color: pill.ink.withValues(alpha: 0.6),
+              const SizedBox(height: 20),
+              // The bar move is the reason to open the app at all, so it gets
+              // its own panel rather than a line under a rule.
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.16),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'BAR MOVE',
+                      style: AppText.label(
+                        size: 10.5,
+                        spacing: 1.2,
+                        color: pill.ink.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      pill.barMove,
+                      style: AppText.body(
+                        size: 14.5,
+                        weight: FontWeight.w500,
+                        height: 1.4,
+                        color: pill.ink,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 6),
-              Text(
-                pill.barMove,
-                style: AppText.body(
-                  size: 15,
-                  weight: FontWeight.w500,
-                  height: 1.35,
-                  color: pill.ink,
-                ),
-              ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 13),
               Text(
                 'Source · ${pill.source}',
                 style: AppText.body(
-                  size: 12,
+                  size: 11.5,
                   weight: FontWeight.w400,
-                  color: pill.ink.withValues(alpha: 0.55),
+                  color: pill.ink.withValues(alpha: 0.6),
                 ),
               ),
             ],

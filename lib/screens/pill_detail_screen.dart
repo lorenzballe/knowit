@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
 
@@ -54,11 +53,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                       label: 'Share this pill',
                       icon: Icons.ios_share_rounded,
                       color: AppColors.ink,
-                      onTap: () => requirePlus(
-                        context,
-                        widget.app,
-                        () => showShareSheet(context, pill),
-                      ),
+                      onTap: () => showShareSheet(context, pill),
                     ),
                   ],
                 ),
