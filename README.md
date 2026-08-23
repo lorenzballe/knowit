@@ -142,8 +142,25 @@ about, and ungraded answers stay out of the buckets.
 - **What the other side says** — on a debate, the strongest case against
   whichever side you took.
 
-A day is dealt easiest-first, so it opens on something light and works up
-rather than starting on a hard competition problem.
+## The shape of a day
+
+Sorting the day by difficulty looked sensible and was not. Facts are easy and
+anything that asks is not, so every day came out as all the reading first and
+then a pile of work at the end, when attention is lowest.
+
+A day is now arranged rather than sorted:
+
+- it opens on something to read, so there is no cost to starting;
+- reading and answering alternate, so attention is not spent three cards in a
+  row and then asked for twice;
+- the hardest card lands early, while there is attention to spend on it;
+- a debate closes, because it is the one card meant to be carried away rather
+  than finished.
+
+There is also a floor on how much of a day asks something. Everything that
+asks lives under one topic, and a deck that takes one card per topic was
+dealing four facts and a single puzzle — an app that trains reasoning cannot
+be four fifths reading.
 
 ## Project structure
 

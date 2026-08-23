@@ -363,15 +363,125 @@ void main() {
     });
   });
 
-  test('a day opens on its easiest card', () {
-    final deck = pillsForDate(DateTime(2026, 3, 4));
-    for (var i = 1; i < deck.length; i++) {
-      expect(
-        deck[i].difficulty.index,
-        greaterThanOrEqualTo(deck[i - 1].difficulty.index),
-        reason: 'the day gets harder, never easier',
-      );
-    }
+  group('The shape of a day', () {
+    Pill fact(String id, Difficulty d) => Pill(
+      id: id,
+      topic: 'Test',
+      color: const Color(0xFF000000),
+      ink: const Color(0xFFFFFFFF),
+      tint: const Color(0xFFFFFFFF),
+      question: 'q?',
+      answer: 'a',
+      barMove: 'b',
+      source: 's',
+      difficulty: d,
+    );
+
+    Pill asks(String id, Difficulty d, Challenge c) => Pill(
+      id: id,
+      topic: 'Test',
+      color: const Color(0xFF000000),
+      ink: const Color(0xFFFFFFFF),
+      tint: const Color(0xFFFFFFFF),
+      question: 'q?',
+      answer: 'a',
+      barMove: 'b',
+      source: 's',
+      challenge: c,
+      difficulty: d,
+    );
+
+    const pick = PickOne(options: ['a', 'b'], correct: 0);
+    const side = TakeASide(positions: ['yes', 'no']);
+
+    test('reading and answering alternate', () {
+      final day = arrangeDay([
+        fact('f1', Difficulty.easy),
+        fact('f2', Difficulty.easy),
+        fact('f3', Difficulty.easy),
+        asks('p1', Difficulty.medium, pick),
+        asks('p2', Difficulty.medium, pick),
+      ]);
+
+      expect(day.first.asksSomething, isFalse, reason: 'opens on a read');
+      for (var i = 1; i < day.length; i++) {
+        expect(
+          day[i].asksSomething == day[i - 1].asksSomething,
+          isFalse,
+          reason: 'two of the same kind in a row at $i',
+        );
+      }
+    });
+
+    test('the hardest card is not saved for last', () {
+      final day = arrangeDay([
+        fact('f1', Difficulty.easy),
+        fact('f2', Difficulty.easy),
+        fact('f3', Difficulty.easy),
+        asks('easy', Difficulty.easy, pick),
+        asks('hard', Difficulty.hard, pick),
+      ]);
+
+      expect(day.last.id, isNot('hard'));
+      // It lands early, while there is attention to spend on it.
+      expect(day.indexWhere((p) => p.id == 'hard'), lessThan(3));
+    });
+
+    test('a debate closes the day', () {
+      final day = arrangeDay([
+        fact('f1', Difficulty.easy),
+        fact('f2', Difficulty.easy),
+        asks('p1', Difficulty.medium, pick),
+        asks('hard', Difficulty.hard, pick),
+        asks('debate', Difficulty.medium, side),
+      ]);
+
+      expect(day.last.id, 'debate');
+    });
+
+    test('it copes when a day is all of one kind', () {
+      final allReads = arrangeDay([
+        fact('f1', Difficulty.easy),
+        fact('f2', Difficulty.easy),
+        fact('f3', Difficulty.easy),
+      ]);
+      expect(allReads, hasLength(3));
+
+      final allAsks = arrangeDay([
+        asks('p1', Difficulty.easy, pick),
+        asks('p2', Difficulty.medium, pick),
+        asks('p3', Difficulty.hard, pick),
+      ]);
+      expect(allAsks, hasLength(3));
+      expect(allAsks.map((p) => p.id), containsAll(['p1', 'p2', 'p3']));
+    });
+
+    test('a real day keeps every card it was dealt', () {
+      final deck = pillsForDate(DateTime(2026, 3, 4));
+      expect(deck, hasLength(5));
+      expect(deck.map((p) => p.id).toSet(), hasLength(5));
+    });
+
+    test('a real day always asks something, not just tells', () {
+      // Everything that asks lives under one topic, and a deck that takes
+      // one card per topic used to deal four facts and a single puzzle.
+      final seen = <String>{};
+      for (var day = 1; day <= 8; day++) {
+        final deck = pillsForDate(DateTime(2026, 3, day), exclude: seen);
+        final asking = deck.where((p) => p.asksSomething).length;
+        expect(
+          asking,
+          greaterThanOrEqualTo(2),
+          reason: 'day \$day only asked \$asking times',
+        );
+        seen.addAll(deck.map((p) => p.id));
+      }
+    });
+
+    test('a reader with no asking topics still gets a full day', () {
+      final deck = pillsForDate(DateTime(2026, 3, 4), topics: {'space'});
+      expect(deck, hasLength(5));
+    });
   });
 
   test('a day never deals a pill already read', () {
