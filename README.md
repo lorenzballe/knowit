@@ -101,11 +101,24 @@ could be reached without ever guessing. Getting it wrong on purpose is the part
 that teaches, so the reveal names the trap before it explains. Your first
 answer stands.
 
+## What you got wrong comes back
+
+An app that never re-asks what you missed is entertaining, not teaching.
+Every graded answer schedules the card to return: wrong knocks it to the
+bottom of a ladder — **2 days, 7, 21** — right moves it up one, and past the
+top it retires. Two of the five cards a day are given over to cards coming
+back, marked **AGAIN** so a repeat reads as deliberate. A card that has come
+back has to be answered again; tapping will not open a reveal the reader has
+to re-earn. Debates never return: there is nothing to get right.
+
 ## Calibration
 
 After committing to a graded answer the card asks one more thing: how sure
-are you? Five levels, 50 to 90. The profile then reports the only number in
-the app that says something about the reader rather than the cards —
+are you? Five levels, 50 to 90. Each of those is appended to a judgement log
+that is never rewritten — calibration is a track record, so answering a card
+again months later is another data point, not a correction of the first. The
+profile reports the only number in the app that says something about the
+reader rather than the cards —
 
 > You are overconfident by 17 points
 

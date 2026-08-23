@@ -16,6 +16,9 @@ class PillCard extends StatelessWidget {
   final Answer? given;
   final void Function(String response, int? confidence)? onAnswer;
 
+  /// True when this card is in today's deck because it came back.
+  final bool isReview;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -23,6 +26,7 @@ class PillCard extends StatelessWidget {
     required this.flipped,
     this.given,
     this.onAnswer,
+    this.isReview = false,
   });
 
   @override
@@ -46,13 +50,38 @@ class PillCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                pill.topic.toUpperCase(),
-                style: AppText.label(
-                  size: 11,
-                  spacing: 1.4,
-                  color: pill.ink.withValues(alpha: 0.72),
-                ),
+              Row(
+                children: [
+                  Text(
+                    pill.topic.toUpperCase(),
+                    style: AppText.label(
+                      size: 11,
+                      spacing: 1.4,
+                      color: pill.ink.withValues(alpha: 0.72),
+                    ),
+                  ),
+                  if (isReview) ...[
+                    const SizedBox(width: 9),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
+                      decoration: BoxDecoration(
+                        color: pill.wash,
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Text(
+                        'AGAIN',
+                        style: AppText.label(
+                          size: 9.5,
+                          spacing: 1,
+                          color: pill.ink.withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
               Text(
                 indexLabel,

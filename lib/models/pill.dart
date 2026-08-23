@@ -138,11 +138,34 @@ class Answer {
   final String response;
   final int? confidence;
 
-  const Answer(this.response, {this.confidence});
+  /// How far up the review ladder this card has climbed. A wrong answer
+  /// knocks it back to the bottom.
+  final int stage;
+
+  /// The day this card comes back, as a date key. Null once it has been
+  /// answered right often enough to retire.
+  final String? dueOn;
+
+  const Answer(this.response, {this.confidence, this.stage = 0, this.dueOn});
+
+  Answer copyWith({
+    String? response,
+    int? confidence,
+    int? stage,
+    String? dueOn,
+    bool clearDue = false,
+  }) => Answer(
+    response ?? this.response,
+    confidence: confidence ?? this.confidence,
+    stage: stage ?? this.stage,
+    dueOn: clearDue ? null : (dueOn ?? this.dueOn),
+  );
 
   Map<String, dynamic> toJson() => {
     'r': response,
     if (confidence != null) 'c': confidence,
+    if (stage != 0) 's': stage,
+    if (dueOn != null) 'd': dueOn,
   };
 
   static Answer? fromJson(Object? raw) {
@@ -150,9 +173,42 @@ class Answer {
     final response = raw['r'];
     if (response is! String) return null;
     final confidence = raw['c'];
-    return Answer(response, confidence: confidence is int ? confidence : null);
+    final stage = raw['s'];
+    final due = raw['d'];
+    return Answer(
+      response,
+      confidence: confidence is int ? confidence : null,
+      stage: stage is int ? stage : 0,
+      dueOn: due is String ? due : null,
+    );
   }
 }
+
+/// One judgement the reader made, kept for as long as the app lives.
+///
+/// Calibration is a track record, not a property of a card: answering the
+/// same card again months later is another data point, not a correction of
+/// the first. So judgements are appended, never rewritten.
+class Judgement {
+  final int confidence;
+  final bool correct;
+
+  const Judgement(this.confidence, {required this.correct});
+
+  Map<String, dynamic> toJson() => {'c': confidence, 'k': correct};
+
+  static Judgement? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final confidence = raw['c'];
+    final correct = raw['k'];
+    if (confidence is! int || correct is! bool) return null;
+    return Judgement(confidence, correct: correct);
+  }
+}
+
+/// How long a card waits before it comes back, once it has been got right
+/// that many times in a row. Past the end of the ladder it retires.
+const List<int> kReviewLadder = [2, 7, 21];
 
 /// The confidence levels the app offers. Five is enough to see a pattern
 /// without turning every card into a form.

@@ -146,12 +146,7 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(width: 10),
               _Stat(value: '${app.pillsRead}', label: 'pills read'),
               const SizedBox(width: 10),
-              _Stat(
-                value: app.puzzlesAnswered == 0
-                    ? '—'
-                    : '${app.puzzlesRight}/${app.puzzlesAnswered}',
-                label: 'puzzles right',
-              ),
+              _Stat(value: '${app.dueReviews.length}', label: 'coming back'),
             ],
           ),
           if (app.calibratedAnswers > 0) ...[

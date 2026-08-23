@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
               const _FannedCards(),
               const SizedBox(height: 26),
               Text(
-                'Five things worth saying out loud.',
+                'Five a day. Some you read, some you have to answer.',
                 style: AppText.display(
                   size: 34,
                   weight: FontWeight.w700,
@@ -50,9 +50,10 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 11),
               Text(
-                'Every morning, five short pills across twelve topics. '
-                'Written fresh, checked against a source, and built to '
-                'survive a conversation at the bar.',
+                'Facts worth repeating, and puzzles that catch you out. You '
+                'answer before you see the answer, and say how sure you are '
+                '— so the app can show you not just what you know, but how '
+                'well you know it.',
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
@@ -81,7 +82,7 @@ class _FannedCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 288,
+      height: 254,
       child: Stack(
         children: [
           Positioned(

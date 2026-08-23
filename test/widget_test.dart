@@ -53,7 +53,10 @@ void main() {
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    expect(find.text('Five things worth saying out loud.'), findsOneWidget);
+    expect(
+      find.text('Five a day. Some you read, some you have to answer.'),
+      findsOneWidget,
+    );
     expect(find.text('Get my first five'), findsOneWidget);
   });
 
@@ -448,7 +451,11 @@ void main() {
   });
 
   group('The card', () {
-    Widget host(List<Pill> deck, Map<String, Answer> given) {
+    Widget host(
+      List<Pill> deck,
+      Map<String, Answer> given, {
+      Set<String> reviews = const {},
+    }) {
       return MaterialApp(
         theme: buildKnowitTheme(),
         home: Scaffold(
@@ -460,6 +467,7 @@ void main() {
               index: 0,
               onAdvance: () {},
               answerFor: (id) => given[id],
+              reviewIds: reviews,
               onAnswer: (id, response, confidence) =>
                   given[id] = Answer(response, confidence: confidence),
             ),
@@ -686,7 +694,7 @@ void main() {
 
       // Every step, not just pill.answer — which is the last one.
       for (final step in pill.steps) {
-        expect(find.text(step), findsOneWidget, reason: 'missing: \$step');
+        expect(find.text(step), findsOneWidget, reason: 'missing: $step');
       }
       expect(find.text(pill.barMove), findsOneWidget);
     });
@@ -711,6 +719,101 @@ void main() {
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
       expect(find.text(pill.counterpoint), findsOneWidget);
+    });
+  });
+
+  group('Review', () {
+    test('a wrong answer comes back, a right one moves up the ladder',
+        () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final challenge = pill.challenge as PickOne;
+      final wrong = challenge.correct == 0 ? 1 : 0;
+
+      await app.recordAnswer(pill.id, '$wrong', confidence: 90);
+      final missed = app.answerFor(pill.id)!;
+      expect(missed.stage, 0);
+      // Bottom of the ladder: back in two days.
+      expect(
+        missed.dueOn,
+        dateKey(app.today.add(Duration(days: kReviewLadder[0]))),
+      );
+
+      // Not due yet, so it cannot be answered again.
+      expect(app.isDueForReview(pill.id), isFalse);
+      await app.recordAnswer(pill.id, '${challenge.correct}');
+      expect(app.answerFor(pill.id)!.response, '$wrong');
+    });
+
+    test('a card retires once it is up the whole ladder', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final right = '${(pill.challenge as PickOne).correct}';
+
+      var answer = app.answerFor(pill.id);
+      for (var i = 0; i < kReviewLadder.length; i++) {
+        // Force it due, then get it right again.
+        if (answer != null) {
+          app.answers[pill.id] = answer.copyWith(dueOn: dateKey(app.today));
+        }
+        await app.recordAnswer(pill.id, right, confidence: 80);
+        answer = app.answerFor(pill.id);
+        expect(answer!.stage, i + 1);
+      }
+      // Past the top of the ladder there is nothing left to schedule.
+      expect(answer!.dueOn, isNull);
+      expect(app.dueReviews, isEmpty);
+    });
+
+    test('an opinion never comes back', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      await app.recordAnswer(debate.id, '0');
+
+      expect(app.answerFor(debate.id)!.dueOn, isNull);
+      expect(app.dueReviews, isEmpty);
+    });
+
+    testWidgets('a card that came back has to be answered again', (
+      tester,
+    ) async {
+      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final given = <String, Answer>{pill.id: const Answer('0')};
+
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildKnowitTheme(),
+          home: Scaffold(
+            body: SizedBox(
+              height: 640,
+              child: PillCardStack(
+                deck: [pill],
+                index: 0,
+                onAdvance: () {},
+                reviewIds: {pill.id},
+                answerFor: (id) => given[id],
+                onAnswer: (id, r, c) => given[id] = Answer(r, confidence: c),
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Tapping must not open an answer the reader has to re-earn.
+      await tester.tap(find.text(pill.question));
+      await tester.pumpAndSettle();
+      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('AGAIN'), findsOneWidget);
     });
   });
 

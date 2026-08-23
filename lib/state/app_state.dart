@@ -31,6 +31,7 @@ class AppState extends ChangeNotifier {
   static const _kDeckIds = 'knowit.todayDeckIds';
   static const _kExtraOpen = 'knowit.extraSetDate';
   static const _kAnswers = 'knowit.answersJson';
+  static const _kJudgements = 'knowit.judgements';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -51,8 +52,15 @@ class AppState extends ChangeNotifier {
   /// True once the Knowit+ second set has been unlocked today.
   bool extraSetOpen = false;
 
-  /// Card id -> what the reader committed to, and how sure they were.
+  /// Which of today's cards are here because they came back.
+  Set<String> reviewIdsToday = {};
+
+  /// Card id -> what the reader last committed to, and when it comes back.
   Map<String, Answer> answers = {};
+
+  /// Every judgement ever made, oldest first. Calibration is a track record,
+  /// so this is appended to and never rewritten.
+  List<Judgement> judgements = [];
 
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
@@ -119,6 +127,7 @@ class AppState extends ChangeNotifier {
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
+    judgements = _decodeJudgements(_prefs.getString(_kJudgements));
 
     final storedDay = _prefs.getString(_kTodayDate);
     final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
@@ -127,20 +136,38 @@ class AppState extends ChangeNotifier {
       // shuffle under the reader as their history grows.
       todaysDeck = pillsByIds(storedDeck);
       todayIndex = _prefs.getInt(_kTodayIndex) ?? 0;
+      reviewIdsToday = {
+        for (final p in todaysDeck)
+          if (answers.containsKey(p.id)) p.id,
+      };
       if (todaysDeck.isEmpty) await _startNewDay();
     } else {
       await _startNewDay();
     }
   }
 
+  /// How much of a day is given over to cards coming back. Two out of five
+  /// keeps the day feeling new while still closing the loop on mistakes.
+  static const int kReviewsPerDay = 2;
+
   /// Deals a fresh day and records it, so a restart resumes the same deck.
+  ///
+  /// Cards that have come round again take the first slots, and fresh ones
+  /// fill the rest — an app that never re-asks what you got wrong is not
+  /// teaching, it is entertaining.
   Future<void> _startNewDay() async {
+    final size = extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay;
+    final reviews = dueReviews.take(kReviewsPerDay).toList();
+    reviewIdsToday = reviews.map((p) => p.id).toSet();
+
     todaysDeck = pillsForDate(
       today,
       topics: pickedTopics,
-      exclude: seenIds,
-      count: extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay,
+      exclude: {...seenIds, ...reviews.map((p) => p.id)},
+      count: size - reviews.length,
     );
+    todaysDeck = [...reviews, ...todaysDeck];
+    todaysDeck.sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
     todayIndex = 0;
     await _prefs.setString(_kTodayDate, dateKey(today));
     await _prefs.setInt(_kTodayIndex, 0);
@@ -222,13 +249,7 @@ class AppState extends ChangeNotifier {
   // ── Answers ───────────────────────────────────────────────────────────
 
   static Map<String, Answer> _decodeAnswers(String? raw) {
-    if (raw == null || raw.isEmpty) return {};
-    Object? parsed;
-    try {
-      parsed = jsonDecode(raw);
-    } on FormatException {
-      return {};
-    }
+    final parsed = _decodeJson(raw);
     if (parsed is! Map) return {};
     final out = <String, Answer>{};
     for (final entry in parsed.entries) {
@@ -238,18 +259,36 @@ class AppState extends ChangeNotifier {
     return out;
   }
 
+  static List<Judgement> _decodeJudgements(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! List) return [];
+    return [for (final item in parsed) ?Judgement.fromJson(item)];
+  }
+
+  static Object? _decodeJson(String? raw) {
+    if (raw == null || raw.isEmpty) return null;
+    try {
+      return jsonDecode(raw);
+    } on FormatException {
+      return null;
+    }
+  }
+
   Future<void> _saveAnswers() async {
     await _prefs.setString(
       _kAnswers,
       jsonEncode({for (final e in answers.entries) e.key: e.value.toJson()}),
     );
+    await _prefs.setString(
+      _kJudgements,
+      jsonEncode([for (final j in judgements) j.toJson()]),
+    );
   }
 
-  /// What the reader committed to on this card, or null if they have not.
+  /// What the reader last committed to on this card, or null if never.
   Answer? answerFor(String pillId) => answers[pillId];
 
-  /// Only cards that can be right or wrong count. A debate card asks for an
-  /// opinion, and an opinion is not a score.
+  /// Cards answered, paired with the pill, for the ones that can be marked.
   Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
       final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
@@ -273,17 +312,77 @@ class AppState extends ChangeNotifier {
   double get puzzleAccuracy =>
       puzzlesAnswered == 0 ? 0 : puzzlesRight / puzzlesAnswered;
 
-  /// Records a commitment. The first answer is the one that stands — meeting
-  /// a card again should not let the score be retaken.
+  /// Records a commitment.
+  ///
+  /// A card can be answered again only when it has come back for review —
+  /// otherwise the first answer stands, so a score cannot be retaken by
+  /// reopening a card from the archive.
   Future<void> recordAnswer(
     String pillId,
     String response, {
     int? confidence,
   }) async {
-    if (answers.containsKey(pillId)) return;
-    answers[pillId] = Answer(response, confidence: confidence);
+    final existing = answers[pillId];
+    if (existing != null && !isDueForReview(pillId)) return;
+
+    final pill = kPillPool.where((p) => p.id == pillId).firstOrNull;
+    final graded = pill?.isGraded ?? false;
+    final right = graded && (pill?.challenge.accepts(response) ?? false);
+
+    answers[pillId] = _scheduled(
+      Answer(response, confidence: confidence),
+      graded: graded,
+      right: right,
+      previous: existing,
+    );
+
+    if (graded && confidence != null) {
+      judgements.add(Judgement(confidence, correct: right));
+    }
+
     await _saveAnswers();
     notifyListeners();
+  }
+
+  // ── Review ────────────────────────────────────────────────────────────
+
+  /// Works out when this card should come back.
+  ///
+  /// Wrong knocks it to the bottom of the ladder; right moves it up one, and
+  /// past the top it retires. Ungraded cards never come back: there is
+  /// nothing to get right.
+  Answer _scheduled(
+    Answer answer, {
+    required bool graded,
+    required bool right,
+    Answer? previous,
+  }) {
+    if (!graded) return answer;
+
+    final stage = right ? (previous?.stage ?? 0) + 1 : 0;
+    if (stage >= kReviewLadder.length) {
+      return answer.copyWith(stage: stage, clearDue: true);
+    }
+    final due = today.add(Duration(days: kReviewLadder[stage]));
+    return answer.copyWith(stage: stage, dueOn: dateKey(due));
+  }
+
+  bool isDueForReview(String pillId) {
+    final due = answers[pillId]?.dueOn;
+    if (due == null) return false;
+    return due.compareTo(dateKey(today)) <= 0;
+  }
+
+  /// The cards waiting to come back, oldest due first.
+  List<Pill> get dueReviews {
+    final due = <MapEntry<String, Pill>>[];
+    for (final e in answers.entries) {
+      if (!isDueForReview(e.key)) continue;
+      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      if (pill != null) due.add(MapEntry(e.value.dueOn!, pill));
+    }
+    due.sort((a, b) => a.key.compareTo(b.key));
+    return [for (final e in due) e.value];
   }
 
   // ── Calibration ───────────────────────────────────────────────────────
@@ -293,33 +392,29 @@ class AppState extends ChangeNotifier {
     for (final level in kConfidenceLevels) {
       var count = 0;
       var right = 0;
-      for (final e in _graded) {
-        if (e.value.confidence != level) continue;
+      for (final j in judgements) {
+        if (j.confidence != level) continue;
         count++;
-        if (e.key.challenge.accepts(e.value.response)) right++;
+        if (j.correct) right++;
       }
       if (count > 0) yield CalibrationBucket(level, count, right);
     }
   }
 
-  int get calibratedAnswers =>
-      _graded.where((e) => e.value.confidence != null).length;
+  int get calibratedAnswers => judgements.length;
 
   /// How far the reader's confidence sits from their accuracy, in points.
   /// Positive means overconfident — the usual direction.
   double? get overconfidence {
+    if (judgements.isEmpty) return null;
     var claimed = 0.0;
     var right = 0;
-    var count = 0;
-    for (final e in _graded) {
-      final said = e.value.confidence;
-      if (said == null) continue;
-      claimed += said;
-      if (e.key.challenge.accepts(e.value.response)) right++;
-      count++;
+    for (final j in judgements) {
+      claimed += j.confidence;
+      if (j.correct) right++;
     }
-    if (count == 0) return null;
-    return (claimed / count) - (right / count * 100);
+    final n = judgements.length;
+    return (claimed / n) - (right / n * 100);
   }
 
   bool isSaved(String pillId) => savedIds.contains(pillId);
@@ -435,7 +530,9 @@ class AppState extends ChangeNotifier {
     isPlus = false;
     seenIds = {};
     extraSetOpen = false;
+    reviewIdsToday = {};
     answers = {};
+    judgements = [];
     await _startNewDay();
     notifyListeners();
   }

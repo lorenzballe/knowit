@@ -19,6 +19,9 @@ class PillCardStack extends StatefulWidget {
   final Answer? Function(String id) answerFor;
   final void Function(String id, String response, int? confidence) onAnswer;
 
+  /// Which of these cards are back for another go.
+  final Set<String> reviewIds;
+
   const PillCardStack({
     super.key,
     required this.deck,
@@ -26,6 +29,7 @@ class PillCardStack extends StatefulWidget {
     required this.onAdvance,
     required this.answerFor,
     required this.onAnswer,
+    required this.reviewIds,
   });
 
   @override
@@ -39,6 +43,10 @@ class _PillCardStackState extends State<PillCardStack>
   bool _dragging = false;
   double _dragTotalMove = 0;
   bool _flipped = false;
+
+  /// True once the reader has committed to the card on screen, so a review
+  /// can be turned back and forth after it has been answered again.
+  bool _answeredHere = false;
 
   @override
   void initState() {
@@ -55,6 +63,7 @@ class _PillCardStackState extends State<PillCardStack>
     if (old.index != widget.index) {
       _dx = 0;
       _flipped = false;
+      _answeredHere = false;
     }
   }
 
@@ -95,10 +104,14 @@ class _PillCardStackState extends State<PillCardStack>
     } else if (_dragTotalMove < 7) {
       await _animateTo(0);
       if (!mounted) return;
-      // A puzzle turns over when the reader commits, not on a stray tap —
-      // otherwise the answer can be reached without ever guessing.
+      // A card that asks turns over when the reader commits, not on a stray
+      // tap — otherwise the answer can be reached without ever guessing. A
+      // card that has come back has an answer already, so it must be asked
+      // again rather than opened for free.
       final top = widget.deck[widget.index];
-      if (top.asksSomething && widget.answerFor(top.id) == null) return;
+      final mustAnswer =
+          widget.answerFor(top.id) == null || widget.reviewIds.contains(top.id);
+      if (top.asksSomething && mustAnswer && !_answeredHere) return;
       HapticFeedback.selectionClick();
       setState(() => _flipped = !_flipped);
     } else {
@@ -145,21 +158,31 @@ class _PillCardStackState extends State<PillCardStack>
                 pill: pill,
                 indexLabel: num,
                 flipped: false,
+                isReview: widget.reviewIds.contains(pill.id),
                 given: given,
                 onAnswer: (response, confidence) {
                   HapticFeedback.mediumImpact();
                   widget.onAnswer(pill.id, response, confidence);
-                  setState(() => _flipped = true);
+                  setState(() {
+                    _answeredHere = true;
+                    _flipped = true;
+                  });
                 },
               ),
               back: PillCard(
                 pill: pill,
                 indexLabel: num,
                 flipped: true,
+                isReview: widget.reviewIds.contains(pill.id),
                 given: given,
               ),
             )
-          : PillCard(pill: pill, indexLabel: num, flipped: false);
+          : PillCard(
+              pill: pill,
+              indexLabel: num,
+              flipped: false,
+              isReview: widget.reviewIds.contains(pill.id),
+            );
 
       final translateY = isTop ? 0.0 : d * 16.0;
       final scale = isTop ? 1.0 : 1 - d * 0.035;
