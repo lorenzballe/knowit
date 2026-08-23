@@ -57,14 +57,14 @@ class ComebackScreen extends StatelessWidget {
     final favourite = _favouriteTopic;
 
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: FlexPage(
           padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Eyebrow('Streak reset', color: AppColors.red),
+              Eyebrow('Streak reset', color: context.p.alert),
               const SizedBox(height: 11),
               Text(
                 missed == 1
@@ -75,7 +75,7 @@ class ComebackScreen extends StatelessWidget {
                   weight: FontWeight.w700,
                   height: 1.05,
                   spacing: -1.5,
-                  color: AppColors.ink,
+                  color: context.p.ink,
                 ),
               ),
               const SizedBox(height: 11),
@@ -88,14 +88,14 @@ class ComebackScreen extends StatelessWidget {
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
-                  color: Colors.black.withValues(alpha: 0.55),
+                  color: context.p.inkMuted,
                 ),
               ),
               const SizedBox(height: 24),
               WeekStrip(
                 week: app.weekCompletion(),
                 onColor: AppColors.lime,
-                offColor: Colors.black.withValues(alpha: 0.07),
+                offColor: context.p.line,
               ),
               const SizedBox(height: 24),
               PaperCard(
@@ -107,13 +107,13 @@ class ComebackScreen extends StatelessWidget {
                     const Eyebrow('While you were away'),
                     const SizedBox(height: 14),
                     _MissedLine(
-                      color: AppColors.red,
+                      color: context.p.alert,
                       text: '$unread pill${unread == 1 ? '' : 's'} went unread',
                     ),
                     if (favourite != null) ...[
                       const SizedBox(height: 11),
                       _MissedLine(
-                        color: AppColors.blue,
+                        color: context.p.link,
                         text: '$favourite is still your most kept topic',
                       ),
                     ],
@@ -165,7 +165,7 @@ class _MissedLine extends StatelessWidget {
               size: 13.5,
               weight: FontWeight.w500,
               height: 1.35,
-              color: AppColors.ink,
+              color: context.p.ink,
             ),
           ),
         ),

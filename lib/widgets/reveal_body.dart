@@ -38,14 +38,16 @@ class RevealBody extends StatefulWidget {
     washEdge: pill.washEdge,
   );
 
-  /// The version that sits on paper.
-  factory RevealBody.onPaper(Pill pill, {Key? key}) => RevealBody(
-    key: key,
-    pill: pill,
-    ink: AppColors.ink,
-    wash: Colors.black.withValues(alpha: 0.05),
-    washEdge: Colors.black.withValues(alpha: 0.08),
-  );
+  /// The version that sits on the page rather than on a card, so it takes
+  /// its colours from the palette in force.
+  factory RevealBody.onPage(Pill pill, Palette palette, {Key? key}) =>
+      RevealBody(
+        key: key,
+        pill: pill,
+        ink: palette.ink,
+        wash: palette.line,
+        washEdge: palette.lineStrong,
+      );
 
   @override
   State<RevealBody> createState() => _RevealBodyState();

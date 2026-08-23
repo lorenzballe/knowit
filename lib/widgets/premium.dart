@@ -36,13 +36,13 @@ class PlusLock extends StatelessWidget {
       margin: const EdgeInsets.only(left: 8),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
       decoration: BoxDecoration(
-        color: AppColors.blue.withValues(alpha: 0.12),
+        color: context.p.link.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.lock_rounded, size: 10, color: AppColors.blue),
+          Icon(Icons.lock_rounded, size: 10, color: context.p.link),
           const SizedBox(width: 4),
           Text(
             'Knowit+',
@@ -50,7 +50,7 @@ class PlusLock extends StatelessWidget {
               size: 9,
               weight: FontWeight.w600,
               spacing: 0.6,
-              color: AppColors.blue,
+              color: context.p.link,
             ),
           ),
         ],

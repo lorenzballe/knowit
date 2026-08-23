@@ -11,17 +11,7 @@ import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
 
-void main() {
-  // Dark status-bar icons: every screen the bar sits over is light.
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-    ),
-  );
-  runApp(const KnowitApp());
-}
+void main() => runApp(const KnowitApp());
 
 /// On the web a list should follow the mouse the way it follows a finger.
 class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
@@ -36,16 +26,45 @@ class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
   };
 }
 
-class KnowitApp extends StatelessWidget {
+/// Owns the stored state, because the theme is part of it and has to be
+/// known above MaterialApp — otherwise the choice could only repaint the
+/// screen that made it.
+class KnowitApp extends StatefulWidget {
   const KnowitApp({super.key});
+
+  @override
+  State<KnowitApp> createState() => _KnowitAppState();
+}
+
+class _KnowitAppState extends State<KnowitApp> {
+  final AppState _app = AppState();
+
+  @override
+  void initState() {
+    super.initState();
+    _app.addListener(_onChanged);
+    _app.init();
+  }
+
+  void _onChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _app.removeListener(_onChanged);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Knowit',
       debugShowCheckedModeBanner: false,
-      theme: buildKnowitTheme(),
-      home: const KnowitRoot(),
+      theme: buildKnowitTheme(Brightness.light),
+      darkTheme: buildKnowitTheme(Brightness.dark),
+      themeMode: _app.themeMode,
+      home: KnowitRoot(app: _app),
       scrollBehavior: const _DragAnywhereScrollBehavior(),
       builder: (context, child) => _PhoneFrame(child: child),
     );
@@ -68,7 +87,7 @@ class _PhoneFrame extends StatelessWidget {
     if (width <= _maxWidth) return content;
 
     return ColoredBox(
-      color: AppColors.bg,
+      color: context.p.surface,
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: _maxWidth),
@@ -76,9 +95,7 @@ class _PhoneFrame extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 border: Border.symmetric(
-                  vertical: BorderSide(
-                    color: Colors.black.withValues(alpha: 0.06),
-                  ),
+                  vertical: BorderSide(color: context.p.line),
                 ),
               ),
               child: content,
@@ -95,14 +112,15 @@ class _PhoneFrame extends StatelessWidget {
 enum _Stage { welcome, signIn, comeback, shell }
 
 class KnowitRoot extends StatefulWidget {
-  const KnowitRoot({super.key});
+  final AppState app;
+  const KnowitRoot({super.key, required this.app});
 
   @override
   State<KnowitRoot> createState() => _KnowitRootState();
 }
 
 class _KnowitRootState extends State<KnowitRoot> {
-  final AppState _app = AppState();
+  AppState get _app => widget.app;
   _Stage _stage = _Stage.welcome;
   bool _stageResolved = false;
 
@@ -110,7 +128,7 @@ class _KnowitRootState extends State<KnowitRoot> {
   void initState() {
     super.initState();
     _app.addListener(_onAppStateChanged);
-    _app.init();
+    if (_app.ready) _onAppStateChanged();
   }
 
   void _onAppStateChanged() {
@@ -214,7 +232,7 @@ class _Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -225,7 +243,7 @@ class _Splash extends StatelessWidget {
                 size: 30,
                 weight: FontWeight.w700,
                 spacing: -1,
-                color: AppColors.ink,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 18),
@@ -234,7 +252,7 @@ class _Splash extends StatelessWidget {
               height: 26,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                color: AppColors.ink.withValues(alpha: 0.35),
+                color: context.p.ink.withValues(alpha: 0.35),
               ),
             ),
           ],
@@ -257,9 +275,6 @@ class KnowitShell extends StatefulWidget {
 class _KnowitShellState extends State<KnowitShell> {
   int _tab = 0;
 
-  /// Today is the full-bleed dark screen; the other two sit on paper.
-  bool get _dark => _tab == 0;
-
   @override
   Widget build(BuildContext context) {
     final screens = [
@@ -271,29 +286,22 @@ class _KnowitShellState extends State<KnowitShell> {
       ProfileScreen(app: widget.app, onSignedOut: widget.onSignedOut),
     ];
 
+    // The status bar follows the one palette, like everything else.
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: _dark
-          ? SystemUiOverlayStyle.light.copyWith(
-              statusBarColor: Colors.transparent,
-            )
-          : SystemUiOverlayStyle.dark.copyWith(
-              statusBarColor: Colors.transparent,
-            ),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 260),
-        color: _dark ? AppColors.dark : AppColors.paper,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            top: _dark,
-            bottom: false,
-            child: IndexedStack(index: _tab, children: screens),
-          ),
-          bottomNavigationBar: _KnowitTabBar(
-            index: _tab,
-            dark: _dark,
-            onChanged: (i) => setState(() => _tab = i),
-          ),
+      value:
+          (context.p.isDark
+                  ? SystemUiOverlayStyle.light
+                  : SystemUiOverlayStyle.dark)
+              .copyWith(statusBarColor: Colors.transparent),
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          bottom: false,
+          child: IndexedStack(index: _tab, children: screens),
+        ),
+        bottomNavigationBar: _KnowitTabBar(
+          index: _tab,
+          onChanged: (i) => setState(() => _tab = i),
         ),
       ),
     );
@@ -302,13 +310,8 @@ class _KnowitShellState extends State<KnowitShell> {
 
 class _KnowitTabBar extends StatelessWidget {
   final int index;
-  final bool dark;
   final ValueChanged<int> onChanged;
-  const _KnowitTabBar({
-    required this.index,
-    required this.dark,
-    required this.onChanged,
-  });
+  const _KnowitTabBar({required this.index, required this.onChanged});
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
@@ -321,14 +324,8 @@ class _KnowitTabBar extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 260),
       decoration: BoxDecoration(
-        color: dark ? AppColors.dark : Colors.white.withValues(alpha: 0.94),
-        border: Border(
-          top: BorderSide(
-            color: dark
-                ? Colors.white.withValues(alpha: 0.08)
-                : Colors.black.withValues(alpha: 0.08),
-          ),
-        ),
+        color: context.p.surface,
+        border: Border(top: BorderSide(color: context.p.line)),
       ),
       padding: EdgeInsets.fromLTRB(
         18,
@@ -340,10 +337,8 @@ class _KnowitTabBar extends StatelessWidget {
         children: List.generate(_tabs.length, (i) {
           final selected = i == index;
           final tab = _tabs[i];
-          final onColor = dark ? Colors.white : AppColors.ink;
-          final offColor = dark
-              ? Colors.white.withValues(alpha: 0.38)
-              : Colors.black.withValues(alpha: 0.32);
+          final onColor = context.p.ink;
+          final offColor = context.p.inkFaint;
           final tint = selected ? onColor : offColor;
 
           return Expanded(
@@ -374,9 +369,7 @@ class _KnowitTabBar extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: selected
-                              ? AppColors.lime.withValues(
-                                  alpha: dark ? 0.18 : 0.35,
-                                )
+                              ? AppColors.lime.withValues(alpha: 0.22)
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(999),
                         ),

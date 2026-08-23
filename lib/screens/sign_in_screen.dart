@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 weight: FontWeight.w700,
                 height: 1.07,
                 spacing: -1.3,
-                color: AppColors.ink,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 9),
@@ -88,14 +88,14 @@ class _SignInScreenState extends State<SignInScreen> {
               style: AppText.body(
                 size: 14.5,
                 height: 1.5,
-                color: Colors.black.withValues(alpha: 0.55),
+                color: context.p.inkMuted,
               ),
             ),
             const SizedBox(height: 26),
             _ProviderButton(
               label: 'Continue with Apple',
               dark: true,
-              leading: const Icon(Icons.apple, size: 19, color: Colors.white),
+              leading: Icon(Icons.apple, size: 19, color: context.p.onInverse),
               onTap: () => _continueLocally('Apple'),
             ),
             const SizedBox(height: 10),
@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 style: AppText.display(
                   size: 15,
                   weight: FontWeight.w700,
-                  color: AppColors.blue,
+                  color: context.p.link,
                 ),
               ),
               onTap: () => _continueLocally('Google'),
@@ -115,37 +115,24 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 18),
             Row(
               children: [
-                Expanded(
-                  child: Container(
-                    height: 1,
-                    color: Colors.black.withValues(alpha: 0.1),
-                  ),
-                ),
+                Expanded(child: Container(height: 1, color: context.p.line)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     'or',
-                    style: AppText.body(
-                      size: 11.5,
-                      color: Colors.black.withValues(alpha: 0.38),
-                    ),
+                    style: AppText.body(size: 11.5, color: context.p.inkFaint),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    height: 1,
-                    color: Colors.black.withValues(alpha: 0.1),
-                  ),
-                ),
+                Expanded(child: Container(height: 1, color: context.p.line)),
               ],
             ),
             const SizedBox(height: 18),
             Container(
               padding: const EdgeInsets.fromLTRB(18, 13, 18, 9),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.p.surfaceRaised,
                 borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: Colors.black.withValues(alpha: 0.12)),
+                border: Border.all(color: context.p.line),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,14 +143,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     onChanged: (_) => setState(() {}),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    style: AppText.body(size: 15, color: AppColors.ink),
+                    style: AppText.body(size: 15, color: context.p.ink),
                     decoration: InputDecoration(
                       isDense: true,
                       border: InputBorder.none,
                       hintText: 'marco@studio.it',
                       hintStyle: AppText.body(
                         size: 15,
-                        color: Colors.black.withValues(alpha: 0.3),
+                        color: context.p.inkFaint,
                       ),
                     ),
                   ),
@@ -175,12 +162,8 @@ class _SignInScreenState extends State<SignInScreen> {
               label: _linkSent
                   ? 'Link sent — signing you in'
                   : 'Send me a login link',
-              background: _emailValid
-                  ? AppColors.blue
-                  : Colors.black.withValues(alpha: 0.12),
-              foreground: _emailValid
-                  ? Colors.white
-                  : Colors.black.withValues(alpha: 0.35),
+              background: _emailValid ? context.p.link : context.p.line,
+              foreground: _emailValid ? null : context.p.inkFaint,
               onPressed: _emailValid && !_linkSent ? _sendLink : null,
             ),
             const SizedBox(height: 24),
@@ -191,7 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
               style: AppText.body(
                 size: 11.5,
                 height: 1.5,
-                color: Colors.black.withValues(alpha: 0.38),
+                color: context.p.inkFaint,
               ),
             ),
           ],
@@ -222,11 +205,9 @@ class _ProviderButton extends StatelessWidget {
       child: Container(
         height: 56,
         decoration: BoxDecoration(
-          color: dark ? AppColors.ink : Colors.white,
+          color: dark ? context.p.inverse : context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(18),
-          border: dark
-              ? null
-              : Border.all(color: Colors.black.withValues(alpha: 0.12)),
+          border: dark ? null : Border.all(color: context.p.line),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -238,7 +219,7 @@ class _ProviderButton extends StatelessWidget {
               style: AppText.body(
                 size: 14.5,
                 weight: FontWeight.w600,
-                color: dark ? Colors.white : AppColors.ink,
+                color: dark ? context.p.onInverse : context.p.ink,
               ),
             ),
           ],

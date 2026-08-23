@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../data/pills_data.dart';
 import '../data/topics.dart';
@@ -41,10 +42,10 @@ class ProfileScreen extends StatelessWidget {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.paper,
+        backgroundColor: context.p.surface,
         title: Text(
           'Sign out?',
-          style: AppText.display(size: 19, color: AppColors.ink),
+          style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
           'This clears your streak, your saved pills and your topics on '
@@ -52,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
           style: AppText.body(
             size: 14,
             height: 1.45,
-            color: Colors.black.withValues(alpha: 0.6),
+            color: context.p.inkMuted,
           ),
         ),
         actions: [
@@ -60,7 +61,7 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(
               'Cancel',
-              style: AppText.body(size: 14, color: AppColors.ink),
+              style: AppText.body(size: 14, color: context.p.ink),
             ),
           ),
           TextButton(
@@ -70,7 +71,7 @@ class ProfileScreen extends StatelessWidget {
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w600,
-                color: AppColors.red,
+                color: context.p.alert,
               ),
             ),
           ),
@@ -95,8 +96,8 @@ class ProfileScreen extends StatelessWidget {
               Container(
                 width: 54,
                 height: 54,
-                decoration: const BoxDecoration(
-                  color: AppColors.ink,
+                decoration: BoxDecoration(
+                  color: context.p.inverse,
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
@@ -105,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                   style: AppText.display(
                     size: 18,
                     weight: FontWeight.w600,
-                    color: Colors.white,
+                    color: context.p.onInverse,
                   ),
                 ),
               ),
@@ -121,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                         weight: FontWeight.w700,
                         height: 1.1,
                         spacing: -0.7,
-                        color: AppColors.ink,
+                        color: context.p.ink,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -131,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
                           : 'Free plan · ${app.pickedTopics.length} topics',
                       style: AppText.body(
                         size: 12.5,
-                        color: Colors.black.withValues(alpha: 0.45),
+                        color: context.p.inkMuted,
                       ),
                     ),
                   ],
@@ -160,6 +161,10 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 11),
           _Coverage(app: app),
           const SizedBox(height: 22),
+          const Eyebrow('Appearance'),
+          const SizedBox(height: 11),
+          _ThemePicker(app: app),
+          const SizedBox(height: 22),
           const Eyebrow('Daily nudge'),
           const SizedBox(height: 11),
           PaperCard(
@@ -177,7 +182,7 @@ class ProfileScreen extends StatelessWidget {
                           size: 14.5,
                           weight: FontWeight.w500,
                           height: 1.2,
-                          color: AppColors.ink,
+                          color: context.p.ink,
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -186,7 +191,7 @@ class ProfileScreen extends StatelessWidget {
                         style: AppText.body(
                           size: 12,
                           height: 1.3,
-                          color: Colors.black.withValues(alpha: 0.45),
+                          color: context.p.inkMuted,
                         ),
                       ),
                     ],
@@ -228,7 +233,7 @@ class ProfileScreen extends StatelessWidget {
                       style: AppText.body(
                         size: 12.5,
                         weight: FontWeight.w500,
-                        color: AppColors.blue,
+                        color: context.p.link,
                       ),
                     ),
                     PlusLock(locked: !app.isPlus),
@@ -386,7 +391,7 @@ class _Stat extends StatelessWidget {
                 size: 24,
                 weight: FontWeight.w700,
                 height: 1,
-                color: AppColors.ink,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 4),
@@ -395,7 +400,7 @@ class _Stat extends StatelessWidget {
               style: AppText.body(
                 size: 11.5,
                 height: 1.3,
-                color: Colors.black.withValues(alpha: 0.45),
+                color: context.p.inkMuted,
               ),
             ),
           ],
@@ -426,9 +431,7 @@ class _LinkRow extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
-          ),
+          border: Border(top: BorderSide(color: context.p.line)),
         ),
         child: Row(
           children: [
@@ -437,9 +440,7 @@ class _LinkRow extends StatelessWidget {
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
-                color: muted
-                    ? Colors.black.withValues(alpha: 0.45)
-                    : AppColors.ink,
+                color: muted ? context.p.inkMuted : context.p.ink,
               ),
             ),
             PlusLock(locked: locked),
@@ -447,7 +448,7 @@ class _LinkRow extends StatelessWidget {
             Icon(
               Icons.chevron_right_rounded,
               size: 20,
-              color: Colors.black.withValues(alpha: 0.25),
+              color: context.p.inkFaint,
             ),
           ],
         ),
@@ -493,7 +494,7 @@ class _Coverage extends StatelessWidget {
               size: 20,
               weight: FontWeight.w600,
               spacing: -0.5,
-              color: AppColors.ink,
+              color: context.p.ink,
             ),
           ),
           const SizedBox(height: 14),
@@ -514,7 +515,7 @@ class _Coverage extends StatelessWidget {
                           style: AppText.body(
                             size: 13,
                             weight: FontWeight.w500,
-                            color: AppColors.ink,
+                            color: context.p.ink,
                           ),
                         ),
                       ),
@@ -523,9 +524,7 @@ class _Coverage extends StatelessWidget {
                         style: AppText.body(
                           size: 12,
                           weight: complete ? FontWeight.w600 : FontWeight.w400,
-                          color: complete
-                              ? style.color
-                              : Colors.black.withValues(alpha: 0.4),
+                          color: complete ? style.color : context.p.inkFaint,
                         ),
                       ),
                     ],
@@ -536,7 +535,7 @@ class _Coverage extends StatelessWidget {
                     child: LinearProgressIndicator(
                       value: total == 0 ? 0 : seen / total,
                       minHeight: 5,
-                      backgroundColor: Colors.black.withValues(alpha: 0.07),
+                      backgroundColor: context.p.line,
                       valueColor: AlwaysStoppedAnimation(style.color),
                     ),
                   ),
@@ -576,7 +575,7 @@ class _Calibration extends StatelessWidget {
               weight: FontWeight.w600,
               height: 1.25,
               spacing: -0.4,
-              color: AppColors.ink,
+              color: context.p.ink,
             ),
           ),
           const SizedBox(height: 6),
@@ -586,7 +585,7 @@ class _Calibration extends StatelessWidget {
             style: AppText.body(
               size: 12.5,
               height: 1.4,
-              color: Colors.black.withValues(alpha: 0.5),
+              color: context.p.inkMuted,
             ),
           ),
           const SizedBox(height: 16),
@@ -598,7 +597,7 @@ class _Calibration extends StatelessWidget {
             style: AppText.body(
               size: 11.5,
               height: 1.4,
-              color: Colors.black.withValues(alpha: 0.4),
+              color: context.p.inkFaint,
             ),
           ),
         ],
@@ -640,7 +639,7 @@ class _Row extends StatelessWidget {
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
-                    color: AppColors.ink,
+                    color: context.p.ink,
                   ),
                 ),
               ),
@@ -651,9 +650,7 @@ class _Row extends StatelessWidget {
                   '(${bucket.right} of ${bucket.count})',
                   style: AppText.body(
                     size: 12.5,
-                    color: off
-                        ? AppColors.red
-                        : Colors.black.withValues(alpha: 0.5),
+                    color: off ? context.p.alert : context.p.inkMuted,
                   ),
                 ),
               ),
@@ -666,7 +663,7 @@ class _Row extends StatelessWidget {
               Container(
                 height: 6,
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.07),
+                  color: context.p.line,
                   borderRadius: BorderRadius.circular(999),
                 ),
               ),
@@ -675,7 +672,7 @@ class _Row extends StatelessWidget {
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.18),
+                    color: context.p.lineStrong,
                     borderRadius: BorderRadius.circular(999),
                   ),
                 ),
@@ -685,7 +682,7 @@ class _Row extends StatelessWidget {
                 child: Container(
                   height: 6,
                   decoration: BoxDecoration(
-                    color: off ? AppColors.red : AppColors.ink,
+                    color: off ? context.p.alert : context.p.ink,
                     borderRadius: BorderRadius.circular(999),
                   ),
                 ),
@@ -693,6 +690,65 @@ class _Row extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// One choice for the whole app. It used to change between tabs, which is
+/// the sort of thing that reads as unfinished.
+class _ThemePicker extends StatelessWidget {
+  final AppState app;
+  const _ThemePicker({required this.app});
+
+  static const _options = [
+    (mode: ThemeMode.light, label: 'Light'),
+    (mode: ThemeMode.dark, label: 'Dark'),
+    (mode: ThemeMode.system, label: 'System'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return PaperCard(
+      padding: const EdgeInsets.all(6),
+      radius: 18,
+      child: Row(
+        children: _options.map((option) {
+          final selected = app.themeMode == option.mode;
+          return Expanded(
+            child: Semantics(
+              button: true,
+              selected: selected,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  if (selected) return;
+                  HapticFeedback.selectionClick();
+                  app.setThemeMode(option.mode);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.symmetric(vertical: 11),
+                  decoration: BoxDecoration(
+                    color: selected ? context.p.inverse : Colors.transparent,
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    option.label,
+                    style: AppText.body(
+                      size: 13.5,
+                      weight: FontWeight.w600,
+                      color: selected
+                          ? context.p.onInverse
+                          : context.p.inkMuted,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

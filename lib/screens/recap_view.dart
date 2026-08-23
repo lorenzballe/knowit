@@ -28,7 +28,7 @@ class RecapView extends StatelessWidget {
               style: AppText.label(
                 size: 11,
                 spacing: 1.4,
-                color: Colors.white.withValues(alpha: 0.45),
+                color: context.p.inkMuted,
               ),
             ),
             const SizedBox(height: 12),
@@ -39,7 +39,7 @@ class RecapView extends StatelessWidget {
                   weight: FontWeight.w700,
                   height: 1.06,
                   spacing: -1.3,
-                  color: Colors.white,
+                  color: context.p.ink,
                 ),
                 children: [
                   TextSpan(
@@ -64,9 +64,7 @@ class RecapView extends StatelessWidget {
                           width: double.infinity,
                           height: 34,
                           decoration: BoxDecoration(
-                            color: week[i]
-                                ? AppColors.lime
-                                : Colors.white.withValues(alpha: 0.08),
+                            color: week[i] ? AppColors.lime : context.p.line,
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -75,7 +73,7 @@ class RecapView extends StatelessWidget {
                           _weekLetters[i],
                           style: AppText.label(
                             size: 10,
-                            color: Colors.white.withValues(alpha: 0.35),
+                            color: context.p.inkFaint,
                           ),
                         ),
                       ],
@@ -90,7 +88,7 @@ class RecapView extends StatelessWidget {
               style: AppText.label(
                 size: 11,
                 spacing: 1.3,
-                color: Colors.white.withValues(alpha: 0.42),
+                color: context.p.inkFaint,
               ),
             ),
             const SizedBox(height: 10),
@@ -102,7 +100,7 @@ class RecapView extends StatelessWidget {
                   vertical: 12,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.055),
+                  color: context.p.line,
                   borderRadius: BorderRadius.circular(14),
                 ),
                 child: Row(
@@ -125,7 +123,7 @@ class RecapView extends StatelessWidget {
                           size: 13.5,
                           weight: FontWeight.w500,
                           height: 1.3,
-                          color: Colors.white.withValues(alpha: 0.86),
+                          color: context.p.ink,
                         ),
                       ),
                     ),
@@ -138,7 +136,7 @@ class RecapView extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.blue,
+                  color: context.p.link,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
@@ -150,7 +148,7 @@ class RecapView extends StatelessWidget {
                         size: 20,
                         weight: FontWeight.w600,
                         spacing: -0.6,
-                        color: Colors.white,
+                        color: context.p.ink,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -160,7 +158,7 @@ class RecapView extends StatelessWidget {
                       style: AppText.body(
                         size: 13.5,
                         height: 1.45,
-                        color: Colors.white.withValues(alpha: 0.75),
+                        color: context.p.ink,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -170,8 +168,8 @@ class RecapView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => app.openExtraSet(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: AppColors.ink,
+                          backgroundColor: context.p.ink,
+                          foregroundColor: context.p.ink,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(999),
@@ -182,7 +180,7 @@ class RecapView extends StatelessWidget {
                           style: AppText.body(
                             size: 14.5,
                             weight: FontWeight.w600,
-                            color: AppColors.ink,
+                            color: context.p.ink,
                           ),
                         ),
                       ),
@@ -196,7 +194,7 @@ class RecapView extends StatelessWidget {
                 style: AppText.body(
                   size: 13.5,
                   height: 1.45,
-                  color: Colors.white.withValues(alpha: 0.5),
+                  color: context.p.ink.withValues(alpha: 0.5),
                 ),
               )
             else

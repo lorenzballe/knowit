@@ -1,16 +1,138 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 
+/// Colours that do not belong to a theme: a topic's card is the same lime
+/// whichever ground it sits on, and the brand accent does not flip.
 class AppColors {
-  static const bg = Color(0xFFECEAE4);
-  static const paper = Color(0xFFF5F3EE);
-  static const ink = Color(0xFF131316);
-  static const dark = Color(0xFF0D0D0F);
   static const lime = Color(0xFFC6F24E);
   static const limeDark = Color(0xFFA8E02C);
-  static const blue = Color(0xFF2B4BFF);
-  static const red = Color(0xFFFF4E2D);
   static const limeInk = Color(0xFF17200A);
+}
+
+/// Every colour the chrome uses, named for its job rather than its value.
+///
+/// The app used to paint Today dark and the other tabs on paper, which meant
+/// it changed skin between tabs. One palette, chosen once in settings, is
+/// what an app does — so nothing outside this file should name a raw colour
+/// for chrome again.
+@immutable
+class Palette extends ThemeExtension<Palette> {
+  /// The page itself.
+  final Color surface;
+
+  /// Cards and panels sitting on the page.
+  final Color surfaceRaised;
+
+  /// Text, in three weights of presence.
+  final Color ink;
+  final Color inkMuted;
+  final Color inkFaint;
+
+  /// Hairlines, and the heavier borders around inputs.
+  final Color line;
+  final Color lineStrong;
+
+  /// A filled control that reverses the page: dark on light, light on dark.
+  final Color inverse;
+  final Color onInverse;
+
+  /// Links and destructive text.
+  final Color link;
+  final Color alert;
+
+  const Palette({
+    required this.surface,
+    required this.surfaceRaised,
+    required this.ink,
+    required this.inkMuted,
+    required this.inkFaint,
+    required this.line,
+    required this.lineStrong,
+    required this.inverse,
+    required this.onInverse,
+    required this.link,
+    required this.alert,
+  });
+
+  static const light = Palette(
+    surface: Color(0xFFF5F3EE),
+    surfaceRaised: Color(0xFFFFFFFF),
+    ink: Color(0xFF131316),
+    inkMuted: Color(0xFF6B6B70),
+    inkFaint: Color(0xFF9B9BA0),
+    line: Color(0xFFE4E1DA),
+    lineStrong: Color(0xFFD2CEC4),
+    inverse: Color(0xFF131316),
+    onInverse: Color(0xFFFFFFFF),
+    link: Color(0xFF2B4BFF),
+    alert: Color(0xFFD8341A),
+  );
+
+  static const dark = Palette(
+    surface: Color(0xFF0D0D0F),
+    surfaceRaised: Color(0xFF1A1A1E),
+    ink: Color(0xFFF2F1EC),
+    inkMuted: Color(0xFF9E9EA6),
+    inkFaint: Color(0xFF6A6A72),
+    line: Color(0xFF27272C),
+    lineStrong: Color(0xFF3A3A42),
+    inverse: Color(0xFFF2F1EC),
+    onInverse: Color(0xFF0D0D0F),
+    link: Color(0xFF7D93FF),
+    alert: Color(0xFFFF7A5E),
+  );
+
+  bool get isDark => surface.computeLuminance() < 0.5;
+
+  @override
+  Palette copyWith({
+    Color? surface,
+    Color? surfaceRaised,
+    Color? ink,
+    Color? inkMuted,
+    Color? inkFaint,
+    Color? line,
+    Color? lineStrong,
+    Color? inverse,
+    Color? onInverse,
+    Color? link,
+    Color? alert,
+  }) => Palette(
+    surface: surface ?? this.surface,
+    surfaceRaised: surfaceRaised ?? this.surfaceRaised,
+    ink: ink ?? this.ink,
+    inkMuted: inkMuted ?? this.inkMuted,
+    inkFaint: inkFaint ?? this.inkFaint,
+    line: line ?? this.line,
+    lineStrong: lineStrong ?? this.lineStrong,
+    inverse: inverse ?? this.inverse,
+    onInverse: onInverse ?? this.onInverse,
+    link: link ?? this.link,
+    alert: alert ?? this.alert,
+  );
+
+  @override
+  Palette lerp(covariant Palette? other, double t) {
+    if (other == null) return this;
+    return Palette(
+      surface: Color.lerp(surface, other.surface, t)!,
+      surfaceRaised: Color.lerp(surfaceRaised, other.surfaceRaised, t)!,
+      ink: Color.lerp(ink, other.ink, t)!,
+      inkMuted: Color.lerp(inkMuted, other.inkMuted, t)!,
+      inkFaint: Color.lerp(inkFaint, other.inkFaint, t)!,
+      line: Color.lerp(line, other.line, t)!,
+      lineStrong: Color.lerp(lineStrong, other.lineStrong, t)!,
+      inverse: Color.lerp(inverse, other.inverse, t)!,
+      onInverse: Color.lerp(onInverse, other.onInverse, t)!,
+      link: Color.lerp(link, other.link, t)!,
+      alert: Color.lerp(alert, other.alert, t)!,
+    );
+  }
+}
+
+extension PaletteOf on BuildContext {
+  /// The palette in force. Every colour the chrome paints comes from here.
+  Palette get p => Theme.of(this).extension<Palette>() ?? Palette.light;
 }
 
 class AppText {
@@ -79,26 +201,33 @@ class AppText {
   );
 }
 
-ThemeData buildKnowitTheme() {
+ThemeData buildKnowitTheme(Brightness brightness) {
+  final palette = brightness == Brightness.dark ? Palette.dark : Palette.light;
   final base = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.paper,
+    brightness: brightness,
+    scaffoldBackgroundColor: palette.surface,
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.lime,
-      brightness: Brightness.light,
+      brightness: brightness,
     ),
   );
   return base.copyWith(
-    textTheme: base.textTheme.apply(fontFamily: 'Figtree'),
+    extensions: [palette],
+    textTheme: base.textTheme.apply(
+      fontFamily: 'Figtree',
+      bodyColor: palette.ink,
+      displayColor: palette.ink,
+    ),
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
-      backgroundColor: AppColors.ink,
+      backgroundColor: palette.inverse,
       contentTextStyle: AppText.body(
         size: 13.5,
         height: 1.35,
-        color: Colors.white,
+        color: palette.onInverse,
       ),
       actionTextColor: AppColors.lime,
       insetPadding: const EdgeInsets.fromLTRB(16, 8, 16, 16),

@@ -8,16 +8,19 @@ import '../theme.dart';
 class PrimaryButton extends StatefulWidget {
   final String label;
   final VoidCallback? onPressed;
-  final Color background;
-  final Color foreground;
+
+  /// Defaults to the palette's reversed pair, so the primary action is dark
+  /// on a light page and light on a dark one without every caller saying so.
+  final Color? background;
+  final Color? foreground;
   final double height;
 
   const PrimaryButton({
     super.key,
     required this.label,
     required this.onPressed,
-    this.background = AppColors.ink,
-    this.foreground = Colors.white,
+    this.background,
+    this.foreground,
     this.height = 54,
   });
 
@@ -35,6 +38,9 @@ class _PrimaryButtonState extends State<PrimaryButton> {
 
   @override
   Widget build(BuildContext context) {
+    final background = widget.background ?? context.p.inverse;
+    final foreground = widget.foreground ?? context.p.onInverse;
+
     return Listener(
       onPointerDown: (_) => _setDown(true),
       onPointerUp: (_) => _setDown(false),
@@ -55,10 +61,10 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                     widget.onPressed!();
                   },
             style: ElevatedButton.styleFrom(
-              backgroundColor: widget.background,
-              foregroundColor: widget.foreground,
-              disabledBackgroundColor: widget.background,
-              disabledForegroundColor: widget.foreground,
+              backgroundColor: background,
+              foregroundColor: foreground,
+              disabledBackgroundColor: background,
+              disabledForegroundColor: foreground,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(999),
@@ -72,7 +78,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 style: AppText.body(
                   size: 15,
                   weight: FontWeight.w600,
-                  color: widget.foreground,
+                  color: foreground,
                 ),
               ),
             ),
@@ -103,7 +109,7 @@ class QuietButton extends StatelessWidget {
           style: AppText.body(
             size: 13,
             weight: FontWeight.w500,
-            color: Colors.black.withValues(alpha: 0.5),
+            color: context.p.inkMuted,
           ),
         ),
       ),
@@ -130,18 +136,10 @@ class BackCircle extends StatelessWidget {
           height: 38,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(
-              color: dark
-                  ? Colors.white.withValues(alpha: 0.18)
-                  : Colors.black.withValues(alpha: 0.12),
-            ),
+            border: Border.all(color: context.p.line),
           ),
           alignment: Alignment.center,
-          child: Icon(
-            Icons.arrow_back_rounded,
-            size: 17,
-            color: dark ? Colors.white : AppColors.ink,
-          ),
+          child: Icon(Icons.arrow_back_rounded, size: 17, color: context.p.ink),
         ),
       ),
     );
@@ -161,7 +159,7 @@ class Eyebrow extends StatelessWidget {
       style: AppText.label(
         size: 11,
         spacing: 1.3,
-        color: color ?? Colors.black.withValues(alpha: 0.42),
+        color: color ?? context.p.inkFaint,
       ),
     );
   }
@@ -237,9 +235,9 @@ class PaperCard extends StatelessWidget {
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.p.surfaceRaised,
         borderRadius: BorderRadius.circular(radius),
-        border: Border.all(color: Colors.black.withValues(alpha: 0.07)),
+        border: Border.all(color: context.p.line),
       ),
       child: child,
     );
@@ -285,15 +283,15 @@ class NudgeSwitch extends StatelessWidget {
           height: 30,
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
-            color: value ? AppColors.ink : Colors.black.withValues(alpha: 0.18),
+            color: value ? context.p.ink : context.p.lineStrong,
             borderRadius: BorderRadius.circular(999),
           ),
           alignment: value ? Alignment.centerRight : Alignment.centerLeft,
           child: Container(
             width: 24,
             height: 24,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: context.p.surfaceRaised,
               shape: BoxShape.circle,
             ),
           ),

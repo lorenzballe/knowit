@@ -70,7 +70,7 @@ class SavedScreen extends StatelessWidget {
                       weight: FontWeight.w700,
                       height: 1.05,
                       spacing: -1.3,
-                      color: AppColors.ink,
+                      color: context.p.ink,
                     ),
                   ),
                 ),
@@ -95,7 +95,7 @@ class SavedScreen extends StatelessWidget {
                         Icon(
                           Icons.search_rounded,
                           size: 16,
-                          color: AppColors.blue,
+                          color: context.p.link,
                         ),
                         const SizedBox(width: 5),
                         Text(
@@ -103,7 +103,7 @@ class SavedScreen extends StatelessWidget {
                           style: AppText.body(
                             size: 12.5,
                             weight: FontWeight.w500,
-                            color: AppColors.blue,
+                            color: context.p.link,
                           ),
                         ),
                         PlusLock(locked: !app.isPlus),
@@ -117,10 +117,7 @@ class SavedScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 '${saved.length} pill${saved.length == 1 ? '' : 's'}',
-                style: AppText.body(
-                  size: 13,
-                  color: Colors.black.withValues(alpha: 0.45),
-                ),
+                style: AppText.body(size: 13, color: context.p.inkMuted),
               ),
             ],
             const SizedBox(height: 18),
@@ -175,7 +172,7 @@ class _EmptyState extends StatelessWidget {
                   weight: FontWeight.w600,
                   height: 1.22,
                   spacing: -0.6,
-                  color: AppColors.ink,
+                  color: context.p.ink,
                 ),
               ),
               const SizedBox(height: 9),
@@ -186,7 +183,7 @@ class _EmptyState extends StatelessWidget {
                 style: AppText.body(
                   size: 14,
                   height: 1.5,
-                  color: Colors.black.withValues(alpha: 0.5),
+                  color: context.p.inkMuted,
                 ),
               ),
               const SizedBox(height: 24),
@@ -195,8 +192,8 @@ class _EmptyState extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onBackToToday,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.ink,
-                    foregroundColor: Colors.white,
+                    backgroundColor: context.p.inverse,
+                    foregroundColor: context.p.onInverse,
                     elevation: 0,
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     shape: RoundedRectangleBorder(
@@ -208,7 +205,7 @@ class _EmptyState extends StatelessWidget {
                     style: AppText.body(
                       size: 14,
                       weight: FontWeight.w600,
-                      color: Colors.white,
+                      color: context.p.onInverse,
                     ),
                   ),
                 ),
@@ -239,7 +236,10 @@ class _DashedStack extends StatelessWidget {
               angle: -0.14,
               child: CustomPaint(
                 size: const Size(double.infinity, 92),
-                painter: _DashedBorderPainter(radius: 20, opacity: 0.2),
+                painter: _DashedBorderPainter(
+                  radius: 20,
+                  ink: context.p.inkFaint,
+                ),
               ),
             ),
           ),
@@ -251,18 +251,24 @@ class _DashedStack extends StatelessWidget {
               angle: 0.087,
               child: CustomPaint(
                 size: const Size(double.infinity, 100),
-                painter: _DashedBorderPainter(radius: 22, opacity: 0.22),
+                painter: _DashedBorderPainter(
+                  radius: 22,
+                  ink: context.p.inkFaint,
+                ),
               ),
             ),
           ),
           Positioned.fill(
             child: CustomPaint(
-              painter: _DashedBorderPainter(radius: 24, opacity: 0.28),
+              painter: _DashedBorderPainter(
+                radius: 24,
+                ink: context.p.inkMuted,
+              ),
               child: Center(
                 child: Icon(
                   Icons.favorite_border_rounded,
                   size: 26,
-                  color: Colors.black.withValues(alpha: 0.25),
+                  color: context.p.inkFaint,
                 ),
               ),
             ),
@@ -275,15 +281,15 @@ class _DashedStack extends StatelessWidget {
 
 class _DashedBorderPainter extends CustomPainter {
   final double radius;
-  final double opacity;
-  const _DashedBorderPainter({required this.radius, required this.opacity});
+  final Color ink;
+  const _DashedBorderPainter({required this.radius, required this.ink});
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1
-      ..color = Colors.black.withValues(alpha: opacity);
+      ..color = ink;
 
     final rrect = RRect.fromRectAndRadius(
       Offset.zero & size,
@@ -306,7 +312,7 @@ class _DashedBorderPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DashedBorderPainter old) =>
-      old.radius != radius || old.opacity != opacity;
+      old.radius != radius || old.ink != ink;
 }
 
 class _SavedRow extends StatelessWidget {
@@ -346,7 +352,7 @@ class _SavedRow extends StatelessWidget {
                     style: AppText.label(
                       size: 10.5,
                       spacing: 1.2,
-                      color: Colors.black.withValues(alpha: 0.4),
+                      color: context.p.inkFaint,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -356,7 +362,7 @@ class _SavedRow extends StatelessWidget {
                       size: 15,
                       weight: FontWeight.w600,
                       height: 1.3,
-                      color: AppColors.ink,
+                      color: context.p.ink,
                     ),
                   ),
                 ],
@@ -376,7 +382,7 @@ class _SavedRow extends StatelessWidget {
                   onPressed: onShare,
                   tooltip: 'Share this pill',
                   icon: const Icon(Icons.ios_share_rounded, size: 17),
-                  color: Colors.black.withValues(alpha: 0.35),
+                  color: context.p.inkFaint,
                   splashRadius: 18,
                   visualDensity: VisualDensity.compact,
                 ),

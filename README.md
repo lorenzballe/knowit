@@ -27,6 +27,22 @@ flutter run -d chrome   # web
 flutter run              # any connected device/simulator
 ```
 
+## One palette
+
+The app used to paint Today dark and the other tabs on paper, which meant it
+changed skin between tabs — the sort of thing that reads as unfinished.
+
+There is now a single semantic `Palette` (a `ThemeExtension`) with light and
+dark values, named for the job each colour does rather than what it looks
+like: `surface`, `surfaceRaised`, `ink` / `inkMuted` / `inkFaint`, `line`,
+`inverse` / `onInverse`. Every screen reads from it through `context.p`, and
+the only raw colours left outside `theme.dart` are on a pill card, which is
+the same lime whichever ground it sits on.
+
+Light, dark or system is one choice, made once, under **Appearance** in the
+profile. It is stored, it is read above `MaterialApp` so the whole tree
+repaints at once, and the status bar follows it.
+
 ## Screens
 
 **Free** — first run (welcome, optional sign-in), Today with the card stack,

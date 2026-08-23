@@ -34,7 +34,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
@@ -49,9 +49,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                         margin: EdgeInsets.only(right: i == 2 ? 0 : 8),
                         height: 3,
                         decoration: BoxDecoration(
-                          color: i < 2
-                              ? AppColors.ink
-                              : Colors.black.withValues(alpha: 0.12),
+                          color: i < 2 ? context.p.ink : context.p.line,
                           borderRadius: BorderRadius.circular(9),
                         ),
                       ),
@@ -68,7 +66,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                   weight: FontWeight.w700,
                   height: 1.06,
                   spacing: -1.3,
-                  color: AppColors.ink,
+                  color: context.p.ink,
                 ),
               ),
               const SizedBox(height: 10),
@@ -78,7 +76,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
-                  color: Colors.black.withValues(alpha: 0.55),
+                  color: context.p.inkMuted,
                 ),
               ),
               const SizedBox(height: 22),
@@ -113,10 +111,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 child: Text(
                   '${_picked.length} of ${kTopicOrder.length} selected',
                   textAlign: TextAlign.center,
-                  style: AppText.body(
-                    size: 12.5,
-                    color: Colors.black.withValues(alpha: 0.42),
-                  ),
+                  style: AppText.body(size: 12.5, color: context.p.inkFaint),
                 ),
               ),
               const SizedBox(height: 12),
@@ -126,12 +121,8 @@ class _TopicsScreenState extends State<TopicsScreen> {
                           ? 'Start with ${_picked.length} topics'
                           : 'Save ${_picked.length} topics')
                     : 'Pick at least $_minTopics',
-                background: _enough
-                    ? AppColors.ink
-                    : Colors.black.withValues(alpha: 0.12),
-                foreground: _enough
-                    ? Colors.white
-                    : Colors.black.withValues(alpha: 0.35),
+                background: _enough ? context.p.ink : context.p.line,
+                foreground: _enough ? null : context.p.inkFaint,
                 onPressed: _enough ? () => widget.onDone(_picked) : null,
               ),
             ],
@@ -166,13 +157,9 @@ class _TopicChip extends StatelessWidget {
         duration: const Duration(milliseconds: 180),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
         decoration: BoxDecoration(
-          color: on ? color : Colors.white,
+          color: on ? color : context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(999),
-          border: Border.all(
-            color: on
-                ? Colors.transparent
-                : Colors.black.withValues(alpha: 0.12),
-          ),
+          border: Border.all(color: on ? Colors.transparent : context.p.line),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -188,7 +175,7 @@ class _TopicChip extends StatelessWidget {
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
-                color: on ? onColor : Colors.black.withValues(alpha: 0.62),
+                color: on ? onColor : context.p.inkMuted,
               ),
             ),
           ],

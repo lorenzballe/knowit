@@ -38,7 +38,7 @@ class HowScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
@@ -55,7 +55,7 @@ class HowScreen extends StatelessWidget {
                 weight: FontWeight.w700,
                 height: 1.07,
                 spacing: -1.2,
-                color: AppColors.ink,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 10),
@@ -65,7 +65,7 @@ class HowScreen extends StatelessWidget {
               style: AppText.body(
                 size: 14.5,
                 height: 1.5,
-                color: Colors.black.withValues(alpha: 0.55),
+                color: context.p.inkMuted,
               ),
             ),
             const SizedBox(height: 22),
@@ -73,11 +73,7 @@ class HowScreen extends StatelessWidget {
               (s) => Container(
                 padding: const EdgeInsets.symmetric(vertical: 17),
                 decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Colors.black.withValues(alpha: 0.09),
-                    ),
-                  ),
+                  border: Border(top: BorderSide(color: context.p.line)),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +83,7 @@ class HowScreen extends StatelessWidget {
                       style: AppText.label(
                         size: 11,
                         height: 1.5,
-                        color: AppColors.blue,
+                        color: context.p.link,
                       ),
                     ),
                     const SizedBox(width: 15),
@@ -101,7 +97,7 @@ class HowScreen extends StatelessWidget {
                               size: 15,
                               weight: FontWeight.w600,
                               height: 1.3,
-                              color: AppColors.ink,
+                              color: context.p.ink,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -110,7 +106,7 @@ class HowScreen extends StatelessWidget {
                             style: AppText.body(
                               size: 13,
                               height: 1.5,
-                              color: Colors.black.withValues(alpha: 0.52),
+                              color: context.p.inkMuted,
                             ),
                           ),
                         ],
@@ -124,7 +120,7 @@ class HowScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(19),
               decoration: BoxDecoration(
-                color: AppColors.ink,
+                color: context.p.surfaceRaised,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -136,7 +132,7 @@ class HowScreen extends StatelessWidget {
                       size: 15,
                       weight: FontWeight.w600,
                       height: 1.3,
-                      color: Colors.white,
+                      color: context.p.ink,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -146,7 +142,7 @@ class HowScreen extends StatelessWidget {
                     style: AppText.body(
                       size: 13,
                       height: 1.45,
-                      color: Colors.white.withValues(alpha: 0.6),
+                      color: context.p.ink.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
@@ -159,7 +155,7 @@ class HowScreen extends StatelessWidget {
               style: AppText.body(
                 size: 11.5,
                 height: 1.5,
-                color: Colors.black.withValues(alpha: 0.38),
+                color: context.p.inkFaint,
               ),
             ),
           ],

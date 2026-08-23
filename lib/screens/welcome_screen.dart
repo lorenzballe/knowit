@@ -19,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: FlexPage(
           padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                   size: 20,
                   weight: FontWeight.w700,
                   spacing: -0.6,
-                  color: AppColors.ink,
+                  color: context.p.ink,
                 ),
               ),
               const SizedBox(height: 26),
@@ -45,7 +45,7 @@ class WelcomeScreen extends StatelessWidget {
                   weight: FontWeight.w700,
                   height: 1.06,
                   spacing: -1.4,
-                  color: AppColors.ink,
+                  color: context.p.ink,
                 ),
               ),
               const SizedBox(height: 11),
@@ -57,7 +57,7 @@ class WelcomeScreen extends StatelessWidget {
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
-                  color: Colors.black.withValues(alpha: 0.55),
+                  color: context.p.inkMuted,
                 ),
               ),
               const Spacer(),
@@ -109,7 +109,7 @@ class _FannedCards extends StatelessWidget {
               child: Container(
                 height: 234,
                 decoration: BoxDecoration(
-                  color: AppColors.red,
+                  color: context.p.alert,
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -123,7 +123,7 @@ class _FannedCards extends StatelessWidget {
               height: 246,
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: AppColors.blue,
+                color: context.p.link,
                 borderRadius: BorderRadius.circular(32),
                 boxShadow: const [
                   BoxShadow(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,6 +33,7 @@ class AppState extends ChangeNotifier {
   static const _kExtraOpen = 'knowit.extraSetDate';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
+  static const _kTheme = 'knowit.theme';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -71,6 +73,10 @@ class AppState extends ChangeNotifier {
   bool isPlus = false;
   String name = 'You';
   Plan plan = Plan.year;
+
+  /// Light, dark, or whatever the phone is set to. One choice for the whole
+  /// app — it does not change from screen to screen.
+  ThemeMode themeMode = ThemeMode.dark;
 
   late DateTime today;
   late List<Pill> todaysDeck;
@@ -124,6 +130,7 @@ class AppState extends ChangeNotifier {
     notifyTime = _prefs.getString(_kNotifyHour) ?? '08:30';
     name = _prefs.getString(_kName) ?? 'You';
     isPlus = _prefs.getBool(_kPlus) ?? false;
+    themeMode = _decodeTheme(_prefs.getString(_kTheme));
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
@@ -454,6 +461,18 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  static ThemeMode _decodeTheme(String? raw) => switch (raw) {
+    'light' => ThemeMode.light,
+    'system' => ThemeMode.system,
+    _ => ThemeMode.dark,
+  };
+
+  Future<void> setThemeMode(ThemeMode mode) async {
+    themeMode = mode;
+    await _prefs.setString(_kTheme, mode.name);
+    notifyListeners();
+  }
+
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
     await _prefs.setBool(_kNotifications, on);
@@ -528,6 +547,7 @@ class AppState extends ChangeNotifier {
     notifyTime = '08:30';
     name = 'You';
     isPlus = false;
+    themeMode = ThemeMode.dark;
     seenIds = {};
     extraSetOpen = false;
     reviewIdsToday = {};

@@ -116,13 +116,13 @@ class _Header extends StatelessWidget {
               size: 20,
               weight: FontWeight.w600,
               spacing: -0.4,
-              color: Colors.white,
+              color: context.p.ink,
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.09),
+              color: context.p.line,
               borderRadius: BorderRadius.circular(999),
             ),
             child: Row(
@@ -142,7 +142,7 @@ class _Header extends StatelessWidget {
                   style: AppText.body(
                     size: 12,
                     weight: FontWeight.w600,
-                    color: Colors.white.withValues(alpha: 0.82),
+                    color: context.p.ink,
                   ),
                 ),
               ],
@@ -178,9 +178,7 @@ class _ProgressBars extends StatelessWidget {
               margin: EdgeInsets.only(right: i == total - 1 ? 0 : 5),
               height: 3,
               decoration: BoxDecoration(
-                color: filled
-                    ? Colors.white
-                    : Colors.white.withValues(alpha: 0.16),
+                color: filled ? context.p.ink : context.p.line,
                 borderRadius: BorderRadius.circular(9),
               ),
             ),
@@ -216,7 +214,7 @@ class _ActionRow extends StatelessWidget {
             icon: saved
                 ? Icons.favorite_rounded
                 : Icons.favorite_border_rounded,
-            color: saved ? const Color(0xFFFF8B73) : Colors.white,
+            color: saved ? context.p.alert : context.p.ink,
             onTap: () {
               HapticFeedback.mediumImpact();
               onSave();
@@ -233,8 +231,8 @@ class _ActionRow extends StatelessWidget {
                     onNext();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppColors.dark,
+                    backgroundColor: context.p.inverse,
+                    foregroundColor: context.p.onInverse,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(999),
@@ -248,14 +246,14 @@ class _ActionRow extends StatelessWidget {
                         style: AppText.body(
                           size: 15,
                           weight: FontWeight.w600,
-                          color: AppColors.dark,
+                          color: context.p.onInverse,
                         ),
                       ),
                       const SizedBox(width: 8),
                       Icon(
                         Icons.arrow_forward_rounded,
                         size: 17,
-                        color: AppColors.dark.withValues(alpha: 0.4),
+                        color: context.p.onInverse.withValues(alpha: 0.45),
                       ),
                     ],
                   ),
@@ -266,7 +264,7 @@ class _ActionRow extends StatelessWidget {
           _RoundButton(
             label: 'Share this pill',
             icon: Icons.ios_share_rounded,
-            color: Colors.white.withValues(alpha: 0.8),
+            color: context.p.ink,
             onTap: onShare,
           ),
         ],
@@ -300,7 +298,7 @@ class _RoundButton extends StatelessWidget {
           width: 46,
           height: 46,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.09),
+            color: context.p.line,
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,

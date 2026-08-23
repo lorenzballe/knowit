@@ -44,7 +44,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.ink,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(22, 12, 22, 24),
@@ -61,14 +61,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     width: 32,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.1),
+                      color: context.p.ink.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     alignment: Alignment.center,
                     child: Icon(
                       Icons.close_rounded,
                       size: 17,
-                      color: Colors.white.withValues(alpha: 0.6),
+                      color: context.p.ink.withValues(alpha: 0.6),
                     ),
                   ),
                 ),
@@ -83,7 +83,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   vertical: 7,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.blue,
+                  color: context.p.link,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -92,7 +92,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     size: 11,
                     weight: FontWeight.w600,
                     spacing: 1.2,
-                    color: Colors.white,
+                    color: context.p.ink,
                   ),
                 ),
               ),
@@ -105,7 +105,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 weight: FontWeight.w700,
                 height: 1.06,
                 spacing: -1.5,
-                color: Colors.white,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 22),
@@ -114,7 +114,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 decoration: BoxDecoration(
                   border: Border(
-                    top: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
+                    top: BorderSide(
+                      color: context.p.ink.withValues(alpha: 0.1),
+                    ),
                   ),
                 ),
                 child: Row(
@@ -125,7 +127,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       child: Icon(
                         Icons.check_rounded,
                         size: 15,
-                        color: AppColors.blue,
+                        color: context.p.link,
                       ),
                     ),
                     const SizedBox(width: 13),
@@ -139,7 +141,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                               size: 14.5,
                               weight: FontWeight.w600,
                               height: 1.3,
-                              color: Colors.white,
+                              color: context.p.ink,
                             ),
                           ),
                           const SizedBox(height: 3),
@@ -148,7 +150,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             style: AppText.body(
                               size: 12.5,
                               height: 1.4,
-                              color: Colors.white.withValues(alpha: 0.5),
+                              color: context.p.ink.withValues(alpha: 0.5),
                             ),
                           ),
                         ],
@@ -200,12 +202,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         Navigator.of(context).pop();
                       },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.blue,
-                  foregroundColor: Colors.white,
-                  disabledBackgroundColor: AppColors.blue.withValues(
+                  backgroundColor: context.p.link,
+                  foregroundColor: context.p.ink,
+                  disabledBackgroundColor: context.p.link.withValues(
                     alpha: 0.35,
                   ),
-                  disabledForegroundColor: Colors.white.withValues(alpha: 0.7),
+                  disabledForegroundColor: context.p.ink.withValues(alpha: 0.7),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(999),
@@ -216,7 +218,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   style: AppText.body(
                     size: 14.5,
                     weight: FontWeight.w600,
-                    color: Colors.white,
+                    color: context.p.ink,
                   ),
                 ),
               ),
@@ -238,7 +240,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 style: AppText.body(
                   size: 11.5,
                   height: 1.4,
-                  color: Colors.white.withValues(alpha: 0.35),
+                  color: context.p.inkFaint,
                 ),
               ),
             ),
@@ -266,10 +268,8 @@ class _PlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ink = selected ? Colors.white : AppColors.ink;
-    final sub = selected
-        ? Colors.white.withValues(alpha: 0.55)
-        : Colors.black.withValues(alpha: 0.45);
+    final ink = selected ? context.p.ink : context.p.ink;
+    final sub = selected ? context.p.inkMuted : context.p.inkMuted;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -280,10 +280,10 @@ class _PlanTile extends StatelessWidget {
         decoration: BoxDecoration(
           // The selected tile stays on the dark ground with a lit border;
           // the other one turns to paper so the choice reads instantly.
-          color: selected ? AppColors.ink : Colors.white,
+          color: selected ? context.p.ink : context.p.ink,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: selected ? AppColors.blue : Colors.transparent,
+            color: selected ? context.p.link : Colors.transparent,
             width: 1.5,
           ),
         ),

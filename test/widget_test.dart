@@ -363,6 +363,38 @@ void main() {
     });
   });
 
+  testWidgets('the theme is one choice for the whole app', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    Palette paletteOn(String tabLabel) {
+      final context = tester.element(find.text(tabLabel).last);
+      return Theme.of(context).extension<Palette>()!;
+    }
+
+    // Whatever the tab, the same ground.
+    final onToday = paletteOn('Today');
+    await tester.tap(find.text('Saved').last);
+    await _settle(tester);
+    expect(paletteOn('Saved').surface, onToday.surface);
+
+    await tester.tap(find.text('Profile').last);
+    await _settle(tester);
+    expect(paletteOn('Profile').surface, onToday.surface);
+
+    // And it can be changed, once, for all of it.
+    await tester.scrollUntilVisible(find.text('Light'), 200);
+    await _settle(tester);
+    await tester.tap(find.text('Light'));
+    await _settle(tester);
+
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('knowit.theme'), 'light');
+    expect(paletteOn('Profile').surface, Palette.light.surface);
+    expect(paletteOn('Profile').surface, isNot(onToday.surface));
+  });
+
   group('The shape of a day', () {
     Pill fact(String id, Difficulty d) => Pill(
       id: id,
@@ -567,9 +599,9 @@ void main() {
       Set<String> reviews = const {},
     }) {
       return MaterialApp(
-        theme: buildKnowitTheme(),
+        theme: buildKnowitTheme(Brightness.dark),
         home: Scaffold(
-          backgroundColor: AppColors.dark,
+          backgroundColor: Palette.dark.surface,
           body: SizedBox(
             height: 640,
             child: PillCardStack(
@@ -796,7 +828,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(),
+          theme: buildKnowitTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
       );
@@ -819,7 +851,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(),
+          theme: buildKnowitTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
       );
@@ -901,7 +933,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(),
+          theme: buildKnowitTheme(Brightness.dark),
           home: Scaffold(
             body: SizedBox(
               height: 640,

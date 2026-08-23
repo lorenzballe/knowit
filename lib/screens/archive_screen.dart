@@ -46,7 +46,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     final results = _results;
 
     return Scaffold(
-      backgroundColor: AppColors.paper,
+      backgroundColor: context.p.surface,
       body: SafeArea(
         bottom: false,
         child: Column(
@@ -66,7 +66,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       weight: FontWeight.w700,
                       height: 1.05,
                       spacing: -1.3,
-                      color: AppColors.ink,
+                      color: context.p.ink,
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -74,32 +74,30 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     height: 48,
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: context.p.surfaceRaised,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: Colors.black.withValues(alpha: 0.1),
-                      ),
+                      border: Border.all(color: context.p.line),
                     ),
                     child: Row(
                       children: [
                         Icon(
                           Icons.search_rounded,
                           size: 18,
-                          color: Colors.black.withValues(alpha: 0.35),
+                          color: context.p.inkFaint,
                         ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextField(
                             controller: _controller,
                             onChanged: (v) => setState(() => _query = v),
-                            style: AppText.body(size: 15, color: AppColors.ink),
+                            style: AppText.body(size: 15, color: context.p.ink),
                             decoration: InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
                               hintText: 'Search ${kPillPool.length} pills',
                               hintStyle: AppText.body(
                                 size: 15,
-                                color: Colors.black.withValues(alpha: 0.35),
+                                color: context.p.inkFaint,
                               ),
                             ),
                           ),
@@ -116,7 +114,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               child: Icon(
                                 Icons.close_rounded,
                                 size: 17,
-                                color: Colors.black.withValues(alpha: 0.35),
+                                color: context.p.inkFaint,
                               ),
                             ),
                           ),
@@ -140,12 +138,12 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: on ? AppColors.ink : Colors.white,
+                            color: on
+                                ? context.p.inverse
+                                : context.p.surfaceRaised,
                             borderRadius: BorderRadius.circular(999),
                             border: Border.all(
-                              color: on
-                                  ? Colors.transparent
-                                  : Colors.black.withValues(alpha: 0.1),
+                              color: on ? Colors.transparent : context.p.line,
                             ),
                           ),
                           child: Row(
@@ -159,8 +157,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                   size: 12.5,
                                   weight: FontWeight.w500,
                                   color: on
-                                      ? Colors.white
-                                      : Colors.black.withValues(alpha: 0.62),
+                                      ? context.p.onInverse
+                                      : context.p.inkMuted,
                                 ),
                               ),
                             ],
@@ -172,7 +170,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   const SizedBox(height: 16),
                   Eyebrow(
                     '${results.length} result${results.length == 1 ? '' : 's'}',
-                    color: Colors.black.withValues(alpha: 0.4),
+                    color: context.p.inkFaint,
                   ),
                 ],
               ),
@@ -224,9 +222,7 @@ class _ResultRow extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
-          ),
+          border: Border(bottom: BorderSide(color: context.p.line)),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -246,16 +242,13 @@ class _ResultRow extends StatelessWidget {
                       size: 15,
                       weight: FontWeight.w500,
                       height: 1.32,
-                      color: AppColors.ink,
+                      color: context.p.ink,
                     ),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     '${pill.topic} · ${pill.source}',
-                    style: AppText.body(
-                      size: 11.5,
-                      color: Colors.black.withValues(alpha: 0.4),
-                    ),
+                    style: AppText.body(size: 11.5, color: context.p.inkFaint),
                   ),
                 ],
               ),
@@ -290,11 +283,7 @@ class _NoResults extends StatelessWidget {
               ? 'No pills match that filter yet.'
               : 'Nothing for "$query". Try a topic instead.',
           textAlign: TextAlign.center,
-          style: AppText.body(
-            size: 14,
-            height: 1.5,
-            color: Colors.black.withValues(alpha: 0.45),
-          ),
+          style: AppText.body(size: 14, height: 1.5, color: context.p.inkMuted),
         ),
       ),
     );

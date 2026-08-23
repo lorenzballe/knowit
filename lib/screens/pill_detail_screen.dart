@@ -44,7 +44,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                       icon: saved
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
-                      color: saved ? pill.color : AppColors.ink,
+                      color: saved ? pill.color : context.p.ink,
                       onTap: () async {
                         await widget.app.toggleSaved(pill.id);
                         if (mounted) setState(() {});
@@ -54,7 +54,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                     _RoundAction(
                       label: 'Share this pill',
                       icon: Icons.ios_share_rounded,
-                      color: AppColors.ink,
+                      color: context.p.ink,
                       onTap: () => showShareSheet(context, pill),
                     ),
                   ],
@@ -108,7 +108,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
             // The same reveal the card shows. This used to print pill.answer
             // alone, which on a worked problem is the last line of the
             // solution and on a debate is one side of it.
-            RevealBody.onPaper(pill),
+            RevealBody.onPage(pill, context.p),
           ],
         ),
       ),
@@ -142,7 +142,7 @@ class _RoundAction extends StatelessWidget {
           height: 38,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: Colors.black.withValues(alpha: 0.12)),
+            border: Border.all(color: context.p.line),
           ),
           alignment: Alignment.center,
           child: Icon(icon, size: 17, color: color),
@@ -166,7 +166,7 @@ class _AnsweredLine extends StatelessWidget {
         style: AppText.body(
           size: 13,
           weight: FontWeight.w500,
-          color: Colors.black.withValues(alpha: 0.55),
+          color: context.p.inkMuted,
         ),
       );
     }
@@ -180,7 +180,7 @@ class _AnsweredLine extends StatelessWidget {
         Icon(
           right ? Icons.check_circle_rounded : Icons.cancel_rounded,
           size: 16,
-          color: right ? AppColors.ink : AppColors.red,
+          color: right ? context.p.ink : context.p.alert,
         ),
         const SizedBox(width: 8),
         Flexible(
@@ -191,7 +191,7 @@ class _AnsweredLine extends StatelessWidget {
             style: AppText.body(
               size: 13,
               weight: FontWeight.w500,
-              color: Colors.black.withValues(alpha: 0.6),
+              color: context.p.inkMuted,
             ),
           ),
         ),

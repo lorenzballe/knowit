@@ -112,8 +112,8 @@ class _ShareSheetState extends State<_ShareSheet> {
     final pill = widget.pill;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.paper,
+      decoration: BoxDecoration(
+        color: context.p.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),
       padding: EdgeInsets.fromLTRB(
@@ -132,7 +132,7 @@ class _ShareSheetState extends State<_ShareSheet> {
                 width: 38,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.16),
+                  color: context.p.lineStrong,
                   borderRadius: BorderRadius.circular(9),
                 ),
               ),
@@ -144,7 +144,7 @@ class _ShareSheetState extends State<_ShareSheet> {
                 size: 20,
                 weight: FontWeight.w600,
                 spacing: -0.6,
-                color: AppColors.ink,
+                color: context.p.ink,
               ),
             ),
             const SizedBox(height: 20),
@@ -283,10 +283,10 @@ class _CircleAction extends StatelessWidget {
         height: 52,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.black.withValues(alpha: 0.14)),
+          border: Border.all(color: context.p.line),
         ),
         alignment: Alignment.center,
-        child: Icon(icon, size: 19, color: AppColors.ink),
+        child: Icon(icon, size: 19, color: context.p.ink),
       ),
     );
   }
