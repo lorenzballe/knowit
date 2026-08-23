@@ -74,8 +74,6 @@ class _TodayScreenState extends State<TodayScreen> {
                       deck: deck,
                       index: index,
                       onAdvance: () => app.advance(),
-                      isSaved: app.isSaved,
-                      onToggleSaved: (id) => app.toggleSaved(id),
                     ),
             ),
           ),

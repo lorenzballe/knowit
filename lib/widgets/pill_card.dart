@@ -1,7 +1,4 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
@@ -12,16 +9,12 @@ class PillCard extends StatelessWidget {
   final Pill pill;
   final String indexLabel;
   final bool flipped;
-  final bool saved;
-  final VoidCallback? onToggleSaved;
 
   const PillCard({
     super.key,
     required this.pill,
     required this.indexLabel,
     required this.flipped,
-    required this.saved,
-    this.onToggleSaved,
   });
 
   @override
@@ -53,25 +46,12 @@ class PillCard extends StatelessWidget {
                   color: pill.ink.withValues(alpha: 0.72),
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    indexLabel,
-                    style: AppText.label(
-                      size: 11,
-                      color: pill.ink.withValues(alpha: 0.55),
-                    ),
-                  ),
-                  if (onToggleSaved != null) ...[
-                    const SizedBox(width: 10),
-                    _SaveButton(
-                      label: saved ? 'Remove from saved' : 'Save this pill',
-                      saved: saved,
-                      ink: pill.ink,
-                      onTap: onToggleSaved!,
-                    ),
-                  ],
-                ],
+              Text(
+                indexLabel,
+                style: AppText.label(
+                  size: 11,
+                  color: pill.ink.withValues(alpha: 0.55),
+                ),
               ),
             ],
           ),
@@ -203,81 +183,6 @@ class _BackFace extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SaveButton extends StatefulWidget {
-  final bool saved;
-  final Color ink;
-  final VoidCallback onTap;
-  final String label;
-  const _SaveButton({
-    required this.saved,
-    required this.ink,
-    required this.onTap,
-    required this.label,
-  });
-
-  @override
-  State<_SaveButton> createState() => _SaveButtonState();
-}
-
-class _SaveButtonState extends State<_SaveButton>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _pop = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 340),
-  );
-
-  @override
-  void didUpdateWidget(covariant _SaveButton old) {
-    super.didUpdateWidget(old);
-    // Only celebrate on the way in, not when the pill is dropped.
-    if (widget.saved && !old.saved) _pop.forward(from: 0);
-  }
-
-  @override
-  void dispose() {
-    _pop.dispose();
-    super.dispose();
-  }
-
-  void _handleTap() {
-    HapticFeedback.mediumImpact();
-    widget.onTap();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: widget.label,
-      child: GestureDetector(
-        onTap: _handleTap,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-          child: AnimatedBuilder(
-            animation: _pop,
-            builder: (context, child) {
-              // Overshoot then settle, so the heart lands with a bit of weight.
-              final t = _pop.value;
-              final scale = 1 + math.sin(t * math.pi) * 0.45;
-              return Transform.scale(scale: scale, child: child);
-            },
-            child: Icon(
-              widget.saved
-                  ? Icons.favorite_rounded
-                  : Icons.favorite_border_rounded,
-              size: 18,
-              color: widget.saved
-                  ? widget.ink
-                  : widget.ink.withValues(alpha: 0.65),
-            ),
           ),
         ),
       ),

@@ -13,16 +13,12 @@ class PillCardStack extends StatefulWidget {
   final List<Pill> deck;
   final int index;
   final VoidCallback onAdvance;
-  final bool Function(String id) isSaved;
-  final void Function(String id) onToggleSaved;
 
   const PillCardStack({
     super.key,
     required this.deck,
     required this.index,
     required this.onAdvance,
-    required this.isSaved,
-    required this.onToggleSaved,
   });
 
   @override
@@ -132,27 +128,10 @@ class _PillCardStackState extends State<PillCardStack>
       Widget card = isTop
           ? FlipCard(
               showBack: _flipped,
-              front: PillCard(
-                pill: pill,
-                indexLabel: num,
-                flipped: false,
-                saved: widget.isSaved(pill.id),
-                onToggleSaved: () => widget.onToggleSaved(pill.id),
-              ),
-              back: PillCard(
-                pill: pill,
-                indexLabel: num,
-                flipped: true,
-                saved: widget.isSaved(pill.id),
-                onToggleSaved: () => widget.onToggleSaved(pill.id),
-              ),
+              front: PillCard(pill: pill, indexLabel: num, flipped: false),
+              back: PillCard(pill: pill, indexLabel: num, flipped: true),
             )
-          : PillCard(
-              pill: pill,
-              indexLabel: num,
-              flipped: false,
-              saved: widget.isSaved(pill.id),
-            );
+          : PillCard(pill: pill, indexLabel: num, flipped: false);
 
       final translateY = isTop ? 0.0 : d * 16.0;
       final scale = isTop ? 1.0 : 1 - d * 0.035;
