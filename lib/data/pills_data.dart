@@ -34,8 +34,9 @@ Pill _q(
   String trap,
   String a,
   String bar,
-  String src,
-) {
+  String src, {
+  String simply = '',
+}) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
@@ -49,6 +50,7 @@ Pill _q(
     source: src,
     challenge: PickOne(options: choices, correct: correct),
     trap: trap,
+    simply: simply,
     difficulty: Difficulty.medium,
   );
 }
@@ -66,6 +68,7 @@ Pill _n(
   String bar,
   String src, {
   Difficulty difficulty = Difficulty.medium,
+  String simply = '',
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
@@ -78,10 +81,71 @@ Pill _n(
     answer: steps.isEmpty ? '' : steps.last,
     barMove: bar,
     source: src,
+    simply: simply,
     challenge: TypeNumber(answer: answer, unit: unit),
     hint: hint,
     steps: steps,
     difficulty: difficulty,
+  );
+}
+
+/// Builds a Fermi estimate: judged on being close, not exact.
+Pill _e(
+  String id,
+  String topicKey,
+  String q,
+  num answer,
+  String unit,
+  String hint,
+  List<String> steps,
+  String bar,
+  String src, {
+  num withinFactor = 3,
+}) {
+  final t = kTopics[topicKey]!;
+  return Pill(
+    id: id,
+    topic: t.name,
+    color: t.color,
+    ink: t.ink,
+    tint: t.tint,
+    question: q,
+    answer: steps.isEmpty ? '' : steps.last,
+    barMove: bar,
+    source: src,
+    challenge: Estimate(answer: answer, unit: unit, withinFactor: withinFactor),
+    hint: hint,
+    steps: steps,
+    difficulty: Difficulty.medium,
+  );
+}
+
+/// Builds a debate card. Nothing here is graded: the reader takes a side and
+/// then meets the strongest version of the case against it.
+Pill _d(
+  String id,
+  String topicKey,
+  String claim,
+  List<String> positions,
+  String yourCase,
+  String counterpoint,
+  String bar,
+  String src,
+) {
+  final t = kTopics[topicKey]!;
+  return Pill(
+    id: id,
+    topic: t.name,
+    color: t.color,
+    ink: t.ink,
+    tint: t.tint,
+    question: claim,
+    answer: yourCase,
+    barMove: bar,
+    source: src,
+    challenge: TakeASide(positions: positions),
+    counterpoint: counterpoint,
+    difficulty: Difficulty.medium,
   );
 }
 
@@ -585,6 +649,11 @@ final List<Pill> kPillPool = [
     'Out of 100,000 people, 100 are ill and about 95 test positive. But 5% of the other 99,900 also test positive: about 4,995 false alarms. So roughly 95 out of 5,090 positives are real — under 2%.',
     'The accuracy of a test is not the accuracy of your result.',
     'Base rate neglect; Casscells, Schoenberger & Graboys, 1978',
+    simply:
+        'Imagine a village of 100,000. Only 100 people are actually ill. '
+        'The test shouts "ill!" at almost all of those 100 — but it also '
+        'shouts at 5,000 healthy people by mistake. If it shouts at you, '
+        'you are far more likely to be one of the 5,000.',
   ),
   _q(
     'thinking-2',
@@ -610,6 +679,10 @@ final List<Pill> kPillPool = [
     'Your first pick was right 1 time in 3, and that does not change. The remaining 2 in 3 collapse onto the one door left. Switching wins twice as often. Simulate it a hundred times and the split shows up.',
     'The host knew where the car was. That is the whole trick.',
     'Monty Hall problem; vos Savant, 1990',
+    simply:
+        'Play with a hundred doors instead of three. You pick one. The host '
+        'opens ninety-eight empty ones and leaves your door and one other. '
+        'Do you still fancy your first guess?',
   ),
   _q(
     'thinking-4',
@@ -668,6 +741,11 @@ final List<Pill> kPillPool = [
     'Women applied in larger numbers to departments that admitted few people at all. Split by department, the bias mostly ran the other way. An aggregate can reverse when you break it up — Simpson\'s paradox.',
     'A number about everyone can be true and say nothing about anyone.',
     'Bickel, Hammel & O\'Connell, Science, 1975',
+    simply:
+        'Two queues. The short easy queue mostly had men in it, the long '
+        'hard queue mostly women. Each queue was slightly kinder to women '
+        '— but more women stood in the hard one, so the total looks unfair '
+        'to them. The whole can lean one way while every part leans the other.',
   ),
   _q(
     'thinking-9',
@@ -828,6 +906,10 @@ final List<Pill> kPillPool = [
     ],
     'You can answer a question about a 158-digit number without computing it.',
     "Legendre's formula",
+    simply:
+        'A zero at the end means the number got multiplied by 10 somewhere. '
+        'Ten is two times five. Twos are everywhere in a factorial, so the '
+        'zeros are limited by how many fives you can find.',
     difficulty: Difficulty.hard,
   ),
   _n(
@@ -845,5 +927,205 @@ final List<Pill> kPillPool = [
     'Twelve is the obvious answer and it is one too many.',
     'Relative angular speed',
     difficulty: Difficulty.hard,
+  ),
+
+  // ── Fermi estimates. Close is the skill; exact is not the point.
+  _e(
+    'thinking-e1',
+    'thinking',
+    'How many piano tuners work in a city the size of Milan?',
+    30,
+    'tuners',
+    'How many pianos are there, and how many can one person keep in tune?',
+    [
+      'About 1.4 million people, say 500,000 households.',
+      'Perhaps one household in fifty has a piano: 10,000 pianos.',
+      'Each is tuned about once a year; a tuner does maybe 4 a day, 800 a year.',
+      '10,000 ÷ 800 ≈ 12, and add schools, bars and studios: a few dozen.',
+    ],
+    'The answer matters less than the fact that you could get near it.',
+    'Fermi estimation, classic problem',
+  ),
+  _e(
+    'thinking-e2',
+    'thinking',
+    'How many times does a human heart beat in a lifetime, in billions?',
+    3,
+    'billion',
+    'Beats a minute, minutes in a year, years in a life. Multiply.',
+    [
+      'About 70 beats a minute, so roughly 100,000 a day.',
+      'That is about 37 million a year.',
+      'Over 80 years: a bit under 3 billion.',
+    ],
+    'Every mammal gets roughly a billion heartbeats. We cheat and get three.',
+    'Physiology, order-of-magnitude estimate',
+  ),
+  _e(
+    'thinking-e3',
+    'thinking',
+    'How many words does a person speak in a day?',
+    16000,
+    'words',
+    'Speaking runs at about 150 words a minute. How many minutes do you talk?',
+    [
+      'Conversation runs at roughly 150 words a minute.',
+      'Most people talk for something like two hours across a whole day.',
+      '150 × 120 ≈ 18,000. Measured studies land near 16,000.',
+    ],
+    'Men and women turn out to speak almost exactly the same amount.',
+    'Mehl et al., Science, 2007',
+  ),
+  _e(
+    'thinking-e4',
+    'thinking',
+    "Roughly how many molecules of Caesar's last breath are in the breath you just took?",
+    1,
+    'molecules',
+    'A breath holds about 10²² molecules. The atmosphere holds about 10⁴⁴.',
+    [
+      'One breath contains roughly 10²² molecules.',
+      'The whole atmosphere holds about 10⁴⁴.',
+      'So your breath is about 10⁻²² of the air — and Caesar\'s last breath spread through all of it.',
+      'Multiply: about one molecule of his last breath in every breath you take.',
+    ],
+    'You are, in a very literal and very small way, breathing Caesar.',
+    'Classic order-of-magnitude problem',
+    withinFactor: 10,
+  ),
+  _e(
+    'thinking-e5',
+    'thinking',
+    'How many hairs are on a human head?',
+    100000,
+    'hairs',
+    'Think of hairs per square centimetre, then the area of a scalp.',
+    [
+      'A scalp is roughly 600 cm².',
+      'Hair grows at something like 150–200 per cm².',
+      '600 × 170 ≈ 100,000.',
+    ],
+    'Two strangers in a city of a million certainly have the same hair count.',
+    'Dermatology, average follicle density',
+  ),
+
+  // ── Spot the flaw. Not what the fallacy is called — where the step breaks.
+  _q(
+    'thinking-f1',
+    'thinking',
+    '"Every successful founder I interviewed woke at 5am. So waking early makes you successful." Where does this break?',
+    [
+      'Waking early is not that helpful',
+      'Nobody asked the founders who failed',
+      'Five is too early to be realistic',
+    ],
+    1,
+    'Arguing about whether waking early works, instead of about the sample.',
+    'The sample was chosen by its outcome. If half of all failed founders also woke at 5am, the habit tells you nothing. You cannot learn what causes success by studying only successes.',
+    'Ask who is missing from the sample before you argue about the finding.',
+    'Selection on the dependent variable',
+  ),
+  _q(
+    'thinking-f2',
+    'thinking',
+    '"Hospitals are dangerous: far more people die in them than at home." What is wrong?',
+    [
+      'The figures are probably made up',
+      'People go to hospital because they are already dying',
+      'Home deaths are under-reported',
+    ],
+    1,
+    'Treating a place where sick people are sent as a cause of their outcome.',
+    'The comparison assumes the two groups are alike, and they are not: hospitals concentrate the sickest people. Judging a treatment needs comparable groups, which is what a control group is for.',
+    'Any statistic comparing two groups invites one question: who ended up in each?',
+    'Confounding by indication',
+  ),
+  _q(
+    'thinking-f3',
+    'thinking',
+    '"After the new mayor, crime fell 8%. The policy worked." What is missing?',
+    [
+      'Eight percent is too small to matter',
+      'What crime did everywhere else over the same period',
+      'The exact definition of crime',
+    ],
+    1,
+    'Judging a change without anything to compare it against.',
+    'If crime fell 12% nationally, this mayor did worse than doing nothing. A number with no comparison group cannot support a claim about cause — that is what a counterfactual is for.',
+    '"Compared to what?" is the most useful question in any argument.',
+    'Counterfactual reasoning',
+  ),
+  _q(
+    'thinking-f4',
+    'thinking',
+    'A study tests 20 foods against cancer risk and finds one significant at p < 0.05. What should you think?',
+    [
+      'Convincing — that is the standard threshold',
+      'Expected by chance: 20 tests, 1 in 20 odds',
+      'They should have tested more foods',
+    ],
+    1,
+    'Reading a single p-value without asking how many tests were run.',
+    'A 5% threshold means one false positive in twenty tests on average. Run twenty tests and finding one "result" is what should happen if nothing is going on. The fix is to say up front what you are testing.',
+    'Ask how many things they measured before you believe the one they report.',
+    'Multiple comparisons problem',
+  ),
+  _q(
+    'thinking-f5',
+    'thinking',
+    '"Nobody I know voted for it, so the result must be rigged." Where is the error?',
+    [
+      'They probably did not check carefully',
+      'The people you know are not a random sample',
+      'One election is too small a sample',
+    ],
+    1,
+    'Treating the people around you as if they were drawn at random.',
+    'People cluster with people like themselves, so your circle is one of the least random samples available. Pauline Kael is often misquoted saying this about Nixon; the underlying error is real regardless.',
+    'Your social circle is evidence about your social circle.',
+    'Sampling bias',
+  ),
+
+  // ── Debate. Nothing here is graded: pick a side, then meet the best case
+  // against it.
+  _d(
+    'thinking-d1',
+    'thinking',
+    'Should social media have a legal minimum age of 16?',
+    ['Yes, set a minimum', 'No, leave it to parents'],
+    'A minimum age treats a designed-to-be-addictive product the way we treat alcohol and gambling. Parents cannot realistically opt one child out of where every classmate lives, so the choice is not free in practice — a floor removes that trap for everyone at once.',
+    'Bans push teenagers to lie about their age rather than stay off, which makes them less visible and less protected. Enforcement means verifying identity for everyone, handing platforms more personal data than they hold now. And the evidence on harm is contested — much of it is correlational, and the effect sizes found are often small.',
+    'Whichever side you took, the enforcement question is the one that decides it.',
+    'Contested policy question',
+  ),
+  _d(
+    'thinking-d2',
+    'thinking',
+    'A self-driving car must choose: swerve and kill one, or continue and kill five. What should it be built to do?',
+    ['Minimise deaths', 'Protect its passenger'],
+    'A machine should do what a clear-headed person would want in advance, and almost nobody, asked in the abstract, prefers five deaths to one. Building anything else means writing a rule that some lives count less because of where they are standing.',
+    'People say they want the car to minimise deaths, and then say they would not buy that car. A vehicle that might sacrifice its passenger will not sell, so the ethical version never reaches the road and the far larger benefit — fewer crashes overall — never arrives.',
+    'The gap between what people say they want and what they would buy is the whole problem.',
+    'Bonnefon, Shariff & Rahwan, Science, 2016',
+  ),
+  _d(
+    'thinking-d3',
+    'thinking',
+    'Should people be paid for donating a kidney?',
+    ['Yes, pay donors', 'No, keep it a gift'],
+    'People die on waiting lists while healthy kidneys go undonated. Iran, the one country with a regulated payment system, has no waiting list. We already pay surgeons, nurses and hospitals — the only person forbidden to benefit is the one taking the risk.',
+    'A price makes the poor the supply. If the offer is life-changing money, refusing stops being a free choice, and the burden of organ removal lands almost entirely on people with no other options. Consent given under financial pressure is the thing the rule exists to protect.',
+    'Both sides agree people are dying. They disagree about what counts as a free choice.',
+    'Contested question in medical ethics',
+  ),
+  _d(
+    'thinking-d4',
+    'thinking',
+    'Should we bring back extinct species we have the technology to revive?',
+    ['Yes, revive them', 'No, leave them extinct'],
+    'We caused most of these extinctions, and restoring a lost species can repair an ecosystem that lost its engineer. The techniques developed also help species that are still alive but failing.',
+    'The money is finite, and it competes directly with protecting species that still exist. A revived animal returns to a habitat that has moved on without it, and the promise of reversal weakens the argument for not causing extinctions in the first place.',
+    'The strongest objection is not scientific. It is what the promise does to the incentive.',
+    'Contested question in conservation biology',
   ),
 ];

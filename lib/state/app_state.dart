@@ -224,15 +224,24 @@ class AppState extends ChangeNotifier {
   /// What the reader committed to on this card, or null if they have not.
   String? answerFor(String pillId) => answers[pillId];
 
-  int get puzzlesAnswered => answers.length;
+  /// Only cards that can be right or wrong count. A debate card asks for an
+  /// opinion, and an opinion is not a score.
+  Iterable<MapEntry<String, String>> get _gradedAnswers sync* {
+    for (final e in answers.entries) {
+      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      if (pill != null && pill.isGraded) yield e;
+    }
+  }
+
+  int get puzzlesAnswered => _gradedAnswers.length;
 
   int get puzzlesRight {
     var right = 0;
-    for (final e in answers.entries) {
-      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+    for (final e in _gradedAnswers) {
+      final pill = kPillPool.firstWhere((p) => p.id == e.key);
       // Grading belongs to the challenge, not here: a new kind of card
       // brings its own rule and this stays untouched.
-      if (pill != null && pill.challenge.accepts(e.value)) right++;
+      if (pill.challenge.accepts(e.value)) right++;
     }
     return right;
   }

@@ -47,7 +47,12 @@ List<Pill> pillsForDate(
   ];
 
   final ordered = [for (final tier in tiers) ..._oneTopicFirst(tier)];
-  return ordered.take(count).toList();
+  final deck = ordered.take(count).toList();
+
+  // A day should open on something easy and work up. Opening on a hard
+  // competition problem is a good way to be closed again.
+  deck.sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
+  return deck;
 }
 
 /// Looks pills back up by id — used to restore a day's deck across restarts.

@@ -70,6 +70,79 @@ These are declared in the UI rather than faked:
 - **No notification delivery.** The daily nudge is stored as a preference;
   actually scheduling it needs a local-notifications plugin and a mobile build.
 
+The pool holds 95 cards: 60 facts plus 35 under **Thinking** — bias traps,
+competition problems, Fermi estimates, spot-the-flaw and debates.
+
+## How a card asks
+
+A card either tells you something or asks you something first, and that is
+modelled as a sealed `Challenge` rather than a kind flag with a drawer of
+nullable fields:
+
+| Challenge | The front of the card | Graded |
+|---|---|---|
+| `NoChallenge` | the question, tap to turn it over | — |
+| `PickOne` | the options | index matches |
+| `TypeNumber` | a number field and a unit | value within tolerance |
+| `Estimate` | the same field, judged loosely | within a factor |
+| `TakeASide` | two positions | **never** |
+
+Each case carries only the data it needs and grades its own answers, so adding
+a way to ask means a new subclass — and the switch that picks a card's face
+stops compiling until that case is handled. Answers are stored as the raw
+string the reader committed, so one store serves every kind.
+
+`TakeASide` is ungraded on purpose. A debate card asks for an opinion, and
+scoring an opinion would be telling the reader theirs is wrong; ungraded cards
+stay out of the tally entirely.
+
+Committing is what turns the card over; a stray tap will not, or the answer
+could be reached without ever guessing. Getting it wrong on purpose is the part
+that teaches, so the reveal names the trap before it explains. Your first
+answer stands.
+
+## What a card can offer on the reveal
+
+- **A hint**, asked for without giving up and without turning the card.
+- **A worked solution** as numbered steps, because a derivation nobody can
+  follow is not an explanation.
+- **Put simply** — a second way in for the ideas that genuinely have one: a
+  concrete image, not the same words made smaller. Deliberately absent where
+  the main explanation is already the simplest true version, since a button on
+  every card becomes an excuse to write the first one badly.
+- **What the other side says** — on a debate, the strongest case against
+  whichever side you took.
+
+A day is dealt easiest-first, so it opens on something light and works up
+rather than starting on a hard competition problem.
+
+## Project structure
+
+```
+lib/
+  data/        topic palette, the pill pool, and the daily dealer
+  models/      Pill
+  state/       AppState — streak, saved pills, reading history, plan (persisted)
+  utils/       PNG download, web-only with a no-op elsewhere
+  widgets/     card stack, share sheet, shared UI, the Knowit+ gate
+  screens/     the screens listed above
+```
+
+Today's deck is dealt deterministically from the date, so it does not reshuffle
+mid-day, and it is stored by id so a restart resumes the same five. Pills
+already read are kept out of later days until the pool runs dry.
+
+## What is not real yet
+
+These are declared in the UI rather than faked:
+
+- **No billing.** The paywall's call to action starts the trial locally so the
+  gated screens can be used, and says no payment was taken.
+- **No account backend.** Sign-in keeps a profile on the device; the Apple and
+  Google buttons say they are not connected.
+- **No notification delivery.** The daily nudge is stored as a preference;
+  actually scheduling it needs a local-notifications plugin and a mobile build.
+
 The pool holds 81 cards: 60 facts, 15 reasoning puzzles and 6 competition
 problems, the last two under **Thinking**.
 

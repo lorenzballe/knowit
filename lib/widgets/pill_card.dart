@@ -78,10 +78,34 @@ class PillCard extends StatelessWidget {
                         onAnswer: onAnswer,
                       ),
                     ),
-                    TypeNumber() => _AskFace(
+                    TakeASide(:final positions) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
-                      input: _NumberInput(pill: pill, onAnswer: onAnswer),
+                      prompt: 'Pick a side. There is no right answer.',
+                      input: _PickInput(
+                        pill: pill,
+                        options: positions,
+                        onAnswer: onAnswer,
+                      ),
+                    ),
+                    TypeNumber(:final unit) => _AskFace(
+                      pill: pill,
+                      onAnswer: onAnswer,
+                      input: _NumberInput(
+                        pill: pill,
+                        unit: unit,
+                        onAnswer: onAnswer,
+                      ),
+                    ),
+                    Estimate(:final unit) => _AskFace(
+                      pill: pill,
+                      onAnswer: onAnswer,
+                      prompt: 'Estimate. Close enough counts.',
+                      input: _NumberInput(
+                        pill: pill,
+                        unit: unit,
+                        onAnswer: onAnswer,
+                      ),
                     ),
                   },
           ),
@@ -144,13 +168,24 @@ class _FrontFace extends StatelessWidget {
   }
 }
 
-class _BackFace extends StatelessWidget {
+class _BackFace extends StatefulWidget {
   final Pill pill;
   final String? given;
   const _BackFace({required this.pill, this.given});
 
   @override
+  State<_BackFace> createState() => _BackFaceState();
+}
+
+class _BackFaceState extends State<_BackFace> {
+  bool _simplyOpen = false;
+  bool _counterOpen = false;
+
+  @override
   Widget build(BuildContext context) {
+    final pill = widget.pill;
+    final given = widget.given;
+
     return LayoutBuilder(
       builder: (context, constraints) => SingleChildScrollView(
         child: ConstrainedBox(
@@ -160,11 +195,11 @@ class _BackFace extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (pill.asksSomething && given != null) ...[
+              if (pill.isGraded && given != null) ...[
                 _Verdict(
                   pill: pill,
-                  right: pill.challenge.accepts(given!),
-                  given: given!,
+                  right: pill.challenge.accepts(given),
+                  given: pill.challenge.describe(given),
                 ),
                 const SizedBox(height: 14),
               ],
@@ -191,6 +226,34 @@ class _BackFace extends StatelessWidget {
                     color: pill.ink.withValues(alpha: 0.92),
                   ),
                 ),
+              if (pill.hasSimply) ...[
+                const SizedBox(height: 14),
+                if (_simplyOpen)
+                  _Panel(pill: pill, label: 'PUT SIMPLY', body: pill.simply)
+                else
+                  _TextAction(
+                    pill: pill,
+                    icon: Icons.child_care_rounded,
+                    label: 'Explain it like I am three',
+                    onTap: () => setState(() => _simplyOpen = true),
+                  ),
+              ],
+              if (pill.hasCounterpoint) ...[
+                const SizedBox(height: 14),
+                if (_counterOpen)
+                  _Panel(
+                    pill: pill,
+                    label: 'WHAT THE OTHER SIDE SAYS',
+                    body: pill.counterpoint,
+                  )
+                else
+                  _TextAction(
+                    pill: pill,
+                    icon: Icons.swap_horiz_rounded,
+                    label: 'What the other side says',
+                    onTap: () => setState(() => _counterOpen = true),
+                  ),
+              ],
               if (pill.asksSomething && pill.trap.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(
@@ -266,12 +329,15 @@ class _Verdict extends StatelessWidget {
   });
 
   String get _line {
-    if (right) return 'You got it';
     return switch (pill.challenge) {
+      Estimate(:final answerLabel, :final band) =>
+        right
+            ? 'Close enough · it is $answerLabel'
+            : 'You said $given · it is $answerLabel, and $band counted',
       // A wrong number is a slip; a wrong pick is usually the trap working.
       TypeNumber(:final answerLabel) =>
-        'You said ${pill.challenge.describe(given)} · it is $answerLabel',
-      _ => 'Almost everyone gets this wrong',
+        right ? 'You got it' : 'You said $given · it is $answerLabel',
+      _ => right ? 'You got it' : 'Almost everyone gets this wrong',
     };
   }
 
@@ -351,10 +417,15 @@ class _AskFace extends StatefulWidget {
   final Widget input;
   final ValueChanged<String>? onAnswer;
 
+  /// Overrides the default line under the input, so a debate does not tell
+  /// the reader to commit to a right answer that does not exist.
+  final String? prompt;
+
   const _AskFace({
     required this.pill,
     required this.input,
     required this.onAnswer,
+    this.prompt,
   });
 
   @override
@@ -427,7 +498,6 @@ class _AskFaceState extends State<_AskFace> {
                     behavior: HitTestBehavior.opaque,
                     onTap: () => setState(() => _hintOpen = true),
                     child: Row(
-                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           Icons.lightbulb_outline_rounded,
@@ -435,12 +505,14 @@ class _AskFaceState extends State<_AskFace> {
                           color: pill.ink.withValues(alpha: 0.65),
                         ),
                         const SizedBox(width: 7),
-                        Text(
-                          'Give me a nudge',
-                          style: AppText.body(
-                            size: 13,
-                            weight: FontWeight.w500,
-                            color: pill.ink.withValues(alpha: 0.65),
+                        Flexible(
+                          child: Text(
+                            'Give me a nudge',
+                            style: AppText.body(
+                              size: 13,
+                              weight: FontWeight.w500,
+                              color: pill.ink.withValues(alpha: 0.65),
+                            ),
                           ),
                         ),
                       ],
@@ -449,7 +521,8 @@ class _AskFaceState extends State<_AskFace> {
               ],
               const SizedBox(height: 14),
               Text(
-                '${pill.difficulty.label} · commit before you turn it over.',
+                widget.prompt ??
+                    '${pill.difficulty.label} · commit before you turn it over.',
                 style: AppText.body(
                   size: 12.5,
                   weight: FontWeight.w500,
@@ -499,9 +572,14 @@ class _PickInput extends StatelessWidget {
 /// empty box will not commit.
 class _NumberInput extends StatefulWidget {
   final Pill pill;
+  final String unit;
   final ValueChanged<String>? onAnswer;
 
-  const _NumberInput({required this.pill, required this.onAnswer});
+  const _NumberInput({
+    required this.pill,
+    required this.unit,
+    required this.onAnswer,
+  });
 
   @override
   State<_NumberInput> createState() => _NumberInputState();
@@ -526,7 +604,7 @@ class _NumberInputState extends State<_NumberInput> {
   @override
   Widget build(BuildContext context) {
     final pill = widget.pill;
-    final unit = (pill.challenge as TypeNumber).unit;
+    final unit = widget.unit;
 
     return Row(
       children: [
@@ -650,6 +728,92 @@ class _ChoiceButton extends StatelessWidget {
               color: ink,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A labelled panel on the card — the shape a hint, a plain-words retelling
+/// and a counterpoint all take.
+class _Panel extends StatelessWidget {
+  final Pill pill;
+  final String label;
+  final String body;
+
+  const _Panel({required this.pill, required this.label, required this.body});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(15, 13, 15, 14),
+      decoration: BoxDecoration(
+        color: pill.wash,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppText.label(
+              size: 10.5,
+              spacing: 1.2,
+              color: pill.ink.withValues(alpha: 0.6),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            body,
+            style: AppText.body(
+              size: 14,
+              height: 1.45,
+              color: pill.ink.withValues(alpha: 0.92),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The closed state of one of those panels: an icon and a line to tap.
+class _TextAction extends StatelessWidget {
+  final Pill pill;
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _TextAction({
+    required this.pill,
+    required this.icon,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Row(
+          children: [
+            Icon(icon, size: 16, color: pill.ink.withValues(alpha: 0.65)),
+            const SizedBox(width: 7),
+            Flexible(
+              child: Text(
+                label,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w500,
+                  color: pill.ink.withValues(alpha: 0.65),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

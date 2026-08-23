@@ -13,6 +13,11 @@ sealed class Challenge {
   /// Whether [response] — the raw string the reader committed to — is right.
   bool accepts(String response);
 
+  /// Whether being right is even a thing here. A debate card asks the reader
+  /// to take a side; scoring that would be telling them their opinion is
+  /// wrong. Ungraded cards stay out of the tally entirely.
+  bool get isGraded => true;
+
   /// How the reader's own answer should read back to them on the reveal.
   String describe(String response) => response;
 }
@@ -23,6 +28,9 @@ class NoChallenge extends Challenge {
 
   @override
   bool accepts(String response) => false;
+
+  @override
+  bool get isGraded => false;
 }
 
 /// Pick one of the options. The response is the option's index.
@@ -74,6 +82,53 @@ class TypeNumber extends Challenge {
   String get answerLabel => unit.isEmpty ? '$answer' : '$answer $unit';
 }
 
+/// Work out roughly how big something is. Being close is the skill — a Fermi
+/// estimate is judged on order of magnitude, not on hitting the number.
+class Estimate extends Challenge {
+  final num answer;
+  final String unit;
+
+  /// Anything between answer/[withinFactor] and answer×[withinFactor] counts.
+  final num withinFactor;
+
+  const Estimate({required this.answer, this.unit = '', this.withinFactor = 3});
+
+  @override
+  bool accepts(String response) {
+    final given = TypeNumber.parse(response);
+    if (given == null || given <= 0) return false;
+    return given >= answer / withinFactor && given <= answer * withinFactor;
+  }
+
+  String get answerLabel => unit.isEmpty ? '$answer' : '$answer $unit';
+
+  /// What counted as close enough, for the reveal.
+  String get band =>
+      '${(answer / withinFactor).round()} to ${(answer * withinFactor).round()}';
+}
+
+/// Take a side. There is no right answer — the point is to commit, then meet
+/// the strongest version of the case against you.
+class TakeASide extends Challenge {
+  final List<String> positions;
+
+  const TakeASide({required this.positions});
+
+  @override
+  bool accepts(String response) => false;
+
+  @override
+  bool get isGraded => false;
+
+  @override
+  String describe(String response) {
+    final i = int.tryParse(response);
+    return (i != null && i >= 0 && i < positions.length)
+        ? positions[i]
+        : response;
+  }
+}
+
 /// How much work a card expects.
 enum Difficulty {
   easy('Easy'),
@@ -108,6 +163,14 @@ class Pill {
   /// so a long solution stays readable.
   final List<String> steps;
 
+  /// A second way in, for the ideas that genuinely have one — a concrete
+  /// image rather than the same explanation with smaller words. Left empty
+  /// where the main explanation is already the simplest true version.
+  final String simply;
+
+  /// Debate only: the strongest case against whichever side you took.
+  final String counterpoint;
+
   final Difficulty difficulty;
 
   const Pill({
@@ -124,12 +187,17 @@ class Pill {
     this.hint = '',
     this.trap = '',
     this.steps = const [],
+    this.simply = '',
+    this.counterpoint = '',
     this.difficulty = Difficulty.easy,
   });
 
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;
   bool get hasSteps => steps.isNotEmpty;
+  bool get hasSimply => simply.isNotEmpty;
+  bool get hasCounterpoint => counterpoint.isNotEmpty;
+  bool get isGraded => challenge.isGraded;
 
   /// A panel fill that shows up on this card. Tinting with white works on a
   /// saturated card and disappears on a pale one, so follow the ink.

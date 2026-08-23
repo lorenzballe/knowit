@@ -359,6 +359,17 @@ void main() {
     });
   });
 
+  test('a day opens on its easiest card', () {
+    final deck = pillsForDate(DateTime(2026, 3, 4));
+    for (var i = 1; i < deck.length; i++) {
+      expect(
+        deck[i].difficulty.index,
+        greaterThanOrEqualTo(deck[i - 1].difficulty.index),
+        reason: 'the day gets harder, never easier',
+      );
+    }
+  });
+
   test('a day never deals a pill already read', () {
     // Four mornings in a row, each dealt with the history so far.
     final seen = <String>{};
@@ -563,6 +574,89 @@ void main() {
     });
   });
 
+  group('New card kinds', () {
+    Widget host(List<Pill> deck, Map<String, String> given) {
+      return MaterialApp(
+        theme: buildKnowitTheme(),
+        home: Scaffold(
+          backgroundColor: AppColors.dark,
+          body: SizedBox(
+            height: 640,
+            child: PillCardStack(
+              deck: deck,
+              index: 0,
+              onAdvance: () {},
+              answerFor: (id) => given[id],
+              onAnswer: (id, response) => given[id] = response,
+            ),
+          ),
+        ),
+      );
+    }
+
+    testWidgets('an estimate accepts anything in the right ballpark', (
+      tester,
+    ) async {
+      final pill = kPillPool.firstWhere((p) => p.challenge is Estimate);
+      final challenge = pill.challenge as Estimate;
+      await tester.pumpWidget(host([pill], {}));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Estimate. Close enough counts.'), findsOneWidget);
+
+      // Deliberately off, but inside the band.
+      await tester.enterText(
+        find.byType(TextField),
+        '${challenge.answer * 2}',
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+
+      expect(find.textContaining('Close enough'), findsOneWidget);
+    });
+
+    testWidgets('a debate takes a side and offers the other one', (
+      tester,
+    ) async {
+      final pill = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      final challenge = pill.challenge as TakeASide;
+      await tester.pumpWidget(host([pill], {}));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Pick a side. There is no right answer.'), findsOneWidget);
+
+      await tester.tap(find.text(challenge.positions.first));
+      await tester.pumpAndSettle();
+
+      // No verdict: an opinion is not marked.
+      expect(find.text('You got it'), findsNothing);
+      expect(find.text('Almost everyone gets this wrong'), findsNothing);
+
+      // The other side is one tap away, and not shown before it is asked for.
+      expect(find.text(pill.counterpoint), findsNothing);
+      await tester.tap(find.text('What the other side says'));
+      await tester.pumpAndSettle();
+      expect(find.text(pill.counterpoint), findsOneWidget);
+    });
+
+    testWidgets('the plain-words retelling waits to be asked for', (
+      tester,
+    ) async {
+      final pill = kPillPool.firstWhere((p) => p.hasSimply);
+      await tester.pumpWidget(host([pill], {pill.id: '0'}));
+      await tester.pumpAndSettle();
+      // Already answered, so the card opens on the reveal after one tap.
+      await tester.tap(find.text(pill.question));
+      await tester.pumpAndSettle();
+
+      expect(find.text(pill.simply), findsNothing);
+      await tester.tap(find.text('Explain it like I am three'));
+      await tester.pumpAndSettle();
+      expect(find.text(pill.simply), findsOneWidget);
+    });
+  });
+
   group('Grading', () {
     test('each challenge grades its own answers', () {
       const pick = PickOne(options: ['a', 'b', 'c'], correct: 1);
@@ -570,6 +664,18 @@ void main() {
       expect(pick.accepts('2'), isFalse);
       expect(pick.accepts('nonsense'), isFalse);
       expect(pick.describe('2'), 'c');
+
+      // An estimate is judged on being close, not exact.
+      const guess = Estimate(answer: 100, withinFactor: 3);
+      expect(guess.accepts('40'), isTrue);
+      expect(guess.accepts('300'), isTrue);
+      expect(guess.accepts('20'), isFalse);
+      expect(guess.accepts('0'), isFalse);
+
+      // A debate is never right or wrong, and never counts.
+      const debate = TakeASide(positions: ['yes', 'no']);
+      expect(debate.isGraded, isFalse);
+      expect(debate.describe('1'), 'no');
 
       const number = TypeNumber(answer: 5050);
       expect(number.accepts('5050'), isTrue);
@@ -599,6 +705,13 @@ void main() {
       // Meeting the card again must not let the score be retaken.
       await app.recordAnswer(pill.id, '0');
       expect(app.answerFor(pill.id), '${challenge.answer}');
+      expect(app.puzzlesRight, 1);
+
+      // Taking a side is not an answer that can be marked, so the tally
+      // must not move.
+      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      await app.recordAnswer(debate.id, '0');
+      expect(app.puzzlesAnswered, 1);
       expect(app.puzzlesRight, 1);
     });
   });
