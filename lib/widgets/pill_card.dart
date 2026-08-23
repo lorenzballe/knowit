@@ -47,7 +47,7 @@ class PillCard extends StatelessWidget {
             children: [
               Text(
                 pill.topic.toUpperCase(),
-                style: AppText.mono(
+                style: AppText.label(
                   size: 11,
                   spacing: 1.4,
                   color: pill.ink.withValues(alpha: 0.72),
@@ -57,7 +57,7 @@ class PillCard extends StatelessWidget {
                 children: [
                   Text(
                     indexLabel,
-                    style: AppText.mono(
+                    style: AppText.label(
                       size: 11,
                       color: pill.ink.withValues(alpha: 0.55),
                     ),
@@ -99,7 +99,9 @@ class _FrontFace extends StatelessWidget {
             ? 24.0
             : tall < 340
             ? 28.0
-            : 34.0;
+            : tall < 460
+            ? 34.0
+            : 37.0;
         return SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: tall),
@@ -109,7 +111,7 @@ class _FrontFace extends StatelessWidget {
               children: [
                 Text(
                   pill.question,
-                  style: AppText.outfit(
+                  style: AppText.display(
                     size: size,
                     weight: FontWeight.w600,
                     height: 1.12,
@@ -120,7 +122,7 @@ class _FrontFace extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Tap to reveal',
-                  style: AppText.figtree(
+                  style: AppText.body(
                     size: 13,
                     weight: FontWeight.w500,
                     color: pill.ink.withValues(alpha: 0.6),
@@ -141,63 +143,68 @@ class _BackFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(height: 10),
-          Text(
-            pill.question,
-            style: AppText.outfit(
-              size: 20,
-              weight: FontWeight.w600,
-              height: 1.28,
-              spacing: -0.4,
-              color: pill.ink,
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) => SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: constraints.maxHeight),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                pill.question,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  height: 1.28,
+                  spacing: -0.4,
+                  color: pill.ink,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                pill.answer,
+                style: AppText.body(
+                  size: 16,
+                  weight: FontWeight.w400,
+                  height: 1.5,
+                  color: pill.ink.withValues(alpha: 0.92),
+                ),
+              ),
+              const SizedBox(height: 18),
+              Container(height: 1, color: pill.ink.withValues(alpha: 0.22)),
+              const SizedBox(height: 16),
+              Text(
+                'BAR MOVE',
+                style: AppText.label(
+                  size: 10.5,
+                  spacing: 1.2,
+                  color: pill.ink.withValues(alpha: 0.6),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                pill.barMove,
+                style: AppText.body(
+                  size: 15,
+                  weight: FontWeight.w500,
+                  height: 1.35,
+                  color: pill.ink,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Source · ${pill.source}',
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w400,
+                  color: pill.ink.withValues(alpha: 0.55),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 16),
-          Text(
-            pill.answer,
-            style: AppText.figtree(
-              size: 16,
-              weight: FontWeight.w400,
-              height: 1.5,
-              color: pill.ink.withValues(alpha: 0.92),
-            ),
-          ),
-          const SizedBox(height: 18),
-          Container(height: 1, color: pill.ink.withValues(alpha: 0.22)),
-          const SizedBox(height: 16),
-          Text(
-            'BAR MOVE',
-            style: AppText.mono(
-              size: 10.5,
-              spacing: 1.2,
-              color: pill.ink.withValues(alpha: 0.6),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            pill.barMove,
-            style: AppText.figtree(
-              size: 15,
-              weight: FontWeight.w500,
-              height: 1.35,
-              color: pill.ink,
-            ),
-          ),
-          const SizedBox(height: 14),
-          Text(
-            'Source · ${pill.source}',
-            style: AppText.figtree(
-              size: 12,
-              weight: FontWeight.w400,
-              color: pill.ink.withValues(alpha: 0.55),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

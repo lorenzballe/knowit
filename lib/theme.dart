@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   static const bg = Color(0xFFECEAE4);
@@ -15,44 +14,68 @@ class AppColors {
 }
 
 class AppText {
-  static TextStyle outfit({
+  /// Questions, titles, numbers — the voice of the app. A warm editorial
+  /// serif rather than a geometric sans, which read as machine-set.
+  ///
+  /// Fraunces is a variable font: [soft] rounds the terminals and [wonk]
+  /// turns on its quirkier letterforms. Both stay low here — enough warmth to
+  /// lose the mechanical feel without turning into a novelty face.
+  static TextStyle display({
     required double size,
     FontWeight weight = FontWeight.w600,
     double? height,
     double? spacing,
     Color? color,
-  }) => GoogleFonts.outfit(
+  }) => TextStyle(
+    fontFamily: 'Fraunces',
     fontSize: size,
     fontWeight: weight,
     height: height,
     letterSpacing: spacing,
     color: color,
+    fontVariations: [
+      FontVariation('wght', weight.value.toDouble()),
+      // Optical size follows the type size, so large headings get the
+      // tighter, more dramatic cut and small text stays readable.
+      FontVariation('opsz', size.clamp(9, 144).toDouble()),
+      const FontVariation('SOFT', 30),
+      const FontVariation('WONK', 0),
+    ],
   );
 
-  static TextStyle figtree({
+  /// Running text.
+  static TextStyle body({
     required double size,
     FontWeight weight = FontWeight.w400,
     double? height,
+    double? spacing,
     Color? color,
-  }) => GoogleFonts.figtree(
+  }) => TextStyle(
+    fontFamily: 'Figtree',
     fontSize: size,
     fontWeight: weight,
     height: height,
+    letterSpacing: spacing,
     color: color,
+    fontVariations: [FontVariation('wght', weight.value.toDouble())],
   );
 
-  static TextStyle mono({
+  /// Small uppercase meta — topic names, section eyebrows, counters. Spaced
+  /// out rather than set in a monospace, which looked like terminal output.
+  static TextStyle label({
     required double size,
-    FontWeight weight = FontWeight.w500,
+    FontWeight weight = FontWeight.w600,
     double? spacing,
     double? height,
     Color? color,
-  }) => GoogleFonts.jetBrainsMono(
+  }) => TextStyle(
+    fontFamily: 'Figtree',
     fontSize: size,
     fontWeight: weight,
-    letterSpacing: spacing,
+    letterSpacing: spacing ?? 1.2,
     height: height,
     color: color,
+    fontVariations: [FontVariation('wght', weight.value.toDouble())],
   );
 }
 
@@ -66,14 +89,14 @@ ThemeData buildKnowitTheme() {
     ),
   );
   return base.copyWith(
-    textTheme: GoogleFonts.figtreeTextTheme(base.textTheme),
+    textTheme: base.textTheme.apply(fontFamily: 'Figtree'),
     splashFactory: NoSplash.splashFactory,
     highlightColor: Colors.transparent,
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       backgroundColor: AppColors.ink,
-      contentTextStyle: GoogleFonts.figtree(
-        fontSize: 13.5,
+      contentTextStyle: AppText.body(
+        size: 13.5,
         height: 1.35,
         color: Colors.white,
       ),

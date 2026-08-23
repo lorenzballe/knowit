@@ -46,7 +46,7 @@ class PlusLock extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             'Knowit+',
-            style: AppText.mono(
+            style: AppText.label(
               size: 9,
               weight: FontWeight.w600,
               spacing: 0.6,

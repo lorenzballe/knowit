@@ -74,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 28),
             Text(
               'Welcome back.',
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 32,
                 weight: FontWeight.w700,
                 height: 1.07,
@@ -85,7 +85,7 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 9),
             Text(
               'Your streak and your saved pills are waiting.',
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14.5,
                 height: 1.5,
                 color: Colors.black.withValues(alpha: 0.55),
@@ -104,7 +104,7 @@ class _SignInScreenState extends State<SignInScreen> {
               dark: false,
               leading: Text(
                 'G',
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 15,
                   weight: FontWeight.w700,
                   color: AppColors.blue,
@@ -125,7 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     'or',
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 11.5,
                       color: Colors.black.withValues(alpha: 0.38),
                     ),
@@ -156,12 +156,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     onChanged: (_) => setState(() {}),
                     keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    style: AppText.figtree(size: 15, color: AppColors.ink),
+                    style: AppText.body(size: 15, color: AppColors.ink),
                     decoration: InputDecoration(
                       isDense: true,
                       border: InputBorder.none,
                       hintText: 'marco@studio.it',
-                      hintStyle: AppText.figtree(
+                      hintStyle: AppText.body(
                         size: 15,
                         color: Colors.black.withValues(alpha: 0.3),
                       ),
@@ -188,7 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
               'No account is created. Your streak and saved pills stay on '
               'this device.',
               textAlign: TextAlign.center,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 11.5,
                 height: 1.5,
                 color: Colors.black.withValues(alpha: 0.38),
@@ -235,7 +235,7 @@ class _ProviderButton extends StatelessWidget {
             const SizedBox(width: 9),
             Text(
               label,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14.5,
                 weight: FontWeight.w600,
                 color: dark ? Colors.white : AppColors.ink,

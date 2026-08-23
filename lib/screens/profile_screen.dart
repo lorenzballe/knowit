@@ -43,12 +43,12 @@ class ProfileScreen extends StatelessWidget {
         backgroundColor: AppColors.paper,
         title: Text(
           'Sign out?',
-          style: AppText.outfit(size: 19, color: AppColors.ink),
+          style: AppText.display(size: 19, color: AppColors.ink),
         ),
         content: Text(
           'This clears your streak, your saved pills and your topics on '
           'this device.',
-          style: AppText.figtree(
+          style: AppText.body(
             size: 14,
             height: 1.45,
             color: Colors.black.withValues(alpha: 0.6),
@@ -59,14 +59,14 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () => Navigator.of(dialogContext).pop(false),
             child: Text(
               'Cancel',
-              style: AppText.figtree(size: 14, color: AppColors.ink),
+              style: AppText.body(size: 14, color: AppColors.ink),
             ),
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             child: Text(
               'Sign out',
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14,
                 weight: FontWeight.w600,
                 color: AppColors.red,
@@ -103,7 +103,7 @@ class ProfileScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   app.initials,
-                  style: AppText.outfit(
+                  style: AppText.display(
                     size: 18,
                     weight: FontWeight.w600,
                     color: Colors.white,
@@ -117,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Text(
                       app.name,
-                      style: AppText.outfit(
+                      style: AppText.display(
                         size: 22,
                         weight: FontWeight.w700,
                         height: 1.1,
@@ -130,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                       app.isPlus
                           ? 'Knowit+ · ${app.pickedTopics.length} topics'
                           : 'Free plan · ${app.pickedTopics.length} topics',
-                      style: AppText.figtree(
+                      style: AppText.body(
                         size: 12.5,
                         color: Colors.black.withValues(alpha: 0.45),
                       ),
@@ -164,7 +164,7 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Text(
                         'Every day at ${app.notifyTime}',
-                        style: AppText.figtree(
+                        style: AppText.body(
                           size: 14.5,
                           weight: FontWeight.w500,
                           height: 1.2,
@@ -174,7 +174,7 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         'Your 5 pills, before the first coffee.',
-                        style: AppText.figtree(
+                        style: AppText.body(
                           size: 12,
                           height: 1.3,
                           color: Colors.black.withValues(alpha: 0.45),
@@ -216,7 +216,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Edit',
-                      style: AppText.figtree(
+                      style: AppText.body(
                         size: 12.5,
                         weight: FontWeight.w500,
                         color: AppColors.blue,
@@ -245,7 +245,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Text(
                   style.name,
-                  style: AppText.figtree(
+                  style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
                     color: style.ink,
@@ -272,7 +272,7 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         Text(
                           'Knowit+',
-                          style: AppText.outfit(
+                          style: AppText.display(
                             size: 17,
                             weight: FontWeight.w600,
                             color: AppColors.limeInk,
@@ -281,7 +281,7 @@ class ProfileScreen extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           '5 extra pills a day, full archive.',
-                          style: AppText.figtree(
+                          style: AppText.body(
                             size: 12.5,
                             color: AppColors.limeInk.withValues(alpha: 0.72),
                           ),
@@ -307,7 +307,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     child: Text(
                       'Upgrade',
-                      style: AppText.figtree(
+                      style: AppText.body(
                         size: 13,
                         weight: FontWeight.w600,
                         color: const Color(0xFFE9FFC4),
@@ -373,7 +373,7 @@ class _Stat extends StatelessWidget {
           children: [
             Text(
               value,
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 24,
                 weight: FontWeight.w700,
                 height: 1,
@@ -383,7 +383,7 @@ class _Stat extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               label,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 11.5,
                 height: 1.3,
                 color: Colors.black.withValues(alpha: 0.45),
@@ -425,7 +425,7 @@ class _LinkRow extends StatelessWidget {
           children: [
             Text(
               label,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
                 color: muted

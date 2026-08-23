@@ -69,7 +69,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
               child: Text(
                 widget.label,
                 key: ValueKey(widget.label),
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 15,
                   weight: FontWeight.w600,
                   color: widget.foreground,
@@ -100,7 +100,7 @@ class QuietButton extends StatelessWidget {
         alignment: Alignment.center,
         child: Text(
           label,
-          style: AppText.figtree(
+          style: AppText.body(
             size: 13,
             weight: FontWeight.w500,
             color: Colors.black.withValues(alpha: 0.5),
@@ -158,7 +158,7 @@ class Eyebrow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text.toUpperCase(),
-      style: AppText.mono(
+      style: AppText.label(
         size: 11,
         spacing: 1.3,
         color: color ?? Colors.black.withValues(alpha: 0.42),
@@ -209,7 +209,7 @@ class WeekStrip extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   _letters[weekdayIndex < 0 ? weekdayIndex + 7 : weekdayIndex],
-                  style: AppText.mono(size: 10, color: labelColor),
+                  style: AppText.label(size: 10, color: labelColor),
                 ),
               ],
             ),

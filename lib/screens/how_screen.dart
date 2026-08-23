@@ -50,7 +50,7 @@ class HowScreen extends StatelessWidget {
             const SizedBox(height: 22),
             Text(
               'Every pill here is written by a model.',
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 31,
                 weight: FontWeight.w700,
                 height: 1.07,
@@ -62,7 +62,7 @@ class HowScreen extends StatelessWidget {
             Text(
               "We'd rather say it up front than have you find out. "
               'Here is the whole pipeline.',
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14.5,
                 height: 1.5,
                 color: Colors.black.withValues(alpha: 0.55),
@@ -84,7 +84,7 @@ class HowScreen extends StatelessWidget {
                   children: [
                     Text(
                       s.n,
-                      style: AppText.mono(
+                      style: AppText.label(
                         size: 11,
                         height: 1.5,
                         color: AppColors.blue,
@@ -97,7 +97,7 @@ class HowScreen extends StatelessWidget {
                         children: [
                           Text(
                             s.title,
-                            style: AppText.figtree(
+                            style: AppText.body(
                               size: 15,
                               weight: FontWeight.w600,
                               height: 1.3,
@@ -107,7 +107,7 @@ class HowScreen extends StatelessWidget {
                           const SizedBox(height: 5),
                           Text(
                             s.sub,
-                            style: AppText.figtree(
+                            style: AppText.body(
                               size: 13,
                               height: 1.5,
                               color: Colors.black.withValues(alpha: 0.52),
@@ -132,7 +132,7 @@ class HowScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Found something wrong?',
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 15,
                       weight: FontWeight.w600,
                       height: 1.3,
@@ -143,7 +143,7 @@ class HowScreen extends StatelessWidget {
                   Text(
                     'Report any pill and it gets pulled from rotation until '
                     'a human checks it.',
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 13,
                       height: 1.45,
                       color: Colors.white.withValues(alpha: 0.6),
@@ -156,7 +156,7 @@ class HowScreen extends StatelessWidget {
             Text(
               'Model and source list updated monthly.',
               textAlign: TextAlign.center,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 11.5,
                 height: 1.5,
                 color: Colors.black.withValues(alpha: 0.38),

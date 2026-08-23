@@ -83,7 +83,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 children: [
                   Text(
                     pill.topic.toUpperCase(),
-                    style: AppText.mono(
+                    style: AppText.label(
                       size: 10.5,
                       spacing: 1.4,
                       color: onCard.withValues(alpha: 0.7),
@@ -92,7 +92,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                   const SizedBox(height: 18),
                   Text(
                     pill.question,
-                    style: AppText.outfit(
+                    style: AppText.display(
                       size: 26,
                       weight: FontWeight.w600,
                       height: 1.16,
@@ -106,11 +106,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
             const SizedBox(height: 22),
             SelectableText(
               pill.answer,
-              style: AppText.figtree(
-                size: 16,
-                height: 1.55,
-                color: AppColors.ink,
-              ),
+              style: AppText.body(size: 16, height: 1.55, color: AppColors.ink),
             ),
             const SizedBox(height: 22),
             PaperCard(
@@ -121,7 +117,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                   const SizedBox(height: 8),
                   Text(
                     pill.barMove,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 14.5,
                       weight: FontWeight.w500,
                       height: 1.45,
@@ -139,7 +135,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 Expanded(
                   child: Text(
                     pill.source,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 12,
                       color: Colors.black.withValues(alpha: 0.45),
                     ),

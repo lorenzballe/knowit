@@ -63,7 +63,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               const SizedBox(height: 22),
               Text(
                 'What should we talk about?',
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 33,
                   weight: FontWeight.w700,
                   height: 1.06,
@@ -75,7 +75,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               Text(
                 'Five pills a day, written fresh each morning. Pick the '
                 'topics you want in the mix — you can change them later.',
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 15,
                   height: 1.5,
                   color: Colors.black.withValues(alpha: 0.55),
@@ -113,7 +113,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 child: Text(
                   '${_picked.length} of ${kTopicOrder.length} selected',
                   textAlign: TextAlign.center,
-                  style: AppText.figtree(
+                  style: AppText.body(
                     size: 12.5,
                     color: Colors.black.withValues(alpha: 0.42),
                   ),
@@ -185,7 +185,7 @@ class _TopicChip extends StatelessWidget {
             const SizedBox(width: 7),
             Text(
               label,
-              style: AppText.figtree(
+              style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
                 color: on ? onColor : Colors.black.withValues(alpha: 0.62),

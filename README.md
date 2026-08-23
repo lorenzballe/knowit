@@ -5,8 +5,10 @@ economics, tech, weird facts, the human body, philosophy, pop culture, nature an
 language — each with a **Bar move** line (the reason to bring it up) and a source.
 Swipe sideways to move to the next pill, tap to flip and reveal the answer.
 
-Design mixes the *full-bleed, one-colour-per-topic card* look with the *editorial
-light chrome + tab bar* layout from the original Claude Design mockups.
+Today is the full-bleed treatment from the original mockups — dark chrome, the
+card filling the screen. Saved and Profile keep the light editorial chrome.
+Type is Fraunces over Figtree, both bundled with the app rather than fetched
+from Google at runtime.
 
 ## Live preview
 

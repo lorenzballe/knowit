@@ -116,7 +116,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             const SizedBox(height: 20),
             Text(
               'Share this pill',
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 20,
                 weight: FontWeight.w600,
                 spacing: -0.6,
@@ -151,7 +151,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             Center(
               child: Text(
                 'Source travels with the image',
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 12,
                   color: Colors.black.withValues(alpha: 0.4),
                 ),
@@ -193,7 +193,7 @@ class _ShareCard extends StatelessWidget {
           children: [
             Text(
               pill.topic.toUpperCase(),
-              style: AppText.mono(
+              style: AppText.label(
                 size: 10.5,
                 spacing: 1.4,
                 color: onCard.withValues(alpha: 0.7),
@@ -202,7 +202,7 @@ class _ShareCard extends StatelessWidget {
             Flexible(
               child: Text(
                 pill.question,
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 26,
                   weight: FontWeight.w600,
                   height: 1.16,
@@ -218,7 +218,7 @@ class _ShareCard extends StatelessWidget {
                   flex: 3,
                   child: Text(
                     pill.barMove,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 13,
                       weight: FontWeight.w500,
                       height: 1.4,
@@ -229,7 +229,7 @@ class _ShareCard extends StatelessWidget {
                 const SizedBox(width: 14),
                 Text(
                   'Knowit',
-                  style: AppText.outfit(
+                  style: AppText.display(
                     size: 13,
                     weight: FontWeight.w600,
                     color: onCard.withValues(alpha: 0.6),

@@ -70,7 +70,7 @@ class ComebackScreen extends StatelessWidget {
                 missed == 1
                     ? 'You missed\na day.'
                     : 'You missed\n${_spell(missed)} days.',
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 38,
                   weight: FontWeight.w700,
                   height: 1.05,
@@ -85,7 +85,7 @@ class ComebackScreen extends StatelessWidget {
                 '${app.bestStreak == 1 ? 'day is' : 'days is'} still your '
                 "record. Read today's five and the counter starts again "
                 'from one.',
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 15,
                   height: 1.5,
                   color: Colors.black.withValues(alpha: 0.55),
@@ -161,7 +161,7 @@ class _MissedLine extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: AppText.figtree(
+            style: AppText.body(
               size: 13.5,
               weight: FontWeight.w500,
               height: 1.35,

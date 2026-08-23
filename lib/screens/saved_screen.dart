@@ -65,7 +65,7 @@ class SavedScreen extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'Saved',
-                    style: AppText.outfit(
+                    style: AppText.display(
                       size: 33,
                       weight: FontWeight.w700,
                       height: 1.05,
@@ -100,7 +100,7 @@ class SavedScreen extends StatelessWidget {
                         const SizedBox(width: 5),
                         Text(
                           'Archive',
-                          style: AppText.figtree(
+                          style: AppText.body(
                             size: 12.5,
                             weight: FontWeight.w500,
                             color: AppColors.blue,
@@ -117,7 +117,7 @@ class SavedScreen extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 '${saved.length} pill${saved.length == 1 ? '' : 's'}',
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 13,
                   color: Colors.black.withValues(alpha: 0.45),
                 ),
@@ -174,7 +174,7 @@ class _EmptyState extends StatelessWidget {
               Text(
                 "Keep the ones you'll actually use",
                 textAlign: TextAlign.center,
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 21,
                   weight: FontWeight.w600,
                   height: 1.22,
@@ -187,7 +187,7 @@ class _EmptyState extends StatelessWidget {
                 'Tap the heart on any pill and it lands here, ready for the '
                 'next time the conversation stalls.',
                 textAlign: TextAlign.center,
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 14,
                   height: 1.5,
                   color: Colors.black.withValues(alpha: 0.5),
@@ -209,7 +209,7 @@ class _EmptyState extends StatelessWidget {
                   ),
                   child: Text(
                     "Back to today's five",
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 14,
                       weight: FontWeight.w600,
                       color: Colors.white,
@@ -347,7 +347,7 @@ class _SavedRow extends StatelessWidget {
                 children: [
                   Text(
                     pill.topic.toUpperCase(),
-                    style: AppText.mono(
+                    style: AppText.label(
                       size: 10.5,
                       spacing: 1.2,
                       color: Colors.black.withValues(alpha: 0.4),
@@ -356,7 +356,7 @@ class _SavedRow extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     pill.question,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 15,
                       weight: FontWeight.w600,
                       height: 1.3,

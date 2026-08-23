@@ -92,7 +92,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
                 child: Text(
                   'KNOWIT+',
-                  style: AppText.mono(
+                  style: AppText.label(
                     size: 11,
                     weight: FontWeight.w600,
                     spacing: 1.2,
@@ -104,7 +104,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
             const SizedBox(height: 11),
             Text(
               'Ten pills a day, and nothing gets lost.',
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 36,
                 weight: FontWeight.w700,
                 height: 1.06,
@@ -139,7 +139,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         children: [
                           Text(
                             p.title,
-                            style: AppText.figtree(
+                            style: AppText.body(
                               size: 14.5,
                               weight: FontWeight.w600,
                               height: 1.3,
@@ -149,7 +149,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           const SizedBox(height: 3),
                           Text(
                             p.sub,
-                            style: AppText.figtree(
+                            style: AppText.body(
                               size: 12.5,
                               height: 1.4,
                               color: Colors.white.withValues(alpha: 0.5),
@@ -217,7 +217,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                 ),
                 child: Text(
                   _cta,
-                  style: AppText.figtree(
+                  style: AppText.body(
                     size: 14.5,
                     weight: FontWeight.w600,
                     color: Colors.white,
@@ -239,7 +239,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     ? 'Cancel the trial'
                     : 'Cancel any time · Restore purchase',
                 textAlign: TextAlign.center,
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 11.5,
                   height: 1.4,
                   color: Colors.white.withValues(alpha: 0.35),
@@ -299,20 +299,20 @@ class _PlanTile extends StatelessWidget {
                 children: [
                   Text(
                     label,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 15.5,
                       weight: FontWeight.w600,
                       color: ink,
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(note, style: AppText.figtree(size: 12, color: sub)),
+                  Text(note, style: AppText.body(size: 12, color: sub)),
                 ],
               ),
             ),
             Text(
               price,
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 19,
                 weight: FontWeight.w700,
                 spacing: -0.5,

@@ -221,7 +221,7 @@ class _Splash extends StatelessWidget {
           children: [
             Text(
               'Knowit',
-              style: AppText.outfit(
+              style: AppText.display(
                 size: 30,
                 weight: FontWeight.w700,
                 spacing: -1,
@@ -257,6 +257,9 @@ class KnowitShell extends StatefulWidget {
 class _KnowitShellState extends State<KnowitShell> {
   int _tab = 0;
 
+  /// Today is the full-bleed dark screen; the other two sit on paper.
+  bool get _dark => _tab == 0;
+
   @override
   Widget build(BuildContext context) {
     final screens = [
@@ -268,15 +271,30 @@ class _KnowitShellState extends State<KnowitShell> {
       ProfileScreen(app: widget.app, onSignedOut: widget.onSignedOut),
     ];
 
-    return Scaffold(
-      backgroundColor: AppColors.paper,
-      body: SafeArea(
-        top: false,
-        child: IndexedStack(index: _tab, children: screens),
-      ),
-      bottomNavigationBar: _KnowitTabBar(
-        index: _tab,
-        onChanged: (i) => setState(() => _tab = i),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: _dark
+          ? SystemUiOverlayStyle.light.copyWith(
+              statusBarColor: Colors.transparent,
+            )
+          : SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: Colors.transparent,
+            ),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 260),
+        color: _dark ? AppColors.dark : AppColors.paper,
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            top: _dark,
+            bottom: false,
+            child: IndexedStack(index: _tab, children: screens),
+          ),
+          bottomNavigationBar: _KnowitTabBar(
+            index: _tab,
+            dark: _dark,
+            onChanged: (i) => setState(() => _tab = i),
+          ),
+        ),
       ),
     );
   }
@@ -284,8 +302,13 @@ class _KnowitShellState extends State<KnowitShell> {
 
 class _KnowitTabBar extends StatelessWidget {
   final int index;
+  final bool dark;
   final ValueChanged<int> onChanged;
-  const _KnowitTabBar({required this.index, required this.onChanged});
+  const _KnowitTabBar({
+    required this.index,
+    required this.dark,
+    required this.onChanged,
+  });
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
@@ -295,11 +318,16 @@ class _KnowitTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 260),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.94),
+        color: dark ? AppColors.dark : Colors.white.withValues(alpha: 0.94),
         border: Border(
-          top: BorderSide(color: Colors.black.withValues(alpha: 0.08)),
+          top: BorderSide(
+            color: dark
+                ? Colors.white.withValues(alpha: 0.08)
+                : Colors.black.withValues(alpha: 0.08),
+          ),
         ),
       ),
       padding: EdgeInsets.fromLTRB(
@@ -312,9 +340,11 @@ class _KnowitTabBar extends StatelessWidget {
         children: List.generate(_tabs.length, (i) {
           final selected = i == index;
           final tab = _tabs[i];
-          final tint = selected
-              ? AppColors.ink
+          final onColor = dark ? Colors.white : AppColors.ink;
+          final offColor = dark
+              ? Colors.white.withValues(alpha: 0.38)
               : Colors.black.withValues(alpha: 0.32);
+          final tint = selected ? onColor : offColor;
 
           return Expanded(
             child: Semantics(
@@ -344,7 +374,9 @@ class _KnowitTabBar extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: selected
-                              ? AppColors.lime.withValues(alpha: 0.35)
+                              ? AppColors.lime.withValues(
+                                  alpha: dark ? 0.18 : 0.35,
+                                )
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(999),
                         ),
@@ -358,7 +390,7 @@ class _KnowitTabBar extends StatelessWidget {
                       const SizedBox(height: 5),
                       AnimatedDefaultTextStyle(
                         duration: const Duration(milliseconds: 220),
-                        style: AppText.figtree(
+                        style: AppText.body(
                           size: 10.5,
                           weight: selected ? FontWeight.w600 : FontWeight.w500,
                           color: tint,

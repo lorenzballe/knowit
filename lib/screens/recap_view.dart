@@ -18,18 +18,14 @@ class RecapView extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(22, 26, 22, 22),
-      decoration: BoxDecoration(
-        color: AppColors.dark,
-        borderRadius: BorderRadius.circular(34),
-      ),
+      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               '${app.todaysDeck.length} of ${app.todaysDeck.length} · done',
-              style: AppText.mono(
+              style: AppText.label(
                 size: 11,
                 spacing: 1.4,
                 color: Colors.white.withValues(alpha: 0.45),
@@ -38,7 +34,7 @@ class RecapView extends StatelessWidget {
             const SizedBox(height: 12),
             RichText(
               text: TextSpan(
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 34,
                   weight: FontWeight.w700,
                   height: 1.06,
@@ -77,7 +73,7 @@ class RecapView extends StatelessWidget {
                         const SizedBox(height: 7),
                         Text(
                           _weekLetters[i],
-                          style: AppText.mono(
+                          style: AppText.label(
                             size: 10,
                             color: Colors.white.withValues(alpha: 0.35),
                           ),
@@ -91,7 +87,7 @@ class RecapView extends StatelessWidget {
             const SizedBox(height: 22),
             Text(
               'YOU PICKED UP TODAY',
-              style: AppText.mono(
+              style: AppText.label(
                 size: 11,
                 spacing: 1.3,
                 color: Colors.white.withValues(alpha: 0.42),
@@ -125,7 +121,7 @@ class RecapView extends StatelessWidget {
                     Expanded(
                       child: Text(
                         p.question,
-                        style: AppText.figtree(
+                        style: AppText.body(
                           size: 13.5,
                           weight: FontWeight.w500,
                           height: 1.3,
@@ -150,7 +146,7 @@ class RecapView extends StatelessWidget {
                   children: [
                     Text(
                       'Your second set is ready',
-                      style: AppText.outfit(
+                      style: AppText.display(
                         size: 20,
                         weight: FontWeight.w600,
                         spacing: -0.6,
@@ -161,7 +157,7 @@ class RecapView extends StatelessWidget {
                     Text(
                       'Five more pills, picked the same way. Knowit+ unlocks '
                       'them the moment you finish the first five.',
-                      style: AppText.figtree(
+                      style: AppText.body(
                         size: 13.5,
                         height: 1.45,
                         color: Colors.white.withValues(alpha: 0.75),
@@ -183,7 +179,7 @@ class RecapView extends StatelessWidget {
                         ),
                         child: Text(
                           'Read 5 more',
-                          style: AppText.figtree(
+                          style: AppText.body(
                             size: 14.5,
                             weight: FontWeight.w600,
                             color: AppColors.ink,
@@ -197,7 +193,7 @@ class RecapView extends StatelessWidget {
             else if (app.isPlus)
               Text(
                 "That's all ten for today. New pills tomorrow morning.",
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 13.5,
                   height: 1.45,
                   color: Colors.white.withValues(alpha: 0.5),
@@ -219,7 +215,7 @@ class RecapView extends StatelessWidget {
                   children: [
                     Text(
                       'Want 5 more?',
-                      style: AppText.outfit(
+                      style: AppText.display(
                         size: 20,
                         weight: FontWeight.w600,
                         spacing: -0.6,
@@ -229,7 +225,7 @@ class RecapView extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       "Knowit+ unlocks an extra set every day, plus the full archive of everything you've read.",
-                      style: AppText.figtree(
+                      style: AppText.body(
                         size: 13.5,
                         height: 1.45,
                         color: const Color(0xFF17200A).withValues(alpha: 0.72),
@@ -255,7 +251,7 @@ class RecapView extends StatelessWidget {
                         ),
                         child: Text(
                           'Unlock 5 extra pills',
-                          style: AppText.figtree(
+                          style: AppText.body(
                             size: 14.5,
                             weight: FontWeight.w600,
                             color: const Color(0xFFE9FFC4),

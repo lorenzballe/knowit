@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:knowit/data/pills_data.dart';
@@ -28,10 +27,6 @@ Future<void> _openProfile(WidgetTester tester) async {
 }
 
 void main() {
-  setUpAll(() {
-    GoogleFonts.config.allowRuntimeFetching = false;
-  });
-
   // Run against a real handset surface rather than the 800x600 default, so
   // layouts are exercised at the size they actually ship at.
   setUp(() {

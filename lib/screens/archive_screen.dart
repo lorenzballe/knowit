@@ -61,7 +61,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   const SizedBox(height: 16),
                   Text(
                     'Archive',
-                    style: AppText.outfit(
+                    style: AppText.display(
                       size: 33,
                       weight: FontWeight.w700,
                       height: 1.05,
@@ -92,15 +92,12 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                           child: TextField(
                             controller: _controller,
                             onChanged: (v) => setState(() => _query = v),
-                            style: AppText.figtree(
-                              size: 15,
-                              color: AppColors.ink,
-                            ),
+                            style: AppText.body(size: 15, color: AppColors.ink),
                             decoration: InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
                               hintText: 'Search ${kPillPool.length} pills',
-                              hintStyle: AppText.figtree(
+                              hintStyle: AppText.body(
                                 size: 15,
                                 color: Colors.black.withValues(alpha: 0.35),
                               ),
@@ -158,7 +155,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                               const SizedBox(width: 7),
                               Text(
                                 style.name,
-                                style: AppText.figtree(
+                                style: AppText.body(
                                   size: 12.5,
                                   weight: FontWeight.w500,
                                   color: on
@@ -245,7 +242,7 @@ class _ResultRow extends StatelessWidget {
                 children: [
                   Text(
                     pill.question,
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 15,
                       weight: FontWeight.w500,
                       height: 1.32,
@@ -255,7 +252,7 @@ class _ResultRow extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     '${pill.topic} · ${pill.source}',
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 11.5,
                       color: Colors.black.withValues(alpha: 0.4),
                     ),
@@ -293,7 +290,7 @@ class _NoResults extends StatelessWidget {
               ? 'No pills match that filter yet.'
               : 'Nothing for "$query". Try a topic instead.',
           textAlign: TextAlign.center,
-          style: AppText.figtree(
+          style: AppText.body(
             size: 14,
             height: 1.5,
             color: Colors.black.withValues(alpha: 0.45),

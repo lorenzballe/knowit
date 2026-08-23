@@ -28,7 +28,7 @@ class WelcomeScreen extends StatelessWidget {
             children: [
               Text(
                 'Knowit',
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 20,
                   weight: FontWeight.w700,
                   spacing: -0.6,
@@ -40,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
               const SizedBox(height: 26),
               Text(
                 'Five things worth saying out loud.',
-                style: AppText.outfit(
+                style: AppText.display(
                   size: 34,
                   weight: FontWeight.w700,
                   height: 1.06,
@@ -53,7 +53,7 @@ class WelcomeScreen extends StatelessWidget {
                 'Every morning, five short pills across twelve topics. '
                 'Written fresh, checked against a source, and built to '
                 'survive a conversation at the bar.',
-                style: AppText.figtree(
+                style: AppText.body(
                   size: 15,
                   height: 1.5,
                   color: Colors.black.withValues(alpha: 0.55),
@@ -138,7 +138,7 @@ class _FannedCards extends StatelessWidget {
                 children: [
                   Text(
                     'SPACE',
-                    style: AppText.mono(
+                    style: AppText.label(
                       size: 10.5,
                       spacing: 1.4,
                       color: Colors.white.withValues(alpha: 0.72),
@@ -146,7 +146,7 @@ class _FannedCards extends StatelessWidget {
                   ),
                   Text(
                     'Why do we only ever see one face of the Moon?',
-                    style: AppText.outfit(
+                    style: AppText.display(
                       size: 26,
                       weight: FontWeight.w600,
                       height: 1.14,
@@ -156,7 +156,7 @@ class _FannedCards extends StatelessWidget {
                   ),
                   Text(
                     'tap to reveal',
-                    style: AppText.figtree(
+                    style: AppText.body(
                       size: 12.5,
                       weight: FontWeight.w500,
                       color: Colors.white.withValues(alpha: 0.6),
