@@ -65,5 +65,5 @@ These are declared in the UI rather than faked:
 - **No notification delivery.** The daily nudge is stored as a preference;
   actually scheduling it needs a local-notifications plugin and a mobile build.
 
-The content pool is small (24 pills, two per topic), so a heavy reader will
-work through it in under a week.
+The pool holds 60 pills, five per topic — about twelve days for a free reader
+and six on Knowit+ before anything repeats.

@@ -266,10 +266,46 @@ void main() {
     expect(find.text('Read 5 more'), findsNothing);
   });
 
+  group('The content pool', () {
+    test('has unique ids and a full set per topic', () {
+      final ids = kPillPool.map((p) => p.id).toList();
+      expect(ids.toSet(), hasLength(ids.length), reason: 'duplicate pill id');
+
+      final perTopic = <String, int>{};
+      for (final p in kPillPool) {
+        perTopic[p.topic] = (perTopic[p.topic] ?? 0) + 1;
+      }
+      expect(perTopic, hasLength(12));
+      // Every topic carries enough that a single-topic mix still fills a day.
+      for (final entry in perTopic.entries) {
+        expect(
+          entry.value,
+          greaterThanOrEqualTo(kPillsPerDay),
+          reason: '${entry.key} cannot fill a day on its own',
+        );
+      }
+    });
+
+    test('every pill is complete and the answer stays short', () {
+      for (final p in kPillPool) {
+        expect(p.question.trim(), isNotEmpty, reason: '${p.id} has no question');
+        expect(p.answer.trim(), isNotEmpty, reason: '${p.id} has no answer');
+        expect(p.barMove.trim(), isNotEmpty, reason: '${p.id} has no bar move');
+        expect(p.source.trim(), isNotEmpty, reason: '${p.id} has no source');
+        expect(
+          p.answer.split(RegExp(r'\s+')).length,
+          lessThanOrEqualTo(60),
+          reason: '${p.id} runs past sixty words',
+        );
+        expect(p.question, endsWith('?'), reason: '${p.id} is not a question');
+      }
+    });
+  });
+
   test('a day never deals a pill already read', () {
     // Four mornings in a row, each dealt with the history so far.
     final seen = <String>{};
-    for (var day = 1; day <= 4; day++) {
+    for (var day = 1; day <= 8; day++) {
       final deck = pillsForDate(DateTime(2026, 1, day), exclude: seen);
       expect(deck, hasLength(5));
       expect(
@@ -279,7 +315,7 @@ void main() {
       );
       seen.addAll(deck.map((p) => p.id));
     }
-    expect(seen, hasLength(20));
+    expect(seen, hasLength(40));
   });
 
   test('the dealer falls back to read pills once the pool runs dry', () {
