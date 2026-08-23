@@ -154,6 +154,12 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
+          if (app.calibratedAnswers > 0) ...[
+            const SizedBox(height: 22),
+            const Eyebrow('How well you know yourself'),
+            const SizedBox(height: 11),
+            _Calibration(app: app),
+          ],
           const SizedBox(height: 22),
           const Eyebrow('What you have covered'),
           const SizedBox(height: 11),
@@ -543,6 +549,154 @@ class _Coverage extends StatelessWidget {
               ),
             );
           }),
+        ],
+      ),
+    );
+  }
+}
+
+/// Stated confidence against what actually happened.
+///
+/// This is the one number in the app that says something about the reader
+/// rather than about the cards: not how much they know, but how well they
+/// know what they know.
+class _Calibration extends StatelessWidget {
+  final AppState app;
+  const _Calibration({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final buckets = app.calibration.toList();
+    final gap = app.overconfidence;
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _headline(gap),
+            style: AppText.display(
+              size: 19,
+              weight: FontWeight.w600,
+              height: 1.25,
+              spacing: -0.4,
+              color: AppColors.ink,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Across ${app.calibratedAnswers} answers you said how sure you '
+            'were. Here is what happened.',
+            style: AppText.body(
+              size: 12.5,
+              height: 1.4,
+              color: Colors.black.withValues(alpha: 0.5),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...buckets.map((b) => _Row(bucket: b)),
+          const SizedBox(height: 4),
+          Text(
+            'A perfectly calibrated person is right 70% of the time when '
+            'they say 70%.',
+            style: AppText.body(
+              size: 11.5,
+              height: 1.4,
+              color: Colors.black.withValues(alpha: 0.4),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _headline(double? gap) {
+    if (gap == null) return 'Not enough answers yet';
+    final points = gap.abs().round();
+    if (points <= 5) return 'Your confidence matches your accuracy';
+    return gap > 0
+        ? 'You are overconfident by $points points'
+        : 'You are underconfident by $points points';
+  }
+}
+
+class _Row extends StatelessWidget {
+  final CalibrationBucket bucket;
+  const _Row({required this.bucket});
+
+  @override
+  Widget build(BuildContext context) {
+    // Off by more than fifteen points is worth marking; the rest is noise
+    // at these sample sizes.
+    final off = bucket.gap.abs() > 15;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 52,
+                child: Text(
+                  'Said ${bucket.said}%',
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: AppColors.ink,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'right ${bucket.actual.round()}% '
+                  '(${bucket.right} of ${bucket.count})',
+                  style: AppText.body(
+                    size: 12.5,
+                    color: off
+                        ? AppColors.red
+                        : Colors.black.withValues(alpha: 0.5),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          // Two bars: what you claimed, and what you managed.
+          Stack(
+            children: [
+              Container(
+                height: 6,
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.07),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: (bucket.said / 100).clamp(0.0, 1.0),
+                child: Container(
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: (bucket.actual / 100).clamp(0.0, 1.0),
+                child: Container(
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: off ? AppColors.red : AppColors.ink,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

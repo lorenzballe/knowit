@@ -129,6 +129,35 @@ class TakeASide extends Challenge {
   }
 }
 
+/// What the reader committed to: the answer, and how sure they were.
+///
+/// Confidence is the whole point of calibration — being right matters less
+/// than knowing how likely you are to be right. Null where the card never
+/// asked, so old answers and debate cards stay valid.
+class Answer {
+  final String response;
+  final int? confidence;
+
+  const Answer(this.response, {this.confidence});
+
+  Map<String, dynamic> toJson() => {
+    'r': response,
+    if (confidence != null) 'c': confidence,
+  };
+
+  static Answer? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final response = raw['r'];
+    if (response is! String) return null;
+    final confidence = raw['c'];
+    return Answer(response, confidence: confidence is int ? confidence : null);
+  }
+}
+
+/// The confidence levels the app offers. Five is enough to see a pattern
+/// without turning every card into a form.
+const List<int> kConfidenceLevels = [50, 60, 70, 80, 90];
+
 /// How much work a card expects.
 enum Difficulty {
   easy('Easy'),

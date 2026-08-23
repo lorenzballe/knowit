@@ -12,8 +12,8 @@ class PillCard extends StatelessWidget {
 
   /// What the reader committed to, and where to send a new commitment.
   /// Null while untouched.
-  final String? given;
-  final ValueChanged<String>? onAnswer;
+  final Answer? given;
+  final void Function(String response, int? confidence)? onAnswer;
 
   const PillCard({
     super.key,
@@ -72,39 +72,39 @@ class PillCard extends StatelessWidget {
                     PickOne(:final options) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
-                      input: _PickInput(
+                      input: (commit) => _PickInput(
                         pill: pill,
                         options: options,
-                        onAnswer: onAnswer,
+                        onAnswer: commit,
                       ),
                     ),
                     TakeASide(:final positions) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
                       prompt: 'Pick a side. There is no right answer.',
-                      input: _PickInput(
+                      input: (commit) => _PickInput(
                         pill: pill,
                         options: positions,
-                        onAnswer: onAnswer,
+                        onAnswer: commit,
                       ),
                     ),
                     TypeNumber(:final unit) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
-                      input: _NumberInput(
+                      input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
-                        onAnswer: onAnswer,
+                        onAnswer: commit,
                       ),
                     ),
                     Estimate(:final unit) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
                       prompt: 'Estimate. Close enough counts.',
-                      input: _NumberInput(
+                      input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
-                        onAnswer: onAnswer,
+                        onAnswer: commit,
                       ),
                     ),
                   },
@@ -170,7 +170,7 @@ class _FrontFace extends StatelessWidget {
 
 class _BackFace extends StatefulWidget {
   final Pill pill;
-  final String? given;
+  final Answer? given;
   const _BackFace({required this.pill, this.given});
 
   @override
@@ -198,8 +198,9 @@ class _BackFaceState extends State<_BackFace> {
               if (pill.isGraded && given != null) ...[
                 _Verdict(
                   pill: pill,
-                  right: pill.challenge.accepts(given),
-                  given: pill.challenge.describe(given),
+                  right: pill.challenge.accepts(given.response),
+                  given: pill.challenge.describe(given.response),
+                  confidence: given.confidence,
                 ),
                 const SizedBox(height: 14),
               ],
@@ -322,10 +323,12 @@ class _Verdict extends StatelessWidget {
   final Pill pill;
   final bool right;
   final String given;
+  final int? confidence;
   const _Verdict({
     required this.pill,
     required this.right,
     required this.given,
+    this.confidence,
   });
 
   String get _line {
@@ -353,7 +356,7 @@ class _Verdict extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            _line,
+            confidence == null ? _line : '$_line · you said $confidence% sure',
             style: AppText.label(
               size: 11,
               spacing: 1.2,
@@ -414,8 +417,10 @@ class _Steps extends StatelessWidget {
 /// challenge needs, and an optional nudge for when the reader is stuck.
 class _AskFace extends StatefulWidget {
   final Pill pill;
-  final Widget input;
-  final ValueChanged<String>? onAnswer;
+
+  /// Built with the callback that reports a raw response.
+  final Widget Function(ValueChanged<String>? commit) input;
+  final void Function(String response, int? confidence)? onAnswer;
 
   /// Overrides the default line under the input, so a debate does not tell
   /// the reader to commit to a right answer that does not exist.
@@ -434,6 +439,25 @@ class _AskFace extends StatefulWidget {
 
 class _AskFaceState extends State<_AskFace> {
   bool _hintOpen = false;
+
+  /// Held between answering and saying how sure you are.
+  String? _pending;
+
+  void _commit(String response) {
+    final pill = widget.pill;
+    // Only a card that can be wrong is worth being sure about.
+    if (!pill.isGraded) {
+      widget.onAnswer?.call(response, null);
+      return;
+    }
+    setState(() => _pending = response);
+  }
+
+  void _finish(int confidence) {
+    final response = _pending;
+    if (response == null) return;
+    widget.onAnswer?.call(response, confidence);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -459,8 +483,11 @@ class _AskFaceState extends State<_AskFace> {
                 ),
               ),
               const SizedBox(height: 22),
-              widget.input,
-              if (pill.hasHint) ...[
+              if (_pending == null)
+                widget.input(widget.onAnswer == null ? null : _commit)
+              else
+                _ConfidenceStep(pill: pill, onPick: _finish),
+              if (_pending == null && pill.hasHint) ...[
                 const SizedBox(height: 12),
                 if (_hintOpen)
                   Container(
@@ -521,8 +548,11 @@ class _AskFaceState extends State<_AskFace> {
               ],
               const SizedBox(height: 14),
               Text(
-                widget.prompt ??
-                    '${pill.difficulty.label} · commit before you turn it over.',
+                _pending != null
+                    ? 'Being right matters less than knowing how often you are.'
+                    : widget.prompt ??
+                          '${pill.difficulty.label} · commit before you turn '
+                              'it over.',
                 style: AppText.body(
                   size: 12.5,
                   weight: FontWeight.w500,
@@ -816,6 +846,69 @@ class _TextAction extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// The step between answering and finding out: how sure are you?
+///
+/// This is the part that makes the app worth keeping. Being right is a fact
+/// about one card; knowing how often you are right is a fact about you.
+class _ConfidenceStep extends StatelessWidget {
+  final Pill pill;
+  final ValueChanged<int> onPick;
+
+  const _ConfidenceStep({required this.pill, required this.onPick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'How sure are you?',
+          style: AppText.display(
+            size: 19,
+            weight: FontWeight.w600,
+            spacing: -0.4,
+            color: pill.ink,
+          ),
+        ),
+        const SizedBox(height: 14),
+        Wrap(
+          spacing: 9,
+          runSpacing: 9,
+          children: kConfidenceLevels.map((level) {
+            return Semantics(
+              button: true,
+              label: '$level percent sure',
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onPick(level),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 18,
+                    vertical: 13,
+                  ),
+                  decoration: BoxDecoration(
+                    color: pill.wash,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: pill.washEdge),
+                  ),
+                  child: Text(
+                    '$level%',
+                    style: AppText.body(
+                      size: 15,
+                      weight: FontWeight.w600,
+                      color: pill.ink,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 }

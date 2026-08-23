@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +30,7 @@ class AppState extends ChangeNotifier {
   static const _kSeenIds = 'knowit.seenIds';
   static const _kDeckIds = 'knowit.todayDeckIds';
   static const _kExtraOpen = 'knowit.extraSetDate';
-  static const _kAnswers = 'knowit.answers';
+  static const _kAnswers = 'knowit.answersJson';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -49,10 +51,8 @@ class AppState extends ChangeNotifier {
   /// True once the Knowit+ second set has been unlocked today.
   bool extraSetOpen = false;
 
-  /// Card id -> the raw answer the reader committed to. Kept as written
-  /// rather than a right/wrong flag, so a card met again still shows what
-  /// they said, and so one store serves every kind of challenge.
-  Map<String, String> answers = {};
+  /// Card id -> what the reader committed to, and how sure they were.
+  Map<String, Answer> answers = {};
 
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
@@ -84,6 +84,22 @@ class AppState extends ChangeNotifier {
     _prefs = await SharedPreferences.getInstance();
     today = DateTime.now();
 
+    // Stored state is read defensively. A value written by an older build,
+    // or corrupted on disk, must not leave the app stuck on the splash: it
+    // is better to start fresh than never to start.
+    try {
+      await _restore();
+    } catch (error, stack) {
+      debugPrint('Knowit: could not restore stored state, starting fresh');
+      debugPrintStack(stackTrace: stack, label: '$error');
+      await _startNewDay();
+    }
+
+    ready = true;
+    notifyListeners();
+  }
+
+  Future<void> _restore() async {
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
@@ -102,7 +118,7 @@ class AppState extends ChangeNotifier {
     isPlus = _prefs.getBool(_kPlus) ?? false;
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
-    answers = _decodeAnswers(_prefs.getStringList(_kAnswers) ?? []);
+    answers = _decodeAnswers(_prefs.getString(_kAnswers));
 
     final storedDay = _prefs.getString(_kTodayDate);
     final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
@@ -111,12 +127,10 @@ class AppState extends ChangeNotifier {
       // shuffle under the reader as their history grows.
       todaysDeck = pillsByIds(storedDeck);
       todayIndex = _prefs.getInt(_kTodayIndex) ?? 0;
+      if (todaysDeck.isEmpty) await _startNewDay();
     } else {
       await _startNewDay();
     }
-
-    ready = true;
-    notifyListeners();
   }
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
@@ -207,41 +221,50 @@ class AppState extends ChangeNotifier {
 
   // ── Answers ───────────────────────────────────────────────────────────
 
-  static Map<String, String> _decodeAnswers(List<String> raw) {
-    final out = <String, String>{};
-    for (final entry in raw) {
-      final at = entry.indexOf('=');
-      if (at <= 0) continue;
-      out[entry.substring(0, at)] = entry.substring(at + 1);
+  static Map<String, Answer> _decodeAnswers(String? raw) {
+    if (raw == null || raw.isEmpty) return {};
+    Object? parsed;
+    try {
+      parsed = jsonDecode(raw);
+    } on FormatException {
+      return {};
+    }
+    if (parsed is! Map) return {};
+    final out = <String, Answer>{};
+    for (final entry in parsed.entries) {
+      final answer = Answer.fromJson(entry.value);
+      if (answer != null) out['${entry.key}'] = answer;
     }
     return out;
   }
 
-  static List<String> _encodeAnswers(Map<String, String> given) => [
-    for (final e in given.entries) '${e.key}=${e.value}',
-  ];
+  Future<void> _saveAnswers() async {
+    await _prefs.setString(
+      _kAnswers,
+      jsonEncode({for (final e in answers.entries) e.key: e.value.toJson()}),
+    );
+  }
 
   /// What the reader committed to on this card, or null if they have not.
-  String? answerFor(String pillId) => answers[pillId];
+  Answer? answerFor(String pillId) => answers[pillId];
 
   /// Only cards that can be right or wrong count. A debate card asks for an
   /// opinion, and an opinion is not a score.
-  Iterable<MapEntry<String, String>> get _gradedAnswers sync* {
+  Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
       final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
-      if (pill != null && pill.isGraded) yield e;
+      if (pill != null && pill.isGraded) yield MapEntry(pill, e.value);
     }
   }
 
-  int get puzzlesAnswered => _gradedAnswers.length;
+  int get puzzlesAnswered => _graded.length;
 
   int get puzzlesRight {
     var right = 0;
-    for (final e in _gradedAnswers) {
-      final pill = kPillPool.firstWhere((p) => p.id == e.key);
+    for (final e in _graded) {
       // Grading belongs to the challenge, not here: a new kind of card
       // brings its own rule and this stays untouched.
-      if (pill.challenge.accepts(e.value)) right++;
+      if (e.key.challenge.accepts(e.value.response)) right++;
     }
     return right;
   }
@@ -252,11 +275,51 @@ class AppState extends ChangeNotifier {
 
   /// Records a commitment. The first answer is the one that stands — meeting
   /// a card again should not let the score be retaken.
-  Future<void> recordAnswer(String pillId, String response) async {
+  Future<void> recordAnswer(
+    String pillId,
+    String response, {
+    int? confidence,
+  }) async {
     if (answers.containsKey(pillId)) return;
-    answers[pillId] = response;
-    await _prefs.setStringList(_kAnswers, _encodeAnswers(answers));
+    answers[pillId] = Answer(response, confidence: confidence);
+    await _saveAnswers();
     notifyListeners();
+  }
+
+  // ── Calibration ───────────────────────────────────────────────────────
+
+  /// One confidence level, and how it actually went.
+  Iterable<CalibrationBucket> get calibration sync* {
+    for (final level in kConfidenceLevels) {
+      var count = 0;
+      var right = 0;
+      for (final e in _graded) {
+        if (e.value.confidence != level) continue;
+        count++;
+        if (e.key.challenge.accepts(e.value.response)) right++;
+      }
+      if (count > 0) yield CalibrationBucket(level, count, right);
+    }
+  }
+
+  int get calibratedAnswers =>
+      _graded.where((e) => e.value.confidence != null).length;
+
+  /// How far the reader's confidence sits from their accuracy, in points.
+  /// Positive means overconfident — the usual direction.
+  double? get overconfidence {
+    var claimed = 0.0;
+    var right = 0;
+    var count = 0;
+    for (final e in _graded) {
+      final said = e.value.confidence;
+      if (said == null) continue;
+      claimed += said;
+      if (e.key.challenge.accepts(e.value.response)) right++;
+      count++;
+    }
+    if (count == 0) return null;
+    return (claimed / count) - (right / count * 100);
   }
 
   bool isSaved(String pillId) => savedIds.contains(pillId);
@@ -385,4 +448,20 @@ class AppState extends ChangeNotifier {
       return set.contains(dateKey(d));
     });
   }
+}
+
+/// One confidence level and how it actually turned out.
+class CalibrationBucket {
+  /// What the reader claimed, as a percentage.
+  final int said;
+  final int count;
+  final int right;
+
+  const CalibrationBucket(this.said, this.count, this.right);
+
+  /// What actually happened, as a percentage.
+  double get actual => count == 0 ? 0 : right / count * 100;
+
+  /// Positive when the reader was more sure than they should have been.
+  double get gap => said - actual;
 }

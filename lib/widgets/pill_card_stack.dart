@@ -16,8 +16,8 @@ class PillCardStack extends StatefulWidget {
 
   /// What the reader has already committed to, and where to record a new
   /// commitment. Raw strings: the challenge knows how to read its own.
-  final String? Function(String id) answerFor;
-  final void Function(String id, String response) onAnswer;
+  final Answer? Function(String id) answerFor;
+  final void Function(String id, String response, int? confidence) onAnswer;
 
   const PillCardStack({
     super.key,
@@ -146,9 +146,9 @@ class _PillCardStackState extends State<PillCardStack>
                 indexLabel: num,
                 flipped: false,
                 given: given,
-                onAnswer: (response) {
+                onAnswer: (response, confidence) {
                   HapticFeedback.mediumImpact();
-                  widget.onAnswer(pill.id, response);
+                  widget.onAnswer(pill.id, response, confidence);
                   setState(() => _flipped = true);
                 },
               ),

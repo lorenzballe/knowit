@@ -74,8 +74,11 @@ class _TodayScreenState extends State<TodayScreen> {
                       index: index,
                       onAdvance: () => app.advance(),
                       answerFor: app.answerFor,
-                      onAnswer: (id, response) =>
-                          app.recordAnswer(id, response),
+                      onAnswer: (id, response, confidence) => app.recordAnswer(
+                        id,
+                        response,
+                        confidence: confidence,
+                      ),
                     ),
             ),
           ),

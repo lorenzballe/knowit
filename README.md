@@ -101,6 +101,22 @@ could be reached without ever guessing. Getting it wrong on purpose is the part
 that teaches, so the reveal names the trap before it explains. Your first
 answer stands.
 
+## Calibration
+
+After committing to a graded answer the card asks one more thing: how sure
+are you? Five levels, 50 to 90. The profile then reports the only number in
+the app that says something about the reader rather than the cards —
+
+> You are overconfident by 17 points
+
+— broken down by level: what you claimed against what actually happened.
+Being right is a fact about one card. Knowing how often you are right is a
+fact about you, and it is one of the few reasoning skills with evidence that
+training transfers.
+
+A debate card never asks, because an opinion is not something to be sure
+about, and ungraded answers stay out of the buckets.
+
 ## What a card can offer on the reveal
 
 - **A hint**, asked for without giving up and without turning the card.

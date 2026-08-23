@@ -447,19 +447,20 @@ void main() {
   });
 
   group('The card', () {
-    Widget host(List<Pill> deck, Map<String, String> given) {
+    Widget host(List<Pill> deck, Map<String, Answer> given) {
       return MaterialApp(
         theme: buildKnowitTheme(),
         home: Scaffold(
           backgroundColor: AppColors.dark,
           body: SizedBox(
-            height: 620,
+            height: 640,
             child: PillCardStack(
               deck: deck,
               index: 0,
               onAdvance: () {},
               answerFor: (id) => given[id],
-              onAnswer: (id, response) => given[id] = response,
+              onAnswer: (id, response, confidence) =>
+                  given[id] = Answer(response, confidence: confidence),
             ),
           ),
         ),
@@ -469,6 +470,8 @@ void main() {
     final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
     final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
     final number = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
+    final guess = kPillPool.firstWhere((p) => p.challenge is Estimate);
+    final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
 
     testWidgets('a fact turns over on a tap', (tester) async {
       await tester.pumpWidget(host([fact], {}));
@@ -488,16 +491,16 @@ void main() {
       await tester.pumpWidget(host([pick], {}));
       await tester.pumpAndSettle();
 
-      expect(find.textContaining('commit before you turn it over'), findsOneWidget);
-
       // Tapping the question is not an answer, so the card stays put.
       await tester.tap(find.text(pick.question));
       await tester.pumpAndSettle();
       expect(find.text('BAR MOVE'), findsNothing);
     });
 
-    testWidgets('picking the right option turns the card', (tester) async {
-      final given = <String, String>{};
+    testWidgets('answering asks how sure you are, then turns the card', (
+      tester,
+    ) async {
+      final given = <String, Answer>{};
       final challenge = pick.challenge as PickOne;
       await tester.pumpWidget(host([pick], given));
       await tester.pumpAndSettle();
@@ -505,8 +508,18 @@ void main() {
       await tester.tap(find.text(challenge.correctOption));
       await tester.pumpAndSettle();
 
-      expect(given[pick.id], '${challenge.correct}');
-      expect(find.text('You got it'), findsOneWidget);
+      // Committed, but not revealed: the card asks for confidence first.
+      expect(find.text('How sure are you?'), findsOneWidget);
+      expect(find.text('BAR MOVE'), findsNothing);
+
+      await tester.tap(find.text('80%'));
+      await tester.pumpAndSettle();
+
+      expect(given[pick.id]?.response, '${challenge.correct}');
+      expect(given[pick.id]?.confidence, 80);
+      expect(find.textContaining('You got it'), findsOneWidget);
+      expect(find.textContaining('you said 80% sure'), findsOneWidget);
+      expect(find.text('BAR MOVE'), findsOneWidget);
     });
 
     testWidgets('a wrong pick names the trap', (tester) async {
@@ -517,13 +530,18 @@ void main() {
 
       await tester.tap(find.text(challenge.options[wrong]));
       await tester.pumpAndSettle();
+      await tester.tap(find.text('50%'));
+      await tester.pumpAndSettle();
 
-      expect(find.text('Almost everyone gets this wrong'), findsOneWidget);
+      expect(
+        find.textContaining('Almost everyone gets this wrong'),
+        findsOneWidget,
+      );
       expect(find.textContaining('The trap:'), findsOneWidget);
     });
 
     testWidgets('a number problem takes a typed answer', (tester) async {
-      final given = <String, String>{};
+      final given = <String, Answer>{};
       final challenge = number.challenge as TypeNumber;
       await tester.pumpWidget(host([number], given));
       await tester.pumpAndSettle();
@@ -532,14 +550,17 @@ void main() {
       await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
       await tester.pumpAndSettle();
       expect(given, isEmpty);
+      expect(find.text('How sure are you?'), findsNothing);
 
       await tester.enterText(find.byType(TextField), '${challenge.answer}');
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
       await tester.pumpAndSettle();
+      await tester.tap(find.text('90%'));
+      await tester.pumpAndSettle();
 
-      expect(given[number.id], '${challenge.answer}');
-      expect(find.text('You got it'), findsOneWidget);
+      expect(given[number.id]?.response, '${challenge.answer}');
+      expect(find.textContaining('You got it'), findsOneWidget);
       // A worked solution, not one paragraph.
       expect(find.text(number.steps.first), findsOneWidget);
     });
@@ -552,6 +573,8 @@ void main() {
       await tester.enterText(find.byType(TextField), '1');
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('70%'));
       await tester.pumpAndSettle();
 
       expect(
@@ -572,34 +595,12 @@ void main() {
       // A hint is not the answer: the card has not turned.
       expect(find.text('BAR MOVE'), findsNothing);
     });
-  });
-
-  group('New card kinds', () {
-    Widget host(List<Pill> deck, Map<String, String> given) {
-      return MaterialApp(
-        theme: buildKnowitTheme(),
-        home: Scaffold(
-          backgroundColor: AppColors.dark,
-          body: SizedBox(
-            height: 640,
-            child: PillCardStack(
-              deck: deck,
-              index: 0,
-              onAdvance: () {},
-              answerFor: (id) => given[id],
-              onAnswer: (id, response) => given[id] = response,
-            ),
-          ),
-        ),
-      );
-    }
 
     testWidgets('an estimate accepts anything in the right ballpark', (
       tester,
     ) async {
-      final pill = kPillPool.firstWhere((p) => p.challenge is Estimate);
-      final challenge = pill.challenge as Estimate;
-      await tester.pumpWidget(host([pill], {}));
+      final challenge = guess.challenge as Estimate;
+      await tester.pumpWidget(host([guess], {}));
       await tester.pumpAndSettle();
 
       expect(find.text('Estimate. Close enough counts.'), findsOneWidget);
@@ -612,6 +613,8 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
       await tester.pumpAndSettle();
+      await tester.tap(find.text('60%'));
+      await tester.pumpAndSettle();
 
       expect(find.textContaining('Close enough'), findsOneWidget);
     });
@@ -619,34 +622,40 @@ void main() {
     testWidgets('a debate takes a side and offers the other one', (
       tester,
     ) async {
-      final pill = kPillPool.firstWhere((p) => p.challenge is TakeASide);
-      final challenge = pill.challenge as TakeASide;
-      await tester.pumpWidget(host([pill], {}));
+      final challenge = debate.challenge as TakeASide;
+      await tester.pumpWidget(host([debate], {}));
       await tester.pumpAndSettle();
 
-      expect(find.text('Pick a side. There is no right answer.'), findsOneWidget);
+      expect(
+        find.text('Pick a side. There is no right answer.'),
+        findsOneWidget,
+      );
 
       await tester.tap(find.text(challenge.positions.first));
       await tester.pumpAndSettle();
 
-      // No verdict: an opinion is not marked.
+      // An opinion is not something to be sure about, so it is never asked,
+      // and it is never marked.
+      expect(find.text('How sure are you?'), findsNothing);
       expect(find.text('You got it'), findsNothing);
       expect(find.text('Almost everyone gets this wrong'), findsNothing);
 
       // The other side is one tap away, and not shown before it is asked for.
-      expect(find.text(pill.counterpoint), findsNothing);
+      expect(find.text(debate.counterpoint), findsNothing);
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
-      expect(find.text(pill.counterpoint), findsOneWidget);
+      expect(find.text(debate.counterpoint), findsOneWidget);
     });
 
     testWidgets('the plain-words retelling waits to be asked for', (
       tester,
     ) async {
       final pill = kPillPool.firstWhere((p) => p.hasSimply);
-      await tester.pumpWidget(host([pill], {pill.id: '0'}));
+      await tester.pumpWidget(
+        host([pill], {pill.id: const Answer('0', confidence: 50)}),
+      );
       await tester.pumpAndSettle();
-      // Already answered, so the card opens on the reveal after one tap.
+      // Already answered, so one tap reveals.
       await tester.tap(find.text(pill.question));
       await tester.pumpAndSettle();
 
@@ -654,6 +663,83 @@ void main() {
       await tester.tap(find.text('Explain it like I am three'));
       await tester.pumpAndSettle();
       expect(find.text(pill.simply), findsOneWidget);
+    });
+  });
+
+  group('Calibration', () {
+    testWidgets('a corrupt store starts fresh instead of hanging', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        // Not JSON at all, and a deck of ids that no longer exist.
+        'knowit.answersJson': 'not json {{{',
+        'knowit.todayDeckIds': <String>['gone-1', 'gone-2'],
+      });
+      await tester.pumpWidget(const KnowitApp());
+      await _settle(tester);
+
+      // The app is past the splash and dealing a real day.
+      expect(find.text('Knowit'), findsWidgets);
+      expect(find.text('Today'), findsWidgets);
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
+
+    test('buckets confidence against what actually happened', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final graded = kPillPool.where((p) => p.isGraded).toList();
+      String right(Pill p) => switch (p.challenge) {
+        PickOne(:final correct) => '$correct',
+        TypeNumber(:final answer) => '$answer',
+        Estimate(:final answer) => '$answer',
+        _ => '',
+      };
+
+      // Four answers at 90%, only one of them right: badly overconfident.
+      await app.recordAnswer(graded[0].id, right(graded[0]), confidence: 90);
+      for (var i = 1; i < 4; i++) {
+        await app.recordAnswer(graded[i].id, 'rubbish', confidence: 90);
+      }
+
+      final buckets = app.calibration.toList();
+      expect(buckets, hasLength(1));
+      expect(buckets.single.said, 90);
+      expect(buckets.single.count, 4);
+      expect(buckets.single.right, 1);
+      expect(buckets.single.actual, 25);
+      expect(buckets.single.gap, 65);
+      expect(app.overconfidence, 65);
+      expect(app.calibratedAnswers, 4);
+    });
+
+    test('an opinion never lands in a bucket', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      await app.recordAnswer(debate.id, '0');
+
+      expect(app.calibratedAnswers, 0);
+      expect(app.calibration, isEmpty);
+      expect(app.overconfidence, isNull);
+    });
+
+    test('answers survive being written and read back', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final first = AppState();
+      await first.init();
+      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      await first.recordAnswer(pill.id, '1', confidence: 70);
+
+      // A fresh install reading the same store.
+      final second = AppState();
+      await second.init();
+      expect(second.answerFor(pill.id)?.response, '1');
+      expect(second.answerFor(pill.id)?.confidence, 70);
     });
   });
 
@@ -698,13 +784,13 @@ void main() {
       final pill = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
       final challenge = pill.challenge as TypeNumber;
 
-      await app.recordAnswer(pill.id, '${challenge.answer}');
+      await app.recordAnswer(pill.id, '${challenge.answer}', confidence: 90);
       expect(app.puzzlesRight, 1);
       expect(app.puzzlesAnswered, 1);
 
       // Meeting the card again must not let the score be retaken.
       await app.recordAnswer(pill.id, '0');
-      expect(app.answerFor(pill.id), '${challenge.answer}');
+      expect(app.answerFor(pill.id)?.response, '${challenge.answer}');
       expect(app.puzzlesRight, 1);
 
       // Taking a side is not an answer that can be marked, so the tally
