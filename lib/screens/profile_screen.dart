@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -84,8 +85,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final saved = app.savedIds.length;
-
     return SafeArea(
       bottom: false,
       child: ListView(
@@ -147,9 +146,18 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(width: 10),
               _Stat(value: '${app.pillsRead}', label: 'pills read'),
               const SizedBox(width: 10),
-              _Stat(value: '$saved', label: 'saved'),
+              _Stat(
+                value: app.puzzlesAnswered == 0
+                    ? '—'
+                    : '${app.puzzlesRight}/${app.puzzlesAnswered}',
+                label: 'puzzles right',
+              ),
             ],
           ),
+          const SizedBox(height: 22),
+          const Eyebrow('What you have covered'),
+          const SizedBox(height: 11),
+          _Coverage(app: app),
           const SizedBox(height: 22),
           const Eyebrow('Daily nudge'),
           const SizedBox(height: 11),
@@ -442,6 +450,100 @@ class _LinkRow extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The collection, topic by topic. A daily app needs somewhere to be going,
+/// and a bar that fills is the cheapest honest version of that.
+class _Coverage extends StatelessWidget {
+  final AppState app;
+  const _Coverage({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final byTopic = <String, int>{};
+    final seenByTopic = <String, int>{};
+    for (final pill in kPillPool) {
+      byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
+      if (app.seenIds.contains(pill.id)) {
+        seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;
+      }
+    }
+
+    final rows = kTopicOrder
+        .where(app.pickedTopics.contains)
+        .map((key) => kTopics[key]!)
+        .where((style) => (byTopic[style.name] ?? 0) > 0)
+        .toList();
+
+    final seenTotal = app.seenIds.length;
+    final poolTotal = kPillPool.length;
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$seenTotal of $poolTotal pills',
+            style: AppText.display(
+              size: 20,
+              weight: FontWeight.w600,
+              spacing: -0.5,
+              color: AppColors.ink,
+            ),
+          ),
+          const SizedBox(height: 14),
+          ...rows.map((style) {
+            final total = byTopic[style.name] ?? 0;
+            final seen = seenByTopic[style.name] ?? 0;
+            final complete = seen >= total;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          style.name,
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w500,
+                            color: AppColors.ink,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        complete ? 'complete' : '$seen/$total',
+                        style: AppText.body(
+                          size: 12,
+                          weight: complete ? FontWeight.w600 : FontWeight.w400,
+                          color: complete
+                              ? style.color
+                              : Colors.black.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: LinearProgressIndicator(
+                      value: total == 0 ? 0 : seen / total,
+                      minHeight: 5,
+                      backgroundColor: Colors.black.withValues(alpha: 0.07),
+                      valueColor: AlwaysStoppedAnimation(style.color),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

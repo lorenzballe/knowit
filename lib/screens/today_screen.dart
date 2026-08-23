@@ -73,6 +73,9 @@ class _TodayScreenState extends State<TodayScreen> {
                       deck: deck,
                       index: index,
                       onAdvance: () => app.advance(),
+                      chosenFor: app.puzzleChoice,
+                      onChoose: (id, choice) =>
+                          app.recordPuzzleChoice(id, choice),
                     ),
             ),
           ),

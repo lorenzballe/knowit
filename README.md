@@ -70,5 +70,17 @@ These are declared in the UI rather than faked:
 - **No notification delivery.** The daily nudge is stored as a preference;
   actually scheduling it needs a local-notifications plugin and a mobile build.
 
-The pool holds 60 pills, five per topic — about twelve days for a free reader
-and six on Knowit+ before anything repeats.
+The pool holds 75 cards: 60 facts, five per topic, plus 15 reasoning puzzles
+under **Thinking** — about fifteen days for a free reader before anything
+repeats.
+
+A puzzle asks before it tells. The options are the front of the card, and
+committing to one is what turns it over; a stray tap will not. Getting it wrong
+on purpose is the part that teaches, so the reveal names the trap you fell into
+before it explains the answer. Your first answer is the one that counts.
+
+Every puzzle is either arithmetic the reader can redo (Monty Hall, base rates,
+the birthday problem) or a result that has held up under repeated testing
+(Wason, Tversky & Kahneman, the Berkeley admissions data). Famous psychology
+that failed replication — ego depletion, power posing, priming — is
+deliberately absent.

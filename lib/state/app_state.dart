@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
@@ -27,6 +28,7 @@ class AppState extends ChangeNotifier {
   static const _kSeenIds = 'knowit.seenIds';
   static const _kDeckIds = 'knowit.todayDeckIds';
   static const _kExtraOpen = 'knowit.extraSetDate';
+  static const _kPuzzleChoices = 'knowit.puzzleChoices';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -46,6 +48,10 @@ class AppState extends ChangeNotifier {
 
   /// True once the Knowit+ second set has been unlocked today.
   bool extraSetOpen = false;
+
+  /// Puzzle id -> the option the reader committed to. Kept rather than a
+  /// right/wrong flag so a card they meet again still shows their answer.
+  Map<String, int> puzzleChoices = {};
 
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
@@ -95,6 +101,7 @@ class AppState extends ChangeNotifier {
     isPlus = _prefs.getBool(_kPlus) ?? false;
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
+    puzzleChoices = _decodeChoices(_prefs.getStringList(_kPuzzleChoices) ?? []);
 
     final storedDay = _prefs.getString(_kTodayDate);
     final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
@@ -195,6 +202,50 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+  }
+
+  // ── Puzzles ───────────────────────────────────────────────────────────
+
+  static Map<String, int> _decodeChoices(List<String> raw) {
+    final out = <String, int>{};
+    for (final entry in raw) {
+      final at = entry.lastIndexOf('|');
+      if (at <= 0) continue;
+      final index = int.tryParse(entry.substring(at + 1));
+      if (index != null) out[entry.substring(0, at)] = index;
+    }
+    return out;
+  }
+
+  static List<String> _encodeChoices(Map<String, int> choices) => [
+    for (final e in choices.entries) '${e.key}|${e.value}',
+  ];
+
+  /// Which option the reader committed to, or null if they have not yet.
+  int? puzzleChoice(String pillId) => puzzleChoices[pillId];
+
+  int get puzzlesAnswered => puzzleChoices.length;
+
+  int get puzzlesRight {
+    var right = 0;
+    for (final e in puzzleChoices.entries) {
+      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      if (pill != null && pill.correctIndex == e.value) right++;
+    }
+    return right;
+  }
+
+  /// Share of puzzles the reader got right, 0 when none answered yet.
+  double get puzzleAccuracy =>
+      puzzlesAnswered == 0 ? 0 : puzzlesRight / puzzlesAnswered;
+
+  /// Records a commitment. The first answer is the one that stands — meeting
+  /// a card again should not let the score be retaken.
+  Future<void> recordPuzzleChoice(String pillId, int choice) async {
+    if (puzzleChoices.containsKey(pillId)) return;
+    puzzleChoices[pillId] = choice;
+    await _prefs.setStringList(_kPuzzleChoices, _encodeChoices(puzzleChoices));
+    notifyListeners();
   }
 
   bool isSaved(String pillId) => savedIds.contains(pillId);
@@ -310,6 +361,7 @@ class AppState extends ChangeNotifier {
     isPlus = false;
     seenIds = {};
     extraSetOpen = false;
+    puzzleChoices = {};
     await _startNewDay();
     notifyListeners();
   }

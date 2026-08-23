@@ -5,6 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:knowit/data/pills_data.dart';
 import 'package:knowit/data/pills_repository.dart';
 import 'package:knowit/main.dart';
+import 'package:knowit/models/pill.dart';
+import 'package:knowit/state/app_state.dart';
+import 'package:knowit/theme.dart';
+import 'package:knowit/widgets/pill_card_stack.dart';
 import 'package:knowit/widgets/ui.dart';
 
 /// Pumps a few frames so the async `SharedPreferences` load settles.
@@ -135,6 +139,8 @@ void main() {
       await _settle(tester);
 
       await _openProfile(tester);
+      await tester.scrollUntilVisible(find.text('Edit'), 200);
+      await _settle(tester);
       await tester.tap(find.text('Edit'));
       await _settle(tester);
 
@@ -201,6 +207,8 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
+    await tester.scrollUntilVisible(find.text('Upgrade'), 200);
+    await _settle(tester);
     await tester.tap(find.text('Upgrade'));
     await _settle(tester);
 
@@ -219,6 +227,8 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
+    await tester.scrollUntilVisible(find.text('Upgrade'), 200);
+    await _settle(tester);
     await tester.tap(find.text('Upgrade'));
     await _settle(tester);
 
@@ -237,6 +247,8 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
+    await tester.scrollUntilVisible(find.text('Every day at 08:30'), 200);
+    await _settle(tester);
     expect(find.text('Every day at 08:30'), findsOneWidget);
 
     await tester.tap(find.byType(NudgeSwitch));
@@ -299,7 +311,7 @@ void main() {
       for (final p in kPillPool) {
         perTopic[p.topic] = (perTopic[p.topic] ?? 0) + 1;
       }
-      expect(perTopic, hasLength(12));
+      expect(perTopic, hasLength(13));
       // Every topic carries enough that a single-topic mix still fills a day.
       for (final entry in perTopic.entries) {
         expect(
@@ -402,21 +414,108 @@ void main() {
     });
   });
 
-  testWidgets('tapping a card turns it over to the answer', (tester) async {
-    SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
-    await _settle(tester);
+  group('The card', () {
+    Widget host(List<Pill> deck, Map<String, int> chosen) {
+      return MaterialApp(
+        theme: buildKnowitTheme(),
+        home: Scaffold(
+          backgroundColor: AppColors.dark,
+          body: SizedBox(
+            height: 600,
+            child: PillCardStack(
+              deck: deck,
+              index: 0,
+              onAdvance: () {},
+              chosenFor: (id) => chosen[id],
+              onChoose: (id, choice) => chosen[id] = choice,
+            ),
+          ),
+        ),
+      );
+    }
 
-    // Three cards are stacked, so three fronts are in the tree.
-    expect(find.text('Tap to reveal'), findsNWidgets(3));
-    expect(find.text('BAR MOVE'), findsNothing);
+    final fact = kPillPool.firstWhere((p) => !p.isPuzzle);
+    final puzzle = kPillPool.firstWhere((p) => p.isPuzzle);
 
-    await tester.tap(find.text('Tap to reveal').first);
-    await tester.pumpAndSettle();
+    testWidgets('a fact turns over on a tap', (tester) async {
+      await tester.pumpWidget(host([fact], {}));
+      await tester.pumpAndSettle();
 
-    // The top card has turned; the two behind it are untouched.
-    expect(find.text('BAR MOVE'), findsOneWidget);
-    expect(find.text('Tap to reveal'), findsNWidgets(2));
+      expect(find.text('Tap to reveal'), findsOneWidget);
+      expect(find.text('BAR MOVE'), findsNothing);
+
+      await tester.tap(find.text('Tap to reveal'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('BAR MOVE'), findsOneWidget);
+    });
+
+    testWidgets('a puzzle will not turn over until you commit', (
+      tester,
+    ) async {
+      await tester.pumpWidget(host([puzzle], {}));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Commit before you turn it over.'), findsOneWidget);
+      for (final choice in puzzle.choices) {
+        expect(find.text(choice), findsOneWidget);
+      }
+
+      // Tapping the question is not an answer, so the card stays put.
+      await tester.tap(find.text(puzzle.question));
+      await tester.pumpAndSettle();
+      expect(find.text('BAR MOVE'), findsNothing);
+    });
+
+    testWidgets('choosing turns the card and reports the outcome', (
+      tester,
+    ) async {
+      final chosen = <String, int>{};
+      await tester.pumpWidget(host([puzzle], chosen));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(puzzle.correctChoice));
+      await tester.pumpAndSettle();
+
+      expect(chosen[puzzle.id], puzzle.correctIndex);
+      expect(find.text('You got it'), findsOneWidget);
+      expect(find.text('BAR MOVE'), findsOneWidget);
+    });
+
+    testWidgets('a wrong answer names the trap', (tester) async {
+      final wrong = puzzle.correctIndex == 0 ? 1 : 0;
+      final chosen = <String, int>{};
+      await tester.pumpWidget(host([puzzle], chosen));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(puzzle.choices[wrong]));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Almost everyone gets this wrong'), findsOneWidget);
+      expect(find.textContaining('The trap:'), findsOneWidget);
+    });
+  });
+
+  group('Puzzle scoring', () {
+    testWidgets('the first answer is the one that stands', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const KnowitApp());
+      await _settle(tester);
+
+      final puzzle = kPillPool.firstWhere((p) => p.isPuzzle);
+      final app = AppState();
+      await app.init();
+
+      await app.recordPuzzleChoice(puzzle.id, puzzle.correctIndex);
+      expect(app.puzzlesRight, 1);
+      expect(app.puzzlesAnswered, 1);
+
+      // Meeting the card again must not let the score be retaken.
+      final wrong = puzzle.correctIndex == 0 ? 1 : 0;
+      await app.recordPuzzleChoice(puzzle.id, wrong);
+      expect(app.puzzleChoice(puzzle.id), puzzle.correctIndex);
+      expect(app.puzzlesRight, 1);
+    });
   });
 
   testWidgets('the come-back screen appears after a lapsed streak', (

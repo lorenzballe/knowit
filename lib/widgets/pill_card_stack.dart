@@ -14,11 +14,18 @@ class PillCardStack extends StatefulWidget {
   final int index;
   final VoidCallback onAdvance;
 
+  /// Puzzle only: what the reader has already answered, and where to record
+  /// a new answer.
+  final int? Function(String id) chosenFor;
+  final void Function(String id, int choice) onChoose;
+
   const PillCardStack({
     super.key,
     required this.deck,
     required this.index,
     required this.onAdvance,
+    required this.chosenFor,
+    required this.onChoose,
   });
 
   @override
@@ -88,6 +95,10 @@ class _PillCardStackState extends State<PillCardStack>
     } else if (_dragTotalMove < 7) {
       await _animateTo(0);
       if (!mounted) return;
+      // A puzzle turns over when the reader commits, not on a stray tap —
+      // otherwise the answer can be reached without ever guessing.
+      final top = widget.deck[widget.index];
+      if (top.isPuzzle && widget.chosenFor(top.id) == null) return;
       HapticFeedback.selectionClick();
       setState(() => _flipped = !_flipped);
     } else {
@@ -125,11 +136,28 @@ class _PillCardStackState extends State<PillCardStack>
           '${(widget.index + d + 1).toString().padLeft(2, '0')} / '
           '${widget.deck.length.toString().padLeft(2, '0')}';
 
+      final chosen = widget.chosenFor(pill.id);
+
       Widget card = isTop
           ? FlipCard(
               showBack: _flipped,
-              front: PillCard(pill: pill, indexLabel: num, flipped: false),
-              back: PillCard(pill: pill, indexLabel: num, flipped: true),
+              front: PillCard(
+                pill: pill,
+                indexLabel: num,
+                flipped: false,
+                chosenIndex: chosen,
+                onChoose: (i) {
+                  HapticFeedback.mediumImpact();
+                  widget.onChoose(pill.id, i);
+                  setState(() => _flipped = true);
+                },
+              ),
+              back: PillCard(
+                pill: pill,
+                indexLabel: num,
+                flipped: true,
+                chosenIndex: chosen,
+              ),
             )
           : PillCard(pill: pill, indexLabel: num, flipped: false);
 

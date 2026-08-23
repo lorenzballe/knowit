@@ -81,6 +81,12 @@ const Map<String, TopicStyle> kTopics = {
     ink: Color(0xFFFFFFFF),
     tint: Color(0xFFECE7FF),
   ),
+  'thinking': TopicStyle(
+    name: 'Thinking',
+    color: Color(0xFFF5F3EE),
+    ink: Color(0xFF131316),
+    tint: Color(0xFFFFFFFF),
+  ),
   'philosophy': TopicStyle(
     name: 'Philosophy',
     color: Color(0xFFA94BE0),
@@ -91,6 +97,7 @@ const Map<String, TopicStyle> kTopics = {
 
 /// Display order used by the topic picker and the profile chips.
 const List<String> kTopicOrder = [
+  'thinking',
   'science',
   'space',
   'psychology',
