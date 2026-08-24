@@ -39,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
               const _FannedCards(),
               const SizedBox(height: 26),
               Text(
-                'Five a day. Some you read, some you have to answer.',
+                'Most people are more sure than they are right.',
                 style: AppText.display(
                   size: 34,
                   weight: FontWeight.w700,
@@ -50,10 +50,10 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 11),
               Text(
-                'Facts worth repeating, and puzzles that catch you out. You '
-                'answer before you see the answer, and say how sure you are '
-                '— so the app can show you not just what you know, but how '
-                'well you know it.',
+                'Five cards a day. You commit to an answer and say how '
+                'sure you are before you turn it over — so after a few weeks '
+                'you have the one thing almost nobody has: a measurement of '
+                'your own judgement.',
                 style: AppText.body(
                   size: 15,
                   height: 1.5,

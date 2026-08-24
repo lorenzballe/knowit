@@ -6,6 +6,7 @@ import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/premium.dart';
+import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'how_screen.dart';
@@ -155,6 +156,14 @@ class ProfileScreen extends StatelessWidget {
             const Eyebrow('How well you know yourself'),
             const SizedBox(height: 11),
             _Calibration(app: app),
+            const SizedBox(height: 10),
+            _ShareRecord(app: app),
+          ],
+          if (app.trend != null) ...[
+            const SizedBox(height: 22),
+            const Eyebrow('Is the gap closing?'),
+            const SizedBox(height: 11),
+            _TrendPanel(app: app),
           ],
           if (app.masteryByWeakness.isNotEmpty) ...[
             const SizedBox(height: 22),
@@ -773,7 +782,12 @@ class _Mastery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rows = app.masteryByWeakness.take(5).toList();
+    // The three you are worst at are the ones worth acting on, and they are
+    // free: a reader has to see the measurement before paying to keep it.
+    // What Knowit+ adds is the rest of the board.
+    final all = app.masteryByWeakness;
+    final rows = app.isPlus ? all : all.take(3).toList();
+    final hidden = all.length - rows.length;
 
     return PaperCard(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 10),
@@ -849,8 +863,247 @@ class _Mastery extends StatelessWidget {
               ),
             );
           }),
+          if (hidden > 0)
+            Semantics(
+              button: true,
+              label: 'See every principle with Knowit plus',
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => requirePlus(context, app, () {}),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 2, bottom: 8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          '$hidden more '
+                          '${hidden == 1 ? 'principle' : 'principles'} '
+                          'being tracked',
+                          style: AppText.body(
+                            size: 13.5,
+                            weight: FontWeight.w600,
+                            color: context.p.inkMuted,
+                          ),
+                        ),
+                      ),
+                      const PlusLock(locked: true),
+                    ],
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
+    );
+  }
+}
+
+/// The one thing this app makes that no other daily-learning app holds: a
+/// number about the reader. It sits directly under the calibration rows, so
+/// it is offered at the moment the number has just been read.
+class _ShareRecord extends StatelessWidget {
+  final AppState app;
+  const _ShareRecord({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: 'Share your record',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => showRecordShareSheet(context, app),
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: AppColors.lime,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.ios_share_rounded,
+                size: 17,
+                color: AppColors.limeInk,
+              ),
+              const SizedBox(width: 9),
+              Text(
+                'Share my record',
+                style: AppText.body(
+                  size: 14.5,
+                  weight: FontWeight.w600,
+                  color: AppColors.limeInk,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Whether the reader is actually getting better — the one question the
+/// subscription is sold on, so it has to exist before it is sold.
+///
+/// Free readers see that the answer is being kept and how many calls it
+/// rests on; the number itself is what Knowit+ opens.
+class _TrendPanel extends StatelessWidget {
+  final AppState app;
+  const _TrendPanel({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final t = app.trend!;
+    final locked = !app.isPlus;
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  locked
+                      ? 'Your last ${t.window} calls, against your first '
+                            '${t.window}'
+                      : t.isMoving
+                      ? (t.isImproving
+                            ? 'Closed by ${t.closedBy.abs().round()} points'
+                            : 'Opened by ${t.closedBy.abs().round()} points')
+                      : 'Holding steady',
+                  style: AppText.display(
+                    size: 18,
+                    weight: FontWeight.w600,
+                    height: 1.2,
+                    spacing: -0.5,
+                    color: context.p.ink,
+                  ),
+                ),
+              ),
+              PlusLock(locked: locked),
+            ],
+          ),
+          const SizedBox(height: 10),
+          if (locked)
+            Text(
+              'The measurement is running. Knowit+ shows you which way it '
+              'is going.',
+              style: AppText.body(
+                size: 13,
+                height: 1.45,
+                color: context.p.inkMuted,
+              ),
+            )
+          else ...[
+            _TrendRow(label: 'First ${t.window}', gap: t.early, muted: true),
+            const SizedBox(height: 8),
+            _TrendRow(label: 'Last ${t.window}', gap: t.recent, muted: false),
+            const SizedBox(height: 11),
+            Text(
+              t.isMoving
+                  ? (t.isImproving
+                        ? 'Your confidence is tracking your accuracy more '
+                              'closely than it did.'
+                        : 'The distance has grown. Worth slowing down before '
+                              'you commit.')
+                  : 'No real movement yet. This takes weeks, not days.',
+              style: AppText.body(
+                size: 12.5,
+                height: 1.45,
+                color: context.p.inkMuted,
+              ),
+            ),
+          ],
+          if (locked) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 44,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => requirePlus(context, app, () {}),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.lime,
+                  foregroundColor: AppColors.limeInk,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                ),
+                child: Text(
+                  'See which way',
+                  style: AppText.body(
+                    size: 13.5,
+                    weight: FontWeight.w600,
+                    color: AppColors.limeInk,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TrendRow extends StatelessWidget {
+  final String label;
+  final double gap;
+  final bool muted;
+  const _TrendRow({
+    required this.label,
+    required this.gap,
+    required this.muted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final points = gap.abs().round();
+    final word = gap >= 0 ? 'over' : 'under';
+    return Row(
+      children: [
+        SizedBox(
+          width: 74,
+          child: Text(
+            label,
+            style: AppText.body(
+              size: 13,
+              weight: FontWeight.w500,
+              color: context.p.inkMuted,
+            ),
+          ),
+        ),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              // Fills as the reader gets closer, not as they get further
+              // out: a long bar has to mean the good thing. 30 points out is
+              // a wide miss, and past that the bar is simply empty rather
+              // than pretending to more resolution.
+              value: (1 - points / 30).clamp(0.0, 1.0),
+              minHeight: 6,
+              backgroundColor: context.p.line,
+              valueColor: AlwaysStoppedAnimation(
+                muted ? context.p.lineStrong : AppColors.lime,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          points == 0 ? 'spot on' : '$points $word',
+          style: AppText.body(
+            size: 12.5,
+            weight: FontWeight.w600,
+            color: context.p.ink,
+          ),
+        ),
+      ],
     );
   }
 }

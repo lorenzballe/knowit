@@ -102,8 +102,8 @@ These are declared in the UI rather than faked:
 - **No notification delivery.** The daily nudge is stored as a preference;
   actually scheduling it needs a local-notifications plugin and a mobile build.
 
-The pool holds 95 cards: 60 facts plus 35 under **Thinking** — bias traps,
-competition problems, Fermi estimates, spot-the-flaw and debates.
+The pool holds 131 cards: 60 facts plus 71 that ask something — bias traps,
+competition problems, Fermi estimates, spot-the-flaw and 20 debates.
 
 ## What the evidence says, and what follows from it
 
@@ -239,106 +239,64 @@ asks lives under one topic, and a deck that takes one card per topic was
 dealing four facts and a single puzzle — an app that trains reasoning cannot
 be four fifths reading.
 
-## Project structure
+Every puzzle is either arithmetic the reader can redo or a result that has held
+up under repeated testing. Famous psychology that failed replication — ego
+depletion, power posing, priming — is deliberately absent, and so are the
+textbook instances people already have an answer for: the principle is met in
+a context you did not expect it in, because that is what transfer means.
 
-```
-lib/
-  data/        topic palette, the pill pool, and the daily dealer
-  models/      Pill
-  state/       AppState — streak, saved pills, reading history, plan (persisted)
-  utils/       PNG download, web-only with a no-op elsewhere
-  widgets/     card stack, share sheet, shared UI, the Knowit+ gate
-  screens/     the screens listed above
-```
+## Who else is in this market, and what that changed
 
-Today's deck is dealt deterministically from the date, so it does not reshuffle
-mid-day, and it is stored by id so a restart resumes the same five. Pills
-already read are kept out of later days until the pool runs dry.
+The direction of this app was set by looking at what already ships, not by
+reasoning about it. Three findings mattered.
 
-## What is not real yet
+**The concept is not a moat.** [Fallacy][fallacy] does almost exactly this —
+cognitive biases, thirty logical fallacies, a debate mode, real headlines. It
+is rated 4.5 stars and has roughly [500 Android downloads][fallacy-play].
+Shipping the idea first protects nobody, so nothing here is built on being the
+only one to have thought of it.
 
-These are declared in the UI rather than faked:
+**The money in this category is in daily content, not in judgement.**
+[Imprint][imprint] takes about 300k downloads and $400k a month for
+illustrated two-minute lessons. [Blinkist][blinkist] does roughly $2M a month
+on book summaries. Neither promises better reasoning. Meanwhile the platforms
+with real rigour — [Metaculus][metaculus], Manifold, Good Judgment Open — are
+free, and Metaculus runs on [philanthropy][metaculus-funding].
 
-- **No billing.** The paywall's call to action starts the trial locally so the
-  gated screens can be used, and says no payment was taken.
-- **No account backend.** Sign-in keeps a profile on the device; the Apple and
-  Google buttons say they are not connected.
-- **No notification delivery.** The daily nudge is stored as a preference;
-  actually scheduling it needs a local-notifications plugin and a mobile build.
+**Its users named the gap.** The most common complaint about Fallacy's debate
+mode is that it is multiple choice and never lets you build your own
+reasoning.
 
-The pool holds 81 cards: 60 facts, 15 reasoning puzzles and 6 competition
-problems, the last two under **Thinking**.
+### What follows
 
-## What the evidence says, and what follows from it
+The daily cards are the reason to open the app; the record is the reason to
+keep it and the only thing here that a better-funded competitor cannot copy.
+So:
 
-The app is built on three findings, not on a hunch about what feels useful.
+- **Sharing is the record, not a card.** A fact posted into a chat competes
+  with apps that spend far more on illustration. `RecordSummary` — what you
+  said, what actually happened, and the distance between them — is the one
+  asset this app owns. It leaves as a lime card, in the app's own colour,
+  because a near-black square is what everything else in a feed already looks
+  like.
+- **Debates ask you to write first.** Taking a side now opens a one-line
+  "why?" before the counter-argument can be read. Committing to a reason in
+  your own words is what stops the other side being explained away on sight.
+  Skipping is allowed: a reader made to type before they may read on stops
+  reading on.
+- **Knowit+ sells depth, not volume.** More cards is the pitch every rival
+  makes better. What is gated instead is whether the gap is closing over time
+  (`Trend`) and the full principle board; the measurement itself stays free,
+  because a reader has to see it before they will pay to keep it.
 
-**You cannot train general intelligence.** The large review of brain training
-([Simons et al., 2016](https://journals.sagepub.com/doi/abs/10.1177/1529100616661983))
-found gains only on the exact tasks practised. So the app does not claim it,
-and reading facts is not treated as training.
+The promise on the welcome screen changed with it. "Five a day" was a claim
+about volume. What the evidence actually supports is narrower and more
+useful: most people are more sure than they are right, and this can be
+measured.
 
-**You can train away specific biases, and it transfers.** A single
-interactive session reduced confirmation bias, the bias blind spot and the
-fundamental attribution error for 8–12 weeks
-([Morewedge et al., 2015](https://journals.sagepub.com/doi/abs/10.1177/2372732215600886)),
-and trained students were 19% less likely to take the hypothesis-confirming
-answer on an unannounced business case
-([Sellier, Scopelliti & Morewedge, 2019](https://journals.sagepub.com/doi/abs/10.1177/0956797619861429)).
-The interactive version beat the video. The ingredients that carried were
-naming the bias, practice in varied contexts, and feedback on your own
-errors.
-
-**You can train calibration.** An hour of probabilistic-reasoning training
-improved forecasting accuracy by around 10% on Brier score, sustained across
-four years of tournament
-([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
-
-### Three things that follow
-
-**A day is mostly asking.** Four of the five cards ask something. One fact
-opens it — a fact is a reason to come and it opens up a subject, but it is
-not the training.
-
-**A principle, not a card, is the unit.** `Principle` is what a card is an
-instance of. Meeting base-rate neglect once, in a medical test, teaches
-medical tests; meeting it in facial recognition and in hiring teaches base
-rates. New contexts deliberately avoid the textbook version — the famous one
-is the one people already have an answer for.
-
-**A review is a new context, not the same card.** When a card comes due, the
-deck brings back a *different instance of the same principle* where one
-exists. Repeating the identical card tests whether you remember that card.
-
-The profile reports **the moves you keep missing** — per principle, across
-every context of it you have met — because naming the move and showing your
-own record on it is the part that carried to a real decision.
-
-## How a card asks
-
-A card either tells you something or asks you something first, and that is
-modelled as a sealed `Challenge` rather than a kind flag with a drawer of
-nullable fields:
-
-| Challenge | The front of the card | Graded by |
-|---|---|---|
-| `NoChallenge` | the question, tap to turn it over | — |
-| `PickOne` | the options | index matches |
-| `TypeNumber` | a number field and a unit | value within tolerance |
-
-Each case carries only the data it needs and grades its own answers, so adding
-a way to ask means a new subclass — and the switch that picks a card's face
-stops compiling until that case is handled. Answers are stored as the raw
-string the reader committed, so one store serves every kind.
-
-Committing is what turns the card over; a stray tap will not, or the answer
-could be reached without ever guessing. Getting it wrong on purpose is the part
-that teaches, so the reveal names the trap before it explains. Competition
-problems add a hint you can ask for without giving up, and a worked solution
-shown as numbered steps rather than one paragraph. Your first answer stands.
-
-Every puzzle is either arithmetic the reader can redo (Monty Hall, base rates,
-the birthday problem) or a result that has held up under repeated testing
-(Wason, Tversky & Kahneman, the Berkeley admissions data). Famous psychology
-that failed replication — ego depletion, power posing, priming — is
-deliberately absent.
+[fallacy]: https://apps.apple.com/us/app/fallacy-brain-training-logic/id6743923575
+[fallacy-play]: https://play.google.com/store/apps/details?id=com.spotthefallacy.fallacygame
+[imprint]: https://app.sensortower.com/overview/1482780647?country=US
+[blinkist]: https://app.sensortower.com/overview/568839295?country=US
+[metaculus]: https://predictionmarketsreviews.com/reviews/metaculus
+[metaculus-funding]: https://ea-crux-project.vercel.app/knowledge-base/organizations/metaculus/

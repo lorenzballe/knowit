@@ -8,6 +8,7 @@ import 'package:knowit/main.dart';
 import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
 import 'package:knowit/state/app_state.dart';
+import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
 import 'package:knowit/widgets/motion.dart';
 import 'package:knowit/widgets/pill_card_stack.dart';
@@ -36,15 +37,15 @@ void main() {
   // Run against a real handset surface rather than the 800x600 default, so
   // layouts are exercised at the size they actually ship at.
   setUp(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.physicalSize = const Size(402, 874) * 3;
     view.devicePixelRatio = 3;
   });
 
   tearDown(() {
-    final view = TestWidgetsFlutterBinding.instance.platformDispatcher.views
-        .first;
+    final view =
+        TestWidgetsFlutterBinding.instance.platformDispatcher.views.first;
     view.resetPhysicalSize();
     view.resetDevicePixelRatio();
   });
@@ -55,7 +56,7 @@ void main() {
     await _settle(tester);
 
     expect(
-      find.text('Five a day. Some you read, some you have to answer.'),
+      find.text('Most people are more sure than they are right.'),
       findsOneWidget,
     );
     expect(find.text('Get my first five'), findsOneWidget);
@@ -132,7 +133,10 @@ void main() {
       await tester.tap(find.text('Archive').first);
       await _settle(tester);
 
-      expect(find.text('Ten pills a day, and nothing gets lost.'), findsOneWidget);
+      expect(
+        find.text('Find out if you are actually getting better.'),
+        findsOneWidget,
+      );
       expect(find.text('Archive'), findsNothing);
     });
 
@@ -149,7 +153,10 @@ void main() {
       await tester.tap(find.text('Edit'));
       await _settle(tester);
 
-      expect(find.text('Ten pills a day, and nothing gets lost.'), findsOneWidget);
+      expect(
+        find.text('Find out if you are actually getting better.'),
+        findsOneWidget,
+      );
       expect(find.text('What should we talk about?'), findsNothing);
     });
 
@@ -203,7 +210,37 @@ void main() {
 
     // The share sheet, not the paywall.
     expect(find.text('Share this pill'), findsOneWidget);
-    expect(find.text('Ten pills a day, and nothing gets lost.'), findsNothing);
+    expect(
+      find.text('Find out if you are actually getting better.'),
+      findsNothing,
+    );
+  });
+
+  test('a day never fills up with opinions', () {
+    // Debates are ungraded, so a deck of them measures nothing. With twenty
+    // in the pool a random day could otherwise come out as four in a row.
+    final seen = <String>{};
+    for (var d = 0; d < 40; d++) {
+      final deck = arrangeDay(
+        pillsForDate(
+          DateTime(2026, 1, 1).add(Duration(days: d)),
+          exclude: seen,
+        ),
+      );
+      final debates = deck.where((p) => p.challenge is TakeASide).length;
+      expect(
+        debates,
+        lessThanOrEqualTo(1),
+        reason: 'day ${d + 1} held $debates debates',
+      );
+      final graded = deck.where((p) => p.isGraded && p.asksSomething).length;
+      expect(
+        graded,
+        greaterThanOrEqualTo(2),
+        reason: 'day ${d + 1} had only $graded gradeable cards',
+      );
+      seen.addAll(deck.map((p) => p.id));
+    }
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
@@ -220,6 +257,11 @@ void main() {
     expect(find.text('5 extra pills every day'), findsOneWidget);
     expect(find.text('The full archive'), findsOneWidget);
     expect(find.text('Pick your own topics'), findsOneWidget);
+    // The two perks the pivot added have to exist as screens before they may
+    // be sold. Both are on the profile, so the paywall naming them is a
+    // promise this test holds it to.
+    expect(find.text('Your record over time'), findsOneWidget);
+    expect(find.text('Every principle you have met'), findsOneWidget);
     // Sharing left the paywall when it became free.
     expect(find.text('Share as image'), findsNothing);
   });
@@ -329,7 +371,11 @@ void main() {
 
     test('every pill is complete and the answer stays short', () {
       for (final p in kPillPool) {
-        expect(p.question.trim(), isNotEmpty, reason: '${p.id} has no question');
+        expect(
+          p.question.trim(),
+          isNotEmpty,
+          reason: '${p.id} has no question',
+        );
         expect(
           p.answer.trim().isNotEmpty || p.hasSteps,
           isTrue,
@@ -358,7 +404,11 @@ void main() {
             reason: '${p.id} is not a finished prompt',
           );
         } else {
-          expect(p.question, endsWith('?'), reason: '${p.id} is not a question');
+          expect(
+            p.question,
+            endsWith('?'),
+            reason: '${p.id} is not a question',
+          );
         }
       }
     });
@@ -668,8 +718,8 @@ void main() {
               onAdvance: () {},
               answerFor: (id) => given[id],
               reviewIds: reviews,
-              onAnswer: (id, response, confidence) =>
-                  given[id] = Answer(response, confidence: confidence),
+              onAnswer: (id, response, confidence, reason) => given[id] =
+                  Answer(response, confidence: confidence, reason: reason),
             ),
           ),
         ),
@@ -815,10 +865,7 @@ void main() {
       expect(find.text('Estimate. Close enough counts.'), findsOneWidget);
 
       // Deliberately off, but inside the band.
-      await tester.enterText(
-        find.byType(TextField),
-        '${challenge.answer * 2}',
-      );
+      await tester.enterText(find.byType(TextField), '${challenge.answer * 2}');
       await tester.pumpAndSettle();
       await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
       await tester.pumpAndSettle();
@@ -849,11 +896,65 @@ void main() {
       expect(find.text('You got it'), findsNothing);
       expect(find.text('Almost everyone gets this wrong'), findsNothing);
 
+      // What is asked for instead is a reason, before the other side is
+      // readable at all.
+      expect(find.text('In one line — why?'), findsOneWidget);
+      await tester.enterText(find.byType(TextField), 'Because of the cost.');
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Now show me the other side'));
+      await tester.pumpAndSettle();
+
+      // The line written a moment ago is still on screen while the other
+      // side makes its case — that is the whole point of asking for it.
+      expect(find.text('"Because of the cost."'), findsOneWidget);
+
       // The other side is one tap away, and not shown before it is asked for.
       expect(find.text(debate.counterpoint), findsNothing);
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
       expect(find.text(debate.counterpoint), findsOneWidget);
+    });
+
+    testWidgets('the reason step still fits on a small handset', (
+      tester,
+    ) async {
+      // The write-why step adds a two-line field and a button to a face that
+      // was already full. A 4.7-inch phone is where that runs out of room.
+      tester.view.physicalSize = const Size(320, 568) * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+
+      final challenge = debate.challenge as TakeASide;
+      await tester.pumpWidget(host([debate], {}));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+
+      await tester.tap(find.text(challenge.positions.first));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      expect(find.text('In one line — why?'), findsOneWidget);
+
+      await tester.enterText(find.byType(TextField), 'Because of the cost.');
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('a debate can be turned over without writing anything', (
+      tester,
+    ) async {
+      final challenge = debate.challenge as TakeASide;
+      await tester.pumpWidget(host([debate], {}));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(challenge.positions.first));
+      await tester.pumpAndSettle();
+
+      // Made to type before they may read on, a reader stops reading on.
+      await tester.tap(find.text('Skip — show me anyway'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('YOU TOOK'), findsOneWidget);
+      expect(find.text('What the other side says'), findsOneWidget);
     });
 
     testWidgets('the plain-words retelling waits to be asked for', (
@@ -1015,30 +1116,32 @@ void main() {
   });
 
   group('Review', () {
-    test('a wrong answer comes back, a right one moves up the ladder',
-        () async {
-      SharedPreferences.setMockInitialValues(_installed());
-      final app = AppState();
-      await app.init();
+    test(
+      'a wrong answer comes back, a right one moves up the ladder',
+      () async {
+        SharedPreferences.setMockInitialValues(_installed());
+        final app = AppState();
+        await app.init();
 
-      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
-      final challenge = pill.challenge as PickOne;
-      final wrong = challenge.correct == 0 ? 1 : 0;
+        final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+        final challenge = pill.challenge as PickOne;
+        final wrong = challenge.correct == 0 ? 1 : 0;
 
-      await app.recordAnswer(pill.id, '$wrong', confidence: 90);
-      final missed = app.answerFor(pill.id)!;
-      expect(missed.stage, 0);
-      // Bottom of the ladder: back in two days.
-      expect(
-        missed.dueOn,
-        dateKey(app.today.add(Duration(days: kReviewLadder[0]))),
-      );
+        await app.recordAnswer(pill.id, '$wrong', confidence: 90);
+        final missed = app.answerFor(pill.id)!;
+        expect(missed.stage, 0);
+        // Bottom of the ladder: back in two days.
+        expect(
+          missed.dueOn,
+          dateKey(app.today.add(Duration(days: kReviewLadder[0]))),
+        );
 
-      // Not due yet, so it cannot be answered again.
-      expect(app.isDueForReview(pill.id), isFalse);
-      await app.recordAnswer(pill.id, '${challenge.correct}');
-      expect(app.answerFor(pill.id)!.response, '$wrong');
-    });
+        // Not due yet, so it cannot be answered again.
+        expect(app.isDueForReview(pill.id), isFalse);
+        await app.recordAnswer(pill.id, '${challenge.correct}');
+        expect(app.answerFor(pill.id)!.response, '$wrong');
+      },
+    );
 
     test('a card retires once it is up the whole ladder', () async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -1093,7 +1196,8 @@ void main() {
                 onAdvance: () {},
                 reviewIds: {pill.id},
                 answerFor: (id) => given[id],
-                onAnswer: (id, r, c) => given[id] = Answer(r, confidence: c),
+                onAnswer: (id, r, c, w) =>
+                    given[id] = Answer(r, confidence: c, reason: w),
               ),
             ),
           ),
@@ -1156,6 +1260,88 @@ void main() {
       expect(buckets.single.gap, 65);
       expect(app.overconfidence, 65);
       expect(app.calibratedAnswers, 4);
+    });
+
+    test('a trend needs two full windows before it says anything', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      // Nineteen judgements is one short of two windows of ten.
+      for (var i = 0; i < 19; i++) {
+        app.judgements.add(const Judgement(80, correct: true));
+      }
+      expect(app.trend, isNull, reason: 'not enough run to call it a trend');
+
+      app.judgements.add(const Judgement(80, correct: true));
+      expect(app.trend, isNotNull);
+    });
+
+    test('a trend reads the gap closing, not the accuracy rising', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      // First ten: said 90, right 5 of 10 — forty points overconfident.
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(90, correct: i < 5));
+      }
+      // Last ten: said 60, right 6 of 10 — spot on.
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(60, correct: i < 6));
+      }
+
+      final t = app.trend!;
+      expect(t.early, 40);
+      expect(t.recent, 0);
+      expect(t.closedBy, 40);
+      expect(t.isImproving, isTrue);
+    });
+
+    test('a gap that opens the other way is not an improvement', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      // Starts spot on, ends badly underconfident: the distance grew even
+      // though the sign flipped, so this must not read as progress.
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(60, correct: i < 6));
+      }
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(50, correct: i < 9));
+      }
+
+      final t = app.trend!;
+      expect(t.recent, -40);
+      expect(t.isMoving, isTrue);
+      expect(t.isImproving, isFalse);
+    });
+
+    test('the shared record names the direction it is out by', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(90, correct: i < 5));
+      }
+      expect(RecordSummary.of(app).verdict, '40 points overconfident');
+
+      app.judgements.clear();
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(50, correct: i < 9));
+      }
+      expect(RecordSummary.of(app).verdict, '40 points underconfident');
+
+      // Inside the band it is noise, and the card should not scold.
+      app.judgements.clear();
+      for (var i = 0; i < 10; i++) {
+        app.judgements.add(Judgement(60, correct: i < 6));
+      }
+      final calibrated = RecordSummary.of(app);
+      expect(calibrated.isCalibrated, isTrue);
+      expect(calibrated.verdict, startsWith('Calibrated within'));
     });
 
     test('an opinion never lands in a bucket', () async {

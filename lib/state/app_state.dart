@@ -328,6 +328,7 @@ class AppState extends ChangeNotifier {
     String pillId,
     String response, {
     int? confidence,
+    String? reason,
   }) async {
     final existing = answers[pillId];
     if (existing != null && !isDueForReview(pillId)) return;
@@ -337,7 +338,7 @@ class AppState extends ChangeNotifier {
     final right = graded && (pill?.challenge.accepts(response) ?? false);
 
     answers[pillId] = _scheduled(
-      Answer(response, confidence: confidence),
+      Answer(response, confidence: confidence, reason: reason),
       graded: graded,
       right: right,
       previous: existing,
@@ -470,6 +471,35 @@ class AppState extends ChangeNotifier {
   }
 
   int get calibratedAnswers => judgements.length;
+
+  /// How the gap between confidence and accuracy has moved across the run.
+  ///
+  /// Judgements are append-only and kept in order, so the earliest window and
+  /// the most recent one can be compared without storing a date against each
+  /// answer. Null until there are two full windows: before that, a "trend" is
+  /// just the last few answers wearing a serious word.
+  Trend? get trend {
+    const window = 10;
+    if (judgements.length < window * 2) return null;
+    return Trend(
+      early: _gapOver(judgements.take(window)),
+      recent: _gapOver(judgements.skip(judgements.length - window)),
+      window: window,
+    );
+  }
+
+  static double _gapOver(Iterable<Judgement> run) {
+    var claimed = 0.0;
+    var right = 0;
+    var n = 0;
+    for (final j in run) {
+      claimed += j.confidence;
+      if (j.correct) right++;
+      n++;
+    }
+    if (n == 0) return 0;
+    return claimed / n - right * 100 / n;
+  }
 
   /// How far the reader's confidence sits from their accuracy, in points.
   /// Positive means overconfident — the usual direction.
@@ -668,4 +698,27 @@ class Mastery {
   bool get isSettled => met >= 2;
 
   bool get isWeak => isSettled && share < 0.5;
+}
+
+/// Two windows of the same run, so the reader can see whether the distance
+/// between how sure they were and how right they were is actually closing.
+class Trend {
+  /// Signed gaps in points; positive means overconfident.
+  final double early;
+  final double recent;
+  final int window;
+
+  const Trend({
+    required this.early,
+    required this.recent,
+    required this.window,
+  });
+
+  /// Positive means the gap has narrowed, whichever side it started on.
+  double get closedBy => early.abs() - recent.abs();
+
+  /// A couple of points either way is noise, not progress.
+  bool get isMoving => closedBy.abs() >= 3;
+
+  bool get isImproving => isMoving && closedBy > 0;
 }

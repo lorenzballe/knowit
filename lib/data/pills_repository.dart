@@ -63,7 +63,23 @@ List<Pill> pillsForDate(
   // fall back to whatever is left, so a reader who has turned every asking
   // topic off still gets a full day.
   final wantAsks = (count * kAskShare).round();
-  final asks = ordered.where((p) => p.asksSomething).take(wantAsks).toList();
+
+  // At most one debate a day. A debate is ungraded on purpose, so it feeds
+  // nothing back into calibration — and now that the pool holds twenty of
+  // them, a day picked purely at random can come out as four opinions in a
+  // row and measure nothing at all.
+  const maxDebates = 1;
+  var debates = 0;
+  final asks = <Pill>[];
+  for (final p in ordered.where((p) => p.asksSomething)) {
+    if (asks.length >= wantAsks) break;
+    final isDebate = p.challenge is TakeASide;
+    if (isDebate) {
+      if (debates >= maxDebates) continue;
+      debates++;
+    }
+    asks.add(p);
+  }
   final reads = ordered
       .where((p) => !p.asksSomething)
       .take(count - asks.length)

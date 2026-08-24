@@ -138,6 +138,11 @@ class Answer {
   final String response;
   final int? confidence;
 
+  /// On an ungraded card, the line the reader wrote before they were shown
+  /// the other side. Committing to a reason first is what makes the
+  /// counter-argument land instead of being explained away on sight.
+  final String? reason;
+
   /// How far up the review ladder this card has climbed. A wrong answer
   /// knocks it back to the bottom.
   final int stage;
@@ -146,17 +151,27 @@ class Answer {
   /// answered right often enough to retire.
   final String? dueOn;
 
-  const Answer(this.response, {this.confidence, this.stage = 0, this.dueOn});
+  const Answer(
+    this.response, {
+    this.confidence,
+    this.reason,
+    this.stage = 0,
+    this.dueOn,
+  });
+
+  bool get hasReason => (reason ?? '').trim().isNotEmpty;
 
   Answer copyWith({
     String? response,
     int? confidence,
+    String? reason,
     int? stage,
     String? dueOn,
     bool clearDue = false,
   }) => Answer(
     response ?? this.response,
     confidence: confidence ?? this.confidence,
+    reason: reason ?? this.reason,
     stage: stage ?? this.stage,
     dueOn: clearDue ? null : (dueOn ?? this.dueOn),
   );
@@ -164,6 +179,7 @@ class Answer {
   Map<String, dynamic> toJson() => {
     'r': response,
     if (confidence != null) 'c': confidence,
+    if (hasReason) 'w': reason,
     if (stage != 0) 's': stage,
     if (dueOn != null) 'd': dueOn,
   };
@@ -173,11 +189,13 @@ class Answer {
     final response = raw['r'];
     if (response is! String) return null;
     final confidence = raw['c'];
+    final reason = raw['w'];
     final stage = raw['s'];
     final due = raw['d'];
     return Answer(
       response,
       confidence: confidence is int ? confidence : null,
+      reason: reason is String ? reason : null,
       stage: stage is int ? stage : 0,
       dueOn: due is String ? due : null,
     );

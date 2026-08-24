@@ -15,7 +15,8 @@ class PillCard extends StatelessWidget {
   /// What the reader committed to, and where to send a new commitment.
   /// Null while untouched.
   final Answer? given;
-  final void Function(String response, int? confidence)? onAnswer;
+  final void Function(String response, int? confidence, String? reason)?
+  onAnswer;
 
   /// True when this card is in today's deck because it came back.
   final bool isReview;
@@ -226,6 +227,12 @@ class _BackFace extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
+              ] else if (!pill.isGraded && given != null) ...[
+                PopIn(
+                  delay: const Duration(milliseconds: 260),
+                  child: _YourLine(pill: pill, given: given!),
+                ),
+                const SizedBox(height: 14),
               ],
               Text(
                 pill.question,
@@ -305,7 +312,8 @@ class _AskFace extends StatefulWidget {
 
   /// Built with the callback that reports a raw response.
   final Widget Function(ValueChanged<String>? commit) input;
-  final void Function(String response, int? confidence)? onAnswer;
+  final void Function(String response, int? confidence, String? reason)?
+  onAnswer;
 
   /// Overrides the default line under the input, so a debate does not tell
   /// the reader to commit to a right answer that does not exist.
@@ -329,19 +337,22 @@ class _AskFaceState extends State<_AskFace> {
   String? _pending;
 
   void _commit(String response) {
-    final pill = widget.pill;
-    // Only a card that can be wrong is worth being sure about.
-    if (!pill.isGraded) {
-      widget.onAnswer?.call(response, null);
-      return;
-    }
     setState(() => _pending = response);
   }
 
   void _finish(int confidence) {
     final response = _pending;
     if (response == null) return;
-    widget.onAnswer?.call(response, confidence);
+    widget.onAnswer?.call(response, confidence, null);
+  }
+
+  /// The ungraded path. Nothing here can be scored, so what is asked for is
+  /// the reason — written down before the other side is shown, so it cannot
+  /// be quietly rewritten to agree with whatever comes next.
+  void _finishReason(String reason) {
+    final response = _pending;
+    if (response == null) return;
+    widget.onAnswer?.call(response, null, reason);
   }
 
   @override
@@ -370,8 +381,10 @@ class _AskFaceState extends State<_AskFace> {
               const SizedBox(height: 22),
               if (_pending == null)
                 widget.input(widget.onAnswer == null ? null : _commit)
+              else if (pill.isGraded)
+                _ConfidenceStep(pill: pill, onPick: _finish)
               else
-                _ConfidenceStep(pill: pill, onPick: _finish),
+                _ReasonStep(pill: pill, onSubmit: _finishReason),
               if (_pending == null && pill.hasHint) ...[
                 const SizedBox(height: 12),
                 if (_hintOpen)
@@ -434,7 +447,10 @@ class _AskFaceState extends State<_AskFace> {
               const SizedBox(height: 14),
               Text(
                 _pending != null
-                    ? 'Being right matters less than knowing how often you are.'
+                    ? (pill.isGraded
+                          ? 'Being right matters less than knowing how often '
+                                'you are.'
+                          : 'Write it before you read theirs.')
                     : widget.prompt ??
                           '${pill.difficulty.label} · commit before you turn '
                               'it over.',
@@ -708,6 +724,156 @@ class _ConfidenceStep extends StatelessWidget {
           }).toList(),
         ),
       ],
+    );
+  }
+}
+
+/// The ungraded card's second step: one line saying why, before the other
+/// side is shown.
+///
+/// Skipping is allowed. A reader who is made to type before they are allowed
+/// to turn the card over stops turning cards over.
+class _ReasonStep extends StatefulWidget {
+  final Pill pill;
+  final ValueChanged<String> onSubmit;
+
+  const _ReasonStep({required this.pill, required this.onSubmit});
+
+  @override
+  State<_ReasonStep> createState() => _ReasonStepState();
+}
+
+class _ReasonStepState extends State<_ReasonStep> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pill = widget.pill;
+    final ink = pill.ink;
+    final written = _controller.text.trim().isNotEmpty;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'In one line — why?',
+          style: AppText.body(
+            size: 14.5,
+            weight: FontWeight.w600,
+            color: ink.withValues(alpha: 0.85),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.fromLTRB(14, 4, 14, 4),
+          decoration: BoxDecoration(
+            color: pill.wash,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: TextField(
+            controller: _controller,
+            onChanged: (_) => setState(() {}),
+            maxLines: 2,
+            minLines: 2,
+            textCapitalization: TextCapitalization.sentences,
+            style: AppText.body(size: 14.5, height: 1.35, color: ink),
+            decoration: InputDecoration(
+              isDense: true,
+              border: InputBorder.none,
+              hintText: 'Because…',
+              hintStyle: AppText.body(
+                size: 14.5,
+                color: ink.withValues(alpha: 0.4),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => widget.onSubmit(_controller.text.trim()),
+          child: Container(
+            height: 46,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: ink,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              written ? 'Now show me the other side' : 'Skip — show me anyway',
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w600,
+                color: pill.color,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// What the reader committed to on an ungraded card, held next to what they
+/// are about to read. Nothing is marked right: the point is that the line
+/// they wrote is still visible while the other side makes its case.
+class _YourLine extends StatelessWidget {
+  final Pill pill;
+  final Answer given;
+  const _YourLine({required this.pill, required this.given});
+
+  @override
+  Widget build(BuildContext context) {
+    final ink = pill.ink;
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
+      decoration: BoxDecoration(
+        color: pill.wash,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: pill.washEdge),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'YOU TOOK',
+            style: AppText.label(
+              size: 10,
+              spacing: 1.3,
+              color: ink.withValues(alpha: 0.55),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            pill.challenge.describe(given.response),
+            style: AppText.body(
+              size: 15,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: ink,
+            ),
+          ),
+          if (given.hasReason) ...[
+            const SizedBox(height: 8),
+            Text(
+              '"${given.reason!.trim()}"',
+              style: AppText.body(
+                size: 13.5,
+                height: 1.4,
+                color: ink.withValues(alpha: 0.75),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

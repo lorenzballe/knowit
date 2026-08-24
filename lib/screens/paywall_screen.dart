@@ -3,7 +3,22 @@ import 'package:flutter/material.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 
+// Volume is what every other daily-learning app is already selling, and
+// several of them can afford to sell it harder. What this app has that they
+// do not is a measurement of the reader, so that is what leads.
 const _perks = [
+  (
+    title: 'Your record over time',
+    sub:
+        'Whether the gap between how sure you were and how right you were '
+        'is actually closing.',
+  ),
+  (
+    title: 'Every principle you have met',
+    sub:
+        'Not just the three you are worst at — all of them, and the '
+        'contexts you have not been shown yet.',
+  ),
   (
     title: '5 extra pills every day',
     sub: 'A second set unlocks the moment you finish the first.',
@@ -21,7 +36,8 @@ const _perks = [
 /// Knowit+ — the plans are selectable and the copy follows the choice.
 ///
 /// There is no billing wired up. The CTA starts the trial locally so the
-/// three gated perks (archive, image export, topic mix) can be used, and says
+/// gated perks (the record over time, the full principle list, the archive,
+/// the extra set and the topic mix) can be used, and says
 /// plainly that no payment was taken.
 class PaywallScreen extends StatefulWidget {
   final AppState app;
@@ -83,7 +99,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   vertical: 7,
                 ),
                 decoration: BoxDecoration(
-                  color: context.p.link,
+                  color: AppColors.lime,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -92,14 +108,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     size: 11,
                     weight: FontWeight.w600,
                     spacing: 1.2,
-                    color: context.p.ink,
+                    color: AppColors.limeInk,
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 11),
             Text(
-              'Ten pills a day, and nothing gets lost.',
+              'Find out if you are actually getting better.',
               style: AppText.display(
                 size: 36,
                 weight: FontWeight.w700,

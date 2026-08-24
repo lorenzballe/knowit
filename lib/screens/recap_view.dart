@@ -4,6 +4,8 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
+import '../widgets/record_share_sheet.dart';
+import '../widgets/ui.dart';
 import 'paywall_screen.dart';
 
 const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -125,11 +127,15 @@ class RecapView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+            if (app.calibratedAnswers >= 3) ...[
+              _RecordNudge(app: app),
+              const SizedBox(height: 14),
+            ],
             if (app.canOpenExtraSet)
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: context.p.link,
+                  color: context.p.inverse,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Column(
@@ -141,17 +147,17 @@ class RecapView extends StatelessWidget {
                         size: 20,
                         weight: FontWeight.w600,
                         spacing: -0.6,
-                        color: context.p.ink,
+                        color: context.p.onInverse,
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Five more pills, picked the same way. Knowit+ unlocks '
-                      'them the moment you finish the first five.',
+                      'Five more, picked the same way — and they count '
+                      'towards your record like the first five.',
                       style: AppText.body(
                         size: 13.5,
                         height: 1.45,
-                        color: context.p.ink,
+                        color: context.p.onInverse.withValues(alpha: 0.72),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -161,8 +167,8 @@ class RecapView extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => app.openExtraSet(),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: context.p.ink,
-                          foregroundColor: context.p.ink,
+                          backgroundColor: AppColors.lime,
+                          foregroundColor: AppColors.limeInk,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(999),
@@ -173,7 +179,7 @@ class RecapView extends StatelessWidget {
                           style: AppText.body(
                             size: 14.5,
                             weight: FontWeight.w600,
-                            color: context.p.ink,
+                            color: AppColors.limeInk,
                           ),
                         ),
                       ),
@@ -357,6 +363,80 @@ class _Tomorrow extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The day's tally answers "what did I read". This answers "how good was I",
+/// which is the question worth coming back for — and the only one that makes
+/// an image somebody would actually post.
+class _RecordNudge extends StatelessWidget {
+  final AppState app;
+  const _RecordNudge({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final s = RecordSummary.of(app);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+      decoration: BoxDecoration(
+        color: context.p.surfaceRaised,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: context.p.line),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Eyebrow('Your record so far'),
+          const SizedBox(height: 10),
+          Text(
+            'You said ${s.said.round()}% sure. '
+            'You were right ${s.wasRight.round()}% of the time.',
+            style: AppText.display(
+              size: 19,
+              weight: FontWeight.w600,
+              height: 1.25,
+              spacing: -0.6,
+              color: context.p.ink,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            s.isCalibrated
+                ? 'That is closer than most people ever get.'
+                : '${s.verdict} — over ${s.calls} calls.',
+            style: AppText.body(
+              size: 13,
+              height: 1.4,
+              color: context.p.inkMuted,
+            ),
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            height: 46,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => showRecordShareSheet(context, app),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.lime,
+                foregroundColor: AppColors.limeInk,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              child: Text(
+                'Share my record',
+                style: AppText.body(
+                  size: 14,
+                  weight: FontWeight.w600,
+                  color: AppColors.limeInk,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
