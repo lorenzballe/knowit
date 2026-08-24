@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/motion.dart';
 import 'paywall_screen.dart';
 
 const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -23,112 +25,103 @@ class RecapView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${app.todaysDeck.length} of ${app.todaysDeck.length} · done',
-              style: AppText.label(
-                size: 11,
-                spacing: 1.4,
-                color: context.p.inkMuted,
+            RiseIn(
+              child: Text(
+                '${app.todaysDeck.length} of ${app.todaysDeck.length} · done',
+                style: AppText.label(
+                  size: 11,
+                  spacing: 1.4,
+                  color: context.p.inkMuted,
+                ),
               ),
             ),
             const SizedBox(height: 12),
-            RichText(
-              text: TextSpan(
-                style: AppText.display(
-                  size: 34,
-                  weight: FontWeight.w700,
-                  height: 1.06,
-                  spacing: -1.3,
-                  color: context.p.ink,
-                ),
+            // The number climbs rather than landing. It is the one figure the
+            // reader came back for.
+            RiseIn(
+              delay: const Duration(milliseconds: 90),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextSpan(
-                    text: '${app.streak} day${app.streak == 1 ? '' : 's'}\n',
+                  CountUp(
+                    value: app.streak,
+                    style: AppText.display(
+                      size: 34,
+                      weight: FontWeight.w700,
+                      height: 1.06,
+                      spacing: -1.3,
+                      color: context.p.ink,
+                    ),
                   ),
-                  TextSpan(
-                    text: 'in a row.',
-                    style: const TextStyle(color: AppColors.lime),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      app.streak == 1 ? 'day\nin a row.' : 'days\nin a row.',
+                      style: AppText.display(
+                        size: 34,
+                        weight: FontWeight.w700,
+                        height: 1.06,
+                        spacing: -1.3,
+                        color: AppColors.lime,
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 22),
-            Row(
-              children: List.generate(7, (i) {
-                return Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: i == 6 ? 0 : 6),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 34,
-                          decoration: BoxDecoration(
-                            color: week[i] ? AppColors.lime : context.p.line,
-                            borderRadius: BorderRadius.circular(10),
+            RiseIn(
+              delay: const Duration(milliseconds: 180),
+              child: Row(
+                children: List.generate(7, (i) {
+                  return Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: i == 6 ? 0 : 6),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 34,
+                            decoration: BoxDecoration(
+                              color: week[i] ? AppColors.lime : context.p.line,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 7),
-                        Text(
-                          _weekLetters[i],
-                          style: AppText.label(
-                            size: 10,
-                            color: context.p.inkFaint,
+                          const SizedBox(height: 7),
+                          Text(
+                            _weekLetters[i],
+                            style: AppText.label(
+                              size: 10,
+                              color: context.p.inkFaint,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
             const SizedBox(height: 22),
-            Text(
-              'YOU PICKED UP TODAY',
-              style: AppText.label(
-                size: 11,
-                spacing: 1.3,
-                color: context.p.inkFaint,
+            RiseIn(
+              delay: const Duration(milliseconds: 260),
+              child: Text(
+                'YOU PICKED UP TODAY',
+                style: AppText.label(
+                  size: 11,
+                  spacing: 1.3,
+                  color: context.p.inkFaint,
+                ),
               ),
             ),
             const SizedBox(height: 10),
-            ...app.todaysDeck.map(
-              (p) => Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
-                decoration: BoxDecoration(
-                  color: context.p.line,
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: p.color,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        p.question,
-                        style: AppText.body(
-                          size: 13.5,
-                          weight: FontWeight.w500,
-                          height: 1.3,
-                          color: context.p.ink,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            // Each card you got through arrives in turn, so the list reads as
+            // a tally being counted out rather than a screenshot.
+            ...app.todaysDeck.indexed.map(
+              (entry) => RiseIn.staggered(
+                entry.$1,
+                from: const Duration(milliseconds: 320),
+                child: _RecapRow(pill: entry.$2),
               ),
             ),
             const SizedBox(height: 8),
@@ -189,14 +182,7 @@ class RecapView extends StatelessWidget {
                 ),
               )
             else if (app.isPlus)
-              Text(
-                "That's all ten for today. New pills tomorrow morning.",
-                style: AppText.body(
-                  size: 13.5,
-                  height: 1.45,
-                  color: context.p.ink.withValues(alpha: 0.5),
-                ),
-              )
+              _Tomorrow(app: app)
             else
               Container(
                 padding: const EdgeInsets.all(20),
@@ -260,6 +246,115 @@ class RecapView extends StatelessWidget {
                   ],
                 ),
               ),
+            if (!app.canOpenExtraSet && !app.isPlus) ...[
+              const SizedBox(height: 14),
+              _Tomorrow(app: app),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One line of the day's tally.
+class _RecapRow extends StatelessWidget {
+  final Pill pill;
+  const _RecapRow({required this.pill});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      decoration: BoxDecoration(
+        color: context.p.line,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: pill.color,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              pill.question,
+              style: AppText.body(
+                size: 13.5,
+                weight: FontWeight.w500,
+                height: 1.3,
+                color: context.p.ink,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// What happens next. A daily app that ends on nothing gives no reason to
+/// come back at a particular time.
+class _Tomorrow extends StatelessWidget {
+  final AppState app;
+  const _Tomorrow({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+    final tomorrow = DateTime(now.year, now.month, now.day + 1);
+    final left = tomorrow.difference(now);
+    final hours = left.inHours;
+    final minutes = left.inMinutes % 60;
+
+    final away = hours >= 1
+        ? '$hours ${hours == 1 ? 'hour' : 'hours'}'
+        : '$minutes ${minutes == 1 ? 'minute' : 'minutes'}';
+
+    final due = app.dueReviews.length;
+
+    return RiseIn(
+      delay: const Duration(milliseconds: 460),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(18, 16, 18, 17),
+        decoration: BoxDecoration(
+          color: context.p.line,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Five more in $away',
+              style: AppText.display(
+                size: 18,
+                weight: FontWeight.w600,
+                spacing: -0.4,
+                color: context.p.ink,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              due == 0
+                  ? 'Nothing waiting to come back. Keep the streak.'
+                  : due == 1
+                  ? 'One card you missed is coming back with them.'
+                  : '$due cards you missed are coming back with them.',
+              style: AppText.body(
+                size: 13,
+                height: 1.45,
+                color: context.p.inkMuted,
+              ),
+            ),
           ],
         ),
       ),

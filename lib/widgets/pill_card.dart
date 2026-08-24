@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
+import 'motion.dart';
 import 'reveal_body.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
@@ -215,11 +216,14 @@ class _BackFace extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (pill.isGraded && given != null) ...[
-                _Verdict(
-                  pill: pill,
-                  right: pill.challenge.accepts(given!.response),
-                  given: pill.challenge.describe(given!.response),
-                  confidence: given!.confidence,
+                PopIn(
+                  delay: const Duration(milliseconds: 260),
+                  child: _Verdict(
+                    pill: pill,
+                    right: pill.challenge.accepts(given!.response),
+                    given: pill.challenge.describe(given!.response),
+                    confidence: given!.confidence,
+                  ),
                 ),
                 const SizedBox(height: 14),
               ],

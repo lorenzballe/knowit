@@ -6,6 +6,7 @@ import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/motion.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
 
@@ -183,14 +184,18 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                           ScrollViewKeyboardDismissBehavior.onDrag,
                       padding: const EdgeInsets.fromLTRB(22, 6, 22, 24),
                       itemCount: results.length,
-                      itemBuilder: (context, i) => _ResultRow(
-                        pill: results[i],
-                        saved: widget.app.isSaved(results[i].id),
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => PillDetailScreen(
-                              pill: results[i],
-                              app: widget.app,
+                      itemBuilder: (context, i) => RiseIn.staggered(
+                        i,
+                        step: const Duration(milliseconds: 34),
+                        child: _ResultRow(
+                          pill: results[i],
+                          saved: widget.app.isSaved(results[i].id),
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => PillDetailScreen(
+                                pill: results[i],
+                                app: widget.app,
+                              ),
                             ),
                           ),
                         ),

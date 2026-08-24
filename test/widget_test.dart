@@ -9,6 +9,7 @@ import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/theme.dart';
+import 'package:knowit/widgets/motion.dart';
 import 'package:knowit/widgets/pill_card_stack.dart';
 import 'package:knowit/widgets/ui.dart';
 
@@ -393,6 +394,63 @@ void main() {
     expect(prefs.getString('knowit.theme'), 'light');
     expect(paletteOn('Profile').surface, Palette.light.surface);
     expect(paletteOn('Profile').surface, isNot(onToday.surface));
+  });
+
+  group('Motion', () {
+    testWidgets('entrances leave no timer behind', (tester) async {
+      // A delay built on Future.delayed outlives a disposed widget and hangs
+      // pumpAndSettle. Anything that only works outside tests is a thing
+      // nobody can check, so the delays are animation intervals instead.
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildKnowitTheme(Brightness.dark),
+          home: Scaffold(
+            body: Column(
+              children: [
+                const RiseIn(
+                  delay: Duration(milliseconds: 400),
+                  child: Text('one'),
+                ),
+                RiseIn.staggered(3, child: const Text('two')),
+                const PopIn(
+                  delay: Duration(milliseconds: 300),
+                  child: Text('three'),
+                ),
+                CountUp(value: 12, style: AppText.display(size: 20)),
+              ],
+            ),
+          ),
+        ),
+      );
+      // Settles, rather than throwing on a pending timer.
+      await tester.pumpAndSettle();
+
+      expect(find.text('one'), findsOneWidget);
+      expect(find.text('two'), findsOneWidget);
+      expect(find.text('three'), findsOneWidget);
+      expect(find.text('12'), findsOneWidget);
+
+      // Tearing down mid-flight must not leave anything running either.
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('the day ends by saying when the next one starts', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const KnowitApp());
+      await _settle(tester);
+
+      for (var i = 0; i < 5; i++) {
+        await tester.tap(find.text('Next pill'));
+        await _settle(tester);
+      }
+
+      await tester.scrollUntilVisible(find.textContaining('Five more in'), 200);
+      await _settle(tester);
+      expect(find.textContaining('Five more in'), findsOneWidget);
+    });
   });
 
   group('The shape of a day', () {

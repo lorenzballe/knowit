@@ -4,6 +4,7 @@ import '../data/pills_data.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/motion.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
@@ -128,14 +129,17 @@ class SavedScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 24),
                       itemCount: saved.length,
                       separatorBuilder: (_, _) => const SizedBox(height: 10),
-                      itemBuilder: (context, i) => _SavedRow(
-                        pill: saved[i],
-                        onUnsave: () => _unsave(context, saved[i], i),
-                        onShare: () => showShareSheet(context, saved[i]),
-                        onOpen: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) =>
-                                PillDetailScreen(pill: saved[i], app: app),
+                      itemBuilder: (context, i) => RiseIn.staggered(
+                        i,
+                        child: _SavedRow(
+                          pill: saved[i],
+                          onUnsave: () => _unsave(context, saved[i], i),
+                          onShare: () => showShareSheet(context, saved[i]),
+                          onOpen: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  PillDetailScreen(pill: saved[i], app: app),
+                            ),
                           ),
                         ),
                       ),

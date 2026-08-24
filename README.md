@@ -27,6 +27,22 @@ flutter run -d chrome   # web
 flutter run              # any connected device/simulator
 ```
 
+## Motion
+
+Three pieces in `widgets/motion.dart`, used everywhere something appears:
+`RiseIn` (fade and lift, with a staggered constructor for lists), `CountUp`
+(a number climbs rather than landing) and `PopIn` (an overshoot for the
+instant something lands — a verdict, a finished day).
+
+Their delays are intervals inside one animation controller, not
+`Future.delayed`. A pending timer outlives a disposed widget and hangs
+`pumpAndSettle`, and anything that only works outside tests is a thing nobody
+can check — so there is a test that asserts the entrances settle and leave
+nothing running.
+
+All of it defers to the reduce-motion setting: whoever asked for less gets
+the finished state.
+
 ## One palette
 
 The app used to paint Today dark and the other tabs on paper, which meant it
