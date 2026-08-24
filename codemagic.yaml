@@ -1,0 +1,150 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Knowit on Codemagic.
+#
+# Two ways onto a phone, because they are not the same job:
+#
+#   android-apk     Builds an installable APK on a Linux machine. Needs no
+#                   account, no certificate and no store — Codemagic emails a
+#                   link, you open it on the phone and install it. This is the
+#                   one to use to simply look at the app.
+#
+#   ios-testflight  The iPhone route, which has no equivalent shortcut: Apple
+#                   will not run an app on a device unless it is signed, so
+#                   this needs an App Store Connect key and an app record.
+#                   Copied from the Improvy workflow, retargeted at Knowit.
+# ─────────────────────────────────────────────────────────────────────────────
+workflows:
+
+  android-apk:
+    name: Android · installable APK
+    # Linux is the cheap machine for this. If the plan does not carry it, an
+    # Android build runs unchanged on mac_mini_m2 — swap the line, nothing
+    # else in this workflow depends on the operating system.
+    instance_type: linux_x2
+    max_build_duration: 45
+    environment:
+      flutter: stable
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/.gradle/caches
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      # The same three checks the project runs locally. A build that reaches a
+      # phone with a broken deck in it costs more to discover than the two
+      # minutes these take.
+      - name: Analyze and test
+        script: |
+          set -e
+          flutter analyze
+          flutter test
+
+      # A universal APK rather than one per ABI: there is one phone to get
+      # this onto, and picking the right architecture by hand is exactly the
+      # step worth not having.
+      #
+      # Release here is signed with the debug key, which is what the project's
+      # build.gradle.kts still does. That is fine for installing by hand and
+      # is NOT publishable to Play — that needs a real keystore, and is a
+      # different job from looking at the app.
+      - name: Build the APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+    publishing:
+      email:
+        recipients:
+          - lorenzo.ballestrazzi07@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Signing strategy, inherited from Improvy: a distribution certificate's
+  # PRIVATE KEY only exists where the certificate was first created, so any
+  # certificate already sitting in the Apple account is unusable on a fresh
+  # build machine ("Cannot save Signing Certificates without certificate
+  # private key"). The build therefore deletes the existing distribution
+  # certificates through the App Store Connect API and mints a new one whose
+  # private key it generates and keeps, then creates the matching profile.
+  #
+  # Before this can run, two things have to exist on Apple's side:
+  #   1. an App Store Connect app record for com.knowit.knowit;
+  #   2. its Apple ID (the long number in the app's URL), set below.
+  # ───────────────────────────────────────────────────────────────────────────
+  ios-testflight:
+    name: iOS · TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: chiaveapipercodemagic
+    environment:
+      vars:
+        # Replace with the Apple ID of the Knowit app record. The build cannot
+        # work out which app it is publishing to without it.
+        APP_STORE_APPLE_ID: PUT_THE_KNOWIT_APPLE_ID_HERE
+        BUNDLE_ID: "com.knowit.knowit"
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Analyze and test
+        script: |
+          set -e
+          flutter analyze
+          flutter test
+
+      - name: Reset signing — create a certificate we own + App Store profile
+        script: |
+          set -e
+          keychain initialize
+          echo "Removing existing distribution certificates (we don't hold their private keys)..."
+          for T in IOS_DISTRIBUTION DISTRIBUTION; do
+            app-store-connect certificates list --type "$T" --json 2>/dev/null | jq -r '.[].id' 2>/dev/null || true
+          done | sort -u | while read -r cid; do
+            if [ -n "$cid" ]; then
+              echo "  deleting certificate $cid"
+              app-store-connect certificates delete "$cid" || true
+            fi
+          done
+          echo "Generating our OWN private key, then the certificate + App Store profile..."
+          # fetch-signing-files needs a private key to create the certificate — give it a fresh one.
+          openssl genrsa -out /tmp/cert_key.pem 2048
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --certificate-key=@file:/tmp/cert_key.pem \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: Install CocoaPods dependencies
+        script: find . -name "Podfile" -execdir pod install \;
+
+      - name: Build signed IPA (build number = latest TestFlight + 1)
+        script: |
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "0")
+          flutter build ipa --release \
+            --build-number=$(($LATEST + 1)) \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+      email:
+        recipients:
+          - lorenzo.ballestrazzi07@gmail.com
+        notify:
+          success: true
+          failure: true
