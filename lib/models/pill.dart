@@ -214,6 +214,61 @@ const List<int> kReviewLadder = [2, 7, 21];
 /// without turning every card into a form.
 const List<int> kConfidenceLevels = [50, 60, 70, 80, 90];
 
+/// The thing a card is actually training.
+///
+/// A card is one instance; the principle is what should survive it. This
+/// distinction is the whole point: meeting base-rate neglect once, in a
+/// medical test, teaches medical tests. Meeting it in hiring, in crime
+/// figures and in a sales pitch teaches base rates — and transfer to a
+/// context you have not seen is the only outcome worth claiming.
+///
+/// Evidence: a single interactive debiasing session reduced confirmation
+/// bias, the bias blind spot and the fundamental attribution error for
+/// 8-12 weeks (Morewedge et al., 2015), and transferred to an unannounced
+/// business case months later (Sellier, Scopelliti & Morewedge, 2019).
+/// Naming the bias and practising it across varied contexts are the parts
+/// that carry.
+enum Principle {
+  none('', ''),
+  baseRate('Base rates', 'How accurate a test is, is not how likely you are'),
+  survivorship('Survivorship', 'The data you have is the data that survived'),
+  regression('Regression to the mean', 'Extremes drift back on their own'),
+  confirmation('Confirmation', 'Looking for a yes is not a test'),
+  anchoring('Anchoring', 'The first number said moves every number after'),
+  sampling('Sampling', 'Who ended up in the sample decides what it can say'),
+  confounding('Confounding', 'Something else may be causing both'),
+  counterfactual(
+    'Compared to what',
+    'A change means nothing without a control',
+  ),
+  multipleComparisons('Multiple looks', 'Test enough things and one will pass'),
+  availability('Availability', 'Easy to picture is not the same as common'),
+  sunkCost('Sunk cost', 'Spent is spent; only what is left can be decided'),
+  conjunction('Conjunction', 'Detail makes a story likelier and less probable'),
+  conditional('Conditional odds', 'What you were told changes the odds'),
+  independence('Independence', 'Chance has no memory'),
+  coincidence(
+    'Coincidence',
+    'Rare things are common when there are many tries',
+  ),
+  exponential('Exponential growth', 'Nobody has intuition for doubling'),
+  reflection(
+    'The quick answer',
+    'The answer that arrives first is the one to check',
+  ),
+  simpson('Aggregates', 'A whole can lean the way no part of it does'),
+  estimation('Estimation', 'Break the unanswerable into things you can guess'),
+  computation('Working it out', 'A problem you can actually finish');
+
+  const Principle(this.label, this.oneLine);
+
+  /// What it is called, and the one line that names the move.
+  final String label;
+  final String oneLine;
+
+  bool get isReal => this != Principle.none;
+}
+
 /// How much work a card expects.
 enum Difficulty {
   easy('Easy'),
@@ -258,6 +313,10 @@ class Pill {
 
   final Difficulty difficulty;
 
+  /// What this card is an instance of. Cards sharing a principle are the
+  /// varied contexts that make it stick.
+  final Principle principle;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -275,6 +334,7 @@ class Pill {
     this.simply = '',
     this.counterpoint = '',
     this.difficulty = Difficulty.easy,
+    this.principle = Principle.none,
   });
 
   bool get asksSomething => challenge is! NoChallenge;

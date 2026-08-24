@@ -156,6 +156,12 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 11),
             _Calibration(app: app),
           ],
+          if (app.masteryByWeakness.isNotEmpty) ...[
+            const SizedBox(height: 22),
+            const Eyebrow('The moves you keep missing'),
+            const SizedBox(height: 11),
+            _Mastery(app: app),
+          ],
           const SizedBox(height: 22),
           const Eyebrow('What you have covered'),
           const SizedBox(height: 11),
@@ -621,9 +627,10 @@ class _Row extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Off by more than fifteen points is worth marking; the rest is noise
-    // at these sample sizes.
-    final off = bucket.gap.abs() > 15;
+    // Only overconfidence is worth marking in alarm, and only once there is
+    // enough of it to mean anything: being right more often than you claimed
+    // is the good direction, and one answer in a bucket is noise.
+    final off = bucket.count >= 3 && bucket.gap > 15;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -749,6 +756,100 @@ class _ThemePicker extends StatelessWidget {
             ),
           );
         }).toList(),
+      ),
+    );
+  }
+}
+
+/// How the reader is doing on each principle, weakest first.
+///
+/// This is the readout the evidence points at. Naming the move you missed,
+/// and showing your own record on it, is the part of debiasing training that
+/// carried to a real decision months later (Sellier, Scopelliti & Morewedge,
+/// 2019). Knowing you got card seven wrong is worth nothing by comparison.
+class _Mastery extends StatelessWidget {
+  final AppState app;
+  const _Mastery({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final rows = app.masteryByWeakness.take(5).toList();
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...rows.indexed.map((entry) {
+            final m = entry.$2;
+            final last = entry.$1 == rows.length - 1;
+            return Padding(
+              padding: EdgeInsets.only(bottom: last ? 6 : 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          m.principle.label,
+                          style: AppText.body(
+                            size: 14,
+                            weight: FontWeight.w600,
+                            color: context.p.ink,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '${m.right}/${m.met}',
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: m.isWeak
+                              ? context.p.alert
+                              : context.p.inkMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    m.principle.oneLine,
+                    style: AppText.body(
+                      size: 12.5,
+                      height: 1.4,
+                      color: context.p.inkMuted,
+                    ),
+                  ),
+                  const SizedBox(height: 7),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: LinearProgressIndicator(
+                      value: m.share,
+                      minHeight: 5,
+                      backgroundColor: context.p.line,
+                      valueColor: AlwaysStoppedAnimation(
+                        m.isWeak ? context.p.alert : AppColors.lime,
+                      ),
+                    ),
+                  ),
+                  if (m.met < m.contexts) ...[
+                    const SizedBox(height: 5),
+                    Text(
+                      '${m.contexts - m.met} more '
+                      '${m.contexts - m.met == 1 ? 'context' : 'contexts'} '
+                      'of this to come',
+                      style: AppText.body(
+                        size: 11.5,
+                        color: context.p.inkFaint,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

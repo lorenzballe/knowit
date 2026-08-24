@@ -36,6 +36,7 @@ Pill _q(
   String bar,
   String src, {
   String simply = '',
+  Principle principle = Principle.none,
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
@@ -52,6 +53,7 @@ Pill _q(
     trap: trap,
     simply: simply,
     difficulty: Difficulty.medium,
+    principle: principle,
   );
 }
 
@@ -69,6 +71,7 @@ Pill _n(
   String src, {
   Difficulty difficulty = Difficulty.medium,
   String simply = '',
+  Principle principle = Principle.computation,
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
@@ -86,6 +89,7 @@ Pill _n(
     hint: hint,
     steps: steps,
     difficulty: difficulty,
+    principle: principle,
   );
 }
 
@@ -117,6 +121,7 @@ Pill _e(
     hint: hint,
     steps: steps,
     difficulty: Difficulty.medium,
+    principle: Principle.estimation,
   );
 }
 
@@ -654,6 +659,7 @@ final List<Pill> kPillPool = [
         'The test shouts "ill!" at almost all of those 100 — but it also '
         'shouts at 5,000 healthy people by mistake. If it shouts at you, '
         'you are far more likely to be one of the 5,000.',
+    principle: Principle.baseRate,
   ),
   _q(
     'thinking-2',
@@ -668,6 +674,7 @@ final List<Pill> kPillPool = [
     'Two conditions can never be more likely than one of them alone: every feminist bank teller is already a bank teller. The story makes the second sound plausible, and plausibility is not probability. Most people, including trained ones, pick the second.',
     'Adding detail makes a story more convincing and less likely at the same time.',
     'Conjunction fallacy; Tversky & Kahneman, 1983',
+    principle: Principle.conjunction,
   ),
   _q(
     'thinking-3',
@@ -683,6 +690,7 @@ final List<Pill> kPillPool = [
         'Play with a hundred doors instead of three. You pick one. The host '
         'opens ninety-eight empty ones and leaves your door and one other. '
         'Do you still fancy your first guess?',
+    principle: Principle.conditional,
   ),
   _q(
     'thinking-4',
@@ -694,6 +702,7 @@ final List<Pill> kPillPool = [
     'You are not looking for a match with one person but between any pair. Twenty-three people make 253 pairs, and the chance that none of them match falls just below half. With 70 people it is 99.9%.',
     'Any football match on the pitch almost certainly has a shared birthday.',
     'Birthday problem, classical probability',
+    principle: Principle.coincidence,
   ),
   _q(
     'thinking-5',
@@ -705,6 +714,7 @@ final List<Pill> kPillPool = [
     'The planes that came back are the survivors. Hits to the engines are missing from the map because those aircraft did not return. Abraham Wald told them to armour exactly where the returning planes were unmarked.',
     'The data you have is the data that survived.',
     'Survivorship bias; Abraham Wald, Statistical Research Group, 1943',
+    principle: Principle.survivorship,
   ),
   _q(
     'thinking-6',
@@ -719,6 +729,7 @@ final List<Pill> kPillPool = [
     'Exceptional performances are partly luck, so the next attempt drifts back toward average whatever you say. Regression to the mean produces this pattern on its own — and quietly teaches people that punishment works and praise does not.',
     'Half of what looks like cause and effect is just the average pulling things back.',
     'Regression to the mean; Kahneman, Thinking Fast and Slow',
+    principle: Principle.regression,
   ),
   _q(
     'thinking-7',
@@ -730,6 +741,7 @@ final List<Pill> kPillPool = [
     'You need the cases that could break the rule. A vowel with an odd number would break it, so turn A and 7. The 4 cannot: whatever is behind it, the rule survives. Fewer than one in ten people get this right.',
     'Looking for confirmation is not testing. Looking for the counterexample is.',
     'Wason selection task; Wason, 1968',
+    principle: Principle.confirmation,
   ),
   _q(
     'thinking-8',
@@ -746,6 +758,7 @@ final List<Pill> kPillPool = [
         'hard queue mostly women. Each queue was slightly kinder to women '
         '— but more women stood in the hard one, so the total looks unfair '
         'to them. The whole can lean one way while every part leans the other.',
+    principle: Principle.simpson,
   ),
   _q(
     'thinking-9',
@@ -757,6 +770,7 @@ final List<Pill> kPillPool = [
     'If the ball were 10 cents the bat would be €1.10 and the total €1.20. The ball is 5 cents, the bat €1.05. Most people who answer quickly say ten, including most students at top universities.',
     'The answer that arrives instantly is the one worth checking.',
     'Cognitive Reflection Test; Frederick, 2005',
+    principle: Principle.reflection,
   ),
   _q(
     'thinking-10',
@@ -768,6 +782,7 @@ final List<Pill> kPillPool = [
     'Each fold doubles the thickness, so 42 folds is 2⁴² sheets. At 0.1 mm a sheet that is about 440,000 km — past the Moon. You cannot actually fold paper that many times, but the arithmetic is exact.',
     'Nobody has intuition for doubling. That is why compound interest surprises people.',
     'Exponential growth, arithmetic',
+    principle: Principle.exponential,
   ),
   _q(
     'thinking-11',
@@ -779,6 +794,7 @@ final List<Pill> kPillPool = [
     'The coin has no memory. Each flip is independent, so it stays 50/50 forever. Runs of six happen roughly once in every 64 sequences, which is often enough to feel meaningful and rare enough to feel wrong.',
     'The coin does not know what it did before. Roulette tables count on you forgetting that.',
     'Gambler\'s fallacy; independence of events',
+    principle: Principle.independence,
   ),
   _q(
     'thinking-12',
@@ -790,6 +806,7 @@ final List<Pill> kPillPool = [
     'The ticket costs the same whether you stay or leave, so it cannot inform the choice. Only the next two hours are still yours to spend. People reliably do the opposite, and the more they paid the longer they sit.',
     'You cannot get the money back by suffering longer.',
     'Sunk cost effect; Arkes & Blumer, 1985',
+    principle: Principle.sunkCost,
   ),
   _q(
     'thinking-13',
@@ -801,6 +818,7 @@ final List<Pill> kPillPool = [
     'Those who saw a high number guessed high, those who saw a low one guessed low — even knowing the wheel was random. An irrelevant figure becomes the starting point you adjust from, and you never adjust far enough.',
     'Whoever says a number first has already moved the negotiation.',
     'Anchoring; Tversky & Kahneman, 1974',
+    principle: Principle.anchoring,
   ),
   _q(
     'thinking-14',
@@ -812,6 +830,7 @@ final List<Pill> kPillPool = [
     'Hippos kill far more people annually than sharks, which kill roughly a dozen. What comes to mind easily feels frequent — and shark attacks come with a soundtrack. The coconut figure, incidentally, is a widely repeated invention.',
     'How easily you can imagine it is not how often it happens.',
     'Availability heuristic; Tversky & Kahneman, 1973',
+    principle: Principle.availability,
   ),
   _q(
     'thinking-15',
@@ -823,6 +842,7 @@ final List<Pill> kPillPool = [
     'The rule was simply "increasing numbers". People proposed only sequences fitting their guess, got yes every time, and declared themselves right. The informative move is to test something you expect to fail.',
     'If every test you run says yes, you are not testing anything.',
     'Confirmation bias; Wason, 1960',
+    principle: Principle.confirmation,
   ),
 
   // ── Thinking: competition problems. The answer is a number you work out,
@@ -1024,6 +1044,7 @@ final List<Pill> kPillPool = [
     'The sample was chosen by its outcome. If half of all failed founders also woke at 5am, the habit tells you nothing. You cannot learn what causes success by studying only successes.',
     'Ask who is missing from the sample before you argue about the finding.',
     'Selection on the dependent variable',
+    principle: Principle.survivorship,
   ),
   _q(
     'thinking-f2',
@@ -1039,6 +1060,7 @@ final List<Pill> kPillPool = [
     'The comparison assumes the two groups are alike, and they are not: hospitals concentrate the sickest people. Judging a treatment needs comparable groups, which is what a control group is for.',
     'Any statistic comparing two groups invites one question: who ended up in each?',
     'Confounding by indication',
+    principle: Principle.confounding,
   ),
   _q(
     'thinking-f3',
@@ -1054,6 +1076,7 @@ final List<Pill> kPillPool = [
     'If crime fell 12% nationally, this mayor did worse than doing nothing. A number with no comparison group cannot support a claim about cause — that is what a counterfactual is for.',
     '"Compared to what?" is the most useful question in any argument.',
     'Counterfactual reasoning',
+    principle: Principle.counterfactual,
   ),
   _q(
     'thinking-f4',
@@ -1069,6 +1092,7 @@ final List<Pill> kPillPool = [
     'A 5% threshold means one false positive in twenty tests on average. Run twenty tests and finding one "result" is what should happen if nothing is going on. The fix is to say up front what you are testing.',
     'Ask how many things they measured before you believe the one they report.',
     'Multiple comparisons problem',
+    principle: Principle.multipleComparisons,
   ),
   _q(
     'thinking-f5',
@@ -1084,6 +1108,7 @@ final List<Pill> kPillPool = [
     'People cluster with people like themselves, so your circle is one of the least random samples available. Pauline Kael is often misquoted saying this about Nixon; the underlying error is real regardless.',
     'Your social circle is evidence about your social circle.',
     'Sampling bias',
+    principle: Principle.sampling,
   ),
 
   // ── Debate. Nothing here is graded: pick a side, then meet the best case
@@ -1127,5 +1152,305 @@ final List<Pill> kPillPool = [
     'The money is finite, and it competes directly with protecting species that still exist. A revived animal returns to a habitat that has moved on without it, and the promise of reversal weakens the argument for not causing extinctions in the first place.',
     'The strongest objection is not scientific. It is what the promise does to the incentive.',
     'Contested question in conservation biology',
+  ),
+
+  // ── Second and third contexts. Deliberately not the textbook instance:
+  // meeting a principle where you do not expect it is what transfer means,
+  // and the famous version is the one people already have an answer for.
+  _q(
+    'thinking-b1',
+    'thinking',
+    'A camera that identifies faces with 99% accuracy scans 100,000 travellers to find one wanted person. Roughly how many alarms will be wrong?',
+    ['Almost none', 'About a thousand', 'A few dozen'],
+    1,
+    'Hearing 99% and picturing a system that is almost always right.',
+    'One per cent of 100,000 innocent people is about 1,000 false alarms, against the single real match. Almost every alarm is wrong — not because the camera is bad, but because there is only one of them and a hundred thousand of us.',
+    'A very accurate test looking for something very rare is mostly wrong.',
+    'Base rate neglect applied to screening',
+    principle: Principle.baseRate,
+  ),
+  _q(
+    'thinking-b2',
+    'thinking',
+    'A hiring tool spots the 5% of applicants who become top performers, with 80% accuracy. You are flagged. What are your odds?',
+    ['About 80%', 'About one in five', 'About half'],
+    1,
+    'Reading the tool\'s accuracy as the chance it is right about you.',
+    'Of 1,000 applicants, 50 are top performers and 40 get flagged. But 20% of the other 950 get flagged too: 190 more. So about 40 of 230 flags are real — under one in five.',
+    'Ask how rare the thing is before you ask how good the test is.',
+    'Base rate neglect in selection',
+    principle: Principle.baseRate,
+  ),
+  _q(
+    'thinking-s1',
+    'thinking',
+    '"Old buildings were built to last — look how many are still standing." What is wrong with this?',
+    [
+      'Nothing, older methods were better',
+      'The badly built ones already fell down',
+      'Old buildings are repaired more often',
+    ],
+    1,
+    'Judging a period by what is left of it.',
+    'Every era built badly and well. Only the well-built survive to be admired, so any century looks like a golden age from far enough away. The comparison you want is against everything built then, most of which is gone.',
+    'Every past era looks well made, because the bad parts are not there to see.',
+    'Survivorship bias in the built environment',
+    principle: Principle.survivorship,
+  ),
+  _q(
+    'thinking-s2',
+    'thinking',
+    'A fund family advertises the ten-year returns of its funds. Why is the average flattering?',
+    [
+      'They pick the best years',
+      'The funds that did badly were closed and left the table',
+      'Ten years is too short',
+    ],
+    1,
+    'Assuming the table lists every fund they ever ran.',
+    'Poor funds get merged away or shut, and their records leave with them. What remains is the survivors, so the family average describes a group selected for having done well. Regulators require some disclosure of this precisely because it flatters so reliably.',
+    'Any performance table is a list of the ones still allowed to be on it.',
+    'Survivorship bias in fund performance',
+    principle: Principle.survivorship,
+  ),
+  _q(
+    'thinking-r1',
+    'thinking',
+    'A company sends consultants to its worst-performing sales region. Next quarter it improves. What is the safest reading?',
+    [
+      'The consultants worked',
+      'Some of it would have happened anyway',
+      'The region was under-managed',
+    ],
+    1,
+    'Crediting the intervention with the whole improvement.',
+    'A region is picked because it had an unusually bad quarter, and unusual results are partly luck. The next quarter drifts back toward that region\'s own average whatever anyone does. Without a comparable region left alone, you cannot tell the treatment from the drift.',
+    'Anything chosen for being extreme will look improved next time.',
+    'Regression to the mean in management',
+    principle: Principle.regression,
+  ),
+  _q(
+    'thinking-c1',
+    'thinking',
+    'You think a colleague dislikes you, and start noticing the evidence. Why does the evidence keep arriving?',
+    [
+      'Because it is true',
+      'Because you are only counting what fits',
+      'Because they can tell you suspect it',
+    ],
+    1,
+    'Treating a growing pile of confirming moments as proof.',
+    'The neutral moments are not stored, so the pile can only grow one way. The test that would tell you something is looking for the times they went out of their way for you — and noticing whether you had been discounting them.',
+    'A theory that only ever gains evidence is not being tested.',
+    'Confirmation bias in everyday judgement',
+    principle: Principle.confirmation,
+  ),
+  _q(
+    'thinking-a1',
+    'thinking',
+    'Judges were shown a sentencing demand rolled on dice before deciding a case. What happened?',
+    [
+      'Nothing — they are trained to ignore it',
+      'Higher rolls produced longer sentences',
+      'They sentenced more leniently overall',
+    ],
+    1,
+    'Assuming expertise protects against an irrelevant number.',
+    'Experienced judges gave longer sentences after a high roll than a low one, knowing the number came from dice. Expertise does not remove the anchor; it makes people more certain they were not anchored.',
+    'Whoever names a figure first has already moved the room, expert or not.',
+    'Englich, Mussweiler & Strack, 2006',
+    principle: Principle.anchoring,
+  ),
+  _q(
+    'thinking-a2',
+    'thinking',
+    'A shop marks an item "was €200, now €80". Why does the crossed-out price work even when it was never charged?',
+    [
+      'People assume it is a real discount',
+      'It sets the number you judge €80 against',
+      'It signals quality',
+    ],
+    1,
+    'Thinking the effect depends on believing the old price.',
+    'The first figure becomes the reference point, and €80 is then read as a saving rather than as a price. It works on people who doubt the original price was ever real — which is why the practice is regulated rather than merely mocked.',
+    'The crossed-out number is not information. It is the ruler.',
+    'Reference price effects in retail',
+    principle: Principle.anchoring,
+  ),
+  _q(
+    'thinking-p1',
+    'thinking',
+    'A shop raises a price by 10%, then advertises 10% off. Where are you?',
+    [
+      'Back where you started',
+      'One per cent below the old price',
+      'Ten per cent below',
+    ],
+    1,
+    'Cancelling the two tens, because they look like the same ten.',
+    'Take €100: up 10% is €110, then 10% off €110 is €99. The rises and the falls are percentages of different numbers, so they never cancel. The same asymmetry is why a 50% loss needs a 100% gain to undo.',
+    'A percentage is always a percentage of something, and the something changes.',
+    'Percentage change, arithmetic',
+    principle: Principle.reflection,
+  ),
+  _q(
+    'thinking-g1',
+    'thinking',
+    'A survey is emailed to customers and 4% reply, overwhelmingly positive. What has it measured?',
+    [
+      'Customer satisfaction',
+      'The views of people who still open your email',
+      'Nothing, 4% is too small',
+    ],
+    1,
+    'Reading a low response rate as merely a small sample.',
+    'A small random sample would be fine. This one is not random: it excludes everyone who has stopped opening your email, which is exactly the unhappy. The size is not the problem — who is missing is.',
+    'The people who did not answer are the finding.',
+    'Non-response bias',
+    principle: Principle.sampling,
+  ),
+  _q(
+    'thinking-g2',
+    'thinking',
+    'Online ratings for most products cluster at five stars and one star, with little between. Why?',
+    [
+      'Products really are either great or terrible',
+      'Only the delighted and the furious bother to write',
+      'Fake reviews at both ends',
+    ],
+    1,
+    'Reading the shape of the ratings as the shape of the experience.',
+    'Writing a review costs effort, and only strong feeling pays for it. The many people who found it fine never appear, so the distribution is about who writes, not about what the product is like.',
+    'The middle of any rating scale is missing, not empty.',
+    'Self-selection in ratings',
+    principle: Principle.sampling,
+  ),
+  _q(
+    'thinking-x1',
+    'thinking',
+    'Employees who use the company gym take fewer sick days. Should the company expand the gym?',
+    [
+      'Yes — the effect is clear',
+      'Not on this evidence: healthy people use gyms',
+      'Only if the gym is free',
+    ],
+    1,
+    'Reading a difference between two self-selected groups as an effect.',
+    'Nobody assigned people to the gym; they chose. Whatever makes someone a gym user — health, age, energy, a job with slack in it — also affects sick days. The gym could do nothing and the figures would look the same.',
+    'When people chose their own group, the groups differ before you do anything.',
+    'Healthy-user bias',
+    principle: Principle.confounding,
+  ),
+  _q(
+    'thinking-x2',
+    'thinking',
+    'Children who take music lessons do better at school. What does this establish?',
+    [
+      'Music lessons raise attainment',
+      'Very little on its own',
+      'Music and maths use the same skills',
+    ],
+    1,
+    'Accepting an appealing cause because the correlation is real.',
+    'Music lessons cost money and stable time, which travel with a great deal else. Randomised studies of music training find much smaller effects on school attainment than the correlation suggests — the gap between the two is the confounding.',
+    'Ask what else comes with the thing before you credit the thing.',
+    'Confounding by family background',
+    principle: Principle.confounding,
+  ),
+  _q(
+    'thinking-k1',
+    'thinking',
+    'A factory changes supplier and defects drop 12%. What would make this convincing?',
+    [
+      'A bigger drop',
+      'Knowing what defects did on the lines that did not change',
+      'A longer measurement period',
+    ],
+    1,
+    'Judging a change with nothing to compare it to.',
+    'If defects fell 15% everywhere that quarter, the new supplier did worse than doing nothing. A number with no comparison cannot support a claim about cause, however large it is.',
+    '"Compared to what" beats any figure quoted on its own.',
+    'Counterfactual reasoning in operations',
+    principle: Principle.counterfactual,
+  ),
+  _q(
+    'thinking-m1',
+    'thinking',
+    'A team tests 15 versions of a button and one beats the original at p < 0.05. What should they do?',
+    ['Ship it', 'Run that one again on its own', 'Test 15 more versions'],
+    1,
+    'Treating the winner of many tests like the winner of one.',
+    'With 15 tests, a false winner at the 5% threshold is more likely than not. The number means something only for a test decided in advance, so the finding has to survive being the only thing you are looking at.',
+    'The winner of a search is not the same as the winner of a test.',
+    'Multiple comparisons in experimentation',
+    principle: Principle.multipleComparisons,
+  ),
+  _q(
+    'thinking-m2',
+    'thinking',
+    '"The campaign did not work overall, but it worked for women aged 25-34 in the north." What is the risk?',
+    [
+      'The segment is too small',
+      'The segment was found by looking, not chosen first',
+      'It probably works for other segments too',
+    ],
+    1,
+    'Accepting a slice as a finding because the numbers in it are real.',
+    'Cut any dataset enough ways and some slice will look like a success by chance alone. A subgroup named before the data was collected is evidence; one found afterwards is a hypothesis, and needs its own test.',
+    'A result found by slicing has to survive being predicted.',
+    'Subgroup analysis',
+    principle: Principle.multipleComparisons,
+  ),
+  _q(
+    'thinking-v1',
+    'thinking',
+    'Which takes more lives worldwide each year?',
+    ['Homicide', 'Suicide'],
+    1,
+    'Reaching for the one that gets reported.',
+    'Suicide takes roughly twice as many lives as homicide worldwide. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.',
+    'What you can recall easily is a fact about the news, not about the world.',
+    'WHO global health estimates',
+    principle: Principle.availability,
+  ),
+  _q(
+    'thinking-u1',
+    'thinking',
+    'You paid for a year of a service and stopped using it after two months. Should the year you paid for keep you subscribed?',
+    ['Yes, get your money\'s worth', 'No, the year is gone either way'],
+    1,
+    'Staying to redeem money that is already spent.',
+    'The payment is the same whether you use it or not, so it cannot inform the choice. The only live question is whether the next ten months are worth your attention — and annual pricing exists partly because that reasoning is so hard to apply.',
+    'You cannot get money back by spending time on top of it.',
+    'Sunk cost in subscriptions',
+    principle: Principle.sunkCost,
+  ),
+  _q(
+    'thinking-i1',
+    'thinking',
+    'A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?',
+    [
+      'Yes, the team needs variety',
+      'Not as stated — the past hires do not change this candidate',
+      'Yes, three is already too many',
+    ],
+    1,
+    'Feeling that a run has to be balanced out.',
+    'There may be a real case for varied backgrounds, but that case does not come from the run. As stated, the manager is treating independent decisions as though the earlier ones changed the odds of the next — the same move as expecting tails after four heads.',
+    'A good reason for a decision is not the same as the feeling that produced it.',
+    'Gambler\'s fallacy in hiring',
+    principle: Principle.independence,
+  ),
+  _q(
+    'thinking-w1',
+    'thinking',
+    'In a country of 60 million, how often should a genuine one-in-a-million-per-day event happen?',
+    ['Almost never', 'About 60 times a day', 'About once a month'],
+    1,
+    'Hearing "one in a million" as "essentially impossible".',
+    'One in a million per person per day, across 60 million people, is 60 occurrences a day. Astonishing coincidences are guaranteed at scale — which is why a coincidence needs to be surprising *given how many chances there were*.',
+    'With enough people, the miraculous is scheduled.',
+    'Law of truly large numbers',
+    principle: Principle.coincidence,
   ),
 ];

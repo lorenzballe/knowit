@@ -13,11 +13,14 @@ const int kPillsPerDay = 5;
 
 /// How much of a day should ask something of the reader rather than tell.
 ///
-/// Without a floor the mix collapses: everything that asks lives under one
-/// topic, and a deck that takes one card per topic then deals four facts and
-/// a single puzzle. An app that trains reasoning cannot be four fifths
-/// reading.
-const double kAskShare = 0.4;
+/// Reading facts has no evidence behind it as reasoning training — the
+/// large review of brain training found gains only on the exact task
+/// practised (Simons et al., 2016). What does transfer is answering, being
+/// wrong, and being told which move you missed (Morewedge et al., 2015).
+///
+/// So a day is mostly asking. One fact opens it: a fact is a reason to come
+/// and it opens up a subject, which is worth one card in five and not four.
+const double kAskShare = 0.8;
 
 /// Deterministic pills for a day — the same date, topic mix and reading
 /// history always yield the same set and order, so the deck doesn't reshuffle

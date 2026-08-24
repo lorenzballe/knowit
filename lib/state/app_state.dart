@@ -380,16 +380,77 @@ class AppState extends ChangeNotifier {
     return due.compareTo(dateKey(today)) <= 0;
   }
 
-  /// The cards waiting to come back, oldest due first.
+  /// The cards to bring back, oldest due first.
+  ///
+  /// A card that came due is returned as a *different instance of the same
+  /// principle* wherever one exists. Meeting the identical card again tests
+  /// whether you remember that card; meeting base-rate neglect in a context
+  /// you have not seen tests whether you learned base rates — and only the
+  /// second is what transfer means.
   List<Pill> get dueReviews {
     final due = <MapEntry<String, Pill>>[];
-    for (final e in answers.entries) {
-      if (!isDueForReview(e.key)) continue;
-      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
-      if (pill != null) due.add(MapEntry(e.value.dueOn!, pill));
+    final claimed = <String>{};
+
+    final entries = answers.entries.where((e) => isDueForReview(e.key)).toList()
+      ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
+
+    for (final e in entries) {
+      final original = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      if (original == null) continue;
+      final pick = _freshInstanceOf(original, claimed);
+      claimed.add(pick.id);
+      due.add(MapEntry(e.value.dueOn!, pick));
     }
-    due.sort((a, b) => a.key.compareTo(b.key));
-    return [for (final e in due) e.value];
+    return [for (final entry in due) entry.value];
+  }
+
+  /// Another card teaching the same principle that the reader has not met,
+  /// or the original when the principle has only the one instance.
+  Pill _freshInstanceOf(Pill original, Set<String> claimed) {
+    if (!original.principle.isReal) return original;
+
+    final siblings = kPillPool
+        .where(
+          (p) =>
+              p.principle == original.principle &&
+              p.id != original.id &&
+              !claimed.contains(p.id) &&
+              !answers.containsKey(p.id),
+        )
+        .toList();
+    if (siblings.isEmpty) return original;
+
+    // Deterministic per day, so the deck does not shuffle under the reader.
+    siblings.sort((a, b) => a.id.compareTo(b.id));
+    final seed = dateKey(today).hashCode.abs() + original.id.hashCode.abs();
+    return siblings[seed % siblings.length];
+  }
+
+  // ── Mastery ───────────────────────────────────────────────────────────
+
+  /// How the reader is doing on one principle, across every context of it
+  /// they have met.
+  Mastery masteryOf(Principle principle) {
+    var met = 0;
+    var right = 0;
+    for (final e in _graded) {
+      if (e.key.principle != principle) continue;
+      met++;
+      if (e.key.challenge.accepts(e.value.response)) right++;
+    }
+    final total = kPillPool.where((p) => p.principle == principle).length;
+    return Mastery(principle, met: met, right: right, contexts: total);
+  }
+
+  /// Every principle the reader has met, weakest first — the ones worth
+  /// putting in front of them again.
+  List<Mastery> get masteryByWeakness {
+    final out = [
+      for (final principle in Principle.values)
+        if (principle.isReal) masteryOf(principle),
+    ]..removeWhere((m) => m.met == 0);
+    out.sort((a, b) => a.share.compareTo(b.share));
+    return out;
   }
 
   // ── Calibration ───────────────────────────────────────────────────────
@@ -581,4 +642,30 @@ class CalibrationBucket {
 
   /// Positive when the reader was more sure than they should have been.
   double get gap => said - actual;
+}
+
+/// How one principle is going, across every context of it the reader has met.
+class Mastery {
+  final Principle principle;
+
+  /// Contexts met, and of those how many were got right.
+  final int met;
+  final int right;
+
+  /// How many contexts of this principle exist at all.
+  final int contexts;
+
+  const Mastery(
+    this.principle, {
+    required this.met,
+    required this.right,
+    required this.contexts,
+  });
+
+  double get share => met == 0 ? 0 : right / met;
+
+  /// One instance proves nothing either way; the label waits for a second.
+  bool get isSettled => met >= 2;
+
+  bool get isWeak => isSettled && share < 0.5;
 }

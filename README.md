@@ -105,6 +105,51 @@ These are declared in the UI rather than faked:
 The pool holds 95 cards: 60 facts plus 35 under **Thinking** — bias traps,
 competition problems, Fermi estimates, spot-the-flaw and debates.
 
+## What the evidence says, and what follows from it
+
+The app is built on three findings, not on a hunch about what feels useful.
+
+**You cannot train general intelligence.** The large review of brain training
+([Simons et al., 2016](https://journals.sagepub.com/doi/abs/10.1177/1529100616661983))
+found gains only on the exact tasks practised. So the app does not claim it,
+and reading facts is not treated as training.
+
+**You can train away specific biases, and it transfers.** A single
+interactive session reduced confirmation bias, the bias blind spot and the
+fundamental attribution error for 8–12 weeks
+([Morewedge et al., 2015](https://journals.sagepub.com/doi/abs/10.1177/2372732215600886)),
+and trained students were 19% less likely to take the hypothesis-confirming
+answer on an unannounced business case
+([Sellier, Scopelliti & Morewedge, 2019](https://journals.sagepub.com/doi/abs/10.1177/0956797619861429)).
+The interactive version beat the video. The ingredients that carried were
+naming the bias, practice in varied contexts, and feedback on your own
+errors.
+
+**You can train calibration.** An hour of probabilistic-reasoning training
+improved forecasting accuracy by around 10% on Brier score, sustained across
+four years of tournament
+([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
+
+### Three things that follow
+
+**A day is mostly asking.** Four of the five cards ask something. One fact
+opens it — a fact is a reason to come and it opens up a subject, but it is
+not the training.
+
+**A principle, not a card, is the unit.** `Principle` is what a card is an
+instance of. Meeting base-rate neglect once, in a medical test, teaches
+medical tests; meeting it in facial recognition and in hiring teaches base
+rates. New contexts deliberately avoid the textbook version — the famous one
+is the one people already have an answer for.
+
+**A review is a new context, not the same card.** When a card comes due, the
+deck brings back a *different instance of the same principle* where one
+exists. Repeating the identical card tests whether you remember that card.
+
+The profile reports **the moves you keep missing** — per principle, across
+every context of it you have met — because naming the move and showing your
+own record on it is the part that carried to a real decision.
+
 ## How a card asks
 
 A card either tells you something or asks you something first, and that is
@@ -223,6 +268,51 @@ These are declared in the UI rather than faked:
 
 The pool holds 81 cards: 60 facts, 15 reasoning puzzles and 6 competition
 problems, the last two under **Thinking**.
+
+## What the evidence says, and what follows from it
+
+The app is built on three findings, not on a hunch about what feels useful.
+
+**You cannot train general intelligence.** The large review of brain training
+([Simons et al., 2016](https://journals.sagepub.com/doi/abs/10.1177/1529100616661983))
+found gains only on the exact tasks practised. So the app does not claim it,
+and reading facts is not treated as training.
+
+**You can train away specific biases, and it transfers.** A single
+interactive session reduced confirmation bias, the bias blind spot and the
+fundamental attribution error for 8–12 weeks
+([Morewedge et al., 2015](https://journals.sagepub.com/doi/abs/10.1177/2372732215600886)),
+and trained students were 19% less likely to take the hypothesis-confirming
+answer on an unannounced business case
+([Sellier, Scopelliti & Morewedge, 2019](https://journals.sagepub.com/doi/abs/10.1177/0956797619861429)).
+The interactive version beat the video. The ingredients that carried were
+naming the bias, practice in varied contexts, and feedback on your own
+errors.
+
+**You can train calibration.** An hour of probabilistic-reasoning training
+improved forecasting accuracy by around 10% on Brier score, sustained across
+four years of tournament
+([Mellers et al., Good Judgment Project](https://www.cambridge.org/core/journals/judgment-and-decision-making/article/developing-expert-political-judgment-the-impact-of-training-and-practice-on-judgmental-accuracy-in-geopolitical-forecasting-tournaments/123EB18425391D05FA6581FDBB3F309F)).
+
+### Three things that follow
+
+**A day is mostly asking.** Four of the five cards ask something. One fact
+opens it — a fact is a reason to come and it opens up a subject, but it is
+not the training.
+
+**A principle, not a card, is the unit.** `Principle` is what a card is an
+instance of. Meeting base-rate neglect once, in a medical test, teaches
+medical tests; meeting it in facial recognition and in hiring teaches base
+rates. New contexts deliberately avoid the textbook version — the famous one
+is the one people already have an answer for.
+
+**A review is a new context, not the same card.** When a card comes due, the
+deck brings back a *different instance of the same principle* where one
+exists. Repeating the identical card tests whether you remember that card.
+
+The profile reports **the moves you keep missing** — per principle, across
+every context of it you have met — because naming the move and showing your
+own record on it is the part that carried to a real decision.
 
 ## How a card asks
 

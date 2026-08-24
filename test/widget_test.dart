@@ -562,7 +562,7 @@ void main() {
         expect(
           asking,
           greaterThanOrEqualTo(2),
-          reason: 'day \$day only asked \$asking times',
+          reason: 'day $day only asked $asking times',
         );
         seen.addAll(deck.map((p) => p.id));
       }
@@ -919,6 +919,98 @@ void main() {
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
       expect(find.text(pill.counterpoint), findsOneWidget);
+    });
+  });
+
+  test('being righter than you claimed is not flagged as a problem', () {
+    // Underconfidence is the good direction, and a single answer in a
+    // bucket says nothing either way.
+    const lucky = CalibrationBucket(60, 1, 1);
+    expect(lucky.gap, lessThan(0));
+
+    const overconfident = CalibrationBucket(90, 4, 1);
+    expect(overconfident.gap, 65);
+  });
+
+  group('Principles', () {
+    test('the day is mostly asking, not reading', () {
+      final seen = <String>{};
+      for (var day = 1; day <= 6; day++) {
+        final deck = pillsForDate(DateTime(2026, 4, day), exclude: seen);
+        final asking = deck.where((p) => p.asksSomething).length;
+        expect(
+          asking,
+          greaterThanOrEqualTo(4),
+          reason: 'day $day only asked $asking times',
+        );
+        seen.addAll(deck.map((p) => p.id));
+      }
+    });
+
+    test('the principles that matter have more than one context', () {
+      // One instance teaches that instance. Transfer needs the same move in
+      // clothes you have not seen.
+      const wanted = [
+        Principle.baseRate,
+        Principle.survivorship,
+        Principle.anchoring,
+        Principle.sampling,
+        Principle.confounding,
+        Principle.multipleComparisons,
+      ];
+      for (final principle in wanted) {
+        final contexts = kPillPool.where((p) => p.principle == principle);
+        expect(
+          contexts.length,
+          greaterThanOrEqualTo(2),
+          reason: '${principle.name} has only ${contexts.length} context',
+        );
+      }
+    });
+
+    test('a review is a new context, not the same card again', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      // Get a base-rate card wrong, then force it due.
+      final card = kPillPool.firstWhere(
+        (p) => p.principle == Principle.baseRate,
+      );
+      await app.recordAnswer(card.id, 'rubbish', confidence: 90);
+      app.answers[card.id] = app.answers[card.id]!.copyWith(
+        dueOn: dateKey(app.today),
+      );
+
+      final back = app.dueReviews;
+      expect(back, hasLength(1));
+      expect(back.single.principle, Principle.baseRate);
+      expect(
+        back.single.id,
+        isNot(card.id),
+        reason: 'the review repeated the card instead of the principle',
+      );
+    });
+
+    test('mastery is counted per principle across contexts', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+
+      final cards = kPillPool
+          .where((p) => p.principle == Principle.baseRate)
+          .toList();
+      expect(cards.length, greaterThanOrEqualTo(2));
+
+      final right = (cards.first.challenge as PickOne).correct;
+      await app.recordAnswer(cards[0].id, '$right', confidence: 80);
+      await app.recordAnswer(cards[1].id, 'rubbish', confidence: 80);
+
+      final m = app.masteryOf(Principle.baseRate);
+      expect(m.met, 2);
+      expect(m.right, 1);
+      expect(m.contexts, cards.length);
+      expect(m.isSettled, isTrue);
     });
   });
 
