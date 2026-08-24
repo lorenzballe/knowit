@@ -104,25 +104,30 @@ class PillCard extends StatelessWidget {
                     PickOne(:final options) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
+                      given: given,
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: options,
                         onAnswer: commit,
+                        taken: int.tryParse(given?.response ?? ''),
                       ),
                     ),
                     TakeASide(:final positions) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
+                      given: given,
                       prompt: 'Pick a side. There is no right answer.',
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: positions,
                         onAnswer: commit,
+                        taken: int.tryParse(given?.response ?? ''),
                       ),
                     ),
                     TypeNumber(:final unit) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
+                      given: given,
                       input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
@@ -132,6 +137,7 @@ class PillCard extends StatelessWidget {
                     Estimate(:final unit) => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
+                      given: given,
                       prompt: 'Estimate. Close enough counts.',
                       input: (commit) => _NumberInput(
                         pill: pill,
@@ -319,11 +325,16 @@ class _AskFace extends StatefulWidget {
   /// the reader to commit to a right answer that does not exist.
   final String? prompt;
 
+  /// What this reader already committed, if anything. Only used to word the
+  /// line under the input when the card cannot be answered here.
+  final Answer? given;
+
   const _AskFace({
     required this.pill,
     required this.input,
     required this.onAnswer,
     this.prompt,
+    this.given,
   });
 
   @override
@@ -451,6 +462,13 @@ class _AskFaceState extends State<_AskFace> {
                           ? 'Being right matters less than knowing how often '
                                 'you are.'
                           : 'Write it before you read theirs.')
+                    // Nowhere to commit means this is a re-read, and telling
+                    // someone to commit to a card they answered days ago is
+                    // just wrong.
+                    : widget.onAnswer == null
+                    ? (widget.given != null
+                          ? 'You answered this one.'
+                          : 'Answer this one on Today first.')
                     : widget.prompt ??
                           '${pill.difficulty.label} · commit before you turn '
                               'it over.',
@@ -474,10 +492,14 @@ class _PickInput extends StatelessWidget {
   final List<String> options;
   final ValueChanged<String>? onAnswer;
 
+  /// Which option was taken, on a card being re-read rather than answered.
+  final int? taken;
+
   const _PickInput({
     required this.pill,
     required this.options,
     required this.onAnswer,
+    this.taken,
   });
 
   @override
@@ -491,6 +513,7 @@ class _PickInput extends StatelessWidget {
             ink: pill.ink,
             fill: pill.wash,
             edge: pill.washEdge,
+            taken: onAnswer == null && taken == i,
             onTap: onAnswer == null ? null : () => onAnswer!('$i'),
           ),
         );
@@ -627,18 +650,26 @@ class _ChoiceButton extends StatelessWidget {
   final Color edge;
   final VoidCallback? onTap;
 
+  /// True on the option this reader took, when the card is being looked at
+  /// again rather than answered. Coming back to a question you have already
+  /// answered and not being shown your own answer is the whole of what makes
+  /// a re-read feel broken.
+  final bool taken;
+
   const _ChoiceButton({
     required this.label,
     required this.ink,
     required this.fill,
     required this.edge,
     required this.onTap,
+    this.taken = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      button: true,
+      button: onTap != null,
+      selected: taken,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
@@ -648,16 +679,36 @@ class _ChoiceButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: fill,
             borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: edge),
-          ),
-          child: Text(
-            label,
-            style: AppText.body(
-              size: 14.5,
-              weight: FontWeight.w500,
-              height: 1.35,
-              color: ink,
+            border: Border.all(
+              color: taken ? ink.withValues(alpha: 0.55) : edge,
+              width: taken ? 1.6 : 1,
             ),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: AppText.body(
+                    size: 14.5,
+                    weight: taken ? FontWeight.w600 : FontWeight.w500,
+                    height: 1.35,
+                    color: ink,
+                  ),
+                ),
+              ),
+              if (taken) ...[
+                const SizedBox(width: 10),
+                Text(
+                  'YOURS',
+                  style: AppText.label(
+                    size: 9,
+                    spacing: 1,
+                    color: ink.withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
       ),

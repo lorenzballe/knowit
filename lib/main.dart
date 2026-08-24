@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'screens/comeback_screen.dart';
+import 'screens/deck_viewer_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
 import 'screens/sign_in_screen.dart';
@@ -281,7 +282,17 @@ class _KnowitShellState extends State<KnowitShell> {
       TodayScreen(app: widget.app),
       SavedScreen(
         app: widget.app,
-        onBackToToday: () => setState(() => _tab = 0),
+        // A day still to do belongs on Today, where it can be answered. A day
+        // already worked through opens as a re-read instead, because sending
+        // someone back to a finished recap is not "today's five".
+        onBackToToday: () {
+          final app = widget.app;
+          if (app.todayCompleted && app.todaysDeck.isNotEmpty) {
+            openDeckViewer(context, app, app.todaysDeck, "Today's five");
+          } else {
+            setState(() => _tab = 0);
+          }
+        },
       ),
       ProfileScreen(app: widget.app, onSignedOut: widget.onSignedOut),
     ];

@@ -6,6 +6,7 @@ import '../theme.dart';
 import '../widgets/motion.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
+import 'deck_viewer_screen.dart';
 import 'paywall_screen.dart';
 
 const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -123,9 +124,20 @@ class RecapView extends StatelessWidget {
               (entry) => RiseIn.staggered(
                 entry.$1,
                 from: const Duration(milliseconds: 320),
-                child: _RecapRow(pill: entry.$2),
+                child: _RecapRow(
+                  pill: entry.$2,
+                  onTap: () => openDeckViewer(
+                    context,
+                    app,
+                    app.todaysDeck,
+                    "Today's five",
+                    initialIndex: entry.$1,
+                  ),
+                ),
               ),
             ),
+            const SizedBox(height: 4),
+            _ReadAgain(app: app),
             const SizedBox(height: 8),
             if (app.calibratedAnswers >= 3) ...[
               _RecordNudge(app: app),
@@ -266,42 +278,103 @@ class RecapView extends StatelessWidget {
 /// One line of the day's tally.
 class _RecapRow extends StatelessWidget {
   final Pill pill;
-  const _RecapRow({required this.pill});
+  final VoidCallback onTap;
+  const _RecapRow({required this.pill, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: context.p.line,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 5),
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(
-              color: pill.color,
-              borderRadius: BorderRadius.circular(2),
-            ),
+    return Semantics(
+      button: true,
+      label: 'Read this one again',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: context.p.line,
+            borderRadius: BorderRadius.circular(14),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              pill.question,
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w500,
-                height: 1.3,
-                color: context.p.ink,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(top: 5),
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: pill.color,
+                  borderRadius: BorderRadius.circular(2),
+                ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  pill.question,
+                  style: AppText.body(
+                    size: 13.5,
+                    weight: FontWeight.w500,
+                    height: 1.3,
+                    color: context.p.ink,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, top: 2),
+                child: Icon(
+                  Icons.chevron_right_rounded,
+                  size: 17,
+                  color: context.p.inkFaint,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The way back into the five, once the day is done.
+///
+/// The recap lists what you read; this opens it. Cards come back face down,
+/// so going through them again is a re-read rather than a page of answers.
+class _ReadAgain extends StatelessWidget {
+  final AppState app;
+  const _ReadAgain({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: "Read today's five again",
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () =>
+            openDeckViewer(context, app, app.todaysDeck, "Today's five"),
+        child: Container(
+          height: 46,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: context.p.lineStrong),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.replay_rounded, size: 16, color: context.p.inkMuted),
+              const SizedBox(width: 8),
+              Text(
+                'Read them again',
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w600,
+                  color: context.p.inkMuted,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

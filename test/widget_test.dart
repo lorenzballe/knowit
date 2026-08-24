@@ -7,6 +7,7 @@ import 'package:knowit/data/pills_repository.dart';
 import 'package:knowit/main.dart';
 import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
+import 'package:knowit/screens/deck_viewer_screen.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
@@ -697,6 +698,149 @@ void main() {
       await tester.tap(find.text('Undo'));
       await _settle(tester);
       expect(find.text('1 pill'), findsOneWidget);
+    });
+  });
+
+  group('Reading the five again', () {
+    Future<AppState> freshApp() async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      return app;
+    }
+
+    Widget viewer(AppState app, List<Pill> deck) => MaterialApp(
+      theme: buildKnowitTheme(Brightness.dark),
+      home: DeckViewerScreen(app: app, deck: deck, title: "Today's five"),
+    );
+
+    testWidgets('a card already answered still opens face down', (
+      tester,
+    ) async {
+      final app = await freshApp();
+      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final correct = (pick.challenge as PickOne).correct;
+      await app.recordAnswer(pick.id, '$correct', confidence: 70);
+
+      await tester.pumpWidget(viewer(app, [pick]));
+      await tester.pumpAndSettle();
+
+      // The point of coming back is to read it again, not to be handed the
+      // answer the moment the screen opens.
+      expect(find.text(pick.question), findsWidgets);
+      expect(find.text('Tap for the answer'), findsOneWidget);
+      expect(find.text(pick.answer), findsNothing);
+
+      await tester.tap(find.text(pick.question).first);
+      await tester.pumpAndSettle();
+      expect(find.text(pick.answer), findsWidgets);
+      expect(find.text('That was the last one'), findsOneWidget);
+    });
+
+    testWidgets('the re-read shows which option you took', (tester) async {
+      final app = await freshApp();
+      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final options = (pick.challenge as PickOne).options;
+      await app.recordAnswer(pick.id, '1', confidence: 70);
+
+      await tester.pumpWidget(viewer(app, [pick]));
+      await tester.pumpAndSettle();
+
+      // Coming back to a question and not being shown your own answer is
+      // what makes a re-read feel broken.
+      expect(find.text('YOURS'), findsOneWidget);
+      expect(find.text('You answered this one.'), findsOneWidget);
+      expect(
+        find.text('${pick.difficulty.label} · commit before you turn it over.'),
+        findsNothing,
+        reason: 'it was committed days ago',
+      );
+
+      // And the mark sits on the option that was actually taken.
+      final row = find.ancestor(
+        of: find.text(options[1]),
+        matching: find.byType(Row),
+      );
+      expect(
+        find.descendant(of: row.first, matching: find.text('YOURS')),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a graded card never answered stays shut', (tester) async {
+      final app = await freshApp();
+      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+
+      await tester.pumpWidget(viewer(app, [pick]));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Answer this one on Today first'), findsOneWidget);
+      await tester.tap(find.text(pick.question).first);
+      await tester.pumpAndSettle();
+
+      // Reading the answer here and then claiming 90% on Today would empty
+      // the calibration figures of any meaning.
+      expect(find.text(pick.answer), findsNothing);
+    });
+
+    testWidgets('a fact opens without ever having been answered', (
+      tester,
+    ) async {
+      final app = await freshApp();
+      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
+
+      await tester.pumpWidget(viewer(app, [fact]));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(fact.question).first);
+      await tester.pumpAndSettle();
+
+      expect(find.text(fact.answer), findsWidgets);
+    });
+
+    testWidgets('swiping moves to the next card, and it is face down', (
+      tester,
+    ) async {
+      final app = await freshApp();
+      final facts = kPillPool
+          .where((p) => p.challenge is NoChallenge)
+          .take(2)
+          .toList();
+
+      await tester.pumpWidget(viewer(app, facts));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text(facts[0].question).first);
+      await tester.pumpAndSettle();
+      expect(find.text('Swipe for the next one'), findsOneWidget);
+
+      await tester.fling(
+        find.text(facts[0].answer).first,
+        const Offset(-400, 0),
+        1200,
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text(facts[1].question), findsWidgets);
+      expect(find.text('Tap for the answer'), findsOneWidget);
+      expect(find.text(facts[1].answer), findsNothing);
+    });
+
+    testWidgets('the heart keeps the card, and both actions are there', (
+      tester,
+    ) async {
+      final app = await freshApp();
+      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
+
+      await tester.pumpWidget(viewer(app, [fact]));
+      await tester.pumpAndSettle();
+
+      expect(find.bySemanticsLabel('Share this pill'), findsOneWidget);
+      expect(app.isSaved(fact.id), isFalse);
+
+      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await tester.pumpAndSettle();
+      expect(app.isSaved(fact.id), isTrue);
+      expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
     });
   });
 
