@@ -11,6 +11,7 @@ import 'package:knowit/screens/deck_viewer_screen.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
+import 'package:knowit/widgets/scaled_text.dart';
 import 'package:knowit/widgets/motion.dart';
 import 'package:knowit/widgets/pill_card_stack.dart';
 import 'package:knowit/widgets/ui.dart';
@@ -698,6 +699,78 @@ void main() {
       await tester.tap(find.text('Undo'));
       await _settle(tester);
       expect(find.text('1 pill'), findsOneWidget);
+    });
+  });
+
+  group('Type set to the space', () {
+    Widget box(String text, {double width = 300, double height = 500}) =>
+        MaterialApp(
+          theme: buildKnowitTheme(Brightness.dark),
+          home: Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: width,
+                height: height,
+                child: ScaledText(
+                  text: text,
+                  min: 20,
+                  max: 64,
+                  styleFor: (size) => AppText.display(size: size),
+                ),
+              ),
+            ),
+          ),
+        );
+
+    double sizeOf(WidgetTester tester) =>
+        tester.widget<Text>(find.byType(Text)).style!.fontSize!;
+
+    testWidgets('a short question is set larger than a long one', (
+      tester,
+    ) async {
+      await tester.pumpWidget(box('Why do we yawn?'));
+      await tester.pumpAndSettle();
+      final short = sizeOf(tester);
+
+      await tester.pumpWidget(
+        box(
+          'A camera that identifies faces with 99% accuracy scans 100,000 '
+          'travellers to find one wanted person. Roughly how many alarms '
+          'will be wrong?',
+        ),
+      );
+      await tester.pumpAndSettle();
+      final long = sizeOf(tester);
+
+      // The whole point: a fixed size is either too small for the short one
+      // or too big for the long one, and the card looked empty because it
+      // was tuned for the long one.
+      expect(short, greaterThan(long));
+      expect(short, lessThanOrEqualTo(64));
+      expect(long, greaterThanOrEqualTo(20));
+    });
+
+    testWidgets('a taller box takes larger type for the same words', (
+      tester,
+    ) async {
+      await tester.pumpWidget(box('Why do we yawn?', height: 200));
+      await tester.pumpAndSettle();
+      final small = sizeOf(tester);
+
+      await tester.pumpWidget(box('Why do we yawn?', height: 500));
+      await tester.pumpAndSettle();
+      expect(sizeOf(tester), greaterThan(small));
+    });
+
+    testWidgets('text too long for the box stays reachable', (tester) async {
+      final wall = List.filled(90, 'unavoidably long wording').join(' ');
+      await tester.pumpWidget(box(wall, height: 160));
+      await tester.pumpAndSettle();
+
+      // Nothing clipped away: it bottoms out at min and scrolls instead.
+      expect(tester.takeException(), isNull);
+      expect(sizeOf(tester), 20);
+      expect(find.byType(SingleChildScrollView), findsWidgets);
     });
   });
 

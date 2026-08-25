@@ -4,6 +4,7 @@ import '../models/pill.dart';
 import '../theme.dart';
 import 'motion.dart';
 import 'reveal_body.dart';
+import 'scaled_text.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
 /// carrying a Bar move line and a source once flipped.
@@ -159,49 +160,39 @@ class _FrontFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // A long question on a narrow card wraps to many lines, so the type steps
-    // down on short cards and the whole face scrolls rather than overflowing.
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final tall = constraints.maxHeight;
-        final size = tall < 260
-            ? 24.0
-            : tall < 340
-            ? 28.0
-            : tall < 460
-            ? 34.0
-            : 37.0;
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: tall),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  pill.question,
-                  style: AppText.display(
-                    size: size,
-                    weight: FontWeight.w600,
-                    height: 1.12,
-                    spacing: -1.0,
-                    color: pill.ink,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Tap to reveal',
-                  style: AppText.body(
-                    size: 13,
-                    weight: FontWeight.w500,
-                    color: pill.ink.withValues(alpha: 0.6),
-                  ),
-                ),
-              ],
+    // The question is the whole card, so it is set to the space rather than
+    // to a fixed size — a short one becomes a poster instead of a line
+    // floating in a field of colour.
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: ScaledText(
+            text: pill.question,
+            min: 22,
+            max: 64,
+            alignment: Alignment.centerLeft,
+            styleFor: (size) => AppText.display(
+              size: size,
+              weight: FontWeight.w600,
+              height: 1.08,
+              // Tracking tightens as the type grows: what reads as generous
+              // at 22pt reads as gappy at 54.
+              spacing: -0.4 - size * 0.028,
+              color: pill.ink,
             ),
           ),
-        );
-      },
+        ),
+        const SizedBox(height: 18),
+        Text(
+          'Tap to reveal',
+          style: AppText.body(
+            size: 13,
+            weight: FontWeight.w500,
+            color: pill.ink.withValues(alpha: 0.6),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -214,14 +205,19 @@ class _BackFace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
+      // The reveal is read, not looked at, so it starts at the top like any
+      // other page. Centring a block of body text in a tall card leaves it
+      // floating with a gap above and below, and the gap above is the one
+      // that reads as a mistake rather than as a margin.
       builder: (context, constraints) => SingleChildScrollView(
         child: ConstrainedBox(
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
+              const SizedBox(height: 10),
               if (pill.isGraded && given != null) ...[
                 PopIn(
                   delay: const Duration(milliseconds: 260),
@@ -376,17 +372,28 @@ class _AskFaceState extends State<_AskFace> {
           constraints: BoxConstraints(minHeight: constraints.maxHeight),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                pill.question,
-                style: AppText.display(
-                  size: constraints.maxHeight < 420 ? 21 : 25,
-                  weight: FontWeight.w600,
-                  height: 1.2,
-                  spacing: -0.7,
-                  color: pill.ink,
+              // The question takes a fixed share of the card and is set as
+              // large as that share will hold. A share rather than whatever
+              // the options leave over, because the leftover needs their
+              // intrinsic height — which a LayoutBuilder cannot give — and
+              // because a proportion keeps the same composition across every
+              // card instead of inventing one per question length.
+              SizedBox(
+                height: constraints.maxHeight * 0.48,
+                child: ScaledText(
+                  text: pill.question,
+                  min: 19,
+                  max: 40,
+                  alignment: Alignment.bottomLeft,
+                  styleFor: (size) => AppText.display(
+                    size: size,
+                    weight: FontWeight.w600,
+                    height: 1.14,
+                    spacing: -0.3 - size * 0.018,
+                    color: pill.ink,
+                  ),
                 ),
               ),
               const SizedBox(height: 22),
