@@ -371,6 +371,141 @@ void main() {
       }
     });
 
+    test('no two cards are the same card', () {
+      // The pool once held the Mpemba effect twice and the trailer horn
+      // twice, under questions worded just differently enough to miss. This
+      // compares content words rather than strings.
+      const noise = {
+        'the',
+        'a',
+        'an',
+        'is',
+        'are',
+        'was',
+        'were',
+        'do',
+        'does',
+        'did',
+        'you',
+        'your',
+        'we',
+        'it',
+        'its',
+        'of',
+        'in',
+        'on',
+        'to',
+        'for',
+        'why',
+        'how',
+        'what',
+        'when',
+        'where',
+        'which',
+        'who',
+        'and',
+        'or',
+        'but',
+        'so',
+        'that',
+        'this',
+        'than',
+        'then',
+        'from',
+        'at',
+        'by',
+        'with',
+        'as',
+        'be',
+        'can',
+        'could',
+        'would',
+        'should',
+        'have',
+        'has',
+        'not',
+        'no',
+        'if',
+        'there',
+        'their',
+        'they',
+        'one',
+        'about',
+        'up',
+        'out',
+        'get',
+        'got',
+        'make',
+        'made',
+        'much',
+        'many',
+        'more',
+        'most',
+        'actually',
+        'really',
+        'ever',
+        'still',
+        'own',
+      };
+      Set<String> words(String q) => q
+          .toLowerCase()
+          .replaceAll(RegExp(r"[^a-z0-9 ]"), ' ')
+          .split(RegExp(r'\s+'))
+          .where((w) => w.length > 2 && !noise.contains(w))
+          .toSet();
+
+      final byId = {for (final p in kPillPool) p.id: words(p.question)};
+      final ids = byId.keys.toList();
+      for (var i = 0; i < ids.length; i++) {
+        for (var j = i + 1; j < ids.length; j++) {
+          final a = byId[ids[i]]!;
+          final b = byId[ids[j]]!;
+          // Two very short questions can collide on ordinary words without
+          // being the same card, so only compare ones with enough substance
+          // to mean something.
+          if (a.length < 4 || b.length < 4) continue;
+          final shared = a.intersection(b).length;
+          final overlap = shared / (a.union(b).length);
+          expect(
+            overlap,
+            lessThan(0.5),
+            reason: '${ids[i]} and ${ids[j]} are asking the same thing',
+          );
+        }
+      }
+    });
+
+    test('the pool stays off the listicle', () {
+      // Everything here was in the pool and had to go: it is the material
+      // every "did you know" account has already run, so a reader has met it
+      // before and learns nothing. A card has to earn its place against the
+      // stuff people scroll past for free.
+      const tired = [
+        'honey never',
+        'cleopatra',
+        'sharks or trees',
+        'bananas are radioactive',
+        'jumping the shark',
+        'ship of theseus',
+        'tickle yourself',
+        'goosebumps',
+        'shortest war',
+        'turning it off and on',
+        'freeze faster',
+        'braaam',
+      ];
+      for (final pill in kPillPool) {
+        final hay = '${pill.question} ${pill.answer}'.toLowerCase();
+        for (final phrase in tired) {
+          expect(
+            hay.contains(phrase),
+            isFalse,
+            reason: '${pill.id} is back on the listicle: "$phrase"',
+          );
+        }
+      }
+    });
+
     test('every pill is complete and the answer stays short', () {
       for (final p in kPillPool) {
         expect(
@@ -1187,9 +1322,15 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(pill.simply), findsNothing);
-      await tester.tap(find.text('Explain it like I am three'));
+      // A full reveal — verdict, answer, trap, bar move, source — is taller
+      // than the card, so the offer sits below the fold and is reached the
+      // way a reader reaches it.
+      final offer = find.text('Explain it like I am three');
+      await tester.ensureVisible(offer);
       await tester.pumpAndSettle();
-      expect(find.text(pill.simply), findsOneWidget);
+      await tester.tap(offer);
+      await tester.pumpAndSettle();
+      expect(find.text(pill.simply), findsWidgets);
     });
   });
 
