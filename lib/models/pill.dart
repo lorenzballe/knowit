@@ -357,6 +357,7 @@ class Pill {
 
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;
+  bool get hasTrap => trap.isNotEmpty;
   bool get hasSteps => steps.isNotEmpty;
   bool get hasSimply => simply.isNotEmpty;
   bool get hasCounterpoint => counterpoint.isNotEmpty;
