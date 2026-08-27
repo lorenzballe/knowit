@@ -8,6 +8,7 @@ import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
+import '../utils/reminders.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -16,6 +17,8 @@ class AppState extends ChangeNotifier {
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
   static const _kLastCompletion = 'knowit.lastCompletionDate';
+  static const _kFreezes = 'knowit.freezes';
+  static const _kFrozeOn = 'knowit.frozeOn';
   static const _kCompletedDates = 'knowit.completedDates';
   static const _kSavedIds = 'knowit.savedIds';
   static const _kTodayDate = 'knowit.todayDate';
@@ -42,6 +45,13 @@ class AppState extends ChangeNotifier {
   int streak = 0;
   int bestStreak = 0;
   String? lastCompletionDate;
+
+  /// Days the reader can miss without losing the streak. Earned by keeping
+  /// one, not only bought — a protection you can only pay for is a threat.
+  int freezes = 0;
+
+  /// The day a freeze was spent, so it can be said out loud once.
+  String? frozeOn;
   List<String> completedDates = [];
 
   /// Saved pill ids, most recently kept first.
@@ -122,6 +132,8 @@ class AppState extends ChangeNotifier {
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
+    freezes = _prefs.getInt(_kFreezes) ?? 1;
+    frozeOn = _prefs.getString(_kFrozeOn);
     completedDates = _prefs.getStringList(_kCompletedDates) ?? [];
     savedIds = _prefs.getStringList(_kSavedIds) ?? [];
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
@@ -155,8 +167,46 @@ class AppState extends ChangeNotifier {
       };
       if (todaysDeck.isEmpty) await _startNewDay();
     } else {
+      await _spendFreezeIfMissed();
       await _startNewDay();
     }
+  }
+
+  /// How many freezes can be held at once.
+  ///
+  /// One on the free plan is enough to cover the evening somebody falls
+  /// asleep early. Three is the difference between a streak that survives a
+  /// weekend away and one that does not, and that is worth paying for.
+  int get freezeCapacity => isPlus ? 3 : 1;
+
+  /// Covers a gap, if the whole gap can be covered.
+  ///
+  /// Partial cover would be the worst of both: the freezes are gone and the
+  /// streak breaks anyway. So it is all or nothing, and the freezes stay in
+  /// the bank when they cannot save it.
+  Future<void> _spendFreezeIfMissed() async {
+    final missed = missedDays;
+    if (missed < 1 || streak < 1) return;
+    if (freezes < missed) return;
+
+    freezes -= missed;
+    lastCompletionDate = dateKey(today.subtract(const Duration(days: 1)));
+    frozeOn = dateKey(today);
+    await _prefs.setInt(_kFreezes, freezes);
+    await _prefs.setString(_kLastCompletion, lastCompletionDate!);
+    await _prefs.setString(_kFrozeOn, frozeOn!);
+  }
+
+  /// True when a freeze saved the streak today and it has not been said yet.
+  bool get streakWasFrozen => frozeOn == dateKey(today);
+
+  /// Earns a freeze every seventh day kept, up to what can be held. The
+  /// streak pays for its own insurance.
+  Future<void> _earnFreeze() async {
+    if (streak % 7 != 0) return;
+    if (freezes >= freezeCapacity) return;
+    freezes++;
+    await _prefs.setInt(_kFreezes, freezes);
   }
 
   /// How much of a day is given over to cards coming back. Two out of five
@@ -258,6 +308,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+    await _earnFreeze();
   }
 
   // ── Answers ───────────────────────────────────────────────────────────
@@ -571,16 +622,60 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// True once the reader turned the nudge on and the system agreed to it.
+  /// The switch reflects what will actually happen rather than what was
+  /// asked for — a toggle that says on while nothing is scheduled is worse
+  /// than no toggle.
+  bool remindersLive = false;
+
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
     await _prefs.setBool(_kNotifications, on);
+    await _applyReminder();
     notifyListeners();
   }
 
   Future<void> setNotifyTime(String time) async {
     notifyTime = time;
     await _prefs.setString(_kNotifyHour, time);
+    await _applyReminder();
     notifyListeners();
+  }
+
+  /// Puts the daily reminder in step with the settings, whichever way they
+  /// moved. Called from both setters so the two can never disagree.
+  Future<void> _applyReminder() async {
+    if (!remindersSupported) {
+      remindersLive = false;
+      return;
+    }
+    // A host with no notification implementation behind the plugin — a
+    // desktop, a test — throws on the first call. Losing the reminder is a
+    // small thing; losing the settings screen with it is not.
+    try {
+      if (!notificationsOn) {
+        await cancelDailyReminder();
+        remindersLive = false;
+        return;
+      }
+      final granted = await ensureReminderPermission();
+      if (!granted) {
+        remindersLive = false;
+        return;
+      }
+      final parts = notifyTime.split(':');
+      await scheduleDailyReminder(
+        hour: int.tryParse(parts.first) ?? 8,
+        minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
+        title: 'Your five are ready',
+        body: streak > 0
+            ? '$streak days in a row. Keep it.'
+            : 'Five cards, two minutes.',
+      );
+      remindersLive = true;
+    } catch (_) {
+      remindersLive = false;
+    }
   }
 
   Future<void> setName(String value) async {
@@ -678,6 +773,8 @@ class AppState extends ChangeNotifier {
     pickedTopics = kTopicOrder.toSet();
     notificationsOn = true;
     notifyTime = '08:30';
+    freezes = 1;
+    frozeOn = null;
     name = 'You';
     isPlus = false;
     themeMode = ThemeMode.dark;

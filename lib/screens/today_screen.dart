@@ -58,7 +58,12 @@ class _TodayScreenState extends State<TodayScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Header(streak: app.liveStreak, onBack: widget.onBack),
+          _Header(
+            streak: app.liveStreak,
+            freezes: app.freezes,
+            frozen: app.streakWasFrozen,
+            onBack: widget.onBack,
+          ),
           const SizedBox(height: 16),
           _ProgressBars(
             total: deck.length,
@@ -109,8 +114,15 @@ class _TodayScreenState extends State<TodayScreen> {
 
 class _Header extends StatelessWidget {
   final int streak;
+  final int freezes;
+  final bool frozen;
   final VoidCallback? onBack;
-  const _Header({required this.streak, this.onBack});
+  const _Header({
+    required this.streak,
+    this.freezes = 0,
+    this.frozen = false,
+    this.onBack,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -132,10 +144,48 @@ class _Header extends StatelessWidget {
               color: context.p.ink,
             ),
           ),
+          if (freezes > 0) ...[
+            Semantics(
+              label: freezes == 1
+                  ? 'One streak freeze in hand'
+                  : '$freezes streak freezes in hand',
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+                decoration: BoxDecoration(
+                  color: context.p.line,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.ac_unit_rounded,
+                      size: 13,
+                      color: context.p.link,
+                    ),
+                    if (freezes > 1) ...[
+                      const SizedBox(width: 4),
+                      Text(
+                        '$freezes',
+                        style: AppText.body(
+                          size: 12,
+                          weight: FontWeight.w700,
+                          color: context.p.ink,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+          ],
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
             decoration: BoxDecoration(
-              color: context.p.line,
+              color: frozen
+                  ? context.p.link.withValues(alpha: 0.22)
+                  : context.p.line,
               borderRadius: BorderRadius.circular(999),
             ),
             child: Row(
@@ -144,8 +194,8 @@ class _Header extends StatelessWidget {
                 Container(
                   width: 6,
                   height: 6,
-                  decoration: const BoxDecoration(
-                    color: AppColors.lime,
+                  decoration: BoxDecoration(
+                    color: frozen ? context.p.link : AppColors.lime,
                     shape: BoxShape.circle,
                   ),
                 ),

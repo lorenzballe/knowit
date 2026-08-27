@@ -42,6 +42,13 @@ const _perks = [
         'contexts you have not been shown yet.',
   ),
   (
+    icon: Icons.ac_unit_rounded,
+    title: 'Three streak freezes, not one',
+    sub:
+        'Enough to cover a weekend away. A streak you can only lose is a '
+        'streak that eventually goes.',
+  ),
+  (
     icon: Icons.add_circle_outline_rounded,
     title: '5 extra pills every day',
     sub: 'A second set unlocks the moment you finish the first.',

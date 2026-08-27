@@ -279,6 +279,54 @@ void main() {
     expect(deck, hasLength(kPillsPerDay));
   });
 
+  group('Streak freezes', () {
+    Future<AppState> appWith(Map<String, Object> extra) async {
+      SharedPreferences.setMockInitialValues({..._installed(), ...extra});
+      final app = AppState();
+      await app.init();
+      return app;
+    }
+
+    String key(DateTime d) =>
+        '${d.year}-${d.month.toString().padLeft(2, '0')}-'
+        '${d.day.toString().padLeft(2, '0')}';
+
+    test('one missed day is covered, and the streak lives', () async {
+      final twoDaysAgo = DateTime.now().subtract(const Duration(days: 2));
+      final app = await appWith({
+        'knowit.streak': 9,
+        'knowit.lastCompletionDate': key(twoDaysAgo),
+        'knowit.freezes': 1,
+      });
+
+      expect(app.liveStreak, 9, reason: 'the freeze should have covered it');
+      expect(app.freezes, 0);
+      expect(app.streakWasFrozen, isTrue);
+    });
+
+    test('a gap too wide to cover keeps the freezes and breaks', () async {
+      final fiveDaysAgo = DateTime.now().subtract(const Duration(days: 5));
+      final app = await appWith({
+        'knowit.streak': 9,
+        'knowit.lastCompletionDate': key(fiveDaysAgo),
+        'knowit.freezes': 1,
+      });
+
+      // Spending them and breaking anyway would be the worst of both.
+      expect(app.liveStreak, 0);
+      expect(app.freezes, 1);
+      expect(app.streakWasFrozen, isFalse);
+    });
+
+    test('the free plan holds one, Knowit+ holds three', () async {
+      final free = await appWith({});
+      expect(free.freezeCapacity, 1);
+
+      final plus = await appWith({'knowit.plus': true});
+      expect(plus.freezeCapacity, 3);
+    });
+  });
+
   test('a day never fills up with opinions', () {
     // Debates are ungraded, so a deck of them measures nothing. With twenty
     // in the pool a random day could otherwise come out as four in a row.
@@ -373,6 +421,7 @@ void main() {
     for (final perk in const [
       'Your record over time',
       'Every principle you have met',
+      'Three streak freezes, not one',
       '5 extra pills every day',
       'The full archive',
       'Pick your own topics',

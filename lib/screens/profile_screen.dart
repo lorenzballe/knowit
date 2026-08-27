@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../state/app_state.dart';
+import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/premium.dart';
@@ -207,7 +208,10 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Your 5 pills, before the first coffee.',
+                        remindersSupported
+                            ? 'Your 5 pills, before the first coffee.'
+                            : 'A browser can only speak while it is open, '
+                                  'so this one needs the phone build.',
                         style: AppText.body(
                           size: 12,
                           height: 1.3,
@@ -226,9 +230,14 @@ class ProfileScreen extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          v
-                              ? 'Nudge on. Delivery needs the mobile build.'
-                              : 'Nudge off.',
+                          !v
+                              ? 'Nudge off.'
+                              : app.remindersLive
+                              ? 'Nudge on, every day at ${app.notifyTime}.'
+                              : remindersSupported
+                              ? 'Nudge on, but the system said no. Turn '
+                                    'notifications on for Knowit in settings.'
+                              : 'Nudge on. Delivery needs the phone build.',
                         ),
                       ),
                     );
