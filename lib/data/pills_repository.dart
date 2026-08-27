@@ -23,6 +23,26 @@ const int kPillsPerDay = 5;
 /// and it opens up a subject, which is worth one card in five and not four.
 const double kAskShare = 0.8;
 
+/// The first five anybody ever sees, chosen rather than dealt.
+///
+/// A generated first day is a gamble on the worst possible occasion. These
+/// five are picked to be the app arguing for itself: something startling that
+/// costs nothing to read, the trap almost everybody falls into, a survivorship
+/// case from a kitchen drawer, an arithmetic catch that lands in a second, and
+/// an argument with two real sides to close on.
+///
+/// It is also the answer to personalising a first session. A questionnaire
+/// cannot help here — four cards in five have to ask something and everything
+/// that asks is one subject — so the honest way to make the opening feel
+/// chosen is to choose it.
+const List<String> kOpeningDeck = [
+  'science-4',
+  'thinking-1',
+  'thinking-5',
+  'thinking-9',
+  'thinking-d6',
+];
+
 /// Deterministic pills for a day — the same date, topic mix and reading
 /// history always yield the same set and order, so the deck doesn't reshuffle
 /// mid-day or across devices.

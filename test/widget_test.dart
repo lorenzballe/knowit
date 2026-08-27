@@ -376,6 +376,24 @@ void main() {
     });
   });
 
+  test('the very first day is the chosen one', () async {
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    final app = AppState();
+    await app.init();
+
+    // A generated first day is a gamble on the worst possible occasion.
+    expect(app.todaysDeck.map((p) => p.id).toList(), kOpeningDeck);
+
+    // And it is only the first: once anything has been read, the dealer takes
+    // over again.
+    expect(kOpeningDeck, hasLength(kPillsPerDay));
+    expect(
+      kOpeningDeck.every((id) => kPillPool.any((p) => p.id == id)),
+      isTrue,
+      reason: 'the opening deck names a card that does not exist',
+    );
+  });
+
   test('a day never fills up with opinions', () {
     // Debates are ungraded, so a deck of them measures nothing. With twenty
     // in the pool a random day could otherwise come out as four in a row.

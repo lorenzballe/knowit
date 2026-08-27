@@ -219,6 +219,21 @@ class AppState extends ChangeNotifier {
   /// fill the rest — an app that never re-asks what you got wrong is not
   /// teaching, it is entertaining.
   Future<void> _startNewDay() async {
+    // Nobody has read anything yet, so this is the only first impression
+    // there will be. It is chosen, not dealt.
+    if (seenIds.isEmpty && answers.isEmpty && !extraSetOpen) {
+      final opening = pillsByIds(kOpeningDeck);
+      if (opening.length == kOpeningDeck.length) {
+        todaysDeck = opening;
+        reviewIdsToday = {};
+        todayIndex = 0;
+        await _prefs.setString(_kTodayDate, dateKey(today));
+        await _prefs.setInt(_kTodayIndex, 0);
+        await _prefs.setStringList(_kDeckIds, kOpeningDeck);
+        return;
+      }
+    }
+
     final size = extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay;
     final reviews = dueReviews.take(kReviewsPerDay).toList();
     reviewIdsToday = reviews.map((p) => p.id).toSet();
