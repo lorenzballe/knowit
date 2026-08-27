@@ -8,8 +8,6 @@ import 'package:knowit/main.dart';
 import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
 import 'package:knowit/screens/deck_viewer_screen.dart';
-import 'package:knowit/screens/lesson_screen.dart';
-import 'package:knowit/screens/path_screen.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
@@ -89,7 +87,7 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('knowit.topicWeights'), isNotNull);
     expect(prefs.getStringList('knowit.topics'), hasLength(13));
-    expect(find.text('Path'), findsWidgets);
+    expect(find.text('Today'), findsWidgets);
   });
 
   testWidgets('signing in keeps the name and lands on the tab bar', (
@@ -108,7 +106,7 @@ void main() {
     await tester.tap(find.text('Send me a login link'));
     await _settle(tester);
 
-    expect(find.text('Path'), findsWidgets);
+    expect(find.text('Today'), findsWidgets);
     await _openProfile(tester);
     expect(find.text('Marco'), findsOneWidget);
   });
@@ -120,7 +118,7 @@ void main() {
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    expect(find.text('Path'), findsWidgets);
+    expect(find.text('Today'), findsWidgets);
     expect(find.text('Saved'), findsWidgets);
     expect(find.text('Profile'), findsWidgets);
   });
@@ -328,23 +326,15 @@ void main() {
     );
   });
 
-  testWidgets('opening the app lands on the cards, not on the path', (
-    tester,
-  ) async {
+  testWidgets('opening the app lands straight on the cards', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    // The path is where the app keeps its shape, but putting a map between
-    // the reader and the five cards they came for is not what a daily app is
-    // for. It is still one tap away.
     expect(find.text('Next pill'), findsOneWidget);
-    expect(find.text('Finish the one above'), findsNothing);
-    expect(find.text('Path'), findsWidgets);
-
-    await tester.tap(find.text('Path').last);
-    await _settle(tester);
-    expect(find.text('Base rates'), findsWidgets);
+    expect(find.text('Today'), findsWidgets);
+    expect(find.text('Saved'), findsWidgets);
+    expect(find.text('Profile'), findsWidgets);
   });
 
   testWidgets('the first run goes from the welcome straight to the cards', (
@@ -721,7 +711,7 @@ void main() {
     }
 
     // Whatever the tab, the same ground.
-    final onToday = paletteOn('Path');
+    final onToday = paletteOn('Today');
     await tester.tap(find.text('Saved').last);
     await _settle(tester);
     expect(paletteOn('Saved').surface, onToday.surface);
@@ -1068,149 +1058,6 @@ void main() {
     });
   });
 
-  group('A lesson', () {
-    Future<AppState> freshApp() async {
-      SharedPreferences.setMockInitialValues(_installed());
-      final app = AppState();
-      await app.init();
-      return app;
-    }
-
-    Widget lesson(AppState app, List<Pill> cards) => MaterialApp(
-      theme: buildKnowitTheme(Brightness.dark),
-      home: LessonScreen(app: app, cards: cards, title: 'Base rates'),
-    );
-
-    final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
-
-    testWidgets('saying how sure you are is what submits the answer', (
-      tester,
-    ) async {
-      final app = await freshApp();
-      final correct = (pick.challenge as PickOne).correct;
-
-      await tester.pumpWidget(lesson(app, [pick]));
-      await tester.pumpAndSettle();
-
-      // Nothing committed yet, so there is nothing to be sure about and
-      // nothing to check.
-      expect(find.text('CHECK'), findsOneWidget);
-      expect(find.text('How sure are you?'), findsNothing);
-
-      await tester.tap(find.text((pick.challenge as PickOne).options[correct]));
-      await tester.pumpAndSettle();
-
-      // The chips replace the check button: one tap carries both the answer
-      // and the thing worth measuring about it.
-      expect(find.text('CHECK'), findsNothing);
-      expect(find.text('How sure are you?'), findsOneWidget);
-      expect(find.text('70%'), findsOneWidget);
-
-      await tester.tap(find.text('70%'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Got it.'), findsOneWidget);
-      expect(app.answerFor(pick.id)!.confidence, 70);
-      expect(app.judgements, hasLength(1));
-      expect(app.judgements.single.correct, isTrue);
-    });
-
-    testWidgets('a wrong answer says so, and names the trap', (tester) async {
-      final app = await freshApp();
-      final challenge = pick.challenge as PickOne;
-      final wrongIndex = challenge.correct == 0 ? 1 : 0;
-
-      await tester.pumpWidget(lesson(app, [pick]));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text(challenge.options[wrongIndex]));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('90%'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Not this time.'), findsOneWidget);
-      if (pick.hasTrap) expect(find.text(pick.trap), findsOneWidget);
-      expect(app.judgements.single.correct, isFalse);
-      expect(app.judgements.single.confidence, 90);
-    });
-
-    testWidgets('a fact opens and moves on without being answered', (
-      tester,
-    ) async {
-      final app = await freshApp();
-      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
-
-      await tester.pumpWidget(lesson(app, [fact]));
-      await tester.pumpAndSettle();
-
-      expect(find.text('SHOW ME'), findsOneWidget);
-      expect(find.text(fact.answer), findsNothing);
-
-      await tester.tap(find.text('SHOW ME'));
-      await tester.pumpAndSettle();
-      expect(find.text(fact.answer), findsWidgets);
-
-      // A fact cannot be right or wrong, so it must not reach the record.
-      expect(app.judgements, isEmpty);
-      expect(find.text('FINISH'), findsOneWidget);
-    });
-
-    testWidgets('the last card ends on the results, not on nothing', (
-      tester,
-    ) async {
-      final app = await freshApp();
-      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
-
-      await tester.pumpWidget(lesson(app, [fact]));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('SHOW ME'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('FINISH'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Lesson complete'), findsOneWidget);
-      expect(find.text('XP EARNED'), findsOneWidget);
-    });
-  });
-
-  group('The path', () {
-    test('opens on the first unit and locks the rest', () async {
-      SharedPreferences.setMockInitialValues(_installed());
-      final app = AppState();
-      await app.init();
-
-      final units = buildPath(app);
-      expect(units, isNotEmpty);
-      // Nothing answered, so nothing is finished and the first is where you
-      // are — every later one has to wait.
-      expect(units.every((u) => !u.isDone), isTrue);
-      expect(units.first.cards, isNotEmpty);
-      expect(units.first.total, greaterThan(0));
-    });
-
-    test('a unit finishes when its cards have been answered', () async {
-      SharedPreferences.setMockInitialValues(_installed());
-      final app = AppState();
-      await app.init();
-
-      final unit = buildPath(app).first;
-      for (final card in unit.cards.where(
-        (c) => c.isGraded && c.asksSomething,
-      )) {
-        final right = switch (card.challenge) {
-          PickOne(:final correct) => '$correct',
-          TypeNumber(:final answer) => '$answer',
-          Estimate(:final answer) => '$answer',
-          _ => '',
-        };
-        await app.recordAnswer(card.id, right, confidence: 70);
-      }
-
-      // Progress is read back off the answers rather than stored twice, so
-      // it cannot drift out of step with them.
-      expect(buildPath(app).first.isDone, isTrue);
-    });
-  });
-
   group('Reading the five again', () {
     Future<AppState> freshApp() async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -1277,20 +1124,20 @@ void main() {
       );
     });
 
-    testWidgets('a graded card never answered stays shut', (tester) async {
+    testWidgets('a card that was skipped still opens', (tester) async {
       final app = await freshApp();
       final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
 
       await tester.pumpWidget(viewer(app, [pick]));
       await tester.pumpAndSettle();
 
-      expect(find.text('Answer this one on Today first'), findsOneWidget);
+      // Withholding these made the re-read useless: most of a deck somebody
+      // clicked through is unanswered. Commitment is enforced on the card the
+      // first time it is dealt, which is where it means something.
+      expect(find.text('Answer this one on Today first'), findsNothing);
       await tester.tap(find.text(pick.question).first);
       await tester.pumpAndSettle();
-
-      // Reading the answer here and then claiming 90% on Today would empty
-      // the calibration figures of any meaning.
-      expect(find.text(pick.answer), findsNothing);
+      expect(find.text(pick.answer), findsWidgets);
     });
 
     testWidgets('a fact opens without ever having been answered', (
@@ -2117,6 +1964,6 @@ void main() {
 
     await tester.tap(find.text("Start again with today's five"));
     await _settle(tester);
-    expect(find.text('Path'), findsWidgets);
+    expect(find.text('Today'), findsWidgets);
   });
 }

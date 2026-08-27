@@ -17,10 +17,12 @@ import '../widgets/share_sheet.dart';
 /// answering — and re-reading is the thing a person actually does with a card
 /// they liked.
 ///
-/// One rule survives from the trainer: a graded card you have never answered
-/// stays shut. Being able to read the answer here and then go and claim 90%
-/// confidence on Today would quietly empty the calibration figures of any
-/// meaning.
+/// Every card opens, including ones that were skipped rather than answered.
+/// Withholding those made the re-read useless — most of a deck somebody
+/// clicked through is unanswered — and it never closed the hole it was for:
+/// the deck already lets a card be passed without committing, and a finished
+/// day cannot be gone back and answered anyway. Commitment is enforced where
+/// it means something, on the card itself, the first time it is dealt.
 class DeckViewerScreen extends StatefulWidget {
   final AppState app;
   final List<Pill> deck;
@@ -58,32 +60,12 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
 
   Pill get _pill => widget.deck[_index];
 
-  /// A card with nothing to score — a fact, or a debate — was never withheld
-  /// in the first place. A graded one has to have been answered.
-  bool _canOpen(Pill pill) =>
-      !pill.asksSomething ||
-      !pill.isGraded ||
-      widget.app.answerFor(pill.id) != null;
-
   void _toggle(int i) {
-    if (!_canOpen(widget.deck[i])) {
-      HapticFeedback.vibrate();
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          const SnackBar(
-            content: Text('Answer this one on Today first.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      return;
-    }
     HapticFeedback.selectionClick();
     setState(() => _flipped[i] = !_flipped[i]);
   }
 
   String get _hint {
-    if (!_canOpen(_pill)) return 'Answer this one on Today first';
     final hasNext = _index < widget.deck.length - 1;
     if (!_flipped[_index]) {
       // A fact already carries "Tap to reveal" on its own face. Repeating it
