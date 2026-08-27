@@ -344,15 +344,44 @@ void main() {
     }
 
     expect(find.text('Your second set is ready'), findsOneWidget);
-    // The recap scrolls; the button sits below the fold.
-    await tester.ensureVisible(find.text('Read 5 more'));
+    // The recap scrolls; the offer sits below the way back into the cards.
+    await tester.ensureVisible(find.text('READ 5 MORE'));
     await _settle(tester);
-    await tester.tap(find.text('Read 5 more'));
+    await tester.tap(find.text('READ 5 MORE'));
     await _settle(tester);
 
     // Back to reading, on pill six of ten.
     expect(find.text('Next pill'), findsOneWidget);
     expect(find.text('06 / 10'), findsOneWidget);
+  });
+
+  testWidgets('finishing the day gives a short summary and a way back', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+    await _openToday(tester);
+
+    for (var i = 0; i < 5; i++) {
+      await tester.tap(find.text('Next pill'));
+      await _settle(tester);
+    }
+
+    // Short: it says it is done and how it went, and nothing else has to be
+    // scrolled past to get back to the cards.
+    expect(find.text('Done for today.'), findsOneWidget);
+    expect(find.text('CARDS'), findsOneWidget);
+    expect(find.text('RIGHT'), findsOneWidget);
+
+    final again = find.text("SHOW TODAY'S CARDS AGAIN");
+    expect(again, findsOneWidget);
+    await tester.tap(again);
+    await _settle(tester);
+
+    // And it lands on the five, face down.
+    expect(find.text("Today's five"), findsOneWidget);
+    expect(find.text('1/5'), findsOneWidget);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -369,7 +398,7 @@ void main() {
     await tester.ensureVisible(find.text('Want 5 more?'));
     await _settle(tester);
     expect(find.text('Want 5 more?'), findsOneWidget);
-    expect(find.text('Read 5 more'), findsNothing);
+    expect(find.text('READ 5 MORE'), findsNothing);
   });
 
   group('The content pool', () {

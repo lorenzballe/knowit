@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/chunky.dart';
 import '../widgets/motion.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
@@ -17,364 +17,300 @@ class RecapView extends StatelessWidget {
   final AppState app;
   const RecapView({super.key, required this.app});
 
+  /// How many of today's gradeable cards were got right.
+  (int, int) _tally() {
+    var right = 0;
+    var gradeable = 0;
+    for (final pill in app.todaysDeck) {
+      if (!pill.isGraded || !pill.asksSomething) continue;
+      gradeable++;
+      final given = app.answerFor(pill.id);
+      if (given != null && pill.challenge.accepts(given.response)) right++;
+    }
+    return (right, gradeable);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final (right, gradeable) = _tally();
     final week = app.weekCompletion();
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RiseIn(
-              child: Text(
-                '${app.todaysDeck.length} of ${app.todaysDeck.length} · done',
-                style: AppText.label(
-                  size: 11,
-                  spacing: 1.4,
-                  color: context.p.inkMuted,
+    // Small on purpose. The end of a day is a beat, not a report: what it
+    // owes the reader is that it is finished, roughly how it went, and a way
+    // back into the cards. The long version pushed that way back below the
+    // fold, which is the one thing on this screen anybody actually wants.
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          PopIn(
+            child: Center(
+              child: Container(
+                width: 62,
+                height: 62,
+                decoration: const BoxDecoration(
+                  color: AppColors.lime,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.check_rounded,
+                  size: 34,
+                  color: AppColors.limeInk,
                 ),
               ),
             ),
+          ),
+          const SizedBox(height: 16),
+          RiseIn(
+            delay: const Duration(milliseconds: 80),
+            child: Text(
+              'Done for today.',
+              textAlign: TextAlign.center,
+              style: AppText.display(
+                size: 30,
+                weight: FontWeight.w700,
+                height: 1.05,
+                spacing: -1.2,
+                color: context.p.ink,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          RiseIn(
+            delay: const Duration(milliseconds: 160),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _Stat(
+                    value: '${app.todaysDeck.length}',
+                    label: 'CARDS',
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: _Stat(
+                    value: gradeable == 0 ? '—' : '$right/$gradeable',
+                    label: 'RIGHT',
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: _Stat(
+                    value: '${app.streak}',
+                    label: app.streak == 1 ? 'DAY' : 'DAYS',
+                    accent: true,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 18),
+          RiseIn(
+            delay: const Duration(milliseconds: 240),
+            child: ChunkyButton(
+              label: "SHOW TODAY'S CARDS AGAIN",
+              height: 54,
+              fill: AppColors.lime,
+              ink: AppColors.limeInk,
+              onPressed: () =>
+                  openDeckViewer(context, app, app.todaysDeck, "Today's five"),
+            ),
+          ),
+          const SizedBox(height: 20),
+          RiseIn(
+            delay: const Duration(milliseconds: 300),
+            child: Row(
+              children: List.generate(7, (i) {
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: i == 6 ? 0 : 5),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 22,
+                          decoration: BoxDecoration(
+                            color: week[i] ? AppColors.lime : context.p.line,
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          _weekLetters[i],
+                          style: AppText.label(
+                            size: 9.5,
+                            color: context.p.inkFaint,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Everything past here is optional reading, and sits below the
+          // thing the reader came to this screen to do.
+          if (app.canOpenExtraSet)
+            _ExtraSet(app: app)
+          else if (!app.isPlus)
+            _Upsell(app: app)
+          else
+            _Tomorrow(app: app),
+          if (app.calibratedAnswers >= 3) ...[
             const SizedBox(height: 12),
-            // The number climbs rather than landing. It is the one figure the
-            // reader came back for.
-            RiseIn(
-              delay: const Duration(milliseconds: 90),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CountUp(
-                    value: app.streak,
-                    style: AppText.display(
-                      size: 34,
-                      weight: FontWeight.w700,
-                      height: 1.06,
-                      spacing: -1.3,
-                      color: context.p.ink,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      app.streak == 1 ? 'day\nin a row.' : 'days\nin a row.',
-                      style: AppText.display(
-                        size: 34,
-                        weight: FontWeight.w700,
-                        height: 1.06,
-                        spacing: -1.3,
-                        color: AppColors.lime,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 22),
-            RiseIn(
-              delay: const Duration(milliseconds: 180),
-              child: Row(
-                children: List.generate(7, (i) {
-                  return Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(right: i == 6 ? 0 : 6),
-                      child: Column(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 34,
-                            decoration: BoxDecoration(
-                              color: week[i] ? AppColors.lime : context.p.line,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          Text(
-                            _weekLetters[i],
-                            style: AppText.label(
-                              size: 10,
-                              color: context.p.inkFaint,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
-            const SizedBox(height: 22),
-            RiseIn(
-              delay: const Duration(milliseconds: 260),
-              child: Text(
-                'YOU PICKED UP TODAY',
-                style: AppText.label(
-                  size: 11,
-                  spacing: 1.3,
-                  color: context.p.inkFaint,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            // Each card you got through arrives in turn, so the list reads as
-            // a tally being counted out rather than a screenshot.
-            ...app.todaysDeck.indexed.map(
-              (entry) => RiseIn.staggered(
-                entry.$1,
-                from: const Duration(milliseconds: 320),
-                child: _RecapRow(
-                  pill: entry.$2,
-                  onTap: () => openDeckViewer(
-                    context,
-                    app,
-                    app.todaysDeck,
-                    "Today's five",
-                    initialIndex: entry.$1,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 4),
-            _ReadAgain(app: app),
-            const SizedBox(height: 8),
-            if (app.calibratedAnswers >= 3) ...[
-              _RecordNudge(app: app),
-              const SizedBox(height: 14),
-            ],
-            if (app.canOpenExtraSet)
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: context.p.inverse,
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Your second set is ready',
-                      style: AppText.display(
-                        size: 20,
-                        weight: FontWeight.w600,
-                        spacing: -0.6,
-                        color: context.p.onInverse,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Five more, picked the same way — and they count '
-                      'towards your record like the first five.',
-                      style: AppText.body(
-                        size: 13.5,
-                        height: 1.45,
-                        color: context.p.onInverse.withValues(alpha: 0.72),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 48,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () => app.openExtraSet(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.lime,
-                          foregroundColor: AppColors.limeInk,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                        ),
-                        child: Text(
-                          'Read 5 more',
-                          style: AppText.body(
-                            size: 14.5,
-                            weight: FontWeight.w600,
-                            color: AppColors.limeInk,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            else if (app.isPlus)
-              _Tomorrow(app: app)
-            else
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [AppColors.lime, AppColors.limeDark],
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Want 5 more?',
-                      style: AppText.display(
-                        size: 20,
-                        weight: FontWeight.w600,
-                        spacing: -0.6,
-                        color: const Color(0xFF17200A),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      "Knowit+ unlocks an extra set every day, plus the full archive of everything you've read.",
-                      style: AppText.body(
-                        size: 13.5,
-                        height: 1.45,
-                        color: const Color(0xFF17200A).withValues(alpha: 0.72),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 48,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => PaywallScreen(app: app),
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF17200A),
-                          foregroundColor: const Color(0xFFE9FFC4),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                        ),
-                        child: Text(
-                          'Unlock 5 extra pills',
-                          style: AppText.body(
-                            size: 14.5,
-                            weight: FontWeight.w600,
-                            color: const Color(0xFFE9FFC4),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            if (!app.canOpenExtraSet && !app.isPlus) ...[
-              const SizedBox(height: 14),
-              _Tomorrow(app: app),
-            ],
+            _RecordNudge(app: app),
           ],
-        ),
+          if (!app.isPlus) ...[const SizedBox(height: 12), _Tomorrow(app: app)],
+        ],
       ),
     );
   }
 }
 
-/// One line of the day's tally.
-class _RecapRow extends StatelessWidget {
-  final Pill pill;
-  final VoidCallback onTap;
-  const _RecapRow({required this.pill, required this.onTap});
+/// One figure from the day, in a tile small enough that three fit a row.
+class _Stat extends StatelessWidget {
+  final String value;
+  final String label;
+  final bool accent;
+
+  const _Stat({required this.value, required this.label, this.accent = false});
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Read this one again',
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 8),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: context.p.line,
-            borderRadius: BorderRadius.circular(14),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 13),
+      decoration: BoxDecoration(
+        color: context.p.surfaceRaised,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.p.line),
+      ),
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppText.display(
+              size: 23,
+              weight: FontWeight.w700,
+              spacing: -0.7,
+              color: accent ? AppColors.limeDark : context.p.ink,
+            ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(top: 5),
-                width: 8,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: pill.color,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  pill.question,
-                  style: AppText.body(
-                    size: 13.5,
-                    weight: FontWeight.w500,
-                    height: 1.3,
-                    color: context.p.ink,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, top: 2),
-                child: Icon(
-                  Icons.chevron_right_rounded,
-                  size: 17,
-                  color: context.p.inkFaint,
-                ),
-              ),
-            ],
+          const SizedBox(height: 3),
+          Text(
+            label,
+            style: AppText.label(
+              size: 9.5,
+              spacing: 1.1,
+              color: context.p.inkFaint,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-/// The way back into the five, once the day is done.
-///
-/// The recap lists what you read; this opens it. Cards come back face down,
-/// so going through them again is a re-read rather than a page of answers.
-class _ReadAgain extends StatelessWidget {
+/// The Knowit+ second set, once the first five are done.
+class _ExtraSet extends StatelessWidget {
   final AppState app;
-  const _ReadAgain({required this.app});
+  const _ExtraSet({required this.app});
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: "Read today's five again",
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () =>
-            openDeckViewer(context, app, app.todaysDeck, "Today's five"),
-        child: Container(
-          height: 46,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: context.p.lineStrong),
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: context.p.inverse,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Your second set is ready',
+            style: AppText.display(
+              size: 18,
+              weight: FontWeight.w700,
+              spacing: -0.5,
+              color: context.p.onInverse,
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.replay_rounded, size: 16, color: context.p.inkMuted),
-              const SizedBox(width: 8),
-              Text(
-                'Read them again',
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w600,
-                  color: context.p.inkMuted,
-                ),
-              ),
-            ],
+          const SizedBox(height: 6),
+          Text(
+            'Five more, and they count towards your record like the first.',
+            style: AppText.body(
+              size: 13,
+              height: 1.4,
+              color: context.p.onInverse.withValues(alpha: 0.7),
+            ),
           ),
+          const SizedBox(height: 13),
+          ChunkyButton(
+            label: 'READ 5 MORE',
+            height: 48,
+            fill: AppColors.lime,
+            ink: AppColors.limeInk,
+            onPressed: () => app.openExtraSet(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The offer, for readers on the free plan.
+class _Upsell extends StatelessWidget {
+  final AppState app;
+  const _Upsell({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.lime, AppColors.limeDark],
         ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Want 5 more?',
+            style: AppText.display(
+              size: 18,
+              weight: FontWeight.w700,
+              spacing: -0.5,
+              color: AppColors.limeInk,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Knowit+ unlocks a second set every day, and shows you whether '
+            'the gap is closing.',
+            style: AppText.body(
+              size: 13,
+              height: 1.4,
+              color: AppColors.limeInk.withValues(alpha: 0.75),
+            ),
+          ),
+          const SizedBox(height: 13),
+          ChunkyButton(
+            label: 'UNLOCK 5 EXTRA PILLS',
+            height: 48,
+            fill: AppColors.limeInk,
+            ink: AppColors.lime,
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
+          ),
+        ],
       ),
     );
   }

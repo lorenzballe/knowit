@@ -6,13 +6,19 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/ui.dart';
 import 'recap_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
 /// between the progress bars and the action row.
 class TodayScreen extends StatefulWidget {
   final AppState app;
-  const TodayScreen({super.key, required this.app});
+
+  /// Set when this is opened as its own screen off the path, so the way back
+  /// sits in the header rather than stacked above it.
+  final VoidCallback? onBack;
+
+  const TodayScreen({super.key, required this.app, this.onBack});
 
   @override
   State<TodayScreen> createState() => _TodayScreenState();
@@ -52,7 +58,7 @@ class _TodayScreenState extends State<TodayScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Header(streak: app.liveStreak),
+          _Header(streak: app.liveStreak, onBack: widget.onBack),
           const SizedBox(height: 16),
           _ProgressBars(
             total: deck.length,
@@ -103,7 +109,8 @@ class _TodayScreenState extends State<TodayScreen> {
 
 class _Header extends StatelessWidget {
   final int streak;
-  const _Header({required this.streak});
+  final VoidCallback? onBack;
+  const _Header({required this.streak, this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +119,10 @@ class _Header extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          if (onBack != null) ...[
+            BackCircle(onPressed: onBack!),
+            const SizedBox(width: 12),
+          ],
           Text(
             'Knowit',
             style: AppText.display(

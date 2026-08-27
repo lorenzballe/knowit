@@ -8,7 +8,6 @@ import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/motion.dart';
-import '../widgets/ui.dart';
 import 'lesson_screen.dart';
 import 'today_screen.dart';
 
@@ -412,21 +411,7 @@ class TodayRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.p.surface,
-      body: Column(
-        children: [
-          SafeArea(
-            bottom: false,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(14, 6, 14, 0),
-                child: BackCircle(onPressed: () => Navigator.of(context).pop()),
-              ),
-            ),
-          ),
-          Expanded(child: TodayScreen(app: app)),
-        ],
-      ),
+      body: TodayScreen(app: app, onBack: () => Navigator.of(context).pop()),
     );
   }
 }
