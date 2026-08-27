@@ -292,10 +292,12 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    // Twelve subjects at the same level, so each is a twelfth of the deck.
-    expect(find.text('8%'), findsWidgets);
+    // The chip shows its level as a length, not a number: there is nothing
+    // to read, only something to see.
+    expect(find.textContaining('%'), findsNothing);
+    expect(find.textContaining('12 of 12 subjects'), findsOneWidget);
 
-    // Drag Science to the far right: it takes more, so the rest take less.
+    // Drag Science to the far right: it takes more of the deck.
     final science = find.ancestor(
       of: find.text('Science'),
       matching: find.byType(GestureDetector),
@@ -315,7 +317,6 @@ void main() {
     final natureBox = tester.getRect(nature.first);
     await tester.tapAt(Offset(natureBox.left + 1, natureBox.center.dy));
     await tester.pumpAndSettle();
-    expect(find.text('off'), findsOneWidget);
     expect(find.textContaining('11 of 12 subjects'), findsOneWidget);
 
     await tester.tap(find.text('START WITH MY FIRST CARDS'));

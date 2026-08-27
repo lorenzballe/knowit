@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -41,15 +39,6 @@ class _TopicMixScreenState extends State<TopicMixScreen> {
 
   /// Below this a subject is out of the deck entirely.
   static const double _minKept = 0.04;
-
-  double get _total =>
-      _weights.values.fold(0.0, (sum, v) => sum + math.max(0, v));
-
-  int _percent(String key) {
-    final total = _total;
-    if (total <= 0) return 0;
-    return (100 * math.max(0.0, _weights[key]!) / total).round();
-  }
 
   int get _kept => _weights.values.where((v) => v >= _minKept).length;
 
@@ -128,7 +117,6 @@ class _TopicMixScreenState extends State<TopicMixScreen> {
                                   child: _TopicSlider(
                                     topicKey: key,
                                     value: _weights[key]!,
-                                    percent: _percent(key),
                                     onChanged: (v) => _set(key, v),
                                   ),
                                 ),
@@ -178,102 +166,113 @@ class _TopicMixScreenState extends State<TopicMixScreen> {
   }
 }
 
-/// One subject, as a pill that is also its own slider.
+/// One subject: the topic chip from the topics screen, filled part-way.
+///
+/// It has to be that chip and not a near-miss of it — same pill, same check,
+/// same weight of type — or the app has two kinds of topic chip and the
+/// newer one looks like a copy somebody made in a hurry. The only thing
+/// added is that the colour stops part of the way across, and the label is
+/// drawn twice so the half over the fill takes the ink that belongs on it.
 class _TopicSlider extends StatelessWidget {
   final String topicKey;
   final double value;
-  final int percent;
   final ValueChanged<double> onChanged;
 
   const _TopicSlider({
     required this.topicKey,
     required this.value,
-    required this.percent,
     required this.onChanged,
   });
+
+  static const double _off = 0.04;
 
   @override
   Widget build(BuildContext context) {
     final style = kTopics[topicKey]!;
-    final out = value < 0.04;
+    final on = value >= _off;
 
-    void setFrom(Offset local, double width) {
-      if (width <= 0) return;
-      onChanged(local.dx / width);
-    }
-
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        return Semantics(
-          slider: true,
-          label: style.name,
-          value: '$percent per cent',
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapDown: (d) => setFrom(d.localPosition, width),
-            onHorizontalDragStart: (d) => setFrom(d.localPosition, width),
-            onHorizontalDragUpdate: (d) => setFrom(d.localPosition, width),
-            child: Container(
-              height: 56,
-              decoration: BoxDecoration(
-                color: context.p.surfaceRaised,
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(
-                  color: out ? context.p.line : style.color,
-                  width: out ? 1.4 : 2,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(999),
-                child: Stack(
-                  children: [
-                    // The fill follows the finger; the number on top follows
-                    // the deck.
-                    AnimatedFractionallySizedBox(
-                      duration: const Duration(milliseconds: 90),
-                      widthFactor: value.clamp(0.0, 1.0),
-                      alignment: Alignment.centerLeft,
-                      heightFactor: 1,
-                      child: ColoredBox(
-                        color: style.color.withValues(alpha: 0.55),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              style.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.body(
-                                size: 13.5,
-                                weight: FontWeight.w700,
-                                color: out ? context.p.inkFaint : context.p.ink,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            out ? 'off' : '$percent%',
-                            style: AppText.body(
-                              size: 13,
-                              weight: FontWeight.w700,
-                              color: out ? context.p.inkFaint : context.p.ink,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+    Widget label(Color ink, double opacity) => Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
+      child: Row(
+        children: [
+          Opacity(
+            opacity: opacity,
+            child: Icon(Icons.check_rounded, size: 13, color: ink),
+          ),
+          const SizedBox(width: 7),
+          Expanded(
+            child: Text(
+              style.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w500,
+                color: ink,
               ),
             ),
           ),
-        );
-      },
+        ],
+      ),
+    );
+
+    return Semantics(
+      slider: true,
+      label: style.name,
+      // The share is worth saying to a screen reader even though the chip
+      // shows it as a length rather than a number.
+      value: on ? 'in the mix' : 'out of the mix',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (d) => _fromLocal(context, d.localPosition),
+        onHorizontalDragStart: (d) => _fromLocal(context, d.localPosition),
+        onHorizontalDragUpdate: (d) => _fromLocal(context, d.localPosition),
+        child: Container(
+          decoration: BoxDecoration(
+            color: context.p.surfaceRaised,
+            borderRadius: BorderRadius.circular(999),
+            border: Border.all(color: context.p.line),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: Stack(
+              children: [
+                label(context.p.inkMuted, on ? 1 : 0),
+                ClipRect(
+                  // Off means no colour at all: a sliver left at the edge
+                  // reads as a rendering fault rather than as a setting.
+                  clipper: _LeftFraction(on ? value.clamp(0.0, 1.0) : 0),
+                  child: ColoredBox(
+                    color: style.color,
+                    child: label(style.ink, on ? 1 : 0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
+
+  void _fromLocal(BuildContext context, Offset local) {
+    final box = context.findRenderObject() as RenderBox?;
+    final width = box?.size.width ?? 0;
+    if (width <= 0) return;
+    onChanged(local.dx / width);
+  }
+}
+
+/// Clips a full-width layer to the left [fraction] of itself, so the text
+/// underneath keeps its own layout rather than being squashed.
+class _LeftFraction extends CustomClipper<Rect> {
+  final double fraction;
+  const _LeftFraction(this.fraction);
+
+  @override
+  Rect getClip(Size size) =>
+      Rect.fromLTWH(0, 0, size.width * fraction, size.height);
+
+  @override
+  bool shouldReclip(_LeftFraction old) => old.fraction != fraction;
 }
