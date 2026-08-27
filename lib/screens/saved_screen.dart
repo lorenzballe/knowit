@@ -191,28 +191,10 @@ class _EmptyState extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: onBackToToday,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: context.p.inverse,
-                    foregroundColor: context.p.onInverse,
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  child: Text(
-                    "Back to today's five",
-                    style: AppText.body(
-                      size: 14,
-                      weight: FontWeight.w600,
-                      color: context.p.onInverse,
-                    ),
-                  ),
-                ),
+              PrimaryButton(
+                label: "BACK TO TODAY'S FIVE",
+                height: 52,
+                onPressed: onBackToToday,
               ),
             ],
           ),

@@ -13,6 +13,7 @@ import 'package:knowit/screens/path_screen.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
+import 'package:knowit/widgets/chunky.dart';
 import 'package:knowit/widgets/scaled_text.dart';
 import 'package:knowit/widgets/motion.dart';
 import 'package:knowit/widgets/pill_card_stack.dart';
@@ -264,6 +265,26 @@ void main() {
     }
   });
 
+  testWidgets('every primary action is the same button', (tester) async {
+    // Screens written before the lesson existed called PrimaryButton and the
+    // lesson calls ChunkyButton, so the app pressed two different kinds of
+    // button depending on which week a screen was written in. PrimaryButton
+    // is now built on the chunky one, which is what keeps that from coming
+    // back one screen at a time.
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    expect(find.text('Get my first five'), findsOneWidget);
+    expect(
+      find.ancestor(
+        of: find.text('Get my first five'),
+        matching: find.byType(ChunkyButton),
+      ),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('the paywall sells only what it delivers', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const KnowitApp());
@@ -275,14 +296,21 @@ void main() {
     await tester.tap(find.text('Upgrade'));
     await _settle(tester);
 
-    expect(find.text('5 extra pills every day'), findsOneWidget);
-    expect(find.text('The full archive'), findsOneWidget);
-    expect(find.text('Pick your own topics'), findsOneWidget);
-    // The two perks the pivot added have to exist as screens before they may
-    // be sold. Both are on the profile, so the paywall naming them is a
-    // promise this test holds it to.
-    expect(find.text('Your record over time'), findsOneWidget);
-    expect(find.text('Every principle you have met'), findsOneWidget);
+    // The perks scroll now, so each is reached the way a reader reaches it.
+    // The two the pivot added have to exist as screens before they may be
+    // sold — both are on the profile, so naming them here is a promise this
+    // test holds the paywall to.
+    for (final perk in const [
+      'Your record over time',
+      'Every principle you have met',
+      '5 extra pills every day',
+      'The full archive',
+      'Pick your own topics',
+    ]) {
+      await tester.scrollUntilVisible(find.text(perk), 200);
+      await _settle(tester);
+      expect(find.text(perk), findsOneWidget);
+    }
     // Sharing left the paywall when it became free.
     expect(find.text('Share as image'), findsNothing);
   });
@@ -300,10 +328,14 @@ void main() {
     await tester.tap(find.text('Upgrade'));
     await _settle(tester);
 
-    await tester.scrollUntilVisible(find.text('Monthly'), 260);
-    await _settle(tester);
+    // Yearly leads and is preselected, so the call to action opens on it —
+    // and the call to action is pinned, so it never scrolls away.
     expect(find.text('Try 7 days free, then €24,99/yr'), findsOneWidget);
 
+    await tester.scrollUntilVisible(find.text('Monthly'), 260);
+    await _settle(tester);
+    // The saving is worked out from the two prices rather than asserted.
+    expect(find.text('SAVE 48%'), findsOneWidget);
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Try 7 days free, then €3,99/mo'), findsOneWidget);

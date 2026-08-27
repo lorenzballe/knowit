@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../theme.dart';
+import 'chunky.dart';
 
-/// The full-width dark pill button used as the primary action on almost every
-/// screen in the flow.
-class PrimaryButton extends StatefulWidget {
+/// The app's primary action.
+///
+/// This is now a thin naming over [ChunkyButton]. Screens built before the
+/// lesson existed called this, and the lesson calls the chunky one, so the
+/// app was pressing two different kinds of button depending on which week a
+/// screen was written in — which is exactly the sort of thing that reads as
+/// unfinished without anybody being able to say why. Rewriting the shared
+/// widget rather than every call site means no screen can be left behind.
+class PrimaryButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
 
@@ -25,66 +31,13 @@ class PrimaryButton extends StatefulWidget {
   });
 
   @override
-  State<PrimaryButton> createState() => _PrimaryButtonState();
-}
-
-class _PrimaryButtonState extends State<PrimaryButton> {
-  bool _down = false;
-
-  void _setDown(bool value) {
-    if (widget.onPressed == null || _down == value) return;
-    setState(() => _down = value);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final background = widget.background ?? context.p.inverse;
-    final foreground = widget.foreground ?? context.p.onInverse;
-
-    return Listener(
-      onPointerDown: (_) => _setDown(true),
-      onPointerUp: (_) => _setDown(false),
-      onPointerCancel: (_) => _setDown(false),
-      child: AnimatedScale(
-        // The press dip is what makes a button feel physical.
-        scale: _down ? 0.97 : 1,
-        duration: const Duration(milliseconds: 110),
-        curve: Curves.easeOut,
-        child: SizedBox(
-          height: widget.height,
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: widget.onPressed == null
-                ? null
-                : () {
-                    HapticFeedback.lightImpact();
-                    widget.onPressed!();
-                  },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: background,
-              foregroundColor: foreground,
-              disabledBackgroundColor: background,
-              disabledForegroundColor: foreground,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(999),
-              ),
-            ),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 220),
-              child: Text(
-                widget.label,
-                key: ValueKey(widget.label),
-                style: AppText.body(
-                  size: 15,
-                  weight: FontWeight.w600,
-                  color: foreground,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+    return ChunkyButton(
+      label: label,
+      height: height,
+      fill: background ?? context.p.inverse,
+      ink: foreground ?? context.p.onInverse,
+      onPressed: onPressed,
     );
   }
 }

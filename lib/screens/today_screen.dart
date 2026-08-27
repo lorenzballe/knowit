@@ -236,41 +236,10 @@ class _ActionRow extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: SizedBox(
+              child: PrimaryButton(
+                label: 'Next pill',
                 height: 52,
-                child: ElevatedButton(
-                  onPressed: () {
-                    HapticFeedback.lightImpact();
-                    onNext();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: context.p.inverse,
-                    foregroundColor: context.p.onInverse,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Next pill',
-                        style: AppText.body(
-                          size: 15,
-                          weight: FontWeight.w600,
-                          color: context.p.onInverse,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                        size: 17,
-                        color: context.p.onInverse.withValues(alpha: 0.45),
-                      ),
-                    ],
-                  ),
-                ),
+                onPressed: onNext,
               ),
             ),
           ),

@@ -422,28 +422,12 @@ class _RecordNudge extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          SizedBox(
-            height: 46,
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => showRecordShareSheet(context, app),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.lime,
-                foregroundColor: AppColors.limeInk,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(999),
-                ),
-              ),
-              child: Text(
-                'Share my record',
-                style: AppText.body(
-                  size: 14,
-                  weight: FontWeight.w600,
-                  color: AppColors.limeInk,
-                ),
-              ),
-            ),
+          ChunkyButton(
+            label: 'SHARE MY RECORD',
+            height: 48,
+            fill: AppColors.lime,
+            ink: AppColors.limeInk,
+            onPressed: () => showRecordShareSheet(context, app),
           ),
         ],
       ),

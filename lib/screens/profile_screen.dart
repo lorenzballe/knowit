@@ -5,6 +5,7 @@ import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/chunky.dart';
 import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
@@ -151,6 +152,10 @@ class ProfileScreen extends StatelessWidget {
               _Stat(value: '${app.dueReviews.length}', label: 'coming back'),
             ],
           ),
+          // The offer belongs where the reader is already looking at their own
+          // numbers, not as a link under the settings. A profile is the one
+          // screen somebody opens because they care how they are doing.
+          if (!app.isPlus) ...[const SizedBox(height: 14), _PlusCard(app: app)],
           if (app.calibratedAnswers > 0) ...[
             const SizedBox(height: 22),
             const Eyebrow('How well you know yourself'),
@@ -394,11 +399,14 @@ class _Stat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: PaperCard(
-        padding: const EdgeInsets.all(16),
-        radius: 18,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        decoration: BoxDecoration(
+          color: context.p.surfaceRaised,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: context.p.line),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               value,
@@ -406,16 +414,18 @@ class _Stat extends StatelessWidget {
                 size: 24,
                 weight: FontWeight.w700,
                 height: 1,
+                spacing: -0.6,
                 color: context.p.ink,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 5),
             Text(
-              label,
-              style: AppText.body(
-                size: 11.5,
-                height: 1.3,
-                color: context.p.inkMuted,
+              label.toUpperCase(),
+              textAlign: TextAlign.center,
+              style: AppText.label(
+                size: 9.5,
+                spacing: 1,
+                color: context.p.inkFaint,
               ),
             ),
           ],
@@ -907,39 +917,17 @@ class _ShareRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: 'Share your record',
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => showRecordShareSheet(context, app),
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: AppColors.lime,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.ios_share_rounded,
-                size: 17,
-                color: AppColors.limeInk,
-              ),
-              const SizedBox(width: 9),
-              Text(
-                'Share my record',
-                style: AppText.body(
-                  size: 14.5,
-                  weight: FontWeight.w600,
-                  color: AppColors.limeInk,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return ChunkyButton(
+      label: 'SHARE MY RECORD',
+      height: 52,
+      fill: AppColors.lime,
+      ink: AppColors.limeInk,
+      leading: const Icon(
+        Icons.ios_share_rounded,
+        size: 17,
+        color: AppColors.limeInk,
       ),
+      onPressed: () => showRecordShareSheet(context, app),
     );
   }
 }
@@ -1020,28 +1008,12 @@ class _TrendPanel extends StatelessWidget {
           ],
           if (locked) ...[
             const SizedBox(height: 12),
-            SizedBox(
-              height: 44,
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => requirePlus(context, app, () {}),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.lime,
-                  foregroundColor: AppColors.limeInk,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                ),
-                child: Text(
-                  'See which way',
-                  style: AppText.body(
-                    size: 13.5,
-                    weight: FontWeight.w600,
-                    color: AppColors.limeInk,
-                  ),
-                ),
-              ),
+            ChunkyButton(
+              label: 'SEE WHICH WAY',
+              height: 46,
+              fill: AppColors.lime,
+              ink: AppColors.limeInk,
+              onPressed: () => requirePlus(context, app, () {}),
             ),
           ],
         ],
@@ -1104,6 +1076,89 @@ class _TrendRow extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// The Knowit+ offer, on the screen where the reader is already looking at
+/// what the app knows about them.
+class _PlusCard extends StatelessWidget {
+  final AppState app;
+  const _PlusCard({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
+      decoration: BoxDecoration(
+        color: context.p.inverse,
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.lime,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  'KNOWIT+',
+                  style: AppText.label(
+                    size: 9.5,
+                    weight: FontWeight.w700,
+                    spacing: 1.1,
+                    color: AppColors.limeInk,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '7 days free',
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w600,
+                  color: context.p.onInverse.withValues(alpha: 0.6),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            'Watch the gap move.',
+            style: AppText.display(
+              size: 22,
+              weight: FontWeight.w700,
+              height: 1.1,
+              spacing: -0.8,
+              color: context.p.onInverse,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'The measurement is free and always will be. Knowit+ is what '
+            'tells you which way it is going.',
+            style: AppText.body(
+              size: 13,
+              height: 1.45,
+              color: context.p.onInverse.withValues(alpha: 0.7),
+            ),
+          ),
+          const SizedBox(height: 14),
+          ChunkyButton(
+            label: 'SEE THE PLANS',
+            height: 48,
+            fill: AppColors.lime,
+            ink: AppColors.limeInk,
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
+          ),
+        ],
+      ),
     );
   }
 }
