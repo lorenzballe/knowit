@@ -21,21 +21,6 @@ import 'package:knowit/widgets/ui.dart';
 
 /// Pumps a few frames so the async `SharedPreferences` load settles.
 
-/// Today's deck is now a stop on the path rather than a tab, so a test that
-/// wants the deck taps into it the way a reader does.
-Future<void> _openToday(WidgetTester tester) async {
-  final start = find.text('START');
-  final again = find.text('READ THEM AGAIN');
-  await tester.tap(start.evaluate().isNotEmpty ? start : again);
-  await _settle(tester);
-}
-
-/// Back out of today's deck to the path and its tab bar.
-Future<void> _leaveToday(WidgetTester tester) async {
-  await tester.tap(find.bySemanticsLabel('Back').first);
-  await _settle(tester);
-}
-
 Future<void> _settle(WidgetTester tester) async {
   for (var i = 0; i < 10; i++) {
     await tester.pump(const Duration(milliseconds: 100));
@@ -80,7 +65,7 @@ void main() {
       find.text('Most people are more sure than they are right.'),
       findsOneWidget,
     );
-    expect(find.text('Get my first five'), findsOneWidget);
+    expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
   });
 
   testWidgets('the first run goes straight to today on the default mix', (
@@ -90,7 +75,7 @@ void main() {
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    await tester.tap(find.text('Get my first five'));
+    await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
     await _settle(tester);
 
     // No topic step and no notification step: picking a mix is a Knowit+ perk.
@@ -225,7 +210,6 @@ void main() {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
-    await _openToday(tester);
 
     await tester.tap(find.byIcon(Icons.ios_share_rounded));
     await _settle(tester);
@@ -275,14 +259,46 @@ void main() {
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
 
-    expect(find.text('Get my first five'), findsOneWidget);
+    expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
     expect(
       find.ancestor(
-        of: find.text('Get my first five'),
+        of: find.text('SHOW ME THE FIRST 5 CARDS'),
         matching: find.byType(ChunkyButton),
       ),
       findsOneWidget,
     );
+  });
+
+  testWidgets('opening the app lands on the cards, not on the path', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    // The path is where the app keeps its shape, but putting a map between
+    // the reader and the five cards they came for is not what a daily app is
+    // for. It is still one tap away.
+    expect(find.text('Next pill'), findsOneWidget);
+    expect(find.text('Finish the one above'), findsNothing);
+    expect(find.text('Path'), findsWidgets);
+
+    await tester.tap(find.text('Path').last);
+    await _settle(tester);
+    expect(find.text('Base rates'), findsWidgets);
+  });
+
+  testWidgets('the first run goes from the welcome straight to the cards', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    await tester.pumpWidget(const KnowitApp());
+    await _settle(tester);
+
+    await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
+    await _settle(tester);
+
+    expect(find.text('Next pill'), findsOneWidget);
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
@@ -368,7 +384,6 @@ void main() {
     SharedPreferences.setMockInitialValues(_installed(plus: true));
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
-    await _openToday(tester);
 
     for (var i = 0; i < 5; i++) {
       await tester.tap(find.text('Next pill'));
@@ -393,7 +408,6 @@ void main() {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
-    await _openToday(tester);
 
     for (var i = 0; i < 5; i++) {
       await tester.tap(find.text('Next pill'));
@@ -420,7 +434,6 @@ void main() {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
-    await _openToday(tester);
 
     for (var i = 0; i < 5; i++) {
       await tester.tap(find.text('Next pill'));
@@ -710,7 +723,6 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const KnowitApp());
       await _settle(tester);
-      await _openToday(tester);
 
       for (var i = 0; i < 5; i++) {
         await tester.tap(find.text('Next pill'));
@@ -872,7 +884,6 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const KnowitApp());
       await _settle(tester);
-      await _openToday(tester);
 
       // Save the first two pills of the day.
       final first = find.byIcon(Icons.favorite_border_rounded);
@@ -887,7 +898,6 @@ void main() {
       final order = prefs.getStringList('knowit.savedIds')!;
       expect(order, hasLength(2));
 
-      await _leaveToday(tester);
       await tester.tap(find.text('Saved').last);
       await _settle(tester);
 
@@ -903,12 +913,10 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const KnowitApp());
       await _settle(tester);
-      await _openToday(tester);
 
       await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
       await _settle(tester);
 
-      await _leaveToday(tester);
       await tester.tap(find.text('Saved').last);
       await _settle(tester);
       expect(find.text('1 pill'), findsOneWidget);
@@ -1814,13 +1822,12 @@ void main() {
       await tester.pumpWidget(const KnowitApp());
       await _settle(tester);
 
-      // The app is past the splash and has built a path.
+      // The app is past the splash and dealing a real day.
       expect(find.text('Knowit'), findsWidgets);
-      expect(find.text('TODAY'), findsWidgets);
+      expect(find.text('Today'), findsWidgets);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
       // And the deck it could not restore was re-dealt rather than left empty.
-      await _openToday(tester);
       expect(find.text('Next pill'), findsOneWidget);
     });
 

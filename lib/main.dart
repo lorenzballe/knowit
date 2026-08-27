@@ -8,6 +8,7 @@ import 'screens/path_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
 import 'screens/sign_in_screen.dart';
+import 'screens/today_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
@@ -278,7 +279,11 @@ class _KnowitShellState extends State<KnowitShell> {
 
   @override
   Widget build(BuildContext context) {
+    // Today first. The path is where the app keeps its shape, but opening
+    // onto it puts a map between the reader and the five cards they came for,
+    // and nobody opens a daily app to look at a map.
     final screens = [
+      TodayScreen(app: widget.app),
       PathScreen(app: widget.app),
       SavedScreen(
         app: widget.app,
@@ -325,6 +330,7 @@ class _KnowitTabBar extends StatelessWidget {
   const _KnowitTabBar({required this.index, required this.onChanged});
 
   static const _tabs = [
+    (icon: Icons.wb_sunny_rounded, label: 'Today'),
     (icon: Icons.route_rounded, label: 'Path'),
     (icon: Icons.bookmark_rounded, label: 'Saved'),
     (icon: Icons.person_rounded, label: 'Profile'),

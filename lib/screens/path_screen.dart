@@ -9,7 +9,6 @@ import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/motion.dart';
 import 'lesson_screen.dart';
-import 'today_screen.dart';
 
 /// One lesson on the path: a principle, and the cards that teach it.
 class PathUnit {
@@ -115,19 +114,8 @@ class PathScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(20, 4, 20, 30),
-              itemCount: units.length + 1,
-              itemBuilder: (context, index) {
-                // The daily five sit at the top of the path rather than in a
-                // tab of their own. The path is what gives the app somewhere
-                // to be going; the day is what brings anybody back tomorrow,
-                // and an app needs both.
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 22),
-                    child: _TodayCard(app: app),
-                  );
-                }
-                final i = index - 1;
+              itemCount: units.length,
+              itemBuilder: (context, i) {
                 final unit = units[i];
                 final isCurrent = i == current;
                 final locked = !unit.isDone && !isCurrent && !atEnd;
@@ -328,90 +316,6 @@ class _Node extends StatelessWidget {
         onTap: onTap,
         child: current ? PopIn(strength: 0.12, child: circle) : circle,
       ),
-    );
-  }
-}
-
-/// The way into today's deck, kept at the head of the path.
-class _TodayCard extends StatelessWidget {
-  final AppState app;
-  const _TodayCard({required this.app});
-
-  @override
-  Widget build(BuildContext context) {
-    final total = app.todaysDeck.length;
-    final done = app.todayCompleted ? total : app.todayIndex;
-    final finished = app.todayCompleted;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
-      decoration: BoxDecoration(
-        color: context.p.inverse,
-        borderRadius: BorderRadius.circular(22),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                'TODAY',
-                style: AppText.label(
-                  size: 10.5,
-                  spacing: 1.5,
-                  color: AppColors.lime,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                '$done of $total',
-                style: AppText.label(
-                  size: 11,
-                  color: context.p.onInverse.withValues(alpha: 0.6),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            finished
-                ? 'Done for today.'
-                : done == 0
-                ? 'Your five are ready.'
-                : 'You are part way through.',
-            style: AppText.display(
-              size: 24,
-              weight: FontWeight.w700,
-              height: 1.1,
-              spacing: -0.8,
-              color: context.p.onInverse,
-            ),
-          ),
-          const SizedBox(height: 14),
-          ChunkyButton(
-            label: finished ? 'READ THEM AGAIN' : 'START',
-            height: 50,
-            fill: AppColors.lime,
-            ink: AppColors.limeInk,
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => TodayRoute(app: app))),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Today's deck, opened as its own screen off the path.
-class TodayRoute extends StatelessWidget {
-  final AppState app;
-  const TodayRoute({super.key, required this.app});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: TodayScreen(app: app, onBack: () => Navigator.of(context).pop()),
     );
   }
 }

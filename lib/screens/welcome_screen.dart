@@ -61,7 +61,10 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              PrimaryButton(label: 'Get my first five', onPressed: onStart),
+              PrimaryButton(
+                label: 'SHOW ME THE FIRST 5 CARDS',
+                onPressed: onStart,
+              ),
               const SizedBox(height: 4),
               QuietButton(
                 label: 'I already have an account',
