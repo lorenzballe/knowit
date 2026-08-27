@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:math' as math;
 
 import '../models/pill.dart';
 import 'pills_data.dart';
@@ -35,6 +36,10 @@ List<Pill> pillsForDate(
   Set<String>? topics,
   Set<String> exclude = const {},
   int count = kPillsPerDay,
+
+  /// How much of each subject the reader asked for, 0..1 by topic key. When
+  /// this is empty the deck spreads evenly, which is what it always did.
+  Map<String, double> weights = const {},
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = List<Pill>.from(kPillPool);
@@ -57,7 +62,18 @@ List<Pill> pillsForDate(
     pool.where((p) => !onTopic(p) && exclude.contains(p.id)).toList(),
   ];
 
-  final ordered = [for (final tier in tiers) ..._oneTopicFirst(tier)];
+  // With a mix to honour, order by it. Without one, spread the topics out so
+  // a day never opens with two of the same subject running together.
+  final byName = {
+    for (final entry in kTopics.entries)
+      entry.value.name: weights[entry.key] ?? 0.0,
+  };
+  final ordered = weights.isEmpty
+      ? [for (final tier in tiers) ..._oneTopicFirst(tier)]
+      : [
+          for (final tier in tiers)
+            ..._weightedOrder(tier, byName, Random(seed)),
+        ];
 
   // Fill the asking slots first, then top the day up with reading. Both
   // fall back to whatever is left, so a reader who has turned every asking
@@ -164,4 +180,28 @@ List<Pill> searchPills(String query) {
     final hay = '${p.question} ${p.answer} ${p.topic} ${p.barMove}';
     return hay.toLowerCase().contains(q);
   }).toList();
+}
+
+/// Orders pills so each subject turns up about as often as it was asked for.
+///
+/// This is the exponential race: draw a key of -ln(u) / w for each item and
+/// sort ascending, which samples without replacement in proportion to the
+/// weights. Seeded, so a day does not reshuffle under the reader.
+List<Pill> _weightedOrder(
+  List<Pill> pills,
+  Map<String, double> byName,
+  Random rng,
+) {
+  if (pills.isEmpty) return pills;
+  final keyed = <(double, Pill)>[];
+  for (final pill in pills) {
+    final w = byName[pill.topic] ?? 0.0;
+    // A subject pushed all the way in still exists — it just goes last,
+    // which is what keeps a day full when the mix is narrow.
+    final weight = w <= 0 ? 1e-6 : w;
+    final u = rng.nextDouble().clamp(1e-12, 1.0);
+    keyed.add((-math.log(u) / weight, pill));
+  }
+  keyed.sort((a, b) => a.$1.compareTo(b.$1));
+  return [for (final entry in keyed) entry.$2];
 }

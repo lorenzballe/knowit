@@ -9,6 +9,7 @@ import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
 import 'screens/sign_in_screen.dart';
 import 'screens/today_screen.dart';
+import 'screens/topic_mix_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
@@ -111,7 +112,7 @@ class _PhoneFrame extends StatelessWidget {
 
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
-enum _Stage { welcome, signIn, comeback, shell }
+enum _Stage { welcome, topics, signIn, comeback, shell }
 
 class KnowitRoot extends StatefulWidget {
   final AppState app;
@@ -190,10 +191,16 @@ class _KnowitRootState extends State<KnowitRoot> {
     switch (_stage) {
       case _Stage.welcome:
         return WelcomeScreen(
-          // Picking a topic mix is a Knowit+ perk, so the free first run
-          // goes straight to today's five on the default mix.
-          onStart: _finishOnboarding,
+          onStart: () => _go(_Stage.topics),
           onSignIn: () => _go(_Stage.signIn),
+        );
+
+      case _Stage.topics:
+        return TopicMixScreen(
+          onDone: (weights) async {
+            await _app.setTopicMix(weights);
+            await _finishOnboarding();
+          },
         );
 
       case _Stage.signIn:

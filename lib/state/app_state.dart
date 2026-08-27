@@ -22,6 +22,7 @@ class AppState extends ChangeNotifier {
   static const _kTodayIndex = 'knowit.todayIndex';
   static const _kOnboarded = 'knowit.onboarded';
   static const _kTopics = 'knowit.topics';
+  static const _kTopicWeights = 'knowit.topicWeights';
   static const _kNotifications = 'knowit.notifications';
   static const _kNotifyHour = 'knowit.notifyHour';
   static const _kPillsRead = 'knowit.pillsRead';
@@ -66,6 +67,10 @@ class AppState extends ChangeNotifier {
 
   bool onboarded = false;
   Set<String> pickedTopics = kTopicOrder.toSet();
+
+  /// How much of each subject the reader asked for, 0..1 by topic key. Empty
+  /// means they never said, and every subject is dealt evenly.
+  Map<String, double> topicWeights = {};
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
@@ -122,6 +127,7 @@ class AppState extends ChangeNotifier {
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
+    topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
       pickedTopics = storedTopics.toSet();
@@ -170,6 +176,7 @@ class AppState extends ChangeNotifier {
     todaysDeck = pillsForDate(
       today,
       topics: pickedTopics,
+      weights: topicWeights,
       exclude: {...seenIds, ...reviews.map((p) => p.id)},
       count: size - reviews.length,
     );
@@ -582,6 +589,40 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Records the mix the reader dragged into shape.
+  ///
+  /// The weights and the picked set are two views of one answer, so they are
+  /// written together and never separately.
+  Future<void> setTopicMix(Map<String, double> weights) async {
+    topicWeights = {...weights};
+    // Thinking is never on the wheel and never off the deck: every card that
+    // asks something lives there, and those are the training.
+    pickedTopics = {...weights.keys, 'thinking'};
+    await _prefs.setString(
+      _kTopicWeights,
+      jsonEncode(weights.map((k, v) => MapEntry(k, v))),
+    );
+    await _prefs.setStringList(_kTopics, pickedTopics.toList());
+    notifyListeners();
+  }
+
+  static Map<String, double> _decodeWeights(String? raw) {
+    if (raw == null || raw.isEmpty) return {};
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map) return {};
+      final out = <String, double>{};
+      for (final entry in decoded.entries) {
+        final key = entry.key;
+        final value = entry.value;
+        if (key is String && value is num) out[key] = value.toDouble();
+      }
+      return out;
+    } catch (_) {
+      return {};
+    }
+  }
+
   void setPlan(Plan value) {
     plan = value;
     notifyListeners();
@@ -608,6 +649,7 @@ class AppState extends ChangeNotifier {
     final extra = pillsForDate(
       today,
       topics: pickedTopics,
+      weights: topicWeights,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       count: kPillsPerDay,
     );

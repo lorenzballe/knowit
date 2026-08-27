@@ -68,9 +68,7 @@ void main() {
     expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
   });
 
-  testWidgets('the first run goes straight to today on the default mix', (
-    tester,
-  ) async {
+  testWidgets('the first run asks for the mix, then deals', (tester) async {
     SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(const KnowitApp());
     await _settle(tester);
@@ -78,8 +76,19 @@ void main() {
     await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
     await _settle(tester);
 
-    // No topic step and no notification step: picking a mix is a Knowit+ perk.
-    expect(find.text('What should we talk about?'), findsNothing);
+    // Everything starts half-way out, so the shape opens as a wheel rather
+    // than as an empty star somebody has to fill in from nothing. Thinking
+    // is not among them: the puzzles come whatever the reader picks.
+    expect(find.text('What should we talk about?'), findsOneWidget);
+    expect(find.textContaining('12 of 12 subjects'), findsOneWidget);
+
+    await tester.tap(find.text('START WITH MY FIRST CARDS'));
+    await _settle(tester);
+
+    // And the answer is kept, not just used once.
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('knowit.topicWeights'), isNotNull);
+    expect(prefs.getStringList('knowit.topics'), hasLength(13));
     expect(find.text('Path'), findsWidgets);
   });
 
@@ -222,6 +231,56 @@ void main() {
     );
   });
 
+  test('the mix the reader dragged governs every card it can', () {
+    // Worth stating plainly, because it bounds what the radar can promise:
+    // four cards in five have to ask something, and everything that asks
+    // lives under Thinking. So the mix governs the reading card, and the
+    // reading card only — but it governs it completely.
+    const weights = {'space': 1.0, 'history': 1.0};
+    final seen = <String>{};
+
+    // Two subjects hold ten facts between them, and a day reads one. So ten
+    // days is exactly the supply.
+    for (var d = 0; d < 10; d++) {
+      final deck = pillsForDate(
+        DateTime(2026, 3, 1).add(Duration(days: d)),
+        topics: weights.keys.toSet(),
+        weights: weights,
+        exclude: seen,
+      );
+      for (final pill in deck.where((p) => !p.asksSomething)) {
+        expect(
+          pill.topic,
+          anyOf('Space', 'History'),
+          reason: 'day ${d + 1} dealt a subject nobody asked for',
+        );
+      }
+      seen.addAll(deck.map((p) => p.id));
+    }
+
+    // Past that the chosen subjects are spent, and the dealer reaches outside
+    // them rather than handing over a short day.
+    final eleventh = pillsForDate(
+      DateTime(2026, 3, 11),
+      topics: weights.keys.toSet(),
+      weights: weights,
+      exclude: seen,
+    );
+    expect(eleventh, hasLength(kPillsPerDay));
+  });
+
+  test('a narrow mix still fills a whole day', () {
+    // Pushing everything in but one subject must not leave short days: the
+    // dealer falls back rather than handing over three cards.
+    const weights = {'space': 1.0};
+    final deck = pillsForDate(
+      DateTime(2026, 3, 1),
+      topics: {'space'},
+      weights: weights,
+    );
+    expect(deck, hasLength(kPillsPerDay));
+  });
+
   test('a day never fills up with opinions', () {
     // Debates are ungraded, so a deck of them measures nothing. With twenty
     // in the pool a random day could otherwise come out as four in a row.
@@ -296,6 +355,11 @@ void main() {
     await _settle(tester);
 
     await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
+    await _settle(tester);
+
+    // One stop on the way: the mix, dragged rather than ticked.
+    expect(find.text('What should we talk about?'), findsOneWidget);
+    await tester.tap(find.text('START WITH MY FIRST CARDS'));
     await _settle(tester);
 
     expect(find.text('Next pill'), findsOneWidget);
