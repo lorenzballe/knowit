@@ -8,6 +8,7 @@ import 'package:knowit/main.dart';
 import 'package:knowit/screens/pill_detail_screen.dart';
 import 'package:knowit/models/pill.dart';
 import 'package:knowit/screens/deck_viewer_screen.dart';
+import 'package:knowit/screens/topic_mix_screen.dart';
 import 'package:knowit/state/app_state.dart';
 import 'package:knowit/widgets/record_share_sheet.dart';
 import 'package:knowit/theme.dart';
@@ -277,6 +278,53 @@ void main() {
       weights: weights,
     );
     expect(deck, hasLength(kPillsPerDay));
+  });
+
+  testWidgets('sliding a subject changes its share of the deck', (
+    tester,
+  ) async {
+    Map<String, double>? picked;
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildKnowitTheme(Brightness.dark),
+        home: TopicMixScreen(onDone: (w) => picked = w),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Twelve subjects at the same level, so each is a twelfth of the deck.
+    expect(find.text('8%'), findsWidgets);
+
+    // Drag Science to the far right: it takes more, so the rest take less.
+    final science = find.ancestor(
+      of: find.text('Science'),
+      matching: find.byType(GestureDetector),
+    );
+    final box = tester.getRect(science.first);
+    await tester.dragFrom(
+      Offset(box.left + box.width * 0.5, box.center.dy),
+      Offset(box.width * 0.5, 0),
+    );
+    await tester.pumpAndSettle();
+
+    // Slide another one all the way down and it leaves the deck entirely.
+    final nature = find.ancestor(
+      of: find.text('Nature'),
+      matching: find.byType(GestureDetector),
+    );
+    final natureBox = tester.getRect(nature.first);
+    await tester.tapAt(Offset(natureBox.left + 1, natureBox.center.dy));
+    await tester.pumpAndSettle();
+    expect(find.text('off'), findsOneWidget);
+    expect(find.textContaining('11 of 12 subjects'), findsOneWidget);
+
+    await tester.tap(find.text('START WITH MY FIRST CARDS'));
+    await tester.pumpAndSettle();
+
+    // What comes back is the mix as it stands: Nature dropped, Science top.
+    expect(picked, isNotNull);
+    expect(picked!.containsKey('nature'), isFalse);
+    expect(picked!['science'], greaterThan(picked!['history']!));
   });
 
   group('Streak freezes', () {
