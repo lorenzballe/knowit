@@ -58,7 +58,7 @@ class _ShareSheetState extends State<_ShareSheet> {
     }
 
     return '$buffer\n${pill.barMove}\n\nSource: ${pill.source}\n'
-        '— Knowit · lorenzballe.github.io/knowit';
+        '— Astuto · lorenzballe.github.io/knowit';
   }
 
   void _toast(String message) {
@@ -252,7 +252,7 @@ class _ShareCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 14),
                 Text(
-                  'Knowit',
+                  'Astuto',
                   style: AppText.display(
                     size: 13,
                     weight: FontWeight.w600,

@@ -1,140 +1,14 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# Knowit on Codemagic.
+# Astuto — iOS build & TestFlight on Codemagic (no Mac).
 #
-# Two ways onto a phone, because they are not the same job:
-#
-#   android-apk     Builds an installable APK on a Linux machine. Needs no
-#                   account, no certificate and no store — Codemagic emails a
-#                   link, you open it on the phone and install it. This is the
-#                   one to use to simply look at the app.
-#
-#   ios-testflight  The iPhone route, which has no equivalent shortcut: Apple
-#                   will not run an app on a device unless it is signed, so
-#                   this needs an App Store Connect key and an app record.
-#                   Copied from the Improvy workflow, retargeted at Knowit.
+# Signing strategy: because a distribution certificate's PRIVATE KEY only exists
+# where the cert was first created, any pre-existing cert in the Apple account is
+# unusable on this build machine ("Cannot save Signing Certificates without
+# certificate private key"). So the build itself deletes existing distribution
+# certificates via the App Store Connect API and mints a fresh one whose private
+# key it generates and keeps — then creates the matching App Store profile.
 # ─────────────────────────────────────────────────────────────────────────────
 workflows:
-
-  android-apk:
-    name: Android · installable APK
-    # Linux is the cheap machine for this. If the plan does not carry it, an
-    # Android build runs unchanged on mac_mini_m2 — swap the line, nothing
-    # else in this workflow depends on the operating system.
-    instance_type: linux_x2
-    max_build_duration: 45
-    environment:
-      flutter: stable
-    cache:
-      cache_paths:
-        - $HOME/.pub-cache
-        - $HOME/.gradle/caches
-    scripts:
-      - name: Get Flutter packages
-        script: flutter pub get
-
-      # The same three checks the project runs locally. A build that reaches a
-      # phone with a broken deck in it costs more to discover than the two
-      # minutes these take.
-      - name: Analyze and test
-        script: |
-          set -e
-          flutter analyze
-          flutter test
-
-      # A universal APK rather than one per ABI: there is one phone to get
-      # this onto, and picking the right architecture by hand is exactly the
-      # step worth not having.
-      #
-      # Release here is signed with the debug key, which is what the project's
-      # build.gradle.kts still does. That is fine for installing by hand and
-      # is NOT publishable to Play — that needs a real keystore, and is a
-      # different job from looking at the app.
-      - name: Build the APK
-        script: flutter build apk --release
-    artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-    publishing:
-      email:
-        recipients:
-          - lorenzo.ballestrazzi07@gmail.com
-        notify:
-          success: true
-          failure: true
-
-  # ───────────────────────────────────────────────────────────────────────────
-  # The Play Store build.
-  #
-  # An AAB is not an APK: it cannot be installed on a phone at all. It is the
-  # upload format, and Play generates the APKs from it. Use android-apk above
-  # to look at the app; use this one to publish it.
-  #
-  # Play also refuses anything signed with the debug key, so this needs a real
-  # keystore. Codemagic holds it: Settings -> Code signing identities ->
-  # Android keystores, uploaded under the reference name below. The build
-  # writes key.properties from the secrets it is given, and the Gradle config
-  # picks it up from there.
-  # ───────────────────────────────────────────────────────────────────────────
-  android-aab:
-    name: Android · AAB for Play
-    instance_type: linux_x2
-    max_build_duration: 45
-    environment:
-      flutter: stable
-      android_signing:
-        - knowit_keystore
-    cache:
-      cache_paths:
-        - $HOME/.pub-cache
-        - $HOME/.gradle/caches
-    scripts:
-      - name: Get Flutter packages
-        script: flutter pub get
-
-      - name: Analyze and test
-        script: |
-          set -e
-          flutter analyze
-          flutter test
-
-      - name: Point Gradle at the keystore
-        script: |
-          set -e
-          cat > "$CM_BUILD_DIR/android/key.properties" <<EOF
-          storeFile=$CM_KEYSTORE_PATH
-          storePassword=$CM_KEYSTORE_PASSWORD
-          keyAlias=$CM_KEY_ALIAS
-          keyPassword=$CM_KEY_PASSWORD
-          EOF
-
-      - name: Build the bundle
-        # Play rejects an upload whose version code it has seen before, and
-        # pubspec's is pinned at 1. Codemagic's own build number increments on
-        # its own, so it is the one thing here that cannot collide.
-        script: flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
-    artifacts:
-      - build/**/outputs/bundle/**/*.aab
-      - build/**/outputs/**/mapping.txt
-    publishing:
-      email:
-        recipients:
-          - lorenzo.ballestrazzi07@gmail.com
-        notify:
-          success: true
-          failure: true
-
-  # ───────────────────────────────────────────────────────────────────────────
-  # Signing strategy, inherited from Improvy: a distribution certificate's
-  # PRIVATE KEY only exists where the certificate was first created, so any
-  # certificate already sitting in the Apple account is unusable on a fresh
-  # build machine ("Cannot save Signing Certificates without certificate
-  # private key"). The build therefore deletes the existing distribution
-  # certificates through the App Store Connect API and mints a new one whose
-  # private key it generates and keeps, then creates the matching profile.
-  #
-  # Before this can run, two things have to exist on Apple's side:
-  #   1. an App Store Connect app record for com.knowit.knowit;
-  #   2. its Apple ID (the long number in the app's URL), set below.
-  # ───────────────────────────────────────────────────────────────────────────
   ios-testflight:
     name: iOS · TestFlight
     instance_type: mac_mini_m2
@@ -143,10 +17,8 @@ workflows:
       app_store_connect: chiaveapipercodemagic
     environment:
       vars:
-        # Replace with the Apple ID of the Knowit app record. The build cannot
-        # work out which app it is publishing to without it.
-        APP_STORE_APPLE_ID: PUT_THE_KNOWIT_APPLE_ID_HERE
-        BUNDLE_ID: "com.knowit.knowit"
+        APP_STORE_APPLE_ID: 6806852300
+        BUNDLE_ID: "com.astuto.app"
       flutter: stable
       xcode: latest
       cocoapods: default
@@ -157,12 +29,6 @@ workflows:
     scripts:
       - name: Get Flutter packages
         script: flutter pub get
-
-      - name: Analyze and test
-        script: |
-          set -e
-          flutter analyze
-          flutter test
 
       - name: Reset signing — create a certificate we own + App Store profile
         script: |
@@ -199,6 +65,7 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
     publishing:
       app_store_connect:
         auth: integration

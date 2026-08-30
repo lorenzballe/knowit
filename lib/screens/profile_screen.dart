@@ -131,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       app.isPlus
-                          ? 'Knowit+ · ${app.pickedTopics.length} topics'
+                          ? 'Astuto+ · ${app.pickedTopics.length} topics'
                           : 'Free plan · ${app.pickedTopics.length} topics',
                       style: AppText.body(
                         size: 12.5,
@@ -236,7 +236,7 @@ class ProfileScreen extends StatelessWidget {
                               ? 'Nudge on, every day at ${app.notifyTime}.'
                               : remindersSupported
                               ? 'Nudge on, but the system said no. Turn '
-                                    'notifications on for Knowit in settings.'
+                                    'notifications on for Astuto in settings.'
                               : 'Nudge on. Delivery needs the phone build.',
                         ),
                       ),
@@ -314,7 +314,7 @@ class ProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Knowit+',
+                          'Astuto+',
                           style: AppText.display(
                             size: 17,
                             weight: FontWeight.w600,
@@ -803,7 +803,7 @@ class _Mastery extends StatelessWidget {
   Widget build(BuildContext context) {
     // The three you are worst at are the ones worth acting on, and they are
     // free: a reader has to see the measurement before paying to keep it.
-    // What Knowit+ adds is the rest of the board.
+    // What Astuto+ adds is the rest of the board.
     final all = app.masteryByWeakness;
     final rows = app.isPlus ? all : all.take(3).toList();
     final hidden = all.length - rows.length;
@@ -885,7 +885,7 @@ class _Mastery extends StatelessWidget {
           if (hidden > 0)
             Semantics(
               button: true,
-              label: 'See every principle with Knowit plus',
+              label: 'See every principle with Astuto plus',
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => requirePlus(context, app, () {}),
@@ -945,7 +945,7 @@ class _ShareRecord extends StatelessWidget {
 /// subscription is sold on, so it has to exist before it is sold.
 ///
 /// Free readers see that the answer is being kept and how many calls it
-/// rests on; the number itself is what Knowit+ opens.
+/// rests on; the number itself is what Astuto+ opens.
 class _TrendPanel extends StatelessWidget {
   final AppState app;
   const _TrendPanel({required this.app});
@@ -987,7 +987,7 @@ class _TrendPanel extends StatelessWidget {
           const SizedBox(height: 10),
           if (locked)
             Text(
-              'The measurement is running. Knowit+ shows you which way it '
+              'The measurement is running. Astuto+ shows you which way it '
               'is going.',
               style: AppText.body(
                 size: 13,
@@ -1089,7 +1089,7 @@ class _TrendRow extends StatelessWidget {
   }
 }
 
-/// The Knowit+ offer, on the screen where the reader is already looking at
+/// The Astuto+ offer, on the screen where the reader is already looking at
 /// what the app knows about them.
 class _PlusCard extends StatelessWidget {
   final AppState app;
@@ -1115,7 +1115,7 @@ class _PlusCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  'KNOWIT+',
+                  'ASTUTO+',
                   style: AppText.label(
                     size: 9.5,
                     weight: FontWeight.w700,
@@ -1148,7 +1148,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'The measurement is free and always will be. Knowit+ is what '
+            'The measurement is free and always will be. Astuto+ is what '
             'tells you which way it is going.',
             style: AppText.body(
               size: 13,

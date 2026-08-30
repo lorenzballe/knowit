@@ -5,7 +5,7 @@ import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/motion.dart';
 
-/// What Knowit+ costs, in cents, so the saving can be worked out rather than
+/// What Astuto+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 48%" is a number that quietly stops being true
 /// the first time a price moves.
 const int kMonthlyCents = 399;
@@ -65,7 +65,7 @@ const _perks = [
   ),
 ];
 
-/// Knowit+.
+/// Astuto+.
 ///
 /// There is no billing wired up. The CTA starts the trial locally so the
 /// gated perks can be used, and says plainly that no payment was taken.
@@ -81,7 +81,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
   String get _cta {
-    if (widget.app.isPlus) return 'KNOWIT+ IS ACTIVE';
+    if (widget.app.isPlus) return 'ASTUTO+ IS ACTIVE';
     return _plan == Plan.year
         ? 'Try 7 days free, then ${_euros(kYearlyCents)}/yr'
         : 'Try 7 days free, then ${_euros(kMonthlyCents)}/mo';
@@ -141,7 +141,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
-                        'KNOWIT+',
+                        'ASTUTO+',
                         style: AppText.label(
                           size: 11,
                           weight: FontWeight.w700,

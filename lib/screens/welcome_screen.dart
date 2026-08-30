@@ -27,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Knowit',
+                'Astuto',
                 style: AppText.display(
                   size: 20,
                   weight: FontWeight.w700,

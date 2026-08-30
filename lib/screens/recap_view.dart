@@ -11,7 +11,7 @@ import 'paywall_screen.dart';
 
 const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
-/// The end-of-day state: the streak recap, then either the Knowit+ upsell on
+/// The end-of-day state: the streak recap, then either the Astuto+ upsell on
 /// the free plan or the second set of the day for subscribers.
 class RecapView extends StatelessWidget {
   final AppState app;
@@ -213,7 +213,7 @@ class _Stat extends StatelessWidget {
   }
 }
 
-/// The Knowit+ second set, once the first five are done.
+/// The Astuto+ second set, once the first five are done.
 class _ExtraSet extends StatelessWidget {
   final AppState app;
   const _ExtraSet({required this.app});
@@ -292,7 +292,7 @@ class _Upsell extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Knowit+ unlocks a second set every day, and shows you whether '
+            'Astuto+ unlocks a second set every day, and shows you whether '
             'the gap is closing.',
             style: AppText.body(
               size: 13,

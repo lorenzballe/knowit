@@ -1,4 +1,4 @@
-# Knowit
+# Astuto
 
 Five AI-written "pills" a day — bite-size facts across science, history, psychology,
 economics, tech, weird facts, the human body, philosophy, pop culture, nature and
@@ -66,7 +66,7 @@ the end-of-day recap, Saved with its empty state, Profile (stats, daily nudge,
 topic chips), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
-**Knowit+** — three perks, all delivered: the searchable **Archive**, the
+**Astuto+** — three perks, all delivered: the searchable **Archive**, the
 **topic picker**, and a **second set of five pills** handed over from the recap
 once the first five are done. On the free plan the first two carry a lock chip
 and open the paywall instead.
@@ -83,7 +83,7 @@ lib/
   models/      Pill
   state/       AppState — streak, saved pills, reading history, plan (persisted)
   utils/       PNG download, web-only with a no-op elsewhere
-  widgets/     card stack, share sheet, shared UI, the Knowit+ gate
+  widgets/     card stack, share sheet, shared UI, the Astuto+ gate
   screens/     the screens listed above
 ```
 
@@ -284,7 +284,7 @@ So:
   your own words is what stops the other side being explained away on sight.
   Skipping is allowed: a reader made to type before they may read on stops
   reading on.
-- **Knowit+ sells depth, not volume.** More cards is the pitch every rival
+- **Astuto+ sells depth, not volume.** More cards is the pitch every rival
   makes better. What is gated instead is whether the gap is closing over time
   (`Trend`) and the full principle board; the measurement itself stays free,
   because a reader has to see it before they will pay to keep it.

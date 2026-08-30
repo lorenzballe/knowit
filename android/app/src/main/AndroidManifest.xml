@@ -4,7 +4,7 @@
     <!-- So a scheduled reminder survives a restart. -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
-        android:label="Knowit"
+        android:label="Astuto"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

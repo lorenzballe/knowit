@@ -154,7 +154,7 @@ Pill _d(
   );
 }
 
-/// The full content pool — Knowit's "100% AI-written" daily pills.
+/// The full content pool — Astuto's "100% AI-written" daily pills.
 /// Five per topic. Each answer stays under sixty words and carries a source
 /// that can be checked.
 final List<Pill> kPillPool = [

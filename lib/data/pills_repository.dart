@@ -8,7 +8,7 @@ import 'topics.dart';
 String dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-/// How many pills a free day holds. Knowit+ unlocks a second set of the same
+/// How many pills a free day holds. Astuto+ unlocks a second set of the same
 /// size once the first is done.
 const int kPillsPerDay = 5;
 

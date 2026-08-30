@@ -136,7 +136,7 @@ class _Header extends StatelessWidget {
             const SizedBox(width: 12),
           ],
           Text(
-            'Knowit',
+            'Astuto',
             style: AppText.display(
               size: 20,
               weight: FontWeight.w600,

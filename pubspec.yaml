@@ -1,5 +1,5 @@
-name: knowit
-description: "Knowit — one smart pill a day, five ways to sound interesting at the bar."
+name: astuto
+description: "Astuto — five cards a day, and a measurement of your own judgement."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

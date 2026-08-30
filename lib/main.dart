@@ -13,7 +13,7 @@ import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
 
-void main() => runApp(const KnowitApp());
+void main() => runApp(const AstutoApp());
 
 /// On the web a list should follow the mouse the way it follows a finger.
 class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
@@ -31,14 +31,14 @@ class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
 /// Owns the stored state, because the theme is part of it and has to be
 /// known above MaterialApp — otherwise the choice could only repaint the
 /// screen that made it.
-class KnowitApp extends StatefulWidget {
-  const KnowitApp({super.key});
+class AstutoApp extends StatefulWidget {
+  const AstutoApp({super.key});
 
   @override
-  State<KnowitApp> createState() => _KnowitAppState();
+  State<AstutoApp> createState() => _AstutoAppState();
 }
 
-class _KnowitAppState extends State<KnowitApp> {
+class _AstutoAppState extends State<AstutoApp> {
   final AppState _app = AppState();
 
   @override
@@ -61,19 +61,19 @@ class _KnowitAppState extends State<KnowitApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Knowit',
+      title: 'Astuto',
       debugShowCheckedModeBanner: false,
-      theme: buildKnowitTheme(Brightness.light),
-      darkTheme: buildKnowitTheme(Brightness.dark),
+      theme: buildAstutoTheme(Brightness.light),
+      darkTheme: buildAstutoTheme(Brightness.dark),
       themeMode: _app.themeMode,
-      home: KnowitRoot(app: _app),
+      home: AstutoRoot(app: _app),
       scrollBehavior: const _DragAnywhereScrollBehavior(),
       builder: (context, child) => _PhoneFrame(child: child),
     );
   }
 }
 
-/// Knowit is a phone app served from a web page, so on anything wider than a
+/// Astuto is a phone app served from a web page, so on anything wider than a
 /// handset it sits in a centred column at handset width rather than stretching
 /// a card across a desktop monitor.
 class _PhoneFrame extends StatelessWidget {
@@ -113,15 +113,15 @@ class _PhoneFrame extends StatelessWidget {
 /// per install; after that the app opens straight on the tab bar.
 enum _Stage { welcome, topics, signIn, comeback, shell }
 
-class KnowitRoot extends StatefulWidget {
+class AstutoRoot extends StatefulWidget {
   final AppState app;
-  const KnowitRoot({super.key, required this.app});
+  const AstutoRoot({super.key, required this.app});
 
   @override
-  State<KnowitRoot> createState() => _KnowitRootState();
+  State<AstutoRoot> createState() => _AstutoRootState();
 }
 
-class _KnowitRootState extends State<KnowitRoot> {
+class _AstutoRootState extends State<AstutoRoot> {
   AppState get _app => widget.app;
   _Stage _stage = _Stage.welcome;
   bool _stageResolved = false;
@@ -221,7 +221,7 @@ class _KnowitRootState extends State<KnowitRoot> {
         );
 
       case _Stage.shell:
-        return KnowitShell(
+        return AstutoShell(
           app: _app,
           onSignedOut: () => setState(() {
             _stageResolved = true;
@@ -246,7 +246,7 @@ class _Splash extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Knowit',
+              'Astuto',
               style: AppText.display(
                 size: 30,
                 weight: FontWeight.w700,
@@ -270,17 +270,17 @@ class _Splash extends StatelessWidget {
   }
 }
 
-class KnowitShell extends StatefulWidget {
+class AstutoShell extends StatefulWidget {
   final AppState app;
   final VoidCallback onSignedOut;
 
-  const KnowitShell({super.key, required this.app, required this.onSignedOut});
+  const AstutoShell({super.key, required this.app, required this.onSignedOut});
 
   @override
-  State<KnowitShell> createState() => _KnowitShellState();
+  State<AstutoShell> createState() => _AstutoShellState();
 }
 
-class _KnowitShellState extends State<KnowitShell> {
+class _AstutoShellState extends State<AstutoShell> {
   int _tab = 0;
 
   @override
@@ -317,7 +317,7 @@ class _KnowitShellState extends State<KnowitShell> {
           bottom: false,
           child: IndexedStack(index: _tab, children: screens),
         ),
-        bottomNavigationBar: _KnowitTabBar(
+        bottomNavigationBar: _AstutoTabBar(
           index: _tab,
           onChanged: (i) => setState(() => _tab = i),
         ),
@@ -326,10 +326,10 @@ class _KnowitShellState extends State<KnowitShell> {
   }
 }
 
-class _KnowitTabBar extends StatelessWidget {
+class _AstutoTabBar extends StatelessWidget {
   final int index;
   final ValueChanged<int> onChanged;
-  const _KnowitTabBar({required this.index, required this.onChanged});
+  const _AstutoTabBar({required this.index, required this.onChanged});
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),

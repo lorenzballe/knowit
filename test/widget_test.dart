@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:knowit/data/pills_data.dart';
-import 'package:knowit/data/pills_repository.dart';
-import 'package:knowit/main.dart';
-import 'package:knowit/screens/pill_detail_screen.dart';
-import 'package:knowit/models/pill.dart';
-import 'package:knowit/screens/deck_viewer_screen.dart';
-import 'package:knowit/screens/topic_mix_screen.dart';
-import 'package:knowit/state/app_state.dart';
-import 'package:knowit/widgets/record_share_sheet.dart';
-import 'package:knowit/theme.dart';
-import 'package:knowit/widgets/chunky.dart';
-import 'package:knowit/widgets/scaled_text.dart';
-import 'package:knowit/widgets/motion.dart';
-import 'package:knowit/widgets/pill_card_stack.dart';
-import 'package:knowit/widgets/ui.dart';
+import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/main.dart';
+import 'package:astuto/screens/pill_detail_screen.dart';
+import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/deck_viewer_screen.dart';
+import 'package:astuto/screens/topic_mix_screen.dart';
+import 'package:astuto/state/app_state.dart';
+import 'package:astuto/widgets/record_share_sheet.dart';
+import 'package:astuto/theme.dart';
+import 'package:astuto/widgets/chunky.dart';
+import 'package:astuto/widgets/scaled_text.dart';
+import 'package:astuto/widgets/motion.dart';
+import 'package:astuto/widgets/pill_card_stack.dart';
+import 'package:astuto/widgets/ui.dart';
 
 /// Pumps a few frames so the async `SharedPreferences` load settles.
 
@@ -57,7 +57,7 @@ void main() {
 
   testWidgets('a fresh install opens on the welcome screen', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(
@@ -69,7 +69,7 @@ void main() {
 
   testWidgets('the first run asks for the mix, then deals', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
@@ -95,7 +95,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await tester.tap(find.text('I already have an account'));
@@ -116,7 +116,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(find.text('Today'), findsWidgets);
@@ -126,7 +126,7 @@ void main() {
 
   testWidgets('Saved shows the empty state', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await tester.tap(find.text('Saved').last);
@@ -134,12 +134,12 @@ void main() {
     expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
   });
 
-  group('Knowit+ gates the three perks', () {
+  group('Astuto+ gates the three perks', () {
     testWidgets('the archive opens the paywall on the free plan', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await tester.tap(find.text('Saved').last);
@@ -158,7 +158,7 @@ void main() {
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await _openProfile(tester);
@@ -174,9 +174,9 @@ void main() {
       expect(find.text('What should we talk about?'), findsNothing);
     });
 
-    testWidgets('the archive opens for real on Knowit+', (tester) async {
+    testWidgets('the archive opens for real on Astuto+', (tester) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await tester.tap(find.text('Saved').last);
@@ -193,7 +193,7 @@ void main() {
 
     testWidgets('starting the trial unlocks what was gated', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await tester.tap(find.text('Saved').last);
@@ -216,7 +216,7 @@ void main() {
 
   testWidgets('sharing is free — it is how the app spreads', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await tester.tap(find.byIcon(Icons.ios_share_rounded));
@@ -286,7 +286,7 @@ void main() {
     Map<String, double>? picked;
     await tester.pumpWidget(
       MaterialApp(
-        theme: buildKnowitTheme(Brightness.dark),
+        theme: buildAstutoTheme(Brightness.dark),
         home: TopicMixScreen(onDone: (w) => picked = w),
       ),
     );
@@ -367,7 +367,7 @@ void main() {
       expect(app.streakWasFrozen, isFalse);
     });
 
-    test('the free plan holds one, Knowit+ holds three', () async {
+    test('the free plan holds one, Astuto+ holds three', () async {
       final free = await appWith({});
       expect(free.freezeCapacity, 1);
 
@@ -428,7 +428,7 @@ void main() {
     // is now built on the chunky one, which is what keeps that from coming
     // back one screen at a time.
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
@@ -443,7 +443,7 @@ void main() {
 
   testWidgets('opening the app lands straight on the cards', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(find.text('Next pill'), findsOneWidget);
@@ -456,7 +456,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
@@ -472,7 +472,7 @@ void main() {
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await _openProfile(tester);
@@ -505,7 +505,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await _openProfile(tester);
@@ -529,7 +529,7 @@ void main() {
 
   testWidgets('the daily nudge toggle flips and persists', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     await _openProfile(tester);
@@ -548,11 +548,11 @@ void main() {
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 
-  testWidgets('Knowit+ hands over the second set once the day is done', (
+  testWidgets('Astuto+ hands over the second set once the day is done', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed(plus: true));
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
@@ -576,7 +576,7 @@ void main() {
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
@@ -602,7 +602,7 @@ void main() {
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
@@ -818,7 +818,7 @@ void main() {
 
   testWidgets('the theme is one choice for the whole app', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     Palette paletteOn(String tabLabel) {
@@ -855,7 +855,7 @@ void main() {
       // nobody can check, so the delays are animation intervals instead.
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(Brightness.dark),
+          theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: Column(
               children: [
@@ -891,7 +891,7 @@ void main() {
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       for (var i = 0; i < 5; i++) {
@@ -1052,7 +1052,7 @@ void main() {
   group('Saved list', () {
     testWidgets('keeps the most recently saved pill first', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       // Save the first two pills of the day.
@@ -1081,7 +1081,7 @@ void main() {
 
     testWidgets('removing a pill can be undone', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
@@ -1105,7 +1105,7 @@ void main() {
   group('Type set to the space', () {
     Widget box(String text, {double width = 300, double height = 500}) =>
         MaterialApp(
-          theme: buildKnowitTheme(Brightness.dark),
+          theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: Center(
               child: SizedBox(
@@ -1183,7 +1183,7 @@ void main() {
     }
 
     Widget viewer(AppState app, List<Pill> deck) => MaterialApp(
-      theme: buildKnowitTheme(Brightness.dark),
+      theme: buildAstutoTheme(Brightness.dark),
       home: DeckViewerScreen(app: app, deck: deck, title: "Today's five"),
     );
 
@@ -1324,7 +1324,7 @@ void main() {
       Set<String> reviews = const {},
     }) {
       return MaterialApp(
-        theme: buildKnowitTheme(Brightness.dark),
+        theme: buildAstutoTheme(Brightness.dark),
         home: Scaffold(
           backgroundColor: Palette.dark.surface,
           body: SizedBox(
@@ -1610,7 +1610,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(Brightness.dark),
+          theme: buildAstutoTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
       );
@@ -1633,7 +1633,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(Brightness.dark),
+          theme: buildAstutoTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
       );
@@ -1809,7 +1809,7 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
-          theme: buildKnowitTheme(Brightness.dark),
+          theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: SizedBox(
               height: 640,
@@ -1846,11 +1846,11 @@ void main() {
         'knowit.answersJson': 'not json {{{',
         'knowit.todayDeckIds': <String>['gone-1', 'gone-2'],
       });
-      await tester.pumpWidget(const KnowitApp());
+      await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       // The app is past the splash and dealing a real day.
-      expect(find.text('Knowit'), findsWidgets);
+      expect(find.text('Astuto'), findsWidgets);
       expect(find.text('Today'), findsWidgets);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
@@ -2072,7 +2072,7 @@ void main() {
       'knowit.bestStreak': 13,
       'knowit.lastCompletionDate': key(lapsed),
     });
-    await tester.pumpWidget(const KnowitApp());
+    await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
     expect(find.text('STREAK RESET'), findsOneWidget);

@@ -101,7 +101,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         'I was right ${s.wasRight.round()}% of the time.\n'
         '${s.verdict}.\n\n'
         'How close would yours be?\n'
-        '— Knowit · lorenzballe.github.io/knowit';
+        '— Astuto · lorenzballe.github.io/knowit';
   }
 
   void _toast(String message) {
@@ -308,7 +308,7 @@ class RecordCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Knowit',
+                  'Astuto',
                   style: AppText.display(
                     size: 14,
                     weight: FontWeight.w600,

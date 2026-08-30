@@ -201,7 +201,7 @@ class AppText {
   );
 }
 
-ThemeData buildKnowitTheme(Brightness brightness) {
+ThemeData buildAstutoTheme(Brightness brightness) {
   final palette = brightness == Brightness.dark ? Palette.dark : Palette.light;
   final base = ThemeData(
     useMaterial3: true,
