@@ -28,6 +28,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // Required by flutter_local_notifications: it uses java.time, which
+        // needs backporting for the Android versions below 26 that this app
+        // still supports. Without it the Android build fails outright — the
+        // web build says nothing about it, which is why it went unnoticed.
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
@@ -68,6 +73,11 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    // The backport itself (see isCoreLibraryDesugaringEnabled above).
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
 }
 
 kotlin {
