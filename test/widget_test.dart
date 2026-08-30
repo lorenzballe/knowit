@@ -34,7 +34,7 @@ Map<String, Object> _installed({bool plus = false}) => {
 };
 
 Future<void> _openProfile(WidgetTester tester) async {
-  await tester.tap(find.text('Profile').last);
+  await tester.tap(find.byKey(const ValueKey('tab-Profile')));
   await _settle(tester);
 }
 
@@ -88,7 +88,7 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('knowit.topicWeights'), isNotNull);
     expect(prefs.getStringList('knowit.topics'), hasLength(13));
-    expect(find.text('Today'), findsWidgets);
+    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
   });
 
   testWidgets('signing in keeps the name and lands on the tab bar', (
@@ -107,7 +107,7 @@ void main() {
     await tester.tap(find.text('Send me a login link'));
     await _settle(tester);
 
-    expect(find.text('Today'), findsWidgets);
+    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
     await _openProfile(tester);
     expect(find.text('Marco'), findsOneWidget);
   });
@@ -119,9 +119,9 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('Today'), findsWidgets);
-    expect(find.text('Saved'), findsWidgets);
-    expect(find.text('Profile'), findsWidgets);
+    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Saved')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
   testWidgets('Saved shows the empty state', (tester) async {
@@ -129,7 +129,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.text('Saved').last);
+    await tester.tap(find.byKey(const ValueKey('tab-Saved')));
     await _settle(tester);
     expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
   });
@@ -142,7 +142,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.text('Saved').last);
+      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
       await _settle(tester);
       await tester.tap(find.text('Archive').first);
       await _settle(tester);
@@ -179,7 +179,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.text('Saved').last);
+      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
       await _settle(tester);
       await tester.tap(find.text('Archive').first);
       await _settle(tester);
@@ -196,7 +196,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.text('Saved').last);
+      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
       await _settle(tester);
       await tester.tap(find.text('Archive').first);
       await _settle(tester);
@@ -447,9 +447,9 @@ void main() {
     await _settle(tester);
 
     expect(find.text('Next pill'), findsOneWidget);
-    expect(find.text('Today'), findsWidgets);
-    expect(find.text('Saved'), findsWidgets);
-    expect(find.text('Profile'), findsWidgets);
+    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Saved')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
   testWidgets('the first run goes from the welcome straight to the cards', (
@@ -828,11 +828,11 @@ void main() {
 
     // Whatever the tab, the same ground.
     final onToday = paletteOn('Today');
-    await tester.tap(find.text('Saved').last);
+    await tester.tap(find.byKey(const ValueKey('tab-Saved')));
     await _settle(tester);
     expect(paletteOn('Saved').surface, onToday.surface);
 
-    await tester.tap(find.text('Profile').last);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await _settle(tester);
     expect(paletteOn('Profile').surface, onToday.surface);
 
@@ -1068,7 +1068,7 @@ void main() {
       final order = prefs.getStringList('knowit.savedIds')!;
       expect(order, hasLength(2));
 
-      await tester.tap(find.text('Saved').last);
+      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
       await _settle(tester);
 
       // The list follows that order, newest at the top.
@@ -1087,7 +1087,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
       await _settle(tester);
 
-      await tester.tap(find.text('Saved').last);
+      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
       await _settle(tester);
       expect(find.text('1 pill'), findsOneWidget);
 
@@ -1851,7 +1851,7 @@ void main() {
 
       // The app is past the splash and dealing a real day.
       expect(find.text('Astuto'), findsWidgets);
-      expect(find.text('Today'), findsWidgets);
+      expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
       // And the deck it could not restore was re-dealt rather than left empty.
@@ -2080,6 +2080,6 @@ void main() {
 
     await tester.tap(find.text("Start again with today's five"));
     await _settle(tester);
-    expect(find.text('Today'), findsWidgets);
+    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
   });
 }

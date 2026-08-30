@@ -326,6 +326,18 @@ class _AstutoShellState extends State<AstutoShell> {
   }
 }
 
+/// The tab bar, floating.
+///
+/// It used to be a full-width slab pinned to the bottom edge with a hairline
+/// over it, and two rows of content — icon above label — which made it the
+/// thickest thing on the screen after the card. A detached pill reads as
+/// something laid on top of the app rather than part of its frame, and
+/// putting the label beside the icon rather than under it takes a row out.
+///
+/// The Scaffold still reserves the height rather than letting content run
+/// underneath: a bar that floats over a scrolling list has to be paid for in
+/// bottom padding on every screen, and getting that wrong hides the last row
+/// of something.
 class _AstutoTabBar extends StatelessWidget {
   final int index;
   final ValueChanged<int> onChanged;
@@ -339,82 +351,100 @@ class _AstutoTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 260),
-      decoration: BoxDecoration(
-        color: context.p.surface,
-        border: Border(top: BorderSide(color: context.p.line)),
-      ),
+    return Padding(
       padding: EdgeInsets.fromLTRB(
         18,
-        10,
+        4,
         18,
-        MediaQuery.of(context).padding.bottom + 10,
+        MediaQuery.of(context).padding.bottom + 8,
       ),
-      child: Row(
-        children: List.generate(_tabs.length, (i) {
-          final selected = i == index;
-          final tab = _tabs[i];
-          final onColor = context.p.ink;
-          final offColor = context.p.inkFaint;
-          final tint = selected ? onColor : offColor;
+      child: Container(
+        height: 58,
+        decoration: BoxDecoration(
+          color: context.p.surfaceRaised,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: context.p.line),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(
+                alpha: context.p.isDark ? 0.5 : 0.1,
+              ),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Row(
+          children: List.generate(_tabs.length, (i) {
+            final selected = i == index;
+            final tab = _tabs[i];
+            final tint = selected ? AppColors.limeInk : context.p.inkFaint;
 
-          return Expanded(
-            child: Semantics(
-              button: true,
-              selected: selected,
-              label: tab.label,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  if (selected) return;
-                  HapticFeedback.selectionClick();
-                  onChanged(i);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 2),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // The selected tab sits in a soft pill, and the icon
-                      // lifts slightly — enough to read at a glance.
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 220),
-                        curve: Curves.easeOut,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: selected
-                              ? AppColors.lime.withValues(alpha: 0.22)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(999),
-                        ),
-                        child: AnimatedScale(
-                          duration: const Duration(milliseconds: 220),
-                          curve: Curves.easeOutBack,
-                          scale: selected ? 1.08 : 1,
-                          child: Icon(tab.icon, size: 20, color: tint),
-                        ),
+            return Expanded(
+              child: Semantics(
+                key: ValueKey('tab-${tab.label}'),
+                button: true,
+                selected: selected,
+                label: tab.label,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () {
+                    if (selected) return;
+                    HapticFeedback.selectionClick();
+                    onChanged(i);
+                  },
+                  child: Center(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 240),
+                      curve: Curves.easeOutCubic,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: selected ? 14 : 10,
+                        vertical: 8,
                       ),
-                      const SizedBox(height: 5),
-                      AnimatedDefaultTextStyle(
-                        duration: const Duration(milliseconds: 220),
-                        style: AppText.body(
-                          size: 10.5,
-                          weight: selected ? FontWeight.w600 : FontWeight.w500,
-                          color: tint,
-                        ),
-                        child: Text(tab.label),
+                      decoration: BoxDecoration(
+                        color: selected ? AppColors.lime : Colors.transparent,
+                        borderRadius: BorderRadius.circular(999),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(tab.icon, size: 19, color: tint),
+                          // The label has to be able to take less than it
+                          // asks for: a third of the bar is not much, and it
+                          // is briefly narrower still while the pill grows.
+                          //
+                          // The label belongs to the tab you are on. Three of
+                          // them side by side is a legend nobody reads.
+                          Flexible(
+                            child: AnimatedSize(
+                              duration: const Duration(milliseconds: 240),
+                              curve: Curves.easeOutCubic,
+                              child: selected
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(left: 7),
+                                      child: Text(
+                                        tab.label,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppText.body(
+                                          size: 13,
+                                          weight: FontWeight.w700,
+                                          color: tint,
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }

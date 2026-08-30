@@ -141,11 +141,26 @@ class _PillCardStackState extends State<PillCardStack>
     anim.removeListener(listener);
   }
 
+  /// How far the top card has travelled towards being gone, 0 to 1.
+  ///
+  /// Everything behind it is placed against this rather than against its
+  /// integer position in the stack. That is the whole fix: a card sitting at
+  /// depth 1 used to hold a fixed opacity, scale and offset until the index
+  /// moved, and then snap to the top card's values in a single frame — which
+  /// is what read as the card underneath lighting up all at once. Sliding
+  /// depth by the drag means that by the time the index actually moves, the
+  /// card below is already exactly where the new top card belongs, and the
+  /// change of index is invisible.
+  double get _progress => (_dx.abs() / 220).clamp(0.0, 1.0);
+
   @override
   Widget build(BuildContext context) {
     final remaining = widget.deck.length - widget.index;
-    final visible = math.min(3, remaining);
+    // One layer more than is really visible: the extra sits at the back at
+    // low opacity so a card entering the stack fades in instead of appearing.
+    final visible = math.min(4, remaining);
     if (visible <= 0) return const SizedBox.shrink();
+    final progress = _progress;
 
     final layers = <Widget>[];
     for (var d = visible - 1; d >= 0; d--) {
@@ -190,11 +205,15 @@ class _PillCardStackState extends State<PillCardStack>
               isReview: widget.reviewIds.contains(pill.id),
             );
 
-      final translateY = isTop ? 0.0 : d * 16.0;
-      final scale = isTop ? 1.0 : 1 - d * 0.035;
-      final opacity = isTop
-          ? math.max(0.0, 1 - _dx.abs() / 420)
-          : (d == 1 ? 0.55 : 0.28);
+      // Continuous depth: 1 becomes 0 as the top card leaves.
+      final depth = isTop ? 0.0 : d - progress;
+      final translateY = depth * 16.0;
+      final scale = 1 - depth * 0.035;
+      // The card being dragged stays solid. Fading it turned it into a
+      // window onto the card underneath, and two legible questions printed
+      // over each other read as a fault rather than as one card leaving. It
+      // travels far enough to clear the screen on its own.
+      final opacity = isTop ? 1.0 : math.pow(0.5, depth).toDouble();
 
       card = Opacity(
         opacity: opacity,

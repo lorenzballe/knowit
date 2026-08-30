@@ -471,11 +471,12 @@ class _AskFaceState extends State<_AskFace> {
                           : 'Write it before you read theirs.')
                     // Nowhere to commit means this is a re-read, and telling
                     // someone to commit to a card they answered days ago is
-                    // just wrong.
-                    : widget.onAnswer == null
-                    ? (widget.given != null
-                          ? 'You answered this one.'
-                          : 'Answer this one on Today first.')
+                    // just wrong. It used to also tell an unanswered one to
+                    // go and answer it on Today — which the cards sitting
+                    // behind the top of today's own deck were saying, on
+                    // Today, about themselves.
+                    : widget.onAnswer == null && widget.given != null
+                    ? 'You answered this one.'
                     : widget.prompt ??
                           '${pill.difficulty.label} · commit before you turn '
                               'it over.',
