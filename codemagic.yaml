@@ -62,6 +62,67 @@ workflows:
           failure: true
 
   # ───────────────────────────────────────────────────────────────────────────
+  # The Play Store build.
+  #
+  # An AAB is not an APK: it cannot be installed on a phone at all. It is the
+  # upload format, and Play generates the APKs from it. Use android-apk above
+  # to look at the app; use this one to publish it.
+  #
+  # Play also refuses anything signed with the debug key, so this needs a real
+  # keystore. Codemagic holds it: Settings -> Code signing identities ->
+  # Android keystores, uploaded under the reference name below. The build
+  # writes key.properties from the secrets it is given, and the Gradle config
+  # picks it up from there.
+  # ───────────────────────────────────────────────────────────────────────────
+  android-aab:
+    name: Android · AAB for Play
+    instance_type: linux_x2
+    max_build_duration: 45
+    environment:
+      flutter: stable
+      android_signing:
+        - knowit_keystore
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/.gradle/caches
+    scripts:
+      - name: Get Flutter packages
+        script: flutter pub get
+
+      - name: Analyze and test
+        script: |
+          set -e
+          flutter analyze
+          flutter test
+
+      - name: Point Gradle at the keystore
+        script: |
+          set -e
+          cat > "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storeFile=$CM_KEYSTORE_PATH
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          keyPassword=$CM_KEY_PASSWORD
+          EOF
+
+      - name: Build the bundle
+        # Play rejects an upload whose version code it has seen before, and
+        # pubspec's is pinned at 1. Codemagic's own build number increments on
+        # its own, so it is the one thing here that cannot collide.
+        script: flutter build appbundle --release --build-number=$PROJECT_BUILD_NUMBER
+    artifacts:
+      - build/**/outputs/bundle/**/*.aab
+      - build/**/outputs/**/mapping.txt
+    publishing:
+      email:
+        recipients:
+          - lorenzo.ballestrazzi07@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # ───────────────────────────────────────────────────────────────────────────
   # Signing strategy, inherited from Improvy: a distribution certificate's
   # PRIVATE KEY only exists where the certificate was first created, so any
   # certificate already sitting in the Apple account is unusable on a fresh
