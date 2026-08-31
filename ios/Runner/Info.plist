@@ -66,6 +66,12 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Answers the export-compliance question at upload time instead of on
+	     every build. Astuto's only encryption is the HTTPS its dependencies
+	     speak through the system — Firebase, RevenueCat — which is exempt.
+	     Nothing here implements or bundles an algorithm of its own. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<!-- Google sign-in comes back to the app through this scheme: it is the
 	     REVERSED_CLIENT_ID out of GoogleService-Info.plist, and without it
 	     the browser has nowhere to return to. -->
