@@ -130,6 +130,9 @@ function byGap(
  * space would never converge.
  */
 function wantedTags(demand: Demand, supply: Demand, topic: string): string[] {
+  // Thinking is the one subject where the reasoning move already says what
+  // the card is about, so a tag on top of it is noise.
+  if (topic === 'thinking') return [];
   const out: Array<[string, number]> = [];
   for (const [facet, want] of demand) {
     if (!facet.startsWith('tag:')) continue;
@@ -142,8 +145,7 @@ function wantedTags(demand: Demand, supply: Demand, topic: string): string[] {
   return out
     .sort((a, b) => b[1] - a[1])
     .slice(0, 3)
-    .map(([tag]) => tag)
-    .filter(() => topic !== 'thinking');
+    .map(([tag]) => tag);
 }
 
 /**
@@ -187,9 +189,13 @@ export function planBriefs(
     const asks = i < wantAsks;
     // One debate per run at most, for the reason the deck holds one a day:
     // a debate is ungraded, so it measures nothing.
+    // A debate closes a run, but only a run big enough for one to be worth
+    // a slot: a debate is ungraded, so a two-card batch with one in it has
+    // measured nothing.
+    const closesOnDebate = wantAsks >= 3 && i === wantAsks - 1;
     const kind: Brief['kind'] = !asks
       ? 'none'
-      : i === wantAsks - 1
+      : closesOnDebate
         ? 'side'
         : (asking[i % asking.length] as Brief['kind']);
     briefs.push({

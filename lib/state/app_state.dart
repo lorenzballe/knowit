@@ -417,6 +417,11 @@ class AppState extends ChangeNotifier {
     // quickly and a worked problem is not counted as read for being glanced
     // at. Bounded at both ends: nothing counts as read under three seconds,
     // and nothing has to be held for more than twenty.
+    //
+    // A card left on screen while the phone was in a pocket reads as held,
+    // which over-credits it. That is the direction to be wrong in: reading is
+    // worth a fifth of what skipping costs, so a false positive is nearly
+    // free and a false skip would punish a subject nobody rejected.
     final spent = DateTime.now().difference(_cardOpenedAt).inMilliseconds / 1000;
     final floor = (card.seconds * 0.3).clamp(3.0, 20.0);
     taste.learn(card, spent >= floor ? Signal.read : Signal.skipped);
