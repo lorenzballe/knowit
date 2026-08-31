@@ -49,14 +49,14 @@ class RecapView extends StatelessWidget {
               child: Container(
                 width: 62,
                 height: 62,
-                decoration: const BoxDecoration(
-                  color: AppColors.lime,
+                decoration: BoxDecoration(
+                  color: context.p.inverse,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.check_rounded,
                   size: 34,
-                  color: AppColors.limeInk,
+                  color: context.p.onInverse,
                 ),
               ),
             ),
@@ -111,8 +111,8 @@ class RecapView extends StatelessWidget {
             child: ChunkyButton(
               label: "SHOW TODAY'S CARDS AGAIN",
               height: 54,
-              fill: AppColors.lime,
-              ink: AppColors.limeInk,
+              fill: context.p.inverse,
+              ink: context.p.onInverse,
               onPressed: () =>
                   openDeckViewer(context, app, app.todaysDeck, "Today's five"),
             ),
@@ -130,7 +130,7 @@ class RecapView extends StatelessWidget {
                         Container(
                           height: 22,
                           decoration: BoxDecoration(
-                            color: week[i] ? AppColors.lime : context.p.line,
+                            color: week[i] ? context.p.inverse : context.p.line,
                             borderRadius: BorderRadius.circular(7),
                           ),
                         ),
@@ -195,7 +195,7 @@ class _Stat extends StatelessWidget {
               size: 23,
               weight: FontWeight.w700,
               spacing: -0.7,
-              color: accent ? AppColors.limeDark : context.p.ink,
+              color: accent ? context.p.inverse : context.p.ink,
             ),
           ),
           const SizedBox(height: 3),
@@ -251,8 +251,8 @@ class _ExtraSet extends StatelessWidget {
           ChunkyButton(
             label: 'READ 5 MORE',
             height: 48,
-            fill: AppColors.lime,
-            ink: AppColors.limeInk,
+            fill: context.p.inverse,
+            ink: context.p.onInverse,
             onPressed: () => app.openExtraSet(),
           ),
         ],
@@ -271,11 +271,7 @@ class _Upsell extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [AppColors.lime, AppColors.limeDark],
-        ),
+        color: context.p.inverse,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -287,7 +283,7 @@ class _Upsell extends StatelessWidget {
               size: 18,
               weight: FontWeight.w700,
               spacing: -0.5,
-              color: AppColors.limeInk,
+              color: context.p.onInverse,
             ),
           ),
           const SizedBox(height: 6),
@@ -297,15 +293,15 @@ class _Upsell extends StatelessWidget {
             style: AppText.body(
               size: 13,
               height: 1.4,
-              color: AppColors.limeInk.withValues(alpha: 0.75),
+              color: context.p.onInverse.withValues(alpha: 0.75),
             ),
           ),
           const SizedBox(height: 13),
           ChunkyButton(
             label: 'UNLOCK 5 EXTRA PILLS',
             height: 48,
-            fill: AppColors.limeInk,
-            ink: AppColors.lime,
+            fill: context.p.onInverse,
+            ink: context.p.inverse,
             onPressed: () => Navigator.of(
               context,
             ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
@@ -425,8 +421,8 @@ class _RecordNudge extends StatelessWidget {
           ChunkyButton(
             label: 'SHARE MY RECORD',
             height: 48,
-            fill: AppColors.lime,
-            ink: AppColors.limeInk,
+            fill: context.p.inverse,
+            ink: context.p.onInverse,
             onPressed: () => showRecordShareSheet(context, app),
           ),
         ],

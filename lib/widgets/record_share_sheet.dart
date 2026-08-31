@@ -228,11 +228,12 @@ class RecordCard extends StatelessWidget {
   final RecordSummary summary;
   const RecordCard({super.key, required this.summary});
 
-  // The app's own colour, not a neutral. This leaves as an image into a feed
-  // of other images, where being instantly recognisable is the whole job —
-  // and a near-black card is exactly what everything else already looks like.
-  static const _ground = AppColors.lime;
-  static const _ink = AppColors.limeInk;
+  // Black, with the reader's own spectrum on it. This leaves as an image
+  // into a feed of other images, where being recognisable is the whole job,
+  // and what makes Astuto recognisable is no longer one accent colour: it is
+  // the wheel of subjects, which nobody else's card carries.
+  static const _ground = Color(0xFF08080A);
+  static const _ink = Color(0xFFF2F1EC);
 
   @override
   Widget build(BuildContext context) {

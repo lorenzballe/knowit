@@ -195,7 +195,7 @@ class _Header extends StatelessWidget {
                   width: 6,
                   height: 6,
                   decoration: BoxDecoration(
-                    color: frozen ? context.p.link : AppColors.lime,
+                    color: frozen ? context.p.link : context.p.inverse,
                     shape: BoxShape.circle,
                   ),
                 ),

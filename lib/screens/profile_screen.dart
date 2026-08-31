@@ -382,9 +382,7 @@ class ProfileScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [AppColors.lime, AppColors.limeDark],
-                ),
+                color: context.p.inverse,
                 borderRadius: BorderRadius.circular(22),
               ),
               child: Row(
@@ -398,7 +396,7 @@ class ProfileScreen extends StatelessWidget {
                           style: AppText.display(
                             size: 17,
                             weight: FontWeight.w600,
-                            color: AppColors.limeInk,
+                            color: context.p.onInverse,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -406,7 +404,7 @@ class ProfileScreen extends StatelessWidget {
                           '5 extra pills a day, full archive.',
                           style: AppText.body(
                             size: 12.5,
-                            color: AppColors.limeInk.withValues(alpha: 0.72),
+                            color: context.p.onInverse.withValues(alpha: 0.72),
                           ),
                         ),
                       ],
@@ -419,7 +417,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     style: TextButton.styleFrom(
-                      backgroundColor: AppColors.limeInk,
+                      backgroundColor: context.p.onInverse,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(999),
                       ),
@@ -722,6 +720,7 @@ class _Coverage extends StatelessWidget {
             final total = byTopic[style.name] ?? 0;
             final seen = seenByTopic[style.name] ?? 0;
             final complete = seen >= total;
+            final wheel = style.name == 'Thinking';
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Column(
@@ -729,6 +728,22 @@ class _Coverage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      // The subject's own colour, present before any of it
+                      // has been read. An empty bar is the same grey for
+                      // every topic, which loses the one thing that tells
+                      // them apart at a glance.
+                      Container(
+                        width: 9,
+                        height: 9,
+                        margin: const EdgeInsets.only(right: 9),
+                        decoration: BoxDecoration(
+                          color: wheel ? null : style.color,
+                          gradient: wheel
+                              ? const LinearGradient(colors: kSpectrum)
+                              : null,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                      ),
                       Expanded(
                         child: Text(
                           style.name,
@@ -752,12 +767,30 @@ class _Coverage extends StatelessWidget {
                   const SizedBox(height: 6),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: total == 0 ? 0 : seen / total,
-                      minHeight: 5,
-                      backgroundColor: context.p.line,
-                      valueColor: AlwaysStoppedAnimation(style.color),
-                    ),
+                    child: wheel
+                        // Thinking's cards each take their own hue, so its
+                        // row carries the whole wheel rather than picking one
+                        // of them and lying about the rest.
+                        ? Stack(
+                            children: [
+                              Container(height: 5, color: context.p.line),
+                              FractionallySizedBox(
+                                widthFactor: total == 0 ? 0 : seen / total,
+                                child: Container(
+                                  height: 5,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(colors: kSpectrum),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : LinearProgressIndicator(
+                            value: total == 0 ? 0 : seen / total,
+                            minHeight: 5,
+                            backgroundColor: context.p.line,
+                            valueColor: AlwaysStoppedAnimation(style.color),
+                          ),
                   ),
                 ],
               ),
@@ -1048,7 +1081,7 @@ class _Mastery extends StatelessWidget {
                       minHeight: 5,
                       backgroundColor: context.p.line,
                       valueColor: AlwaysStoppedAnimation(
-                        m.isWeak ? context.p.alert : AppColors.lime,
+                        m.isWeak ? context.p.alert : context.p.inverse,
                       ),
                     ),
                   ),
@@ -1115,12 +1148,12 @@ class _ShareRecord extends StatelessWidget {
     return ChunkyButton(
       label: 'SHARE MY RECORD',
       height: 52,
-      fill: AppColors.lime,
-      ink: AppColors.limeInk,
-      leading: const Icon(
+      fill: context.p.inverse,
+      ink: context.p.onInverse,
+      leading: Icon(
         Icons.ios_share_rounded,
         size: 17,
-        color: AppColors.limeInk,
+        color: context.p.onInverse,
       ),
       onPressed: () => showRecordShareSheet(context, app),
     );
@@ -1206,8 +1239,8 @@ class _TrendPanel extends StatelessWidget {
             ChunkyButton(
               label: 'SEE WHICH WAY',
               height: 46,
-              fill: AppColors.lime,
-              ink: AppColors.limeInk,
+              fill: context.p.inverse,
+              ink: context.p.onInverse,
               onPressed: () => requirePlus(context, app, () {}),
             ),
           ],
@@ -1256,7 +1289,7 @@ class _TrendRow extends StatelessWidget {
               minHeight: 6,
               backgroundColor: context.p.line,
               valueColor: AlwaysStoppedAnimation(
-                muted ? context.p.lineStrong : AppColors.lime,
+                muted ? context.p.lineStrong : context.p.inverse,
               ),
             ),
           ),
@@ -1297,7 +1330,7 @@ class _PlusCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.lime,
+                  color: context.p.inverse,
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -1306,7 +1339,7 @@ class _PlusCard extends StatelessWidget {
                     size: 9.5,
                     weight: FontWeight.w700,
                     spacing: 1.1,
-                    color: AppColors.limeInk,
+                    color: context.p.onInverse,
                   ),
                 ),
               ),
@@ -1346,8 +1379,8 @@ class _PlusCard extends StatelessWidget {
           ChunkyButton(
             label: 'SEE THE PLANS',
             height: 48,
-            fill: AppColors.lime,
-            ink: AppColors.limeInk,
+            fill: context.p.inverse,
+            ink: context.p.onInverse,
             onPressed: () => Navigator.of(
               context,
             ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),

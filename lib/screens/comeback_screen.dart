@@ -94,7 +94,7 @@ class ComebackScreen extends StatelessWidget {
               const SizedBox(height: 24),
               WeekStrip(
                 week: app.weekCompletion(),
-                onColor: AppColors.lime,
+                onColor: context.p.inverse,
                 offColor: context.p.line,
               ),
               const SizedBox(height: 24),

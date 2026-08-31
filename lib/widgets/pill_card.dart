@@ -160,18 +160,23 @@ class _FrontFace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The question is the whole card, so it is set to the space rather than
-    // to a fixed size — a short one becomes a poster instead of a line
-    // floating in a field of colour.
+    // Set to the space rather than to a fixed size, so a short question is
+    // not a line floating in a field of colour — but inside an editorial
+    // band, not a poster one. At sixty-four points a five-word question
+    // shouted; the card is something you read, not a billboard.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: ScaledText(
             text: pill.question,
-            min: 22,
-            max: 64,
-            alignment: Alignment.centerLeft,
+            min: 21,
+            max: 34,
+            // Anchored to the foot of the card, not floated in the middle of
+            // it: the question always sits on the same line, a long one grows
+            // upward into the air above, and the composition never depends on
+            // how many words a particular pill happens to have.
+            alignment: Alignment.bottomLeft,
             styleFor: (size) => AppText.display(
               size: size,
               weight: FontWeight.w600,
@@ -384,8 +389,8 @@ class _AskFaceState extends State<_AskFace> {
                 height: constraints.maxHeight * 0.48,
                 child: ScaledText(
                   text: pill.question,
-                  min: 19,
-                  max: 40,
+                  min: 18,
+                  max: 28,
                   alignment: Alignment.bottomLeft,
                   styleFor: (size) => AppText.display(
                     size: size,

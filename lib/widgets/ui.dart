@@ -122,7 +122,9 @@ class Eyebrow extends StatelessWidget {
 /// screen.
 class WeekStrip extends StatelessWidget {
   final List<bool> week;
-  final Color onColor;
+
+  /// Null takes the palette's own reverse — the app has no fixed accent.
+  final Color? onColor;
   final Color offColor;
   final Color labelColor;
   final double barHeight;
@@ -130,7 +132,7 @@ class WeekStrip extends StatelessWidget {
   const WeekStrip({
     super.key,
     required this.week,
-    this.onColor = AppColors.lime,
+    this.onColor,
     this.offColor = const Color(0x14000000),
     this.labelColor = const Color(0x59000000),
     this.barHeight = 38,
@@ -153,7 +155,7 @@ class WeekStrip extends StatelessWidget {
                 Container(
                   height: barHeight,
                   decoration: BoxDecoration(
-                    color: week[i] ? onColor : offColor,
+                    color: week[i] ? (onColor ?? context.p.inverse) : offColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

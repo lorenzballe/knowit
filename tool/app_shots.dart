@@ -14,6 +14,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/pills_data.dart';
 import 'package:astuto/main.dart';
 
 Future<void> _loadFonts() async {
@@ -40,6 +41,22 @@ Future<void> _loadFonts() async {
 void _installed() {
   // ignore: invalid_use_of_visible_for_testing_member
   SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+}
+
+/// An install with a fortnight behind it.
+///
+/// A record photographed at zero shows every bar empty and every subject the
+/// same grey, which is a picture of the empty state rather than of the
+/// screen. This is what the profile actually looks like in use.
+void _wellUsed() {
+  final read = kPillPool.take(46).map((pill) => pill.id).toList();
+  // ignore: invalid_use_of_visible_for_testing_member
+  SharedPreferences.setMockInitialValues({
+    'knowit.onboarded': true,
+    'knowit.seenIds': read,
+    'knowit.streak': 13,
+    'knowit.savedIds': read.take(6).toList(),
+  });
 }
 
 void main() {
@@ -88,6 +105,16 @@ void main() {
     await shoot(tester, 'profile');
   });
 
+  testWidgets('the record of somebody who has been reading', (tester) async {
+    _wellUsed();
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    await shoot(tester, 'profile-used');
+  });
+
   testWidgets('a card, opened and answered', (tester) async {
     _installed();
     await tester.pumpWidget(const AstutoApp());
@@ -114,6 +141,24 @@ void main() {
     await tester.drag(find.byType(Scrollable).first, const Offset(0, -2000));
     await settle(tester);
     await shoot(tester, 'profile-foot');
+  });
+
+  testWidgets('on paper, where the accent reverses', (tester) async {
+    // The accent is no longer a colour, it is whatever reverses the page —
+    // white on the black ground, near-black on the light one. That only
+    // holds if the light theme is looked at, so it is looked at.
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.theme': 'light',
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await shoot(tester, 'today-light');
+
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    await shoot(tester, 'profile-light');
   });
 
   testWidgets('the paywall', (tester) async {

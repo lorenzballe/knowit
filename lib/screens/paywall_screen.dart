@@ -6,6 +6,8 @@ import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
+import '../data/topics.dart';
+import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
 
 /// What Astuto+ costs, in cents, so the saving can be worked out rather than
@@ -160,173 +162,190 @@ class _PaywallScreenState extends State<PaywallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.p.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(22, 8, 22, 8),
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Semantics(
-                      button: true,
-                      label: 'Close',
-                      child: GestureDetector(
+      body: Stack(
+        children: [
+          if (context.p.isDark)
+            Positioned.fill(
+              child: AmbientBlooms(
+                colors: [kSpectrum[6], kSpectrum[13], kSpectrum[2]],
+              ),
+            ),
+          SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(22, 8, 22, 8),
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Semantics(
+                          button: true,
+                          label: 'Close',
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () => Navigator.of(context).pop(),
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Icon(
+                                Icons.close_rounded,
+                                size: 22,
+                                color: context.p.inkFaint,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: context.p.inverse,
+                            borderRadius: BorderRadius.circular(999),
+                          ),
+                          child: Text(
+                            'ASTUTO+',
+                            style: AppText.label(
+                              size: 11,
+                              weight: FontWeight.w700,
+                              spacing: 1.3,
+                              color: context.p.onInverse,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Find out if you are actually getting better.',
+                        style: AppText.display(
+                          size: 33,
+                          weight: FontWeight.w700,
+                          height: 1.06,
+                          spacing: -1.4,
+                          color: context.p.ink,
+                        ),
+                      ),
+                      const SizedBox(height: 22),
+                      ..._perks.indexed.map(
+                        (e) => RiseIn.staggered(
+                          e.$1,
+                          step: const Duration(milliseconds: 50),
+                          child: _Perk(
+                            icon: e.$2.icon,
+                            title: e.$2.title,
+                            sub: e.$2.sub,
+                            // Six points, six hues off the wheel — the same
+                            // wheel the reader's own record is drawn in. A
+                            // column of identical grey chips says nothing about
+                            // what the app is.
+                            colour: kSpectrum[(e.$1 * 3) % kSpectrum.length],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const _TrialSteps(),
+                      const SizedBox(height: 22),
+                      _PlanTile(
+                        label: 'Yearly',
+                        price: _euros(kYearlyCents),
+                        per: 'per year',
+                        note: '${_euros(kYearlyCents ~/ 12)} a month',
+                        badge: 'SAVE $kYearlySavingPercent%',
+                        selected: _plan == Plan.year,
+                        onTap: () {
+                          setState(() => _plan = Plan.year);
+                          widget.app.setPlan(Plan.year);
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      _PlanTile(
+                        label: 'Monthly',
+                        price: _euros(kMonthlyCents),
+                        per: 'per month',
+                        note: 'billed monthly',
+                        selected: _plan == Plan.month,
+                        onTap: () {
+                          setState(() => _plan = Plan.month);
+                          widget.app.setPlan(Plan.month);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+
+                // The one button whose job is revenue does not scroll away.
+                Container(
+                  padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
+                  decoration: BoxDecoration(
+                    color: context.p.surface,
+                    border: Border(top: BorderSide(color: context.p.line)),
+                  ),
+                  child: Column(
+                    children: [
+                      ChunkyButton(
+                        label: _cta,
+                        height: 56,
+                        fill: context.p.inverse,
+                        ink: context.p.onInverse,
+                        onPressed: widget.app.isPlus ? null : _start,
+                      ),
+                      const SizedBox(height: 10),
+                      GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap: () => Navigator.of(context).pop(),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Icon(
-                            Icons.close_rounded,
-                            size: 22,
+                        onTap: widget.app.isPlus
+                            ? () async {
+                                await widget.app.endPlus();
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            : null,
+                        child: Text(
+                          widget.app.isPlus
+                              ? 'Cancel the trial'
+                              : _store.offering != null
+                              ? 'Cancel any time'
+                              : 'Cancel any time · No payment is taken in this '
+                                    'build',
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 11.5,
+                            height: 1.4,
                             color: context.p.inkFaint,
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.lime,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        'ASTUTO+',
-                        style: AppText.label(
-                          size: 11,
-                          weight: FontWeight.w700,
-                          spacing: 1.3,
-                          color: AppColors.limeInk,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    'Find out if you are actually getting better.',
-                    style: AppText.display(
-                      size: 33,
-                      weight: FontWeight.w700,
-                      height: 1.06,
-                      spacing: -1.4,
-                      color: context.p.ink,
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  ..._perks.indexed.map(
-                    (e) => RiseIn.staggered(
-                      e.$1,
-                      step: const Duration(milliseconds: 50),
-                      child: _Perk(
-                        icon: e.$2.icon,
-                        title: e.$2.title,
-                        sub: e.$2.sub,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const _TrialSteps(),
-                  const SizedBox(height: 22),
-                  _PlanTile(
-                    label: 'Yearly',
-                    price: _euros(kYearlyCents),
-                    per: 'per year',
-                    note: '${_euros(kYearlyCents ~/ 12)} a month',
-                    badge: 'SAVE $kYearlySavingPercent%',
-                    selected: _plan == Plan.year,
-                    onTap: () {
-                      setState(() => _plan = Plan.year);
-                      widget.app.setPlan(Plan.year);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  _PlanTile(
-                    label: 'Monthly',
-                    price: _euros(kMonthlyCents),
-                    per: 'per month',
-                    note: 'billed monthly',
-                    selected: _plan == Plan.month,
-                    onTap: () {
-                      setState(() => _plan = Plan.month);
-                      widget.app.setPlan(Plan.month);
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            // The one button whose job is revenue does not scroll away.
-            Container(
-              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-              decoration: BoxDecoration(
-                color: context.p.surface,
-                border: Border(top: BorderSide(color: context.p.line)),
-              ),
-              child: Column(
-                children: [
-                  ChunkyButton(
-                    label: _cta,
-                    height: 56,
-                    fill: AppColors.lime,
-                    ink: AppColors.limeInk,
-                    onPressed: widget.app.isPlus ? null : _start,
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: widget.app.isPlus
-                        ? () async {
-                            await widget.app.endPlus();
-                            if (context.mounted) Navigator.of(context).pop();
-                          }
-                        : null,
-                    child: Text(
-                      widget.app.isPlus
-                          ? 'Cancel the trial'
-                          : _store.offering != null
-                          ? 'Cancel any time'
-                          : 'Cancel any time · No payment is taken in this '
-                                'build',
-                      textAlign: TextAlign.center,
-                      style: AppText.body(
-                        size: 11.5,
-                        height: 1.4,
-                        color: context.p.inkFaint,
-                      ),
-                    ),
-                  ),
-                  // Apple requires a way back to something already paid for,
-                  // and it only means anything when there is a store.
-                  if (_store.offering != null && !widget.app.isPlus)
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: _restore,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          'Restore purchases',
-                          textAlign: TextAlign.center,
-                          style: AppText.body(
-                            size: 12.5,
-                            weight: FontWeight.w600,
-                            color: context.p.inkMuted,
+                      // Apple requires a way back to something already paid for,
+                      // and it only means anything when there is a store.
+                      if (_store.offering != null && !widget.app.isPlus)
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: _restore,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              'Restore purchases',
+                              textAlign: TextAlign.center,
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w600,
+                                color: context.p.inkMuted,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                ],
-              ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -336,8 +355,14 @@ class _Perk extends StatelessWidget {
   final IconData icon;
   final String title;
   final String sub;
+  final Color colour;
 
-  const _Perk({required this.icon, required this.title, required this.sub});
+  const _Perk({
+    required this.icon,
+    required this.title,
+    required this.sub,
+    required this.colour,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -350,11 +375,11 @@ class _Perk extends StatelessWidget {
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: AppColors.lime.withValues(alpha: 0.18),
+              color: colour.withValues(alpha: 0.18),
               borderRadius: BorderRadius.circular(11),
             ),
             alignment: Alignment.center,
-            child: Icon(icon, size: 18, color: AppColors.limeDark),
+            child: Icon(icon, size: 18, color: colour),
           ),
           const SizedBox(width: 13),
           Expanded(
@@ -436,7 +461,7 @@ class _TrialSteps extends StatelessWidget {
                       style: AppText.label(
                         size: 10,
                         spacing: 0.8,
-                        color: AppColors.limeDark,
+                        color: context.p.inverse,
                       ),
                     ),
                   ),
@@ -481,7 +506,7 @@ class _PlanTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final edge = selected ? AppColors.limeDark : context.p.line;
+    final edge = selected ? context.p.inverse : context.p.line;
 
     return Semantics(
       button: true,
@@ -494,7 +519,7 @@ class _PlanTile extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
           decoration: BoxDecoration(
             color: selected
-                ? AppColors.lime.withValues(alpha: 0.13)
+                ? context.p.inverse.withValues(alpha: 0.13)
                 : context.p.surfaceRaised,
             borderRadius: BorderRadius.circular(18),
             border: Border.all(color: edge, width: selected ? 2 : 1.4),
@@ -529,7 +554,7 @@ class _PlanTile extends StatelessWidget {
                               vertical: 3,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.lime,
+                              color: context.p.inverse,
                               borderRadius: BorderRadius.circular(999),
                             ),
                             child: Text(
@@ -538,7 +563,7 @@ class _PlanTile extends StatelessWidget {
                                 size: 9.5,
                                 weight: FontWeight.w700,
                                 spacing: 0.8,
-                                color: AppColors.limeInk,
+                                color: context.p.onInverse,
                               ),
                             ),
                           ),
@@ -594,14 +619,14 @@ class _Radio extends StatelessWidget {
       height: 22,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: on ? AppColors.lime : Colors.transparent,
+        color: on ? context.p.inverse : Colors.transparent,
         border: Border.all(
-          color: on ? AppColors.limeDark : context.p.lineStrong,
+          color: on ? context.p.inverse : context.p.lineStrong,
           width: 2,
         ),
       ),
       child: on
-          ? const Icon(Icons.check_rounded, size: 14, color: AppColors.limeInk)
+          ? Icon(Icons.check_rounded, size: 14, color: context.p.onInverse)
           : null,
     );
   }

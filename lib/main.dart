@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'cloud.dart';
+import 'data/topics.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
@@ -407,6 +408,19 @@ class AstutoShell extends StatefulWidget {
 class _AstutoShellState extends State<AstutoShell> {
   int _tab = 0;
 
+  /// Three hues off today's deck, for the light behind the app.
+  ///
+  /// Taken from the cards the reader actually has in hand rather than picked
+  /// once and fixed, which is the whole point: nothing here is Astuto's
+  /// colour, it is today's.
+  List<Color> get _bloomColours {
+    final List<Color> deck = widget.app.todaysDeck
+        .map((pill) => pill.color)
+        .toList();
+    if (deck.isEmpty) return kSpectrum.take(3).toList();
+    return [deck[0], deck[deck.length ~/ 2], deck[deck.length - 1]];
+  }
+
   @override
   Widget build(BuildContext context) {
     final screens = [
@@ -441,9 +455,19 @@ class _AstutoShellState extends State<AstutoShell> {
               .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         backgroundColor: context.p.surface,
-        body: SafeArea(
-          bottom: false,
-          child: IndexedStack(index: _tab, children: screens),
+        body: Stack(
+          children: [
+            // The same light the onboarding sits in, and the same rule: the
+            // colour is the day's own. Five cards, five hues, drifting
+            // behind everything — so the app is never one colour, and never
+            // the same colour two days running.
+            if (context.p.isDark)
+              Positioned.fill(child: AmbientBlooms(colors: _bloomColours)),
+            SafeArea(
+              bottom: false,
+              child: IndexedStack(index: _tab, children: screens),
+            ),
+          ],
         ),
         bottomNavigationBar: _AstutoTabBar(
           index: _tab,
@@ -506,7 +530,7 @@ class _AstutoTabBar extends StatelessWidget {
           children: List.generate(_tabs.length, (i) {
             final selected = i == index;
             final tab = _tabs[i];
-            final tint = selected ? AppColors.limeInk : context.p.inkFaint;
+            final tint = selected ? context.p.onInverse : context.p.inkFaint;
 
             return Expanded(
               child: Semantics(
@@ -530,7 +554,9 @@ class _AstutoTabBar extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: selected ? AppColors.lime : Colors.transparent,
+                        color: selected
+                            ? context.p.inverse
+                            : Colors.transparent,
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Row(

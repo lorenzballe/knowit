@@ -1,14 +1,6 @@
 import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 
-/// Colours that do not belong to a theme: a topic's card is the same lime
-/// whichever ground it sits on, and the brand accent does not flip.
-class AppColors {
-  static const lime = Color(0xFFC6F24E);
-  static const limeDark = Color(0xFFA8E02C);
-  static const limeInk = Color(0xFF17200A);
-}
-
 /// Every colour the chrome uses, named for its job rather than its value.
 ///
 /// The app used to paint Today dark and the other tabs on paper, which meant
@@ -69,15 +61,15 @@ class Palette extends ThemeExtension<Palette> {
   );
 
   static const dark = Palette(
-    surface: Color(0xFF0D0D0F),
-    surfaceRaised: Color(0xFF1A1A1E),
+    surface: Color(0xFF000000),
+    surfaceRaised: Color(0xFF121215),
     ink: Color(0xFFF2F1EC),
     inkMuted: Color(0xFF9E9EA6),
     inkFaint: Color(0xFF6A6A72),
-    line: Color(0xFF27272C),
-    lineStrong: Color(0xFF3A3A42),
+    line: Color(0xFF1E1E22),
+    lineStrong: Color(0xFF303038),
     inverse: Color(0xFFF2F1EC),
-    onInverse: Color(0xFF0D0D0F),
+    onInverse: Color(0xFF08080A),
     link: Color(0xFF7D93FF),
     alert: Color(0xFFFF7A5E),
   );
@@ -208,7 +200,7 @@ ThemeData buildAstutoTheme(Brightness brightness) {
     brightness: brightness,
     scaffoldBackgroundColor: palette.surface,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.lime,
+      seedColor: palette.inverse,
       brightness: brightness,
     ),
   );
@@ -229,7 +221,7 @@ ThemeData buildAstutoTheme(Brightness brightness) {
         height: 1.35,
         color: palette.onInverse,
       ),
-      actionTextColor: AppColors.lime,
+      actionTextColor: palette.onInverse,
       insetPadding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       elevation: 0,

@@ -153,6 +153,9 @@ class _PillCardStackState extends State<PillCardStack>
   /// change of index is invisible.
   double get _progress => (_dx.abs() / 220).clamp(0.0, 1.0);
 
+  /// How tall a card is against its own width.
+  static const double _cardAspect = 1.55;
+
   @override
   Widget build(BuildContext context) {
     final remaining = widget.deck.length - widget.index;
@@ -242,6 +245,18 @@ class _PillCardStackState extends State<PillCardStack>
       );
     }
 
-    return Stack(children: layers);
+    // A card, not a slab. Filling every pixel of the column made the top
+    // card three quarters of the screen, most of it flat colour, and buried
+    // the ones underneath — so the deck stopped reading as a deck. Held to a
+    // card's proportion and centred, the stack shows behind it again.
+    return Center(
+      child: LayoutBuilder(
+        builder: (context, box) => SizedBox(
+          width: box.maxWidth,
+          height: math.min(box.maxHeight, box.maxWidth * _cardAspect),
+          child: Stack(children: layers),
+        ),
+      ),
+    );
   }
 }

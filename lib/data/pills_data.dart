@@ -9,7 +9,7 @@ Pill _p(
   String bar,
   String src,
 ) {
-  final t = kTopics[topicKey]!;
+  final t = topicKey == 'thinking' ? thinkingStyle(id) : kTopics[topicKey]!;
   return Pill(
     id: id,
     topic: t.name,
@@ -38,7 +38,7 @@ Pill _q(
   String simply = '',
   Principle principle = Principle.none,
 }) {
-  final t = kTopics[topicKey]!;
+  final t = topicKey == 'thinking' ? thinkingStyle(id) : kTopics[topicKey]!;
   return Pill(
     id: id,
     topic: t.name,
@@ -73,7 +73,7 @@ Pill _n(
   String simply = '',
   Principle principle = Principle.computation,
 }) {
-  final t = kTopics[topicKey]!;
+  final t = topicKey == 'thinking' ? thinkingStyle(id) : kTopics[topicKey]!;
   return Pill(
     id: id,
     topic: t.name,
@@ -106,7 +106,7 @@ Pill _e(
   String src, {
   num withinFactor = 3,
 }) {
-  final t = kTopics[topicKey]!;
+  final t = topicKey == 'thinking' ? thinkingStyle(id) : kTopics[topicKey]!;
   return Pill(
     id: id,
     topic: t.name,
@@ -137,7 +137,7 @@ Pill _d(
   String bar,
   String src,
 ) {
-  final t = kTopics[topicKey]!;
+  final t = topicKey == 'thinking' ? thinkingStyle(id) : kTopics[topicKey]!;
   return Pill(
     id: id,
     topic: t.name,
