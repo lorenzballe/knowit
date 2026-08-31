@@ -1203,15 +1203,21 @@ class _SceneCard extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.12),
+                  // Solid, not glass. Translucent it took the colour of
+                  // whatever card was behind it and stopped being readable —
+                  // a caption has to be legible wherever it lands.
+                  color: const Color(0xFF131316).withValues(alpha: 0.88),
                   borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.16),
+                  ),
                 ),
                 child: Text(
                   'Source · Stanford GSB',
                   style: AppText.body(
-                    size: 10.5,
-                    weight: FontWeight.w500,
-                    color: Colors.white.withValues(alpha: 0.8),
+                    size: 11.5,
+                    weight: FontWeight.w600,
+                    color: Colors.white.withValues(alpha: 0.95),
                   ),
                 ),
               ),
