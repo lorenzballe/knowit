@@ -77,124 +77,142 @@ class _IntroScreenState extends State<IntroScreen> {
         onTap: () {
           if (_moved < 8) _next();
         },
-        child: Stack(
-          children: [
-            Positioned.fill(child: AmbientBlooms(colors: _blooms)),
-            const Positioned.fill(child: Bokeh()),
-            const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
-            const Positioned.fill(child: Vignette(ground: Colors.black)),
-            SafeArea(
-              child: Padding(
-                // No horizontal padding here: the scene runs to both edges,
-                // and everything else is inset on its own. A drawing that
-                // stops 22px short of the screen looks like a picture in a
-                // frame rather than like the app.
-                padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: widget.onContinue,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
-                          child: Text(
-                            'Skip',
-                            style: AppText.body(
-                              size: 14,
-                              weight: FontWeight.w500,
-                              color: Colors.white.withValues(alpha: 0.38),
+        child: LayoutBuilder(
+          builder: (context, box) => Stack(
+            children: [
+              Positioned.fill(child: AmbientBlooms(colors: _blooms)),
+              const Positioned.fill(child: Bokeh()),
+              const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
+
+              // The picture is the background, not a panel inside the layout.
+              // It runs off all three edges it can reach, so there is nothing
+              // to see the end of, and it keeps the same size whatever the
+              // copy under it happens to say.
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                height: box.maxHeight * 0.48,
+                child: _SceneStage(
+                  child: _Swap(
+                    scene: _scene,
+                    child: _IntroScene(index: _scene),
+                  ),
+                ),
+              ),
+
+              // What makes text on top of a picture readable. It also takes
+              // the picture's lower edge away, which is why the scene needs
+              // no fade of its own down there.
+              const Positioned.fill(child: _Scrim()),
+
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: widget.onContinue,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
+                            child: Text(
+                              'Skip',
+                              style: AppText.body(
+                                size: 14,
+                                weight: FontWeight.w500,
+                                color: Colors.white.withValues(alpha: 0.5),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Scales down instead of overflowing. A browser
-                          // window has no notch and no home indicator; a
-                          // phone gives about ninety fewer pixels, and a
-                          // fixed box turned that into copy drawn over
-                          // buttons rather than a smaller drawing.
-                          Expanded(
-                            child: _SceneStage(
-                              child: _Swap(
-                                scene: _scene,
-                                child: _IntroScene(index: _scene),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          // A fixed height for the copy, whatever it says.
-                          // A title on one line and a title on two gave the
-                          // drawing above different room on different scenes,
-                          // so it changed size as you moved — and the dots and
-                          // buttons moved with it. Geometry that holds still
-                          // is worth more than the fourteen pixels it costs.
-                          SizedBox(
-                            height: _SceneCopy.height,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 22,
-                              ),
-                              child: _Swap(
-                                scene: _scene,
-                                child: _SceneCopy(index: _scene),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          _Dots(count: _sceneCount, active: _scene, onTap: _go),
-                          // Nobody guesses that a screen is tappable, and the
-                          // dots alone say "there is more" without saying how
-                          // to reach it. Gone the moment they move — and it
-                          // gives its height back to the drawing when it goes,
-                          // rather than holding an empty band.
-                          SizedBox(
-                            height: 26,
-                            child: AnimatedOpacity(
-                              opacity: _moved == 0 && _scene == 0 ? 1 : 0,
-                              duration: const Duration(milliseconds: 350),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8),
-                                child: Text(
-                                  'Swipe to see more',
-                                  style: AppText.body(
-                                    size: 12.5,
-                                    weight: FontWeight.w500,
-                                    color: Colors.white.withValues(alpha: 0.34),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: _Swap(
+                          scene: _scene,
+                          child: _SceneCopy(index: _scene),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
-                      child: _SignInBlock(
-                        onApple: () async {
-                          if (await widget.onApple()) widget.onContinue();
-                        },
-                        onGoogle: () async {
-                          if (await widget.onGoogle()) widget.onContinue();
-                        },
-                        onEmail: () {
-                          widget.onNotConnected('Email');
-                          widget.onContinue();
-                        },
+                      const SizedBox(height: 18),
+                      _Dots(count: _sceneCount, active: _scene, onTap: _go),
+                      SizedBox(
+                        height: 26,
+                        child: AnimatedOpacity(
+                          opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                          duration: const Duration(milliseconds: 350),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Swipe to see more',
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w500,
+                                color: Colors.white.withValues(alpha: 0.4),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: _SignInBlock(
+                          onApple: () async {
+                            if (await widget.onApple()) widget.onContinue();
+                          },
+                          onGoogle: () async {
+                            if (await widget.onGoogle()) widget.onContinue();
+                          },
+                          onEmail: () {
+                            widget.onNotConnected('Email');
+                            widget.onContinue();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+/// Darkens the lower half so text sits on something rather than on a picture.
+///
+/// It is what lets the scene run all the way down without an edge: the
+/// picture does not stop, it is covered.
+class _Scrim extends StatelessWidget {
+  const _Scrim();
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black.withValues(alpha: 0),
+              Colors.black.withValues(alpha: 0),
+              Colors.black.withValues(alpha: 0.86),
+              Colors.black.withValues(alpha: 0.96),
+              Colors.black.withValues(alpha: 0.98),
+            ],
+            // Fully dark by the row the copy starts on. A title lying across
+            // a bright card is legible and still looks like an accident.
+            stops: const [0, 0.32, 0.46, 0.60, 1],
+          ),
+        ),
+        child: const SizedBox.expand(),
       ),
     );
   }
@@ -219,15 +237,17 @@ class _SceneStage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
-        final double scale = math.min(box.maxWidth, box.maxHeight * 1.18) / 344;
+        // Covers, rather than fits. The larger of the two ratios means the
+        // picture always reaches both sides, and what it loses is the part
+        // beyond the screen — which is the only kind of edge worth having.
+        final double scale = math.max(box.maxWidth / 344, box.maxHeight / 344);
         return ClipRect(
-          child: SoftEdges(
-            fade: 0.10,
-            child: Center(
-              child: Transform.scale(
-                scale: scale,
-                child: SizedBox(width: 344, height: 344, child: child),
-              ),
+          child: OverflowBox(
+            maxWidth: double.infinity,
+            maxHeight: double.infinity,
+            child: Transform.scale(
+              scale: scale,
+              child: SizedBox(width: 344, height: 344, child: child),
             ),
           ),
         );
@@ -324,10 +344,6 @@ class _SceneCopy extends StatelessWidget {
       'One notification, five cards, and a streak you will not want to break.',
     ),
   ];
-
-  /// Tall enough for the longest of the five, so every scene reserves the
-  /// same band and nothing below it shifts.
-  static const double height = 168;
 
   @override
   Widget build(BuildContext context) {
@@ -1355,7 +1371,10 @@ class _SceneChips extends StatelessWidget {
     // Yellow and orange want dark type on them; everything else takes white.
     final bool pale = base.computeLuminance() > 0.45;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+      // Tight enough that nine of them settle into three rows. At four rows
+      // the last one reached down into the copy, which is the sort of thing
+      // that reads as a mistake however good the colours are.
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
         color: base,
         borderRadius: BorderRadius.circular(999),
@@ -1370,7 +1389,7 @@ class _SceneChips extends StatelessWidget {
       child: Text(
         _names[i],
         style: AppText.body(
-          size: 15,
+          size: 13.5,
           weight: FontWeight.w600,
           color: pale ? const Color(0xFF2B2400) : Colors.white,
         ),
