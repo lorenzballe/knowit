@@ -330,6 +330,14 @@ void main() {
       expect(kMonthlyPackageIds.first, r'$rc_monthly');
     });
 
+    test('each store has its own key, and neither is assumed', () {
+      // Handing one store the other's key is a configuration error whose
+      // only symptom is "nothing is for sale", so both are declared and
+      // neither defaults to the other.
+      expect(kRevenueCatIosKey, isNot(startsWith('goog_')));
+      expect(kRevenueCatAndroidKey, isNot(startsWith('appl_')));
+    });
+
     test('a build with no store key stays quiet and claims nothing', () async {
       final store = Subscription(keyOverride: '');
 

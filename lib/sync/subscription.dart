@@ -16,13 +16,23 @@ const String kPlusEntitlement = String.fromEnvironment(
   defaultValue: 'astuto_pro',
 );
 
-/// The public RevenueCat key for the iOS app.
+/// The public RevenueCat keys, one per store.
 ///
-/// Public on purpose — it identifies the app to RevenueCat and grants
-/// nothing. Passed in at build time so it is not a code change to rotate it:
+/// Public on purpose — they identify the app to RevenueCat and grant nothing,
+/// which is why they ship inside the binary. Passed in at build time so
+/// rotating one is not a code change:
 ///
-///     flutter build ipa --dart-define=REVENUECAT_IOS_KEY=appl_xxx
+///     flutter build ipa    --dart-define=REVENUECAT_IOS_KEY=appl_xxx
+///     flutter build appbundle --dart-define=REVENUECAT_ANDROID_KEY=goog_xxx
+///
+/// A key beginning `test_` is RevenueCat's test mode: purchases are simulated
+/// and no store is involved. It is the right key for trying the flow and the
+/// wrong one for taking money.
 const String kRevenueCatIosKey = String.fromEnvironment('REVENUECAT_IOS_KEY');
+
+const String kRevenueCatAndroidKey = String.fromEnvironment(
+  'REVENUECAT_ANDROID_KEY',
+);
 
 /// Package identifiers, tried in order.
 ///
@@ -87,7 +97,15 @@ class Subscription extends ChangeNotifier {
     return null;
   }
 
-  String get _key => keyOverride ?? kRevenueCatIosKey;
+  /// Each store has its own key, and giving one the other's is a
+  /// configuration error that only shows up as "nothing is for sale".
+  String get _key {
+    if (keyOverride != null) return keyOverride!;
+    if (kIsWeb) return '';
+    return defaultTargetPlatform == TargetPlatform.android
+        ? kRevenueCatAndroidKey
+        : kRevenueCatIosKey;
+  }
 
   /// Starts the SDK, tied to the account so the entitlement follows the
   /// reader rather than the phone. Never throws: a store that will not answer
