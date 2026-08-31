@@ -59,7 +59,18 @@ class _FakeGoogleSheet extends GoogleSignInPlatform {
     this.answer,
     this.throws,
     this.supportThrows,
+    this.quietAccessToken,
+    this.authorizationThrows,
   });
+
+  /// An access token the phone already holds, or null where getting one would
+  /// mean prompting.
+  final String? quietAccessToken;
+  final Object? authorizationThrows;
+
+  /// Whether the silent path was the one asked for. Prompting a reader who
+  /// only wanted to sign in is the thing this must never do.
+  bool? askedWithoutPrompting;
 
   final bool supported;
   final AuthenticationResults? answer;
@@ -96,7 +107,13 @@ class _FakeGoogleSheet extends GoogleSignInPlatform {
   @override
   Future<ClientAuthorizationTokenData?> clientAuthorizationTokensForScopes(
     ClientAuthorizationTokensForScopesParameters params,
-  ) async => null;
+  ) async {
+    askedWithoutPrompting = !params.request.promptIfUnauthorized;
+    if (authorizationThrows != null) throw authorizationThrows!;
+    return quietAccessToken == null
+        ? null
+        : ClientAuthorizationTokenData(accessToken: quietAccessToken!);
+  }
 
   @override
   Future<ServerAuthorizationTokenData?> serverAuthorizationTokensForScopes(
@@ -358,6 +375,49 @@ void main() {
 
       expect(result.outcome, IdentityOutcome.failed);
       expect(result.error, contains('the network went away'));
+    });
+
+    test('an access token already held is carried too', () async {
+      // firebase_auth's iOS side hands Firebase an empty string where it has
+      // no access token. One that costs nothing to fetch is worth sending.
+      final sheet = _FakeGoogleSheet(
+        answer: _googleAnswer(idToken: 'google-id-token'),
+        quietAccessToken: 'google-access-token',
+      );
+      GoogleSignInPlatform.instance = sheet;
+
+      final IdentityResult result = await Identity().google();
+
+      final credential = result.credential! as OAuthCredential;
+      expect(credential.idToken, 'google-id-token');
+      expect(credential.accessToken, 'google-access-token');
+      // And it must never have been asked for in a way that could prompt.
+      expect(sheet.askedWithoutPrompting, isTrue);
+    });
+
+    test('no access token to be had quietly is fine — the id token stands', () async {
+      GoogleSignInPlatform.instance = _FakeGoogleSheet(
+        answer: _googleAnswer(idToken: 'google-id-token'),
+      );
+
+      final IdentityResult result = await Identity().google();
+
+      expect(result.outcome, IdentityOutcome.got);
+      final credential = result.credential! as OAuthCredential;
+      expect(credential.idToken, 'google-id-token');
+      expect(credential.accessToken, isNull);
+    });
+
+    test('a broken authorization call cannot undo a sign-in that worked', () async {
+      GoogleSignInPlatform.instance = _FakeGoogleSheet(
+        answer: _googleAnswer(idToken: 'google-id-token'),
+        authorizationThrows: StateError('authorization blew up'),
+      );
+
+      final IdentityResult result = await Identity().google();
+
+      expect(result.outcome, IdentityOutcome.got);
+      expect((result.credential! as OAuthCredential).idToken, 'google-id-token');
     });
 
     test('a token-less answer is a failure', () async {

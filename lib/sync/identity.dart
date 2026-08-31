@@ -209,7 +209,16 @@ class Identity {
 
       return IdentityResult(
         IdentityOutcome.got,
-        credential: GoogleAuthProvider.credential(idToken: idToken),
+        // The id token alone is enough — Firebase verifies that, and the API
+        // asks only that one of the two be present. But the iOS side of
+        // firebase_auth hands Firebase an empty string where it has no access
+        // token, so if one can be had for nothing it is worth having. This
+        // asks without prompting: it returns null rather than putting a
+        // consent screen in front of a reader who only wanted to sign in.
+        credential: GoogleAuthProvider.credential(
+          idToken: idToken,
+          accessToken: await _quietAccessToken(google),
+        ),
       );
     } on GoogleSignInException catch (error) {
       final String detail = 'google ${error.code.name}: ${error.description}';
@@ -231,6 +240,21 @@ class Identity {
       };
     } catch (error) {
       return IdentityResult(IdentityOutcome.failed, error: '$error');
+    }
+  }
+
+  /// An access token if the phone already holds one, and nothing if getting
+  /// one would mean asking. Never throws: this is a bonus on top of a
+  /// sign-in that already succeeded, and must not be able to undo it.
+  Future<String?> _quietAccessToken(GoogleSignInAccount google) async {
+    try {
+      final GoogleSignInClientAuthorization? granted = await google
+          .authorizationClient
+          .authorizationForScopes(const ['email']);
+      return granted?.accessToken;
+    } catch (error) {
+      debugPrint('No quiet Google access token, carrying on with the id token: $error');
+      return null;
     }
   }
 
