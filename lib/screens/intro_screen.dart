@@ -45,6 +45,8 @@ class _IntroScreenState extends State<IntroScreen> {
   double _dragX = 0;
   double _moved = 0;
 
+  List<Color> get _blooms => kSceneBlooms[_scene % kSceneBlooms.length];
+
   void _go(int i) => setState(() => _scene = i % _sceneCount);
 
   void _next() => _go(_scene + 1);
@@ -75,89 +77,183 @@ class _IntroScreenState extends State<IntroScreen> {
         onTap: () {
           if (_moved < 8) _next();
         },
-        child: Stack(
-          children: [
-            const Positioned.fill(child: AmbientBlooms()),
-            const Positioned.fill(child: Bokeh()),
-            const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
-            const Positioned.fill(child: Vignette(ground: Colors.black)),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(22, 14, 22, 26),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: widget.onContinue,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 2,
-                            vertical: 4,
-                          ),
-                          child: Text(
-                            'Skip',
-                            style: AppText.body(
-                              size: 14,
-                              weight: FontWeight.w500,
-                              color: Colors.white.withValues(alpha: 0.38),
+        child: LayoutBuilder(
+          builder: (context, box) => Stack(
+            children: [
+              Positioned.fill(child: AmbientBlooms(colors: _blooms)),
+              const Positioned.fill(child: Bokeh()),
+              const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
+
+              // The picture is the background, not a panel inside the layout.
+              // It runs off all three edges it can reach, so there is nothing
+              // to see the end of, and it keeps the same size whatever the
+              // copy under it happens to say.
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                // The scenes are drawn for a band 344 by 252 — the shape of
+                // the room actually free above the copy. Drawn square, as
+                // they were, a picture at full width is taller than that
+                // space and has to either run off the top or sit under the
+                // title. That was not something to tune: the shape was wrong.
+                height: box.maxWidth * _SceneStage.ratio,
+                child: _SceneStage(
+                  child: _Swap(
+                    scene: _scene,
+                    child: _IntroScene(index: _scene),
+                  ),
+                ),
+              ),
+
+              // What makes text on top of a picture readable. It also takes
+              // the picture's lower edge away, which is why the scene needs
+              // no fade of its own down there.
+              const Positioned.fill(child: _Scrim()),
+
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: widget.onContinue,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
+                            child: Text(
+                              'Skip',
+                              style: AppText.body(
+                                size: 14,
+                                weight: FontWeight.w500,
+                                color: Colors.white.withValues(alpha: 0.5),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // Scales down instead of overflowing. A browser
-                          // window has no notch and no home indicator; a
-                          // phone gives about ninety fewer pixels, and a
-                          // fixed box turned that into copy drawn over
-                          // buttons rather than a smaller drawing.
-                          Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: SizedBox(
-                                width: 344,
-                                height: 344,
-                                child: _Swap(
-                                  scene: _scene,
-                                  child: _IntroScene(index: _scene),
-                                ),
+                      const Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: _Swap(
+                          scene: _scene,
+                          child: _SceneCopy(index: _scene),
+                        ),
+                      ),
+                      const SizedBox(height: 18),
+                      _Dots(count: _sceneCount, active: _scene, onTap: _go),
+                      SizedBox(
+                        height: 26,
+                        child: AnimatedOpacity(
+                          opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                          duration: const Duration(milliseconds: 350),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Text(
+                              'Swipe to see more',
+                              style: AppText.body(
+                                size: 12.5,
+                                weight: FontWeight.w500,
+                                color: Colors.white.withValues(alpha: 0.4),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          _Swap(
-                            scene: _scene,
-                            child: _SceneCopy(index: _scene),
-                          ),
-                          const SizedBox(height: 14),
-                          _Dots(count: _sceneCount, active: _scene, onTap: _go),
-                        ],
+                        ),
                       ),
-                    ),
-                    _SignInBlock(
-                      onApple: () async {
-                        if (await widget.onApple()) widget.onContinue();
-                      },
-                      onGoogle: () async {
-                        if (await widget.onGoogle()) widget.onContinue();
-                      },
-                      onEmail: () {
-                        widget.onNotConnected('Email');
-                        widget.onContinue();
-                      },
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: _SignInBlock(
+                          onApple: () async {
+                            if (await widget.onApple()) widget.onContinue();
+                          },
+                          onGoogle: () async {
+                            if (await widget.onGoogle()) widget.onContinue();
+                          },
+                          onEmail: () {
+                            widget.onNotConnected('Email');
+                            widget.onContinue();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+/// Darkens the lower half so text sits on something rather than on a picture.
+///
+/// It is what lets the scene run all the way down without an edge: the
+/// picture does not stop, it is covered.
+class _Scrim extends StatelessWidget {
+  const _Scrim();
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black.withValues(alpha: 0),
+              Colors.black.withValues(alpha: 0),
+              Colors.black.withValues(alpha: 0.86),
+              Colors.black.withValues(alpha: 0.96),
+              Colors.black.withValues(alpha: 0.98),
+            ],
+            // Fully dark by the row the copy starts on. A title lying across
+            // a bright card is legible and still looks like an accident.
+            stops: const [0, 0.30, 0.42, 0.56, 1],
+          ),
+        ),
+        child: const SizedBox.expand(),
+      ),
+    );
+  }
+}
+
+/// Gives a scene the whole width of the screen.
+///
+/// The scenes are composed on a 344 square. Fitting that square inside the
+/// space available scales it to whichever side is shorter, which on a phone
+/// is the height — so it came out small with the width unused on both sides,
+/// looking like a picture in a frame rather than like the app.
+///
+/// It is scaled to the width instead, and allowed to run a little past the
+/// top and bottom, where the fade takes it. The clamp stops that becoming a
+/// crop on a short screen.
+class _SceneStage extends StatelessWidget {
+  const _SceneStage({required this.child});
+
+  /// The band the scenes are drawn for.
+  static const double width = 344;
+  static const double bandHeight = 252;
+  static const double ratio = bandHeight / width;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        // Scaled to the width. Nothing is cropped, because the band it is
+        // scaled into is the same shape as the band it was drawn in.
+        return Transform.scale(
+          scale: box.maxWidth / width,
+          child: SizedBox(width: width, height: bandHeight, child: child),
+        );
+      },
     );
   }
 }
@@ -256,6 +352,8 @@ class _SceneCopy extends StatelessWidget {
     final (String title, String sub) = _copy[index];
     final bool wordmark = index == 0;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           title,
@@ -505,13 +603,13 @@ class _SceneOrbits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 344,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: Stack(
         alignment: Alignment.center,
         children: [
           _Orbit(
-            size: 314,
+            size: 236,
             period: const Duration(seconds: 38),
             opacity: 0.09,
             satellites: const [
@@ -520,7 +618,7 @@ class _SceneOrbits extends StatelessWidget {
             ],
           ),
           _Orbit(
-            size: 238,
+            size: 178,
             period: const Duration(seconds: 24),
             reverse: true,
             opacity: 0.13,
@@ -529,14 +627,14 @@ class _SceneOrbits extends StatelessWidget {
               _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
             ],
           ),
-          const _Pulse(size: 186, color: Color(0x992B4BFF)),
+          const _Pulse(size: 146, color: Color(0x992B4BFF)),
           _Pop(
             duration: const Duration(milliseconds: 850),
             child: Container(
-              width: 118,
-              height: 118,
+              width: 104,
+              height: 104,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(25),
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0xB3000000),
@@ -766,13 +864,19 @@ class _SceneRain extends StatelessWidget {
     Color(0xFF00B083),
     Color(0xFF7A5CFF),
     Color(0xFFFF9500),
+    Color(0xFF00A3FF),
+    Color(0xFFFF4E2D),
+    Color(0xFFC24BE0),
+    Color(0xFF2FA84F),
+    Color(0xFF00C2A8),
+    Color(0xFFFF5AD1),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 344,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: ClipRect(
         child: Stack(
           children: [
@@ -808,23 +912,6 @@ class _SceneRain extends StatelessWidget {
                 radius: 8,
                 shadow: true,
               ),
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 140,
-              child: IgnorePointer(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0x00000000), Color(0xFF000000)],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -911,7 +998,7 @@ class _FallingCardState extends State<_FallingCard>
       // full width put a wide card half outside, and the clip then cuts it
       // down the middle — which reads as a rectangle drawn round the
       // animation rather than as cards falling past.
-      left: widget.left / 100 * (344 - widget.width),
+      left: widget.left / 100 * (_SceneStage.width - widget.width),
       top: 0,
       child: MediaQuery.disableAnimationsOf(context)
           ? Opacity(opacity: widget.opacity * 0.6, child: card)
@@ -925,7 +1012,7 @@ class _FallingCardState extends State<_FallingCard>
                     ? 1 - (t - 0.82) / 0.18
                     : 1;
                 return Transform.translate(
-                  offset: Offset(0, -170 + 600 * t),
+                  offset: Offset(0, -170 + (_SceneStage.bandHeight + 210) * t),
                   child: Opacity(
                     opacity: (widget.opacity * fade).clamp(0, 1),
                     child: child,
@@ -945,8 +1032,8 @@ class _SceneCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 324,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -957,7 +1044,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(-32, 0),
               child: Transform.rotate(
                 angle: -18 * math.pi / 180,
-                child: _blank(const Color(0xFF00B083), 192, 260, 24),
+                child: _blank(const Color(0xFF00B083), 158, 214, 20),
               ),
             ),
           ),
@@ -968,7 +1055,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(28, 0),
               child: Transform.rotate(
                 angle: 12 * math.pi / 180,
-                child: _blank(const Color(0xFFFFC93C), 192, 260, 24),
+                child: _blank(const Color(0xFFFFC93C), 158, 214, 20),
               ),
             ),
           ),
@@ -976,8 +1063,8 @@ class _SceneCard extends StatelessWidget {
             duration: const Duration(milliseconds: 750),
             delay: const Duration(milliseconds: 200),
             child: Container(
-              width: 198,
-              height: 270,
+              width: 164,
+              height: 224,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 color: const Color(0xFF2B4BFF),
@@ -1033,8 +1120,8 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: -8,
-            bottom: 30,
+            right: 6,
+            bottom: 14,
             child: _SlideIn(
               delay: const Duration(milliseconds: 460),
               child: Container(
@@ -1083,8 +1170,8 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: -4,
-            top: 36,
+            left: 6,
+            top: 12,
             child: _Pop(
               duration: const Duration(milliseconds: 600),
               delay: const Duration(milliseconds: 620),
@@ -1245,13 +1332,19 @@ class _SceneChips extends StatelessWidget {
     'Human body',
   ];
 
+  /// One colour each, and no two the same. A grid where four are lit and
+  /// five are grey reads as a form half filled in; the point of the scene is
+  /// that there are twelve subjects and they are not all alike.
   static const List<Color> _palette = [
-    Color(0xFFFF2E9C),
     Color(0xFF2B4BFF),
+    Color(0xFFFF4E2D),
     Color(0xFFFFC93C),
-    Color(0xFF00B083),
+    Color(0xFFC97B2E),
+    Color(0xFF00C2A8),
+    Color(0xFF2FA84F),
+    Color(0xFF00A3FF),
+    Color(0xFFC24BE0),
     Color(0xFF7A5CFF),
-    Color(0xFFFF9500),
   ];
 
   @override
@@ -1276,33 +1369,31 @@ class _SceneChips extends StatelessWidget {
   }
 
   Widget _chip(int i) {
-    final bool on = const [0, 2, 4, 6].contains(i);
     final Color base = _palette[i % _palette.length];
+    // Yellow and orange want dark type on them; everything else takes white.
+    final bool pale = base.computeLuminance() > 0.45;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+      // Tight enough that nine of them settle into three rows. At four rows
+      // the last one reached down into the copy, which is the sort of thing
+      // that reads as a mistake however good the colours are.
+      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
-        color: on ? base : Colors.white.withValues(alpha: 0.07),
+        color: base,
         borderRadius: BorderRadius.circular(999),
-        boxShadow: on
-            ? const [
-                BoxShadow(
-                  color: Color(0x59000000),
-                  blurRadius: 22,
-                  offset: Offset(0, 8),
-                ),
-              ]
-            : null,
+        boxShadow: [
+          BoxShadow(
+            color: base.withValues(alpha: 0.45),
+            blurRadius: 22,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Text(
         _names[i],
         style: AppText.body(
-          size: 15,
+          size: 13.5,
           weight: FontWeight.w600,
-          color: on
-              ? (i % _palette.length == 2
-                    ? const Color(0xFF2B2400)
-                    : Colors.white)
-              : Colors.white.withValues(alpha: 0.42),
+          color: pale ? const Color(0xFF2B2400) : Colors.white,
         ),
       ),
     );
@@ -1320,13 +1411,13 @@ class _SceneStreak extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: 164,
-          height: 164,
+          width: 138,
+          height: 138,
           child: Stack(
             alignment: Alignment.center,
             children: [
               CustomPaint(
-                size: const Size(164, 164),
+                size: const Size(138, 138),
                 painter: _RingPainter(
                   // 258 of 360 degrees, as drawn on the canvas.
                   progress: 258 / 360,
@@ -1335,7 +1426,7 @@ class _SceneStreak extends StatelessWidget {
                   stroke: 9,
                 ),
               ),
-              const _Pulse(size: 136, color: Color(0x66FF2E9C)),
+              const _Pulse(size: 114, color: Color(0x66FF2E9C)),
               _Rise(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -1343,7 +1434,7 @@ class _SceneStreak extends StatelessWidget {
                     Text(
                       '13',
                       style: AppText.body(
-                        size: 56,
+                        size: 46,
                         weight: FontWeight.w700,
                         height: 1,
                         spacing: -2.4,
@@ -1365,9 +1456,9 @@ class _SceneStreak extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 18),
         SizedBox(
-          height: 70,
+          height: 56,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -1377,8 +1468,8 @@ class _SceneStreak extends StatelessWidget {
                 _Grow(
                   delay: Duration(milliseconds: (100 + i * 70)),
                   child: Container(
-                    width: 21,
-                    height: i < 5 ? 22 + i * 7 : 22,
+                    width: 18,
+                    height: i < 5 ? 18 + i * 6 : 18,
                     decoration: BoxDecoration(
                       color: i < 5
                           ? const Color(0xFFFF2E9C)
