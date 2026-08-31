@@ -1,0 +1,25 @@
+{
+  "name": "astuto-functions",
+  "description": "The card writer: everything that must not run on a phone.",
+  "private": true,
+  "engines": {
+    "node": "20"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "deploy": "npm run build && firebase deploy --only functions",
+    "test": "tsc -p tsconfig.test.json && node --test \"lib-test/test/**/*.js\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.122.0",
+    "firebase-admin": "^14.3.0",
+    "firebase-functions": "^7.3.2",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

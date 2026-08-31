@@ -1,7 +1,13 @@
 rules_version = '2';
 
-// Astuto stores one document per reader and nothing that is shared, so the
-// whole policy is: you may read and write your own, and nothing else exists.
+// Astuto stores one document per reader, and a catalogue of cards that every
+// reader may read and none may write.
+//
+// The asymmetry on cards is the point of having a server at all. A card is the
+// app's claim about the world — it says which answer is right — so a card any
+// client could write is a claim any client could plant. Cards are written by
+// the generator in functions/, which runs with the Admin SDK and is not
+// subject to these rules.
 //
 // Deploy with:  firebase deploy --only firestore:rules
 service cloud.firestore {
@@ -30,6 +36,24 @@ service cloud.firestore {
       match /saved/{pillId} {
         allow read, write: if isOwner(uid);
       }
+    }
+
+    // The catalogue. Everyone signed in may read it; nobody may write it.
+    //
+    // Read is gated on being signed in rather than being open, because every
+    // phone is given an anonymous account on first run — so this costs a
+    // reader nothing and keeps the catalogue from being scraped by anything
+    // that has not at least been through the app.
+    match /cards/{cardId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // What the generator threw away, and why. Server-side only: these are the
+    // cards that did not survive review, and a reader must never be served one
+    // by a client that went looking.
+    match /rejected/{rejectId} {
+      allow read, write: if false;
     }
 
     // Anything not named above is closed, including reads of other readers.
