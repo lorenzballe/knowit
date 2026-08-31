@@ -32,6 +32,16 @@ Future<void> _loadFonts() async {
   }
 }
 
+/// A store that is past the first run.
+///
+/// The analyzer only counts a file as a test if it sits under test/, and this
+/// camera lives outside it on purpose so CI never runs it — hence the one
+/// ignore, kept in a single place rather than repeated at every call.
+void _installed() {
+  // ignore: invalid_use_of_visible_for_testing_member
+  SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+}
+
 void main() {
   setUpAll(_loadFonts);
 
@@ -63,7 +73,7 @@ void main() {
   }
 
   testWidgets('the three tabs', (tester) async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    _installed();
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
 
@@ -79,7 +89,7 @@ void main() {
   });
 
   testWidgets('a card, opened and answered', (tester) async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    _installed();
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
 
@@ -95,7 +105,7 @@ void main() {
   testWidgets('the foot of the profile, where the debug tools live', (
     tester,
   ) async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    _installed();
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
 
@@ -107,7 +117,7 @@ void main() {
   });
 
   testWidgets('the paywall', (tester) async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    _installed();
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
 
