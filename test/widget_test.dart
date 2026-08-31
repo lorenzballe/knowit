@@ -8,6 +8,7 @@ import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
+import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -2128,6 +2129,59 @@ void main() {
 
       await tapToggle('Turn Astuto+ off');
       expect(prefs.getBool('knowit.plus'), isFalse);
+    });
+  });
+
+  group('the intro on a phone with insets', () {
+    /// A notch and a home indicator, which a browser window does not have —
+    /// and which is where a layout pinned to the top of the screen instead
+    /// of the top of the safe area goes wrong without ever looking wrong in
+    /// a preview.
+    const EdgeInsets insets = EdgeInsets.only(top: 59, bottom: 34);
+
+    Future<void> pumpIntro(WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: buildAstutoTheme(Brightness.dark),
+          home: MediaQuery(
+            data: const MediaQueryData(padding: insets, size: Size(402, 874)),
+            child: IntroScreen(
+              onContinue: () {},
+              onApple: () async => false,
+              onGoogle: () async => false,
+              onNotConnected: (_) {},
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+    }
+
+    testWidgets('the drawing starts below the notch, not behind it', (
+      tester,
+    ) async {
+      await pumpIntro(tester);
+
+      final stage = find.byKey(const ValueKey('intro-stage'));
+      expect(stage, findsOneWidget);
+      expect(tester.getTopLeft(stage).dy, greaterThanOrEqualTo(insets.top));
+    });
+
+    testWidgets('nothing runs off the sides or the bottom', (tester) async {
+      await pumpIntro(tester);
+
+      final Size screen =
+          tester.view.physicalSize / tester.view.devicePixelRatio;
+      for (final key in ['intro-stage']) {
+        final rect = tester.getRect(find.byKey(ValueKey(key)));
+        expect(rect.left, greaterThanOrEqualTo(0));
+        expect(rect.right, lessThanOrEqualTo(screen.width + 0.5));
+      }
+
+      // And the buttons are still on screen with the home indicator taking
+      // its share of the bottom.
+      final apple = tester.getRect(find.text('Continue with Apple'));
+      expect(apple.bottom, lessThanOrEqualTo(screen.height - insets.bottom));
     });
   });
 }

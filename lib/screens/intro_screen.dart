@@ -91,7 +91,12 @@ class _IntroScreenState extends State<IntroScreen> {
               Positioned(
                 left: 0,
                 right: 0,
-                top: 0,
+                // Below the notch, not behind it. The blooms may run under
+                // the status bar because they are a wash; the drawing may
+                // not, or every phone with an inset shows it shifted up by
+                // however deep that inset is — which a browser, having none,
+                // will never reveal.
+                top: MediaQuery.paddingOf(context).top,
                 // The scenes are drawn for a band 344 by 252 — the shape of
                 // the room actually free above the copy. Drawn square, as
                 // they were, a picture at full width is taller than that
@@ -99,6 +104,7 @@ class _IntroScreenState extends State<IntroScreen> {
                 // title. That was not something to tune: the shape was wrong.
                 height: box.maxWidth * _SceneStage.ratio,
                 child: _SceneStage(
+                  key: const ValueKey('intro-stage'),
                   child: _Swap(
                     scene: _scene,
                     child: _IntroScene(index: _scene),
@@ -234,7 +240,7 @@ class _Scrim extends StatelessWidget {
 /// top and bottom, where the fade takes it. The clamp stops that becoming a
 /// crop on a short screen.
 class _SceneStage extends StatelessWidget {
-  const _SceneStage({required this.child});
+  const _SceneStage({super.key, required this.child});
 
   /// The band the scenes are drawn for.
   static const double width = 344;
