@@ -8,7 +8,6 @@ import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
-import 'package:astuto/screens/topic_mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -61,56 +60,44 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
+    expect(find.text('Astuto'), findsOneWidget);
     expect(
-      find.text('Most people are more sure than they are right.'),
+      find.text('Five smart things a day, ready to use in conversation'),
       findsOneWidget,
     );
-    expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
+    expect(find.text('Continue with Apple'), findsOneWidget);
   });
 
-  testWidgets('the first run asks for the mix, then deals', (tester) async {
+  testWidgets('the first run runs the subjects, then deals', (tester) async {
     SharedPreferences.setMockInitialValues({});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
+    await tester.tap(find.text('Continue with Apple'));
     await _settle(tester);
 
-    // Everything starts half-way out, so the shape opens as a wheel rather
-    // than as an empty star somebody has to fill in from nothing. Thinking
-    // is not among them: the puzzles come whatever the reader picks.
-    expect(find.text('What should we talk about?'), findsOneWidget);
-    expect(find.textContaining('12 of 12 subjects'), findsOneWidget);
+    // The run opens on the first subject, one card at a time.
+    expect(find.text('01'), findsOneWidget);
+    expect(find.text('of 12'), findsOneWidget);
+    expect(find.text('Science'), findsOneWidget);
 
-    await tester.tap(find.text('START WITH MY FIRST CARDS'));
+    await tester.tap(find.text('Favourite'));
+    await _settle(tester);
+    expect(find.text('02'), findsOneWidget);
+
+    // Skip keeps whatever is left rather than dropping it, so the deck is
+    // never empty because somebody stopped answering.
+    await tester.tap(find.text('Skip'));
+    await _settle(tester);
+    expect(find.text('Deal my first five'), findsOneWidget);
+
+    await tester.tap(find.text('Deal my first five'));
     await _settle(tester);
 
     // And the answer is kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('knowit.topicWeights'), isNotNull);
-    expect(prefs.getStringList('knowit.topics'), hasLength(13));
-    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-  });
-
-  testWidgets('signing in keeps the name and lands on the tab bar', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(const AstutoApp());
-    await _settle(tester);
-
-    await tester.tap(find.text('I already have an account'));
-    await _settle(tester);
-    expect(find.text('Welcome back.'), findsOneWidget);
-
-    await tester.enterText(find.byType(TextField), 'marco@studio.it');
-    await _settle(tester);
-    await tester.tap(find.text('Send me a login link'));
-    await _settle(tester);
-
-    expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-    await _openProfile(tester);
-    expect(find.text('Marco'), findsOneWidget);
+    expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
   testWidgets('an onboarded install opens straight on the tab bar', (
@@ -281,54 +268,6 @@ void main() {
     expect(deck, hasLength(kPillsPerDay));
   });
 
-  testWidgets('sliding a subject changes its share of the deck', (
-    tester,
-  ) async {
-    Map<String, double>? picked;
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: buildAstutoTheme(Brightness.dark),
-        home: TopicMixScreen(onDone: (w) => picked = w),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    // The chip shows its level as a length, not a number: there is nothing
-    // to read, only something to see.
-    expect(find.textContaining('%'), findsNothing);
-    expect(find.textContaining('12 of 12 subjects'), findsOneWidget);
-
-    // Drag Science to the far right: it takes more of the deck.
-    final science = find.ancestor(
-      of: find.text('Science'),
-      matching: find.byType(GestureDetector),
-    );
-    final box = tester.getRect(science.first);
-    await tester.dragFrom(
-      Offset(box.left + box.width * 0.5, box.center.dy),
-      Offset(box.width * 0.5, 0),
-    );
-    await tester.pumpAndSettle();
-
-    // Slide another one all the way down and it leaves the deck entirely.
-    final nature = find.ancestor(
-      of: find.text('Nature'),
-      matching: find.byType(GestureDetector),
-    );
-    final natureBox = tester.getRect(nature.first);
-    await tester.tapAt(Offset(natureBox.left + 1, natureBox.center.dy));
-    await tester.pumpAndSettle();
-    expect(find.textContaining('11 of 12 subjects'), findsOneWidget);
-
-    await tester.tap(find.text('START WITH MY FIRST CARDS'));
-    await tester.pumpAndSettle();
-
-    // What comes back is the mix as it stands: Nature dropped, Science top.
-    expect(picked, isNotNull);
-    expect(picked!.containsKey('nature'), isFalse);
-    expect(picked!['science'], greaterThan(picked!['history']!));
-  });
-
   group('Streak freezes', () {
     Future<AppState> appWith(Map<String, Object> extra) async {
       SharedPreferences.setMockInitialValues({..._installed(), ...extra});
@@ -428,16 +367,22 @@ void main() {
     // button depending on which week a screen was written in. PrimaryButton
     // is now built on the chunky one, which is what keeps that from coming
     // back one screen at a time.
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    final lapsed = DateTime.now().subtract(const Duration(days: 3));
+    SharedPreferences.setMockInitialValues({
+      ..._installed(),
+      'knowit.streak': 13,
+      'knowit.lastCompletionDate':
+          '${lapsed.year.toString().padLeft(4, '0')}-'
+          '${lapsed.month.toString().padLeft(2, '0')}-'
+          '${lapsed.day.toString().padLeft(2, '0')}',
+    });
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
+    const label = "Start again with today's five";
+    expect(find.text(label), findsOneWidget);
     expect(
-      find.ancestor(
-        of: find.text('SHOW ME THE FIRST 5 CARDS'),
-        matching: find.byType(ChunkyButton),
-      ),
+      find.ancestor(of: find.text(label), matching: find.byType(ChunkyButton)),
       findsOneWidget,
     );
   });
@@ -453,19 +398,22 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the first run goes from the welcome straight to the cards', (
+  testWidgets('the onboarding is two screens and then the cards', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.text('SHOW ME THE FIRST 5 CARDS'));
+    // One: the intro. Skip takes the same road as the buttons do.
+    await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // One stop on the way: the mix, dragged rather than ticked.
-    expect(find.text('What should we talk about?'), findsOneWidget);
-    await tester.tap(find.text('START WITH MY FIRST CARDS'));
+    // Two: the subject run.
+    expect(find.text('Science'), findsOneWidget);
+    await tester.tap(find.text('Skip'));
+    await _settle(tester);
+    await tester.tap(find.text('Deal my first five'));
     await _settle(tester);
 
     expect(find.text('Next pill'), findsOneWidget);
@@ -2141,8 +2089,8 @@ void main() {
       await tester.tap(find.text('Wipe it'));
       await _settle(tester);
 
-      // The welcome screen, not the tab shell.
-      expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
+      // The intro, not the tab shell.
+      expect(find.text('Continue with Apple'), findsOneWidget);
       expect(find.byKey(const ValueKey('tab-Today')), findsNothing);
 
       final prefs = await SharedPreferences.getInstance();

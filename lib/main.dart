@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
+import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
-import 'screens/sign_in_screen.dart';
+import 'screens/subject_run_screen.dart';
 import 'screens/today_screen.dart';
-import 'screens/topic_mix_screen.dart';
-import 'screens/welcome_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
 
@@ -111,7 +110,10 @@ class _PhoneFrame extends StatelessWidget {
 
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
-enum _Stage { welcome, topics, signIn, comeback, shell }
+/// The onboarding is two screens and no more: the intro that says what the
+/// app is, then the subject run that fills the deck. Everything else waits
+/// until there is something worth signing in to keep.
+enum _Stage { intro, subjects, comeback, shell }
 
 class AstutoRoot extends StatefulWidget {
   final AppState app;
@@ -123,7 +125,7 @@ class AstutoRoot extends StatefulWidget {
 
 class _AstutoRootState extends State<AstutoRoot> {
   AppState get _app => widget.app;
-  _Stage _stage = _Stage.welcome;
+  _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
   @override
@@ -141,7 +143,7 @@ class _AstutoRootState extends State<AstutoRoot> {
       if (_app.ready && !_stageResolved) {
         _stageResolved = true;
         if (!_app.onboarded) {
-          _stage = _Stage.welcome;
+          _stage = _Stage.intro;
         } else if (_app.shouldShowComeback) {
           _stage = _Stage.comeback;
         } else {
@@ -188,25 +190,13 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   Widget _stageScreen() {
     switch (_stage) {
-      case _Stage.welcome:
-        return WelcomeScreen(
-          onStart: () => _go(_Stage.topics),
-          onSignIn: () => _go(_Stage.signIn),
-        );
+      case _Stage.intro:
+        return IntroScreen(onContinue: () => _go(_Stage.subjects));
 
-      case _Stage.topics:
-        return TopicMixScreen(
+      case _Stage.subjects:
+        return SubjectRunScreen(
           onDone: (weights) async {
             await _app.setTopicMix(weights);
-            await _finishOnboarding();
-          },
-        );
-
-      case _Stage.signIn:
-        return SignInScreen(
-          onBack: () => _go(_Stage.welcome),
-          onSignedIn: (name) async {
-            await _app.setName(name);
             await _finishOnboarding();
           },
         );
@@ -225,7 +215,7 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onSignedOut: () => setState(() {
             _stageResolved = true;
-            _stage = _Stage.welcome;
+            _stage = _Stage.intro;
           }),
         );
     }
