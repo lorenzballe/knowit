@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "582789807174",
+    "project_id": "astuto-3d398",
+    "storage_bucket": "astuto-3d398.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582789807174:android:b6e25efeabc2ecae8ede47",
+        "android_client_info": {
+          "package_name": "com.astuto.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUAqeoKsZlQM7tJ7xksYy_JhxWnuPNmJQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
