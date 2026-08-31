@@ -173,6 +173,31 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   void _go(_Stage stage) => setState(() => _stage = stage);
 
+  /// Returns whether the intro should move on. Only backing out of the
+  /// provider's own sheet keeps the reader where they are.
+  Future<bool> _signIn(
+    String label,
+    Future<SignInOutcome> Function(AppState) run,
+  ) async {
+    final outcome = await run(_app);
+    if (!mounted) return false;
+    switch (outcome) {
+      case SignInOutcome.signedIn:
+      // Nothing to sign in to on this build or this platform: the reader
+      // should not be stuck behind a button that cannot work.
+      case SignInOutcome.unavailable:
+        return true;
+      case SignInOutcome.cancelled:
+        return false;
+      case SignInOutcome.failed:
+        _say(
+          'Could not sign in with $label. You can carry on without an '
+          'account.',
+        );
+        return false;
+    }
+  }
+
   void _say(String message) {
     final messenger = ScaffoldMessenger.maybeOf(context);
     messenger?.showSnackBar(SnackBar(content: Text(message)));
@@ -210,25 +235,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       case _Stage.intro:
         return IntroScreen(
           onContinue: () => _go(_Stage.subjects),
-          onApple: () async {
-            final outcome = await _account.signInWithApple(_app);
-            if (!mounted) return false;
-            switch (outcome) {
-              case SignInOutcome.signedIn:
-              // Nothing to sign in to on this build or this platform: the
-              // reader should not be stuck behind a button that cannot work.
-              case SignInOutcome.unavailable:
-                return true;
-              case SignInOutcome.cancelled:
-                return false;
-              case SignInOutcome.failed:
-                _say(
-                  'Could not sign in with Apple. You can carry on '
-                  'without an account.',
-                );
-                return false;
-            }
-          },
+          onApple: () => _signIn('Apple', _account.signInWithApple),
+          onGoogle: () => _signIn('Google', _account.signInWithGoogle),
           onNotConnected: (provider) => _say(
             '$provider sign-in is not connected yet. Your cards are '
             'kept on this device.',

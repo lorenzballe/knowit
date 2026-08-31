@@ -18,15 +18,17 @@ class IntroScreen extends StatefulWidget {
     super.key,
     required this.onContinue,
     required this.onApple,
+    required this.onGoogle,
     required this.onNotConnected,
   });
 
   /// Skip, and where every button lands once it is done.
   final VoidCallback onContinue;
 
-  /// Signs in with Apple. Returns false only when the reader backed out of
-  /// the sheet, which should leave them exactly where they were.
+  /// Sign in. Each returns false only when the reader backed out of the
+  /// provider's sheet, which should leave them exactly where they were.
   final Future<bool> Function() onApple;
+  final Future<bool> Function() onGoogle;
 
   /// A provider that has no backend behind it yet. Says so, then carries on
   /// — the next screen only needs a deck, not an account.
@@ -130,9 +132,8 @@ class _IntroScreenState extends State<IntroScreen> {
                       onApple: () async {
                         if (await widget.onApple()) widget.onContinue();
                       },
-                      onGoogle: () {
-                        widget.onNotConnected('Google');
-                        widget.onContinue();
+                      onGoogle: () async {
+                        if (await widget.onGoogle()) widget.onContinue();
                       },
                       onEmail: () {
                         widget.onNotConnected('Email');

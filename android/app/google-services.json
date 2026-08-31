@@ -12,7 +12,12 @@
           "package_name": "com.astuto.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "582789807174-tu0hqj49009a3gituuhljqj5dnfto56g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCUAqeoKsZlQM7tJ7xksYy_JhxWnuPNmJQ"
@@ -20,7 +25,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582789807174-tu0hqj49009a3gituuhljqj5dnfto56g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582789807174-gqik2m8lr283qu6pr1s99gqgsj9lfas4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.astuto.app",
+                "app_store_id": "6806852300"
+              }
+            }
+          ]
         }
       }
     }

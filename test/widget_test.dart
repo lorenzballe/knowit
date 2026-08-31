@@ -2078,11 +2078,12 @@ void main() {
       await _openProfile(tester);
 
       final wipe = find.text('Wipe everything and restart');
-      await tester.scrollUntilVisible(
-        wipe,
-        400,
-        scrollable: find.byType(Scrollable).first,
-      );
+      final list = find.byType(Scrollable).first;
+      await tester.scrollUntilVisible(wipe, 400, scrollable: list);
+      // scrollUntilVisible stops the moment the row appears, which can leave
+      // it under the floating tab bar, where the tap would land on the bar.
+      await tester.drag(list, const Offset(0, -160));
+      await _settle(tester);
       await tester.tap(wipe);
       await _settle(tester);
 
@@ -2108,11 +2109,10 @@ void main() {
       // scrolled back into view each time rather than tapped where it was.
       Future<void> tapToggle(String label) async {
         final row = find.text(label);
-        await tester.scrollUntilVisible(
-          row,
-          300,
-          scrollable: find.byType(Scrollable).first,
-        );
+        final list = find.byType(Scrollable).first;
+        await tester.scrollUntilVisible(row, 300, scrollable: list);
+        await tester.drag(list, const Offset(0, -160));
+        await _settle(tester);
         await tester.tap(row);
         await _settle(tester);
       }

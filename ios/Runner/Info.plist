@@ -66,5 +66,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Google sign-in comes back to the app through this scheme: it is the
+	     REVERSED_CLIENT_ID out of GoogleService-Info.plist, and without it
+	     the browser has nowhere to return to. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.582789807174-gqik2m8lr283qu6pr1s99gqgsj9lfas4</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

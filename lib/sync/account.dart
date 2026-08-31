@@ -38,25 +38,39 @@ class Account extends ChangeNotifier {
 
   bool get signedIn => user != null;
 
-  /// What to show on the profile: the email if Apple shared one, otherwise
-  /// nothing useful — Apple lets people hide it, and inventing a label for
-  /// that case would be worse than saying "signed in".
+  /// What to show on the profile: the email if the provider shared one,
+  /// otherwise nothing useful — Apple lets people hide theirs, and inventing
+  /// a label for that case would be worse than saying "signed in".
   String? get email {
     final String? value = user?.email;
     return (value == null || value.isEmpty) ? null : value;
   }
 
-  Future<SignInOutcome> signInWithApple(AppState app) async {
+  Future<SignInOutcome> signInWithApple(AppState app) => _signIn(
+    app,
+    'Apple',
+    () => AppleAuthProvider()
+      ..addScope('email')
+      ..addScope('name'),
+  );
+
+  Future<SignInOutcome> signInWithGoogle(AppState app) =>
+      _signIn(app, 'Google', () => GoogleAuthProvider()..addScope('email'));
+
+  /// Both providers do the same thing: hand Firebase an identity, then fold
+  /// this phone into whatever the account already holds.
+  Future<SignInOutcome> _signIn(
+    AppState app,
+    String label,
+    AuthProvider Function() build,
+  ) async {
     final FirebaseAuth? auth = _firebase;
     if (auth == null) return SignInOutcome.unavailable;
 
     _busy = true;
     notifyListeners();
     try {
-      final provider = AppleAuthProvider()
-        ..addScope('email')
-        ..addScope('name');
-      final UserCredential credential = await auth.signInWithProvider(provider);
+      final UserCredential credential = await auth.signInWithProvider(build());
       final User? signed = credential.user;
       if (signed == null) return SignInOutcome.failed;
       await foldInto(app, signed.uid);
@@ -71,10 +85,10 @@ class Account extends ChangeNotifier {
         'user-cancelled',
       };
       if (cancelled.contains(error.code)) return SignInOutcome.cancelled;
-      debugPrint('Apple sign-in failed: ${error.code} ${error.message}');
+      debugPrint('$label sign-in failed: ${error.code} ${error.message}');
       return SignInOutcome.failed;
     } catch (error) {
-      debugPrint('Apple sign-in failed: $error');
+      debugPrint('$label sign-in failed: $error');
       return SignInOutcome.failed;
     } finally {
       _busy = false;

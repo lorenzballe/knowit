@@ -92,13 +92,17 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _signIn(BuildContext context) async {
+  Future<void> _signIn(
+    BuildContext context,
+    String label,
+    Future<SignInOutcome> Function(AppState) run,
+  ) async {
     final messenger = ScaffoldMessenger.maybeOf(context);
-    final outcome = await account.signInWithApple(app);
+    final outcome = await run(app);
     final String? note = switch (outcome) {
       SignInOutcome.signedIn =>
         'Signed in. Your streak and record are on your account now.',
-      SignInOutcome.failed => 'Could not sign in with Apple.',
+      SignInOutcome.failed => 'Could not sign in with $label.',
       SignInOutcome.unavailable => 'Signing in is not available on this build.',
       SignInOutcome.cancelled => null,
     };
@@ -465,11 +469,16 @@ class ProfileScreen extends StatelessWidget {
               muted: true,
               onTap: () => _confirmSignOut(context),
             )
-          else
+          else ...[
             _LinkRow(
               label: 'Sign in with Apple',
-              onTap: () => _signIn(context),
+              onTap: () => _signIn(context, 'Apple', account.signInWithApple),
             ),
+            _LinkRow(
+              label: 'Sign in with Google',
+              onTap: () => _signIn(context, 'Google', account.signInWithGoogle),
+            ),
+          ],
           if (kDebugTools) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
