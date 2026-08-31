@@ -128,32 +128,49 @@ class _IntroScreenState extends State<IntroScreen> {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 22),
-                            child: _Swap(
-                              scene: _scene,
-                              child: _SceneCopy(index: _scene),
+                          // A fixed height for the copy, whatever it says.
+                          // A title on one line and a title on two gave the
+                          // drawing above different room on different scenes,
+                          // so it changed size as you moved — and the dots and
+                          // buttons moved with it. Geometry that holds still
+                          // is worth more than the fourteen pixels it costs.
+                          SizedBox(
+                            height: _SceneCopy.height,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22,
+                              ),
+                              child: _Swap(
+                                scene: _scene,
+                                child: _SceneCopy(index: _scene),
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 14),
+                          const SizedBox(height: 10),
                           _Dots(count: _sceneCount, active: _scene, onTap: _go),
                           // Nobody guesses that a screen is tappable, and the
                           // dots alone say "there is more" without saying how
                           // to reach it. Gone the moment they move — and it
                           // gives its height back to the drawing when it goes,
                           // rather than holding an empty band.
-                          if (_moved == 0 && _scene == 0)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                'Swipe to see more',
-                                style: AppText.body(
-                                  size: 12.5,
-                                  weight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.34),
+                          SizedBox(
+                            height: 26,
+                            child: AnimatedOpacity(
+                              opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                              duration: const Duration(milliseconds: 350),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Text(
+                                  'Swipe to see more',
+                                  style: AppText.body(
+                                    size: 12.5,
+                                    weight: FontWeight.w500,
+                                    color: Colors.white.withValues(alpha: 0.34),
+                                  ),
                                 ),
                               ),
                             ),
+                          ),
                         ],
                       ),
                     ),
@@ -308,11 +325,17 @@ class _SceneCopy extends StatelessWidget {
     ),
   ];
 
+  /// Tall enough for the longest of the five, so every scene reserves the
+  /// same band and nothing below it shifts.
+  static const double height = 168;
+
   @override
   Widget build(BuildContext context) {
     final (String title, String sub) = _copy[index];
     final bool wordmark = index == 0;
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           title,
@@ -871,23 +894,6 @@ class _SceneRain extends StatelessWidget {
                 radius: 8,
                 shadow: true,
               ),
-            const Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 140,
-              child: IgnorePointer(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Color(0x00000000), Color(0xFF000000)],
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
