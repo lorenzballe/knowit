@@ -88,6 +88,9 @@ class ProfileScreen extends StatelessWidget {
     if (confirmed == true) {
       await account.signOut();
       await app.signOut();
+      // The phone keeps an account of its own, so what happens next still
+      // has somewhere to be written.
+      await account.ensureAnonymous(app);
       onSignedOut();
     }
   }
@@ -463,7 +466,7 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
           ),
-          if (account.signedIn)
+          if (account.signedInForReal)
             _LinkRow(
               label: 'Sign out',
               muted: true,

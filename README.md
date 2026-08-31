@@ -87,6 +87,49 @@ Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging
 readers to advertise it.
 
+## Accounts, and what crosses to a new phone
+
+The app works signed out and always did. An account only decides whether the
+phone's work also lives somewhere that survives the phone.
+
+Every phone is given an anonymous account the first time it opens, because
+the app asks for a real one late on purpose — and until there is one, a
+reader has nowhere to keep a backup and no address a notification could be
+sent to. Signing in with Apple or Google **links** that account rather than
+opening a second one, so the uid does not move and nothing has to be carried.
+Where the identity already has an account of its own, the uid does change,
+and the merge below is what brings this phone's week across.
+
+Signing in is not a restore. It happens after the reader has used the app, so
+both sides are real and neither may be dropped:
+
+- streaks and counts take the better of the two — losing a streak for owning
+  a second phone would be the app punishing someone for its own design;
+- completed days, saved pills, seen cards and push tokens are unions: a day
+  either was done or was not, and a reader with two phones should be
+  reachable on both;
+- a card both sides know keeps the answer that climbed further up the review
+  ladder, which is "your first answer stands" seen from the other end;
+- the mix is a decision rather than a score, so the one made on this phone
+  wins;
+- and the judgement log is never cut. It carries no id and no timestamp, so
+  two lists cannot honestly be interleaved — the longer one is the more
+  complete record, because on one device it only grows. Ids would let this be
+  exact, and should come before anyone runs two phones in earnest.
+
+Not synced, deliberately: the theme, the reminder, today's deck and how far
+through it the reader is. Those describe a device, and copying them would
+have a phone pick up half of another phone's day. Nor the plan — a
+subscription the client writes to itself is a wish, not an entitlement.
+
+Backing up runs four seconds after the app goes quiet, so five cards are one
+write, and flushes when the app leaves the screen, which is the last moment
+anything is certain to run.
+
+Notifications are asked for once, after a first day is finished. iOS gives an
+app one prompt and no second chance, so spending it on a launch screen throws
+the channel away on someone who does not yet know what the app is.
+
 ## Project structure
 
 ```

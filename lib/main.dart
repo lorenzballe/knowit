@@ -156,6 +156,7 @@ class _AstutoRootState extends State<AstutoRoot> {
       onDetach: _account.flush,
     );
     _refreshPushToken();
+    _account.ensureAnonymous(_app);
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
   }

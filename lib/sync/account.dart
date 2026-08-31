@@ -55,6 +55,10 @@ class Account extends ChangeNotifier {
 
   bool get signedIn => uid != null;
 
+  /// Whether a person signed in, rather than the phone having been given an
+  /// account to write to. The profile asks this one.
+  bool get signedInForReal => user != null && !user!.isAnonymous;
+
   /// What to show on the profile: the email if the provider shared one,
   /// otherwise nothing useful — Apple lets people hide theirs, and inventing
   /// a label for that case would be worse than saying "signed in".
@@ -87,7 +91,28 @@ class Account extends ChangeNotifier {
     _busy = true;
     notifyListeners();
     try {
-      final UserCredential credential = await auth.signInWithProvider(build());
+      final User? current = auth.currentUser;
+      UserCredential credential;
+      if (current != null && current.isAnonymous) {
+        // Promote the account the phone has been writing to, rather than
+        // opening a second one — linking keeps the uid, so nothing has to be
+        // moved and nothing can be dropped on the way.
+        try {
+          credential = await current.linkWithProvider(build());
+        } on FirebaseAuthException catch (error) {
+          if (error.code != 'credential-already-in-use' &&
+              error.code != 'email-already-in-use' &&
+              error.code != 'provider-already-linked') {
+            rethrow;
+          }
+          // This identity already has an account of its own. Signing into it
+          // changes the uid, and the fold below is what carries this phone's
+          // work across.
+          credential = await auth.signInWithProvider(build());
+        }
+      } else {
+        credential = await auth.signInWithProvider(build());
+      }
       final User? signed = credential.user;
       if (signed == null) return SignInOutcome.failed;
       await foldInto(app, signed.uid);
@@ -143,6 +168,31 @@ class Account extends ChangeNotifier {
     } catch (error) {
       // A backup that fails is not something to interrupt a reader over.
       debugPrint('Could not push the snapshot: $error');
+    }
+  }
+
+  /// Gives this phone an account of its own, before anyone signs in.
+  ///
+  /// Without it a reader who has not signed in has nowhere to keep anything
+  /// — no backup, and no address to send a notification to. Since the app
+  /// asks for a real account late on purpose, that is most readers for most
+  /// of their first week.
+  ///
+  /// It is not a sign-in and must never look like one: nothing is shown, the
+  /// profile still offers Apple and Google, and [signedInForReal] is what the
+  /// screens ask about.
+  Future<void> ensureAnonymous(AppState app) async {
+    final FirebaseAuth? auth = _firebase;
+    if (auth == null || auth.currentUser != null) return;
+    try {
+      final credential = await auth.signInAnonymously();
+      final User? signed = credential.user;
+      if (signed != null) await foldInto(app, signed.uid);
+      notifyListeners();
+    } catch (error) {
+      // An anonymous provider that is switched off leaves the app exactly
+      // where it was before this existed: local only.
+      debugPrint('No anonymous account, carrying on locally: $error');
     }
   }
 
