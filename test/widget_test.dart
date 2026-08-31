@@ -10,6 +10,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/topic_mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/chunky.dart';
@@ -2081,5 +2082,39 @@ void main() {
     await tester.tap(find.text("Start again with today's five"));
     await _settle(tester);
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
+  });
+
+  group('BrandMark', () {
+    Future<String> assetUnder(
+      WidgetTester tester,
+      Brightness brightness,
+    ) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: ThemeData(brightness: brightness),
+          // MaterialApp crossfades between themes, so without this the second
+          // pump still reads the previous one.
+          themeAnimationDuration: Duration.zero,
+          home: const Scaffold(body: BrandMark()),
+        ),
+      );
+      final image = tester.widget<Image>(find.byType(Image));
+      return (image.image as AssetImage).assetName;
+    }
+
+    testWidgets('carries its own ground, so it follows the theme', (
+      tester,
+    ) async {
+      // The mark is not a transparent glyph: showing the light one in dark
+      // mode puts a cream tile on a near-black screen.
+      expect(
+        await assetUnder(tester, Brightness.light),
+        'assets/brand/mark-light.png',
+      );
+      expect(
+        await assetUnder(tester, Brightness.dark),
+        'assets/brand/mark-dark.png',
+      );
+    });
   });
 }

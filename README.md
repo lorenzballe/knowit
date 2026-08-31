@@ -19,6 +19,18 @@ Every push to `main` builds and deploys automatically to GitHub Pages:
 (First deploy: in the repo, go to **Settings → Pages** and set **Source** to
 **GitHub Actions** if it isn't already — after that every push publishes on its own.)
 
+## The mark
+
+The icon is the A with the two cards behind it, in two versions — cream ground
+and near-black. The mark carries its own background rather than being a
+transparent glyph, so which one is shown matters: the light one on a dark
+screen is a pale tile. `BrandMark` picks from the theme, and the web favicon
+swaps on `prefers-color-scheme`.
+
+A home-screen icon does not follow the phone's theme on either platform, so the
+launcher icon is the light one everywhere. `tool/icons/` holds the supplied
+artwork and the script that resizes it to all 25 sizes.
+
 ## Running locally
 
 ```sh

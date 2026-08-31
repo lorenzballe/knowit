@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
+import '../widgets/brand_mark.dart';
 import '../widgets/ui.dart';
 
 /// First run — the fanned card hero and the two ways in.
@@ -26,14 +27,20 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Astuto',
-                style: AppText.display(
-                  size: 20,
-                  weight: FontWeight.w700,
-                  spacing: -0.6,
-                  color: context.p.ink,
-                ),
+              Row(
+                children: [
+                  const BrandMark(size: 26),
+                  const SizedBox(width: 9),
+                  Text(
+                    'Astuto',
+                    style: AppText.display(
+                      size: 20,
+                      weight: FontWeight.w700,
+                      spacing: -0.6,
+                      color: context.p.ink,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 26),
               const _FannedCards(),
