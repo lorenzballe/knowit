@@ -96,9 +96,26 @@ class _LoopState extends State<_Loop> with SingleTickerProviderStateMixin {
   }
 }
 
-/// The three blooms behind the intro, each drifting on its own clock.
+/// Colour is not the brand here — having many of them is.
+///
+/// Each scene gets its own three, so the ground under the app never settles
+/// into one hue and moving between scenes is a change of light rather than a
+/// change of slide.
+const List<List<Color>> kSceneBlooms = [
+  [Color(0xFFFF2E9C), Color(0xFF2B4BFF), Color(0xFF00B083)],
+  [Color(0xFFFF9500), Color(0xFF7A5CFF), Color(0xFF00C2A8)],
+  [Color(0xFF2B4BFF), Color(0xFFFFC93C), Color(0xFFFF2E9C)],
+  [Color(0xFFC24BE0), Color(0xFF2FA84F), Color(0xFFFF5AD1)],
+  [Color(0xFFFF4E2D), Color(0xFF00A3FF), Color(0xFFFFC93C)],
+];
+
+/// The three blooms behind the intro, each drifting on its own clock and
+/// crossfading to whatever the scene asks for.
 class AmbientBlooms extends StatelessWidget {
-  const AmbientBlooms({super.key});
+  const AmbientBlooms({super.key, required this.colors});
+
+  /// Three, in the order they are painted: top left, top right, lower left.
+  final List<Color> colors;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +132,7 @@ class AmbientBlooms extends StatelessWidget {
                   offset: Offset(34 * t, -30 * t),
                   child: Transform.scale(
                     scale: 1 + 0.18 * t,
-                    child: const Bloom(color: Color(0x52FF2E9C), size: 360),
+                    child: _Tinted(colors[0], alpha: 0.32, size: 360),
                   ),
                 ),
               ),
@@ -129,7 +146,7 @@ class AmbientBlooms extends StatelessWidget {
                   offset: Offset(-30 * t, 26 * t),
                   child: Transform.scale(
                     scale: 1.1 - 0.18 * t,
-                    child: const Bloom(color: Color(0x5C2B4BFF), size: 380),
+                    child: _Tinted(colors[1], alpha: 0.36, size: 380),
                   ),
                 ),
               ),
@@ -145,13 +162,79 @@ class AmbientBlooms extends StatelessWidget {
                   offset: Offset(34 * t, -30 * t),
                   child: Transform.scale(
                     scale: 1 + 0.18 * t,
-                    child: const Bloom(color: Color(0x2E00B083), size: 280),
+                    child: _Tinted(colors[2], alpha: 0.28, size: 280),
                   ),
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// A bloom that crossfades when its colour changes, so a new scene arrives
+/// as the light moving rather than as a cut.
+class _Tinted extends StatelessWidget {
+  const _Tinted(this.color, {required this.alpha, required this.size});
+
+  final Color color;
+  final double alpha;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<Color?>(
+      tween: ColorTween(end: color.withValues(alpha: alpha)),
+      duration: const Duration(milliseconds: 900),
+      curve: Curves.easeInOut,
+      builder: (context, value, _) => Bloom(
+        color: value ?? color.withValues(alpha: alpha),
+        size: size,
+      ),
+    );
+  }
+}
+
+/// Fades whatever it wraps out at the edges, so an animation ends in light
+/// rather than against a straight line. A clipped rectangle reads as a frame
+/// somebody forgot to remove.
+class SoftEdges extends StatelessWidget {
+  const SoftEdges({super.key, required this.child, this.fade = 0.14});
+
+  final Widget child;
+  final double fade;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.dstIn,
+      shaderCallback: (rect) => LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: const [
+          Color(0x00FFFFFF),
+          Color(0xFFFFFFFF),
+          Color(0xFFFFFFFF),
+          Color(0x00FFFFFF),
+        ],
+        stops: [0, fade, 1 - fade, 1],
+      ).createShader(rect),
+      child: ShaderMask(
+        blendMode: BlendMode.dstIn,
+        shaderCallback: (rect) => LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: const [
+            Color(0x00FFFFFF),
+            Color(0xFFFFFFFF),
+            Color(0xFFFFFFFF),
+            Color(0x00FFFFFF),
+          ],
+          stops: [0, fade * 0.8, 1 - fade * 0.8, 1],
+        ).createShader(rect),
+        child: child,
       ),
     );
   }

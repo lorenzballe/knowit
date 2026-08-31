@@ -16,6 +16,7 @@ import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
 import 'theme.dart';
+import 'widgets/ambient.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -349,30 +350,39 @@ class _Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.p.surface,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Astuto',
-              style: AppText.display(
-                size: 30,
-                weight: FontWeight.w700,
-                spacing: -1,
-                color: context.p.ink,
-              ),
+      body: Stack(
+        children: [
+          // The colour arrives before anything else does. A launch screen is
+          // the one moment the app is only a promise, and a plain background
+          // spends it saying nothing.
+          Positioned.fill(child: AmbientBlooms(colors: kSceneBlooms.first)),
+          const Positioned.fill(child: Bokeh()),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Astuto',
+                  style: AppText.display(
+                    size: 30,
+                    weight: FontWeight.w700,
+                    spacing: -1,
+                    color: context.p.ink,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                SizedBox(
+                  width: 26,
+                  height: 26,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: context.p.ink.withValues(alpha: 0.35),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 18),
-            SizedBox(
-              width: 26,
-              height: 26,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: context.p.ink.withValues(alpha: 0.35),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

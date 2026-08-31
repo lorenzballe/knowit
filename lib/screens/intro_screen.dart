@@ -45,6 +45,8 @@ class _IntroScreenState extends State<IntroScreen> {
   double _dragX = 0;
   double _moved = 0;
 
+  List<Color> get _blooms => kSceneBlooms[_scene % kSceneBlooms.length];
+
   void _go(int i) => setState(() => _scene = i % _sceneCount);
 
   void _next() => _go(_scene + 1);
@@ -77,7 +79,7 @@ class _IntroScreenState extends State<IntroScreen> {
         },
         child: Stack(
           children: [
-            const Positioned.fill(child: AmbientBlooms()),
+            Positioned.fill(child: AmbientBlooms(colors: _blooms)),
             const Positioned.fill(child: Bokeh()),
             const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
             const Positioned.fill(child: Vignette(ground: Colors.black)),
@@ -117,14 +119,16 @@ class _IntroScreenState extends State<IntroScreen> {
                           // fixed box turned that into copy drawn over
                           // buttons rather than a smaller drawing.
                           Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: SizedBox(
-                                width: 344,
-                                height: 344,
-                                child: _Swap(
-                                  scene: _scene,
-                                  child: _IntroScene(index: _scene),
+                            child: SoftEdges(
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: SizedBox(
+                                  width: 344,
+                                  height: 344,
+                                  child: _Swap(
+                                    scene: _scene,
+                                    child: _IntroScene(index: _scene),
+                                  ),
                                 ),
                               ),
                             ),
@@ -136,6 +140,24 @@ class _IntroScreenState extends State<IntroScreen> {
                           ),
                           const SizedBox(height: 14),
                           _Dots(count: _sceneCount, active: _scene, onTap: _go),
+                          // Nobody guesses that a screen is tappable, and the
+                          // dots alone say "there is more" without saying how
+                          // to reach it. Gone the moment they move.
+                          AnimatedOpacity(
+                            opacity: _moved > 0 || _scene > 0 ? 0 : 1,
+                            duration: const Duration(milliseconds: 400),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Swipe to see more',
+                                style: AppText.body(
+                                  size: 12.5,
+                                  weight: FontWeight.w500,
+                                  color: Colors.white.withValues(alpha: 0.34),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -766,6 +788,12 @@ class _SceneRain extends StatelessWidget {
     Color(0xFF00B083),
     Color(0xFF7A5CFF),
     Color(0xFFFF9500),
+    Color(0xFF00A3FF),
+    Color(0xFFFF4E2D),
+    Color(0xFFC24BE0),
+    Color(0xFF2FA84F),
+    Color(0xFF00C2A8),
+    Color(0xFFFF5AD1),
   ];
 
   @override
@@ -1245,13 +1273,19 @@ class _SceneChips extends StatelessWidget {
     'Human body',
   ];
 
+  /// One colour each, and no two the same. A grid where four are lit and
+  /// five are grey reads as a form half filled in; the point of the scene is
+  /// that there are twelve subjects and they are not all alike.
   static const List<Color> _palette = [
-    Color(0xFFFF2E9C),
     Color(0xFF2B4BFF),
+    Color(0xFFFF4E2D),
     Color(0xFFFFC93C),
-    Color(0xFF00B083),
+    Color(0xFFC97B2E),
+    Color(0xFF00C2A8),
+    Color(0xFF2FA84F),
+    Color(0xFF00A3FF),
+    Color(0xFFC24BE0),
     Color(0xFF7A5CFF),
-    Color(0xFFFF9500),
   ];
 
   @override
@@ -1276,33 +1310,28 @@ class _SceneChips extends StatelessWidget {
   }
 
   Widget _chip(int i) {
-    final bool on = const [0, 2, 4, 6].contains(i);
     final Color base = _palette[i % _palette.length];
+    // Yellow and orange want dark type on them; everything else takes white.
+    final bool pale = base.computeLuminance() > 0.45;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
       decoration: BoxDecoration(
-        color: on ? base : Colors.white.withValues(alpha: 0.07),
+        color: base,
         borderRadius: BorderRadius.circular(999),
-        boxShadow: on
-            ? const [
-                BoxShadow(
-                  color: Color(0x59000000),
-                  blurRadius: 22,
-                  offset: Offset(0, 8),
-                ),
-              ]
-            : null,
+        boxShadow: [
+          BoxShadow(
+            color: base.withValues(alpha: 0.45),
+            blurRadius: 22,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Text(
         _names[i],
         style: AppText.body(
           size: 15,
           weight: FontWeight.w600,
-          color: on
-              ? (i % _palette.length == 2
-                    ? const Color(0xFF2B2400)
-                    : Colors.white)
-              : Colors.white.withValues(alpha: 0.42),
+          color: pale ? const Color(0xFF2B2400) : Colors.white,
         ),
       ),
     );
