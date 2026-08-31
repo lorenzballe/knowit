@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 /// The one entitlement Astuto sells. Everything gated asks this by name.
 ///
@@ -12,7 +13,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 /// each should have a project of its own.
 const String kPlusEntitlement = String.fromEnvironment(
   'REVENUECAT_ENTITLEMENT',
-  defaultValue: 'plus',
+  defaultValue: 'astuto_pro',
 );
 
 /// The public RevenueCat key for the iOS app.
@@ -22,6 +23,16 @@ const String kPlusEntitlement = String.fromEnvironment(
 ///
 ///     flutter build ipa --dart-define=REVENUECAT_IOS_KEY=appl_xxx
 const String kRevenueCatIosKey = String.fromEnvironment('REVENUECAT_IOS_KEY');
+
+/// Package identifiers, tried in order.
+///
+/// RevenueCat's own accessors only find packages built from its standard
+/// types ($rc_annual, $rc_monthly). An offering whose packages were named by
+/// hand — "yearly", "monthly" — leaves those null, and the paywall would show
+/// its written-in prices while quietly refusing to sell anything. So both are
+/// tried.
+const List<String> kYearlyPackageIds = ['\$rc_annual', 'yearly', 'annual'];
+const List<String> kMonthlyPackageIds = ['\$rc_monthly', 'monthly'];
 
 /// Whether the reader has actually paid, and what it would cost if not.
 ///
@@ -58,6 +69,23 @@ class Subscription extends ChangeNotifier {
   /// What is on sale, or null when the store has not answered — in which
   /// case the paywall falls back to the prices written into the app.
   Offering? get offering => _offering;
+
+  /// The yearly package, however the offering happens to name it.
+  Package? get yearly => _packageFrom(kYearlyPackageIds, _offering?.annual);
+
+  Package? get monthly => _packageFrom(kMonthlyPackageIds, _offering?.monthly);
+
+  Package? _packageFrom(List<String> identifiers, Package? standard) {
+    if (standard != null) return standard;
+    final Offering? offering = _offering;
+    if (offering == null) return null;
+    for (final String id in identifiers) {
+      for (final Package package in offering.availablePackages) {
+        if (package.identifier == id) return package;
+      }
+    }
+    return null;
+  }
 
   String get _key => keyOverride ?? kRevenueCatIosKey;
 
@@ -125,6 +153,26 @@ class Subscription extends ChangeNotifier {
     } catch (error) {
       debugPrint('Purchase failed: $error');
       return PurchaseOutcome.failed;
+    }
+  }
+
+  /// RevenueCat's own screen for managing a subscription: cancelling,
+  /// changing plan, asking for a refund, restoring.
+  ///
+  /// Worth using rather than building, because it is the part of a paywall
+  /// nobody designs and everybody needs — and because the alternative is
+  /// sending the reader to iOS Settings and hoping.
+  ///
+  /// The customer info is read again afterwards: someone who cancelled in
+  /// there should not come back to a profile that still says they are on the
+  /// plan.
+  Future<void> presentCustomerCenter() async {
+    if (_key.isEmpty) return;
+    try {
+      await RevenueCatUI.presentCustomerCenter();
+      _apply(await Purchases.getCustomerInfo());
+    } catch (error) {
+      debugPrint('Could not open the customer centre: $error');
     }
   }
 

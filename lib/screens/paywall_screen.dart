@@ -92,10 +92,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// What the store charges, or the price written into the app when it has
   /// not answered.
   String _priceFor(Plan plan) {
-    final Offering? offering = _store.offering;
-    final Package? package = offering == null
-        ? null
-        : (plan == Plan.year ? offering.annual : offering.monthly);
+    final Package? package = plan == Plan.year ? _store.yearly : _store.monthly;
     if (package != null) return package.storeProduct.priceString;
     return _euros(plan == Plan.year ? kYearlyCents : kMonthlyCents);
   }
@@ -107,11 +104,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   /// The package for the plan on screen, if the store has offered one.
-  Package? get _package {
-    final Offering? offering = _store.offering;
-    if (offering == null) return null;
-    return _plan == Plan.year ? offering.annual : offering.monthly;
-  }
+  Package? get _package => _plan == Plan.year ? _store.yearly : _store.monthly;
 
   Future<void> _start() async {
     final Package? package = _package;

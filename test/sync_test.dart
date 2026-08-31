@@ -313,6 +313,23 @@ void main() {
   });
 
   group('what the reader is entitled to', () {
+    test('the entitlement it asks for is the one RevenueCat grants', () {
+      // The two live in different places and have to agree exactly: an
+      // entitlement asked for under the wrong name is a subscriber the app
+      // never sees, and it fails silently.
+      expect(kPlusEntitlement, 'astuto_pro');
+    });
+
+    test('a package is found however the offering names it', () {
+      // RevenueCat's own accessors only see its standard types, so an
+      // offering with hand-named packages would leave the paywall unable to
+      // sell while still showing a price.
+      expect(kYearlyPackageIds, contains('yearly'));
+      expect(kYearlyPackageIds.first, r'$rc_annual');
+      expect(kMonthlyPackageIds, contains('monthly'));
+      expect(kMonthlyPackageIds.first, r'$rc_monthly');
+    });
+
     test('a build with no store key stays quiet and claims nothing', () async {
       final store = Subscription(keyOverride: '');
 

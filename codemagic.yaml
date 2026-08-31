@@ -59,8 +59,13 @@ workflows:
       - name: Build signed IPA (build number = latest TestFlight + 1)
         script: |
           LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "0")
+          # The RevenueCat key is public — it identifies the app and grants
+          # nothing — so it travels with the build rather than as a secret.
+          # This one is a test key: swap it for the appl_ production key
+          # before anything is charged for real.
           flutter build ipa --release \
             --build-number=$(($LATEST + 1)) \
+            --dart-define=REVENUECAT_IOS_KEY=test_GcXfgVkwPweaHCkXRScBdCgtkmF \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa

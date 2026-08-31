@@ -6,6 +6,7 @@ import '../data/topics.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
 import '../sync/account.dart';
+import '../sync/subscription.dart';
 import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
@@ -456,9 +457,15 @@ class ProfileScreen extends StatelessWidget {
           ),
           _LinkRow(
             label: 'Manage subscription',
-            onTap: () => Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
+            // A subscriber wants to cancel, change plan or ask for a refund,
+            // and none of that belongs on a screen built to sell. RevenueCat's
+            // customer centre does all of it; the paywall is for everyone
+            // else.
+            onTap: () => app.isPlus
+                ? Subscription.instance.presentCustomerCenter()
+                : Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => PaywallScreen(app: app)),
+                  ),
           ),
           _LinkRow(
             label: 'How pills are written',
