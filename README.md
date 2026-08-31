@@ -73,7 +73,7 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (welcome, optional sign-in), Today with the card stack,
+**Free** — first run (the five-scene intro, then the subject run), Today with the card stack,
 the end-of-day recap, Saved with its empty state, Profile (stats, daily nudge,
 topic chips), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
@@ -150,15 +150,29 @@ already read are kept out of later days until the pool runs dry.
 
 These are declared in the UI rather than faked:
 
-- **No billing.** The paywall's call to action starts the trial locally so the
-  gated screens can be used, and says no payment was taken.
-- **No account backend.** Sign-in keeps a profile on the device; the Apple and
-  Google buttons say they are not connected.
-- **No notification delivery.** The daily nudge is stored as a preference;
-  actually scheduling it needs a local-notifications plugin and a mobile build.
+- **Notification delivery.** The permission is asked for and the token is
+  registered, so a phone can be reached — but nothing sends yet. Deciding who
+  gets what, and when in their own timezone, is the work that remains.
+- **Email sign-in.** Apple and Google are wired; the email button says plainly
+  that it is not connected. Firebase's email link needs a domain of ours with
+  universal links, since Dynamic Links was retired.
+- **The pool runs out.** 170 cards at five a day, two of which are reviews, is
+  about eight weeks of new material. The app asks for a subscription that
+  renews annually, so the content pipeline is the thing standing between this
+  and a product.
 
-The pool holds 131 cards: 60 facts plus 71 that ask something — bias traps,
-competition problems, Fermi estimates, spot-the-flaw and 20 debates.
+Since the sections above were first written, three of the things listed here
+stopped being true and are now real: accounts (anonymous, Apple, Google, with
+the merge described above), the backup, and the plan, which comes from the
+store through RevenueCat rather than from a bool the app wrote to itself.
+
+**Debug tools.** The foot of the profile carries a temporary section — wipe
+and restart, toggle the plan, and a readout of what the app knows about
+itself: whether Firebase started and why not, the account id, the last auth
+error, whether the store answered. It is on in release builds on purpose,
+because TestFlight builds are release builds and that is where it is needed.
+One line in `lib/debug_flags.dart`, or `--dart-define=DEBUG_TOOLS=false`,
+turns it off.
 
 ## What the evidence says, and what follows from it
 
