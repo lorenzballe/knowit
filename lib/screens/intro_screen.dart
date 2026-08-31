@@ -92,7 +92,12 @@ class _IntroScreenState extends State<IntroScreen> {
                 left: 0,
                 right: 0,
                 top: 0,
-                height: box.maxHeight * 0.48,
+                // The scenes are drawn for a band 344 by 252 — the shape of
+                // the room actually free above the copy. Drawn square, as
+                // they were, a picture at full width is taller than that
+                // space and has to either run off the top or sit under the
+                // title. That was not something to tune: the shape was wrong.
+                height: box.maxWidth * _SceneStage.ratio,
                 child: _SceneStage(
                   child: _Swap(
                     scene: _scene,
@@ -209,7 +214,7 @@ class _Scrim extends StatelessWidget {
             ],
             // Fully dark by the row the copy starts on. A title lying across
             // a bright card is legible and still looks like an accident.
-            stops: const [0, 0.32, 0.46, 0.60, 1],
+            stops: const [0, 0.30, 0.42, 0.56, 1],
           ),
         ),
         child: const SizedBox.expand(),
@@ -231,25 +236,22 @@ class _Scrim extends StatelessWidget {
 class _SceneStage extends StatelessWidget {
   const _SceneStage({required this.child});
 
+  /// The band the scenes are drawn for.
+  static const double width = 344;
+  static const double bandHeight = 252;
+  static const double ratio = bandHeight / width;
+
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
-        // Covers, rather than fits. The larger of the two ratios means the
-        // picture always reaches both sides, and what it loses is the part
-        // beyond the screen — which is the only kind of edge worth having.
-        final double scale = math.max(box.maxWidth / 344, box.maxHeight / 344);
-        return ClipRect(
-          child: OverflowBox(
-            maxWidth: double.infinity,
-            maxHeight: double.infinity,
-            child: Transform.scale(
-              scale: scale,
-              child: SizedBox(width: 344, height: 344, child: child),
-            ),
-          ),
+        // Scaled to the width. Nothing is cropped, because the band it is
+        // scaled into is the same shape as the band it was drawn in.
+        return Transform.scale(
+          scale: box.maxWidth / width,
+          child: SizedBox(width: width, height: bandHeight, child: child),
         );
       },
     );
@@ -601,13 +603,13 @@ class _SceneOrbits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 344,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: Stack(
         alignment: Alignment.center,
         children: [
           _Orbit(
-            size: 314,
+            size: 236,
             period: const Duration(seconds: 38),
             opacity: 0.09,
             satellites: const [
@@ -616,7 +618,7 @@ class _SceneOrbits extends StatelessWidget {
             ],
           ),
           _Orbit(
-            size: 238,
+            size: 178,
             period: const Duration(seconds: 24),
             reverse: true,
             opacity: 0.13,
@@ -625,14 +627,14 @@ class _SceneOrbits extends StatelessWidget {
               _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
             ],
           ),
-          const _Pulse(size: 186, color: Color(0x992B4BFF)),
+          const _Pulse(size: 146, color: Color(0x992B4BFF)),
           _Pop(
             duration: const Duration(milliseconds: 850),
             child: Container(
-              width: 118,
-              height: 118,
+              width: 104,
+              height: 104,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(28),
+                borderRadius: BorderRadius.circular(25),
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0xB3000000),
@@ -873,8 +875,8 @@ class _SceneRain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 344,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: ClipRect(
         child: Stack(
           children: [
@@ -996,7 +998,7 @@ class _FallingCardState extends State<_FallingCard>
       // full width put a wide card half outside, and the clip then cuts it
       // down the middle — which reads as a rectangle drawn round the
       // animation rather than as cards falling past.
-      left: widget.left / 100 * (344 - widget.width),
+      left: widget.left / 100 * (_SceneStage.width - widget.width),
       top: 0,
       child: MediaQuery.disableAnimationsOf(context)
           ? Opacity(opacity: widget.opacity * 0.6, child: card)
@@ -1010,7 +1012,7 @@ class _FallingCardState extends State<_FallingCard>
                     ? 1 - (t - 0.82) / 0.18
                     : 1;
                 return Transform.translate(
-                  offset: Offset(0, -170 + 600 * t),
+                  offset: Offset(0, -170 + (_SceneStage.bandHeight + 210) * t),
                   child: Opacity(
                     opacity: (widget.opacity * fade).clamp(0, 1),
                     child: child,
@@ -1030,8 +1032,8 @@ class _SceneCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 324,
-      height: 344,
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
       child: Stack(
         alignment: Alignment.center,
         children: [
@@ -1042,7 +1044,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(-32, 0),
               child: Transform.rotate(
                 angle: -18 * math.pi / 180,
-                child: _blank(const Color(0xFF00B083), 192, 260, 24),
+                child: _blank(const Color(0xFF00B083), 158, 214, 20),
               ),
             ),
           ),
@@ -1053,7 +1055,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(28, 0),
               child: Transform.rotate(
                 angle: 12 * math.pi / 180,
-                child: _blank(const Color(0xFFFFC93C), 192, 260, 24),
+                child: _blank(const Color(0xFFFFC93C), 158, 214, 20),
               ),
             ),
           ),
@@ -1061,8 +1063,8 @@ class _SceneCard extends StatelessWidget {
             duration: const Duration(milliseconds: 750),
             delay: const Duration(milliseconds: 200),
             child: Container(
-              width: 198,
-              height: 270,
+              width: 164,
+              height: 224,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 color: const Color(0xFF2B4BFF),
@@ -1118,8 +1120,8 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: -8,
-            bottom: 30,
+            right: 6,
+            bottom: 14,
             child: _SlideIn(
               delay: const Duration(milliseconds: 460),
               child: Container(
@@ -1168,8 +1170,8 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: -4,
-            top: 36,
+            left: 6,
+            top: 12,
             child: _Pop(
               duration: const Duration(milliseconds: 600),
               delay: const Duration(milliseconds: 620),
@@ -1409,13 +1411,13 @@ class _SceneStreak extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: 164,
-          height: 164,
+          width: 138,
+          height: 138,
           child: Stack(
             alignment: Alignment.center,
             children: [
               CustomPaint(
-                size: const Size(164, 164),
+                size: const Size(138, 138),
                 painter: _RingPainter(
                   // 258 of 360 degrees, as drawn on the canvas.
                   progress: 258 / 360,
@@ -1424,7 +1426,7 @@ class _SceneStreak extends StatelessWidget {
                   stroke: 9,
                 ),
               ),
-              const _Pulse(size: 136, color: Color(0x66FF2E9C)),
+              const _Pulse(size: 114, color: Color(0x66FF2E9C)),
               _Rise(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -1432,7 +1434,7 @@ class _SceneStreak extends StatelessWidget {
                     Text(
                       '13',
                       style: AppText.body(
-                        size: 56,
+                        size: 46,
                         weight: FontWeight.w700,
                         height: 1,
                         spacing: -2.4,
@@ -1454,9 +1456,9 @@ class _SceneStreak extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 30),
+        const SizedBox(height: 18),
         SizedBox(
-          height: 70,
+          height: 56,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -1466,8 +1468,8 @@ class _SceneStreak extends StatelessWidget {
                 _Grow(
                   delay: Duration(milliseconds: (100 + i * 70)),
                   child: Container(
-                    width: 21,
-                    height: i < 5 ? 22 + i * 7 : 22,
+                    width: 18,
+                    height: i < 5 ? 18 + i * 6 : 18,
                     decoration: BoxDecoration(
                       color: i < 5
                           ? const Color(0xFFFF2E9C)
