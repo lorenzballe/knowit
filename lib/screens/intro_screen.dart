@@ -883,42 +883,54 @@ class _SceneRain extends StatelessWidget {
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
-      child: ClipRect(
-        child: Stack(
-          children: [
-            Opacity(
-              opacity: 0.5,
-              child: Stack(
-                children: [
-                  for (int i = 0; i < 10; i++)
-                    _FallingCard(
-                      left: 4 + seeded(i, 33.19) * 88,
-                      width: 16 + seeded(i, 45.11) * 12,
-                      height: 22 + seeded(i, 45.11) * 16,
-                      color: _palette[(i + 2) % _palette.length],
-                      turns: (seeded(i, 78.233) * 40 - 20) / 360,
-                      seconds: 10 + seeded(i, 21.7) * 6,
-                      offset: seeded(i, 9.13) * 14,
-                      opacity: 1,
-                      radius: 6,
-                    ),
-                ],
+      child: ShaderMask(
+        // Cards leave the picture by fading, not by meeting the bottom of
+        // their box. A row of cards ending on a straight line is the edge of
+        // a container, and there should not be one to see.
+        blendMode: BlendMode.dstIn,
+        shaderCallback: (rect) => const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0x00FFFFFF)],
+          stops: [0, 0.62, 1],
+        ).createShader(rect),
+        child: ClipRect(
+          child: Stack(
+            children: [
+              Opacity(
+                opacity: 0.5,
+                child: Stack(
+                  children: [
+                    for (int i = 0; i < 10; i++)
+                      _FallingCard(
+                        left: 4 + seeded(i, 33.19) * 88,
+                        width: 16 + seeded(i, 45.11) * 12,
+                        height: 22 + seeded(i, 45.11) * 16,
+                        color: _palette[(i + 2) % _palette.length],
+                        turns: (seeded(i, 78.233) * 40 - 20) / 360,
+                        seconds: 10 + seeded(i, 21.7) * 6,
+                        offset: seeded(i, 9.13) * 14,
+                        opacity: 1,
+                        radius: 6,
+                      ),
+                  ],
+                ),
               ),
-            ),
-            for (int i = 0; i < 18; i++)
-              _FallingCard(
-                left: 2 + seeded(i, 12.9898) * 90,
-                width: 26 + seeded(i, 45.11) * 30,
-                height: 36 + seeded(i, 45.11) * 42,
-                color: _palette[i % _palette.length],
-                turns: (seeded(i, 78.233) * 46 - 23) / 360,
-                seconds: 6.5 + seeded(i, 21.7) * 5,
-                offset: seeded(i, 9.13) * 11,
-                opacity: 0.5 + seeded(i, 33.7) * 0.5,
-                radius: 8,
-                shadow: true,
-              ),
-          ],
+              for (int i = 0; i < 18; i++)
+                _FallingCard(
+                  left: 2 + seeded(i, 12.9898) * 90,
+                  width: 26 + seeded(i, 45.11) * 30,
+                  height: 36 + seeded(i, 45.11) * 42,
+                  color: _palette[i % _palette.length],
+                  turns: (seeded(i, 78.233) * 46 - 23) / 360,
+                  seconds: 6.5 + seeded(i, 21.7) * 5,
+                  offset: seeded(i, 9.13) * 11,
+                  opacity: 0.5 + seeded(i, 33.7) * 0.5,
+                  radius: 8,
+                  shadow: true,
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -1176,8 +1188,11 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 4,
-            top: 62,
+            left: 12,
+            // Above the deck rather than across it. Lying on the card it
+            // covered the one thing the card is there to show, and a label
+            // over artwork reads as a sticker somebody forgot to peel off.
+            top: 0,
             child: _Pop(
               duration: const Duration(milliseconds: 600),
               delay: const Duration(milliseconds: 620),
