@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart' show ThemeMode;
@@ -9,6 +10,7 @@ import '../data/pills_repository.dart';
 import '../data/taste.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
+import '../sync/card_feed.dart';
 import '../sync/reader_snapshot.dart';
 import '../utils/reminders.dart';
 
@@ -140,6 +142,11 @@ class AppState extends ChangeNotifier {
     _prefs = await SharedPreferences.getInstance();
     today = DateTime.now();
 
+    // Before anything is dealt, so a day is dealt from everything the phone
+    // knows about rather than only from what shipped inside it. Reads a file,
+    // touches no network, and a cache that will not read is simply not there.
+    await CardFeed.loadCache(_prefs);
+
     // Stored state is read defensively. A value written by an older build,
     // or corrupted on disk, must not leave the app stuck on the splash: it
     // is better to start fresh than never to start.
@@ -153,7 +160,22 @@ class AppState extends ChangeNotifier {
 
     ready = true;
     notifyListeners();
+
+    // And then go and look for more, behind the reader rather than in front
+    // of them. Anything new applies from tomorrow: today's deck is already
+    // dealt and re-dealing it would drop whatever they are part-way through.
+    unawaited(_catchUp());
   }
+
+  Future<void> _catchUp() async {
+    final held = await CardFeed.refresh(_prefs);
+    if (held != null) notifyListeners();
+  }
+
+  /// How many of the cards on hand were written after this build shipped.
+  /// Shown in the debug section, where "is the generator running" is
+  /// otherwise unanswerable from a phone.
+  int get writtenCards => CardCatalog.writtenCount;
 
   Future<void> _restore() async {
     taste = ReaderTaste.fromJson(_decodeJson(_prefs.getString(_kTaste)));
@@ -907,6 +929,7 @@ class AppState extends ChangeNotifier {
   /// Wipes local state — used by "Sign out" on the profile.
   Future<void> signOut() async {
     await _prefs.clear();
+    await CardFeed.clear(_prefs);
     streak = 0;
     bestStreak = 0;
     lastCompletionDate = null;

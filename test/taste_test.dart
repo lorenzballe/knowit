@@ -1,10 +1,15 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:astuto/data/card_catalog.dart';
 import 'package:astuto/data/card_codec.dart';
+import 'package:astuto/data/pills_data.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/taste.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/sync/card_feed.dart';
 
 /// A card with exactly the facets a test cares about and nothing else.
 Pill card(
@@ -40,6 +45,10 @@ Pill card(
 const _pick = PickOne(options: ['a', 'b', 'c'], correct: 0);
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  tearDown(CardCatalog.reset);
+
   group('What a card is made of', () {
     test('facets are only what the card actually states', () {
       final bare = card('x-1', 'science');
@@ -414,6 +423,86 @@ void main() {
       expect(off, isNotNull);
       expect(off!.challenge, isA<NoChallenge>());
       expect(off.asksSomething, isFalse);
+    });
+  });
+
+  group('Cards written after the build shipped', () {
+    Map<String, dynamic> written(String id, String question) => {
+      'id': id,
+      'topic': 'nature',
+      'question': question,
+      'answer': 'Because of how bees see ultraviolet.',
+      'barMove': 'A flower is a landing strip.',
+      'source': 'Chittka, 1992',
+      'difficulty': 'easy',
+      'tags': ['bees'],
+      'tone': 'playful',
+      'challenge': {'kind': 'none'},
+    };
+
+    test('they are dealt alongside the ones that shipped', () {
+      expect(CardCatalog.cards.length, kPillPool.length);
+      CardCatalog.adopt([cardFromJson(written('nature-z1', 'Why?'))!]);
+      expect(CardCatalog.writtenCount, 1);
+      expect(CardCatalog.cards.length, kPillPool.length + 1);
+      expect(CardCatalog.cards.any((p) => p.id == 'nature-z1'), isTrue);
+    });
+
+    test('one can correct a card that shipped with a mistake in it', () {
+      final wrong = kPillPool.first;
+      CardCatalog.adopt([
+        cardFromJson({...written(wrong.id, 'The corrected question'), 'topic': 'nature'})!,
+      ]);
+      // Same count, not one more: the id is the identity of a card, so
+      // rewriting one does not leave the old one on the shelf.
+      expect(CardCatalog.cards.length, kPillPool.length);
+      final now = CardCatalog.cards.firstWhere((p) => p.id == wrong.id);
+      expect(now.question, 'The corrected question');
+    });
+
+    test('a second fetch replaces rather than doubles the catalogue', () {
+      CardCatalog.adopt([cardFromJson(written('nature-z1', 'One?'))!]);
+      CardCatalog.adopt([cardFromJson(written('nature-z2', 'Two?'))!]);
+      expect(CardCatalog.writtenCount, 1);
+      expect(CardCatalog.cards.any((p) => p.id == 'nature-z1'), isFalse);
+    });
+
+    test('the cache is what a reader on a train has', () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.writtenCards': jsonEncode([written('nature-z9', 'Cached?')]),
+      });
+      await CardFeed.loadCache(await SharedPreferences.getInstance());
+      expect(CardCatalog.cards.any((p) => p.id == 'nature-z9'), isTrue);
+    });
+
+    test('a cache that will not read costs the reader nothing', () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.writtenCards': 'half a json file',
+      });
+      await CardFeed.loadCache(await SharedPreferences.getInstance());
+      expect(CardCatalog.cards.length, kPillPool.length);
+    });
+
+    test('a card in the cache that no longer reads is skipped, not fatal', () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.writtenCards': jsonEncode([
+          written('nature-z1', 'Fine?'),
+          {'id': 'nature-z2', 'topic': 'astrology'},
+        ]),
+      });
+      await CardFeed.loadCache(await SharedPreferences.getInstance());
+      expect(CardCatalog.writtenCount, 1);
+    });
+
+    test('signing out forgets them', () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.writtenCards': jsonEncode([written('nature-z1', 'Gone?')]),
+      });
+      final prefs = await SharedPreferences.getInstance();
+      await CardFeed.loadCache(prefs);
+      await CardFeed.clear(prefs);
+      expect(CardCatalog.writtenCount, 0);
+      expect(prefs.getString('knowit.writtenCards'), isNull);
     });
   });
 }
