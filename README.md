@@ -100,6 +100,26 @@ opening a second one, so the uid does not move and nothing has to be carried.
 Where the identity already has an account of its own, the uid does change,
 and the merge below is what brings this phone's week across.
 
+Signing in asks the phone, not a browser. Firebase will run the whole flow
+itself, and for a while this app let it: a browser sheet titled
+`astuto-3d398.firebaseapp.com` rather than Astuto, opening a session that
+knows none of the accounts the phone is signed into, so it asks someone to
+type an email address and a password on the second screen of an app they have
+not decided to keep. Nobody finishes that. Apple's own sheet is a glance at
+Face ID and Google's lists the accounts the phone already holds, so those are
+asked first, and Firebase's browser flow is kept for the places with no sheet
+of their own — Apple on Android, a phone the Google sheet cannot run on, a
+build whose signing fingerprint was never registered. Apple's token is bound
+to a nonce we draw per attempt: Apple is handed the hash and Firebase the
+string it was made from, so a token lifted off the wire is no use to whoever
+has it.
+
+Sign in with Apple also needs the entitlement in `ios/Runner/Runner.entitlements`
+and the matching capability on the App ID, or the sheet comes back with error
+1000 and nothing to explain itself. The Codemagic workflow enables the
+capability before it mints a profile, because a profile that predates it will
+not sign the build.
+
 Signing in is not a restore. It happens after the reader has used the app, so
 both sides are real and neither may be dropped:
 

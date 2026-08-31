@@ -8,5 +8,14 @@
 	     it. -->
 	<key>aps-environment</key>
 	<string>production</string>
+	<!-- Sign in with Apple. Without this the native sheet does not fail
+	     politely: it comes back with error 1000, "authorization attempt failed
+	     for an unknown reason", which is what "Could not sign in with Apple"
+	     was. The App ID in the developer portal has to carry the capability
+	     too, or the profile will not sign a build that asks for it. -->
+	<key>com.apple.developer.applesignin</key>
+	<array>
+		<string>Default</string>
+	</array>
 </dict>
 </plist>

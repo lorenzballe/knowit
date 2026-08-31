@@ -44,6 +44,13 @@ dependencies:
   firebase_messaging: ^16.6.0
   purchases_flutter: ^10.10.1
   purchases_ui_flutter: ^10.10.1
+  # The phone's own sign-in sheets. Firebase can run both flows itself, in a
+  # browser that knows none of the accounts the phone holds — see the README.
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^8.2.0
+  # For the nonce Apple's token is bound to: the hash goes to Apple and the
+  # string behind it to Firebase.
+  crypto: ^3.0.7
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +63,10 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   fake_async: ^1.3.3
+  # So a sign-in can be driven end to end without a phone: both sheets are
+  # swapped for stand-ins in test/sign_in_test.dart.
+  google_sign_in_platform_interface: ^3.1.0
+  sign_in_with_apple_platform_interface: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

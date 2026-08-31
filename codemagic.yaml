@@ -36,6 +36,40 @@ workflows:
       - name: Get Flutter packages
         script: flutter pub get
 
+      - name: Let the App ID grant Sign in with Apple
+        script: |
+          set -e
+          # Runner.entitlements asking for Sign in with Apple is only half of
+          # it: a profile will not sign a build that claims a capability the
+          # App ID does not carry, and that fails the export rather than the
+          # sign-in. So the App ID is brought up to date here, before any
+          # profile is minted — and the App Store profiles that already exist
+          # are dropped, because Apple marks them invalid when a capability
+          # changes rather than updating them in place.
+          BUNDLE_UUID=$(app-store-connect bundle-ids list \
+            --bundle-id-identifier "$BUNDLE_ID" \
+            --strict-match-identifier --json 2>/dev/null \
+            | jq -r 'if type=="array" then (.[0].id // empty) else (.id // empty) end' 2>/dev/null || true)
+          if [ -z "$BUNDLE_UUID" ]; then
+            echo "No App ID registered for $BUNDLE_ID yet — fetch-signing-files will create one."
+          else
+            echo "App ID $BUNDLE_ID is $BUNDLE_UUID"
+            # Already enabled is the outcome we want, and the API reports that
+            # as an error, so it must not stop the build.
+            app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
+              --capability "Sign In with Apple" \
+              || echo "  Sign in with Apple was already enabled, or could not be changed."
+            app-store-connect bundle-ids profiles --bundle-ids "$BUNDLE_UUID" \
+              --type IOS_APP_STORE --json 2>/dev/null \
+              | jq -r 'if type=="array" then .[].id else .id end' 2>/dev/null \
+              | while read -r pid; do
+                  if [ -n "$pid" ]; then
+                    echo "  dropping stale App Store profile $pid"
+                    app-store-connect profiles delete "$pid" --ignore-not-found || true
+                  fi
+                done
+          fi
+
       - name: Reset signing — create a certificate we own + App Store profile
         script: |
           set -e

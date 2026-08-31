@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../cloud.dart';
 import '../state/app_state.dart';
+import 'identity.dart';
 import 'reader_snapshot.dart';
 import 'reader_store.dart';
 
@@ -16,9 +17,14 @@ enum SignInOutcome { signedIn, cancelled, unavailable, failed }
 /// The app works signed out and always has: this only decides whether what
 /// the phone knows also lives somewhere it survives the phone.
 class Account extends ChangeNotifier {
-  /// The two seams the tests use. Left null, the account reaches for the
-  /// real Firebase — and finds nothing unless Cloud.start() succeeded.
-  Account({this.authOverride, this.storeOverride, this.uidOverride});
+  /// The seams the tests use. Left null, the account reaches for the real
+  /// Firebase — and finds nothing unless Cloud.start() succeeded.
+  Account({
+    this.authOverride,
+    this.storeOverride,
+    this.uidOverride,
+    Identity? identity,
+  }) : _identity = identity ?? Identity();
 
   /// Stand-ins for the real Firebase, so a sign-in can be driven in a test
   /// without a project, a network or a device. Null in the app.
@@ -28,6 +34,10 @@ class Account extends ChangeNotifier {
   /// Stands in for a signed-in reader. FirebaseAuth cannot be faked, so
   /// without this seam the backing-up path could only be tested on a phone.
   final String? uidOverride;
+
+  /// Where an identity comes from before Firebase sees it: the phone's own
+  /// sign-in sheets, or a stand-in under a test.
+  final Identity _identity;
 
   bool _busy = false;
 
@@ -74,19 +84,29 @@ class Account extends ChangeNotifier {
   Future<SignInOutcome> signInWithApple(AppState app) => _signIn(
     app,
     'Apple',
+    _identity.apple,
     () => AppleAuthProvider()
       ..addScope('email')
       ..addScope('name'),
   );
 
-  Future<SignInOutcome> signInWithGoogle(AppState app) =>
-      _signIn(app, 'Google', () => GoogleAuthProvider()..addScope('email'));
+  Future<SignInOutcome> signInWithGoogle(AppState app) => _signIn(
+    app,
+    'Google',
+    _identity.google,
+    () => GoogleAuthProvider()..addScope('email'),
+  );
 
-  /// Both providers do the same thing: hand Firebase an identity, then fold
-  /// this phone into whatever the account already holds.
+  /// Both providers do the same thing: get an identity from the phone, hand
+  /// it to Firebase, then fold this phone into whatever the account holds.
+  ///
+  /// [ask] is the system sheet. Where there is none — Apple on Android, a
+  /// phone the Google sheet cannot run on — it says so instead of failing,
+  /// and [build] is the browser flow Firebase runs itself.
   Future<SignInOutcome> _signIn(
     AppState app,
     String label,
+    Future<IdentityResult> Function() ask,
     AuthProvider Function() build,
   ) async {
     final FirebaseAuth? auth = _firebase;
@@ -95,46 +115,46 @@ class Account extends ChangeNotifier {
       return SignInOutcome.unavailable;
     }
 
+    // A second tap while the first sheet is still up starts a second flow,
+    // and the two cancel each other — so a reader who taps twice gets nothing
+    // at all. One at a time.
+    if (_busy) return SignInOutcome.cancelled;
+
     lastError = null;
     _busy = true;
     notifyListeners();
     try {
-      final User? current = auth.currentUser;
-      UserCredential credential;
-      if (current != null && current.isAnonymous) {
-        // Promote the account the phone has been writing to, rather than
-        // opening a second one — linking keeps the uid, so nothing has to be
-        // moved and nothing can be dropped on the way.
-        try {
-          credential = await current.linkWithProvider(build());
-        } on FirebaseAuthException catch (error) {
-          if (error.code != 'credential-already-in-use' &&
-              error.code != 'email-already-in-use' &&
-              error.code != 'provider-already-linked') {
-            rethrow;
+      final IdentityResult identity = await ask();
+      switch (identity.outcome) {
+        case IdentityOutcome.cancelled:
+          return SignInOutcome.cancelled;
+        case IdentityOutcome.failed:
+          lastError = identity.error;
+          debugPrint('$label sign-in failed: $lastError');
+          return SignInOutcome.failed;
+        case IdentityOutcome.noSheet:
+          // Worth a line: falling back is not a failure, but "the sheet was
+          // skipped, and here is what it said" is the difference between a
+          // fixable misconfiguration and a browser flow nobody ordered.
+          if (identity.error != null) {
+            debugPrint('$label has no sheet here: ${identity.error}');
           }
-          // This identity already has an account of its own. Signing into it
-          // changes the uid, and the fold below is what carries this phone's
-          // work across.
-          credential = await auth.signInWithProvider(build());
-        }
-      } else {
-        credential = await auth.signInWithProvider(build());
+          break;
+        case IdentityOutcome.got:
+          break;
       }
+
+      final AuthCredential? held = identity.credential;
+      final UserCredential credential = held == null
+          ? await _throughTheBrowser(auth, build)
+          : await _withCredential(auth, held);
+
       final User? signed = credential.user;
       if (signed == null) return SignInOutcome.failed;
       await foldInto(app, signed.uid);
       return SignInOutcome.signedIn;
     } on FirebaseAuthException catch (error) {
-      // Backing out of the Apple sheet is not a failure and must not be
-      // reported as one.
-      const cancelled = {
-        'canceled',
-        'cancelled',
-        'web-context-canceled',
-        'user-cancelled',
-      };
-      if (cancelled.contains(error.code)) return SignInOutcome.cancelled;
+      if (isCancellation(error.code)) return SignInOutcome.cancelled;
       lastError = '${error.code}: ${error.message}';
       debugPrint('$label sign-in failed: $lastError');
       return SignInOutcome.failed;
@@ -147,6 +167,75 @@ class Account extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  /// Signs in with an identity a system sheet has already produced.
+  Future<UserCredential> _withCredential(
+    FirebaseAuth auth,
+    AuthCredential credential,
+  ) async {
+    final User? current = auth.currentUser;
+    if (current == null || !current.isAnonymous) {
+      return auth.signInWithCredential(credential);
+    }
+    // Promote the account the phone has been writing to, rather than opening
+    // a second one — linking keeps the uid, so nothing has to be moved and
+    // nothing can be dropped on the way.
+    try {
+      return await current.linkWithCredential(credential);
+    } on FirebaseAuthException catch (error) {
+      if (!identityIsSpokenFor(error.code)) rethrow;
+      // This identity already has an account of its own. Firebase hands back
+      // the credential it refused, so the reader is not shown the sheet a
+      // second time to say what they have just said. The uid changes, and the
+      // fold below is what carries this phone's work across.
+      return auth.signInWithCredential(error.credential ?? credential);
+    }
+  }
+
+  /// The same thing where there was no sheet to ask, and Firebase runs the
+  /// whole flow itself in a browser.
+  Future<UserCredential> _throughTheBrowser(
+    FirebaseAuth auth,
+    AuthProvider Function() build,
+  ) async {
+    final User? current = auth.currentUser;
+    if (current == null || !current.isAnonymous) {
+      return auth.signInWithProvider(build());
+    }
+    try {
+      return await current.linkWithProvider(build());
+    } on FirebaseAuthException catch (error) {
+      if (!identityIsSpokenFor(error.code)) rethrow;
+      final AuthCredential? held = error.credential;
+      return held == null
+          ? await auth.signInWithProvider(build())
+          : await auth.signInWithCredential(held);
+    }
+  }
+
+  /// Backing out of a sheet is not a failure and must not be reported as one.
+  /// Every layer underneath spells it differently, and one missed spelling is
+  /// an error message shown to somebody who simply changed their mind.
+  @visibleForTesting
+  static bool isCancellation(String code) => const {
+    'canceled',
+    'cancelled',
+    'user-canceled',
+    'user-cancelled',
+    'web-context-canceled',
+    'web-context-cancelled',
+    'sign-in-cancelled',
+    'popup-closed-by-user',
+  }.contains(code);
+
+  /// Whether a link failed because the identity already has an account of its
+  /// own — in which case signing into that one is the answer, not an error.
+  @visibleForTesting
+  static bool identityIsSpokenFor(String code) => const {
+    'credential-already-in-use',
+    'email-already-in-use',
+    'provider-already-linked',
+  }.contains(code);
 
   /// Folds this phone into the account, then writes the result back.
   ///

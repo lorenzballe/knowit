@@ -474,22 +474,46 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
           ),
-          if (account.signedInForReal)
-            _LinkRow(
-              label: 'Sign out',
-              muted: true,
-              onTap: () => _confirmSignOut(context),
-            )
-          else ...[
-            _LinkRow(
-              label: 'Sign in with Apple',
-              onTap: () => _signIn(context, 'Apple', account.signInWithApple),
-            ),
-            _LinkRow(
-              label: 'Sign in with Google',
-              onTap: () => _signIn(context, 'Google', account.signInWithGoogle),
-            ),
-          ],
+          // The account changes under this screen — a sign-in that lands, a
+          // sheet still up — and none of it is worth leaving the profile to
+          // see.
+          ListenableBuilder(
+            listenable: account,
+            builder: (context, _) {
+              if (account.signedInForReal) {
+                return _LinkRow(
+                  label: 'Sign out',
+                  muted: true,
+                  onTap: () => _confirmSignOut(context),
+                );
+              }
+              // While a sheet is up, say so and take no second tap. Two flows
+              // at once cancel each other, so a reader tapping again because
+              // nothing seemed to happen would end up with nothing.
+              if (account.busy) {
+                return _LinkRow(
+                  label: 'Signing in…',
+                  muted: true,
+                  onTap: () {},
+                );
+              }
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _LinkRow(
+                    label: 'Sign in with Apple',
+                    onTap: () =>
+                        _signIn(context, 'Apple', account.signInWithApple),
+                  ),
+                  _LinkRow(
+                    label: 'Sign in with Google',
+                    onTap: () =>
+                        _signIn(context, 'Google', account.signInWithGoogle),
+                  ),
+                ],
+              );
+            },
+          ),
           if (kDebugTools) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
