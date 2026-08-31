@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../data/pills_data.dart';
 import '../data/topics.dart';
+import '../debug_flags.dart';
 import '../state/app_state.dart';
 import '../utils/reminders.dart';
 import '../theme.dart';
@@ -82,6 +83,56 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
     if (confirmed == true) {
+      await app.signOut();
+      onSignedOut();
+    }
+  }
+
+  Future<void> _confirmReset(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: context.p.surface,
+        title: Text(
+          'Start over?',
+          style: AppText.display(size: 19, color: context.p.ink),
+        ),
+        content: Text(
+          'Wipes everything on this device — streak, saved pills, answers, '
+          'your judgement record, topics and plan — and reopens the '
+          'onboarding.',
+          style: AppText.body(
+            size: 14,
+            height: 1.45,
+            color: context.p.inkMuted,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(
+              'Cancel',
+              style: AppText.body(size: 14, color: context.p.ink),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              'Wipe it',
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w600,
+                color: context.p.alert,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      // signOut() is already the full wipe: it clears every stored key and
+      // puts onboarded back to false, which is what sends the root back to
+      // the welcome screen.
       await app.signOut();
       onSignedOut();
     }
@@ -394,6 +445,35 @@ class ProfileScreen extends StatelessWidget {
             muted: true,
             onTap: () => _confirmSignOut(context),
           ),
+          if (kDebugTools) ...[
+            const SizedBox(height: 40),
+            const Eyebrow('Debug'),
+            const SizedBox(height: 6),
+            Text(
+              'Temporary, and visible in release builds on purpose — these '
+              'are needed on a real phone. Remove before anyone else has it.',
+              style: AppText.body(
+                size: 12.5,
+                height: 1.45,
+                color: context.p.inkFaint,
+              ),
+            ),
+            const SizedBox(height: 10),
+            _LinkRow(
+              label: 'Wipe everything and restart',
+              onTap: () => _confirmReset(context),
+            ),
+            _LinkRow(
+              label: app.isPlus ? 'Turn Astuto+ off' : 'Turn Astuto+ on',
+              onTap: () async {
+                if (app.isPlus) {
+                  await app.endPlus();
+                } else {
+                  await app.startPlusTrial();
+                }
+              },
+            ),
+          ],
         ],
       ),
     );
@@ -469,12 +549,16 @@ class _LinkRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Text(
-              label,
-              style: AppText.body(
-                size: 14,
-                weight: FontWeight.w500,
-                color: muted ? context.p.inkMuted : context.p.ink,
+            // Flexible, so a label longer than the row does not overflow it —
+            // which any other language would manage on its own.
+            Flexible(
+              child: Text(
+                label,
+                style: AppText.body(
+                  size: 14,
+                  weight: FontWeight.w500,
+                  color: muted ? context.p.inkMuted : context.p.ink,
+                ),
               ),
             ),
             PlusLock(locked: locked),

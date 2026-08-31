@@ -2117,4 +2117,65 @@ void main() {
       );
     });
   });
+
+  group('debug tools', () {
+    testWidgets('wiping puts the app back at the onboarding', (tester) async {
+      SharedPreferences.setMockInitialValues({
+        ..._installed(plus: true),
+        'knowit.streak': 9,
+        'knowit.saved': <String>['x'],
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _openProfile(tester);
+
+      final wipe = find.text('Wipe everything and restart');
+      await tester.scrollUntilVisible(
+        wipe,
+        400,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(wipe);
+      await _settle(tester);
+
+      await tester.tap(find.text('Wipe it'));
+      await _settle(tester);
+
+      // The welcome screen, not the tab shell.
+      expect(find.text('SHOW ME THE FIRST 5 CARDS'), findsOneWidget);
+      expect(find.byKey(const ValueKey('tab-Today')), findsNothing);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getInt('knowit.streak'), isNull);
+      expect(prefs.getBool('knowit.onboarded'), isNot(true));
+    });
+
+    testWidgets('the plan toggle turns Astuto+ on and off', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _openProfile(tester);
+
+      // Turning the plan on adds panels above this row, so it has to be
+      // scrolled back into view each time rather than tapped where it was.
+      Future<void> tapToggle(String label) async {
+        final row = find.text(label);
+        await tester.scrollUntilVisible(
+          row,
+          300,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(row);
+        await _settle(tester);
+      }
+
+      final prefs = await SharedPreferences.getInstance();
+
+      await tapToggle('Turn Astuto+ on');
+      expect(prefs.getBool('knowit.plus'), isTrue);
+
+      await tapToggle('Turn Astuto+ off');
+      expect(prefs.getBool('knowit.plus'), isFalse);
+    });
+  });
 }
