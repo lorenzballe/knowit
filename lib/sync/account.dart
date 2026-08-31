@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
@@ -16,14 +18,26 @@ enum SignInOutcome { signedIn, cancelled, unavailable, failed }
 class Account extends ChangeNotifier {
   /// The two seams the tests use. Left null, the account reaches for the
   /// real Firebase — and finds nothing unless Cloud.start() succeeded.
-  Account({this.authOverride, this.storeOverride});
+  Account({this.authOverride, this.storeOverride, this.uidOverride});
 
   /// Stand-ins for the real Firebase, so a sign-in can be driven in a test
   /// without a project, a network or a device. Null in the app.
   final FirebaseAuth? authOverride;
   final ReaderStore? storeOverride;
 
+  /// Stands in for a signed-in reader. FirebaseAuth cannot be faked, so
+  /// without this seam the backing-up path could only be tested on a phone.
+  final String? uidOverride;
+
   bool _busy = false;
+  AppState? _watching;
+  Timer? _pending;
+
+  /// How long the app waits after a change before backing it up. Long enough
+  /// that answering five cards is one write rather than five, short enough
+  /// that closing the app straight after still catches it — and a close
+  /// flushes immediately anyway.
+  static const Duration _settle = Duration(seconds: 4);
 
   /// True while a sign-in is in flight, so the button can say so.
   bool get busy => _busy;
@@ -36,7 +50,10 @@ class Account extends ChangeNotifier {
 
   User? get user => _firebase?.currentUser;
 
-  bool get signedIn => user != null;
+  /// Who is signed in, if anyone. Everything that writes goes through this.
+  String? get uid => uidOverride ?? user?.uid;
+
+  bool get signedIn => uid != null;
 
   /// What to show on the profile: the email if the provider shared one,
   /// otherwise nothing useful — Apple lets people hide theirs, and inventing
@@ -118,19 +135,56 @@ class Account extends ChangeNotifier {
 
   /// Pushes what the phone knows, for a reader who is already signed in.
   Future<void> push(AppState app) async {
-    final User? signed = user;
+    final String? who = uid;
     final ReaderStore? store = _readers;
-    if (signed == null || store == null) return;
+    if (who == null || store == null) return;
     try {
-      await store.write(signed.uid, app.snapshot());
+      await store.write(who, app.snapshot());
     } catch (error) {
       // A backup that fails is not something to interrupt a reader over.
       debugPrint('Could not push the snapshot: $error');
     }
   }
 
+  /// Starts backing this phone up whenever it changes.
+  ///
+  /// Signing in only ever uploaded the moment it happened, which made the
+  /// account a photograph of that day. Everything after it has to travel too,
+  /// or a new phone restores a week that stopped a week ago.
+  void watch(AppState app) {
+    if (identical(_watching, app)) return;
+    _watching?.removeListener(_onAppChanged);
+    _watching = app..addListener(_onAppChanged);
+  }
+
+  void _onAppChanged() {
+    // Nothing to back up to, so nothing to schedule — and in particular no
+    // timer left running under a test.
+    if (!signedIn || _readers == null) return;
+    _pending?.cancel();
+    _pending = Timer(_settle, flush);
+  }
+
+  /// Writes now rather than in a few seconds. Called when the app goes to the
+  /// background, which is the last moment anything is certain to run.
+  Future<void> flush() async {
+    _pending?.cancel();
+    _pending = null;
+    final AppState? app = _watching;
+    if (app != null) await push(app);
+  }
+
   Future<void> signOut() async {
+    _pending?.cancel();
+    _pending = null;
     await _firebase?.signOut();
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _pending?.cancel();
+    _watching?.removeListener(_onAppChanged);
+    super.dispose();
   }
 }

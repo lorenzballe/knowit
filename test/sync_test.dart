@@ -1,3 +1,4 @@
+import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -183,6 +184,70 @@ void main() {
 
       // No override and no Firebase: the account has nowhere to write.
       expect(await Account().foldInto(app, 'reader-1'), isNull);
+    });
+  });
+
+  group('keeping the account up to date', () {
+    Future<AppState> installed() async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.onboarded': true,
+        'knowit.streak': 2,
+      });
+      final app = AppState();
+      await app.init();
+      return app;
+    }
+
+    test('a change is backed up once the app settles', () async {
+      final app = await installed();
+      final store = MemoryReaderStore();
+      Account(storeOverride: store, uidOverride: 'reader-1').watch(app);
+
+      fakeAsync((async) {
+        app.toggleSaved('p1');
+        // Nothing yet: five answers in a row should be one write, not five.
+        expect(store.writes, 0);
+        async.elapse(const Duration(seconds: 5));
+      });
+      await Future<void>.delayed(Duration.zero);
+
+      expect(store.writes, 1);
+      expect((await store.read('reader-1'))!.savedIds, contains('p1'));
+    });
+
+    test('several changes in a row are one write', () async {
+      final app = await installed();
+      final store = MemoryReaderStore();
+      final account = Account(storeOverride: store, uidOverride: 'reader-1')
+        ..watch(app);
+
+      fakeAsync((async) {
+        app.toggleSaved('p1');
+        async.elapse(const Duration(seconds: 1));
+        app.toggleSaved('p2');
+        async.elapse(const Duration(seconds: 1));
+        app.toggleSaved('p3');
+        async.elapse(const Duration(seconds: 6));
+      });
+      await Future<void>.delayed(Duration.zero);
+
+      expect(store.writes, 1);
+      account.dispose();
+    });
+
+    test('signed out, a change schedules nothing at all', () async {
+      final app = await installed();
+      final store = MemoryReaderStore();
+      // No uid: nobody to back up to.
+      Account(storeOverride: store).watch(app);
+
+      fakeAsync((async) {
+        app.toggleSaved('p1');
+        async.elapse(const Duration(minutes: 1));
+      });
+      await Future<void>.delayed(Duration.zero);
+
+      expect(store.writes, 0);
     });
   });
 }

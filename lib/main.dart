@@ -136,12 +136,21 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// One account for the whole app. It works signed out — this only decides
   /// whether the phone's work also lives somewhere it survives the phone.
   final Account _account = Account();
+
+  /// Backing up is best done at the last moment anything is certain to run,
+  /// which on a phone is the moment the app leaves the screen.
+  AppLifecycleListener? _lifecycle;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
   @override
   void initState() {
     super.initState();
+    _account.watch(_app);
+    _lifecycle = AppLifecycleListener(
+      onPause: _account.flush,
+      onDetach: _account.flush,
+    );
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
   }
@@ -167,6 +176,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   @override
   void dispose() {
     _app.removeListener(_onAppStateChanged);
+    _lifecycle?.dispose();
     _account.dispose();
     super.dispose();
   }
