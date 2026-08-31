@@ -3,7 +3,17 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 /// The one entitlement Astuto sells. Everything gated asks this by name.
-const String kPlusEntitlement = 'plus';
+///
+/// Configurable at build time because the name lives in RevenueCat, not here,
+/// and the two have to agree exactly — an entitlement the app asks for under
+/// the wrong name is a subscriber the app never sees. It also matters when an
+/// account holds more than one app: entitlements are scoped to a RevenueCat
+/// *project*, so two apps sharing one project would share this name too, and
+/// each should have a project of its own.
+const String kPlusEntitlement = String.fromEnvironment(
+  'REVENUECAT_ENTITLEMENT',
+  defaultValue: 'plus',
+);
 
 /// The public RevenueCat key for the iOS app.
 ///
