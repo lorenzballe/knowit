@@ -17,8 +17,13 @@ class Cloud {
   const Cloud._();
 
   static bool _ready = false;
+  static String? _failure;
 
   static bool get ready => _ready;
+
+  /// Why Firebase is not up, when it is not. Shown in the debug section,
+  /// because "nothing happens" is the least useful bug report there is.
+  static String? get failure => _failure;
 
   /// Called once from main(). Never throws: a project that is misconfigured,
   /// offline or missing on this platform must not stop the app opening.
@@ -30,8 +35,10 @@ class Cloud {
         options: DefaultFirebaseOptions.currentPlatform,
       );
       _ready = true;
+      _failure = null;
     } catch (error, stack) {
       _ready = false;
+      _failure = '$error';
       debugPrint('Firebase did not start, carrying on locally: $error');
       debugPrintStack(stackTrace: stack);
     }

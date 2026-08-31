@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../data/pills_data.dart';
 import '../data/topics.dart';
+import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
 import '../sync/account.dart';
@@ -502,6 +503,32 @@ class ProfileScreen extends StatelessWidget {
                 color: context.p.inkFaint,
               ),
             ),
+            const SizedBox(height: 10),
+            // What the app actually knows about itself. "Nothing happens"
+            // is the least useful bug report there is, so it is replaced
+            // here by something that can be read off a screen.
+            _DebugLine('Firebase', Cloud.ready ? 'running' : 'NOT running'),
+            if (Cloud.failure != null) _DebugLine('Why', Cloud.failure!),
+            _DebugLine(
+              'Account',
+              account.signedInForReal
+                  ? 'signed in${account.email == null ? '' : ' · ${account.email}'}'
+                  : account.signedIn
+                  ? 'anonymous'
+                  : 'none',
+            ),
+            _DebugLine('Account id', account.uid ?? '—'),
+            if (account.lastError != null)
+              _DebugLine('Last auth error', account.lastError!),
+            _DebugLine(
+              'Store',
+              Subscription.instance.ready ? 'answered' : 'no answer',
+            ),
+            _DebugLine(
+              'Offering',
+              Subscription.instance.offering?.identifier ?? 'none',
+            ),
+            _DebugLine('Entitlement asked for', kPlusEntitlement),
             const SizedBox(height: 10),
             _LinkRow(
               label: 'Wipe everything and restart',
@@ -1293,6 +1320,43 @@ class _PlusCard extends StatelessWidget {
             onPressed: () => Navigator.of(
               context,
             ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One fact about the running app, for the debug section.
+class _DebugLine extends StatelessWidget {
+  const _DebugLine(this.label, this.value);
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 132,
+            child: Text(
+              label,
+              style: AppText.body(size: 12, color: context.p.inkFaint),
+            ),
+          ),
+          Expanded(
+            child: SelectableText(
+              value,
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w600,
+                color: context.p.inkMuted,
+              ),
+            ),
           ),
         ],
       ),

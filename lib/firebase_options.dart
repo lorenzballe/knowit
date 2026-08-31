@@ -34,6 +34,11 @@ class DefaultFirebaseOptions {
     projectId: 'astuto-3d398',
     storageBucket: 'astuto-3d398.firebasestorage.app',
     iosBundleId: 'com.astuto.app',
+    // Without this the OAuth flows have no client to start from: the sheet
+    // never opens and the app reports nothing at all. It is in the plist,
+    // but the plist is not in the Xcode target and these options are what
+    // Firebase is actually configured from, so it has to be here too.
+    iosClientId: '582789807174-gqik2m8lr283qu6pr1s99gqgsj9lfas4.apps.googleusercontent.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(

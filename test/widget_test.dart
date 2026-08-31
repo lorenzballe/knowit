@@ -75,6 +75,10 @@ void main() {
 
     await tester.tap(find.text('Continue with Apple'));
     await _settle(tester);
+    // With no Firebase in a test, sign-in reports itself unavailable and says
+    // so. Let the snackbar go before touching anything underneath it.
+    await tester.pump(const Duration(seconds: 5));
+    await _settle(tester);
 
     // The run opens on the first subject, one card at a time.
     expect(find.text('01'), findsOneWidget);

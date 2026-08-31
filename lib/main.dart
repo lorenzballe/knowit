@@ -242,9 +242,11 @@ class _AstutoRootState extends State<AstutoRoot> {
         // reader rather than to the phone.
         await Subscription.instance.switchTo(_account.uid);
         return true;
-      // Nothing to sign in to on this build or this platform: the reader
-      // should not be stuck behind a button that cannot work.
+      // Firebase is not running. This used to move on in silence, which made
+      // a broken build look exactly like a successful sign-in: press, no
+      // sheet, next screen. Say it instead.
       case SignInOutcome.unavailable:
+        _say('Sign-in is unavailable: ${_account.lastError ?? "unknown"}');
         return true;
       case SignInOutcome.cancelled:
         return false;

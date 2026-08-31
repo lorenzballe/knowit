@@ -30,6 +30,10 @@ class Account extends ChangeNotifier {
   final String? uidOverride;
 
   bool _busy = false;
+
+  /// The last thing that went wrong, kept for the debug section. A silent
+  /// failure is the hardest kind to report.
+  String? lastError;
   AppState? _watching;
   Timer? _pending;
 
@@ -86,8 +90,12 @@ class Account extends ChangeNotifier {
     AuthProvider Function() build,
   ) async {
     final FirebaseAuth? auth = _firebase;
-    if (auth == null) return SignInOutcome.unavailable;
+    if (auth == null) {
+      lastError = Cloud.failure ?? 'Firebase is not running on this build.';
+      return SignInOutcome.unavailable;
+    }
 
+    lastError = null;
     _busy = true;
     notifyListeners();
     try {
@@ -127,9 +135,11 @@ class Account extends ChangeNotifier {
         'user-cancelled',
       };
       if (cancelled.contains(error.code)) return SignInOutcome.cancelled;
-      debugPrint('$label sign-in failed: ${error.code} ${error.message}');
+      lastError = '${error.code}: ${error.message}';
+      debugPrint('$label sign-in failed: $lastError');
       return SignInOutcome.failed;
     } catch (error) {
+      lastError = '$error';
       debugPrint('$label sign-in failed: $error');
       return SignInOutcome.failed;
     } finally {
@@ -192,6 +202,7 @@ class Account extends ChangeNotifier {
     } catch (error) {
       // An anonymous provider that is switched off leaves the app exactly
       // where it was before this existed: local only.
+      lastError = '$error';
       debugPrint('No anonymous account, carrying on locally: $error');
     }
   }
