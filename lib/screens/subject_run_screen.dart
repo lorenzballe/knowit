@@ -300,10 +300,16 @@ class _SubjectRunScreenState extends State<SubjectRunScreen> {
         ),
         const SizedBox(height: 14),
         _ProgressBar(value: _i / kSubjects.length, color: _current.color),
-        const SizedBox(height: 26),
-        // Fixed, not Expanded: the deck is drawn at one size, and stretching
-        // it leaves the card floating over a gap on a taller phone.
-        SizedBox(height: 428, child: _buildStack()),
+        const SizedBox(height: 22),
+        // Drawn at 428 and never more, but free to be less: on a phone with
+        // a notch and a home indicator there is not 428 to give, and a fixed
+        // box would put the buttons under the card rather than below it.
+        Flexible(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 428),
+            child: _buildStack(),
+          ),
+        ),
         const SizedBox(height: 4),
         _Slots(favourites: _favourites),
         const SizedBox(height: 10),
@@ -906,9 +912,16 @@ class _SubjectCard extends StatelessWidget {
                 ],
               ),
               Flexible(
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: flipped ? _back() : _front(),
+                // Scales down rather than losing the bottom of itself. A
+                // short card was dropping the example pill, which is the
+                // only part that says what the subject is actually like.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 306),
+                    child: flipped ? _back() : _front(),
+                  ),
                 ),
               ),
               Opacity(
@@ -933,7 +946,8 @@ class _SubjectCard extends StatelessWidget {
       left: 0,
       right: 0,
       top: 0,
-      height: 412,
+      // Sixteen short of the box, which is where the deck behind shows.
+      bottom: 16,
       child: IgnorePointer(
         ignoring: !isTop,
         child: GestureDetector(

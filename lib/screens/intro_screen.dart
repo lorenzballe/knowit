@@ -111,19 +111,30 @@ class _IntroScreenState extends State<IntroScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: 344,
-                            child: _Swap(
-                              scene: _scene,
-                              child: _IntroScene(index: _scene),
+                          // Scales down instead of overflowing. A browser
+                          // window has no notch and no home indicator; a
+                          // phone gives about ninety fewer pixels, and a
+                          // fixed box turned that into copy drawn over
+                          // buttons rather than a smaller drawing.
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: 344,
+                                height: 344,
+                                child: _Swap(
+                                  scene: _scene,
+                                  child: _IntroScene(index: _scene),
+                                ),
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 18),
+                          const SizedBox(height: 16),
                           _Swap(
                             scene: _scene,
                             child: _SceneCopy(index: _scene),
                           ),
-                          const SizedBox(height: 19),
+                          const SizedBox(height: 14),
                           _Dots(count: _sceneCount, active: _scene, onTap: _go),
                         ],
                       ),
@@ -896,7 +907,11 @@ class _FallingCardState extends State<_FallingCard>
     );
 
     return Positioned(
-      left: widget.left / 100 * 344,
+      // Placed inside the box rather than across its edge. Fractions of the
+      // full width put a wide card half outside, and the clip then cuts it
+      // down the middle — which reads as a rectangle drawn round the
+      // animation rather than as cards falling past.
+      left: widget.left / 100 * (344 - widget.width),
       top: 0,
       child: MediaQuery.disableAnimationsOf(context)
           ? Opacity(opacity: widget.opacity * 0.6, child: card)
