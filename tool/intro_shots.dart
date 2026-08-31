@@ -35,6 +35,8 @@ Future<void> _loadFonts() async {
   }
 }
 
+void _nothing(Map<String, double> _) {}
+
 void main() {
   const Size phone = Size(402, 874);
   const EdgeInsets insets = EdgeInsets.only(top: 59, bottom: 34);
@@ -107,6 +109,38 @@ void main() {
     await expectLater(
       find.byType(MixScreen),
       matchesGoldenFile('shots/mix.png'),
+    );
+  });
+
+  testWidgets('the mix on a short phone', (tester) async {
+    // An SE. Nine rows have to share a much smaller middle, and the rule is
+    // that they get shorter — never that the page starts scrolling.
+    const Size small = Size(375, 667);
+    await tester.binding.setSurfaceSize(small);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: const MediaQuery(
+          data: MediaQueryData(
+            size: small,
+            padding: EdgeInsets.only(top: 20),
+          ),
+          child: MixScreen(onDone: _nothing),
+        ),
+      ),
+    );
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 300)),
+    );
+    for (int f = 0; f < 10; f++) {
+      await tester.pump(const Duration(milliseconds: 120));
+    }
+    await expectLater(
+      find.byType(MixScreen),
+      matchesGoldenFile('shots/mix-short.png'),
     );
   });
 }

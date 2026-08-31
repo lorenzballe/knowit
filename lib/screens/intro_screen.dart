@@ -532,58 +532,15 @@ class _GoogleG extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    // Google's own mark, keyed off its plate and scaled down — not a drawing
+    // of it. Four arcs and a bar never quite become a G at nineteen pixels.
+    return Image.asset(
+      'assets/brand/google-g.png',
       width: 19,
       height: 19,
-      child: CustomPaint(painter: const _GooglePainter()),
+      filterQuality: FilterQuality.medium,
     );
   }
-}
-
-class _GooglePainter extends CustomPainter {
-  const _GooglePainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    // The G is a ring in four colours with a bite out of the right-hand side,
-    // and a bar running from the centre into that bite. Drawn as one circle
-    // with four arcs, the bite was missing and it read as a coloured hoop.
-    final double stroke = size.width * 0.22;
-    final Rect ring = (Offset.zero & size).deflate(stroke / 2);
-    final Paint p = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke
-      ..strokeCap = StrokeCap.butt;
-
-    double rad(double deg) => deg * math.pi / 180;
-
-    // Anticlockwise from the mouth: blue up the right, red across the top,
-    // yellow down the left, green along the bottom.
-    void arc(double from, double sweep, Color colour) {
-      p.color = colour;
-      canvas.drawArc(ring, rad(from), rad(sweep), false, p);
-    }
-
-    arc(-22, -68, const Color(0xFF4285F4));
-    arc(-90, -98, const Color(0xFFEA4335));
-    arc(-188, -72, const Color(0xFFFBBC05));
-    arc(100, -78, const Color(0xFF34A853));
-
-    // The bar. It starts at the middle and runs out to the ring, which is
-    // what turns a circle into a G.
-    canvas.drawRect(
-      Rect.fromLTRB(
-        size.width * 0.52,
-        size.height / 2 - stroke / 2,
-        size.width,
-        size.height / 2 + stroke / 2,
-      ),
-      Paint()..color = const Color(0xFF4285F4),
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 /// The five scenes.

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
@@ -84,7 +87,7 @@ void main() {
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
-    expect(find.text('12 of 12 subjects in the mix'), findsOneWidget);
+    expect(find.text('18 of 18 subjects in the mix'), findsOneWidget);
 
     // Press at the very left of a tile — that is zero — and it leaves the
     // mix, with the count saying so.
@@ -92,15 +95,26 @@ void main() {
       tester.getTopLeft(find.text('Science')).translate(-28, 6),
     );
     await _settle(tester);
-    expect(find.text('11 of 12 subjects in the mix'), findsOneWidget);
+    expect(find.text('17 of 18 subjects in the mix'), findsOneWidget);
 
     await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
     // And the answer is kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString('knowit.topicWeights'), isNotNull);
+    final weights = jsonDecode(prefs.getString('knowit.topicWeights')!) as Map;
     expect(prefs.getBool('knowit.onboarded'), isTrue);
+
+    // Science was dragged to nothing, so it is not in the mix.
+    expect(weights.containsKey('science'), isFalse);
+    // The grid draws eighteen subjects because the canvas does, but the six
+    // with no cards behind them must never reach the dealer as topics it
+    // would then fail to fill.
+    expect(
+      weights.keys.every(kTopics.containsKey),
+      isTrue,
+      reason: 'the mix only carries topics the deck can actually serve',
+    );
   });
 
   testWidgets('an onboarded install opens straight on the tab bar', (

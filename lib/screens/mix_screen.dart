@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
-import '../widgets/ambient.dart';
 
 /// One subject on the mix grid.
 class MixSubject {
   const MixSubject(this.key, this.name, this.color);
 
-  /// The topic key the app deals by.
-  final String key;
+  /// The topic key the app deals by, or null for a subject the canvas draws
+  /// but the deck cannot serve yet.
+  final String? key;
   final String name;
   final Color color;
 }
 
-/// The twelve subjects, in spectrum order.
+/// The eighteen subjects of artboard 49a, in the canvas's own order: hues
+/// taken from the top corner of the picker, spaced around the wheel so the
+/// grid reads as a spectrum.
 ///
-/// The canvas draws eighteen. Six of them — Medicine, Art, Sport, Cinema,
-/// Music, Food — have no cards behind them yet, and a subject a reader turns
-/// up and is never dealt is worse than one that is not offered. Their colours
-/// are not lost: the ramp is sampled across twelve so the grid still runs the
-/// whole spectrum from red to pink.
+/// Medicine, Art, Sport, Cinema, Music and Food have no cards behind them
+/// yet, so they carry no topic key and contribute nothing to the mix.
 const List<MixSubject> kMixSubjects = [
-  MixSubject('history', 'History', Color(0xFFFF1A1A)),
-  MixSubject('economics', 'Economics', Color(0xFFFFA800)),
-  MixSubject('nature', 'Nature', Color(0xFFFFD400)),
-  MixSubject('language', 'Language', Color(0xFF22E551)),
-  MixSubject('science', 'Science', Color(0xFF00FFC2)),
+  MixSubject(null, 'Medicine', Color(0xFFFF1A1A)),
+  MixSubject(null, 'Art', Color(0xFFFF6A00)),
+  MixSubject('history', 'History', Color(0xFFFFA800)),
+  MixSubject('economics', 'Economics', Color(0xFFFFD400)),
+  MixSubject(null, 'Sport', Color(0xFFC6FF00)),
+  MixSubject('nature', 'Nature', Color(0xFF22E551)),
+  MixSubject('language', 'Language', Color(0xFF00FFC2)),
+  MixSubject('science', 'Science', Color(0xFF00E5FF)),
   MixSubject('technology', 'Technology', Color(0xFF00A6FF)),
   MixSubject('space', 'Space', Color(0xFF2979FF)),
-  MixSubject('philosophy', 'Philosophy', Color(0xFF7C4DFF)),
-  MixSubject('psychology', 'Psychology', Color(0xFF9D3FFF)),
+  MixSubject('philosophy', 'Philosophy', Color(0xFF5B57FF)),
+  MixSubject('psychology', 'Psychology', Color(0xFF7C4DFF)),
+  MixSubject(null, 'Cinema', Color(0xFF9D3FFF)),
+  MixSubject(null, 'Music', Color(0xFFC13AFF)),
   MixSubject('weird_facts', 'Weird facts', Color(0xFFE040FB)),
-  MixSubject('pop_culture', 'Pop culture', Color(0xFFFF3D6E)),
-  MixSubject('human_body', 'Human body', Color(0xFFFF5252)),
+  MixSubject('pop_culture', 'Pop culture', Color(0xFFFF2D9E)),
+  MixSubject('human_body', 'Human body', Color(0xFFFF3D6E)),
+  MixSubject(null, 'Food', Color(0xFFFF5252)),
 ];
 
 /// Below this a subject is out of the mix rather than merely quiet.
@@ -54,105 +59,121 @@ class MixScreen extends StatefulWidget {
 }
 
 class _MixScreenState extends State<MixScreen> {
+  /// Keyed by name, as the canvas keys it: the six subjects without cards
+  /// have no topic key to hold a value under.
   final Map<String, int> _value = {
-    for (final MixSubject s in kMixSubjects) s.key: 100,
+    for (final MixSubject s in kMixSubjects) s.name: 100,
   };
 
   int get _inMix => _value.values.where((int v) => v > kMixFloor).length;
 
   void _setAt(MixSubject subject, double dx, double width) {
     final int next = ((dx / width).clamp(0.0, 1.0) * 100).round();
-    if (_value[subject.key] == next) return;
-    setState(() => _value[subject.key] = next);
+    if (_value[subject.name] == next) return;
+    setState(() => _value[subject.name] = next);
   }
 
   void _finish() {
     final Map<String, double> weights = {
       for (final MixSubject s in kMixSubjects)
-        if (_value[s.key]! > kMixFloor) s.key: _value[s.key]! / 100,
+        if (s.key != null && _value[s.name]! > kMixFloor)
+          s.key!: _value[s.name]! / 100,
     };
     // Thinking is not on the grid and never off the deck, so it is not here
     // either: setTopicMix adds it.
     widget.onDone(
       weights.isEmpty
-          ? {for (final MixSubject s in kMixSubjects) s.key: 1}
+          ? {
+              for (final MixSubject s in kMixSubjects)
+                if (s.key != null) s.key!: 1,
+            }
           : weights,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
     return Scaffold(
+      // 49a has nothing behind it. The tiles are the colour on this screen,
+      // and blooms behind them would only mute what they are being chosen for.
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Positioned.fill(child: AmbientBlooms(colors: kSceneBlooms[3])),
-          const Positioned.fill(child: Bokeh()),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(18, 14, 18, 22),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const _MixHeading(),
-                  const SizedBox(height: 14),
-                  Expanded(
-                    child: GridView.builder(
-                      // Never scrollable: the whole point of the grid is that
-                      // the mix is one thing you see at once. If it stops
-                      // fitting, a subject comes out rather than the page
-                      // growing a scrollbar.
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        childAspectRatio: _tileRatio(context),
-                      ),
-                      itemCount: kMixSubjects.length,
-                      itemBuilder: (context, i) => _MixTile(
-                        subject: kMixSubjects[i],
-                        value: _value[kMixSubjects[i].key]!,
-                        index: i,
-                        onDragAt: _setAt,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    '$_inMix of ${kMixSubjects.length} subjects in the mix',
-                    textAlign: TextAlign.center,
-                    style: AppText.body(
-                      size: 12,
-                      weight: FontWeight.w500,
-                      color: Colors.white.withValues(alpha: 0.38),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  _StartButton(onTap: _finish),
-                ],
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(
+          18,
+          // The canvas clears the status bar with 54; a taller notch needs
+          // more, and never less.
+          safe.top > 54 ? safe.top : 54,
+          18,
+          safe.bottom > 22 ? safe.bottom : 22,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _MixHeading(),
+            const SizedBox(height: 14),
+            // grid-auto-rows:1fr — the nine rows share whatever height is
+            // left, so a shorter phone gets shorter tiles instead of a
+            // scrollbar. The mix is one thing you see at once or it is not
+            // a mix.
+            Expanded(
+              child: _MixGrid(value: _value, onDragAt: _setAt),
+            ),
+            const SizedBox(height: 14),
+            Text(
+              '$_inMix of ${kMixSubjects.length} subjects in the mix',
+              textAlign: TextAlign.center,
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w500,
+                color: Colors.white.withValues(alpha: 0.38),
               ),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+            _StartButton(onTap: _finish),
+          ],
+        ),
       ),
     );
   }
+}
 
-  /// Rows share whatever height is left, as the canvas has them do. Working
-  /// it out here rather than fixing the tile height is what keeps the grid
-  /// off a scrollbar on a short phone.
-  double _tileRatio(BuildContext context) {
-    final Size screen = MediaQuery.sizeOf(context);
-    final EdgeInsets safe = MediaQuery.paddingOf(context);
-    const double chrome = 14 + 14 + 14 + 10 + 58 + 22 + 14 + 76;
-    final int rows = (kMixSubjects.length / 2).ceil();
-    final double free =
-        screen.height - safe.top - safe.bottom - chrome - (rows - 1) * 8;
-    final double tileWidth = (screen.width - 36 - 8) / 2;
-    final double tileHeight = (free / rows).clamp(44.0, 96.0);
-    return tileWidth / tileHeight;
+class _MixGrid extends StatelessWidget {
+  const _MixGrid({required this.value, required this.onDragAt});
+
+  final Map<String, int> value;
+  final void Function(MixSubject, double dx, double width) onDragAt;
+
+  @override
+  Widget build(BuildContext context) {
+    const int columns = 2;
+    final int rows = (kMixSubjects.length / columns).ceil();
+    return Column(
+      children: [
+        for (int r = 0; r < rows; r++) ...[
+          if (r > 0) const SizedBox(height: 8),
+          Expanded(
+            child: Row(
+              children: [
+                for (int c = 0; c < columns; c++) ...[
+                  if (c > 0) const SizedBox(width: 8),
+                  Expanded(
+                    child: r * columns + c < kMixSubjects.length
+                        ? _MixTile(
+                            subject: kMixSubjects[r * columns + c],
+                            value: value[kMixSubjects[r * columns + c].name]!,
+                            index: r * columns + c,
+                            onDragAt: onDragAt,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
   }
 }
 
@@ -181,9 +202,7 @@ class _MixHeading extends StatelessWidget {
         ),
         const SizedBox(height: 7),
         Text(
-          // The canvas says "down"; the drag is sideways, and a screen that
-          // tells you the wrong direction is worse than one that says nothing.
-          'Everything is in. Drag a subject left to see less of it, or all '
+          'Everything is in. Drag a subject down to see less of it, or all '
           'the way to zero to drop it.',
           style: AppText.body(
             size: 13.5,
@@ -197,7 +216,8 @@ class _MixHeading extends StatelessWidget {
 }
 
 /// A word that walks the spectrum, slowly enough to be noticed rather than
-/// watched.
+/// watched. Eight colours over eighty seconds, each held most of its turn and
+/// then crossed to the next, as the canvas's mixColor keyframes have it.
 class _SpectrumWord extends StatefulWidget {
   const _SpectrumWord(this.text);
 
@@ -219,6 +239,9 @@ class _SpectrumWordState extends State<_SpectrumWord>
     Color(0xFFFF00A8),
     Color(0xFFFF7A1A),
   ];
+
+  /// Each colour holds for 9 of its 12.5 per cent, then crosses over.
+  static const double _hold = 9 / 12.5;
 
   late final AnimationController _c = AnimationController(
     vsync: this,
@@ -249,10 +272,12 @@ class _SpectrumWordState extends State<_SpectrumWord>
       builder: (context, _) {
         final double at = _c.value * _ramp.length;
         final int i = at.floor() % _ramp.length;
+        final double into = at - at.floor();
+        final double t = into <= _hold ? 0 : (into - _hold) / (1 - _hold);
         final Color colour = Color.lerp(
           _ramp[i],
           _ramp[(i + 1) % _ramp.length],
-          at - at.floor(),
+          t,
         )!;
         return Text(widget.text, style: style(colour));
       },
@@ -279,11 +304,12 @@ class _MixTile extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         void at(Offset local) => onDragAt(subject, local.dx, box.maxWidth);
-        return GestureDetector(
+        // A raw Listener, as the canvas has it: once the pointer goes down on
+        // a tile every move belongs to that tile, whichever way it travels.
+        return Listener(
           behavior: HitTestBehavior.opaque,
-          onTapDown: (d) => at(d.localPosition),
-          onHorizontalDragStart: (d) => at(d.localPosition),
-          onHorizontalDragUpdate: (d) => at(d.localPosition),
+          onPointerDown: (e) => at(e.localPosition),
+          onPointerMove: (e) => at(e.localPosition),
           child: _TileIn(
             delay: Duration(milliseconds: 30 + index * 20),
             child: DecoratedBox(
@@ -303,12 +329,27 @@ class _MixTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 child: Stack(
                   children: [
+                    // The inset top highlight. It sits under the fill, the
+                    // way an inset shadow sits under an element's children,
+                    // so it shows on whatever part of the tile is still empty.
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      height: 1,
+                      child: ColoredBox(
+                        color: Colors.white.withValues(
+                          alpha: live ? 0.28 : 0.05,
+                        ),
+                      ),
+                    ),
                     // How much of this subject, as a length rather than a
                     // number: there is nothing to read, only something to see.
                     Align(
                       alignment: Alignment.centerLeft,
                       child: AnimatedFractionallySizedBox(
                         duration: const Duration(milliseconds: 90),
+                        curve: Curves.linear,
                         widthFactor: value / 100,
                         heightFactor: 1,
                         child: DecoratedBox(
@@ -318,7 +359,7 @@ class _MixTile extends StatelessWidget {
                               end: Alignment.bottomCenter,
                               colors: [
                                 subject.color,
-                                subject.color.withValues(alpha: 0.85),
+                                subject.color.withValues(alpha: 0.851),
                               ],
                             ),
                           ),
