@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#2b4bff">
+<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#2b4bff"/><rect x="360" y="200" width="480" height="400" rx="56" fill="#f5f3ee"/><text x="600" y="455" font-family="Outfit,Helvetica,sans-serif" font-size="180" font-weight="700" fill="#2b4bff" text-anchor="middle">K</text></svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"><style>
+body{margin:0;background:#eceae4;font-family:Figtree,system-ui,sans-serif}
+a{color:#2b4bff}a:hover{color:#1732cc}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#131316;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 Figtree,system-ui,sans-serif;color:#131316}
+.dv-opts{display:flex;flex-wrap:wrap;gap:34px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#131316;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.3 Figtree,system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-opt:target .dv-oid{background:#2b4bff;color:#fff}
+.dv-next{margin:24px 0 0;font:12px/1.5 Figtree,system-ui,sans-serif;color:rgba(0,0,0,.5)}
+.dv-note{margin:0 0 26px;max-width:720px;font:13px/1.65 Figtree,system-ui,sans-serif;color:rgba(0,0,0,.62)}
+.dv-note b{color:#131316;font-weight:600}
+</style></helmet>
+
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Knowit — the rest of the app</span></div>
+<p class="dv-note">Everything around the daily loop: first run, the 08:30 notification, sign-in, the archive with live search (<a href="#3d">3d</a> — type in the field), the day you break your streak, the empty collection, and the transparency screen that explains how an AI-written pill is made. Same chrome as turn <a href="#t2">2</a>.</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a"><div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>First run · welcome</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:74px 22px 30px;gap:26px">
+  <div style="font:700 20px/1 Outfit,sans-serif;letter-spacing:-.6px;color:#131316">Knowit</div>
+  <div style="position:relative;height:300px">
+    <div style="position:absolute;left:22px;right:22px;top:26px;height:230px;border-radius:28px;background:#c6f24e;transform:rotate(-7deg)"></div>
+    <div style="position:absolute;left:14px;right:14px;top:14px;height:240px;border-radius:30px;background:#ff4e2d;transform:rotate(4deg)"></div>
+    <div style="position:absolute;left:0;right:0;top:0;height:252px;border-radius:32px;background:#2b4bff;color:#fff;padding:24px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 20px 44px rgba(0,0,0,.2)">
+      <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;opacity:.72">Space</div>
+      <div style="font:600 27px/1.14 Outfit,sans-serif;letter-spacing:-.9px;text-wrap:pretty">Why do we only ever see one face of the Moon?</div>
+      <div style="font:500 12.5px/1 Figtree,sans-serif;opacity:.6">tap to reveal</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="font:700 34px/1.06 Outfit,sans-serif;letter-spacing:-1.4px;color:#131316;text-wrap:pretty">Five things worth saying out loud.</div>
+    <div style="font:400 15px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.55)">Every morning, five short pills across twelve topics. Written fresh, checked against a source, and built to survive a conversation at the bar.</div>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:11px">
+    <div style="height:54px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:600 15px/1 Figtree,sans-serif;cursor:pointer">Get my first five</div>
+    <div style="text-align:center;font:500 13px/1 Figtree,sans-serif;color:rgba(0,0,0,.5);cursor:pointer">I already have an account</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3b"><div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Sign in</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 22px 30px;gap:22px">
+  <div style="width:38px;height:38px;border-radius:99px;border:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font:400 16px/1 Figtree,sans-serif;color:#131316;cursor:pointer">←</div>
+  <div style="display:flex;flex-direction:column;gap:9px;margin-top:14px">
+    <div style="font:700 32px/1.07 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316">Welcome back.</div>
+    <div style="font:400 14.5px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.55)">Your streak and your saved pills are waiting.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+    <div style="height:56px;border-radius:18px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;gap:9px;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer"><span style="font-size:16px"></span>Continue with Apple</div>
+    <div style="height:56px;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.12);color:#131316;display:flex;align-items:center;justify-content:center;gap:9px;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer"><span style="font:700 15px/1 Outfit,sans-serif;color:#2b4bff">G</span>Continue with Google</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin:4px 0"><div style="flex:1;height:1px;background:rgba(0,0,0,.1)"></div><span style="font:400 11.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.38)">or</span><div style="flex:1;height:1px;background:rgba(0,0,0,.1)"></div></div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.12);padding:15px 18px;display:flex;flex-direction:column;gap:5px">
+      <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;color:rgba(0,0,0,.4)">Email</div>
+      <div style="font:400 15px/1.2 Figtree,sans-serif;color:#131316">marco@studio.it</div>
+    </div>
+    <div style="height:54px;border-radius:99px;background:#2b4bff;color:#fff;display:flex;align-items:center;justify-content:center;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer">Send me a login link</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font:400 11.5px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.38)">By continuing you accept the Terms and the Privacy Policy.</div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3c"><div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Notification · 08:30 lock screen</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" dark="{{ yes }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:radial-gradient(120% 80% at 20% 8%, #2b4bff 0%, #14142a 46%, #0b0b10 100%);display:flex;flex-direction:column;padding:88px 18px 34px;gap:26px">
+  <div style="text-align:center;display:flex;flex-direction:column;gap:4px">
+    <div style="font:500 15px/1 Figtree,sans-serif;color:rgba(255,255,255,.7)">Saturday, 22 August</div>
+    <div style="font:300 78px/1 Outfit,sans-serif;letter-spacing:-3px;color:#fff">8:30</div>
+  </div>
+  <div style="margin-top:20px;border-radius:22px;padding:16px 17px;background:rgba(255,255,255,.14);backdrop-filter:blur(18px);display:flex;gap:13px">
+    <div style="width:38px;height:38px;flex:none;border-radius:10px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:700 13px/1 Outfit,sans-serif">K</div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px"><span style="font:600 13.5px/1 Figtree,sans-serif;color:#fff">Knowit</span><span style="font:400 11.5px/1 Figtree,sans-serif;color:rgba(255,255,255,.55)">now</span></div>
+      <div style="font:500 14px/1.35 Figtree,sans-serif;color:#fff;text-wrap:pretty">Your 5 pills are ready</div>
+      <div style="font:400 13.5px/1.4 Figtree,sans-serif;color:rgba(255,255,255,.72);text-wrap:pretty">{{ lockQ }}</div>
+    </div>
+  </div>
+  <div style="border-radius:22px;padding:14px 17px;background:rgba(255,255,255,.07);backdrop-filter:blur(18px);display:flex;gap:13px;align-items:center">
+    <div style="width:30px;height:30px;flex:none;border-radius:8px;background:rgba(255,255,255,.16)"></div>
+    <div style="font:400 12.5px/1.3 Figtree,sans-serif;color:rgba(255,255,255,.5)">2 more notifications</div>
+  </div>
+  <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding:0 26px">
+    <div style="width:48px;height:48px;border-radius:99px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font:400 17px/1 Figtree,sans-serif;color:#fff">⚑</div>
+    <div style="width:48px;height:48px;border-radius:99px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font:400 17px/1 Figtree,sans-serif;color:#fff">⊙</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3d"><div class="dv-olabel"><a class="dv-oid" href="#3d">3d</a>Archive · live search</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="padding:6px 22px 14px;display:flex;flex-direction:column;gap:14px">
+    <div style="font:700 33px/1.05 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316">Archive</div>
+    <div style="display:flex;align-items:center;gap:10px;border-radius:16px;background:#fff;border:1px solid rgba(0,0,0,.1);padding:0 15px;height:48px">
+      <span style="font:400 15px/1 Figtree,sans-serif;color:rgba(0,0,0,.35)">⌕</span>
+      <input value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search 247 pills" style="flex:1;border:none;outline:none;background:transparent;font:400 15px/1 Figtree,sans-serif;color:#131316" />
+    </div>
+  </div>
+  <div style="padding:0 22px 14px;display:flex;flex-wrap:wrap;gap:8px">
+    <sc-for list="{{ searchTopics }}" as="t" hint-placeholder-count="6">
+      <div style="display:flex;align-items:center;gap:7px;border-radius:999px;padding:8px 13px;background:#fff;border:1px solid rgba(0,0,0,.1);font:500 12.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.62);cursor:pointer"><span style="width:7px;height:7px;border-radius:2px;background: {{ t.color }}"></span>{{ t.name }}</div>
+    </sc-for>
+  </div>
+  <div style="padding:0 22px 8px;font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.4)">{{ resultCount }} results</div>
+  <div style="flex:1;overflow:hidden;padding:6px 22px 0;display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ results }}" as="r" hint-placeholder-count="5">
+      <div style="display:flex;gap:13px;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.08);cursor:pointer">
+        <span style="width:9px;height:9px;flex:none;margin-top:6px;border-radius:2px;background: {{ r.color }}"></span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font:500 15px/1.32 Figtree,sans-serif;color:#131316;text-wrap:pretty">{{ r.q }}</div>
+          <div style="font:400 11.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.4)">{{ r.topic }} · {{ r.date }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Today</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:#131316"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:#131316">Saved</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Profile</span></div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3e"><div class="dv-olabel"><a class="dv-oid" href="#3e">3e</a>Saved · empty state</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="padding:6px 22px 16px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">Nothing kept yet</div>
+    <div style="font:700 33px/1.05 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316;margin-top:7px">Saved</div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:0 34px;text-align:center">
+    <div style="position:relative;width:150px;height:120px">
+      <div style="position:absolute;left:16px;top:12px;right:16px;height:92px;border-radius:20px;border:1px dashed rgba(0,0,0,.2);transform:rotate(-8deg)"></div>
+      <div style="position:absolute;left:8px;top:6px;right:8px;height:100px;border-radius:22px;border:1px dashed rgba(0,0,0,.22);transform:rotate(5deg)"></div>
+      <div style="position:absolute;inset:0;border-radius:24px;border:1px dashed rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;font:400 26px/1 Figtree,sans-serif;color:rgba(0,0,0,.25)">♥</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div style="font:600 21px/1.22 Outfit,sans-serif;letter-spacing:-.6px;color:#131316">Keep the ones you'll actually use</div>
+      <div style="font:400 14px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.5)">Tap the heart on any pill and it lands here, ready for the next time the conversation stalls.</div>
+    </div>
+    <div style="height:50px;padding:0 24px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:600 14px/1 Figtree,sans-serif;cursor:pointer">Back to today's five</div>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Today</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:#131316"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:#131316">Saved</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Profile</span></div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3f"><div class="dv-olabel"><a class="dv-oid" href="#3f">3f</a>Streak broken · come back</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:74px 22px 30px;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:#ff4e2d">Streak reset</div>
+    <div style="font:700 38px/1.05 Outfit,sans-serif;letter-spacing:-1.5px;color:#131316">You missed<br>two days.</div>
+    <div style="font:400 15px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.55)">Thirteen days is still your record. Read today's five and the counter starts again from one.</div>
+  </div>
+  <div style="display:flex;gap:6px">
+    <sc-for list="{{ weekD }}" as="d" hint-placeholder-count="7"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:100%;height:38px;border-radius:10px;background: {{ d.bg }}"></div><span style="font:500 10px/1 'JetBrains Mono',monospace;color:rgba(0,0,0,.35)">{{ d.label }}</span></div></sc-for>
+  </div>
+  <div style="border-radius:22px;background:#fff;border:1px solid rgba(0,0,0,.07);padding:20px;display:flex;flex-direction:column;gap:14px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">While you were away</div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div style="display:flex;gap:12px;align-items:center"><span style="width:8px;height:8px;border-radius:2px;background:#ff4e2d;flex:none"></span><span style="font:500 13.5px/1.35 Figtree,sans-serif;color:#131316">10 pills went unread</span></div>
+      <div style="display:flex;gap:12px;align-items:center"><span style="width:8px;height:8px;border-radius:2px;background:#2b4bff;flex:none"></span><span style="font:500 13.5px/1.35 Figtree,sans-serif;color:#131316">3 of them were on Space, your most read topic</span></div>
+    </div>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:11px">
+    <div style="height:54px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:600 15px/1 Figtree,sans-serif;cursor:pointer">Start again with today's five</div>
+    <div style="text-align:center;font:500 13px/1 Figtree,sans-serif;color:rgba(0,0,0,.5);cursor:pointer">Move my reminder to 19:00</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="3g"><div class="dv-olabel"><a class="dv-oid" href="#3g">3g</a>How pills are written</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 22px 30px;gap:22px">
+  <div style="width:38px;height:38px;border-radius:99px;border:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font:400 16px/1 Figtree,sans-serif;color:#131316;cursor:pointer">←</div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font:700 31px/1.07 Outfit,sans-serif;letter-spacing:-1.2px;color:#131316;text-wrap:pretty">Every pill here is written by a model.</div>
+    <div style="font:400 14.5px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.55)">We'd rather say it up front than have you find out. Here is the whole pipeline.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ howSteps }}" as="h" hint-placeholder-count="4">
+      <div style="display:flex;gap:15px;padding:17px 0;border-top:1px solid rgba(0,0,0,.09)">
+        <span style="font:500 11px/1.5 'JetBrains Mono',monospace;color:#2b4bff;flex:none">{{ h.n }}</span>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="font:600 15px/1.3 Figtree,sans-serif;color:#131316">{{ h.t }}</div>
+          <div style="font:400 13px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.52);text-wrap:pretty">{{ h.s }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="border-radius:20px;background:#131316;padding:19px;display:flex;flex-direction:column;gap:8px">
+    <div style="font:600 15px/1.3 Figtree,sans-serif;color:#fff">Found something wrong?</div>
+    <div style="font:400 13px/1.45 Figtree,sans-serif;color:rgba(255,255,255,.6)">Report any pill and it gets pulled from rotation until a human checks it.</div>
+  </div>
+  <div style="margin-top:auto;text-align:center;font:400 11.5px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.38)">Model and source list updated monthly.</div>
+</div>
+</x-import>
+</div>
+
+</div>
+<p class="dv-next">Try next: "make this a clickable flow with real navigation" · "add widget and Apple Watch" · "Italian copy"</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Knowit — full flow, hybrid of 1a + 1b</span></div>
+<p class="dv-note"><b>The mix.</b> Light editorial chrome from <a href="#1b">1b</a> — warm paper background, header, dots, tab bar — with the full-bleed topic-colour card from <a href="#1a">1a</a> sitting in the middle and the stack peeking below it. Deck in <a href="#2b">2b</a> is live: drag sideways, tap to flip. Topics in <a href="#2a">2a</a>, the toggle in <a href="#2f">2f</a> and the plans in <a href="#2g">2g</a> are all tappable.</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Onboarding · pick your topics</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 22px 30px;gap:22px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="flex:1;height:3px;border-radius:9px;background:#131316"></div>
+    <div style="flex:1;height:3px;border-radius:9px;background:#131316"></div>
+    <div style="flex:1;height:3px;border-radius:9px;background:rgba(0,0,0,.12)"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font:700 33px/1.06 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316;text-wrap:pretty">What should we talk about?</div>
+    <div style="font:400 15px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.55)">Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:9px">
+    <sc-for list="{{ topicsAll }}" as="t" hint-placeholder-count="12">
+      <div onClick="{{ t.toggle }}" style="display:flex;align-items:center;gap:7px;border-radius:999px;padding:11px 15px;cursor:pointer;font:500 14px/1 Figtree,sans-serif;transition:background .18s ease,color .18s ease;background: {{ t.bg }};color: {{ t.ink }};border:1px solid {{ t.border }}">
+        <span style="font-size:12px;opacity: {{ t.mark }}">✓</span>{{ t.name }}
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+    <div style="text-align:center;font:400 12.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.42)">{{ pickedCount }} of 12 selected</div>
+    <div style="height:54px;border-radius:99px;display:flex;align-items:center;justify-content:center;font:600 15px/1 Figtree,sans-serif;cursor:pointer;transition:background .2s ease;background: {{ pickCtaBg }};color: {{ pickCtaInk }}">{{ pickCta }}</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Today · the hybrid card (live)</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:6px 22px 18px">
+    <div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">Saturday · 5 pills</div>
+      <div style="font:700 33px/1.05 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316;margin-top:7px">Today</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:7px 12px"><span style="font:600 12px/1 Figtree,sans-serif;color:#131316">12</span><span style="font:400 11px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">day streak</span></div>
+  </div>
+  <div style="position:relative;flex:1;margin:0 22px">
+    <sc-for list="{{ deckD }}" as="c" hint-placeholder-count="3">
+      <div onPointerDown="{{ c.down }}" onPointerMove="{{ c.move }}" onPointerUp="{{ c.up }}" onPointerCancel="{{ c.up }}" style="position:absolute;left:0;right:0;top:0;height:520px;border-radius:32px;padding:26px 24px;box-sizing:border-box;display:flex;flex-direction:column;cursor:grab;touch-action:none;user-select:none;box-shadow:0 20px 46px rgba(0,0,0,.18);background: {{ c.color }};color: {{ c.ink }};z-index: {{ c.z }};transform: {{ c.tf }};opacity: {{ c.op }};transition: {{ c.tr }}">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;opacity:.72">{{ c.topic }}</div>
+          <div style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.55">{{ c.num }}</div>
+        </div>
+        <sc-if value="{{ c.front }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px">
+            <div style="font:600 34px/1.1 Outfit,sans-serif;letter-spacing:-1.1px;text-wrap:pretty">{{ c.q }}</div>
+            <div style="display:flex;align-items:center;gap:9px;font:500 13px/1 Figtree,sans-serif;opacity:.62"><span style="width:22px;height:1px;background:currentColor;opacity:.5"></span>tap to reveal</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ c.flipped }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;gap:18px;padding-top:22px">
+            <div style="font:600 21px/1.26 Outfit,sans-serif;letter-spacing:-.5px">{{ c.q }}</div>
+            <div style="font:400 16.5px/1.5 Figtree,sans-serif;opacity:.92;text-wrap:pretty">{{ c.a }}</div>
+            <div style="margin-top:auto;display:flex;flex-direction:column;gap:13px">
+              <div style="border-radius:16px;padding:14px 16px;background:rgba(255,255,255,.16);display:flex;flex-direction:column;gap:5px">
+                <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;opacity:.7">Bar move</div>
+                <div style="font:500 14.5px/1.4 Figtree,sans-serif">{{ c.bar }}</div>
+              </div>
+              <div style="font:400 11.5px/1 Figtree,sans-serif;opacity:.6">Source · {{ c.src }}</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;padding:22px 22px 0">
+    <div style="flex:1;height:50px;border-radius:99px;border:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:600 14px/1 Figtree,sans-serif;color:#131316"><span style="font-size:15px">♥</span>Save</div>
+    <div style="flex:1;height:50px;border-radius:99px;border:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:600 14px/1 Figtree,sans-serif;color:#131316"><span style="font-size:15px">↑</span>Share</div>
+    <div style="width:50px;height:50px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:400 19px/1 Figtree,sans-serif;cursor:pointer">→</div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:7px;padding:16px 0 12px">
+    <sc-for list="{{ dotsD }}" as="d" hint-placeholder-count="5"><div style="height:6px;border-radius:9px;width: {{ d.w }};background: {{ d.bg }}"></div></sc-for>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px">
+    <sc-for list="{{ tabsD }}" as="t" hint-placeholder-count="3"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background: {{ t.bg }}"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color: {{ t.ink }}">{{ t.label }}</span></div></sc-for>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>End of day · streak recap</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:70px 22px 30px;gap:24px">
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:rgba(0,0,0,.42)">5 of 5 · done</div>
+    <div style="font:700 40px/1.04 Outfit,sans-serif;letter-spacing:-1.6px;color:#131316">13 days<br><span style="color:#2b4bff">in a row.</span></div>
+  </div>
+  <div style="display:flex;gap:6px">
+    <sc-for list="{{ weekD }}" as="d" hint-placeholder-count="7"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:100%;height:38px;border-radius:10px;background: {{ d.bg }}"></div><span style="font:500 10px/1 'JetBrains Mono',monospace;color:rgba(0,0,0,.35)">{{ d.label }}</span></div></sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">You picked up today</div>
+    <sc-for list="{{ recapD }}" as="r" hint-placeholder-count="5">
+      <div style="display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:15px;background:#fff;border:1px solid rgba(0,0,0,.06)">
+        <span style="width:8px;height:8px;border-radius:2px;flex:none;background: {{ r.color }}"></span>
+        <span style="font:500 13.5px/1.3 Figtree,sans-serif;color:#131316;text-wrap:pretty">{{ r.t }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:13px">
+    <div style="border-radius:24px;padding:20px;background:#131316;display:flex;flex-direction:column;gap:11px">
+      <div style="font:600 20px/1.2 Outfit,sans-serif;letter-spacing:-.6px;color:#fff">Want 5 more?</div>
+      <div style="font:400 13.5px/1.45 Figtree,sans-serif;color:rgba(255,255,255,.62)">Knowit+ unlocks an extra set every day, plus the full archive of everything you've read.</div>
+      <div style="height:48px;border-radius:99px;background:#fff;color:#131316;display:flex;align-items:center;justify-content:center;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer">Unlock 5 extra pills</div>
+    </div>
+    <div style="text-align:center;font:400 12.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.4)">Next set in 14h 22m</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>Saved · your collection</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="padding:6px 22px 16px;display:flex;align-items:flex-end;justify-content:space-between">
+    <div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">{{ savedCount }} pills kept</div>
+      <div style="font:700 33px/1.05 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316;margin-top:7px">Saved</div>
+    </div>
+    <div style="width:38px;height:38px;border-radius:99px;border:1px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font:400 15px/1 Figtree,sans-serif;color:rgba(0,0,0,.5);cursor:pointer">⌕</div>
+  </div>
+  <div style="flex:1;overflow:hidden;padding:0 22px;display:flex;flex-direction:column;gap:12px">
+    <sc-for list="{{ savedList }}" as="c" hint-placeholder-count="3">
+      <div style="border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:13px;background: {{ c.color }};color: {{ c.ink }}">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;opacity:.72">{{ c.topic }}</span>
+          <span style="font:400 15px/1 Figtree,sans-serif;opacity:.85;cursor:pointer">♥</span>
+        </div>
+        <div style="font:600 21px/1.22 Outfit,sans-serif;letter-spacing:-.6px;text-wrap:pretty">{{ c.q }}</div>
+        <div style="font:500 13px/1.4 Figtree,sans-serif;opacity:.78">{{ c.bar }}</div>
+      </div>
+    </sc-for>
+    <div style="border-radius:22px;border:1px dashed rgba(0,0,0,.18);padding:22px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center">
+      <div style="font:600 14.5px/1.3 Figtree,sans-serif;color:#131316">The full archive is in Knowit+</div>
+      <div style="font:400 12.5px/1.45 Figtree,sans-serif;color:rgba(0,0,0,.5)">Everything you've read, searchable by topic.</div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px;margin-top:16px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Today</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:#131316"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:#131316">Saved</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Profile</span></div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2e"><div class="dv-olabel"><a class="dv-oid" href="#2e">2e</a>Share · export as image</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:rgba(20,20,22,.55);display:flex;flex-direction:column;justify-content:flex-end">
+  <div style="background:#f5f3ee;border-radius:30px 30px 0 0;padding:14px 22px 30px;display:flex;flex-direction:column;gap:20px">
+    <div style="width:38px;height:4px;border-radius:9px;background:rgba(0,0,0,.16);align-self:center"></div>
+    <div style="font:600 20px/1.2 Outfit,sans-serif;letter-spacing:-.6px;color:#131316">Share this pill</div>
+    <div style="border-radius:24px;padding:26px;aspect-ratio:1/1;display:flex;flex-direction:column;justify-content:space-between;background: {{ shareColor }};color: {{ shareInk }};box-shadow:0 16px 36px rgba(0,0,0,.16)">
+      <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;opacity:.7">{{ shareTopic }}</div>
+      <div style="font:600 26px/1.16 Outfit,sans-serif;letter-spacing:-.9px;text-wrap:pretty">{{ shareQ }}</div>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px">
+        <div style="font:500 13px/1.4 Figtree,sans-serif;opacity:.8;max-width:74%">{{ shareBar }}</div>
+        <div style="font:600 13px/1 Outfit,sans-serif;opacity:.6">Knowit</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <div style="flex:1;height:52px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:600 14px/1 Figtree,sans-serif;cursor:pointer">Share image</div>
+      <div style="width:52px;height:52px;border-radius:99px;border:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font:400 17px/1 Figtree,sans-serif;color:#131316;cursor:pointer">⤓</div>
+      <div style="width:52px;height:52px;border-radius:99px;border:1px solid rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font:400 15px/1 Figtree,sans-serif;color:#131316;cursor:pointer">⧉</div>
+    </div>
+    <div style="text-align:center;font:400 12px/1 Figtree,sans-serif;color:rgba(0,0,0,.4)">Source travels with the image</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2f"><div class="dv-olabel"><a class="dv-oid" href="#2f">2f</a>Profile · streak, topics, daily nudge</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="padding:6px 22px 18px;display:flex;align-items:center;gap:14px">
+    <div style="width:54px;height:54px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:600 18px/1 Outfit,sans-serif">MR</div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="font:700 22px/1.1 Outfit,sans-serif;letter-spacing:-.7px;color:#131316">Marco R.</div>
+      <div style="font:400 12.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Free plan · joined in March</div>
+    </div>
+  </div>
+  <div style="padding:0 22px;display:flex;gap:10px">
+    <div style="flex:1;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.06);padding:16px;display:flex;flex-direction:column;gap:4px"><div style="font:700 24px/1 Outfit,sans-serif;color:#131316">13</div><div style="font:400 11.5px/1.3 Figtree,sans-serif;color:rgba(0,0,0,.45)">day streak</div></div>
+    <div style="flex:1;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.06);padding:16px;display:flex;flex-direction:column;gap:4px"><div style="font:700 24px/1 Outfit,sans-serif;color:#131316">247</div><div style="font:400 11.5px/1.3 Figtree,sans-serif;color:rgba(0,0,0,.45)">pills read</div></div>
+    <div style="flex:1;border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.06);padding:16px;display:flex;flex-direction:column;gap:4px"><div style="font:700 24px/1 Outfit,sans-serif;color:#131316">31</div><div style="font:400 11.5px/1.3 Figtree,sans-serif;color:rgba(0,0,0,.45)">saved</div></div>
+  </div>
+  <div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:11px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">Daily nudge</div>
+    <div style="border-radius:18px;background:#fff;border:1px solid rgba(0,0,0,.06);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div style="font:500 14.5px/1.2 Figtree,sans-serif;color:#131316">Every day at 08:30</div>
+        <div style="font:400 12px/1.3 Figtree,sans-serif;color:rgba(0,0,0,.45)">Your 5 pills, before the first coffee.</div>
+      </div>
+      <div onClick="{{ toggleNotif }}" style="width:50px;height:30px;border-radius:99px;padding:3px;box-sizing:border-box;display:flex;align-items:center;cursor:pointer;transition:background .2s ease;background: {{ notifTrack }};justify-content: {{ notifKnob }}">
+        <div style="width:24px;height:24px;border-radius:99px;background:#fff"></div>
+      </div>
+    </div>
+  </div>
+  <div style="padding:22px 22px 0;display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">Your topics</div>
+      <div style="font:500 12.5px/1 Figtree,sans-serif;color:#2b4bff;cursor:pointer">Edit</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <sc-for list="{{ topicsAll }}" as="t" hint-placeholder-count="12">
+        <sc-if value="{{ t.on }}" hint-placeholder-val="{{ true }}">
+          <div style="border-radius:999px;padding:9px 13px;font:500 12.5px/1 Figtree,sans-serif;background: {{ t.bg }};color: {{ t.ink }}">{{ t.name }}</div>
+        </sc-if>
+      </sc-for>
+    </div>
+  </div>
+  <div style="margin-top:auto;padding:20px 22px 0;display:flex;flex-direction:column;gap:2px">
+    <div style="padding:14px 0;border-top:1px solid rgba(0,0,0,.08);font:500 14px/1 Figtree,sans-serif;color:#131316;cursor:pointer">Manage subscription</div>
+    <div style="padding:14px 0;border-top:1px solid rgba(0,0,0,.08);font:500 14px/1 Figtree,sans-serif;color:#131316;cursor:pointer">How pills are written</div>
+    <div style="padding:14px 0;border-top:1px solid rgba(0,0,0,.08);font:500 14px/1 Figtree,sans-serif;color:rgba(0,0,0,.45);cursor:pointer">Sign out</div>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px;margin-top:14px">
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Today</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:rgba(0,0,0,.22)"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">Saved</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background:#131316"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color:#131316">Profile</span></div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="2g"><div class="dv-olabel"><a class="dv-oid" href="#2g">2g</a>Knowit+ · paywall</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" dark="{{ yes }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#131316;display:flex;flex-direction:column;padding:62px 22px 30px;gap:22px">
+  <div style="display:flex;justify-content:flex-end"><div style="width:32px;height:32px;border-radius:99px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font:400 15px/1 Figtree,sans-serif;cursor:pointer">✕</div></div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="align-self:flex-start;border-radius:999px;padding:7px 13px;background:#2b4bff;color:#fff;font:600 11px/1 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase">Knowit+</div>
+    <div style="font:700 36px/1.06 Outfit,sans-serif;letter-spacing:-1.5px;color:#fff;text-wrap:pretty">Ten pills a day, and nothing gets lost.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ perks }}" as="p" hint-placeholder-count="4">
+      <div style="display:flex;gap:13px;padding:14px 0;border-top:1px solid rgba(255,255,255,.1)">
+        <span style="width:18px;flex:none;font:500 13px/1.35 Figtree,sans-serif;color:#2b4bff">✓</span>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="font:600 14.5px/1.3 Figtree,sans-serif;color:#fff">{{ p.t }}</div>
+          <div style="font:400 12.5px/1.4 Figtree,sans-serif;color:rgba(255,255,255,.5)">{{ p.s }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px">
+    <sc-for list="{{ plans }}" as="p" hint-placeholder-count="2">
+      <div onClick="{{ p.pick }}" style="border-radius:20px;padding:17px 19px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .18s ease;background: {{ p.bg }};border:1px solid {{ p.border }}">
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <div style="font:600 15.5px/1 Figtree,sans-serif;color: {{ p.ink }}">{{ p.label }}</div>
+          <div style="font:400 12px/1 Figtree,sans-serif;color: {{ p.sub }}">{{ p.note }}</div>
+        </div>
+        <div style="font:700 19px/1 Outfit,sans-serif;letter-spacing:-.5px;color: {{ p.ink }}">{{ p.price }}</div>
+      </div>
+    </sc-for>
+    <div style="height:54px;border-radius:99px;background:#2b4bff;color:#fff;display:flex;align-items:center;justify-content:center;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer;margin-top:4px">{{ planCta }}</div>
+    <div style="text-align:center;font:400 11.5px/1.4 Figtree,sans-serif;color:rgba(255,255,255,.35)">Cancel any time · Restore purchase</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+</div>
+<p class="dv-next">Try next: "add the notification lock-screen and the first-run splash" · "make the plan cards match <a class="dv-oid" href="#2c">2c</a>" · "turn <a class="dv-oid" href="#2b">2b</a> into a clickable flow"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Knowit — daily pills, three card directions</span></div>
+<p class="dv-note"><b>Assumptions.</b> 5 AI-written pills a day, horizontal card stack, question on the cover and the answer on tap. Every card carries a <b>Bar move</b> line (the reason to bring it up) and a source. English UI, Outfit + Figtree, one saturated colour per topic. <b>All three phones are live</b> — drag a card sideways to advance, tap it to flip. <a href="#1d">1d</a> is the end-of-day state shared by all three.</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Full-bleed colour · card is the screen</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" dark="{{ yes }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#0d0d0f;display:flex;flex-direction:column;padding:62px 18px 30px;gap:18px">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 6px">
+    <div style="font:600 19px/1 Outfit,sans-serif;color:#fff;letter-spacing:-.4px">Knowit</div>
+    <div style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.09);border-radius:999px;padding:6px 11px"><span style="width:6px;height:6px;border-radius:99px;background:#c6f24e"></span><span style="font:600 12px/1 Figtree,sans-serif;color:rgba(255,255,255,.82)">12 days</span></div>
+  </div>
+  <div style="display:flex;gap:5px;padding:0 6px">
+    <sc-for list="{{ barsA }}" as="b" hint-placeholder-count="5"><div style="flex:1;height:3px;border-radius:9px;background: {{ b.bg }}"></div></sc-for>
+  </div>
+  <div style="position:relative;flex:1;margin-top:4px">
+    <sc-for list="{{ deckA }}" as="c" hint-placeholder-count="3">
+      <div onPointerDown="{{ c.down }}" onPointerMove="{{ c.move }}" onPointerUp="{{ c.up }}" onPointerCancel="{{ c.up }}" style="position:absolute;inset:0;border-radius:34px;padding:28px 26px;box-sizing:border-box;display:flex;flex-direction:column;cursor:grab;touch-action:none;user-select:none;box-shadow:0 24px 60px rgba(0,0,0,.45);background: {{ c.color }};color: {{ c.ink }};z-index: {{ c.z }};transform: {{ c.tf }};opacity: {{ c.op }};transition: {{ c.tr }}">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;opacity:.72">{{ c.topic }}</div>
+          <div style="font:500 11px/1 'JetBrains Mono',monospace;opacity:.55">{{ c.num }}</div>
+        </div>
+        <sc-if value="{{ c.front }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px">
+            <div style="font:600 37px/1.1 Outfit,sans-serif;letter-spacing:-1.1px;text-wrap:pretty">{{ c.q }}</div>
+            <div style="font:500 13px/1 Figtree,sans-serif;opacity:.6">Tap to reveal</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ c.flipped }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px">
+            <div style="font:600 21px/1.28 Outfit,sans-serif;letter-spacing:-.4px">{{ c.q }}</div>
+            <div style="font:400 17px/1.5 Figtree,sans-serif;opacity:.9;text-wrap:pretty">{{ c.a }}</div>
+            <div style="border-top:1px solid currentColor;opacity:.22"></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;opacity:.6">Bar move</div>
+              <div style="font:500 15px/1.4 Figtree,sans-serif">{{ c.bar }}</div>
+            </div>
+            <div style="font:400 12px/1 Figtree,sans-serif;opacity:.55">Source · {{ c.src }}</div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:2px 12px 0">
+    <div onClick="{{ saveA }}" style="width:46px;height:46px;border-radius:99px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font:400 19px/1 Figtree,sans-serif;color: {{ savedAColor }};cursor:pointer">♥</div>
+    <div onClick="{{ nextA }}" style="flex:1;margin:0 14px;height:52px;border-radius:99px;background:#fff;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:600 15px/1 Figtree,sans-serif;color:#0d0d0f">Next pill <span style="opacity:.4">→</span></div>
+    <div style="width:46px;height:46px;border-radius:99px;background:rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font:400 18px/1 Figtree,sans-serif;color:rgba(255,255,255,.8);cursor:pointer">↑</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Editorial light · stack peeks below, tab bar</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#f5f3ee;display:flex;flex-direction:column;padding:62px 0 0">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;padding:6px 22px 14px">
+    <div>
+      <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.42)">Thursday · 5 pills</div>
+      <div style="font:700 33px/1.05 Outfit,sans-serif;letter-spacing:-1.3px;color:#131316;margin-top:7px">Today</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:7px;border:1px solid rgba(0,0,0,.12);border-radius:999px;padding:7px 12px"><span style="font:600 12px/1 Figtree,sans-serif;color:#131316">12</span><span style="font:400 11px/1 Figtree,sans-serif;color:rgba(0,0,0,.45)">day streak</span></div>
+  </div>
+  <div style="display:flex;gap:8px;padding:0 22px 16px;overflow:hidden">
+    <sc-for list="{{ chipsB }}" as="t" hint-placeholder-count="4"><div style="flex:none;border-radius:999px;padding:7px 13px;font:500 12px/1 Figtree,sans-serif;white-space:nowrap;background: {{ t.bg }};color: {{ t.ink }}">{{ t.label }}</div></sc-for>
+  </div>
+  <div style="position:relative;flex:1;margin:0 22px 0">
+    <sc-for list="{{ deckB }}" as="c" hint-placeholder-count="3">
+      <div onPointerDown="{{ c.down }}" onPointerMove="{{ c.move }}" onPointerUp="{{ c.up }}" onPointerCancel="{{ c.up }}" style="position:absolute;left:0;right:0;top:0;height:480px;border-radius:26px;background:#fff;border:1px solid rgba(0,0,0,.07);box-shadow:0 18px 40px rgba(0,0,0,.09);overflow:hidden;cursor:grab;touch-action:none;user-select:none;display:flex;flex-direction:column;z-index: {{ c.z }};transform: {{ c.tf }};opacity: {{ c.op }};transition: {{ c.tr }}">
+        <div style="height:7px;background: {{ c.color }}"></div>
+        <div style="padding:22px 24px 24px;flex:1;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:9px"><span style="width:9px;height:9px;border-radius:2px;background: {{ c.color }}"></span><span style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(0,0,0,.5)">{{ c.topic }}</span></div>
+            <div style="font:500 11px/1 'JetBrains Mono',monospace;color:rgba(0,0,0,.3)">{{ c.num }}</div>
+          </div>
+          <div style="font:600 28px/1.14 Outfit,sans-serif;letter-spacing:-.9px;color:#131316;text-wrap:pretty">{{ c.q }}</div>
+          <sc-if value="{{ c.front }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:14px">
+              <div style="height:1px;background:rgba(0,0,0,.08)"></div>
+              <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;height:34px;border-radius:99px;background:#131316;color:#fff;display:flex;align-items:center;justify-content:center;font:400 15px/1 Figtree,sans-serif">?</span><span style="font:500 14px/1 Figtree,sans-serif;color:rgba(0,0,0,.55)">Tap for the answer</span></div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ c.flipped }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1;display:flex;flex-direction:column;gap:16px;overflow:hidden">
+              <div style="font:400 16px/1.5 Figtree,sans-serif;color:rgba(0,0,0,.72);text-wrap:pretty">{{ c.a }}</div>
+              <div style="border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:5px;background: {{ c.tint }}">
+                <div style="font:500 10.5px/1 'JetBrains Mono',monospace;letter-spacing:1.2px;text-transform:uppercase;color:rgba(0,0,0,.5)">Bar move</div>
+                <div style="font:500 14px/1.4 Figtree,sans-serif;color:#131316">{{ c.bar }}</div>
+              </div>
+              <div style="margin-top:auto;font:400 11.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.4)">Source · {{ c.src }}</div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:7px;padding:14px 0 10px">
+    <sc-for list="{{ dotsB }}" as="d" hint-placeholder-count="5"><div style="height:6px;border-radius:9px;width: {{ d.w }};background: {{ d.bg }}"></div></sc-for>
+  </div>
+  <div style="border-top:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.7);backdrop-filter:blur(12px);display:flex;padding:12px 30px 30px">
+    <sc-for list="{{ tabsB }}" as="t" hint-placeholder-count="3"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer"><span style="width:18px;height:18px;border-radius:5px;background: {{ t.bg }}"></span><span style="font:500 10.5px/1 Figtree,sans-serif;color: {{ t.ink }}">{{ t.label }}</span></div></sc-for>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Tinted chrome · screen takes the topic colour</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;display:flex;flex-direction:column;padding:62px 20px 30px;gap:16px;transition:background .45s ease;background: {{ tintC }}">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 4px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:rgba(0,0,0,.5)">Pill {{ posCLabel }} of 5</div>
+    <div style="width:30px;height:30px;border-radius:99px;background:rgba(0,0,0,.14);display:flex;align-items:center;justify-content:center;font:600 11px/1 Figtree,sans-serif;color:rgba(0,0,0,.6)">MR</div>
+  </div>
+  <div style="position:relative;flex:1">
+    <sc-for list="{{ deckC }}" as="c" hint-placeholder-count="3">
+      <div onPointerDown="{{ c.down }}" onPointerMove="{{ c.move }}" onPointerUp="{{ c.up }}" onPointerCancel="{{ c.up }}" style="position:absolute;left:0;right:0;top:0;bottom:0;border-radius:30px;background:#fffdf8;box-shadow:0 20px 44px rgba(0,0,0,.16);padding:26px 24px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;cursor:grab;touch-action:none;user-select:none;z-index: {{ c.z }};transform: {{ c.tf }};opacity: {{ c.op }};transition: {{ c.tr }}">
+        <div style="align-self:flex-start;border-radius:999px;padding:8px 14px;font:600 11.5px/1 Figtree,sans-serif;letter-spacing:.3px;background: {{ c.color }};color: {{ c.ink }}">{{ c.topic }}</div>
+        <sc-if value="{{ c.front }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px">
+            <div style="font:600 34px/1.12 Outfit,sans-serif;letter-spacing:-1.1px;color:#17161a;text-wrap:pretty">{{ c.q }}</div>
+            <div style="display:flex;align-items:center;gap:8px;font:500 13px/1 Figtree,sans-serif;color:rgba(0,0,0,.42)"><span style="width:20px;height:1px;background:rgba(0,0,0,.25)"></span>tap</div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ c.flipped }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;display:flex;flex-direction:column;gap:18px">
+            <div style="font:600 20px/1.26 Outfit,sans-serif;letter-spacing:-.5px;color:#17161a">{{ c.q }}</div>
+            <div style="font:400 16px/1.52 Figtree,sans-serif;color:rgba(0,0,0,.72);text-wrap:pretty">{{ c.a }}</div>
+            <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;gap:11px;align-items:flex-start"><span style="font:500 10.5px/1.5 'JetBrains Mono',monospace;letter-spacing:1.1px;text-transform:uppercase;color:rgba(0,0,0,.42);white-space:nowrap">Bar move</span><span style="font:500 14.5px/1.42 Figtree,sans-serif;color:#17161a">{{ c.bar }}</span></div>
+              <div style="font:400 11.5px/1 Figtree,sans-serif;color:rgba(0,0,0,.38)">Source · {{ c.src }}</div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <div onClick="{{ saveC }}" style="flex:1;height:54px;border-radius:99px;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:600 14px/1 Figtree,sans-serif;color:#17161a"><span style="font-size:16px">♥</span>{{ saveCLabel }}</div>
+    <div style="flex:1;height:54px;border-radius:99px;background:rgba(255,255,255,.62);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;font:600 14px/1 Figtree,sans-serif;color:#17161a"><span style="font-size:16px">↑</span>Share</div>
+    <div onClick="{{ nextC }}" style="width:54px;height:54px;border-radius:99px;background:#17161a;color:#fff;display:flex;align-items:center;justify-content:center;font:400 20px/1 Figtree,sans-serif;cursor:pointer">→</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>End of day · streak recap + extra pills</div>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ W }}" height="{{ H }}" dark="{{ yes }}" hint-size="402px,874px">
+<div style="min-height:874px;box-sizing:border-box;background:#0d0d0f;display:flex;flex-direction:column;padding:74px 22px 30px;gap:26px">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,.45)">5 of 5 · done</div>
+    <div style="font:700 40px/1.04 Outfit,sans-serif;letter-spacing:-1.6px;color:#fff">13 days<br><span style="color:#c6f24e">in a row.</span></div>
+  </div>
+  <div style="display:flex;gap:6px">
+    <sc-for list="{{ weekD }}" as="d" hint-placeholder-count="7"><div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px"><div style="width:100%;height:38px;border-radius:10px;background: {{ d.bg }}"></div><span style="font:500 10px/1 'JetBrains Mono',monospace;color:rgba(255,255,255,.35)">{{ d.label }}</span></div></sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:11px">
+    <div style="font:500 11px/1 'JetBrains Mono',monospace;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.42)">You picked up today</div>
+    <sc-for list="{{ recapD }}" as="r" hint-placeholder-count="5">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.055)">
+        <span style="width:8px;height:8px;border-radius:2px;flex:none;background: {{ r.color }}"></span>
+        <span style="font:500 13.5px/1.3 Figtree,sans-serif;color:rgba(255,255,255,.86);text-wrap:pretty">{{ r.t }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:14px">
+    <div style="border-radius:24px;padding:20px;background:linear-gradient(#c6f24e,#a8e02c);display:flex;flex-direction:column;gap:12px">
+      <div style="font:600 20px/1.2 Outfit,sans-serif;letter-spacing:-.6px;color:#17200a">Want 5 more?</div>
+      <div style="font:400 13.5px/1.45 Figtree,sans-serif;color:rgba(23,32,10,.72)">Knowit+ unlocks an extra set every day, plus the full archive of everything you've read.</div>
+      <div style="height:48px;border-radius:99px;background:#17200a;color:#e9ffc4;display:flex;align-items:center;justify-content:center;font:600 14.5px/1 Figtree,sans-serif;cursor:pointer">Unlock 5 extra pills</div>
+    </div>
+    <div style="text-align:center;font:400 12.5px/1 Figtree,sans-serif;color:rgba(255,255,255,.38)">Next set in 14h 22m</div>
+  </div>
+</div>
+</x-import>
+</div>
+
+</div>
+<p class="dv-next">Try next: "build out <a class="dv-oid" href="#1a">1a</a> as the real flow with onboarding + saved" · "give <a class="dv-oid" href="#1b">1b</a> the tinted background from <a class="dv-oid" href="#1c">1c</a>" · "new directions for the card itself"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const CARDS = [
+  {topic:'Space', color:'#2b4bff', ink:'#ffffff', tint:'#e6eaff',
+   q:'Why do we only ever see one face of the Moon?',
+   a:"The Moon is tidally locked: it turns once per orbit, so the same hemisphere always points at us. The far side isn't dark, it just never faces Earth.",
+   bar:"Correct the next person who says \u201cdark side of the Moon\u201d.", src:'NASA, Lunar Reconnaissance Orbiter'},
+  {topic:'Psychology', color:'#ff4e2d', ink:'#ffffff', tint:'#ffe9e3',
+   q:'Why do you replay embarrassing moments for years?',
+   a:'Unfinished business stays open in memory, the Zeigarnik effect. The brain keeps rehearsing what it never got to file away.',
+   bar:'Nobody remembers your worst moment except you.', src:'Zeigarnik, 1927'},
+  {topic:'Economics', color:'#c6f24e', ink:'#17200a', tint:'#f0fbd4',
+   q:'Why does cinema popcorn cost more than the ticket?',
+   a:'Ticket revenue is split with the studio, concessions are not. The theatre keeps almost all of the popcorn margin, so the snack pays for the screen.',
+   bar:'The film is the loss leader. The counter is the business.', src:'Stanford GSB, concession pricing'},
+  {topic:'Human body', color:'#7a5cff', ink:'#ffffff', tint:'#ece7ff',
+   q:'How long does a single red blood cell live?',
+   a:'About 120 days, then the spleen takes it apart and recycles the iron. You replace roughly two million of them every second.',
+   bar:"You are physically not the person you were last spring.", src:'NIH'},
+  {topic:'Language', color:'#00b083', ink:'#ffffff', tint:'#d9f5ec',
+   q:"What did the word \u201cnice\u201d originally mean?",
+   a:"Foolish. It comes from Latin nescius, \u201cignorant\u201d, drifted through \u201cprecise\u201d in the 1600s, and only landed on \u201cpleasant\u201d in the 1700s.",
+   bar:"Call an outfit nice and you can mean all three.", src:'Oxford English Dictionary'}
+];
+
+class Component extends DCLogic {
+  state = {pos:{a:0,b:0,c:0,d:0}, flip:{a:false,b:false,c:false,d:false}, dx:{a:0,b:0,c:0,d:0}, savedA:false, savedC:false,
+    picked:['Space','Psychology','Economics','Language','Human body','Curiosities'], savedIds:[0,2,4], notif:true, plan:'year'};
+
+  drag = null;
+
+  down = (k) => (e) => {
+    if (e.currentTarget.setPointerCapture) e.currentTarget.setPointerCapture(e.pointerId);
+    this.drag = {k, x:e.clientX, moved:0};
+  };
+  move = (k) => (e) => {
+    if (!this.drag || this.drag.k !== k) return;
+    const dx = e.clientX - this.drag.x;
+    this.drag.moved = Math.max(this.drag.moved, Math.abs(dx));
+    this.setState(s => ({dx:{...s.dx, [k]:dx}}));
+  };
+  up = (k) => () => {
+    const d = this.drag;
+    if (!d || d.k !== k) return;
+    this.drag = null;
+    const dx = this.state.dx[k] || 0;
+    if (Math.abs(dx) > 78) this.advance(k, dx < 0 ? 1 : -1);
+    else if (d.moved < 7) this.setState(s => ({flip:{...s.flip, [k]:!s.flip[k]}, dx:{...s.dx, [k]:0}}));
+    else this.setState(s => ({dx:{...s.dx, [k]:0}}));
+  };
+  advance = (k, dir) => {
+    this.setState(s => ({
+      pos:{...s.pos, [k]:(s.pos[k] + dir + CARDS.length) % CARDS.length},
+      flip:{...s.flip, [k]:false},
+      dx:{...s.dx, [k]:0}
+    }));
+  };
+
+  deck(k, mode) {
+    const i = this.state.pos[k], dx = this.state.dx[k] || 0, dragging = this.drag && this.drag.k === k;
+    const out = [];
+    for (let d = 2; d >= 0; d--) {
+      const c = CARDS[(i + d) % CARDS.length];
+      const top = d === 0;
+      let tf;
+      if (top) tf = 'translateX(' + dx.toFixed(1) + 'px) rotate(' + (dx * 0.035).toFixed(2) + 'deg)';
+      else if (mode === 'below') tf = 'translateY(' + (d * 16) + 'px) scale(' + (1 - d * 0.035) + ')';
+      else tf = 'translateY(' + (-d * 12) + 'px) scale(' + (1 - d * 0.04) + ')';
+      out.push(Object.assign({}, c, {
+        num: String((i + d) % CARDS.length + 1).padStart(2,'0') + ' / 05',
+        z: 10 - d,
+        tf,
+        op: top ? Math.max(0, 1 - Math.abs(dx) / 420) : (d === 1 ? 0.55 : 0.28),
+        tr: top && dragging ? 'none' : 'transform .34s cubic-bezier(.22,.9,.24,1), opacity .3s ease',
+        front: top ? !this.state.flip[k] : true,
+        flipped: top ? this.state.flip[k] : false,
+        down: this.down(k), move: this.move(k), up: this.up(k)
+      }));
+    }
+    return out;
+  }
+
+  toggleTopic = (name) => () => this.setState(s => ({
+    picked: s.picked.indexOf(name) < 0 ? s.picked.concat([name]) : s.picked.filter(t => t !== name)
+  }));
+
+  renderVals() {
+    const s = this.state;
+    const cur = CARDS[s.pos.c];
+    const ALL = ['Science','Space','Psychology','Economics','Technology','History','Human body','Philosophy','Pop culture','Nature','Language','Curiosities'];
+    const TC = {Science:'#00b083',Space:'#2b4bff',Psychology:'#ff4e2d',Economics:'#c6f24e',Technology:'#7a5cff',History:'#e0873a',
+      'Human body':'#7a5cff',Philosophy:'#131316',"Pop culture":'#ff3d8b',Nature:'#00b083',Language:'#00b083',Curiosities:'#ffc93c'};
+    const shareCard = CARDS[2];
+    const q = (s.query || '').toLowerCase();
+    return {
+      query: s.query || '',
+      onQuery: (e) => this.setState({query: e.target.value}),
+      queryEmpty: !q,
+      searchTopics: ['Space','Economics','Psychology','Language','Human body','History'].map(n => ({name:n, color:TC[n]})),
+      results: CARDS.filter(c => !q || (c.q + ' ' + c.a + ' ' + c.topic).toLowerCase().indexOf(q) >= 0)
+        .map(c => ({topic:c.topic, color:c.color, q:c.q, date: 'Aug ' + (12 + CARDS.indexOf(c)) + ', 2026'})),
+      resultCount: CARDS.filter(c => !q || (c.q + ' ' + c.a + ' ' + c.topic).toLowerCase().indexOf(q) >= 0).length,
+      lockQ: CARDS[0].q,
+      howSteps: [
+        {n:'01', t:'A topic comes up', s:'Rotated from the twelve you picked, weighted so you never get the same one twice in a day.'},
+        {n:'02', t:'The model drafts a pill', s:'One question, one answer under 60 words, one reason it is worth saying out loud.'},
+        {n:'03', t:'It gets checked against a source', s:'Every claim is matched to a public reference. No match, no pill.'},
+        {n:'04', t:'You get five at 08:30', s:'Written the same morning. Nothing recycled from yesterday.'}
+      ],
+      W: 402, H: 874, yes: true,
+      deckD: this.deck('d','below'),
+      dotsD: CARDS.map((c,i) => ({w: i === s.pos.d ? '20px' : '6px', bg: i === s.pos.d ? '#131316' : 'rgba(0,0,0,.16)'})),
+      tabsD: [
+        {label:'Today', bg:'#131316', ink:'#131316'},
+        {label:'Saved', bg:'rgba(0,0,0,.22)', ink:'rgba(0,0,0,.45)'},
+        {label:'Profile', bg:'rgba(0,0,0,.22)', ink:'rgba(0,0,0,.45)'}
+      ],
+      topicsAll: ALL.map(name => {
+        const on = s.picked.indexOf(name) >= 0;
+        return {name, on, toggle: this.toggleTopic(name),
+          bg: on ? TC[name] : '#ffffff',
+          ink: on ? (name === 'Economics' || name === 'Curiosities' ? '#17200a' : '#ffffff') : 'rgba(0,0,0,.62)',
+          border: on ? 'transparent' : 'rgba(0,0,0,.12)',
+          mark: on ? '1' : '0'};
+      }),
+      pickedCount: s.picked.length,
+      pickCta: s.picked.length < 3 ? 'Pick at least 3' : 'Start with ' + s.picked.length + ' topics',
+      pickCtaBg: s.picked.length < 3 ? 'rgba(0,0,0,.12)' : '#131316',
+      pickCtaInk: s.picked.length < 3 ? 'rgba(0,0,0,.35)' : '#ffffff',
+      savedList: CARDS.map((c,i) => Object.assign({}, c, {on: s.savedIds.indexOf(i) >= 0})).filter(c => c.on),
+      savedCount: s.savedIds.length,
+      shareQ: shareCard.q, shareBar: shareCard.bar, shareColor: shareCard.color, shareInk: shareCard.ink, shareTopic: shareCard.topic,
+      notifOn: s.notif,
+      notifKnob: s.notif ? 'flex-end' : 'flex-start',
+      notifTrack: s.notif ? '#131316' : 'rgba(0,0,0,.18)',
+      toggleNotif: () => this.setState(st => ({notif: !st.notif})),
+      plans: [
+        {id:'month', label:'Monthly', price:'€3,99', note:'billed monthly',
+         bg: s.plan === 'month' ? '#131316' : '#ffffff', ink: s.plan === 'month' ? '#ffffff' : '#131316',
+         sub: s.plan === 'month' ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.45)',
+         border: s.plan === 'month' ? 'transparent' : 'rgba(0,0,0,.12)',
+         pick: () => this.setState({plan:'month'})},
+        {id:'year', label:'Yearly', price:'€24,99', note:'€2,08 / month · save 48%',
+         bg: s.plan === 'year' ? '#131316' : '#ffffff', ink: s.plan === 'year' ? '#ffffff' : '#131316',
+         sub: s.plan === 'year' ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.45)',
+         border: s.plan === 'year' ? 'transparent' : 'rgba(0,0,0,.12)',
+         pick: () => this.setState({plan:'year'})}
+      ],
+      planCta: s.plan === 'year' ? 'Try 7 days free, then €24,99/yr' : 'Try 7 days free, then €3,99/mo',
+      perks: [
+        {t:'5 extra pills every day', s:'A second set unlocks the moment you finish the first.'},
+        {t:'The full archive', s:'Every pill you have ever read, searchable by topic.'},
+        {t:'Share as image', s:'Export any card as a clean square for stories.'},
+        {t:'Pick your own topics', s:'Weight the mix toward what you actually like.'}
+      ],
+      deckA: this.deck('a','above'),
+      deckB: this.deck('b','below'),
+      deckC: this.deck('c','above'),
+      barsA: CARDS.map((c,i) => ({bg: i <= s.pos.a ? '#ffffff' : 'rgba(255,255,255,.16)'})),
+      dotsB: CARDS.map((c,i) => ({w: i === s.pos.b ? '22px' : '6px', bg: i === s.pos.b ? '#131316' : 'rgba(0,0,0,.16)'})),
+      chipsB: [
+        {label:'All 12 topics', bg:'#131316', ink:'#fff'},
+        {label:'Space', bg:'#e6eaff', ink:'#2b4bff'},
+        {label:'Psychology', bg:'#ffe9e3', ink:'#d13a1c'},
+        {label:'Economics', bg:'#f0fbd4', ink:'#4d6b12'},
+        {label:'Language', bg:'#d9f5ec', ink:'#00795a'}
+      ],
+      tabsB: [
+        {label:'Today', bg:'#131316', ink:'#131316'},
+        {label:'Saved', bg:'rgba(0,0,0,.22)', ink:'rgba(0,0,0,.45)'},
+        {label:'Profile', bg:'rgba(0,0,0,.22)', ink:'rgba(0,0,0,.45)'}
+      ],
+      weekD: ['M','T','W','T','F','S','S'].map((l,i) => ({label:l, bg: i < 5 ? '#c6f24e' : 'rgba(255,255,255,.08)'})),
+      recapD: CARDS.map(c => ({color:c.color, t:c.q})),
+      tintC: cur.tint,
+      posCLabel: String(s.pos.c + 1),
+      saveCLabel: s.savedC ? 'Saved' : 'Save',
+      savedAColor: s.savedA ? '#ff8b73' : 'rgba(255,255,255,.8)',
+      nextA: () => this.advance('a', 1),
+      nextC: () => this.advance('c', 1),
+      saveA: () => this.setState(st => ({savedA: !st.savedA})),
+      saveC: () => this.setState(st => ({savedC: !st.savedC}))
+    };
+  }
+}
+</script>
+</body>
+</html>
