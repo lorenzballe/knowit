@@ -2193,5 +2193,42 @@ void main() {
       final apple = tester.getRect(find.text('Continue with Apple'));
       expect(apple.bottom, lessThanOrEqualTo(screen.height - insets.bottom));
     });
+
+    testWidgets('the words hold still from scene to scene', (tester) async {
+      await pumpIntro(tester);
+
+      // Sample every frame of the swap, not just the ends. The fault this
+      // pins was a mid-transition resize: the crossfade took the height of
+      // whichever scene was taller, so the title lifted and then dropped
+      // back once the outgoing scene left the tree. Reading only before and
+      // after would have called that clean.
+      double lowest = double.infinity;
+      double highest = -double.infinity;
+
+      Future<void> swipe(Offset velocity) async {
+        await tester.fling(find.byType(IntroScreen), velocity, 900);
+        for (int frame = 0; frame < 30; frame++) {
+          await tester.pump(const Duration(milliseconds: 30));
+          for (final title in ['Astuto', 'Twelve topics, five pills']) {
+            final found = find.text(title);
+            if (found.evaluate().isEmpty) continue;
+            final bottom = tester.getRect(found.first).bottom;
+            lowest = bottom < lowest ? bottom : lowest;
+            highest = bottom > highest ? bottom : highest;
+          }
+        }
+      }
+
+      await swipe(const Offset(-300, 0));
+      await swipe(const Offset(300, 0));
+
+      // A pixel of slack for the crossfade's own scale, which breathes the
+      // copy in from .965. Anything past that is the layout moving.
+      expect(
+        highest - lowest,
+        lessThan(1.5),
+        reason: 'the title must land on the same line in every scene',
+      );
+    });
   });
 }

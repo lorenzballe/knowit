@@ -124,10 +124,7 @@ void main() {
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: const MediaQuery(
-          data: MediaQueryData(
-            size: small,
-            padding: EdgeInsets.only(top: 20),
-          ),
+          data: MediaQueryData(size: small, padding: EdgeInsets.only(top: 20)),
           child: MixScreen(onDone: _nothing),
         ),
       ),
@@ -141,6 +138,54 @@ void main() {
     await expectLater(
       find.byType(MixScreen),
       matchesGoldenFile('shots/mix-short.png'),
+    );
+  });
+
+  testWidgets('the mix, turned down', (tester) async {
+    // The state the empty half has to be judged in: some subjects at about
+    // half, one at nothing. A glow bleeding through a see-through tile only
+    // shows here, never on the all-full screen.
+    await tester.binding.setSurfaceSize(phone);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: MediaQuery(
+          data: const MediaQueryData(size: phone, padding: insets),
+          child: MixScreen(onDone: _nothing),
+        ),
+      ),
+    );
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 300)),
+    );
+    for (int f = 0; f < 10; f++) {
+      await tester.pump(const Duration(milliseconds: 120));
+    }
+
+    Future<void> setTo(String name, double fraction) async {
+      final Rect tile = tester.getRect(find.text(name));
+      // The label starts 14 + tick + 7 in from the tile's left edge; walk
+      // back to the tile and take the fraction across its width.
+      final double left = tile.left - 33;
+      const double width = 178;
+      await tester.tapAt(Offset(left + width * fraction, tile.center.dy));
+      await tester.pump(const Duration(milliseconds: 200));
+    }
+
+    await setTo('Music', 0.5);
+    await setTo('Cinema', 0.28);
+    await setTo('Medicine', 0.72);
+    await setTo('Sport', 0.0);
+    for (int f = 0; f < 6; f++) {
+      await tester.pump(const Duration(milliseconds: 120));
+    }
+
+    await expectLater(
+      find.byType(MixScreen),
+      matchesGoldenFile('shots/mix-down.png'),
     );
   });
 }

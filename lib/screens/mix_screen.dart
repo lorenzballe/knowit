@@ -319,7 +319,15 @@ class _MixTile extends StatelessWidget {
             delay: Duration(milliseconds: 30 + index * 20),
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: live ? 0.055 : 0.028),
+                // Opaque, not translucent white. A CSS outer glow is clipped
+                // out from under its own element; Flutter paints the shadow
+                // straight through a see-through fill, which washed the empty
+                // half of a turned-down tile in a dim version of its colour.
+                // The canvas leaves that half black.
+                color: Color.alphaBlend(
+                  Colors.white.withValues(alpha: live ? 0.055 : 0.028),
+                  Colors.black,
+                ),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: live
                     ? [
