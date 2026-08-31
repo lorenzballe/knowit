@@ -134,12 +134,15 @@ the channel away on someone who does not yet know what the app is.
 
 ```
 lib/
-  data/        topic palette, the pill pool, and the daily dealer
+  data/        topic palette, the built-in pool, the catalogue, the taste
+               model and the daily dealer
   models/      Pill
-  state/       AppState — streak, saved pills, reading history, plan (persisted)
+  state/       AppState — streak, saved pills, reading history, taste, plan
+  sync/        the account, the backup, and the card feed
   utils/       PNG download, web-only with a no-op elsewhere
   widgets/     card stack, share sheet, shared UI, the Astuto+ gate
   screens/     the screens listed above
+functions/     the card writer: the model, the checks, the schedule
 ```
 
 Today's deck is dealt deterministically from the date, so it does not reshuffle
@@ -156,10 +159,19 @@ These are declared in the UI rather than faked:
 - **Email sign-in.** Apple and Google are wired; the email button says plainly
   that it is not connected. Firebase's email link needs a domain of ours with
   universal links, since Dynamic Links was retired.
-- **The pool runs out.** 170 cards at five a day, two of which are reviews, is
-  about eight weeks of new material. The app asks for a subscription that
-  renews annually, so the content pipeline is the thing standing between this
-  and a product.
+- **The generator has not been run against a real project.** The pipeline is
+  written, typechecked and unit-tested — the checks, the deduplication and
+  the planner all have tests that need no key and no network — but nothing
+  has deployed it, so no card in the app was written by it yet. The first run
+  is where the editorial standard finds out what it forgot to say.
+- **Demand needs readers to exist.** What gets written is steered by the sum
+  of readers' taste models, and with nobody using the app that sum is empty,
+  so the first months of the catalogue are filled by supply gaps alone.
+- **Tone and tags are only on written cards.** The 170 that shipped state
+  their subject, their difficulty, their move and what they ask, which is
+  what the deck matches on today. Neither was invented for them: a facet
+  nobody stated is left out of the reckoning rather than defaulted to a value
+  nobody chose, since a default would be learned from as though somebody had.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with
@@ -256,6 +268,94 @@ top it retires. Two of the five cards a day are given over to cards coming
 back, marked **AGAIN** so a repeat reads as deliberate. A card that has come
 back has to be answered again; tapping will not open a reveal the reader has
 to re-earn. Debates never return: there is nothing to get right.
+
+## How a day is chosen
+
+A card is written once with a lot said about it — its subject, two to four
+tags below that subject, how it sounds, what it asks, how hard it is and
+which reasoning move it is an instance of. A reader accumulates a pull on
+each of those from what they did with the cards they were given. The deck is
+where the two meet.
+
+**What they said is the prior. What they did is the evidence.** With nothing
+to go on the deck is exactly the mix somebody dragged into shape in the
+profile; with plenty it is what they actually do; in between it is a blend
+weighted by how much evidence there is, which is the only honest answer.
+Facets rather than cards are what is learned about — five cards a day is far
+too little to learn about cards and plenty to learn about kinds, and one
+skipped card is evidence about hundreds of cards not yet written.
+
+Only things somebody did count, and they are weighted by how costly the act
+is. Saving and sharing are the two nobody does by accident. Skipping — moving
+past a card in less time than it takes to read — is the one strong negative,
+and the reason a taste can go down as well as up. Reading is a weak positive,
+because otherwise every card ever shown looks liked.
+
+Three terms in the score are not about taste at all:
+
+- **Whether it is winnable.** Difficulty is aimed at a success rate around
+  three in four, measured per level for this reader. A card everyone gets
+  right teaches nothing; one nobody does is where people decide the app is
+  unfair.
+- **Whether they have just had one.** A subject dealt recently is worth less
+  than one that was not, decaying daily. Liking something is not a reason to
+  be given only that.
+- **The moves they keep missing.** Pushed up whether or not they are liked.
+  The profile already names somebody's worst move, and naming a gap the deck
+  then avoids would be a strange thing to do.
+
+**One slot in every day is not the model's choice.** Without it the ranking
+is a trap of its own making: the cards it likes are the only ones a reader
+gets the chance to like, so a first guess becomes permanent and no evidence
+could ever overturn it. The card given up is the lowest-ranked one that made
+the cut, and the replacement is drawn from everything that did not — by the
+day's own noise, not by score, because a "random" card the model still chose
+is not a control. In a fortnight, a reader who skips an entire subject still
+meets it about one day in four.
+
+The day is still deterministic: the same date and the same stored state
+always deal the same five, so a deck does not reshuffle under somebody
+part-way through it. And the taste crosses to a new phone with the streak —
+two devices add up rather than one overwriting the other, each facet weighed
+by how many cards it was learned from.
+
+The profile says all of it out loud, in the same words the ranking uses. A
+deck that decides what somebody sees and never tells them is the thing
+everyone has learned to distrust about a feed.
+
+## Where the cards come from
+
+Most of them are now written by a generator that runs on a server, not by
+hand and not on the phone. `functions/` holds it and has its own README.
+
+It is a server for two reasons and only the first is about money. An API key
+inside a shipped app has been given away, and the bill for a key somebody
+else holds has no ceiling. And a card says which answer is right — the app's
+entire promise is that it will tell a reader when they are wrong — so a card
+any client could write is a claim anyone could plant. Readers may read the
+catalogue; nobody may write it.
+
+What gets written is decided by the gap between what readers want and what
+the catalogue holds, which closes the loop the ranking opens: the algorithm
+learns what people like, and what people like decides what is written next.
+Nothing anybody answered or wrote is read to work that out — a taste model is
+already an aggregate, and only facet totals leave the function.
+
+Three gates, in increasing order of cost so the expensive one runs on the
+fewest cards: the schema, then everything decidable without knowing anything
+about the world — a graded card with no worked solution, an option index that
+is not an option, the right answer being conspicuously the longest, a
+question containing its own answer — then a second call with the answers
+visible and no memory of having written them, which redoes the arithmetic and
+checks the source. A review that does not run fails the batch closed. What is
+thrown away is kept with its reason, because a generator whose failures are
+invisible cannot be improved.
+
+The app reads the catalogue, caches it on disk and deals from the cache and
+the built-in pool together. A catalogue that only exists on the network is a
+catalogue a reader on a train does not have. Ids are the identity of a card,
+so a written card that reuses one replaces it — which is how a card that
+shipped with a mistake in it gets corrected without shipping a build.
 
 ## Calibration
 

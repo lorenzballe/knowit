@@ -190,6 +190,10 @@ class AppState extends ChangeNotifier {
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
+    // The mix is the taste model's prior, so it has to be in place before
+    // anything is scored — including on a day that was restored rather than
+    // dealt, where the profile still reads the model to say what it thinks.
+    taste.declare(topicWeights);
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
       pickedTopics = storedTopics.toSet();
@@ -854,6 +858,11 @@ class AppState extends ChangeNotifier {
       jsonEncode(weights.map((k, v) => MapEntry(k, v))),
     );
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
+    // Changing the mix moves the prior, not the evidence. Somebody who has
+    // used the app for months has facts about themselves on record, and a
+    // slider is not a reason to throw them away — it is a reason to weigh
+    // them differently.
+    taste.declare(topicWeights);
     notifyListeners();
   }
 
@@ -897,13 +906,23 @@ class AppState extends ChangeNotifier {
     extraSetOpen = true;
     await _prefs.setString(_kExtraOpen, dateKey(today));
 
+    // Ranked the same way the first five were. A second set that ignored
+    // everything the app knows about the reader would be the one part of the
+    // product they paid for being the least personal thing in it.
     final extra = pillsForDate(
       today,
       topics: pickedTopics,
       weights: topicWeights,
+      taste: taste,
+      successByLevel: successByLevel,
+      weakMoves: weakMoves,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       count: kPillsPerDay,
     );
+    for (final card in extra) {
+      taste.noteDealt(card);
+    }
+    await _saveTaste();
     todaysDeck = [...todaysDeck, ...extra];
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
     notifyListeners();
