@@ -26,6 +26,7 @@ class ReaderSnapshot {
     this.judgements = const [],
     this.pickedTopics = const [],
     this.topicWeights = const {},
+    this.pushTokens = const [],
   });
 
   final String name;
@@ -40,6 +41,9 @@ class ReaderSnapshot {
   final List<Judgement> judgements;
   final List<String> pickedTopics;
   final Map<String, double> topicWeights;
+
+  /// Where to send a notification, one entry per phone the reader uses.
+  final List<String> pushTokens;
 
   bool get isEmpty =>
       streak == 0 &&
@@ -62,6 +66,7 @@ class ReaderSnapshot {
     'judgements': judgements.map((j) => j.toJson()).toList(),
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
+    'pushTokens': pushTokens,
   };
 
   static ReaderSnapshot fromJson(Map<String, dynamic>? raw) {
@@ -110,6 +115,7 @@ class ReaderSnapshot {
       judgements: judgements,
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
+      pushTokens: strings(raw['pushTokens']),
     );
   }
 }
@@ -181,5 +187,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
         ? local.pickedTopics
         : union(local.pickedTopics, remote.pickedTopics),
     topicWeights: localChoseMix ? local.topicWeights : remote.topicWeights,
+    // A reader with two phones should be reachable on both.
+    pushTokens: union(local.pushTokens, remote.pushTokens),
   );
 }

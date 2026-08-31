@@ -39,6 +39,8 @@ class AppState extends ChangeNotifier {
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
   static const _kTheme = 'knowit.theme';
+  static const _kPushAsked = 'knowit.pushAsked';
+  static const _kPushTokens = 'knowit.pushTokens';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -93,6 +95,15 @@ class AppState extends ChangeNotifier {
   /// Light, dark, or whatever the phone is set to. One choice for the whole
   /// app — it does not change from screen to screen.
   ThemeMode themeMode = ThemeMode.dark;
+
+  /// Whether the reader has been asked about notifications. iOS gives one
+  /// prompt and no second chance, so this is asked once and remembered.
+  bool pushAsked = false;
+
+  /// Every address the account can be reached at, this phone's included.
+  /// Kept whole rather than reduced to this device, so backing up does not
+  /// quietly unsubscribe the reader's other phone.
+  List<String> pushTokens = [];
 
   late DateTime today;
   late List<Pill> todaysDeck;
@@ -153,6 +164,8 @@ class AppState extends ChangeNotifier {
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
+    pushAsked = _prefs.getBool(_kPushAsked) ?? false;
+    pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
 
     final storedDay = _prefs.getString(_kTodayDate);
@@ -795,11 +808,39 @@ class AppState extends ChangeNotifier {
     isPlus = false;
     themeMode = ThemeMode.dark;
     seenIds = {};
+    pushAsked = false;
+    pushTokens = [];
     extraSetOpen = false;
     reviewIdsToday = {};
     answers = {};
     judgements = [];
     await _startNewDay();
+    notifyListeners();
+  }
+
+  /// True once there is a day behind the reader and they have not been asked
+  /// about notifications yet. Asking before that spends the single prompt
+  /// iOS allows on someone who does not yet know what the app is.
+  bool get shouldAskForPush => !pushAsked && completedDates.isNotEmpty;
+
+  /// Records the answer to that question, whatever it was. A refusal is
+  /// remembered as firmly as a yes: asking twice is not possible anyway.
+  Future<void> notedPushAnswer({String? token}) async {
+    pushAsked = true;
+    await _prefs.setBool(_kPushAsked, true);
+    if (token != null && !pushTokens.contains(token)) {
+      pushTokens = [...pushTokens, token];
+      await _prefs.setStringList(_kPushTokens, pushTokens);
+    }
+    notifyListeners();
+  }
+
+  /// A token can be reissued by the system; one that changed is one the
+  /// server can no longer reach.
+  Future<void> rememberPushToken(String token) async {
+    if (pushTokens.contains(token)) return;
+    pushTokens = [...pushTokens, token];
+    await _prefs.setStringList(_kPushTokens, pushTokens);
     notifyListeners();
   }
 
@@ -817,6 +858,7 @@ class AppState extends ChangeNotifier {
     judgements: List<Judgement>.from(judgements),
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
+    pushTokens: List<String>.from(pushTokens),
   );
 
   /// Takes on a snapshot that has already been merged, and stores it.
@@ -837,6 +879,7 @@ class AppState extends ChangeNotifier {
     judgements = List<Judgement>.from(s.judgements);
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
+    pushTokens = List<String>.from(s.pushTokens);
 
     await _prefs.setString(_kName, name);
     await _prefs.setInt(_kStreak, streak);
@@ -850,6 +893,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
+    await _prefs.setStringList(_kPushTokens, pushTokens);
     await _saveAnswers();
     notifyListeners();
   }

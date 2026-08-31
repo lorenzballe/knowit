@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- TestFlight and the App Store both deliver over the production APNs
+	     environment. A build entitled only for development would take the
+	     token and then never receive anything, without an error to show for
+	     it. -->
+	<key>aps-environment</key>
+	<string>production</string>
+</dict>
+</plist>

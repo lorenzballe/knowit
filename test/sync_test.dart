@@ -250,4 +250,64 @@ void main() {
       expect(store.writes, 0);
     });
   });
+
+  group('when the app asks about notifications', () {
+    Future<AppState> withPrefs(Map<String, Object> prefs) async {
+      SharedPreferences.setMockInitialValues(prefs);
+      final app = AppState();
+      await app.init();
+      return app;
+    }
+
+    test('not on a fresh install: there is nothing to protect yet', () async {
+      final app = await withPrefs({'knowit.onboarded': true});
+      expect(app.shouldAskForPush, isFalse);
+    });
+
+    test('once a day is behind the reader', () async {
+      final app = await withPrefs({
+        'knowit.onboarded': true,
+        'knowit.completedDates': <String>['2026-08-30'],
+      });
+      expect(app.shouldAskForPush, isTrue);
+    });
+
+    test('a refusal is remembered as firmly as a yes', () async {
+      final app = await withPrefs({
+        'knowit.onboarded': true,
+        'knowit.completedDates': <String>['2026-08-30'],
+      });
+
+      // No token came back: the reader said no.
+      await app.notedPushAnswer();
+
+      expect(app.shouldAskForPush, isFalse);
+      expect(app.pushTokens, isEmpty);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.pushAsked'), isTrue);
+    });
+
+    test('a yes is stored and travels with the account', () async {
+      final app = await withPrefs({
+        'knowit.onboarded': true,
+        'knowit.completedDates': <String>['2026-08-30'],
+      });
+
+      await app.notedPushAnswer(token: 'token-a');
+
+      expect(app.shouldAskForPush, isFalse);
+      expect(app.snapshot().pushTokens, ['token-a']);
+    });
+
+    test('the other phone is not unsubscribed by this one', () {
+      const local = ReaderSnapshot(pushTokens: ['this-phone']);
+      const remote = ReaderSnapshot(pushTokens: ['other-phone']);
+
+      expect(
+        mergeSnapshots(local, remote).pushTokens,
+        containsAll(<String>['this-phone', 'other-phone']),
+      );
+    });
+  });
 }

@@ -12,6 +12,7 @@ import 'screens/subject_run_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
+import 'sync/push.dart';
 import 'theme.dart';
 
 Future<void> main() async {
@@ -140,6 +141,9 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// Backing up is best done at the last moment anything is certain to run,
   /// which on a phone is the moment the app leaves the screen.
   AppLifecycleListener? _lifecycle;
+
+  final Push _push = Push();
+  bool _askingForPush = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
@@ -151,8 +155,28 @@ class _AstutoRootState extends State<AstutoRoot> {
       onPause: _account.flush,
       onDetach: _account.flush,
     );
+    _refreshPushToken();
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
+  }
+
+  /// A token the system reissued is one the server can no longer reach, so
+  /// it is picked up again on every launch — without asking anything.
+  Future<void> _refreshPushToken() async {
+    final String? token = await _push.refresh();
+    if (token != null && mounted) await _app.rememberPushToken(token);
+  }
+
+  /// The one prompt iOS allows, spent at the only moment it is worth
+  /// something: a day is finished, so there is a streak to protect and the
+  /// reader knows what they would be agreeing to.
+  Future<void> _askForPush() async {
+    if (_askingForPush) return;
+    _askingForPush = true;
+    final String? token = await _push.ask();
+    if (!mounted) return;
+    await _app.notedPushAnswer(token: token);
+    _askingForPush = false;
   }
 
   void _onAppStateChanged() {
@@ -171,6 +195,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         }
       }
     });
+    if (_stage == _Stage.shell && _app.shouldAskForPush) _askForPush();
   }
 
   @override
