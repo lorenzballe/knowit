@@ -8,6 +8,7 @@ import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
+import '../sync/reader_snapshot.dart';
 import '../utils/reminders.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
@@ -799,6 +800,57 @@ class AppState extends ChangeNotifier {
     answers = {};
     judgements = [];
     await _startNewDay();
+    notifyListeners();
+  }
+
+  /// What this phone knows about the reader, for the account to hold.
+  ReaderSnapshot snapshot() => ReaderSnapshot(
+    name: name,
+    streak: streak,
+    bestStreak: bestStreak,
+    lastCompletionDate: lastCompletionDate,
+    completedDates: List<String>.from(completedDates),
+    savedIds: List<String>.from(savedIds),
+    seenIds: seenIds.toList(),
+    pillsRead: pillsRead,
+    answers: Map<String, Answer>.from(answers),
+    judgements: List<Judgement>.from(judgements),
+    pickedTopics: pickedTopics.toList(),
+    topicWeights: Map<String, double>.from(topicWeights),
+  );
+
+  /// Takes on a snapshot that has already been merged, and stores it.
+  ///
+  /// Today's deck is deliberately left alone. The reader is part-way through
+  /// five cards; re-dealing under them because a sign-in finished would lose
+  /// the one thing they were actually doing.
+  Future<void> adopt(ReaderSnapshot s) async {
+    name = s.name;
+    streak = s.streak;
+    bestStreak = s.bestStreak;
+    lastCompletionDate = s.lastCompletionDate;
+    completedDates = List<String>.from(s.completedDates);
+    savedIds = List<String>.from(s.savedIds);
+    seenIds = s.seenIds.toSet();
+    pillsRead = s.pillsRead;
+    answers = Map<String, Answer>.from(s.answers);
+    judgements = List<Judgement>.from(s.judgements);
+    if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
+    topicWeights = Map<String, double>.from(s.topicWeights);
+
+    await _prefs.setString(_kName, name);
+    await _prefs.setInt(_kStreak, streak);
+    await _prefs.setInt(_kBestStreak, bestStreak);
+    if (lastCompletionDate != null) {
+      await _prefs.setString(_kLastCompletion, lastCompletionDate!);
+    }
+    await _prefs.setStringList(_kCompletedDates, completedDates);
+    await _prefs.setStringList(_kSavedIds, savedIds);
+    await _prefs.setStringList(_kSeenIds, seenIds.toList());
+    await _prefs.setInt(_kPillsRead, pillsRead);
+    await _prefs.setStringList(_kTopics, pickedTopics.toList());
+    await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
+    await _saveAnswers();
     notifyListeners();
   }
 

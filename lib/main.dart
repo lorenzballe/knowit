@@ -11,6 +11,7 @@ import 'screens/saved_screen.dart';
 import 'screens/subject_run_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
+import 'sync/account.dart';
 import 'theme.dart';
 
 Future<void> main() async {
@@ -131,6 +132,10 @@ class AstutoRoot extends StatefulWidget {
 
 class _AstutoRootState extends State<AstutoRoot> {
   AppState get _app => widget.app;
+
+  /// One account for the whole app. It works signed out — this only decides
+  /// whether the phone's work also lives somewhere it survives the phone.
+  final Account _account = Account();
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
@@ -162,10 +167,16 @@ class _AstutoRootState extends State<AstutoRoot> {
   @override
   void dispose() {
     _app.removeListener(_onAppStateChanged);
+    _account.dispose();
     super.dispose();
   }
 
   void _go(_Stage stage) => setState(() => _stage = stage);
+
+  void _say(String message) {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    messenger?.showSnackBar(SnackBar(content: Text(message)));
+  }
 
   Future<void> _finishOnboarding() async {
     await _app.completeOnboarding();
@@ -197,7 +208,32 @@ class _AstutoRootState extends State<AstutoRoot> {
   Widget _stageScreen() {
     switch (_stage) {
       case _Stage.intro:
-        return IntroScreen(onContinue: () => _go(_Stage.subjects));
+        return IntroScreen(
+          onContinue: () => _go(_Stage.subjects),
+          onApple: () async {
+            final outcome = await _account.signInWithApple(_app);
+            if (!mounted) return false;
+            switch (outcome) {
+              case SignInOutcome.signedIn:
+              // Nothing to sign in to on this build or this platform: the
+              // reader should not be stuck behind a button that cannot work.
+              case SignInOutcome.unavailable:
+                return true;
+              case SignInOutcome.cancelled:
+                return false;
+              case SignInOutcome.failed:
+                _say(
+                  'Could not sign in with Apple. You can carry on '
+                  'without an account.',
+                );
+                return false;
+            }
+          },
+          onNotConnected: (provider) => _say(
+            '$provider sign-in is not connected yet. Your cards are '
+            'kept on this device.',
+          ),
+        );
 
       case _Stage.subjects:
         return SubjectRunScreen(
@@ -219,6 +255,7 @@ class _AstutoRootState extends State<AstutoRoot> {
       case _Stage.shell:
         return AstutoShell(
           app: _app,
+          account: _account,
           onSignedOut: () => setState(() {
             _stageResolved = true;
             _stage = _Stage.intro;
@@ -268,9 +305,15 @@ class _Splash extends StatelessWidget {
 
 class AstutoShell extends StatefulWidget {
   final AppState app;
+  final Account account;
   final VoidCallback onSignedOut;
 
-  const AstutoShell({super.key, required this.app, required this.onSignedOut});
+  const AstutoShell({
+    super.key,
+    required this.app,
+    required this.account,
+    required this.onSignedOut,
+  });
 
   @override
   State<AstutoShell> createState() => _AstutoShellState();
@@ -297,7 +340,11 @@ class _AstutoShellState extends State<AstutoShell> {
           }
         },
       ),
-      ProfileScreen(app: widget.app, onSignedOut: widget.onSignedOut),
+      ProfileScreen(
+        app: widget.app,
+        account: widget.account,
+        onSignedOut: widget.onSignedOut,
+      ),
     ];
 
     // The status bar follows the one palette, like everything else.

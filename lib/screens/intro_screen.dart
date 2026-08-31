@@ -14,9 +14,23 @@ import '../widgets/ambient.dart';
 /// promise explicit: an account is asked for once there is a streak worth
 /// keeping.
 class IntroScreen extends StatefulWidget {
-  const IntroScreen({super.key, required this.onContinue});
+  const IntroScreen({
+    super.key,
+    required this.onContinue,
+    required this.onApple,
+    required this.onNotConnected,
+  });
 
+  /// Skip, and where every button lands once it is done.
   final VoidCallback onContinue;
+
+  /// Signs in with Apple. Returns false only when the reader backed out of
+  /// the sheet, which should leave them exactly where they were.
+  final Future<bool> Function() onApple;
+
+  /// A provider that has no backend behind it yet. Says so, then carries on
+  /// — the next screen only needs a deck, not an account.
+  final void Function(String provider) onNotConnected;
 
   @override
   State<IntroScreen> createState() => _IntroScreenState();
@@ -112,7 +126,19 @@ class _IntroScreenState extends State<IntroScreen> {
                         ],
                       ),
                     ),
-                    _SignInBlock(onAny: widget.onContinue),
+                    _SignInBlock(
+                      onApple: () async {
+                        if (await widget.onApple()) widget.onContinue();
+                      },
+                      onGoogle: () {
+                        widget.onNotConnected('Google');
+                        widget.onContinue();
+                      },
+                      onEmail: () {
+                        widget.onNotConnected('Email');
+                        widget.onContinue();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -262,9 +288,15 @@ class _SceneCopy extends StatelessWidget {
 }
 
 class _SignInBlock extends StatelessWidget {
-  const _SignInBlock({required this.onAny});
+  const _SignInBlock({
+    required this.onApple,
+    required this.onGoogle,
+    required this.onEmail,
+  });
 
-  final VoidCallback onAny;
+  final VoidCallback onApple;
+  final VoidCallback onGoogle;
+  final VoidCallback onEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -272,19 +304,19 @@ class _SignInBlock extends StatelessWidget {
       children: [
         _WhiteButton(
           label: 'Continue with Apple',
-          onTap: onAny,
+          onTap: onApple,
           leading: const Icon(Icons.apple, size: 21, color: Colors.black),
         ),
         const SizedBox(height: 11),
         _WhiteButton(
           label: 'Continue with Google',
-          onTap: onAny,
+          onTap: onGoogle,
           leading: const _GoogleG(),
         ),
         const SizedBox(height: 11),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: onAny,
+          onTap: onEmail,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 13, 0, 7),
             child: Text(

@@ -5,6 +5,7 @@ import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
+import '../sync/account.dart';
 import '../utils/reminders.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
@@ -18,11 +19,13 @@ import 'topics_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   final AppState app;
+  final Account account;
   final VoidCallback onSignedOut;
 
   const ProfileScreen({
     super.key,
     required this.app,
+    required this.account,
     required this.onSignedOut,
   });
 
@@ -52,8 +55,8 @@ class ProfileScreen extends StatelessWidget {
           style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
-          'This clears your streak, your saved pills and your topics on '
-          'this device.',
+          'Your streak, saved pills and record stay on your account. This '
+          'clears them from this device.',
           style: AppText.body(
             size: 14,
             height: 1.45,
@@ -83,8 +86,24 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
     if (confirmed == true) {
+      await account.signOut();
       await app.signOut();
       onSignedOut();
+    }
+  }
+
+  Future<void> _signIn(BuildContext context) async {
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final outcome = await account.signInWithApple(app);
+    final String? note = switch (outcome) {
+      SignInOutcome.signedIn =>
+        'Signed in. Your streak and record are on your account now.',
+      SignInOutcome.failed => 'Could not sign in with Apple.',
+      SignInOutcome.unavailable => 'Signing in is not available on this build.',
+      SignInOutcome.cancelled => null,
+    };
+    if (note != null) {
+      messenger?.showSnackBar(SnackBar(content: Text(note)));
     }
   }
 
@@ -440,11 +459,17 @@ class ProfileScreen extends StatelessWidget {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
           ),
-          _LinkRow(
-            label: 'Sign out',
-            muted: true,
-            onTap: () => _confirmSignOut(context),
-          ),
+          if (account.signedIn)
+            _LinkRow(
+              label: 'Sign out',
+              muted: true,
+              onTap: () => _confirmSignOut(context),
+            )
+          else
+            _LinkRow(
+              label: 'Sign in with Apple',
+              onTap: () => _signIn(context),
+            ),
           if (kDebugTools) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
