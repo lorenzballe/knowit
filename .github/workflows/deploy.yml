@@ -29,7 +29,14 @@ jobs:
 
       - run: flutter test
 
-      - run: flutter build web --release --base-href /knowit/
+      # No service worker on the preview. Its whole job is to serve the
+      # last build from cache, which on a page whose point is seeing the
+      # newest one means a hard refresh after every deploy — and forgetting
+      # to do it looks exactly like a change that did not land.
+      - run: |
+          flutter build web --release \
+            --base-href /knowit/ \
+            --pwa-strategy=none
 
       - uses: actions/upload-pages-artifact@v3
         with:
