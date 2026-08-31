@@ -5,6 +5,7 @@ import 'package:astuto/sync/identity.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show MissingPluginException;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in_platform_interface/google_sign_in_platform_interface.dart';
 import 'package:sign_in_with_apple_platform_interface/sign_in_with_apple_platform_interface.dart';
@@ -12,18 +13,30 @@ import 'package:sign_in_with_apple_platform_interface/sign_in_with_apple_platfor
 /// Stands in for the Apple sheet, so the whole flow can be driven without a
 /// phone: what the sheet was asked, and what it answers.
 class _FakeAppleSheet extends SignInWithApplePlatform {
-  _FakeAppleSheet({this.available = true, this.answer, this.throws});
+  _FakeAppleSheet({
+    this.available = true,
+    this.answer,
+    this.throws,
+    this.availabilityThrows,
+  });
 
   final bool available;
   final AuthorizationCredentialAppleID? answer;
   final Object? throws;
+
+  /// What `isAvailable()` does on a build where the plugin never registered:
+  /// it throws rather than answering.
+  final Object? availabilityThrows;
 
   /// The nonce the sheet was handed. Apple embeds it in the token it mints.
   String? askedWithNonce;
   List<AppleIDAuthorizationScopes>? askedForScopes;
 
   @override
-  Future<bool> isAvailable() async => available;
+  Future<bool> isAvailable() async {
+    if (availabilityThrows != null) throw availabilityThrows!;
+    return available;
+  }
 
   @override
   Future<AuthorizationCredentialAppleID> getAppleIDCredential({
@@ -41,11 +54,19 @@ class _FakeAppleSheet extends SignInWithApplePlatform {
 
 /// Stands in for the Google sheet.
 class _FakeGoogleSheet extends GoogleSignInPlatform {
-  _FakeGoogleSheet({this.supported = true, this.answer, this.throws});
+  _FakeGoogleSheet({
+    this.supported = true,
+    this.answer,
+    this.throws,
+    this.supportThrows,
+  });
 
   final bool supported;
   final AuthenticationResults? answer;
   final Object? throws;
+
+  /// What an unregistered platform implementation does when asked.
+  final Object? supportThrows;
 
   InitParameters? startedWith;
 
@@ -53,7 +74,10 @@ class _FakeGoogleSheet extends GoogleSignInPlatform {
   Future<void> init(InitParameters params) async => startedWith = params;
 
   @override
-  bool supportsAuthenticate() => supported;
+  bool supportsAuthenticate() {
+    if (supportThrows != null) throw supportThrows!;
+    return supported;
+  }
 
   @override
   Future<AuthenticationResults> authenticate(AuthenticateParameters params) {
@@ -352,6 +376,51 @@ void main() {
       final IdentityResult result = await Identity().google();
 
       expect(result.outcome, IdentityOutcome.noSheet);
+    });
+  });
+
+  group('A plugin that never registered', () {
+    // Both probes used to sit outside the try, so a build where the native
+    // side was missing threw straight past the fallback and was reported to
+    // the reader as a failed sign-in.
+    test('Apple: an unanswerable probe is a missing sheet, not a failure', () async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      SignInWithApplePlatform.instance = _FakeAppleSheet(
+        availabilityThrows: MissingPluginException(
+          'No implementation found for method isAvailable',
+        ),
+      );
+
+      final IdentityResult result = await Identity().apple();
+
+      expect(result.outcome, IdentityOutcome.noSheet);
+      expect(result.error, contains('isAvailable'));
+    });
+
+    test('Google: an unanswerable probe is a missing sheet, not a failure', () async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      GoogleSignInPlatform.instance = _FakeGoogleSheet(
+        supportThrows: UnimplementedError('supportsAuthenticate'),
+      );
+
+      final IdentityResult result = await Identity().google();
+
+      expect(result.outcome, IdentityOutcome.noSheet);
+      expect(result.error, contains('supportsAuthenticate'));
+    });
+  });
+
+  group('Where the browser is an answer, and where it is not', () {
+    test('on an iPhone it is not: both sheets exist there', () {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      expect(Identity().browserIsAcceptable, isFalse);
+      debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
+      expect(Identity().browserIsAcceptable, isFalse);
+    });
+
+    test('on Android it is: no Apple sheet, and no fingerprint for Google', () {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      expect(Identity().browserIsAcceptable, isTrue);
     });
   });
 

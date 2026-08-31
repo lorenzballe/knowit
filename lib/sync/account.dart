@@ -44,6 +44,11 @@ class Account extends ChangeNotifier {
   /// The last thing that went wrong, kept for the debug section. A silent
   /// failure is the hardest kind to report.
   String? lastError;
+
+  /// Which road the last attempt took — the phone's own sheet, or Firebase's
+  /// browser. Two rounds were spent working out which one a build was
+  /// actually running; the phone can say so itself.
+  String? lastRoute;
   AppState? _watching;
   Timer? _pending;
 
@@ -133,14 +138,25 @@ class Account extends ChangeNotifier {
           debugPrint('$label sign-in failed: $lastError');
           return SignInOutcome.failed;
         case IdentityOutcome.noSheet:
-          // Worth a line: falling back is not a failure, but "the sheet was
-          // skipped, and here is what it said" is the difference between a
-          // fixable misconfiguration and a browser flow nobody ordered.
+          // On a phone that has the sheets, being here means the build is
+          // wrong — and Firebase's browser flow is the very thing the sheets
+          // replaced, so bouncing the reader into Safari would hide the fault
+          // behind the experience we set out to remove. Say it instead.
+          if (!_identity.browserIsAcceptable) {
+            lastRoute = '$label · no sheet, and Safari is not a substitute';
+            lastError =
+                identity.error ??
+                'The $label sheet did not open on a phone that has one.';
+            debugPrint('$label sign-in failed: $lastError');
+            return SignInOutcome.failed;
+          }
+          lastRoute = '$label · Firebase browser';
           if (identity.error != null) {
             debugPrint('$label has no sheet here: ${identity.error}');
           }
           break;
         case IdentityOutcome.got:
+          lastRoute = '$label · native sheet';
           break;
       }
 

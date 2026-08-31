@@ -6,6 +6,7 @@ import '../data/topics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
+import '../sync/identity.dart';
 import '../sync/account.dart';
 import '../sync/subscription.dart';
 import '../utils/reminders.dart';
@@ -542,6 +543,12 @@ class ProfileScreen extends StatelessWidget {
                   : 'none',
             ),
             _DebugLine('Account id', account.uid ?? '—'),
+            // Which sign-in code this build carries, and which road the last
+            // attempt actually took. Between them a screenshot answers "is
+            // this the new build, and did it use the phone's own sheet" —
+            // which otherwise costs a round trip and a TestFlight install.
+            _DebugLine('Sign-in build', Identity.implementation),
+            _DebugLine('Last sign-in route', account.lastRoute ?? '—'),
             if (account.lastError != null)
               _DebugLine('Last auth error', account.lastError!),
             _DebugLine(

@@ -60,6 +60,29 @@ class IdentityResult {
 class Identity {
   Identity();
 
+  /// Names this sign-in implementation, so the debug section can say which one
+  /// is actually on the phone. Working out whether a build even carried the
+  /// new code cost a round trip once — a screenshot should answer it. Bump it
+  /// whenever this path changes.
+  static const String implementation = 'native-sheets-1';
+
+  /// Whether landing in Firebase's browser flow is an acceptable answer here.
+  ///
+  /// On an iPhone it is not. Both sheets exist there, so ending up in Safari
+  /// means something is wrong with the build — and that browser flow is the
+  /// exact experience the sheets were brought in to replace: a page titled
+  /// astuto-3d398.firebaseapp.com, holding no session, asking for an address
+  /// to be typed. Saying what went wrong is worth more than offering a
+  /// sign-in nobody finishes.
+  ///
+  /// Everywhere else the fallback is the real answer: Android has no Apple
+  /// sheet at all, and its Google sheet wants a signing fingerprint this
+  /// project has never registered.
+  bool get browserIsAcceptable =>
+      kIsWeb ||
+      (defaultTargetPlatform != TargetPlatform.iOS &&
+          defaultTargetPlatform != TargetPlatform.macOS);
+
   /// The project's web OAuth client, out of `android/app/google-services.json`.
   /// Android's sheet mints its id token for this one — there is no Android
   /// client in the project, and asking for one would mean registering a
@@ -82,8 +105,21 @@ class Identity {
           defaultTargetPlatform == TargetPlatform.macOS);
 
   Future<IdentityResult> apple() async {
-    if (!_hasAppleSheet || !await SignInWithApple.isAvailable()) {
-      return const IdentityResult(IdentityOutcome.noSheet);
+    if (!_hasAppleSheet) return const IdentityResult(IdentityOutcome.noSheet);
+
+    try {
+      if (!await SignInWithApple.isAvailable()) {
+        return const IdentityResult(IdentityOutcome.noSheet);
+      }
+    } catch (error) {
+      // Asked in its own try on purpose. On a build where the plugin never
+      // registered this throws rather than answering false, and an exception
+      // escaping from here would be reported as a reader who could not sign
+      // in — when what happened is that the sheet was never there.
+      return IdentityResult(
+        IdentityOutcome.noSheet,
+        error: 'apple sheet did not answer: $error',
+      );
     }
 
     // Apple mints its token against a nonce we choose, and Firebase checks
@@ -139,8 +175,20 @@ class Identity {
   }
 
   Future<IdentityResult> google() async {
-    if (kIsWeb || !GoogleSignIn.instance.supportsAuthenticate()) {
-      return const IdentityResult(IdentityOutcome.noSheet);
+    if (kIsWeb) return const IdentityResult(IdentityOutcome.noSheet);
+
+    try {
+      if (!GoogleSignIn.instance.supportsAuthenticate()) {
+        return const IdentityResult(IdentityOutcome.noSheet);
+      }
+    } catch (error) {
+      // Same reason as Apple's: with no platform implementation registered
+      // this throws instead of answering, and that is a missing sheet rather
+      // than a failed sign-in.
+      return IdentityResult(
+        IdentityOutcome.noSheet,
+        error: 'google sheet did not answer: $error',
+      );
     }
 
     try {

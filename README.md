@@ -114,6 +114,14 @@ to a nonce we draw per attempt: Apple is handed the hash and Firebase the
 string it was made from, so a token lifted off the wire is no use to whoever
 has it.
 
+On an iPhone there is **no** browser fallback, deliberately. Both sheets exist
+there, so landing in Safari means the build is wrong — and falling back would
+hide that behind the exact experience the sheets were brought in to replace.
+It says what went wrong instead. The profile's debug section names the
+sign-in implementation the build carries and which road the last attempt took,
+because working out whether a build even contained the new code cost two
+rounds of TestFlight once.
+
 Sign in with Apple also needs the entitlement in `ios/Runner/Runner.entitlements`
 and the matching capability on the App ID, or the sheet comes back with error
 1000 and nothing to explain itself. The Codemagic workflow enables the
