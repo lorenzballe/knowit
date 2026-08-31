@@ -13,31 +13,31 @@ class MixSubject {
   final Color color;
 }
 
-/// The eighteen subjects of artboard 49a, in the canvas's own order: hues
-/// taken from the top corner of the picker, spaced around the wheel so the
-/// grid reads as a spectrum.
+/// The eighteen subjects of artboard 50a, in the canvas's own order and
+/// hues: the second pass at the palette, which walks the wheel from pure
+/// yellow all the way round to amber and stops the two greens colliding.
 ///
 /// Medicine, Art, Sport, Cinema, Music and Food have no cards behind them
 /// yet, so they carry no topic key and contribute nothing to the mix.
 const List<MixSubject> kMixSubjects = [
-  MixSubject(null, 'Medicine', Color(0xFFFF1A1A)),
-  MixSubject(null, 'Art', Color(0xFFFF6A00)),
-  MixSubject('history', 'History', Color(0xFFFFA800)),
-  MixSubject('economics', 'Economics', Color(0xFFFFD400)),
-  MixSubject(null, 'Sport', Color(0xFFC6FF00)),
-  MixSubject('nature', 'Nature', Color(0xFF22E551)),
-  MixSubject('language', 'Language', Color(0xFF00FFC2)),
-  MixSubject('science', 'Science', Color(0xFF00E5FF)),
+  MixSubject('economics', 'Economics', Color(0xFFFFE600)),
+  MixSubject(null, 'Sport', Color(0xFFA6FF00)),
+  MixSubject('nature', 'Nature', Color(0xFF00D451)),
+  MixSubject('science', 'Science', Color(0xFF00E5A0)),
+  MixSubject('language', 'Language', Color(0xFF00D9D9)),
   MixSubject('technology', 'Technology', Color(0xFF00A6FF)),
-  MixSubject('space', 'Space', Color(0xFF2979FF)),
-  MixSubject('philosophy', 'Philosophy', Color(0xFF5B57FF)),
-  MixSubject('psychology', 'Psychology', Color(0xFF7C4DFF)),
-  MixSubject(null, 'Cinema', Color(0xFF9D3FFF)),
+  MixSubject('space', 'Space', Color(0xFF2B5CFF)),
+  MixSubject('philosophy', 'Philosophy', Color(0xFF4C6FFF)),
+  MixSubject(null, 'Cinema', Color(0xFF6E3AFF)),
+  MixSubject('psychology', 'Psychology', Color(0xFF9B5CFF)),
   MixSubject(null, 'Music', Color(0xFFC13AFF)),
   MixSubject('weird_facts', 'Weird facts', Color(0xFFE040FB)),
-  MixSubject('pop_culture', 'Pop culture', Color(0xFFFF2D9E)),
-  MixSubject('human_body', 'Human body', Color(0xFFFF3D6E)),
-  MixSubject(null, 'Food', Color(0xFFFF5252)),
+  MixSubject(null, 'Art', Color(0xFFFF00A8)),
+  MixSubject('pop_culture', 'Pop culture', Color(0xFFFF3D7F)),
+  MixSubject('human_body', 'Human body', Color(0xFFFF2D5F)),
+  MixSubject(null, 'Medicine', Color(0xFFFF3B30)),
+  MixSubject(null, 'Food', Color(0xFFFF7A1A)),
+  MixSubject('history', 'History', Color(0xFFFFB000)),
 ];
 
 /// Below this a subject is out of the mix rather than merely quiet.
@@ -101,11 +101,16 @@ class _MixScreenState extends State<MixScreen> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           18,
-          // The canvas clears the status bar with 54; a taller notch needs
-          // more, and never less.
+          // The canvas clears its own status bar with 54. A real notch is
+          // taller than the one it draws, so take whichever is bigger —
+          // never less, or the title runs under the clock.
           safe.top > 54 ? safe.top : 54,
           18,
-          safe.bottom > 22 ? safe.bottom : 22,
+          // 22, as the canvas has it. The artboard is already a phone with a
+          // home indicator and the designer put the button here; only a
+          // device whose bar is deeper than an iPhone's gets pushed further
+          // up.
+          22 + (safe.bottom > 34 ? safe.bottom - 34 : 0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -366,40 +371,49 @@ class _MixTile extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Row(
-                        children: [
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 150),
-                            opacity: live ? 1 : 0,
-                            // An icon, not the ✓ character: Figtree does not
-                            // carry that glyph and it came out as an empty
-                            // box.
-                            child: const Icon(
-                              Icons.check_rounded,
-                              size: 13,
-                              color: Colors.white,
+                    // inset:0 — the row has to fill the tile, or an
+                    // unpositioned Stack child takes only the height it needs
+                    // and the label rides at the top instead of the middle.
+                    Positioned.fill(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: Row(
+                          children: [
+                            AnimatedOpacity(
+                              duration: const Duration(milliseconds: 150),
+                              opacity: live ? 1 : 0,
+                              // An icon, not the ✓ character: Figtree does not
+                              // carry that glyph and it came out as an empty
+                              // box.
+                              // The canvas sets a plain check glyph at
+                              // 10.5px; Figtree has no such glyph, and the
+                              // rounded icon came out far heavier than the
+                              // mark it stands in for.
+                              child: const Icon(
+                                Icons.check,
+                                size: 12,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              subject.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.body(
-                                size: 14,
-                                weight: FontWeight.w700,
-                                height: 1.1,
-                                spacing: -0.3,
-                                color: Colors.white.withValues(
-                                  alpha: live ? 0.94 : 0.3,
+                            const SizedBox(width: 7),
+                            Expanded(
+                              child: Text(
+                                subject.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppText.body(
+                                  size: 14,
+                                  weight: FontWeight.w700,
+                                  height: 1.1,
+                                  spacing: -0.3,
+                                  color: Colors.white.withValues(
+                                    alpha: live ? 0.95 : 0.3,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
