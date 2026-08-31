@@ -85,7 +85,11 @@ class _IntroScreenState extends State<IntroScreen> {
             const Positioned.fill(child: Vignette(ground: Colors.black)),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(22, 14, 22, 26),
+                // No horizontal padding here: the scene runs to both edges,
+                // and everything else is inset on its own. A drawing that
+                // stops 22px short of the screen looks like a picture in a
+                // frame rather than like the app.
+                padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
                 child: Column(
                   children: [
                     Align(
@@ -94,10 +98,7 @@ class _IntroScreenState extends State<IntroScreen> {
                         behavior: HitTestBehavior.opaque,
                         onTap: widget.onContinue,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 2,
-                            vertical: 4,
-                          ),
+                          padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
                           child: Text(
                             'Skip',
                             style: AppText.body(
@@ -118,35 +119,31 @@ class _IntroScreenState extends State<IntroScreen> {
                           // phone gives about ninety fewer pixels, and a
                           // fixed box turned that into copy drawn over
                           // buttons rather than a smaller drawing.
-                          Flexible(
-                            child: SoftEdges(
-                              child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: SizedBox(
-                                  width: 344,
-                                  height: 344,
-                                  child: _Swap(
-                                    scene: _scene,
-                                    child: _IntroScene(index: _scene),
-                                  ),
-                                ),
+                          Expanded(
+                            child: _SceneStage(
+                              child: _Swap(
+                                scene: _scene,
+                                child: _IntroScene(index: _scene),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
-                          _Swap(
-                            scene: _scene,
-                            child: _SceneCopy(index: _scene),
+                          const SizedBox(height: 12),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 22),
+                            child: _Swap(
+                              scene: _scene,
+                              child: _SceneCopy(index: _scene),
+                            ),
                           ),
                           const SizedBox(height: 14),
                           _Dots(count: _sceneCount, active: _scene, onTap: _go),
                           // Nobody guesses that a screen is tappable, and the
                           // dots alone say "there is more" without saying how
-                          // to reach it. Gone the moment they move.
-                          AnimatedOpacity(
-                            opacity: _moved > 0 || _scene > 0 ? 0 : 1,
-                            duration: const Duration(milliseconds: 400),
-                            child: Padding(
+                          // to reach it. Gone the moment they move — and it
+                          // gives its height back to the drawing when it goes,
+                          // rather than holding an empty band.
+                          if (_moved == 0 && _scene == 0)
+                            Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: Text(
                                 'Swipe to see more',
@@ -157,21 +154,23 @@ class _IntroScreenState extends State<IntroScreen> {
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
-                    _SignInBlock(
-                      onApple: () async {
-                        if (await widget.onApple()) widget.onContinue();
-                      },
-                      onGoogle: () async {
-                        if (await widget.onGoogle()) widget.onContinue();
-                      },
-                      onEmail: () {
-                        widget.onNotConnected('Email');
-                        widget.onContinue();
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: _SignInBlock(
+                        onApple: () async {
+                          if (await widget.onApple()) widget.onContinue();
+                        },
+                        onGoogle: () async {
+                          if (await widget.onGoogle()) widget.onContinue();
+                        },
+                        onEmail: () {
+                          widget.onNotConnected('Email');
+                          widget.onContinue();
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -180,6 +179,42 @@ class _IntroScreenState extends State<IntroScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// Gives a scene the whole width of the screen.
+///
+/// The scenes are composed on a 344 square. Fitting that square inside the
+/// space available scales it to whichever side is shorter, which on a phone
+/// is the height — so it came out small with the width unused on both sides,
+/// looking like a picture in a frame rather than like the app.
+///
+/// It is scaled to the width instead, and allowed to run a little past the
+/// top and bottom, where the fade takes it. The clamp stops that becoming a
+/// crop on a short screen.
+class _SceneStage extends StatelessWidget {
+  const _SceneStage({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) {
+        final double scale = math.min(box.maxWidth, box.maxHeight * 1.18) / 344;
+        return ClipRect(
+          child: SoftEdges(
+            fade: 0.10,
+            child: Center(
+              child: Transform.scale(
+                scale: scale,
+                child: SizedBox(width: 344, height: 344, child: child),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
