@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'cloud.dart';
+import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
 import 'screens/intro_screen.dart';
@@ -251,9 +252,14 @@ class _AstutoRootState extends State<AstutoRoot> {
       case SignInOutcome.cancelled:
         return false;
       case SignInOutcome.failed:
+        // While the debug tools are on, show what actually went wrong. A
+        // polite sentence is the right thing for a reader and the wrong
+        // thing for the person trying to fix it.
         _say(
-          'Could not sign in with $label. You can carry on without an '
-          'account.',
+          kDebugTools && _account.lastError != null
+              ? '$label sign-in failed — ${_account.lastError}'
+              : 'Could not sign in with $label. You can carry on without an '
+                    'account.',
         );
         return false;
     }
