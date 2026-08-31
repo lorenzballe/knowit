@@ -13,6 +13,7 @@ import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
+import 'sync/subscription.dart';
 import 'theme.dart';
 
 Future<void> main() async {
@@ -156,9 +157,26 @@ class _AstutoRootState extends State<AstutoRoot> {
       onDetach: _account.flush,
     );
     _refreshPushToken();
-    _account.ensureAnonymous(_app);
+    _startAccountAndStore();
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
+  }
+
+  /// The account comes first: the store is told who the reader is, so the
+  /// entitlement follows them to a new phone rather than staying on this one.
+  Future<void> _startAccountAndStore() async {
+    await _account.ensureAnonymous(_app);
+    if (!mounted) return;
+    final Subscription store = Subscription.instance
+      ..addListener(_onEntitlementChanged);
+    await store.start(accountId: _account.uid);
+  }
+
+  void _onEntitlementChanged() {
+    final Subscription store = Subscription.instance;
+    // Until the store has answered, the app should not decide the reader has
+    // nothing: a launch with no network would drop them off their own plan.
+    if (store.ready) _app.applyEntitlement(store.isPlus);
   }
 
   /// A token the system reissued is one the server can no longer reach, so
@@ -203,6 +221,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   void dispose() {
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
+    Subscription.instance.removeListener(_onEntitlementChanged);
     _account.dispose();
     super.dispose();
   }
@@ -219,6 +238,10 @@ class _AstutoRootState extends State<AstutoRoot> {
     if (!mounted) return false;
     switch (outcome) {
       case SignInOutcome.signedIn:
+        // The account id may have changed, and the entitlement belongs to the
+        // reader rather than to the phone.
+        await Subscription.instance.switchTo(_account.uid);
+        return true;
       // Nothing to sign in to on this build or this platform: the reader
       // should not be stuck behind a button that cannot work.
       case SignInOutcome.unavailable:

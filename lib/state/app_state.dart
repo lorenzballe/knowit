@@ -782,6 +782,17 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// What the store says the reader is entitled to.
+  ///
+  /// Kept in prefs so a launch with no network still opens on the right side
+  /// of the paywall: the store is the truth, this is the last thing it said.
+  Future<void> applyEntitlement(bool active) async {
+    if (isPlus == active) return;
+    isPlus = active;
+    await _prefs.setBool(_kPlus, active);
+    notifyListeners();
+  }
+
   Future<void> endPlus() async {
     isPlus = false;
     await _prefs.setBool(_kPlus, false);

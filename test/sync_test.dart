@@ -7,6 +7,7 @@ import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/sync/reader_store.dart';
+import 'package:astuto/sync/subscription.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -308,6 +309,51 @@ void main() {
         mergeSnapshots(local, remote).pushTokens,
         containsAll(<String>['this-phone', 'other-phone']),
       );
+    });
+  });
+
+  group('what the reader is entitled to', () {
+    test('a build with no store key stays quiet and claims nothing', () async {
+      final store = Subscription(keyOverride: '');
+
+      await store.start(accountId: 'reader-1');
+
+      // Not ready, so the app must not conclude the reader has nothing —
+      // that would drop a paying reader off their plan on a bad launch.
+      expect(store.ready, isFalse);
+      expect(store.isPlus, isFalse);
+      expect(store.offering, isNull);
+    });
+
+    test('the store decides the plan, and it survives a restart', () async {
+      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+      final app = AppState();
+      await app.init();
+      expect(app.isPlus, isFalse);
+
+      await app.applyEntitlement(true);
+      expect(app.isPlus, isTrue);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getBool('knowit.plus'), isTrue);
+
+      // And it can be taken away again, which a self-granted flag never was.
+      await app.applyEntitlement(false);
+      expect(app.isPlus, isFalse);
+      expect(prefs.getBool('knowit.plus'), isFalse);
+    });
+
+    test('the plan is not carried to another phone by the sync', () {
+      const local = ReaderSnapshot(streak: 3);
+      const remote = ReaderSnapshot(streak: 1);
+
+      // Nothing about the plan is in a snapshot at all: it comes from the
+      // store, so there is nothing here to copy or to forge.
+      expect(
+        mergeSnapshots(local, remote).toJson().containsKey('plan'),
+        isFalse,
+      );
+      expect(local.toJson().containsKey('isPlus'), isFalse);
     });
   });
 }

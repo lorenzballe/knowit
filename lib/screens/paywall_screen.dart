@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:purchases_flutter/purchases_flutter.dart';
+
 import '../state/app_state.dart';
+import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
 import '../widgets/motion.dart';
@@ -67,10 +70,14 @@ const _perks = [
 
 /// Astuto+.
 ///
-/// There is no billing wired up. The CTA starts the trial locally so the
-/// gated perks can be used, and says plainly that no payment was taken.
+/// Prices come from the store when it answers, so what is shown is what the
+/// reader's App Store will actually charge, in their currency. Where it has
+/// not answered — no key in this build, or a product not yet approved — the
+/// prices written into the app stand in, and the CTA says plainly that
+/// nothing was charged rather than implying a purchase happened.
 class PaywallScreen extends StatefulWidget {
   final AppState app;
+
   const PaywallScreen({super.key, required this.app});
 
   @override
@@ -80,22 +87,80 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
+  Subscription get _store => Subscription.instance;
+
+  /// What the store charges, or the price written into the app when it has
+  /// not answered.
+  String _priceFor(Plan plan) {
+    final Offering? offering = _store.offering;
+    final Package? package = offering == null
+        ? null
+        : (plan == Plan.year ? offering.annual : offering.monthly);
+    if (package != null) return package.storeProduct.priceString;
+    return _euros(plan == Plan.year ? kYearlyCents : kMonthlyCents);
+  }
+
   String get _cta {
     if (widget.app.isPlus) return 'ASTUTO+ IS ACTIVE';
-    return _plan == Plan.year
-        ? 'Try 7 days free, then ${_euros(kYearlyCents)}/yr'
-        : 'Try 7 days free, then ${_euros(kMonthlyCents)}/mo';
+    final String suffix = _plan == Plan.year ? '/yr' : '/mo';
+    return 'Try 7 days free, then ${_priceFor(_plan)}$suffix';
+  }
+
+  /// The package for the plan on screen, if the store has offered one.
+  Package? get _package {
+    final Offering? offering = _store.offering;
+    if (offering == null) return null;
+    return _plan == Plan.year ? offering.annual : offering.monthly;
   }
 
   Future<void> _start() async {
-    await widget.app.startPlusTrial();
+    final Package? package = _package;
+
+    // No store to buy from: unlock locally so the gated screens can be seen,
+    // and say so rather than letting it look like a purchase.
+    if (package == null) {
+      await widget.app.startPlusTrial();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Trial started. No payment is connected in this build.',
+          ),
+        ),
+      );
+      Navigator.of(context).pop();
+      return;
+    }
+
+    final outcome = await _store.buy(package);
+    if (!mounted) return;
+    switch (outcome) {
+      case PurchaseOutcome.bought:
+        await widget.app.applyEntitlement(true);
+        if (mounted) Navigator.of(context).pop();
+      case PurchaseOutcome.cancelled:
+        break;
+      case PurchaseOutcome.failed:
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('That did not go through.')),
+        );
+    }
+  }
+
+  /// Apple requires a way back to something already paid for, and a reader on
+  /// a new phone needs it before they will trust the first purchase.
+  Future<void> _restore() async {
+    final bool restored = await _store.restore();
+    if (!mounted) return;
+    if (restored) await widget.app.applyEntitlement(true);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Trial started. No payment is connected in this build.'),
+      SnackBar(
+        content: Text(
+          restored ? 'Astuto+ is back.' : 'Nothing to restore on this account.',
+        ),
       ),
     );
-    Navigator.of(context).pop();
   }
 
   @override
@@ -233,6 +298,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     child: Text(
                       widget.app.isPlus
                           ? 'Cancel the trial'
+                          : _store.offering != null
+                          ? 'Cancel any time'
                           : 'Cancel any time · No payment is taken in this '
                                 'build',
                       textAlign: TextAlign.center,
@@ -243,6 +310,25 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     ),
                   ),
+                  // Apple requires a way back to something already paid for,
+                  // and it only means anything when there is a store.
+                  if (_store.offering != null && !widget.app.isPlus)
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _restore,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Restore purchases',
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 12.5,
+                            weight: FontWeight.w600,
+                            color: context.p.inkMuted,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
