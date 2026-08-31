@@ -253,7 +253,9 @@ class Identity {
           .authorizationForScopes(const ['email']);
       return granted?.accessToken;
     } catch (error) {
-      debugPrint('No quiet Google access token, carrying on with the id token: $error');
+      debugPrint(
+        'No quiet Google access token, carrying on with the id token: $error',
+      );
       return null;
     }
   }

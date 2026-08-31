@@ -1050,7 +1050,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(-32, 0),
               child: Transform.rotate(
                 angle: -18 * math.pi / 180,
-                child: _blank(const Color(0xFF00B083), 158, 214, 20),
+                child: _blank(const Color(0xFF00B083), 152, 178, 18),
               ),
             ),
           ),
@@ -1061,7 +1061,7 @@ class _SceneCard extends StatelessWidget {
               offset: const Offset(28, 0),
               child: Transform.rotate(
                 angle: 12 * math.pi / 180,
-                child: _blank(const Color(0xFFFFC93C), 158, 214, 20),
+                child: _blank(const Color(0xFFFFC93C), 152, 178, 18),
               ),
             ),
           ),
@@ -1069,8 +1069,8 @@ class _SceneCard extends StatelessWidget {
             duration: const Duration(milliseconds: 750),
             delay: const Duration(milliseconds: 200),
             child: Container(
-              width: 164,
-              height: 224,
+              width: 168,
+              height: 186,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 color: const Color(0xFF2B4BFF),
@@ -1103,7 +1103,7 @@ class _SceneCard extends StatelessWidget {
                         Text(
                           'Why does cinema popcorn cost more than the ticket?',
                           style: AppText.body(
-                            size: 21,
+                            size: 15.5,
                             weight: FontWeight.w600,
                             height: 1.14,
                             spacing: -0.6,
@@ -1126,15 +1126,15 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 6,
-            bottom: 14,
+            right: 4,
+            bottom: 2,
             child: _SlideIn(
               delay: const Duration(milliseconds: 460),
               child: Container(
-                constraints: const BoxConstraints(maxWidth: 190),
+                constraints: const BoxConstraints(maxWidth: 152),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical: 13,
+                  horizontal: 12,
+                  vertical: 10,
                 ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFF5F3EE),
@@ -1176,8 +1176,8 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 6,
-            top: 12,
+            left: 4,
+            top: 62,
             child: _Pop(
               duration: const Duration(milliseconds: 600),
               delay: const Duration(milliseconds: 620),
