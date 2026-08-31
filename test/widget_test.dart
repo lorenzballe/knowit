@@ -12,6 +12,7 @@ import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
+import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -114,6 +115,27 @@ void main() {
       weights.keys.every(kTopics.containsKey),
       isTrue,
       reason: 'the mix only carries topics the deck can actually serve',
+    );
+  });
+
+  testWidgets('a turned-down tile keeps its empty half dark', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await tester.pumpWidget(MaterialApp(home: MixScreen(onDone: (_) {})));
+    await _settle(tester);
+
+    // A tile's ground has to be opaque. Flutter paints a BoxShadow straight
+    // through a see-through fill — CSS clips an outer glow from under its own
+    // element — so a translucent tile wore a dim wash of its own colour
+    // across the half the reader had just turned off.
+    final decoration = tester
+        .widgetList<DecoratedBox>(find.byType(DecoratedBox))
+        .map((box) => box.decoration)
+        .whereType<BoxDecoration>()
+        .firstWhere((d) => d.boxShadow?.isNotEmpty ?? false);
+    expect(
+      decoration.color!.a,
+      1.0,
+      reason: 'a glow behind a see-through tile shows through it',
     );
   });
 
