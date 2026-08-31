@@ -9,7 +9,7 @@ import 'screens/deck_viewer_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/saved_screen.dart';
-import 'screens/subject_run_screen.dart';
+import 'screens/mix_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
@@ -312,7 +312,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         );
 
       case _Stage.subjects:
-        return SubjectRunScreen(
+        return MixScreen(
           onDone: (weights) async {
             await _app.setTopicMix(weights);
             await _finishOnboarding();

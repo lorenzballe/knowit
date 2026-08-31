@@ -152,31 +152,34 @@ void main() {
   group('Apple', () {
     setUp(() => debugDefaultTargetPlatformOverride = TargetPlatform.iOS);
 
-    test('hands Apple the hash and Firebase the string it was made from', () async {
-      // The replay guard: Apple mints its token against a nonce it is given,
-      // Firebase re-hashes the one it is given and compares. A token lifted
-      // off the wire is no use without the string behind the hash — so the
-      // two must be the hash and its preimage, and never the same value.
-      final sheet = _FakeAppleSheet(
-        answer: _appleAnswer(identityToken: 'apple-id-token'),
-      );
-      SignInWithApplePlatform.instance = sheet;
+    test(
+      'hands Apple the hash and Firebase the string it was made from',
+      () async {
+        // The replay guard: Apple mints its token against a nonce it is given,
+        // Firebase re-hashes the one it is given and compares. A token lifted
+        // off the wire is no use without the string behind the hash — so the
+        // two must be the hash and its preimage, and never the same value.
+        final sheet = _FakeAppleSheet(
+          answer: _appleAnswer(identityToken: 'apple-id-token'),
+        );
+        SignInWithApplePlatform.instance = sheet;
 
-      final IdentityResult result = await Identity().apple();
+        final IdentityResult result = await Identity().apple();
 
-      expect(result.outcome, IdentityOutcome.got);
-      final credential = result.credential! as OAuthCredential;
-      expect(credential.providerId, 'apple.com');
-      expect(credential.idToken, 'apple-id-token');
+        expect(result.outcome, IdentityOutcome.got);
+        final credential = result.credential! as OAuthCredential;
+        expect(credential.providerId, 'apple.com');
+        expect(credential.idToken, 'apple-id-token');
 
-      final String rawNonce = credential.rawNonce!;
-      expect(rawNonce, isNotEmpty);
-      expect(
-        sheet.askedWithNonce,
-        sha256.convert(utf8.encode(rawNonce)).toString(),
-      );
-      expect(sheet.askedWithNonce, isNot(rawNonce));
-    });
+        final String rawNonce = credential.rawNonce!;
+        expect(rawNonce, isNotEmpty);
+        expect(
+          sheet.askedWithNonce,
+          sha256.convert(utf8.encode(rawNonce)).toString(),
+        );
+        expect(sheet.askedWithNonce, isNot(rawNonce));
+      },
+    );
 
     test('asks for the name too, which Apple gives only once', () async {
       final sheet = _FakeAppleSheet(
@@ -248,17 +251,20 @@ void main() {
       expect(result.credential, isNull);
     });
 
-    test('where there is no Apple sheet, the browser is asked instead', () async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.android;
-      SignInWithApplePlatform.instance = _FakeAppleSheet(
-        answer: _appleAnswer(identityToken: 'apple-id-token'),
-      );
+    test(
+      'where there is no Apple sheet, the browser is asked instead',
+      () async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.android;
+        SignInWithApplePlatform.instance = _FakeAppleSheet(
+          answer: _appleAnswer(identityToken: 'apple-id-token'),
+        );
 
-      final IdentityResult result = await Identity().apple();
+        final IdentityResult result = await Identity().apple();
 
-      expect(result.outcome, IdentityOutcome.noSheet);
-      expect(result.credential, isNull);
-    });
+        expect(result.outcome, IdentityOutcome.noSheet);
+        expect(result.credential, isNull);
+      },
+    );
 
     test('an iPhone too old for the sheet falls back too', () async {
       // Sign in with Apple starts at iOS 13. Below it the sheet is simply not
@@ -346,22 +352,25 @@ void main() {
       expect(result.outcome, IdentityOutcome.cancelled);
     });
 
-    test('a sheet that cannot run here falls back rather than refusing', () async {
-      // A phone without Play Services, or a build whose signing fingerprint
-      // was never registered. Neither is the reader's problem, and the
-      // browser flow needs nothing from the app.
-      GoogleSignInPlatform.instance = _FakeGoogleSheet(
-        throws: const GoogleSignInException(
-          code: GoogleSignInExceptionCode.clientConfigurationError,
-          description: 'no such client',
-        ),
-      );
+    test(
+      'a sheet that cannot run here falls back rather than refusing',
+      () async {
+        // A phone without Play Services, or a build whose signing fingerprint
+        // was never registered. Neither is the reader's problem, and the
+        // browser flow needs nothing from the app.
+        GoogleSignInPlatform.instance = _FakeGoogleSheet(
+          throws: const GoogleSignInException(
+            code: GoogleSignInExceptionCode.clientConfigurationError,
+            description: 'no such client',
+          ),
+        );
 
-      final IdentityResult result = await Identity().google();
+        final IdentityResult result = await Identity().google();
 
-      expect(result.outcome, IdentityOutcome.noSheet);
-      expect(result.error, contains('no such client'));
-    });
+        expect(result.outcome, IdentityOutcome.noSheet);
+        expect(result.error, contains('no such client'));
+      },
+    );
 
     test('anything else is a failure, and says why', () async {
       GoogleSignInPlatform.instance = _FakeGoogleSheet(
@@ -395,30 +404,39 @@ void main() {
       expect(sheet.askedWithoutPrompting, isTrue);
     });
 
-    test('no access token to be had quietly is fine — the id token stands', () async {
-      GoogleSignInPlatform.instance = _FakeGoogleSheet(
-        answer: _googleAnswer(idToken: 'google-id-token'),
-      );
+    test(
+      'no access token to be had quietly is fine — the id token stands',
+      () async {
+        GoogleSignInPlatform.instance = _FakeGoogleSheet(
+          answer: _googleAnswer(idToken: 'google-id-token'),
+        );
 
-      final IdentityResult result = await Identity().google();
+        final IdentityResult result = await Identity().google();
 
-      expect(result.outcome, IdentityOutcome.got);
-      final credential = result.credential! as OAuthCredential;
-      expect(credential.idToken, 'google-id-token');
-      expect(credential.accessToken, isNull);
-    });
+        expect(result.outcome, IdentityOutcome.got);
+        final credential = result.credential! as OAuthCredential;
+        expect(credential.idToken, 'google-id-token');
+        expect(credential.accessToken, isNull);
+      },
+    );
 
-    test('a broken authorization call cannot undo a sign-in that worked', () async {
-      GoogleSignInPlatform.instance = _FakeGoogleSheet(
-        answer: _googleAnswer(idToken: 'google-id-token'),
-        authorizationThrows: StateError('authorization blew up'),
-      );
+    test(
+      'a broken authorization call cannot undo a sign-in that worked',
+      () async {
+        GoogleSignInPlatform.instance = _FakeGoogleSheet(
+          answer: _googleAnswer(idToken: 'google-id-token'),
+          authorizationThrows: StateError('authorization blew up'),
+        );
 
-      final IdentityResult result = await Identity().google();
+        final IdentityResult result = await Identity().google();
 
-      expect(result.outcome, IdentityOutcome.got);
-      expect((result.credential! as OAuthCredential).idToken, 'google-id-token');
-    });
+        expect(result.outcome, IdentityOutcome.got);
+        expect(
+          (result.credential! as OAuthCredential).idToken,
+          'google-id-token',
+        );
+      },
+    );
 
     test('a token-less answer is a failure', () async {
       GoogleSignInPlatform.instance = _FakeGoogleSheet(
@@ -430,44 +448,53 @@ void main() {
       expect(result.outcome, IdentityOutcome.failed);
     });
 
-    test('where there is no Google sheet, the browser is asked instead', () async {
-      GoogleSignInPlatform.instance = _FakeGoogleSheet(supported: false);
+    test(
+      'where there is no Google sheet, the browser is asked instead',
+      () async {
+        GoogleSignInPlatform.instance = _FakeGoogleSheet(supported: false);
 
-      final IdentityResult result = await Identity().google();
+        final IdentityResult result = await Identity().google();
 
-      expect(result.outcome, IdentityOutcome.noSheet);
-    });
+        expect(result.outcome, IdentityOutcome.noSheet);
+      },
+    );
   });
 
   group('A plugin that never registered', () {
     // Both probes used to sit outside the try, so a build where the native
     // side was missing threw straight past the fallback and was reported to
     // the reader as a failed sign-in.
-    test('Apple: an unanswerable probe is a missing sheet, not a failure', () async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      SignInWithApplePlatform.instance = _FakeAppleSheet(
-        availabilityThrows: MissingPluginException(
-          'No implementation found for method isAvailable',
-        ),
-      );
+    test(
+      'Apple: an unanswerable probe is a missing sheet, not a failure',
+      () async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        SignInWithApplePlatform.instance = _FakeAppleSheet(
+          availabilityThrows: MissingPluginException(
+            'No implementation found for method isAvailable',
+          ),
+        );
 
-      final IdentityResult result = await Identity().apple();
+        final IdentityResult result = await Identity().apple();
 
-      expect(result.outcome, IdentityOutcome.noSheet);
-      expect(result.error, contains('isAvailable'));
-    });
+        expect(result.outcome, IdentityOutcome.noSheet);
+        expect(result.error, contains('isAvailable'));
+      },
+    );
 
-    test('Google: an unanswerable probe is a missing sheet, not a failure', () async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      GoogleSignInPlatform.instance = _FakeGoogleSheet(
-        supportThrows: UnimplementedError('supportsAuthenticate'),
-      );
+    test(
+      'Google: an unanswerable probe is a missing sheet, not a failure',
+      () async {
+        debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+        GoogleSignInPlatform.instance = _FakeGoogleSheet(
+          supportThrows: UnimplementedError('supportsAuthenticate'),
+        );
 
-      final IdentityResult result = await Identity().google();
+        final IdentityResult result = await Identity().google();
 
-      expect(result.outcome, IdentityOutcome.noSheet);
-      expect(result.error, contains('supportsAuthenticate'));
-    });
+        expect(result.outcome, IdentityOutcome.noSheet);
+        expect(result.error, contains('supportsAuthenticate'));
+      },
+    );
   });
 
   group('Where the browser is an answer, and where it is not', () {

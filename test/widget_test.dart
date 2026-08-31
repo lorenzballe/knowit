@@ -81,22 +81,20 @@ void main() {
     await tester.pump(const Duration(seconds: 5));
     await _settle(tester);
 
-    // The run opens on the first subject, one card at a time.
-    expect(find.text('01'), findsOneWidget);
-    expect(find.text('of 12'), findsOneWidget);
+    // The mix opens with everything in, so the reader turns things down
+    // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
+    expect(find.text('12 of 12 subjects in the mix'), findsOneWidget);
 
-    await tester.tap(find.text('Favourite'));
+    // Press at the very left of a tile — that is zero — and it leaves the
+    // mix, with the count saying so.
+    await tester.tapAt(
+      tester.getTopLeft(find.text('Science')).translate(-28, 6),
+    );
     await _settle(tester);
-    expect(find.text('02'), findsOneWidget);
+    expect(find.text('11 of 12 subjects in the mix'), findsOneWidget);
 
-    // Skip keeps whatever is left rather than dropping it, so the deck is
-    // never empty because somebody stopped answering.
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
-    expect(find.text('Deal my first five'), findsOneWidget);
-
-    await tester.tap(find.text('Deal my first five'));
+    await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
     // And the answer is kept, not just used once.
@@ -414,11 +412,9 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Two: the subject run.
+    // Two: the mix.
     expect(find.text('Science'), findsOneWidget);
-    await tester.tap(find.text('Skip'));
-    await _settle(tester);
-    await tester.tap(find.text('Deal my first five'));
+    await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
     expect(find.text('Next pill'), findsOneWidget);

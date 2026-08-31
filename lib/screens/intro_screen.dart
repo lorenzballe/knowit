@@ -535,48 +535,50 @@ class _GoogleG extends StatelessWidget {
     return SizedBox(
       width: 19,
       height: 19,
-      child: CustomPaint(painter: _GooglePainter()),
+      child: CustomPaint(painter: const _GooglePainter()),
     );
   }
 }
 
 class _GooglePainter extends CustomPainter {
+  const _GooglePainter();
+
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect box = Offset.zero & size;
-    final double stroke = size.width * 0.23;
-    final Rect ring = box.deflate(stroke / 2);
+    // The G is a ring in four colours with a bite out of the right-hand side,
+    // and a bar running from the centre into that bite. Drawn as one circle
+    // with four arcs, the bite was missing and it read as a coloured hoop.
+    final double stroke = size.width * 0.22;
+    final Rect ring = (Offset.zero & size).deflate(stroke / 2);
     final Paint p = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = stroke
       ..strokeCap = StrokeCap.butt;
 
-    void arc(double from, double sweep, Color c) {
-      p.color = c;
-      canvas.drawArc(
-        ring,
-        from * math.pi / 180,
-        sweep * math.pi / 180,
-        false,
-        p,
-      );
+    double rad(double deg) => deg * math.pi / 180;
+
+    // Anticlockwise from the mouth: blue up the right, red across the top,
+    // yellow down the left, green along the bottom.
+    void arc(double from, double sweep, Color colour) {
+      p.color = colour;
+      canvas.drawArc(ring, rad(from), rad(sweep), false, p);
     }
 
-    arc(-8, -80, const Color(0xFF4285F4));
-    arc(-88, -104, const Color(0xFFFBBC05));
-    arc(168, -80, const Color(0xFF34A853));
-    arc(88, -80, const Color(0xFFEA4335));
+    arc(-22, -68, const Color(0xFF4285F4));
+    arc(-90, -98, const Color(0xFFEA4335));
+    arc(-188, -72, const Color(0xFFFBBC05));
+    arc(100, -78, const Color(0xFF34A853));
 
-    // The bar that closes the G.
-    final Paint bar = Paint()..color = const Color(0xFF4285F4);
+    // The bar. It starts at the middle and runs out to the ring, which is
+    // what turns a circle into a G.
     canvas.drawRect(
-      Rect.fromLTWH(
-        size.width * 0.5,
-        size.height * 0.4,
-        size.width * 0.5,
-        stroke,
+      Rect.fromLTRB(
+        size.width * 0.52,
+        size.height / 2 - stroke / 2,
+        size.width,
+        size.height / 2 + stroke / 2,
       ),
-      bar,
+      Paint()..color = const Color(0xFF4285F4),
     );
   }
 

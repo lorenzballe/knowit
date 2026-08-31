@@ -14,6 +14,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/screens/intro_screen.dart';
+import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/theme.dart';
 
 Future<void> _loadFonts() async {
@@ -22,13 +23,14 @@ Future<void> _loadFonts() async {
     'Figtree': 'assets/fonts/Figtree.ttf',
     // Without this the Apple mark on the button comes out as an empty box,
     // which would be a picture of a fault the app does not have.
-    'MaterialIcons':
-        '/opt/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+    'MaterialIcons': '/opt/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
   };
   for (final entry in fonts.entries) {
     final loader = FontLoader(entry.key);
     final bytes = await File(entry.value).readAsBytes();
-    loader.addFont(Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)));
+    loader.addFont(
+      Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)),
+    );
     await loader.load();
   }
 }
@@ -61,9 +63,9 @@ void main() {
 
     // Real image decoding needs real async, which a test clock does not give.
     // Without it the app mark renders as an empty box.
-    await tester.runAsync(() => Future<void>.delayed(
-      const Duration(milliseconds: 400),
-    ));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 400)),
+    );
 
     for (int i = 0; i < 5; i++) {
       // Never pumpAndSettle: the ambient loops never end. A few frames is
@@ -80,5 +82,31 @@ void main() {
         await tester.pump(const Duration(milliseconds: 400));
       }
     }
+  });
+
+  testWidgets('the mix, on a phone', (tester) async {
+    await tester.binding.setSurfaceSize(phone);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: MediaQuery(
+          data: const MediaQueryData(size: phone, padding: insets),
+          child: MixScreen(onDone: (_) {}),
+        ),
+      ),
+    );
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 300)),
+    );
+    for (int f = 0; f < 10; f++) {
+      await tester.pump(const Duration(milliseconds: 120));
+    }
+    await expectLater(
+      find.byType(MixScreen),
+      matchesGoldenFile('shots/mix.png'),
+    );
   });
 }
