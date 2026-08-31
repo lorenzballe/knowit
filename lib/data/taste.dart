@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../models/pill.dart';
+import 'topics.dart';
 
 /// What the reader did with a card, and what it is worth as evidence.
 ///
@@ -136,6 +137,74 @@ const Map<String, double> kFamilyWeight = {
   'level': 0.4,
 };
 
+/// One thing the deck has concluded about a reader, in the form it can be
+/// said back to them.
+class Leaning {
+  const Leaning(this.facet, this.pull, this.met);
+
+  final String facet;
+
+  /// -1 to 1. Negative means the deck is showing them less of this.
+  final double pull;
+
+  /// How many cards it was learned from.
+  final int met;
+
+  bool get isToward => pull > 0;
+}
+
+/// How many cards a facet has to have been met on before the app will say
+/// anything about it out loud.
+///
+/// Higher than the threshold the deck itself uses. The deck is allowed to act
+/// on a hunch — that is what the exploration slot is for — but telling
+/// somebody "you do not like space" on the strength of two cards is a
+/// different kind of claim, and a wrong one is worse than saying nothing.
+const int kSayableEvidence = 5;
+
+/// And how far from indifferent it has to be.
+const double kSayablePull = 0.2;
+
+/// What a facet is called, for a reader.
+String facetLabel(String facet) {
+  final at = facet.indexOf(':');
+  if (at < 0) return facet;
+  final family = facet.substring(0, at);
+  final value = facet.substring(at + 1);
+  return switch (family) {
+    'topic' => kTopics[value]?.name ?? value,
+    'tag' => value,
+    'tone' => switch (Tone.byName(value)) {
+      Tone.playful => 'cards that are enjoying themselves',
+      Tone.startling => 'cards that startle',
+      Tone.practical => 'cards you can use',
+      Tone.sober => 'cards that play it straight',
+      null => value,
+    },
+    'format' => switch (value) {
+      'read' => 'being told something',
+      'pick' => 'being asked to choose',
+      'number' => 'working out a number',
+      'estimate' => 'estimating',
+      'debate' => 'taking a side',
+      _ => value,
+    },
+    'level' => switch (value) {
+      'easy' => 'the easy ones',
+      'medium' => 'the middling ones',
+      'hard' => 'the hard ones',
+      _ => value,
+    },
+    'move' => Principle.values
+        .firstWhere(
+          (p) => p.name == value,
+          orElse: () => Principle.none,
+        )
+        .label,
+    _ => value,
+  };
+}
+
 /// What this reader likes, learned from what they did.
 ///
 /// The design in one line: **what they said is the prior, what they did is
@@ -214,6 +283,24 @@ class ReaderTaste {
   void ageOneDay() {
     _recent.updateAll((_, v) => v * kFatigueDecay);
     _recent.removeWhere((_, v) => v < 0.05);
+  }
+
+  /// What the deck has concluded, strongest conclusion first.
+  ///
+  /// Only what it would stand behind: enough cards to be more than a hunch,
+  /// and far enough from indifferent to be worth a line. The app shows this
+  /// because a deck that quietly decides what somebody sees and never says so
+  /// is the thing everyone has learned to distrust about feeds.
+  List<Leaning> leanings({int take = 6}) {
+    final out = <Leaning>[];
+    for (final entry in _traits.entries) {
+      if (entry.value.met < kSayableEvidence) continue;
+      final pull = pullOf(entry.key);
+      if (pull.abs() < kSayablePull) continue;
+      out.add(Leaning(entry.key, pull, entry.value.met));
+    }
+    out.sort((a, b) => b.pull.abs().compareTo(a.pull.abs()));
+    return out.take(take).toList();
   }
 
   /// How much the reader likes one facet, -1 to 1.

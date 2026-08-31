@@ -505,4 +505,48 @@ void main() {
       expect(prefs.getString('knowit.writtenCards'), isNull);
     });
   });
+
+  group('Saying it out loud', () {
+    test('says nothing on evidence too thin to stand behind', () {
+      final taste = ReaderTaste();
+      for (var i = 0; i < 3; i++) {
+        taste.learn(card('a$i', 'science'), Signal.saved);
+      }
+      // The deck may act on a hunch — that is what the wildcard slot is
+      // for. Telling somebody what they like is a different claim.
+      expect(taste.leanings(), isEmpty);
+    });
+
+    test('reports what it would stand behind, strongest first', () {
+      final taste = ReaderTaste();
+      for (var i = 0; i < 12; i++) {
+        taste.learn(card('h$i', 'history', tone: Tone.sober), Signal.saved);
+        taste.learn(card('s$i', 'science'), Signal.skipped);
+      }
+      final said = taste.leanings();
+      expect(said, isNotEmpty);
+      expect(said.first.pull.abs(), greaterThanOrEqualTo(said.last.pull.abs()));
+      expect(
+        said.where((l) => l.facet == 'topic:history').single.isToward,
+        isTrue,
+      );
+      expect(
+        said.where((l) => l.facet == 'topic:science').single.isToward,
+        isFalse,
+      );
+    });
+
+    test('a facet reads as something a person would say', () {
+      expect(facetLabel('topic:human_body'), 'Human body');
+      expect(facetLabel('tag:money'), 'money');
+      expect(facetLabel('format:estimate'), 'estimating');
+      expect(facetLabel('tone:playful'), "cards that are enjoying themselves");
+      expect(facetLabel('move:baseRate'), 'Base rates');
+      expect(facetLabel('level:hard'), 'the hard ones');
+      // Anything a later build invents still reads as itself rather than
+      // crashing a screen.
+      expect(facetLabel('mood:blue'), 'blue');
+      expect(facetLabel('nonsense'), 'nonsense');
+    });
+  });
 }

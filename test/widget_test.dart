@@ -1289,6 +1289,7 @@ void main() {
               index: 0,
               onAdvance: () {},
               answerFor: (id) => given[id],
+              onSignal: (_, _) {},
               reviewIds: reviews,
               onAnswer: (id, response, confidence, reason) => given[id] =
                   Answer(response, confidence: confidence, reason: reason),
@@ -1774,6 +1775,7 @@ void main() {
                 onAdvance: () {},
                 reviewIds: {pill.id},
                 answerFor: (id) => given[id],
+              onSignal: (_, _) {},
                 onAnswer: (id, r, c, w) =>
                     given[id] = Answer(r, confidence: c, reason: w),
               ),

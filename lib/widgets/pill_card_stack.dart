@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../data/taste.dart';
 import '../models/pill.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
@@ -28,6 +29,9 @@ class PillCardStack extends StatefulWidget {
   /// Which of these cards are back for another go.
   final Set<String> reviewIds;
 
+  /// What the reader did with a card short of answering it.
+  final void Function(Pill pill, Signal signal) onSignal;
+
   const PillCardStack({
     super.key,
     required this.deck,
@@ -36,6 +40,7 @@ class PillCardStack extends StatefulWidget {
     required this.answerFor,
     required this.onAnswer,
     required this.reviewIds,
+    required this.onSignal,
   });
 
   @override
@@ -181,6 +186,7 @@ class _PillCardStackState extends State<PillCardStack>
                 flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
+                onSignal: (signal) => widget.onSignal(pill, signal),
                 onAnswer: (response, confidence, reason) {
                   HapticFeedback.mediumImpact();
                   widget.onAnswer(pill.id, response, confidence, reason);
@@ -196,6 +202,7 @@ class _PillCardStackState extends State<PillCardStack>
                 flipped: true,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
+                onSignal: (signal) => widget.onSignal(pill, signal),
               ),
             )
           : PillCard(

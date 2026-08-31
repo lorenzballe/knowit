@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../data/taste.dart';
 import '../models/pill.dart';
 import '../theme.dart';
+import 'motion.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -21,21 +23,32 @@ class RevealBody extends StatefulWidget {
   final Color wash;
   final Color washEdge;
 
+  /// Called when the reader asks for more of the explanation than the card
+  /// gave them. Wanting the longer version is about the closest thing to a
+  /// stated preference the app gets without asking for one.
+  final void Function(Signal)? onSignal;
+
   const RevealBody({
     super.key,
     required this.pill,
     required this.ink,
     required this.wash,
     required this.washEdge,
+    this.onSignal,
   });
 
   /// The version that sits on a coloured card.
-  factory RevealBody.onCard(Pill pill, {Key? key}) => RevealBody(
+  factory RevealBody.onCard(
+    Pill pill, {
+    Key? key,
+    void Function(Signal)? onSignal,
+  }) => RevealBody(
     key: key,
     pill: pill,
     ink: pill.ink,
     wash: pill.wash,
     washEdge: pill.washEdge,
+    onSignal: onSignal,
   );
 
   /// The version that sits on the page rather than on a card, so it takes
@@ -90,7 +103,10 @@ class _RevealBodyState extends State<RevealBody> {
               ink: widget.ink,
               icon: Icons.child_care_rounded,
               label: 'Explain it like I am three',
-              onTap: () => setState(() => _simplyOpen = true),
+              onTap: () {
+              setState(() => _simplyOpen = true);
+              widget.onSignal?.call(Signal.explained);
+            },
             ),
         ],
         if (pill.hasCounterpoint) ...[
@@ -107,7 +123,10 @@ class _RevealBodyState extends State<RevealBody> {
               ink: widget.ink,
               icon: Icons.swap_horiz_rounded,
               label: 'What the other side says',
-              onTap: () => setState(() => _counterOpen = true),
+              onTap: () {
+              setState(() => _counterOpen = true);
+              widget.onSignal?.call(Signal.explained);
+            },
             ),
         ],
         if (pill.asksSomething && pill.trap.isNotEmpty) ...[
@@ -155,7 +174,13 @@ class _Steps extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: List.generate(pill.steps.length, (i) {
-        return Padding(
+        // A derivation is read in order, so it lands in order. The delay is
+        // an interval inside one controller rather than a timer, and it
+        // defers to reduce-motion like everything else — see RiseIn.
+        return RiseIn.staggered(
+          i,
+          step: const Duration(milliseconds: 90),
+          child: Padding(
           padding: EdgeInsets.only(bottom: i == pill.steps.length - 1 ? 0 : 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,6 +207,7 @@ class _Steps extends StatelessWidget {
                 ),
               ),
             ],
+          ),
           ),
         );
       }),

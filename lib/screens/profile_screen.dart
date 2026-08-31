@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../data/pills_data.dart';
+import '../data/taste.dart';
 import '../data/topics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
@@ -256,6 +257,12 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 11),
             _Mastery(app: app),
           ],
+          if (app.taste.leanings().isNotEmpty) ...[
+            const SizedBox(height: 22),
+            const Eyebrow('What the deck thinks about you'),
+            const SizedBox(height: 11),
+            _Leanings(app: app),
+          ],
           const SizedBox(height: 22),
           const Eyebrow('What you have covered'),
           const SizedBox(height: 11),
@@ -508,6 +515,10 @@ class ProfileScreen extends StatelessWidget {
             // is the least useful bug report there is, so it is replaced
             // here by something that can be read off a screen.
             _DebugLine('Firebase', Cloud.ready ? 'running' : 'NOT running'),
+            _DebugLine(
+              'Cards written since this build',
+              '${app.writtenCards}',
+            ),
             if (Cloud.failure != null) _DebugLine('Why', Cloud.failure!),
             _DebugLine(
               'Account',
@@ -950,6 +961,87 @@ class _ThemePicker extends StatelessWidget {
 /// and showing your own record on it, is the part of debiasing training that
 /// carried to a real decision months later (Sellier, Scopelliti & Morewedge,
 /// 2019). Knowing you got card seven wrong is worth nothing by comparison.
+/// What the deck has concluded, said out loud.
+///
+/// A deck that decides what somebody sees and never tells them is the thing
+/// everybody has learned to distrust about a feed. This is the same
+/// information the ranking runs on, in the same words — and it is worth
+/// saying that none of it came from a questionnaire: every line is something
+/// the reader did.
+class _Leanings extends StatelessWidget {
+  final AppState app;
+  const _Leanings({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final leanings = app.taste.leanings();
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...leanings.indexed.map((entry) {
+            final leaning = entry.$2;
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: entry.$1 == leanings.length - 1 ? 0 : 11,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 46,
+                    child: Text(
+                      leaning.isToward ? 'MORE' : 'LESS',
+                      style: AppText.label(
+                        size: 10,
+                        color: leaning.isToward
+                            ? context.p.ink
+                            : context.p.inkFaint,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      facetLabel(leaning.facet),
+                      style: AppText.body(
+                        size: 14,
+                        weight: FontWeight.w600,
+                        height: 1.35,
+                        color: context.p.ink,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    '${leaning.met} cards',
+                    style: AppText.body(
+                      size: 12,
+                      color: context.p.inkFaint,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          const SizedBox(height: 14),
+          Text(
+            'Worked out from what you did with the cards, not from anything '
+            'you were asked. One card a day is deliberately not chosen for '
+            'you, so a wrong guess here can be corrected. The mix above '
+            'overrules all of it.',
+            style: AppText.body(
+              size: 12.5,
+              height: 1.45,
+              color: context.p.inkMuted,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _Mastery extends StatelessWidget {
   final AppState app;
   const _Mastery({required this.app});

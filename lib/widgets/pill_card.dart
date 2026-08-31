@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/taste.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import 'motion.dart';
@@ -19,6 +20,12 @@ class PillCard extends StatelessWidget {
   final void Function(String response, int? confidence, String? reason)?
   onAnswer;
 
+  /// What the reader did with this card short of answering it — asked for the
+  /// hint, asked for more of the explanation. Both say something about what
+  /// they want to be shown, and neither is a button most people press, which
+  /// is why the app does not rely on them alone.
+  final void Function(Signal)? onSignal;
+
   /// True when this card is in today's deck because it came back.
   final bool isReview;
 
@@ -27,6 +34,7 @@ class PillCard extends StatelessWidget {
     required this.pill,
     required this.indexLabel,
     required this.flipped,
+    this.onSignal,
     this.given,
     this.onAnswer,
     this.isReview = false,
@@ -97,7 +105,7 @@ class PillCard extends StatelessWidget {
           ),
           Expanded(
             child: flipped
-                ? _BackFace(pill: pill, given: given)
+                ? _BackFace(pill: pill, given: given, onSignal: onSignal)
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
                 : switch (pill.challenge) {
@@ -106,6 +114,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      onSignal: onSignal,
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: options,
@@ -117,6 +126,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      onSignal: onSignal,
                       prompt: 'Pick a side. There is no right answer.',
                       input: (commit) => _PickInput(
                         pill: pill,
@@ -129,6 +139,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      onSignal: onSignal,
                       input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
@@ -139,6 +150,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
+                      onSignal: onSignal,
                       prompt: 'Estimate. Close enough counts.',
                       input: (commit) => _NumberInput(
                         pill: pill,
@@ -200,7 +212,9 @@ class _FrontFace extends StatelessWidget {
 class _BackFace extends StatelessWidget {
   final Pill pill;
   final Answer? given;
-  const _BackFace({required this.pill, this.given});
+  const _BackFace({required this.pill, this.given, this.onSignal});
+
+  final void Function(Signal)? onSignal;
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +261,7 @@ class _BackFace extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              RevealBody.onCard(pill),
+              RevealBody.onCard(pill, onSignal: onSignal),
             ],
           ),
         ),
@@ -325,12 +339,16 @@ class _AskFace extends StatefulWidget {
   /// line under the input when the card cannot be answered here.
   final Answer? given;
 
+  /// Reports asking for the hint.
+  final void Function(Signal)? onSignal;
+
   const _AskFace({
     required this.pill,
     required this.input,
     required this.onAnswer,
     this.prompt,
     this.given,
+    this.onSignal,
   });
 
   @override
@@ -439,7 +457,10 @@ class _AskFaceState extends State<_AskFace> {
                 else
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => setState(() => _hintOpen = true),
+                    onTap: () {
+                      setState(() => _hintOpen = true);
+                      widget.onSignal?.call(Signal.hinted);
+                    },
                     child: Row(
                       children: [
                         Icon(
