@@ -4,8 +4,9 @@ import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../data/pills_data.dart';
+import '../data/card_catalog.dart';
 import '../data/pills_repository.dart';
+import '../data/taste.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../sync/reader_snapshot.dart';
@@ -41,6 +42,7 @@ class AppState extends ChangeNotifier {
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
   static const _kPushTokens = 'knowit.pushTokens';
+  static const _kTaste = 'knowit.taste';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -84,6 +86,19 @@ class AppState extends ChangeNotifier {
   /// How much of each subject the reader asked for, 0..1 by topic key. Empty
   /// means they never said, and every subject is dealt evenly.
   Map<String, double> topicWeights = {};
+
+  /// What the app has learned about what this reader likes, from what they
+  /// did with the cards they were given. The mix above is its prior.
+  ReaderTaste taste = ReaderTaste();
+
+  /// When the card on screen was put there.
+  ///
+  /// The one behavioural signal the app cannot get any other way: a card
+  /// swiped past in two seconds was not read, and a card that held someone
+  /// for half a minute was. Everything else — saving, answering, asking for
+  /// the hint — is a button, and buttons are pressed by the minority who
+  /// press buttons.
+  DateTime _cardOpenedAt = DateTime.now();
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
@@ -141,6 +156,7 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> _restore() async {
+    taste = ReaderTaste.fromJson(_decodeJson(_prefs.getString(_kTaste)));
     streak = _prefs.getInt(_kStreak) ?? 0;
     bestStreak = _prefs.getInt(_kBestStreak) ?? 0;
     lastCompletionDate = _prefs.getString(_kLastCompletion);
@@ -233,6 +249,12 @@ class AppState extends ChangeNotifier {
   /// fill the rest — an app that never re-asks what you got wrong is not
   /// teaching, it is entertaining.
   Future<void> _startNewDay() async {
+    // What was shown yesterday matters less than what is shown today, so a
+    // subject rested for a few days becomes available again.
+    taste.ageOneDay();
+    taste.declare(topicWeights);
+    _cardOpenedAt = DateTime.now();
+
     // Nobody has read anything yet, so this is the only first impression
     // there will be. It is chosen, not dealt.
     if (seenIds.isEmpty && answers.isEmpty && !extraSetOpen) {
@@ -256,15 +278,70 @@ class AppState extends ChangeNotifier {
       today,
       topics: pickedTopics,
       weights: topicWeights,
+      taste: taste,
+      successByLevel: successByLevel,
+      weakMoves: weakMoves,
       exclude: {...seenIds, ...reviews.map((p) => p.id)},
       count: size - reviews.length,
     );
     todaysDeck = [...reviews, ...todaysDeck];
     todaysDeck.sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
     todayIndex = 0;
+
+    // Dealing is what tires a subject out, not liking it: a card the reader
+    // loved and one they skipped both mean they have just had one of those.
+    for (final card in todaysDeck) {
+      taste.noteDealt(card);
+    }
+    await _saveTaste();
     await _prefs.setString(_kTodayDate, dateKey(today));
     await _prefs.setInt(_kTodayIndex, 0);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+  }
+
+  Future<void> _saveTaste() =>
+      _prefs.setString(_kTaste, jsonEncode(taste.toJson()));
+
+  /// How often the reader gets a card of each difficulty right.
+  ///
+  /// What the deck needs in order to pitch a card where it can be won. Only
+  /// levels they have actually answered at appear: a guess at a level nobody
+  /// has met is not better than the assumption the ranker already makes.
+  Map<Difficulty, double> get successByLevel {
+    final met = <Difficulty, int>{};
+    final right = <Difficulty, int>{};
+    for (final e in _graded) {
+      final level = e.key.difficulty;
+      met[level] = (met[level] ?? 0) + 1;
+      if (e.key.challenge.accepts(e.value.response)) {
+        right[level] = (right[level] ?? 0) + 1;
+      }
+    }
+    return {
+      for (final level in met.keys)
+        if (met[level]! >= 3) level: (right[level] ?? 0) / met[level]!,
+    };
+  }
+
+  /// The moves the reader keeps missing, for the deck to bring back.
+  ///
+  /// This is the term that stops the ranking being a preference engine.
+  /// Everything else in the score asks what the reader wants; this one asks
+  /// what they need, and the profile already names it out loud — showing
+  /// someone their worst move and then never dealing it again would be the
+  /// app telling them about a gap it has no intention of closing.
+  Set<Principle> get weakMoves => {
+    for (final m in masteryByWeakness)
+      if (m.isWeak) m.principle,
+  };
+
+  /// Records what the reader did with the card in front of them.
+  ///
+  /// Every one of these is something they did rather than something they
+  /// said. See [Signal].
+  Future<void> noteSignal(Pill card, Signal signal) async {
+    taste.learn(card, signal);
+    await _saveTaste();
   }
 
   // ── Streak ────────────────────────────────────────────────────────────
@@ -307,7 +384,20 @@ class AppState extends ChangeNotifier {
 
   Future<void> advance() async {
     if (todayCompleted) return;
-    seenIds.add(todaysDeck[todayIndex].id);
+    final card = todaysDeck[todayIndex];
+
+    // Read, or moved past. The floor is a share of how long the card claims
+    // to take, so a one-line fact is not counted as skipped for being read
+    // quickly and a worked problem is not counted as read for being glanced
+    // at. Bounded at both ends: nothing counts as read under three seconds,
+    // and nothing has to be held for more than twenty.
+    final spent = DateTime.now().difference(_cardOpenedAt).inMilliseconds / 1000;
+    final floor = (card.seconds * 0.3).clamp(3.0, 20.0);
+    taste.learn(card, spent >= floor ? Signal.read : Signal.skipped);
+    await _saveTaste();
+    _cardOpenedAt = DateTime.now();
+
+    seenIds.add(card.id);
     todayIndex += 1;
     pillsRead += 1;
     await _prefs.setInt(_kTodayIndex, todayIndex);
@@ -385,7 +475,7 @@ class AppState extends ChangeNotifier {
   /// Cards answered, paired with the pill, for the ones that can be marked.
   Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
-      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      final pill = CardCatalog.cards.where((p) => p.id == e.key).firstOrNull;
       if (pill != null && pill.isGraded) yield MapEntry(pill, e.value);
     }
   }
@@ -420,7 +510,7 @@ class AppState extends ChangeNotifier {
     final existing = answers[pillId];
     if (existing != null && !isDueForReview(pillId)) return;
 
-    final pill = kPillPool.where((p) => p.id == pillId).firstOrNull;
+    final pill = CardCatalog.cards.where((p) => p.id == pillId).firstOrNull;
     final graded = pill?.isGraded ?? false;
     final right = graded && (pill?.challenge.accepts(response) ?? false);
 
@@ -433,6 +523,15 @@ class AppState extends ChangeNotifier {
 
     if (graded && confidence != null) {
       judgements.add(Judgement(confidence, correct: right));
+    }
+
+    // Committing to an answer rather than tapping through is engagement, and
+    // it is not scored on whether the answer was right: being wrong about
+    // something is not evidence of disliking it, and treating it that way
+    // would quietly steer every reader toward what they already know.
+    if (pill != null) {
+      taste.learn(pill, Signal.answered);
+      await _saveTaste();
     }
 
     await _saveAnswers();
@@ -483,7 +582,7 @@ class AppState extends ChangeNotifier {
       ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
 
     for (final e in entries) {
-      final original = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      final original = CardCatalog.cards.where((p) => p.id == e.key).firstOrNull;
       if (original == null) continue;
       final pick = _freshInstanceOf(original, claimed);
       claimed.add(pick.id);
@@ -497,7 +596,7 @@ class AppState extends ChangeNotifier {
   Pill _freshInstanceOf(Pill original, Set<String> claimed) {
     if (!original.principle.isReal) return original;
 
-    final siblings = kPillPool
+    final siblings = CardCatalog.cards
         .where(
           (p) =>
               p.principle == original.principle &&
@@ -526,7 +625,7 @@ class AppState extends ChangeNotifier {
       met++;
       if (e.key.challenge.accepts(e.value.response)) right++;
     }
-    final total = kPillPool.where((p) => p.principle == principle).length;
+    final total = CardCatalog.cards.where((p) => p.principle == principle).length;
     return Mastery(principle, met: met, right: right, contexts: total);
   }
 
@@ -605,12 +704,18 @@ class AppState extends ChangeNotifier {
   bool isSaved(String pillId) => savedIds.contains(pillId);
 
   Future<void> toggleSaved(String pillId) async {
-    if (savedIds.contains(pillId)) {
-      savedIds.remove(pillId);
-    } else {
+    final keeping = !savedIds.contains(pillId);
+    if (keeping) {
       savedIds.insert(0, pillId);
+    } else {
+      savedIds.remove(pillId);
     }
     await _prefs.setStringList(_kSavedIds, savedIds);
+
+    final card = CardCatalog.cards.where((p) => p.id == pillId).firstOrNull;
+    if (card != null) {
+      await noteSignal(card, keeping ? Signal.saved : Signal.unsaved);
+    }
     notifyListeners();
   }
 

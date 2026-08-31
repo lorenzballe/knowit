@@ -2,7 +2,8 @@ import 'dart:math';
 import 'dart:math' as math;
 
 import '../models/pill.dart';
-import 'pills_data.dart';
+import 'card_catalog.dart';
+import 'taste.dart';
 import 'topics.dart';
 
 String dateKey(DateTime d) =>
@@ -60,9 +61,28 @@ List<Pill> pillsForDate(
   /// How much of each subject the reader asked for, 0..1 by topic key. When
   /// this is empty the deck spreads evenly, which is what it always did.
   Map<String, double> weights = const {},
+
+  /// What the reader has been shown to like. When this is given it decides
+  /// the order, and [weights] becomes its prior rather than the answer —
+  /// see [ReaderTaste]. Null on a phone that has learned nothing yet, and in
+  /// the tests that are about the shape of a day rather than about whose day
+  /// it is.
+  ReaderTaste? taste,
+
+  /// The reader's measured accuracy per difficulty, for pitching a card
+  /// where they can win it.
+  Map<Difficulty, double> successByLevel = const {},
+
+  /// The moves they keep missing. These come back more often, whether or
+  /// not they are liked.
+  Set<Principle> weakMoves = const {},
+
+  /// The cards to deal from. Defaults to the whole catalogue; passed
+  /// explicitly by tests, which need a pool they can reason about.
+  List<Pill>? catalogue,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
-  final pool = List<Pill>.from(kPillPool);
+  final pool = List<Pill>.from(catalogue ?? CardCatalog.cards);
   pool.shuffle(Random(seed));
 
   final wanted = <String>{};
@@ -88,12 +108,25 @@ List<Pill> pillsForDate(
     for (final entry in kTopics.entries)
       entry.value.name: weights[entry.key] ?? 0.0,
   };
-  final ordered = weights.isEmpty
-      ? [for (final tier in tiers) ..._oneTopicFirst(tier)]
-      : [
-          for (final tier in tiers)
-            ..._weightedOrder(tier, byName, Random(seed)),
-        ];
+  final ordered = switch (taste) {
+    // Someone the app knows something about: every card is scored, and the
+    // tiers keep it from reaching for a card already read while fresh ones
+    // are on the shelf.
+    final ReaderTaste t => [
+      for (final tier in tiers)
+        ..._rankedOrder(
+          tier,
+          t,
+          successByLevel: successByLevel,
+          weakMoves: weakMoves,
+          daySeed: seed,
+        ),
+    ],
+    _ when weights.isEmpty => [for (final tier in tiers) ..._oneTopicFirst(tier)],
+    _ => [
+      for (final tier in tiers) ..._weightedOrder(tier, byName, Random(seed)),
+    ],
+  };
 
   // Fill the asking slots first, then top the day up with reading. Both
   // fall back to whatever is left, so a reader who has turned every asking
@@ -116,6 +149,36 @@ List<Pill> pillsForDate(
     }
     asks.add(p);
   }
+  // One slot in the day is not the model's choice.
+  //
+  // Without this the ranking is a trap of its own making: the cards it likes
+  // are the only ones the reader is given the chance to like, so its first
+  // guess about someone becomes permanent and there is no evidence that could
+  // ever overturn it. The lowest-ranked card that made the cut is given up,
+  // and the replacement is drawn from everything that did not — by the day's
+  // own noise, not by score, because a "random" card the model still chose is
+  // not a control.
+  //
+  // It is the asking slot rather than the reading one on purpose. A subject
+  // the reader has turned away from has to be able to come back as the thing
+  // the app is actually for, and giving up the reading card would change how
+  // much of a day asks.
+  if (taste != null && asks.length >= 2) {
+    final spare = [
+      for (final p in ordered)
+        if (p.asksSomething &&
+            !asks.contains(p) &&
+            !(debates >= maxDebates && p.challenge is TakeASide))
+          p,
+    ];
+    if (spare.isNotEmpty) {
+      final pick = (ReaderTaste.jitter(seed, 'wildcard') * spare.length)
+          .floor()
+          .clamp(0, spare.length - 1);
+      asks[asks.length - 1] = spare[pick];
+    }
+  }
+
   final reads = ordered
       .where((p) => !p.asksSomething)
       .take(count - asks.length)
@@ -170,11 +233,37 @@ List<Pill> arrangeDay(List<Pill> cards) {
 
 /// Looks pills back up by id — used to restore a day's deck across restarts.
 List<Pill> pillsByIds(List<String> ids) {
-  final byId = {for (final p in kPillPool) p.id: p};
+  final byId = {for (final p in CardCatalog.cards) p.id: p};
   return [
     for (final id in ids)
       if (byId[id] != null) byId[id]!,
   ];
+}
+
+/// Orders cards by how much this reader is likely to want them. The scoring
+/// itself lives in [ReaderTaste]; this is only the sort.
+List<Pill> _rankedOrder(
+  List<Pill> pills,
+  ReaderTaste taste, {
+  Map<Difficulty, double> successByLevel = const {},
+  Set<Principle> weakMoves = const {},
+  int daySeed = 0,
+}) {
+  if (pills.length < 2) return pills;
+  final scored = [
+    for (final pill in pills)
+      (
+        taste.score(
+          pill,
+          successByLevel: successByLevel,
+          weakMoves: weakMoves,
+          daySeed: daySeed,
+        ),
+        pill,
+      ),
+  ]..sort((a, b) => b.$1.compareTo(a.$1));
+
+  return [for (final entry in scored) entry.$2];
 }
 
 /// Front-loads one pill per topic so a day never opens with two in a row from
@@ -195,8 +284,8 @@ List<Pill> _oneTopicFirst(List<Pill> pills) {
 /// Free-text search across the whole pool — question, answer and topic.
 List<Pill> searchPills(String query) {
   final q = query.trim().toLowerCase();
-  if (q.isEmpty) return List<Pill>.from(kPillPool);
-  return kPillPool.where((p) {
+  if (q.isEmpty) return List<Pill>.from(CardCatalog.cards);
+  return CardCatalog.cards.where((p) {
     final hay = '${p.question} ${p.answer} ${p.topic} ${p.barMove}';
     return hay.toLowerCase().contains(q);
   }).toList();

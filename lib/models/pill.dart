@@ -20,6 +20,58 @@ sealed class Challenge {
 
   /// How the reader's own answer should read back to them on the reveal.
   String describe(String response) => response;
+
+  /// The facet family this challenge belongs to — what shape of question it
+  /// is, which is one of the things a reader has a taste about.
+  String get format;
+
+  /// Written form. A card that came from the server arrives as JSON, and a
+  /// card that goes into the local cache leaves as JSON, so both directions
+  /// go through here.
+  Map<String, dynamic> toJson();
+
+  /// Reads a challenge back. Anything unrecognised — an older build meeting
+  /// a newer kind — degrades to a card that simply tells you something,
+  /// which is always safe to show.
+  static Challenge fromJson(Object? raw) {
+    if (raw is! Map) return const NoChallenge();
+    List<String> strings(Object? v) => v is List
+        ? [for (final e in v) if (e is String) e]
+        : const <String>[];
+    final answer = raw['answer'];
+    switch (raw['kind']) {
+      case 'pick':
+        final options = strings(raw['options']);
+        final correct = raw['correct'];
+        if (options.length < 2 ||
+            correct is! int ||
+            correct < 0 ||
+            correct >= options.length) {
+          return const NoChallenge();
+        }
+        return PickOne(options: options, correct: correct);
+      case 'number':
+        if (answer is! num) return const NoChallenge();
+        return TypeNumber(
+          answer: answer,
+          unit: raw['unit'] is String ? raw['unit'] as String : '',
+          tolerance: raw['tolerance'] is num ? raw['tolerance'] as num : 0,
+        );
+      case 'estimate':
+        if (answer is! num || answer <= 0) return const NoChallenge();
+        return Estimate(
+          answer: answer,
+          unit: raw['unit'] is String ? raw['unit'] as String : '',
+          withinFactor: raw['factor'] is num ? raw['factor'] as num : 3,
+        );
+      case 'side':
+        final positions = strings(raw['positions']);
+        if (positions.length < 2) return const NoChallenge();
+        return TakeASide(positions: positions);
+      default:
+        return const NoChallenge();
+    }
+  }
 }
 
 /// Nothing to answer. Turn it over and read.
@@ -31,6 +83,12 @@ class NoChallenge extends Challenge {
 
   @override
   bool get isGraded => false;
+
+  @override
+  String get format => 'read';
+
+  @override
+  Map<String, dynamic> toJson() => {'kind': 'none'};
 }
 
 /// Pick one of the options. The response is the option's index.
@@ -52,6 +110,16 @@ class PickOne extends Challenge {
   }
 
   String get correctOption => options[correct];
+
+  @override
+  String get format => 'pick';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'kind': 'pick',
+    'options': options,
+    'correct': correct,
+  };
 }
 
 /// Work it out and type the number — the shape a competition problem takes.
@@ -80,6 +148,17 @@ class TypeNumber extends Challenge {
   }
 
   String get answerLabel => unit.isEmpty ? '$answer' : '$answer $unit';
+
+  @override
+  String get format => 'number';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'kind': 'number',
+    'answer': answer,
+    if (unit.isNotEmpty) 'unit': unit,
+    if (tolerance != 0) 'tolerance': tolerance,
+  };
 }
 
 /// Work out roughly how big something is. Being close is the skill — a Fermi
@@ -105,6 +184,17 @@ class Estimate extends Challenge {
   /// What counted as close enough, for the reveal.
   String get band =>
       '${(answer / withinFactor).round()} to ${(answer * withinFactor).round()}';
+
+  @override
+  String get format => 'estimate';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'kind': 'estimate',
+    'answer': answer,
+    if (unit.isNotEmpty) 'unit': unit,
+    'factor': withinFactor,
+  };
 }
 
 /// Take a side. There is no right answer — the point is to commit, then meet
@@ -127,6 +217,12 @@ class TakeASide extends Challenge {
         ? positions[i]
         : response;
   }
+
+  @override
+  String get format => 'debate';
+
+  @override
+  Map<String, dynamic> toJson() => {'kind': 'side', 'positions': positions};
 }
 
 /// What the reader committed to: the answer, and how sure they were.
@@ -287,6 +383,30 @@ enum Principle {
   bool get isReal => this != Principle.none;
 }
 
+/// How a card sounds.
+///
+/// Not a property of the subject: the same fact about the deep sea can be
+/// written to startle or written to be used. Readers split on this harder
+/// than they split on topics, and it is one of the few things about a card
+/// that cannot be read off anything else — so it is stated when a card is
+/// written, and left null when nobody said.
+enum Tone {
+  playful('Playful'),
+  startling('Startling'),
+  practical('Practical'),
+  sober('Sober');
+
+  const Tone(this.label);
+  final String label;
+
+  static Tone? byName(Object? raw) {
+    for (final t in Tone.values) {
+      if (t.name == raw) return t;
+    }
+    return null;
+  }
+}
+
 /// How much work a card expects.
 enum Difficulty {
   easy('Easy'),
@@ -299,6 +419,10 @@ enum Difficulty {
 
 class Pill {
   final String id;
+
+  /// The topic's key in `kTopics`. [topic] is the display name, which is for
+  /// reading; this is the identity, and it is what matching is done on.
+  final String topicKey;
   final String topic;
   final Color color;
   final Color ink;
@@ -335,8 +459,25 @@ class Pill {
   /// varied contexts that make it stick.
   final Principle principle;
 
+  /// Subjects below the topic — 'money', 'sleep', 'ai'. A topic is too coarse
+  /// to be a taste: two people can both want Science and want nothing of each
+  /// other's science.
+  ///
+  /// Empty on a card that never declared any. An absent facet is not evidence
+  /// of anything, so it is left out of the reckoning rather than defaulted to
+  /// a value nobody chose.
+  final List<String> tags;
+
+  /// How the card sounds, where it was stated.
+  final Tone? tone;
+
+  /// Roughly how long the card takes, in seconds. Used to tell a card that
+  /// was skipped from one that was read quickly because it was short.
+  final int seconds;
+
   const Pill({
     required this.id,
+    required this.topicKey,
     required this.topic,
     required this.color,
     required this.ink,
@@ -353,6 +494,9 @@ class Pill {
     this.counterpoint = '',
     this.difficulty = Difficulty.easy,
     this.principle = Principle.none,
+    this.tags = const [],
+    this.tone,
+    this.seconds = 30,
   });
 
   bool get asksSomething => challenge is! NoChallenge;
@@ -362,6 +506,23 @@ class Pill {
   bool get hasSimply => simply.isNotEmpty;
   bool get hasCounterpoint => counterpoint.isNotEmpty;
   bool get isGraded => challenge.isGraded;
+
+  /// What kind of question this is: read, pick, number, estimate, debate.
+  /// Derived rather than stored — the challenge already says it.
+  String get format => challenge.format;
+
+  /// Everything about this card a reader could have a taste about, as facet
+  /// keys. Only what is actually known: a card that stated no tone and no
+  /// tags contributes neither, rather than contributing a default that would
+  /// then be learned from as though someone had chosen it.
+  List<String> get facets => [
+    'topic:$topicKey',
+    'format:$format',
+    'level:${difficulty.name}',
+    if (principle.isReal) 'move:${principle.name}',
+    if (tone != null) 'tone:${tone!.name}',
+    for (final tag in tags) 'tag:$tag',
+  ];
 
   /// A panel fill that shows up on this card. Tinting with white works on a
   /// saturated card and disappears on a pale one, so follow the ink.

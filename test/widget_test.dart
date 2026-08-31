@@ -861,6 +861,7 @@ void main() {
   group('The shape of a day', () {
     Pill fact(String id, Difficulty d) => Pill(
       id: id,
+      topicKey: 'science',
       topic: 'Test',
       color: const Color(0xFF000000),
       ink: const Color(0xFFFFFFFF),
@@ -874,6 +875,7 @@ void main() {
 
     Pill asks(String id, Difficulty d, Challenge c) => Pill(
       id: id,
+      topicKey: 'science',
       topic: 'Test',
       color: const Color(0xFF000000),
       ink: const Color(0xFFFFFFFF),

@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import '../data/taste.dart';
 import '../models/pill.dart';
 
 /// Everything about a reader that should survive a new phone.
@@ -27,6 +28,7 @@ class ReaderSnapshot {
     this.pickedTopics = const [],
     this.topicWeights = const {},
     this.pushTokens = const [],
+    this.taste,
   });
 
   final String name;
@@ -44,6 +46,14 @@ class ReaderSnapshot {
 
   /// Where to send a notification, one entry per phone the reader uses.
   final List<String> pushTokens;
+
+  /// What the app has learned about what this reader likes.
+  ///
+  /// It crosses to a new phone for the same reason the streak does: it was
+  /// earned by using the app, and starting again from nothing on a new device
+  /// would make the second phone worse than the first for a month. Null on a
+  /// snapshot written by a build that had no taste model.
+  final ReaderTaste? taste;
 
   bool get isEmpty =>
       streak == 0 &&
@@ -67,6 +77,13 @@ class ReaderSnapshot {
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
     'pushTokens': pushTokens,
+    // Flat rather than nested under a wrapper: the generator reads
+    // `taste.t` off this document to decide what to write next, and a
+    // shallower path is a cheaper query and a clearer rule.
+    if (taste != null) 'taste': taste!.toJson(),
+    // When this was last written. The generator orders by it to sample recent
+    // readers rather than the whole table.
+    'at': DateTime.now().millisecondsSinceEpoch,
   };
 
   static ReaderSnapshot fromJson(Map<String, dynamic>? raw) {
@@ -116,6 +133,7 @@ class ReaderSnapshot {
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
       pushTokens: strings(raw['pushTokens']),
+      taste: raw['taste'] == null ? null : ReaderTaste.fromJson(raw['taste']),
     );
   }
 }
@@ -189,5 +207,14 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     topicWeights: localChoseMix ? local.topicWeights : remote.topicWeights,
     // A reader with two phones should be reachable on both.
     pushTokens: union(local.pushTokens, remote.pushTokens),
+    // Two taste models of the same person are two samples of one taste, so
+    // they add up rather than one replacing the other — the merge weighs each
+    // facet by how many cards it was learned from. See
+    // [ReaderTaste.mergedWith].
+    taste: local.taste == null
+        ? remote.taste
+        : remote.taste == null
+        ? local.taste
+        : local.taste!.mergedWith(remote.taste!),
   );
 }

@@ -7,11 +7,16 @@ Pill _p(
   String q,
   String a,
   String bar,
-  String src,
-) {
+  String src, {
+  List<String> tags = const [],
+  Tone? tone,
+}) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
+    topicKey: topicKey,
+    tags: tags,
+    tone: tone,
     topic: t.name,
     color: t.color,
     ink: t.ink,
@@ -37,10 +42,15 @@ Pill _q(
   String src, {
   String simply = '',
   Principle principle = Principle.none,
+  List<String> tags = const [],
+  Tone? tone,
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
+    topicKey: topicKey,
+    tags: tags,
+    tone: tone,
     topic: t.name,
     color: t.color,
     ink: t.ink,
@@ -72,10 +82,15 @@ Pill _n(
   Difficulty difficulty = Difficulty.medium,
   String simply = '',
   Principle principle = Principle.computation,
+  List<String> tags = const [],
+  Tone? tone,
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
+    topicKey: topicKey,
+    tags: tags,
+    tone: tone,
     topic: t.name,
     color: t.color,
     ink: t.ink,
@@ -105,10 +120,15 @@ Pill _e(
   String bar,
   String src, {
   num withinFactor = 3,
+  List<String> tags = const [],
+  Tone? tone,
 }) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
+    topicKey: topicKey,
+    tags: tags,
+    tone: tone,
     topic: t.name,
     color: t.color,
     ink: t.ink,
@@ -135,11 +155,16 @@ Pill _d(
   String yourCase,
   String counterpoint,
   String bar,
-  String src,
-) {
+  String src, {
+  List<String> tags = const [],
+  Tone? tone,
+}) {
   final t = kTopics[topicKey]!;
   return Pill(
     id: id,
+    topicKey: topicKey,
+    tags: tags,
+    tone: tone,
     topic: t.name,
     color: t.color,
     ink: t.ink,
