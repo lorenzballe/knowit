@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Astuto stores one document per reader and nothing that is shared, so the
+// whole policy is: you may read and write your own, and nothing else exists.
+//
+// Deploy with:  firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    match /readers/{uid} {
+      allow read, write: if isOwner(uid);
+
+      // Answers, judgements and saved pills: same owner, same rule. The
+      // judgement log is append-only — a calibration record that can be
+      // rewritten is not a record, and the app never edits one either.
+      match /answers/{answerId} {
+        allow read, create, update: if isOwner(uid);
+        allow delete: if false;
+      }
+
+      match /judgements/{judgementId} {
+        allow read, create: if isOwner(uid);
+        allow update, delete: if false;
+      }
+
+      match /saved/{pillId} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // Anything not named above is closed, including reads of other readers.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

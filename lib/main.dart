@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'cloud.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
 import 'screens/intro_screen.dart';
@@ -12,7 +13,12 @@ import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'theme.dart';
 
-void main() => runApp(const AstutoApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Never blocks the app: see Cloud.start.
+  await Cloud.start();
+  runApp(const AstutoApp());
+}
 
 /// On the web a list should follow the mouse the way it follows a finger.
 class _DragAnywhereScrollBehavior extends MaterialScrollBehavior {
