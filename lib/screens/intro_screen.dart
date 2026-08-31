@@ -1188,11 +1188,12 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 12,
-            // Above the deck rather than across it. Lying on the card it
-            // covered the one thing the card is there to show, and a label
-            // over artwork reads as a sticker somebody forgot to peel off.
-            top: 0,
+            // Bottom left, beside the bar move and below the card. Above the
+            // deck it sat higher than Skip, which made a caption look like a
+            // control; and it keeps a margin, because a label touching the
+            // glass reads as something that did not fit.
+            left: 16,
+            bottom: 8,
             child: _Pop(
               duration: const Duration(milliseconds: 600),
               delay: const Duration(milliseconds: 620),
