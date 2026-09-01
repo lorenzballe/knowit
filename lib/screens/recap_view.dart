@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
@@ -118,8 +119,34 @@ class RecapView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
+          // The five, small. Not a re-read — a glance at what the day was
+          // made of, the way you would look at five things laid on a table.
+          // Each one opens itself, so the button above is for going through
+          // all of them and this is for going back to one.
           RiseIn(
-            delay: const Duration(milliseconds: 300),
+            delay: const Duration(milliseconds: 280),
+            child: SizedBox(
+              height: 108,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.zero,
+                itemCount: app.todaysDeck.length,
+                itemBuilder: (context, i) => _Thumb(
+                  pill: app.todaysDeck[i],
+                  onTap: () => openDeckViewer(
+                    context,
+                    app,
+                    app.todaysDeck,
+                    "Today's five",
+                    initialIndex: i,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          RiseIn(
+            delay: const Duration(milliseconds: 340),
             child: Row(
               children: List.generate(7, (i) {
                 return Expanded(
@@ -426,6 +453,61 @@ class _RecordNudge extends StatelessWidget {
             onPressed: () => showRecordShareSheet(context, app),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// One of the day's cards at a glance: its colour, its subject, and enough
+/// of the question to remember which one it was.
+class _Thumb extends StatelessWidget {
+  const _Thumb({required this.pill, required this.onTap});
+
+  final Pill pill;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Container(
+        width: 128,
+        margin: const EdgeInsets.only(right: 9),
+        padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+        decoration: BoxDecoration(
+          color: pill.color,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              pill.topic.toUpperCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.label(
+                size: 8.5,
+                spacing: 1.2,
+                color: pill.ink.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 7),
+            Expanded(
+              child: Text(
+                pill.question,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 11.5,
+                  height: 1.22,
+                  weight: FontWeight.w600,
+                  color: pill.ink,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

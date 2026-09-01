@@ -69,8 +69,13 @@ class _TodayScreenState extends State<TodayScreen> {
             onBack: widget.onBack,
           ),
           const SizedBox(height: 16),
-          _ProgressBars(deck: deck, index: index, done: app.todayCompleted),
-          const SizedBox(height: 16),
+          // Only while there is a day left to run. Once it is finished the
+          // screen says so in words, and a full row of colour under that is
+          // decoration on a screen whose whole job is to be quiet.
+          if (!app.todayCompleted) ...[
+            _ProgressBars(deck: deck, index: index, done: false),
+            const SizedBox(height: 16),
+          ],
 
           // The deck takes every pixel that is left.
           Expanded(
