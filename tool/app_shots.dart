@@ -15,6 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 
@@ -231,6 +232,34 @@ void main() {
     await tester.tap(find.text('Edit'));
     await settle(tester);
     await shoot(tester, 'topics-editor');
+  });
+
+  testWidgets('the day, once the five are read', (tester) async {
+    // Past the last card, which is what todayCompleted means. This is the
+    // screen a reader who keeps the habit sees most often: five out of five
+    // are behind them and the day is closed.
+    // The stored day and deck have to match today, or init re-deals and
+    // puts the index back to zero.
+    // Five different subjects, as a dealt day is: taking the first five of
+    // the pool gave one topic five times, and a picture of the bars all one
+    // colour would be a picture of something that never happens.
+    final deck = pickedPills(seed: 'shot', count: 5).map((p) => p.id).toList();
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.todayDate': dateKey(DateTime.now()),
+      'knowit.todayDeckIds': deck,
+      'knowit.todayIndex': 5,
+      'knowit.streak': 13,
+      'knowit.seenIds': kPillPool.take(46).map((pill) => pill.id).toList(),
+      'knowit.completedDates': [
+        for (var back = 0; back < 5; back++)
+          dateKey(DateTime.now().subtract(Duration(days: back))),
+      ],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await shoot(tester, 'today-done');
   });
 
   testWidgets('the paywall', (tester) async {
