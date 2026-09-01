@@ -8,6 +8,8 @@
 /// never using it.
 bool get remindersSupported => false;
 
+Future<bool> hasReminderPermission() async => false;
+
 Future<bool> ensureReminderPermission() async => false;
 
 Future<void> scheduleDailyReminder({

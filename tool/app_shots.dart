@@ -262,6 +262,27 @@ void main() {
     await shoot(tester, 'today-done');
   });
 
+  testWidgets('the card that leaves', (tester) async {
+    // The share sheet, opened from the finished day. This is the one free
+    // channel the app has, and it had never been photographed — which is how
+    // "share image" got to ship copying text on a phone.
+    final deck = pickedPills(seed: 'shot', count: 5).map((p) => p.id).toList();
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.todayDate': dateKey(DateTime.now()),
+      'knowit.todayDeckIds': deck,
+      'knowit.todayIndex': 5,
+      'knowit.streak': 13,
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    await tester.tap(find.text('Share this card'));
+    await settle(tester);
+    await shoot(tester, 'share');
+  });
+
   testWidgets('the paywall', (tester) async {
     _installed();
     await tester.pumpWidget(const AstutoApp());

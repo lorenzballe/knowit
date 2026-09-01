@@ -181,8 +181,8 @@ class _EmptyState extends StatelessWidget {
               ),
               const SizedBox(height: 9),
               Text(
-                'Tap the heart on any pill and it lands here, ready for the '
-                'next time the conversation stalls.',
+                'Tap the heart on any pill and it lands here — the ones that '
+                'changed how you think, kept.',
                 textAlign: TextAlign.center,
                 style: AppText.body(
                   size: 14,

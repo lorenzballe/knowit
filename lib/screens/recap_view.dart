@@ -527,7 +527,7 @@ class _SayThis extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'SAY THIS TONIGHT',
+            'THE BAR MOVE',
             style: AppText.label(size: 9.5, spacing: 1.5, color: pill.color),
           ),
           const SizedBox(height: 8),

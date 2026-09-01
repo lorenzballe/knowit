@@ -39,9 +39,17 @@ dependencies:
   # Rolling a path parser by hand would mean writing the elliptical-arc to
   # cubic conversion, and eight of the eighteen icons are drawn with arcs.
   flutter_svg: ^2.0.10
+  # The share sheet. Saving a PNG needed a file picker the app did not carry,
+  # so on a phone "share image" quietly copied text instead. This hands the
+  # rendered card to the system share sheet, which is the whole point of it.
+  share_plus: ^10.1.0
+  path_provider: ^2.1.5
   web: ^1.1.0
   flutter_local_notifications: ^18.0.1
   timezone: ^0.9.4
+  # Names the phone's zone for the scheduler. Without it tz.local is UTC, and
+  # a reminder set for 08:30 arrives at 10:30 in Rome all summer.
+  flutter_timezone: ^3.0.1
   firebase_core: ^4.14.0
   firebase_auth: ^6.6.1
   cloud_firestore: ^6.9.0

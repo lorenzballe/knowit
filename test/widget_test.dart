@@ -320,7 +320,7 @@ void main() {
     await _settle(tester);
 
     // The share sheet, not the paywall.
-    expect(find.text('Share this pill'), findsOneWidget);
+    expect(find.text('Share this card'), findsOneWidget);
     expect(
       find.text('Find out if you are actually getting better.'),
       findsNothing,
@@ -448,6 +448,94 @@ void main() {
       weights: {for (final key in unwritten) key: 1.0},
     );
     expect(deck, hasLength(kPillsPerDay));
+  });
+
+  group('The daily nudge', () {
+    /// Records what the platform was asked to do, and stands in for it.
+    ({List<(int, int, String)> armed, List<String> asked, AppState app}) build({
+      required bool granted,
+      Map<String, Object> extra = const {},
+    }) {
+      SharedPreferences.setMockInitialValues({..._installed(), ...extra});
+      final armed = <(int, int, String)>[];
+      final asked = <String>[];
+      final app = AppState(
+        hasPermission: () async {
+          asked.add('has');
+          return granted;
+        },
+        askPermission: () async {
+          asked.add('ask');
+          return granted;
+        },
+        arm:
+            ({
+              required int hour,
+              required int minute,
+              required String title,
+              required String body,
+            }) async {
+              armed.add((hour, minute, body));
+            },
+        disarm: () async => armed.add((-1, -1, 'off')),
+      );
+      return (armed: armed, asked: asked, app: app);
+    }
+
+    test('a fresh install arms the reminder at launch', () async {
+      // The switch defaults to on, and for the whole of this project's life
+      // only the switch ever scheduled anything — so a reader who never
+      // touched it never got a nudge. Launching arms it.
+      final t = build(granted: true);
+      await t.app.init();
+      await Future<void>.delayed(Duration.zero);
+
+      expect(t.armed, hasLength(1));
+      expect((t.armed.single.$1, t.armed.single.$2), (8, 30));
+      expect(t.app.remindersLive, isTrue);
+    });
+
+    test('launch never prompts — it only re-arms what is permitted', () async {
+      final t = build(granted: false);
+      await t.app.init();
+      await Future<void>.delayed(Duration.zero);
+
+      expect(t.asked, ['has'], reason: 'the silent check, and nothing else');
+      expect(t.armed, isEmpty);
+      expect(t.app.remindersLive, isFalse);
+    });
+
+    test('the switch is the one place that may prompt', () async {
+      final t = build(granted: true);
+      await t.app.init();
+      await Future<void>.delayed(Duration.zero);
+      t.asked.clear();
+      t.armed.clear();
+
+      await t.app.setNotifications(false);
+      expect(t.armed.last.$3, 'off');
+
+      await t.app.setNotifications(true);
+      expect(t.asked, contains('ask'));
+      expect(t.armed.last.$1, 8);
+    });
+
+    test('the nudge carries the streak it was armed with', () async {
+      final t = build(granted: true, extra: {'knowit.streak': 13});
+      await t.app.init();
+      await Future<void>.delayed(Duration.zero);
+
+      expect(t.armed.single.$3, contains('13 days'));
+    });
+
+    test('a changed time moves the reminder', () async {
+      final t = build(granted: true);
+      await t.app.init();
+      await Future<void>.delayed(Duration.zero);
+
+      await t.app.setNotifyTime('19:00');
+      expect((t.armed.last.$1, t.armed.last.$2), (19, 0));
+    });
   });
 
   group('Streak freezes', () {
@@ -717,7 +805,7 @@ void main() {
     // back fanned, and the line off the card at the front is what you can
     // actually say tonight.
     expect(find.text("TODAY'S FIVE · ALL READ"), findsOneWidget);
-    expect(find.text('SAY THIS TONIGHT'), findsOneWidget);
+    expect(find.text('THE BAR MOVE'), findsOneWidget);
 
     // The card at the front opens itself. It is the middle one, so the fan
     // opens both ways.

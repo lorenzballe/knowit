@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart' show ThemeMode;
@@ -14,7 +15,32 @@ import '../utils/reminders.dart';
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
 
+/// How the reminder is asked about and armed. Function-typed so a test can
+/// stand in for the platform, which has no notification centre.
+typedef PermissionProbe = Future<bool> Function();
+typedef ReminderArmer = Future<void> Function({
+  required int hour,
+  required int minute,
+  required String title,
+  required String body,
+});
+
 class AppState extends ChangeNotifier {
+  AppState({
+    PermissionProbe? hasPermission,
+    PermissionProbe? askPermission,
+    ReminderArmer? arm,
+    Future<void> Function()? disarm,
+  }) : _hasPermission = hasPermission ?? hasReminderPermission,
+       _askPermission = askPermission ?? ensureReminderPermission,
+       _arm = arm ?? scheduleDailyReminder,
+       _disarm = disarm ?? cancelDailyReminder;
+
+  final PermissionProbe _hasPermission;
+  final PermissionProbe _askPermission;
+  final ReminderArmer _arm;
+  final Future<void> Function() _disarm;
+
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
   static const _kLastCompletion = 'knowit.lastCompletionDate';
@@ -138,6 +164,9 @@ class AppState extends ChangeNotifier {
 
     ready = true;
     notifyListeners();
+    // Not awaited: the splash must not wait on the notification centre, and
+    // this never prompts — it only re-arms what is already permitted.
+    unawaited(refreshDailyReminder());
   }
 
   Future<void> _restore() async {
@@ -660,6 +689,10 @@ class AppState extends ChangeNotifier {
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
     await _prefs.setBool(_kNotifications, on);
+    // The switch shows the setting, not the platform's response time. Told
+    // only after the notification centre answered, it sat on its old value
+    // for as long as that took — and a second tap then flipped it back.
+    notifyListeners();
     await _applyReminder();
     notifyListeners();
   }
@@ -667,12 +700,15 @@ class AppState extends ChangeNotifier {
   Future<void> setNotifyTime(String time) async {
     notifyTime = time;
     await _prefs.setString(_kNotifyHour, time);
+    notifyListeners();
     await _applyReminder();
     notifyListeners();
   }
 
   /// Puts the daily reminder in step with the settings, whichever way they
-  /// moved. Called from both setters so the two can never disagree.
+  /// moved. Called from both setters so the two can never disagree. This is
+  /// the one path that may prompt for permission, because it runs when the
+  /// reader has just touched the switch.
   Future<void> _applyReminder() async {
     if (!remindersSupported) {
       remindersLive = false;
@@ -683,28 +719,57 @@ class AppState extends ChangeNotifier {
     // small thing; losing the settings screen with it is not.
     try {
       if (!notificationsOn) {
-        await cancelDailyReminder();
+        await _disarm();
         remindersLive = false;
         return;
       }
-      final granted = await ensureReminderPermission();
+      final granted = await _askPermission();
       if (!granted) {
         remindersLive = false;
         return;
       }
-      final parts = notifyTime.split(':');
-      await scheduleDailyReminder(
-        hour: int.tryParse(parts.first) ?? 8,
-        minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
-        title: 'Your five are ready',
-        body: streak > 0
-            ? '$streak days in a row. Keep it.'
-            : 'Five cards, two minutes.',
-      );
-      remindersLive = true;
+      await _armNow();
     } catch (_) {
       remindersLive = false;
     }
+  }
+
+  /// Re-arms the reminder without ever asking for anything.
+  ///
+  /// Run at every launch and every return to the foreground. The switch was
+  /// the only thing that ever scheduled, so a fresh install with the switch
+  /// on never scheduled at all — and a reminder armed once carries the
+  /// streak it was armed with, which is stale by the next morning. This
+  /// keeps it both present and current, and stays silent where permission
+  /// has not been given: that prompt belongs to a moment the reader chose.
+  Future<void> refreshDailyReminder() async {
+    if (!remindersSupported || !notificationsOn) return;
+    try {
+      // No patience timer on this path. It is never awaited by anything
+      // that shows on screen, so a centre that never answers costs nothing
+      // here — and the timer itself outlived every widget test as a
+      // pending timer, which is a worse fault than the one it guarded.
+      if (!await _hasPermission()) {
+        remindersLive = false;
+        return;
+      }
+      await _armNow();
+    } catch (_) {
+      remindersLive = false;
+    }
+  }
+
+  Future<void> _armNow() async {
+    final parts = notifyTime.split(':');
+    await _arm(
+      hour: int.tryParse(parts.first) ?? 8,
+      minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
+      title: 'Your five are ready',
+      body: streak > 0
+          ? '$streak days in a row. Two minutes to keep it.'
+          : 'Five cards. Two minutes sharper.',
+    );
+    remindersLive = true;
   }
 
   Future<void> setName(String value) async {
@@ -844,6 +909,10 @@ class AppState extends ChangeNotifier {
       await _prefs.setStringList(_kPushTokens, pushTokens);
     }
     notifyListeners();
+    // The reader has just answered the system's notification prompt. If they
+    // said yes, the daily nudge can be armed now rather than at the next
+    // launch.
+    await refreshDailyReminder();
   }
 
   /// A token can be reissued by the system; one that changed is one the

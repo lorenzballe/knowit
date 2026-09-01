@@ -156,6 +156,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     _lifecycle = AppLifecycleListener(
       onPause: _account.flush,
       onDetach: _account.flush,
+      // Coming back to the foreground re-arms tomorrow's nudge with today's
+      // streak in it, and quietly — no prompt ever comes from here.
+      onResume: _app.refreshDailyReminder,
     );
     _refreshPushToken();
     _startAccountAndStore();

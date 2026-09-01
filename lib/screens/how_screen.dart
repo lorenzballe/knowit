@@ -15,8 +15,8 @@ const _steps = [
     n: '02',
     title: 'The model drafts a pill',
     sub:
-        'One question, one answer under 60 words, one reason it is worth '
-        'saying out loud.',
+        'One question, one answer under 60 words, and the one move that '
+        'changes how you think about it.',
   ),
   (
     n: '03',

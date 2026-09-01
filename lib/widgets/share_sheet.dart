@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
-import '../utils/image_saver.dart';
+import '../utils/share_image.dart';
 import 'ui.dart';
 
 /// Opens the share sheet for [pill] — the square export preview plus the
@@ -86,16 +86,18 @@ class _ShareSheetState extends State<_ShareSheet> {
         _toast('Could not render the card.');
         return;
       }
-      final name = 'knowit-${widget.pill.id}.png'.replaceAll(
+      final name = 'astuto-${widget.pill.id}.png'.replaceAll(
         RegExp(r'[^\w.-]'),
         '-',
       );
-      final saved = await savePng(bytes, name);
-      if (saved) {
-        _toast('Image saved.');
-      } else {
+      // On a phone this opens the system share sheet with the image in it;
+      // in a browser it downloads. It used to copy the text on a phone and
+      // say the image was "web-only", which meant the one thing this sheet
+      // is for did not work on the one device anybody uses it on.
+      final shared = await shareCardImage(bytes, name, _shareText);
+      if (!shared) {
         await Clipboard.setData(ClipboardData(text: _shareText));
-        _toast('Text copied — image export is web-only for now.');
+        _toast('Text copied instead.');
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -139,7 +141,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Share this pill',
+              'Share this card',
               style: AppText.display(
                 size: 20,
                 weight: FontWeight.w600,
@@ -157,7 +159,7 @@ class _ShareSheetState extends State<_ShareSheet> {
               children: [
                 Expanded(
                   child: PrimaryButton(
-                    label: _busy ? 'Rendering…' : 'Share image',
+                    label: _busy ? 'Rendering…' : 'Share',
                     height: 52,
                     onPressed: _busy ? null : _shareImage,
                   ),
@@ -174,7 +176,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Source travels with the image',
+                'The source goes with it',
                 style: AppText.body(
                   size: 12,
                   color: Colors.black.withValues(alpha: 0.4),
@@ -188,7 +190,14 @@ class _ShareSheetState extends State<_ShareSheet> {
   }
 }
 
-/// The square that gets exported.
+/// The card that leaves — four by five, the shape a phone screen and a feed
+/// both take without cropping.
+///
+/// It leads with the question, because that is what makes somebody stop,
+/// and ends on the bar move, because that is the thing that changes how you
+/// think and the reason to send it. The subject and the mark are small: a
+/// card in someone else's chat is the only free distribution this app has,
+/// and it should look like a thought, not an advertisement.
 class _ShareCard extends StatelessWidget {
   final Pill pill;
   const _ShareCard({required this.pill});
@@ -197,66 +206,89 @@ class _ShareCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final onCard = pill.ink;
     return AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 4 / 5,
       child: Container(
-        padding: const EdgeInsets.all(26),
+        padding: const EdgeInsets.fromLTRB(26, 24, 26, 22),
         decoration: BoxDecoration(
           color: pill.color,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x29000000),
-              blurRadius: 36,
-              offset: Offset(0, 16),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(26),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               pill.topic.toUpperCase(),
               style: AppText.label(
                 size: 10.5,
-                spacing: 1.4,
-                color: onCard.withValues(alpha: 0.7),
+                spacing: 1.5,
+                color: onCard.withValues(alpha: 0.62),
               ),
             ),
-            Flexible(
-              child: Text(
-                pill.question,
-                style: AppText.display(
-                  size: 26,
-                  weight: FontWeight.w600,
-                  height: 1.16,
-                  spacing: -0.9,
-                  color: onCard,
-                ),
+            const SizedBox(height: 18),
+            Text(
+              pill.question,
+              style: AppText.display(
+                size: 27,
+                weight: FontWeight.w600,
+                height: 1.14,
+                spacing: -0.9,
+                color: onCard,
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    pill.barMove,
-                    style: AppText.body(
-                      size: 13,
-                      weight: FontWeight.w500,
-                      height: 1.4,
-                      color: onCard.withValues(alpha: 0.8),
+            const Spacer(),
+            Container(
+              padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+              decoration: BoxDecoration(
+                color: onCard.withValues(alpha: 0.09),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'THE BAR MOVE',
+                    style: AppText.label(
+                      size: 9,
+                      spacing: 1.4,
+                      color: onCard.withValues(alpha: 0.55),
                     ),
                   ),
-                ),
-                const SizedBox(width: 14),
+                  const SizedBox(height: 7),
+                  Text(
+                    pill.barMove,
+                    style: AppText.body(
+                      size: 14.5,
+                      weight: FontWeight.w600,
+                      height: 1.35,
+                      color: onCard.withValues(alpha: 0.92),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
                 Text(
                   'Astuto',
                   style: AppText.display(
-                    size: 13,
+                    size: 14,
                     weight: FontWeight.w600,
-                    color: onCard.withValues(alpha: 0.6),
+                    color: onCard.withValues(alpha: 0.7),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'Five a day. A little sharper.',
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 10.5,
+                      weight: FontWeight.w500,
+                      color: onCard.withValues(alpha: 0.45),
+                    ),
                   ),
                 ),
               ],
