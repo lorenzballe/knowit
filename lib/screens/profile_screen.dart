@@ -387,7 +387,11 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  subject.name,
+                  // The six with nothing behind them yet say so, rather than
+                  // sitting dark with no reason given.
+                  live || subject.key != null
+                      ? subject.name
+                      : '${subject.name} · soon',
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
@@ -747,7 +751,6 @@ class _Coverage extends StatelessWidget {
           const SizedBox(height: 14),
           ...rows.map((style) {
             final seen = seenByTopic[style.name] ?? 0;
-            final wheel = style.name == 'Thinking';
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Column(
@@ -764,10 +767,7 @@ class _Coverage extends StatelessWidget {
                         height: 9,
                         margin: const EdgeInsets.only(right: 9),
                         decoration: BoxDecoration(
-                          color: wheel ? null : style.color,
-                          gradient: wheel
-                              ? const LinearGradient(colors: kSpectrum)
-                              : null,
+                          color: style.color,
                           borderRadius: BorderRadius.circular(3),
                         ),
                       ),
@@ -794,30 +794,12 @@ class _Coverage extends StatelessWidget {
                   const SizedBox(height: 6),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(999),
-                    child: wheel
-                        // Thinking's cards each take their own hue, so its
-                        // row carries the whole wheel rather than picking one
-                        // of them and lying about the rest.
-                        ? Stack(
-                            children: [
-                              Container(height: 5, color: context.p.line),
-                              FractionallySizedBox(
-                                widthFactor: busiest == 0 ? 0 : seen / busiest,
-                                child: Container(
-                                  height: 5,
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(colors: kSpectrum),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : LinearProgressIndicator(
-                            value: busiest == 0 ? 0 : seen / busiest,
-                            minHeight: 5,
-                            backgroundColor: context.p.line,
-                            valueColor: AlwaysStoppedAnimation(style.color),
-                          ),
+                    child: LinearProgressIndicator(
+                      value: busiest == 0 ? 0 : seen / busiest,
+                      minHeight: 5,
+                      backgroundColor: context.p.line,
+                      valueColor: AlwaysStoppedAnimation(style.color),
+                    ),
                   ),
                 ],
               ),

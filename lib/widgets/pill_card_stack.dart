@@ -216,9 +216,6 @@ class _PillCardStackState extends State<PillCardStack>
     for (var d = visible - 1; d >= 0; d--) {
       final pill = widget.deck[widget.index + d];
       final isTop = d == 0;
-      final num =
-          '${(widget.index + d + 1).toString().padLeft(2, '0')} / '
-          '${widget.deck.length.toString().padLeft(2, '0')}';
 
       final given = widget.answerFor(pill.id);
 
@@ -227,7 +224,6 @@ class _PillCardStackState extends State<PillCardStack>
               showBack: _flipped,
               front: PillCard(
                 pill: pill,
-                indexLabel: num,
                 flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
@@ -247,7 +243,6 @@ class _PillCardStackState extends State<PillCardStack>
               ),
               back: PillCard(
                 pill: pill,
-                indexLabel: num,
                 flipped: true,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
@@ -258,7 +253,6 @@ class _PillCardStackState extends State<PillCardStack>
             )
           : PillCard(
               pill: pill,
-              indexLabel: num,
               flipped: false,
               isReview: widget.reviewIds.contains(pill.id),
             );

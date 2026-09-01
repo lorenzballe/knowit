@@ -199,6 +199,21 @@ class _TopicChip extends StatelessWidget {
                     : context.p.inkMuted.withValues(alpha: enabled ? 1 : 0.4),
               ),
             ),
+            // A control that does nothing when pressed and gives no reason is
+            // worse than one that is absent. These subjects are coming; the
+            // chip says so rather than leaving the reader to work out why
+            // their tap did nothing.
+            if (!enabled) ...[
+              const SizedBox(width: 7),
+              Text(
+                'soon',
+                style: AppText.label(
+                  size: 9.5,
+                  spacing: 0.8,
+                  color: context.p.inkFaint,
+                ),
+              ),
+            ],
           ],
         ),
       ),

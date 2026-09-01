@@ -72,26 +72,23 @@ final Map<String, TopicStyle> kTopics = {
   'psychology': _topic('Psychology', kSpectrum[9]),
   'weird_facts': _topic('Weird facts', kSpectrum[11]),
   'human_body': _topic('Human body', kSpectrum[14]),
-  // Thinking is more than half the deck, so a single hue for it would make
-  // the whole app that colour. Its cards take theirs from the pill's own id
-  // instead — see [thinkingStyle] — and this entry only names it.
-  'thinking': _topic('Thinking', kSpectrum[8]),
+  // Thinking is not a subject. Its cards are not economics or space applied
+  // to reasoning — they are the reasoning itself, which is the app's own
+  // voice, so they carry no hue at all. White is the one card that is not a
+  // colour, and it happens to solve what a single hue could not: more than
+  // half the deck lives here, and any colour would have made the whole app
+  // that colour.
+  'thinking': TopicStyle(
+    name: 'Thinking',
+    color: kThinkingWhite,
+    ink: Color(0xFF10100C),
+    tint: Color(0xFF16161A),
+  ),
   'philosophy': _topic('Philosophy', kSpectrum[7]),
 };
 
-/// The colour a reasoning card wears.
-///
-/// Ninety-four of the hundred and seventy pills live under Thinking. Give
-/// them one hue and every other card in a day is that hue, which is the one
-/// thing the app is not meant to be. Drawn from the id, so a card keeps its
-/// colour for good and a day's five come out different from each other.
-TopicStyle thinkingStyle(String id) {
-  int hash = 0;
-  for (final unit in id.codeUnits) {
-    hash = (hash * 31 + unit) & 0x1FFFFFFF;
-  }
-  return _topic('Thinking', kSpectrum[hash % kSpectrum.length]);
-}
+/// The paper a reasoning card is printed on.
+const Color kThinkingWhite = Color(0xFFF2F1EC);
 
 /// Display order used by the topic picker and the profile chips.
 const List<String> kTopicOrder = [

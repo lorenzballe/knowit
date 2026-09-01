@@ -11,7 +11,12 @@ import 'scaled_text.dart';
 /// carrying a Bar move line and a source once flipped.
 class PillCard extends StatelessWidget {
   final Pill pill;
-  final String indexLabel;
+
+  /// Where this card sits in the set, or null when something else on screen
+  /// already says. The bars above the deck and the viewer's own header both
+  /// do, and printing it a second time on the card itself is chrome pretending
+  /// to be content.
+  final String? indexLabel;
   final bool flipped;
 
   /// What the reader committed to, and where to send a new commitment.
@@ -26,7 +31,7 @@ class PillCard extends StatelessWidget {
   const PillCard({
     super.key,
     required this.pill,
-    required this.indexLabel,
+    this.indexLabel,
     required this.flipped,
     this.given,
     this.onAnswer,
@@ -132,13 +137,14 @@ class PillCard extends StatelessWidget {
                   ],
                 ],
               ),
-              Text(
-                indexLabel,
-                style: AppText.label(
-                  size: 11,
-                  color: pill.ink.withValues(alpha: 0.55),
+              if (indexLabel != null)
+                Text(
+                  indexLabel!,
+                  style: AppText.label(
+                    size: 11,
+                    color: pill.ink.withValues(alpha: 0.55),
+                  ),
                 ),
-              ),
             ],
           ),
           Expanded(

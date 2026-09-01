@@ -581,9 +581,10 @@ void main() {
     await tester.tap(find.text('READ 5 MORE'));
     await _settle(tester);
 
-    // Back to reading, on pill six of ten.
+    // Back to reading, on pill six of ten. The bars say so; the card no
+    // longer repeats it.
     expect(find.byType(PillCardStack), findsOneWidget);
-    expect(find.text('06 / 10'), findsOneWidget);
+    expect(find.byKey(const ValueKey('progress-6-of-10')), findsOneWidget);
   });
 
   testWidgets('finishing the day gives a short summary and a way back', (
@@ -1869,8 +1870,10 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // The app is past the splash and dealing a real day.
-      expect(find.text('Astuto'), findsWidgets);
+      // The app is past the splash and dealing a real day. The header used
+      // to say Astuto, which is not something a screen has to tell you about
+      // the app you just opened; it says the date now, so the tab bar and
+      // the deck are what stand for "it came back".
       expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 

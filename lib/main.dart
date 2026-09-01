@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'cloud.dart';
-import 'data/topics.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/deck_viewer_screen.dart';
@@ -411,22 +410,6 @@ class _AstutoShellState extends State<AstutoShell> {
   /// True while a card is under the finger.
   bool _cardMoving = false;
 
-  /// True while the reader is on Today with cards still in front of them.
-  bool get _cardsShowing => _tab == 0 && !widget.app.todayCompleted;
-
-  /// Three hues off today's deck, for the light behind the app.
-  ///
-  /// Taken from the cards the reader actually has in hand rather than picked
-  /// once and fixed, which is the whole point: nothing here is Astuto's
-  /// colour, it is today's.
-  List<Color> get _bloomColours {
-    final List<Color> deck = widget.app.todaysDeck
-        .map((pill) => pill.color)
-        .toList();
-    if (deck.isEmpty) return kSpectrum.take(3).toList();
-    return [deck[0], deck[deck.length ~/ 2], deck[deck.length - 1]];
-  }
-
   @override
   Widget build(BuildContext context) {
     final screens = [
@@ -465,26 +448,14 @@ class _AstutoShellState extends State<AstutoShell> {
                   : SystemUiOverlayStyle.dark)
               .copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
+        // Still, and black. The drifting light belongs to the onboarding,
+        // which is a pitch and can afford atmosphere; this is the thing
+        // itself, and a tool reads as well made when it holds still. The
+        // cards are the only colour, which is the whole idea.
         backgroundColor: context.p.surface,
-        body: Stack(
-          children: [
-            // The same light the onboarding sits in, and the same rule: the
-            // colour is the day's own. Five cards, five hues, drifting
-            // behind everything — so the app is never one colour, and never
-            // the same colour two days running.
-            //
-            // Not behind the cards themselves. A card is already a field of
-            // its own colour, and a second colour washing about behind it
-            // fights it; the deck reads better lifted off plain black. The
-            // light comes back once the day is finished and the cards are
-            // gone.
-            if (context.p.isDark && !_cardsShowing)
-              Positioned.fill(child: AmbientBlooms(colors: _bloomColours)),
-            SafeArea(
-              bottom: false,
-              child: IndexedStack(index: _tab, children: screens),
-            ),
-          ],
+        body: SafeArea(
+          bottom: false,
+          child: IndexedStack(index: _tab, children: screens),
         ),
         // The bar steps aside while a card is being thrown. Two rows of
         // controls along the bottom edge was one too many, and a card thrown

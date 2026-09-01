@@ -113,57 +113,104 @@ class _Header extends StatelessWidget {
   final VoidCallback? onBack;
   const _Header({required this.streak, this.frozen = false, this.onBack});
 
+  /// Monday 1 September. Built here rather than pulling in a localisation
+  /// package for one line.
+  static String _today() {
+    const days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    final now = DateTime.now();
+    return '${days[now.weekday - 1]} ${now.day} ${months[now.month - 1]}';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (onBack != null) ...[
             BackCircle(onPressed: onBack!),
             const SizedBox(width: 12),
           ],
-          Text(
-            'Astuto',
-            style: AppText.display(
-              size: 20,
-              weight: FontWeight.w600,
-              spacing: -0.4,
-              color: context.p.ink,
+          // The day, not the app's name. Every app knows what it is called;
+          // what a reader opening a daily app twice needs to know is which
+          // day's five these are.
+          // A long date and a streak badge do not both fit on a narrow
+          // handset. The date gives way by a point or two rather than being
+          // clipped, or overflowing, which is what it did.
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                _today(),
+                maxLines: 1,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.4,
+                  color: context.p.ink,
+                ),
+              ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
-            decoration: BoxDecoration(
-              color: frozen
-                  ? context.p.link.withValues(alpha: 0.22)
-                  : context.p.line,
-              borderRadius: BorderRadius.circular(999),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: frozen ? context.p.link : context.p.inverse,
-                    shape: BoxShape.circle,
+          const SizedBox(width: 10),
+          // Nothing until there is something. A badge reading "0 days" on the
+          // morning somebody installs the app is a worse first impression
+          // than no badge at all.
+          if (streak > 0)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+              decoration: BoxDecoration(
+                color: frozen
+                    ? context.p.link.withValues(alpha: 0.22)
+                    : context.p.line,
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: frozen ? context.p.link : context.p.inverse,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 6),
-                Text(
-                  streak == 1 ? '1 day' : '$streak days',
-                  style: AppText.body(
-                    size: 12,
-                    weight: FontWeight.w600,
-                    color: context.p.ink,
+                  const SizedBox(width: 6),
+                  Text(
+                    streak == 1 ? '1 day' : '$streak days',
+                    style: AppText.body(
+                      size: 12,
+                      weight: FontWeight.w600,
+                      color: context.p.ink,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -183,6 +230,10 @@ class _ProgressBars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      // The bars are the only thing that says where in the day you are, now
+      // that the card has stopped repeating it. The key names what they
+      // draw, so it can be read without a caption existing for its own sake.
+      key: ValueKey('progress-${done ? total : index + 1}-of-$total'),
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: List.generate(total, (i) {
