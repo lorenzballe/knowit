@@ -853,11 +853,7 @@ class _SceneRain extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0x00FFFFFF)],
-          // The fade used to begin at 62%, which meant the cards were gone
-          // well before the band was, and the scene ended a long way above
-          // the copy. It still leaves by fading — there is no straight edge
-          // to see — but it does it at the bottom rather than in the middle.
-          stops: [0, 0.86, 1],
+          stops: [0, 0.62, 1],
         ).createShader(rect),
         child: ClipRect(
           child: Stack(
@@ -1342,30 +1338,19 @@ class _SceneChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Three rows spread down the band rather than huddled in the middle of
-    // it. Wrapped, they took a hundred and forty points of a band worth two
-    // hundred and fifty, and the hundred left over sat as a hole between the
-    // picture and the words — which reads as the words having slipped, not
-    // as the picture being short.
     return SizedBox(
       width: 334,
-      height: _SceneStage.bandHeight,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        alignment: WrapAlignment.center,
+        runAlignment: WrapAlignment.center,
         children: [
-          for (int row = 0; row < 3; row++)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                for (int col = 0; col < 3; col++) ...[
-                  if (col > 0) const SizedBox(width: 10),
-                  _Pop(
-                    duration: const Duration(milliseconds: 620),
-                    delay: Duration(milliseconds: 120 + (row * 3 + col) * 60),
-                    child: _chip(row * 3 + col),
-                  ),
-                ],
-              ],
+          for (int i = 0; i < _names.length; i++)
+            _Pop(
+              duration: const Duration(milliseconds: 620),
+              delay: Duration(milliseconds: (120 + i * 60)),
+              child: _chip(i),
             ),
         ],
       ),
