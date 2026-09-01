@@ -125,16 +125,19 @@ class WeekStrip extends StatelessWidget {
 
   /// Null takes the palette's own reverse — the app has no fixed accent.
   final Color? onColor;
-  final Color offColor;
-  final Color labelColor;
+
+  /// Both null take the palette too. Fixed black at 8% was invisible on the
+  /// black ground, so the strip rendered as a hole.
+  final Color? offColor;
+  final Color? labelColor;
   final double barHeight;
 
   const WeekStrip({
     super.key,
     required this.week,
     this.onColor,
-    this.offColor = const Color(0x14000000),
-    this.labelColor = const Color(0x59000000),
+    this.offColor,
+    this.labelColor,
     this.barHeight = 38,
   });
 
@@ -155,14 +158,19 @@ class WeekStrip extends StatelessWidget {
                 Container(
                   height: barHeight,
                   decoration: BoxDecoration(
-                    color: week[i] ? (onColor ?? context.p.inverse) : offColor,
+                    color: week[i]
+                        ? (onColor ?? context.p.inverse)
+                        : (offColor ?? context.p.line),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   _letters[weekdayIndex < 0 ? weekdayIndex + 7 : weekdayIndex],
-                  style: AppText.label(size: 10, color: labelColor),
+                  style: AppText.label(
+                    size: 10,
+                    color: labelColor ?? context.p.inkFaint,
+                  ),
                 ),
               ],
             ),

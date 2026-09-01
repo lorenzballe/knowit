@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
@@ -68,11 +69,7 @@ class _TodayScreenState extends State<TodayScreen> {
             onBack: widget.onBack,
           ),
           const SizedBox(height: 16),
-          _ProgressBars(
-            total: deck.length,
-            index: index,
-            done: app.todayCompleted,
-          ),
+          _ProgressBars(deck: deck, index: index, done: app.todayCompleted),
           const SizedBox(height: 16),
 
           // The deck takes every pixel that is left.
@@ -220,17 +217,18 @@ class _Header extends StatelessWidget {
 }
 
 class _ProgressBars extends StatelessWidget {
-  final int total;
+  final List<Pill> deck;
   final int index;
   final bool done;
   const _ProgressBars({
-    required this.total,
+    required this.deck,
     required this.index,
     required this.done,
   });
 
   @override
   Widget build(BuildContext context) {
+    final total = deck.length;
     return Padding(
       // The bars are the only thing that says where in the day you are, now
       // that the card has stopped repeating it. The key names what they
@@ -239,16 +237,30 @@ class _ProgressBars extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: List.generate(total, (i) {
-          final filled = done || i <= index;
+          final read = done || i < index;
+          final here = !done && i == index;
+          // Each bar is its own card, in that card's colour. Five identical
+          // grey dashes said only how far along you were; these say what the
+          // day is made of before you have read any of it, and the one under
+          // the thumb is the one lit.
+          final colour = deck[i].color;
           return Expanded(
             child: AnimatedContainer(
               duration: Duration(milliseconds: 260 + i * 40),
               curve: Curves.easeOut,
               margin: EdgeInsets.only(right: i == total - 1 ? 0 : 5),
-              height: 3,
+              height: here ? 5 : 3,
               decoration: BoxDecoration(
-                color: filled ? context.p.ink : context.p.line,
+                color: read || here ? colour : colour.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(9),
+                boxShadow: here
+                    ? [
+                        BoxShadow(
+                          color: colour.withValues(alpha: 0.5),
+                          blurRadius: 12,
+                        ),
+                      ]
+                    : null,
               ),
             ),
           );

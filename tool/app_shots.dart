@@ -219,8 +219,13 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, -900));
-    await settle(tester);
+    // Scroll until the row is built rather than guessing a distance: the
+    // profile's height changes as it is worked on.
+    for (var attempt = 0; attempt < 8; attempt++) {
+      if (find.text('Edit').evaluate().isNotEmpty) break;
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -420));
+      await settle(tester);
+    }
     await shoot(tester, 'topics-list');
 
     await tester.tap(find.text('Edit'));

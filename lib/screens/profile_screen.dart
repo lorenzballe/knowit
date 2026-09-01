@@ -176,80 +176,35 @@ class ProfileScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(22, 8, 22, 24),
         children: [
-          Row(
-            children: [
-              Container(
-                width: 54,
-                height: 54,
-                decoration: BoxDecoration(
-                  color: context.p.inverse,
-                  shape: BoxShape.circle,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  app.initials,
-                  style: AppText.display(
-                    size: 18,
-                    weight: FontWeight.w600,
-                    color: context.p.onInverse,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      app.name,
-                      style: AppText.display(
-                        size: 22,
-                        weight: FontWeight.w700,
-                        height: 1.1,
-                        spacing: -0.7,
-                        color: context.p.ink,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      app.isPlus
-                          ? 'Astuto+ · ${app.pickedTopics.length} topics'
-                          : 'Free plan · ${app.pickedTopics.length} topics',
-                      style: AppText.body(
-                        size: 12.5,
-                        color: context.p.inkMuted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          Row(
-            children: [
-              _Stat(value: '${app.liveStreak}', label: 'day streak'),
-              const SizedBox(width: 10),
-              _Stat(value: '${app.pillsRead}', label: 'pills read'),
-              const SizedBox(width: 10),
-              _Stat(value: '${app.dueReviews.length}', label: 'coming back'),
-              if (app.freezes > 0) ...[
-                const SizedBox(width: 10),
-                // The reading screen carried this as a bare blue snowflake
-                // with nothing to read it by. A freeze only matters on the
-                // day you miss one, so it belongs here, next to the streak it
-                // protects, where there is room to name it.
-                _Stat(
-                  value: '${app.freezes}',
-                  label: app.freezes == 1 ? 'streak freeze' : 'streak freezes',
-                ),
-              ],
-            ],
-          ),
-          // The offer belongs where the reader is already looking at their own
-          // numbers, not as a link under the settings. A profile is the one
-          // screen somebody opens because they care how they are doing.
-          if (!app.isPlus) ...[const SizedBox(height: 14), _PlusCard(app: app)],
+          // The record, not an identity. This screen used to open with a
+          // circle of initials nobody typed, a name nobody set, and four
+          // boxes reading zero — a dashboard of nothing, with an
+          // advertisement as the brightest object on it. What a reader comes
+          // here for is the one number the habit has produced, so that is
+          // what it opens with.
+          const Eyebrow('Your record'),
+          const SizedBox(height: 12),
+          _Headline(app: app),
+          if (app.weekCompletion().any((day) => day)) ...[
+            const SizedBox(height: 18),
+            WeekStrip(week: app.weekCompletion(), barHeight: 34),
+          ],
+          const SizedBox(height: 16),
+          _RecordLine(app: app),
+          // Under the reader's own record and above everything else: the
+          // offer is about the record, so it reads as the next thing to say
+          // rather than as the loudest thing on the screen. Below the
+          // coverage list it was buried under thirteen rows.
+          if (!app.isPlus) ...[const SizedBox(height: 20), _PlusCard(app: app)],
+          // Nothing to cover until something has been read: a list of
+          // nineteen subjects all reading zero is the same wall of nothing
+          // the four tiles used to be.
+          if (app.seenIds.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            const Eyebrow('What you have covered'),
+            const SizedBox(height: 11),
+            _Coverage(app: app),
+          ],
           if (app.calibratedAnswers > 0) ...[
             const SizedBox(height: 22),
             const Eyebrow('How well you know yourself'),
@@ -270,10 +225,6 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 11),
             _Mastery(app: app),
           ],
-          const SizedBox(height: 22),
-          const Eyebrow('What you have covered'),
-          const SizedBox(height: 11),
-          _Coverage(app: app),
           const SizedBox(height: 22),
           const Eyebrow('Appearance'),
           const SizedBox(height: 11),
@@ -623,50 +574,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class _Stat extends StatelessWidget {
-  final String value;
-  final String label;
-  const _Stat({required this.value, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: BoxDecoration(
-          color: context.p.surfaceRaised,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: context.p.line),
-        ),
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: AppText.display(
-                size: 24,
-                weight: FontWeight.w700,
-                height: 1,
-                spacing: -0.6,
-                color: context.p.ink,
-              ),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              label.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: AppText.label(
-                size: 9.5,
-                spacing: 1,
-                color: context.p.inkFaint,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _LinkRow extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
@@ -741,7 +648,6 @@ class _Coverage extends StatelessWidget {
         .where((style) => (byTopic[style.name] ?? 0) > 0)
         .toList();
 
-    final seenTotal = app.seenIds.length;
     // The most any one subject has been read. The bars are drawn against
     // this, not against how many cards exist: the pool is written to keep
     // growing, so a total would be a number that quietly stops being true —
@@ -756,16 +662,6 @@ class _Coverage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            seenTotal == 1 ? '1 pill read' : '$seenTotal pills read',
-            style: AppText.display(
-              size: 20,
-              weight: FontWeight.w600,
-              spacing: -0.5,
-              color: context.p.ink,
-            ),
-          ),
-          const SizedBox(height: 14),
           ...rows.map((style) {
             final seen = seenByTopic[style.name] ?? 0;
             return Padding(
@@ -1450,6 +1346,96 @@ class _DebugLine extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// The one number the habit has produced, set as a headline.
+///
+/// A streak while there is one, because that is what a reader comes back to
+/// protect. Before there is a streak it says what has actually been read,
+/// and on the first morning it says neither, because a screen that opens
+/// with a zero has told you nothing except that you have not started.
+class _Headline extends StatelessWidget {
+  const _Headline({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final int streak = app.liveStreak;
+    // The same count the coverage panel prints. Reading it from a second
+    // field meant the headline said the record had not started while the
+    // panel underneath said forty-six.
+    final int read = app.seenIds.length;
+
+    if (streak == 0 && read == 0) {
+      return Text(
+        'Your record starts today.',
+        style: AppText.display(
+          size: 34,
+          weight: FontWeight.w600,
+          height: 1.08,
+          spacing: -1.1,
+          color: context.p.ink,
+        ),
+      );
+    }
+
+    final bool onStreak = streak > 0;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Text(
+          '${onStreak ? streak : read}',
+          style: AppText.display(
+            size: 64,
+            weight: FontWeight.w600,
+            height: 1,
+            spacing: -3,
+            color: context.p.ink,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          onStreak
+              ? (streak == 1 ? 'day' : 'days')
+              : (read == 1 ? 'pill read' : 'pills read'),
+          style: AppText.body(
+            size: 16,
+            weight: FontWeight.w500,
+            color: context.p.inkMuted,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The rest of the numbers, on one line rather than in a row of boxes.
+class _RecordLine extends StatelessWidget {
+  const _RecordLine({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final parts = <String>[
+      if (app.liveStreak > 0)
+        app.seenIds.length == 1
+            ? '1 pill read'
+            : '${app.seenIds.length} pills read',
+      if (app.dueReviews.isNotEmpty) '${app.dueReviews.length} coming back',
+      if (app.freezes > 0)
+        app.freezes == 1
+            ? '1 freeze in hand'
+            : '${app.freezes} freezes in hand',
+      app.isPlus ? 'Astuto+' : 'Free plan',
+    ];
+    return Text(
+      parts.join('  ·  '),
+      style: AppText.body(size: 13, color: context.p.inkMuted),
     );
   }
 }
