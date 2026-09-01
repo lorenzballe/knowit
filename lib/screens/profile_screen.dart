@@ -17,6 +17,7 @@ import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
+import 'saved_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
@@ -460,6 +461,27 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 24),
+          // Your own shelf, which is a thing you own and not a place to go
+          // looking — so it lives here, with the rest of what is yours,
+          // rather than taking one of three tabs.
+          _LinkRow(
+            label: app.savedIds.isEmpty
+                ? 'Saved'
+                : 'Saved · ${app.savedIds.length}',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => Scaffold(
+                  backgroundColor: context.p.surface,
+                  body: SafeArea(
+                    child: SavedScreen(
+                      app: app,
+                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           _LinkRow(
             label: 'Archive',
             locked: !app.isPlus,

@@ -5,10 +5,9 @@ import 'package:flutter/services.dart';
 import 'cloud.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
-import 'screens/deck_viewer_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
-import 'screens/saved_screen.dart';
+import 'screens/search_screen.dart';
 import 'screens/mix_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
@@ -419,20 +418,7 @@ class _AstutoShellState extends State<AstutoShell> {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
       ),
-      SavedScreen(
-        app: widget.app,
-        // A day still to do belongs on Today, where it can be answered. A day
-        // already worked through opens as a re-read instead, because sending
-        // someone back to a finished recap is not "today's five".
-        onBackToToday: () {
-          final app = widget.app;
-          if (app.todayCompleted && app.todaysDeck.isNotEmpty) {
-            openDeckViewer(context, app, app.todaysDeck, "Today's five");
-          } else {
-            setState(() => _tab = 0);
-          }
-        },
-      ),
+      SearchScreen(app: widget.app),
       ProfileScreen(
         app: widget.app,
         account: widget.account,
@@ -494,7 +480,10 @@ class _AstutoTabBar extends StatelessWidget {
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
-    (icon: Icons.bookmark_rounded, label: 'Saved'),
+    // A lens, not a bookmark: the middle tab stopped being the reader's own
+    // shelf and became the one place with cards nobody dealt them. Saved
+    // moved into the profile, where a list of your own things belongs.
+    (icon: Icons.search_rounded, label: 'Search'),
     (icon: Icons.person_rounded, label: 'Profile'),
   ];
 

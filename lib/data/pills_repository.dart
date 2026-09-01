@@ -225,3 +225,95 @@ List<Pill> _weightedOrder(
   keyed.sort((a, b) => a.$1.compareTo(b.$1));
   return [for (final entry in keyed) entry.$2];
 }
+
+/// A rotating pick of cards, the same for everybody.
+///
+/// The search tab is not a second archive and it is not a feed: it hands over
+/// a handful of cards, chosen for the day or the month, so there is something
+/// to look at that was not dealt to you. Nothing here is personalised — that
+/// is the point of it, and it is why the reader's own history never enters.
+///
+/// "Best" is earned rather than claimed. With no server collecting what
+/// anybody saved, popularity would be a number invented on the spot; the
+/// cards that come out on top here are the ones that ask the most — hardest
+/// first, then the ones that ask anything at all — and inside a band the
+/// order is drawn from [seed], so the shelf turns over without ever
+/// reshuffling under somebody looking at it.
+List<Pill> pickedPills({
+  required String seed,
+  required int count,
+  String? topic,
+}) {
+  final pool = topic == null
+      ? List<Pill>.from(kPillPool)
+      : kPillPool.where((p) => p.topic == topic).toList();
+
+  int rank(Pill p) => switch (p.difficulty) {
+    Difficulty.hard => 0,
+    Difficulty.medium => 1,
+    Difficulty.easy => 2,
+  };
+
+  int keyed(Pill p) {
+    var hash = 0;
+    for (final unit in '$seed${p.id}'.codeUnits) {
+      hash = (hash * 31 + unit) & 0x1FFFFFFF;
+    }
+    return hash;
+  }
+
+  pool.sort((a, b) {
+    final byRank = rank(a).compareTo(rank(b));
+    if (byRank != 0) return byRank;
+    final byAsking = (a.asksSomething ? 0 : 1).compareTo(
+      b.asksSomething ? 0 : 1,
+    );
+    if (byAsking != 0) return byAsking;
+    return keyed(a).compareTo(keyed(b));
+  });
+
+  if (topic != null) return pool.take(count).toList();
+
+  // One subject at a time, round the subjects, until the shelf is full.
+  // Ranked straight down, the shelf came out entirely Thinking — it is more
+  // than half the deck and it holds most of the hard cards — and six cards
+  // from one subject is not a shelf, it is the same card six times.
+  final byTopic = <String, List<Pill>>{};
+  for (final pill in pool) {
+    byTopic.putIfAbsent(pill.topic, () => <Pill>[]).add(pill);
+  }
+  final order = byTopic.keys.toList()
+    ..sort((a, b) {
+      var ka = 0, kb = 0;
+      for (final unit in '$seed$a'.codeUnits) {
+        ka = (ka * 31 + unit) & 0x1FFFFFFF;
+      }
+      for (final unit in '$seed$b'.codeUnits) {
+        kb = (kb * 31 + unit) & 0x1FFFFFFF;
+      }
+      return ka.compareTo(kb);
+    });
+
+  final picked = <Pill>[];
+  for (var round = 0; picked.length < count; round++) {
+    var tookAny = false;
+    for (final name in order) {
+      final subject = byTopic[name]!;
+      if (round >= subject.length) continue;
+      picked.add(subject[round]);
+      tookAny = true;
+      if (picked.length == count) break;
+    }
+    if (!tookAny) break;
+  }
+  return picked;
+}
+
+/// The seed for a day, and for a month. Named so the two shelves cannot
+/// silently become the same list.
+String daySeed(DateTime on) =>
+    '${on.year}-${on.month.toString().padLeft(2, '0')}-'
+    '${on.day.toString().padLeft(2, '0')}';
+
+String monthSeed(DateTime on) =>
+    '${on.year}-${on.month.toString().padLeft(2, '0')}';

@@ -97,9 +97,16 @@ void main() {
 
     await shoot(tester, 'today');
 
-    await tester.tap(find.byKey(const ValueKey('tab-Saved')));
+    await tester.tap(find.byKey(const ValueKey('tab-Search')));
     await settle(tester);
-    await shoot(tester, 'saved');
+    await shoot(tester, 'search');
+
+    // And with a subject picked, which is the shelf a reader actually uses.
+    // The chip, not the subject label on a card row — the shelf now
+    // carries Science cards too, so the plain finder is ambiguous.
+    await tester.tap(find.text('Science').first);
+    await settle(tester);
+    await shoot(tester, 'search-topic');
 
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);

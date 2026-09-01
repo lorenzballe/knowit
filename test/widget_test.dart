@@ -66,6 +66,25 @@ Future<void> _loadRealFonts() async {
   }
 }
 
+/// Opens the profile and scrolls until a settings row is on screen.
+///
+/// The rows below the fold are not built until they are, so a finder alone
+/// will not reach them.
+Future<void> _openSetting(WidgetTester tester, String label) async {
+  await _openProfile(tester);
+  for (var attempt = 0; attempt < 8; attempt++) {
+    final row = find.textContaining(label);
+    if (row.evaluate().isNotEmpty) {
+      await tester.tap(row.first);
+      await _settle(tester);
+      return;
+    }
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -320));
+    await _settle(tester);
+  }
+  fail('no settings row named $label');
+}
+
 Future<void> _openProfile(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('tab-Profile')));
   await _settle(tester);
@@ -174,7 +193,7 @@ void main() {
     await _settle(tester);
 
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-    expect(find.byKey(const ValueKey('tab-Saved')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Search')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
@@ -183,9 +202,29 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-    await _settle(tester);
+    // Saved is the reader's own shelf, so it lives in the profile now rather
+    // than holding one of three tabs.
+    await _openSetting(tester, 'Saved');
     expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
+  });
+
+  testWidgets('Search offers cards nobody dealt you', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await _settle(tester);
+
+    // Two shelves and the subjects along the top, none of it personalised.
+    expect(find.text('Today'), findsWidgets);
+    expect(find.text('This month'), findsOneWidget);
+    expect(find.text('All'), findsOneWidget);
+
+    // And it searches the whole pool, not just what has been read.
+    await tester.enterText(find.byType(TextField), 'why');
+    await _settle(tester);
+    expect(find.textContaining('cards'), findsWidgets);
   });
 
   group('Astuto+ gates the three perks', () {
@@ -196,10 +235,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-      await _settle(tester);
-      await tester.tap(find.text('Archive').first);
-      await _settle(tester);
+      await _openSetting(tester, 'Archive');
 
       expect(
         find.text('Find out if you are actually getting better.'),
@@ -233,10 +269,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-      await _settle(tester);
-      await tester.tap(find.text('Archive').first);
-      await _settle(tester);
+      await _openSetting(tester, 'Archive');
 
       expect(find.textContaining('RESULTS'), findsOneWidget);
 
@@ -250,10 +283,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-      await _settle(tester);
-      await tester.tap(find.text('Archive').first);
-      await _settle(tester);
+      await _openSetting(tester, 'Archive');
 
       // The paywall stands in for the archive; taking the trial should carry
       // the reader through to what they reached for.
@@ -332,6 +362,55 @@ void main() {
       weights: weights,
     );
     expect(deck, hasLength(kPillsPerDay));
+  });
+
+  group('The shelf', () {
+    test('shows a range of subjects rather than the deepest one', () {
+      // Ranked straight by difficulty it came out entirely Thinking, which
+      // is more than half the deck. A shelf of six cards from one subject is
+      // the same card six times.
+      final shelf = pickedPills(seed: daySeed(DateTime(2026, 5, 4)), count: 6);
+      expect(shelf, hasLength(6));
+      expect(
+        shelf.map((p) => p.topic).toSet().length,
+        greaterThanOrEqualTo(5),
+        reason: 'a shelf is worth looking at only if it is not all one thing',
+      );
+    });
+
+    test('holds still through a day and turns over between days', () {
+      final monday = daySeed(DateTime(2026, 5, 4));
+      final tuesday = daySeed(DateTime(2026, 5, 5));
+      // Nobody wants the shelf reshuffling while they are reading it.
+      expect(
+        pickedPills(seed: monday, count: 6).map((p) => p.id),
+        pickedPills(seed: monday, count: 6).map((p) => p.id),
+      );
+      expect(
+        pickedPills(seed: monday, count: 6).map((p) => p.id).toList(),
+        isNot(pickedPills(seed: tuesday, count: 6).map((p) => p.id).toList()),
+      );
+      // And the month is a different shelf from the day inside it.
+      expect(
+        pickedPills(seed: monday, count: 6).map((p) => p.id).toList(),
+        isNot(
+          pickedPills(
+            seed: monthSeed(DateTime(2026, 5, 4)),
+            count: 6,
+          ).map((p) => p.id).toList(),
+        ),
+      );
+    });
+
+    test('a subject shelf only carries that subject', () {
+      final shelf = pickedPills(
+        seed: daySeed(DateTime(2026, 5, 4)),
+        count: 6,
+        topic: 'Science',
+      );
+      expect(shelf, isNotEmpty);
+      expect(shelf.every((p) => p.topic == 'Science'), isTrue);
+    });
   });
 
   test('a mix of subjects nobody has written for still fills a day', () {
@@ -484,7 +563,7 @@ void main() {
 
     expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-    expect(find.byKey(const ValueKey('tab-Saved')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Search')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
@@ -866,9 +945,9 @@ void main() {
 
     // Whatever the tab, the same ground.
     final onToday = paletteOn('Today');
-    await tester.tap(find.byKey(const ValueKey('tab-Saved')));
+    await tester.tap(find.byKey(const ValueKey('tab-Search')));
     await _settle(tester);
-    expect(paletteOn('Saved').surface, onToday.surface);
+    expect(paletteOn('Search').surface, onToday.surface);
 
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await _settle(tester);
@@ -1106,8 +1185,7 @@ void main() {
       final order = prefs.getStringList('knowit.savedIds')!;
       expect(order, hasLength(2));
 
-      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-      await _settle(tester);
+      await _openSetting(tester, 'Saved');
 
       // The list follows that order, newest at the top.
       final rows = tester
@@ -1125,8 +1203,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
       await _settle(tester);
 
-      await tester.tap(find.byKey(const ValueKey('tab-Saved')));
-      await _settle(tester);
+      await _openSetting(tester, 'Saved');
       expect(find.text('1 pill'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.favorite_rounded).first);
