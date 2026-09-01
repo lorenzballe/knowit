@@ -207,7 +207,7 @@ class _MixHeading extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const _SpectrumWord('mix'),
+            const SpectrumWord('mix'),
           ],
         ),
         const SizedBox(height: 7),
@@ -228,16 +228,17 @@ class _MixHeading extends StatelessWidget {
 /// A word that walks the spectrum, slowly enough to be noticed rather than
 /// watched. Eight colours over eighty seconds, each held most of its turn and
 /// then crossed to the next, as the canvas's mixColor keyframes have it.
-class _SpectrumWord extends StatefulWidget {
-  const _SpectrumWord(this.text);
+class SpectrumWord extends StatefulWidget {
+  const SpectrumWord(this.text, {super.key, this.size = 30});
 
   final String text;
+  final double size;
 
   @override
-  State<_SpectrumWord> createState() => _SpectrumWordState();
+  State<SpectrumWord> createState() => _SpectrumWordState();
 }
 
-class _SpectrumWordState extends State<_SpectrumWord>
+class _SpectrumWordState extends State<SpectrumWord>
     with SingleTickerProviderStateMixin {
   static const List<Color> _ramp = [
     Color(0xFFFFE600),
@@ -270,7 +271,7 @@ class _SpectrumWordState extends State<_SpectrumWord>
   @override
   Widget build(BuildContext context) {
     TextStyle style(Color c) => AppText.display(
-      size: 30,
+      size: widget.size,
       weight: FontWeight.w600,
       height: 1.04,
       spacing: -1,

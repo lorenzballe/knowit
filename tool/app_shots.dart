@@ -108,6 +108,10 @@ void main() {
     await settle(tester);
     await shoot(tester, 'search-topic');
 
+    await tester.tap(find.text('All time'));
+    await settle(tester);
+    await shoot(tester, 'search-alltime');
+
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
     await shoot(tester, 'profile');

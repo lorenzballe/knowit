@@ -315,5 +315,15 @@ String daySeed(DateTime on) =>
     '${on.year}-${on.month.toString().padLeft(2, '0')}-'
     '${on.day.toString().padLeft(2, '0')}';
 
+String weekSeed(DateTime on) {
+  final firstOfYear = DateTime(on.year);
+  final week = ((on.difference(firstOfYear).inDays + firstOfYear.weekday) / 7)
+      .floor();
+  return '${on.year}-w$week';
+}
+
 String monthSeed(DateTime on) =>
     '${on.year}-${on.month.toString().padLeft(2, '0')}';
+
+/// The shelf that does not move. Everything else turns over.
+const String allTimeSeed = 'astuto-all-time';

@@ -216,15 +216,28 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Search')));
     await _settle(tester);
 
-    // Two shelves and the subjects along the top, none of it personalised.
-    expect(find.text('Today'), findsWidgets);
-    expect(find.text('This month'), findsOneWidget);
+    // A range across the top, the subjects under it, and one card held up.
+    expect(find.text('Best '), findsOneWidget);
+    expect(find.text('All time'), findsOneWidget);
     expect(find.text('All'), findsOneWidget);
+    expect(find.text('TOP TODAY'), findsOneWidget);
+    expect(
+      find.textContaining("Everyone's cards, not your mix"),
+      findsOneWidget,
+    );
 
-    // And it searches the whole pool, not just what has been read.
+    // The range changes the shelf, and the badge on the card it holds up.
+    await tester.tap(find.text('This month'));
+    await _settle(tester);
+    expect(find.text('TOP THIS MONTH'), findsOneWidget);
+
+    // And the lens opens a field over the whole pool.
+    await tester.tap(find.byIcon(Icons.search_rounded).first);
+    await _settle(tester);
     await tester.enterText(find.byType(TextField), 'why');
     await _settle(tester);
-    expect(find.textContaining('cards'), findsWidgets);
+    expect(find.textContaining('matching'), findsOneWidget);
+    expect(find.text('BEST MATCH'), findsOneWidget);
   });
 
   group('Astuto+ gates the three perks', () {
