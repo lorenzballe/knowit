@@ -1029,7 +1029,13 @@ void main() {
         await _settle(tester);
       }
 
-      await tester.scrollUntilVisible(find.textContaining('Five more in'), 200);
+      await tester.scrollUntilVisible(
+        find.textContaining('Five more in'),
+        200,
+        // The page, not the row of thumbnails: there are two scrollables on
+        // this screen now and the default picks neither.
+        scrollable: find.byType(Scrollable).first,
+      );
       await _settle(tester);
       expect(find.textContaining('Five more in'), findsOneWidget);
     });
