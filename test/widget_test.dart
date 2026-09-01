@@ -1302,6 +1302,28 @@ void main() {
     });
   });
 
+  testWidgets('a re-read card is the size of the one it re-reads', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    final dealt = tester.getRect(find.byType(PillCardStack));
+
+    // Into the re-read, by way of Search — which is where this was first
+    // noticed: the viewer had been handed the whole window, so the same card
+    // came back wider, and taller with it.
+    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await _settle(tester);
+    // The badge sits inside the held-up card, so tapping it opens that card.
+    await tester.tap(find.text('TOP TODAY'));
+    await _settle(tester);
+
+    final reread = tester.getRect(find.byType(PillCardStack));
+    expect(reread.width, dealt.width, reason: 'one card, one width');
+  });
+
   group('Reading the five again', () {
     Future<AppState> freshApp() async {
       SharedPreferences.setMockInitialValues(_installed());

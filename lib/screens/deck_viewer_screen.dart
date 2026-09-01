@@ -114,27 +114,35 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
             // card. A re-read that looks unlike the day it is re-reading is
             // two designs for one thing.
             Expanded(
-              child: PillCardStack(
-                deck: widget.deck,
-                index: _index,
-                onAdvance: () =>
-                    setState(() => _index = (_index + 1) % widget.deck.length),
-                reviewIds: const {},
-                answering: false,
-                answerFor: widget.app.answerFor,
-                onAnswer: (id, response, confidence, reason) =>
-                    widget.app.recordAnswer(
-                      id,
-                      response,
-                      confidence: confidence,
-                      reason: reason,
-                    ),
-                isSaved: widget.app.isSaved,
-                onSave: (pill) {
-                  widget.app.toggleSaved(pill.id);
-                  setState(() {});
-                },
-                onShare: (pill) => showShareSheet(context, pill),
+              // The same margin Today gives it. Without this the viewer
+              // handed the deck the whole window, so a re-read card came out
+              // wider than the one dealt — and, being held to a proportion,
+              // taller with it.
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: kDeckMargin),
+                child: PillCardStack(
+                  deck: widget.deck,
+                  index: _index,
+                  onAdvance: () => setState(
+                    () => _index = (_index + 1) % widget.deck.length,
+                  ),
+                  reviewIds: const {},
+                  answering: false,
+                  answerFor: widget.app.answerFor,
+                  onAnswer: (id, response, confidence, reason) =>
+                      widget.app.recordAnswer(
+                        id,
+                        response,
+                        confidence: confidence,
+                        reason: reason,
+                      ),
+                  isSaved: widget.app.isSaved,
+                  onSave: (pill) {
+                    widget.app.toggleSaved(pill.id);
+                    setState(() {});
+                  },
+                  onShare: (pill) => showShareSheet(context, pill),
+                ),
               ),
             ),
 

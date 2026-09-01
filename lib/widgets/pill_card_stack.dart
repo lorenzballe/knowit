@@ -7,6 +7,13 @@ import '../models/pill.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
 
+/// How much room the deck leaves at each side of the screen.
+///
+/// Named because two screens draw this deck and they have to agree: a card
+/// re-read in the viewer that comes out wider than the one dealt on Today is
+/// the same card at two sizes, which reads as two designs.
+const double kDeckMargin = 18;
+
 /// Drag sideways to advance, tap to flip — a stack of up to three cards
 /// peeking below the top one.
 class PillCardStack extends StatefulWidget {

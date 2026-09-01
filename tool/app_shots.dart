@@ -112,6 +112,17 @@ void main() {
     await settle(tester);
     await shoot(tester, 'search-alltime');
 
+    // And a card opened from the shelf, which has to come out the size of
+    // one dealt on Today.
+    await tester.tap(find.text('TOP ALL TIME'));
+    await settle(tester);
+    await shoot(tester, 'reread');
+
+    // Back out of the route, or the tab bar is gone for whatever runs next.
+    // The viewer carries its own close button, not a platform back arrow.
+    await tester.tap(find.byIcon(Icons.close_rounded).first);
+    await settle(tester);
+
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
     await shoot(tester, 'profile');

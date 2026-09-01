@@ -56,7 +56,9 @@ class _TodayScreenState extends State<TodayScreen> {
     final index = app.todayIndex;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 10, 18, 8),
+      // The sides come from the deck's own constant, so Today and the
+      // re-read cannot drift apart again.
+      padding: const EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
