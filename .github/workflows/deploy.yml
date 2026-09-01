@@ -38,6 +38,20 @@ jobs:
             --base-href /knowit/ \
             --pwa-strategy=none
 
+      # Stamp the bundle with the commit. Removing the service worker stopped
+      # it serving yesterday's build, but the plain HTTP cache still can:
+      # main.dart.js is requested at the same URL every deploy, so a browser
+      # holding it has no reason to ask again, and a change that shipped an
+      # hour ago looks like a change that never landed. A new URL each build
+      # takes that away — there is nothing to guess and nothing to clear.
+      - name: Version the bundle so a deploy cannot be served from cache
+        run: |
+          v="${GITHUB_SHA::12}"
+          sed -i "s|flutter_bootstrap.js\"|flutter_bootstrap.js?v=$v\"|g" build/web/index.html
+          sed -i "s|\"main\.dart\.js\"|\"main.dart.js?v=$v\"|g" build/web/flutter_bootstrap.js
+          grep -o 'flutter_bootstrap.js?v=[0-9a-f]*' build/web/index.html | head -1
+          grep -o 'main.dart.js?v=[0-9a-f]*' build/web/flutter_bootstrap.js | head -1
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
