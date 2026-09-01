@@ -37,6 +37,10 @@ Future<void> _loadFonts() async {
 
 void _nothing(Map<String, double> _) {}
 
+void _noop() {}
+Future<bool> _no() async => false;
+void _ignore(String _) {}
+
 void main() {
   const Size phone = Size(402, 874);
   const EdgeInsets insets = EdgeInsets.only(top: 59, bottom: 34);
@@ -83,6 +87,53 @@ void main() {
         await tester.tapAt(const Offset(200, 300));
         await tester.pump(const Duration(milliseconds: 400));
       }
+    }
+  });
+
+  testWidgets('the five scenes, on a 390 by 844 handset', (tester) async {
+    const Size small = Size(390, 844);
+    await tester.binding.setSurfaceSize(small);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: const MediaQuery(
+          data: MediaQueryData(
+            size: small,
+            padding: EdgeInsets.only(top: 47, bottom: 34),
+          ),
+          child: IntroScreen(
+            onContinue: _noop,
+            onApple: _no,
+            onGoogle: _no,
+            onNotConnected: _ignore,
+          ),
+        ),
+      ),
+    );
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 300)),
+    );
+    for (int f = 0; f < 10; f++) {
+      await tester.pump(const Duration(milliseconds: 120));
+    }
+    for (int scene = 0; scene < 5; scene++) {
+      if (scene > 0) {
+        await tester.fling(
+          find.byType(IntroScreen),
+          const Offset(-300, 0),
+          900,
+        );
+        for (int f = 0; f < 10; f++) {
+          await tester.pump(const Duration(milliseconds: 120));
+        }
+      }
+      await expectLater(
+        find.byType(IntroScreen),
+        matchesGoldenFile('shots/p390-$scene.png'),
+      );
     }
   });
 
