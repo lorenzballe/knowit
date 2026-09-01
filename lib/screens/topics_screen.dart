@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/topics.dart';
+import 'mix_screen.dart';
 import '../theme.dart';
 import '../widgets/ui.dart';
 
@@ -85,21 +86,30 @@ class _TopicsScreenState extends State<TopicsScreen> {
                   child: Wrap(
                     spacing: 9,
                     runSpacing: 9,
-                    children: kTopicOrder.map((key) {
-                      final style = kTopics[key]!;
-                      final on = _picked.contains(key);
+                    // Every subject the onboarding offers, in its order —
+                    // including the ones with no cards behind them yet, which
+                    // simply cannot be switched on. Editing a mix while being
+                    // shown a shorter list than the one you were first given
+                    // is how a setting starts feeling like it lost something.
+                    children: kMixSubjects.map((subject) {
+                      final key = subject.key;
+                      final servable = key != null;
+                      final on = servable && _picked.contains(key);
                       return _TopicChip(
-                        label: style.name,
+                        label: subject.name,
                         on: on,
-                        color: style.color,
-                        onColor: style.ink,
-                        onTap: () => setState(() {
-                          if (on) {
-                            _picked.remove(key);
-                          } else {
-                            _picked.add(key);
-                          }
-                        }),
+                        color: subject.color,
+                        onColor: inkOn(subject.color),
+                        enabled: servable,
+                        onTap: !servable
+                            ? null
+                            : () => setState(() {
+                                if (on) {
+                                  _picked.remove(key);
+                                } else {
+                                  _picked.add(key);
+                                }
+                              }),
                       );
                     }).toList(),
                   ),
@@ -109,7 +119,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  '${_picked.length} of ${kTopicOrder.length} selected',
+                  '${_picked.length} selected',
                   textAlign: TextAlign.center,
                   style: AppText.body(size: 12.5, color: context.p.inkFaint),
                 ),
@@ -138,7 +148,11 @@ class _TopicChip extends StatelessWidget {
   final bool on;
   final Color color;
   final Color onColor;
-  final VoidCallback onTap;
+
+  /// Null for a subject that has no cards behind it yet: it is shown, so the
+  /// list is the one the onboarding gave, but there is nothing to switch on.
+  final VoidCallback? onTap;
+  final bool enabled;
 
   const _TopicChip({
     required this.label,
@@ -146,6 +160,7 @@ class _TopicChip extends StatelessWidget {
     required this.color,
     required this.onColor,
     required this.onTap,
+    this.enabled = true,
   });
 
   @override
@@ -159,7 +174,11 @@ class _TopicChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: on ? color : context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(999),
-          border: Border.all(color: on ? Colors.transparent : context.p.line),
+          border: Border.all(
+            color: on
+                ? Colors.transparent
+                : context.p.line.withValues(alpha: enabled ? 1 : 0.5),
+          ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -175,7 +194,9 @@ class _TopicChip extends StatelessWidget {
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
-                color: on ? onColor : context.p.inkMuted,
+                color: on
+                    ? onColor
+                    : context.p.inkMuted.withValues(alpha: enabled ? 1 : 0.4),
               ),
             ),
           ],

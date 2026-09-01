@@ -218,11 +218,7 @@ class _FrontFace extends StatelessWidget {
             text: pill.question,
             min: 21,
             max: 34,
-            // Anchored to the foot of the card, not floated in the middle of
-            // it: the question always sits on the same line, a long one grows
-            // upward into the air above, and the composition never depends on
-            // how many words a particular pill happens to have.
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.centerLeft,
             styleFor: (size) => AppText.display(
               size: size,
               weight: FontWeight.w600,

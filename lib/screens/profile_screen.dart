@@ -232,6 +232,17 @@ class ProfileScreen extends StatelessWidget {
               _Stat(value: '${app.pillsRead}', label: 'pills read'),
               const SizedBox(width: 10),
               _Stat(value: '${app.dueReviews.length}', label: 'coming back'),
+              if (app.freezes > 0) ...[
+                const SizedBox(width: 10),
+                // The reading screen carried this as a bare blue snowflake
+                // with nothing to read it by. A freeze only matters on the
+                // day you miss one, so it belongs here, next to the streak it
+                // protects, where there is room to name it.
+                _Stat(
+                  value: '${app.freezes}',
+                  label: app.freezes == 1 ? 'streak freeze' : 'streak freezes',
+                ),
+              ],
             ],
           ),
           // The offer belongs where the reader is already looking at their own

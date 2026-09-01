@@ -16,7 +16,9 @@ class FlipCard extends StatefulWidget {
     required this.showBack,
     required this.front,
     required this.back,
-    this.duration = const Duration(milliseconds: 460),
+    // Four hundred and sixty was a card turning over at its leisure. The
+    // gesture is a tap: the answer should arrive with it, not after it.
+    this.duration = const Duration(milliseconds: 300),
   });
 
   @override

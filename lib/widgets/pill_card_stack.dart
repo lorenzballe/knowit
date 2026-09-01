@@ -146,7 +146,11 @@ class _PillCardStackState extends State<PillCardStack>
       });
       widget.onAdvance();
     } else if (_dragTotalMove < 7) {
-      await _animateTo(Offset.zero);
+      // A tap, not a drag. It used to wait out the settle animation before
+      // turning the card over, which put three tenths of a second between
+      // the finger and the answer and read as the card being slow to
+      // respond. There is nothing to settle: the card never moved.
+      setState(() => _drag = Offset.zero);
       if (!mounted) return;
       // A card that asks turns over when the reader commits, not on a stray
       // tap — otherwise the answer can be reached without ever guessing. A

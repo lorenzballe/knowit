@@ -2254,6 +2254,72 @@ void main() {
       expect(apple.bottom, lessThanOrEqualTo(screen.height - insets.bottom));
     });
 
+    testWidgets('no scene prints its words over its drawing', (tester) async {
+      // The picture is pinned to a band under the notch and the copy is
+      // anchored by its foot, so the two meet in the middle — and where they
+      // meet depends on how tall the screen is. A tall handset never shows
+      // it, which is why this walks several.
+      const sizes = [
+        (Size(402, 874), EdgeInsets.only(top: 59, bottom: 34)),
+        (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
+        (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
+      ];
+      const titles = [
+        'Astuto',
+        'Twelve topics, five pills',
+        'A question, then the answer',
+        'You choose the mix',
+        'Thirty seconds a day',
+      ];
+
+      for (final (Size size, EdgeInsets pad) in sizes) {
+        // The view, not setSurfaceSize: this group already sets a physical
+        // size and a pixel ratio, and the two ways of saying it fight.
+        tester.view.physicalSize = size * 3;
+        tester.view.devicePixelRatio = 3;
+        await tester.pumpWidget(
+          MaterialApp(
+            theme: buildAstutoTheme(Brightness.dark),
+            home: MediaQuery(
+              data: MediaQueryData(padding: pad, size: size),
+              // Keyed by size: without it the second handset reuses the
+              // first one's State and starts on scene five.
+              child: IntroScreen(
+                key: ValueKey(size),
+                onContinue: () {},
+                onApple: () async => false,
+                onGoogle: () async => false,
+                onNotConnected: (_) {},
+              ),
+            ),
+          ),
+        );
+        await _settle(tester);
+
+        for (int scene = 0; scene < titles.length; scene++) {
+          if (scene > 0) {
+            await tester.fling(
+              find.byType(IntroScreen),
+              const Offset(-300, 0),
+              900,
+            );
+            await _settle(tester);
+          }
+          final drawing = tester.getRect(
+            find.byKey(const ValueKey('intro-stage')),
+          );
+          final words = tester.getRect(find.text(titles[scene]));
+          expect(
+            words.top,
+            greaterThanOrEqualTo(drawing.bottom),
+            reason:
+                'on a ${size.width.toInt()} by ${size.height.toInt()} screen, '
+                'scene ${scene + 1} puts its title inside the picture',
+          );
+        }
+      }
+    });
+
     testWidgets('the words hold still from scene to scene', (tester) async {
       // With the real typeface, not the test one: whether the five scenes
       // agree depends entirely on how many lines each subtitle takes, and

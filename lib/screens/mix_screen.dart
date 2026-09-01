@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../theme.dart';
 
@@ -69,9 +70,17 @@ class _MixScreenState extends State<MixScreen> {
 
   void _setAt(MixSubject subject, double dx, double width) {
     final int next = ((dx / width).clamp(0.0, 1.0) * 100).round();
-    if (_value[subject.name] == next) return;
+    final int was = _value[subject.name]!;
+    if (was == next) return;
+    // A detent every twentieth, so the bar clicks under the thumb like a
+    // wheel instead of sliding in silence. Fired on the crossing rather than
+    // on every pixel, or it would buzz continuously and mean nothing.
+    if (next ~/ _detent != was ~/ _detent) HapticFeedback.selectionClick();
     setState(() => _value[subject.name] = next);
   }
+
+  /// How far the bar travels between clicks.
+  static const int _detent = 5;
 
   void _finish() {
     final Map<String, double> weights = {
@@ -249,11 +258,11 @@ class _SpectrumWordState extends State<_SpectrumWord>
   static const double _hold = 9 / 12.5;
 
   // The canvas walks the eight over eighty seconds, which on a screen nobody
-  // sits on for eighty seconds means the word looks fixed. Half that reads as
-  // a colour that moves without becoming a flicker.
+  // sits on for eighty seconds means the word looks fixed. Twenty is a colour
+  // you can watch move without it becoming a flicker.
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 40),
+    duration: const Duration(seconds: 20),
   )..repeat();
 
   @override
