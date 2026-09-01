@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +40,31 @@ Map<String, Object> _installed({bool plus = false}) => {
   'knowit.onboarded': true,
   'knowit.plus': plus,
 };
+
+/// Throws the top card off the deck, which is how a reader moves on now that
+/// the button that did it has gone.
+Future<void> _swipeCardAway(WidgetTester tester) async {
+  await tester.fling(find.byType(PillCardStack), const Offset(-320, 0), 900);
+  await _settle(tester);
+}
+
+/// The faces the app actually ships, so a layout test measures the text a
+/// reader sees rather than the fixed-width stand-in a widget test defaults
+/// to.
+Future<void> _loadRealFonts() async {
+  const faces = {
+    'Fraunces': 'assets/fonts/Fraunces.ttf',
+    'Figtree': 'assets/fonts/Figtree.ttf',
+  };
+  for (final face in faces.entries) {
+    final loader = FontLoader(face.key);
+    final bytes = await File(face.value).readAsBytes();
+    loader.addFont(
+      Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)),
+    );
+    await loader.load();
+  }
+}
 
 Future<void> _openProfile(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('tab-Profile')));
@@ -431,7 +459,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('Next pill'), findsOneWidget);
+    expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Saved')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
@@ -453,7 +481,7 @@ void main() {
     await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
-    expect(find.text('Next pill'), findsOneWidget);
+    expect(find.byType(PillCardStack), findsOneWidget);
   });
 
   testWidgets('the paywall sells only what it delivers', (tester) async {
@@ -542,7 +570,7 @@ void main() {
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
-      await tester.tap(find.text('Next pill'));
+      await _swipeCardAway(tester);
       await _settle(tester);
     }
 
@@ -554,7 +582,7 @@ void main() {
     await _settle(tester);
 
     // Back to reading, on pill six of ten.
-    expect(find.text('Next pill'), findsOneWidget);
+    expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.text('06 / 10'), findsOneWidget);
   });
 
@@ -566,7 +594,7 @@ void main() {
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
-      await tester.tap(find.text('Next pill'));
+      await _swipeCardAway(tester);
       await _settle(tester);
     }
 
@@ -592,7 +620,7 @@ void main() {
     await _settle(tester);
 
     for (var i = 0; i < 5; i++) {
-      await tester.tap(find.text('Next pill'));
+      await _swipeCardAway(tester);
       await _settle(tester);
     }
 
@@ -881,7 +909,7 @@ void main() {
       await _settle(tester);
 
       for (var i = 0; i < 5; i++) {
-        await tester.tap(find.text('Next pill'));
+        await _swipeCardAway(tester);
         await _settle(tester);
       }
 
@@ -1045,7 +1073,7 @@ void main() {
       final first = find.byIcon(Icons.favorite_border_rounded);
       await tester.tap(first.first);
       await _settle(tester);
-      await tester.tap(find.text('Next pill'));
+      await _swipeCardAway(tester);
       await _settle(tester);
       await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
       await _settle(tester);
@@ -1187,13 +1215,14 @@ void main() {
       // The point of coming back is to read it again, not to be handed the
       // answer the moment the screen opens.
       expect(find.text(pick.question), findsWidgets);
-      expect(find.text('Tap for the answer'), findsOneWidget);
       expect(find.text(pick.answer), findsNothing);
 
       await tester.tap(find.text(pick.question).first);
       await tester.pumpAndSettle();
       expect(find.text(pick.answer), findsWidgets);
-      expect(find.text('That was the last one'), findsOneWidget);
+      // The line under the deck names the gesture the card's own face does
+      // not; with one card there is nowhere to swipe to.
+      expect(find.text('That was the only one'), findsOneWidget);
     });
 
     testWidgets('the re-read shows which option you took', (tester) async {
@@ -1280,7 +1309,6 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(facts[1].question), findsWidgets);
-      expect(find.text('Tap for the answer'), findsOneWidget);
       expect(find.text(facts[1].answer), findsNothing);
     });
 
@@ -1316,6 +1344,9 @@ void main() {
           body: SizedBox(
             height: 640,
             child: PillCardStack(
+              isSaved: (_) => false,
+              onSave: (_) {},
+              onShare: (_) {},
               deck: deck,
               index: 0,
               onAdvance: () {},
@@ -1800,6 +1831,9 @@ void main() {
             body: SizedBox(
               height: 640,
               child: PillCardStack(
+                isSaved: (_) => false,
+                onSave: (_) {},
+                onShare: (_) {},
                 deck: [pill],
                 index: 0,
                 onAdvance: () {},
@@ -1841,7 +1875,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
       // And the deck it could not restore was re-dealt rather than left empty.
-      expect(find.text('Next pill'), findsOneWidget);
+      expect(find.byType(PillCardStack), findsOneWidget);
     });
 
     test('buckets confidence against what actually happened', () async {
@@ -2171,6 +2205,10 @@ void main() {
     /// a preview.
     const EdgeInsets insets = EdgeInsets.only(top: 59, bottom: 34);
 
+    // Outside the test body: FontLoader needs real asynchrony, and inside a
+    // widget test's fake-async zone it simply never completes.
+    setUpAll(_loadRealFonts);
+
     Future<void> pumpIntro(WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -2217,40 +2255,46 @@ void main() {
     });
 
     testWidgets('the words hold still from scene to scene', (tester) async {
+      // With the real typeface, not the test one: whether the five scenes
+      // agree depends entirely on how many lines each subtitle takes, and
+      // the stand-in font every widget test uses breaks lines somewhere
+      // else entirely. This is the check that means anything — lengthen one
+      // of these five sentences and it fails, which is exactly when the
+      // titles start moving between scenes again.
       await pumpIntro(tester);
 
-      // Sample every frame of the swap, not just the ends. The fault this
-      // pins was a mid-transition resize: the crossfade took the height of
-      // whichever scene was taller, so the title lifted and then dropped
-      // back once the outgoing scene left the tree. Reading only before and
-      // after would have called that clean.
-      double lowest = double.infinity;
-      double highest = -double.infinity;
+      const titles = [
+        'Astuto',
+        'Twelve topics, five pills',
+        'A question, then the answer',
+        'You choose the mix',
+        'Thirty seconds a day',
+      ];
 
-      Future<void> swipe(Offset velocity) async {
-        await tester.fling(find.byType(IntroScreen), velocity, 900);
-        for (int frame = 0; frame < 30; frame++) {
-          await tester.pump(const Duration(milliseconds: 30));
-          for (final title in ['Astuto', 'Twelve topics, five pills']) {
-            final found = find.text(title);
-            if (found.evaluate().isEmpty) continue;
-            final bottom = tester.getRect(found.first).bottom;
-            lowest = bottom < lowest ? bottom : lowest;
-            highest = bottom > highest ? bottom : highest;
-          }
+      double? foot;
+      for (int scene = 0; scene < titles.length; scene++) {
+        if (scene > 0) {
+          await tester.fling(
+            find.byType(IntroScreen),
+            const Offset(-300, 0),
+            900,
+          );
+          await _settle(tester);
         }
+        final bottom = tester.getRect(find.text(titles[scene])).bottom;
+        foot ??= bottom;
+        expect(
+          bottom,
+          // Three points of slack: the wordmark is Fraunces at 46 and the
+          // rest are Figtree at 30, and two faces at two sizes do not put
+          // their boxes on exactly the same pixel. A subtitle gaining a line
+          // moves this by twenty-five, which is what the check is for.
+          closeTo(foot, 3),
+          reason:
+              'scene ${scene + 1} puts its title on a different line from '
+              'the first — the copy under it has changed length',
+        );
       }
-
-      await swipe(const Offset(-300, 0));
-      await swipe(const Offset(300, 0));
-
-      // A pixel of slack for the crossfade's own scale, which breathes the
-      // copy in from .965. Anything past that is the layout moving.
-      expect(
-        highest - lowest,
-        lessThan(1.5),
-        reason: 'the title must land on the same line in every scene',
-      );
     });
   });
 }

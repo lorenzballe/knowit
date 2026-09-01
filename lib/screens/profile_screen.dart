@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../data/pills_data.dart';
 import '../data/topics.dart';
+import 'mix_screen.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
@@ -355,23 +356,33 @@ class ProfileScreen extends StatelessWidget {
           Wrap(
             spacing: 8,
             runSpacing: 8,
-            children: kTopicOrder.where(app.pickedTopics.contains).map((key) {
-              final style = kTopics[key]!;
+            // All of them, in the onboarding's own order — the ones in the
+            // mix in their colour, the ones out of it dark. Showing only what
+            // was chosen made this a list with nothing to compare against:
+            // you could not see what you had turned off, or that there was
+            // anything else to turn on.
+            children: kMixSubjects.map((subject) {
+              final bool live =
+                  subject.key != null && app.pickedTopics.contains(subject.key);
               return Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 13,
                   vertical: 9,
                 ),
                 decoration: BoxDecoration(
-                  color: style.color,
+                  color: live
+                      ? subject.color
+                      : context.p.inverse.withValues(alpha: 0.06),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  style.name,
+                  subject.name,
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
-                    color: style.ink,
+                    color: live
+                        ? inkOn(subject.color)
+                        : context.p.ink.withValues(alpha: 0.34),
                   ),
                 ),
               );
@@ -699,7 +710,14 @@ class _Coverage extends StatelessWidget {
         .toList();
 
     final seenTotal = app.seenIds.length;
-    final poolTotal = kPillPool.length;
+    // The most any one subject has been read. The bars are drawn against
+    // this, not against how many cards exist: the pool is written to keep
+    // growing, so a total would be a number that quietly stops being true —
+    // and one that says "you have read 3% of Astuto", which is nobody's idea
+    // of progress.
+    final int busiest = rows
+        .map((style) => seenByTopic[style.name] ?? 0)
+        .fold(0, (a, b) => a > b ? a : b);
 
     return PaperCard(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
@@ -707,7 +725,7 @@ class _Coverage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$seenTotal of $poolTotal pills',
+            seenTotal == 1 ? '1 pill read' : '$seenTotal pills read',
             style: AppText.display(
               size: 20,
               weight: FontWeight.w600,
@@ -717,9 +735,7 @@ class _Coverage extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           ...rows.map((style) {
-            final total = byTopic[style.name] ?? 0;
             final seen = seenByTopic[style.name] ?? 0;
-            final complete = seen >= total;
             final wheel = style.name == 'Thinking';
             return Padding(
               padding: const EdgeInsets.only(bottom: 12),
@@ -755,11 +771,11 @@ class _Coverage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        complete ? 'complete' : '$seen/$total',
+                        '$seen',
                         style: AppText.body(
                           size: 12,
-                          weight: complete ? FontWeight.w600 : FontWeight.w400,
-                          color: complete ? style.color : context.p.inkFaint,
+                          weight: FontWeight.w500,
+                          color: context.p.inkFaint,
                         ),
                       ),
                     ],
@@ -775,7 +791,7 @@ class _Coverage extends StatelessWidget {
                             children: [
                               Container(height: 5, color: context.p.line),
                               FractionallySizedBox(
-                                widthFactor: total == 0 ? 0 : seen / total,
+                                widthFactor: busiest == 0 ? 0 : seen / busiest,
                                 child: Container(
                                   height: 5,
                                   decoration: const BoxDecoration(
@@ -786,7 +802,7 @@ class _Coverage extends StatelessWidget {
                             ],
                           )
                         : LinearProgressIndicator(
-                            value: total == 0 ? 0 : seen / total,
+                            value: busiest == 0 ? 0 : seen / busiest,
                             minHeight: 5,
                             backgroundColor: context.p.line,
                             valueColor: AlwaysStoppedAnimation(style.color),

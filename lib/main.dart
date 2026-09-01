@@ -408,6 +408,12 @@ class AstutoShell extends StatefulWidget {
 class _AstutoShellState extends State<AstutoShell> {
   int _tab = 0;
 
+  /// True while a card is under the finger.
+  bool _cardMoving = false;
+
+  /// True while the reader is on Today with cards still in front of them.
+  bool get _cardsShowing => _tab == 0 && !widget.app.todayCompleted;
+
   /// Three hues off today's deck, for the light behind the app.
   ///
   /// Taken from the cards the reader actually has in hand rather than picked
@@ -424,7 +430,12 @@ class _AstutoShellState extends State<AstutoShell> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      TodayScreen(app: widget.app),
+      TodayScreen(
+        app: widget.app,
+        onCardMotion: (moving) {
+          if (moving != _cardMoving) setState(() => _cardMoving = moving);
+        },
+      ),
       SavedScreen(
         app: widget.app,
         // A day still to do belongs on Today, where it can be answered. A day
@@ -461,7 +472,13 @@ class _AstutoShellState extends State<AstutoShell> {
             // colour is the day's own. Five cards, five hues, drifting
             // behind everything — so the app is never one colour, and never
             // the same colour two days running.
-            if (context.p.isDark)
+            //
+            // Not behind the cards themselves. A card is already a field of
+            // its own colour, and a second colour washing about behind it
+            // fights it; the deck reads better lifted off plain black. The
+            // light comes back once the day is finished and the cards are
+            // gone.
+            if (context.p.isDark && !_cardsShowing)
               Positioned.fill(child: AmbientBlooms(colors: _bloomColours)),
             SafeArea(
               bottom: false,
@@ -469,7 +486,11 @@ class _AstutoShellState extends State<AstutoShell> {
             ),
           ],
         ),
+        // The bar steps aside while a card is being thrown. Two rows of
+        // controls along the bottom edge was one too many, and a card thrown
+        // downward should not be thrown at a row of buttons.
         bottomNavigationBar: _AstutoTabBar(
+          hidden: _cardMoving,
           index: _tab,
           onChanged: (i) => setState(() => _tab = i),
         ),
@@ -493,7 +514,12 @@ class _AstutoShellState extends State<AstutoShell> {
 class _AstutoTabBar extends StatelessWidget {
   final int index;
   final ValueChanged<int> onChanged;
-  const _AstutoTabBar({required this.index, required this.onChanged});
+  final bool hidden;
+  const _AstutoTabBar({
+    required this.index,
+    required this.onChanged,
+    this.hidden = false,
+  });
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
@@ -503,6 +529,21 @@ class _AstutoTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Faded and lifted away rather than removed: taking it out of the tree
+    // would change the page's height mid-gesture and shove the card.
+    return AnimatedSlide(
+      offset: hidden ? const Offset(0, 0.6) : Offset.zero,
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOutCubic,
+      child: AnimatedOpacity(
+        opacity: hidden ? 0 : 1,
+        duration: const Duration(milliseconds: 180),
+        child: IgnorePointer(ignoring: hidden, child: _bar(context)),
+      ),
+    );
+  }
+
+  Widget _bar(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
         18,

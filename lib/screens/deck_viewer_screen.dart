@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../widgets/flip_card.dart';
-import '../widgets/pill_card.dart';
+import '../widgets/pill_card_stack.dart';
 import '../widgets/share_sheet.dart';
 
 /// A full-screen re-read of a set of cards.
@@ -42,45 +40,17 @@ class DeckViewerScreen extends StatefulWidget {
 }
 
 class _DeckViewerScreenState extends State<DeckViewerScreen> {
-  late final PageController _controller = PageController(
-    initialPage: widget.initialIndex,
-  );
-
-  /// One flag per card, and the state is fresh every time this screen opens —
-  /// which is what makes the deck read as if it were the first time.
-  late final List<bool> _flipped = List.filled(widget.deck.length, false);
-
   late int _index = widget.initialIndex;
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  Pill get _pill => widget.deck[_index];
-
-  void _toggle(int i) {
-    HapticFeedback.selectionClick();
-    setState(() => _flipped[i] = !_flipped[i]);
-  }
-
-  String get _hint {
-    final hasNext = _index < widget.deck.length - 1;
-    if (!_flipped[_index]) {
-      // A fact already carries "Tap to reveal" on its own face. Repeating it
-      // underneath teaches one gesture twice and the other not at all, so
-      // that line goes to the swipe instead.
-      if (!_pill.asksSomething && hasNext) return 'Swipe for the next one';
-      return 'Tap for the answer';
-    }
-    return hasNext ? 'Swipe for the next one' : 'That was the last one';
-  }
+  /// Which face is showing now lives inside the deck, so the line under it
+  /// no longer tries to say — it names the gesture the card does not already
+  /// carry on its own face.
+  String get _hint => widget.deck.length > 1
+      ? 'Swipe for the next one'
+      : 'That was the only one';
 
   @override
   Widget build(BuildContext context) {
-    final saved = widget.app.isSaved(_pill.id);
-
     return Scaffold(
       backgroundColor: context.p.surface,
       body: SafeArea(
@@ -140,44 +110,31 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
             ),
             const SizedBox(height: 12),
 
-            // The card takes everything left over, which is the point of
-            // opening it on its own screen rather than under a tab bar.
+            // The same deck Today uses, not a second way of drawing a
+            // card. A re-read that looks unlike the day it is re-reading is
+            // two designs for one thing.
             Expanded(
-              child: PageView.builder(
-                controller: _controller,
-                itemCount: widget.deck.length,
-                onPageChanged: (i) {
-                  HapticFeedback.selectionClick();
-                  setState(() => _index = i);
-                },
-                itemBuilder: (context, i) {
-                  final pill = widget.deck[i];
-                  final label =
-                      '${(i + 1).toString().padLeft(2, '0')} / '
-                      '${widget.deck.length.toString().padLeft(2, '0')}';
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => _toggle(i),
-                      child: FlipCard(
-                        showBack: _flipped[i],
-                        front: PillCard(
-                          pill: pill,
-                          indexLabel: label,
-                          flipped: false,
-                          given: widget.app.answerFor(pill.id),
-                        ),
-                        back: PillCard(
-                          pill: pill,
-                          indexLabel: label,
-                          flipped: true,
-                          given: widget.app.answerFor(pill.id),
-                        ),
-                      ),
+              child: PillCardStack(
+                deck: widget.deck,
+                index: _index,
+                onAdvance: () =>
+                    setState(() => _index = (_index + 1) % widget.deck.length),
+                reviewIds: const {},
+                answering: false,
+                answerFor: widget.app.answerFor,
+                onAnswer: (id, response, confidence, reason) =>
+                    widget.app.recordAnswer(
+                      id,
+                      response,
+                      confidence: confidence,
+                      reason: reason,
                     ),
-                  );
+                isSaved: widget.app.isSaved,
+                onSave: (pill) {
+                  widget.app.toggleSaved(pill.id);
+                  setState(() {});
                 },
+                onShare: (pill) => showShareSheet(context, pill),
               ),
             ),
 
@@ -194,72 +151,7 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _ViewerAction(
-                    label: saved ? 'Remove from saved' : 'Save this pill',
-                    icon: saved
-                        ? Icons.favorite_rounded
-                        : Icons.favorite_border_rounded,
-                    tint: saved ? context.p.alert : context.p.ink,
-                    onTap: () {
-                      HapticFeedback.mediumImpact();
-                      widget.app.toggleSaved(_pill.id);
-                      setState(() {});
-                    },
-                  ),
-                  const SizedBox(width: 18),
-                  _ViewerAction(
-                    label: 'Share this pill',
-                    icon: Icons.ios_share_rounded,
-                    tint: context.p.ink,
-                    onTap: () => showShareSheet(context, _pill),
-                  ),
-                ],
-              ),
-            ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ViewerAction extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  final Color tint;
-  final VoidCallback onTap;
-
-  const _ViewerAction({
-    required this.label,
-    required this.icon,
-    required this.tint,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          width: 54,
-          height: 54,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: context.p.surfaceRaised,
-            border: Border.all(color: context.p.line),
-          ),
-          alignment: Alignment.center,
-          child: Icon(icon, size: 21, color: tint),
         ),
       ),
     );

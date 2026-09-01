@@ -248,9 +248,12 @@ class _SpectrumWordState extends State<_SpectrumWord>
   /// Each colour holds for 9 of its 12.5 per cent, then crosses over.
   static const double _hold = 9 / 12.5;
 
+  // The canvas walks the eight over eighty seconds, which on a screen nobody
+  // sits on for eighty seconds means the word looks fixed. Half that reads as
+  // a colour that moves without becoming a flicker.
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: const Duration(seconds: 80),
+    duration: const Duration(seconds: 40),
   )..repeat();
 
   @override

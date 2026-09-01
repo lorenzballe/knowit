@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/pills_data.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/widgets/pill_card_stack.dart';
 
 Future<void> _loadFonts() async {
   const fonts = {
@@ -159,6 +160,28 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
     await shoot(tester, 'profile-light');
+  });
+
+  testWidgets('a card mid-throw, and the re-read', (tester) async {
+    _wellUsed();
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    // Held part-way through a throw, up and to the left. The tab bar should
+    // be on its way out, because a card thrown at a row of buttons is a card
+    // thrown at a row of buttons.
+    final TestGesture drag = await tester.startGesture(
+      tester.getCenter(find.byType(PillCardStack)),
+    );
+    await drag.moveBy(const Offset(-70, -60));
+    // Several frames, not one: the bar slides out over 220ms and a single
+    // pump only starts it.
+    for (int f = 0; f < 8; f++) {
+      await tester.pump(const Duration(milliseconds: 40));
+    }
+    await shoot(tester, 'card-thrown');
+    await drag.up();
+    await settle(tester);
   });
 
   testWidgets('the paywall', (tester) async {

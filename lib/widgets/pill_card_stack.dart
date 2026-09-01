@@ -28,6 +28,24 @@ class PillCardStack extends StatefulWidget {
   /// Which of these cards are back for another go.
   final Set<String> reviewIds;
 
+  /// True while a card is under the finger, so the chrome can step out of
+  /// the way of the gesture.
+  final ValueChanged<bool>? onMotion;
+
+  /// Whether these cards are being answered now, or read back.
+  ///
+  /// Answering: a card that asks will not turn over until the reader has
+  /// committed, which is the whole point of the day. Reading back: the cards
+  /// open freely and show the answer that was given, because most of a
+  /// finished day was never answered and asking again days later is not a
+  /// second first impression — it is a quiz nobody asked for.
+  final bool answering;
+
+  /// Keeping and sharing, which the top card carries itself.
+  final bool Function(String id) isSaved;
+  final ValueChanged<Pill> onSave;
+  final ValueChanged<Pill> onShare;
+
   const PillCardStack({
     super.key,
     required this.deck,
@@ -36,6 +54,11 @@ class PillCardStack extends StatefulWidget {
     required this.answerFor,
     required this.onAnswer,
     required this.reviewIds,
+    required this.isSaved,
+    required this.onSave,
+    required this.onShare,
+    this.answering = true,
+    this.onMotion,
   });
 
   @override
@@ -45,7 +68,7 @@ class PillCardStack extends StatefulWidget {
 class _PillCardStackState extends State<PillCardStack>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  double _dx = 0;
+  Offset _drag = Offset.zero;
   bool _dragging = false;
   double _dragTotalMove = 0;
   bool _flipped = false;
@@ -67,7 +90,7 @@ class _PillCardStackState extends State<PillCardStack>
   void didUpdateWidget(covariant PillCardStack old) {
     super.didUpdateWidget(old);
     if (old.index != widget.index) {
-      _dx = 0;
+      _drag = Offset.zero;
       _flipped = false;
       _answeredHere = false;
     }
@@ -89,26 +112,41 @@ class _PillCardStackState extends State<PillCardStack>
   void _onPanUpdate(DragUpdateDetails d) {
     if (!_dragging) return;
     setState(() {
-      _dx += d.delta.dx;
-      _dragTotalMove += d.delta.dx.abs();
+      // Both axes, one to one with the finger. Sideways only meant a card
+      // pulled upward stayed put under the thumb, which reads as the card
+      // being stuck rather than held.
+      _drag += d.delta;
+      _dragTotalMove += d.delta.distance;
     });
+    widget.onMotion?.call(true);
   }
 
   Future<void> _onPanEnd(DragEndDetails d) async {
     if (!_dragging) return;
     _dragging = false;
-    final dx = _dx;
-    if (dx.abs() > 78) {
+    widget.onMotion?.call(false);
+
+    final Offset thrown = d.velocity.pixelsPerSecond;
+    // Either carried far enough or thrown hard enough. Distance alone made a
+    // quick flick do nothing, which is the gesture most people actually make.
+    final bool gone = _drag.distance > 78 || thrown.distance > 620;
+    if (gone) {
       HapticFeedback.lightImpact();
-      await _animateTo(dx < 0 ? -480 : 480);
+      // Out along the way it was sent — a card pushed up leaves upward. The
+      // throw decides the heading when there is one, otherwise the drag does.
+      final Offset heading = thrown.distance > 220 ? thrown : _drag;
+      final double length = heading.distance;
+      await _animateTo(
+        length == 0 ? const Offset(480, 0) : heading * (1100 / length),
+      );
       if (!mounted) return;
       setState(() {
-        _dx = 0;
+        _drag = Offset.zero;
         _flipped = false;
       });
       widget.onAdvance();
     } else if (_dragTotalMove < 7) {
-      await _animateTo(0);
+      await _animateTo(Offset.zero);
       if (!mounted) return;
       // A card that asks turns over when the reader commits, not on a stray
       // tap — otherwise the answer can be reached without ever guessing. A
@@ -117,23 +155,28 @@ class _PillCardStackState extends State<PillCardStack>
       final top = widget.deck[widget.index];
       final mustAnswer =
           widget.answerFor(top.id) == null || widget.reviewIds.contains(top.id);
-      if (top.asksSomething && mustAnswer && !_answeredHere) return;
+      if (widget.answering &&
+          top.asksSomething &&
+          mustAnswer &&
+          !_answeredHere) {
+        return;
+      }
       HapticFeedback.selectionClick();
       setState(() => _flipped = !_flipped);
     } else {
-      await _animateTo(0);
+      await _animateTo(Offset.zero);
     }
   }
 
-  Future<void> _animateTo(double target) async {
-    final start = _dx;
+  Future<void> _animateTo(Offset target) async {
+    final start = _drag;
     _controller.reset();
-    final anim = Tween<double>(
+    final anim = Tween<Offset>(
       begin: start,
       end: target,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
     void listener() {
-      if (mounted) setState(() => _dx = anim.value);
+      if (mounted) setState(() => _drag = anim.value);
     }
 
     anim.addListener(listener);
@@ -151,7 +194,7 @@ class _PillCardStackState extends State<PillCardStack>
   /// depth by the drag means that by the time the index actually moves, the
   /// card below is already exactly where the new top card belongs, and the
   /// change of index is invisible.
-  double get _progress => (_dx.abs() / 220).clamp(0.0, 1.0);
+  double get _progress => (_drag.distance / 220).clamp(0.0, 1.0);
 
   /// How tall a card is against its own width.
   static const double _cardAspect = 1.55;
@@ -184,14 +227,19 @@ class _PillCardStackState extends State<PillCardStack>
                 flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
-                onAnswer: (response, confidence, reason) {
-                  HapticFeedback.mediumImpact();
-                  widget.onAnswer(pill.id, response, confidence, reason);
-                  setState(() {
-                    _answeredHere = true;
-                    _flipped = true;
-                  });
-                },
+                saved: widget.isSaved(pill.id),
+                onSave: () => widget.onSave(pill),
+                onShare: () => widget.onShare(pill),
+                onAnswer: !widget.answering
+                    ? null
+                    : (response, confidence, reason) {
+                        HapticFeedback.mediumImpact();
+                        widget.onAnswer(pill.id, response, confidence, reason);
+                        setState(() {
+                          _answeredHere = true;
+                          _flipped = true;
+                        });
+                      },
               ),
               back: PillCard(
                 pill: pill,
@@ -199,6 +247,9 @@ class _PillCardStackState extends State<PillCardStack>
                 flipped: true,
                 isReview: widget.reviewIds.contains(pill.id),
                 given: given,
+                saved: widget.isSaved(pill.id),
+                onSave: () => widget.onSave(pill),
+                onShare: () => widget.onShare(pill),
               ),
             )
           : PillCard(
@@ -223,9 +274,16 @@ class _PillCardStackState extends State<PillCardStack>
         child: Transform(
           alignment: Alignment.center,
           transform: Matrix4.identity()
-            ..translateByDouble(isTop ? _dx : 0.0, translateY, 0.0, 1.0)
+            ..translateByDouble(
+              isTop ? _drag.dx : 0.0,
+              isTop ? translateY + _drag.dy : translateY,
+              0.0,
+              1.0,
+            )
             ..scaleByDouble(scale, scale, 1.0, 1.0)
-            ..rotateZ(isTop ? _dx * 0.035 * math.pi / 180 : 0.0),
+            // Tilt follows the sideways travel only: a card lifted straight
+            // up should rise, not spin.
+            ..rotateZ(isTop ? _drag.dx * 0.035 * math.pi / 180 : 0.0),
           child: card,
         ),
       );

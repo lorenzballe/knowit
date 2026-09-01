@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
@@ -30,10 +31,55 @@ class PillCard extends StatelessWidget {
     this.given,
     this.onAnswer,
     this.isReview = false,
+    this.saved = false,
+    this.onSave,
+    this.onShare,
   });
+
+  /// Keeping and sharing act on this card, not on the screen, so they live on
+  /// it. They used to sit in a row of their own under the deck, which put two
+  /// rows of controls along the bottom edge with the tab bar.
+  final bool saved;
+  final VoidCallback? onSave;
+  final VoidCallback? onShare;
 
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _face(context),
+        if (onSave != null)
+          Positioned(
+            right: 20,
+            bottom: 18,
+            child: Row(
+              children: [
+                _CardControl(
+                  label: saved ? 'Remove from saved' : 'Save this pill',
+                  icon: saved
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
+                  ink: pill.ink,
+                  onTap: () {
+                    HapticFeedback.mediumImpact();
+                    onSave!.call();
+                  },
+                ),
+                const SizedBox(width: 4),
+                _CardControl(
+                  label: 'Share this pill',
+                  icon: Icons.ios_share_rounded,
+                  ink: pill.ink,
+                  onTap: () => onShare?.call(),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _face(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: pill.color,
@@ -937,6 +983,37 @@ class _YourLine extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+/// A control drawn on the card, in the card's own ink.
+class _CardControl extends StatelessWidget {
+  const _CardControl({
+    required this.label,
+    required this.icon,
+    required this.ink,
+    required this.onTap,
+  });
+
+  final String label;
+  final IconData icon;
+  final Color ink;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(9),
+          child: Icon(icon, size: 20, color: ink.withValues(alpha: 0.62)),
+        ),
       ),
     );
   }

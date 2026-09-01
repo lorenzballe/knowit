@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
@@ -18,7 +17,17 @@ class TodayScreen extends StatefulWidget {
   /// sits in the header rather than stacked above it.
   final VoidCallback? onBack;
 
-  const TodayScreen({super.key, required this.app, this.onBack});
+  /// True while a card is under the finger. The tab bar steps aside for the
+  /// gesture: a card being thrown towards the bottom of the screen should
+  /// not be thrown at a row of buttons.
+  final ValueChanged<bool>? onCardMotion;
+
+  const TodayScreen({
+    super.key,
+    required this.app,
+    this.onBack,
+    this.onCardMotion,
+  });
 
   @override
   State<TodayScreen> createState() => _TodayScreenState();
@@ -38,12 +47,6 @@ class _TodayScreenState extends State<TodayScreen> {
     });
   }
 
-  Pill? get _currentPill {
-    final app = widget.app;
-    if (app.todayIndex >= app.todaysDeck.length) return null;
-    return app.todaysDeck[app.todayIndex];
-  }
-
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
@@ -51,7 +54,6 @@ class _TodayScreenState extends State<TodayScreen> {
 
     final deck = app.todaysDeck;
     final index = app.todayIndex;
-    final pill = _currentPill;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 10, 18, 8),
@@ -84,6 +86,10 @@ class _TodayScreenState extends State<TodayScreen> {
                       deck: deck,
                       index: index,
                       onAdvance: () => app.advance(),
+                      isSaved: app.isSaved,
+                      onSave: (pill) => app.toggleSaved(pill.id),
+                      onShare: (pill) => showShareSheet(context, pill),
+                      onMotion: widget.onCardMotion,
                       reviewIds: app.reviewIdsToday,
                       answerFor: app.answerFor,
                       onAnswer: (id, response, confidence, reason) =>
@@ -96,16 +102,6 @@ class _TodayScreenState extends State<TodayScreen> {
                     ),
             ),
           ),
-
-          if (pill != null) ...[
-            const SizedBox(height: 14),
-            _ActionRow(
-              saved: app.isSaved(pill.id),
-              onSave: () => app.toggleSaved(pill.id),
-              onShare: () => showShareSheet(context, pill),
-              onNext: () => app.advance(),
-            ),
-          ],
         ],
       ),
     );
@@ -253,90 +249,3 @@ class _ProgressBars extends StatelessWidget {
 }
 
 /// Heart, next, share — the three things you do to a card, always in reach.
-class _ActionRow extends StatelessWidget {
-  final bool saved;
-  final VoidCallback onSave;
-  final VoidCallback onShare;
-  final VoidCallback onNext;
-
-  const _ActionRow({
-    required this.saved,
-    required this.onSave,
-    required this.onShare,
-    required this.onNext,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-      child: Row(
-        children: [
-          _RoundButton(
-            label: saved ? 'Remove from saved' : 'Save this pill',
-            icon: saved
-                ? Icons.favorite_rounded
-                : Icons.favorite_border_rounded,
-            color: saved ? context.p.alert : context.p.ink,
-            onTap: () {
-              HapticFeedback.mediumImpact();
-              onSave();
-            },
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: PrimaryButton(
-                label: 'Next pill',
-                height: 52,
-                onPressed: onNext,
-              ),
-            ),
-          ),
-          _RoundButton(
-            label: 'Share this pill',
-            icon: Icons.ios_share_rounded,
-            color: context.p.ink,
-            onTap: onShare,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _RoundButton extends StatelessWidget {
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-  final String label;
-
-  const _RoundButton({
-    required this.icon,
-    required this.color,
-    required this.onTap,
-    required this.label,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: label,
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: Container(
-          width: 46,
-          height: 46,
-          decoration: BoxDecoration(
-            color: context.p.line,
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: Icon(icon, size: 19, color: color),
-        ),
-      ),
-    );
-  }
-}

@@ -335,8 +335,11 @@ class _SceneCopy extends StatelessWidget {
     ('Astuto', 'Five smart things a day, ready to use in conversation'),
     (
       'Twelve topics, five pills',
-      'Written fresh every morning, checked against a source before it '
-          'reaches you.',
+      // Two lines, like the rest. Three made this scene's block taller than
+      // the others, and since the copy is anchored by its foot, a taller
+      // block starts higher — which is the whole reason the title moved
+      // between scenes. Shorter copy, not machinery.
+      'Written fresh every morning, and checked against a source.',
     ),
     (
       'A question, then the answer',
@@ -344,8 +347,7 @@ class _SceneCopy extends StatelessWidget {
     ),
     (
       'You choose the mix',
-      'Turn a topic on and it appears tomorrow. Turn it off and it never '
-          'comes back.',
+      'Turn a topic down to see less of it, or off for good.',
     ),
     (
       'Thirty seconds a day',
@@ -353,100 +355,54 @@ class _SceneCopy extends StatelessWidget {
     ),
   ];
 
-  static TextStyle _titleStyle(int index) => index == 0
-      ? AppText.display(
-          size: 46,
-          weight: FontWeight.w600,
-          height: 1,
-          spacing: -1.6,
-          color: Colors.white,
-        )
-      // The canvas sets the scene titles in Outfit, which the app does
-      // not ship. Figtree at 700 is the closest face already bundled;
-      // adding a third family for five lines is not worth the weight.
-      : AppText.body(
-          size: 30,
-          weight: FontWeight.w700,
-          height: 1.12,
-          spacing: -1.2,
-          color: Colors.white,
-        );
-
-  static TextStyle _subStyle(int index) => AppText.body(
-    size: index == 0 ? 18.5 : 17.5,
-    height: index == 0 ? 1.4 : 1.44,
-    color: Colors.white.withValues(alpha: 0.58),
-  );
-
-  /// The tallest any of the five lines gets at this width.
-  ///
-  /// Both slots are sized to it so the words land on the same pixels in every
-  /// scene. Left to size themselves, a shorter scene's title dropped and a
-  /// longer one lifted it — and mid-swap the crossfade took the height of
-  /// whichever was taller, so a title visibly jumped and then settled.
-  static double _tallest(
-    double width,
-    TextStyle Function(int) style,
-    String Function(int) text,
-  ) {
-    double tallest = 0;
-    for (int i = 0; i < _copy.length; i++) {
-      final TextPainter painter = TextPainter(
-        text: TextSpan(text: text(i), style: style(i)),
-        textDirection: TextDirection.ltr,
-        textAlign: TextAlign.center,
-      )..layout(maxWidth: width);
-      if (painter.height > tallest) tallest = painter.height;
-      painter.dispose();
-    }
-    return tallest;
-  }
-
   @override
   Widget build(BuildContext context) {
     final (String title, String sub) = _copy[index];
-    return LayoutBuilder(
-      builder: (context, box) {
-        final double width = box.maxWidth.isFinite ? box.maxWidth : 358;
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              // Bottom-aligned: a title that needs two lines grows upward
-              // into the picture, and never pushes what is under it.
-              height: _tallest(width, _titleStyle, (i) => _copy[i].$1),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: _titleStyle(index),
+    final bool wordmark = index == 0;
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: wordmark
+              ? AppText.display(
+                  size: 46,
+                  weight: FontWeight.w600,
+                  height: 1,
+                  spacing: -1.6,
+                  color: Colors.white,
+                )
+              // The canvas sets the scene titles in Outfit, which the app does
+              // not ship. Figtree at 700 is the closest face already bundled;
+              // adding a third family for five lines is not worth the weight.
+              : AppText.body(
+                  size: 30,
+                  weight: FontWeight.w700,
+                  height: 1.12,
+                  spacing: -1.2,
+                  color: Colors.white,
                 ),
-              ),
+        ),
+        const SizedBox(height: wordmarkGap),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 302),
+          child: Text(
+            sub,
+            textAlign: TextAlign.center,
+            style: AppText.body(
+              size: wordmark ? 18.5 : 17.5,
+              height: wordmark ? 1.4 : 1.44,
+              color: Colors.white.withValues(alpha: 0.58),
             ),
-            const SizedBox(height: wordmarkGap),
-            SizedBox(
-              height: _tallest(subWidth, _subStyle, (i) => _copy[i].$2),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: subWidth),
-                  child: Text(
-                    sub,
-                    textAlign: TextAlign.center,
-                    style: _subStyle(index),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
 
   static const double wordmarkGap = 14;
-  static const double subWidth = 302;
 }
 
 class _SignInBlock extends StatelessWidget {
