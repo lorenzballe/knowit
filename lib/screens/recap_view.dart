@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
@@ -9,6 +8,8 @@ import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
 import 'paywall_screen.dart';
+
+const _weekLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 /// The end-of-day state: the streak recap, then either the Astuto+ upsell on
 /// the free plan or the second set of the day for subscribers.
@@ -32,73 +33,126 @@ class RecapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (right, gradeable) = _tally();
+    final week = app.weekCompletion();
 
-    // A receipt, not a certificate. What this screen owes the reader is
-    // that the day is finished, what was in it, and when the next one comes.
-    // It used to open with a tick in a circle that could have belonged to
-    // any app, under three tiles of which one usually read a dash — and it
-    // never once named a card, which is the whole of what had just been
-    // read.
-    final summary = <String>[
-      app.todaysDeck.length == 1 ? '1 read' : '${app.todaysDeck.length} read',
-      if (gradeable > 0) '$right of $gradeable right',
-      if (app.streak > 0) app.streak == 1 ? '1 day' : '${app.streak} days',
-      'back at ${app.notifyTime}',
-    ];
-
+    // Small on purpose. The end of a day is a beat, not a report: what it
+    // owes the reader is that it is finished, roughly how it went, and a way
+    // back into the cards. The long version pushed that way back below the
+    // fold, which is the one thing on this screen anybody actually wants.
     return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(6, 24, 6, 10),
+      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          PopIn(
+            child: Center(
+              child: Container(
+                width: 62,
+                height: 62,
+                decoration: BoxDecoration(
+                  color: context.p.inverse,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.check_rounded,
+                  size: 34,
+                  color: context.p.onInverse,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
           RiseIn(
+            delay: const Duration(milliseconds: 80),
             child: Text(
               'Done for today.',
+              textAlign: TextAlign.center,
               style: AppText.display(
-                size: 34,
-                weight: FontWeight.w600,
+                size: 30,
+                weight: FontWeight.w700,
                 height: 1.05,
                 spacing: -1.2,
                 color: context.p.ink,
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           RiseIn(
-            delay: const Duration(milliseconds: 60),
-            child: Text(
-              summary.join('  ·  '),
-              style: AppText.body(size: 13.5, color: context.p.inkMuted),
+            delay: const Duration(milliseconds: 160),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _Stat(
+                    value: '${app.todaysDeck.length}',
+                    label: 'CARDS',
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: _Stat(
+                    value: gradeable == 0 ? '—' : '$right/$gradeable',
+                    label: 'RIGHT',
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Expanded(
+                  child: _Stat(
+                    value: '${app.streak}',
+                    label: app.streak == 1 ? 'DAY' : 'DAYS',
+                    accent: true,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 26),
-          const Eyebrow('What you read'),
-          const SizedBox(height: 10),
-          // The five, named, each one a way back into itself. A single
-          // button marked "show them again" made you re-open all five to
-          // reach the one you wanted.
-          for (int i = 0; i < app.todaysDeck.length; i++)
-            RiseIn(
-              delay: Duration(milliseconds: 100 + i * 50),
-              child: _ReadRow(
-                pill: app.todaysDeck[i],
-                onTap: () => openDeckViewer(
-                  context,
-                  app,
-                  app.todaysDeck,
-                  "Today's five",
-                  initialIndex: i,
-                ),
-              ),
-            ),
           const SizedBox(height: 18),
           RiseIn(
-            delay: const Duration(milliseconds: 340),
-            child: WeekStrip(week: app.weekCompletion(), barHeight: 26),
+            delay: const Duration(milliseconds: 240),
+            child: ChunkyButton(
+              label: "SHOW TODAY'S CARDS AGAIN",
+              height: 54,
+              fill: context.p.inverse,
+              ink: context.p.onInverse,
+              onPressed: () =>
+                  openDeckViewer(context, app, app.todaysDeck, "Today's five"),
+            ),
           ),
           const SizedBox(height: 20),
+          RiseIn(
+            delay: const Duration(milliseconds: 300),
+            child: Row(
+              children: List.generate(7, (i) {
+                return Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: i == 6 ? 0 : 5),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 22,
+                          decoration: BoxDecoration(
+                            color: week[i] ? context.p.inverse : context.p.line,
+                            borderRadius: BorderRadius.circular(7),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          _weekLetters[i],
+                          style: AppText.label(
+                            size: 9.5,
+                            color: context.p.inkFaint,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 16),
 
-          // Everything past here is optional reading.
+          // Everything past here is optional reading, and sits below the
+          // thing the reader came to this screen to do.
           if (app.canOpenExtraSet)
             _ExtraSet(app: app)
           else if (!app.isPlus)
@@ -109,74 +163,51 @@ class RecapView extends StatelessWidget {
             const SizedBox(height: 12),
             _RecordNudge(app: app),
           ],
+          if (!app.isPlus) ...[const SizedBox(height: 12), _Tomorrow(app: app)],
         ],
       ),
     );
   }
 }
 
-/// One of the day's cards, on the screen that closes the day.
-class _ReadRow extends StatelessWidget {
-  const _ReadRow({required this.pill, required this.onTap});
+/// One figure from the day, in a tile small enough that three fit a row.
+class _Stat extends StatelessWidget {
+  final String value;
+  final String label;
+  final bool accent;
 
-  final Pill pill;
-  final VoidCallback onTap;
+  const _Stat({required this.value, required this.label, this.accent = false});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 8),
-        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-        decoration: BoxDecoration(
-          color: context.p.ink.withValues(alpha: 0.05),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                width: 4,
-                decoration: BoxDecoration(
-                  color: pill.color,
-                  borderRadius: BorderRadius.circular(9),
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      pill.question,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: 13.5,
-                        height: 1.28,
-                        weight: FontWeight.w600,
-                        color: context.p.ink.withValues(alpha: 0.92),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      pill.topic,
-                      style: AppText.label(
-                        size: 9.5,
-                        spacing: 1.1,
-                        color: context.p.inkFaint,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 13),
+      decoration: BoxDecoration(
+        color: context.p.surfaceRaised,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: context.p.line),
+      ),
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: AppText.display(
+              size: 23,
+              weight: FontWeight.w700,
+              spacing: -0.7,
+              color: accent ? context.p.inverse : context.p.ink,
+            ),
           ),
-        ),
+          const SizedBox(height: 3),
+          Text(
+            label,
+            style: AppText.label(
+              size: 9.5,
+              spacing: 1.1,
+              color: context.p.inkFaint,
+            ),
+          ),
+        ],
       ),
     );
   }
