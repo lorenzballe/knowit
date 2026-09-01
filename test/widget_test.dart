@@ -714,20 +714,22 @@ void main() {
       await _settle(tester);
     }
 
-    // Short: it says it is done and how it went, and nothing else has to be
-    // scrolled past to get back to the cards.
+    // It says it is done, how the day went on one line, and then names the
+    // five — which is both the record of the day and the way back into any
+    // one of them.
     expect(find.text('Done for today.'), findsOneWidget);
-    expect(find.text('CARDS'), findsOneWidget);
-    expect(find.text('RIGHT'), findsOneWidget);
+    expect(find.textContaining('5 read'), findsOneWidget);
+    expect(find.text('WHAT YOU READ'), findsOneWidget);
 
-    final again = find.text("SHOW TODAY'S CARDS AGAIN");
-    expect(again, findsOneWidget);
-    await tester.tap(again);
+    final app = AppState();
+    await app.init();
+    final second = app.todaysDeck[1].question;
+    await tester.tap(find.text(second));
     await _settle(tester);
 
-    // And it lands on the five, face down.
+    // Straight to that card, not to the top of the five.
     expect(find.text("Today's five"), findsOneWidget);
-    expect(find.text('1/5'), findsOneWidget);
+    expect(find.text('2/5'), findsOneWidget);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -1029,9 +1031,9 @@ void main() {
         await _settle(tester);
       }
 
-      await tester.scrollUntilVisible(find.textContaining('Five more in'), 200);
-      await _settle(tester);
-      expect(find.textContaining('Five more in'), findsOneWidget);
+      // On one line with the rest of the day, rather than in a card of its
+      // own under two others.
+      expect(find.textContaining('back at'), findsOneWidget);
     });
   });
 
