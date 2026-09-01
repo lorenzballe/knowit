@@ -86,30 +86,25 @@ class _TopicsScreenState extends State<TopicsScreen> {
                   child: Wrap(
                     spacing: 9,
                     runSpacing: 9,
-                    // Every subject the onboarding offers, in its order —
-                    // including the ones with no cards behind them yet, which
-                    // simply cannot be switched on. Editing a mix while being
+                    // Every subject the onboarding offers, in its order, and
+                    // every one of them switchable. Editing a mix while being
                     // shown a shorter list than the one you were first given
                     // is how a setting starts feeling like it lost something.
                     children: kMixSubjects.map((subject) {
                       final key = subject.key;
-                      final servable = key != null;
-                      final on = servable && _picked.contains(key);
+                      final on = _picked.contains(key);
                       return _TopicChip(
                         label: subject.name,
                         on: on,
                         color: subject.color,
                         onColor: inkOn(subject.color),
-                        enabled: servable,
-                        onTap: !servable
-                            ? null
-                            : () => setState(() {
-                                if (on) {
-                                  _picked.remove(key);
-                                } else {
-                                  _picked.add(key);
-                                }
-                              }),
+                        onTap: () => setState(() {
+                          if (on) {
+                            _picked.remove(key);
+                          } else {
+                            _picked.add(key);
+                          }
+                        }),
                       );
                     }).toList(),
                   ),
@@ -149,10 +144,7 @@ class _TopicChip extends StatelessWidget {
   final Color color;
   final Color onColor;
 
-  /// Null for a subject that has no cards behind it yet: it is shown, so the
-  /// list is the one the onboarding gave, but there is nothing to switch on.
-  final VoidCallback? onTap;
-  final bool enabled;
+  final VoidCallback onTap;
 
   const _TopicChip({
     required this.label,
@@ -160,7 +152,6 @@ class _TopicChip extends StatelessWidget {
     required this.color,
     required this.onColor,
     required this.onTap,
-    this.enabled = true,
   });
 
   @override
@@ -174,11 +165,7 @@ class _TopicChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: on ? color : context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(999),
-          border: Border.all(
-            color: on
-                ? Colors.transparent
-                : context.p.line.withValues(alpha: enabled ? 1 : 0.5),
-          ),
+          border: Border.all(color: on ? Colors.transparent : context.p.line),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -194,26 +181,9 @@ class _TopicChip extends StatelessWidget {
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w500,
-                color: on
-                    ? onColor
-                    : context.p.inkMuted.withValues(alpha: enabled ? 1 : 0.4),
+                color: on ? onColor : context.p.inkMuted,
               ),
             ),
-            // A control that does nothing when pressed and gives no reason is
-            // worse than one that is absent. These subjects are coming; the
-            // chip says so rather than leaving the reader to work out why
-            // their tap did nothing.
-            if (!enabled) ...[
-              const SizedBox(width: 7),
-              Text(
-                'soon',
-                style: AppText.label(
-                  size: 9.5,
-                  spacing: 0.8,
-                  color: context.p.inkFaint,
-                ),
-              ),
-            ],
           ],
         ),
       ),

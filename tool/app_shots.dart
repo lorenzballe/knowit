@@ -184,6 +184,28 @@ void main() {
     await settle(tester);
   });
 
+  testWidgets('the topics editor, with every subject live', (tester) async {
+    // On the paid plan, because editing the mix is behind Astuto+ and the
+    // free plan quite rightly answers that tap with the paywall.
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.plus': true,
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    await tester.drag(find.byType(Scrollable).first, const Offset(0, -900));
+    await settle(tester);
+    await shoot(tester, 'topics-list');
+
+    await tester.tap(find.text('Edit'));
+    await settle(tester);
+    await shoot(tester, 'topics-editor');
+  });
+
   testWidgets('the paywall', (tester) async {
     _installed();
     await tester.pumpWidget(const AstutoApp());

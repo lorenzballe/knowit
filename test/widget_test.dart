@@ -136,13 +136,12 @@ void main() {
 
     // Science was dragged to nothing, so it is not in the mix.
     expect(weights.containsKey('science'), isFalse);
-    // The grid draws eighteen subjects because the canvas does, but the six
-    // with no cards behind them must never reach the dealer as topics it
-    // would then fail to fill.
+    // Every subject the grid draws is a real topic — including the six with
+    // nothing written for them yet, which are switchable on purpose.
     expect(
       weights.keys.every(kTopics.containsKey),
       isTrue,
-      reason: 'the mix only carries topics the deck can actually serve',
+      reason: 'a subject on the grid that is not a topic cannot be dealt',
     );
   });
 
@@ -331,6 +330,30 @@ void main() {
       DateTime(2026, 3, 1),
       topics: {'space'},
       weights: weights,
+    );
+    expect(deck, hasLength(kPillsPerDay));
+  });
+
+  test('a mix of subjects nobody has written for still fills a day', () {
+    // Every subject the onboarding offers can now be switched on, including
+    // the six that have no cards behind them yet. Somebody who picks only
+    // those must still get five cards in the morning — if they do not, the
+    // app is broken for the reader who took the list at its word.
+    const unwritten = {'sport', 'cinema', 'music', 'art', 'medicine', 'food'};
+    for (final key in unwritten) {
+      expect(
+        kTopics.containsKey(key),
+        isTrue,
+        reason: '$key is offered, so it has to exist as a topic',
+      );
+    }
+
+    final deck = pillsForDate(
+      DateTime(2026, 3, 1),
+      // Thinking rides along on every mix — setTopicMix puts it there — and
+      // it is what keeps this day from being empty.
+      topics: {...unwritten, 'thinking'},
+      weights: {for (final key in unwritten) key: 1.0},
     );
     expect(deck, hasLength(kPillsPerDay));
   });

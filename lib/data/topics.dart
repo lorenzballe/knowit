@@ -85,6 +85,16 @@ final Map<String, TopicStyle> kTopics = {
     tint: Color(0xFF16161A),
   ),
   'philosophy': _topic('Philosophy', kSpectrum[7]),
+  // Offered, and with nothing written for them yet. They are switchable
+  // because a subject the onboarding puts in front of you and then refuses
+  // is worse than one that is simply quiet: picking one costs nothing, and
+  // the day still fills, because Thinking is never off the deck.
+  'sport': _topic('Sport', kSpectrum[1]),
+  'cinema': _topic('Cinema', kSpectrum[8]),
+  'music': _topic('Music', kSpectrum[10]),
+  'art': _topic('Art', kSpectrum[12]),
+  'medicine': _topic('Medicine', kSpectrum[15]),
+  'food': _topic('Food', kSpectrum[16]),
 };
 
 /// The paper a reasoning card is printed on.
@@ -105,6 +115,12 @@ const List<String> kTopicOrder = [
   'nature',
   'language',
   'weird_facts',
+  'sport',
+  'cinema',
+  'music',
+  'art',
+  'medicine',
+  'food',
 ];
 
 /// Reverse lookup, display name -> key.

@@ -373,8 +373,7 @@ class ProfileScreen extends StatelessWidget {
             // you could not see what you had turned off, or that there was
             // anything else to turn on.
             children: kMixSubjects.map((subject) {
-              final bool live =
-                  subject.key != null && app.pickedTopics.contains(subject.key);
+              final bool live = app.pickedTopics.contains(subject.key);
               return Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 13,
@@ -387,11 +386,7 @@ class ProfileScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  // The six with nothing behind them yet say so, rather than
-                  // sitting dark with no reason given.
-                  live || subject.key != null
-                      ? subject.name
-                      : '${subject.name} · soon',
+                  subject.name,
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,

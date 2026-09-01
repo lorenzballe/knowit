@@ -7,9 +7,8 @@ import '../theme.dart';
 class MixSubject {
   const MixSubject(this.key, this.name, this.color);
 
-  /// The topic key the app deals by, or null for a subject the canvas draws
-  /// but the deck cannot serve yet.
-  final String? key;
+  /// The topic key the app deals by.
+  final String key;
   final String name;
   final Color color;
 }
@@ -18,26 +17,27 @@ class MixSubject {
 /// hues: the second pass at the palette, which walks the wheel from pure
 /// yellow all the way round to amber and stops the two greens colliding.
 ///
-/// Medicine, Art, Sport, Cinema, Music and Food have no cards behind them
-/// yet, so they carry no topic key and contribute nothing to the mix.
+/// Every one of them can be chosen. Six have nothing written for them yet
+/// and simply stay quiet until they do — offering a subject and then
+/// refusing it is worse than offering one that has not arrived.
 const List<MixSubject> kMixSubjects = [
   MixSubject('economics', 'Economics', Color(0xFFFFE600)),
-  MixSubject(null, 'Sport', Color(0xFFA6FF00)),
+  MixSubject('sport', 'Sport', Color(0xFFA6FF00)),
   MixSubject('nature', 'Nature', Color(0xFF00D451)),
   MixSubject('science', 'Science', Color(0xFF00E5A0)),
   MixSubject('language', 'Language', Color(0xFF00D9D9)),
   MixSubject('technology', 'Technology', Color(0xFF00A6FF)),
   MixSubject('space', 'Space', Color(0xFF2B5CFF)),
   MixSubject('philosophy', 'Philosophy', Color(0xFF4C6FFF)),
-  MixSubject(null, 'Cinema', Color(0xFF6E3AFF)),
+  MixSubject('cinema', 'Cinema', Color(0xFF6E3AFF)),
   MixSubject('psychology', 'Psychology', Color(0xFF9B5CFF)),
-  MixSubject(null, 'Music', Color(0xFFC13AFF)),
+  MixSubject('music', 'Music', Color(0xFFC13AFF)),
   MixSubject('weird_facts', 'Weird facts', Color(0xFFE040FB)),
-  MixSubject(null, 'Art', Color(0xFFFF00A8)),
+  MixSubject('art', 'Art', Color(0xFFFF00A8)),
   MixSubject('pop_culture', 'Pop culture', Color(0xFFFF3D7F)),
   MixSubject('human_body', 'Human body', Color(0xFFFF2D5F)),
-  MixSubject(null, 'Medicine', Color(0xFFFF3B30)),
-  MixSubject(null, 'Food', Color(0xFFFF7A1A)),
+  MixSubject('medicine', 'Medicine', Color(0xFFFF3B30)),
+  MixSubject('food', 'Food', Color(0xFFFF7A1A)),
   MixSubject('history', 'History', Color(0xFFFFB000)),
 ];
 
@@ -85,17 +85,13 @@ class _MixScreenState extends State<MixScreen> {
   void _finish() {
     final Map<String, double> weights = {
       for (final MixSubject s in kMixSubjects)
-        if (s.key != null && _value[s.name]! > kMixFloor)
-          s.key!: _value[s.name]! / 100,
+        if (_value[s.name]! > kMixFloor) s.key: _value[s.name]! / 100,
     };
     // Thinking is not on the grid and never off the deck, so it is not here
     // either: setTopicMix adds it.
     widget.onDone(
       weights.isEmpty
-          ? {
-              for (final MixSubject s in kMixSubjects)
-                if (s.key != null) s.key!: 1,
-            }
+          ? {for (final MixSubject s in kMixSubjects) s.key: 1}
           : weights,
     );
   }
