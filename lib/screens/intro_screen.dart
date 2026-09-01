@@ -13,6 +13,15 @@ import '../widgets/ambient.dart';
 /// because no account is created here. The copy on the next screen makes that
 /// promise explicit: an account is asked for once there is a streak worth
 /// keeping.
+/// How far each scene's words are lifted off where the block alone would put
+/// them.
+///
+/// The wordmark scene is set much larger and the long title wraps to two
+/// lines, so those two ride higher on their own; without this the other three
+/// read as having sagged. Named here rather than buried in the build so the
+/// layout check can hold the app to it.
+const List<double> kIntroCopyLift = [0, 14, 0, 14, 14];
+
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
     super.key,
@@ -143,9 +152,17 @@ class _IntroScreenState extends State<IntroScreen> {
                       const Spacer(),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 22),
-                        child: _Swap(
-                          scene: _scene,
-                          child: _SceneCopy(index: _scene),
+                        // Three of the five sit a touch lower than the rest —
+                        // the wordmark scene is set larger and the long title
+                        // wraps, so those two ride higher on their own. A
+                        // translation rather than padding: the words move,
+                        // and the dots and the buttons under them do not.
+                        child: Transform.translate(
+                          offset: Offset(0, -kIntroCopyLift[_scene]),
+                          child: _Swap(
+                            scene: _scene,
+                            child: _SceneCopy(index: _scene),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 18),

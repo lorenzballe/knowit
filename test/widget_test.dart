@@ -2373,7 +2373,12 @@ void main() {
           );
           await _settle(tester);
         }
-        final bottom = tester.getRect(find.text(titles[scene])).bottom;
+        // Read against the scene's own deliberate lift, so a copy change
+        // that adds a line still fails by twenty-five points while the
+        // fourteen that three scenes are raised by on purpose does not.
+        final bottom =
+            tester.getRect(find.text(titles[scene])).bottom +
+            kIntroCopyLift[scene];
         foot ??= bottom;
         expect(
           bottom,
