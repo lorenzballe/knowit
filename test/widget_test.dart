@@ -689,11 +689,10 @@ void main() {
       await _settle(tester);
     }
 
-    expect(find.text('Your second set is ready'), findsOneWidget);
-    // The recap scrolls; the offer sits below the way back into the cards.
-    await tester.ensureVisible(find.text('READ 5 MORE'));
-    await _settle(tester);
-    await tester.tap(find.text('READ 5 MORE'));
+    // The second set is a button on the closing screen now, beside the way
+    // back into the five, rather than a panel of its own below them.
+    expect(find.text('Five more'), findsOneWidget);
+    await tester.tap(find.text('Five more'));
     await _settle(tester);
 
     // Back to reading, on pill six of ten. The bars say so; the card no
@@ -714,20 +713,22 @@ void main() {
       await _settle(tester);
     }
 
-    // Short: it says it is done and how it went, and nothing else has to be
-    // scrolled past to get back to the cards.
-    expect(find.text('Done for today.'), findsOneWidget);
-    expect(find.text('CARDS'), findsOneWidget);
-    expect(find.text('RIGHT'), findsOneWidget);
+    // The tick says at a glance that the day has been seen, the deck comes
+    // back fanned, and the line off the card at the front is what you can
+    // actually say tonight.
+    expect(find.text("TODAY'S FIVE · ALL READ"), findsOneWidget);
+    expect(find.text('SAY THIS TONIGHT'), findsOneWidget);
 
-    final again = find.text("SHOW TODAY'S CARDS AGAIN");
-    expect(again, findsOneWidget);
-    await tester.tap(again);
+    // The card at the front opens itself. It is the middle one, so the fan
+    // opens both ways.
+    final app = AppState();
+    await app.init();
+    final front = app.todaysDeck[app.todaysDeck.length ~/ 2].question;
+    await tester.tap(find.text(front));
     await _settle(tester);
 
-    // And it lands on the five, face down.
     expect(find.text("Today's five"), findsOneWidget);
-    expect(find.text('1/5'), findsOneWidget);
+    expect(find.text('3/5'), findsOneWidget);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -740,10 +741,11 @@ void main() {
       await _settle(tester);
     }
 
-    await tester.ensureVisible(find.text('Want 5 more?'));
-    await _settle(tester);
-    expect(find.text('Want 5 more?'), findsOneWidget);
-    expect(find.text('READ 5 MORE'), findsNothing);
+    // The upsell is not on this screen at all now. It sits in the profile,
+    // where it can say something about the reader's own record — and the
+    // second button here offers what the free plan actually has.
+    expect(find.text('Five more'), findsNothing);
+    expect(find.text('Share streak'), findsOneWidget);
   });
 
   group('The content pool', () {
@@ -1029,15 +1031,9 @@ void main() {
         await _settle(tester);
       }
 
-      await tester.scrollUntilVisible(
-        find.textContaining('Five more in'),
-        200,
-        // The page, not the row of thumbnails: there are two scrollables on
-        // this screen now and the default picks neither.
-        scrollable: find.byType(Scrollable).first,
-      );
-      await _settle(tester);
-      expect(find.textContaining('Five more in'), findsOneWidget);
+      // Under the buttons, and no longer inside a scrolling page — the
+      // closing screen is one screenful now.
+      expect(find.textContaining('Next five in'), findsOneWidget);
     });
   });
 
