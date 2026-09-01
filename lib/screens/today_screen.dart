@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/pill_card_stack.dart';
@@ -73,7 +72,7 @@ class _TodayScreenState extends State<TodayScreen> {
           // screen says so in words, and a full row of colour under that is
           // decoration on a screen whose whole job is to be quiet.
           if (!app.todayCompleted) ...[
-            _ProgressBars(deck: deck, index: index, done: false),
+            _ProgressBars(total: deck.length, index: index),
             const SizedBox(height: 16),
           ],
 
@@ -117,36 +116,6 @@ class _Header extends StatelessWidget {
   final VoidCallback? onBack;
   const _Header({required this.streak, this.frozen = false, this.onBack});
 
-  /// Monday 1 September. Built here rather than pulling in a localisation
-  /// package for one line.
-  static String _today() {
-    const days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday',
-    ];
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    final now = DateTime.now();
-    return '${days[now.weekday - 1]} ${now.day} ${months[now.month - 1]}';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -157,9 +126,6 @@ class _Header extends StatelessWidget {
             BackCircle(onPressed: onBack!),
             const SizedBox(width: 12),
           ],
-          // The day, not the app's name. Every app knows what it is called;
-          // what a reader opening a daily app twice needs to know is which
-          // day's five these are.
           // A long date and a streak badge do not both fit on a narrow
           // handset. The date gives way by a point or two rather than being
           // clipped, or overflowing, which is what it did.
@@ -168,7 +134,7 @@ class _Header extends StatelessWidget {
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
               child: Text(
-                _today(),
+                'Today',
                 maxLines: 1,
                 style: AppText.display(
                   size: 20,
@@ -222,50 +188,30 @@ class _Header extends StatelessWidget {
 }
 
 class _ProgressBars extends StatelessWidget {
-  final List<Pill> deck;
+  final int total;
   final int index;
-  final bool done;
-  const _ProgressBars({
-    required this.deck,
-    required this.index,
-    required this.done,
-  });
+  const _ProgressBars({required this.total, required this.index});
 
   @override
   Widget build(BuildContext context) {
-    final total = deck.length;
     return Padding(
       // The bars are the only thing that says where in the day you are, now
       // that the card has stopped repeating it. The key names what they
       // draw, so it can be read without a caption existing for its own sake.
-      key: ValueKey('progress-${done ? total : index + 1}-of-$total'),
+      key: ValueKey('progress-${index + 1}-of-$total'),
       padding: const EdgeInsets.symmetric(horizontal: 6),
       child: Row(
         children: List.generate(total, (i) {
-          final read = done || i < index;
-          final here = !done && i == index;
-          // Each bar is its own card, in that card's colour. Five identical
-          // grey dashes said only how far along you were; these say what the
-          // day is made of before you have read any of it, and the one under
-          // the thumb is the one lit.
-          final colour = deck[i].color;
+          final filled = i <= index;
           return Expanded(
             child: AnimatedContainer(
               duration: Duration(milliseconds: 260 + i * 40),
               curve: Curves.easeOut,
               margin: EdgeInsets.only(right: i == total - 1 ? 0 : 5),
-              height: here ? 5 : 3,
+              height: 3,
               decoration: BoxDecoration(
-                color: read || here ? colour : colour.withValues(alpha: 0.5),
+                color: filled ? context.p.ink : context.p.line,
                 borderRadius: BorderRadius.circular(9),
-                boxShadow: here
-                    ? [
-                        BoxShadow(
-                          color: colour.withValues(alpha: 0.5),
-                          blurRadius: 12,
-                        ),
-                      ]
-                    : null,
               ),
             ),
           );

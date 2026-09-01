@@ -35,8 +35,6 @@ class _RecapViewState extends State<RecapView> {
     final deck = app.todaysDeck;
     if (deck.isEmpty) return const SizedBox.shrink();
     final Pill front = deck[_at.clamp(0, deck.length - 1)];
-    final week = app.weekCompletion();
-    final int daysDone = week.where((day) => day).length;
 
     return Stack(
       children: [
@@ -66,33 +64,46 @@ class _RecapViewState extends State<RecapView> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 4),
-            _StreakHead(streak: app.streak, daysDone: daysDone),
-            const SizedBox(height: 22),
+            const SizedBox(height: 6),
             _AllRead(count: deck.length),
+            // The fan and its dots are one object, centred together in the
+            // room that is left. With the fan alone filling the middle, the
+            // dots sat a long way under it and the two read as unrelated.
             Expanded(
-              child: _Fan(
-                deck: deck,
-                at: _at,
-                onPick: (i) => setState(() => _at = i),
-                onOpen: (i) => openDeckViewer(
-                  context,
-                  app,
-                  deck,
-                  "Today's five",
-                  initialIndex: i,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Held to the fan's own height. Left loose, the fan's
+                  // centring box took the whole middle and the dots ended up
+                  // at the bottom of it, a long way under the cards.
+                  Flexible(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxHeight: 318),
+                      child: _Fan(
+                        deck: deck,
+                        at: _at,
+                        onPick: (i) => setState(() => _at = i),
+                        onOpen: (i) => openDeckViewer(
+                          context,
+                          app,
+                          deck,
+                          "Today's five",
+                          initialIndex: i,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  _Dots(
+                    count: deck.length,
+                    at: _at,
+                    colour: front.color,
+                    onPick: (i) => setState(() => _at = i),
+                  ),
+                ],
               ),
             ),
-            _Dots(
-              count: deck.length,
-              at: _at,
-              colour: front.color,
-              onPick: (i) => setState(() => _at = i),
-            ),
-            const SizedBox(height: 16),
-            _SayThis(pill: front),
-            const SizedBox(height: 14),
+            const SizedBox(height: 18),
             _Actions(app: app, deck: deck, front: front),
             const SizedBox(height: 12),
             _NextFive(),
@@ -105,125 +116,6 @@ class _RecapViewState extends State<RecapView> {
 }
 
 /// The streak as a ring closing on the week.
-class _StreakHead extends StatelessWidget {
-  const _StreakHead({required this.streak, required this.daysDone});
-
-  final int streak;
-  final int daysDone;
-
-  static const _words = [
-    'no days',
-    'One day',
-    'Two days',
-    'Three days',
-    'Four days',
-    'Five days',
-    'Six days',
-    'Seven days',
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final String said = streak < _words.length
-        ? _words[streak]
-        : '$streak days';
-    final int left = 7 - daysDone;
-    return Row(
-      children: [
-        SizedBox(
-          width: 62,
-          height: 62,
-          child: CustomPaint(
-            painter: _RingPainter(
-              turned: daysDone / 7,
-              ink: context.p.inverse,
-              rest: context.p.ink.withValues(alpha: 0.10),
-            ),
-            child: Center(
-              child: Text(
-                '$streak',
-                style: AppText.display(
-                  size: 22,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  spacing: -0.6,
-                  color: context.p.ink,
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 15),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                streak == 0 ? 'Day one' : '$said in a row',
-                style: AppText.display(
-                  size: 21,
-                  weight: FontWeight.w600,
-                  height: 1.1,
-                  spacing: -0.6,
-                  color: context.p.ink,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                left <= 0
-                    ? 'The week is yours'
-                    : left == 1
-                    ? 'One more and the week is yours'
-                    : '$left more and the week is yours',
-                style: AppText.body(
-                  size: 12.5,
-                  height: 1.3,
-                  color: context.p.ink.withValues(alpha: 0.45),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _RingPainter extends CustomPainter {
-  const _RingPainter({
-    required this.turned,
-    required this.ink,
-    required this.rest,
-  });
-
-  final double turned;
-  final Color ink;
-  final Color rest;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    const double width = 5;
-    final Rect box = (Offset.zero & size).deflate(width / 2);
-    final Paint p = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = width
-      ..strokeCap = StrokeCap.round;
-    canvas.drawArc(box, 0, math.pi * 2, false, p..color = rest);
-    if (turned <= 0) return;
-    canvas.drawArc(
-      box,
-      -math.pi / 2,
-      math.pi * 2 * turned.clamp(0, 1),
-      false,
-      p..color = ink,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _RingPainter old) =>
-      old.turned != turned || old.ink != ink;
-}
-
 /// The tick, kept from the version before this one: it says at a glance that
 /// the day has been seen, which is the first thing this screen owes.
 class _AllRead extends StatelessWidget {
@@ -504,48 +396,6 @@ class _Dots extends StatelessWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-/// The line off the card at the front — what you can actually say tonight.
-class _SayThis extends StatelessWidget {
-  const _SayThis({required this.pill});
-
-  final Pill pill;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(19, 18, 19, 18),
-      decoration: BoxDecoration(
-        color: context.p.ink.withValues(alpha: 0.055),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: context.p.ink.withValues(alpha: 0.07)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'THE BAR MOVE',
-            style: AppText.label(size: 9.5, spacing: 1.5, color: pill.color),
-          ),
-          const SizedBox(height: 8),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 260),
-            child: Text(
-              pill.barMove,
-              key: ValueKey(pill.id),
-              style: AppText.body(
-                size: 15.5,
-                height: 1.4,
-                weight: FontWeight.w500,
-                color: context.p.ink.withValues(alpha: 0.94),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

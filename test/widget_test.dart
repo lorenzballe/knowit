@@ -801,11 +801,9 @@ void main() {
       await _settle(tester);
     }
 
-    // The tick says at a glance that the day has been seen, the deck comes
-    // back fanned, and the line off the card at the front is what you can
-    // actually say tonight.
+    // The tick says at a glance that the day has been seen, and the deck
+    // comes back fanned.
     expect(find.text("TODAY'S FIVE · ALL READ"), findsOneWidget);
-    expect(find.text('THE BAR MOVE'), findsOneWidget);
 
     // The card at the front opens itself. It is the middle one, so the fan
     // opens both ways.
