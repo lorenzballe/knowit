@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../data/subject_icons.dart';
 import '../theme.dart';
 
 /// One subject on the mix grid.
@@ -393,33 +396,31 @@ class _MixTile extends StatelessWidget {
                     // and the label rides at the top instead of the middle.
                     Positioned.fill(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        padding: const EdgeInsets.symmetric(horizontal: 13),
                         child: Row(
                           children: [
+                            // The subject's own mark, not a tick. Every
+                            // tile carried the same check, which told you a
+                            // tile was on and nothing about what it was.
                             AnimatedOpacity(
                               duration: const Duration(milliseconds: 150),
-                              opacity: live ? 1 : 0,
-                              // An icon, not the ✓ character: Figtree does not
-                              // carry that glyph and it came out as an empty
-                              // box.
-                              // The canvas sets a plain check glyph at
-                              // 10.5px; Figtree has no such glyph, and the
-                              // rounded icon came out far heavier than the
-                              // mark it stands in for.
-                              child: const Icon(
-                                Icons.check,
-                                size: 12,
-                                color: Colors.white,
+                              opacity: live ? 0.92 : 0.34,
+                              child: SizedBox(
+                                width: 17,
+                                height: 17,
+                                child: SvgPicture.string(
+                                  subjectIconSvg(subject.name),
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 7),
+                            const SizedBox(width: 9),
                             Expanded(
                               child: Text(
                                 subject.name,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppText.body(
-                                  size: 14,
+                                  size: 13.5,
                                   weight: FontWeight.w700,
                                   height: 1.1,
                                   spacing: -0.3,
