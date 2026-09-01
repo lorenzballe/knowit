@@ -745,7 +745,7 @@ void main() {
     // where it can say something about the reader's own record — and the
     // second button here offers what the free plan actually has.
     expect(find.text('Five more'), findsNothing);
-    expect(find.text('Share streak'), findsOneWidget);
+    expect(find.text('Share this card'), findsOneWidget);
   });
 
   group('The content pool', () {

@@ -6,7 +6,7 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
-import '../widgets/record_share_sheet.dart';
+import '../widgets/share_sheet.dart';
 import 'deck_viewer_screen.dart';
 
 /// The end of the day, from artboard 55.
@@ -93,7 +93,7 @@ class _RecapViewState extends State<RecapView> {
             const SizedBox(height: 16),
             _SayThis(pill: front),
             const SizedBox(height: 14),
-            _Actions(app: app, deck: deck),
+            _Actions(app: app, deck: deck, front: front),
             const SizedBox(height: 12),
             _NextFive(),
             const SizedBox(height: 4),
@@ -352,10 +352,22 @@ class _Fan extends StatelessWidget {
               ),
             );
           }
-          return SizedBox(
-            width: width,
-            height: height,
-            child: Stack(alignment: Alignment.center, children: layers),
+          // A swipe walks the fan, the way a thumb goes through a deck.
+          // Tapping the card behind still brings it forward, but nobody
+          // who has just swiped through five cards expects to stop now.
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onHorizontalDragEnd: (d) {
+              final v = d.primaryVelocity ?? 0;
+              if (v.abs() < 120) return;
+              final next = v < 0 ? at + 1 : at - 1;
+              if (next >= 0 && next < deck.length) onPick(next);
+            },
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: Stack(alignment: Alignment.center, children: layers),
+            ),
           );
         },
       ),
@@ -539,10 +551,13 @@ class _SayThis extends StatelessWidget {
 }
 
 class _Actions extends StatelessWidget {
-  const _Actions({required this.app, required this.deck});
+  const _Actions({required this.app, required this.deck, required this.front});
 
   final AppState app;
   final List<Pill> deck;
+
+  /// The card at the front of the fan — the one the share button sends.
+  final Pill front;
 
   @override
   Widget build(BuildContext context) {
@@ -564,14 +579,19 @@ class _Actions extends StatelessWidget {
         const SizedBox(width: 9),
         Expanded(
           child: _Action(
-            label: more ? 'Five more' : 'Share streak',
+            // "Share streak" shared a record card, which nobody sends
+            // anyone. What gets sent is the card — the surprising thing,
+            // the line you can use — and it is the one channel this kind of
+            // app has that costs nothing. So the button shares whichever
+            // card is at the front of the fan.
+            label: more ? 'Five more' : 'Share this card',
             fill: context.p.ink.withValues(alpha: 0.07),
             ink: context.p.ink,
             onTap: () async {
               if (more) {
                 await app.openExtraSet();
               } else if (context.mounted) {
-                showRecordShareSheet(context, app);
+                await showShareSheet(context, front);
               }
             },
           ),
