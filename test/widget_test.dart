@@ -320,7 +320,7 @@ void main() {
     await _settle(tester);
 
     // The share sheet, not the paywall.
-    expect(find.text('Share this card'), findsOneWidget);
+    expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
     expect(
       find.text('Find out if you are actually getting better.'),
       findsNothing,
@@ -831,7 +831,7 @@ void main() {
     // where it can say something about the reader's own record — and the
     // second button here offers what the free plan actually has.
     expect(find.text('Five more'), findsNothing);
-    expect(find.text('Share this card'), findsOneWidget);
+    expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
   });
 
   group('The content pool', () {

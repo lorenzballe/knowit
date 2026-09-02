@@ -1,21 +1,23 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../data/subject_icons.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
 import 'deck_viewer_screen.dart';
 
-/// The end of the day, from artboard 55.
+/// The end of the day, from artboard 58a.
 ///
-/// The old version treated finishing as an inventory: a tick, three tiles, a
-/// list. This treats it as the payoff. The day's five come back as the deck
-/// itself, fanned — tap one and it comes to the front with the line you can
-/// use underneath, so the last thing on screen is what you can now say
-/// rather than a receipt of what you read.
+/// The day's five come back as the deck itself, fanned, and the whole screen
+/// takes the colour of the card at the front — the wash behind, the streak
+/// ring, the button and the chips all shift together. The subject chips sit
+/// under the deck and drive it. Nothing here asks you to perform a line: the
+/// point of the app is sharper thinking, so the footer counts what you have
+/// actually worked through.
 class RecapView extends StatefulWidget {
   final AppState app;
   const RecapView({super.key, required this.app});
@@ -34,138 +36,212 @@ class _RecapViewState extends State<RecapView> {
     final app = widget.app;
     final deck = app.todaysDeck;
     if (deck.isEmpty) return const SizedBox.shrink();
-    final Pill front = deck[_at.clamp(0, deck.length - 1)];
+    final int at = _at.clamp(0, deck.length - 1);
+    final Pill front = deck[at];
+    final int daysDone = app.weekCompletion().where((d) => d).length;
 
     return Stack(
       children: [
-        // The light behind takes the colour of whichever card is at the
-        // front, so choosing one changes the room it is standing in.
-        Positioned(
-          left: -60,
-          right: -60,
-          top: 40,
-          height: 420,
-          child: IgnorePointer(
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 600),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    front.color.withValues(alpha: 0.30),
-                    Colors.transparent,
-                  ],
-                  stops: const [0, 0.66],
-                ),
-              ),
-            ),
-          ),
-        ),
+        Positioned.fill(child: _Wash(colour: front.color)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 6),
-            _AllRead(count: deck.length),
-            // The fan and its dots are one object, centred together in the
-            // room that is left. With the fan alone filling the middle, the
-            // dots sat a long way under it and the two read as unrelated.
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Held to the fan's own height. Left loose, the fan's
-                  // centring box took the whole middle and the dots ended up
-                  // at the bottom of it, a long way under the cards.
-                  Flexible(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(maxHeight: 318),
-                      child: _Fan(
-                        deck: deck,
-                        at: _at,
-                        onPick: (i) => setState(() => _at = i),
-                        onOpen: (i) => openDeckViewer(
-                          context,
-                          app,
-                          deck,
-                          "Today's five",
-                          initialIndex: i,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  _Dots(
-                    count: deck.length,
-                    at: _at,
-                    colour: front.color,
-                    onPick: (i) => setState(() => _at = i),
-                  ),
-                ],
+            const SizedBox(height: 4),
+            _StreakHead(
+              streak: app.streak,
+              daysDone: daysDone,
+              colour: front.color,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              "TODAY'S ${_spelt(deck.length)} · ALL READ",
+              style: AppText.label(
+                size: 10.5,
+                spacing: 1.6,
+                color: context.p.ink.withValues(alpha: 0.38),
               ),
             ),
+            Expanded(
+              child: _Fan(
+                deck: deck,
+                at: at,
+                onPick: (i) => setState(() => _at = i),
+                onOpen: (i) => openDeckViewer(
+                  context,
+                  app,
+                  deck,
+                  "Today's five",
+                  initialIndex: i,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            _Chips(deck: deck, at: at, onPick: (i) => setState(() => _at = i)),
             const SizedBox(height: 18),
             _Actions(app: app, deck: deck, front: front),
-            const SizedBox(height: 12),
-            _NextFive(),
-            const SizedBox(height: 4),
+            const SizedBox(height: 15),
+            _Footer(worked: app.seenIds.length),
+            const SizedBox(height: 6),
           ],
         ),
       ],
     );
   }
-}
-
-/// The streak as a ring closing on the week.
-/// The tick, kept from the version before this one: it says at a glance that
-/// the day has been seen, which is the first thing this screen owes.
-class _AllRead extends StatelessWidget {
-  const _AllRead({required this.count});
-
-  final int count;
 
   static const _numbers = [
-    'none',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-    'ten',
+    'NONE',
+    'ONE',
+    'TWO',
+    'THREE',
+    'FOUR',
+    'FIVE',
+    'SIX',
+    'SEVEN',
+    'EIGHT',
+    'NINE',
+    'TEN',
   ];
+  static String _spelt(int n) => n < _numbers.length ? _numbers[n] : '$n';
+}
 
-  static String _spelt(int n) =>
-      n < _numbers.length ? _numbers[n].toUpperCase() : '$n';
+/// The screen's own colour: the front card's, as an ellipse of light from
+/// the top, falling to black by three quarters of the way down.
+class _Wash extends StatelessWidget {
+  const _Wash({required this.colour});
+
+  final Color colour;
 
   @override
   Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: LayoutBuilder(
+        builder: (context, box) {
+          // radial-gradient(125% 58% at 50% 6%): a circle drawn at 125% of
+          // the width, squashed to 58% of the height, centred near the top.
+          final double w = box.maxWidth;
+          final double h = box.maxHeight;
+          return OverflowBox(
+            maxWidth: double.infinity,
+            maxHeight: double.infinity,
+            alignment: Alignment.topCenter,
+            child: Transform.translate(
+              offset: Offset(0, h * 0.06 - w * 1.25 * 0.58 / 2 * 0.0),
+              child: Transform.scale(
+                scaleY: (h * 0.58) / (w * 1.25),
+                alignment: Alignment.topCenter,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 550),
+                  curve: Curves.easeOut,
+                  width: w * 1.25 * 2,
+                  height: w * 1.25 * 2,
+                  transform: Matrix4.translationValues(0, -w * 1.25, 0),
+                  decoration: BoxDecoration(
+                    gradient: RadialGradient(
+                      colors: [
+                        colour.withValues(alpha: 0.40),
+                        colour.withValues(alpha: 0.12),
+                        Colors.black,
+                      ],
+                      stops: const [0, 0.42, 0.78],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// The streak as a ring closing on the week, in the day's colour.
+class _StreakHead extends StatelessWidget {
+  const _StreakHead({
+    required this.streak,
+    required this.daysDone,
+    required this.colour,
+  });
+
+  final int streak;
+  final int daysDone;
+  final Color colour;
+
+  static const _words = [
+    '',
+    'One day',
+    'Two days',
+    'Three days',
+    'Four days',
+    'Five days',
+    'Six days',
+    'Seven days',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final int left = 7 - daysDone;
+    final String head = streak == 0
+        ? 'Day one'
+        : streak < _words.length
+        ? '${_words[streak]} sharper'
+        : '$streak days sharper';
     return Row(
       children: [
-        PopIn(
-          child: Container(
-            width: 26,
-            height: 26,
-            decoration: BoxDecoration(
-              color: context.p.inverse,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.check_rounded,
-              size: 16,
-              color: context.p.onInverse,
+        _RingIn(
+          child: SizedBox(
+            width: 60,
+            height: 60,
+            child: CustomPaint(
+              painter: _RingPainter(
+                turned: daysDone / 7,
+                lit: colour,
+                rest: context.p.ink.withValues(alpha: 0.10),
+              ),
+              child: Center(
+                child: Text(
+                  '$streak',
+                  style: AppText.display(
+                    size: 21,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    spacing: -0.6,
+                    color: context.p.ink,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        Text(
-          "TODAY'S ${_spelt(count)} · ALL READ",
-          style: AppText.label(
-            size: 10.5,
-            spacing: 1.6,
-            color: context.p.ink.withValues(alpha: 0.38),
+        const SizedBox(width: 15),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                head,
+                style: AppText.display(
+                  size: 21,
+                  weight: FontWeight.w600,
+                  height: 1.1,
+                  spacing: -0.6,
+                  color: context.p.ink,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                left <= 0
+                    ? 'The week is yours'
+                    : left == 1
+                    ? 'One more and the week is yours'
+                    : '$left more and the week is yours',
+                style: AppText.body(
+                  size: 12.5,
+                  height: 1.3,
+                  color: context.p.ink.withValues(alpha: 0.45),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -173,7 +249,89 @@ class _AllRead extends StatelessWidget {
   }
 }
 
-/// The day's cards as the deck itself, fanned.
+/// ringIn: turns up from a quarter back, growing from .85, as it fades in.
+class _RingIn extends StatefulWidget {
+  const _RingIn({required this.child});
+  final Widget child;
+  @override
+  State<_RingIn> createState() => _RingInState();
+}
+
+class _RingInState extends State<_RingIn> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 700),
+  )..forward();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) return widget.child;
+    final curve = CurvedAnimation(
+      parent: _c,
+      curve: const Cubic(0.3, 1.2, 0.3, 1),
+    );
+    return AnimatedBuilder(
+      animation: curve,
+      builder: (context, child) {
+        final t = curve.value;
+        return Opacity(
+          opacity: t.clamp(0, 1),
+          child: Transform.rotate(
+            angle: -math.pi / 2 * (1 - t),
+            child: Transform.scale(scale: 0.85 + 0.15 * t, child: child),
+          ),
+        );
+      },
+      child: widget.child,
+    );
+  }
+}
+
+class _RingPainter extends CustomPainter {
+  const _RingPainter({
+    required this.turned,
+    required this.lit,
+    required this.rest,
+  });
+
+  final double turned;
+  final Color lit;
+  final Color rest;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // conic-gradient(colour 0..308deg, rest after): a 5-point band, with
+    // the lit share starting at twelve o'clock and running clockwise.
+    const double band = 5;
+    final Rect box = (Offset.zero & size).deflate(band / 2);
+    final Paint p = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = band
+      ..strokeCap = StrokeCap.butt;
+    canvas.drawArc(box, 0, math.pi * 2, false, p..color = rest);
+    if (turned <= 0) return;
+    canvas.drawArc(
+      box,
+      -math.pi / 2,
+      math.pi * 2 * turned.clamp(0, 1),
+      false,
+      p..color = lit,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _RingPainter old) =>
+      old.turned != turned || old.lit != lit || old.rest != rest;
+}
+
+/// The day's cards as the deck itself, fanned. 250 by 318 on the artboard;
+/// on a shorter phone it takes what is there.
 class _Fan extends StatelessWidget {
   const _Fan({
     required this.deck,
@@ -192,14 +350,10 @@ class _Fan extends StatelessWidget {
     return Center(
       child: LayoutBuilder(
         builder: (context, box) {
-          // The artboard draws the fan at 240 by 310. On a shorter phone it
-          // takes what is there rather than being cropped.
-          final double height = math.min(box.maxHeight - 8, 310);
-          final double width = math.min(box.maxWidth - 80, height * 240 / 310);
+          final double height = math.min(box.maxHeight - 8, 318);
+          final double width = math.min(box.maxWidth - 80, height * 250 / 318);
           // Painted furthest-from-the-front first, which is what the
-          // artboard's z-index says. Walking the deck in index order left
-          // card one on top of whichever card was chosen, so three questions
-          // showed through each other.
+          // artboard's z-index says.
           final order = List<int>.generate(deck.length, (k) => k)
             ..sort((a, b) => (b - at).abs().compareTo((a - at).abs()));
           final layers = <Widget>[];
@@ -210,8 +364,8 @@ class _Fan extends StatelessWidget {
             final bool front = off == 0;
             final double opacity = switch (off.abs()) {
               0 => 1,
-              1 => 0.6,
-              2 => 0.28,
+              1 => 0.55,
+              2 => 0.24,
               _ => 0,
             };
             layers.add(
@@ -222,11 +376,11 @@ class _Fan extends StatelessWidget {
                   opacity: opacity,
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeOutCubic,
+                    curve: const Cubic(0.3, 1.16, 0.3, 1),
                     transform: Matrix4.identity()
                       ..translateByDouble(
-                        side * reach * 34.0,
-                        reach * 11.0,
+                        side * reach * 36.0,
+                        reach * 12.0,
                         0,
                         1,
                       )
@@ -236,7 +390,6 @@ class _Fan extends StatelessWidget {
                     child: _FanCard(
                       pill: deck[k],
                       index: k,
-                      total: deck.length,
                       onTap: () => front ? onOpen(k) : onPick(k),
                     ),
                   ),
@@ -244,9 +397,6 @@ class _Fan extends StatelessWidget {
               ),
             );
           }
-          // A swipe walks the fan, the way a thumb goes through a deck.
-          // Tapping the card behind still brings it forward, but nobody
-          // who has just swiped through five cards expects to stop now.
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onHorizontalDragEnd: (d) {
@@ -255,10 +405,12 @@ class _Fan extends StatelessWidget {
               final next = v < 0 ? at + 1 : at - 1;
               if (next >= 0 && next < deck.length) onPick(next);
             },
-            child: SizedBox(
-              width: width,
-              height: height,
-              child: Stack(alignment: Alignment.center, children: layers),
+            child: _FanIn(
+              child: SizedBox(
+                width: width,
+                height: height,
+                child: Stack(alignment: Alignment.center, children: layers),
+              ),
             ),
           );
         },
@@ -267,34 +419,75 @@ class _Fan extends StatelessWidget {
   }
 }
 
+/// fanIn: rises thirty points from .9, fading in.
+class _FanIn extends StatefulWidget {
+  const _FanIn({required this.child});
+  final Widget child;
+  @override
+  State<_FanIn> createState() => _FanInState();
+}
+
+class _FanInState extends State<_FanIn> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 700),
+  )..forward();
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (MediaQuery.disableAnimationsOf(context)) return widget.child;
+    final curve = CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
+    return AnimatedBuilder(
+      animation: curve,
+      builder: (context, child) {
+        final t = curve.value;
+        return Opacity(
+          opacity: t,
+          child: Transform.translate(
+            offset: Offset(0, 30 * (1 - t)),
+            child: Transform.scale(scale: 0.9 + 0.1 * t, child: child),
+          ),
+        );
+      },
+      child: widget.child,
+    );
+  }
+}
+
 class _FanCard extends StatelessWidget {
   const _FanCard({
     required this.pill,
     required this.index,
-    required this.total,
     required this.onTap,
   });
 
   final Pill pill;
   final int index;
-  final int total;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final Color ink = pill.ink;
+    final bool light = ink.computeLuminance() < 0.5;
+    final Color sub = ink.withValues(alpha: light ? 0.6 : 0.66);
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(22),
         decoration: BoxDecoration(
           color: pill.color,
-          borderRadius: BorderRadius.circular(26),
+          borderRadius: BorderRadius.circular(28),
           boxShadow: const [
             BoxShadow(
-              color: Color(0x9E000000),
-              blurRadius: 48,
+              color: Color(0x99000000),
+              blurRadius: 50,
               offset: Offset(0, 22),
             ),
           ],
@@ -307,23 +500,28 @@ class _FanCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: Text(
-                    pill.topic.toUpperCase(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.label(
-                      size: 9.5,
-                      spacing: 1.4,
-                      color: ink.withValues(alpha: 0.62),
-                    ),
+                  child: Row(
+                    children: [
+                      _SubjectIcon(subject: pill.topic, size: 16, ink: ink),
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Text(
+                          pill.topic.toUpperCase(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.label(
+                            size: 9.5,
+                            spacing: 1.4,
+                            color: sub,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Text(
                   '${index + 1}'.padLeft(2, '0'),
-                  style: AppText.label(
-                    size: 9.5,
-                    color: ink.withValues(alpha: 0.42),
-                  ),
+                  style: AppText.label(size: 9.5, color: sub),
                 ),
               ],
             ),
@@ -333,7 +531,7 @@ class _FanCard extends StatelessWidget {
                 maxLines: 6,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.body(
-                  size: 20,
+                  size: 21,
                   weight: FontWeight.w600,
                   height: 1.16,
                   spacing: -0.6,
@@ -343,11 +541,7 @@ class _FanCard extends StatelessWidget {
             ),
             Text(
               'READ',
-              style: AppText.label(
-                size: 10,
-                spacing: 1.2,
-                color: ink.withValues(alpha: 0.45),
-              ),
+              style: AppText.label(size: 10, spacing: 1.2, color: sub),
             ),
           ],
         ),
@@ -356,45 +550,87 @@ class _FanCard extends StatelessWidget {
   }
 }
 
-class _Dots extends StatelessWidget {
-  const _Dots({
-    required this.count,
-    required this.at,
-    required this.colour,
-    required this.onPick,
+/// The subject's own mark, recoloured to whatever ink it sits on.
+class _SubjectIcon extends StatelessWidget {
+  const _SubjectIcon({
+    required this.subject,
+    required this.size,
+    required this.ink,
   });
 
-  final int count;
+  final String subject;
+  final double size;
+  final Color ink;
+
+  @override
+  Widget build(BuildContext context) {
+    final String svg = subjectIconSvg(subject);
+    if (svg.isEmpty) return SizedBox(width: size, height: size);
+    return SizedBox(
+      width: size,
+      height: size,
+      child: SvgPicture.string(
+        svg,
+        colorFilter: ColorFilter.mode(ink, BlendMode.srcIn),
+      ),
+    );
+  }
+}
+
+/// The five subjects under the deck, driving it. The one at the front is
+/// filled in its own colour; the others sit back.
+class _Chips extends StatelessWidget {
+  const _Chips({required this.deck, required this.at, required this.onPick});
+
+  final List<Pill> deck;
   final int at;
-  final Color colour;
   final ValueChanged<int> onPick;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
+      spacing: 7,
+      runSpacing: 7,
       children: [
-        for (int i = 0; i < count; i++) ...[
-          if (i > 0) const SizedBox(width: 7),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => onPick(i),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                height: 6,
-                width: i == at ? 20 : 6,
-                decoration: BoxDecoration(
-                  color: i == at
-                      ? colour
-                      : context.p.ink.withValues(alpha: 0.18),
-                  borderRadius: BorderRadius.circular(9),
+        for (int k = 0; k < deck.length; k++)
+          Builder(
+            builder: (context) {
+              final bool on = k == at;
+              final Pill pill = deck[k];
+              final Color ink = on
+                  ? pill.ink
+                  : context.p.ink.withValues(alpha: 0.6);
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onPick(k),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
+                  decoration: BoxDecoration(
+                    color: on
+                        ? pill.color
+                        : context.p.ink.withValues(alpha: 0.06),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _SubjectIcon(subject: pill.topic, size: 14, ink: ink),
+                      const SizedBox(width: 7),
+                      Text(
+                        pill.topic,
+                        style: AppText.body(
+                          size: 12.5,
+                          weight: FontWeight.w600,
+                          color: ink,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
-        ],
       ],
     );
   }
@@ -405,8 +641,6 @@ class _Actions extends StatelessWidget {
 
   final AppState app;
   final List<Pill> deck;
-
-  /// The card at the front of the fan — the one the share button sends.
   final Pill front;
 
   @override
@@ -415,35 +649,58 @@ class _Actions extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _Action(
-            // Short enough to fit half the row at fifteen points: the
-            // longer wording came out clipped mid-word.
-            label: deck.length == 5
-                ? "Today's five again"
-                : 'All ${deck.length} again',
-            fill: context.p.inverse,
-            ink: context.p.onInverse,
-            onTap: () => openDeckViewer(context, app, deck, "Today's five"),
-          ),
-        ),
-        const SizedBox(width: 9),
-        Expanded(
-          child: _Action(
-            // "Share streak" shared a record card, which nobody sends
-            // anyone. What gets sent is the card — the surprising thing,
-            // the line you can use — and it is the one channel this kind of
-            // app has that costs nothing. So the button shares whichever
-            // card is at the front of the fan.
-            label: more ? 'Five more' : 'Share this card',
-            fill: context.p.ink.withValues(alpha: 0.07),
-            ink: context.p.ink,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () async {
               if (more) {
                 await app.openExtraSet();
-              } else if (context.mounted) {
-                await showShareSheet(context, front);
+              } else {
+                openDeckViewer(context, app, deck, "Today's five");
               }
             },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              height: 54,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                // The button takes the front card's colour, with that
+                // card's ink, so it changes with the deck like everything
+                // else on the screen.
+                color: front.color,
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: Text(
+                more ? 'Five more' : "Today's five again",
+                style: AppText.body(
+                  size: 15,
+                  weight: FontWeight.w700,
+                  color: front.ink,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 9),
+        Semantics(
+          button: true,
+          label: 'Share this card',
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => showShareSheet(context, front),
+            child: Container(
+              width: 54,
+              height: 54,
+              decoration: BoxDecoration(
+                color: context.p.ink.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(18),
+              ),
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.arrow_upward_rounded,
+                size: 20,
+                color: context.p.ink,
+              ),
+            ),
           ),
         ),
       ],
@@ -451,46 +708,11 @@ class _Actions extends StatelessWidget {
   }
 }
 
-class _Action extends StatelessWidget {
-  const _Action({
-    required this.label,
-    required this.fill,
-    required this.ink,
-    required this.onTap,
-  });
+class _Footer extends StatelessWidget {
+  const _Footer({required this.worked});
 
-  final String label;
-  final Color fill;
-  final Color ink;
-  final VoidCallback onTap;
+  final int worked;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Container(
-        height: 54,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: fill,
-          borderRadius: BorderRadius.circular(18),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            label,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.body(size: 15, weight: FontWeight.w700, color: ink),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NextFive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -498,16 +720,32 @@ class _NextFive extends StatelessWidget {
     final left = tomorrow.difference(now);
     final hours = left.inHours;
     final minutes = left.inMinutes % 60;
-    return Text(
-      hours >= 1
-          ? 'Next five in ${hours}h ${minutes}m'
-          : 'Next five in ${minutes}m',
-      textAlign: TextAlign.center,
-      style: AppText.body(
-        size: 11.5,
-        weight: FontWeight.w500,
-        color: context.p.ink.withValues(alpha: 0.3),
-      ),
+    final style = AppText.body(
+      size: 11.5,
+      weight: FontWeight.w500,
+      color: context.p.ink.withValues(alpha: 0.32),
+    );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Text(
+            worked == 1
+                ? '1 pill worked through'
+                : '$worked pills worked through',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: style,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          hours >= 1
+              ? 'Next five in ${hours}h ${minutes}m'
+              : 'Next five in ${minutes}m',
+          style: style,
+        ),
+      ],
     );
   }
 }

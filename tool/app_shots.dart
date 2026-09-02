@@ -278,7 +278,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
 
-    await tester.tap(find.text('Share this card'));
+    await tester.tap(find.bySemanticsLabel('Share this card'));
     await settle(tester);
     await shoot(tester, 'share');
   });
