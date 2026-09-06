@@ -15,6 +15,7 @@ import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
+import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
@@ -72,6 +73,13 @@ Future<void> _loadRealFonts() async {
 /// The profile's own list. The tabs sit in a page view now, which is a
 /// scrollable of its own and the first one in the tree, so "the first
 /// scrollable" stopped meaning the list.
+/// The word Today at the top of the screen — not the one on the tab bar,
+/// which the selected tab also prints.
+final Finder _todayTitle = find.descendant(
+  of: find.byType(TodayScreen),
+  matching: find.text('Today'),
+);
+
 final Finder _profileList = find
     .descendant(
       of: find.byType(ProfileScreen),
@@ -699,44 +707,53 @@ void main() {
     );
   });
 
-  testWidgets('the tabs slide under the finger', (tester) async {
+  testWidgets('the day being read does not slide off', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    // A sideways drag on the card is a throw, as it always was — the page
-    // does not take it.
+    // A drag on the card is a throw, as it always was.
     await _swipeCardAway(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.byKey(const ValueKey('progress-2-of-5')), findsOneWidget);
 
-    // From the header, where nothing else wants the gesture, the same drag
-    // slides to the next tab, and the bar follows.
-    await tester.dragFrom(
-      tester.getCenter(find.text('Nothing kept yet')),
-      const Offset(-300, 0),
-    );
-    await _settle(tester);
-    expect(find.text('TOP TODAY'), findsOneWidget);
-    expect(find.byType(PillCardStack), findsNothing);
-    expect(find.text('Explore'), findsOneWidget);
-
-    // And back the other way, from a row of the shelf.
-    await tester.dragFrom(
-      tester.getCenter(
-        find.text(
-          "Everyone's cards, not your mix. The ones that ask the most, first.",
-        ),
-      ),
-      const Offset(300, 0),
-    );
+    // And a drag anywhere else on the screen is nothing at all: the five
+    // are a screen you finish, not one you swipe off.
+    await tester.dragFrom(tester.getCenter(_todayTitle), const Offset(-300, 0));
     await _settle(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.text('TOP TODAY'), findsNothing);
 
-    // What a tab was left on survives the reader looking away from it.
+    // The bar still goes anywhere, so nobody is held there.
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
+    expect(find.text('TOP TODAY'), findsOneWidget);
+  });
+
+  testWidgets('the other tabs slide under the finger', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+
+    // On to Profile, and back again, and the bar follows the finger.
+    await tester.dragFrom(
+      tester.getCenter(find.text('All time')),
+      const Offset(-300, 0),
+    );
+    await _settle(tester);
+    expect(find.text('YOUR RECORD'), findsOneWidget);
+    expect(find.text('Profile'), findsOneWidget);
+
+    await tester.dragFrom(
+      tester.getCenter(find.text('APPEARANCE')),
+      const Offset(300, 0),
+    );
+    await _settle(tester);
+    expect(find.text('TOP TODAY'), findsOneWidget);
+
+    // What a tab was left on survives the reader looking away from it.
     await tester.tap(find.text('This month'));
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
@@ -744,6 +761,31 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
     expect(find.text('TOP THIS MONTH'), findsOneWidget);
+  });
+
+  testWidgets('once the day is done the shelf slides like everything else', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    for (var i = 0; i < 5; i++) {
+      await _swipeCardAway(tester);
+      await _settle(tester);
+    }
+
+    // The carousel keeps a drag that lands on it...
+    await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
+    await _settle(tester);
+    expect(find.text('02 / 05'), findsOneWidget);
+
+    // ...and the header, which wants nothing, hands it to the page.
+    await tester.dragFrom(
+      tester.getCenter(find.text('Nothing kept yet')),
+      const Offset(-300, 0),
+    );
+    await _settle(tester);
+    expect(find.text('TOP TODAY'), findsOneWidget);
   });
 
   testWidgets('opening the app lands straight on the cards', (tester) async {
@@ -894,6 +936,7 @@ void main() {
     // screen now is, and the first card is at the front, face up, with
     // its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
+    expect(_todayTitle, findsNothing);
     expect(find.text('Nothing kept yet'), findsOneWidget);
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
@@ -939,9 +982,12 @@ void main() {
       final front = pillsByIds(kOpeningDeck).first;
       await tester.tap(find.text(front.question));
       await _settle(tester);
-      // The whole reveal, the same one the deck shows, not a summary.
+      // The canvas's back: the answer and the line to bring it up with.
+      // Not the deck's full reveal — that belongs to the first time.
       expect(find.text(front.answer), findsOneWidget);
-      expect(find.text('Source · ${front.source}'), findsOneWidget);
+      expect(find.text(front.barMove), findsOneWidget);
+      expect(find.text('Source · ${front.source}'), findsNothing);
+      expect(find.text('BAR MOVE'), findsNothing);
 
       await tester.tap(find.text(front.question));
       await _settle(tester);
@@ -1035,14 +1081,21 @@ void main() {
       expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsNothing);
     });
 
-    testWidgets('the header counts the day as it goes', (tester) async {
+    testWidgets('the day being read keeps the header it always had', (
+      tester,
+    ) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      expect(find.text('Day 1 · five to read'), findsOneWidget);
+      // Today, and the bars. The shelf's line belongs to the shelf.
+      expect(_todayTitle, findsOneWidget);
+      expect(find.byKey(const ValueKey('progress-1-of-5')), findsOneWidget);
+      expect(find.textContaining('Day 1'), findsNothing);
+
       await _swipeCardAway(tester);
-      expect(find.text('Day 1 · 1 of 5 read'), findsOneWidget);
+      expect(_todayTitle, findsOneWidget);
+      expect(find.byKey(const ValueKey('progress-2-of-5')), findsOneWidget);
     });
 
     testWidgets('the day is counted along the streak', (tester) async {
@@ -1055,8 +1108,9 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // The sixth day from the moment it opens, not once it is done.
-      expect(find.text('Day 6 · five to read'), findsOneWidget);
+      // The sixth day, said once it is done. While it runs the header is
+      // the word Today and the streak beside it.
+      expect(find.text('5 days'), findsOneWidget);
       await finish(tester);
       expect(find.text('Day 6 · five read'), findsOneWidget);
     });

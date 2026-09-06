@@ -109,11 +109,27 @@ today's best, every subject, whatever it was left on.
 
 The three tabs slide under the finger, the way they do in every app with
 three of them side by side; the bar is the other way to the same place.
-Where a screen has a sideways gesture of its own — the card being thrown,
-the shelf, the strip of subject chips — that gesture keeps it, and the page
-moves from anywhere else. The card's drag had to be taught to win: a pan
-waits for twice the distance a one-axis drag does before it commits, so the
-page underneath was taking every throw.
+
+Except while the day is running. Today is then a screen with one thing on
+it, and every sideways drag on it belongs to the card being thrown — a page
+that slid instead, depending on where the finger landed, was the worst of
+both. The five are a screen you finish, not one you slide off, so the page
+is locked until they are read. The bar still goes anywhere, so nobody is
+held there. Once the day is done the shelf slides like every other screen,
+and the carousel keeps the drags that land on it.
+
+What the shelf takes from the canvas and what it does not: the card is
+324 × 452 with its 28-point padding, the eyebrow, the dots and the two
+lines under them sit at the canvas's own margins, and the button is the
+canvas's flat one rather than the app's chunky one — a door out of a
+finished screen is not a commitment. The type stays Fraunces, because the
+canvas's Outfit would have made this the one screen in the app set in
+another face. The back of a card is the canvas's four things — the question
+again small, the answer, a hairline, the line to bring it up with — and not
+the deck's full reveal, which belongs to the card being answered for the
+first time. Real answers run longer than the ones the canvas was drawn
+around, so the block is set down a size or two until it fits rather than
+having its last line sliced in half.
 
 Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging

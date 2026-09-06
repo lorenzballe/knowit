@@ -481,11 +481,20 @@ class _AstutoShellState extends State<AstutoShell> {
         backgroundColor: context.p.surface,
         body: SafeArea(
           bottom: false,
+          // A browser has no status bar to sit under, so the page would
+          // otherwise start hard against the top edge. On a phone the real
+          // inset is larger and this does nothing.
+          minimum: const EdgeInsets.only(top: 12),
           // The tabs slide under the finger, the way they do in every app
           // with three of them side by side, and the bar is the other way
-          // to the same place. Where a screen has a sideways gesture of its
-          // own — the card being thrown, the shelf, a strip of chips — that
-          // gesture keeps it and the page moves from anywhere else.
+          // to the same place.
+          //
+          // Except while the day is running. Today is then a screen with
+          // one thing on it, and every sideways drag belongs to the card
+          // being thrown — a page that slid instead, depending on where the
+          // finger landed, was the worst of both. The five are a screen you
+          // finish, not one you slide off. The bar still goes anywhere; it
+          // is the sliding that stops.
           //
           // No glow at the ends: there is nothing past the last tab, and
           // the Android indicator would say so in a colour of its own.
@@ -495,6 +504,9 @@ class _AstutoShellState extends State<AstutoShell> {
             child: PageView(
               controller: _pages,
               onPageChanged: _onPageChanged,
+              physics: _tab == 0 && !widget.app.todayCompleted
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
               // The next tab is built before it is reached, so the first
               // swipe does not pay for a screen being laid out mid-gesture.
               allowImplicitScrolling: true,

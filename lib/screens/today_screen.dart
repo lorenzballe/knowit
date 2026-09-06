@@ -10,10 +10,13 @@ import '../widgets/ui.dart';
 import 'today_done_view.dart';
 
 /// The card is the screen: dark chrome, and the deck filling everything
-/// between the progress bars and the tab bar. Once the five are done the
-/// same tab becomes the shelf from artboard 66a, under the same one-line
-/// header, so finishing the day changes what the tab holds and not what it
-/// looks like.
+/// between the progress bars and the tab bar.
+///
+/// Two screens live here, and they are deliberately not the same one with a
+/// different middle. While the five are unread this is the trainer — "Today"
+/// at the top, the bars, the deck, and nothing else to do. Once they are
+/// read it becomes the shelf from artboard 66a, which is a place to look
+/// back rather than a place to work.
 class TodayScreen extends StatefulWidget {
   final AppState app;
 
@@ -67,8 +70,65 @@ class _TodayScreenState extends State<TodayScreen> {
     final bool done = app.todayCompleted;
     _markCompletion(done);
 
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 420),
+      switchInCurve: Curves.easeOutCubic,
+      child: done
+          ? _shelf(context, key: const ValueKey('shelf'))
+          : _reading(context, key: const ValueKey('deck')),
+    );
+  }
+
+  /// The day, being read. Unchanged from the screen this app has always
+  /// opened on: the word Today, the streak beside it, the bars, the deck.
+  Widget _reading(BuildContext context, {required Key key}) {
+    final app = widget.app;
+    return Padding(
+      key: key,
+      // The sides come from the deck's own constant, so Today and the
+      // re-read cannot drift apart again.
+      padding: const EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ReadingHeader(
+            streak: app.liveStreak,
+            frozen: app.streakWasFrozen,
+            onBack: widget.onBack,
+          ),
+          const SizedBox(height: 16),
+          _ProgressBars(total: app.todaysDeck.length, index: app.todayIndex),
+          const SizedBox(height: 16),
+          // The deck takes every pixel that is left.
+          Expanded(
+            child: PillCardStack(
+              deck: app.todaysDeck,
+              index: app.todayIndex,
+              onAdvance: () => app.advance(),
+              isSaved: app.isSaved,
+              onSave: (pill) => app.toggleSaved(pill.id),
+              onShare: (pill) => showShareSheet(context, pill),
+              onMotion: widget.onCardMotion,
+              reviewIds: app.reviewIdsToday,
+              answerFor: app.answerFor,
+              onAnswer: (id, response, confidence, reason) => app.recordAnswer(
+                id,
+                response,
+                confidence: confidence,
+                reason: reason,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The day, done — artboard 66a, down to its margins.
+  Widget _shelf(BuildContext context, {required Key key}) {
+    final app = widget.app;
     final deck = app.todaysDeck;
-    final index = app.todayIndex;
+    if (deck.isEmpty) return SizedBox.shrink(key: key);
 
     // A new deck — the next day, or the second set dealt — starts the shelf
     // from its first card.
@@ -76,83 +136,26 @@ class _TodayScreenState extends State<TodayScreen> {
       _shelfDeck = deck;
       _shelfAt = 0;
     }
-    final int at = deck.isEmpty ? 0 : _shelfAt.clamp(0, deck.length - 1);
-
-    // The card the screen is about: the one being read, or the one at the
-    // front of the shelf. Its colour is the only colour the chrome takes.
-    final Pill? front = deck.isEmpty
-        ? null
-        : deck[done ? at : index.clamp(0, deck.length - 1)];
+    final int at = _shelfAt.clamp(0, deck.length - 1);
+    final Pill front = deck[at];
 
     return Stack(
+      key: key,
       children: [
-        if (done && front != null)
-          Positioned.fill(child: _Glow(colour: front.color)),
+        Positioned.fill(child: _Glow(colour: front.color)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
-              child: _Header(
-                app: app,
-                colour: front?.color ?? context.p.inkFaint,
-                onBack: widget.onBack,
-              ),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 15),
+              child: _ShelfHeader(app: app, colour: front.color),
             ),
-            // Only while there is a day left to run. Once it is finished the
-            // screen says so in words, and a full row of colour under that
-            // is decoration on a screen whose whole job is to be quiet.
-            if (!done) ...[
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _ProgressBars(total: deck.length, index: index),
-              ),
-            ],
-            const SizedBox(height: 16),
-
-            // The deck takes every pixel that is left.
             Expanded(
-              child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 420),
-                switchInCurve: Curves.easeOutCubic,
-                child: done
-                    ? TodayDoneView(
-                        key: const ValueKey('shelf'),
-                        app: app,
-                        at: at,
-                        onPick: (k) => setState(() => _shelfAt = k),
-                        onExplore: widget.onExplore,
-                      )
-                    : Padding(
-                        key: const ValueKey('deck'),
-                        // The sides come from the deck's own constant, so
-                        // Today and the re-read cannot drift apart again.
-                        padding: const EdgeInsets.fromLTRB(
-                          kDeckMargin,
-                          0,
-                          kDeckMargin,
-                          8,
-                        ),
-                        child: PillCardStack(
-                          deck: deck,
-                          index: index,
-                          onAdvance: () => app.advance(),
-                          isSaved: app.isSaved,
-                          onSave: (pill) => app.toggleSaved(pill.id),
-                          onShare: (pill) => showShareSheet(context, pill),
-                          onMotion: widget.onCardMotion,
-                          reviewIds: app.reviewIdsToday,
-                          answerFor: app.answerFor,
-                          onAnswer: (id, response, confidence, reason) =>
-                              app.recordAnswer(
-                                id,
-                                response,
-                                confidence: confidence,
-                                reason: reason,
-                              ),
-                        ),
-                      ),
+              child: TodayDoneView(
+                app: app,
+                at: at,
+                onPick: (k) => setState(() => _shelfAt = k),
+                onExplore: widget.onExplore,
               ),
             ),
           ],
@@ -162,30 +165,100 @@ class _TodayScreenState extends State<TodayScreen> {
   }
 }
 
-/// One line: a dot in the day's colour, which day this is and where it has
-/// got to, and at the far end what has been kept.
-///
-/// The header used to be the word "Today" with a streak badge beside it,
-/// which said the name of the tab you were already on and nothing about
-/// the day. "Day 6 · five read" says both, in the same width.
-class _Header extends StatelessWidget {
-  const _Header({required this.app, required this.colour, this.onBack});
+/// The header while the day is being read.
+class _ReadingHeader extends StatelessWidget {
+  final int streak;
+  final bool frozen;
+  final VoidCallback? onBack;
+  const _ReadingHeader({
+    required this.streak,
+    this.frozen = false,
+    this.onBack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Row(
+        children: [
+          if (onBack != null) ...[
+            BackCircle(onPressed: onBack!),
+            const SizedBox(width: 12),
+          ],
+          // A long date and a streak badge do not both fit on a narrow
+          // handset. The date gives way by a point or two rather than being
+          // clipped, or overflowing, which is what it did.
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Today',
+                maxLines: 1,
+                style: AppText.display(
+                  size: 20,
+                  weight: FontWeight.w600,
+                  spacing: -0.4,
+                  color: context.p.ink,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 10),
+          // Nothing until there is something. A badge reading "0 days" on the
+          // morning somebody installs the app is a worse first impression
+          // than no badge at all.
+          if (streak > 0)
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 6),
+              decoration: BoxDecoration(
+                color: frozen
+                    ? context.p.link.withValues(alpha: 0.22)
+                    : context.p.line,
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: frozen ? context.p.link : context.p.inverse,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    streak == 1 ? '1 day' : '$streak days',
+                    style: AppText.body(
+                      size: 12,
+                      weight: FontWeight.w600,
+                      color: context.p.ink,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The header once the day is done: a dot in the front card's colour, which
+/// day this was, and at the far end what was kept. One line, because the
+/// screen under it is the subject and a header should say where you are
+/// rather than take a third of the room saying it.
+class _ShelfHeader extends StatelessWidget {
+  const _ShelfHeader({required this.app, required this.colour});
 
   final AppState app;
   final Color colour;
-  final VoidCallback? onBack;
-
-  String get _state {
-    final int total = app.todaysDeck.length;
-    final int read = app.todayIndex.clamp(0, total);
-    if (total == 0) return 'nothing to read';
-    if (read >= total) return '${spellCount(total).toLowerCase()} read';
-    if (read == 0) return '${spellCount(total).toLowerCase()} to read';
-    return '$read of $total read';
-  }
 
   /// The freeze is said here and nowhere else, so it comes first on the day
-  /// it was spent. Otherwise, what the day has produced so far.
+  /// it was spent. Otherwise, what the day has produced.
   String get _aside {
     if (app.streakWasFrozen) return 'A freeze kept the streak';
     final int kept = app.keptToday;
@@ -198,10 +271,6 @@ class _Header extends StatelessWidget {
     final bool still = MediaQuery.disableAnimationsOf(context);
     return Row(
       children: [
-        if (onBack != null) ...[
-          BackCircle(onPressed: onBack!),
-          const SizedBox(width: 12),
-        ],
         AnimatedContainer(
           duration: Duration(milliseconds: still ? 0 : 500),
           curve: Curves.easeOut,
@@ -210,12 +279,14 @@ class _Header extends StatelessWidget {
           decoration: BoxDecoration(color: colour, shape: BoxShape.circle),
         ),
         const SizedBox(width: 10),
-        // The day's line takes what it needs and the aside sits at the far
-        // end; when the two cannot both fit, the aside gives way first.
-        Flexible(
-          flex: 3,
+        // The day's line eats the room, so the aside is pushed flush to the
+        // far edge — the canvas's `flex:1` spacer between the two. Sharing
+        // the room between them instead left the aside stranded in the
+        // middle with the leftover piled up after it.
+        Expanded(
           child: Text(
-            'Day ${app.dayNumber} · $_state',
+            'Day ${app.dayNumber} · '
+            '${spellCount(app.todaysDeck.length).toLowerCase()} read',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppText.body(
@@ -227,18 +298,13 @@ class _Header extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        Expanded(
-          flex: 2,
-          child: Text(
-            _aside,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.right,
-            style: AppText.body(
-              size: 12,
-              weight: FontWeight.w500,
-              color: context.p.ink.withValues(alpha: 0.38),
-            ),
+        Text(
+          _aside,
+          maxLines: 1,
+          style: AppText.body(
+            size: 12,
+            weight: FontWeight.w500,
+            color: context.p.ink.withValues(alpha: 0.38),
           ),
         ),
       ],
@@ -247,12 +313,17 @@ class _Header extends StatelessWidget {
 }
 
 /// Two pools of the front card's colour thrown on the ground, one high
-/// behind the card and a fainter one low behind the controls. The colour
-/// crosses over when the front card changes rather than snapping.
+/// behind the card and a fainter one low behind the controls — the
+/// artboard's two blurred circles, at its own positions and strengths. The
+/// colour crosses over when the front card changes rather than snapping.
 class _Glow extends StatelessWidget {
   const _Glow({required this.colour});
 
   final Color colour;
+
+  /// Where the artboard puts them, less the 56 points of status bar its
+  /// frame draws above the page.
+  static const double _statusBar = 56;
 
   @override
   Widget build(BuildContext context) {
@@ -267,22 +338,21 @@ class _Glow extends StatelessWidget {
             children: [
               Positioned(
                 left: w / 2 - 320,
-                top: 94,
+                top: 150 - _statusBar,
                 child: _Pool(
                   colour: colour,
                   strength: 0.30,
-                  width: 640,
-                  height: 640,
+                  size: 640,
                   duration: duration,
                 ),
               ),
               Positioned(
                 left: w / 2 - 260,
-                top: 364,
+                top: 420 - _statusBar,
                 child: _Pool(
                   colour: colour,
                   strength: 0.16,
-                  width: 520,
+                  size: 520,
                   height: 420,
                   duration: duration,
                 ),
@@ -299,15 +369,15 @@ class _Pool extends StatelessWidget {
   const _Pool({
     required this.colour,
     required this.strength,
-    required this.width,
-    required this.height,
+    required this.size,
     required this.duration,
+    this.height,
   });
 
   final Color colour;
   final double strength;
-  final double width;
-  final double height;
+  final double size;
+  final double? height;
   final Duration duration;
 
   @override
@@ -315,20 +385,23 @@ class _Pool extends StatelessWidget {
     return AnimatedContainer(
       duration: duration,
       curve: Curves.easeOut,
-      width: width,
-      height: height,
+      width: size,
+      height: height ?? size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        // A soft pool rather than a hard-edged disc: most of the colour is
-        // in the middle third and it is gone well before the edge.
+        // The canvas draws a hard-edged circle and blurs it by 130. A blur
+        // that wide is a Gaussian, so the same shape is cheaper as a
+        // gradient: most of the colour in the middle third, and gone well
+        // before the edge.
         gradient: RadialGradient(
           colors: [
             colour.withValues(alpha: strength),
-            colour.withValues(alpha: strength * 0.55),
-            colour.withValues(alpha: strength * 0.18),
+            colour.withValues(alpha: strength * 0.72),
+            colour.withValues(alpha: strength * 0.30),
+            colour.withValues(alpha: strength * 0.08),
             colour.withValues(alpha: 0),
           ],
-          stops: const [0, 0.3, 0.6, 1],
+          stops: const [0, 0.28, 0.55, 0.78, 1],
         ),
       ),
     );
@@ -342,26 +415,29 @@ class _ProgressBars extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Padding(
       // The bars are the only thing that says where in the day you are, now
       // that the card has stopped repeating it. The key names what they
       // draw, so it can be read without a caption existing for its own sake.
       key: ValueKey('progress-${index + 1}-of-$total'),
-      children: List.generate(total, (i) {
-        final filled = i <= index;
-        return Expanded(
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 260 + i * 40),
-            curve: Curves.easeOut,
-            margin: EdgeInsets.only(right: i == total - 1 ? 0 : 5),
-            height: 3,
-            decoration: BoxDecoration(
-              color: filled ? context.p.ink : context.p.line,
-              borderRadius: BorderRadius.circular(9),
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Row(
+        children: List.generate(total, (i) {
+          final filled = i <= index;
+          return Expanded(
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 260 + i * 40),
+              curve: Curves.easeOut,
+              margin: EdgeInsets.only(right: i == total - 1 ? 0 : 5),
+              height: 3,
+              decoration: BoxDecoration(
+                color: filled ? context.p.ink : context.p.line,
+                borderRadius: BorderRadius.circular(9),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

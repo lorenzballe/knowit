@@ -7,9 +7,8 @@ import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../widgets/chunky.dart';
 import '../widgets/flip_card.dart';
-import '../widgets/reveal_body.dart';
+import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
 import 'paywall_screen.dart';
@@ -55,6 +54,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// The artboard's card, and the distance between one card and the next.
   static const double _artWidth = 324;
   static const double _artHeight = 452;
+
+  /// How far a card's shadow may spill past the room it sits in before the
+  /// fade takes it. The canvas pads the shelf by this and pulls the padding
+  /// straight back off with a negative margin.
+  static const double _bleed = 90;
 
   /// Settles the cards after a drag. The curve overshoots a touch, so a
   /// card lands rather than stops.
@@ -255,10 +259,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
           ),
         ),
         Expanded(child: _shelf(context, deck, at)),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 14, 24, 8),
-          child: _Dots(deck: deck, at: at, onPick: _goTo),
-        ),
+        _Dots(deck: deck, at: at, onPick: _goTo),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 18, 24, 0),
           child: _Tomorrow(lead: _tomorrowsLead(app)),
@@ -267,7 +268,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           child: _Actions(app: app, onExplore: widget.onExplore),
         ),
-        const SizedBox(height: 8),
+        // What the canvas leaves between the last line and the tab bar.
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -331,14 +333,20 @@ class _TodayDoneViewState extends State<TodayDoneView>
           onHorizontalDragStart: _onDragStart,
           onHorizontalDragUpdate: _onDragUpdate,
           onHorizontalDragEnd: _onDragEnd,
-          child: ClipRect(
-            child: _Fade(
-              child: SizedBox.fromSize(
-                size: stage,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: layers,
+          child: SizedBox.fromSize(
+            size: stage,
+            child: OverflowBox(
+              maxWidth: stage.width,
+              maxHeight: stage.height + _bleed * 2,
+              child: _Fade(
+                child: SizedBox(
+                  width: stage.width,
+                  height: stage.height + _bleed * 2,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
+                    children: layers,
+                  ),
                 ),
               ),
             ),
@@ -691,9 +699,18 @@ class _Front extends StatelessWidget {
   }
 }
 
-/// The question, small, and the reveal under it — the same reveal the deck
-/// shows, not a summary of it, so the shelf is a place to re-read and not
-/// a second version of the card.
+/// The back of a card, as the canvas draws it: the question again small
+/// and quiet, the answer, a hairline, and the line to bring it up with.
+///
+/// Not the deck's full reveal — no hint, no worked steps, no counterpoint.
+/// Those belong to the card being answered for the first time; this is a
+/// shelf, and what a person wants off a shelf at the end of the day is the
+/// one thing the card said.
+///
+/// The canvas was drawn around a four-line answer. Real ones run longer, so
+/// the whole block is set down a size or two until it fits — the same move
+/// the front makes with the question, and it keeps the canvas's
+/// proportions rather than clipping its last line in half.
 class _Back extends StatelessWidget {
   const _Back({required this.pill, required this.scale, required this.sub});
 
@@ -701,42 +718,104 @@ class _Back extends StatelessWidget {
   final double scale;
   final Color sub;
 
+  /// How far the block may be set down before it is left to scroll.
+  static const double _floor = 0.76;
+
+  TextStyle _questionStyle(double s) => AppText.display(
+    size: 15 * s,
+    weight: FontWeight.w600,
+    height: 1.3,
+    spacing: -0.3,
+    color: sub,
+  );
+
+  TextStyle _answerStyle(double s) =>
+      AppText.body(size: 16.5 * s, height: 1.44, color: pill.ink);
+
+  TextStyle _lineStyle(double s) => AppText.body(
+    size: 14.5 * s,
+    weight: FontWeight.w500,
+    height: 1.4,
+    color: sub,
+  );
+
+  double _height(String text, TextStyle style, double width) {
+    final painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: width);
+    return painter.height;
+  }
+
+  /// The block's height at scale [s].
+  double _blockHeight(double s, double width) =>
+      _height(pill.question, _questionStyle(s), width) +
+      32 * s +
+      _height(pill.answer, _answerStyle(s), width) +
+      1 +
+      _height(pill.barMove, _lineStyle(s), width);
+
   @override
   Widget build(BuildContext context) {
-    final double s = scale;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          pill.question,
-          style: AppText.display(
-            size: 15 * s,
-            weight: FontWeight.w600,
-            height: 1.3,
-            spacing: -0.3,
-            color: sub,
-          ),
-        ),
-        SizedBox(height: 16 * s),
-        Expanded(
-          // The reveal is longer than the card, so it scrolls, and the foot
-          // of it dissolves rather than being cut: a panel sliced in half
-          // reads as a fault, a panel fading out reads as more below.
-          child: ShaderMask(
-            blendMode: BlendMode.dstIn,
-            shaderCallback: (rect) => const LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.black, Colors.black, Color(0x00000000)],
-              stops: [0, 0.86, 1],
-            ).createShader(rect),
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(bottom: 18 * s),
-              child: RevealBody.onCard(pill),
-            ),
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, box) {
+        final double full = scale;
+        double s = full;
+        if (_blockHeight(s, box.maxWidth) > box.maxHeight) {
+          var lo = full * _floor;
+          var hi = full;
+          while (hi - lo > full * 0.01) {
+            final mid = (lo + hi) / 2;
+            if (_blockHeight(mid, box.maxWidth) <= box.maxHeight) {
+              lo = mid;
+            } else {
+              hi = mid;
+            }
+          }
+          s = lo;
+        }
+
+        final Widget body = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(pill.question, style: _questionStyle(s)),
+            SizedBox(height: 16 * s),
+            Text(pill.answer, style: _answerStyle(s)),
+            SizedBox(height: 16 * s),
+            Container(height: 1, color: pill.ink.withValues(alpha: 0.2)),
+            SizedBox(height: 16 * s),
+            Text(pill.barMove, style: _lineStyle(s)),
+          ],
+        );
+
+        // Past the floor it scrolls, and the foot of it dissolves rather
+        // than being cut: text sliced through the middle of a line reads as
+        // a fault, text fading out reads as more below.
+        final bool fits = _blockHeight(s, box.maxWidth) <= box.maxHeight;
+        final Widget rising = RiseIn(
+          duration: const Duration(milliseconds: 300),
+          distance: 8,
+          child: body,
+        );
+        if (fits) {
+          return SizedBox(
+            width: box.maxWidth,
+            height: box.maxHeight,
+            child: rising,
+          );
+        }
+        return ShaderMask(
+          blendMode: BlendMode.dstIn,
+          shaderCallback: (rect) => const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.black, Colors.black, Color(0x00000000)],
+            stops: [0, 0.9, 1],
+          ).createShader(rect),
+          child: SingleChildScrollView(child: rising),
+        );
+      },
     );
   }
 }
@@ -873,43 +952,50 @@ class _Dots extends StatelessWidget {
   final int at;
   final ValueChanged<int> onPick;
 
+  /// 14 above the dots and 8 below them, on the canvas.
+  static const double height = 28;
+
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int k = 0; k < deck.length; k++)
-          Semantics(
-            button: true,
-            selected: k == at,
-            label: 'Card ${k + 1} of ${deck.length}',
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => onPick(k),
-              // A six-point dot is not a target. The row is, so each dot
-              // owns a slice of it.
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 3.5,
-                  vertical: 9,
-                ),
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: still ? 0 : 350),
-                  curve: Curves.easeOut,
-                  width: k == at ? 22 : 6,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: k == at
-                        ? deck[k].color
-                        : context.p.ink.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(9),
+    return SizedBox(
+      height: height,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (int k = 0; k < deck.length; k++)
+            Semantics(
+              button: true,
+              selected: k == at,
+              label: 'Card ${k + 1} of ${deck.length}',
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => onPick(k),
+                // A six-point dot is not a target. Each one takes a slice
+                // of the whole row instead — which is the height the
+                // canvas gives the row anyway, so nothing grows.
+                child: SizedBox(
+                  width: (k == at ? 22 : 6) + 7,
+                  height: height,
+                  child: Center(
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: still ? 0 : 350),
+                      curve: Curves.easeOut,
+                      width: k == at ? 22 : 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: k == at
+                            ? deck[k].color
+                            : context.p.ink.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(9),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -967,6 +1053,80 @@ class _Tomorrow extends StatelessWidget {
   }
 }
 
+/// The canvas's button: flat, 52 by 18, the label and an arrow behind it.
+///
+/// Not the app's chunky button, which is right where a press is a
+/// commitment — an answer, a purchase — and too heavy for a door out of a
+/// screen that is finished. It still gives under the finger.
+class _ExploreButton extends StatefulWidget {
+  const _ExploreButton({required this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  State<_ExploreButton> createState() => _ExploreButtonState();
+}
+
+class _ExploreButtonState extends State<_ExploreButton> {
+  bool _down = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.onInverse;
+    return Semantics(
+      button: true,
+      label: "Explore today's best",
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTapDown: (_) => setState(() => _down = true),
+        onTapUp: (_) => setState(() => _down = false),
+        onTapCancel: () => setState(() => _down = false),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          widget.onPressed();
+        },
+        child: AnimatedScale(
+          scale: _down ? 0.98 : 1,
+          duration: const Duration(milliseconds: 90),
+          child: Container(
+            height: 52,
+            decoration: BoxDecoration(
+              color: context.p.inverse,
+              borderRadius: BorderRadius.circular(18),
+            ),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Flexible(
+                  child: Text(
+                    "Explore today's best",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 14.5,
+                      weight: FontWeight.w700,
+                      color: ink,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Text(
+                  '\u2192',
+                  style: AppText.body(
+                    size: 14,
+                    color: ink.withValues(alpha: 0.45),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// The way on: everyone's best of today, and under it the second set —
 /// as an offer on the free plan, as a deal on Astuto+, and not at all once
 /// it has been dealt.
@@ -984,20 +1144,7 @@ class _Actions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (onExplore != null)
-          ChunkyButton(
-            label: "Explore today's best",
-            height: 52,
-            radius: 18,
-            fill: context.p.inverse,
-            ink: context.p.onInverse,
-            trailing: Icon(
-              Icons.arrow_forward_rounded,
-              size: 16,
-              color: context.p.onInverse.withValues(alpha: 0.45),
-            ),
-            onPressed: onExplore,
-          ),
+        if (onExplore != null) _ExploreButton(onPressed: onExplore!),
         if (extra != null)
           Semantics(
             button: true,
