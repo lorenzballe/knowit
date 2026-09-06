@@ -409,6 +409,9 @@ class AstutoShell extends StatefulWidget {
 class _AstutoShellState extends State<AstutoShell> {
   int _tab = 0;
 
+  /// The three tabs as pages, so a finger can slide between them.
+  final PageController _pages = PageController();
+
   /// True while a card is under the finger.
   bool _cardMoving = false;
 
@@ -416,6 +419,31 @@ class _AstutoShellState extends State<AstutoShell> {
   /// until the finished day sends the reader to "today's best" and finds
   /// the tab still on last week's month filter.
   final GlobalKey<ExploreScreenState> _explore = GlobalKey();
+
+  @override
+  void dispose() {
+    _pages.dispose();
+    super.dispose();
+  }
+
+  /// Slides to a tab. From a tap the bar answers at once and the page
+  /// follows; from a swipe the page leads and the bar catches up.
+  void _goTo(int tab) {
+    if (tab == _tab) return;
+    HapticFeedback.selectionClick();
+    setState(() => _tab = tab);
+    _pages.animateToPage(
+      tab,
+      duration: const Duration(milliseconds: 320),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  void _onPageChanged(int page) {
+    if (page == _tab) return;
+    HapticFeedback.selectionClick();
+    setState(() => _tab = page);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -427,7 +455,7 @@ class _AstutoShellState extends State<AstutoShell> {
         },
         onExplore: () {
           _explore.currentState?.showBest();
-          setState(() => _tab = 1);
+          _goTo(1);
         },
       ),
       ExploreScreen(key: _explore, app: widget.app),
@@ -453,7 +481,28 @@ class _AstutoShellState extends State<AstutoShell> {
         backgroundColor: context.p.surface,
         body: SafeArea(
           bottom: false,
-          child: IndexedStack(index: _tab, children: screens),
+          // The tabs slide under the finger, the way they do in every app
+          // with three of them side by side, and the bar is the other way
+          // to the same place. Where a screen has a sideways gesture of its
+          // own — the card being thrown, the shelf, a strip of chips — that
+          // gesture keeps it and the page moves from anywhere else.
+          //
+          // No glow at the ends: there is nothing past the last tab, and
+          // the Android indicator would say so in a colour of its own.
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context)
+                .copyWith(overscroll: false),
+            child: PageView(
+              controller: _pages,
+              onPageChanged: _onPageChanged,
+              // The next tab is built before it is reached, so the first
+              // swipe does not pay for a screen being laid out mid-gesture.
+              allowImplicitScrolling: true,
+              children: [
+                for (final screen in screens) _KeepAlive(child: screen),
+              ],
+            ),
+          ),
         ),
         // The bar steps aside while a card is being thrown. Two rows of
         // controls along the bottom edge was one too many, and a card thrown
@@ -461,10 +510,37 @@ class _AstutoShellState extends State<AstutoShell> {
         bottomNavigationBar: _AstutoTabBar(
           hidden: _cardMoving,
           index: _tab,
-          onChanged: (i) => setState(() => _tab = i),
+          onChanged: _goTo,
         ),
       ),
     );
+  }
+}
+
+/// Keeps a tab alive while another is on screen.
+///
+/// The tabs used to sit in an IndexedStack, which builds all three and
+/// keeps them. A page view lets go of a page once it has slid out of
+/// reach, and a tab that forgets its search, its range or how far down it
+/// was scrolled every time the reader looks away is a worse tab than the
+/// one it replaced.
+class _KeepAlive extends StatefulWidget {
+  final Widget child;
+  const _KeepAlive({required this.child});
+
+  @override
+  State<_KeepAlive> createState() => _KeepAliveState();
+}
+
+class _KeepAliveState extends State<_KeepAlive>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
   }
 }
 

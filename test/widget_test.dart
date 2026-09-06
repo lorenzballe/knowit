@@ -16,6 +16,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/intro_screen.dart';
+import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
@@ -68,6 +69,16 @@ Future<void> _loadRealFonts() async {
   }
 }
 
+/// The profile's own list. The tabs sit in a page view now, which is a
+/// scrollable of its own and the first one in the tree, so "the first
+/// scrollable" stopped meaning the list.
+final Finder _profileList = find
+    .descendant(
+      of: find.byType(ProfileScreen),
+      matching: find.byType(Scrollable),
+    )
+    .first;
+
 /// Opens the profile and scrolls until a settings row is on screen.
 ///
 /// The rows below the fold are not built until they are, so a finder alone
@@ -81,7 +92,7 @@ Future<void> _openSetting(WidgetTester tester, String label) async {
       await _settle(tester);
       return;
     }
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, -320));
+    await tester.drag(_profileList, const Offset(0, -320));
     await _settle(tester);
   }
   fail('no settings row named $label');
@@ -99,7 +110,7 @@ Future<List<String>> _sectionOrder(
   WidgetTester tester,
   List<String> labels,
 ) async {
-  final list = find.byType(Scrollable).first;
+  final list = _profileList;
   final seen = <String, double>{};
   for (var step = 0; step < 16 && seen.length < labels.length; step++) {
     final double scrolled = tester.state<ScrollableState>(list).position.pixels;
@@ -292,7 +303,11 @@ void main() {
       await _settle(tester);
 
       await _openProfile(tester);
-      await tester.scrollUntilVisible(find.text('Edit'), 200);
+      await tester.scrollUntilVisible(
+        find.text('Edit'),
+        200,
+        scrollable: _profileList,
+      );
       await _settle(tester);
       await tester.tap(find.text('Edit'));
       await _settle(tester);
@@ -684,6 +699,53 @@ void main() {
     );
   });
 
+  testWidgets('the tabs slide under the finger', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    // A sideways drag on the card is a throw, as it always was — the page
+    // does not take it.
+    await _swipeCardAway(tester);
+    expect(find.byType(PillCardStack), findsOneWidget);
+    expect(find.byKey(const ValueKey('progress-2-of-5')), findsOneWidget);
+
+    // From the header, where nothing else wants the gesture, the same drag
+    // slides to the next tab, and the bar follows.
+    await tester.dragFrom(
+      tester.getCenter(find.text('Nothing kept yet')),
+      const Offset(-300, 0),
+    );
+    await _settle(tester);
+    expect(find.text('TOP TODAY'), findsOneWidget);
+    expect(find.byType(PillCardStack), findsNothing);
+    expect(find.text('Explore'), findsOneWidget);
+
+    // And back the other way, from a row of the shelf.
+    await tester.dragFrom(
+      tester.getCenter(
+        find.text(
+          "Everyone's cards, not your mix. The ones that ask the most, first.",
+        ),
+      ),
+      const Offset(300, 0),
+    );
+    await _settle(tester);
+    expect(find.byType(PillCardStack), findsOneWidget);
+    expect(find.text('TOP TODAY'), findsNothing);
+
+    // What a tab was left on survives the reader looking away from it.
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+    await tester.tap(find.text('This month'));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+    expect(find.text('TOP THIS MONTH'), findsOneWidget);
+  });
+
   testWidgets('opening the app lands straight on the cards', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
@@ -775,7 +837,11 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
-    await tester.scrollUntilVisible(find.text('Every day at 08:30'), 200);
+    await tester.scrollUntilVisible(
+      find.text('Every day at 08:30'),
+      200,
+      scrollable: _profileList,
+    );
     await _settle(tester);
     expect(find.text('Every day at 08:30'), findsOneWidget);
 
@@ -1315,7 +1381,11 @@ void main() {
     expect(paletteOn('Profile').surface, onToday.surface);
 
     // And it can be changed, once, for all of it.
-    await tester.scrollUntilVisible(find.text('Light'), 200);
+    await tester.scrollUntilVisible(
+      find.text('Light'),
+      200,
+      scrollable: _profileList,
+    );
     await _settle(tester);
     await tester.tap(find.text('Light'));
     await _settle(tester);
@@ -2636,7 +2706,7 @@ void main() {
       await _openProfile(tester);
 
       final wipe = find.text('Wipe everything and restart');
-      final list = find.byType(Scrollable).first;
+      final list = _profileList;
       await tester.scrollUntilVisible(wipe, 400, scrollable: list);
       // scrollUntilVisible stops the moment the row appears, which can leave
       // it under the floating tab bar, where the tap would land on the bar.
@@ -2667,7 +2737,7 @@ void main() {
       // scrolled back into view each time rather than tapped where it was.
       Future<void> tapToggle(String label) async {
         final row = find.text(label);
-        final list = find.byType(Scrollable).first;
+        final list = _profileList;
         await tester.scrollUntilVisible(row, 300, scrollable: list);
         await tester.drag(list, const Offset(0, -160));
         await _settle(tester);

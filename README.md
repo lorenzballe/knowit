@@ -107,6 +107,14 @@ shelf of cards nobody dealt you) rather than after the field at the top of
 it, and it carries a compass. The finished day's button puts it back on
 today's best, every subject, whatever it was left on.
 
+The three tabs slide under the finger, the way they do in every app with
+three of them side by side; the bar is the other way to the same place.
+Where a screen has a sideways gesture of its own — the card being thrown,
+the shelf, the strip of subject chips — that gesture keeps it, and the page
+moves from anywhere else. The card's drag had to be taught to win: a pan
+waits for twice the distance a one-axis drag does before it commits, so the
+page underneath was taking every throw.
+
 Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging
 readers to advertise it.

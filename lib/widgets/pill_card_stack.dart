@@ -1,11 +1,31 @@
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
+
+/// The card's drag, which has to beat the page swipe underneath it.
+///
+/// The tabs slide under the finger now, and a pan waits for twice the
+/// distance a one-axis drag does before it commits — so every sideways
+/// throw was taken by the page, whose recognizer reached its threshold
+/// first. Same threshold as the page's, and the card, being the deeper of
+/// the two, is asked first and wins. A throw is still a throw in any
+/// direction; only the moment of commitment moved.
+class _CardPanRecognizer extends PanGestureRecognizer {
+  @override
+  bool hasSufficientGlobalDistanceToAccept(
+    PointerDeviceKind pointerDeviceKind,
+    double? deviceTouchSlop,
+  ) {
+    return globalDistanceMoved.abs() >
+        computeHitSlop(pointerDeviceKind, gestureSettings);
+  }
+}
 
 /// How much room the deck leaves at each side of the screen.
 ///
@@ -297,10 +317,18 @@ class _PillCardStackState extends State<PillCardStack>
         Positioned.fill(
           key: ValueKey(pill.id),
           child: isTop
-              ? GestureDetector(
-                  onPanStart: _onPanStart,
-                  onPanUpdate: _onPanUpdate,
-                  onPanEnd: _onPanEnd,
+              ? RawGestureDetector(
+                  gestures: {
+                    _CardPanRecognizer:
+                        GestureRecognizerFactoryWithHandlers<
+                          _CardPanRecognizer
+                        >(_CardPanRecognizer.new, (recognizer) {
+                          recognizer
+                            ..onStart = _onPanStart
+                            ..onUpdate = _onPanUpdate
+                            ..onEnd = _onPanEnd;
+                        }),
+                  },
                   child: card,
                 )
               : IgnorePointer(child: card),
