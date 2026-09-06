@@ -19,22 +19,27 @@ enum _Range {
   final String badge;
 }
 
-/// Cards nobody dealt you — artboard 52a.
+/// Cards nobody dealt you — artboard 52a, on the tab called Explore.
 ///
 /// One card held up at the top of a ranked list, a range across the middle
 /// and the subjects under it. These are everyone's cards rather than your
 /// mix, and the screen says so, because a shelf that quietly matched your
 /// taste would only ever hand back what you already asked for.
-class SearchScreen extends StatefulWidget {
+///
+/// The tab was called Search, after the one thing on it that is not the
+/// point: the field is a way in, the shelf is what you came for. Explore is
+/// what the finished day sends you to ("Explore today's best"), and what a
+/// compass in a tab bar has meant since there were tab bars.
+class ExploreScreen extends StatefulWidget {
   final AppState app;
 
-  const SearchScreen({super.key, required this.app});
+  const ExploreScreen({super.key, required this.app});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<ExploreScreen> createState() => ExploreScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class ExploreScreenState extends State<ExploreScreen> {
   final TextEditingController _field = TextEditingController();
   final FocusNode _focus = FocusNode();
 
@@ -51,6 +56,20 @@ class _SearchScreenState extends State<SearchScreen> {
     _field.dispose();
     _focus.dispose();
     super.dispose();
+  }
+
+  /// Puts the shelf back on today's best, every subject, with no search in
+  /// the way. The finished day's button promises exactly that, and a tab
+  /// that remembers last week's month filter would break the promise.
+  void showBest() {
+    _field.clear();
+    _focus.unfocus();
+    setState(() {
+      _range = _Range.today;
+      _topic = null;
+      _searching = false;
+      _query = '';
+    });
   }
 
   String get _seed => switch (_range) {

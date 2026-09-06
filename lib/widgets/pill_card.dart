@@ -6,6 +6,7 @@ import '../theme.dart';
 import 'motion.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
+import 'subject_icon.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
 /// carrying a Bar move line and a source once flipped.
@@ -106,6 +107,10 @@ class PillCard extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  // The subject's own mark beside its name, as on the shelf
+                  // the card ends the day on: one card, drawn one way.
+                  SubjectIcon(subject: pill.topic, size: 16, ink: pill.ink),
+                  const SizedBox(width: 8),
                   Text(
                     pill.topic.toUpperCase(),
                     style: AppText.label(

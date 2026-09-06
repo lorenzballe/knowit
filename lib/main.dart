@@ -7,7 +7,7 @@ import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
-import 'screens/search_screen.dart';
+import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
@@ -412,6 +412,11 @@ class _AstutoShellState extends State<AstutoShell> {
   /// True while a card is under the finger.
   bool _cardMoving = false;
 
+  /// The Explore tab keeps its state across tab changes, which is right
+  /// until the finished day sends the reader to "today's best" and finds
+  /// the tab still on last week's month filter.
+  final GlobalKey<ExploreScreenState> _explore = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final screens = [
@@ -420,8 +425,12 @@ class _AstutoShellState extends State<AstutoShell> {
         onCardMotion: (moving) {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
+        onExplore: () {
+          _explore.currentState?.showBest();
+          setState(() => _tab = 1);
+        },
       ),
-      SearchScreen(app: widget.app),
+      ExploreScreen(key: _explore, app: widget.app),
       ProfileScreen(
         app: widget.app,
         account: widget.account,
@@ -483,10 +492,12 @@ class _AstutoTabBar extends StatelessWidget {
 
   static const _tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
-    // A lens, not a bookmark: the middle tab stopped being the reader's own
-    // shelf and became the one place with cards nobody dealt them. Saved
-    // moved into the profile, where a list of your own things belongs.
-    (icon: Icons.search_rounded, label: 'Search'),
+    // A compass, not a bookmark and not a lens: the middle tab stopped being
+    // the reader's own shelf and became the one place with cards nobody
+    // dealt them. Saved moved into the profile, where a list of your own
+    // things belongs, and the tab is named for the shelf rather than for
+    // the search field at the top of it.
+    (icon: Icons.explore_rounded, label: 'Explore'),
     (icon: Icons.person_rounded, label: 'Profile'),
   ];
 

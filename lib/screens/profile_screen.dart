@@ -193,12 +193,82 @@ class ProfileScreen extends StatelessWidget {
           _RecordLine(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
-          // rather than as the loudest thing on the screen. Below the
-          // coverage list it was buried under thirteen rows.
+          // rather than as the loudest thing on the screen. It is also the
+          // only offer on the page — a second box lower down, selling the
+          // same thing in different words, was the app asking twice.
           if (!app.isPlus) ...[const SizedBox(height: 20), _PlusCard(app: app)],
+          // The two things a reader sets, straight after the thing they
+          // came to read: how the app looks and what it deals. Both used to
+          // sit under five panels of measurement, which is where a setting
+          // goes to be forgotten.
+          const SizedBox(height: 24),
+          const Eyebrow('Appearance'),
+          const SizedBox(height: 11),
+          _ThemePicker(app: app),
+          const SizedBox(height: 22),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Eyebrow('Your topics'),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () =>
+                    requirePlus(context, app, () => _editTopics(context)),
+                child: Row(
+                  children: [
+                    Text(
+                      'Edit',
+                      style: AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w500,
+                        color: context.p.link,
+                      ),
+                    ),
+                    PlusLock(locked: !app.isPlus),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 11),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            // All of them, in the onboarding's own order — the ones in the
+            // mix in their colour, the ones out of it dark. Showing only what
+            // was chosen made this a list with nothing to compare against:
+            // you could not see what you had turned off, or that there was
+            // anything else to turn on.
+            children: kMixSubjects.map((subject) {
+              final bool live = app.pickedTopics.contains(subject.key);
+              return Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 13,
+                  vertical: 9,
+                ),
+                decoration: BoxDecoration(
+                  color: live
+                      ? subject.color
+                      : context.p.inverse.withValues(alpha: 0.06),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  subject.name,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: live
+                        ? inkOn(subject.color)
+                        : context.p.ink.withValues(alpha: 0.34),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
           // Nothing to cover until something has been read: a list of
           // nineteen subjects all reading zero is the same wall of nothing
-          // the four tiles used to be.
+          // the four tiles used to be. Under the topics, because it is the
+          // topics, read.
           if (app.seenIds.isNotEmpty) ...[
             const SizedBox(height: 24),
             const Eyebrow('What you have covered'),
@@ -225,10 +295,6 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 11),
             _Mastery(app: app),
           ],
-          const SizedBox(height: 22),
-          const Eyebrow('Appearance'),
-          const SizedBox(height: 11),
-          _ThemePicker(app: app),
           const SizedBox(height: 22),
           const Eyebrow('Daily nudge'),
           const SizedBox(height: 11),
@@ -290,127 +356,6 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 22),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Eyebrow('Your topics'),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () =>
-                    requirePlus(context, app, () => _editTopics(context)),
-                child: Row(
-                  children: [
-                    Text(
-                      'Edit',
-                      style: AppText.body(
-                        size: 12.5,
-                        weight: FontWeight.w500,
-                        color: context.p.link,
-                      ),
-                    ),
-                    PlusLock(locked: !app.isPlus),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 11),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            // All of them, in the onboarding's own order — the ones in the
-            // mix in their colour, the ones out of it dark. Showing only what
-            // was chosen made this a list with nothing to compare against:
-            // you could not see what you had turned off, or that there was
-            // anything else to turn on.
-            children: kMixSubjects.map((subject) {
-              final bool live = app.pickedTopics.contains(subject.key);
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 13,
-                  vertical: 9,
-                ),
-                decoration: BoxDecoration(
-                  color: live
-                      ? subject.color
-                      : context.p.inverse.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(999),
-                ),
-                child: Text(
-                  subject.name,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    color: live
-                        ? inkOn(subject.color)
-                        : context.p.ink.withValues(alpha: 0.34),
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 24),
-          if (!app.isPlus)
-            Container(
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: context.p.inverse,
-                borderRadius: BorderRadius.circular(22),
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Astuto+',
-                          style: AppText.display(
-                            size: 17,
-                            weight: FontWeight.w600,
-                            color: context.p.onInverse,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '5 extra pills a day, full archive.',
-                          style: AppText.body(
-                            size: 12.5,
-                            color: context.p.onInverse.withValues(alpha: 0.72),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => PaywallScreen(app: app),
-                      ),
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: context.p.onInverse,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
-                      ),
-                    ),
-                    child: Text(
-                      'Upgrade',
-                      style: AppText.body(
-                        size: 13,
-                        weight: FontWeight.w600,
-                        color: const Color(0xFFE9FFC4),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           const SizedBox(height: 24),
           // Your own shelf, which is a thing you own and not a place to go
           // looking — so it lives here, with the rest of what is yours,
@@ -599,20 +544,30 @@ class _LinkRow extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Flexible, so a label longer than the row does not overflow it —
-            // which any other language would manage on its own.
-            Flexible(
-              child: Text(
-                label,
-                style: AppText.body(
-                  size: 14,
-                  weight: FontWeight.w500,
-                  color: muted ? context.p.inkMuted : context.p.ink,
-                ),
+            // The label and its lock together at the left, the chevron at
+            // the far right. A Flexible label beside a Spacer split the row
+            // in two, which left the chevron somewhere in the middle at a
+            // different place on every row.
+            Expanded(
+              child: Row(
+                children: [
+                  // Flexible, so a label longer than the row does not
+                  // overflow it — which any other language would manage on
+                  // its own.
+                  Flexible(
+                    child: Text(
+                      label,
+                      style: AppText.body(
+                        size: 14,
+                        weight: FontWeight.w500,
+                        color: muted ? context.p.inkMuted : context.p.ink,
+                      ),
+                    ),
+                  ),
+                  PlusLock(locked: locked),
+                ],
               ),
             ),
-            PlusLock(locked: locked),
-            const Spacer(),
             Icon(
               Icons.chevron_right_rounded,
               size: 20,

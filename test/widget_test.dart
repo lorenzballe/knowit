@@ -14,9 +14,11 @@ import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
+import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
@@ -88,6 +90,31 @@ Future<void> _openSetting(WidgetTester tester, String label) async {
 Future<void> _openProfile(WidgetTester tester) async {
   await tester.tap(find.byKey(const ValueKey('tab-Profile')));
   await _settle(tester);
+}
+
+/// The order [labels] sit in down the profile, found by scrolling through
+/// it. The rows below the fold are not built until they are, so positions
+/// are taken as they appear and kept in page coordinates.
+Future<List<String>> _sectionOrder(
+  WidgetTester tester,
+  List<String> labels,
+) async {
+  final list = find.byType(Scrollable).first;
+  final seen = <String, double>{};
+  for (var step = 0; step < 16 && seen.length < labels.length; step++) {
+    final double scrolled = tester.state<ScrollableState>(list).position.pixels;
+    for (final label in labels) {
+      if (seen.containsKey(label)) continue;
+      final row = find.text(label);
+      if (row.evaluate().isEmpty) continue;
+      seen[label] = tester.getTopLeft(row.first).dy + scrolled;
+    }
+    await tester.drag(list, const Offset(0, -300));
+    await _settle(tester);
+  }
+  final order = seen.keys.toList()
+    ..sort((a, b) => seen[a]!.compareTo(seen[b]!));
+  return order;
 }
 
 void main() {
@@ -193,7 +220,7 @@ void main() {
     await _settle(tester);
 
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-    expect(find.byKey(const ValueKey('tab-Search')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Explore')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
@@ -208,12 +235,12 @@ void main() {
     expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
   });
 
-  testWidgets('Search offers cards nobody dealt you', (tester) async {
+  testWidgets('Explore offers cards nobody dealt you', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
     // A range across the top, the subjects under it, and one card held up.
@@ -664,7 +691,7 @@ void main() {
 
     expect(find.byType(PillCardStack), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
-    expect(find.byKey(const ValueKey('tab-Search')), findsOneWidget);
+    expect(find.byKey(const ValueKey('tab-Explore')), findsOneWidget);
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
@@ -693,9 +720,8 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
-    await tester.scrollUntilVisible(find.text('Upgrade'), 200);
-    await _settle(tester);
-    await tester.tap(find.text('Upgrade'));
+    // The one offer on the profile, under the record.
+    await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
     // The perks scroll now, so each is reached the way a reader reaches it.
@@ -726,9 +752,8 @@ void main() {
     await _settle(tester);
 
     await _openProfile(tester);
-    await tester.scrollUntilVisible(find.text('Upgrade'), 200);
-    await _settle(tester);
-    await tester.tap(find.text('Upgrade'));
+    // The one offer on the profile, under the record.
+    await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it —
@@ -789,9 +814,7 @@ void main() {
     expect(find.byKey(const ValueKey('progress-6-of-10')), findsOneWidget);
   });
 
-  testWidgets('finishing the day gives a short summary and a way back', (
-    tester,
-  ) async {
+  testWidgets('finishing the day turns the tab into the shelf', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -801,20 +824,18 @@ void main() {
       await _settle(tester);
     }
 
-    // The tick says at a glance that the day has been seen, and the deck
-    // comes back fanned.
-    expect(find.text("TODAY'S FIVE · ALL READ"), findsOneWidget);
+    // The header says where the day got to, the eyebrow says what the
+    // screen now is, and the first card is at the front, face up, with
+    // its line to bring it up with.
+    expect(find.text('Day 1 · five read'), findsOneWidget);
+    expect(find.text('Nothing kept yet'), findsOneWidget);
+    expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
+    expect(find.text('01 / 05'), findsOneWidget);
 
-    // The card at the front opens itself. It is the middle one, so the fan
-    // opens both ways.
-    final app = AppState();
-    await app.init();
-    final front = app.todaysDeck[app.todaysDeck.length ~/ 2].question;
-    await tester.tap(find.text(front));
-    await _settle(tester);
-
-    expect(find.text("Today's five"), findsOneWidget);
-    expect(find.text('3/5'), findsOneWidget);
+    final front = pillsByIds(kOpeningDeck).first;
+    expect(find.text(front.question), findsOneWidget);
+    expect(find.text(front.barMove), findsOneWidget);
+    expect(find.text(front.answer), findsNothing);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -832,6 +853,245 @@ void main() {
     // second button here offers what the free plan actually has.
     expect(find.text('Five more'), findsNothing);
     expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
+  });
+
+  group('The finished day is a shelf', () {
+    /// Reads the day through, which is what turns the tab into the shelf.
+    Future<void> finish(WidgetTester tester) async {
+      for (var i = 0; i < 5; i++) {
+        await _swipeCardAway(tester);
+        await _settle(tester);
+      }
+    }
+
+    testWidgets('a tap turns the front card over, and back', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      final front = pillsByIds(kOpeningDeck).first;
+      await tester.tap(find.text(front.question));
+      await _settle(tester);
+      // The whole reveal, the same one the deck shows, not a summary.
+      expect(find.text(front.answer), findsOneWidget);
+      expect(find.text('Source · ${front.source}'), findsOneWidget);
+
+      await tester.tap(find.text(front.question));
+      await _settle(tester);
+      expect(find.text(front.answer), findsNothing);
+    });
+
+    testWidgets('a swipe brings the next card to the front, face down', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      final deck = pillsByIds(kOpeningDeck);
+      await tester.tap(find.text(deck.first.question));
+      await _settle(tester);
+      expect(find.text(deck.first.answer), findsOneWidget);
+
+      await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
+      await _settle(tester);
+      expect(find.text('02 / 05'), findsOneWidget);
+      expect(find.text(deck[1].question), findsOneWidget);
+      // Turning a card over does not carry to the next one.
+      expect(find.text(deck.first.answer), findsNothing);
+
+      await tester.drag(find.byType(TodayDoneView), const Offset(200, 0));
+      await _settle(tester);
+      expect(find.text('01 / 05'), findsOneWidget);
+
+      // The dots jump straight to a card.
+      await tester.tap(find.bySemanticsLabel('Card 5 of 5'));
+      await _settle(tester);
+      expect(find.text('05 / 05'), findsOneWidget);
+      expect(find.text(deck.last.question), findsOneWidget);
+    });
+
+    testWidgets('keeping a card counts it in the header', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      expect(find.text('Nothing kept yet'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await _settle(tester);
+      expect(find.text('1 kept today'), findsOneWidget);
+      expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);
+    });
+
+    testWidgets('the day ends by naming what opens tomorrow', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      // The same prefs, so the same history, so the same deal.
+      final app = AppState();
+      await app.init();
+      final lead = app.tomorrowsDeck.first;
+      expect(
+        find.textContaining("${lead.topic} opens tomorrow's five, in"),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets("the way on is everyone's best of today", (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      // Leave the Explore tab somewhere else first, so the button has to
+      // put it back rather than merely switch to it.
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+      await tester.tap(find.text('This month'));
+      await _settle(tester);
+      expect(find.text('TOP THIS MONTH'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('tab-Today')));
+      await _settle(tester);
+
+      await finish(tester);
+      await tester.tap(find.text("Explore today's best"));
+      await _settle(tester);
+
+      expect(find.text('TOP TODAY'), findsOneWidget);
+      expect(find.text('TOP THIS MONTH'), findsNothing);
+      expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsNothing);
+    });
+
+    testWidgets('the header counts the day as it goes', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      expect(find.text('Day 1 · five to read'), findsOneWidget);
+      await _swipeCardAway(tester);
+      expect(find.text('Day 1 · 1 of 5 read'), findsOneWidget);
+    });
+
+    testWidgets('the day is counted along the streak', (tester) async {
+      final yesterday = DateTime.now().subtract(const Duration(days: 1));
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 5,
+        'knowit.lastCompletionDate': dateKey(yesterday),
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      // The sixth day from the moment it opens, not once it is done.
+      expect(find.text('Day 6 · five to read'), findsOneWidget);
+      await finish(tester);
+      expect(find.text('Day 6 · five read'), findsOneWidget);
+    });
+  });
+
+  group("Tomorrow's five", () {
+    test('are dealt tonight the way tomorrow deals them', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await app.advance();
+      }
+
+      final preview = app.tomorrowsDeck.map((p) => p.id).toList();
+      expect(preview, hasLength(kPillsPerDay));
+      // Nothing already read, and nothing from today.
+      expect(preview.toSet().intersection(app.seenIds), isEmpty);
+      expect(
+        preview.toSet().intersection(app.todaysDeck.map((p) => p.id).toSet()),
+        isEmpty,
+      );
+      // The same question asked twice gets the same answer.
+      expect(app.tomorrowsDeck.map((p) => p.id).toList(), preview);
+    });
+
+    test('a card due back tomorrow is in it', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      final tomorrow = DateTime.now().add(const Duration(days: 1));
+      final original = kPillPool.firstWhere(
+        (p) => p.isGraded && p.principle.isReal,
+      );
+      await app.adopt(
+        ReaderSnapshot(
+          answers: {original.id: Answer('0', dueOn: dateKey(tomorrow))},
+        ),
+      );
+
+      // Back as the same principle — the original, or a fresh context of it.
+      expect(
+        app.tomorrowsDeck.where((p) => p.principle == original.principle),
+        isNotEmpty,
+      );
+      expect(app.tomorrowsDeck, hasLength(kPillsPerDay));
+    });
+
+    test(
+      'the day number runs one ahead of the streak until it is done',
+      () async {
+        final yesterday = DateTime.now().subtract(const Duration(days: 1));
+        SharedPreferences.setMockInitialValues({
+          ..._installed(),
+          'knowit.streak': 5,
+          'knowit.lastCompletionDate': dateKey(yesterday),
+        });
+        final app = AppState();
+        await app.init();
+        expect(app.dayNumber, 6);
+        for (var i = 0; i < kPillsPerDay; i++) {
+          await app.advance();
+        }
+        expect(app.streak, 6);
+        expect(app.dayNumber, 6);
+      },
+    );
+  });
+
+  testWidgets('the profile opens on the record, then the settings', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({
+      ..._installed(),
+      'knowit.seenIds': <String>['science-4'],
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _openProfile(tester);
+
+    // One offer, under the record; the second box that used to sell the
+    // same thing lower down is gone.
+    expect(find.text('SEE THE PLANS'), findsOneWidget);
+
+    final order = await _sectionOrder(tester, const [
+      'YOUR RECORD',
+      'APPEARANCE',
+      'YOUR TOPICS',
+      'WHAT YOU HAVE COVERED',
+      'DAILY NUDGE',
+      'DEBUG',
+    ]);
+    expect(order, const [
+      'YOUR RECORD',
+      'APPEARANCE',
+      'YOUR TOPICS',
+      'WHAT YOU HAVE COVERED',
+      'DAILY NUDGE',
+      'DEBUG',
+    ]);
+    expect(find.text('Upgrade'), findsNothing);
   });
 
   group('The content pool', () {
@@ -1046,9 +1306,9 @@ void main() {
 
     // Whatever the tab, the same ground.
     final onToday = paletteOn('Today');
-    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
-    expect(paletteOn('Search').surface, onToday.surface);
+    expect(paletteOn('Explore').surface, onToday.surface);
 
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await _settle(tester);
@@ -1117,9 +1377,10 @@ void main() {
         await _settle(tester);
       }
 
-      // Under the buttons, and no longer inside a scrolling page — the
-      // closing screen is one screenful now.
-      expect(find.textContaining('Next five in'), findsOneWidget);
+      // Under the shelf, and no longer inside a scrolling page — the
+      // closing screen is one screenful, and its last line is about
+      // tomorrow rather than about the clock.
+      expect(find.textContaining("opens tomorrow's five, in"), findsOneWidget);
     });
   });
 
@@ -1402,7 +1663,7 @@ void main() {
     // Into the re-read, by way of Search — which is where this was first
     // noticed: the viewer had been handed the whole window, so the same card
     // came back wider, and taller with it.
-    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
     // The badge sits inside the held-up card, so tapping it opens that card.
     await tester.tap(find.text('TOP TODAY'));

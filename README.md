@@ -73,15 +73,39 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run), Today with the card stack,
-the end-of-day recap, Saved with its empty state, Profile (stats, daily nudge,
-topic chips), the come-back screen after a lapsed streak, and the disclosure
-page on how pills are written.
+**Free** — first run (the five-scene intro, then the subject run), Today with
+the card stack and, once the five are done, the shelf, Explore (everyone's best
+cards by day, week, month and all time, with a search over the whole pool),
+Saved with its empty state, Profile (record, appearance, topics, coverage,
+calibration, daily nudge), the come-back screen after a lapsed streak, and the
+disclosure page on how pills are written.
 
 **Astuto+** — three perks, all delivered: the searchable **Archive**, the
-**topic picker**, and a **second set of five pills** handed over from the recap
+**topic picker**, and a **second set of five pills** handed over from the shelf
 once the first five are done. On the free plan the first two carry a lock chip
 and open the paywall instead.
+
+## Today, done
+
+The finished day is artboard 66a. The tab at rest is a shelf: the day's five
+come back as a real carousel — swipe through them, tap one to turn it over
+and read the whole reveal again — so "review" is the screen itself rather
+than a button. The glow behind everything, the dot in the header and the
+long dot under the carousel all take the colour of the card at the front.
+Under the dots the app names what opens tomorrow: the deck is dealt from the
+date and the reading history, both settled by tonight, so the subject it
+names is the one that will actually be on top in the morning. The way on is
+Explore's best of today; the second set sits under it as a quiet line.
+
+The header is the same one line whether the day is running or done — a dot
+in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far
+end what has been kept — so finishing the day changes what the tab holds and
+not what it looks like.
+
+The middle tab is called Explore rather than Search, after what is on it (a
+shelf of cards nobody dealt you) rather than after the field at the top of
+it, and it carries a compass. The finished day's button puts it back on
+today's best, every subject, whatever it was left on.
 
 Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging

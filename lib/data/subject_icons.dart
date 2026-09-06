@@ -4,7 +4,13 @@
 /// picked from an icon font: a flask for Science, a ringed planet for Space,
 /// a temple for Philosophy. Kept as source paths so they are the artboard's
 /// drawing and not a redrawing of it.
+///
+/// Thinking is not on the artboard — it is not a subject, and the canvas
+/// never drew it one — but every card now carries its mark, and a card
+/// with a hole where the mark should be reads as a fault rather than as a
+/// choice. A bulb, on the same grid and at the same weight.
 const Map<String, String> kSubjectIcons = {
+  'Thinking': 'M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3z',
   'Economics': 'M4 16l5-5 3 3 7-7 M15 7h5v5',
   'Sport': 'M7 4h10v4a5 5 0 0 1-10 0V4z M7 5H4v2a3 3 0 0 0 3 3 M17 5h3v2a3 3 0 0 1-3 3 M12 13v4 M9 20h6l-1-3h-4z',
   'Nature': 'M5 19C5 11 11 5 19 5c0 8-6 14-14 14z M9 15l6-6',

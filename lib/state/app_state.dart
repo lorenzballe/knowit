@@ -136,6 +136,18 @@ class AppState extends ChangeNotifier {
 
   bool get todayCompleted => todayIndex >= todaysDeck.length;
 
+  /// True once today's five have been finished, whether or not a second set
+  /// was dealt after them.
+  bool get dayClosed => lastCompletionDate == dateKey(today);
+
+  /// Which day this is, counted along the streak. A streak counts finished
+  /// days, so the day being read is one past it: the sixth day kept is
+  /// "Day 6" from the moment it opens, not only once it is done.
+  int get dayNumber => liveStreak + (dayClosed ? 0 : 1);
+
+  /// How many of today's cards the reader kept.
+  int get keptToday => todaysDeck.where((p) => savedIds.contains(p.id)).length;
+
   /// Initials for the profile avatar.
   String get initials {
     final parts = name.trim().split(RegExp(r'\s+')).where((p) => p.isNotEmpty);
@@ -491,10 +503,12 @@ class AppState extends ChangeNotifier {
     return answer.copyWith(stage: stage, dueOn: dateKey(due));
   }
 
-  bool isDueForReview(String pillId) {
+  bool isDueForReview(String pillId) => _dueBy(pillId, today);
+
+  bool _dueBy(String pillId, DateTime on) {
     final due = answers[pillId]?.dueOn;
     if (due == null) return false;
-    return due.compareTo(dateKey(today)) <= 0;
+    return due.compareTo(dateKey(on)) <= 0;
   }
 
   /// The cards to bring back, oldest due first.
@@ -504,26 +518,53 @@ class AppState extends ChangeNotifier {
   /// whether you remember that card; meeting base-rate neglect in a context
   /// you have not seen tests whether you learned base rates — and only the
   /// second is what transfer means.
-  List<Pill> get dueReviews {
+  List<Pill> get dueReviews => _reviewsDue(today);
+
+  /// The same, for a day that has not started: what [on] will bring back.
+  List<Pill> _reviewsDue(DateTime on) {
     final due = <MapEntry<String, Pill>>[];
     final claimed = <String>{};
 
-    final entries = answers.entries.where((e) => isDueForReview(e.key)).toList()
+    final entries = answers.entries.where((e) => _dueBy(e.key, on)).toList()
       ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
 
     for (final e in entries) {
       final original = kPillPool.where((p) => p.id == e.key).firstOrNull;
       if (original == null) continue;
-      final pick = _freshInstanceOf(original, claimed);
+      final pick = _freshInstanceOf(original, claimed, on);
       claimed.add(pick.id);
       due.add(MapEntry(e.value.dueOn!, pick));
     }
     return [for (final entry in due) entry.value];
   }
 
+  /// Tomorrow's cards, dealt the way tomorrow will deal them.
+  ///
+  /// The dealer is deterministic in the date and the reading history, and
+  /// once a day is done the history is exactly what tomorrow will see — so
+  /// tonight can say what opens the morning and the morning will agree. Only
+  /// what a plain day holds: a second set is something the reader opens.
+  List<Pill> get tomorrowsDeck {
+    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    final reviews = _reviewsDue(tomorrow).take(kReviewsPerDay).toList();
+    final fresh = pillsForDate(
+      tomorrow,
+      topics: pickedTopics,
+      weights: topicWeights,
+      exclude: {
+        ...seenIds,
+        ...todaysDeck.map((p) => p.id),
+        ...reviews.map((p) => p.id),
+      },
+      count: kPillsPerDay - reviews.length,
+    );
+    return [...reviews, ...fresh]
+      ..sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
+  }
+
   /// Another card teaching the same principle that the reader has not met,
   /// or the original when the principle has only the one instance.
-  Pill _freshInstanceOf(Pill original, Set<String> claimed) {
+  Pill _freshInstanceOf(Pill original, Set<String> claimed, DateTime on) {
     if (!original.principle.isReal) return original;
 
     final siblings = kPillPool
@@ -539,7 +580,7 @@ class AppState extends ChangeNotifier {
 
     // Deterministic per day, so the deck does not shuffle under the reader.
     siblings.sort((a, b) => a.id.compareTo(b.id));
-    final seed = dateKey(today).hashCode.abs() + original.id.hashCode.abs();
+    final seed = dateKey(on).hashCode.abs() + original.id.hashCode.abs();
     return siblings[seed % siblings.length];
   }
 

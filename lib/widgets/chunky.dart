@@ -32,8 +32,9 @@ class ChunkyButton extends StatefulWidget {
   final double height;
   final double radius;
 
-  /// Leading widget, sized and coloured by the caller.
+  /// Leading and trailing widgets, sized and coloured by the caller.
   final Widget? leading;
+  final Widget? trailing;
 
   const ChunkyButton({
     super.key,
@@ -45,6 +46,7 @@ class ChunkyButton extends StatefulWidget {
     this.height = 56,
     this.radius = 16,
     this.leading,
+    this.trailing,
   });
 
   @override
@@ -119,6 +121,10 @@ class _ChunkyButtonState extends State<ChunkyButton> {
                     ),
                   ),
                 ),
+                if (widget.trailing != null) ...[
+                  const SizedBox(width: 9),
+                  widget.trailing!,
+                ],
               ],
             ),
           ),
