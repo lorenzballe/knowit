@@ -763,6 +763,48 @@ void main() {
     expect(find.text('TOP THIS MONTH'), findsOneWidget);
   });
 
+  testWidgets('the bar crosses straight to a tab two along', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    /// How lit each tab is, read off the pill behind its icon.
+    List<double> lit() => [
+      for (final label in const ['Today', 'Explore', 'Profile'])
+        (tester
+                    .widget<Container>(
+                      find
+                          .descendant(
+                            of: find.byKey(ValueKey('tab-$label')),
+                            matching: find.byType(Container),
+                          )
+                          .first,
+                    )
+                    .decoration
+                as BoxDecoration)
+            .color!
+            .a,
+    ];
+
+    expect(lit(), [1.0, 0.0, 0.0]);
+
+    // Two along. Halfway through, the tab in between is still dark: the
+    // move is a crossing from the one you left to the one you asked for,
+    // not a run along the row.
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 130));
+    final half = lit();
+    expect(half[0], greaterThan(0));
+    expect(half[0], lessThan(1));
+    expect(half[2], greaterThan(0));
+    expect(half[2], lessThan(1));
+    expect(half[1], 0.0, reason: 'the tab in between never lights up');
+
+    await _settle(tester);
+    expect(lit(), [0.0, 0.0, 1.0]);
+  });
+
   testWidgets('once the day is done the shelf slides like everything else', (
     tester,
   ) async {

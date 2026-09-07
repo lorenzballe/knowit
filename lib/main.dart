@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -406,11 +407,32 @@ class AstutoShell extends StatefulWidget {
   State<AstutoShell> createState() => _AstutoShellState();
 }
 
-class _AstutoShellState extends State<AstutoShell> {
+class _AstutoShellState extends State<AstutoShell>
+    with SingleTickerProviderStateMixin {
+  /// The tab the app is on. Only ever changed once a move has settled:
+  /// setting it mid-gesture would rebuild the shell — and swap the page
+  /// physics — while a finger is still on the glass.
   int _tab = 0;
 
   /// The three tabs as pages, so a finger can slide between them.
   final PageController _pages = PageController();
+
+  /// How lit each tab is, 0 to 1, rebuilt every frame of a move.
+  ///
+  /// The bar used to follow the page index, which changes once, in the
+  /// middle of a move: two tabs apart that meant two 240ms animations
+  /// starting one on top of the other, which is what read as a stutter.
+  /// This is a number per tab instead, and nothing else on the screen
+  /// rebuilds while it changes.
+  final ValueNotifier<List<double>> _lit = ValueNotifier(const [1, 0, 0]);
+
+  /// Carries the bar across a jump the page does not animate.
+  late final AnimationController _jump = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 260),
+  );
+  int _jumpFrom = 0;
+  int _jumpTo = 0;
 
   /// True while a card is under the finger.
   bool _cardMoving = false;
@@ -421,28 +443,92 @@ class _AstutoShellState extends State<AstutoShell> {
   final GlobalKey<ExploreScreenState> _explore = GlobalKey();
 
   @override
+  void initState() {
+    super.initState();
+    _pages.addListener(_followPage);
+    _jump.addListener(_followJump);
+  }
+
+  @override
   void dispose() {
+    _pages.removeListener(_followPage);
     _pages.dispose();
+    _jump.dispose();
+    _lit.dispose();
     super.dispose();
   }
 
-  /// Slides to a tab. From a tap the bar answers at once and the page
-  /// follows; from a swipe the page leads and the bar catches up.
-  void _goTo(int tab) {
-    if (tab == _tab) return;
-    HapticFeedback.selectionClick();
-    setState(() => _tab = tab);
-    _pages.animateToPage(
-      tab,
-      duration: const Duration(milliseconds: 320),
-      curve: Curves.easeOutCubic,
-    );
+  /// The bar follows the page while the page is moving under a finger, or
+  /// animating to the tab beside it.
+  void _followPage() {
+    if (_jump.isAnimating || !_pages.hasClients) return;
+    final double? page = _pages.page;
+    if (page == null) return;
+    final int lo = page.floor().clamp(0, _AstutoTabBar.tabs.length - 1);
+    final int hi = page.ceil().clamp(0, _AstutoTabBar.tabs.length - 1);
+    final double t = page - lo;
+    _lit.value = [
+      for (int i = 0; i < _AstutoTabBar.tabs.length; i++)
+        i == lo && i == hi
+            ? 1
+            : i == lo
+            ? 1 - t
+            : i == hi
+            ? t
+            : 0,
+    ];
   }
 
-  void _onPageChanged(int page) {
-    if (page == _tab) return;
+  void _followJump() {
+    final double t = Curves.easeOutCubic.transform(_jump.value);
+    _lit.value = [
+      for (int i = 0; i < _AstutoTabBar.tabs.length; i++)
+        i == _jumpFrom
+            ? 1 - t
+            : i == _jumpTo
+            ? t
+            : 0,
+    ];
+  }
+
+  /// Goes to a tab from the bar.
+  ///
+  /// The tab beside this one slides, because there is nothing in between to
+  /// drag across. Two tabs apart, the page cuts instead: a slide would haul
+  /// the middle screen over the glass on its way past, which is a screen
+  /// nobody asked for. The bar carries that move on its own, and it moves
+  /// from the tab you left to the tab you asked for without lighting the
+  /// one between them.
+  void _goTo(int tab) {
+    if (tab == _tab || !mounted) return;
     HapticFeedback.selectionClick();
-    setState(() => _tab = page);
+    final int from = _tab;
+    setState(() => _tab = tab);
+    if ((tab - from).abs() == 1) {
+      _jump.stop();
+      _pages.animateToPage(
+        tab,
+        duration: const Duration(milliseconds: 320),
+        curve: Curves.easeOutCubic,
+      );
+      return;
+    }
+    _jumpFrom = from;
+    _jumpTo = tab;
+    _jump
+      ..reset()
+      ..forward();
+    _pages.jumpToPage(tab);
+  }
+
+  /// A move is over. This is the only place the tab is written down, so a
+  /// drag that crosses into Today is not cut short by the page locking
+  /// under the finger that is still dragging it.
+  bool _settle(ScrollNotification note) {
+    if (note is! ScrollEndNotification || !_pages.hasClients) return false;
+    final int page = (_pages.page ?? _tab.toDouble()).round();
+    if (page != _tab) setState(() => _tab = page);
+    return false;
   }
 
   @override
@@ -501,18 +587,26 @@ class _AstutoShellState extends State<AstutoShell> {
           child: ScrollConfiguration(
             behavior: ScrollConfiguration.of(context)
                 .copyWith(overscroll: false),
-            child: PageView(
-              controller: _pages,
-              onPageChanged: _onPageChanged,
-              physics: _tab == 0 && !widget.app.todayCompleted
-                  ? const NeverScrollableScrollPhysics()
-                  : null,
-              // The next tab is built before it is reached, so the first
-              // swipe does not pay for a screen being laid out mid-gesture.
-              allowImplicitScrolling: true,
-              children: [
-                for (final screen in screens) _KeepAlive(child: screen),
-              ],
+            child: NotificationListener<ScrollNotification>(
+              onNotification: _settle,
+              child: PageView(
+                controller: _pages,
+                physics: _tab == 0 && !widget.app.todayCompleted
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                // The next tab is built before it is reached, so the first
+                // swipe does not pay for a screen being laid out
+                // mid-gesture.
+                allowImplicitScrolling: true,
+                children: [
+                  // Clipped to its own page. A screen is free to paint past
+                  // its edges — the shelf lets a card's glow bleed — and
+                  // without this the bleed lands on the tab beside it and
+                  // rides there until the next repaint.
+                  for (final screen in screens)
+                    ClipRect(child: _KeepAlive(child: screen)),
+                ],
+              ),
             ),
           ),
         ),
@@ -521,7 +615,7 @@ class _AstutoShellState extends State<AstutoShell> {
         // downward should not be thrown at a row of buttons.
         bottomNavigationBar: _AstutoTabBar(
           hidden: _cardMoving,
-          index: _tab,
+          lit: _lit,
           onChanged: _goTo,
         ),
       ),
@@ -569,16 +663,19 @@ class _KeepAliveState extends State<_KeepAlive>
 /// bottom padding on every screen, and getting that wrong hides the last row
 /// of something.
 class _AstutoTabBar extends StatelessWidget {
-  final int index;
+  /// How lit each tab is, 0 to 1. A number rather than a selected index, so
+  /// the bar can follow a finger between two tabs and cross straight from
+  /// one end to the other without the middle one lighting up on the way.
+  final ValueListenable<List<double>> lit;
   final ValueChanged<int> onChanged;
   final bool hidden;
   const _AstutoTabBar({
-    required this.index,
+    required this.lit,
     required this.onChanged,
     this.hidden = false,
   });
 
-  static const _tabs = [
+  static const tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
     // A compass, not a bookmark and not a lens: the middle tab stopped being
     // the reader's own shelf and became the one place with cards nobody
@@ -629,78 +726,86 @@ class _AstutoTabBar extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          children: List.generate(_tabs.length, (i) {
-            final selected = i == index;
-            final tab = _tabs[i];
-            final tint = selected ? context.p.onInverse : context.p.inkFaint;
+        // Only the row of tabs is rebuilt as a move runs. The bar itself —
+        // its ground, its ring, its shadow — is built once and held.
+        child: ValueListenableBuilder<List<double>>(
+          valueListenable: lit,
+          builder: (context, lit, _) => Row(
+            children: List.generate(tabs.length, (i) {
+              final double on = lit[i].clamp(0.0, 1.0);
+              final tab = tabs[i];
+              final Color tint = Color.lerp(
+                context.p.inkFaint,
+                context.p.onInverse,
+                on,
+              )!;
 
-            return Expanded(
-              child: Semantics(
-                key: ValueKey('tab-${tab.label}'),
-                button: true,
-                selected: selected,
-                label: tab.label,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (selected) return;
-                    HapticFeedback.selectionClick();
-                    onChanged(i);
-                  },
-                  child: Center(
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 240),
-                      curve: Curves.easeOutCubic,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: selected ? 14 : 10,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: selected
-                            ? context.p.inverse
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(tab.icon, size: 19, color: tint),
-                          // The label has to be able to take less than it
-                          // asks for: a third of the bar is not much, and it
-                          // is briefly narrower still while the pill grows.
-                          //
-                          // The label belongs to the tab you are on. Three of
-                          // them side by side is a legend nobody reads.
-                          Flexible(
-                            child: AnimatedSize(
-                              duration: const Duration(milliseconds: 240),
-                              curve: Curves.easeOutCubic,
-                              child: selected
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(left: 7),
-                                      child: Text(
-                                        tab.label,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: AppText.body(
-                                          size: 13,
-                                          weight: FontWeight.w700,
-                                          color: tint,
-                                        ),
+              return Expanded(
+                child: Semantics(
+                  key: ValueKey('tab-${tab.label}'),
+                  button: true,
+                  selected: on > 0.5,
+                  label: tab.label,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => onChanged(i),
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10 + 4 * on,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: context.p.inverse.withValues(alpha: on),
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(tab.icon, size: 19, color: tint),
+                            // The label belongs to the tab you are on, and
+                            // unfurls as you arrive rather than appearing
+                            // once you have. Three of them side by side is
+                            // a legend nobody reads.
+                            //
+                            // It has to be able to take less than it asks
+                            // for: a third of the bar is not much, and it
+                            // is narrower still while the pill grows.
+                            Flexible(
+                              child: ClipRect(
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  widthFactor: on,
+                                  // The fade is in the colour rather than
+                                  // in an Opacity: three of those is three
+                                  // saved layers on every frame of a move,
+                                  // for text that is only ever one colour.
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 7),
+                                    child: Text(
+                                      tab.label,
+                                      maxLines: 1,
+                                      softWrap: false,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: AppText.body(
+                                        size: 13,
+                                        weight: FontWeight.w700,
+                                        color: tint.withValues(alpha: on),
                                       ),
-                                    )
-                                  : const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            }),
+          ),
         ),
       ),
     );

@@ -109,6 +109,20 @@ today's best, every subject, whatever it was left on.
 
 The three tabs slide under the finger, the way they do in every app with
 three of them side by side; the bar is the other way to the same place.
+Each tab is clipped to its own page: a screen is free to paint past its
+edges — the shelf lets a card's glow bleed — and without the clip the bleed
+lands on the tab beside it and rides there until the next repaint.
+
+Tapping the tab beside this one slides, because there is nothing in between
+to drag across. Two tabs apart the page cuts instead, because a slide would
+haul the middle screen over the glass on its way past. The bar carries that
+move on its own, crossing from the tab you left to the tab you asked for
+without lighting the one between them. It follows a number per tab rather
+than the page index — the index changes once, in the middle of a move, and
+two tabs apart that meant two overlapping animations, which is what read as
+a stutter. Nothing else on the screen rebuilds while that number changes,
+and the tab is only written down once a move has settled: doing it
+mid-gesture swapped the page physics under a finger that was still dragging.
 
 Except while the day is running. Today is then a screen with one thing on
 it, and every sideways drag on it belongs to the card being thrown — a page
