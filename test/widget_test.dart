@@ -350,10 +350,13 @@ void main() {
       expect(find.textContaining('Tap a day to open it'), findsOneWidget);
       expect(find.text('Today'), findsOneWidget);
 
-      // Asked something, it is the answer.
+      // Asked something, it is the answer. The field is behind the lens,
+      // where the canvas puts it.
+      await tester.tap(find.byKey(const ValueKey('archive-search')));
+      await _settle(tester);
       await tester.enterText(find.byType(TextField), 'zzzzznotathing');
       await _settle(tester);
-      expect(find.text('0 RESULTS'), findsOneWidget);
+      expect(find.text('0 results'), findsOneWidget);
       expect(find.textContaining('Tap a day to open it'), findsNothing);
     });
 
@@ -721,6 +724,49 @@ void main() {
       find.ancestor(of: find.text(label), matching: find.byType(ChunkyButton)),
       findsOneWidget,
     );
+  });
+
+  testWidgets('a card thrown downward is not sliced off', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    // The body runs under the tab bar, so the deck has the whole screen to
+    // travel into. Held short of that, a card dragged towards the bottom
+    // edge was cut where the bar used to reserve its room.
+    final Size screen = tester.view.physicalSize / tester.view.devicePixelRatio;
+    final RenderBox page = tester.renderObject(find.byType(PageView).first);
+    // The bar is 70 points tall. If the page still stopped above it, this
+    // would be 70 points short of the screen.
+    expect(
+      page.size.height,
+      greaterThan(screen.height - 60),
+      reason: 'the page stops short of the bar rather than running under it',
+    );
+  });
+
+  testWidgets('only the next card shows behind the one being read', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+
+    // Four questions faintly stacked is three more than anybody asked for,
+    // and a spoiler of the rest of the day. The one after next is drawn at
+    // nothing until the top card starts to leave.
+    final List<Pill> deck = pillsByIds(kOpeningDeck);
+    double shownAt(int i) {
+      final finder = find.ancestor(
+        of: find.text(deck[i].question),
+        matching: find.byType(Opacity),
+      );
+      if (finder.evaluate().isEmpty) return 0;
+      return tester.widgetList<Opacity>(finder).first.opacity;
+    }
+
+    expect(shownAt(1), greaterThan(0), reason: 'the next one is there');
+    expect(shownAt(2), 0, reason: 'the one after it is not');
   });
 
   testWidgets('the day being read does not slide off', (tester) async {

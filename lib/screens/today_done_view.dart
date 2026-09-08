@@ -60,6 +60,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
   /// straight back off with a negative margin.
   static const double _bleed = 90;
 
+  /// The least room left above and below the card, whatever the screen.
+  static const double _air = 22;
+
   /// Settles the cards after a drag. The curve overshoots a touch, so a
   /// card lands rather than stops.
   late final AnimationController _settle = AnimationController(
@@ -283,7 +286,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // The artboard's 324 by 452, or as much of that as the phone has:
         // the card keeps its proportion and everything on it scales with
         // its width, so a smaller card is the same card, smaller.
-        final double height = math.min(_artHeight, box.maxHeight);
+        //
+        // Never the whole of what is there. On a screen shorter than the
+        // canvas the card filled its room exactly and sat against the line
+        // above it, which reads as the two colliding rather than as a card
+        // in a space.
+        final double height = math.min(_artHeight, box.maxHeight - _air * 2);
         final double width = math.min(
           math.min(_artWidth, box.maxWidth - 78),
           height * _artWidth / _artHeight,

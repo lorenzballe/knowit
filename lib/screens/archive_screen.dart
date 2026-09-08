@@ -30,12 +30,19 @@ class ArchiveScreen extends StatefulWidget {
 
 class _ArchiveScreenState extends State<ArchiveScreen> {
   final _controller = TextEditingController();
+  final _focus = FocusNode();
   String _query = '';
   String? _topicFilter;
+
+  /// The field is behind the lens, as it is on the canvas. A field sitting
+  /// open over a screen that already has something on it is a prompt to
+  /// type where nothing needs typing.
+  bool _searching = false;
 
   @override
   void dispose() {
     _controller.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -98,72 +105,38 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(22, 12, 22, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BackCircle(onPressed: widget.onBack),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Archive',
-                    style: AppText.display(
-                      size: 33,
-                      weight: FontWeight.w700,
-                      height: 1.05,
-                      spacing: -1.3,
-                      color: context.p.ink,
-                    ),
+                  _Head(
+                    searching: _searching,
+                    controller: _controller,
+                    focus: _focus,
+                    onBack: widget.onBack,
+                    onOpenSearch: () {
+                      setState(() => _searching = true);
+                      _focus.requestFocus();
+                    },
+                    onCloseSearch: () {
+                      _controller.clear();
+                      setState(() {
+                        _searching = false;
+                        _query = '';
+                      });
+                    },
+                    onChanged: (v) => setState(() => _query = v),
                   ),
-                  const SizedBox(height: 14),
-                  Container(
-                    height: 48,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
-                      color: context.p.surfaceRaised,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: context.p.line),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search_rounded,
-                          size: 18,
-                          color: context.p.inkFaint,
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: TextField(
-                            controller: _controller,
-                            onChanged: (v) => setState(() => _query = v),
-                            style: AppText.body(size: 15, color: context.p.ink),
-                            decoration: InputDecoration(
-                              isDense: true,
-                              border: InputBorder.none,
-                              hintText: 'Search ${kPillPool.length} pills',
-                              hintStyle: AppText.body(
-                                size: 15,
-                                color: context.p.inkFaint,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (_query.isNotEmpty)
-                          Semantics(
-                            button: true,
-                            label: 'Clear search',
-                            child: GestureDetector(
-                              onTap: () {
-                                _controller.clear();
-                                setState(() => _query = '');
-                              },
-                              child: Icon(
-                                Icons.close_rounded,
-                                size: 17,
-                                color: context.p.inkFaint,
-                              ),
-                            ),
-                          ),
-                      ],
+                  const SizedBox(height: 5),
+                  Text(
+                    asking
+                        ? '${results.length} '
+                              'result${results.length == 1 ? '' : 's'}'
+                        : '${kPillPool.length} cards. Tap a day to open it.',
+                    style: AppText.body(
+                      size: 12.5,
+                      height: 1.35,
+                      color: context.p.ink.withValues(alpha: 0.42),
                     ),
                   ),
                   const SizedBox(height: 14),
@@ -212,21 +185,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 16),
-                  asking
-                      ? Eyebrow(
-                          '${results.length} '
-                          'result${results.length == 1 ? '' : 's'}',
-                          color: context.p.inkFaint,
-                        )
-                      : Text(
-                          '${kPillPool.length} cards. Tap a day to open it.',
-                          style: AppText.body(
-                            size: 12.5,
-                            height: 1.35,
-                            color: context.p.ink.withValues(alpha: 0.42),
-                          ),
-                        ),
+                  const SizedBox(height: 14),
                 ],
               ),
             ),
@@ -291,6 +250,134 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// The way back, the name of the screen, and the lens — artboard 70e, plus
+/// the arrow it had no need for. The archive is reached from the profile,
+/// so it needs a way back; beside the title is where a way back goes, and
+/// it costs the title nothing.
+class _Head extends StatelessWidget {
+  const _Head({
+    required this.searching,
+    required this.controller,
+    required this.focus,
+    required this.onBack,
+    required this.onOpenSearch,
+    required this.onCloseSearch,
+    required this.onChanged,
+  });
+
+  final bool searching;
+  final TextEditingController controller;
+  final FocusNode focus;
+  final VoidCallback onBack;
+  final VoidCallback onOpenSearch;
+  final VoidCallback onCloseSearch;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        BackCircle(onPressed: onBack),
+        const SizedBox(width: 12),
+        if (searching) ...[
+          Expanded(
+            child: Container(
+              height: 38,
+              padding: const EdgeInsets.symmetric(horizontal: 13),
+              decoration: BoxDecoration(
+                color: context.p.ink.withValues(alpha: 0.07),
+                borderRadius: BorderRadius.circular(13),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.search_rounded,
+                    size: 16,
+                    color: context.p.ink.withValues(alpha: 0.6),
+                  ),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: TextField(
+                      controller: controller,
+                      focusNode: focus,
+                      onChanged: onChanged,
+                      textInputAction: TextInputAction.search,
+                      style: AppText.body(size: 14.5, color: context.p.ink),
+                      cursorColor: context.p.ink,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: InputBorder.none,
+                        hintText: 'Search ${kPillPool.length} cards',
+                        hintStyle: AppText.body(
+                          size: 14.5,
+                          color: context.p.inkFaint,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: onCloseSearch,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Text(
+                'Cancel',
+                style: AppText.body(
+                  size: 14,
+                  weight: FontWeight.w500,
+                  color: context.p.inkMuted,
+                ),
+              ),
+            ),
+          ),
+        ] else ...[
+          Expanded(
+            child: Text(
+              'Archive',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.display(
+                size: 27,
+                weight: FontWeight.w600,
+                height: 1,
+                spacing: -0.8,
+                color: context.p.ink,
+              ),
+            ),
+          ),
+          Semantics(
+            key: const ValueKey('archive-search'),
+            button: true,
+            label: 'Search every card',
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onOpenSearch,
+              child: Container(
+                width: 38,
+                height: 38,
+                decoration: BoxDecoration(
+                  color: context.p.ink.withValues(alpha: 0.07),
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.search_rounded,
+                  size: 16,
+                  color: context.p.ink.withValues(alpha: 0.6),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 }

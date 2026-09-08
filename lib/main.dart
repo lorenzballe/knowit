@@ -565,6 +565,12 @@ class _AstutoShellState extends State<AstutoShell>
         // itself, and a tool reads as well made when it holds still. The
         // cards are the only colour, which is the whole idea.
         backgroundColor: context.p.surface,
+        // The body runs the whole height, under the tab bar, and each
+        // screen puts the bar's height back as padding — so nothing moves,
+        // and a card thrown downward is not sliced off at the top of a bar
+        // that has already faded out of its way. A card is the thing on
+        // this screen: nothing should be able to cover it.
+        extendBody: true,
         body: SafeArea(
           bottom: false,
           // A browser has no status bar to sit under, so the page would
@@ -600,11 +606,29 @@ class _AstutoShellState extends State<AstutoShell>
                 allowImplicitScrolling: true,
                 children: [
                   // Clipped to its own page. A screen is free to paint past
-                  // its edges — the shelf lets a card's glow bleed — and
-                  // without this the bleed lands on the tab beside it and
-                  // rides there until the next repaint.
+                  // its edges — the shelf lets a card's glow bleed, a card
+                  // being thrown goes under the tab bar — and without this
+                  // the overflow lands on the tab beside it and rides there
+                  // until the next repaint.
+                  //
+                  // The padding is the height the tab bar would have taken
+                  // if it still reserved room, read back from the media
+                  // query the Scaffold hands a body it has extended. The
+                  // page is taller than the screen it draws; the screens
+                  // are exactly where they were.
                   for (final screen in screens)
-                    ClipRect(child: _KeepAlive(child: screen)),
+                    ClipRect(
+                      child: _KeepAlive(
+                        child: Builder(
+                          builder: (context) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.paddingOf(context).bottom,
+                            ),
+                            child: screen,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

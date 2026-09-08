@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/pills_repository.dart';
+import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
@@ -110,26 +111,24 @@ class ExploreScreenState extends State<ExploreScreen> {
     // which is what the canvas means by "written this morning". Nothing
     // here is dealt from the reader's own mix.
     final List<Pill> fresh = _only(
-      pickedPills(seed: daySeed(DateTime.now()), count: 12),
-    ).take(6).toList();
+      pickedPills(seed: daySeed(DateTime.now()), count: 24),
+    ).take(8).toList();
 
     // The canvas ranks this shelf by what everyone saved. Nothing counts
     // saves yet — there is no server to count them on — so it is ranked by
     // what the cards ask instead, which is the same order the shelf was
     // always in and a claim the app can stand behind.
-    final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 24))
-        .take(5)
+    final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 40))
+        .take(6)
         .toList();
 
-    // This one the app can say for real: the mix is the reader's own, and
-    // the subject they pushed furthest up is a fact about them.
-    final String? favourite = _favouriteSubject();
-    final List<Pill> mine = favourite == null
-        ? const []
-        : _only(pickedPills(seed: monthSeed(DateTime.now()), count: 24))
-              .where((p) => p.topic == favourite)
-              .take(6)
-              .toList();
+    // The third shelf is about the reader, and it is always there. An
+    // install that never dragged the mix used to get two shelves and a
+    // page with nowhere to scroll to, which is not this screen.
+    final (String title, String line, String subject) = _thirdShelf();
+    final List<Pill> mine = _only(
+      pickedPills(seed: monthSeed(DateTime.now()), count: 40, topic: subject),
+    ).take(8).toList();
 
     return Stack(
       children: [
@@ -162,8 +161,8 @@ class ExploreScreenState extends State<ExploreScreen> {
             if (mine.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
-                title: 'Because $favourite sits at full',
-                line: 'Older cards from the subjects you turned up',
+                title: title,
+                line: line,
                 child: _SmallRow(pills: mine, onOpen: _open),
               ),
             ],
@@ -195,18 +194,57 @@ class ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  /// The subject the reader pushed furthest up, once they have pushed one
-  /// further than the rest. An even mix has no favourite and says nothing.
-  String? _favouriteSubject() {
-    final weights = widget.app.topicWeights;
-    if (weights.isEmpty) return null;
-    final sorted = weights.entries.toList()
+  /// The last shelf: what it is called, why, and whose cards are on it.
+  ///
+  /// Three answers, in the order of how much the app actually knows. The
+  /// mix the reader dragged is the best of them and the canvas's own; what
+  /// they have read most of is the next; and before either of those exists
+  /// there is still a subject to put on a shelf, which beats a screen with
+  /// a hole where a shelf was.
+  (String, String, String) _thirdShelf() {
+    final app = widget.app;
+
+    final weights = app.topicWeights.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
-    if (sorted.first.value <= 0) return null;
-    if (sorted.length > 1 && sorted.first.value == sorted.last.value) {
-      return null;
+    if (weights.isNotEmpty &&
+        weights.first.value > 0 &&
+        weights.first.value != weights.last.value) {
+      final String name = kTopics[weights.first.key]?.name ?? '';
+      if (name.isNotEmpty) {
+        return (
+          'Because $name sits at full',
+          'Older cards from the subjects you turned up',
+          name,
+        );
+      }
     }
-    return kTopics[sorted.first.key]?.name;
+
+    final counted = <String, int>{};
+    for (final pill in kPillPool) {
+      if (app.seenIds.contains(pill.id)) {
+        counted[pill.topic] = (counted[pill.topic] ?? 0) + 1;
+      }
+    }
+    if (counted.isNotEmpty) {
+      final String most =
+          (counted.entries.toList()..sort((a, b) => b.value.compareTo(a.value)))
+              .first
+              .key;
+      return ('More on $most', 'The subject you have read most of', most);
+    }
+
+    // Nothing read and no mix: a subject of the month, so the shelf is
+    // still a shelf on the morning somebody installs the app.
+    final subjects =
+        app.pickedTopics
+            .map((key) => kTopics[key]?.name)
+            .whereType<String>()
+            .toList()
+          ..sort();
+    final String name = subjects.isEmpty
+        ? kTopics['science']!.name
+        : subjects[monthSeed(DateTime.now()).hashCode.abs() % subjects.length];
+    return ('A month of $name', 'Somewhere to start that is not today', name);
   }
 
   Widget _found(BuildContext context) {

@@ -123,8 +123,11 @@ is the order it was always in and a claim the app can stand behind. The
 third one the app can say for real, because the mix is the reader's own:
 **Because Space sits at full**, from the subject they pushed furthest up.
 
-The **Archive** is artboard 70e, under the subject chips that were already
-there. Left alone it is the days — every day the reader has finished, most
+The **Archive** is artboard 70e — its head too: the name, the lens on the
+right and the count under it, with the way back beside the title, which is
+the one thing the canvas had no need for and a screen reached from the
+profile does. Under the subject chips that were already there and are
+untouched, left alone it is the days — every day the reader has finished, most
 recent first, five cards each, today already open. Ask it something, by
 typing or by picking a subject, and it becomes the list of what matched. A
 search field over an empty screen is a question with no reason to be asked;
@@ -149,6 +152,13 @@ two tabs apart that meant two overlapping animations, which is what read as
 a stutter. Nothing else on the screen rebuilds while that number changes,
 and the tab is only written down once a move has settled: doing it
 mid-gesture swapped the page physics under a finger that was still dragging.
+
+The body runs the whole height, under the tab bar, and each screen puts the
+bar's height back as padding — so nothing moves, and a card thrown downward
+is not sliced off at the top of a bar that has already faded out of its
+way. Behind the card being read there is one other card and no more: a
+stack that fades everything it holds shows four questions at once, which is
+three more than anybody asked for and a spoiler of the rest of the day.
 
 Except while the day is running. Today is then a screen with one thing on
 it, and every sideways drag on it belongs to the card being thrown — a page

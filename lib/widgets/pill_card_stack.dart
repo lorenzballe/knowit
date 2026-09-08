@@ -213,9 +213,10 @@ class _PillCardStackState extends State<PillCardStack>
   @override
   Widget build(BuildContext context) {
     final remaining = widget.deck.length - widget.index;
-    // One layer more than is really visible: the extra sits at the back at
-    // low opacity so a card entering the stack fades in instead of appearing.
-    final visible = math.min(4, remaining);
+    // Three: the card being read, the one behind it, and the one after
+    // that waiting at nothing — it fades in only as the top card leaves,
+    // so what is on screen is never more than the next question.
+    final visible = math.min(3, remaining);
     if (visible <= 0) return const SizedBox.shrink();
     final progress = _progress;
 
@@ -272,7 +273,16 @@ class _PillCardStackState extends State<PillCardStack>
       // window onto the card underneath, and two legible questions printed
       // over each other read as a fault rather than as one card leaving. It
       // travels far enough to clear the screen on its own.
-      final opacity = isTop ? 1.0 : math.pow(0.5, depth).toDouble();
+      //
+      // Behind it, only the next one. A stack that fades every card it
+      // holds shows four questions at once, which is three more than the
+      // reader asked for and a spoiler of the rest of the day. The third
+      // is drawn at nothing and arrives only as the top card goes.
+      final opacity = isTop
+          ? 1.0
+          : depth <= 1
+          ? math.pow(0.5, depth).toDouble()
+          : (0.5 * (2 - depth)).clamp(0.0, 0.5);
 
       card = Opacity(
         opacity: opacity,
