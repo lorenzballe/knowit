@@ -706,7 +706,11 @@ class _AstutoTabBar extends StatelessWidget {
     // dealt them. Saved moved into the profile, where a list of your own
     // things belongs, and the tab is named for the shelf rather than for
     // the search field at the top of it.
-    (icon: Icons.explore_rounded, label: 'Explore'),
+    //
+    // Drawn in outline, like the lens it replaced. Filled, it is a solid
+    // disc — the heaviest thing on the bar by some way, and enough on its
+    // own to make a bar whose measurements never changed look fatter.
+    (icon: Icons.explore_outlined, label: 'Explore'),
     (icon: Icons.person_rounded, label: 'Profile'),
   ];
 
