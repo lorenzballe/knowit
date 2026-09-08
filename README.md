@@ -74,11 +74,11 @@ repaints at once, and the status bar follows it.
 ## Screens
 
 **Free** — first run (the five-scene intro, then the subject run), Today with
-the card stack and, once the five are done, the shelf, Explore (everyone's best
-cards by day, week, month and all time, with a search over the whole pool),
-Saved with its empty state, Profile (record, appearance, topics, coverage,
-calibration, daily nudge), the come-back screen after a lapsed streak, and the
-disclosure page on how pills are written.
+the card stack and, once the five are done, the shelf, Explore (shelves of
+cards nobody dealt you, with a search over the whole pool), Saved with its
+empty state, Profile (record, appearance, topics, coverage, calibration,
+daily nudge), the come-back screen after a lapsed streak, and the disclosure
+page on how pills are written.
 
 **Astuto+** — three perks, all delivered: the searchable **Archive**, the
 **topic picker**, and a **second set of five pills** handed over from the shelf
@@ -102,10 +102,36 @@ in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far
 end what has been kept — so finishing the day changes what the tab holds and
 not what it looks like.
 
-The middle tab is called Explore rather than Search, after what is on it (a
-shelf of cards nobody dealt you) rather than after the field at the top of
-it, and it carries a compass. The finished day's button puts it back on
-today's best, every subject, whatever it was left on.
+## Explore, and the archive
+
+The middle tab is called Explore rather than Search, after what is on it
+rather than after the field at the top of it, and it carries a compass. The
+finished day's button puts it back the way it opens, whatever it was left on.
+
+What was on it was a leaderboard — a ranked list, two rows of chips, and
+every card reduced to a thin grey row. Nothing about it looked like this
+app: the colour, the card as an object and the question are the product,
+and a ranked list throws all three away. It is artboard 72a now, which is
+shelves, each with a reason for existing written under its name, and the
+cards on them are cards. A subject row across the top narrows every shelf at
+once.
+
+Two of the three shelves say what the canvas said. The middle one does not:
+the canvas ranks it by what everyone saved, and nothing counts saves — there
+is no server to count them on — so it is "the ones that ask the most", which
+is the order it was always in and a claim the app can stand behind. The
+third one the app can say for real, because the mix is the reader's own:
+**Because Space sits at full**, from the subject they pushed furthest up.
+
+The **Archive** is artboard 70e, under the subject chips that were already
+there. Left alone it is the days — every day the reader has finished, most
+recent first, five cards each, today already open. Ask it something, by
+typing or by picking a subject, and it becomes the list of what matched. A
+search field over an empty screen is a question with no reason to be asked;
+the days give it one. Only days the reader was here for: a run of empty rows
+back to the launch date would be a longer list saying less. Today's five are
+the real deck; an earlier day is dealt again from its own date, which is
+deterministic, because a finished day's cards have never been stored.
 
 The three tabs slide under the finger, the way they do in every app with
 three of them side by side; the bar is the other way to the same place.

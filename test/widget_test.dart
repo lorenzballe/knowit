@@ -254,7 +254,7 @@ void main() {
     expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
   });
 
-  testWidgets('Explore offers cards nobody dealt you', (tester) async {
+  testWidgets('Explore is shelves, each with a reason', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -262,28 +262,40 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
-    // A range across the top, the subjects under it, and one card held up.
-    expect(find.text('Best '), findsOneWidget);
-    expect(find.text('All time'), findsOneWidget);
-    expect(find.text('All'), findsOneWidget);
-    expect(find.text('TOP TODAY'), findsOneWidget);
-    expect(
-      find.textContaining("Everyone's cards, not your mix"),
-      findsOneWidget,
-    );
+    // A shelf says what it holds and why it is a shelf. The middle one is
+    // the honest version of the canvas's "kept the most": nothing counts
+    // saves yet, so it is ranked by what the cards ask.
+    expect(find.text("Today's shelf"), findsOneWidget);
+    expect(find.text('The same for everyone, and only today'), findsOneWidget);
+    expect(find.text('The ones that ask the most'), findsOneWidget);
+    expect(find.text('Across everyone, not just your mix'), findsOneWidget);
 
-    // The range changes the shelf, and the badge on the card it holds up.
-    await tester.tap(find.text('This month'));
+    // The subject row narrows every shelf at once. A card from another
+    // subject is on the top shelf before, and gone after.
+    final List<Pill> shelf = pickedPills(
+      seed: daySeed(DateTime.now()),
+      count: 12,
+    );
+    final Pill elsewhere = shelf.firstWhere((p) => p.topic != 'Economics');
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
     await _settle(tester);
-    expect(find.text('TOP THIS MONTH'), findsOneWidget);
+    expect(find.byKey(const ValueKey('subject-Economics-on')), findsOneWidget);
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('subject-Economics-on')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
 
     // And the lens opens a field over the whole pool.
-    await tester.tap(find.byIcon(Icons.search_rounded).first);
+    await tester.tap(find.byKey(const ValueKey('explore-search')));
     await _settle(tester);
     await tester.enterText(find.byType(TextField), 'why');
     await _settle(tester);
     expect(find.textContaining('matching'), findsOneWidget);
-    expect(find.text('BEST MATCH'), findsOneWidget);
+    expect(find.text("Today's shelf"), findsNothing);
   });
 
   group('Astuto+ gates the three perks', () {
@@ -334,11 +346,15 @@ void main() {
 
       await _openSetting(tester, 'Archive');
 
-      expect(find.textContaining('RESULTS'), findsOneWidget);
+      // Left alone it is the days, today already open.
+      expect(find.textContaining('Tap a day to open it'), findsOneWidget);
+      expect(find.text('Today'), findsOneWidget);
 
+      // Asked something, it is the answer.
       await tester.enterText(find.byType(TextField), 'zzzzznotathing');
       await _settle(tester);
       expect(find.text('0 RESULTS'), findsOneWidget);
+      expect(find.textContaining('Tap a day to open it'), findsNothing);
     });
 
     testWidgets('starting the trial unlocks what was gated', (tester) async {
@@ -357,7 +373,7 @@ void main() {
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
-      expect(find.textContaining('RESULTS'), findsOneWidget);
+      expect(find.textContaining('Tap a day to open it'), findsOneWidget);
     });
   });
 
@@ -722,12 +738,12 @@ void main() {
     await tester.dragFrom(tester.getCenter(_todayTitle), const Offset(-300, 0));
     await _settle(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
-    expect(find.text('TOP TODAY'), findsNothing);
+    expect(find.text("Today's shelf"), findsNothing);
 
     // The bar still goes anywhere, so nobody is held there.
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
-    expect(find.text('TOP TODAY'), findsOneWidget);
+    expect(find.text("Today's shelf"), findsOneWidget);
   });
 
   testWidgets('the other tabs slide under the finger', (tester) async {
@@ -739,7 +755,7 @@ void main() {
 
     // On to Profile, and back again, and the bar follows the finger.
     await tester.dragFrom(
-      tester.getCenter(find.text('All time')),
+      tester.getCenter(find.text('The ones that ask the most')),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -751,16 +767,16 @@ void main() {
       const Offset(300, 0),
     );
     await _settle(tester);
-    expect(find.text('TOP TODAY'), findsOneWidget);
+    expect(find.text("Today's shelf"), findsOneWidget);
 
     // What a tab was left on survives the reader looking away from it.
-    await tester.tap(find.text('This month'));
+    await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
-    expect(find.text('TOP THIS MONTH'), findsOneWidget);
+    expect(find.byKey(const ValueKey('subject-Economics-on')), findsOneWidget);
   });
 
   testWidgets('the bar crosses straight to a tab two along', (tester) async {
@@ -827,7 +843,7 @@ void main() {
       const Offset(-300, 0),
     );
     await _settle(tester);
-    expect(find.text('TOP TODAY'), findsOneWidget);
+    expect(find.text("Today's shelf"), findsOneWidget);
   });
 
   testWidgets('opening the app lands straight on the cards', (tester) async {
@@ -1108,9 +1124,12 @@ void main() {
       // put it back rather than merely switch to it.
       await tester.tap(find.byKey(const ValueKey('tab-Explore')));
       await _settle(tester);
-      await tester.tap(find.text('This month'));
+      await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
       await _settle(tester);
-      expect(find.text('TOP THIS MONTH'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('subject-Economics-on')),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('tab-Today')));
       await _settle(tester);
 
@@ -1118,8 +1137,11 @@ void main() {
       await tester.tap(find.text("Explore today's best"));
       await _settle(tester);
 
-      expect(find.text('TOP TODAY'), findsOneWidget);
-      expect(find.text('TOP THIS MONTH'), findsNothing);
+      expect(find.text("Today's shelf"), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('subject-Economics-off')),
+        findsOneWidget,
+      );
       expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsNothing);
     });
 
@@ -1826,13 +1848,16 @@ void main() {
 
     final dealt = tester.getRect(find.byType(PillCardStack));
 
-    // Into the re-read, by way of Search — which is where this was first
+    // Into the re-read, by way of Explore — which is where this was first
     // noticed: the viewer had been handed the whole window, so the same card
     // came back wider, and taller with it.
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
-    // The badge sits inside the held-up card, so tapping it opens that card.
-    await tester.tap(find.text('TOP TODAY'));
+    final Pill first = pickedPills(
+      seed: daySeed(DateTime.now()),
+      count: 12,
+    ).first;
+    await tester.tap(find.byKey(ValueKey('explore-${first.id}')));
     await _settle(tester);
 
     final reread = tester.getRect(find.byType(PillCardStack));
