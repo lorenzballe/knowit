@@ -804,6 +804,15 @@ class _AstutoTabBar extends StatelessWidget {
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   widthFactor: on,
+                                  // Width only. Left to size itself, an
+                                  // Align takes all the height it is
+                                  // offered, which stretched the pill from
+                                  // the height of its own contents to the
+                                  // height of the whole bar — a pill with
+                                  // its ends against both edges, which is
+                                  // what a bar looks like when it has got
+                                  // fat without a single number changing.
+                                  heightFactor: 1,
                                   // The fade is in the colour rather than
                                   // in an Opacity: three of those is three
                                   // saved layers on every frame of a move,
