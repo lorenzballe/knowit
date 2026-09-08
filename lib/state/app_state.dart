@@ -11,6 +11,7 @@ import '../data/topics.dart';
 import '../models/pill.dart';
 import '../sync/reader_snapshot.dart';
 import '../utils/reminders.dart';
+import 'progress.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
 enum Plan { month, year }
@@ -447,6 +448,48 @@ class AppState extends ChangeNotifier {
   double get puzzleAccuracy =>
       puzzlesAnswered == 0 ? 0 : puzzlesRight / puzzlesAnswered;
 
+  // ── What it adds up to ────────────────────────────────────────────────
+
+  /// Cards that came back and stuck: got right often enough that the app
+  /// has stopped asking for a while.
+  int get heldCards =>
+      answers.values.where((a) => a.stage >= kHeldFromStage).length;
+
+  /// How far off the reader's confidence is, in points, whichever way.
+  ///
+  /// Averaged over the levels rather than over the whole run, so being
+  /// right about being unsure counts as much as being right about being
+  /// sure: two errors in opposite directions are two errors, not none.
+  /// Null until there is enough of a record to draw a line through.
+  double? get confidenceGap {
+    final buckets = calibration.toList();
+    final int n = buckets.fold<int>(0, (a, b) => a + b.count);
+    if (n < kCalibrationFloor) return null;
+    return buckets.fold<double>(0, (a, b) => a + b.gap.abs() * b.count) / n;
+  }
+
+  /// Where the reader stands on the ladder, and what the next step is.
+  Standing get standing => Standing(
+    read: seenIds.length,
+    answered: answers.length,
+    judged: judgements.length,
+    held: heldCards,
+    gap: confidenceGap,
+  );
+
+  /// Weeks kept in a row, a week being five days out of seven.
+  int get keptWeeks => weeksKept(completedDates.toSet(), today);
+
+  /// The cards the reader was sure about and wrong about, newest first.
+  List<Miss> get misses => missesFrom(judgements);
+
+  /// What this week came to.
+  WeekReport get thisWeek => weekReport(
+    judgements: judgements,
+    completedDates: completedDates,
+    today: today,
+  );
+
   /// Records a commitment.
   ///
   /// A card can be answered again only when it has come back for review —
@@ -473,7 +516,14 @@ class AppState extends ChangeNotifier {
     );
 
     if (graded && confidence != null) {
-      judgements.add(Judgement(confidence, correct: right));
+      judgements.add(
+        Judgement(
+          confidence,
+          correct: right,
+          pillId: pillId,
+          on: dateKey(today),
+        ),
+      );
     }
 
     await _saveAnswers();
@@ -802,13 +852,23 @@ class AppState extends ChangeNotifier {
 
   Future<void> _armNow() async {
     final parts = notifyTime.split(':');
+    final List<Pill> deck = todayCompleted ? tomorrowsDeck : todaysDeck;
+    final Pill? lead = deck.isEmpty ? null : deck.first;
     await _arm(
       hour: int.tryParse(parts.first) ?? 8,
       minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
       title: 'Your five are ready',
-      body: streak > 0
-          ? '$streak days in a row. Two minutes to keep it.'
-          : 'Five cards. Two minutes sharper.',
+      // The question itself, not a reminder to come and get it. "Three
+      // days in a row, two minutes to keep it" is a message about the
+      // app's counter; a question is a message about the reader's own
+      // head, and only one of the two is worth a notification. The old
+      // line stays for the morning after a wipe, when there is no deck
+      // to quote from yet.
+      body: lead == null
+          ? (streak > 0
+                ? '$streak days in a row. Two minutes to keep it.'
+                : 'Five cards. Two minutes sharper.')
+          : lead.question,
     );
     remindersLive = true;
   }

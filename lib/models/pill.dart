@@ -211,16 +211,43 @@ class Judgement {
   final int confidence;
   final bool correct;
 
-  const Judgement(this.confidence, {required this.correct});
+  /// The card it was made on, and the day it was made, as a date key.
+  ///
+  /// Both are missing on judgements recorded before the app kept them: a
+  /// run of confidences is enough to say how calibrated somebody is, but
+  /// not which card they were sure and wrong about, nor whether that was
+  /// this week. Everything that reads them treats absent as unknown rather
+  /// than as a reason to throw the judgement away.
+  final String? pillId;
+  final String? on;
 
-  Map<String, dynamic> toJson() => {'c': confidence, 'k': correct};
+  const Judgement(
+    this.confidence, {
+    required this.correct,
+    this.pillId,
+    this.on,
+  });
+
+  Map<String, dynamic> toJson() => {
+    'c': confidence,
+    'k': correct,
+    if (pillId != null) 'p': pillId,
+    if (on != null) 'd': on,
+  };
 
   static Judgement? fromJson(Object? raw) {
     if (raw is! Map) return null;
     final confidence = raw['c'];
     final correct = raw['k'];
     if (confidence is! int || correct is! bool) return null;
-    return Judgement(confidence, correct: correct);
+    final pill = raw['p'];
+    final on = raw['d'];
+    return Judgement(
+      confidence,
+      correct: correct,
+      pillId: pill is String ? pill : null,
+      on: on is String ? on : null,
+    );
   }
 }
 

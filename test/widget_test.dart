@@ -98,6 +98,16 @@ Future<void> _openSetting(WidgetTester tester, String label) async {
   for (var attempt = 0; attempt < 8; attempt++) {
     final row = find.textContaining(label);
     if (row.evaluate().isNotEmpty) {
+      // The tab bar floats over the body, so a row can be on screen and
+      // still be under it — and a tap that lands on the bar does nothing
+      // but look like the row is broken. Bring it up first.
+      final double floor =
+          tester.view.physicalSize.height / tester.view.devicePixelRatio - 110;
+      final double bottom = tester.getBottomLeft(row.first).dy;
+      if (bottom > floor) {
+        await tester.drag(_profileList, Offset(0, floor - bottom - 20));
+        await _settle(tester);
+      }
       await tester.tap(row.first);
       await _settle(tester);
       return;
@@ -602,12 +612,15 @@ void main() {
       expect(t.armed.last.$1, 8);
     });
 
-    test('the nudge carries the streak it was armed with', () async {
+    test('the nudge carries the question, not the counter', () async {
       final t = build(granted: true, extra: {'knowit.streak': 13});
       await t.app.init();
       await Future<void>.delayed(Duration.zero);
 
-      expect(t.armed.single.$3, contains('13 days'));
+      // What is in the reader's head tomorrow morning, not what is in the
+      // app's counter.
+      expect(t.armed.single.$3, t.app.todaysDeck.first.question);
+      expect(t.armed.single.$3, isNot(contains('13 days')));
     });
 
     test('a changed time moves the reminder', () async {

@@ -7,6 +7,7 @@ import 'mix_screen.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
+import '../state/progress.dart';
 import '../sync/identity.dart';
 import '../sync/account.dart';
 import '../sync/subscription.dart';
@@ -18,6 +19,7 @@ import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'saved_screen.dart';
+import 'week_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
@@ -191,6 +193,8 @@ class ProfileScreen extends StatelessWidget {
           ],
           const SizedBox(height: 16),
           _RecordLine(app: app),
+          const SizedBox(height: 18),
+          _Path(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
           // rather than as the loudest thing on the screen. It is also the
@@ -357,6 +361,19 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          // The week, which is the only distance from which a direction is
+          // visible at all — the day is too close to it.
+          _LinkRow(
+            label: 'Your week',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => WeekScreen(
+                  app: app,
+                  onBack: () => Navigator.of(routeContext).pop(),
+                ),
+              ),
+            ),
+          ),
           // Your own shelf, which is a thing you own and not a place to go
           // looking — so it lives here, with the rest of what is yours,
           // rather than taking one of three tabs.
@@ -1368,6 +1385,125 @@ class _Headline extends StatelessWidget {
   }
 }
 
+/// The way up, as a ladder of what the reader can do rather than a
+/// syllabus of what they have covered.
+///
+/// The five cards a day are mixed on purpose, so a path made of chapters —
+/// fifteen cards on this, then fifteen on that — would have to break the
+/// deck to exist. This one does not care what the cards are about: every
+/// rung is a claim about the reader, and any five at all carry them up it.
+class _Path extends StatelessWidget {
+  const _Path({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final standing = app.standing;
+    final Rung rung = standing.rung;
+    final Rung? next = standing.next;
+    final String? step = standing.step;
+
+    // The card is also the way into the week it is measured in: the rung
+    // and the week are the same question at two distances.
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (routeContext) => WeekScreen(
+            app: app,
+            onBack: () => Navigator.of(routeContext).pop(),
+          ),
+        ),
+      ),
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+        decoration: BoxDecoration(
+          color: context.p.surfaceRaised,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: context.p.line),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        rung.name,
+                        style: AppText.display(
+                          size: 21,
+                          weight: FontWeight.w600,
+                          height: 1.1,
+                          spacing: -0.5,
+                          color: context.p.ink,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        rung.claim,
+                        style: AppText.body(
+                          size: 13,
+                          height: 1.35,
+                          color: context.p.inkMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  '${standing.at + 1} / ${kRungs.length}',
+                  style: AppText.label(
+                    size: 11,
+                    weight: FontWeight.w700,
+                    spacing: 1,
+                    color: context.p.ink.withValues(alpha: 0.32),
+                  ),
+                ),
+              ],
+            ),
+            if (next != null) ...[
+              const SizedBox(height: 14),
+              // One bar, held to the least finished of the things the next
+              // rung asks for, so it never runs ahead of what is actually in
+              // the way.
+              ClipRRect(
+                borderRadius: BorderRadius.circular(999),
+                child: SizedBox(
+                  height: 5,
+                  child: Stack(
+                    children: [
+                      Container(color: context.p.ink.withValues(alpha: 0.09)),
+                      FractionallySizedBox(
+                        widthFactor: standing.toNext.clamp(0.02, 1.0),
+                        child: Container(color: context.p.ink),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                step == null ? 'Next: ${next.name}' : '$step → ${next.name}',
+                style: AppText.body(
+                  size: 12.5,
+                  height: 1.35,
+                  color: context.p.ink.withValues(alpha: 0.55),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /// The rest of the numbers, on one line rather than in a row of boxes.
 class _RecordLine extends StatelessWidget {
   const _RecordLine({required this.app});
@@ -1376,11 +1512,17 @@ class _RecordLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int weeks = app.keptWeeks;
     final parts = <String>[
       if (app.liveStreak > 0)
         app.seenIds.length == 1
             ? '1 pill read'
             : '${app.seenIds.length} pills read',
+      // Five days out of seven is a week kept. The daily streak is the
+      // sharper number and the crueller one — a flight or a fever and two
+      // months are gone — so the record carries both, and this is the one
+      // that survives a life.
+      if (weeks > 0) weeks == 1 ? '1 week kept' : '$weeks weeks kept',
       if (app.dueReviews.isNotEmpty) '${app.dueReviews.length} coming back',
       if (app.freezes > 0)
         app.freezes == 1

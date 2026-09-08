@@ -117,6 +117,20 @@ class ComebackScreen extends StatelessWidget {
                         text: '$favourite is still your most kept topic',
                       ),
                     ],
+                    // What is actually waiting, rather than only what was
+                    // lost: a card the reader already got right, come back
+                    // to see whether it stuck, is a better reason to open
+                    // the app than a broken counter is.
+                    if (app.dueReviews.isNotEmpty) ...[
+                      const SizedBox(height: 11),
+                      _MissedLine(
+                        color: context.p.ink,
+                        text: app.dueReviews.length == 1
+                            ? '1 card you got right is due back today'
+                            : '${app.dueReviews.length} cards you got right '
+                                  'are due back today',
+                      ),
+                    ],
                   ],
                 ),
               ),

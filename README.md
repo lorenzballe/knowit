@@ -416,6 +416,48 @@ training transfers.
 A debate card never asks, because an opinion is not something to be sure
 about, and ungraded answers stay out of the buckets.
 
+## The path, and the week
+
+Retention in an app that promises sharper thinking cannot be bought with
+the usual machinery — a random reward, an infinite feed, a counter that
+shames you. Those work on somebody who wants to be entertained, and this
+app is for somebody who wants to be right more often. So the reasons to
+come back are all evidence:
+
+**The ladder.** Seven rungs, in `lib/state/progress.dart`, and not one of
+them is about a subject. The five cards a day are mixed on purpose, so a
+path made of chapters — fifteen cards on probability, then fifteen on
+incentives — would have to break the deck to exist. Instead each rung is a
+claim about the reader: *Reading*, *Answering* (you commit before turning
+the card over), *Saying how sure*, *Calibrated* (what you say you know,
+you know), *Holding* (it is still there weeks later), *Sharp*. Any five
+cards at all carry somebody up it. The profile shows the rung, one bar
+held to whichever requirement is furthest behind, and the single next
+step — telling somebody four things at once is telling them nothing.
+
+**Weeks kept.** Five days out of seven keeps a week, and the record counts
+the weeks in a row. The daily streak is the sharper number and the crueller
+one: a flight or a fever, and two months are gone. Both are shown; only one
+of them survives a life.
+
+**The week.** `WeekScreen` reads the week back: days kept, how sure against
+how right, whether the gap closed on last week, and the cards the reader was
+sure about and wrong about. That last list is the page in this app most
+worth going back to. It is reachable from the record and from the profile,
+and on Sunday the finished day offers it directly, which is the one moment
+a reader is already looking at what a day came to.
+
+**The nudge carries the question.** Not "three days in a row, keep it up" —
+that is a message about the app's counter. The reminder is the first
+question of the deck waiting, which is a message about the reader's own
+head.
+
+Judgements are dated and carry the card they were made on, so the week can
+be read apart from the run, and a miss can be opened again. Both fields are
+absent on judgements recorded before the app kept them, and everything that
+reads them treats absent as unknown rather than as a reason to throw the
+judgement away.
+
 ## What a card can offer on the reveal
 
 - **A hint**, asked for without giving up and without turning the card.
