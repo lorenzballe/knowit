@@ -61,7 +61,13 @@ class _TodayDoneViewState extends State<TodayDoneView>
   static const double _bleed = 90;
 
   /// The least room left above and below the card, whatever the screen.
-  static const double _air = 22;
+  static const double _air = 14;
+
+  /// What the card leaves at each side. The canvas gives it 39, which on a
+  /// screen taller than the canvas leaves the card floating in the middle
+  /// with the dots stranded under it; 24 lets the card grow into the room
+  /// instead, and takes the dots down with it to the line about tomorrow.
+  static const double _side = 24;
 
   /// Settles the cards after a drag. The curve overshoots a touch, so a
   /// card lands rather than stops.
@@ -263,8 +269,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
         ),
         Expanded(child: _shelf(context, deck, at)),
         _Dots(deck: deck, at: at, onPick: _goTo),
+        // Close under the dots: they count the deck, but they read as
+        // belonging to whatever line they sit nearest, and that line is
+        // the one about tomorrow.
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 18, 24, 0),
+          padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
           child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
         Padding(
@@ -283,21 +292,21 @@ class _TodayDoneViewState extends State<TodayDoneView>
   Widget _shelf(BuildContext context, List<Pill> deck, int at) {
     return LayoutBuilder(
       builder: (context, box) {
-        // The artboard's 324 by 452, or as much of that as the phone has:
-        // the card keeps its proportion and everything on it scales with
-        // its width, so a smaller card is the same card, smaller.
-        //
-        // Never the whole of what is there. On a screen shorter than the
-        // canvas the card filled its room exactly and sat against the line
-        // above it, which reads as the two colliding rather than as a card
-        // in a space.
-        final double height = math.min(_artHeight, box.maxHeight - _air * 2);
+        // The card grows into its room rather than holding the canvas's
+        // 324 by 452 and leaving the rest as black — the room is what sits
+        // between the line above it and the dots below, and a card that
+        // leaves a third of it empty puts those two lines a long way
+        // apart. Everything printed on the card scales with its width, so
+        // a wider card is the same card, bigger; the extra height beyond
+        // the canvas's proportion is air inside the card, and is capped
+        // before the card turns into a column.
+        final double room = math.max(0, box.maxHeight - _air * 2);
         final double width = math.min(
-          math.min(_artWidth, box.maxWidth - 78),
-          height * _artWidth / _artHeight,
+          box.maxWidth - _side * 2,
+          room * _artWidth / _artHeight,
         );
         _cardWidth = width;
-        _cardHeight = width * _artHeight / _artWidth;
+        _cardHeight = math.min(room, width * _artHeight / _artWidth * 1.25);
         final Size stage = Size(box.maxWidth, box.maxHeight);
 
         // Painted furthest-from-the-front first, so the front card is on

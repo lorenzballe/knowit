@@ -312,7 +312,7 @@ void main() {
         find.text('Find out if you are actually getting better.'),
         findsOneWidget,
       );
-      expect(find.text('Archive'), findsNothing);
+      expect(find.text('The archive'), findsNothing);
     });
 
     testWidgets('the topic picker opens the paywall on the free plan', (
@@ -347,6 +347,7 @@ void main() {
       await _openSetting(tester, 'Archive');
 
       // Left alone it is the days, today already open.
+      expect(find.text('The archive'), findsOneWidget);
       expect(find.textContaining('Tap a day to open it'), findsOneWidget);
       expect(find.text('Today'), findsOneWidget);
 

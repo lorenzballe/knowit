@@ -341,7 +341,7 @@ class _Head extends StatelessWidget {
         ] else ...[
           Expanded(
             child: Text(
-              'Archive',
+              'The archive',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppText.display(
