@@ -356,12 +356,15 @@ class _ShelfHeader extends StatelessWidget {
   final AppState app;
   final Color colour;
 
-  /// The freeze is said here and nowhere else, so on the day it is spent
-  /// this line says it. Nothing else earns the space: a tally of what the
-  /// reader kept today is a number they did not ask for, next to the cards
-  /// it is counting, and the heart on each card already says which ones.
-  String? get _aside =>
-      app.streakWasFrozen ? 'A freeze kept the streak' : null;
+  /// The freeze is said here and nowhere else, so it comes first on the day
+  /// it was spent. Otherwise, what the day has produced — and before it has
+  /// produced anything, the line names the gesture that fills it.
+  String get _aside {
+    if (app.streakWasFrozen) return 'A freeze kept the streak';
+    final int kept = app.keptToday;
+    if (kept == 0) return 'Hold a card to keep it';
+    return kept == 1 ? '1 kept today' : '$kept kept today';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -394,18 +397,16 @@ class _ShelfHeader extends StatelessWidget {
             ),
           ),
         ),
-        if (_aside != null) ...[
-          const SizedBox(width: 12),
-          Text(
-            _aside!,
-            maxLines: 1,
-            style: AppText.body(
-              size: 12,
-              weight: FontWeight.w500,
-              color: context.p.ink.withValues(alpha: 0.38),
-            ),
+        const SizedBox(width: 12),
+        Text(
+          _aside,
+          maxLines: 1,
+          style: AppText.body(
+            size: 12,
+            weight: FontWeight.w500,
+            color: context.p.ink.withValues(alpha: 0.38),
           ),
-        ],
+        ),
       ],
     );
   }

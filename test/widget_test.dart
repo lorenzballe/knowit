@@ -1053,8 +1053,7 @@ void main() {
     // its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
-    // Nothing counts what the day kept: the heart on the card says it.
-    expect(find.textContaining('kept today'), findsNothing);
+    expect(find.text('Hold a card to keep it'), findsOneWidget);
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
@@ -1148,9 +1147,10 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
       await tester.tap(find.bySemanticsLabel('Save this pill'));
       await _settle(tester);
+      expect(find.text('1 kept today'), findsOneWidget);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
@@ -1165,18 +1165,19 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
 
       // The whole card is the button, not just the heart in its corner.
       final card = find.byType(HoldToKeep).first;
       await _hold(tester, card);
+      expect(find.text('1 kept today'), findsOneWidget);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.savedIds')!.length, 1);
 
       await _hold(tester, card);
-      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
       expect(prefs.getStringList('knowit.savedIds'), isEmpty);
     });
 
