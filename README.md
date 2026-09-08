@@ -230,7 +230,21 @@ lib/
   utils/       PNG download, web-only with a no-op elsewhere
   widgets/     card stack, share sheet, shared UI, the Astuto+ gate
   screens/     the screens listed above
+tool/
+  icons/         the supplied artwork, and the script that resizes it
+  illustrations/ the figures a card can carry — Python, run on a server
 ```
+
+**Figures.** `tool/illustrations` draws the picture that sometimes goes
+with a question: a hundred dots with one of them filled, a circle inside
+another circle, a curve that doubles. It is Python, it is not wired into
+the app yet, and it exists now because the constraint it has to meet is
+already fixed: the app paints a figure with `BlendMode.srcIn`, so a figure
+has one colour and no background, and a library's default output has both.
+Its README says which libraries were chosen and what manim actually costs.
+The figures are checked from `test/figures_test.dart`, in this suite,
+because a picture produced in another language by a program running
+somewhere else is otherwise nobody's to break.
 
 Today's deck is dealt deterministically from the date, so it does not reshuffle
 mid-day, and it is stored by id so a restart resumes the same five. Pills

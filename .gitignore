@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# The venv for tool/illustrations, if it is made in the repo rather than beside it.
+tool/illustrations/.venv/
+tool/illustrations/**/__pycache__/

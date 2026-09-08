@@ -1,0 +1,16 @@
+# Add these when a card actually needs a plot rather than a drawing: a
+# distribution, a fit, a curve with real data behind it. Together they are
+# another ~270 MB, which is worth knowing before it lands in an image.
+-r requirements.txt
+
+# Every curve, distribution and fit that is genuinely a plot. Writes SVG.
+matplotlib==3.11.1
+
+# Graph layout, when where the nodes go has to be worked out rather than
+# chosen. Drawn through matplotlib.
+networkx==3.6.1
+
+# Symbolic maths: simplifying, solving and checking the algebra on a card
+# before it is written down. Not a drawing library — it is here so a
+# generated card's arithmetic can be verified rather than trusted.
+sympy==1.14.0

@@ -1,0 +1,14 @@
+# What draws a card's figure. Pinned, because a figure that changes shape
+# when a library ships a new default is a card that changed without anyone
+# deciding to.
+#
+# The whole of this is 31 MB and pure Python — no system libraries, no
+# compiler, nothing to install beside it. That is most of the reason it is
+# this list and not another.
+
+# SVG primitives, for anything drawn rather than plotted.
+drawsvg==2.4.0
+
+# Circuits, and the block diagrams that are the same shape. Its own SVG
+# backend, not the matplotlib one — schemdraw.use("svg").
+schemdraw==0.23

@@ -1,0 +1,22 @@
+# Manim — the one 3Blue1Brown wrote, and the one to reach for only when a
+# card needs something to *move*.
+#
+# Before adding this to an image, the three things measured rather than
+# guessed:
+#
+#   1. It cannot write SVG. `--format` takes png, gif, mp4, webm and mov,
+#      and nothing else. Everything else in this folder produces a vector
+#      the app recolours to the card's ink; manim produces pixels, which
+#      have to ship at 3x and cannot follow the card.
+#   2. It is not pip-installable on its own. manimpango needs pangocairo
+#      >= 1.30 with its headers present at build time:
+#        apt-get install -y libcairo2-dev libpango1.0-dev pkg-config
+#      and ffmpeg for anything that moves. LaTeX too, for MathTex.
+#   3. It costs about 340 MB on top of the core, and drags in scipy,
+#      moderngl, pycairo, skia-pathops and av.
+#
+# A still takes about a second to render, so speed is not the objection.
+# The objection is that a still is what a card wants, and a still is
+# exactly what manim is not for.
+-r requirements.txt
+manim==0.21.0
