@@ -20,6 +20,7 @@ import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
+import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -886,7 +887,7 @@ void main() {
 
     // ...and the header, which wants nothing, hands it to the page.
     await tester.dragFrom(
-      tester.getCenter(find.text('Nothing kept yet')),
+      tester.getCenter(find.text('Hold a card to keep it')),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -1042,7 +1043,7 @@ void main() {
     // its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
-    expect(find.text('Nothing kept yet'), findsOneWidget);
+    expect(find.text('Hold a card to keep it'), findsOneWidget);
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
@@ -1136,11 +1137,50 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.text('Nothing kept yet'), findsOneWidget);
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
       await tester.tap(find.bySemanticsLabel('Save this pill'));
       await _settle(tester);
       expect(find.text('1 kept today'), findsOneWidget);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);
+    });
+
+    testWidgets('a card held down is kept, and held again is let go', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
+
+      // The whole card is the button, not just the heart in its corner.
+      final card = find.byType(HoldToKeep).first;
+      await tester.longPress(card);
+      await _settle(tester);
+      expect(find.text('1 kept today'), findsOneWidget);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.savedIds')!.length, 1);
+
+      await tester.longPress(card);
+      await _settle(tester);
+      expect(find.text('Hold a card to keep it'), findsOneWidget);
+      expect(prefs.getStringList('knowit.savedIds'), isEmpty);
+    });
+
+    testWidgets('a card in the deck being read is kept the same way', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      await tester.longPress(find.byType(HoldToKeep).first);
+      await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);

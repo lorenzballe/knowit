@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
+import 'hold_to_keep.dart';
 import 'motion.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
@@ -51,7 +52,7 @@ class PillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    final Widget card = Stack(
       children: [
         _face(context),
         if (onSave != null)
@@ -82,6 +83,16 @@ class PillCard extends StatelessWidget {
             ),
           ),
       ],
+    );
+    // Held, the whole card is the button. The heart in the corner stays for
+    // the reader who has found it.
+    if (onSave == null) return card;
+    return HoldToKeep(
+      saved: saved,
+      ink: pill.ink,
+      ground: pill.color,
+      onToggle: onSave!,
+      child: card,
     );
   }
 

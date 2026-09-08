@@ -153,30 +153,36 @@ class _PillCardStackState extends State<PillCardStack>
       });
       widget.onAdvance();
     } else if (_dragTotalMove < 7) {
-      // A tap, not a drag. It used to wait out the settle animation before
-      // turning the card over, which put three tenths of a second between
-      // the finger and the answer and read as the card being slow to
-      // respond. There is nothing to settle: the card never moved.
+      // Barely moved: put it back where it was and turn it over, with
+      // nothing to settle first — the card never went anywhere.
       setState(() => _drag = Offset.zero);
-      if (!mounted) return;
-      // A card that asks turns over when the reader commits, not on a stray
-      // tap — otherwise the answer can be reached without ever guessing. A
-      // card that has come back has an answer already, so it must be asked
-      // again rather than opened for free.
-      final top = widget.deck[widget.index];
-      final mustAnswer =
-          widget.answerFor(top.id) == null || widget.reviewIds.contains(top.id);
-      if (widget.answering &&
-          top.asksSomething &&
-          mustAnswer &&
-          !_answeredHere) {
-        return;
-      }
-      HapticFeedback.selectionClick();
-      setState(() => _flipped = !_flipped);
+      _turnOver();
     } else {
       await _animateTo(Offset.zero);
     }
+  }
+
+  /// Turn the card over.
+  ///
+  /// This used to be reached only through a pan that happened not to move,
+  /// which worked for exactly as long as the deck's drag was the only thing
+  /// listening: a second recogniser on the card — a press held to keep it —
+  /// puts two of them in the arena, and a still finger then wins nothing at
+  /// all. It is a tap, so it is on the tap.
+  void _turnOver() {
+    if (!mounted) return;
+    // A card that asks turns over when the reader commits, not on a stray
+    // tap — otherwise the answer can be reached without ever guessing. A
+    // card that has come back has an answer already, so it must be asked
+    // again rather than opened for free.
+    final top = widget.deck[widget.index];
+    final mustAnswer =
+        widget.answerFor(top.id) == null || widget.reviewIds.contains(top.id);
+    if (widget.answering && top.asksSomething && mustAnswer && !_answeredHere) {
+      return;
+    }
+    HapticFeedback.selectionClick();
+    setState(() => _flipped = !_flipped);
   }
 
   Future<void> _animateTo(Offset target) async {
@@ -316,6 +322,7 @@ class _PillCardStackState extends State<PillCardStack>
           key: ValueKey(pill.id),
           child: isTop
               ? GestureDetector(
+                  onTap: _turnOver,
                   onPanStart: _onPanStart,
                   onPanUpdate: _onPanUpdate,
                   onPanEnd: _onPanEnd,

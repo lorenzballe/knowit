@@ -142,7 +142,6 @@ class _TodayScreenState extends State<TodayScreen> {
     return Stack(
       key: key,
       children: [
-        Positioned.fill(child: _Glow(colour: front.color)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -258,11 +257,15 @@ class _ShelfHeader extends StatelessWidget {
   final Color colour;
 
   /// The freeze is said here and nowhere else, so it comes first on the day
-  /// it was spent. Otherwise, what the day has produced.
+  /// it was spent. Otherwise, what the day has produced — and before it has
+  /// produced anything, the line earns its place by naming the gesture that
+  /// fills it. "Nothing kept yet" was an answer to a question nobody had
+  /// asked; a reader who has never kept a card does not know that keeping
+  /// is a thing the app does, let alone how.
   String get _aside {
     if (app.streakWasFrozen) return 'A freeze kept the streak';
     final int kept = app.keptToday;
-    if (kept == 0) return 'Nothing kept yet';
+    if (kept == 0) return 'Hold a card to keep it';
     return kept == 1 ? '1 kept today' : '$kept kept today';
   }
 
@@ -290,7 +293,7 @@ class _ShelfHeader extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppText.body(
-              size: 15,
+              size: 17,
               weight: FontWeight.w600,
               spacing: -0.2,
               color: context.p.ink,
@@ -308,102 +311,6 @@ class _ShelfHeader extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Two pools of the front card's colour thrown on the ground, one high
-/// behind the card and a fainter one low behind the controls — the
-/// artboard's two blurred circles, at its own positions and strengths. The
-/// colour crosses over when the front card changes rather than snapping.
-class _Glow extends StatelessWidget {
-  const _Glow({required this.colour});
-
-  final Color colour;
-
-  /// Where the artboard puts them, less the 56 points of status bar its
-  /// frame draws above the page.
-  static const double _statusBar = 56;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool still = MediaQuery.disableAnimationsOf(context);
-    final duration = Duration(milliseconds: still ? 0 : 550);
-    return IgnorePointer(
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final double w = box.maxWidth;
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned(
-                left: w / 2 - 320,
-                top: 150 - _statusBar,
-                child: _Pool(
-                  colour: colour,
-                  strength: 0.30,
-                  size: 640,
-                  duration: duration,
-                ),
-              ),
-              Positioned(
-                left: w / 2 - 260,
-                top: 420 - _statusBar,
-                child: _Pool(
-                  colour: colour,
-                  strength: 0.16,
-                  size: 520,
-                  height: 420,
-                  duration: duration,
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _Pool extends StatelessWidget {
-  const _Pool({
-    required this.colour,
-    required this.strength,
-    required this.size,
-    required this.duration,
-    this.height,
-  });
-
-  final Color colour;
-  final double strength;
-  final double size;
-  final double? height;
-  final Duration duration;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: duration,
-      curve: Curves.easeOut,
-      width: size,
-      height: height ?? size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        // The canvas draws a hard-edged circle and blurs it by 130. A blur
-        // that wide is a Gaussian, so the same shape is cheaper as a
-        // gradient: most of the colour in the middle third, and gone well
-        // before the edge.
-        gradient: RadialGradient(
-          colors: [
-            colour.withValues(alpha: strength),
-            colour.withValues(alpha: strength * 0.72),
-            colour.withValues(alpha: strength * 0.30),
-            colour.withValues(alpha: strength * 0.08),
-            colour.withValues(alpha: 0),
-          ],
-          stops: const [0, 0.28, 0.55, 0.78, 1],
-        ),
-      ),
     );
   }
 }

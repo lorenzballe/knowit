@@ -8,6 +8,7 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/flip_card.dart';
+import '../widgets/hold_to_keep.dart';
 import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -391,7 +392,13 @@ class _TodayDoneViewState extends State<TodayDoneView>
       onShare: () => showShareSheet(context, pill),
     );
     if (!front) return face(false);
-    return FlipCard(showBack: _flipped, front: face(false), back: face(true));
+    return HoldToKeep(
+      saved: saved,
+      ink: pill.ink,
+      ground: pill.color,
+      onToggle: () => app.toggleSaved(pill.id),
+      child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
+    );
   }
 
   static String _two(int n) => n.toString().padLeft(2, '0');
@@ -500,12 +507,17 @@ class _CardFace extends StatelessWidget {
         color: pill.color,
         borderRadius: BorderRadius.circular(36 * s),
         boxShadow: [
+          // A pool under the card rather than a wash over the screen: the
+          // canvas throws the card's colour across the whole page, which on
+          // a real phone reads as a filter over the app instead of as a lit
+          // object. Tight, low and just past the card's own edge, the same
+          // colour reads as light coming off it.
           if (glow > 0)
             BoxShadow(
-              color: pill.color.withValues(alpha: 0.55 * glow),
-              offset: Offset(0, 30 * s),
-              blurRadius: 80 * s,
-              spreadRadius: -22 * s,
+              color: pill.color.withValues(alpha: 0.50 * glow),
+              offset: Offset(0, 26 * s),
+              blurRadius: 46 * s,
+              spreadRadius: -30 * s,
             ),
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.42 + 0.08 * glow),
