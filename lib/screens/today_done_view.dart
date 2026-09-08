@@ -510,14 +510,16 @@ class _CardFace extends StatelessWidget {
           // A pool under the card rather than a wash over the screen: the
           // canvas throws the card's colour across the whole page, which on
           // a real phone reads as a filter over the app instead of as a lit
-          // object. Tight, low and just past the card's own edge, the same
-          // colour reads as light coming off it.
+          // object. Kept low and close, the same colour reads as light
+          // coming off the card — but pulled all the way in it stopped
+          // reaching the ground at all, so it spreads further than it did
+          // on the first pass and less far than the canvas asks.
           if (glow > 0)
             BoxShadow(
-              color: pill.color.withValues(alpha: 0.50 * glow),
-              offset: Offset(0, 26 * s),
-              blurRadius: 46 * s,
-              spreadRadius: -30 * s,
+              color: pill.color.withValues(alpha: 0.52 * glow),
+              offset: Offset(0, 30 * s),
+              blurRadius: 64 * s,
+              spreadRadius: -26 * s,
             ),
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.42 + 0.08 * glow),

@@ -137,6 +137,16 @@ Future<List<String>> _sectionOrder(
   return order;
 }
 
+/// Hold a card down long enough to keep it — longer than the framework's
+/// own long press, which the card deliberately outlasts so that a slow tap
+/// stays a tap.
+Future<void> _hold(WidgetTester tester, Finder card) async {
+  final press = await tester.startGesture(tester.getCenter(card));
+  await tester.pump(const Duration(milliseconds: 900));
+  await press.up();
+  await tester.pumpAndSettle();
+}
+
 void main() {
   // Run against a real handset surface rather than the 800x600 default, so
   // layouts are exercised at the size they actually ship at.
@@ -887,7 +897,7 @@ void main() {
 
     // ...and the header, which wants nothing, hands it to the page.
     await tester.dragFrom(
-      tester.getCenter(find.text('Hold a card to keep it')),
+      tester.getCenter(find.textContaining('five read')),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -1043,7 +1053,8 @@ void main() {
     // its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
-    expect(find.text('Hold a card to keep it'), findsOneWidget);
+    // Nothing counts what the day kept: the heart on the card says it.
+    expect(find.textContaining('kept today'), findsNothing);
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
@@ -1137,10 +1148,9 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
+      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
       await tester.tap(find.bySemanticsLabel('Save this pill'));
       await _settle(tester);
-      expect(find.text('1 kept today'), findsOneWidget);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
@@ -1155,21 +1165,42 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
+      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
 
       // The whole card is the button, not just the heart in its corner.
       final card = find.byType(HoldToKeep).first;
-      await tester.longPress(card);
-      await _settle(tester);
-      expect(find.text('1 kept today'), findsOneWidget);
+      await _hold(tester, card);
+      expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.savedIds')!.length, 1);
 
-      await tester.longPress(card);
-      await _settle(tester);
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
+      await _hold(tester, card);
+      expect(find.bySemanticsLabel('Save this pill'), findsOneWidget);
       expect(prefs.getStringList('knowit.savedIds'), isEmpty);
+    });
+
+    testWidgets('a tap is still a tap: it turns the card over, keeps nothing', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      final front = pillsByIds(kOpeningDeck).first;
+      expect(find.text(front.answer), findsNothing);
+
+      // Longer than the framework's own long press, and still a tap.
+      final press = await tester.startGesture(
+        tester.getCenter(find.byType(HoldToKeep).first),
+      );
+      await tester.pump(const Duration(milliseconds: 560));
+      await press.up();
+      await _settle(tester);
+
+      expect(find.text(front.answer), findsWidgets);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.savedIds') ?? [], isEmpty);
     });
 
     testWidgets('a card in the deck being read is kept the same way', (
@@ -1179,8 +1210,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.longPress(find.byType(HoldToKeep).first);
-      await _settle(tester);
+      await _hold(tester, find.byType(HoldToKeep).first);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);

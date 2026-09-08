@@ -39,12 +39,23 @@ class HoldToKeep extends StatefulWidget {
 }
 
 class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
-  /// How far into the hold the finger is, 0 to 1. Its length is the
-  /// framework's own long-press timeout, so the ring closes on the frame
-  /// the press is recognised rather than before or after it.
+  /// How long the finger has to stay down. Longer than the framework's
+  /// 500ms, because a card is also tapped to turn it over and a keep is
+  /// the more expensive of the two: a tap that runs a little long should
+  /// not start keeping things.
+  static const Duration _press = Duration(milliseconds: 700);
+
+  /// Nothing is drawn for the first stretch of the press. Under this the
+  /// finger is still plausibly tapping, and a mark that flashes up on
+  /// every tap of the card is a mark in the way.
+  static const double _quiet = 0.36;
+
+  /// How far into the hold the finger is, 0 to 1, its length that of the
+  /// press — so the ring closes on the frame the press is recognised
+  /// rather than before or after it.
   late final AnimationController _hold = AnimationController(
     vsync: this,
-    duration: kLongPressTimeout,
+    duration: _press,
     reverseDuration: const Duration(milliseconds: 160),
   );
 
@@ -74,17 +85,27 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return RawGestureDetector(
       // The card underneath keeps its tap and its throw: a quick tap never
       // reaches this, and a card dragged away takes the pointer with it.
-      onLongPressDown: (_) => _hold.forward(),
-      onLongPressCancel: () => _hold.reverse(),
-      onLongPressStart: (_) => _fire(),
-      onLongPressEnd: (_) => _hold.reverse(),
+      gestures: {
+        LongPressGestureRecognizer:
+            GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
+              () => LongPressGestureRecognizer(duration: _press),
+              (r) => r
+                ..onLongPressDown = ((_) => _hold.forward())
+                ..onLongPressCancel = (() => _hold.reverse())
+                ..onLongPressStart = ((_) => _fire())
+                ..onLongPressEnd = ((_) => _hold.reverse()),
+            ),
+      },
       child: AnimatedBuilder(
         animation: Listenable.merge([_hold, _done]),
         builder: (context, child) {
-          final double hold = Curves.easeOut.transform(_hold.value);
+          // The quiet stretch first, then the whole mark in what is left.
+          final double hold = Curves.easeOut.transform(
+            ((_hold.value - _quiet) / (1 - _quiet)).clamp(0.0, 1.0),
+          );
           final double done = _done.value;
           return Transform.scale(
             scale: 1 - 0.02 * hold,
