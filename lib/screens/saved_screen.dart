@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/pills_data.dart';
+import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -11,7 +12,7 @@ import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'pill_detail_screen.dart';
 
-class SavedScreen extends StatelessWidget {
+class SavedScreen extends StatefulWidget {
   final AppState app;
   final VoidCallback onBackToToday;
 
@@ -20,6 +21,16 @@ class SavedScreen extends StatelessWidget {
     required this.app,
     required this.onBackToToday,
   });
+
+  @override
+  State<SavedScreen> createState() => _SavedScreenState();
+}
+
+class _SavedScreenState extends State<SavedScreen> {
+  /// Which topic the shelf is narrowed to, by its key, or all of them.
+  String? _topic;
+
+  AppState get app => widget.app;
 
   /// Dropping a pill is undoable — the row comes back where it was.
   Future<void> _unsave(BuildContext context, Pill pill, int at) async {
@@ -43,10 +54,20 @@ class SavedScreen extends StatelessWidget {
     // Most recently kept first, rather than whatever order the pool happens
     // to be in.
     final byId = {for (final p in kPillPool) p.id: p};
-    final saved = [
+    final all = [
       for (final id in app.savedIds)
         if (byId[id] != null) byId[id]!,
     ];
+    // Only the topics actually on the shelf: a filter offering twenty
+    // subjects to a reader who has kept four cards is a list of things
+    // that do not exist.
+    final present = kTopicOrder
+        .where((key) => all.any((p) => p.topic == kTopics[key]!.name))
+        .toList();
+    if (_topic != null && !present.contains(_topic)) _topic = null;
+    final saved = _topic == null
+        ? all
+        : all.where((p) => p.topic == kTopics[_topic]!.name).toList();
 
     return SafeArea(
       bottom: false,
@@ -55,22 +76,23 @@ class SavedScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (saved.isEmpty) ...[
-              const Eyebrow('Nothing kept yet'),
-              const SizedBox(height: 7),
-            ],
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                // The way back. This screen is pushed over the profile and
+                // had nothing but the phone's own gesture to leave it.
+                BackCircle(onPressed: widget.onBackToToday),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'Saved',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: AppText.display(
-                      size: 33,
-                      weight: FontWeight.w700,
-                      height: 1.05,
-                      spacing: -1.3,
+                      size: 27,
+                      weight: FontWeight.w600,
+                      height: 1,
+                      spacing: -0.8,
                       color: context.p.ink,
                     ),
                   ),
@@ -90,7 +112,7 @@ class SavedScreen extends StatelessWidget {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
+                    padding: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
                         Icon(
@@ -114,17 +136,31 @@ class SavedScreen extends StatelessWidget {
                 ),
               ],
             ),
-            if (saved.isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Text(
-                '${saved.length} pill${saved.length == 1 ? '' : 's'}',
-                style: AppText.body(size: 13, color: context.p.inkMuted),
+            const SizedBox(height: 5),
+            Text(
+              all.isEmpty
+                  ? 'Nothing kept yet'
+                  : _topic == null
+                  ? '${all.length} card${all.length == 1 ? '' : 's'}'
+                  : '${saved.length} in ${kTopics[_topic]!.name}',
+              style: AppText.body(
+                size: 12.5,
+                height: 1.35,
+                color: context.p.ink.withValues(alpha: 0.42),
+              ),
+            ),
+            if (present.length > 1) ...[
+              const SizedBox(height: 14),
+              _Filter(
+                topics: present,
+                picked: _topic,
+                onPick: (key) => setState(() => _topic = key),
               ),
             ],
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             Expanded(
-              child: saved.isEmpty
-                  ? _EmptyState(onBackToToday: onBackToToday)
+              child: all.isEmpty
+                  ? _EmptyState(onBackToToday: widget.onBackToToday)
                   : ListView.separated(
                       padding: const EdgeInsets.only(bottom: 24),
                       itemCount: saved.length,
@@ -147,6 +183,75 @@ class SavedScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The topics on the shelf, as one row that scrolls sideways. The chips
+/// are the archive's, because they are the same act in a different room.
+class _Filter extends StatelessWidget {
+  const _Filter({
+    required this.topics,
+    required this.picked,
+    required this.onPick,
+  });
+
+  final List<String> topics;
+  final String? picked;
+  final ValueChanged<String?> onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 34,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.zero,
+        itemCount: topics.length + 1,
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        itemBuilder: (context, i) {
+          final String? key = i == 0 ? null : topics[i - 1];
+          final bool on = picked == key;
+          final style = key == null ? null : kTopics[key]!;
+          return Semantics(
+            button: true,
+            selected: on,
+            key: ValueKey('saved-filter-${key ?? 'all'}'),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onPick(on ? null : key),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 13),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: on ? context.p.inverse : context.p.surfaceRaised,
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: on ? Colors.transparent : context.p.line,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (style != null) ...[
+                      TopicDot(style.color, size: 7),
+                      const SizedBox(width: 7),
+                    ],
+                    Text(
+                      style?.name ?? 'All',
+                      style: AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w500,
+                        color: on ? context.p.onInverse : context.p.inkMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

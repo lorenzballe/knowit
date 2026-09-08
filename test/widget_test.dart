@@ -41,9 +41,10 @@ Future<void> _settle(WidgetTester tester) async {
 
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
-Map<String, Object> _installed({bool plus = false}) => {
+Map<String, Object> _installed({bool plus = false, List<String>? saved}) => {
   'knowit.onboarded': true,
   'knowit.plus': plus,
+  'knowit.savedIds': ?saved,
 };
 
 /// Throws the top card off the deck, which is how a reader moves on now that
@@ -1860,7 +1861,38 @@ void main() {
           .widgetList<Text>(find.byType(Text))
           .map((t) => t.data)
           .toList();
-      expect(rows, contains('2 pills'));
+      expect(rows, contains('2 cards'));
+    });
+
+    testWidgets('the shelf has a way back and a filter by topic', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(
+        _installed(
+          saved: [
+            kPillPool.firstWhere((p) => p.topic == 'Science').id,
+            kPillPool.firstWhere((p) => p.topic == 'History').id,
+          ],
+        ),
+      );
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      await _openSetting(tester, 'Saved');
+      expect(find.text('2 cards'), findsOneWidget);
+
+      // Narrowed to one subject, and back to all of them.
+      await tester.tap(find.byKey(const ValueKey('saved-filter-science')));
+      await _settle(tester);
+      expect(find.text('1 in Science'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('saved-filter-all')));
+      await _settle(tester);
+      expect(find.text('2 cards'), findsOneWidget);
+
+      // And the way out, which the screen did not have.
+      await tester.tap(find.bySemanticsLabel('Back'));
+      await _settle(tester);
+      expect(find.text('2 cards'), findsNothing);
     });
 
     testWidgets('removing a pill can be undone', (tester) async {
@@ -1872,7 +1904,7 @@ void main() {
       await _settle(tester);
 
       await _openSetting(tester, 'Saved');
-      expect(find.text('1 pill'), findsOneWidget);
+      expect(find.text('1 card'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.favorite_rounded).first);
       await _settle(tester);
@@ -1881,7 +1913,7 @@ void main() {
 
       await tester.tap(find.text('Undo'));
       await _settle(tester);
-      expect(find.text('1 pill'), findsOneWidget);
+      expect(find.text('1 card'), findsOneWidget);
     });
   });
 
