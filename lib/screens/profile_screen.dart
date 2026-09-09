@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/services.dart';
 
 import '../data/topics.dart';
@@ -18,6 +21,7 @@ import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'know_screen.dart';
+import 'progress_text.dart';
 import 'saved_screen.dart';
 import 'week_screen.dart';
 import 'how_screen.dart';
@@ -58,12 +62,11 @@ class ProfileScreen extends StatelessWidget {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: context.p.surface,
         title: Text(
-          'Sign out?',
+          context.l10n.signOutQuestion,
           style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
-          'Your streak, saved pills and record stay on your account. This '
-          'clears them from this device.',
+          context.l10n.signOutBody,
           style: AppText.body(
             size: 14,
             height: 1.45,
@@ -81,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             child: Text(
-              'Sign out',
+              context.l10n.signOut,
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w600,
@@ -108,12 +111,12 @@ class ProfileScreen extends StatelessWidget {
     Future<SignInOutcome> Function(AppState) run,
   ) async {
     final messenger = ScaffoldMessenger.maybeOf(context);
+    final l = context.l10n;
     final outcome = await run(app);
     final String? note = switch (outcome) {
-      SignInOutcome.signedIn =>
-        'Signed in. Your streak and record are on your account now.',
-      SignInOutcome.failed => 'Could not sign in with $label.',
-      SignInOutcome.unavailable => 'Signing in is not available on this build.',
+      SignInOutcome.signedIn => l.signedInRecordOnAccount,
+      SignInOutcome.failed => l.couldNotSignInWith(label),
+      SignInOutcome.unavailable => l.signInNotAvailableBuild,
       SignInOutcome.cancelled => null,
     };
     if (note != null) {
@@ -127,13 +130,11 @@ class ProfileScreen extends StatelessWidget {
       builder: (dialogContext) => AlertDialog(
         backgroundColor: context.p.surface,
         title: Text(
-          'Start over?',
+          context.l10n.startOverQuestion,
           style: AppText.display(size: 19, color: context.p.ink),
         ),
         content: Text(
-          'Wipes everything on this device — streak, saved pills, answers, '
-          'your judgement record, topics and plan — and reopens the '
-          'onboarding.',
+          context.l10n.startOverBody,
           style: AppText.body(
             size: 14,
             height: 1.45,
@@ -151,7 +152,7 @@ class ProfileScreen extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             child: Text(
-              'Wipe it',
+              context.l10n.wipeIt,
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w600,
@@ -184,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
           // advertisement as the brightest object on it. What a reader comes
           // here for is the one number the habit has produced, so that is
           // what it opens with.
-          const Eyebrow('Your record'),
+          Eyebrow(context.l10n.yourRecord),
           const SizedBox(height: 12),
           _Headline(app: app),
           if (app.weekCompletion().any((day) => day)) ...[
@@ -206,14 +207,14 @@ class ProfileScreen extends StatelessWidget {
           // sit under five panels of measurement, which is where a setting
           // goes to be forgotten.
           const SizedBox(height: 24),
-          const Eyebrow('Appearance'),
+          Eyebrow(context.l10n.appearance),
           const SizedBox(height: 11),
           _ThemePicker(app: app),
           const SizedBox(height: 22),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Eyebrow('Your topics'),
+              Eyebrow(context.l10n.yourTopics),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () =>
@@ -221,7 +222,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      'Edit',
+                      context.l10n.edit,
                       style: AppText.body(
                         size: 12.5,
                         weight: FontWeight.w500,
@@ -275,7 +276,7 @@ class ProfileScreen extends StatelessWidget {
           // topics, read.
           if (app.calibratedAnswers > 0) ...[
             const SizedBox(height: 22),
-            const Eyebrow('How well you know yourself'),
+            Eyebrow(context.l10n.howWellYouKnowYourself),
             const SizedBox(height: 11),
             _Calibration(app: app),
             const SizedBox(height: 10),
@@ -283,18 +284,18 @@ class ProfileScreen extends StatelessWidget {
           ],
           if (app.trend != null) ...[
             const SizedBox(height: 22),
-            const Eyebrow('Is the gap closing?'),
+            Eyebrow(context.l10n.isTheGapClosing),
             const SizedBox(height: 11),
             _TrendPanel(app: app),
           ],
           if (app.masteryByWeakness.isNotEmpty) ...[
             const SizedBox(height: 22),
-            const Eyebrow('The moves you keep missing'),
+            Eyebrow(context.l10n.movesYouKeepMissing),
             const SizedBox(height: 11),
             _Mastery(app: app),
           ],
           const SizedBox(height: 22),
-          const Eyebrow('Daily nudge'),
+          Eyebrow(context.l10n.dailyNudge),
           const SizedBox(height: 11),
           PaperCard(
             padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
@@ -306,7 +307,7 @@ class ProfileScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Every day at ${app.notifyTime}',
+                        context.l10n.everyDayAt(app.notifyTime),
                         style: AppText.body(
                           size: 14.5,
                           weight: FontWeight.w500,
@@ -317,9 +318,8 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         remindersSupported
-                            ? 'Your 5 pills, before the first coffee.'
-                            : 'A browser can only speak while it is open, '
-                                  'so this one needs the phone build.',
+                            ? context.l10n.yourFivePillsBeforeCoffee
+                            : context.l10n.browserOnlySpeaksOpen,
                         style: AppText.body(
                           size: 12,
                           height: 1.3,
@@ -339,13 +339,12 @@ class ProfileScreen extends StatelessWidget {
                       SnackBar(
                         content: Text(
                           !v
-                              ? 'Nudge off.'
+                              ? context.l10n.nudgeOff
                               : app.remindersLive
-                              ? 'Nudge on, every day at ${app.notifyTime}.'
+                              ? context.l10n.nudgeOnEveryDayAt(app.notifyTime)
                               : remindersSupported
-                              ? 'Nudge on, but the system said no. Turn '
-                                    'notifications on for Astut in settings.'
-                              : 'Nudge on. Delivery needs the phone build.',
+                              ? context.l10n.nudgeOnSystemSaidNo
+                              : context.l10n.nudgeOnNeedsPhone,
                         ),
                       ),
                     );
@@ -358,7 +357,7 @@ class ProfileScreen extends StatelessWidget {
           // What the reader said they know, which a day is dealt by and
           // which they may well have got wrong the first morning.
           _LinkRow(
-            label: 'How much you know',
+            label: context.l10n.howMuchYouKnow,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (routeContext) => KnowScreen(
@@ -375,7 +374,7 @@ class ProfileScreen extends StatelessWidget {
           // The week, which is the only distance from which a direction is
           // visible at all — the day is too close to it.
           _LinkRow(
-            label: 'Your week',
+            label: context.l10n.yourWeek,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (routeContext) => WeekScreen(
@@ -390,8 +389,8 @@ class ProfileScreen extends StatelessWidget {
           // rather than taking one of three tabs.
           _LinkRow(
             label: app.savedIds.isEmpty
-                ? 'Saved'
-                : 'Saved · ${app.savedIds.length}',
+                ? context.l10n.saved
+                : context.l10n.savedN(app.savedIds.length),
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (routeContext) => Scaffold(
@@ -407,7 +406,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           _LinkRow(
-            label: 'Archive',
+            label: context.l10n.archive,
             locked: !app.isPlus,
             onTap: () => requirePlus(
               context,
@@ -423,7 +422,7 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           _LinkRow(
-            label: 'Manage subscription',
+            label: context.l10n.manageSubscription,
             // A subscriber wants to cancel, change plan or ask for a refund,
             // and none of that belongs on a screen built to sell. RevenueCat's
             // customer centre does all of it; the paywall is for everyone
@@ -435,7 +434,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
           ),
           _LinkRow(
-            label: 'How pills are written',
+            label: context.l10n.howPillsAreWritten,
             onTap: () =>
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => const HowScreen())),
@@ -458,7 +457,7 @@ class ProfileScreen extends StatelessWidget {
               // nothing seemed to happen would end up with nothing.
               if (account.busy) {
                 return _LinkRow(
-                  label: 'Signing in…',
+                  label: context.l10n.signingIn,
                   muted: true,
                   onTap: () {},
                 );
@@ -467,12 +466,12 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   _LinkRow(
-                    label: 'Sign in with Apple',
+                    label: context.l10n.signInWithApple,
                     onTap: () =>
                         _signIn(context, 'Apple', account.signInWithApple),
                   ),
                   _LinkRow(
-                    label: 'Sign in with Google',
+                    label: context.l10n.signInWithGoogle,
                     onTap: () =>
                         _signIn(context, 'Google', account.signInWithGoogle),
                   ),
@@ -631,7 +630,7 @@ class _Calibration extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            _headline(gap),
+            _headline(context, gap),
             style: AppText.display(
               size: 19,
               weight: FontWeight.w600,
@@ -642,8 +641,7 @@ class _Calibration extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Across ${app.calibratedAnswers} answers you said how sure you '
-            'were. Here is what happened.',
+            context.l10n.acrossNAnswersHowSure(app.calibratedAnswers),
             style: AppText.body(
               size: 12.5,
               height: 1.4,
@@ -654,8 +652,7 @@ class _Calibration extends StatelessWidget {
           ...buckets.map((b) => _Row(bucket: b)),
           const SizedBox(height: 4),
           Text(
-            'A perfectly calibrated person is right 70% of the time when '
-            'they say 70%.',
+            context.l10n.perfectlyCalibratedLine,
             style: AppText.body(
               size: 11.5,
               height: 1.4,
@@ -667,13 +664,13 @@ class _Calibration extends StatelessWidget {
     );
   }
 
-  String _headline(double? gap) {
-    if (gap == null) return 'Not enough answers yet';
+  String _headline(BuildContext context, double? gap) {
+    if (gap == null) return context.l10n.notEnoughAnswersYet;
     final points = gap.abs().round();
-    if (points <= 5) return 'Your confidence matches your accuracy';
+    if (points <= 5) return context.l10n.confidenceMatchesAccuracy;
     return gap > 0
-        ? 'You are overconfident by $points points'
-        : 'You are underconfident by $points points';
+        ? context.l10n.overconfidentBy(points)
+        : context.l10n.underconfidentBy(points);
   }
 }
 
@@ -698,7 +695,7 @@ class _Row extends StatelessWidget {
               SizedBox(
                 width: 52,
                 child: Text(
-                  'Said ${bucket.said}%',
+                  context.l10n.saidPercent(bucket.said),
                   style: AppText.body(
                     size: 12.5,
                     weight: FontWeight.w500,
@@ -709,8 +706,11 @@ class _Row extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'right ${bucket.actual.round()}% '
-                  '(${bucket.right} of ${bucket.count})',
+                  context.l10n.rightPercentOf(
+                    bucket.actual.round(),
+                    bucket.right,
+                    bucket.count,
+                  ),
                   style: AppText.body(
                     size: 12.5,
                     color: off ? context.p.alert : context.p.inkMuted,
@@ -798,7 +798,11 @@ class _ThemePicker extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    option.label,
+                    switch (option.mode) {
+                      ThemeMode.light => context.l10n.themeLight,
+                      ThemeMode.dark => context.l10n.themeDark,
+                      _ => context.l10n.themeSystem,
+                    },
                     style: AppText.body(
                       size: 13.5,
                       weight: FontWeight.w600,
@@ -913,7 +917,7 @@ class _Mastery extends StatelessWidget {
           if (hidden > 0)
             Semantics(
               button: true,
-              label: 'See every principle with Astut plus',
+              label: context.l10n.seeEveryPrincipleWithPlus,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => requirePlus(context, app, () {}),
@@ -955,7 +959,7 @@ class _ShareRecord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChunkyButton(
-      label: 'SHARE MY RECORD',
+      label: context.l10n.shareMyRecord,
       height: 52,
       fill: context.p.inverse,
       ink: context.p.onInverse,
@@ -993,13 +997,16 @@ class _TrendPanel extends StatelessWidget {
               Expanded(
                 child: Text(
                   locked
-                      ? 'Your last ${t.window} calls, against your first '
-                            '${t.window}'
+                      ? context.l10n.lastCallsAgainstFirst(t.window)
                       : t.isMoving
                       ? (t.isImproving
-                            ? 'Closed by ${t.closedBy.abs().round()} points'
-                            : 'Opened by ${t.closedBy.abs().round()} points')
-                      : 'Holding steady',
+                            ? context.l10n.closedByPoints(
+                                t.closedBy.abs().round(),
+                              )
+                            : context.l10n.openedByPoints(
+                                t.closedBy.abs().round(),
+                              ))
+                      : context.l10n.holdingSteady,
                   style: AppText.display(
                     size: 18,
                     weight: FontWeight.w600,
@@ -1015,8 +1022,7 @@ class _TrendPanel extends StatelessWidget {
           const SizedBox(height: 10),
           if (locked)
             Text(
-              'The measurement is running. Astut+ shows you which way it '
-              'is going.',
+              context.l10n.measurementRunningPlus,
               style: AppText.body(
                 size: 13,
                 height: 1.45,
@@ -1024,18 +1030,24 @@ class _TrendPanel extends StatelessWidget {
               ),
             )
           else ...[
-            _TrendRow(label: 'First ${t.window}', gap: t.early, muted: true),
+            _TrendRow(
+              label: context.l10n.firstN(t.window),
+              gap: t.early,
+              muted: true,
+            ),
             const SizedBox(height: 8),
-            _TrendRow(label: 'Last ${t.window}', gap: t.recent, muted: false),
+            _TrendRow(
+              label: context.l10n.lastN(t.window),
+              gap: t.recent,
+              muted: false,
+            ),
             const SizedBox(height: 11),
             Text(
               t.isMoving
                   ? (t.isImproving
-                        ? 'Your confidence is tracking your accuracy more '
-                              'closely than it did.'
-                        : 'The distance has grown. Worth slowing down before '
-                              'you commit.')
-                  : 'No real movement yet. This takes weeks, not days.',
+                        ? context.l10n.trackingMoreClosely
+                        : context.l10n.distanceHasGrown)
+                  : context.l10n.noRealMovementYet,
               style: AppText.body(
                 size: 12.5,
                 height: 1.45,
@@ -1046,7 +1058,7 @@ class _TrendPanel extends StatelessWidget {
           if (locked) ...[
             const SizedBox(height: 12),
             ChunkyButton(
-              label: 'SEE WHICH WAY',
+              label: context.l10n.seeWhichWay,
               height: 46,
               fill: context.p.inverse,
               ink: context.p.onInverse,
@@ -1072,7 +1084,7 @@ class _TrendRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final points = gap.abs().round();
-    final word = gap >= 0 ? 'over' : 'under';
+    final bool over = gap >= 0;
     return Row(
       children: [
         SizedBox(
@@ -1105,7 +1117,11 @@ class _TrendRow extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          points == 0 ? 'spot on' : '$points $word',
+          points == 0
+              ? context.l10n.spotOn
+              : over
+              ? context.l10n.pointsOver(points)
+              : context.l10n.pointsUnder(points),
           style: AppText.body(
             size: 12.5,
             weight: FontWeight.w600,
@@ -1143,7 +1159,7 @@ class _PlusCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  'ASTUTO+',
+                  context.l10n.plusNameCaps,
                   style: AppText.label(
                     size: 9.5,
                     weight: FontWeight.w700,
@@ -1154,7 +1170,7 @@ class _PlusCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '7 days free',
+                context.l10n.sevenDaysFree,
                 style: AppText.body(
                   size: 12,
                   weight: FontWeight.w600,
@@ -1165,7 +1181,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Watch the gap move.',
+            context.l10n.watchTheGapMove,
             style: AppText.display(
               size: 22,
               weight: FontWeight.w700,
@@ -1176,8 +1192,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'The measurement is free and always will be. Astut+ is what '
-            'tells you which way it is going.',
+            context.l10n.measurementFreeForever,
             style: AppText.body(
               size: 13,
               height: 1.45,
@@ -1186,7 +1201,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           ChunkyButton(
-            label: 'SEE THE PLANS',
+            label: context.l10n.seeThePlans,
             height: 48,
             fill: context.p.inverse,
             ink: context.p.onInverse,
@@ -1258,7 +1273,7 @@ class _Headline extends StatelessWidget {
 
     if (streak == 0 && read == 0) {
       return Text(
-        'Your record starts today.',
+        context.l10n.recordStartsToday,
         style: AppText.display(
           size: 34,
           weight: FontWeight.w600,
@@ -1287,8 +1302,8 @@ class _Headline extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           onStreak
-              ? (streak == 1 ? 'day' : 'days')
-              : (read == 1 ? 'pill read' : 'pills read'),
+              ? context.l10n.dayWord(streak)
+              : context.l10n.pillReadWord(read),
           style: AppText.body(
             size: 16,
             weight: FontWeight.w500,
@@ -1317,7 +1332,7 @@ class _Path extends StatelessWidget {
     final standing = app.standing;
     final Rung rung = standing.rung;
     final Rung? next = standing.next;
-    final String? step = standing.step;
+    final String? step = stepText(context, standing);
 
     // The card is also the way into the week it is measured in: the rung
     // and the week are the same question at two distances.
@@ -1349,7 +1364,7 @@ class _Path extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        rung.name,
+                        rungName(context, rung),
                         style: AppText.display(
                           size: 21,
                           weight: FontWeight.w600,
@@ -1360,7 +1375,7 @@ class _Path extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        rung.claim,
+                        rungClaim(context, rung),
                         style: AppText.body(
                           size: 13,
                           height: 1.35,
@@ -1372,7 +1387,7 @@ class _Path extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  '${standing.at + 1} / ${kRungs.length}',
+                  context.l10n.rungOfTotal(standing.at + 1, kRungs.length),
                   style: AppText.label(
                     size: 11,
                     weight: FontWeight.w700,
@@ -1404,7 +1419,9 @@ class _Path extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                step == null ? 'Next: ${next.name}' : '$step → ${next.name}',
+                step == null
+                    ? context.l10n.nextRung(rungName(context, next))
+                    : context.l10n.stepThenRung(step, rungName(context, next)),
                 style: AppText.body(
                   size: 12.5,
                   height: 1.35,
@@ -1429,21 +1446,16 @@ class _RecordLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final int weeks = app.keptWeeks;
     final parts = <String>[
-      if (app.liveStreak > 0)
-        app.seenIds.length == 1
-            ? '1 pill read'
-            : '${app.seenIds.length} pills read',
+      if (app.liveStreak > 0) context.l10n.nPillsRead(app.seenIds.length),
       // Five days out of seven is a week kept. The daily streak is the
       // sharper number and the crueller one — a flight or a fever and two
       // months are gone — so the record carries both, and this is the one
       // that survives a life.
-      if (weeks > 0) weeks == 1 ? '1 week kept' : '$weeks weeks kept',
-      if (app.dueReviews.isNotEmpty) '${app.dueReviews.length} coming back',
-      if (app.freezes > 0)
-        app.freezes == 1
-            ? '1 freeze in hand'
-            : '${app.freezes} freezes in hand',
-      app.isPlus ? 'Astut+' : 'Free plan',
+      if (weeks > 0) context.l10n.nWeeksKept(weeks),
+      if (app.dueReviews.isNotEmpty)
+        context.l10n.nComingBack(app.dueReviews.length),
+      if (app.freezes > 0) context.l10n.nFreezesInHand(app.freezes),
+      app.isPlus ? context.l10n.plusName : context.l10n.freePlan,
     ];
     return Text(
       parts.join('  ·  '),

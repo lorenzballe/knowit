@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../models/pill.dart';
 import '../theme.dart';
 
@@ -80,7 +82,7 @@ class _RevealBodyState extends State<RevealBody> {
           const SizedBox(height: 14),
           if (_simplyOpen)
             _Panel(
-              label: 'PUT SIMPLY',
+              label: context.l10n.putSimplyCaps,
               body: pill.simply,
               ink: widget.ink,
               wash: widget.wash,
@@ -89,7 +91,7 @@ class _RevealBodyState extends State<RevealBody> {
             _TextAction(
               ink: widget.ink,
               icon: Icons.child_care_rounded,
-              label: 'Explain it like I am three',
+              label: context.l10n.explainLikeImThree,
               onTap: () => setState(() => _simplyOpen = true),
             ),
         ],
@@ -97,7 +99,7 @@ class _RevealBodyState extends State<RevealBody> {
           const SizedBox(height: 14),
           if (_counterOpen)
             _Panel(
-              label: 'WHAT THE OTHER SIDE SAYS',
+              label: context.l10n.whatTheOtherSideSaysCaps,
               body: pill.counterpoint,
               ink: widget.ink,
               wash: widget.wash,
@@ -106,14 +108,14 @@ class _RevealBodyState extends State<RevealBody> {
             _TextAction(
               ink: widget.ink,
               icon: Icons.swap_horiz_rounded,
-              label: 'What the other side says',
+              label: context.l10n.whatTheOtherSideSays,
               onTap: () => setState(() => _counterOpen = true),
             ),
         ],
         if (pill.asksSomething && pill.trap.isNotEmpty) ...[
           const SizedBox(height: 12),
           Text(
-            'The trap: ${pill.trap}',
+            context.l10n.theTrap(pill.trap),
             style: AppText.body(
               size: 13.5,
               weight: FontWeight.w500,
@@ -126,14 +128,14 @@ class _RevealBodyState extends State<RevealBody> {
         // The bar move is the reason to open the app at all, so it gets its
         // own panel rather than a line under a rule.
         _Panel(
-          label: 'BAR MOVE',
+          label: context.l10n.barMoveCaps,
           body: pill.barMove,
           ink: widget.ink,
           wash: widget.wash,
         ),
         const SizedBox(height: 13),
         Text(
-          'Source · ${pill.source}',
+          context.l10n.sourceLabel(pill.source),
           style: AppText.body(
             size: 11.5,
             color: widget.ink.withValues(alpha: 0.6),

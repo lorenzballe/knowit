@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
@@ -134,7 +137,7 @@ class _MixScreenState extends State<MixScreen> {
             ),
             const SizedBox(height: 14),
             Text(
-              '$_inMix of ${kMixSubjects.length} subjects in the mix',
+              context.l10n.subjectsInTheMix(_inMix, kMixSubjects.length),
               textAlign: TextAlign.center,
               style: AppText.body(
                 size: 12,
@@ -201,7 +204,7 @@ class _MixHeading extends StatelessWidget {
         Row(
           children: [
             Text(
-              'Your ',
+              context.l10n.yourSpace,
               style: AppText.display(
                 size: 30,
                 weight: FontWeight.w600,
@@ -210,13 +213,12 @@ class _MixHeading extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const SpectrumWord('mix'),
+            SpectrumWord(context.l10n.mix),
           ],
         ),
         const SizedBox(height: 7),
         Text(
-          'Everything is in. Drag a subject down to see less of it, or all '
-          'the way to zero to drop it.',
+          context.l10n.everythingIsInDrag,
           style: AppText.body(
             size: 13.5,
             height: 1.4,
@@ -524,7 +526,7 @@ class _StartButtonState extends State<_StartButton> {
           ),
           child: Text(
             // The cards start one screen on, after one more question.
-            'Next',
+            context.l10n.next,
             style: AppText.body(
               size: 16,
               weight: FontWeight.w700,

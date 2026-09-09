@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
@@ -194,7 +197,7 @@ class _ReadingHeader extends StatelessWidget {
               fit: BoxFit.scaleDown,
               alignment: Alignment.centerLeft,
               child: Text(
-                'Today',
+                context.l10n.tabToday,
                 maxLines: 1,
                 style: AppText.display(
                   size: 20,
@@ -231,7 +234,7 @@ class _ReadingHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    streak == 1 ? '1 day' : '$streak days',
+                    context.l10n.streakDays(streak),
                     style: AppText.body(
                       size: 12,
                       weight: FontWeight.w600,
@@ -359,11 +362,11 @@ class _ShelfHeader extends StatelessWidget {
   /// The freeze is said here and nowhere else, so it comes first on the day
   /// it was spent. Otherwise, what the day has produced — and before it has
   /// produced anything, the line names the gesture that fills it.
-  String get _aside {
-    if (app.streakWasFrozen) return 'A freeze kept the streak';
+  String _aside(BuildContext context) {
+    if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
     final int kept = app.keptToday;
-    if (kept == 0) return 'Hold a card to keep it';
-    return kept == 1 ? '1 kept today' : '$kept kept today';
+    if (kept == 0) return context.l10n.holdACardToKeepIt;
+    return context.l10n.keptToday(kept);
   }
 
   @override
@@ -385,8 +388,10 @@ class _ShelfHeader extends StatelessWidget {
         // middle with the leftover piled up after it.
         Expanded(
           child: Text(
-            'Day ${app.dayNumber} · '
-            '${spellCount(app.todaysDeck.length).toLowerCase()} read',
+            context.l10n.dayRead(
+              app.dayNumber,
+              context.l10n.countWord('${app.todaysDeck.length}'),
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppText.body(
@@ -399,7 +404,7 @@ class _ShelfHeader extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         Text(
-          _aside,
+          _aside(context),
           maxLines: 1,
           style: AppText.body(
             size: 12,

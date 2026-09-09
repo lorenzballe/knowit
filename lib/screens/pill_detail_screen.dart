@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -40,7 +42,9 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 Row(
                   children: [
                     _RoundAction(
-                      label: saved ? 'Remove from saved' : 'Save this pill',
+                      label: saved
+                          ? context.l10n.removeFromSaved
+                          : context.l10n.saveThisPill,
                       icon: saved
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
@@ -52,7 +56,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                     ),
                     const SizedBox(width: 8),
                     _RoundAction(
-                      label: 'Share this pill',
+                      label: context.l10n.shareThisPill,
                       icon: Icons.ios_share_rounded,
                       color: context.p.ink,
                       onTap: () => showShareSheet(context, pill),
@@ -162,7 +166,7 @@ class _AnsweredLine extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!pill.isGraded) {
       return Text(
-        'You took the side: ${pill.challenge.describe(given.response)}',
+        context.l10n.youTookTheSide(pill.challenge.describe(given.response)),
         style: AppText.body(
           size: 13,
           weight: FontWeight.w500,
@@ -174,7 +178,7 @@ class _AnsweredLine extends StatelessWidget {
     final right = pill.challenge.accepts(given.response);
     final sure = given.confidence == null
         ? ''
-        : ' at ${given.confidence}% sure';
+        : context.l10n.atPercentSure(given.confidence!);
     return Row(
       children: [
         Icon(
@@ -186,8 +190,11 @@ class _AnsweredLine extends StatelessWidget {
         Flexible(
           child: Text(
             right
-                ? 'You got this one$sure'
-                : 'You said ${pill.challenge.describe(given.response)}$sure',
+                ? context.l10n.youGotThisOne(sure)
+                : context.l10n.youSaidAnswer(
+                    pill.challenge.describe(given.response),
+                    sure,
+                  ),
             style: AppText.body(
               size: 13,
               weight: FontWeight.w500,

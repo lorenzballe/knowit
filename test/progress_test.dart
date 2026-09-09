@@ -37,25 +37,26 @@ void main() {
     test('a fresh reader stands on the first rung', () {
       final s = standing();
       expect(s.at, 0);
-      expect(s.rung.name, 'Day one');
-      expect(s.next!.name, 'Reading');
-      expect(s.step, contains('20 more cards to read'));
+      expect(s.rung.id, 'day_one');
+      expect(s.next!.id, 'reading');
+      expect(s.step!.kind, StepKind.read);
+      expect(s.step!.n, 20);
     });
 
     test('it climbs on what the reader has actually done', () {
-      expect(standing(read: 25).rung.name, 'Reading');
-      expect(standing(read: 45, answered: 22).rung.name, 'Answering');
+      expect(standing(read: 25).rung.id, 'reading');
+      expect(standing(read: 45, answered: 22).rung.id, 'answering');
       expect(
-        standing(read: 80, answered: 45, judged: 33).rung.name,
-        'Saying how sure',
+        standing(read: 80, answered: 45, judged: 33).rung.id,
+        'saying_how_sure',
       );
     });
 
     test('a rung that asks for calibration waits for the confidence', () {
       // Everything else cleared, but nothing to judge the confidence on.
       final blind = standing(read: 200, answered: 150, judged: 60, held: 30);
-      expect(blind.rung.name, 'Saying how sure');
-      expect(blind.step, contains('confidence'));
+      expect(blind.rung.id, 'saying_how_sure');
+      expect(blind.step!.kind, StepKind.beforeJudged);
 
       // The same reader, now measurably calibrated.
       final sharp = standing(
@@ -65,7 +66,7 @@ void main() {
         held: 30,
         gap: 9,
       );
-      expect(sharp.rung.name, 'Calibrated');
+      expect(sharp.rung.id, 'calibrated');
     });
 
     test('a wide gap holds the reader on the rung below', () {
@@ -76,16 +77,17 @@ void main() {
         held: 30,
         gap: 28,
       );
-      expect(loud.rung.name, 'Saying how sure');
-      expect(loud.step, contains('28 points off'));
+      expect(loud.rung.id, 'saying_how_sure');
+      expect(loud.step!.kind, StepKind.gap);
+      expect(loud.step!.n, 28);
     });
 
     test('the bar follows the thing that is furthest behind', () {
       // Halfway on reading, nowhere on answering: the bar shows the worse.
       final s = standing(read: 30, answered: 0);
-      expect(s.rung.name, 'Reading');
+      expect(s.rung.id, 'reading');
       expect(s.toNext, lessThan(0.1));
-      expect(s.step, contains('to answer'));
+      expect(s.step!.kind, StepKind.answer);
     });
 
     test('the top of the ladder asks for nothing more', () {
@@ -96,7 +98,7 @@ void main() {
         held: 100,
         gap: 4,
       );
-      expect(s.rung.name, 'Sharp');
+      expect(s.rung.id, 'sharp');
       expect(s.next, isNull);
       expect(s.step, isNull);
       expect(s.toNext, 1);

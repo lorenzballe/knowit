@@ -1,6 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/services.dart';
 
 import '../data/pills_repository.dart' show dateKey;
@@ -245,7 +248,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
             children: [
               Expanded(
                 child: Text(
-                  "TODAY'S ${spellCount(deck.length)} · SWIPE TO REVIEW",
+                  context.l10n.shelfEyebrow(
+                    context.l10n.countWord('${deck.length}').toUpperCase(),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.label(
@@ -440,7 +445,7 @@ class _WeekLine extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Your week · ${week.days} of 7 kept',
+              context.l10n.weekLine(week.days),
               style: AppText.body(
                 size: 13,
                 weight: FontWeight.w600,
@@ -628,7 +633,7 @@ class _CardFace extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'TAP TO FLIP',
+                  context.l10n.tapToFlip,
                   style: AppText.label(
                     size: 10 * s,
                     weight: FontWeight.w600,
@@ -646,7 +651,7 @@ class _CardFace extends StatelessWidget {
               ),
               SizedBox(width: 12 * s),
               _CardButton(
-                label: 'Share this card',
+                label: context.l10n.shareThisCard,
                 icon: Icons.ios_share_rounded,
                 ink: ink,
                 fill: soft,
@@ -1004,7 +1009,9 @@ class _HeartButtonState extends State<_HeartButton>
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
     return _CardButton(
-      label: widget.saved ? 'Remove from saved' : 'Save this pill',
+      label: widget.saved
+          ? context.l10n.removeFromSaved
+          : context.l10n.saveThisPill,
       icon: widget.saved
           ? Icons.favorite_rounded
           : Icons.favorite_border_rounded,
@@ -1057,7 +1064,7 @@ class _Dots extends StatelessWidget {
             Semantics(
               button: true,
               selected: k == at,
-              label: 'Card ${k + 1} of ${deck.length}',
+              label: context.l10n.cardOf(k + 1, deck.length),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => onPick(k),
@@ -1128,8 +1135,8 @@ class _Tomorrow extends StatelessWidget {
         Expanded(
           child: Text(
             lead == null
-                ? "Tomorrow's five open in $when"
-                : "${lead.topic} opens tomorrow's five, in $when",
+                ? context.l10n.tomorrowsFiveOpenIn(when)
+                : context.l10n.topicOpensTomorrow(lead.topic, when),
             style: AppText.body(
               size: 13.5,
               weight: FontWeight.w500,
@@ -1165,7 +1172,7 @@ class _ExploreButtonState extends State<_ExploreButton> {
     final Color ink = context.p.onInverse;
     return Semantics(
       button: true,
-      label: "Explore today's best",
+      label: context.l10n.exploreTodaysBest,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: (_) => setState(() => _down = true),
@@ -1190,7 +1197,7 @@ class _ExploreButtonState extends State<_ExploreButton> {
               children: [
                 Flexible(
                   child: Text(
-                    "Explore today's best",
+                    context.l10n.exploreTodaysBest,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body(
@@ -1229,8 +1236,8 @@ class _Actions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? extra = app.isPlus
-        ? (app.canOpenExtraSet ? 'Five more' : null)
-        : 'Unlock five extra pills';
+        ? (app.canOpenExtraSet ? context.l10n.fiveMore : null)
+        : context.l10n.unlockFiveExtra;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'cloud.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
+import 'l10n/l10n.dart';
 import 'screens/intro_screen.dart';
 import 'screens/know_screen.dart';
 import 'screens/profile_screen.dart';
@@ -73,6 +74,12 @@ class _AstutoAppState extends State<AstutoApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Astut',
+      // Every language the app has strings for, and the phone's own
+      // choice among them. Anything the phone asks for that is not here
+      // falls back to English; anything not yet translated inside a
+      // language falls back to English one string at a time.
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: buildAstutoTheme(Brightness.light),
       darkTheme: buildAstutoTheme(Brightness.dark),
@@ -712,6 +719,7 @@ class _AstutoTabBar extends StatelessWidget {
     this.hidden = false,
   });
 
+  /// Icons here; the labels come from the strings, by tab.
   static const tabs = [
     (icon: Icons.wb_sunny_rounded, label: 'Today'),
     // A compass, not a bookmark and not a lens: the middle tab stopped being
@@ -775,6 +783,11 @@ class _AstutoTabBar extends StatelessWidget {
             children: List.generate(tabs.length, (i) {
               final double on = lit[i].clamp(0.0, 1.0);
               final tab = tabs[i];
+              final String label = switch (i) {
+                0 => context.l10n.tabToday,
+                1 => context.l10n.tabExplore,
+                _ => context.l10n.tabProfile,
+              };
               final Color tint = Color.lerp(
                 context.p.inkFaint,
                 context.p.onInverse,
@@ -833,7 +846,7 @@ class _AstutoTabBar extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 7),
                                     child: Text(
-                                      tab.label,
+                                      label,
                                       maxLines: 1,
                                       softWrap: false,
                                       overflow: TextOverflow.ellipsis,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
@@ -131,9 +133,8 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   const SizedBox(height: 5),
                   Text(
                     asking
-                        ? '${results.length} '
-                              'result${results.length == 1 ? '' : 's'}'
-                        : '${kPillPool.length} cards. Tap a day to open it.',
+                        ? context.l10n.results(results.length)
+                        : context.l10n.cardsTapADay(kPillPool.length),
                     style: AppText.body(
                       size: 12.5,
                       height: 1.35,
@@ -184,7 +185,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                         // It sat in the profile, where it read as a score; here it is what
                         // it actually is, the map of the archive.
                         if (widget.app.seenIds.isNotEmpty) ...[
-                          const Eyebrow('What you have covered'),
+                          Eyebrow(context.l10n.whatYouHaveCovered),
                           const SizedBox(height: 11),
                           _Coverage(app: widget.app),
                           const SizedBox(height: 22),
@@ -282,7 +283,7 @@ class _Head extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        hintText: 'Search ${kPillPool.length} cards',
+                        hintText: context.l10n.searchNCards(kPillPool.length),
                         hintStyle: AppText.body(
                           size: 14.5,
                           color: context.p.inkFaint,
@@ -300,7 +301,7 @@ class _Head extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 12),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: AppText.body(
                   size: 14,
                   weight: FontWeight.w500,
@@ -312,7 +313,7 @@ class _Head extends StatelessWidget {
         ] else ...[
           Expanded(
             child: Text(
-              'The archive',
+              context.l10n.theArchive,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppText.display(
@@ -449,7 +450,7 @@ class _Day extends StatelessWidget {
                     SizedBox(
                       width: 44,
                       child: Text(
-                        '${cards.length} cards',
+                        context.l10n.nCards(cards.length),
                         textAlign: TextAlign.right,
                         style: AppText.body(
                           size: 11,
@@ -626,8 +627,8 @@ class _NoResults extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 40),
         child: Text(
           query.isEmpty
-              ? 'No pills match that filter yet.'
-              : 'Nothing for "$query". Try a topic instead.',
+              ? context.l10n.noPillsMatchFilter
+              : context.l10n.nothingForTryTopic(query),
           textAlign: TextAlign.center,
           style: AppText.body(size: 14, height: 1.5, color: context.p.inkMuted),
         ),

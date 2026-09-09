@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../theme.dart';
 import '../widgets/ambient.dart';
 
@@ -139,7 +141,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
                             child: Text(
-                              'Skip',
+                              context.l10n.skip,
                               style: AppText.body(
                                 size: 14,
                                 weight: FontWeight.w500,
@@ -175,7 +177,7 @@ class _IntroScreenState extends State<IntroScreen> {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
-                              'Swipe to see more',
+                              context.l10n.swipeToSeeMore,
                               style: AppText.body(
                                 size: 12.5,
                                 weight: FontWeight.w500,
@@ -438,13 +440,13 @@ class _SignInBlock extends StatelessWidget {
     return Column(
       children: [
         _WhiteButton(
-          label: 'Continue with Apple',
+          label: context.l10n.continueWithApple,
           onTap: onApple,
           leading: const Icon(Icons.apple, size: 21, color: Colors.black),
         ),
         const SizedBox(height: 11),
         _WhiteButton(
-          label: 'Continue with Google',
+          label: context.l10n.continueWithGoogle,
           onTap: onGoogle,
           leading: const _GoogleG(),
         ),
@@ -455,7 +457,7 @@ class _SignInBlock extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 13, 0, 7),
             child: Text(
-              'Continue with Email',
+              context.l10n.continueWithEmail,
               style: AppText.body(
                 size: 16,
                 weight: FontWeight.w500,
@@ -465,7 +467,7 @@ class _SignInBlock extends StatelessWidget {
           ),
         ),
         Text(
-          'By signing up you agree to our Terms of Service & Privacy Policy',
+          context.l10n.termsLine,
           textAlign: TextAlign.center,
           style: AppText.body(
             size: 12.5,

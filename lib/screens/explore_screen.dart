@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/pills_repository.dart';
 import '../data/pills_data.dart';
 import '../data/topics.dart';
@@ -142,21 +144,21 @@ class ExploreScreenState extends State<ExploreScreen> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                 child: Text(
-                  'Nothing in ${_subject ?? 'here'} yet.',
+                  context.l10n.nothingInYet(_subject ?? context.l10n.here),
                   style: AppText.body(size: 14, color: context.p.inkMuted),
                 ),
               ),
             if (fresh.isNotEmpty)
               _Shelf(
-                title: "Today's shelf",
-                line: 'The same for everyone, and only today',
+                title: context.l10n.todaysShelf,
+                line: context.l10n.sameForEveryone,
                 child: _BigRow(pills: fresh, onOpen: _open),
               ),
             if (asking.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
-                title: 'The ones that ask the most',
-                line: 'Across everyone, not just your mix',
+                title: context.l10n.onesThatAskTheMost,
+                line: context.l10n.acrossEveryone,
                 child: _RowList(pills: asking, onOpen: _open),
               ),
             ],
@@ -214,8 +216,8 @@ class ExploreScreenState extends State<ExploreScreen> {
       final String name = kTopics[weights.first.key]?.name ?? '';
       if (name.isNotEmpty) {
         return (
-          'Because $name sits at full',
-          'Older cards from the subjects you turned up',
+          context.l10n.becauseSitsAtFull(name),
+          context.l10n.olderFromTurnedUp,
           name,
         );
       }
@@ -232,7 +234,7 @@ class ExploreScreenState extends State<ExploreScreen> {
           (counted.entries.toList()..sort((a, b) => b.value.compareTo(a.value)))
               .first
               .key;
-      return ('More on $most', 'The subject you have read most of', most);
+      return (context.l10n.moreOn(most), context.l10n.subjectReadMost, most);
     }
 
     // Nothing read and no mix: a subject of the month, so the shelf is
@@ -246,7 +248,7 @@ class ExploreScreenState extends State<ExploreScreen> {
     final String name = subjects.isEmpty
         ? kTopics['science']!.name
         : subjects[monthSeed(DateTime.now()).hashCode.abs() % subjects.length];
-    return ('A month of $name', 'Somewhere to start that is not today', name);
+    return (context.l10n.monthOf(name), context.l10n.somewhereToStart, name);
   }
 
   Widget _found(BuildContext context) {
@@ -257,7 +259,7 @@ class ExploreScreenState extends State<ExploreScreen> {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
         child: Text(
-          'Search every card.',
+          context.l10n.searchEveryCard,
           style: AppText.body(size: 13, color: context.p.inkMuted),
         ),
       );
@@ -266,7 +268,7 @@ class ExploreScreenState extends State<ExploreScreen> {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
         child: Text(
-          'Nothing for "${_query.trim()}" yet.',
+          context.l10n.nothingForYet(_query.trim()),
           style: AppText.body(size: 13, color: context.p.inkMuted),
         ),
       );
@@ -278,7 +280,7 @@ class ExploreScreenState extends State<ExploreScreen> {
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Text(
-            '${rows.length} matching',
+            context.l10n.matching(rows.length),
             style: AppText.body(
               size: 12,
               color: context.p.ink.withValues(alpha: 0.42),
@@ -299,7 +301,7 @@ class ExploreScreenState extends State<ExploreScreen> {
       context,
       widget.app,
       shelf,
-      _subject ?? 'Explore',
+      _subject ?? context.l10n.tabExplore,
       initialIndex: shelf.indexOf(pill),
     );
   }
@@ -463,7 +465,7 @@ class _SubjectRow extends StatelessWidget {
             // The key says which subject and whether it is chosen, so the
             // one thing this row does can be seen from outside it.
             key: ValueKey(
-              'subject-${subject?.name ?? 'All'}-${on ? 'on' : 'off'}',
+              'subject-${subject?.name ?? context.l10n.all}-${on ? 'on' : 'off'}',
             ),
             button: true,
             selected: on,

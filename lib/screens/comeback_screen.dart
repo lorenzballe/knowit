@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -15,23 +17,6 @@ class ComebackScreen extends StatelessWidget {
     required this.app,
     required this.onContinue,
   });
-
-  String _spell(int n) {
-    const words = [
-      'zero',
-      'one',
-      'two',
-      'three',
-      'four',
-      'five',
-      'six',
-      'seven',
-      'eight',
-      'nine',
-      'ten',
-    ];
-    return n < words.length ? words[n] : '$n';
-  }
 
   /// The topic the reader has kept the most pills from — the one they will
   /// miss noticing.
@@ -64,12 +49,10 @@ class ComebackScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Eyebrow('Streak reset', color: context.p.alert),
+              Eyebrow(context.l10n.streakReset, color: context.p.alert),
               const SizedBox(height: 11),
               Text(
-                missed == 1
-                    ? 'You missed\na day.'
-                    : 'You missed\n${_spell(missed)} days.',
+                context.l10n.youMissedDays(missed),
                 style: AppText.display(
                   size: 38,
                   weight: FontWeight.w700,
@@ -80,11 +63,7 @@ class ComebackScreen extends StatelessWidget {
               ),
               const SizedBox(height: 11),
               Text(
-                '${_spell(app.bestStreak)[0].toUpperCase()}'
-                '${_spell(app.bestStreak).substring(1)} '
-                '${app.bestStreak == 1 ? 'day is' : 'days is'} still your '
-                "record. Read today's five and the counter starts again "
-                'from one.',
+                context.l10n.bestStreakStillRecord(app.bestStreak),
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
@@ -104,17 +83,17 @@ class ComebackScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Eyebrow('While you were away'),
+                    Eyebrow(context.l10n.whileYouWereAway),
                     const SizedBox(height: 14),
                     _MissedLine(
                       color: context.p.alert,
-                      text: '$unread pill${unread == 1 ? '' : 's'} went unread',
+                      text: context.l10n.pillsWentUnread(unread),
                     ),
                     if (favourite != null) ...[
                       const SizedBox(height: 11),
                       _MissedLine(
                         color: context.p.link,
-                        text: '$favourite is still your most kept topic',
+                        text: context.l10n.stillMostKeptTopic(favourite),
                       ),
                     ],
                     // What is actually waiting, rather than only what was
@@ -125,10 +104,9 @@ class ComebackScreen extends StatelessWidget {
                       const SizedBox(height: 11),
                       _MissedLine(
                         color: context.p.ink,
-                        text: app.dueReviews.length == 1
-                            ? '1 card you got right is due back today'
-                            : '${app.dueReviews.length} cards you got right '
-                                  'are due back today',
+                        text: context.l10n.cardsDueBackToday(
+                          app.dueReviews.length,
+                        ),
                       ),
                     ],
                   ],
@@ -136,20 +114,22 @@ class ComebackScreen extends StatelessWidget {
               ),
               const Spacer(),
               PrimaryButton(
-                label: "Start again with today's five",
+                label: context.l10n.startAgainWithTodaysFive,
                 onPressed: onContinue,
               ),
               const SizedBox(height: 4),
               QuietButton(
-                label: app.notifyTime == '19:00'
-                    ? 'Move my reminder to 08:30'
-                    : 'Move my reminder to 19:00',
+                label: context.l10n.moveMyReminderTo(
+                  app.notifyTime == '19:00' ? '08:30' : '19:00',
+                ),
                 onPressed: () async {
                   final next = app.notifyTime == '19:00' ? '08:30' : '19:00';
                   await app.setNotifyTime(next);
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Daily nudge moved to $next.')),
+                    SnackBar(
+                      content: Text(context.l10n.dailyNudgeMovedTo(next)),
+                    ),
                   );
                 },
               ),

@@ -1,6 +1,9 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -79,11 +82,12 @@ class _ShareSheetState extends State<_ShareSheet> {
   }
 
   Future<void> _shareImage() async {
+    final l = context.l10n;
     setState(() => _busy = true);
     try {
       final bytes = await _capture();
       if (bytes == null) {
-        _toast('Could not render the card.');
+        _toast(l.couldNotRenderCard);
         return;
       }
       final name = 'astuto-${widget.pill.id}.png'.replaceAll(
@@ -97,7 +101,7 @@ class _ShareSheetState extends State<_ShareSheet> {
       final shared = await shareCardImage(bytes, name, _shareText);
       if (!shared) {
         await Clipboard.setData(ClipboardData(text: _shareText));
-        _toast('Text copied instead.');
+        _toast(l.textCopiedInstead);
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -105,8 +109,9 @@ class _ShareSheetState extends State<_ShareSheet> {
   }
 
   Future<void> _copyText() async {
+    final l = context.l10n;
     await Clipboard.setData(ClipboardData(text: _shareText));
-    _toast('Copied to clipboard.');
+    _toast(l.copiedToClipboard);
   }
 
   @override
@@ -141,7 +146,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             ),
             const SizedBox(height: 20),
             Text(
-              'Share this card',
+              context.l10n.shareThisCard,
               style: AppText.display(
                 size: 20,
                 weight: FontWeight.w600,
@@ -159,7 +164,7 @@ class _ShareSheetState extends State<_ShareSheet> {
               children: [
                 Expanded(
                   child: PrimaryButton(
-                    label: _busy ? 'Rendering…' : 'Share',
+                    label: _busy ? context.l10n.rendering : 'Share',
                     height: 52,
                     onPressed: _busy ? null : _shareImage,
                   ),
@@ -176,7 +181,7 @@ class _ShareSheetState extends State<_ShareSheet> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'The source goes with it',
+                context.l10n.theSourceGoesWithIt,
                 style: AppText.body(
                   size: 12,
                   color: Colors.black.withValues(alpha: 0.4),
@@ -246,7 +251,7 @@ class _ShareCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'THE BAR MOVE',
+                    context.l10n.theBarMoveCaps,
                     style: AppText.label(
                       size: 9,
                       spacing: 1.4,
@@ -280,7 +285,7 @@ class _ShareCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Five a day. A little sharper.',
+                    context.l10n.fiveADayALittleSharper,
                     textAlign: TextAlign.right,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

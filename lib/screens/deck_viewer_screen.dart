@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -46,8 +48,8 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
   /// no longer tries to say — it names the gesture the card does not already
   /// carry on its own face.
   String get _hint => widget.deck.length > 1
-      ? 'Swipe for the next one'
-      : 'That was the only one';
+      ? context.l10n.swipeForTheNextOne
+      : context.l10n.thatWasTheOnlyOne;
 
   @override
   Widget build(BuildContext context) {

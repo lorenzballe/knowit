@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/topics.dart';
 import 'mix_screen.dart';
 import '../theme.dart';
@@ -61,7 +63,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 BackCircle(onPressed: widget.onBack!),
               const SizedBox(height: 22),
               Text(
-                'What should we talk about?',
+                context.l10n.whatShouldWeTalkAbout,
                 style: AppText.display(
                   size: 33,
                   weight: FontWeight.w700,
@@ -72,8 +74,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                'Five pills a day, written fresh each morning. Pick the '
-                'topics you want in the mix — you can change them later.',
+                context.l10n.fivePillsADayPick,
                 style: AppText.body(
                   size: 15,
                   height: 1.5,
@@ -119,7 +120,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  '${_picked.length} selected',
+                  context.l10n.nSelected(_picked.length),
                   textAlign: TextAlign.center,
                   style: AppText.body(size: 12.5, color: context.p.inkFaint),
                 ),
@@ -128,9 +129,9 @@ class _TopicsScreenState extends State<TopicsScreen> {
               PrimaryButton(
                 label: _enough
                     ? (widget.isOnboarding
-                          ? 'Start with ${_picked.length} topics'
-                          : 'Save ${_picked.length} topics')
-                    : 'Pick at least $_minTopics',
+                          ? context.l10n.startWithNTopics(_picked.length)
+                          : context.l10n.saveNTopics(_picked.length))
+                    : context.l10n.pickAtLeastN(_minTopics),
                 background: _enough ? context.p.ink : context.p.line,
                 foreground: _enough ? null : context.p.inkFaint,
                 onPressed: _enough ? () => widget.onDone(_picked) : null,

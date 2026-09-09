@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import '../l10n/l10n.dart';
+
 import 'package:flutter/services.dart';
 
 import '../models/pill.dart';
@@ -62,7 +65,9 @@ class PillCard extends StatelessWidget {
             child: Row(
               children: [
                 _CardControl(
-                  label: saved ? 'Remove from saved' : 'Save this pill',
+                  label: saved
+                      ? context.l10n.removeFromSaved
+                      : context.l10n.saveThisPill,
                   icon: saved
                       ? Icons.favorite_rounded
                       : Icons.favorite_border_rounded,
@@ -74,7 +79,7 @@ class PillCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 _CardControl(
-                  label: 'Share this pill',
+                  label: context.l10n.shareThisPill,
                   icon: Icons.ios_share_rounded,
                   ink: pill.ink,
                   onTap: () => onShare?.call(),
@@ -185,7 +190,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
-                      prompt: 'Pick a side. There is no right answer.',
+                      prompt: context.l10n.pickASideNoRightAnswer,
                       input: (commit) => _PickInput(
                         pill: pill,
                         options: positions,
@@ -207,7 +212,7 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
-                      prompt: 'Estimate. Close enough counts.',
+                      prompt: context.l10n.estimateCloseEnough,
                       input: (commit) => _NumberInput(
                         pill: pill,
                         unit: unit,
@@ -254,7 +259,7 @@ class _FrontFace extends StatelessWidget {
         ),
         const SizedBox(height: 18),
         Text(
-          'Tap to reveal',
+          context.l10n.tapToReveal,
           style: AppText.body(
             size: 13,
             weight: FontWeight.w500,
@@ -338,16 +343,21 @@ class _Verdict extends StatelessWidget {
     this.confidence,
   });
 
-  String get _line {
+  String _line(BuildContext context) {
     return switch (pill.challenge) {
       Estimate(:final answerLabel, :final band) =>
         right
-            ? 'Close enough · it is $answerLabel'
-            : 'You said $given · it is $answerLabel, and $band counted',
+            ? context.l10n.closeEnoughItIs(answerLabel)
+            : context.l10n.youSaidItIsCounted(given, answerLabel, band),
       // A wrong number is a slip; a wrong pick is usually the trap working.
       TypeNumber(:final answerLabel) =>
-        right ? 'You got it' : 'You said $given · it is $answerLabel',
-      _ => right ? 'You got it' : 'Almost everyone gets this wrong',
+        right
+            ? context.l10n.youGotIt
+            : context.l10n.youSaidItIs(given, answerLabel),
+      _ =>
+        right
+            ? context.l10n.youGotIt
+            : context.l10n.almostEveryoneGetsThisWrong,
     };
   }
 
@@ -363,7 +373,9 @@ class _Verdict extends StatelessWidget {
         const SizedBox(width: 8),
         Flexible(
           child: Text(
-            confidence == null ? _line : '$_line · you said $confidence% sure',
+            confidence == null
+                ? _line(context)
+                : context.l10n.lineYouSaidSure(_line(context), confidence!),
             style: AppText.label(
               size: 11,
               spacing: 1.2,
@@ -519,7 +531,7 @@ class _AskFaceState extends State<_AskFace> {
                         const SizedBox(width: 7),
                         Flexible(
                           child: Text(
-                            'Give me a nudge',
+                            context.l10n.giveMeANudge,
                             style: AppText.body(
                               size: 13,
                               weight: FontWeight.w500,
@@ -535,9 +547,8 @@ class _AskFaceState extends State<_AskFace> {
               Text(
                 _pending != null
                     ? (pill.isGraded
-                          ? 'Being right matters less than knowing how often '
-                                'you are.'
-                          : 'Write it before you read theirs.')
+                          ? context.l10n.beingRightMattersLess
+                          : context.l10n.writeItBeforeTheirs)
                     // Nowhere to commit means this is a re-read, and telling
                     // someone to commit to a card they answered days ago is
                     // just wrong. It used to also tell an unanswered one to
@@ -545,10 +556,11 @@ class _AskFaceState extends State<_AskFace> {
                     // behind the top of today's own deck were saying, on
                     // Today, about themselves.
                     : widget.onAnswer == null && widget.given != null
-                    ? 'You answered this one.'
+                    ? context.l10n.youAnsweredThisOne
                     : widget.prompt ??
-                          '${pill.difficulty.label} · commit before you turn '
-                              'it over.',
+                          context.l10n.commitBeforeYouTurn(
+                            context.l10n.difficultyLabel(pill.difficulty.name),
+                          ),
                 style: AppText.body(
                   size: 12.5,
                   weight: FontWeight.w500,
@@ -668,7 +680,7 @@ class _NumberInputState extends State<_NumberInput> {
                     decoration: InputDecoration(
                       isDense: true,
                       border: InputBorder.none,
-                      hintText: 'Your answer',
+                      hintText: context.l10n.yourAnswer,
                       hintStyle: AppText.body(
                         size: 15,
                         color: pill.ink.withValues(alpha: 0.4),
@@ -691,7 +703,7 @@ class _NumberInputState extends State<_NumberInput> {
         const SizedBox(width: 10),
         Semantics(
           button: true,
-          label: 'Check my answer',
+          label: context.l10n.checkMyAnswer,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: _submit,
@@ -809,7 +821,7 @@ class _ConfidenceStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'How sure are you?',
+          context.l10n.howSureAreYou,
           style: AppText.display(
             size: 19,
             weight: FontWeight.w600,
@@ -824,7 +836,7 @@ class _ConfidenceStep extends StatelessWidget {
           children: kConfidenceLevels.map((level) {
             return Semantics(
               button: true,
-              label: '$level percent sure',
+              label: context.l10n.percentSure(level),
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => onPick(level),
@@ -890,7 +902,7 @@ class _ReasonStepState extends State<_ReasonStep> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'In one line — why?',
+          context.l10n.inOneLineWhy,
           style: AppText.body(
             size: 14.5,
             weight: FontWeight.w600,
@@ -914,7 +926,7 @@ class _ReasonStepState extends State<_ReasonStep> {
             decoration: InputDecoration(
               isDense: true,
               border: InputBorder.none,
-              hintText: 'Because…',
+              hintText: context.l10n.because,
               hintStyle: AppText.body(
                 size: 14.5,
                 color: ink.withValues(alpha: 0.4),
@@ -935,7 +947,9 @@ class _ReasonStepState extends State<_ReasonStep> {
             ),
             alignment: Alignment.center,
             child: Text(
-              written ? 'Now show me the other side' : 'Skip — show me anyway',
+              written
+                  ? context.l10n.nowShowMeTheOtherSide
+                  : context.l10n.skipShowMeAnyway,
               style: AppText.body(
                 size: 14,
                 weight: FontWeight.w600,
@@ -972,7 +986,7 @@ class _YourLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'YOU TOOK',
+            context.l10n.youTookCaps,
             style: AppText.label(
               size: 10,
               spacing: 1.3,

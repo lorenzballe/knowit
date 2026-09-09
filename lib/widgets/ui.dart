@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/topics.dart';
 
 import '../theme.dart';
@@ -238,7 +240,7 @@ class NudgeSwitch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       toggled: value,
-      label: 'Daily nudge',
+      label: context.l10n.dailyNudge,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(!value),

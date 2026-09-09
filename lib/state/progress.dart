@@ -30,8 +30,7 @@ const int kHeldFromStage = 2;
 /// and any five cards at all can carry them up it.
 class Rung {
   const Rung(
-    this.name,
-    this.claim, {
+    this.id, {
     this.read = 0,
     this.answered = 0,
     this.judged = 0,
@@ -39,9 +38,10 @@ class Rung {
     this.held = 0,
   });
 
-  /// What the rung is called, and what standing on it says about you.
-  final String name;
-  final String claim;
+  /// Which rung this is. The name and the claim it makes about the reader
+  /// are strings, looked up by this id in whatever language the phone is
+  /// set to; the ladder itself never says anything in any language.
+  final String id;
 
   /// What it takes: cards read, cards committed to, answers that carried a
   /// confidence, how far off that confidence may be, and cards held.
@@ -57,48 +57,13 @@ class Rung {
 /// commit before turning the card over, say how sure you are, be right
 /// about how sure you are, and keep what you got.
 const List<Rung> kRungs = [
-  Rung('Day one', 'Everybody starts here.'),
-  Rung('Reading', 'The habit has started.', read: 20),
-  Rung(
-    'Answering',
-    'You commit before you turn the card over.',
-    read: 40,
-    answered: 20,
-  ),
-  Rung(
-    'Saying how sure',
-    'You put a number on what you think you know.',
-    read: 70,
-    answered: 40,
-    judged: 30,
-  ),
-  Rung(
-    'Calibrated',
-    'What you say you know, you know.',
-    read: 110,
-    answered: 70,
-    judged: 50,
-    gap: 15,
-    held: 8,
-  ),
-  Rung(
-    'Holding',
-    'It stays with you weeks later.',
-    read: 170,
-    answered: 110,
-    judged: 80,
-    gap: 15,
-    held: 25,
-  ),
-  Rung(
-    'Sharp',
-    'Sure when you should be, and right when you are.',
-    read: 260,
-    answered: 180,
-    judged: 130,
-    gap: 10,
-    held: 55,
-  ),
+  Rung('day_one'),
+  Rung('reading', read: 20),
+  Rung('answering', read: 40, answered: 20),
+  Rung('saying_how_sure', read: 70, answered: 40, judged: 30),
+  Rung('calibrated', read: 110, answered: 70, judged: 50, gap: 15, held: 8),
+  Rung('holding', read: 170, answered: 110, judged: 80, gap: 15, held: 25),
+  Rung('sharp', read: 260, answered: 180, judged: 130, gap: 10, held: 55),
 ];
 
 /// What the reader has, measured against what the ladder asks.
@@ -157,44 +122,47 @@ class Standing {
     return parts.reduce((a, b) => a < b ? a : b).clamp(0.0, 1.0);
   }
 
-  /// The one thing to do next, named plainly. The furthest-behind of what
-  /// the next rung asks for: telling somebody four things at once is
-  /// telling them nothing.
-  String? get step {
+  /// The one thing to do next. The furthest-behind of what the next rung
+  /// asks for: telling somebody four things at once is telling them
+  /// nothing. What it is, not how it is said — the screen puts the words.
+  Step? get step {
     final Rung? up = next;
     if (up == null) return null;
-    final short = <(double, String)>[
-      if (up.read > read)
-        (read / up.read, '${up.read - read} more cards to read'),
+    final short = <(double, Step)>[
+      if (up.read > read) (read / up.read, Step(StepKind.read, up.read - read)),
       if (up.answered > answered)
-        (
-          answered / up.answered,
-          '${up.answered - answered} more cards to answer',
-        ),
+        (answered / up.answered, Step(StepKind.answer, up.answered - answered)),
       if (up.judged > judged)
-        (
-          judged / up.judged,
-          '${up.judged - judged} more answers with how sure you are',
-        ),
-      if (up.held > held)
-        (held / up.held, '${up.held - held} more cards to hold'),
+        (judged / up.judged, Step(StepKind.judge, up.judged - judged)),
+      if (up.held > held) (held / up.held, Step(StepKind.hold, up.held - held)),
       if (up.gap != null && gap != null && gap! > up.gap!)
         (
           up.gap! / gap!,
-          'your confidence is ${gap!.round()} points off — '
-              '${up.gap!.round()} does it',
+          Step(StepKind.gap, gap!.round(), target: up.gap!.round()),
         ),
       if (up.gap != null && gap == null)
         (
           judged / kCalibrationFloor,
-          '${kCalibrationFloor - judged} more answers before '
-              'the app will judge your confidence',
+          Step(StepKind.beforeJudged, kCalibrationFloor - judged),
         ),
     ];
     if (short.isEmpty) return null;
     short.sort((a, b) => a.$1.compareTo(b.$1));
     return short.first.$2;
   }
+}
+
+/// What kind of thing the next step asks for.
+enum StepKind { read, answer, judge, hold, gap, beforeJudged }
+
+/// The next step: what, and how many.
+class Step {
+  const Step(this.kind, this.n, {this.target = 0});
+  final StepKind kind;
+  final int n;
+
+  /// For a gap, the number it has to come down to.
+  final int target;
 }
 
 /// A card the reader was sure about and wrong about.

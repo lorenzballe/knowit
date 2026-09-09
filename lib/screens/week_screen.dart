@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
+import 'progress_text.dart';
 
 /// The week, read back to the reader.
 ///
@@ -38,7 +41,7 @@ class WeekScreen extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Your week',
+                    context.l10n.yourWeek,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.display(
@@ -55,11 +58,10 @@ class WeekScreen extends StatelessWidget {
             const SizedBox(height: 5),
             Text(
               week.empty
-                  ? 'Nothing this week yet. Five cards start it.'
+                  ? context.l10n.nothingThisWeekYet
                   : week.kept
-                  ? 'Kept — ${week.days} days of seven.'
-                  : '${week.days} day${week.days == 1 ? '' : 's'} of seven. '
-                        'Five keeps the week.',
+                  ? context.l10n.keptDaysOfSeven(week.days)
+                  : context.l10n.daysOfSevenFiveKeeps(week.days),
               style: AppText.body(
                 size: 12.5,
                 height: 1.35,
@@ -70,18 +72,16 @@ class WeekScreen extends StatelessWidget {
             WeekStrip(week: app.weekCompletion(), barHeight: 40),
             const SizedBox(height: 22),
             if (week.answered > 0) ...[
-              const Eyebrow('How sure, against how right'),
+              Eyebrow(context.l10n.howSureAgainstHowRight),
               const SizedBox(height: 11),
               _Verdict(week: week),
               const SizedBox(height: 22),
             ],
             if (week.misses.isNotEmpty) ...[
-              const Eyebrow('Sure, and wrong'),
+              Eyebrow(context.l10n.sureAndWrong),
               const SizedBox(height: 7),
               Text(
-                'The ones worth going back to. Being wrong about something '
-                'you were sure of is the only cheap way to find out what you '
-                'actually believe.',
+                context.l10n.worthGoingBackTo,
                 style: AppText.body(
                   size: 13,
                   height: 1.45,
@@ -103,7 +103,7 @@ class WeekScreen extends StatelessWidget {
               ],
               const SizedBox(height: 12),
             ],
-            const Eyebrow('Where this is going'),
+            Eyebrow(context.l10n.whereThisIsGoing),
             const SizedBox(height: 11),
             _Next(app: app),
           ],
@@ -151,7 +151,7 @@ class _Verdict extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'of ${week.answered} right',
+                context.l10n.ofNRight(week.answered),
                 style: AppText.body(
                   size: 15,
                   weight: FontWeight.w500,
@@ -163,16 +163,18 @@ class _Verdict extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             gap == null
-                ? 'Say how sure you are on a few more and the app will tell '
-                      'you what that confidence is worth.'
+                ? context.l10n.sayHowSureOnMore
                 : closing == null
-                ? 'Your confidence was ${gap.round()} points off what you '
-                      'actually knew.'
+                ? context.l10n.confidenceOff(gap.round())
                 : closing
-                ? 'Your confidence was ${gap.round()} points off, against '
-                      '${week.gapBefore!.round()} last week. It is closing.'
-                : 'Your confidence was ${gap.round()} points off, against '
-                      '${week.gapBefore!.round()} last week. It opened up.',
+                ? context.l10n.confidenceClosing(
+                    gap.round(),
+                    week.gapBefore!.round(),
+                  )
+                : context.l10n.confidenceOpened(
+                    gap.round(),
+                    week.gapBefore!.round(),
+                  ),
             style: AppText.body(
               size: 13.5,
               height: 1.45,
@@ -195,7 +197,7 @@ class _Next extends StatelessWidget {
   Widget build(BuildContext context) {
     final standing = app.standing;
     final Rung? next = standing.next;
-    final String? step = standing.step;
+    final String? step = stepText(context, standing);
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
@@ -208,7 +210,9 @@ class _Next extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            next == null ? standing.rung.name : 'Next: ${next.name}',
+            next == null
+                ? rungName(context, standing.rung)
+                : context.l10n.nextRung(rungName(context, next)),
             style: AppText.body(
               size: 15,
               weight: FontWeight.w700,
@@ -218,9 +222,9 @@ class _Next extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             next == null
-                ? standing.rung.claim
+                ? rungClaim(context, standing.rung)
                 : step == null
-                ? next.claim
+                ? rungClaim(context, next)
                 : '$step.',
             style: AppText.body(
               size: 13,
@@ -279,7 +283,7 @@ class _MissRow extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'You said ${miss.confidence}% sure',
+                    context.l10n.youSaidPercentSure(miss.confidence),
                     style: AppText.label(
                       size: 10.5,
                       weight: FontWeight.w700,

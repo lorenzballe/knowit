@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../state/app_state.dart';
@@ -30,43 +32,35 @@ int get kYearlySavingPercent {
 // Volume is what every other daily-learning app is already selling, and
 // several of them can afford to sell it harder. What this app has that they
 // do not is a measurement of the reader, so that is what leads.
-const _perks = [
+List<({IconData icon, String title, String sub})> _perks(
+  AppLocalizations l,
+) => [
   (
     icon: Icons.show_chart_rounded,
-    title: 'Your record over time',
-    sub:
-        'Whether the gap between how sure you were and how right you were '
-        'is actually closing.',
+    title: l.perkRecordTitle,
+    sub: l.perkRecordLine,
   ),
   (
     icon: Icons.grid_view_rounded,
-    title: 'Every principle you have met',
-    sub:
-        'Not just the three you are worst at — all of them, and the '
-        'contexts you have not been shown yet.',
+    title: l.perkPrinciplesTitle,
+    sub: l.perkPrinciplesLine,
   ),
   (
     icon: Icons.ac_unit_rounded,
-    title: 'Three streak freezes, not one',
-    sub:
-        'Enough to cover a weekend away. A streak you can only lose is a '
-        'streak that eventually goes.',
+    title: l.perkFreezesTitle,
+    sub: l.perkFreezesLine,
   ),
   (
     icon: Icons.add_circle_outline_rounded,
-    title: '5 extra pills every day',
-    sub: 'A second set unlocks the moment you finish the first.',
+    title: l.perkExtraTitle,
+    sub: l.perkExtraLine,
   ),
   (
     icon: Icons.search_rounded,
-    title: 'The full archive',
-    sub: 'Every pill you have ever read, searchable by topic.',
+    title: l.perkArchiveTitle,
+    sub: l.perkArchiveLine,
   ),
-  (
-    icon: Icons.tune_rounded,
-    title: 'Pick your own topics',
-    sub: 'Weight the mix toward what you actually like.',
-  ),
+  (icon: Icons.tune_rounded, title: l.perkTopicsTitle, sub: l.perkTopicsLine),
 ];
 
 /// Astut+.
@@ -99,9 +93,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
   }
 
   String get _cta {
-    if (widget.app.isPlus) return 'ASTUTO+ IS ACTIVE';
+    if (widget.app.isPlus) return context.l10n.plusIsActive;
     final String suffix = _plan == Plan.year ? '/yr' : '/mo';
-    return 'Try 7 days free, then ${_priceFor(_plan)}$suffix';
+    return context.l10n.tryFreeThen(_priceFor(_plan), suffix);
   }
 
   /// The package for the plan on screen, if the store has offered one.
@@ -116,11 +110,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       await widget.app.startPlusTrial();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Trial started. No payment is connected in this build.',
-          ),
-        ),
+        SnackBar(content: Text(context.l10n.trialStartedNoPayment)),
       );
       Navigator.of(context).pop();
       return;
@@ -136,7 +126,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         break;
       case PurchaseOutcome.failed:
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('That did not go through.')),
+          SnackBar(content: Text(context.l10n.thatDidNotGoThrough)),
         );
     }
   }
@@ -151,7 +141,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          restored ? 'Astut+ is back.' : 'Nothing to restore on this account.',
+          restored ? context.l10n.plusIsBack : context.l10n.nothingToRestore,
         ),
       ),
     );
@@ -200,7 +190,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
-                        'ASTUTO+',
+                        context.l10n.plusNameCaps,
                         style: AppText.label(
                           size: 11,
                           weight: FontWeight.w700,
@@ -212,7 +202,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ),
                   const SizedBox(height: 14),
                   Text(
-                    'Find out if you are actually getting better.',
+                    context.l10n.findOutIfBetter,
                     style: AppText.display(
                       size: 33,
                       weight: FontWeight.w700,
@@ -222,7 +212,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     ),
                   ),
                   const SizedBox(height: 22),
-                  ..._perks.indexed.map(
+                  ..._perks(context.l10n).indexed.map(
                     (e) => RiseIn.staggered(
                       e.$1,
                       step: const Duration(milliseconds: 50),
@@ -244,9 +234,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   _PlanTile(
                     label: 'Yearly',
                     price: _euros(kYearlyCents),
-                    per: 'per year',
-                    note: '${_euros(kYearlyCents ~/ 12)} a month',
-                    badge: 'SAVE $kYearlySavingPercent%',
+                    per: context.l10n.perYear,
+                    note: context.l10n.aMonth(_euros(kYearlyCents ~/ 12)),
+                    badge: context.l10n.savePercent(kYearlySavingPercent),
                     selected: _plan == Plan.year,
                     onTap: () {
                       setState(() => _plan = Plan.year);
@@ -257,8 +247,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   _PlanTile(
                     label: 'Monthly',
                     price: _euros(kMonthlyCents),
-                    per: 'per month',
-                    note: 'billed monthly',
+                    per: context.l10n.perMonth,
+                    note: context.l10n.billedMonthly,
                     selected: _plan == Plan.month,
                     onTap: () {
                       setState(() => _plan = Plan.month);
@@ -298,11 +288,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         : null,
                     child: Text(
                       widget.app.isPlus
-                          ? 'Cancel the trial'
+                          ? context.l10n.cancelTheTrial
                           : _store.offering != null
-                          ? 'Cancel any time'
-                          : 'Cancel any time · No payment is taken in this '
-                                'build',
+                          ? context.l10n.cancelAnyTime
+                          : context.l10n.cancelAnyTimeNoPayment,
                       textAlign: TextAlign.center,
                       style: AppText.body(
                         size: 11.5,
@@ -320,7 +309,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
-                          'Restore purchases',
+                          context.l10n.restorePurchases,
                           textAlign: TextAlign.center,
                           style: AppText.body(
                             size: 12.5,
@@ -410,10 +399,13 @@ class _Perk extends StatelessWidget {
 class _TrialSteps extends StatelessWidget {
   const _TrialSteps();
 
-  static const _steps = [
-    (day: 'TODAY', text: 'Everything opens. Nothing is charged.'),
-    (day: 'DAY 5', text: 'A reminder, two days before it renews.'),
-    (day: 'DAY 7', text: 'It renews, unless you cancelled. You can, any time.'),
+  static List<({String day, String text})> _steps(BuildContext context) => [
+    (
+      day: context.l10n.tabToday.toUpperCase(),
+      text: context.l10n.everythingOpensNothingCharged,
+    ),
+    (day: context.l10n.dayN(5), text: context.l10n.reminderTwoDaysBefore),
+    (day: context.l10n.dayN(7), text: context.l10n.itRenewsUnlessCancelled),
   ];
 
   @override
@@ -429,7 +421,7 @@ class _TrialSteps extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'HOW THE FREE WEEK WORKS',
+            context.l10n.howTheFreeWeekWorks,
             style: AppText.label(
               size: 10,
               spacing: 1.3,
@@ -437,7 +429,7 @@ class _TrialSteps extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          ..._steps.map(
+          ..._steps(context).map(
             (s) => Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Row(

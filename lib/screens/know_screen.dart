@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/topics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -124,7 +126,7 @@ class _KnowScreenState extends State<KnowScreen> {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  'What you already ',
+                  context.l10n.whatYouAlready,
                   style: AppText.display(
                     size: 30,
                     weight: FontWeight.w600,
@@ -133,14 +135,12 @@ class _KnowScreenState extends State<KnowScreen> {
                     color: Colors.white,
                   ),
                 ),
-                const SpectrumWord('know'),
+                SpectrumWord(context.l10n.know),
               ],
             ),
             const SizedBox(height: 7),
             Text(
-              'The subjects you pushed highest. It changes what a day asks '
-              'of you in each — solid gets questions, curious gets told — '
-              'not how much of it you get.',
+              context.l10n.knowIntro,
               style: AppText.body(
                 size: 13.5,
                 height: 1.4,
@@ -168,7 +168,9 @@ class _KnowScreenState extends State<KnowScreen> {
             ),
             const SizedBox(height: 6),
             _Button(
-              label: onboarding ? 'Start with my first cards' : 'Save',
+              label: onboarding
+                  ? context.l10n.startWithMyFirstCards
+                  : context.l10n.save,
               onTap: () => widget.onDone(_level),
             ),
             if (onboarding) ...[
@@ -177,7 +179,7 @@ class _KnowScreenState extends State<KnowScreen> {
                 behavior: HitTestBehavior.opaque,
                 onTap: widget.onSkip,
                 child: Text(
-                  'Skip for now',
+                  context.l10n.skipForNow,
                   textAlign: TextAlign.center,
                   style: AppText.body(
                     size: 13,
@@ -253,7 +255,11 @@ class _Row extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        KnowScreen.levels[i],
+                        switch (i) {
+                          0 => context.l10n.levelCurious,
+                          1 => context.l10n.levelSome,
+                          _ => context.l10n.levelSolid,
+                        },
                         style: AppText.body(
                           size: 12,
                           weight: FontWeight.w600,

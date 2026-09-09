@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
+
 import '../data/pills_data.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
@@ -35,14 +37,15 @@ class _SavedScreenState extends State<SavedScreen> {
   /// Dropping a pill is undoable — the row comes back where it was.
   Future<void> _unsave(BuildContext context, Pill pill, int at) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
     await app.toggleSaved(pill.id);
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
       SnackBar(
-        content: const Text('Removed from saved.'),
+        content: Text(l.removedFromSaved),
         duration: const Duration(seconds: 4),
         action: SnackBarAction(
-          label: 'Undo',
+          label: l.undo,
           onPressed: () => app.restoreSaved(pill.id, at),
         ),
       ),
@@ -85,7 +88,7 @@ class _SavedScreenState extends State<SavedScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Saved',
+                    context.l10n.saved,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.display(
@@ -122,7 +125,7 @@ class _SavedScreenState extends State<SavedScreen> {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          'Archive',
+                          context.l10n.archive,
                           style: AppText.body(
                             size: 12.5,
                             weight: FontWeight.w500,
@@ -139,10 +142,10 @@ class _SavedScreenState extends State<SavedScreen> {
             const SizedBox(height: 5),
             Text(
               all.isEmpty
-                  ? 'Nothing kept yet'
+                  ? context.l10n.nothingKeptYet
                   : _topic == null
-                  ? '${all.length} card${all.length == 1 ? '' : 's'}'
-                  : '${saved.length} in ${kTopics[_topic]!.name}',
+                  ? context.l10n.nCards(all.length)
+                  : context.l10n.nInTopic(saved.length, kTopics[_topic]!.name),
               style: AppText.body(
                 size: 12.5,
                 height: 1.35,
@@ -206,7 +209,7 @@ class _EmptyState extends StatelessWidget {
               const _DashedStack(),
               const SizedBox(height: 24),
               Text(
-                "Keep the ones you'll actually use",
+                context.l10n.keepTheOnesYoullUse,
                 textAlign: TextAlign.center,
                 style: AppText.display(
                   size: 21,
@@ -218,8 +221,7 @@ class _EmptyState extends StatelessWidget {
               ),
               const SizedBox(height: 9),
               Text(
-                'Tap the heart on any pill and it lands here — the ones that '
-                'changed how you think, kept.',
+                context.l10n.tapTheHeartLandsHere,
                 textAlign: TextAlign.center,
                 style: AppText.body(
                   size: 14,
@@ -229,7 +231,7 @@ class _EmptyState extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                label: "BACK TO TODAY'S FIVE",
+                label: context.l10n.backToTodaysFive,
                 height: 52,
                 onPressed: onBackToToday,
               ),
@@ -395,7 +397,7 @@ class _SavedRow extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: onUnsave,
-                  tooltip: 'Remove from saved',
+                  tooltip: context.l10n.removeFromSaved,
                   icon: const Icon(Icons.favorite_rounded, size: 18),
                   color: pill.color,
                   splashRadius: 18,
@@ -403,7 +405,7 @@ class _SavedRow extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: onShare,
-                  tooltip: 'Share this pill',
+                  tooltip: context.l10n.shareThisPill,
                   icon: const Icon(Icons.ios_share_rounded, size: 17),
                   color: context.p.inkFaint,
                   splashRadius: 18,

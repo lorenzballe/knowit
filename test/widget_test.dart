@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/pills_data.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
@@ -246,7 +247,13 @@ void main() {
 
   testWidgets('a turned-down tile keeps its empty half dark', (tester) async {
     SharedPreferences.setMockInitialValues({});
-    await tester.pumpWidget(MaterialApp(home: MixScreen(onDone: (_) {})));
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: MixScreen(onDone: (_) {}),
+      ),
+    );
     await _settle(tester);
 
     // A tile's ground has to be opaque. Flutter paints a BoxShadow straight
@@ -1671,6 +1678,9 @@ void main() {
       // nobody can check, so the delays are animation intervals instead.
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: Column(
@@ -1951,6 +1961,9 @@ void main() {
   group('Type set to the space', () {
     Widget box(String text, {double width = 300, double height = 500}) =>
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: Center(
@@ -2054,6 +2067,9 @@ void main() {
     }
 
     Widget viewer(AppState app, List<Pill> deck) => MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+
       theme: buildAstutoTheme(Brightness.dark),
       home: DeckViewerScreen(app: app, deck: deck, title: "Today's five"),
     );
@@ -2195,6 +2211,9 @@ void main() {
       Set<String> reviews = const {},
     }) {
       return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+
         theme: buildAstutoTheme(Brightness.dark),
         home: Scaffold(
           backgroundColor: Palette.dark.surface,
@@ -2484,6 +2503,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
@@ -2507,6 +2529,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: PillDetailScreen(pill: pill, app: app),
         ),
@@ -2683,6 +2708,9 @@ void main() {
 
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: Scaffold(
             body: SizedBox(
@@ -2969,6 +2997,9 @@ void main() {
     ) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: ThemeData(brightness: brightness),
           // MaterialApp crossfades between themes, so without this the second
           // pump still reads the previous one.
@@ -3071,6 +3102,9 @@ void main() {
     Future<void> pumpIntro(WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+
           theme: buildAstutoTheme(Brightness.dark),
           home: MediaQuery(
             data: const MediaQueryData(padding: insets, size: Size(402, 874)),
@@ -3138,6 +3172,9 @@ void main() {
         tester.view.devicePixelRatio = 3;
         await tester.pumpWidget(
           MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+
             theme: buildAstutoTheme(Brightness.dark),
             home: MediaQuery(
               data: MediaQueryData(padding: pad, size: size),
