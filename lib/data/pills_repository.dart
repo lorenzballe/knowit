@@ -14,34 +14,14 @@ const int kPillsPerDay = 5;
 
 /// How much of a day should ask something of the reader rather than tell.
 ///
-/// Reading facts has no evidence behind it as reasoning training — the
-/// large review of brain training found gains only on the exact task
-/// practised (Simons et al., 2016). What does transfer is answering, being
-/// wrong, and being told which move you missed (Morewedge et al., 2015).
-///
-/// So a day is mostly asking. One fact opens it: a fact is a reason to come
-/// and it opens up a subject, which is worth one card in five and not four.
-const double kAskShare = 0.8;
-
-/// The first five anybody ever sees, chosen rather than dealt.
-///
-/// A generated first day is a gamble on the worst possible occasion. These
-/// five are picked to be the app arguing for itself: something startling that
-/// costs nothing to read, the trap almost everybody falls into, a survivorship
-/// case from a kitchen drawer, an arithmetic catch that lands in a second, and
-/// an argument with two real sides to close on.
-///
-/// It is also the answer to personalising a first session. A questionnaire
-/// cannot help here — four cards in five have to ask something and everything
-/// that asks is one subject — so the honest way to make the opening feel
-/// chosen is to choose it.
-const List<String> kOpeningDeck = [
-  'science-4',
-  'thinking-1',
-  'thinking-5',
-  'thinking-9',
-  'thinking-d6',
-];
+/// Two cards in five. It was four, on the evidence that only answering
+/// trains anything (Simons et al., 2016; Morewedge et al., 2015) — and the
+/// evidence has not changed, but a day that is four decisions long is a
+/// day that gets put off, and a day put off trains nothing at all. Two
+/// questions is still two judgements with a confidence on each, which is
+/// what the calibration record is made of; the other three are the reason
+/// to open the app before coffee.
+const double kAskShare = 0.4;
 
 /// Deterministic pills for a day — the same date, topic mix and reading
 /// history always yield the same set and order, so the deck doesn't reshuffle

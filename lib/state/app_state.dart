@@ -5,6 +5,7 @@ import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/daily.dart';
 import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
@@ -63,6 +64,8 @@ class AppState extends ChangeNotifier {
   static const _kPlus = 'knowit.plus';
   static const _kSeenIds = 'knowit.seenIds';
   static const _kDeckIds = 'knowit.todayDeckIds';
+  static const _kDeckHistory = 'knowit.deckHistory';
+  static const _kDayStartRung = 'knowit.dayStartRung';
   static const _kExtraOpen = 'knowit.extraSetDate';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
@@ -96,8 +99,21 @@ class AppState extends ChangeNotifier {
   /// True once the Astut+ second set has been unlocked today.
   bool extraSetOpen = false;
 
-  /// Which of today's cards are here because they came back.
+  /// Which of today's cards the reader has already answered once — the
+  /// calendar can deal a card round again, and a card met before shows
+  /// what was said the first time.
   Set<String> reviewIdsToday = {};
+
+  /// What each day actually dealt, by date key, for the last few weeks.
+  ///
+  /// The calendar is re-dealt from the start whenever the pool grows, so
+  /// asking it what last Tuesday held can get a different answer from the
+  /// one last Tuesday gave. This is the one that was given.
+  Map<String, List<String>> deckHistory = {};
+
+  /// The rung the reader stood on when today was dealt, so the end of the
+  /// day can say whether they climbed.
+  int rungAtDayStart = 0;
 
   /// Card id -> what the reader last committed to, and when it comes back.
   Map<String, Answer> answers = {};
@@ -216,6 +232,10 @@ class AppState extends ChangeNotifier {
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
+    deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
+    // Absent on an install that started the day on an older build: the
+    // reader is where they are now, and today reports no climb.
+    rungAtDayStart = _prefs.getInt(_kDayStartRung) ?? standing.at;
 
     final storedDay = _prefs.getString(_kTodayDate);
     final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
@@ -272,50 +292,109 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kFreezes, freezes);
   }
 
-  /// How much of a day is given over to cards coming back. Two out of five
-  /// keeps the day feeling new while still closing the loop on mistakes.
-  static const int kReviewsPerDay = 2;
-
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
-  /// Cards that have come round again take the first slots, and fresh ones
-  /// fill the rest — an app that never re-asks what you got wrong is not
-  /// teaching, it is entertaining.
+  /// The five are the calendar's five — the same for everybody who opens
+  /// the app today. Nothing of the reader's enters them, with one
+  /// exception: a card the calendar deals that this phone dealt within the
+  /// last two weeks (the pool grew and the calendar moved under it) is
+  /// swapped for one of the same kind from their own mix. Cards that came
+  /// due for review are not in the five any more; they wait after it.
   Future<void> _startNewDay() async {
-    // Nobody has read anything yet, so this is the only first impression
-    // there will be. It is chosen, not dealt.
-    if (seenIds.isEmpty && answers.isEmpty && !extraSetOpen) {
-      final opening = pillsByIds(kOpeningDeck);
-      if (opening.length == kOpeningDeck.length) {
-        todaysDeck = opening;
-        reviewIdsToday = {};
-        todayIndex = 0;
-        await _prefs.setString(_kTodayDate, dateKey(today));
-        await _prefs.setInt(_kTodayIndex, 0);
-        await _prefs.setStringList(_kDeckIds, kOpeningDeck);
-        return;
-      }
-    }
-
     final size = extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay;
-    final reviews = dueReviews.take(kReviewsPerDay).toList();
-    reviewIdsToday = reviews.map((p) => p.id).toSet();
-
-    todaysDeck = pillsForDate(
-      today,
-      topics: pickedTopics,
-      weights: topicWeights,
-      levels: topicLevels,
-      exclude: {...seenIds, ...reviews.map((p) => p.id)},
-      count: size - reviews.length,
-    );
-    todaysDeck = [...reviews, ...todaysDeck];
-    todaysDeck.sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
+    todaysDeck = _personalised(sharedDeckFor(today), on: today);
+    if (size > todaysDeck.length) {
+      todaysDeck = [
+        ...todaysDeck,
+        ...pillsForDate(
+          today,
+          topics: pickedTopics,
+          weights: leanedWeights,
+          levels: topicLevels,
+          exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+          count: size - todaysDeck.length,
+        ),
+      ];
+    }
+    reviewIdsToday = {
+      for (final p in todaysDeck)
+        if (answers.containsKey(p.id)) p.id,
+    };
     todayIndex = 0;
+    rungAtDayStart = standing.at;
     await _prefs.setString(_kTodayDate, dateKey(today));
     await _prefs.setInt(_kTodayIndex, 0);
+    await _prefs.setInt(_kDayStartRung, rungAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    await _noteDealt(today, todaysDeck);
   }
+
+  /// How many days back a card the calendar deals again is swapped out.
+  static const int kRecentDays = 14;
+
+  /// The calendar's deck for [on], with anything this phone dealt lately
+  /// swapped for a card of the same kind from the reader's own mix.
+  List<Pill> _personalised(List<Pill> shared, {required DateTime on}) {
+    final recent = <String>{};
+    for (var i = 1; i <= kRecentDays; i++) {
+      final day = DateTime(on.year, on.month, on.day - i);
+      recent.addAll(deckHistory[dateKey(day)] ?? const []);
+    }
+    if (!shared.any((p) => recent.contains(p.id))) return shared;
+
+    final spare = pillsForDate(
+      on,
+      topics: pickedTopics,
+      weights: leanedWeights,
+      levels: topicLevels,
+      exclude: {...seenIds, ...recent, ...shared.map((p) => p.id)},
+      count: kPillsPerDay * 2,
+    ).toList();
+    return [
+      for (final p in shared)
+        if (recent.contains(p.id)) _sameKind(p, spare) ?? p else p,
+    ];
+  }
+
+  /// Takes the first card of [like]'s kind out of [spare], or any card.
+  static Pill? _sameKind(Pill like, List<Pill> spare) {
+    final i = spare.indexWhere((p) => p.asksSomething == like.asksSomething);
+    if (i >= 0) return spare.removeAt(i);
+    return spare.isEmpty ? null : spare.removeAt(0);
+  }
+
+  /// Writes down what a day was dealt, and forgets what is older than the
+  /// archive shows.
+  Future<void> _noteDealt(DateTime day, List<Pill> deck) async {
+    deckHistory[dateKey(day)] = deck.map((p) => p.id).toList();
+    final keys = deckHistory.keys.toList()..sort();
+    while (keys.length > 60) {
+      deckHistory.remove(keys.removeAt(0));
+    }
+    await _prefs.setString(_kDeckHistory, jsonEncode(deckHistory));
+  }
+
+  static Map<String, List<String>> _decodeHistory(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! Map) return {};
+    return {
+      for (final e in parsed.entries)
+        if (e.value is List)
+          '${e.key}': (e.value as List).whereType<String>().toList(),
+    };
+  }
+
+  /// What a past day was dealt: what this phone wrote down, or failing
+  /// that what the calendar says it was.
+  List<Pill> deckOn(DateTime day) {
+    if (dateKey(day) == dateKey(today)) return todaysDeck;
+    final noted = deckHistory[dateKey(day)];
+    if (noted != null && noted.isNotEmpty) return pillsByIds(noted);
+    return sharedDeckFor(day);
+  }
+
+  /// True when today's five carried the reader up a rung.
+  bool get climbedToday => standing.at > rungAtDayStart;
 
   // ── Streak ────────────────────────────────────────────────────────────
 
@@ -498,6 +577,10 @@ class AppState extends ChangeNotifier {
     today: today,
   );
 
+  /// The mix as the personal deals see it. The five of the day never look
+  /// at this; the second set and the swaps do.
+  Map<String, double> get leanedWeights => topicWeights;
+
   /// Records a commitment.
   ///
   /// A card can be answered again only when it has come back for review —
@@ -598,27 +681,11 @@ class AppState extends ChangeNotifier {
 
   /// Tomorrow's cards, dealt the way tomorrow will deal them.
   ///
-  /// The dealer is deterministic in the date and the reading history, and
-  /// once a day is done the history is exactly what tomorrow will see — so
-  /// tonight can say what opens the morning and the morning will agree. Only
-  /// what a plain day holds: a second set is something the reader opens.
+  /// The calendar is the same tonight as it will be in the morning, so
+  /// tonight can say what opens the day and the morning will agree.
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    final reviews = _reviewsDue(tomorrow).take(kReviewsPerDay).toList();
-    final fresh = pillsForDate(
-      tomorrow,
-      topics: pickedTopics,
-      weights: topicWeights,
-      levels: topicLevels,
-      exclude: {
-        ...seenIds,
-        ...todaysDeck.map((p) => p.id),
-        ...reviews.map((p) => p.id),
-      },
-      count: kPillsPerDay - reviews.length,
-    );
-    return [...reviews, ...fresh]
-      ..sort((a, b) => a.difficulty.index.compareTo(b.difficulty.index));
+    return _personalised(sharedDeckFor(tomorrow), on: tomorrow);
   }
 
   /// Another card teaching the same principle that the reader has not met,
@@ -970,13 +1037,14 @@ class AppState extends ChangeNotifier {
     final extra = pillsForDate(
       today,
       topics: pickedTopics,
-      weights: topicWeights,
+      weights: leanedWeights,
       levels: topicLevels,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       count: kPillsPerDay,
     );
     todaysDeck = [...todaysDeck, ...extra];
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    await _noteDealt(today, todaysDeck);
     notifyListeners();
   }
 
@@ -1025,6 +1093,7 @@ class AppState extends ChangeNotifier {
     judgements = [];
     topicWeights = {};
     topicLevels = {};
+    deckHistory = {};
     await _startNewDay();
     notifyListeners();
   }

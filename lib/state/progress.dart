@@ -56,14 +56,19 @@ class Rung {
 /// order is the order in which the habit actually forms: read at all,
 /// commit before turning the card over, say how sure you are, be right
 /// about how sure you are, and keep what you got.
+///
+/// The numbers are paced to a day of five with two that ask: reading
+/// climbs at five a day, answering at two, and the top rung is about two
+/// months of most days kept — far enough to be worth something, near
+/// enough to be seen from the first week.
 const List<Rung> kRungs = [
   Rung('day_one'),
   Rung('reading', read: 20),
-  Rung('answering', read: 40, answered: 20),
-  Rung('saying_how_sure', read: 70, answered: 40, judged: 30),
-  Rung('calibrated', read: 110, answered: 70, judged: 50, gap: 15, held: 8),
-  Rung('holding', read: 170, answered: 110, judged: 80, gap: 15, held: 25),
-  Rung('sharp', read: 260, answered: 180, judged: 130, gap: 10, held: 55),
+  Rung('answering', read: 40, answered: 10),
+  Rung('saying_how_sure', read: 70, answered: 20, judged: 15),
+  Rung('calibrated', read: 110, answered: 35, judged: 25, gap: 15, held: 5),
+  Rung('holding', read: 170, answered: 55, judged: 40, gap: 15, held: 15),
+  Rung('sharp', read: 260, answered: 90, judged: 65, gap: 10, held: 35),
 ];
 
 /// What the reader has, measured against what the ladder asks.

@@ -29,12 +29,18 @@ class DeckViewerScreen extends StatefulWidget {
   final String title;
   final int initialIndex;
 
+  /// True when these cards are back to be answered again — the ones that
+  /// came due — rather than read back. Then a card that asks holds its
+  /// answer until the reader commits, the way it did the first time.
+  final bool answering;
+
   const DeckViewerScreen({
     super.key,
     required this.app,
     required this.deck,
     required this.title,
     this.initialIndex = 0,
+    this.answering = false,
   });
 
   @override
@@ -128,8 +134,10 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                   onAdvance: () => setState(
                     () => _index = (_index + 1) % widget.deck.length,
                   ),
-                  reviewIds: const {},
-                  answering: false,
+                  reviewIds: widget.answering
+                      ? {for (final p in widget.deck) p.id}
+                      : const {},
+                  answering: widget.answering,
                   answerFor: widget.app.answerFor,
                   onAnswer: (id, response, confidence, reason) =>
                       widget.app.recordAnswer(

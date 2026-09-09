@@ -79,21 +79,9 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     return out;
   }
 
-  /// What that day held.
-  ///
-  /// Today's is the real deck. An earlier day is dealt again from the same
-  /// date the dealer used, which is deterministic — the app has never
-  /// stored a finished day's cards, and dealing it again is closer to the
-  /// truth than showing nothing.
-  List<Pill> _deckOf(DateTime day) {
-    if (dateKey(day) == dateKey(widget.app.today)) return widget.app.todaysDeck;
-    return pillsForDate(
-      day,
-      topics: widget.app.pickedTopics,
-      weights: widget.app.topicWeights,
-      levels: widget.app.topicLevels,
-    );
-  }
+  /// What that day held: today's real deck, or what the phone wrote down
+  /// the day it was dealt, or the calendar's word for it.
+  List<Pill> _deckOf(DateTime day) => widget.app.deckOn(day);
 
   @override
   Widget build(BuildContext context) {

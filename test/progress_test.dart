@@ -58,7 +58,8 @@ void main() {
       expect(blind.rung.id, 'saying_how_sure');
       expect(blind.step!.kind, StepKind.beforeJudged);
 
-      // The same reader, now measurably calibrated.
+      // The same reader, now measurably calibrated — and with that many
+      // cards held and answered, already holding.
       final sharp = standing(
         read: 200,
         answered: 150,
@@ -66,7 +67,11 @@ void main() {
         held: 30,
         gap: 9,
       );
-      expect(sharp.rung.id, 'calibrated');
+      expect(sharp.rung.id, 'holding');
+      expect(
+        standing(read: 120, answered: 40, judged: 30, held: 6, gap: 9).rung.id,
+        'calibrated',
+      );
     });
 
     test('a wide gap holds the reader on the rung below', () {

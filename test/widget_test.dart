@@ -7,6 +7,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pills_data.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
@@ -39,6 +40,10 @@ Future<void> _settle(WidgetTester tester) async {
     await tester.pump(const Duration(milliseconds: 100));
   }
 }
+
+/// The five everybody gets today. A fresh install has nothing to swap, so
+/// its deck is the calendar's, card for card.
+List<Pill> get _todaysFive => sharedDeckFor(DateTime.now());
 
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
@@ -478,16 +483,18 @@ void main() {
   });
 
   test('the mix the reader dragged governs every card it can', () {
-    // Worth stating plainly, because it bounds what the radar can promise:
-    // four cards in five have to ask something, and everything that asks
-    // lives under Thinking. So the mix governs the reading card, and the
-    // reading card only — but it governs it completely.
+    // Worth stating plainly, because it bounds what the mix can promise:
+    // two cards in five ask something, and nearly everything that asks
+    // lives under Thinking. So the mix governs the reading cards, and the
+    // reading cards only — but it governs them completely. (The five of
+    // the day never look at the mix at all; this is the dealer behind the
+    // second set and the swaps.)
     const weights = {'space': 1.0, 'history': 1.0};
     final seen = <String>{};
 
-    // Two subjects hold ten facts between them, and a day reads one. So ten
-    // days is exactly the supply.
-    for (var d = 0; d < 10; d++) {
+    // Two subjects hold ten facts between them, and a day reads three. So
+    // three days is the supply.
+    for (var d = 0; d < 3; d++) {
       final deck = pillsForDate(
         DateTime(2026, 3, 1).add(Duration(days: d)),
         topics: weights.keys.toSet(),
@@ -506,13 +513,13 @@ void main() {
 
     // Past that the chosen subjects are spent, and the dealer reaches outside
     // them rather than handing over a short day.
-    final eleventh = pillsForDate(
-      DateTime(2026, 3, 11),
+    final fourth = pillsForDate(
+      DateTime(2026, 3, 4),
       topics: weights.keys.toSet(),
       weights: weights,
       exclude: seen,
     );
-    expect(eleventh, hasLength(kPillsPerDay));
+    expect(fourth, hasLength(kPillsPerDay));
   });
 
   test('a narrow mix still fills a whole day', () {
@@ -739,22 +746,22 @@ void main() {
     });
   });
 
-  test('the very first day is the chosen one', () async {
+  test("the first day is the calendar's day, like everybody's", () async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
     final app = AppState();
     await app.init();
 
-    // A generated first day is a gamble on the worst possible occasion.
-    expect(app.todaysDeck.map((p) => p.id).toList(), kOpeningDeck);
-
-    // And it is only the first: once anything has been read, the dealer takes
-    // over again.
-    expect(kOpeningDeck, hasLength(kPillsPerDay));
+    // Nothing of the reader's enters the five — a friend who says "did
+    // you get the third one" is talking about the same third one.
     expect(
-      kOpeningDeck.every((id) => kPillPool.any((p) => p.id == id)),
-      isTrue,
-      reason: 'the opening deck names a card that does not exist',
+      app.todaysDeck.map((p) => p.id).toList(),
+      _todaysFive.map((p) => p.id).toList(),
     );
+    expect(app.todaysDeck, hasLength(kPillsPerDay));
+    // And the phone writes down what it was dealt, for the archive.
+    final prefs = await SharedPreferences.getInstance();
+    final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
+    expect(noted[dateKey(DateTime.now())], _todaysFive.map((p) => p.id));
   });
 
   test('a day never fills up with opinions', () {
@@ -777,7 +784,7 @@ void main() {
       final graded = deck.where((p) => p.isGraded && p.asksSomething).length;
       expect(
         graded,
-        greaterThanOrEqualTo(2),
+        greaterThanOrEqualTo(1),
         reason: 'day ${d + 1} had only $graded gradeable cards',
       );
       seen.addAll(deck.map((p) => p.id));
@@ -839,7 +846,7 @@ void main() {
     // Four questions faintly stacked is three more than anybody asked for,
     // and a spoiler of the rest of the day. The one after next is drawn at
     // nothing until the top card starts to leave.
-    final List<Pill> deck = pillsByIds(kOpeningDeck);
+    final List<Pill> deck = _todaysFive;
     double shownAt(int i) {
       final finder = find.ancestor(
         of: find.text(deck[i].question),
@@ -1134,7 +1141,7 @@ void main() {
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
-    final front = pillsByIds(kOpeningDeck).first;
+    final front = _todaysFive.first;
     expect(find.text(front.question), findsOneWidget);
     expect(find.text(front.barMove), findsOneWidget);
     expect(find.text(front.answer), findsNothing);
@@ -1172,7 +1179,7 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      final front = pillsByIds(kOpeningDeck).first;
+      final front = _todaysFive.first;
       await tester.tap(find.text(front.question));
       await _settle(tester);
       // The canvas's back: the answer and the line to bring it up with.
@@ -1195,7 +1202,7 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      final deck = pillsByIds(kOpeningDeck);
+      final deck = _todaysFive;
       await tester.tap(find.text(deck.first.question));
       await _settle(tester);
       expect(find.text(deck.first.answer), findsOneWidget);
@@ -1231,7 +1238,7 @@ void main() {
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);
+      expect(prefs.getStringList('knowit.savedIds'), [_todaysFive.first.id]);
     });
 
     testWidgets('a card held down is kept, and held again is let go', (
@@ -1265,7 +1272,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      final front = pillsByIds(kOpeningDeck).first;
+      final front = _todaysFive.first;
       expect(find.text(front.answer), findsNothing);
 
       // Longer than the framework's own long press, and still a tap.
@@ -1291,7 +1298,7 @@ void main() {
       await _hold(tester, find.byType(HoldToKeep).first);
 
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds'), [kOpeningDeck.first]);
+      expect(prefs.getStringList('knowit.savedIds'), [_todaysFive.first.id]);
     });
 
     testWidgets('the day ends by naming what opens tomorrow', (tester) async {
@@ -2592,16 +2599,14 @@ void main() {
   });
 
   group('Principles', () {
-    test('the day is mostly asking, not reading', () {
+    test('the day asks twice and tells three times', () {
+      // Two decisions a day, not four: enough to keep the calibration
+      // record fed, few enough that the day gets done.
       final seen = <String>{};
       for (var day = 1; day <= 6; day++) {
         final deck = pillsForDate(DateTime(2026, 4, day), exclude: seen);
         final asking = deck.where((p) => p.asksSomething).length;
-        expect(
-          asking,
-          greaterThanOrEqualTo(4),
-          reason: 'day $day only asked $asking times',
-        );
+        expect(asking, 2, reason: 'day $day asked $asking times');
         seen.addAll(deck.map((p) => p.id));
       }
     });
