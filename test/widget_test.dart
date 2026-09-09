@@ -342,6 +342,42 @@ void main() {
     expect(find.text("Today's shelf"), findsNothing);
   });
 
+  group("The phone's language", () {
+    testWidgets('the bar speaks Italian on an Italian phone', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      // The phone's own language, as the app would meet it on launch.
+      tester.platformDispatcher.localesTestValue = const [Locale('it')];
+      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      expect(find.text('Oggi'), findsWidgets);
+      expect(find.text('Esplora'), findsOneWidget);
+      expect(find.text('Profilo'), findsOneWidget);
+    });
+
+    test('every language carries every string', () {
+      // A key missing from a language falls back to English one string at
+      // a time, which is the right behaviour on a phone and the wrong
+      // state for the repository to be in.
+      final dir = Directory('lib/l10n');
+      final files = dir
+          .listSync()
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.arb'))
+          .toList();
+      expect(files.length, greaterThanOrEqualTo(13));
+      Set<String> keysOf(File f) => (jsonDecode(f.readAsStringSync()) as Map)
+          .keys
+          .where((k) => !k.startsWith('@'))
+          .cast<String>()
+          .toSet();
+      final template = keysOf(File('lib/l10n/app_en.arb'));
+      for (final f in files) {
+        expect(keysOf(f), template, reason: f.path);
+      }
+    });
+  });
+
   group('Astut+ gates the three perks', () {
     testWidgets('the archive opens the paywall on the free plan', (
       tester,

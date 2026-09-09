@@ -416,6 +416,27 @@ training transfers.
 A debate card never asks, because an opinion is not something to be sure
 about, and ungraded answers stay out of the buckets.
 
+## Thirteen languages
+
+The app speaks the phone's language. Every string a screen shows lives in
+`lib/l10n/app_<locale>.arb` — English is the template, and Italian,
+Spanish, French, German, Portuguese, Dutch, Polish, Russian, Turkish,
+Japanese, Korean and Chinese carry every key it has; a test refuses a
+language that falls short. Plurals are real plurals (Polish and Russian
+have their `few` and `many`), and the numbers the canvas spells out —
+"five read" — are spelled in each language rather than pasted from
+English. `flutter gen-l10n` turns the files into `AppLocalizations`, and
+`context.l10n` is the way to it from any screen.
+
+The cards are not translated here. They are content, written by the model,
+and they will be translated where they are written; the same goes for the
+subject names, which are data the dealer matches on. The debug panel and
+the page on how pills are written stay English on purpose.
+
+A phone set to a language the app does not have gets English. A string a
+language has not translated yet gets English on its own, so a language can
+arrive half done without a screen going blank.
+
 ## The path, and the week
 
 Retention in an app that promises sharper thinking cannot be bought with

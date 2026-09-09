@@ -392,7 +392,7 @@ class _Head extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Explore',
+          context.l10n.tabExplore,
           style: AppText.display(
             size: 27,
             weight: FontWeight.w600,
