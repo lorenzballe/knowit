@@ -71,7 +71,7 @@ class _AstutoAppState extends State<AstutoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Astuto',
+      title: 'Astut',
       debugShowCheckedModeBanner: false,
       theme: buildAstutoTheme(Brightness.light),
       darkTheme: buildAstutoTheme(Brightness.dark),
@@ -83,7 +83,7 @@ class _AstutoAppState extends State<AstutoApp> {
   }
 }
 
-/// Astuto is a phone app served from a web page, so on anything wider than a
+/// Astut is a phone app served from a web page, so on anything wider than a
 /// handset it sits in a centred column at handset width rather than stretching
 /// a card across a desktop monitor.
 class _PhoneFrame extends StatelessWidget {
@@ -365,7 +365,7 @@ class _Splash extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Astuto',
+                  'Astut',
                   style: AppText.display(
                     size: 30,
                     weight: FontWeight.w700,

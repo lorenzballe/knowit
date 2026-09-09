@@ -9,7 +9,7 @@ import '../widgets/chunky.dart';
 import '../data/topics.dart';
 import '../widgets/motion.dart';
 
-/// What Astuto+ costs, in cents, so the saving can be worked out rather than
+/// What Astut+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 48%" is a number that quietly stops being true
 /// the first time a price moves.
 const int kMonthlyCents = 399;
@@ -69,7 +69,7 @@ const _perks = [
   ),
 ];
 
-/// Astuto+.
+/// Astut+.
 ///
 /// Prices come from the store when it answers, so what is shown is what the
 /// reader's App Store will actually charge, in their currency. Where it has
@@ -151,7 +151,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          restored ? 'Astuto+ is back.' : 'Nothing to restore on this account.',
+          restored ? 'Astut+ is back.' : 'Nothing to restore on this account.',
         ),
       ),
     );

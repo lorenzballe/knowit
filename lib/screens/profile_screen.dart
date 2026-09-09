@@ -350,7 +350,7 @@ class ProfileScreen extends StatelessWidget {
                               ? 'Nudge on, every day at ${app.notifyTime}.'
                               : remindersSupported
                               ? 'Nudge on, but the system said no. Turn '
-                                    'notifications on for Astuto in settings.'
+                                    'notifications on for Astut in settings.'
                               : 'Nudge on. Delivery needs the phone build.',
                         ),
                       ),
@@ -520,7 +520,7 @@ class ProfileScreen extends StatelessWidget {
               onTap: () => _confirmReset(context),
             ),
             _LinkRow(
-              label: app.isPlus ? 'Turn Astuto+ off' : 'Turn Astuto+ on',
+              label: app.isPlus ? 'Turn Astut+ off' : 'Turn Astut+ on',
               onTap: () async {
                 if (app.isPlus) {
                   await app.endPlus();
@@ -623,7 +623,7 @@ class _Coverage extends StatelessWidget {
     // The most any one subject has been read. The bars are drawn against
     // this, not against how many cards exist: the pool is written to keep
     // growing, so a total would be a number that quietly stops being true —
-    // and one that says "you have read 3% of Astuto", which is nobody's idea
+    // and one that says "you have read 3% of Astut", which is nobody's idea
     // of progress.
     final int busiest = rows
         .map((style) => seenByTopic[style.name] ?? 0)
@@ -916,7 +916,7 @@ class _Mastery extends StatelessWidget {
   Widget build(BuildContext context) {
     // The three you are worst at are the ones worth acting on, and they are
     // free: a reader has to see the measurement before paying to keep it.
-    // What Astuto+ adds is the rest of the board.
+    // What Astut+ adds is the rest of the board.
     final all = app.masteryByWeakness;
     final rows = app.isPlus ? all : all.take(3).toList();
     final hidden = all.length - rows.length;
@@ -998,7 +998,7 @@ class _Mastery extends StatelessWidget {
           if (hidden > 0)
             Semantics(
               button: true,
-              label: 'See every principle with Astuto plus',
+              label: 'See every principle with Astut plus',
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => requirePlus(context, app, () {}),
@@ -1058,7 +1058,7 @@ class _ShareRecord extends StatelessWidget {
 /// subscription is sold on, so it has to exist before it is sold.
 ///
 /// Free readers see that the answer is being kept and how many calls it
-/// rests on; the number itself is what Astuto+ opens.
+/// rests on; the number itself is what Astut+ opens.
 class _TrendPanel extends StatelessWidget {
   final AppState app;
   const _TrendPanel({required this.app});
@@ -1100,7 +1100,7 @@ class _TrendPanel extends StatelessWidget {
           const SizedBox(height: 10),
           if (locked)
             Text(
-              'The measurement is running. Astuto+ shows you which way it '
+              'The measurement is running. Astut+ shows you which way it '
               'is going.',
               style: AppText.body(
                 size: 13,
@@ -1202,7 +1202,7 @@ class _TrendRow extends StatelessWidget {
   }
 }
 
-/// The Astuto+ offer, on the screen where the reader is already looking at
+/// The Astut+ offer, on the screen where the reader is already looking at
 /// what the app knows about them.
 class _PlusCard extends StatelessWidget {
   final AppState app;
@@ -1261,7 +1261,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'The measurement is free and always will be. Astuto+ is what '
+            'The measurement is free and always will be. Astut+ is what '
             'tells you which way it is going.',
             style: AppText.body(
               size: 13,
@@ -1528,7 +1528,7 @@ class _RecordLine extends StatelessWidget {
         app.freezes == 1
             ? '1 freeze in hand'
             : '${app.freezes} freezes in hand',
-      app.isPlus ? 'Astuto+' : 'Free plan',
+      app.isPlus ? 'Astut+' : 'Free plan',
     ];
     return Text(
       parts.join('  ·  '),

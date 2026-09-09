@@ -48,7 +48,7 @@ class IdentityResult {
 /// browser at the project's auth handler and comes back with a user — and for
 /// a while that is what this app did. It works, and it is also why nobody
 /// finished signing in: the sheet is titled `astuto-3d398.firebaseapp.com`
-/// rather than Astuto, it opens a browser session that knows none of the
+/// rather than Astut, it opens a browser session that knows none of the
 /// accounts the phone is signed into, and so it asks someone to type an email
 /// address and a password to get into an app they have not decided to keep
 /// yet. That is a lot to ask on the second screen.

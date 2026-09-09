@@ -14,7 +14,7 @@ class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
-        'Astuto has no web Firebase app: the web build is the preview, and '
+        'Astut has no web Firebase app: the web build is the preview, and '
         'it runs on local state alone.',
       );
     }

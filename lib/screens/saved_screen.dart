@@ -151,10 +151,11 @@ class _SavedScreenState extends State<SavedScreen> {
             ),
             if (present.length > 1) ...[
               const SizedBox(height: 14),
-              _Filter(
+              TopicFilterRow(
                 topics: present,
                 picked: _topic,
                 onPick: (key) => setState(() => _topic = key),
+                keyPrefix: 'saved-filter',
               ),
             ],
             const SizedBox(height: 16),
@@ -183,75 +184,6 @@ class _SavedScreenState extends State<SavedScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// The topics on the shelf, as one row that scrolls sideways. The chips
-/// are the archive's, because they are the same act in a different room.
-class _Filter extends StatelessWidget {
-  const _Filter({
-    required this.topics,
-    required this.picked,
-    required this.onPick,
-  });
-
-  final List<String> topics;
-  final String? picked;
-  final ValueChanged<String?> onPick;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 34,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.zero,
-        itemCount: topics.length + 1,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
-        itemBuilder: (context, i) {
-          final String? key = i == 0 ? null : topics[i - 1];
-          final bool on = picked == key;
-          final style = key == null ? null : kTopics[key]!;
-          return Semantics(
-            button: true,
-            selected: on,
-            key: ValueKey('saved-filter-${key ?? 'all'}'),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => onPick(on ? null : key),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 13),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: on ? context.p.inverse : context.p.surfaceRaised,
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(
-                    color: on ? Colors.transparent : context.p.line,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (style != null) ...[
-                      TopicDot(style.color, size: 7),
-                      const SizedBox(width: 7),
-                    ],
-                    Text(
-                      style?.name ?? 'All',
-                      style: AppText.body(
-                        size: 12.5,
-                        weight: FontWeight.w500,
-                        color: on ? context.p.onInverse : context.p.inkMuted,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

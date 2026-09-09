@@ -81,11 +81,16 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 ),
               ),
               const SizedBox(height: 22),
+              // All of them at once, no box to scroll inside: a mix is a
+              // thing you see whole or it is not a mix. The chips are cut
+              // to fit a phone; the scroll view under them is the net for
+              // a screen shorter than any phone sold in years, and on a
+              // phone it never moves.
               Expanded(
                 child: SingleChildScrollView(
                   child: Wrap(
-                    spacing: 9,
-                    runSpacing: 9,
+                    spacing: 8,
+                    runSpacing: 8,
                     // Every subject the onboarding offers, in its order, and
                     // every one of them switchable. Editing a mix while being
                     // shown a shorter list than the one you were first given
@@ -161,7 +166,7 @@ class _TopicChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: on ? color : context.p.surfaceRaised,
           borderRadius: BorderRadius.circular(999),
@@ -170,16 +175,27 @@ class _TopicChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AnimatedOpacity(
+            // The tick takes room only once it is there. Kept invisible it
+            // still held its width on every chip, which is a fifth of a
+            // row of twenty-two chips spent on nothing.
+            AnimatedSize(
               duration: const Duration(milliseconds: 180),
-              opacity: on ? 1 : 0,
-              child: Icon(Icons.check_rounded, size: 13, color: onColor),
+              curve: Curves.easeOut,
+              child: on
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: Icon(
+                        Icons.check_rounded,
+                        size: 13,
+                        color: onColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ),
-            const SizedBox(width: 7),
             Text(
               label,
               style: AppText.body(
-                size: 14,
+                size: 13,
                 weight: FontWeight.w500,
                 color: on ? onColor : context.p.inkMuted,
               ),

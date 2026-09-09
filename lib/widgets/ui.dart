@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../data/topics.dart';
+
 import '../theme.dart';
 import 'chunky.dart';
 
@@ -292,6 +294,83 @@ class FlexPage extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// A row of subjects that narrows a list to one of them, "All" first.
+///
+/// One scrolling row rather than a wall of chips: the wall took six lines
+/// of the archive before a single card showed, and it is the same act on
+/// the kept shelf, so it is the same row. [topics] are topic keys.
+class TopicFilterRow extends StatelessWidget {
+  const TopicFilterRow({
+    super.key,
+    required this.topics,
+    required this.picked,
+    required this.onPick,
+    this.keyPrefix = 'filter',
+  });
+
+  final List<String> topics;
+  final String? picked;
+  final ValueChanged<String?> onPick;
+
+  /// What the chips are keyed by, so a test can tell one row from another.
+  final String keyPrefix;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 34,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.zero,
+        itemCount: topics.length + 1,
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        itemBuilder: (context, i) {
+          final String? key = i == 0 ? null : topics[i - 1];
+          final bool on = picked == key;
+          final style = key == null ? null : kTopics[key]!;
+          return Semantics(
+            button: true,
+            selected: on,
+            key: ValueKey('$keyPrefix-${key ?? 'all'}'),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => onPick(on ? null : key),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 13),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: on ? context.p.inverse : context.p.surfaceRaised,
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(
+                    color: on ? Colors.transparent : context.p.line,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (style != null) ...[
+                      TopicDot(style.color, size: 7),
+                      const SizedBox(width: 7),
+                    ],
+                    Text(
+                      style?.name ?? 'All',
+                      style: AppText.body(
+                        size: 12.5,
+                        weight: FontWeight.w500,
+                        color: on ? context.p.onInverse : context.p.inkMuted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

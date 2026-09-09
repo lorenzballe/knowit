@@ -140,50 +140,11 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     ),
                   ),
                   const SizedBox(height: 14),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: kTopicOrder.map((key) {
-                      final style = kTopics[key]!;
-                      final on = _topicFilter == key;
-                      return GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () =>
-                            setState(() => _topicFilter = on ? null : key),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 13,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: on
-                                ? context.p.inverse
-                                : context.p.surfaceRaised,
-                            borderRadius: BorderRadius.circular(999),
-                            border: Border.all(
-                              color: on ? Colors.transparent : context.p.line,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              TopicDot(style.color, size: 7),
-                              const SizedBox(width: 7),
-                              Text(
-                                style.name,
-                                style: AppText.body(
-                                  size: 12.5,
-                                  weight: FontWeight.w500,
-                                  color: on
-                                      ? context.p.onInverse
-                                      : context.p.inkMuted,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                  TopicFilterRow(
+                    topics: kTopicOrder,
+                    picked: _topicFilter,
+                    onPick: (key) => setState(() => _topicFilter = key),
+                    keyPrefix: 'archive-filter',
                   ),
                   const SizedBox(height: 14),
                 ],

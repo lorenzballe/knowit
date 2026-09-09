@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# Astuto — iOS build & TestFlight on Codemagic (no Mac).
+# Astut — iOS build & TestFlight on Codemagic (no Mac).
 #
 # Signing strategy: because a distribution certificate's PRIVATE KEY only exists
 # where the cert was first created, any pre-existing cert in the Apple account is

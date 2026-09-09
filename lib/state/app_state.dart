@@ -92,7 +92,7 @@ class AppState extends ChangeNotifier {
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
 
-  /// True once the Astuto+ second set has been unlocked today.
+  /// True once the Astut+ second set has been unlocked today.
   bool extraSetOpen = false;
 
   /// Which of today's cards are here because they came back.
@@ -114,7 +114,7 @@ class AppState extends ChangeNotifier {
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
-  /// Astuto+ — gates the archive, image export and the topic mix.
+  /// Astut+ — gates the archive, image export and the topic mix.
   bool isPlus = false;
   String name = 'You';
   Plan plan = Plan.year;
@@ -170,7 +170,7 @@ class AppState extends ChangeNotifier {
     try {
       await _restore();
     } catch (error, stack) {
-      debugPrint('Astuto: could not restore stored state, starting fresh');
+      debugPrint('Astut: could not restore stored state, starting fresh');
       debugPrintStack(stackTrace: stack, label: '$error');
       await _startNewDay();
     }
@@ -918,7 +918,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Unlocks the Astuto+ screens locally. No billing is wired up, so this
+  /// Unlocks the Astut+ screens locally. No billing is wired up, so this
   /// only flips a stored flag — the paywall says as much when it calls it.
   Future<void> startPlusTrial() async {
     isPlus = true;
@@ -926,11 +926,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// True when the reader is on Astuto+, has finished the day and has a
+  /// True when the reader is on Astut+, has finished the day and has a
   /// second set still waiting.
   bool get canOpenExtraSet => isPlus && todayCompleted && !extraSetOpen;
 
-  /// Unlocks the second set of the day — the "5 extra pills" Astuto+ perk.
+  /// Unlocks the second set of the day — the "5 extra pills" Astut+ perk.
   Future<void> openExtraSet() async {
     if (!canOpenExtraSet) return;
     extraSetOpen = true;

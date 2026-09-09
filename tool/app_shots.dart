@@ -208,7 +208,7 @@ void main() {
   });
 
   testWidgets('the topics editor, with every subject live', (tester) async {
-    // On the paid plan, because editing the mix is behind Astuto+ and the
+    // On the paid plan, because editing the mix is behind Astut+ and the
     // free plan quite rightly answers that tap with the paywall.
     // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues({

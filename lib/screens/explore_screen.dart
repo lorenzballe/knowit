@@ -97,8 +97,10 @@ class ExploreScreenState extends State<ExploreScreen> {
         if (!_searching)
           _SubjectRow(
             selected: _subject,
+            // A subject, All, or the lit subject again — the last two both
+            // clear it, so the way back is whichever the finger finds first.
             onPick: (name) =>
-                setState(() => _subject = _subject == name ? null : name),
+                setState(() => _subject = name == _subject ? null : name),
           ),
         Expanded(child: _searching ? _found(context) : _shelfList(context)),
       ],
@@ -434,7 +436,9 @@ class _SubjectRow extends StatelessWidget {
   const _SubjectRow({required this.selected, required this.onPick});
 
   final String? selected;
-  final ValueChanged<String> onPick;
+
+  /// Null clears the filter — the "All" at the head of the row.
+  final ValueChanged<String?> onPick;
 
   @override
   Widget build(BuildContext context) {
@@ -443,21 +447,29 @@ class _SubjectRow extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: kMixSubjects.length,
+        // "All" first, so the way back to everything is a chip and not
+        // the knowledge that tapping the lit one again clears it.
+        itemCount: kMixSubjects.length + 1,
         separatorBuilder: (_, _) => const SizedBox(width: 7),
         itemBuilder: (context, i) {
-          final subject = kMixSubjects[i];
-          final bool on = selected == subject.name;
-          final Color ink = on ? inkOn(subject.color) : context.p.ink;
+          final MixSubject? subject = i == 0 ? null : kMixSubjects[i - 1];
+          final bool on = subject == null
+              ? selected == null
+              : selected == subject.name;
+          final Color ink = subject == null
+              ? (on ? context.p.onInverse : context.p.ink)
+              : (on ? inkOn(subject.color) : context.p.ink);
           return Semantics(
             // The key says which subject and whether it is chosen, so the
             // one thing this row does can be seen from outside it.
-            key: ValueKey('subject-${subject.name}-${on ? 'on' : 'off'}'),
+            key: ValueKey(
+              'subject-${subject?.name ?? 'All'}-${on ? 'on' : 'off'}',
+            ),
             button: true,
             selected: on,
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () => onPick(subject.name),
+              onTap: () => onPick(subject?.name),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: AnimatedContainer(
@@ -466,21 +478,23 @@ class _SubjectRow extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 13),
                   decoration: BoxDecoration(
                     color: on
-                        ? subject.color
+                        ? (subject?.color ?? context.p.inverse)
                         : context.p.ink.withValues(alpha: 0.06),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SubjectIcon(
-                        subject: subject.name,
-                        size: 14,
-                        ink: on ? ink : subject.color,
-                      ),
-                      const SizedBox(width: 8),
+                      if (subject != null) ...[
+                        SubjectIcon(
+                          subject: subject.name,
+                          size: 14,
+                          ink: on ? ink : subject.color,
+                        ),
+                        const SizedBox(width: 8),
+                      ],
                       Text(
-                        subject.name,
+                        subject?.name ?? 'All',
                         style: AppText.body(
                           size: 12.5,
                           weight: FontWeight.w600,
@@ -780,11 +794,14 @@ class _SmallRow extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
+                      // From the top, whatever the length: a short question
+                      // sitting at the bottom of its card next to a long one
+                      // filling its own reads as two designs on one shelf.
                       child: ScaledText(
                         text: pill.question,
                         min: 10.5,
                         max: 15,
-                        alignment: Alignment.bottomLeft,
+                        alignment: Alignment.topLeft,
                         styleFor: (size) => AppText.display(
                           size: size,
                           weight: FontWeight.w600,

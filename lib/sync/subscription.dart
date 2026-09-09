@@ -3,7 +3,7 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
-/// The one entitlement Astuto sells. Everything gated asks this by name.
+/// The one entitlement Astut sells. Everything gated asks this by name.
 ///
 /// Configurable at build time because the name lives in RevenueCat, not here,
 /// and the two have to agree exactly — an entitlement the app asks for under

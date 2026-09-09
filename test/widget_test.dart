@@ -180,7 +180,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('Astuto'), findsOneWidget);
+    expect(find.text('Astut'), findsOneWidget);
     expect(
       find.text('Five smart things a day, ready to use in conversation'),
       findsOneWidget,
@@ -306,8 +306,11 @@ void main() {
     expect(find.byKey(const ValueKey('subject-Economics-on')), findsOneWidget);
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsNothing);
 
-    await tester.tap(find.byKey(const ValueKey('subject-Economics-on')));
+    // "All" at the head of the row is the other way back.
+    expect(find.byKey(const ValueKey('subject-All-off')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('subject-All-off')));
     await _settle(tester);
+    expect(find.byKey(const ValueKey('subject-All-on')), findsOneWidget);
     expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
 
@@ -320,7 +323,7 @@ void main() {
     expect(find.text("Today's shelf"), findsNothing);
   });
 
-  group('Astuto+ gates the three perks', () {
+  group('Astut+ gates the three perks', () {
     testWidgets('the archive opens the paywall on the free plan', (
       tester,
     ) async {
@@ -361,7 +364,7 @@ void main() {
       expect(find.text('What should we talk about?'), findsNothing);
     });
 
-    testWidgets('the archive opens for real on Astuto+', (tester) async {
+    testWidgets('the archive opens for real on Astut+', (tester) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -672,7 +675,7 @@ void main() {
       expect(app.streakWasFrozen, isFalse);
     });
 
-    test('the free plan holds one, Astuto+ holds three', () async {
+    test('the free plan holds one, Astut+ holds three', () async {
       final free = await appWith({});
       expect(free.freezeCapacity, 1);
 
@@ -1028,7 +1031,7 @@ void main() {
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 
-  testWidgets('Astuto+ hands over the second set once the day is done', (
+  testWidgets('Astut+ hands over the second set once the day is done', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed(plus: true));
@@ -2709,7 +2712,7 @@ void main() {
       await _settle(tester);
 
       // The app is past the splash and dealing a real day. The header used
-      // to say Astuto, which is not something a screen has to tell you about
+      // to say Astut, which is not something a screen has to tell you about
       // the app you just opened; it says the date now, so the tab bar and
       // the deck are what stand for "it came back".
       expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
@@ -3011,7 +3014,7 @@ void main() {
       expect(prefs.getBool('knowit.onboarded'), isNot(true));
     });
 
-    testWidgets('the plan toggle turns Astuto+ on and off', (tester) async {
+    testWidgets('the plan toggle turns Astut+ on and off', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -3031,10 +3034,10 @@ void main() {
 
       final prefs = await SharedPreferences.getInstance();
 
-      await tapToggle('Turn Astuto+ on');
+      await tapToggle('Turn Astut+ on');
       expect(prefs.getBool('knowit.plus'), isTrue);
 
-      await tapToggle('Turn Astuto+ off');
+      await tapToggle('Turn Astut+ off');
       expect(prefs.getBool('knowit.plus'), isFalse);
     });
   });
@@ -3106,7 +3109,7 @@ void main() {
         (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
       ];
       const titles = [
-        'Astuto',
+        'Astut',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',
@@ -3171,7 +3174,7 @@ void main() {
       await pumpIntro(tester);
 
       const titles = [
-        'Astuto',
+        'Astut',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',

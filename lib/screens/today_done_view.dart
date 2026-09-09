@@ -1218,7 +1218,7 @@ class _ExploreButtonState extends State<_ExploreButton> {
 }
 
 /// The way on: everyone's best of today, and under it the second set —
-/// as an offer on the free plan, as a deal on Astuto+, and not at all once
+/// as an offer on the free plan, as a deal on Astut+, and not at all once
 /// it has been dealt.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app, required this.onExplore});

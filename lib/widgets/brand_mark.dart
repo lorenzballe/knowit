@@ -19,7 +19,7 @@ class BrandMark extends StatelessWidget {
       width: size,
       height: size,
       filterQuality: FilterQuality.medium,
-      semanticLabel: 'Astuto',
+      semanticLabel: 'Astut',
     );
   }
 }
