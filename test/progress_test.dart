@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/topics.dart';
 import 'package:astuto/state/progress.dart';
 
 Judgement said(
@@ -204,6 +206,64 @@ void main() {
       );
       expect(report.misses, hasLength(1));
       expect(report.misses.single.confidence, 90);
+    });
+  });
+
+  group('What the reader knows leans the deal', () {
+    // The lean only shows on a subject that holds both kinds of card —
+    // some that ask and some that only tell — so the test finds one in the
+    // pool rather than assuming which it is.
+    late final String key;
+    late final String name;
+    setUpAll(() {
+      final asks = <String, int>{};
+      final reads = <String, int>{};
+      for (final p in kPillPool) {
+        final m = p.asksSomething ? asks : reads;
+        m[p.topic] = (m[p.topic] ?? 0) + 1;
+      }
+      final both = asks.keys.where((t) => (reads[t] ?? 0) > 0).toList()
+        ..sort((a, b) {
+          int least(String t) => asks[t]! < reads[t]! ? asks[t]! : reads[t]!;
+          return least(b).compareTo(least(a));
+        });
+      expect(both, isNotEmpty, reason: 'no subject holds both kinds of card');
+      name = both.first;
+      key = kTopics.entries.firstWhere((e) => e.value.name == name).key;
+    });
+
+    // A day is a fixed share of questions and reads, so on one subject the
+    // lean can move nothing; against another it moves which subject's
+    // questions take the asking slots. Over many days, count that subject's
+    // questions in the deck.
+    int questionsOf(int level) {
+      final others = kTopics.keys.where((k) => k != key).toList();
+      var n = 0;
+      for (var d = 1; d <= 120; d++) {
+        final deck = pillsForDate(
+          DateTime(2026, 1, 1).add(Duration(days: d)),
+          topics: {key, ...others},
+          weights: {key: 1, for (final o in others) o: 1},
+          levels: {key: level},
+          count: 10,
+        );
+        n += deck.where((p) => p.topic == name && p.asksSomething).length;
+      }
+      return n;
+    }
+
+    test('solid is asked, curious is told', () {
+      expect(questionsOf(2), greaterThan(questionsOf(0)));
+    });
+
+    test('saying nothing changes nothing', () {
+      List<String> ids(Map<String, int> levels) => pillsForDate(
+        DateTime(2026, 3, 3),
+        topics: {'history', 'science'},
+        weights: const {'history': 1, 'science': 1},
+        levels: levels,
+      ).map((p) => p.id).toList();
+      expect(ids(const {'history': 1}), ids(const {}));
     });
   });
 }

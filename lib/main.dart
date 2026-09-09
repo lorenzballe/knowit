@@ -7,6 +7,7 @@ import 'cloud.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'screens/intro_screen.dart';
+import 'screens/know_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
@@ -124,7 +125,7 @@ class _PhoneFrame extends StatelessWidget {
 /// The onboarding is two screens and no more: the intro that says what the
 /// app is, then the subject run that fills the deck. Everything else waits
 /// until there is something worth signing in to keep.
-enum _Stage { intro, subjects, comeback, shell }
+enum _Stage { intro, subjects, know, comeback, shell }
 
 class AstutoRoot extends StatefulWidget {
   final AppState app;
@@ -318,8 +319,20 @@ class _AstutoRootState extends State<AstutoRoot> {
         return MixScreen(
           onDone: (weights) async {
             await _app.setTopicMix(weights);
+            if (mounted) _go(_Stage.know);
+          },
+        );
+
+      // One more question, and a way past it: what the reader already
+      // knows of what they just asked for. The cards start either way.
+      case _Stage.know:
+        return KnowScreen(
+          app: _app,
+          onDone: (levels) async {
+            await _app.setTopicLevels(levels);
             await _finishOnboarding();
           },
+          onSkip: _finishOnboarding,
         );
 
       case _Stage.comeback:

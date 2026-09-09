@@ -60,6 +60,12 @@ List<Pill> pillsForDate(
   /// How much of each subject the reader asked for, 0..1 by topic key. When
   /// this is empty the deck spreads evenly, which is what it always did.
   Map<String, double> weights = const {},
+
+  /// How much of each subject the reader says they already know, by topic
+  /// key: 0 curious, 1 some, 2 solid. Absent means 1. It does not change
+  /// how much of a subject a day holds — that is the mix — but what kind of
+  /// card: somebody solid on a subject is asked, somebody new to it is told.
+  Map<String, int> levels = const {},
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = List<Pill>.from(kPillPool);
@@ -88,11 +94,22 @@ List<Pill> pillsForDate(
     for (final entry in kTopics.entries)
       entry.value.name: weights[entry.key] ?? 0.0,
   };
-  final ordered = weights.isEmpty
+  final levelByName = {
+    for (final entry in kTopics.entries)
+      if (levels[entry.key] != null) entry.value.name: levels[entry.key]!,
+  };
+  final ordered = weights.isEmpty && levels.isEmpty
       ? [for (final tier in tiers) ..._oneTopicFirst(tier)]
       : [
           for (final tier in tiers)
-            ..._weightedOrder(tier, byName, Random(seed)),
+            ..._weightedOrder(
+              tier,
+              weights.isEmpty
+                  ? {for (final name in byName.keys) name: 1.0}
+                  : byName,
+              Random(seed),
+              levels: levelByName,
+            ),
         ];
 
   // Fill the asking slots first, then top the day up with reading. Both
@@ -210,12 +227,13 @@ List<Pill> searchPills(String query) {
 List<Pill> _weightedOrder(
   List<Pill> pills,
   Map<String, double> byName,
-  Random rng,
-) {
+  Random rng, {
+  Map<String, int> levels = const {},
+}) {
   if (pills.isEmpty) return pills;
   final keyed = <(double, Pill)>[];
   for (final pill in pills) {
-    final w = byName[pill.topic] ?? 0.0;
+    final w = (byName[pill.topic] ?? 0.0) * _fit(pill, levels[pill.topic]);
     // A subject pushed all the way in still exists — it just goes last,
     // which is what keeps a day full when the mix is narrow.
     final weight = w <= 0 ? 1e-6 : w;
@@ -224,6 +242,21 @@ List<Pill> _weightedOrder(
   }
   keyed.sort((a, b) => a.$1.compareTo(b.$1));
   return [for (final entry in keyed) entry.$2];
+}
+
+/// How well a card suits what the reader says they know of its subject.
+///
+/// Solid on a subject: the cards that ask something, and the harder ones,
+/// come up half again as often; a plain easy read, less. New to it: the
+/// other way round. Some, or nothing said: no change. It is a lean on the
+/// draw, not a rule — a reader solid on history still meets a history fact,
+/// only later in the queue than the question about it.
+double _fit(Pill pill, int? level) {
+  if (level == null || level == 1) return 1;
+  final bool demanding =
+      pill.asksSomething || pill.difficulty != Difficulty.easy;
+  if (level >= 2) return demanding ? 1.5 : 0.7;
+  return demanding ? 0.7 : 1.5;
 }
 
 /// A rotating pick of cards, the same for everybody.

@@ -26,6 +26,7 @@ class ReaderSnapshot {
     this.judgements = const [],
     this.pickedTopics = const [],
     this.topicWeights = const {},
+    this.topicLevels = const {},
     this.pushTokens = const [],
   });
 
@@ -41,6 +42,9 @@ class ReaderSnapshot {
   final List<Judgement> judgements;
   final List<String> pickedTopics;
   final Map<String, double> topicWeights;
+
+  /// What the reader said they already know of each subject, by key.
+  final Map<String, int> topicLevels;
 
   /// Where to send a notification, one entry per phone the reader uses.
   final List<String> pushTokens;
@@ -66,6 +70,7 @@ class ReaderSnapshot {
     'judgements': judgements.map((j) => j.toJson()).toList(),
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
+    'topicLevels': topicLevels,
     'pushTokens': pushTokens,
   };
 
@@ -100,6 +105,16 @@ class ReaderSnapshot {
       }
     }
 
+    final levelsRaw = raw['topicLevels'];
+    final levels = <String, int>{};
+    if (levelsRaw is Map) {
+      for (final entry in levelsRaw.entries) {
+        final key = entry.key;
+        final value = entry.value;
+        if (key is String && value is num) levels[key] = value.round();
+      }
+    }
+
     return ReaderSnapshot(
       name: raw['name'] is String ? raw['name'] as String : 'You',
       streak: raw['streak'] is int ? raw['streak'] as int : 0,
@@ -115,6 +130,7 @@ class ReaderSnapshot {
       judgements: judgements,
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
+      topicLevels: levels,
       pushTokens: strings(raw['pushTokens']),
     );
   }
@@ -187,6 +203,8 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
         ? local.pickedTopics
         : union(local.pickedTopics, remote.pickedTopics),
     topicWeights: localChoseMix ? local.topicWeights : remote.topicWeights,
+    // Said in the same breath as the mix, so it travels with it.
+    topicLevels: localChoseMix ? local.topicLevels : remote.topicLevels,
     // A reader with two phones should be reachable on both.
     pushTokens: union(local.pushTokens, remote.pushTokens),
   );

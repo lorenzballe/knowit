@@ -213,13 +213,25 @@ void main() {
     await _settle(tester);
     expect(find.text('17 of 18 subjects in the mix'), findsOneWidget);
 
+    await tester.tap(find.text('Next'));
+    await _settle(tester);
+
+    // Three: what you already know, of the subjects pushed highest. One
+    // subject marked solid, the rest left as they are.
+    expect(find.text('know'), findsOneWidget);
+    expect(find.byKey(const ValueKey('know-economics-2')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('know-economics-2')));
+    await _settle(tester);
     await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
-    // And the answer is kept, not just used once.
+    // And the answers are kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
     final weights = jsonDecode(prefs.getString('knowit.topicWeights')!) as Map;
+    final levels = jsonDecode(prefs.getString('knowit.topicLevels')!) as Map;
     expect(prefs.getBool('knowit.onboarded'), isTrue);
+    expect(levels['economics'], 2);
+    expect(levels['sport'], 1);
 
     // Science was dragged to nothing, so it is not in the mix.
     expect(weights.containsKey('science'), isFalse);
@@ -945,7 +957,12 @@ void main() {
 
     // Two: the mix.
     expect(find.text('Science'), findsOneWidget);
-    await tester.tap(find.text('Start with my first cards'));
+    await tester.tap(find.text('Next'));
+    await _settle(tester);
+
+    // Three: what you know, which can be skipped — the cards start anyway.
+    expect(find.text('Skip for now'), findsOneWidget);
+    await tester.tap(find.text('Skip for now'));
     await _settle(tester);
 
     expect(find.byType(PillCardStack), findsOneWidget);

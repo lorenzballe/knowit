@@ -18,6 +18,7 @@ import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
+import 'know_screen.dart';
 import 'saved_screen.dart';
 import 'week_screen.dart';
 import 'how_screen.dart';
@@ -361,6 +362,23 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          // What the reader said they know, which a day is dealt by and
+          // which they may well have got wrong the first morning.
+          _LinkRow(
+            label: 'How much you know',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => KnowScreen(
+                  app: app,
+                  onBack: () => Navigator.of(routeContext).pop(),
+                  onDone: (levels) async {
+                    await app.setTopicLevels(levels);
+                    if (routeContext.mounted) Navigator.of(routeContext).pop();
+                  },
+                ),
+              ),
+            ),
+          ),
           // The week, which is the only distance from which a direction is
           // visible at all — the day is too close to it.
           _LinkRow(

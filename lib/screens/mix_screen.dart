@@ -523,7 +523,8 @@ class _StartButtonState extends State<_StartButton> {
             borderRadius: BorderRadius.circular(18),
           ),
           child: Text(
-            'Start with my first cards',
+            // The cards start one screen on, after one more question.
+            'Next',
             style: AppText.body(
               size: 16,
               weight: FontWeight.w700,

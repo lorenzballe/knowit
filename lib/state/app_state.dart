@@ -54,6 +54,7 @@ class AppState extends ChangeNotifier {
   static const _kOnboarded = 'knowit.onboarded';
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
+  static const _kTopicLevels = 'knowit.topicLevels';
   static const _kNotifications = 'knowit.notifications';
   static const _kNotifyHour = 'knowit.notifyHour';
   static const _kPillsRead = 'knowit.pillsRead';
@@ -111,6 +112,11 @@ class AppState extends ChangeNotifier {
   /// How much of each subject the reader asked for, 0..1 by topic key. Empty
   /// means they never said, and every subject is dealt evenly.
   Map<String, double> topicWeights = {};
+
+  /// What the reader says they already know of each subject: 0 curious,
+  /// 1 some, 2 solid, by topic key. Only the subjects they were asked about
+  /// are here; the rest count as 1.
+  Map<String, int> topicLevels = {};
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
@@ -194,6 +200,7 @@ class AppState extends ChangeNotifier {
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
+    topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
       pickedTopics = storedTopics.toSet();
@@ -298,6 +305,7 @@ class AppState extends ChangeNotifier {
       today,
       topics: pickedTopics,
       weights: topicWeights,
+      levels: topicLevels,
       exclude: {...seenIds, ...reviews.map((p) => p.id)},
       count: size - reviews.length,
     );
@@ -601,6 +609,7 @@ class AppState extends ChangeNotifier {
       tomorrow,
       topics: pickedTopics,
       weights: topicWeights,
+      levels: topicLevels,
       exclude: {
         ...seenIds,
         ...todaysDeck.map((p) => p.id),
@@ -883,6 +892,28 @@ class AppState extends ChangeNotifier {
   ///
   /// The weights and the picked set are two views of one answer, so they are
   /// written together and never separately.
+  /// Keeps what the reader says they know. The whole answer at once: the
+  /// screen that asks is the only writer, and it always writes all of it.
+  Future<void> setTopicLevels(Map<String, int> levels) async {
+    topicLevels = {...levels};
+    await _prefs.setString(_kTopicLevels, jsonEncode(levels));
+    notifyListeners();
+  }
+
+  static Map<String, int> _decodeLevels(String? raw) {
+    if (raw == null) return {};
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! Map) return {};
+      return {
+        for (final e in decoded.entries)
+          if (e.value is num) e.key.toString(): (e.value as num).round(),
+      };
+    } catch (_) {
+      return {};
+    }
+  }
+
   Future<void> setTopicMix(Map<String, double> weights) async {
     topicWeights = {...weights};
     // Thinking is never on the wheel and never off the deck: every card that
@@ -940,6 +971,7 @@ class AppState extends ChangeNotifier {
       today,
       topics: pickedTopics,
       weights: topicWeights,
+      levels: topicLevels,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       count: kPillsPerDay,
     );
@@ -991,6 +1023,8 @@ class AppState extends ChangeNotifier {
     reviewIdsToday = {};
     answers = {};
     judgements = [];
+    topicWeights = {};
+    topicLevels = {};
     await _startNewDay();
     notifyListeners();
   }
@@ -1039,6 +1073,7 @@ class AppState extends ChangeNotifier {
     judgements: List<Judgement>.from(judgements),
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
+    topicLevels: Map<String, int>.from(topicLevels),
     pushTokens: List<String>.from(pushTokens),
   );
 
@@ -1060,6 +1095,7 @@ class AppState extends ChangeNotifier {
     judgements = List<Judgement>.from(s.judgements);
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
+    topicLevels = Map<String, int>.from(s.topicLevels);
     pushTokens = List<String>.from(s.pushTokens);
 
     await _prefs.setString(_kName, name);
@@ -1074,6 +1110,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
     await _prefs.setString(_kTopicWeights, jsonEncode(topicWeights));
+    await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
     await _prefs.setStringList(_kPushTokens, pushTokens);
     await _saveAnswers();
     notifyListeners();

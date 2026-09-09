@@ -89,6 +89,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
       day,
       topics: widget.app.pickedTopics,
       weights: widget.app.topicWeights,
+      levels: widget.app.topicLevels,
     );
   }
 
