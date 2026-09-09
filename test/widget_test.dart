@@ -1415,7 +1415,6 @@ void main() {
       'YOUR RECORD',
       'APPEARANCE',
       'YOUR TOPICS',
-      'WHAT YOU HAVE COVERED',
       'DAILY NUDGE',
       'DEBUG',
     ]);
@@ -1423,7 +1422,6 @@ void main() {
       'YOUR RECORD',
       'APPEARANCE',
       'YOUR TOPICS',
-      'WHAT YOU HAVE COVERED',
       'DAILY NUDGE',
       'DEBUG',
     ]);

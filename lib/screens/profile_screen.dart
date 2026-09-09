@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../data/pills_data.dart';
 import '../data/topics.dart';
 import 'mix_screen.dart';
 import '../cloud.dart';
@@ -274,12 +273,6 @@ class ProfileScreen extends StatelessWidget {
           // nineteen subjects all reading zero is the same wall of nothing
           // the four tiles used to be. Under the topics, because it is the
           // topics, read.
-          if (app.seenIds.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            const Eyebrow('What you have covered'),
-            const SizedBox(height: 11),
-            _Coverage(app: app),
-          ],
           if (app.calibratedAnswers > 0) ...[
             const SizedBox(height: 22),
             const Eyebrow('How well you know yourself'),
@@ -617,102 +610,6 @@ class _LinkRow extends StatelessWidget {
 
 /// The collection, topic by topic. A daily app needs somewhere to be going,
 /// and a bar that fills is the cheapest honest version of that.
-class _Coverage extends StatelessWidget {
-  final AppState app;
-  const _Coverage({required this.app});
-
-  @override
-  Widget build(BuildContext context) {
-    final byTopic = <String, int>{};
-    final seenByTopic = <String, int>{};
-    for (final pill in kPillPool) {
-      byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
-      if (app.seenIds.contains(pill.id)) {
-        seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;
-      }
-    }
-
-    final rows = kTopicOrder
-        .where(app.pickedTopics.contains)
-        .map((key) => kTopics[key]!)
-        .where((style) => (byTopic[style.name] ?? 0) > 0)
-        .toList();
-
-    // The most any one subject has been read. The bars are drawn against
-    // this, not against how many cards exist: the pool is written to keep
-    // growing, so a total would be a number that quietly stops being true —
-    // and one that says "you have read 3% of Astut", which is nobody's idea
-    // of progress.
-    final int busiest = rows
-        .map((style) => seenByTopic[style.name] ?? 0)
-        .fold(0, (a, b) => a > b ? a : b);
-
-    return PaperCard(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...rows.map((style) {
-            final seen = seenByTopic[style.name] ?? 0;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      // The subject's own colour, present before any of it
-                      // has been read. An empty bar is the same grey for
-                      // every topic, which loses the one thing that tells
-                      // them apart at a glance.
-                      Container(
-                        width: 9,
-                        height: 9,
-                        margin: const EdgeInsets.only(right: 9),
-                        decoration: BoxDecoration(
-                          color: style.color,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          style.name,
-                          style: AppText.body(
-                            size: 13,
-                            weight: FontWeight.w500,
-                            color: context.p.ink,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '$seen',
-                        style: AppText.body(
-                          size: 12,
-                          weight: FontWeight.w500,
-                          color: context.p.inkFaint,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: busiest == 0 ? 0 : seen / busiest,
-                      minHeight: 5,
-                      backgroundColor: context.p.line,
-                      valueColor: AlwaysStoppedAnimation(style.color),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
-        ],
-      ),
-    );
-  }
-}
 
 /// Stated confidence against what actually happened.
 ///

@@ -180,6 +180,15 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   : ListView(
                       padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
                       children: [
+                        // What has been read, by subject, above the days it was read on.
+                        // It sat in the profile, where it read as a score; here it is what
+                        // it actually is, the map of the archive.
+                        if (widget.app.seenIds.isNotEmpty) ...[
+                          const Eyebrow('What you have covered'),
+                          const SizedBox(height: 11),
+                          _Coverage(app: widget.app),
+                          const SizedBox(height: 22),
+                        ],
                         for (final day in _days)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 8),
@@ -622,6 +631,103 @@ class _NoResults extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppText.body(size: 14, height: 1.5, color: context.p.inkMuted),
         ),
+      ),
+    );
+  }
+}
+
+class _Coverage extends StatelessWidget {
+  final AppState app;
+  const _Coverage({required this.app});
+
+  @override
+  Widget build(BuildContext context) {
+    final byTopic = <String, int>{};
+    final seenByTopic = <String, int>{};
+    for (final pill in kPillPool) {
+      byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
+      if (app.seenIds.contains(pill.id)) {
+        seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;
+      }
+    }
+
+    final rows = kTopicOrder
+        .where(app.pickedTopics.contains)
+        .map((key) => kTopics[key]!)
+        .where((style) => (byTopic[style.name] ?? 0) > 0)
+        .toList();
+
+    // The most any one subject has been read. The bars are drawn against
+    // this, not against how many cards exist: the pool is written to keep
+    // growing, so a total would be a number that quietly stops being true —
+    // and one that says "you have read 3% of Astut", which is nobody's idea
+    // of progress.
+    final int busiest = rows
+        .map((style) => seenByTopic[style.name] ?? 0)
+        .fold(0, (a, b) => a > b ? a : b);
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ...rows.map((style) {
+            final seen = seenByTopic[style.name] ?? 0;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      // The subject's own colour, present before any of it
+                      // has been read. An empty bar is the same grey for
+                      // every topic, which loses the one thing that tells
+                      // them apart at a glance.
+                      Container(
+                        width: 9,
+                        height: 9,
+                        margin: const EdgeInsets.only(right: 9),
+                        decoration: BoxDecoration(
+                          color: style.color,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          style.name,
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w500,
+                            color: context.p.ink,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '$seen',
+                        style: AppText.body(
+                          size: 12,
+                          weight: FontWeight.w500,
+                          color: context.p.inkFaint,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: LinearProgressIndicator(
+                      value: busiest == 0 ? 0 : seen / busiest,
+                      minHeight: 5,
+                      backgroundColor: context.p.line,
+                      valueColor: AlwaysStoppedAnimation(style.color),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

@@ -160,7 +160,7 @@ class _KnowScreenState extends State<KnowScreen> {
                         level: _level[subject.key]!,
                         onPick: (v) => setState(() => _level[subject.key] = v),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                     ],
                   ],
                 ),
@@ -226,7 +226,7 @@ class _Row extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Container(
-          height: 36,
+          height: 40,
           padding: const EdgeInsets.all(3),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.07),
