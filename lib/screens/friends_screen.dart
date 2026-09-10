@@ -171,7 +171,16 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   ),
                 ),
                 const SizedBox(width: 10),
-                PrimaryButton(label: l.add, height: 46, onPressed: _add),
+                // A width of its own: the chunky button fills what it is
+                // given, and a row gives it nothing.
+                SizedBox(
+                  width: 96,
+                  child: PrimaryButton(
+                    label: l.add,
+                    height: 46,
+                    onPressed: _add,
+                  ),
+                ),
               ],
             ),
 
@@ -389,17 +398,18 @@ class _League extends StatelessWidget {
       future: Future.wait(app.friendCodes.map((c) => boards[c]!)),
       builder: (context, snap) {
         final me = app.board(account.uid ?? 'me');
-        final rows = <(String, Board)>[
-          (l.you, me),
-          for (final b in snap.data ?? const <Board?>[])
-            if (b != null) (b.name, b),
-        ]..sort((a, b) {
-          final double ga = a.$2.gap ?? double.infinity;
-          final double gb = b.$2.gap ?? double.infinity;
-          final int byGap = ga.compareTo(gb);
-          if (byGap != 0) return byGap;
-          return b.$2.days.compareTo(a.$2.days);
-        });
+        final rows =
+            <(String, Board)>[
+              (l.you, me),
+              for (final b in snap.data ?? const <Board?>[])
+                if (b != null) (b.name, b),
+            ]..sort((a, b) {
+              final double ga = a.$2.gap ?? double.infinity;
+              final double gb = b.$2.gap ?? double.infinity;
+              final int byGap = ga.compareTo(gb);
+              if (byGap != 0) return byGap;
+              return b.$2.days.compareTo(a.$2.days);
+            });
         final Color ink = context.p.ink;
         return Column(
           children: [
