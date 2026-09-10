@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — {sure}%라고 했어요.",
   "nudgeTwoWeeksTitle": "2주 전엔 {read}장을 읽었어요",
   "nudgeTwoWeeksBody": "확신이 {gap}점 어긋나 있었어요. 오늘: {question}",
-  "nudgeTwoWeeksBodyNoGap": "지금까지 {answered}문제 답함. 오늘: {question}"
+  "nudgeTwoWeeksBodyNoGap": "지금까지 {answered}문제 답함. 오늘: {question}",
+  "friends": "친구",
+  "friendsN": "친구 · {n}",
+  "yourFriendCode": "내 친구 코드",
+  "codeCopied": "코드를 복사했어요.",
+  "addAFriend": "친구 추가",
+  "theirCode": "친구의 코드",
+  "add": "추가",
+  "noFriendsYet": "아직 아무도 없어요. 친구와 코드를 교환하고 연속 기록과 확신 정확도를 비교하세요 — 답은 절대 보이지 않아요.",
+  "friendsNeedAnAccount": "비교하려면 휴대폰 앱과 계정이 필요해요. 코드는 저장돼요.",
+  "noReaderWithCode": "그 코드를 가진 독자가 없어요.",
+  "thatsYourOwnCode": "그건 당신의 코드예요.",
+  "pointsOff": "{n}점 어긋남",
+  "notMeasuredYet": "아직 측정 전",
+  "thisWeekByCalibration": "이번 주, 확신 정확도 순",
+  "notYetToday": "오늘은 아직",
+  "nOfSeven": "7일 중 {n}일",
+  "you": "나"
 }

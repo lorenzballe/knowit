@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../cloud.dart';
 import '../state/app_state.dart';
+import 'board.dart';
 import 'identity.dart';
 import 'reader_snapshot.dart';
 import 'reader_store.dart';
@@ -22,6 +23,7 @@ class Account extends ChangeNotifier {
   Account({
     this.authOverride,
     this.storeOverride,
+    this.boardsOverride,
     this.uidOverride,
     Identity? identity,
   }) : _identity = identity ?? Identity();
@@ -30,6 +32,7 @@ class Account extends ChangeNotifier {
   /// without a project, a network or a device. Null in the app.
   final FirebaseAuth? authOverride;
   final ReaderStore? storeOverride;
+  final BoardStore? boardsOverride;
 
   /// Stands in for a signed-in reader. FirebaseAuth cannot be faked, so
   /// without this seam the backing-up path could only be tested on a phone.
@@ -66,6 +69,32 @@ class Account extends ChangeNotifier {
 
   ReaderStore? get _readers =>
       storeOverride ?? (Cloud.ready ? FirestoreReaderStore() : null);
+
+  BoardStore? get _boards =>
+      boardsOverride ?? (Cloud.ready ? FirestoreBoardStore() : null);
+
+  /// The six letters a friend types to find this reader, or null where
+  /// there is no account to be found by.
+  String? get friendCode {
+    final String? who = uid;
+    return who == null ? null : friendCodeOf(who);
+  }
+
+  /// Whether boards can be read at all here.
+  bool get canCompare => _boards != null && uid != null;
+
+  /// A friend's board, by their code. Null when there is none, or nowhere
+  /// to look.
+  Future<Board?> board(String code) async {
+    final BoardStore? boards = _boards;
+    if (boards == null) return null;
+    try {
+      return await boards.read(code);
+    } catch (error) {
+      debugPrint('Could not read a board: $error');
+      return null;
+    }
+  }
 
   User? get user => _firebase?.currentUser;
 
@@ -283,6 +312,14 @@ class Account extends ChangeNotifier {
     } catch (error) {
       // A backup that fails is not something to interrupt a reader over.
       debugPrint('Could not push the snapshot: $error');
+    }
+    // And the board, which is the part of the record a friend can see.
+    final BoardStore? boards = _boards;
+    if (boards == null) return;
+    try {
+      await boards.publish(app.board(who));
+    } catch (error) {
+      debugPrint('Could not publish the board: $error');
     }
   }
 

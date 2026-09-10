@@ -107,6 +107,12 @@ void main() {
       expect(ReaderSnapshot.fromJson(merged.toJson()).likedIds, ['p1', 'p2']);
     });
 
+    test('friends added on either phone are friends on both', () {
+      const local = ReaderSnapshot(friendCodes: ['ABCDEF']);
+      const remote = ReaderSnapshot(friendCodes: ['GHJKLM']);
+      expect(mergeSnapshots(local, remote).friendCodes, ['ABCDEF', 'GHJKLM']);
+    });
+
     test('survives a round trip through JSON', () {
       const before = ReaderSnapshot(
         name: 'Marco',

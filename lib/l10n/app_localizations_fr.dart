@@ -1337,4 +1337,63 @@ class AppLocalizationsFr extends AppLocalizations {
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return '$answered réponses jusqu\'ici. Aujourd\'hui : $question';
   }
+
+  @override
+  String get friends => 'Amis';
+
+  @override
+  String friendsN(int n) {
+    return 'Amis · $n';
+  }
+
+  @override
+  String get yourFriendCode => 'Ton code ami';
+
+  @override
+  String get codeCopied => 'Code copié.';
+
+  @override
+  String get addAFriend => 'Ajouter un ami';
+
+  @override
+  String get theirCode => 'Son code';
+
+  @override
+  String get add => 'Ajouter';
+
+  @override
+  String get noFriendsYet =>
+      'Personne pour l\'instant. Échange ton code avec un ami et comparez séries et calibration — jamais les réponses.';
+
+  @override
+  String get friendsNeedAnAccount =>
+      'Comparer demande l\'app sur téléphone et un compte. Tes codes sont gardés.';
+
+  @override
+  String get noReaderWithCode => 'Aucun lecteur avec ce code.';
+
+  @override
+  String get thatsYourOwnCode => 'C\'est ton propre code.';
+
+  @override
+  String pointsOff(int n) {
+    return '$n points d\'écart';
+  }
+
+  @override
+  String get notMeasuredYet => 'pas encore mesurée';
+
+  @override
+  String get thisWeekByCalibration => 'Cette semaine, par calibration';
+
+  @override
+  String get notYetToday => 'pas encore aujourd\'hui';
+
+  @override
+  String nOfSeven(int n) {
+    return '$n sur 7';
+  }
+
+  @override
+  String get you => 'Toi';
 }

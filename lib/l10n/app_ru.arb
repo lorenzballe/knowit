@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — вы сказали {sure}%.",
   "nudgeTwoWeeksTitle": "Две недели назад вы прочли {read} карточек",
   "nudgeTwoWeeksBody": "Ваша уверенность отклонялась на {gap} пунктов. Сегодня: {question}",
-  "nudgeTwoWeeksBodyNoGap": "Пока {answered} ответов. Сегодня: {question}"
+  "nudgeTwoWeeksBodyNoGap": "Пока {answered} ответов. Сегодня: {question}",
+  "friends": "Друзья",
+  "friendsN": "Друзья · {n}",
+  "yourFriendCode": "Ваш код друга",
+  "codeCopied": "Код скопирован.",
+  "addAFriend": "Добавить друга",
+  "theirCode": "Его код",
+  "add": "Добавить",
+  "noFriendsYet": "Пока никого. Обменяйтесь кодами с другом и сравнивайте серии и калибровку — никогда ответы.",
+  "friendsNeedAnAccount": "Для сравнения нужны приложение на телефоне и аккаунт. Ваши коды сохраняются.",
+  "noReaderWithCode": "Нет читателя с таким кодом.",
+  "thatsYourOwnCode": "Это ваш собственный код.",
+  "pointsOff": "{n} пунктов отклонения",
+  "notMeasuredYet": "ещё не измерена",
+  "thisWeekByCalibration": "На этой неделе, по калибровке",
+  "notYetToday": "сегодня ещё нет",
+  "nOfSeven": "{n} из 7",
+  "you": "Вы"
 }

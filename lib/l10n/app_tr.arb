@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — %{sure} demiştin.",
   "nudgeTwoWeeksTitle": "İki hafta önce {read} kart okumuştun",
   "nudgeTwoWeeksBody": "Güvenin {gap} puan sapıyordu. Bugün: {question}",
-  "nudgeTwoWeeksBodyNoGap": "Şimdiye kadar {answered} cevap. Bugün: {question}"
+  "nudgeTwoWeeksBodyNoGap": "Şimdiye kadar {answered} cevap. Bugün: {question}",
+  "friends": "Arkadaşlar",
+  "friendsN": "Arkadaşlar · {n}",
+  "yourFriendCode": "Arkadaş kodun",
+  "codeCopied": "Kod kopyalandı.",
+  "addAFriend": "Arkadaş ekle",
+  "theirCode": "Onun kodu",
+  "add": "Ekle",
+  "noFriendsYet": "Henüz kimse yok. Bir arkadaşınla kod değişin; serileri ve kalibrasyonu karşılaştırın — cevapları asla.",
+  "friendsNeedAnAccount": "Karşılaştırmak için telefon uygulaması ve bir hesap gerekir. Kodların saklanır.",
+  "noReaderWithCode": "Bu kodla bir okuyucu yok.",
+  "thatsYourOwnCode": "Bu senin kendi kodun.",
+  "pointsOff": "{n} puan sapma",
+  "notMeasuredYet": "henüz ölçülmedi",
+  "thisWeekByCalibration": "Bu hafta, kalibrasyona göre",
+  "notYetToday": "bugün henüz değil",
+  "nOfSeven": "7'de {n}",
+  "you": "Sen"
 }

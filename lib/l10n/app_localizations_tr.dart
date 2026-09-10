@@ -1326,4 +1326,63 @@ class AppLocalizationsTr extends AppLocalizations {
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'Şimdiye kadar $answered cevap. Bugün: $question';
   }
+
+  @override
+  String get friends => 'Arkadaşlar';
+
+  @override
+  String friendsN(int n) {
+    return 'Arkadaşlar · $n';
+  }
+
+  @override
+  String get yourFriendCode => 'Arkadaş kodun';
+
+  @override
+  String get codeCopied => 'Kod kopyalandı.';
+
+  @override
+  String get addAFriend => 'Arkadaş ekle';
+
+  @override
+  String get theirCode => 'Onun kodu';
+
+  @override
+  String get add => 'Ekle';
+
+  @override
+  String get noFriendsYet =>
+      'Henüz kimse yok. Bir arkadaşınla kod değişin; serileri ve kalibrasyonu karşılaştırın — cevapları asla.';
+
+  @override
+  String get friendsNeedAnAccount =>
+      'Karşılaştırmak için telefon uygulaması ve bir hesap gerekir. Kodların saklanır.';
+
+  @override
+  String get noReaderWithCode => 'Bu kodla bir okuyucu yok.';
+
+  @override
+  String get thatsYourOwnCode => 'Bu senin kendi kodun.';
+
+  @override
+  String pointsOff(int n) {
+    return '$n puan sapma';
+  }
+
+  @override
+  String get notMeasuredYet => 'henüz ölçülmedi';
+
+  @override
+  String get thisWeekByCalibration => 'Bu hafta, kalibrasyona göre';
+
+  @override
+  String get notYetToday => 'bugün henüz değil';
+
+  @override
+  String nOfSeven(int n) {
+    return '7\'de $n';
+  }
+
+  @override
+  String get you => 'Sen';
 }

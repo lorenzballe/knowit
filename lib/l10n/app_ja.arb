@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — {sure}%と答えました。",
   "nudgeTwoWeeksTitle": "2週間前、{read}枚読んでいました",
   "nudgeTwoWeeksBody": "自信は{gap}ポイントずれていました。今日：{question}",
-  "nudgeTwoWeeksBodyNoGap": "これまで{answered}問回答。今日：{question}"
+  "nudgeTwoWeeksBodyNoGap": "これまで{answered}問回答。今日：{question}",
+  "friends": "友だち",
+  "friendsN": "友だち · {n}",
+  "yourFriendCode": "あなたの友だちコード",
+  "codeCopied": "コードをコピーしました。",
+  "addAFriend": "友だちを追加",
+  "theirCode": "相手のコード",
+  "add": "追加",
+  "noFriendsYet": "まだ誰もいません。友だちとコードを交換して、連続日数と確信度の精度を比べましょう — 答えは決して見えません。",
+  "friendsNeedAnAccount": "比べるにはスマホ版アプリとアカウントが必要です。コードは保存されています。",
+  "noReaderWithCode": "そのコードの読者はいません。",
+  "thatsYourOwnCode": "それはあなた自身のコードです。",
+  "pointsOff": "{n}ポイントのずれ",
+  "notMeasuredYet": "まだ測定されていません",
+  "thisWeekByCalibration": "今週、確信度の精度順",
+  "notYetToday": "今日はまだ",
+  "nOfSeven": "7日中{n}日",
+  "you": "あなた"
 }

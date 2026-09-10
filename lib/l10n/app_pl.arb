@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — powiedziałeś {sure}%.",
   "nudgeTwoWeeksTitle": "Dwa tygodnie temu miałeś przeczytane {read} kart",
   "nudgeTwoWeeksBody": "Twoja pewność była o {gap} punktów obok. Dziś: {question}",
-  "nudgeTwoWeeksBodyNoGap": "Dotąd {answered} odpowiedzi. Dziś: {question}"
+  "nudgeTwoWeeksBodyNoGap": "Dotąd {answered} odpowiedzi. Dziś: {question}",
+  "friends": "Znajomi",
+  "friendsN": "Znajomi · {n}",
+  "yourFriendCode": "Twój kod znajomego",
+  "codeCopied": "Kod skopiowany.",
+  "addAFriend": "Dodaj znajomego",
+  "theirCode": "Jego kod",
+  "add": "Dodaj",
+  "noFriendsYet": "Jeszcze nikogo. Wymień się kodem ze znajomym i porównujcie serie i kalibrację — nigdy odpowiedzi.",
+  "friendsNeedAnAccount": "Porównywanie wymaga aplikacji na telefonie i konta. Twoje kody zostają.",
+  "noReaderWithCode": "Brak czytelnika z tym kodem.",
+  "thatsYourOwnCode": "To twój własny kod.",
+  "pointsOff": "{n} punktów obok",
+  "notMeasuredYet": "jeszcze nie zmierzona",
+  "thisWeekByCalibration": "W tym tygodniu, według kalibracji",
+  "notYetToday": "dziś jeszcze nie",
+  "nOfSeven": "{n} z 7",
+  "you": "Ty"
 }

@@ -12,6 +12,7 @@ import '../data/topics.dart';
 import '../l10n/app_localizations.dart';
 import '../models/pill.dart';
 import '../models/reminder.dart';
+import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
 import '../utils/reminders.dart';
 import 'progress.dart';
@@ -49,6 +50,7 @@ class AppState extends ChangeNotifier {
   static const _kSavedIds = 'knowit.savedIds';
   static const _kLikedIds = 'knowit.likedIds';
   static const _kDislikedIds = 'knowit.dislikedIds';
+  static const _kFriendCodes = 'knowit.friendCodes';
   static const _kTodayDate = 'knowit.todayDate';
   static const _kTodayIndex = 'knowit.todayIndex';
   static const _kOnboarded = 'knowit.onboarded';
@@ -98,6 +100,9 @@ class AppState extends ChangeNotifier {
 
   /// Cards thrown down: less of this. Quiet, and only a lean on the deal.
   List<String> dislikedIds = [];
+
+  /// The friends whose boards the reader looks at, by code.
+  List<String> friendCodes = [];
   int todayIndex = 0;
   int pillsRead = 0;
 
@@ -223,6 +228,7 @@ class AppState extends ChangeNotifier {
     savedIds = _prefs.getStringList(_kSavedIds) ?? [];
     likedIds = _prefs.getStringList(_kLikedIds) ?? [];
     dislikedIds = _prefs.getStringList(_kDislikedIds) ?? [];
+    friendCodes = _prefs.getStringList(_kFriendCodes) ?? [];
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
@@ -935,6 +941,42 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── Friends ───────────────────────────────────────────────────────────
+
+  Future<void> addFriend(String code) async {
+    if (friendCodes.contains(code)) return;
+    friendCodes = [...friendCodes, code];
+    await _prefs.setStringList(_kFriendCodes, friendCodes);
+    notifyListeners();
+  }
+
+  Future<void> removeFriend(String code) async {
+    if (!friendCodes.contains(code)) return;
+    friendCodes = friendCodes.where((c) => c != code).toList();
+    await _prefs.setStringList(_kFriendCodes, friendCodes);
+    notifyListeners();
+  }
+
+  /// What a friend gets to see of this reader. The squares only once the
+  /// day is done: half a grid says the wrong thing.
+  Board board(String uid) {
+    final DaySummary d = daySummary;
+    return Board(
+      uid: uid,
+      code: friendCodeOf(uid),
+      name: name,
+      streak: liveStreak,
+      weeks: keptWeeks,
+      days: thisWeek.days,
+      gap: confidenceGap,
+      edition: d.edition,
+      squares: dayClosed ? d.squares : '',
+      right: d.right,
+      asked: d.asked,
+      updated: dateKey(today),
+    );
+  }
+
   // ── Onboarding & settings ─────────────────────────────────────────────
 
   Future<void> setTopics(Set<String> topics) async {
@@ -1255,6 +1297,7 @@ class AppState extends ChangeNotifier {
     savedIds = [];
     likedIds = [];
     dislikedIds = [];
+    friendCodes = [];
     todayIndex = 0;
     pillsRead = 0;
     onboarded = false;
@@ -1320,6 +1363,7 @@ class AppState extends ChangeNotifier {
     savedIds: List<String>.from(savedIds),
     likedIds: List<String>.from(likedIds),
     dislikedIds: List<String>.from(dislikedIds),
+    friendCodes: List<String>.from(friendCodes),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
     answers: Map<String, Answer>.from(answers),
@@ -1344,6 +1388,7 @@ class AppState extends ChangeNotifier {
     savedIds = List<String>.from(s.savedIds);
     likedIds = List<String>.from(s.likedIds);
     dislikedIds = List<String>.from(s.dislikedIds);
+    friendCodes = List<String>.from(s.friendCodes);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
     answers = Map<String, Answer>.from(s.answers);
@@ -1363,6 +1408,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kSavedIds, savedIds);
     await _prefs.setStringList(_kLikedIds, likedIds);
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
+    await _prefs.setStringList(_kFriendCodes, friendCodes);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());

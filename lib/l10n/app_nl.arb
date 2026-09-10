@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — je zei {sure}%.",
   "nudgeTwoWeeksTitle": "Twee weken geleden had je {read} kaarten gelezen",
   "nudgeTwoWeeksBody": "Je zekerheid zat er {gap} punten naast. Vandaag: {question}",
-  "nudgeTwoWeeksBodyNoGap": "{answered} beantwoord tot nu toe. Vandaag: {question}"
+  "nudgeTwoWeeksBodyNoGap": "{answered} beantwoord tot nu toe. Vandaag: {question}",
+  "friends": "Vrienden",
+  "friendsN": "Vrienden · {n}",
+  "yourFriendCode": "Je vriendencode",
+  "codeCopied": "Code gekopieerd.",
+  "addAFriend": "Een vriend toevoegen",
+  "theirCode": "Hun code",
+  "add": "Toevoegen",
+  "noFriendsYet": "Nog niemand. Wissel codes uit met een vriend en vergelijk reeksen en kalibratie — nooit antwoorden.",
+  "friendsNeedAnAccount": "Vergelijken vraagt de telefoon-app en een account. Je codes blijven bewaard.",
+  "noReaderWithCode": "Geen lezer met die code.",
+  "thatsYourOwnCode": "Dat is je eigen code.",
+  "pointsOff": "{n} punten ernaast",
+  "notMeasuredYet": "nog niet gemeten",
+  "thisWeekByCalibration": "Deze week, op kalibratie",
+  "notYetToday": "vandaag nog niet",
+  "nOfSeven": "{n} van 7",
+  "you": "Jij"
 }

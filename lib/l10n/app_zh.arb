@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — 你说了{sure}%。",
   "nudgeTwoWeeksTitle": "两周前你已读了{read}张卡片",
   "nudgeTwoWeeksBody": "你的自信偏差了{gap}分。今天：{question}",
-  "nudgeTwoWeeksBodyNoGap": "到目前为止答了{answered}题。今天：{question}"
+  "nudgeTwoWeeksBodyNoGap": "到目前为止答了{answered}题。今天：{question}",
+  "friends": "朋友",
+  "friendsN": "朋友 · {n}",
+  "yourFriendCode": "你的好友码",
+  "codeCopied": "已复制代码。",
+  "addAFriend": "添加朋友",
+  "theirCode": "对方的代码",
+  "add": "添加",
+  "noFriendsYet": "还没有人。和朋友交换代码，比较连续天数和自信校准 — 永远不会看到答案。",
+  "friendsNeedAnAccount": "比较需要手机应用和账户。你的代码会被保留。",
+  "noReaderWithCode": "没有使用该代码的读者。",
+  "thatsYourOwnCode": "这是你自己的代码。",
+  "pointsOff": "偏差{n}分",
+  "notMeasuredYet": "尚未测量",
+  "thisWeekByCalibration": "本周，按校准排序",
+  "notYetToday": "今天还没有",
+  "nOfSeven": "7天中{n}天",
+  "you": "你"
 }

@@ -1362,4 +1362,63 @@ class AppLocalizationsRu extends AppLocalizations {
   String nudgeTwoWeeksBodyNoGap(int answered, String question) {
     return 'Пока $answered ответов. Сегодня: $question';
   }
+
+  @override
+  String get friends => 'Друзья';
+
+  @override
+  String friendsN(int n) {
+    return 'Друзья · $n';
+  }
+
+  @override
+  String get yourFriendCode => 'Ваш код друга';
+
+  @override
+  String get codeCopied => 'Код скопирован.';
+
+  @override
+  String get addAFriend => 'Добавить друга';
+
+  @override
+  String get theirCode => 'Его код';
+
+  @override
+  String get add => 'Добавить';
+
+  @override
+  String get noFriendsYet =>
+      'Пока никого. Обменяйтесь кодами с другом и сравнивайте серии и калибровку — никогда ответы.';
+
+  @override
+  String get friendsNeedAnAccount =>
+      'Для сравнения нужны приложение на телефоне и аккаунт. Ваши коды сохраняются.';
+
+  @override
+  String get noReaderWithCode => 'Нет читателя с таким кодом.';
+
+  @override
+  String get thatsYourOwnCode => 'Это ваш собственный код.';
+
+  @override
+  String pointsOff(int n) {
+    return '$n пунктов отклонения';
+  }
+
+  @override
+  String get notMeasuredYet => 'ещё не измерена';
+
+  @override
+  String get thisWeekByCalibration => 'На этой неделе, по калибровке';
+
+  @override
+  String get notYetToday => 'сегодня ещё нет';
+
+  @override
+  String nOfSeven(int n) {
+    return '$n из 7';
+  }
+
+  @override
+  String get you => 'Вы';
 }

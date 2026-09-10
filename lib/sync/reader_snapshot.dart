@@ -22,6 +22,7 @@ class ReaderSnapshot {
     this.savedIds = const [],
     this.likedIds = const [],
     this.dislikedIds = const [],
+    this.friendCodes = const [],
     this.seenIds = const [],
     this.pillsRead = 0,
     this.answers = const {},
@@ -43,6 +44,9 @@ class ReaderSnapshot {
   /// and both lean what the app deals of its own.
   final List<String> likedIds;
   final List<String> dislikedIds;
+
+  /// Whose boards the reader looks at.
+  final List<String> friendCodes;
   final List<String> seenIds;
   final int pillsRead;
   final Map<String, Answer> answers;
@@ -73,6 +77,7 @@ class ReaderSnapshot {
     'savedIds': savedIds,
     'likedIds': likedIds,
     'dislikedIds': dislikedIds,
+    'friendCodes': friendCodes,
     'seenIds': seenIds,
     'pillsRead': pillsRead,
     'answers': answers.map((k, v) => MapEntry(k, v.toJson())),
@@ -135,6 +140,7 @@ class ReaderSnapshot {
       savedIds: strings(raw['savedIds']),
       likedIds: strings(raw['likedIds']),
       dislikedIds: strings(raw['dislikedIds']),
+      friendCodes: strings(raw['friendCodes']),
       seenIds: strings(raw['seenIds']),
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
       answers: answers,
@@ -208,6 +214,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     savedIds: union(local.savedIds, remote.savedIds),
     likedIds: union(local.likedIds, remote.likedIds),
     dislikedIds: union(local.dislikedIds, remote.dislikedIds),
+    friendCodes: union(local.friendCodes, remote.friendCodes),
     seenIds: union(local.seenIds, remote.seenIds),
     pillsRead: math.max(local.pillsRead, remote.pillsRead),
     answers: answers,

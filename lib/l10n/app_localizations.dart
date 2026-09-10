@@ -1973,6 +1973,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{answered} answered so far. Today: {question}'**
   String nudgeTwoWeeksBodyNoGap(int answered, String question);
+
+  /// No description provided for @friends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get friends;
+
+  /// No description provided for @friendsN.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends · {n}'**
+  String friendsN(int n);
+
+  /// No description provided for @yourFriendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend code'**
+  String get yourFriendCode;
+
+  /// No description provided for @codeCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Code copied.'**
+  String get codeCopied;
+
+  /// No description provided for @addAFriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a friend'**
+  String get addAFriend;
+
+  /// No description provided for @theirCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Their code'**
+  String get theirCode;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @noFriendsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody yet. Swap codes with a friend and compare streaks and calibration — never answers.'**
+  String get noFriendsYet;
+
+  /// No description provided for @friendsNeedAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Comparing needs the phone app and an account. Your codes are kept.'**
+  String get friendsNeedAnAccount;
+
+  /// No description provided for @noReaderWithCode.
+  ///
+  /// In en, this message translates to:
+  /// **'No reader with that code.'**
+  String get noReaderWithCode;
+
+  /// No description provided for @thatsYourOwnCode.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s your own code.'**
+  String get thatsYourOwnCode;
+
+  /// No description provided for @pointsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} points off'**
+  String pointsOff(int n);
+
+  /// No description provided for @notMeasuredYet.
+  ///
+  /// In en, this message translates to:
+  /// **'not measured yet'**
+  String get notMeasuredYet;
+
+  /// No description provided for @thisWeekByCalibration.
+  ///
+  /// In en, this message translates to:
+  /// **'This week, by calibration'**
+  String get thisWeekByCalibration;
+
+  /// No description provided for @notYetToday.
+  ///
+  /// In en, this message translates to:
+  /// **'not yet today'**
+  String get notYetToday;
+
+  /// No description provided for @nOfSeven.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of 7'**
+  String nOfSeven(int n);
+
+  /// No description provided for @you.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get you;
 }
 
 class _AppLocalizationsDelegate

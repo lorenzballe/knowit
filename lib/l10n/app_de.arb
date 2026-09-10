@@ -308,5 +308,22 @@
   "nudgeSureBody": "{question} — du hast {sure} % gesagt.",
   "nudgeTwoWeeksTitle": "Vor zwei Wochen hattest du {read} Karten gelesen",
   "nudgeTwoWeeksBody": "Deine Sicherheit lag {gap} Punkte daneben. Heute: {question}",
-  "nudgeTwoWeeksBodyNoGap": "Bisher {answered} beantwortet. Heute: {question}"
+  "nudgeTwoWeeksBodyNoGap": "Bisher {answered} beantwortet. Heute: {question}",
+  "friends": "Freunde",
+  "friendsN": "Freunde · {n}",
+  "yourFriendCode": "Dein Freundescode",
+  "codeCopied": "Code kopiert.",
+  "addAFriend": "Freund hinzufügen",
+  "theirCode": "Sein Code",
+  "add": "Hinzufügen",
+  "noFriendsYet": "Noch niemand. Tausch Codes mit einem Freund und vergleicht Serien und Kalibrierung — nie Antworten.",
+  "friendsNeedAnAccount": "Vergleichen braucht die Telefon-App und ein Konto. Deine Codes bleiben.",
+  "noReaderWithCode": "Kein Leser mit diesem Code.",
+  "thatsYourOwnCode": "Das ist dein eigener Code.",
+  "pointsOff": "{n} Punkte daneben",
+  "notMeasuredYet": "noch nicht gemessen",
+  "thisWeekByCalibration": "Diese Woche, nach Kalibrierung",
+  "notYetToday": "heute noch nicht",
+  "nOfSeven": "{n} von 7",
+  "you": "Du"
 }

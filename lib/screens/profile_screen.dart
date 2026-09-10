@@ -22,6 +22,7 @@ import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'know_screen.dart';
 import 'progress_text.dart';
+import 'friends_screen.dart';
 import 'saved_screen.dart';
 import 'week_screen.dart';
 import 'how_screen.dart';
@@ -401,6 +402,22 @@ class ProfileScreen extends StatelessWidget {
                       onBackToToday: () => Navigator.of(routeContext).pop(),
                     ),
                   ),
+                ),
+              ),
+            ),
+          ),
+          // The people whose boards you look at: streaks and calibration,
+          // never answers. What is compared is the habit.
+          _LinkRow(
+            label: app.friendCodes.isEmpty
+                ? context.l10n.friends
+                : context.l10n.friendsN(app.friendCodes.length),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => FriendsScreen(
+                  app: app,
+                  account: account,
+                  onBack: () => Navigator.of(routeContext).pop(),
                 ),
               ),
             ),
