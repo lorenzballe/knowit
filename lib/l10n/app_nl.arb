@@ -289,7 +289,7 @@
   "saidSure": "{sure}% zeker",
   "cardsCameBack": "{n, plural, =1{1 kaart kwam terug — beantwoord hem opnieuw} other{{n} kaarten kwamen terug — beantwoord ze opnieuw}}",
   "cameBack": "Teruggekomen",
-  "holdACardYouLike": "Houd een kaart vast die je goed vindt",
+  "holdACardYouLike": "Houd vast als je hem mag",
   "likedToday": "{n, plural, =1{1 vandaag geliket} other{{n} vandaag geliket}}",
   "liked": "Geliket",
   "likedN": "Geliket · {n}",

@@ -289,7 +289,7 @@
   "saidSure": "{sure}% de certeza",
   "cardsCameBack": "{n, plural, =1{1 carta voltou — responde outra vez} other{{n} cartas voltaram — responde outra vez}}",
   "cameBack": "Voltaram",
-  "holdACardYouLike": "Mantém premida uma carta de que gostes",
+  "holdACardYouLike": "Mantém premida se gostas",
   "likedToday": "{n, plural, =1{1 gostada hoje} other{{n} gostadas hoje}}",
   "liked": "Gostei",
   "likedN": "Gostei · {n}",

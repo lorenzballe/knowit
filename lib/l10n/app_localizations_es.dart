@@ -1254,7 +1254,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cameBack => 'Han vuelto';
 
   @override
-  String get holdACardYouLike => 'Mantén pulsada una tarjeta que te guste';
+  String get holdACardYouLike => 'Mantén pulsada si te gusta';
 
   @override
   String likedToday(int n) {

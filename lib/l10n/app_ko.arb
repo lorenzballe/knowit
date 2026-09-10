@@ -289,7 +289,7 @@
   "saidSure": "확신 {sure}%",
   "cardsCameBack": "{n, plural, other{카드 {n}장이 돌아왔어요 — 다시 답해 보세요}}",
   "cameBack": "돌아온 카드",
-  "holdACardYouLike": "마음에 드는 카드를 길게 누르세요",
+  "holdACardYouLike": "마음에 들면 길게 누르기",
   "likedToday": "{n, plural, other{오늘 {n}장 좋아요}}",
   "liked": "좋아요",
   "likedN": "좋아요 · {n}",

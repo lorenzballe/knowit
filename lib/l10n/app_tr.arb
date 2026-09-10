@@ -289,7 +289,7 @@
   "saidSure": "%{sure} emin",
   "cardsCameBack": "{n, plural, =1{1 kart geri geldi — yeniden cevapla} other{{n} kart geri geldi — yeniden cevapla}}",
   "cameBack": "Geri gelenler",
-  "holdACardYouLike": "Beğendiğin bir karta basılı tut",
+  "holdACardYouLike": "Beğendiysen basılı tut",
   "likedToday": "{n, plural, =1{bugün 1 beğeni} other{bugün {n} beğeni}}",
   "liked": "Beğenilenler",
   "likedN": "Beğenilenler · {n}",

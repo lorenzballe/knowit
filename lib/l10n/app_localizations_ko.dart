@@ -1220,7 +1220,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get cameBack => '돌아온 카드';
 
   @override
-  String get holdACardYouLike => '마음에 드는 카드를 길게 누르세요';
+  String get holdACardYouLike => '마음에 들면 길게 누르기';
 
   @override
   String likedToday(int n) {

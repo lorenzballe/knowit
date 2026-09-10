@@ -408,6 +408,7 @@ class _ShelfHeader extends StatelessWidget {
         // the room between them instead left the aside stranded in the
         // middle with the leftover piled up after it.
         Expanded(
+          flex: 3,
           child: Text(
             context.l10n.dayRead(
               app.dayNumber,
@@ -424,13 +425,21 @@ class _ShelfHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        Text(
-          _aside(context),
-          maxLines: 1,
-          style: AppText.body(
-            size: 12,
-            weight: FontWeight.w500,
-            color: context.p.ink.withValues(alpha: 0.38),
+        // The aside gives way before the day's line does: in a language
+        // where "hold a card you like" runs long, it is the aside that is
+        // cut, not "Day 6".
+        Flexible(
+          flex: 2,
+          child: Text(
+            _aside(context),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.right,
+            style: AppText.body(
+              size: 12,
+              weight: FontWeight.w500,
+              color: context.p.ink.withValues(alpha: 0.38),
+            ),
           ),
         ),
       ],

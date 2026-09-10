@@ -1212,7 +1212,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cameBack => '回来的卡片';
 
   @override
-  String get holdACardYouLike => '长按你喜欢的卡片';
+  String get holdACardYouLike => '喜欢就长按';
 
   @override
   String likedToday(int n) {

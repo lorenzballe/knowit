@@ -1280,7 +1280,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get cameBack => 'Вернулись';
 
   @override
-  String get holdACardYouLike => 'Удержите карточку, которая вам понравилась';
+  String get holdACardYouLike => 'Удержите, если нравится';
 
   @override
   String likedToday(int n) {

@@ -1217,7 +1217,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cameBack => '戻ってきたカード';
 
   @override
-  String get holdACardYouLike => '気に入ったカードを長押し';
+  String get holdACardYouLike => '気に入ったら長押し';
 
   @override
   String likedToday(int n) {
