@@ -1357,4 +1357,23 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get you => '나';
+
+  @override
+  String get todaysQuestion => '오늘의 질문';
+
+  @override
+  String get right => '정답';
+
+  @override
+  String get wrong => '오답';
+
+  @override
+  String rightAtSure(int sure) {
+    return '정답, 확신 $sure%';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return '오답, 확신 $sure%';
+  }
 }

@@ -136,7 +136,10 @@ void main() {
       expect(find.text('⬜🟩⬜🟥⬜'), findsOneWidget);
       // The week, by calibration: the friend is measured and the reader is
       // not, so the friend leads.
-      expect(find.text('This week, by calibration'.toUpperCase()), findsOneWidget);
+      expect(
+        find.text('This week, by calibration'.toUpperCase()),
+        findsOneWidget,
+      );
       expect(find.text('You'), findsOneWidget);
       expect(find.text('not measured yet'), findsOneWidget);
     });

@@ -43,9 +43,9 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
-/// The five everybody gets today. A fresh install has nothing to swap, so
-/// its deck is the calendar's, card for card.
-List<Pill> get _todaysFive => sharedDeckFor(DateTime.now());
+/// What a fresh install is dealt today: every subject, nothing read, no
+/// review due — the question of the day and four from the whole pool.
+List<Pill> get _todaysFive => dealDay(date: DateTime.now());
 
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
@@ -683,14 +683,9 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       // What is in the reader's head that morning, not what is in the
-      // app's counter — today's own first card while today's hour is still
-      // ahead, tomorrow's otherwise.
+      // app's counter: the question of the day it lands on.
       final Reminder first = t.armed.single.first;
-      final bool today = first.when.day == DateTime.now().day;
-      final expected = today
-          ? t.app.todaysDeck.first.question
-          : t.app.tomorrowsDeck.first.question;
-      expect(first.body, expected);
+      expect(first.body, questionOfTheDay(first.when).question);
       expect(first.body, isNot(contains('13 days')));
       expect(first.title, 'Your five are ready');
     });
@@ -726,7 +721,7 @@ void main() {
         );
       }
       final third = DateTime.now().add(const Duration(days: 3));
-      expect(plan[3].body, sharedDeckFor(third).first.question);
+      expect(plan[3].body, questionOfTheDay(third).question);
       expect(plan.map((r) => r.body).toSet().length, greaterThan(10));
     });
 
@@ -757,7 +752,7 @@ void main() {
       expect(on(0).title, 'Your five are ready');
       // Tomorrow: two days since — the freeze is what holds, so say so.
       expect(on(1).title, 'Your freeze is holding');
-      expect(on(1).body, contains(t.app.tomorrowsDeck.first.question));
+      expect(on(1).body, contains(questionOfTheDay(on(1).when).question));
       // A week: the card they were sure about and wrong about.
       expect(on(6).title, 'You were sure about this one');
       expect(on(6).body, contains(miss.question));
@@ -790,7 +785,7 @@ void main() {
       expect(pushed, hasLength(1));
       final data = pushed.single;
       expect(data['edition'], editionOf(DateTime.now()));
-      expect(data['question'], app.todaysDeck.first.question);
+      expect(data['question'], questionOfTheDay(DateTime.now()).question);
       expect(data['streak'], 7);
       expect(data['done'], isFalse);
 
@@ -799,7 +794,7 @@ void main() {
       final ahead = data['ahead'] as Map<String, String>;
       expect(ahead, hasLength(AppState.kPlannedDays + 1));
       final third = DateTime.now().add(const Duration(days: 3));
-      expect(ahead[dateKey(third)], sharedDeckFor(third).first.question);
+      expect(ahead[dateKey(third)], questionOfTheDay(third).question);
       // And nothing a stranger reading the home screen should not see.
       expect(data.keys, isNot(contains('answers')));
 
@@ -861,23 +856,30 @@ void main() {
     });
   });
 
-  test("the first day is the calendar's day, like everybody's", () async {
-    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
-    final app = AppState();
-    await app.init();
+  test(
+    'the first day is dealt from the mix, around the question of the day',
+    () async {
+      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+      final app = AppState();
+      await app.init();
 
-    // Nothing of the reader's enters the five — a friend who says "did
-    // you get the third one" is talking about the same third one.
-    expect(
-      app.todaysDeck.map((p) => p.id).toList(),
-      _todaysFive.map((p) => p.id).toList(),
-    );
-    expect(app.todaysDeck, hasLength(kPillsPerDay));
-    // And the phone writes down what it was dealt, for the archive.
-    final prefs = await SharedPreferences.getInstance();
-    final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
-    expect(noted[dateKey(DateTime.now())], _todaysFive.map((p) => p.id));
-  });
+      // Four cards of the reader's own and the one everybody gets — the one
+      // a friend who says "did you get it?" is talking about.
+      expect(
+        app.todaysDeck.map((p) => p.id).toList(),
+        _todaysFive.map((p) => p.id).toList(),
+      );
+      expect(app.todaysDeck, hasLength(kPillsPerDay));
+      expect(
+        app.todaysDeck.map((p) => p.id),
+        contains(questionOfTheDay(DateTime.now()).id),
+      );
+      // And the phone writes down what it was dealt, for the archive.
+      final prefs = await SharedPreferences.getInstance();
+      final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
+      expect(noted[dateKey(DateTime.now())], _todaysFive.map((p) => p.id));
+    },
+  );
 
   test('a day never fills up with opinions', () {
     // Debates are ungraded, so a deck of them measures nothing. With twenty
@@ -1558,27 +1560,50 @@ void main() {
       expect(find.text('Copied to clipboard.'), findsOneWidget);
     });
 
-    testWidgets('what came due waits after the five, and can be answered', (
+    testWidgets('what came due is dealt into the five, and the rest waits', (
       tester,
     ) async {
-      final original = kPillPool.firstWhere(
-        (p) => p.isGraded && !_todaysFive.contains(p),
+      // Two cards due back, on two principles. A card comes back as the
+      // same principle — itself, or a fresh context of it. One takes the
+      // day's second asking slot; the other has nowhere to go and waits
+      // after the five.
+      final question = questionOfTheDay(DateTime.now());
+      final first = kPillPool.firstWhere(
+        (p) =>
+            p.isGraded &&
+            p.principle.isReal &&
+            p.principle != question.principle,
+      );
+      final second = kPillPool.firstWhere(
+        (p) =>
+            p.isGraded &&
+            p.principle.isReal &&
+            p.principle != question.principle &&
+            p.principle != first.principle,
       );
       SharedPreferences.setMockInitialValues({
         ..._installed(),
         'knowit.answersJson': jsonEncode({
-          original.id: {'r': '0', 'd': dateKey(DateTime.now())},
+          first.id: {'r': '0', 'd': dateKey(DateTime.now())},
+          second.id: {'r': '0', 'd': dateKey(DateTime.now())},
         }),
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // Not in the five: the five are everybody's.
       final app = AppState();
       await app.init();
-      expect(app.todaysDeck.map((p) => p.id), isNot(contains(original.id)));
-      expect(app.dueReviews, isNotEmpty);
+      final asks = app.todaysDeck.where((p) => p.asksSomething).toList();
+      // No third question was dealt to make room for it.
+      expect(asks, hasLength(2));
+      expect(asks.map((p) => p.id), contains(question.id));
+      expect(asks.map((p) => p.principle), contains(first.principle));
+      expect(
+        app.todaysDeck.map((p) => p.principle),
+        isNot(contains(second.principle)),
+      );
 
+      // The one left over waits on the finished day.
       await finish(tester);
       expect(
         find.text('1 card came back — answer it again'),
@@ -1676,14 +1701,16 @@ void main() {
       expect(app.tomorrowsDeck.map((p) => p.id).toList(), preview);
     });
 
-    test('a card due back tomorrow waits outside the five', () async {
+    test('a card due back tomorrow is in it', () async {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
       final tomorrow = DateTime.now().add(const Duration(days: 1));
-      final calendar = sharedDeckFor(tomorrow).map((p) => p.id).toSet();
       final original = kPillPool.firstWhere(
-        (p) => p.isGraded && !calendar.contains(p.id),
+        (p) =>
+            p.isGraded &&
+            p.principle.isReal &&
+            p.id != questionOfTheDay(tomorrow).id,
       );
       await app.adopt(
         ReaderSnapshot(
@@ -1691,9 +1718,11 @@ void main() {
         ),
       );
 
-      // The five are everybody's five; what comes back is the reader's own,
-      // and it is offered after them rather than dealt into them.
-      expect(app.tomorrowsDeck.map((p) => p.id), isNot(contains(original.id)));
+      // Back as the same principle — the original, or a fresh context of it.
+      expect(
+        app.tomorrowsDeck.where((p) => p.principle == original.principle),
+        isNotEmpty,
+      );
       expect(app.tomorrowsDeck, hasLength(kPillsPerDay));
       expect(app.dueReviews, isEmpty, reason: 'due tomorrow, not today');
     });
@@ -2306,7 +2335,7 @@ void main() {
       final lean = app.leanedWeights;
       expect(lean['space'], greaterThan(lean['science']!));
       expect(lean['history'], lessThan(lean['science']!));
-      // The five of the day never look at any of it.
+      // A day already dealt does not re-deal under the reader.
       expect(
         app.todaysDeck.map((p) => p.id).toList(),
         _todaysFive.map((p) => p.id).toList(),

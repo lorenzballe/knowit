@@ -1393,4 +1393,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get you => 'Tú';
+
+  @override
+  String get todaysQuestion => 'La pregunta de hoy';
+
+  @override
+  String get right => 'correcta';
+
+  @override
+  String get wrong => 'incorrecta';
+
+  @override
+  String rightAtSure(int sure) {
+    return 'correcta, $sure% de seguridad';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return 'incorrecta, $sure% de seguridad';
+  }
 }

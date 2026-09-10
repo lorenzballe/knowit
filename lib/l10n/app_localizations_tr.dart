@@ -1385,4 +1385,23 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get you => 'Sen';
+
+  @override
+  String get todaysQuestion => 'Günün sorusu';
+
+  @override
+  String get right => 'doğru';
+
+  @override
+  String get wrong => 'yanlış';
+
+  @override
+  String rightAtSure(int sure) {
+    return 'doğru, %$sure emin';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return 'yanlış, %$sure emin';
+  }
 }

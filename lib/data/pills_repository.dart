@@ -46,6 +46,10 @@ List<Pill> pillsForDate(
   /// how much of a subject a day holds — that is the mix — but what kind of
   /// card: somebody solid on a subject is asked, somebody new to it is told.
   Map<String, int> levels = const {},
+
+  /// How many of the [count] should ask, when the caller has already dealt
+  /// some asking cards of its own. Null takes the day's usual share.
+  int? asking,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
   final pool = List<Pill>.from(kPillPool);
@@ -95,7 +99,7 @@ List<Pill> pillsForDate(
   // Fill the asking slots first, then top the day up with reading. Both
   // fall back to whatever is left, so a reader who has turned every asking
   // topic off still gets a full day.
-  final wantAsks = (count * kAskShare).round();
+  final wantAsks = asking ?? (count * kAskShare).round();
 
   // At most one debate a day. A debate is ungraded on purpose, so it feeds
   // nothing back into calibration — and now that the pool holds twenty of

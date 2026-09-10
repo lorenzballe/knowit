@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "今週、確信度の精度順",
   "notYetToday": "今日はまだ",
   "nOfSeven": "7日中{n}日",
-  "you": "あなた"
+  "you": "あなた",
+  "todaysQuestion": "今日の問題",
+  "right": "正解",
+  "wrong": "不正解",
+  "rightAtSure": "正解、確信度{sure}%",
+  "wrongAtSure": "不正解、確信度{sure}%"
 }

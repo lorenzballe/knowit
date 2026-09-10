@@ -308,6 +308,11 @@ class _FriendRow extends StatelessWidget {
         : (b.edition == today && b.squares.isNotEmpty
               ? b.squares
               : l.notYetToday);
+    // The one card in common, said plainly: this is what two friends can
+    // actually compare.
+    final String? question = b != null && b.edition == today
+        ? _questionLine(l, b.questionRight, b.questionSure)
+        : null;
 
     return PaperCard(
       padding: const EdgeInsets.fromLTRB(16, 14, 8, 14),
@@ -354,9 +359,12 @@ class _FriendRow extends StatelessWidget {
                 if (squares.isNotEmpty) ...[
                   const SizedBox(height: 6),
                   Text(
-                    squares,
+                    question == null
+                        ? squares
+                        : '$squares \u00b7 ${l.todaysQuestion}: $question',
                     style: AppText.body(
                       size: 13,
+                      height: 1.35,
                       color: ink.withValues(alpha: 0.6),
                     ),
                   ),
@@ -376,6 +384,12 @@ class _FriendRow extends StatelessWidget {
       ),
     );
   }
+}
+
+String? _questionLine(AppLocalizations l, bool? right, int? sure) {
+  if (right == null) return null;
+  if (sure == null) return right ? l.right : l.wrong;
+  return right ? l.rightAtSure(sure) : l.wrongAtSure(sure);
 }
 
 /// The reader and their friends, ordered by how close their confidence

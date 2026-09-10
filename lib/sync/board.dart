@@ -18,6 +18,8 @@ class Board {
     required this.right,
     required this.asked,
     required this.updated,
+    this.questionRight,
+    this.questionSure,
   });
 
   final String uid;
@@ -40,6 +42,11 @@ class Board {
   final int asked;
   final String updated;
 
+  /// How the question of the day went — the one card two friends have in
+  /// common — and how sure they said they were. Null until answered.
+  final bool? questionRight;
+  final int? questionSure;
+
   Map<String, dynamic> toJson() => {
     'uid': uid,
     'code': code,
@@ -53,6 +60,8 @@ class Board {
     'right': right,
     'asked': asked,
     'updated': updated,
+    'questionRight': questionRight,
+    'questionSure': questionSure,
   };
 
   static Board? fromJson(Map<String, dynamic>? raw) {
@@ -74,6 +83,12 @@ class Board {
       right: n('right'),
       asked: n('asked'),
       updated: s('updated'),
+      questionRight: raw['questionRight'] is bool
+          ? raw['questionRight'] as bool
+          : null,
+      questionSure: raw['questionSure'] is num
+          ? (raw['questionSure'] as num).round()
+          : null,
     );
   }
 }

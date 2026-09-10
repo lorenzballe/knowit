@@ -298,7 +298,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
           child: _PathRow(app: app, colour: deck[at].color),
         ),
-        if (app.dueReviews.isNotEmpty)
+        if (app.reviewsWaiting.isNotEmpty)
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
             child: _ReviewLine(app: app),
@@ -579,6 +579,10 @@ class _ShareDay extends StatelessWidget {
   static String text(BuildContext context, AppState app) {
     final l = context.l10n;
     final d = app.daySummary;
+    // The question of the day on its own line: it is the one card the
+    // reader and the friend have in common, so it is the one line that
+    // can be compared.
+    final String? question = questionLine(l, d.questionRight, d.questionSure);
     final verdict = [
       if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
       if (d.sure != null) l.saidSure(d.sure!.round()),
@@ -586,9 +590,17 @@ class _ShareDay extends StatelessWidget {
     return [
       'Astut #${d.edition}${d.streak > 0 ? ' \u00b7 \u{1f525}${d.streak}' : ''}',
       d.squares,
+      if (question != null) '${l.todaysQuestion}: $question',
       if (verdict.isNotEmpty) verdict,
       'lorenzballe.github.io/knowit',
     ].join('\n');
+  }
+
+  /// "right, 80% sure" — or null when the question was not answered.
+  static String? questionLine(AppLocalizations l, bool? right, int? sure) {
+    if (right == null) return null;
+    if (sure == null) return right ? l.right : l.wrong;
+    return right ? l.rightAtSure(sure) : l.wrongAtSure(sure);
   }
 
   Future<void> _share(BuildContext context) async {
@@ -647,8 +659,8 @@ class _ShareDay extends StatelessWidget {
   }
 }
 
-/// The cards that came due, waiting after the five rather than inside
-/// them. The five are everybody's; what comes back is the reader's own.
+/// The cards that came due and found no room in the five — the day has
+/// two asking slots and one is everybody's — waiting to be answered again.
 class _ReviewLine extends StatelessWidget {
   const _ReviewLine({required this.app});
 
@@ -656,7 +668,7 @@ class _ReviewLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final due = app.dueReviews;
+    final due = app.reviewsWaiting;
     final Color ink = context.p.ink;
     return Semantics(
       button: true,
@@ -971,26 +983,36 @@ class _Front extends StatelessWidget {
           );
         });
         final int lines = math.max(1, (room / (size * 1.1)).floor());
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              pill.question,
-              maxLines: lines,
-              overflow: TextOverflow.ellipsis,
-              style: _question(size),
+        // Measured to fit, and still allowed a few pixels over, clipped: a
+        // font's real line box can run a hair past its nominal height, and
+        // the hair of a descender is not worth a striped bar.
+        return ClipRect(
+          child: OverflowBox(
+            alignment: Alignment.topLeft,
+            minHeight: 0,
+            maxHeight: box.maxHeight + 4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  pill.question,
+                  maxLines: lines,
+                  overflow: TextOverflow.ellipsis,
+                  style: _question(size),
+                ),
+                SizedBox(height: 18 * s),
+                Container(height: 1, color: pill.ink.withValues(alpha: 0.2)),
+                SizedBox(height: 18 * s),
+                Text(
+                  pill.barMove,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: line,
+                ),
+              ],
             ),
-            SizedBox(height: 18 * s),
-            Container(height: 1, color: pill.ink.withValues(alpha: 0.2)),
-            SizedBox(height: 18 * s),
-            Text(
-              pill.barMove,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: line,
-            ),
-          ],
+          ),
         );
       },
     );

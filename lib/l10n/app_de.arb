@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "Diese Woche, nach Kalibrierung",
   "notYetToday": "heute noch nicht",
   "nOfSeven": "{n} von 7",
-  "you": "Du"
+  "you": "Du",
+  "todaysQuestion": "Die Frage des Tages",
+  "right": "richtig",
+  "wrong": "falsch",
+  "rightAtSure": "richtig, {sure} % sicher",
+  "wrongAtSure": "falsch, {sure} % sicher"
 }

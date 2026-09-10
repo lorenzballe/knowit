@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "На этой неделе, по калибровке",
   "notYetToday": "сегодня ещё нет",
   "nOfSeven": "{n} из 7",
-  "you": "Вы"
+  "you": "Вы",
+  "todaysQuestion": "Вопрос дня",
+  "right": "верно",
+  "wrong": "неверно",
+  "rightAtSure": "верно, уверенность {sure}%",
+  "wrongAtSure": "неверно, уверенность {sure}%"
 }

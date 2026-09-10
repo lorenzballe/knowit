@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "이번 주, 확신 정확도 순",
   "notYetToday": "오늘은 아직",
   "nOfSeven": "7일 중 {n}일",
-  "you": "나"
+  "you": "나",
+  "todaysQuestion": "오늘의 질문",
+  "right": "정답",
+  "wrong": "오답",
+  "rightAtSure": "정답, 확신 {sure}%",
+  "wrongAtSure": "오답, 확신 {sure}%"
 }

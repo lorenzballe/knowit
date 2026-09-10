@@ -1421,4 +1421,23 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get you => 'Вы';
+
+  @override
+  String get todaysQuestion => 'Вопрос дня';
+
+  @override
+  String get right => 'верно';
+
+  @override
+  String get wrong => 'неверно';
+
+  @override
+  String rightAtSure(int sure) {
+    return 'верно, уверенность $sure%';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return 'неверно, уверенность $sure%';
+  }
 }

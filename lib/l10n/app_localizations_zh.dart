@@ -1346,4 +1346,23 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get you => '你';
+
+  @override
+  String get todaysQuestion => '今日一题';
+
+  @override
+  String get right => '答对';
+
+  @override
+  String get wrong => '答错';
+
+  @override
+  String rightAtSure(int sure) {
+    return '答对，自信度$sure%';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return '答错，自信度$sure%';
+  }
 }

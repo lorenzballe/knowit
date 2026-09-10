@@ -1426,4 +1426,23 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get you => 'Ty';
+
+  @override
+  String get todaysQuestion => 'Pytanie dnia';
+
+  @override
+  String get right => 'dobrze';
+
+  @override
+  String get wrong => 'źle';
+
+  @override
+  String rightAtSure(int sure) {
+    return 'dobrze, pewność $sure%';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return 'źle, pewność $sure%';
+  }
 }

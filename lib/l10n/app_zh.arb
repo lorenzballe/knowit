@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "本周，按校准排序",
   "notYetToday": "今天还没有",
   "nOfSeven": "7天中{n}天",
-  "you": "你"
+  "you": "你",
+  "todaysQuestion": "今日一题",
+  "right": "答对",
+  "wrong": "答错",
+  "rightAtSure": "答对，自信度{sure}%",
+  "wrongAtSure": "答错，自信度{sure}%"
 }

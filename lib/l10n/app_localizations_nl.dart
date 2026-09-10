@@ -1391,4 +1391,23 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get you => 'Jij';
+
+  @override
+  String get todaysQuestion => 'De vraag van vandaag';
+
+  @override
+  String get right => 'goed';
+
+  @override
+  String get wrong => 'fout';
+
+  @override
+  String rightAtSure(int sure) {
+    return 'goed, $sure% zeker';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return 'fout, $sure% zeker';
+  }
 }

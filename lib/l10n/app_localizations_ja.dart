@@ -1353,4 +1353,23 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get you => 'あなた';
+
+  @override
+  String get todaysQuestion => '今日の問題';
+
+  @override
+  String get right => '正解';
+
+  @override
+  String get wrong => '不正解';
+
+  @override
+  String rightAtSure(int sure) {
+    return '正解、確信度$sure%';
+  }
+
+  @override
+  String wrongAtSure(int sure) {
+    return '不正解、確信度$sure%';
+  }
 }

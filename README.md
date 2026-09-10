@@ -92,15 +92,15 @@ come back as a real carousel — swipe through them, tap one to turn it over
 and read the whole reveal again — so "review" is the screen itself rather
 than a button. The glow behind everything, the dot in the header and the
 long dot under the carousel all take the colour of the card at the front.
-Under the dots the app names what opens tomorrow: the five are the
-calendar's, settled for everybody, so the subject it names is the one that
-will actually be on top in the morning. Under that, what the day did — the
-rung the reader stands on and the one thing between them and the next, or
-the rung they climbed today in the card's colour — and a button that hands
-the day to a chat as five squares (see *Everybody's five*). If cards came
-due for review they wait here too, after the five rather than inside them.
-The way on is Explore's best of today; the second set sits under it as a
-quiet line.
+Under the dots the app names what opens tomorrow: the deck is dealt from
+the date and the reading history, both settled by tonight, so the subject
+it names is the one that will actually be on top in the morning. Under
+that, what the day did — the rung the reader stands on and the one thing
+between them and the next, or the rung they climbed today in the card's
+colour — and a button that hands the day to a chat as five squares (see
+*The question of the day*). A card that came due and found no room in the
+five waits here too. The way on is Explore's best of today; the second set
+sits under it as a quiet line.
 
 The header is the same one line whether the day is running or done — a dot
 in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far
@@ -265,7 +265,7 @@ the channel away on someone who does not yet know what the app is.
 
 ```
 lib/
-  data/        topic palette, the pill pool, the calendar, and the personal dealer
+  data/        topic palette, the pill pool, the question of the day, the dealer
   models/      Pill, Reminder
   state/       AppState — streak, shelves, history, the ladder (persisted)
   sync/        the account, the snapshot and its merge, boards
@@ -288,47 +288,50 @@ The figures are checked from `test/figures_test.dart`, in this suite,
 because a picture produced in another language by a program running
 somewhere else is otherwise nobody's to break.
 
-Today's five are the calendar's (`lib/data/daily.dart`), stored by id so a
-restart resumes the same five; the archive keeps what each day was actually
-dealt, since the calendar is re-dealt from the start whenever the pool grows.
+Today's deck is dealt deterministically from the date and the reading
+history, so it does not reshuffle mid-day, and it is stored by id so a
+restart resumes the same five. Pills already read are kept out of later
+days until the pool runs dry.
 
-## Everybody's five
+## The question of the day
 
-The five of the day are the same five for every reader in the world. One
-calendar, one edition a day from the first of September 2026, and nothing
-of the reader's enters them: not the mix, not the levels, not the history.
-A deck dealt from a reader's own history was five cards nobody else had,
-which meant nobody could talk about them; this is the other thing — a
-friend can ask "did you get the third one", the notification can quote the
-question everyone else is about to meet, and the day can be sent without
-spoiling it.
+A day is five cards, four of them the reader's own and one that every
+reader in the world meets on the same day. The four are dealt from the mix,
+from what the reader said they know, and from what came due for review;
+the fifth is the question of the day (`lib/data/daily.dart`) — one edition
+a day from the first of September 2026, chained so the same question does
+not come round again for months, and dealt from the first edition on every
+phone that holds the same pool, which is what makes it the same question
+everywhere.
 
-The calendar is chained: each edition keeps clear of what the editions
-before it dealt, for three quarters of a lap of the pool for each kind of
-card, so the same card does not come round a week later. It is dealt from
-the first edition on every phone that holds the same pool, which is what
-makes it the same calendar everywhere. With sixty cards that tell and three
-of them a day, the reading side of the pool laps in twenty days — every
-card that tells added to the pool buys a third of a day before a reader
-meets a repeat, and that arithmetic is the content pipeline's brief.
+It costs the mix nothing. Every card that asks and can be marked lives
+under Thinking, and Thinking was never off anybody's deck: the three cards
+that tell, and the second card that asks, are the mix's entirely. What the
+shared question buys is a common object — the card a friend can be asked
+about ("did you get it?"), the one the morning notification can quote a
+fortnight ahead, the one square in the shared grid that means the same
+thing on every phone.
 
 **Two of five ask.** It was four, on the evidence that only answering
 trains anything, and the evidence has not changed — but a day that is four
 decisions long is a day that gets put off, and a day put off trains
 nothing. Two questions is still two judgements with a confidence on each,
 which is what the calibration record is made of; the other three are the
-reason to open the app before coffee. The ladder is paced to that.
-
-**What stays personal.** The Astut+ second set, the swap the app makes when
-the calendar deals a card this phone dealt within the last two weeks, and
-Explore's order all follow the mix, the levels, and what the reader liked.
-Cards that came due for review are no longer dealt into the five: they wait
-after them, on the finished day, to be answered again.
+reason to open the app before coffee. The ladder is paced to that. The two
+asking slots go first to the question of the day and then to a card that
+came due for review, if one did; only when none did does the second go to
+a fresh question from the mix. What came due and found no room waits after
+the five, on the finished day.
 
 **Share my day.** Five squares — read, right, wrong, a side taken, passed —
-the edition, the streak, and a line: "1 of 2 right · said 75% sure". Nothing
-a friend could be spoiled by, because it names no card. On a phone it goes
-to the share sheet; in a browser it is copied.
+the edition, the streak, how the question of the day went ("right, 80%
+sure"), and the day's line. Nothing a friend could be spoiled by, because
+it names no card. On a phone it goes to the share sheet; in a browser it is
+copied.
+
+The archive keeps what each day was actually dealt: the calendar is
+re-dealt from the start whenever the pool grows, and a day dealt again from
+the same date is only most of the truth.
 
 ## Liked, saved, and less like this
 
@@ -343,8 +346,9 @@ not it. Likes and throws travel with the account.
 ## Friends
 
 What a friend sees of a reader is the shape of the habit — the streak, the
-weeks kept, how far off the confidence runs, and today's five as squares
-once the day is done — and never a question or an answer. A board is
+weeks kept, how far off the confidence runs, today's five as squares once
+the day is done, and how the question of the day went — and never a
+question's text or an answer. A board is
 published with every backup, under six letters worked from the account id
 (`friendCodeOf`, no O or 0, no I or 1) that nobody can read the id back
 from; a friend types them and sees the board. The week is compared by
@@ -358,8 +362,8 @@ by their owner.
 The question of the day, and the streak, on the home screen. The widget is
 native — WidgetKit on iOS, an `AppWidgetProvider` on Android — and neither
 can run Dart, so the app hands over what the widget will need through the
-`astut/widget` channel: today's question, the streak, and the question for
-each of the next fourteen mornings, so the widget turns over at midnight
+`astut/widget` channel: the question of the day, the streak, and the
+question for each of the next fourteen mornings, so the widget turns over at midnight
 whether or not the app is opened, and goes quiet after a fortnight rather
 than lying.
 
@@ -383,9 +387,9 @@ These are declared in the UI rather than faked:
 - **Email sign-in.** Apple and Google are wired; the email button says plainly
   that it is not connected. Firebase's email link needs a domain of ours with
   universal links, since Dynamic Links was retired.
-- **The pool runs out.** Sixty cards that tell, at three a day, lap in
-  twenty days; the hundred and ten that ask, at two a day, in about eight
-  weeks. The app asks for a subscription that renews annually, so the content
+- **The pool runs out.** Sixty cards that tell, at three a day, is twenty
+  days of new reading; the ninety questions that can be marked, one of them
+  everybody's each day, about three months. The app asks for a subscription that renews annually, so the content
   pipeline is the thing standing between this and a product.
 - **The iOS widget target.** The Swift is written; the Xcode target has to be
   added by hand, as described under *The home-screen widget*.
@@ -560,9 +564,9 @@ a reader is already looking at what a day came to.
 **The nudge carries the question.** Not "three days in a row, keep it up" —
 that is a message about the app's counter. The reminder is the first
 question of the deck waiting, which is a message about the reader's own
-head. And since the calendar is everybody's, the app plans a fortnight of
-them at a time (`reminderPlan`), each with the question of the morning it
-lands on. On the days a lapse reaches it says something about the reader
+head. And since the question of the day is everybody's, the app plans a
+fortnight of them at a time (`reminderPlan`), each with the question of
+the morning it lands on. On the days a lapse reaches it says something about the reader
 instead of the app — day two, that the freeze is holding; day seven, the
 card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
@@ -608,7 +612,7 @@ A day is now arranged rather than sorted:
 
 Two of the five ask, and at least one of those can be marked: a debate is
 ungraded on purpose, so a day of opinions would measure nothing. The
-reasoning is under *Everybody's five*.
+reasoning is under *The question of the day*.
 
 Every puzzle is either arithmetic the reader can redo or a result that has held
 up under repeated testing. Famous psychology that failed replication — ego

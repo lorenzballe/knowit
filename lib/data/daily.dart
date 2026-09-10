@@ -1,13 +1,14 @@
-/// The five of the day, the same five for everybody.
+/// The question of the day: one card that asks, the same for everybody.
 ///
-/// A deck dealt from a reader's own mix and history was five cards nobody
-/// else had, which meant nobody could talk about them. This is the other
-/// thing: one calendar, one edition a day, and every reader in the world
-/// opens the same five — so a grid can be shared without spoiling anything,
-/// a friend can be asked "did you get the third one", and the morning
-/// notification can quote the exact question everyone else is about to
-/// meet. Nothing personal enters: the mix, the levels and the history shape
-/// what sits *around* the five, never the five.
+/// A day is five cards, four of them the reader's own — dealt from their
+/// mix, what they said they know, what came due for review — and one that
+/// every reader in the world meets on the same day. That one is the
+/// question of the day. It is the card a friend can be asked about ("did
+/// you get it?"), the one the morning notification can quote a fortnight
+/// ahead, and the one square in the shared grid that means the same thing
+/// on every phone. It costs the mix nothing: every card that asks and can
+/// be marked lives under Thinking, and Thinking was never off anybody's
+/// deck.
 library;
 
 import 'dart:math';
@@ -35,121 +36,80 @@ DateTime dateOfEdition(int edition) =>
 /// two judgements a day, which is what the calibration record is made of.
 int asksInADay(int count) => (count * kAskShare).round();
 
-final Map<int, List<Pill>> _dealt = {};
+final Map<int, Pill> _questions = {};
 
-/// The five for [date].
-List<Pill> sharedDeckFor(DateTime date) => sharedDeckOfEdition(editionOf(date));
+/// The question of the day for [date].
+Pill questionOfTheDay(DateTime date) => questionOfEdition(editionOf(date));
 
-/// The five for an edition.
+/// The question of the day for an edition.
 ///
-/// Chained: each edition keeps clear of what the editions just before it
-/// dealt, for as long as the pool allows, so the same card does not come
-/// round again a week later. The chain runs from the first edition, so
-/// every phone that holds the same pool deals the same calendar — and when
-/// the pool grows, the calendar is re-dealt from the start, which is why
-/// the archive keeps a note of what was actually dealt rather than
-/// trusting this to say.
-List<Pill> sharedDeckOfEdition(int edition) {
-  final cached = _dealt[edition];
+/// Chained: each edition keeps clear of what the editions before it asked,
+/// for three quarters of a lap of the cards that can be marked, so the same
+/// question does not come round again for months. The chain runs from the
+/// first edition on every phone that holds the same pool, which is what
+/// makes it the same question everywhere — and when the pool grows the
+/// chain is re-dealt from the start, which is why the archive keeps a note
+/// of what was actually dealt rather than trusting this to say.
+Pill questionOfEdition(int edition) {
+  final cached = _questions[edition];
   if (cached != null) return cached;
   // Everything before the calendar is dealt on its own, chained to nothing:
   // it is an archive that was never really shared.
   final int start = edition < 1 ? edition : 1;
   for (var e = start; e <= edition; e++) {
-    _dealt[e] ??= _deal(e);
+    _questions[e] ??= _ask(e);
   }
-  return _dealt[edition]!;
+  return _questions[edition]!;
 }
 
-/// How many editions back a card is kept out of the deal — three quarters
-/// of a lap of its kind of the pool, so there is always a real choice left.
-int _window(int kind, int perDay) {
-  if (perDay == 0) return 0;
-  return max(0, (kind / perDay * 0.75).floor());
-}
-
-List<Pill> _deal(int edition) {
-  final asks = kPillPool.where((p) => p.asksSomething).toList();
-  final reads = kPillPool.where((p) => !p.asksSomething).toList();
-  final int wantAsks = min(asksInADay(kPillsPerDay), asks.length);
-  final int wantReads = min(kPillsPerDay - wantAsks, reads.length);
-
-  final recentAsks = _recent(edition, _window(asks.length, wantAsks));
-  final recentReads = _recent(edition, _window(reads.length, wantReads));
-
+Pill _ask(int edition) {
+  final pool = kPillPool.where((p) => p.asksSomething && p.isGraded).toList();
+  if (pool.isEmpty) return kPillPool.first;
+  final int window = max(0, (pool.length * 0.75).floor());
+  final recent = <String>{
+    for (var e = edition - window; e < edition; e++) ?_questions[e]?.id,
+  };
   final rng = Random(edition * 7919 + 104729);
-  final askOrder = _order(asks, rng, avoid: recentAsks);
-  final readOrder = _order(reads, rng, avoid: recentReads);
-
-  final deck = <Pill>[];
-  final subjects = <String>{};
-
-  // Asking first: at most one debate, and at least one card that can be
-  // marked, because a debate is ungraded and a day of opinions measures
-  // nothing. The debate, when there is one, is what closes the day.
-  var debates = 0;
-  for (final p in askOrder) {
-    if (deck.length >= wantAsks) break;
-    final bool debate = p.challenge is TakeASide;
-    if (debate && (debates >= 1 || wantAsks - deck.length == 1 && !_hasGraded(deck))) {
-      continue;
-    }
-    if (debate) debates++;
-    deck.add(p);
-    subjects.add(p.topic);
-  }
-  _top(deck, askOrder, wantAsks);
-
-  // Then reading, one subject each while there are subjects to spread over:
-  // three facts from one shelf is not a day, it is a chapter.
-  final taken = deck.length;
-  for (final p in readOrder) {
-    if (deck.length >= taken + wantReads) break;
-    if (subjects.contains(p.topic)) continue;
-    deck.add(p);
-    subjects.add(p.topic);
-  }
-  _top(deck, readOrder, taken + wantReads);
-  _top(deck, [...readOrder, ...askOrder], kPillsPerDay);
-
-  return arrangeDay(deck);
+  final fresh = pool.where((p) => !recent.contains(p.id)).toList()
+    ..shuffle(rng);
+  if (fresh.isNotEmpty) return fresh.first;
+  final stale = List<Pill>.from(pool)..shuffle(rng);
+  return stale.first;
 }
 
-bool _hasGraded(List<Pill> deck) => deck.any((p) => p.isGraded);
-
-/// Fills [deck] up to [count] from [from], in order, skipping what is in it.
-void _top(List<Pill> deck, List<Pill> from, int count) {
-  for (final p in from) {
-    if (deck.length >= count) return;
-    if (!deck.contains(p)) deck.add(p);
-  }
-}
-
-/// The ids dealt in the [back] editions before [edition].
-Set<String> _recent(int edition, int back) {
-  final out = <String>{};
-  for (var e = edition - back; e < edition; e++) {
-    final past = _dealt[e];
-    if (past == null) continue;
-    for (final p in past) {
-      out.add(p.id);
-    }
-  }
-  return out;
-}
-
-/// A seeded order with the recently dealt pushed to the back rather than
-/// cut: a small pool must still deal a full day.
-List<Pill> _order(List<Pill> pills, Random rng, {required Set<String> avoid}) {
-  final fresh = <Pill>[];
-  final stale = <Pill>[];
-  for (final p in pills) {
-    (avoid.contains(p.id) ? stale : fresh).add(p);
-  }
-  fresh.shuffle(rng);
-  stale.shuffle(rng);
-  return [...fresh, ...stale];
+/// A day: the question of the day, and four cards of the reader's own.
+///
+/// The two asking slots go first to the question of the day and then to a
+/// card that came due for review, if one did; only when none did does the
+/// second go to a fresh question from the mix. The three reading slots are
+/// the mix's entirely. Then the day is arranged rather than sorted.
+List<Pill> dealDay({
+  required DateTime date,
+  Set<String>? topics,
+  Map<String, double> weights = const {},
+  Map<String, int> levels = const {},
+  Set<String> exclude = const {},
+  List<Pill> reviews = const [],
+  int count = kPillsPerDay,
+}) {
+  final Pill question = questionOfTheDay(date);
+  final int asks = asksInADay(count);
+  final review = reviews
+      .where((p) => p.id != question.id)
+      .take(max(0, asks - 1))
+      .toList();
+  final int personalAsks = max(0, asks - 1 - review.length);
+  final rest = pillsForDate(
+    date,
+    topics: topics,
+    weights: weights,
+    levels: levels,
+    exclude: {...exclude, question.id, ...review.map((p) => p.id)},
+    count: count - 1 - review.length,
+    asking: personalAsks,
+  );
+  return arrangeDay([question, ...review, ...rest]);
 }
 
 /// Forgets every deal. For tests that change what the pool holds.
-void resetSharedDecks() => _dealt.clear();
+void resetCalendar() => _questions.clear();

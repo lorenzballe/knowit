@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "Deze week, op kalibratie",
   "notYetToday": "vandaag nog niet",
   "nOfSeven": "{n} van 7",
-  "you": "Jij"
+  "you": "Jij",
+  "todaysQuestion": "De vraag van vandaag",
+  "right": "goed",
+  "wrong": "fout",
+  "rightAtSure": "goed, {sure}% zeker",
+  "wrongAtSure": "fout, {sure}% zeker"
 }

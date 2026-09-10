@@ -2075,6 +2075,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You'**
   String get you;
+
+  /// No description provided for @todaysQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s question'**
+  String get todaysQuestion;
+
+  /// No description provided for @right.
+  ///
+  /// In en, this message translates to:
+  /// **'right'**
+  String get right;
+
+  /// No description provided for @wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'wrong'**
+  String get wrong;
+
+  /// No description provided for @rightAtSure.
+  ///
+  /// In en, this message translates to:
+  /// **'right, {sure}% sure'**
+  String rightAtSure(int sure);
+
+  /// No description provided for @wrongAtSure.
+  ///
+  /// In en, this message translates to:
+  /// **'wrong, {sure}% sure'**
+  String wrongAtSure(int sure);
 }
 
 class _AppLocalizationsDelegate

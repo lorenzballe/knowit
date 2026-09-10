@@ -325,5 +325,10 @@
   "thisWeekByCalibration": "Bu hafta, kalibrasyona göre",
   "notYetToday": "bugün henüz değil",
   "nOfSeven": "7'de {n}",
-  "you": "Sen"
+  "you": "Sen",
+  "todaysQuestion": "Günün sorusu",
+  "right": "doğru",
+  "wrong": "yanlış",
+  "rightAtSure": "doğru, %{sure} emin",
+  "wrongAtSure": "yanlış, %{sure} emin"
 }

@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart' show ThemeMode, basicLocaleListResolution;
+import 'package:flutter/material.dart'
+    show ThemeMode, basicLocaleListResolution;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -187,8 +188,7 @@ class AppState extends ChangeNotifier {
   int get dayNumber => liveStreak + (dayClosed ? 0 : 1);
 
   /// How many of today's cards the reader liked.
-  int get likedToday =>
-      todaysDeck.where((p) => likedIds.contains(p.id)).length;
+  int get likedToday => todaysDeck.where((p) => likedIds.contains(p.id)).length;
 
   /// Initials for the profile avatar.
   String get initials {
@@ -317,15 +317,22 @@ class AppState extends ChangeNotifier {
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
-  /// The five are the calendar's five — the same for everybody who opens
-  /// the app today. Nothing of the reader's enters them, with one
-  /// exception: a card the calendar deals that this phone dealt within the
-  /// last two weeks (the pool grew and the calendar moved under it) is
-  /// swapped for one of the same kind from their own mix. Cards that came
-  /// due for review are not in the five any more; they wait after it.
+  /// Four cards of the reader's own — dealt from their mix, what they said
+  /// they know, and what came due for review — around the one card that is
+  /// everybody's, the question of the day. An app that never re-asks what
+  /// you got wrong is not teaching, it is entertaining: a card that came
+  /// due takes the day's second asking slot before any fresh question does.
   Future<void> _startNewDay() async {
     final size = extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay;
-    todaysDeck = _personalised(sharedDeckFor(today), on: today);
+    final reviews = dueReviews;
+    todaysDeck = dealDay(
+      date: today,
+      topics: pickedTopics,
+      weights: leanedWeights,
+      levels: topicLevels,
+      exclude: seenIds,
+      reviews: reviews,
+    );
     if (size > todaysDeck.length) {
       todaysDeck = [
         ...todaysDeck,
@@ -339,9 +346,10 @@ class AppState extends ChangeNotifier {
         ),
       ];
     }
+    final dealtReviews = reviews.map((p) => p.id).toSet();
     reviewIdsToday = {
       for (final p in todaysDeck)
-        if (answers.containsKey(p.id)) p.id,
+        if (dealtReviews.contains(p.id) || answers.containsKey(p.id)) p.id,
     };
     todayIndex = 0;
     rungAtDayStart = standing.at;
@@ -350,40 +358,6 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kDayStartRung, rungAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
     await _noteDealt(today, todaysDeck);
-  }
-
-  /// How many days back a card the calendar deals again is swapped out.
-  static const int kRecentDays = 14;
-
-  /// The calendar's deck for [on], with anything this phone dealt lately
-  /// swapped for a card of the same kind from the reader's own mix.
-  List<Pill> _personalised(List<Pill> shared, {required DateTime on}) {
-    final recent = <String>{};
-    for (var i = 1; i <= kRecentDays; i++) {
-      final day = DateTime(on.year, on.month, on.day - i);
-      recent.addAll(deckHistory[dateKey(day)] ?? const []);
-    }
-    if (!shared.any((p) => recent.contains(p.id))) return shared;
-
-    final spare = pillsForDate(
-      on,
-      topics: pickedTopics,
-      weights: leanedWeights,
-      levels: topicLevels,
-      exclude: {...seenIds, ...recent, ...shared.map((p) => p.id)},
-      count: kPillsPerDay * 2,
-    ).toList();
-    return [
-      for (final p in shared)
-        if (recent.contains(p.id)) _sameKind(p, spare) ?? p else p,
-    ];
-  }
-
-  /// Takes the first card of [like]'s kind out of [spare], or any card.
-  static Pill? _sameKind(Pill like, List<Pill> spare) {
-    final i = spare.indexWhere((p) => p.asksSomething == like.asksSomething);
-    if (i >= 0) return spare.removeAt(i);
-    return spare.isEmpty ? null : spare.removeAt(0);
   }
 
   /// Writes down what a day was dealt, and forgets what is older than the
@@ -408,12 +382,19 @@ class AppState extends ChangeNotifier {
   }
 
   /// What a past day was dealt: what this phone wrote down, or failing
-  /// that what the calendar says it was.
+  /// that the day dealt again from the same date and mix — which is what
+  /// it was, less the review and the history, and closer to the truth than
+  /// showing nothing.
   List<Pill> deckOn(DateTime day) {
     if (dateKey(day) == dateKey(today)) return todaysDeck;
     final noted = deckHistory[dateKey(day)];
     if (noted != null && noted.isNotEmpty) return pillsByIds(noted);
-    return sharedDeckFor(day);
+    return dealDay(
+      date: day,
+      topics: pickedTopics,
+      weights: leanedWeights,
+      levels: topicLevels,
+    );
   }
 
   /// True when today's five carried the reader up a rung.
@@ -447,6 +428,13 @@ class AppState extends ChangeNotifier {
     final double? sure = todays.isEmpty
         ? null
         : todays.fold<int>(0, (a, j) => a + j.confidence) / todays.length;
+
+    // The question of the day, on its own: the one square a friend's grid
+    // has in the same place.
+    final Pill question = questionOfTheDay(today);
+    final Answer? said = todaysDeck.any((p) => p.id == question.id)
+        ? answers[question.id]
+        : null;
     return DaySummary(
       edition: editionOf(today),
       squares: squares.toString(),
@@ -454,6 +442,10 @@ class AppState extends ChangeNotifier {
       right: right,
       sure: sure,
       streak: liveStreak,
+      questionRight: said == null
+          ? null
+          : question.challenge.accepts(said.response),
+      questionSure: said?.confidence,
     );
   }
 
@@ -748,6 +740,13 @@ class AppState extends ChangeNotifier {
   /// second is what transfer means.
   List<Pill> get dueReviews => _reviewsDue(today);
 
+  /// The cards that came due and found no room in the five: what waits
+  /// after the day, to be answered again.
+  List<Pill> get reviewsWaiting {
+    final dealt = todaysDeck.map((p) => p.id).toSet();
+    return dueReviews.where((p) => !dealt.contains(p.id)).toList();
+  }
+
   /// The same, for a day that has not started: what [on] will bring back.
   List<Pill> _reviewsDue(DateTime on) {
     final due = <MapEntry<String, Pill>>[];
@@ -768,11 +767,19 @@ class AppState extends ChangeNotifier {
 
   /// Tomorrow's cards, dealt the way tomorrow will deal them.
   ///
-  /// The calendar is the same tonight as it will be in the morning, so
-  /// tonight can say what opens the day and the morning will agree.
+  /// The dealer is deterministic in the date and the reading history, and
+  /// once a day is done the history is exactly what tomorrow will see — so
+  /// tonight can say what opens the morning and the morning will agree.
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    return _personalised(sharedDeckFor(tomorrow), on: tomorrow);
+    return dealDay(
+      date: tomorrow,
+      topics: pickedTopics,
+      weights: leanedWeights,
+      levels: topicLevels,
+      exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+      reviews: _reviewsDue(tomorrow),
+    );
   }
 
   /// Another card teaching the same principle that the reader has not met,
@@ -980,6 +987,8 @@ class AppState extends ChangeNotifier {
       squares: dayClosed ? d.squares : '',
       right: d.right,
       asked: d.asked,
+      questionRight: d.questionRight,
+      questionSure: d.questionSure,
       updated: dateKey(today),
     );
   }
@@ -1125,8 +1134,7 @@ class AppState extends ChangeNotifier {
       final at = DateTime(day.year, day.month, day.day, hour, minute);
       if (!at.isAfter(clock)) continue;
       if (i == 0 && todayCompleted) continue;
-      final Pill? lead = _leadOn(i, day);
-      if (lead == null) continue;
+      final Pill lead = questionOfTheDay(day);
 
       // How long the reader will have been away when this one lands.
       final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
@@ -1154,23 +1162,22 @@ class AppState extends ChangeNotifier {
   /// What the home-screen widget shows, handed over whenever it could
   /// have changed: at launch, on coming back, and when the day is done.
   ///
-  /// Today's question and the streak, and the question for each of the
-  /// next fourteen mornings, so the widget turns over at midnight on its
-  /// own. Nothing personal beyond the streak: the widget is on the home
-  /// screen, where anyone can read it.
+  /// The question of the day and the streak, and the question for each of
+  /// the next fourteen mornings, so the widget turns over at midnight on
+  /// its own. Nothing personal beyond the streak: the widget is on the
+  /// home screen, where anyone can read it.
   Map<String, Object?> homeWidgetData() {
     final ahead = <String, String>{};
     for (var i = 0; i <= kPlannedDays; i++) {
       final day = DateTime(today.year, today.month, today.day + i);
-      final Pill? lead = _leadOn(i, day);
-      if (lead != null) ahead[dateKey(day)] = lead.question;
+      ahead[dateKey(day)] = questionOfTheDay(day).question;
     }
-    final Pill? lead = todaysDeck.firstOrNull;
+    final Pill lead = questionOfTheDay(today);
     return {
       'edition': editionOf(today),
       'date': dateKey(today),
-      'question': lead?.question ?? '',
-      'topic': lead?.topic ?? '',
+      'question': lead.question,
+      'topic': lead.topic,
       'streak': liveStreak,
       'done': dayClosed,
       'ahead': ahead,
@@ -1183,17 +1190,6 @@ class AppState extends ChangeNotifier {
     } catch (_) {
       // The widget is a convenience; the app never fails for it.
     }
-  }
-
-  /// The card that opens a day: today's own deck, tomorrow's as tonight
-  /// sees it, and for the days after, the calendar's.
-  Pill? _leadOn(int daysAhead, DateTime day) {
-    final List<Pill> deck = switch (daysAhead) {
-      0 => todaysDeck,
-      1 => tomorrowsDeck,
-      _ => sharedDeckFor(day),
-    };
-    return deck.firstOrNull;
   }
 
   static DateTime? _dateOf(String? key) {
@@ -1479,6 +1475,8 @@ class DaySummary {
     required this.right,
     required this.sure,
     required this.streak,
+    this.questionRight,
+    this.questionSure,
   });
 
   /// One square a card: read, right, wrong, a side taken, or passed.
@@ -1499,6 +1497,11 @@ class DaySummary {
   /// when nothing today carried one.
   final double? sure;
   final int streak;
+
+  /// How the question of the day went — null until it was answered — and
+  /// how sure the reader said they were.
+  final bool? questionRight;
+  final int? questionSure;
 }
 
 /// One confidence level and how it actually turned out.

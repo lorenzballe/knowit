@@ -450,5 +450,12 @@
   "notYetToday": "not yet today",
   "nOfSeven": "{n} of 7",
   "@nOfSeven": {"placeholders": {"n": {"type": "int"}}},
-  "you": "You"
+  "you": "You",
+  "todaysQuestion": "Today's question",
+  "right": "right",
+  "wrong": "wrong",
+  "rightAtSure": "right, {sure}% sure",
+  "@rightAtSure": {"placeholders": {"sure": {"type": "int"}}},
+  "wrongAtSure": "wrong, {sure}% sure",
+  "@wrongAtSure": {"placeholders": {"sure": {"type": "int"}}}
 }
