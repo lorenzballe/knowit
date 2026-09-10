@@ -369,13 +369,26 @@ than lying.
 
 Android is complete in the tree: `AstutWidget.kt`, its layout, and the
 receiver in the manifest. (`MainActivity` also moved to `com.astuto.app`,
-the package the manifest actually resolves it in.) iOS needs one step in
-Xcode that a file cannot do: add a Widget Extension target named
-`AstutWidget`, replace its generated Swift with `ios/AstutWidget/
-AstutWidget.swift`, point it at `ios/AstutWidget/Info.plist` and
-`AstutWidget.entitlements`, and turn on the `group.com.astuto.app` App
-Group for both targets in the developer portal. The app side is already
-written in `AppDelegate.swift`.
+the package the manifest actually resolves it in.) iOS needs steps in
+Xcode that a file cannot do, and they have to be done together, because
+the provisioning profile Codemagic signs with has to carry the same
+capabilities as the entitlements or the archive fails to sign:
+
+1. Runner target → Signing & Capabilities → **+ App Groups** →
+   `group.com.astuto.app`. Xcode adds the entitlement to
+   `Runner.entitlements` and, with automatic signing, regenerates the
+   profile; with a manual profile, add App Groups to the App ID in the
+   developer portal and download the profile again.
+2. File → New → Target → **Widget Extension**, named `AstutWidget`,
+   without configuration intent. Replace its generated Swift with
+   `ios/AstutWidget/AstutWidget.swift`, point it at
+   `ios/AstutWidget/Info.plist`, and give it the same App Group
+   (`ios/AstutWidget/AstutWidget.entitlements` is ready to attach).
+
+Until then the app builds and signs as before: the channel handler in
+`AppDelegate.swift` writes to the group's defaults, which without the
+entitlement is a private container nobody reads, and WidgetKit is asked
+to reload timelines that do not exist yet — both harmless.
 
 ## What is not real yet
 
