@@ -773,6 +773,46 @@ void main() {
     });
   });
 
+  group('The home-screen widget', () {
+    test('is handed today, the streak, and a fortnight of mornings', () async {
+      final yesterday = DateTime.now().subtract(const Duration(days: 1));
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 7,
+        'knowit.lastCompletionDate': dateKey(yesterday),
+      });
+      final pushed = <Map<String, Object?>>[];
+      final app = AppState(pushWidget: (data) async => pushed.add(data));
+      await app.init();
+      await Future<void>.delayed(Duration.zero);
+
+      // Handed over at launch, without being asked.
+      expect(pushed, hasLength(1));
+      final data = pushed.single;
+      expect(data['edition'], editionOf(DateTime.now()));
+      expect(data['question'], app.todaysDeck.first.question);
+      expect(data['streak'], 7);
+      expect(data['done'], isFalse);
+
+      // The next fortnight, one question a day, so the widget turns over
+      // at midnight without the app.
+      final ahead = data['ahead'] as Map<String, String>;
+      expect(ahead, hasLength(AppState.kPlannedDays + 1));
+      final third = DateTime.now().add(const Duration(days: 3));
+      expect(ahead[dateKey(third)], sharedDeckFor(third).first.question);
+      // And nothing a stranger reading the home screen should not see.
+      expect(data.keys, isNot(contains('answers')));
+
+      // Again when the day is done, now saying so.
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await app.advance();
+      }
+      await Future<void>.delayed(Duration.zero);
+      expect(pushed.last['done'], isTrue);
+      expect(pushed.last['streak'], 8);
+    });
+  });
+
   group('Streak freezes', () {
     Future<AppState> appWith(Map<String, Object> extra) async {
       SharedPreferences.setMockInitialValues({..._installed(), ...extra});

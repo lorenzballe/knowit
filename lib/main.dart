@@ -167,7 +167,10 @@ class _AstutoRootState extends State<AstutoRoot> {
       onDetach: _account.flush,
       // Coming back to the foreground re-arms tomorrow's nudge with today's
       // streak in it, and quietly — no prompt ever comes from here.
-      onResume: _app.refreshDailyReminder,
+      onResume: () {
+        _app.refreshDailyReminder();
+        _app.refreshHomeWidget();
+      },
     );
     _refreshPushToken();
     _startAccountAndStore();

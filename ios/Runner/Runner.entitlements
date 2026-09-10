@@ -17,5 +17,12 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<!-- The home-screen widget reads what the app writes here. The widget
+	     extension carries the same group in its own entitlements, and the
+	     App ID in the developer portal has to have App Groups turned on. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.astuto.app</string>
+	</array>
 </dict>
 </plist>

@@ -14,6 +14,7 @@ import '../models/pill.dart';
 import '../models/reminder.dart';
 import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
+import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
 import 'progress.dart';
 
@@ -24,6 +25,7 @@ enum Plan { month, year }
 /// stand in for the platform, which has no notification centre.
 typedef PermissionProbe = Future<bool> Function();
 typedef ReminderArmer = Future<void> Function(List<Reminder> plan);
+typedef HomeWidgetPusher = Future<void> Function(Map<String, Object?> data);
 
 class AppState extends ChangeNotifier {
   AppState({
@@ -31,15 +33,18 @@ class AppState extends ChangeNotifier {
     PermissionProbe? askPermission,
     ReminderArmer? arm,
     Future<void> Function()? disarm,
+    HomeWidgetPusher? pushWidget,
   }) : _hasPermission = hasPermission ?? hasReminderPermission,
        _askPermission = askPermission ?? ensureReminderPermission,
        _arm = arm ?? armReminders,
-       _disarm = disarm ?? disarmReminders;
+       _disarm = disarm ?? disarmReminders,
+       _pushWidget = pushWidget ?? pushHomeWidget;
 
   final PermissionProbe _hasPermission;
   final PermissionProbe _askPermission;
   final ReminderArmer _arm;
   final Future<void> Function() _disarm;
+  final HomeWidgetPusher _pushWidget;
 
   static const _kStreak = 'knowit.streak';
   static const _kBestStreak = 'knowit.bestStreak';
@@ -216,6 +221,7 @@ class AppState extends ChangeNotifier {
     // Not awaited: the splash must not wait on the notification centre, and
     // this never prompts — it only re-arms what is already permitted.
     unawaited(refreshDailyReminder());
+    unawaited(refreshHomeWidget());
   }
 
   Future<void> _restore() async {
@@ -499,6 +505,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     if (todayCompleted) {
       await _completeToday();
+      unawaited(refreshHomeWidget());
     }
     notifyListeners();
   }
@@ -1142,6 +1149,40 @@ class AppState extends ChangeNotifier {
       plan.add(Reminder(id: i + 1, when: at, title: title, body: body));
     }
     return plan;
+  }
+
+  /// What the home-screen widget shows, handed over whenever it could
+  /// have changed: at launch, on coming back, and when the day is done.
+  ///
+  /// Today's question and the streak, and the question for each of the
+  /// next fourteen mornings, so the widget turns over at midnight on its
+  /// own. Nothing personal beyond the streak: the widget is on the home
+  /// screen, where anyone can read it.
+  Map<String, Object?> homeWidgetData() {
+    final ahead = <String, String>{};
+    for (var i = 0; i <= kPlannedDays; i++) {
+      final day = DateTime(today.year, today.month, today.day + i);
+      final Pill? lead = _leadOn(i, day);
+      if (lead != null) ahead[dateKey(day)] = lead.question;
+    }
+    final Pill? lead = todaysDeck.firstOrNull;
+    return {
+      'edition': editionOf(today),
+      'date': dateKey(today),
+      'question': lead?.question ?? '',
+      'topic': lead?.topic ?? '',
+      'streak': liveStreak,
+      'done': dayClosed,
+      'ahead': ahead,
+    };
+  }
+
+  Future<void> refreshHomeWidget() async {
+    try {
+      await _pushWidget(homeWidgetData());
+    } catch (_) {
+      // The widget is a convenience; the app never fails for it.
+    }
   }
 
   /// The card that opens a day: today's own deck, tomorrow's as tonight
