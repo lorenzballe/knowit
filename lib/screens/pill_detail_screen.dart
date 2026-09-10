@@ -26,6 +26,7 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
   Widget build(BuildContext context) {
     final pill = widget.pill;
     final saved = widget.app.isSaved(pill.id);
+    final liked = widget.app.isLiked(pill.id);
     final onCard = pill.ink;
     final answered = widget.app.answerFor(pill.id);
 
@@ -42,12 +43,26 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
                 Row(
                   children: [
                     _RoundAction(
+                      label: liked
+                          ? context.l10n.removeFromLiked
+                          : context.l10n.likeThisPill,
+                      icon: liked
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                      color: liked ? pill.color : context.p.ink,
+                      onTap: () async {
+                        await widget.app.toggleLiked(pill.id);
+                        if (mounted) setState(() {});
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    _RoundAction(
                       label: saved
                           ? context.l10n.removeFromSaved
                           : context.l10n.saveThisPill,
                       icon: saved
-                          ? Icons.favorite_rounded
-                          : Icons.favorite_border_rounded,
+                          ? Icons.bookmark_rounded
+                          : Icons.bookmark_border_rounded,
                       color: saved ? pill.color : context.p.ink,
                       onTap: () async {
                         await widget.app.toggleSaved(pill.id);

@@ -53,6 +53,14 @@ class PillCardStack extends StatefulWidget {
   final ValueChanged<Pill> onSave;
   final ValueChanged<Pill> onShare;
 
+  /// Held down: liked. Left null, a hold does nothing here.
+  final bool Function(String id)? isLiked;
+  final ValueChanged<Pill>? onLike;
+
+  /// Thrown down, hard and straight: less like this. Left null, a throw
+  /// down is a throw like any other.
+  final ValueChanged<Pill>? onDislike;
+
   const PillCardStack({
     super.key,
     required this.deck,
@@ -64,6 +72,9 @@ class PillCardStack extends StatefulWidget {
     required this.isSaved,
     required this.onSave,
     required this.onShare,
+    this.isLiked,
+    this.onLike,
+    this.onDislike,
     this.answering = true,
     this.onMotion,
   });
@@ -138,10 +149,23 @@ class _PillCardStackState extends State<PillCardStack>
     // quick flick do nothing, which is the gesture most people actually make.
     final bool gone = _drag.distance > 78 || thrown.distance > 620;
     if (gone) {
-      HapticFeedback.lightImpact();
       // Out along the way it was sent — a card pushed up leaves upward. The
       // throw decides the heading when there is one, otherwise the drag does.
       final Offset heading = thrown.distance > 220 ? thrown : _drag;
+      // Straight down, and thrown rather than carried: the one heading a
+      // card is never sent in by accident, so it can mean something —
+      // less like this. A drag that drifts downward on its way sideways
+      // is not it.
+      final bool down =
+          widget.onDislike != null &&
+          thrown.dy > 520 &&
+          thrown.dy > thrown.dx.abs() * 1.8;
+      if (down) {
+        HapticFeedback.mediumImpact();
+      } else {
+        HapticFeedback.lightImpact();
+      }
+      final Pill leaving = widget.deck[widget.index];
       final double length = heading.distance;
       await _animateTo(
         length == 0 ? const Offset(480, 0) : heading * (1100 / length),
@@ -151,6 +175,7 @@ class _PillCardStackState extends State<PillCardStack>
         _drag = Offset.zero;
         _flipped = false;
       });
+      if (down) widget.onDislike!(leaving);
       widget.onAdvance();
     } else if (_dragTotalMove < 7) {
       // Barely moved: put it back where it was and turn it over, with
@@ -251,6 +276,10 @@ class _PillCardStackState extends State<PillCardStack>
                 given: given,
                 saved: widget.isSaved(pill.id),
                 onSave: () => widget.onSave(pill),
+                liked: widget.isLiked?.call(pill.id) ?? false,
+                onLike: widget.onLike == null
+                    ? null
+                    : () => widget.onLike!(pill),
                 onShare: () => widget.onShare(pill),
                 onAnswer: !widget.answering
                     ? null
@@ -270,6 +299,10 @@ class _PillCardStackState extends State<PillCardStack>
                 given: given,
                 saved: widget.isSaved(pill.id),
                 onSave: () => widget.onSave(pill),
+                liked: widget.isLiked?.call(pill.id) ?? false,
+                onLike: widget.onLike == null
+                    ? null
+                    : () => widget.onLike!(pill),
                 onShare: () => widget.onShare(pill),
               ),
             )

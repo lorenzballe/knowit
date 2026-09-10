@@ -426,11 +426,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
       onShare: () => showShareSheet(context, pill),
     );
     if (!front) return face(false);
+    // Held down, the card is liked; the bookmark on its back saves it.
     return HoldToKeep(
-      saved: saved,
+      saved: app.isLiked(pill.id),
       ink: pill.ink,
       ground: pill.color,
-      onToggle: () => app.toggleSaved(pill.id),
+      onToggle: () => app.toggleLiked(pill.id),
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
     );
   }
@@ -1212,8 +1213,8 @@ class _CardButton extends StatelessWidget {
   }
 }
 
-/// The heart, which swells for a moment when it fills. Keeping a card is
-/// the one thing a reader does here that is worth marking.
+/// The bookmark, which swells for a moment when it fills. Keeping a card
+/// is the one thing a reader does here that is worth marking.
 class _HeartButton extends StatefulWidget {
   const _HeartButton({
     required this.saved,
@@ -1264,8 +1265,8 @@ class _HeartButtonState extends State<_HeartButton>
           ? context.l10n.removeFromSaved
           : context.l10n.saveThisPill,
       icon: widget.saved
-          ? Icons.favorite_rounded
-          : Icons.favorite_border_rounded,
+          ? Icons.bookmark_rounded
+          : Icons.bookmark_border_rounded,
       ink: widget.ink,
       fill: widget.fill,
       size: widget.size,
@@ -1282,8 +1283,8 @@ class _HeartButtonState extends State<_HeartButton>
               },
               child: Icon(
                 widget.saved
-                    ? Icons.favorite_rounded
-                    : Icons.favorite_border_rounded,
+                    ? Icons.bookmark_rounded
+                    : Icons.bookmark_border_rounded,
                 size: widget.size * 17 / 42,
                 color: widget.ink,
               ),

@@ -49,20 +49,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get freezeKeptStreak => 'Bir dondurma seriyi kurtardı';
 
   @override
-  String get holdACardToKeepIt => 'Saklamak için bir karta basılı tut';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'bugün $n saklandı',
-      one: 'bugün 1 saklandı',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'bir',
@@ -270,10 +256,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Gerçekten kullanacaklarını sakla';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Herhangi bir haptaki kalbe dokun, buraya düşer — düşünme biçimini değiştirenler, saklanmış.';
 
   @override
   String get backToTodaysFive => 'BUGÜNÜN BEŞLİSİNE DÖN';
@@ -1262,4 +1244,52 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get cameBack => 'Geri gelenler';
+
+  @override
+  String get holdACardYouLike => 'Beğendiğin bir karta basılı tut';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'bugün $n beğeni',
+      one: 'bugün 1 beğeni',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Beğenilenler';
+
+  @override
+  String likedN(int n) {
+    return 'Beğenilenler · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Henüz beğenilen yok';
+
+  @override
+  String get likeThisPill => 'Bu kartı beğen';
+
+  @override
+  String get removeFromLiked => 'Beğenilenlerden çıkar';
+
+  @override
+  String get removedFromLiked => 'Beğenilenlerden çıkarıldı.';
+
+  @override
+  String get lessLikeThis => 'Bunun gibisi daha az';
+
+  @override
+  String get whatYouLikedLandsHere => 'Yeniden okuyacakların';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Beğendiğin bir karta basılı tut, buraya gelir — uygulama da sana bunun gibilerinden daha çok verir.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Bir kartın yer imine dokun, buraya gelir — düşünme şeklini değiştirenler, saklanır.';
 }

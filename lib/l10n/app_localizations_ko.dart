@@ -49,20 +49,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get freezeKeptStreak => '프리즈가 연속 기록을 지켰어요';
 
   @override
-  String get holdACardToKeepIt => '카드를 길게 눌러 보관하세요';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '오늘 $n장 보관',
-      one: '오늘 1장 보관',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': '1',
@@ -270,9 +256,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => '정말 쓸 것만 보관하세요';
-
-  @override
-  String get tapTheHeartLandsHere => '알약의 하트를 탭하면 여기에 들어옵니다. 생각을 바꾼 카드를, 손에.';
 
   @override
   String get backToTodaysFive => '오늘의 다섯 장으로';
@@ -1235,4 +1218,51 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get cameBack => '돌아온 카드';
+
+  @override
+  String get holdACardYouLike => '마음에 드는 카드를 길게 누르세요';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '오늘 $n장 좋아요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => '좋아요';
+
+  @override
+  String likedN(int n) {
+    return '좋아요 · $n';
+  }
+
+  @override
+  String get nothingLikedYet => '아직 좋아요한 카드가 없어요';
+
+  @override
+  String get likeThisPill => '이 카드 좋아요';
+
+  @override
+  String get removeFromLiked => '좋아요 취소';
+
+  @override
+  String get removedFromLiked => '좋아요를 취소했어요.';
+
+  @override
+  String get lessLikeThis => '이런 카드는 줄이기';
+
+  @override
+  String get whatYouLikedLandsHere => '다시 읽고 싶은 카드';
+
+  @override
+  String get holdToLikeLandsHere =>
+      '마음에 드는 카드를 길게 누르면 여기에 모이고, 앱이 비슷한 카드를 더 보여줘요.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      '카드의 북마크를 누르면 여기에 모여요 — 생각을 바꾼 카드를 간직하세요.';
 }

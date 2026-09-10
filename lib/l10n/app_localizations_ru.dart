@@ -51,22 +51,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get freezeKeptStreak => 'Заморозка спасла серию';
 
   @override
-  String get holdACardToKeepIt => 'Удержи карточку, чтобы сохранить';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n сохранено сегодня',
-      many: '$n сохранено сегодня',
-      few: '$n сохранены сегодня',
-      one: '$n сохранена сегодня',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'одна',
@@ -279,10 +263,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Сохраняй те, что правда пригодятся';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Нажми на сердце на любой пилюле — и она окажется здесь. Те, что изменили твоё мышление, сохранены.';
 
   @override
   String get backToTodaysFive => 'К СЕГОДНЯШНЕЙ ПЯТЁРКЕ';
@@ -1298,4 +1278,54 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get cameBack => 'Вернулись';
+
+  @override
+  String get holdACardYouLike => 'Удержите карточку, которая вам понравилась';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n понравились сегодня',
+      many: '$n понравилось сегодня',
+      few: '$n понравились сегодня',
+      one: '$n понравилась сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Понравившиеся';
+
+  @override
+  String likedN(int n) {
+    return 'Понравившиеся · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Пока ничего не понравилось';
+
+  @override
+  String get likeThisPill => 'Нравится эта карточка';
+
+  @override
+  String get removeFromLiked => 'Убрать из понравившихся';
+
+  @override
+  String get removedFromLiked => 'Убрано из понравившихся.';
+
+  @override
+  String get lessLikeThis => 'Меньше таких';
+
+  @override
+  String get whatYouLikedLandsHere => 'Те, что вы перечитали бы';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Удержите карточку, которая вам понравилась, и она окажется здесь — а приложение даст больше таких.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Нажмите на закладку на карточке, и она окажется здесь — те, что изменили ваше мышление, сохранены.';
 }

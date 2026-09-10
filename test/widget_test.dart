@@ -1138,7 +1138,7 @@ void main() {
     // its line to bring it up with.
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
-    expect(find.text('Hold a card to keep it'), findsOneWidget);
+    expect(find.text('Hold a card you like'), findsOneWidget);
     expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
@@ -1226,23 +1226,7 @@ void main() {
       expect(find.text(deck.last.question), findsOneWidget);
     });
 
-    testWidgets('keeping a card counts it in the header', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await finish(tester);
-
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
-      await tester.tap(find.bySemanticsLabel('Save this pill'));
-      await _settle(tester);
-      expect(find.text('1 kept today'), findsOneWidget);
-      expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
-
-      final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds'), [_todaysFive.first.id]);
-    });
-
-    testWidgets('a card held down is kept, and held again is let go', (
+    testWidgets('the bookmark keeps a card, and a bookmark is not a like', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -1250,20 +1234,41 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
-
-      // The whole card is the button, not just the heart in its corner.
-      final card = find.byType(HoldToKeep).first;
-      await _hold(tester, card);
-      expect(find.text('1 kept today'), findsOneWidget);
+      expect(find.text('Hold a card you like'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await _settle(tester);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
+      // Saving is finding it again later; the header counts what was liked.
+      expect(find.text('Hold a card you like'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds')!.length, 1);
+      expect(prefs.getStringList('knowit.savedIds'), [_todaysFive.first.id]);
+      expect(prefs.getStringList('knowit.likedIds') ?? [], isEmpty);
+    });
+
+    testWidgets('a card held down is liked, and held again is let go', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      expect(find.text('Hold a card you like'), findsOneWidget);
+
+      // The whole card is the button.
+      final card = find.byType(HoldToKeep).first;
+      await _hold(tester, card);
+      expect(find.text('1 liked today'), findsOneWidget);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.likedIds'), [_todaysFive.first.id]);
+      // And nothing was bookmarked by it.
+      expect(prefs.getStringList('knowit.savedIds') ?? [], isEmpty);
 
       await _hold(tester, card);
-      expect(find.text('Hold a card to keep it'), findsOneWidget);
-      expect(prefs.getStringList('knowit.savedIds'), isEmpty);
+      expect(find.text('Hold a card you like'), findsOneWidget);
+      expect(prefs.getStringList('knowit.likedIds'), isEmpty);
     });
 
     testWidgets('a tap is still a tap: it turns the card over, keeps nothing', (
@@ -1286,10 +1291,10 @@ void main() {
 
       expect(find.text(front.answer), findsWidgets);
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds') ?? [], isEmpty);
+      expect(prefs.getStringList('knowit.likedIds') ?? [], isEmpty);
     });
 
-    testWidgets('a card in the deck being read is kept the same way', (
+    testWidgets('a card in the deck being read is liked the same way', (
       tester,
     ) async {
       SharedPreferences.setMockInitialValues(_installed());
@@ -1299,7 +1304,47 @@ void main() {
       await _hold(tester, find.byType(HoldToKeep).first);
 
       final prefs = await SharedPreferences.getInstance();
-      expect(prefs.getStringList('knowit.savedIds'), [_todaysFive.first.id]);
+      expect(prefs.getStringList('knowit.likedIds'), [_todaysFive.first.id]);
+    });
+
+    testWidgets('a card thrown straight down is less like this', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final first = _todaysFive.first;
+
+      // Hard and straight down: the one heading no card is sent in by
+      // accident.
+      await tester.fling(
+        find.byType(PillCardStack),
+        const Offset(0, 300),
+        1400,
+      );
+      await _settle(tester);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.dislikedIds'), [first.id]);
+      expect(find.text('Less like this'), findsOneWidget);
+      // The card still leaves: the throw is a throw, with one more meaning.
+      expect(find.text(first.question), findsNothing);
+
+      await tester.tap(find.text('Undo'));
+      await _settle(tester);
+      expect(prefs.getStringList('knowit.dislikedIds'), isEmpty);
+    });
+
+    testWidgets('a sideways throw is only a throw', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      await _swipeCardAway(tester);
+
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getStringList('knowit.dislikedIds') ?? [], isEmpty);
+      expect(find.text('Less like this'), findsNothing);
     });
 
     testWidgets('the day ends by naming what opens tomorrow', (tester) async {
@@ -2040,12 +2085,12 @@ void main() {
       await _settle(tester);
 
       // Save the first two pills of the day.
-      final first = find.byIcon(Icons.favorite_border_rounded);
+      final first = find.byIcon(Icons.bookmark_border_rounded);
       await tester.tap(first.first);
       await _settle(tester);
       await _swipeCardAway(tester);
       await _settle(tester);
-      await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
+      await tester.tap(find.byIcon(Icons.bookmark_border_rounded).first);
       await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
@@ -2098,13 +2143,13 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await tester.tap(find.byIcon(Icons.favorite_border_rounded).first);
+      await tester.tap(find.byIcon(Icons.bookmark_border_rounded).first);
       await _settle(tester);
 
       await _openSetting(tester, 'Saved');
       expect(find.text('1 card'), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.favorite_rounded).first);
+      await tester.tap(find.byIcon(Icons.bookmark_rounded).first);
       await _settle(tester);
       expect(find.text('Removed from saved.'), findsOneWidget);
       expect(find.text("Keep the ones you'll actually use"), findsOneWidget);
@@ -2112,6 +2157,62 @@ void main() {
       await tester.tap(find.text('Undo'));
       await _settle(tester);
       expect(find.text('1 card'), findsOneWidget);
+    });
+  });
+
+  group('Liked shelf', () {
+    testWidgets('what was held down has a shelf of its own', (tester) async {
+      final liked = kPillPool.firstWhere((p) => p.topic == 'Space');
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.likedIds': <String>[liked.id],
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      await _openSetting(tester, 'Liked · 1');
+      expect(find.text('Liked'), findsOneWidget);
+      expect(find.text(liked.question), findsOneWidget);
+      expect(find.byTooltip('Remove from liked'), findsOneWidget);
+      // Not the bookmarks: the two shelves are two different questions.
+      expect(find.text('Saved'), findsNothing);
+    });
+
+    test('what the reader liked leans the personal deals', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      final space = kPillPool.firstWhere((p) => p.topic == 'Space');
+      final history = kPillPool.firstWhere((p) => p.topic == 'History');
+
+      expect(app.leanedWeights, app.topicWeights, reason: 'nothing said yet');
+      await app.toggleLiked(space.id);
+      await app.dislike(history.id);
+
+      final lean = app.leanedWeights;
+      expect(lean['space'], greaterThan(lean['science']!));
+      expect(lean['history'], lessThan(lean['science']!));
+      // The five of the day never look at any of it.
+      expect(
+        app.todaysDeck.map((p) => p.id).toList(),
+        _todaysFive.map((p) => p.id).toList(),
+      );
+    });
+
+    test('a like takes a throw back, and a throw takes a like', () async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState();
+      await app.init();
+      final pill = kPillPool.first;
+
+      await app.dislike(pill.id);
+      await app.toggleLiked(pill.id);
+      expect(app.isLiked(pill.id), isTrue);
+      expect(app.isDisliked(pill.id), isFalse);
+
+      await app.dislike(pill.id);
+      expect(app.isLiked(pill.id), isFalse);
+      expect(app.isDisliked(pill.id), isTrue);
     });
   });
 
@@ -2342,7 +2443,7 @@ void main() {
       expect(find.text(facts[1].answer), findsNothing);
     });
 
-    testWidgets('the heart keeps the card, and both actions are there', (
+    testWidgets('the bookmark keeps the card, and both actions are there', (
       tester,
     ) async {
       final app = await freshApp();

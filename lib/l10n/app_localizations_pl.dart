@@ -51,22 +51,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get freezeKeptStreak => 'Zamrożenie uratowało serię';
 
   @override
-  String get holdACardToKeepIt => 'Przytrzymaj kartę, żeby ją zachować';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n zachowanych dziś',
-      many: '$n zachowanych dziś',
-      few: '$n zachowane dziś',
-      one: '1 zachowana dziś',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'jedna',
@@ -279,10 +263,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Zachowuj te, których naprawdę użyjesz';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Dotknij serca na dowolnej pigułce, a wyląduje tutaj — te, które zmieniły twoje myślenie, zachowane.';
 
   @override
   String get backToTodaysFive => 'WRÓĆ DO DZISIEJSZEJ PIĄTKI';
@@ -1303,4 +1283,54 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get cameBack => 'Wróciły';
+
+  @override
+  String get holdACardYouLike => 'Przytrzymaj kartę, która ci się podoba';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n polubione dziś',
+      many: '$n polubionych dziś',
+      few: '$n polubione dziś',
+      one: '1 polubiona dziś',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Polubione';
+
+  @override
+  String likedN(int n) {
+    return 'Polubione · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Jeszcze nic polubionego';
+
+  @override
+  String get likeThisPill => 'Polub tę pigułkę';
+
+  @override
+  String get removeFromLiked => 'Usuń z polubionych';
+
+  @override
+  String get removedFromLiked => 'Usunięto z polubionych.';
+
+  @override
+  String get lessLikeThis => 'Mniej takich';
+
+  @override
+  String get whatYouLikedLandsHere => 'Te, które przeczytasz ponownie';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Przytrzymaj kartę, która ci się podoba, a trafi tutaj — a aplikacja da ci więcej takich.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Dotknij zakładki na pigułce, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane.';
 }

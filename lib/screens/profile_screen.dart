@@ -405,6 +405,27 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+          // And the other shelf: not what you want to find again, but
+          // what you liked — which is also what the app deals more of.
+          _LinkRow(
+            label: app.likedIds.isEmpty
+                ? context.l10n.liked
+                : context.l10n.likedN(app.likedIds.length),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => Scaffold(
+                  backgroundColor: context.p.surface,
+                  body: SafeArea(
+                    child: SavedScreen(
+                      app: app,
+                      shelf: Shelf.liked,
+                      onBackToToday: () => Navigator.of(routeContext).pop(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
           _LinkRow(
             label: context.l10n.archive,
             locked: !app.isPlus,

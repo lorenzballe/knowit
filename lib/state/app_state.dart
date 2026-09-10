@@ -50,6 +50,8 @@ class AppState extends ChangeNotifier {
   static const _kFrozeOn = 'knowit.frozeOn';
   static const _kCompletedDates = 'knowit.completedDates';
   static const _kSavedIds = 'knowit.savedIds';
+  static const _kLikedIds = 'knowit.likedIds';
+  static const _kDislikedIds = 'knowit.dislikedIds';
   static const _kTodayDate = 'knowit.todayDate';
   static const _kTodayIndex = 'knowit.todayIndex';
   static const _kOnboarded = 'knowit.onboarded';
@@ -88,8 +90,17 @@ class AppState extends ChangeNotifier {
   String? frozeOn;
   List<String> completedDates = [];
 
-  /// Saved pill ids, most recently kept first.
+  /// Saved pill ids, most recently kept first. A bookmark: the cards the
+  /// reader wants to find again.
   List<String> savedIds = [];
+
+  /// Liked pill ids, most recently liked first. A card held down. What the
+  /// reader liked is what the app deals more of, where it deals anything
+  /// of its own — and a shelf of its own on the profile.
+  List<String> likedIds = [];
+
+  /// Cards thrown down: less of this. Quiet, and only a lean on the deal.
+  List<String> dislikedIds = [];
   int todayIndex = 0;
   int pillsRead = 0;
 
@@ -168,8 +179,9 @@ class AppState extends ChangeNotifier {
   /// "Day 6" from the moment it opens, not only once it is done.
   int get dayNumber => liveStreak + (dayClosed ? 0 : 1);
 
-  /// How many of today's cards the reader kept.
-  int get keptToday => todaysDeck.where((p) => savedIds.contains(p.id)).length;
+  /// How many of today's cards the reader liked.
+  int get likedToday =>
+      todaysDeck.where((p) => likedIds.contains(p.id)).length;
 
   /// Initials for the profile avatar.
   String get initials {
@@ -212,6 +224,8 @@ class AppState extends ChangeNotifier {
     frozeOn = _prefs.getString(_kFrozeOn);
     completedDates = _prefs.getStringList(_kCompletedDates) ?? [];
     savedIds = _prefs.getStringList(_kSavedIds) ?? [];
+    likedIds = _prefs.getStringList(_kLikedIds) ?? [];
+    dislikedIds = _prefs.getStringList(_kDislikedIds) ?? [];
     pillsRead = _prefs.getInt(_kPillsRead) ?? 0;
 
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
@@ -615,9 +629,34 @@ class AppState extends ChangeNotifier {
     today: today,
   );
 
-  /// The mix as the personal deals see it. The five of the day never look
-  /// at this; the second set and the swaps do.
-  Map<String, double> get leanedWeights => topicWeights;
+  /// The mix as the personal deals see it: what the reader asked for,
+  /// leaned by what they liked and threw down. The five of the day never
+  /// look at this; the second set and the swaps do.
+  Map<String, double> get leanedWeights {
+    if (likedIds.isEmpty && dislikedIds.isEmpty) return topicWeights;
+    final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
+    final byId = {for (final p in kPillPool) p.id: p};
+    final lean = <String, double>{};
+    void nudge(Iterable<String> ids, double by) {
+      for (final id in ids) {
+        final String? key = keyOf[byId[id]?.topic];
+        if (key != null) lean[key] = (lean[key] ?? 0) + by;
+      }
+    }
+
+    nudge(likedIds, kLean);
+    nudge(dislikedIds, -kLean);
+    final base = topicWeights.isEmpty
+        ? {for (final key in kTopicOrder) key: 1.0}
+        : topicWeights;
+    return {
+      for (final e in base.entries)
+        e.key: (e.value * (1 + (lean[e.key] ?? 0))).clamp(0.05, 3.0),
+    };
+  }
+
+  /// How much one like, or one throw, moves its subject's weight.
+  static const double kLean = 0.15;
 
   /// Records a commitment.
   ///
@@ -853,6 +892,49 @@ class AppState extends ChangeNotifier {
     if (savedIds.contains(pillId)) return;
     savedIds.insert(at.clamp(0, savedIds.length), pillId);
     await _prefs.setStringList(_kSavedIds, savedIds);
+    notifyListeners();
+  }
+
+  bool isLiked(String pillId) => likedIds.contains(pillId);
+
+  /// A card held down. Liking one that was thrown down takes the throw
+  /// back: the reader has changed their mind, and the newer word stands.
+  Future<void> toggleLiked(String pillId) async {
+    if (likedIds.contains(pillId)) {
+      likedIds.remove(pillId);
+    } else {
+      likedIds.insert(0, pillId);
+      dislikedIds.remove(pillId);
+      await _prefs.setStringList(_kDislikedIds, dislikedIds);
+    }
+    await _prefs.setStringList(_kLikedIds, likedIds);
+    notifyListeners();
+  }
+
+  Future<void> restoreLiked(String pillId, int at) async {
+    if (likedIds.contains(pillId)) return;
+    likedIds.insert(at.clamp(0, likedIds.length), pillId);
+    await _prefs.setStringList(_kLikedIds, likedIds);
+    notifyListeners();
+  }
+
+  bool isDisliked(String pillId) => dislikedIds.contains(pillId);
+
+  /// A card thrown down: less of this. It leaves the liked shelf if it
+  /// was on it, for the same reason a like takes a throw back.
+  Future<void> dislike(String pillId) async {
+    if (dislikedIds.contains(pillId)) return;
+    dislikedIds.insert(0, pillId);
+    likedIds.remove(pillId);
+    await _prefs.setStringList(_kDislikedIds, dislikedIds);
+    await _prefs.setStringList(_kLikedIds, likedIds);
+    notifyListeners();
+  }
+
+  /// The undo behind "less like this".
+  Future<void> undislike(String pillId) async {
+    if (!dislikedIds.remove(pillId)) return;
+    await _prefs.setStringList(_kDislikedIds, dislikedIds);
     notifyListeners();
   }
 
@@ -1111,6 +1193,8 @@ class AppState extends ChangeNotifier {
     lastCompletionDate = null;
     completedDates = [];
     savedIds = [];
+    likedIds = [];
+    dislikedIds = [];
     todayIndex = 0;
     pillsRead = 0;
     onboarded = false;
@@ -1174,6 +1258,8 @@ class AppState extends ChangeNotifier {
     lastCompletionDate: lastCompletionDate,
     completedDates: List<String>.from(completedDates),
     savedIds: List<String>.from(savedIds),
+    likedIds: List<String>.from(likedIds),
+    dislikedIds: List<String>.from(dislikedIds),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
     answers: Map<String, Answer>.from(answers),
@@ -1196,6 +1282,8 @@ class AppState extends ChangeNotifier {
     lastCompletionDate = s.lastCompletionDate;
     completedDates = List<String>.from(s.completedDates);
     savedIds = List<String>.from(s.savedIds);
+    likedIds = List<String>.from(s.likedIds);
+    dislikedIds = List<String>.from(s.dislikedIds);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
     answers = Map<String, Answer>.from(s.answers);
@@ -1213,6 +1301,8 @@ class AppState extends ChangeNotifier {
     }
     await _prefs.setStringList(_kCompletedDates, completedDates);
     await _prefs.setStringList(_kSavedIds, savedIds);
+    await _prefs.setStringList(_kLikedIds, likedIds);
+    await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());

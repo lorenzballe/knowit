@@ -43,6 +43,8 @@ class PillCard extends StatelessWidget {
     this.isReview = false,
     this.saved = false,
     this.onSave,
+    this.liked = false,
+    this.onLike,
     this.onShare,
   });
 
@@ -51,6 +53,11 @@ class PillCard extends StatelessWidget {
   /// rows of controls along the bottom edge with the tab bar.
   final bool saved;
   final VoidCallback? onSave;
+
+  /// Liking is the whole card held down, not a button: a bookmark is a
+  /// thing you go and press, a like is a thing you do without letting go.
+  final bool liked;
+  final VoidCallback? onLike;
   final VoidCallback? onShare;
 
   @override
@@ -69,8 +76,8 @@ class PillCard extends StatelessWidget {
                       ? context.l10n.removeFromSaved
                       : context.l10n.saveThisPill,
                   icon: saved
-                      ? Icons.favorite_rounded
-                      : Icons.favorite_border_rounded,
+                      ? Icons.bookmark_rounded
+                      : Icons.bookmark_border_rounded,
                   ink: pill.ink,
                   onTap: () {
                     HapticFeedback.mediumImpact();
@@ -89,14 +96,13 @@ class PillCard extends StatelessWidget {
           ),
       ],
     );
-    // Held, the whole card is the button. The heart in the corner stays for
-    // the reader who has found it.
-    if (onSave == null) return card;
+    // Held, the whole card is the button.
+    if (onLike == null) return card;
     return HoldToKeep(
-      saved: saved,
+      saved: liked,
       ink: pill.ink,
       ground: pill.color,
-      onToggle: onSave!,
+      onToggle: onLike!,
       child: card,
     );
   }

@@ -14,14 +14,20 @@ import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'pill_detail_screen.dart';
 
+/// Which of the reader's two shelves this is: the cards they bookmarked
+/// to find again, or the cards they held down because they liked them.
+enum Shelf { saved, liked }
+
 class SavedScreen extends StatefulWidget {
   final AppState app;
   final VoidCallback onBackToToday;
+  final Shelf shelf;
 
   const SavedScreen({
     super.key,
     required this.app,
     required this.onBackToToday,
+    this.shelf = Shelf.saved,
   });
 
   @override
@@ -33,20 +39,27 @@ class _SavedScreenState extends State<SavedScreen> {
   String? _topic;
 
   AppState get app => widget.app;
+  bool get _liked => widget.shelf == Shelf.liked;
 
   /// Dropping a pill is undoable — the row comes back where it was.
   Future<void> _unsave(BuildContext context, Pill pill, int at) async {
     final messenger = ScaffoldMessenger.of(context);
     final l = context.l10n;
-    await app.toggleSaved(pill.id);
+    if (_liked) {
+      await app.toggleLiked(pill.id);
+    } else {
+      await app.toggleSaved(pill.id);
+    }
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(
       SnackBar(
-        content: Text(l.removedFromSaved),
+        content: Text(_liked ? l.removedFromLiked : l.removedFromSaved),
         duration: const Duration(seconds: 4),
         action: SnackBarAction(
           label: l.undo,
-          onPressed: () => app.restoreSaved(pill.id, at),
+          onPressed: () => _liked
+              ? app.restoreLiked(pill.id, at)
+              : app.restoreSaved(pill.id, at),
         ),
       ),
     );
@@ -58,7 +71,7 @@ class _SavedScreenState extends State<SavedScreen> {
     // to be in.
     final byId = {for (final p in kPillPool) p.id: p};
     final all = [
-      for (final id in app.savedIds)
+      for (final id in _liked ? app.likedIds : app.savedIds)
         if (byId[id] != null) byId[id]!,
     ];
     // Only the topics actually on the shelf: a filter offering twenty
@@ -88,7 +101,7 @@ class _SavedScreenState extends State<SavedScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    context.l10n.saved,
+                    _liked ? context.l10n.liked : context.l10n.saved,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.display(
@@ -142,7 +155,9 @@ class _SavedScreenState extends State<SavedScreen> {
             const SizedBox(height: 5),
             Text(
               all.isEmpty
-                  ? context.l10n.nothingKeptYet
+                  ? (_liked
+                        ? context.l10n.nothingLikedYet
+                        : context.l10n.nothingKeptYet)
                   : _topic == null
                   ? context.l10n.nCards(all.length)
                   : context.l10n.nInTopic(saved.length, kTopics[_topic]!.name),
@@ -164,7 +179,10 @@ class _SavedScreenState extends State<SavedScreen> {
             const SizedBox(height: 16),
             Expanded(
               child: all.isEmpty
-                  ? _EmptyState(onBackToToday: widget.onBackToToday)
+                  ? _EmptyState(
+                      onBackToToday: widget.onBackToToday,
+                      liked: _liked,
+                    )
                   : ListView.separated(
                       padding: const EdgeInsets.only(bottom: 24),
                       itemCount: saved.length,
@@ -173,6 +191,7 @@ class _SavedScreenState extends State<SavedScreen> {
                         i,
                         child: _SavedRow(
                           pill: saved[i],
+                          liked: _liked,
                           onUnsave: () => _unsave(context, saved[i], i),
                           onShare: () => showShareSheet(context, saved[i]),
                           onOpen: () => Navigator.of(context).push(
@@ -195,7 +214,8 @@ class _SavedScreenState extends State<SavedScreen> {
 /// The dashed, fanned placeholder from the empty-state board.
 class _EmptyState extends StatelessWidget {
   final VoidCallback onBackToToday;
-  const _EmptyState({required this.onBackToToday});
+  final bool liked;
+  const _EmptyState({required this.onBackToToday, required this.liked});
 
   @override
   Widget build(BuildContext context) {
@@ -206,10 +226,12 @@ class _EmptyState extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const _DashedStack(),
+              _DashedStack(liked: liked),
               const SizedBox(height: 24),
               Text(
-                context.l10n.keepTheOnesYoullUse,
+                liked
+                    ? context.l10n.whatYouLikedLandsHere
+                    : context.l10n.keepTheOnesYoullUse,
                 textAlign: TextAlign.center,
                 style: AppText.display(
                   size: 21,
@@ -221,7 +243,9 @@ class _EmptyState extends StatelessWidget {
               ),
               const SizedBox(height: 9),
               Text(
-                context.l10n.tapTheHeartLandsHere,
+                liked
+                    ? context.l10n.holdToLikeLandsHere
+                    : context.l10n.tapTheBookmarkLandsHere,
                 textAlign: TextAlign.center,
                 style: AppText.body(
                   size: 14,
@@ -244,7 +268,9 @@ class _EmptyState extends StatelessWidget {
 }
 
 class _DashedStack extends StatelessWidget {
-  const _DashedStack();
+  const _DashedStack({required this.liked});
+
+  final bool liked;
 
   @override
   Widget build(BuildContext context) {
@@ -291,7 +317,9 @@ class _DashedStack extends StatelessWidget {
               ),
               child: Center(
                 child: Icon(
-                  Icons.favorite_border_rounded,
+                  liked
+                      ? Icons.favorite_border_rounded
+                      : Icons.bookmark_border_rounded,
                   size: 26,
                   color: context.p.inkFaint,
                 ),
@@ -342,12 +370,14 @@ class _DashedBorderPainter extends CustomPainter {
 
 class _SavedRow extends StatelessWidget {
   final Pill pill;
+  final bool liked;
   final VoidCallback onUnsave;
   final VoidCallback onShare;
   final VoidCallback onOpen;
 
   const _SavedRow({
     required this.pill,
+    required this.liked,
     required this.onUnsave,
     required this.onShare,
     required this.onOpen,
@@ -397,8 +427,13 @@ class _SavedRow extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: onUnsave,
-                  tooltip: context.l10n.removeFromSaved,
-                  icon: const Icon(Icons.favorite_rounded, size: 18),
+                  tooltip: liked
+                      ? context.l10n.removeFromLiked
+                      : context.l10n.removeFromSaved,
+                  icon: Icon(
+                    liked ? Icons.favorite_rounded : Icons.bookmark_rounded,
+                    size: 18,
+                  ),
                   color: pill.color,
                   splashRadius: 18,
                   visualDensity: VisualDensity.compact,

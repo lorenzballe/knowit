@@ -49,20 +49,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get freezeKeptStreak => 'Un freeze a sauvé la série';
 
   @override
-  String get holdACardToKeepIt => 'Maintiens une carte pour la garder';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n gardées aujourd\'hui',
-      one: '1 gardée aujourd\'hui',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'une',
@@ -273,10 +259,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Garde celles que tu utiliseras vraiment';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Touche le cœur d\'une pilule et elle atterrit ici — celles qui ont changé ta façon de penser, gardées.';
 
   @override
   String get backToTodaysFive => 'RETOUR AUX CINQ DU JOUR';
@@ -1273,4 +1255,52 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get cameBack => 'Revenues';
+
+  @override
+  String get holdACardYouLike => 'Maintiens une carte que tu aimes';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n aimées aujourd\'hui',
+      one: '1 aimée aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Aimées';
+
+  @override
+  String likedN(int n) {
+    return 'Aimées · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Rien d\'aimé pour l\'instant';
+
+  @override
+  String get likeThisPill => 'J\'aime cette pilule';
+
+  @override
+  String get removeFromLiked => 'Retirer des aimées';
+
+  @override
+  String get removedFromLiked => 'Retirée des aimées.';
+
+  @override
+  String get lessLikeThis => 'Moins comme ça';
+
+  @override
+  String get whatYouLikedLandsHere => 'Celles que tu relirais';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Maintiens une carte que tu aimes et elle atterrit ici — et l\'app t\'en donne d\'autres du même genre.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Touche le marque-page d\'une pilule et elle atterrit ici — celles qui ont changé ta façon de penser, gardées.';
 }

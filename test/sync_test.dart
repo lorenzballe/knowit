@@ -97,6 +97,16 @@ void main() {
       });
     });
 
+    test('what was liked on either phone is liked on both', () {
+      const local = ReaderSnapshot(likedIds: ['p1'], dislikedIds: ['p3']);
+      const remote = ReaderSnapshot(likedIds: ['p2'], dislikedIds: ['p4']);
+
+      final merged = mergeSnapshots(local, remote);
+      expect(merged.likedIds, ['p1', 'p2']);
+      expect(merged.dislikedIds, ['p3', 'p4']);
+      expect(ReaderSnapshot.fromJson(merged.toJson()).likedIds, ['p1', 'p2']);
+    });
+
     test('survives a round trip through JSON', () {
       const before = ReaderSnapshot(
         name: 'Marco',

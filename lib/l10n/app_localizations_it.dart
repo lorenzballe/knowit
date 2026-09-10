@@ -49,20 +49,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get freezeKeptStreak => 'Un freeze ha salvato la serie';
 
   @override
-  String get holdACardToKeepIt => 'Tieni premuta una carta per tenerla';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n tenute oggi',
-      one: '1 tenuta oggi',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'una',
@@ -272,10 +258,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Tieni quelle che userai davvero';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Tocca il cuore su una pillola e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute.';
 
   @override
   String get backToTodaysFive => 'TORNA ALLE CINQUE DI OGGI';
@@ -1269,4 +1251,52 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get cameBack => 'Tornate';
+
+  @override
+  String get holdACardYouLike => 'Tieni premuta una carta che ti piace';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n piaciute oggi',
+      one: '1 piaciuta oggi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Piaciute';
+
+  @override
+  String likedN(int n) {
+    return 'Piaciute · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Ancora niente di piaciuto';
+
+  @override
+  String get likeThisPill => 'Mi piace questa pillola';
+
+  @override
+  String get removeFromLiked => 'Togli dai mi piace';
+
+  @override
+  String get removedFromLiked => 'Tolta dai mi piace.';
+
+  @override
+  String get lessLikeThis => 'Meno così';
+
+  @override
+  String get whatYouLikedLandsHere => 'Quelle che rileggeresti';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Tieni premuta una carta che ti piace e finisce qui — e l\'app te ne dà altre così.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Tocca il segnalibro su una pillola e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute.';
 }

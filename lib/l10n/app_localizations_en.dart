@@ -49,20 +49,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get freezeKeptStreak => 'A freeze kept the streak';
 
   @override
-  String get holdACardToKeepIt => 'Hold a card to keep it';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n kept today',
-      one: '1 kept today',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'one',
@@ -270,10 +256,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Keep the ones you\'ll actually use';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Tap the heart on any pill and it lands here — the ones that changed how you think, kept.';
 
   @override
   String get backToTodaysFive => 'BACK TO TODAY\'S FIVE';
@@ -1263,4 +1245,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cameBack => 'Came back';
+
+  @override
+  String get holdACardYouLike => 'Hold a card you like';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n liked today',
+      one: '1 liked today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Liked';
+
+  @override
+  String likedN(int n) {
+    return 'Liked · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Nothing liked yet';
+
+  @override
+  String get likeThisPill => 'Like this pill';
+
+  @override
+  String get removeFromLiked => 'Remove from liked';
+
+  @override
+  String get removedFromLiked => 'Removed from liked.';
+
+  @override
+  String get lessLikeThis => 'Less like this';
+
+  @override
+  String get whatYouLikedLandsHere => 'The ones you\'d read again';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Hold any card you like and it lands here — and the app deals you more of the same.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.';
 }

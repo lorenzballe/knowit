@@ -49,21 +49,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get freezeKeptStreak => 'Ein Freeze hat die Serie gerettet';
 
   @override
-  String get holdACardToKeepIt =>
-      'Halte eine Karte gedrückt, um sie zu behalten';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n heute behalten',
-      one: '1 heute behalten',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'eine',
@@ -272,10 +257,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Behalte die, die du wirklich brauchst';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Tippe auf das Herz einer Pille und sie landet hier — die, die dein Denken verändert haben, behalten.';
 
   @override
   String get backToTodaysFive => 'ZURÜCK ZU DEN FÜNF VON HEUTE';
@@ -1270,4 +1251,52 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cameBack => 'Zurückgekommen';
+
+  @override
+  String get holdACardYouLike => 'Halte eine Karte, die dir gefällt';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n heute gemocht',
+      one: '1 heute gemocht',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Gemocht';
+
+  @override
+  String likedN(int n) {
+    return 'Gemocht · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Noch nichts gemocht';
+
+  @override
+  String get likeThisPill => 'Diese Pille mögen';
+
+  @override
+  String get removeFromLiked => 'Aus Gemocht entfernen';
+
+  @override
+  String get removedFromLiked => 'Aus Gemocht entfernt.';
+
+  @override
+  String get lessLikeThis => 'Weniger davon';
+
+  @override
+  String get whatYouLikedLandsHere => 'Die, die du nochmal lesen würdest';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Halte eine Karte, die dir gefällt, und sie landet hier — und die App gibt dir mehr davon.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Tippe auf das Lesezeichen einer Pille und sie landet hier — die, die dein Denken verändert haben, behalten.';
 }

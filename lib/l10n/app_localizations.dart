@@ -174,18 +174,6 @@ abstract class AppLocalizations {
   /// **'A freeze kept the streak'**
   String get freezeKeptStreak;
 
-  /// No description provided for @holdACardToKeepIt.
-  ///
-  /// In en, this message translates to:
-  /// **'Hold a card to keep it'**
-  String get holdACardToKeepIt;
-
-  /// No description provided for @keptToday.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 kept today} other{{n} kept today}}'**
-  String keptToday(int n);
-
   /// No description provided for @countWord.
   ///
   /// In en, this message translates to:
@@ -473,12 +461,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Keep the ones you\'ll actually use'**
   String get keepTheOnesYoullUse;
-
-  /// No description provided for @tapTheHeartLandsHere.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap the heart on any pill and it lands here — the ones that changed how you think, kept.'**
-  String get tapTheHeartLandsHere;
 
   /// No description provided for @backToTodaysFive.
   ///
@@ -1871,6 +1853,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Came back'**
   String get cameBack;
+
+  /// No description provided for @holdACardYouLike.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a card you like'**
+  String get holdACardYouLike;
+
+  /// No description provided for @likedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 liked today} other{{n} liked today}}'**
+  String likedToday(int n);
+
+  /// No description provided for @liked.
+  ///
+  /// In en, this message translates to:
+  /// **'Liked'**
+  String get liked;
+
+  /// No description provided for @likedN.
+  ///
+  /// In en, this message translates to:
+  /// **'Liked · {n}'**
+  String likedN(int n);
+
+  /// No description provided for @nothingLikedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing liked yet'**
+  String get nothingLikedYet;
+
+  /// No description provided for @likeThisPill.
+  ///
+  /// In en, this message translates to:
+  /// **'Like this pill'**
+  String get likeThisPill;
+
+  /// No description provided for @removeFromLiked.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from liked'**
+  String get removeFromLiked;
+
+  /// No description provided for @removedFromLiked.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from liked.'**
+  String get removedFromLiked;
+
+  /// No description provided for @lessLikeThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Less like this'**
+  String get lessLikeThis;
+
+  /// No description provided for @whatYouLikedLandsHere.
+  ///
+  /// In en, this message translates to:
+  /// **'The ones you\'d read again'**
+  String get whatYouLikedLandsHere;
+
+  /// No description provided for @holdToLikeLandsHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold any card you like and it lands here — and the app deals you more of the same.'**
+  String get holdToLikeLandsHere;
+
+  /// No description provided for @tapTheBookmarkLandsHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.'**
+  String get tapTheBookmarkLandsHere;
 }
 
 class _AppLocalizationsDelegate

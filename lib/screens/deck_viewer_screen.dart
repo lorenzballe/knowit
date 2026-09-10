@@ -151,6 +151,11 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                     widget.app.toggleSaved(pill.id);
                     setState(() {});
                   },
+                  isLiked: widget.app.isLiked,
+                  onLike: (pill) {
+                    widget.app.toggleLiked(pill.id);
+                    setState(() {});
+                  },
                   onShare: (pill) => showShareSheet(context, pill),
                 ),
               ),

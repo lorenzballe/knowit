@@ -49,20 +49,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get freezeKeptStreak => 'Een freeze heeft de reeks gered';
 
   @override
-  String get holdACardToKeepIt => 'Houd een kaart ingedrukt om hem te bewaren';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n vandaag bewaard',
-      one: '1 vandaag bewaard',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'één',
@@ -271,10 +257,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Bewaar wat je echt gaat gebruiken';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Tik op het hartje van een pil en hij landt hier — de kaarten die je manier van denken veranderden, bewaard.';
 
   @override
   String get backToTodaysFive => 'TERUG NAAR DE VIJF VAN VANDAAG';
@@ -1268,4 +1250,52 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get cameBack => 'Teruggekomen';
+
+  @override
+  String get holdACardYouLike => 'Houd een kaart vast die je goed vindt';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n vandaag geliket',
+      one: '1 vandaag geliket',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Geliket';
+
+  @override
+  String likedN(int n) {
+    return 'Geliket · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Nog niets geliket';
+
+  @override
+  String get likeThisPill => 'Deze pil liken';
+
+  @override
+  String get removeFromLiked => 'Uit geliket halen';
+
+  @override
+  String get removedFromLiked => 'Uit geliket gehaald.';
+
+  @override
+  String get lessLikeThis => 'Minder zoals dit';
+
+  @override
+  String get whatYouLikedLandsHere => 'De kaarten die je nog eens zou lezen';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Houd een kaart vast die je goed vindt en hij komt hier — en de app geeft je er meer van.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Tik op de bladwijzer van een pil en hij komt hier — de kaarten die je denken veranderden, bewaard.';
 }

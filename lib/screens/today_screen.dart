@@ -67,6 +67,24 @@ class _TodayScreenState extends State<TodayScreen> {
     });
   }
 
+  /// Less like this — said once, quietly, with the way back.
+  void _dislike(BuildContext context, Pill pill) {
+    final app = widget.app;
+    app.dislike(pill.id);
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.lessLikeThis),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: context.l10n.undo,
+          onPressed: () => app.undislike(pill.id),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = widget.app;
@@ -110,6 +128,9 @@ class _TodayScreenState extends State<TodayScreen> {
               onAdvance: () => app.advance(),
               isSaved: app.isSaved,
               onSave: (pill) => app.toggleSaved(pill.id),
+              isLiked: app.isLiked,
+              onLike: (pill) => app.toggleLiked(pill.id),
+              onDislike: (pill) => _dislike(context, pill),
               onShare: (pill) => showShareSheet(context, pill),
               onMotion: widget.onCardMotion,
               reviewIds: app.reviewIdsToday,
@@ -364,9 +385,9 @@ class _ShelfHeader extends StatelessWidget {
   /// produced anything, the line names the gesture that fills it.
   String _aside(BuildContext context) {
     if (app.streakWasFrozen) return context.l10n.freezeKeptStreak;
-    final int kept = app.keptToday;
-    if (kept == 0) return context.l10n.holdACardToKeepIt;
-    return context.l10n.keptToday(kept);
+    final int liked = app.likedToday;
+    if (liked == 0) return context.l10n.holdACardYouLike;
+    return context.l10n.likedToday(liked);
   }
 
   @override

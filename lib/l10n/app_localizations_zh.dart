@@ -49,20 +49,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get freezeKeptStreak => '一次冻结保住了连续记录';
 
   @override
-  String get holdACardToKeepIt => '长按卡片即可收藏';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今天收藏 $n 张',
-      one: '今天收藏 1 张',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': '一',
@@ -270,9 +256,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => '只收藏你真会用到的';
-
-  @override
-  String get tapTheHeartLandsHere => '点按任一药丸上的心形，它就会出现在这里——那些改变了你想法的卡片，留在手边。';
 
   @override
   String get backToTodaysFive => '回到今日五张';
@@ -1227,4 +1210,49 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cameBack => '回来的卡片';
+
+  @override
+  String get holdACardYouLike => '长按你喜欢的卡片';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今天喜欢了$n张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => '喜欢';
+
+  @override
+  String likedN(int n) {
+    return '喜欢 · $n';
+  }
+
+  @override
+  String get nothingLikedYet => '还没有喜欢的卡片';
+
+  @override
+  String get likeThisPill => '喜欢这张卡片';
+
+  @override
+  String get removeFromLiked => '取消喜欢';
+
+  @override
+  String get removedFromLiked => '已取消喜欢。';
+
+  @override
+  String get lessLikeThis => '少一些这样的';
+
+  @override
+  String get whatYouLikedLandsHere => '你会再读一遍的卡片';
+
+  @override
+  String get holdToLikeLandsHere => '长按你喜欢的卡片，它就会出现在这里 — 应用也会给你更多类似的。';
+
+  @override
+  String get tapTheBookmarkLandsHere => '点一下卡片上的书签，它就会出现在这里 — 那些改变了你想法的卡片，留下来。';
 }

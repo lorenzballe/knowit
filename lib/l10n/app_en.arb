@@ -13,9 +13,6 @@
   "streakDays": "{n, plural, =1{1 day} other{{n} days}}",
   "@streakDays": {"placeholders": {"n": {"type": "int"}}},
   "freezeKeptStreak": "A freeze kept the streak",
-  "holdACardToKeepIt": "Hold a card to keep it",
-  "keptToday": "{n, plural, =1{1 kept today} other{{n} kept today}}",
-  "@keptToday": {"placeholders": {"n": {"type": "int"}}},
   "countWord": "{n, select, 1{one} 2{two} 3{three} 4{four} 5{five} 6{six} 7{seven} 8{eight} 9{nine} 10{ten} other{{n}}}",
   "@countWord": {"placeholders": {"n": {"type": "String"}}},
   "dayRead": "Day {n} · {word} read",
@@ -87,7 +84,6 @@
   "nInTopic": "{n} in {topic}",
   "@nInTopic": {"placeholders": {"n": {"type": "int"}, "topic": {"type": "String"}}},
   "keepTheOnesYoullUse": "Keep the ones you'll actually use",
-  "tapTheHeartLandsHere": "Tap the heart on any pill and it lands here — the ones that changed how you think, kept.",
   "backToTodaysFive": "BACK TO TODAY'S FIVE",
   "archive": "Archive",
 
@@ -407,5 +403,19 @@
   "@saidSure": {"placeholders": {"sure": {"type": "int"}}},
   "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
   "@cardsCameBack": {"placeholders": {"n": {"type": "int"}}},
-  "cameBack": "Came back"
+  "cameBack": "Came back",
+  "holdACardYouLike": "Hold a card you like",
+  "likedToday": "{n, plural, =1{1 liked today} other{{n} liked today}}",
+  "@likedToday": {"placeholders": {"n": {"type": "int"}}},
+  "liked": "Liked",
+  "likedN": "Liked · {n}",
+  "@likedN": {"placeholders": {"n": {"type": "int"}}},
+  "nothingLikedYet": "Nothing liked yet",
+  "likeThisPill": "Like this pill",
+  "removeFromLiked": "Remove from liked",
+  "removedFromLiked": "Removed from liked.",
+  "lessLikeThis": "Less like this",
+  "whatYouLikedLandsHere": "The ones you'd read again",
+  "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
+  "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept."
 }

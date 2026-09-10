@@ -49,20 +49,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get freezeKeptStreak => 'Um freeze salvou a sequência';
 
   @override
-  String get holdACardToKeepIt => 'Mantém um cartão premido para o guardar';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n guardados hoje',
-      one: '1 guardado hoje',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'um',
@@ -271,10 +257,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Guarda os que vais mesmo usar';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Toca no coração de qualquer pílula e ela aterra aqui — as que mudaram a tua forma de pensar, guardadas.';
 
   @override
   String get backToTodaysFive => 'VOLTAR AOS CINCO DE HOJE';
@@ -1268,4 +1250,52 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cameBack => 'Voltaram';
+
+  @override
+  String get holdACardYouLike => 'Mantém premida uma carta de que gostes';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gostadas hoje',
+      one: '1 gostada hoje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Gostei';
+
+  @override
+  String likedN(int n) {
+    return 'Gostei · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Ainda nada de que gostaste';
+
+  @override
+  String get likeThisPill => 'Gosto desta pílula';
+
+  @override
+  String get removeFromLiked => 'Tirar dos gostos';
+
+  @override
+  String get removedFromLiked => 'Tirada dos gostos.';
+
+  @override
+  String get lessLikeThis => 'Menos como esta';
+
+  @override
+  String get whatYouLikedLandsHere => 'As que voltarias a ler';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Mantém premida uma carta de que gostes e ela aterra aqui — e a app dá-te mais assim.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Toca no marcador de qualquer pílula e ela aterra aqui — as que mudaram a tua forma de pensar, guardadas.';
 }

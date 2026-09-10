@@ -49,20 +49,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get freezeKeptStreak => 'フリーズが連続記録を守りました';
 
   @override
-  String get holdACardToKeepIt => 'カードを長押しして保存';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '今日$n枚保存',
-      one: '今日1枚保存',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': '1',
@@ -270,9 +256,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => '本当に使うものだけを残す';
-
-  @override
-  String get tapTheHeartLandsHere => 'ピルのハートをタップするとここに入ります。考え方を変えたカードを、手元に。';
 
   @override
   String get backToTodaysFive => '今日の5枚に戻る';
@@ -1232,4 +1215,50 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cameBack => '戻ってきたカード';
+
+  @override
+  String get holdACardYouLike => '気に入ったカードを長押し';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '今日$n枚にいいね',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'いいね';
+
+  @override
+  String likedN(int n) {
+    return 'いいね · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'まだいいねはありません';
+
+  @override
+  String get likeThisPill => 'このカードにいいね';
+
+  @override
+  String get removeFromLiked => 'いいねを外す';
+
+  @override
+  String get removedFromLiked => 'いいねを外しました。';
+
+  @override
+  String get lessLikeThis => 'こういうのは少なめに';
+
+  @override
+  String get whatYouLikedLandsHere => 'もう一度読みたいカード';
+
+  @override
+  String get holdToLikeLandsHere => '気に入ったカードを長押しするとここに集まり、同じようなカードが増えます。';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'カードのブックマークを押すとここに集まります — 考え方を変えたカードを、手元に。';
 }

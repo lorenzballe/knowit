@@ -49,20 +49,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get freezeKeptStreak => 'Un freeze salvó la racha';
 
   @override
-  String get holdACardToKeepIt => 'Mantén pulsada una tarjeta para guardarla';
-
-  @override
-  String keptToday(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n guardadas hoy',
-      one: '1 guardada hoy',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String countWord(String n) {
     String _temp0 = intl.Intl.selectLogic(n, {
       '1': 'una',
@@ -271,10 +257,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get keepTheOnesYoullUse => 'Guarda las que de verdad vas a usar';
-
-  @override
-  String get tapTheHeartLandsHere =>
-      'Toca el corazón de cualquier píldora y aterriza aquí: las que cambiaron tu forma de pensar, guardadas.';
 
   @override
   String get backToTodaysFive => 'VOLVER A LAS CINCO DE HOY';
@@ -1270,4 +1252,52 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cameBack => 'Han vuelto';
+
+  @override
+  String get holdACardYouLike => 'Mantén pulsada una tarjeta que te guste';
+
+  @override
+  String likedToday(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n me gusta hoy',
+      one: '1 me gusta hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get liked => 'Me gusta';
+
+  @override
+  String likedN(int n) {
+    return 'Me gusta · $n';
+  }
+
+  @override
+  String get nothingLikedYet => 'Todavía nada que te guste';
+
+  @override
+  String get likeThisPill => 'Me gusta esta píldora';
+
+  @override
+  String get removeFromLiked => 'Quitar de me gusta';
+
+  @override
+  String get removedFromLiked => 'Quitada de me gusta.';
+
+  @override
+  String get lessLikeThis => 'Menos como esta';
+
+  @override
+  String get whatYouLikedLandsHere => 'Las que volverías a leer';
+
+  @override
+  String get holdToLikeLandsHere =>
+      'Mantén pulsada una tarjeta que te guste y aterriza aquí — y la app te da más así.';
+
+  @override
+  String get tapTheBookmarkLandsHere =>
+      'Toca el marcador en cualquier píldora y aterriza aquí — las que cambiaron tu forma de pensar, guardadas.';
 }
