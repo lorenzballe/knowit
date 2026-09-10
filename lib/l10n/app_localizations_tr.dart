@@ -1214,7 +1214,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get fiveADayALittleSharper => 'Günde beş. Biraz daha keskin.';
 
   @override
-  String get shareMyDay => 'Günümü paylaş';
+  String get shareMyDay => 'Paylaş';
 
   @override
   String climbedTo(String rung) {

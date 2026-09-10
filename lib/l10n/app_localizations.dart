@@ -1821,7 +1821,7 @@ abstract class AppLocalizations {
   /// No description provided for @shareMyDay.
   ///
   /// In en, this message translates to:
-  /// **'Share my day'**
+  /// **'Share day'**
   String get shareMyDay;
 
   /// No description provided for @climbedTo.

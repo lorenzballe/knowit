@@ -1181,7 +1181,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fiveADayALittleSharper => '每天五张，更敏锐一点。';
 
   @override
-  String get shareMyDay => '分享我的今天';
+  String get shareMyDay => '分享';
 
   @override
   String climbedTo(String rung) {

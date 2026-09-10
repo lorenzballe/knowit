@@ -1186,7 +1186,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fiveADayALittleSharper => '1日5枚。少しだけ鋭く。';
 
   @override
-  String get shareMyDay => '今日の結果をシェア';
+  String get shareMyDay => 'シェア';
 
   @override
   String climbedTo(String rung) {

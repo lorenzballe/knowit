@@ -1220,7 +1220,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get fiveADayALittleSharper => 'Vijf per dag. Een beetje scherper.';
 
   @override
-  String get shareMyDay => 'Mijn dag delen';
+  String get shareMyDay => 'Delen';
 
   @override
   String climbedTo(String rung) {

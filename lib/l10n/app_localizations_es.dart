@@ -1222,7 +1222,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get fiveADayALittleSharper => 'Cinco al día. Un poco más agudo.';
 
   @override
-  String get shareMyDay => 'Compartir mi día';
+  String get shareMyDay => 'Compartir';
 
   @override
   String climbedTo(String rung) {

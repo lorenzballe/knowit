@@ -1189,7 +1189,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fiveADayALittleSharper => '하루 다섯 장. 조금 더 예리하게.';
 
   @override
-  String get shareMyDay => '오늘 결과 공유';
+  String get shareMyDay => '공유';
 
   @override
   String climbedTo(String rung) {

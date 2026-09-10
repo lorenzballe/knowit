@@ -1221,7 +1221,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get fiveADayALittleSharper => 'Fünf am Tag. Ein bisschen schärfer.';
 
   @override
-  String get shareMyDay => 'Meinen Tag teilen';
+  String get shareMyDay => 'Teilen';
 
   @override
   String climbedTo(String rung) {

@@ -394,7 +394,7 @@
   "rendering": "Rendering…",
   "theSourceGoesWithIt": "The source goes with it",
   "fiveADayALittleSharper": "Five a day. A little sharper.",
-  "shareMyDay": "Share my day",
+  "shareMyDay": "Share day",
   "climbedTo": "Today took you up to {rung}",
   "@climbedTo": {"placeholders": {"rung": {"type": "String"}}},
   "rightOfAsked": "{right} of {asked} right",
