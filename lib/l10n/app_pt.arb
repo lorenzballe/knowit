@@ -285,5 +285,11 @@
   "copiedToClipboard": "Copiado para a área de transferência.",
   "rendering": "A desenhar…",
   "theSourceGoesWithIt": "A fonte vai com ele",
-  "fiveADayALittleSharper": "Cinco por dia. Um pouco mais afiado."
+  "fiveADayALittleSharper": "Cinco por dia. Um pouco mais afiado.",
+  "shareMyDay": "Partilhar o meu dia",
+  "climbedTo": "Hoje subiste para {rung}",
+  "rightOfAsked": "{right} de {asked} certas",
+  "saidSure": "{sure}% de certeza",
+  "cardsCameBack": "{n, plural, =1{1 carta voltou — responde outra vez} other{{n} cartas voltaram — responde outra vez}}",
+  "cameBack": "Voltaram"
 }

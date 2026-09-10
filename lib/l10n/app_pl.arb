@@ -285,5 +285,11 @@
   "copiedToClipboard": "Skopiowano do schowka.",
   "rendering": "Rysowanie…",
   "theSourceGoesWithIt": "Źródło idzie razem z nią",
-  "fiveADayALittleSharper": "Pięć dziennie. Trochę bystrzej."
+  "fiveADayALittleSharper": "Pięć dziennie. Trochę bystrzej.",
+  "shareMyDay": "Udostępnij mój dzień",
+  "climbedTo": "Dziś wspiąłeś się na {rung}",
+  "rightOfAsked": "{right} z {asked} dobrze",
+  "saidSure": "pewność {sure}%",
+  "cardsCameBack": "{n, plural, =1{1 karta wróciła — odpowiedz jeszcze raz} few{{n} karty wróciły — odpowiedz jeszcze raz} many{{n} kart wróciło — odpowiedz jeszcze raz} other{{n} karty wróciły — odpowiedz jeszcze raz}}",
+  "cameBack": "Wróciły"
 }

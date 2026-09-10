@@ -10,8 +10,11 @@ import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../utils/share_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
+import 'deck_viewer_screen.dart';
+import 'progress_text.dart';
 import 'week_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
@@ -49,6 +52,12 @@ class TodayDoneView extends StatefulWidget {
     required this.onPick,
     this.onExplore,
   });
+
+  /// How "share my day" hands the text over. The platform's sheet in the
+  /// app; under a test, which has no sheet and where the desktop stand-in
+  /// never returns, whatever the test puts here.
+  @visibleForTesting
+  static Future<bool> Function(String text) share = shareText;
 
   @override
   State<TodayDoneView> createState() => _TodayDoneViewState();
@@ -283,8 +292,19 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
           child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
+        // What the day did to the reader, and the day as a thing to send:
+        // the two reasons to open the app tomorrow that are not the cards.
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+          padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+          child: _PathRow(app: app, colour: deck[at].color),
+        ),
+        if (app.dueReviews.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
+            child: _ReviewLine(app: app),
+          ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(24, 14, 24, 0),
           child: _Actions(app: app, onExplore: widget.onExplore),
         ),
         // Once a week, where the week ends. A verdict nobody is invited to
@@ -453,6 +473,227 @@ class _WeekLine extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 6),
+            Text(
+              '\u2192',
+              style: AppText.body(
+                size: 13,
+                weight: FontWeight.w600,
+                color: ink.withValues(alpha: 0.42),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The rung, and the way out with the day in hand.
+///
+/// The ladder is on the profile, where nobody looks at the end of a day.
+/// Here is where the day just happened, so here is where it says what the
+/// day did: a rung climbed, in the card's colour, or the one thing that
+/// stands between the reader and the next one.
+class _PathRow extends StatelessWidget {
+  const _PathRow({required this.app, required this.colour});
+
+  final AppState app;
+  final Color colour;
+
+  @override
+  Widget build(BuildContext context) {
+    final standing = app.standing;
+    final bool climbed = app.climbedToday;
+    final String? step = stepText(context, standing);
+    final String text = climbed
+        ? context.l10n.climbedTo(rungName(context, standing.rung))
+        : [rungName(context, standing.rung), ?step].join(' \u00b7 ');
+
+    // The subject's colour, unless it is the ground's own.
+    Color tint = colour;
+    if ((tint.computeLuminance() - context.p.surface.computeLuminance()).abs() <
+        0.15) {
+      tint = context.p.ink;
+    }
+    final Color ink = context.p.ink;
+
+    return Row(
+      children: [
+        Expanded(
+          child: Semantics(
+            button: true,
+            key: const ValueKey('path-line'),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (routeContext) => WeekScreen(
+                    app: app,
+                    onBack: () => Navigator.of(routeContext).pop(),
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    climbed ? Icons.north_east_rounded : Icons.stairs_rounded,
+                    size: 17,
+                    color: climbed ? tint : ink.withValues(alpha: 0.45),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      text,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: climbed ? FontWeight.w600 : FontWeight.w500,
+                        height: 1.35,
+                        color: climbed ? ink : ink.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        _ShareDay(app: app),
+      ],
+    );
+  }
+}
+
+/// The day as five squares and a line, for a chat. Nothing in it that
+/// spoils a card: which ones asked and how those went, never what.
+class _ShareDay extends StatelessWidget {
+  const _ShareDay({required this.app});
+
+  final AppState app;
+
+  /// What goes into the chat. The edition rather than the reader's day
+  /// count, because the edition is the thing two readers have in common.
+  static String text(BuildContext context, AppState app) {
+    final l = context.l10n;
+    final d = app.daySummary;
+    final verdict = [
+      if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
+      if (d.sure != null) l.saidSure(d.sure!.round()),
+    ].join(' \u00b7 ');
+    return [
+      'Astut #${d.edition}${d.streak > 0 ? ' \u00b7 \u{1f525}${d.streak}' : ''}',
+      d.squares,
+      if (verdict.isNotEmpty) verdict,
+      'lorenzballe.github.io/knowit',
+    ].join('\n');
+  }
+
+  Future<void> _share(BuildContext context) async {
+    HapticFeedback.lightImpact();
+    final String line = text(context, app);
+    final messenger = ScaffoldMessenger.of(context);
+    final l = context.l10n;
+    final bool shared = await TodayDoneView.share(line);
+    if (shared) return;
+    // No sheet to hand it to — a browser, a desktop — so it is copied,
+    // which is one paste away from the same chat.
+    await Clipboard.setData(ClipboardData(text: line));
+    messenger.hideCurrentSnackBar();
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l.copiedToClipboard),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: context.l10n.shareMyDay,
+      child: GestureDetector(
+        key: const ValueKey('share-day'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _share(context),
+        child: Container(
+          height: 34,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(17),
+            border: Border.all(color: context.p.line),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.ios_share_rounded, size: 15, color: context.p.ink),
+              const SizedBox(width: 7),
+              Text(
+                context.l10n.shareMyDay,
+                style: AppText.body(
+                  size: 12.5,
+                  weight: FontWeight.w600,
+                  color: context.p.ink,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The cards that came due, waiting after the five rather than inside
+/// them. The five are everybody's; what comes back is the reader's own.
+class _ReviewLine extends StatelessWidget {
+  const _ReviewLine({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final due = app.dueReviews;
+    final Color ink = context.p.ink;
+    return Semantics(
+      button: true,
+      key: const ValueKey('review-line'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => DeckViewerScreen(
+              app: app,
+              deck: due,
+              title: context.l10n.cameBack,
+              answering: true,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.replay_rounded,
+              size: 17,
+              color: ink.withValues(alpha: 0.45),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                context.l10n.cardsCameBack(due.length),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w500,
+                  height: 1.35,
+                  color: ink.withValues(alpha: 0.6),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
             Text(
               '\u2192',
               style: AppText.body(
@@ -702,12 +943,16 @@ class _Front extends StatelessWidget {
         // Measured once per card and box. A drag rebuilds the shelf every
         // frame, and laying text out seven times over for three cards on
         // each of them is work nobody asked for.
+        // Measured in the style the Text will actually set: whatever the
+        // style leaves unsaid, the screen's default fills in, letter
+        // spacing included, and the painter has to see the same.
+        final TextStyle base = DefaultTextStyle.of(context).style;
         final String key = '${pill.id}|${box.maxWidth}|${box.maxHeight}|$s';
         final (double size, double room) = _fits.putIfAbsent(key, () {
           if (_fits.length > 64) _fits.clear();
           final double lineHeight = _measure(
             pill.barMove,
-            line,
+            base.merge(line),
             box.maxWidth,
             maxLines: 3,
           );
@@ -715,7 +960,7 @@ class _Front extends StatelessWidget {
           return (
             _fit(
               pill.question,
-              _question,
+              (size) => base.merge(_question(size)),
               box.maxWidth,
               room,
               min: 19 * s,
@@ -834,34 +1079,40 @@ class _Back extends StatelessWidget {
     color: sub,
   );
 
-  double _height(String text, TextStyle style, double width) {
+  /// Measured in the style the Text widget will actually set — a Text
+  /// takes whatever the screen's default style says for anything the
+  /// style leaves unsaid, letter spacing included, and a quarter of a
+  /// point of tracking the painter never saw was a whole extra line.
+  double _height(String text, TextStyle style, double width, TextStyle base) {
     final painter = TextPainter(
-      text: TextSpan(text: text, style: style),
+      text: TextSpan(text: text, style: base.merge(style)),
       textDirection: TextDirection.ltr,
     )..layout(maxWidth: width);
     return painter.height;
   }
 
-  /// The block's height at scale [s].
-  double _blockHeight(double s, double width) =>
-      _height(pill.question, _questionStyle(s), width) +
-      32 * s +
-      _height(pill.answer, _answerStyle(s), width) +
+  /// The block's height at scale [s]: the three texts, the three gaps of
+  /// sixteen between and around the rule, and the rule.
+  double _blockHeight(double s, double width, TextStyle base) =>
+      _height(pill.question, _questionStyle(s), width, base) +
+      48 * s +
+      _height(pill.answer, _answerStyle(s), width, base) +
       1 +
-      _height(pill.barMove, _lineStyle(s), width);
+      _height(pill.barMove, _lineStyle(s), width, base);
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, box) {
+        final TextStyle base = DefaultTextStyle.of(context).style;
         final double full = scale;
         double s = full;
-        if (_blockHeight(s, box.maxWidth) > box.maxHeight) {
+        if (_blockHeight(s, box.maxWidth, base) > box.maxHeight) {
           var lo = full * _floor;
           var hi = full;
           while (hi - lo > full * 0.01) {
             final mid = (lo + hi) / 2;
-            if (_blockHeight(mid, box.maxWidth) <= box.maxHeight) {
+            if (_blockHeight(mid, box.maxWidth, base) <= box.maxHeight) {
               lo = mid;
             } else {
               hi = mid;
@@ -887,7 +1138,7 @@ class _Back extends StatelessWidget {
         // Past the floor it scrolls, and the foot of it dissolves rather
         // than being cut: text sliced through the middle of a line reads as
         // a fault, text fading out reads as more below.
-        final bool fits = _blockHeight(s, box.maxWidth) <= box.maxHeight;
+        final bool fits = _blockHeight(s, box.maxWidth, base) <= box.maxHeight;
         final Widget rising = RiseIn(
           duration: const Duration(milliseconds: 300),
           distance: 8,

@@ -285,5 +285,11 @@
   "copiedToClipboard": "Copiato negli appunti.",
   "rendering": "Sto disegnando…",
   "theSourceGoesWithIt": "La fonte viaggia con lei",
-  "fiveADayALittleSharper": "Cinque al giorno. Un po' più lucido."
+  "fiveADayALittleSharper": "Cinque al giorno. Un po' più lucido.",
+  "shareMyDay": "Condividi la mia giornata",
+  "climbedTo": "Oggi sei salito a {rung}",
+  "rightOfAsked": "{right} su {asked} giuste",
+  "saidSure": "sicuro al {sure}%",
+  "cardsCameBack": "{n, plural, =1{1 carta è tornata — rispondi di nuovo} other{{n} carte sono tornate — rispondi di nuovo}}",
+  "cameBack": "Tornate"
 }

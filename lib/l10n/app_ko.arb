@@ -285,5 +285,11 @@
   "copiedToClipboard": "클립보드에 복사했어요.",
   "rendering": "그리는 중…",
   "theSourceGoesWithIt": "출처도 함께",
-  "fiveADayALittleSharper": "하루 다섯 장. 조금 더 예리하게."
+  "fiveADayALittleSharper": "하루 다섯 장. 조금 더 예리하게.",
+  "shareMyDay": "오늘 결과 공유",
+  "climbedTo": "오늘 {rung} 단계에 올랐어요",
+  "rightOfAsked": "{asked}문제 중 {right}문제 정답",
+  "saidSure": "확신 {sure}%",
+  "cardsCameBack": "{n, plural, other{카드 {n}장이 돌아왔어요 — 다시 답해 보세요}}",
+  "cameBack": "돌아온 카드"
 }

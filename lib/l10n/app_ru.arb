@@ -285,5 +285,11 @@
   "copiedToClipboard": "Скопировано в буфер обмена.",
   "rendering": "Отрисовка…",
   "theSourceGoesWithIt": "Источник идёт вместе с ней",
-  "fiveADayALittleSharper": "Пять в день. Чуть острее."
+  "fiveADayALittleSharper": "Пять в день. Чуть острее.",
+  "shareMyDay": "Поделиться моим днём",
+  "climbedTo": "Сегодня вы поднялись до {rung}",
+  "rightOfAsked": "{right} из {asked} верно",
+  "saidSure": "уверенность {sure}%",
+  "cardsCameBack": "{n, plural, one{{n} карточка вернулась — ответьте ещё раз} few{{n} карточки вернулись — ответьте ещё раз} many{{n} карточек вернулось — ответьте ещё раз} other{{n} карточки вернулись — ответьте ещё раз}}",
+  "cameBack": "Вернулись"
 }

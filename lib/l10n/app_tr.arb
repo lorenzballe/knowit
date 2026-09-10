@@ -285,5 +285,11 @@
   "copiedToClipboard": "Panoya kopyalandı.",
   "rendering": "Çiziliyor…",
   "theSourceGoesWithIt": "Kaynak da onunla gider",
-  "fiveADayALittleSharper": "Günde beş. Biraz daha keskin."
+  "fiveADayALittleSharper": "Günde beş. Biraz daha keskin.",
+  "shareMyDay": "Günümü paylaş",
+  "climbedTo": "Bugün seni {rung} basamağına çıkardı",
+  "rightOfAsked": "{asked} sorudan {right} doğru",
+  "saidSure": "%{sure} emin",
+  "cardsCameBack": "{n, plural, =1{1 kart geri geldi — yeniden cevapla} other{{n} kart geri geldi — yeniden cevapla}}",
+  "cameBack": "Geri gelenler"
 }

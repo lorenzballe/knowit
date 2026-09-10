@@ -1835,6 +1835,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Five a day. A little sharper.'**
   String get fiveADayALittleSharper;
+
+  /// No description provided for @shareMyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Share my day'**
+  String get shareMyDay;
+
+  /// No description provided for @climbedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Today took you up to {rung}'**
+  String climbedTo(String rung);
+
+  /// No description provided for @rightOfAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {asked} right'**
+  String rightOfAsked(int right, int asked);
+
+  /// No description provided for @saidSure.
+  ///
+  /// In en, this message translates to:
+  /// **'said {sure}% sure'**
+  String saidSure(int sure);
+
+  /// No description provided for @cardsCameBack.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}'**
+  String cardsCameBack(int n);
+
+  /// No description provided for @cameBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Came back'**
+  String get cameBack;
 }
 
 class _AppLocalizationsDelegate

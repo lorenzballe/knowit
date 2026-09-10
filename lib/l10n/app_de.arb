@@ -285,5 +285,11 @@
   "copiedToClipboard": "In die Zwischenablage kopiert.",
   "rendering": "Wird gezeichnet…",
   "theSourceGoesWithIt": "Die Quelle geht mit",
-  "fiveADayALittleSharper": "Fünf am Tag. Ein bisschen schärfer."
+  "fiveADayALittleSharper": "Fünf am Tag. Ein bisschen schärfer.",
+  "shareMyDay": "Meinen Tag teilen",
+  "climbedTo": "Heute hat dich auf {rung} gebracht",
+  "rightOfAsked": "{right} von {asked} richtig",
+  "saidSure": "{sure} % sicher",
+  "cardsCameBack": "{n, plural, =1{1 Karte ist zurück — beantworte sie noch einmal} other{{n} Karten sind zurück — beantworte sie noch einmal}}",
+  "cameBack": "Zurückgekommen"
 }

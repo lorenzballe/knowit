@@ -1204,4 +1204,35 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => '하루 다섯 장. 조금 더 예리하게.';
+
+  @override
+  String get shareMyDay => '오늘 결과 공유';
+
+  @override
+  String climbedTo(String rung) {
+    return '오늘 $rung 단계에 올랐어요';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$asked문제 중 $right문제 정답';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return '확신 $sure%';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '카드 $n장이 돌아왔어요 — 다시 답해 보세요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => '돌아온 카드';
 }

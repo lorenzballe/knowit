@@ -285,5 +285,11 @@
   "copiedToClipboard": "Gekopieerd naar het klembord.",
   "rendering": "Tekenen…",
   "theSourceGoesWithIt": "De bron gaat mee",
-  "fiveADayALittleSharper": "Vijf per dag. Een beetje scherper."
+  "fiveADayALittleSharper": "Vijf per dag. Een beetje scherper.",
+  "shareMyDay": "Mijn dag delen",
+  "climbedTo": "Vandaag bracht je naar {rung}",
+  "rightOfAsked": "{right} van {asked} goed",
+  "saidSure": "{sure}% zeker",
+  "cardsCameBack": "{n, plural, =1{1 kaart kwam terug — beantwoord hem opnieuw} other{{n} kaarten kwamen terug — beantwoord ze opnieuw}}",
+  "cameBack": "Teruggekomen"
 }

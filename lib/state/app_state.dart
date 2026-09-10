@@ -396,6 +396,44 @@ class AppState extends ChangeNotifier {
   /// True when today's five carried the reader up a rung.
   bool get climbedToday => standing.at > rungAtDayStart;
 
+  /// Today's five as a row of squares, with nothing in it a friend could
+  /// not be shown: which cards asked, and of those which went right — never
+  /// what was asked or what was said.
+  DaySummary get daySummary {
+    final squares = StringBuffer();
+    var asked = 0;
+    var right = 0;
+    for (final p in todaysDeck.take(kPillsPerDay)) {
+      if (!p.asksSomething) {
+        squares.write(DaySummary.readSquare);
+        continue;
+      }
+      final Answer? given = answers[p.id];
+      if (given == null) {
+        squares.write(DaySummary.passedSquare);
+      } else if (!p.isGraded) {
+        squares.write(DaySummary.sidedSquare);
+      } else {
+        asked++;
+        final bool ok = p.challenge.accepts(given.response);
+        if (ok) right++;
+        squares.write(ok ? DaySummary.rightSquare : DaySummary.wrongSquare);
+      }
+    }
+    final todays = judgements.where((j) => j.on == dateKey(today)).toList();
+    final double? sure = todays.isEmpty
+        ? null
+        : todays.fold<int>(0, (a, j) => a + j.confidence) / todays.length;
+    return DaySummary(
+      edition: editionOf(today),
+      squares: squares.toString(),
+      asked: asked,
+      right: right,
+      sure: sure,
+      streak: liveStreak,
+    );
+  }
+
   // ── Streak ────────────────────────────────────────────────────────────
 
   /// The streak as it stands right now. A stored streak only still counts if
@@ -1193,6 +1231,37 @@ class AppState extends ChangeNotifier {
       return set.contains(dateKey(d));
     });
   }
+}
+
+/// A day, said without spoiling it.
+class DaySummary {
+  const DaySummary({
+    required this.edition,
+    required this.squares,
+    required this.asked,
+    required this.right,
+    required this.sure,
+    required this.streak,
+  });
+
+  /// One square a card: read, right, wrong, a side taken, or passed.
+  static const String readSquare = '\u2b1c';
+  static const String rightSquare = '\u{1f7e9}';
+  static const String wrongSquare = '\u{1f7e5}';
+  static const String sidedSquare = '\u{1f7e8}';
+  static const String passedSquare = '\u2b1b';
+
+  final int edition;
+  final String squares;
+
+  /// Cards that could be marked and were answered, and how many went right.
+  final int asked;
+  final int right;
+
+  /// The confidence the reader put on today's answers, averaged, or null
+  /// when nothing today carried one.
+  final double? sure;
+  final int streak;
 }
 
 /// One confidence level and how it actually turned out.

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show FontLoader;
+import 'package:flutter/services.dart' show FontLoader, SystemChannels;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,6 +27,7 @@ import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
+import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/chunky.dart';
 import 'package:astuto/widgets/scaled_text.dart';
 import 'package:astuto/widgets/motion.dart';
@@ -1317,6 +1318,119 @@ void main() {
       );
     });
 
+    testWidgets('the day ends by saying where the ladder stands', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      // Five read, fifteen to the first rung — the one thing to do next,
+      // where the day just happened rather than on the profile.
+      expect(find.byKey(const ValueKey('path-line')), findsOneWidget);
+      expect(find.text('Day one · 15 more cards to read'), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('path-line')));
+      await _settle(tester);
+      expect(find.text('Your week'), findsOneWidget);
+    });
+
+    testWidgets('a rung climbed today is said in the day', (tester) async {
+      // Nineteen read before today: the fifth card of the day is the
+      // twentieth, and the twentieth is the first rung.
+      final read = kPillPool
+          .where((p) => !_todaysFive.contains(p))
+          .take(19)
+          .map((p) => p.id)
+          .toList();
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.seenIds': read,
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      expect(find.text('Today took you up to Reading'), findsOneWidget);
+    });
+
+    testWidgets('the day can be sent as five squares and nothing else', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      String? copied;
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'Clipboard.setData') {
+            copied = (call.arguments as Map)['text'] as String;
+          }
+          return null;
+        },
+      );
+      addTearDown(
+        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          null,
+        ),
+      );
+      // No sheet under a test — and the desktop stand-in never returns.
+      TodayDoneView.share = (_) async => false;
+      addTearDown(() => TodayDoneView.share = shareText);
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+
+      await tester.tap(find.byKey(const ValueKey('share-day')));
+      await _settle(tester);
+
+      // No share sheet under a test, so it is copied — and what is copied
+      // names the edition, shows five squares, and quotes no card.
+      final String text = copied!;
+      expect(text, startsWith('Astut #${editionOf(DateTime.now())}'));
+      final String squares = text.split('\n')[1];
+      expect(squares.runes.length, kPillsPerDay);
+      for (final pill in _todaysFive) {
+        expect(text, isNot(contains(pill.question)));
+        expect(text, isNot(contains(pill.answer)));
+      }
+      expect(text, contains('lorenzballe.github.io/knowit'));
+      expect(find.text('Copied to clipboard.'), findsOneWidget);
+    });
+
+    testWidgets('what came due waits after the five, and can be answered', (
+      tester,
+    ) async {
+      final original = kPillPool.firstWhere(
+        (p) => p.isGraded && !_todaysFive.contains(p),
+      );
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.answersJson': jsonEncode({
+          original.id: {'r': '0', 'd': dateKey(DateTime.now())},
+        }),
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      // Not in the five: the five are everybody's.
+      final app = AppState();
+      await app.init();
+      expect(app.todaysDeck.map((p) => p.id), isNot(contains(original.id)));
+      expect(app.dueReviews, isNotEmpty);
+
+      await finish(tester);
+      expect(
+        find.text('1 card came back — answer it again'),
+        findsOneWidget,
+      );
+      await tester.tap(find.byKey(const ValueKey('review-line')));
+      await _settle(tester);
+      expect(find.text('Came back'), findsOneWidget);
+      expect(find.byType(DeckViewerScreen), findsOneWidget);
+    });
+
     testWidgets("the way on is everyone's best of today", (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
@@ -1403,13 +1517,14 @@ void main() {
       expect(app.tomorrowsDeck.map((p) => p.id).toList(), preview);
     });
 
-    test('a card due back tomorrow is in it', () async {
+    test('a card due back tomorrow waits outside the five', () async {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
       final tomorrow = DateTime.now().add(const Duration(days: 1));
+      final calendar = sharedDeckFor(tomorrow).map((p) => p.id).toSet();
       final original = kPillPool.firstWhere(
-        (p) => p.isGraded && p.principle.isReal,
+        (p) => p.isGraded && !calendar.contains(p.id),
       );
       await app.adopt(
         ReaderSnapshot(
@@ -1417,12 +1532,11 @@ void main() {
         ),
       );
 
-      // Back as the same principle — the original, or a fresh context of it.
-      expect(
-        app.tomorrowsDeck.where((p) => p.principle == original.principle),
-        isNotEmpty,
-      );
+      // The five are everybody's five; what comes back is the reader's own,
+      // and it is offered after them rather than dealt into them.
+      expect(app.tomorrowsDeck.map((p) => p.id), isNot(contains(original.id)));
       expect(app.tomorrowsDeck, hasLength(kPillsPerDay));
+      expect(app.dueReviews, isEmpty, reason: 'due tomorrow, not today');
     });
 
     test(

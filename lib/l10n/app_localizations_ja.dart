@@ -1201,4 +1201,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => '1日5枚。少しだけ鋭く。';
+
+  @override
+  String get shareMyDay => '今日の結果をシェア';
+
+  @override
+  String climbedTo(String rung) {
+    return '今日で$rungに上がりました';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$asked問中$right問正解';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return '確信度$sure%';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚のカードが戻ってきました — もう一度答えましょう',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => '戻ってきたカード';
 }

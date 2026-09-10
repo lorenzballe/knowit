@@ -1241,4 +1241,36 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => 'Cinq par jour. Un peu plus affûté.';
+
+  @override
+  String get shareMyDay => 'Partager ma journée';
+
+  @override
+  String climbedTo(String rung) {
+    return 'Aujourd\'hui t\'a fait monter à $rung';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$right sur $asked justes';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return 'sûr à $sure %';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartes sont revenues — réponds encore',
+      one: '1 carte est revenue — réponds encore',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => 'Revenues';
 }

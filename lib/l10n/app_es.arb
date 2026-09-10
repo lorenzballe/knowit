@@ -285,5 +285,11 @@
   "copiedToClipboard": "Copiado al portapapeles.",
   "rendering": "Dibujando…",
   "theSourceGoesWithIt": "La fuente va con ella",
-  "fiveADayALittleSharper": "Cinco al día. Un poco más agudo."
+  "fiveADayALittleSharper": "Cinco al día. Un poco más agudo.",
+  "shareMyDay": "Compartir mi día",
+  "climbedTo": "Hoy has subido a {rung}",
+  "rightOfAsked": "{right} de {asked} correctas",
+  "saidSure": "{sure}% de seguridad",
+  "cardsCameBack": "{n, plural, =1{1 tarjeta ha vuelto — respóndela otra vez} other{{n} tarjetas han vuelto — respóndelas otra vez}}",
+  "cameBack": "Han vuelto"
 }

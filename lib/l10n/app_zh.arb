@@ -285,5 +285,11 @@
   "copiedToClipboard": "已复制到剪贴板。",
   "rendering": "绘制中…",
   "theSourceGoesWithIt": "来源一并附上",
-  "fiveADayALittleSharper": "每天五张，更敏锐一点。"
+  "fiveADayALittleSharper": "每天五张，更敏锐一点。",
+  "shareMyDay": "分享我的今天",
+  "climbedTo": "今天你升到了{rung}",
+  "rightOfAsked": "{asked}题答对{right}题",
+  "saidSure": "自信度{sure}%",
+  "cardsCameBack": "{n, plural, other{{n}张卡片回来了 — 再答一次}}",
+  "cameBack": "回来的卡片"
 }

@@ -397,5 +397,15 @@
   "copiedToClipboard": "Copied to clipboard.",
   "rendering": "Rendering…",
   "theSourceGoesWithIt": "The source goes with it",
-  "fiveADayALittleSharper": "Five a day. A little sharper."
+  "fiveADayALittleSharper": "Five a day. A little sharper.",
+  "shareMyDay": "Share my day",
+  "climbedTo": "Today took you up to {rung}",
+  "@climbedTo": {"placeholders": {"rung": {"type": "String"}}},
+  "rightOfAsked": "{right} of {asked} right",
+  "@rightOfAsked": {"placeholders": {"right": {"type": "int"}, "asked": {"type": "int"}}},
+  "saidSure": "said {sure}% sure",
+  "@saidSure": {"placeholders": {"sure": {"type": "int"}}},
+  "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
+  "@cardsCameBack": {"placeholders": {"n": {"type": "int"}}},
+  "cameBack": "Came back"
 }

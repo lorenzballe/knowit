@@ -1196,4 +1196,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => '每天五张，更敏锐一点。';
+
+  @override
+  String get shareMyDay => '分享我的今天';
+
+  @override
+  String climbedTo(String rung) {
+    return '今天你升到了$rung';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$asked题答对$right题';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return '自信度$sure%';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n张卡片回来了 — 再答一次',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => '回来的卡片';
 }

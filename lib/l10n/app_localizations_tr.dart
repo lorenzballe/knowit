@@ -1230,4 +1230,36 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => 'Günde beş. Biraz daha keskin.';
+
+  @override
+  String get shareMyDay => 'Günümü paylaş';
+
+  @override
+  String climbedTo(String rung) {
+    return 'Bugün seni $rung basamağına çıkardı';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$asked sorudan $right doğru';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return '%$sure emin';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart geri geldi — yeniden cevapla',
+      one: '1 kart geri geldi — yeniden cevapla',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => 'Geri gelenler';
 }

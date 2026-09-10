@@ -1236,4 +1236,36 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fiveADayALittleSharper => 'Vijf per dag. Een beetje scherper.';
+
+  @override
+  String get shareMyDay => 'Mijn dag delen';
+
+  @override
+  String climbedTo(String rung) {
+    return 'Vandaag bracht je naar $rung';
+  }
+
+  @override
+  String rightOfAsked(int right, int asked) {
+    return '$right van $asked goed';
+  }
+
+  @override
+  String saidSure(int sure) {
+    return '$sure% zeker';
+  }
+
+  @override
+  String cardsCameBack(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten kwamen terug — beantwoord ze opnieuw',
+      one: '1 kaart kwam terug — beantwoord hem opnieuw',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBack => 'Teruggekomen';
 }
