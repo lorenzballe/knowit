@@ -32,15 +32,11 @@ class TodayScreen extends StatefulWidget {
   /// not be thrown at a row of buttons.
   final ValueChanged<bool>? onCardMotion;
 
-  /// Opens the Explore tab on today's best, from the finished day.
-  final VoidCallback? onExplore;
-
   const TodayScreen({
     super.key,
     required this.app,
     this.onBack,
     this.onCardMotion,
-    this.onExplore,
   });
 
   @override
@@ -179,7 +175,6 @@ class _TodayScreenState extends State<TodayScreen> {
                 app: app,
                 at: at,
                 onPick: (k) => setState(() => _shelfAt = k),
-                onExplore: widget.onExplore,
               ),
             ),
           ],

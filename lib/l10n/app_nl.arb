@@ -330,5 +330,10 @@
   "right": "goed",
   "wrong": "fout",
   "rightAtSure": "goed, {sure}% zeker",
-  "wrongAtSure": "fout, {sure}% zeker"
+  "wrongAtSure": "fout, {sure}% zeker",
+  "yourJourney": "Je reis",
+  "thePath": "Het pad",
+  "youAreHere": "JE BENT HIER",
+  "reachedOn": "Bereikt op {date}",
+  "readSoFar": "{n} van {of} tot nu toe gelezen"
 }

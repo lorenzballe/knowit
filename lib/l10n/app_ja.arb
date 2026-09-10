@@ -330,5 +330,10 @@
   "right": "正解",
   "wrong": "不正解",
   "rightAtSure": "正解、確信度{sure}%",
-  "wrongAtSure": "不正解、確信度{sure}%"
+  "wrongAtSure": "不正解、確信度{sure}%",
+  "yourJourney": "あなたの旅",
+  "thePath": "道のり",
+  "youAreHere": "現在地",
+  "reachedOn": "{date}に到達",
+  "readSoFar": "これまで{of}枚中{n}枚"
 }

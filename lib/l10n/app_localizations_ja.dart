@@ -1372,4 +1372,23 @@ class AppLocalizationsJa extends AppLocalizations {
   String wrongAtSure(int sure) {
     return '不正解、確信度$sure%';
   }
+
+  @override
+  String get yourJourney => 'あなたの旅';
+
+  @override
+  String get thePath => '道のり';
+
+  @override
+  String get youAreHere => '現在地';
+
+  @override
+  String reachedOn(String date) {
+    return '$dateに到達';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return 'これまで$of枚中$n枚';
+  }
 }

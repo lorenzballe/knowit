@@ -1376,4 +1376,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String wrongAtSure(int sure) {
     return '오답, 확신 $sure%';
   }
+
+  @override
+  String get yourJourney => '나의 여정';
+
+  @override
+  String get thePath => '길';
+
+  @override
+  String get youAreHere => '현재 위치';
+
+  @override
+  String reachedOn(String date) {
+    return '$date에 도달';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return '지금까지 $of장 중 $n장';
+  }
 }

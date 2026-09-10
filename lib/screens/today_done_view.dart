@@ -10,11 +10,10 @@ import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../utils/share_text.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import 'deck_viewer_screen.dart';
-import 'progress_text.dart';
+import 'journey_screen.dart';
 import 'week_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
@@ -41,23 +40,12 @@ class TodayDoneView extends StatefulWidget {
   final int at;
   final ValueChanged<int> onPick;
 
-  /// Opens the Explore tab on today's best. Null where there is no tab bar
-  /// to switch, in which case the button is not offered.
-  final VoidCallback? onExplore;
-
   const TodayDoneView({
     super.key,
     required this.app,
     required this.at,
     required this.onPick,
-    this.onExplore,
   });
-
-  /// How "share my day" hands the text over. The platform's sheet in the
-  /// app; under a test, which has no sheet and where the desktop stand-in
-  /// never returns, whatever the test puts here.
-  @visibleForTesting
-  static Future<bool> Function(String text) share = shareText;
 
   @override
   State<TodayDoneView> createState() => _TodayDoneViewState();
@@ -292,20 +280,16 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
           child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
-        // What the day did to the reader, and the day as a thing to send:
-        // the two reasons to open the app tomorrow that are not the cards.
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
-          child: _PathRow(app: app, colour: deck[at].color),
-        ),
         if (app.reviewsWaiting.isNotEmpty)
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
             child: _ReviewLine(app: app),
           ),
+        // The way on is the journey: where the day just went, on the
+        // ladder, is the one thing worth a button at the end of it.
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 14, 24, 0),
-          child: _Actions(app: app, onExplore: widget.onExplore),
+          padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+          child: _Actions(app: app),
         ),
         // Once a week, where the week ends. A verdict nobody is invited to
         // read is a page nobody reads, and the end of Sunday's five is the
@@ -483,176 +467,6 @@ class _WeekLine extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-/// The rung, and the way out with the day in hand.
-///
-/// The ladder is on the profile, where nobody looks at the end of a day.
-/// Here is where the day just happened, so here is where it says what the
-/// day did: a rung climbed, in the card's colour, or the one thing that
-/// stands between the reader and the next one.
-class _PathRow extends StatelessWidget {
-  const _PathRow({required this.app, required this.colour});
-
-  final AppState app;
-  final Color colour;
-
-  @override
-  Widget build(BuildContext context) {
-    final standing = app.standing;
-    final bool climbed = app.climbedToday;
-    final String? step = stepText(context, standing);
-    final String text = climbed
-        ? context.l10n.climbedTo(rungName(context, standing.rung))
-        : [rungName(context, standing.rung), ?step].join(' \u00b7 ');
-
-    // The subject's colour, unless it is the ground's own.
-    Color tint = colour;
-    if ((tint.computeLuminance() - context.p.surface.computeLuminance()).abs() <
-        0.15) {
-      tint = context.p.ink;
-    }
-    final Color ink = context.p.ink;
-
-    return Row(
-      children: [
-        Expanded(
-          child: Semantics(
-            button: true,
-            key: const ValueKey('path-line'),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (routeContext) => WeekScreen(
-                    app: app,
-                    onBack: () => Navigator.of(routeContext).pop(),
-                  ),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    climbed ? Icons.north_east_rounded : Icons.stairs_rounded,
-                    size: 17,
-                    color: climbed ? tint : ink.withValues(alpha: 0.45),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      text,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.body(
-                        size: 13.5,
-                        weight: climbed ? FontWeight.w600 : FontWeight.w500,
-                        height: 1.35,
-                        color: climbed ? ink : ink.withValues(alpha: 0.6),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        _ShareDay(app: app),
-      ],
-    );
-  }
-}
-
-/// The day as five squares and a line, for a chat. Nothing in it that
-/// spoils a card: which ones asked and how those went, never what.
-class _ShareDay extends StatelessWidget {
-  const _ShareDay({required this.app});
-
-  final AppState app;
-
-  /// What goes into the chat. The edition rather than the reader's day
-  /// count, because the edition is the thing two readers have in common.
-  static String text(BuildContext context, AppState app) {
-    final l = context.l10n;
-    final d = app.daySummary;
-    // The question of the day on its own line: it is the one card the
-    // reader and the friend have in common, so it is the one line that
-    // can be compared.
-    final String? question = questionLine(l, d.questionRight, d.questionSure);
-    final verdict = [
-      if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
-      if (d.sure != null) l.saidSure(d.sure!.round()),
-    ].join(' \u00b7 ');
-    return [
-      'Astut #${d.edition}${d.streak > 0 ? ' \u00b7 \u{1f525}${d.streak}' : ''}',
-      d.squares,
-      if (question != null) '${l.todaysQuestion}: $question',
-      if (verdict.isNotEmpty) verdict,
-      'lorenzballe.github.io/knowit',
-    ].join('\n');
-  }
-
-  /// "right, 80% sure" — or null when the question was not answered.
-  static String? questionLine(AppLocalizations l, bool? right, int? sure) {
-    if (right == null) return null;
-    if (sure == null) return right ? l.right : l.wrong;
-    return right ? l.rightAtSure(sure) : l.wrongAtSure(sure);
-  }
-
-  Future<void> _share(BuildContext context) async {
-    HapticFeedback.lightImpact();
-    final String line = text(context, app);
-    final messenger = ScaffoldMessenger.of(context);
-    final l = context.l10n;
-    final bool shared = await TodayDoneView.share(line);
-    if (shared) return;
-    // No sheet to hand it to — a browser, a desktop — so it is copied,
-    // which is one paste away from the same chat.
-    await Clipboard.setData(ClipboardData(text: line));
-    messenger.hideCurrentSnackBar();
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(l.copiedToClipboard),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: context.l10n.shareMyDay,
-      child: GestureDetector(
-        key: const ValueKey('share-day'),
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _share(context),
-        child: Container(
-          height: 34,
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17),
-            border: Border.all(color: context.p.line),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.ios_share_rounded, size: 15, color: context.p.ink),
-              const SizedBox(width: 7),
-              Text(
-                context.l10n.shareMyDay,
-                style: AppText.body(
-                  size: 12.5,
-                  weight: FontWeight.w600,
-                  color: context.p.ink,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -1429,16 +1243,16 @@ class _Tomorrow extends StatelessWidget {
 /// Not the app's chunky button, which is right where a press is a
 /// commitment — an answer, a purchase — and too heavy for a door out of a
 /// screen that is finished. It still gives under the finger.
-class _ExploreButton extends StatefulWidget {
-  const _ExploreButton({required this.onPressed});
+class _JourneyButton extends StatefulWidget {
+  const _JourneyButton({required this.onPressed});
 
   final VoidCallback onPressed;
 
   @override
-  State<_ExploreButton> createState() => _ExploreButtonState();
+  State<_JourneyButton> createState() => _JourneyButtonState();
 }
 
-class _ExploreButtonState extends State<_ExploreButton> {
+class _JourneyButtonState extends State<_JourneyButton> {
   bool _down = false;
 
   @override
@@ -1446,7 +1260,7 @@ class _ExploreButtonState extends State<_ExploreButton> {
     final Color ink = context.p.onInverse;
     return Semantics(
       button: true,
-      label: context.l10n.exploreTodaysBest,
+      label: context.l10n.yourJourney,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTapDown: (_) => setState(() => _down = true),
@@ -1471,7 +1285,7 @@ class _ExploreButtonState extends State<_ExploreButton> {
               children: [
                 Flexible(
                   child: Text(
-                    context.l10n.exploreTodaysBest,
+                    context.l10n.yourJourney,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body(
@@ -1498,14 +1312,13 @@ class _ExploreButtonState extends State<_ExploreButton> {
   }
 }
 
-/// The way on: everyone's best of today, and under it the second set —
-/// as an offer on the free plan, as a deal on Astut+, and not at all once
-/// it has been dealt.
+/// The way on: the journey, and under it the second set — as an offer on
+/// the free plan, as a deal on Astut+, and not at all once it has been
+/// dealt.
 class _Actions extends StatelessWidget {
-  const _Actions({required this.app, required this.onExplore});
+  const _Actions({required this.app});
 
   final AppState app;
-  final VoidCallback? onExplore;
 
   @override
   Widget build(BuildContext context) {
@@ -1515,7 +1328,16 @@ class _Actions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (onExplore != null) _ExploreButton(onPressed: onExplore!),
+        _JourneyButton(
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (routeContext) => JourneyScreen(
+                app: app,
+                onBack: () => Navigator.of(routeContext).pop(),
+              ),
+            ),
+          ),
+        ),
         if (extra != null)
           Semantics(
             button: true,
@@ -1531,7 +1353,7 @@ class _Actions extends StatelessWidget {
                 }
               },
               child: Padding(
-                padding: EdgeInsets.only(top: onExplore != null ? 11 : 0),
+                padding: const EdgeInsets.only(top: 11),
                 child: Text(
                   extra,
                   textAlign: TextAlign.center,

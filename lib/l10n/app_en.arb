@@ -457,5 +457,12 @@
   "rightAtSure": "right, {sure}% sure",
   "@rightAtSure": {"placeholders": {"sure": {"type": "int"}}},
   "wrongAtSure": "wrong, {sure}% sure",
-  "@wrongAtSure": {"placeholders": {"sure": {"type": "int"}}}
+  "@wrongAtSure": {"placeholders": {"sure": {"type": "int"}}},
+  "yourJourney": "Your journey",
+  "thePath": "The path",
+  "youAreHere": "YOU ARE HERE",
+  "reachedOn": "Reached {date}",
+  "@reachedOn": {"placeholders": {"date": {"type": "String"}}},
+  "readSoFar": "{n} of {of} read so far",
+  "@readSoFar": {"placeholders": {"n": {"type": "int"}, "of": {"type": "int"}}}
 }

@@ -330,5 +330,10 @@
   "right": "correcta",
   "wrong": "incorrecta",
   "rightAtSure": "correcta, {sure}% de seguridad",
-  "wrongAtSure": "incorrecta, {sure}% de seguridad"
+  "wrongAtSure": "incorrecta, {sure}% de seguridad",
+  "yourJourney": "Tu viaje",
+  "thePath": "El camino",
+  "youAreHere": "ESTÁS AQUÍ",
+  "reachedOn": "Alcanzado el {date}",
+  "readSoFar": "{n} de {of} leídas hasta ahora"
 }

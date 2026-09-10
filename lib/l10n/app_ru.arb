@@ -330,5 +330,10 @@
   "right": "верно",
   "wrong": "неверно",
   "rightAtSure": "верно, уверенность {sure}%",
-  "wrongAtSure": "неверно, уверенность {sure}%"
+  "wrongAtSure": "неверно, уверенность {sure}%",
+  "yourJourney": "Ваш путь",
+  "thePath": "Дорога",
+  "youAreHere": "ВЫ ЗДЕСЬ",
+  "reachedOn": "Достигнуто {date}",
+  "readSoFar": "Пока прочитано {n} из {of}"
 }

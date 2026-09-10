@@ -330,5 +330,10 @@
   "right": "答对",
   "wrong": "答错",
   "rightAtSure": "答对，自信度{sure}%",
-  "wrongAtSure": "答错，自信度{sure}%"
+  "wrongAtSure": "答错，自信度{sure}%",
+  "yourJourney": "你的旅程",
+  "thePath": "路径",
+  "youAreHere": "你在这里",
+  "reachedOn": "{date}到达",
+  "readSoFar": "目前已读{of}张中的{n}张"
 }

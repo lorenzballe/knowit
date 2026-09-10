@@ -1365,4 +1365,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String wrongAtSure(int sure) {
     return '答错，自信度$sure%';
   }
+
+  @override
+  String get yourJourney => '你的旅程';
+
+  @override
+  String get thePath => '路径';
+
+  @override
+  String get youAreHere => '你在这里';
+
+  @override
+  String reachedOn(String date) {
+    return '$date到达';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return '目前已读$of张中的$n张';
+  }
 }

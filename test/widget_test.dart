@@ -31,6 +31,7 @@ import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/chunky.dart';
 import 'package:astuto/widgets/scaled_text.dart';
+import 'package:astuto/widgets/share_day.dart';
 import 'package:astuto/widgets/motion.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/ui.dart';
@@ -1479,25 +1480,44 @@ void main() {
       );
     });
 
-    testWidgets('the day ends by saying where the ladder stands', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await finish(tester);
+    testWidgets(
+      'the way on is the journey, which says where the ladder stands',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed());
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await finish(tester);
 
-      // Five read, fifteen to the first rung — the one thing to do next,
-      // where the day just happened rather than on the profile.
-      expect(find.byKey(const ValueKey('path-line')), findsOneWidget);
-      expect(find.text('Day one · 15 more cards to read'), findsOneWidget);
+        // Explore is a tab already; the day just went somewhere on the
+        // ladder, and that is the one button worth having at the end of it.
+        expect(find.text("Explore today's best"), findsNothing);
+        await tester.tap(find.text('Your journey'));
+        await _settle(tester);
 
-      await tester.tap(find.byKey(const ValueKey('path-line')));
-      await _settle(tester);
-      expect(find.text('Your week'), findsOneWidget);
-    });
+        // Today at the top, then the trail: the first stop reached today,
+        // the reader on it, fifteen cards to the next.
+        expect(find.byKey(const ValueKey('share-day')), findsOneWidget);
+        expect(find.text('1 of 2 right · said 75% sure'), findsNothing);
+        expect(find.byKey(const ValueKey('stop-day_one')), findsOneWidget);
+        expect(find.text('YOU ARE HERE'), findsOneWidget);
+        expect(find.text('15 more cards to read → Reading'), findsOneWidget);
+        expect(find.byKey(const ValueKey('stop-sharp')), findsOneWidget);
+        expect(find.textContaining('Reached'), findsNothing);
 
-    testWidgets('a rung climbed today is said in the day', (tester) async {
+        // The week link sits at the foot of the trail, below the fold.
+        await tester.dragUntilVisible(
+          find.text('Your week'),
+          find.byType(ListView).last,
+          const Offset(0, -200),
+        );
+        await _settle(tester);
+        await tester.tap(find.text('Your week'));
+        await _settle(tester);
+        expect(find.text('Your week'), findsWidgets);
+      },
+    );
+
+    testWidgets('a rung climbed today gets today on the trail', (tester) async {
       // Nineteen read before today: the fifth card of the day is the
       // twentieth, and the twentieth is the first rung.
       final read = kPillPool
@@ -1513,7 +1533,17 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      expect(find.text('Today took you up to Reading'), findsOneWidget);
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+
+      // Day one reached, dated; Reading is where the reader stands now.
+      expect(find.byKey(const ValueKey('stop-reading')), findsOneWidget);
+      expect(find.text('YOU ARE HERE'), findsOneWidget);
+      expect(find.textContaining('Reached'), findsOneWidget);
+      final prefs = await SharedPreferences.getInstance();
+      final dates = jsonDecode(prefs.getString('knowit.rungDates')!) as Map;
+      expect(dates['reading'], dateKey(DateTime.now()));
+      expect(dates['day_one'], dateKey(DateTime.now()));
     });
 
     testWidgets('the day can be sent as five squares and nothing else', (
@@ -1537,12 +1567,15 @@ void main() {
         ),
       );
       // No sheet under a test — and the desktop stand-in never returns.
-      TodayDoneView.share = (_) async => false;
-      addTearDown(() => TodayDoneView.share = shareText);
+      ShareDay.share = (_) async => false;
+      addTearDown(() => ShareDay.share = shareText);
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
 
+      // The day is sent from the journey, where it sits as five squares.
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('share-day')));
       await _settle(tester);
 
@@ -1605,44 +1638,11 @@ void main() {
 
       // The one left over waits on the finished day.
       await finish(tester);
-      expect(
-        find.text('1 card came back — answer it again'),
-        findsOneWidget,
-      );
+      expect(find.text('1 card came back — answer it again'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('review-line')));
       await _settle(tester);
       expect(find.text('Came back'), findsOneWidget);
       expect(find.byType(DeckViewerScreen), findsOneWidget);
-    });
-
-    testWidgets("the way on is everyone's best of today", (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-
-      // Leave the Explore tab somewhere else first, so the button has to
-      // put it back rather than merely switch to it.
-      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
-      await _settle(tester);
-      await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
-      await _settle(tester);
-      expect(
-        find.byKey(const ValueKey('subject-Economics-on')),
-        findsOneWidget,
-      );
-      await tester.tap(find.byKey(const ValueKey('tab-Today')));
-      await _settle(tester);
-
-      await finish(tester);
-      await tester.tap(find.text("Explore today's best"));
-      await _settle(tester);
-
-      expect(find.text("Today's shelf"), findsOneWidget);
-      expect(
-        find.byKey(const ValueKey('subject-Economics-off')),
-        findsOneWidget,
-      );
-      expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsNothing);
     });
 
     testWidgets('the day being read keeps the header it always had', (

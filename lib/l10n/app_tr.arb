@@ -330,5 +330,10 @@
   "right": "doğru",
   "wrong": "yanlış",
   "rightAtSure": "doğru, %{sure} emin",
-  "wrongAtSure": "yanlış, %{sure} emin"
+  "wrongAtSure": "yanlış, %{sure} emin",
+  "yourJourney": "Yolculuğun",
+  "thePath": "Yol",
+  "youAreHere": "BURADASIN",
+  "reachedOn": "{date} tarihinde ulaşıldı",
+  "readSoFar": "Şimdiye kadar {of} karttan {n} okundu"
 }

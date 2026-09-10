@@ -113,6 +113,25 @@ void main() {
       expect(mergeSnapshots(local, remote).friendCodes, ['ABCDEF', 'GHJKLM']);
     });
 
+    test('a rung was first reached on whichever phone got there first', () {
+      const local = ReaderSnapshot(
+        rungDates: {'day_one': '2026-09-03', 'reading': '2026-09-09'},
+      );
+      const remote = ReaderSnapshot(
+        rungDates: {'day_one': '2026-09-01', 'answering': '2026-09-12'},
+      );
+      final merged = mergeSnapshots(local, remote);
+      expect(merged.rungDates, {
+        'day_one': '2026-09-01',
+        'reading': '2026-09-09',
+        'answering': '2026-09-12',
+      });
+      expect(
+        ReaderSnapshot.fromJson(merged.toJson()).rungDates['reading'],
+        '2026-09-09',
+      );
+    });
+
     test('survives a round trip through JSON', () {
       const before = ReaderSnapshot(
         name: 'Marco',

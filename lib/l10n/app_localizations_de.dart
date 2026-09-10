@@ -1411,4 +1411,23 @@ class AppLocalizationsDe extends AppLocalizations {
   String wrongAtSure(int sure) {
     return 'falsch, $sure % sicher';
   }
+
+  @override
+  String get yourJourney => 'Deine Reise';
+
+  @override
+  String get thePath => 'Der Weg';
+
+  @override
+  String get youAreHere => 'DU BIST HIER';
+
+  @override
+  String reachedOn(String date) {
+    return 'Erreicht am $date';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return '$n von $of bisher gelesen';
+  }
 }

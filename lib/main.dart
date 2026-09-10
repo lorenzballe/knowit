@@ -562,10 +562,6 @@ class _AstutoShellState extends State<AstutoShell>
         onCardMotion: (moving) {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
-        onExplore: () {
-          _explore.currentState?.showBest();
-          _goTo(1);
-        },
       ),
       ExploreScreen(key: _explore, app: widget.app),
       ProfileScreen(

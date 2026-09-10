@@ -94,13 +94,22 @@ than a button. The glow behind everything, the dot in the header and the
 long dot under the carousel all take the colour of the card at the front.
 Under the dots the app names what opens tomorrow: the deck is dealt from
 the date and the reading history, both settled by tonight, so the subject
-it names is the one that will actually be on top in the morning. Under
-that, what the day did — the rung the reader stands on and the one thing
-between them and the next, or the rung they climbed today in the card's
-colour — and a button that hands the day to a chat as five squares (see
-*The question of the day*). A card that came due and found no room in the
-five waits here too. The way on is Explore's best of today; the second set
-sits under it as a quiet line.
+it names is the one that will actually be on top in the morning. A card
+that came due and found no room in the five waits here too. The way on is
+**Your journey** — the day just went somewhere on the ladder, and that is
+the one thing worth a button at the end of it; Explore is a tab already.
+The second set sits under the button as a quiet line.
+
+## Your journey
+
+`JourneyScreen`: today at the top — the five as squares, how the question
+of the day went, the day's line, and the button that hands it to a chat
+(see *The question of the day*) — and under it the path: the seven rungs
+one under the other on a trail, each with the day it was first reached,
+the one the reader stands on with the bar and the single next step, the
+ones ahead faint. The rung dates are written the moment a rung is cleared
+(`rungDates`, in the snapshot, earliest date winning in a merge) and never
+moved. A first drawing; the stops will get richer.
 
 The header is the same one line whether the day is running or done — a dot
 in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far
@@ -586,9 +595,8 @@ never "we miss you", and after a fortnight it stops. Re-planned at every
 launch, in the phone's language.
 
 **The rung, where the day happened.** The ladder lives on the profile,
-where nobody looks at the end of a day. So the finished day says it too: the
-rung climbed today in the card's colour, or the one thing between the
-reader and the next rung.
+where nobody looks at the end of a day. So the finished day's one button
+opens the journey, where the rung climbed today has today's date on it.
 
 Judgements are dated and carry the card they were made on, so the week can
 be read apart from the run, and a miss can be opened again. Both fields are

@@ -1410,4 +1410,23 @@ class AppLocalizationsNl extends AppLocalizations {
   String wrongAtSure(int sure) {
     return 'fout, $sure% zeker';
   }
+
+  @override
+  String get yourJourney => 'Je reis';
+
+  @override
+  String get thePath => 'Het pad';
+
+  @override
+  String get youAreHere => 'JE BENT HIER';
+
+  @override
+  String reachedOn(String date) {
+    return 'Bereikt op $date';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return '$n van $of tot nu toe gelezen';
+  }
 }

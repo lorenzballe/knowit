@@ -73,6 +73,7 @@ class AppState extends ChangeNotifier {
   static const _kDeckIds = 'knowit.todayDeckIds';
   static const _kDeckHistory = 'knowit.deckHistory';
   static const _kDayStartRung = 'knowit.dayStartRung';
+  static const _kRungDates = 'knowit.rungDates';
   static const _kExtraOpen = 'knowit.extraSetDate';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
@@ -133,6 +134,10 @@ class AppState extends ChangeNotifier {
   /// The rung the reader stood on when today was dealt, so the end of the
   /// day can say whether they climbed.
   int rungAtDayStart = 0;
+
+  /// The day each rung was first reached, by rung id — the dates on the
+  /// journey. Written the moment a rung is cleared and never moved.
+  Map<String, String> rungDates = {};
 
   /// Card id -> what the reader last committed to, and when it comes back.
   Map<String, Answer> answers = {};
@@ -256,9 +261,11 @@ class AppState extends ChangeNotifier {
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
+    rungDates = _decodeDates(_prefs.getString(_kRungDates));
     // Absent on an install that started the day on an older build: the
     // reader is where they are now, and today reports no climb.
     rungAtDayStart = _prefs.getInt(_kDayStartRung) ?? standing.at;
+    await _noteClimb();
 
     final storedDay = _prefs.getString(_kTodayDate);
     final storedDeck = _prefs.getStringList(_kDeckIds) ?? [];
@@ -499,7 +506,31 @@ class AppState extends ChangeNotifier {
       await _completeToday();
       unawaited(refreshHomeWidget());
     }
+    await _noteClimb();
     notifyListeners();
+  }
+
+  /// Dates every rung the reader now stands on or above, once. A rung
+  /// reached on an install that predates the dating gets today, which is
+  /// the day the app first knew.
+  Future<void> _noteClimb() async {
+    var changed = false;
+    final int at = standing.at;
+    for (var i = 0; i <= at && i < kRungs.length; i++) {
+      if (rungDates.containsKey(kRungs[i].id)) continue;
+      rungDates[kRungs[i].id] = dateKey(today);
+      changed = true;
+    }
+    if (changed) await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+  }
+
+  static Map<String, String> _decodeDates(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! Map) return {};
+    return {
+      for (final e in parsed.entries)
+        if (e.value is String) '${e.key}': e.value as String,
+    };
   }
 
   Future<void> _completeToday() async {
@@ -697,6 +728,7 @@ class AppState extends ChangeNotifier {
     }
 
     await _saveAnswers();
+    await _noteClimb();
     notifyListeners();
   }
 
@@ -1335,6 +1367,7 @@ class AppState extends ChangeNotifier {
     likedIds = [];
     dislikedIds = [];
     friendCodes = [];
+    rungDates = {};
     todayIndex = 0;
     pillsRead = 0;
     onboarded = false;
@@ -1401,6 +1434,7 @@ class AppState extends ChangeNotifier {
     likedIds: List<String>.from(likedIds),
     dislikedIds: List<String>.from(dislikedIds),
     friendCodes: List<String>.from(friendCodes),
+    rungDates: Map<String, String>.from(rungDates),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
     answers: Map<String, Answer>.from(answers),
@@ -1426,6 +1460,7 @@ class AppState extends ChangeNotifier {
     likedIds = List<String>.from(s.likedIds);
     dislikedIds = List<String>.from(s.dislikedIds);
     friendCodes = List<String>.from(s.friendCodes);
+    rungDates = Map<String, String>.from(s.rungDates);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
     answers = Map<String, Answer>.from(s.answers);
@@ -1446,6 +1481,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kLikedIds, likedIds);
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kFriendCodes, friendCodes);
+    await _prefs.setString(_kRungDates, jsonEncode(rungDates));
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
@@ -1453,6 +1489,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setString(_kTopicLevels, jsonEncode(topicLevels));
     await _prefs.setStringList(_kPushTokens, pushTokens);
     await _saveAnswers();
+    await _noteClimb();
     notifyListeners();
   }
 

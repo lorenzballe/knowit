@@ -1440,4 +1440,23 @@ class AppLocalizationsRu extends AppLocalizations {
   String wrongAtSure(int sure) {
     return 'неверно, уверенность $sure%';
   }
+
+  @override
+  String get yourJourney => 'Ваш путь';
+
+  @override
+  String get thePath => 'Дорога';
+
+  @override
+  String get youAreHere => 'ВЫ ЗДЕСЬ';
+
+  @override
+  String reachedOn(String date) {
+    return 'Достигнуто $date';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return 'Пока прочитано $n из $of';
+  }
 }

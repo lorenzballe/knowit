@@ -23,6 +23,7 @@ class ReaderSnapshot {
     this.likedIds = const [],
     this.dislikedIds = const [],
     this.friendCodes = const [],
+    this.rungDates = const {},
     this.seenIds = const [],
     this.pillsRead = 0,
     this.answers = const {},
@@ -47,6 +48,9 @@ class ReaderSnapshot {
 
   /// Whose boards the reader looks at.
   final List<String> friendCodes;
+
+  /// The day each rung of the ladder was first reached, by rung id.
+  final Map<String, String> rungDates;
   final List<String> seenIds;
   final int pillsRead;
   final Map<String, Answer> answers;
@@ -78,6 +82,7 @@ class ReaderSnapshot {
     'likedIds': likedIds,
     'dislikedIds': dislikedIds,
     'friendCodes': friendCodes,
+    'rungDates': rungDates,
     'seenIds': seenIds,
     'pillsRead': pillsRead,
     'answers': answers.map((k, v) => MapEntry(k, v.toJson())),
@@ -119,6 +124,16 @@ class ReaderSnapshot {
       }
     }
 
+    final datesRaw = raw['rungDates'];
+    final dates = <String, String>{};
+    if (datesRaw is Map) {
+      for (final entry in datesRaw.entries) {
+        final key = entry.key;
+        final value = entry.value;
+        if (key is String && value is String) dates[key] = value;
+      }
+    }
+
     final levelsRaw = raw['topicLevels'];
     final levels = <String, int>{};
     if (levelsRaw is Map) {
@@ -141,6 +156,7 @@ class ReaderSnapshot {
       likedIds: strings(raw['likedIds']),
       dislikedIds: strings(raw['dislikedIds']),
       friendCodes: strings(raw['friendCodes']),
+      rungDates: dates,
       seenIds: strings(raw['seenIds']),
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
       answers: answers,
@@ -197,6 +213,16 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
       ? local.judgements
       : remote.judgements;
 
+  // A rung was first reached on whichever phone reached it first: the
+  // earlier date is the true one.
+  final Map<String, String> rungDates = {...remote.rungDates};
+  for (final entry in local.rungDates.entries) {
+    final String? theirs = rungDates[entry.key];
+    if (theirs == null || entry.value.compareTo(theirs) < 0) {
+      rungDates[entry.key] = entry.value;
+    }
+  }
+
   // The mix is a decision, not a score: the one made most recently wins, and
   // this phone is where the reader just was.
   final bool localChoseMix = local.topicWeights.isNotEmpty;
@@ -215,6 +241,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     likedIds: union(local.likedIds, remote.likedIds),
     dislikedIds: union(local.dislikedIds, remote.dislikedIds),
     friendCodes: union(local.friendCodes, remote.friendCodes),
+    rungDates: rungDates,
     seenIds: union(local.seenIds, remote.seenIds),
     pillsRead: math.max(local.pillsRead, remote.pillsRead),
     answers: answers,

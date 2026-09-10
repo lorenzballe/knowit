@@ -330,5 +330,10 @@
   "right": "정답",
   "wrong": "오답",
   "rightAtSure": "정답, 확신 {sure}%",
-  "wrongAtSure": "오답, 확신 {sure}%"
+  "wrongAtSure": "오답, 확신 {sure}%",
+  "yourJourney": "나의 여정",
+  "thePath": "길",
+  "youAreHere": "현재 위치",
+  "reachedOn": "{date}에 도달",
+  "readSoFar": "지금까지 {of}장 중 {n}장"
 }

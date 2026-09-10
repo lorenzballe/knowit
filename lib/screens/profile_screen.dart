@@ -23,6 +23,7 @@ import 'archive_screen.dart';
 import 'know_screen.dart';
 import 'progress_text.dart';
 import 'friends_screen.dart';
+import 'journey_screen.dart';
 import 'saved_screen.dart';
 import 'week_screen.dart';
 import 'how_screen.dart';
@@ -1372,13 +1373,12 @@ class _Path extends StatelessWidget {
     final Rung? next = standing.next;
     final String? step = stepText(context, standing);
 
-    // The card is also the way into the week it is measured in: the rung
-    // and the week are the same question at two distances.
+    // The card is also the way into the journey it is a moment of.
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (routeContext) => WeekScreen(
+          builder: (routeContext) => JourneyScreen(
             app: app,
             onBack: () => Navigator.of(routeContext).pop(),
           ),

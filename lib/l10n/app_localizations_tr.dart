@@ -1404,4 +1404,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String wrongAtSure(int sure) {
     return 'yanlış, %$sure emin';
   }
+
+  @override
+  String get yourJourney => 'Yolculuğun';
+
+  @override
+  String get thePath => 'Yol';
+
+  @override
+  String get youAreHere => 'BURADASIN';
+
+  @override
+  String reachedOn(String date) {
+    return '$date tarihinde ulaşıldı';
+  }
+
+  @override
+  String readSoFar(int n, int of) {
+    return 'Şimdiye kadar $of karttan $n okundu';
+  }
 }

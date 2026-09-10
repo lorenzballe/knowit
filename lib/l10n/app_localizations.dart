@@ -2105,6 +2105,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'wrong, {sure}% sure'**
   String wrongAtSure(int sure);
+
+  /// No description provided for @yourJourney.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey'**
+  String get yourJourney;
+
+  /// No description provided for @thePath.
+  ///
+  /// In en, this message translates to:
+  /// **'The path'**
+  String get thePath;
+
+  /// No description provided for @youAreHere.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU ARE HERE'**
+  String get youAreHere;
+
+  /// No description provided for @reachedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reached {date}'**
+  String reachedOn(String date);
+
+  /// No description provided for @readSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of} read so far'**
+  String readSoFar(int n, int of);
 }
 
 class _AppLocalizationsDelegate
