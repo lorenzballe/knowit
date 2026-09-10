@@ -1298,4 +1298,38 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       'Tik op de bladwijzer van een pil en hij komt hier — de kaarten die je denken veranderden, bewaard.';
+
+  @override
+  String get nudgeTitle => 'Je vijf staan klaar';
+
+  @override
+  String get nudgeFreezeTitle => 'Je freeze houdt stand';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return 'Gisteren is gedekt. Vandaag: $question';
+  }
+
+  @override
+  String get nudgeSureTitle => 'Hier was je zeker van';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — je zei $sure%.';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return 'Twee weken geleden had je $read kaarten gelezen';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return 'Je zekerheid zat er $gap punten naast. Vandaag: $question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return '$answered beantwoord tot nu toe. Vandaag: $question';
+  }
 }

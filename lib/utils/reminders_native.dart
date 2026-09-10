@@ -3,6 +3,8 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../models/reminder.dart';
+
 /// The daily nudge, on a phone.
 ///
 /// A daily app that never speaks first is a daily app somebody opens twice.
@@ -14,7 +16,6 @@ import 'package:timezone/timezone.dart' as tz;
 /// need to land on the second, and asking for exact alarms means asking
 /// Android for a permission it now guards closely — a trade with nothing on
 /// the app's side of it.
-const int _dailyId = 1;
 
 final FlutterLocalNotificationsPlugin _plugin =
     FlutterLocalNotificationsPlugin();
@@ -104,52 +105,47 @@ Future<bool> ensureReminderPermission() async {
   return false;
 }
 
-/// Puts the reminder on at [hour]:[minute], every day, replacing any earlier
-/// one. Cancelling first is what keeps a changed time from leaving the old
-/// one behind.
-Future<void> scheduleDailyReminder({
-  required int hour,
-  required int minute,
-  required String title,
-  required String body,
-}) async {
+/// Puts the plan on, replacing whatever was planned before. Cancelling
+/// first is what keeps a changed time, or a re-plan, from leaving old
+/// ones behind: every reminder the app ever schedules goes through here.
+Future<void> armReminders(List<Reminder> plan) async {
   await _init();
-  await _plugin.cancel(_dailyId);
+  await _plugin.cancelAll();
 
   final now = tz.TZDateTime.now(tz.local);
-  var when = tz.TZDateTime(
-    tz.local,
-    now.year,
-    now.month,
-    now.day,
-    hour,
-    minute,
-  );
-  if (!when.isAfter(now)) when = when.add(const Duration(days: 1));
-
-  await _plugin.zonedSchedule(
-    _dailyId,
-    title,
-    body,
-    when,
-    const NotificationDetails(
-      android: AndroidNotificationDetails(
-        'knowit_daily',
-        'Daily pills',
-        channelDescription: 'The nudge that your five are ready.',
-        importance: Importance.defaultImportance,
-        priority: Priority.defaultPriority,
+  for (final r in plan) {
+    final when = tz.TZDateTime(
+      tz.local,
+      r.when.year,
+      r.when.month,
+      r.when.day,
+      r.when.hour,
+      r.when.minute,
+    );
+    if (!when.isAfter(now)) continue;
+    await _plugin.zonedSchedule(
+      r.id,
+      r.title,
+      r.body,
+      when,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'knowit_daily',
+          'Daily pills',
+          channelDescription: 'The nudge that your five are ready.',
+          importance: Importance.defaultImportance,
+          priority: Priority.defaultPriority,
+        ),
+        iOS: DarwinNotificationDetails(),
       ),
-      iOS: DarwinNotificationDetails(),
-    ),
-    androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-    uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.wallClockTime,
-    matchDateTimeComponents: DateTimeComponents.time,
-  );
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.wallClockTime,
+    );
+  }
 }
 
-Future<void> cancelDailyReminder() async {
+Future<void> disarmReminders() async {
   await _init();
-  await _plugin.cancel(_dailyId);
+  await _plugin.cancelAll();
 }

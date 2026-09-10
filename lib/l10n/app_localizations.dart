@@ -1925,6 +1925,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.'**
   String get tapTheBookmarkLandsHere;
+
+  /// No description provided for @nudgeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your five are ready'**
+  String get nudgeTitle;
+
+  /// No description provided for @nudgeFreezeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your freeze is holding'**
+  String get nudgeFreezeTitle;
+
+  /// No description provided for @nudgeFreezeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday is covered. Today: {question}'**
+  String nudgeFreezeBody(String question);
+
+  /// No description provided for @nudgeSureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You were sure about this one'**
+  String get nudgeSureTitle;
+
+  /// No description provided for @nudgeSureBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{question} — you said {sure}%.'**
+  String nudgeSureBody(String question, int sure);
+
+  /// No description provided for @nudgeTwoWeeksTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Two weeks ago you had read {read} cards'**
+  String nudgeTwoWeeksTitle(int read);
+
+  /// No description provided for @nudgeTwoWeeksBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your confidence sat {gap} points off. Today: {question}'**
+  String nudgeTwoWeeksBody(int gap, String question);
+
+  /// No description provided for @nudgeTwoWeeksBodyNoGap.
+  ///
+  /// In en, this message translates to:
+  /// **'{answered} answered so far. Today: {question}'**
+  String nudgeTwoWeeksBodyNoGap(int answered, String question);
 }
 
 class _AppLocalizationsDelegate

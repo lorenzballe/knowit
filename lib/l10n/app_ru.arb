@@ -300,5 +300,13 @@
   "lessLikeThis": "Меньше таких",
   "whatYouLikedLandsHere": "Те, что вы перечитали бы",
   "holdToLikeLandsHere": "Удержите карточку, которая вам понравилась, и она окажется здесь — а приложение даст больше таких.",
-  "tapTheBookmarkLandsHere": "Нажмите на закладку на карточке, и она окажется здесь — те, что изменили ваше мышление, сохранены."
+  "tapTheBookmarkLandsHere": "Нажмите на закладку на карточке, и она окажется здесь — те, что изменили ваше мышление, сохранены.",
+  "nudgeTitle": "Ваши пять готовы",
+  "nudgeFreezeTitle": "Ваша заморозка держится",
+  "nudgeFreezeBody": "Вчера закрыто. Сегодня: {question}",
+  "nudgeSureTitle": "В этой вы были уверены",
+  "nudgeSureBody": "{question} — вы сказали {sure}%.",
+  "nudgeTwoWeeksTitle": "Две недели назад вы прочли {read} карточек",
+  "nudgeTwoWeeksBody": "Ваша уверенность отклонялась на {gap} пунктов. Сегодня: {question}",
+  "nudgeTwoWeeksBodyNoGap": "Пока {answered} ответов. Сегодня: {question}"
 }

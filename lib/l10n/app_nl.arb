@@ -300,5 +300,13 @@
   "lessLikeThis": "Minder zoals dit",
   "whatYouLikedLandsHere": "De kaarten die je nog eens zou lezen",
   "holdToLikeLandsHere": "Houd een kaart vast die je goed vindt en hij komt hier — en de app geeft je er meer van.",
-  "tapTheBookmarkLandsHere": "Tik op de bladwijzer van een pil en hij komt hier — de kaarten die je denken veranderden, bewaard."
+  "tapTheBookmarkLandsHere": "Tik op de bladwijzer van een pil en hij komt hier — de kaarten die je denken veranderden, bewaard.",
+  "nudgeTitle": "Je vijf staan klaar",
+  "nudgeFreezeTitle": "Je freeze houdt stand",
+  "nudgeFreezeBody": "Gisteren is gedekt. Vandaag: {question}",
+  "nudgeSureTitle": "Hier was je zeker van",
+  "nudgeSureBody": "{question} — je zei {sure}%.",
+  "nudgeTwoWeeksTitle": "Twee weken geleden had je {read} kaarten gelezen",
+  "nudgeTwoWeeksBody": "Je zekerheid zat er {gap} punten naast. Vandaag: {question}",
+  "nudgeTwoWeeksBodyNoGap": "{answered} beantwoord tot nu toe. Vandaag: {question}"
 }

@@ -300,5 +300,13 @@
   "lessLikeThis": "Menos como esta",
   "whatYouLikedLandsHere": "As que voltarias a ler",
   "holdToLikeLandsHere": "Mantém premida uma carta de que gostes e ela aterra aqui — e a app dá-te mais assim.",
-  "tapTheBookmarkLandsHere": "Toca no marcador de qualquer pílula e ela aterra aqui — as que mudaram a tua forma de pensar, guardadas."
+  "tapTheBookmarkLandsHere": "Toca no marcador de qualquer pílula e ela aterra aqui — as que mudaram a tua forma de pensar, guardadas.",
+  "nudgeTitle": "As tuas cinco estão prontas",
+  "nudgeFreezeTitle": "O teu congelamento está a aguentar",
+  "nudgeFreezeBody": "Ontem está coberto. Hoje: {question}",
+  "nudgeSureTitle": "Desta tinhas a certeza",
+  "nudgeSureBody": "{question} — disseste {sure}%.",
+  "nudgeTwoWeeksTitle": "Há duas semanas tinhas lido {read} cartas",
+  "nudgeTwoWeeksBody": "A tua confiança estava {gap} pontos ao lado. Hoje: {question}",
+  "nudgeTwoWeeksBodyNoGap": "{answered} respondidas até agora. Hoje: {question}"
 }

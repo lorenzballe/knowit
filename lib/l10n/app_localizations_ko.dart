@@ -1265,4 +1265,38 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       '카드의 북마크를 누르면 여기에 모여요 — 생각을 바꾼 카드를 간직하세요.';
+
+  @override
+  String get nudgeTitle => '오늘의 다섯 장이 준비됐어요';
+
+  @override
+  String get nudgeFreezeTitle => '프리즈가 버티고 있어요';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return '어제는 보호됐어요. 오늘: $question';
+  }
+
+  @override
+  String get nudgeSureTitle => '이건 확신했었죠';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — $sure%라고 했어요.';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return '2주 전엔 $read장을 읽었어요';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return '확신이 $gap점 어긋나 있었어요. 오늘: $question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return '지금까지 $answered문제 답함. 오늘: $question';
+  }
 }

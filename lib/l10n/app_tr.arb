@@ -300,5 +300,13 @@
   "lessLikeThis": "Bunun gibisi daha az",
   "whatYouLikedLandsHere": "Yeniden okuyacakların",
   "holdToLikeLandsHere": "Beğendiğin bir karta basılı tut, buraya gelir — uygulama da sana bunun gibilerinden daha çok verir.",
-  "tapTheBookmarkLandsHere": "Bir kartın yer imine dokun, buraya gelir — düşünme şeklini değiştirenler, saklanır."
+  "tapTheBookmarkLandsHere": "Bir kartın yer imine dokun, buraya gelir — düşünme şeklini değiştirenler, saklanır.",
+  "nudgeTitle": "Beşin hazır",
+  "nudgeFreezeTitle": "Dondurman tutuyor",
+  "nudgeFreezeBody": "Dün kapandı. Bugün: {question}",
+  "nudgeSureTitle": "Bundan emindin",
+  "nudgeSureBody": "{question} — %{sure} demiştin.",
+  "nudgeTwoWeeksTitle": "İki hafta önce {read} kart okumuştun",
+  "nudgeTwoWeeksBody": "Güvenin {gap} puan sapıyordu. Bugün: {question}",
+  "nudgeTwoWeeksBodyNoGap": "Şimdiye kadar {answered} cevap. Bugün: {question}"
 }

@@ -1333,4 +1333,38 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       'Dotknij zakładki na pigułce, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane.';
+
+  @override
+  String get nudgeTitle => 'Twoja piątka jest gotowa';
+
+  @override
+  String get nudgeFreezeTitle => 'Twoje zamrożenie trzyma';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return 'Wczoraj jest pokryte. Dziś: $question';
+  }
+
+  @override
+  String get nudgeSureTitle => 'Tej byłeś pewien';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — powiedziałeś $sure%.';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return 'Dwa tygodnie temu miałeś przeczytane $read kart';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return 'Twoja pewność była o $gap punktów obok. Dziś: $question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return 'Dotąd $answered odpowiedzi. Dziś: $question';
+  }
 }

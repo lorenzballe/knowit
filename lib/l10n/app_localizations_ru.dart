@@ -1328,4 +1328,38 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       'Нажмите на закладку на карточке, и она окажется здесь — те, что изменили ваше мышление, сохранены.';
+
+  @override
+  String get nudgeTitle => 'Ваши пять готовы';
+
+  @override
+  String get nudgeFreezeTitle => 'Ваша заморозка держится';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return 'Вчера закрыто. Сегодня: $question';
+  }
+
+  @override
+  String get nudgeSureTitle => 'В этой вы были уверены';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — вы сказали $sure%.';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return 'Две недели назад вы прочли $read карточек';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return 'Ваша уверенность отклонялась на $gap пунктов. Сегодня: $question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return 'Пока $answered ответов. Сегодня: $question';
+  }
 }

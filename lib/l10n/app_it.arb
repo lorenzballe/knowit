@@ -300,5 +300,13 @@
   "lessLikeThis": "Meno così",
   "whatYouLikedLandsHere": "Quelle che rileggeresti",
   "holdToLikeLandsHere": "Tieni premuta una carta che ti piace e finisce qui — e l'app te ne dà altre così.",
-  "tapTheBookmarkLandsHere": "Tocca il segnalibro su una pillola e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute."
+  "tapTheBookmarkLandsHere": "Tocca il segnalibro su una pillola e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute.",
+  "nudgeTitle": "Le tue cinque sono pronte",
+  "nudgeFreezeTitle": "Il tuo congelamento sta tenendo",
+  "nudgeFreezeBody": "Ieri è coperto. Oggi: {question}",
+  "nudgeSureTitle": "Di questa eri sicuro",
+  "nudgeSureBody": "{question} — avevi detto {sure}%.",
+  "nudgeTwoWeeksTitle": "Due settimane fa avevi letto {read} carte",
+  "nudgeTwoWeeksBody": "La tua sicurezza era di {gap} punti fuori. Oggi: {question}",
+  "nudgeTwoWeeksBodyNoGap": "{answered} risposte finora. Oggi: {question}"
 }

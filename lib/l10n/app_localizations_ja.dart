@@ -1261,4 +1261,38 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       'カードのブックマークを押すとここに集まります — 考え方を変えたカードを、手元に。';
+
+  @override
+  String get nudgeTitle => '今日の5枚が届いています';
+
+  @override
+  String get nudgeFreezeTitle => 'フリーズが効いています';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return '昨日はカバーされました。今日：$question';
+  }
+
+  @override
+  String get nudgeSureTitle => 'これには自信がありましたね';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — $sure%と答えました。';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return '2週間前、$read枚読んでいました';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return '自信は$gapポイントずれていました。今日：$question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return 'これまで$answered問回答。今日：$question';
+  }
 }

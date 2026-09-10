@@ -15,6 +15,7 @@ import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/models/reminder.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/today_screen.dart';
@@ -610,13 +611,17 @@ void main() {
 
   group('The daily nudge', () {
     /// Records what the platform was asked to do, and stands in for it.
-    ({List<(int, int, String)> armed, List<String> asked, AppState app}) build({
-      required bool granted,
-      Map<String, Object> extra = const {},
-    }) {
+    ({
+      List<List<Reminder>> armed,
+      List<String> asked,
+      List<String> off,
+      AppState app,
+    })
+    build({required bool granted, Map<String, Object> extra = const {}}) {
       SharedPreferences.setMockInitialValues({..._installed(), ...extra});
-      final armed = <(int, int, String)>[];
+      final armed = <List<Reminder>>[];
       final asked = <String>[];
+      final off = <String>[];
       final app = AppState(
         hasPermission: () async {
           asked.add('has');
@@ -626,18 +631,10 @@ void main() {
           asked.add('ask');
           return granted;
         },
-        arm:
-            ({
-              required int hour,
-              required int minute,
-              required String title,
-              required String body,
-            }) async {
-              armed.add((hour, minute, body));
-            },
-        disarm: () async => armed.add((-1, -1, 'off')),
+        arm: (plan) async => armed.add(plan),
+        disarm: () async => off.add('off'),
       );
-      return (armed: armed, asked: asked, app: app);
+      return (armed: armed, asked: asked, off: off, app: app);
     }
 
     test('a fresh install arms the reminder at launch', () async {
@@ -649,7 +646,9 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       expect(t.armed, hasLength(1));
-      expect((t.armed.single.$1, t.armed.single.$2), (8, 30));
+      final plan = t.armed.single;
+      expect(plan, isNotEmpty);
+      expect((plan.first.when.hour, plan.first.when.minute), (8, 30));
       expect(t.app.remindersLive, isTrue);
     });
 
@@ -671,11 +670,11 @@ void main() {
       t.armed.clear();
 
       await t.app.setNotifications(false);
-      expect(t.armed.last.$3, 'off');
+      expect(t.off, ['off']);
 
       await t.app.setNotifications(true);
       expect(t.asked, contains('ask'));
-      expect(t.armed.last.$1, 8);
+      expect(t.armed.last.first.when.hour, 8);
     });
 
     test('the nudge carries the question, not the counter', () async {
@@ -683,10 +682,17 @@ void main() {
       await t.app.init();
       await Future<void>.delayed(Duration.zero);
 
-      // What is in the reader's head tomorrow morning, not what is in the
-      // app's counter.
-      expect(t.armed.single.$3, t.app.todaysDeck.first.question);
-      expect(t.armed.single.$3, isNot(contains('13 days')));
+      // What is in the reader's head that morning, not what is in the
+      // app's counter — today's own first card while today's hour is still
+      // ahead, tomorrow's otherwise.
+      final Reminder first = t.armed.single.first;
+      final bool today = first.when.day == DateTime.now().day;
+      final expected = today
+          ? t.app.todaysDeck.first.question
+          : t.app.tomorrowsDeck.first.question;
+      expect(first.body, expected);
+      expect(first.body, isNot(contains('13 days')));
+      expect(first.title, 'Your five are ready');
     });
 
     test('a changed time moves the reminder', () async {
@@ -695,7 +701,75 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       await t.app.setNotifyTime('19:00');
-      expect((t.armed.last.$1, t.armed.last.$2), (19, 0));
+      final Reminder first = t.armed.last.first;
+      expect((first.when.hour, first.when.minute), (19, 0));
+    });
+
+    test('a fortnight is planned, one question a day', () async {
+      final t = build(granted: true);
+      await t.app.init();
+      final plan = t.app.reminderPlan(
+        now: DateTime.now().subtract(const Duration(days: 1)),
+      );
+
+      // Today and fourteen more, each at the reader's hour, each with the
+      // card that opens that day — the calendar is the same for everybody,
+      // so tonight knows what the morning after next will ask.
+      expect(plan, hasLength(AppState.kPlannedDays + 1));
+      for (var i = 0; i < plan.length; i++) {
+        expect(plan[i].id, i + 1);
+        expect(plan[i].when.hour, 8);
+        expect(
+          plan[i].when.day,
+          DateTime.now().add(Duration(days: i)).day,
+          reason: 'entry $i',
+        );
+      }
+      final third = DateTime.now().add(const Duration(days: 3));
+      expect(plan[3].body, sharedDeckFor(third).first.question);
+      expect(plan.map((r) => r.body).toSet().length, greaterThan(10));
+    });
+
+    test('the days a lapse reaches say something about the reader', () async {
+      final yesterday = DateTime.now().subtract(const Duration(days: 1));
+      final miss = kPillPool.firstWhere((p) => p.isGraded);
+      final t = build(
+        granted: true,
+        extra: {
+          'knowit.streak': 5,
+          'knowit.lastCompletionDate': dateKey(yesterday),
+          'knowit.freezes': 1,
+          'knowit.judgements': jsonEncode([
+            {'c': 90, 'k': false, 'p': miss.id, 'd': dateKey(yesterday)},
+          ]),
+        },
+      );
+      await t.app.init();
+      final plan = t.app.reminderPlan(
+        now: DateTime.now().subtract(const Duration(days: 1)),
+      );
+      Reminder on(int daysAhead) => plan.firstWhere(
+        (r) => r.id == daysAhead + 1,
+        orElse: () => throw StateError('nothing planned for day $daysAhead'),
+      );
+
+      // Today: a day since the last one, nothing to say but the question.
+      expect(on(0).title, 'Your five are ready');
+      // Tomorrow: two days since — the freeze is what holds, so say so.
+      expect(on(1).title, 'Your freeze is holding');
+      expect(on(1).body, contains(t.app.tomorrowsDeck.first.question));
+      // A week: the card they were sure about and wrong about.
+      expect(on(6).title, 'You were sure about this one');
+      expect(on(6).body, contains(miss.question));
+      expect(on(6).body, contains('90%'));
+      // A fortnight: what it came to.
+      expect(on(13).title, startsWith('Two weeks ago'));
+      // And in between, the question and nothing else — never "we miss you".
+      expect(on(3).title, 'Your five are ready');
+      expect(on(9).title, 'Your five are ready');
+      for (final r in plan) {
+        expect(r.body.toLowerCase(), isNot(contains('miss you')));
+      }
     });
   });
 

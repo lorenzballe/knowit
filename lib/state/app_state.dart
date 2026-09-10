@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart' show ThemeMode;
+import 'package:flutter/material.dart' show ThemeMode, basicLocaleListResolution;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,7 +9,9 @@ import '../data/daily.dart';
 import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
+import '../l10n/app_localizations.dart';
 import '../models/pill.dart';
+import '../models/reminder.dart';
 import '../sync/reader_snapshot.dart';
 import '../utils/reminders.dart';
 import 'progress.dart';
@@ -20,12 +22,7 @@ enum Plan { month, year }
 /// How the reminder is asked about and armed. Function-typed so a test can
 /// stand in for the platform, which has no notification centre.
 typedef PermissionProbe = Future<bool> Function();
-typedef ReminderArmer = Future<void> Function({
-  required int hour,
-  required int minute,
-  required String title,
-  required String body,
-});
+typedef ReminderArmer = Future<void> Function(List<Reminder> plan);
 
 class AppState extends ChangeNotifier {
   AppState({
@@ -35,8 +32,8 @@ class AppState extends ChangeNotifier {
     Future<void> Function()? disarm,
   }) : _hasPermission = hasPermission ?? hasReminderPermission,
        _askPermission = askPermission ?? ensureReminderPermission,
-       _arm = arm ?? scheduleDailyReminder,
-       _disarm = disarm ?? cancelDailyReminder;
+       _arm = arm ?? armReminders,
+       _disarm = disarm ?? disarmReminders;
 
   final PermissionProbe _hasPermission;
   final PermissionProbe _askPermission;
@@ -1047,27 +1044,90 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> _armNow() async {
-    final parts = notifyTime.split(':');
-    final List<Pill> deck = todayCompleted ? tomorrowsDeck : todaysDeck;
-    final Pill? lead = deck.isEmpty ? null : deck.first;
-    await _arm(
-      hour: int.tryParse(parts.first) ?? 8,
-      minute: parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30,
-      title: 'Your five are ready',
-      // The question itself, not a reminder to come and get it. "Three
-      // days in a row, two minutes to keep it" is a message about the
-      // app's counter; a question is a message about the reader's own
-      // head, and only one of the two is worth a notification. The old
-      // line stays for the morning after a wipe, when there is no deck
-      // to quote from yet.
-      body: lead == null
-          ? (streak > 0
-                ? '$streak days in a row. Two minutes to keep it.'
-                : 'Five cards. Two minutes sharper.')
-          : lead.question,
-    );
+    await _arm(reminderPlan());
     remindersLive = true;
   }
+
+  /// How many days ahead the notifications are planned.
+  static const int kPlannedDays = 14;
+
+  /// The fortnight of notifications, each carrying the question of the
+  /// day it lands on.
+  ///
+  /// One a day at the reader's hour, and never "we miss you": a message
+  /// about the app's feelings is not worth the interruption. On the days a
+  /// lapse reaches, it says something about the reader instead — that the
+  /// freeze is holding, the card they were sure and wrong about, what two
+  /// weeks came to — and after a fortnight it stops. Re-planned at every
+  /// launch, so a reader who comes back is never told they were away.
+  List<Reminder> reminderPlan({DateTime? now}) {
+    final l = _strings;
+    final parts = notifyTime.split(':');
+    final int hour = int.tryParse(parts.first) ?? 8;
+    final int minute = parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30;
+    final DateTime clock = now ?? DateTime.now();
+    final DateTime? lastDone = dayClosed
+        ? DateTime(today.year, today.month, today.day)
+        : _dateOf(lastCompletionDate);
+
+    final plan = <Reminder>[];
+    for (var i = 0; i <= kPlannedDays; i++) {
+      final day = DateTime(today.year, today.month, today.day + i);
+      final at = DateTime(day.year, day.month, day.day, hour, minute);
+      if (!at.isAfter(clock)) continue;
+      if (i == 0 && todayCompleted) continue;
+      final Pill? lead = _leadOn(i, day);
+      if (lead == null) continue;
+
+      // How long the reader will have been away when this one lands.
+      final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
+      String title = l.nudgeTitle;
+      String body = lead.question;
+      if (gap == 2 && freezes > 0) {
+        title = l.nudgeFreezeTitle;
+        body = l.nudgeFreezeBody(lead.question);
+      } else if (gap == 7 && misses.isNotEmpty) {
+        final Miss miss = misses.first;
+        title = l.nudgeSureTitle;
+        body = l.nudgeSureBody(miss.pill.question, miss.confidence);
+      } else if (gap == 14) {
+        final double? off = confidenceGap;
+        title = l.nudgeTwoWeeksTitle(seenIds.length);
+        body = off == null
+            ? l.nudgeTwoWeeksBodyNoGap(answers.length, lead.question)
+            : l.nudgeTwoWeeksBody(off.round(), lead.question);
+      }
+      plan.add(Reminder(id: i + 1, when: at, title: title, body: body));
+    }
+    return plan;
+  }
+
+  /// The card that opens a day: today's own deck, tomorrow's as tonight
+  /// sees it, and for the days after, the calendar's.
+  Pill? _leadOn(int daysAhead, DateTime day) {
+    final List<Pill> deck = switch (daysAhead) {
+      0 => todaysDeck,
+      1 => tomorrowsDeck,
+      _ => sharedDeckFor(day),
+    };
+    return deck.firstOrNull;
+  }
+
+  static DateTime? _dateOf(String? key) {
+    if (key == null) return null;
+    final parts = key.split('-').map(int.tryParse).toList();
+    if (parts.length != 3 || parts.contains(null)) return null;
+    return DateTime(parts[0]!, parts[1]!, parts[2]!);
+  }
+
+  /// The strings, in the phone's language, for what is said with no screen
+  /// to say it on.
+  AppLocalizations get _strings => lookupAppLocalizations(
+    basicLocaleListResolution(
+      PlatformDispatcher.instance.locales,
+      AppLocalizations.supportedLocales,
+    ),
+  );
 
   Future<void> setName(String value) async {
     name = value.trim().isEmpty ? 'You' : value.trim();

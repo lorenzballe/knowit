@@ -1292,4 +1292,38 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get tapTheBookmarkLandsHere =>
       'Bir kartın yer imine dokun, buraya gelir — düşünme şeklini değiştirenler, saklanır.';
+
+  @override
+  String get nudgeTitle => 'Beşin hazır';
+
+  @override
+  String get nudgeFreezeTitle => 'Dondurman tutuyor';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return 'Dün kapandı. Bugün: $question';
+  }
+
+  @override
+  String get nudgeSureTitle => 'Bundan emindin';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — %$sure demiştin.';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return 'İki hafta önce $read kart okumuştun';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return 'Güvenin $gap puan sapıyordu. Bugün: $question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return 'Şimdiye kadar $answered cevap. Bugün: $question';
+  }
 }

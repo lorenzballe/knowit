@@ -300,5 +300,13 @@
   "lessLikeThis": "이런 카드는 줄이기",
   "whatYouLikedLandsHere": "다시 읽고 싶은 카드",
   "holdToLikeLandsHere": "마음에 드는 카드를 길게 누르면 여기에 모이고, 앱이 비슷한 카드를 더 보여줘요.",
-  "tapTheBookmarkLandsHere": "카드의 북마크를 누르면 여기에 모여요 — 생각을 바꾼 카드를 간직하세요."
+  "tapTheBookmarkLandsHere": "카드의 북마크를 누르면 여기에 모여요 — 생각을 바꾼 카드를 간직하세요.",
+  "nudgeTitle": "오늘의 다섯 장이 준비됐어요",
+  "nudgeFreezeTitle": "프리즈가 버티고 있어요",
+  "nudgeFreezeBody": "어제는 보호됐어요. 오늘: {question}",
+  "nudgeSureTitle": "이건 확신했었죠",
+  "nudgeSureBody": "{question} — {sure}%라고 했어요.",
+  "nudgeTwoWeeksTitle": "2주 전엔 {read}장을 읽었어요",
+  "nudgeTwoWeeksBody": "확신이 {gap}점 어긋나 있었어요. 오늘: {question}",
+  "nudgeTwoWeeksBodyNoGap": "지금까지 {answered}문제 답함. 오늘: {question}"
 }

@@ -300,5 +300,13 @@
   "lessLikeThis": "こういうのは少なめに",
   "whatYouLikedLandsHere": "もう一度読みたいカード",
   "holdToLikeLandsHere": "気に入ったカードを長押しするとここに集まり、同じようなカードが増えます。",
-  "tapTheBookmarkLandsHere": "カードのブックマークを押すとここに集まります — 考え方を変えたカードを、手元に。"
+  "tapTheBookmarkLandsHere": "カードのブックマークを押すとここに集まります — 考え方を変えたカードを、手元に。",
+  "nudgeTitle": "今日の5枚が届いています",
+  "nudgeFreezeTitle": "フリーズが効いています",
+  "nudgeFreezeBody": "昨日はカバーされました。今日：{question}",
+  "nudgeSureTitle": "これには自信がありましたね",
+  "nudgeSureBody": "{question} — {sure}%と答えました。",
+  "nudgeTwoWeeksTitle": "2週間前、{read}枚読んでいました",
+  "nudgeTwoWeeksBody": "自信は{gap}ポイントずれていました。今日：{question}",
+  "nudgeTwoWeeksBodyNoGap": "これまで{answered}問回答。今日：{question}"
 }

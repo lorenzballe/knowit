@@ -300,5 +300,13 @@
   "lessLikeThis": "Mniej takich",
   "whatYouLikedLandsHere": "Te, które przeczytasz ponownie",
   "holdToLikeLandsHere": "Przytrzymaj kartę, która ci się podoba, a trafi tutaj — a aplikacja da ci więcej takich.",
-  "tapTheBookmarkLandsHere": "Dotknij zakładki na pigułce, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane."
+  "tapTheBookmarkLandsHere": "Dotknij zakładki na pigułce, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane.",
+  "nudgeTitle": "Twoja piątka jest gotowa",
+  "nudgeFreezeTitle": "Twoje zamrożenie trzyma",
+  "nudgeFreezeBody": "Wczoraj jest pokryte. Dziś: {question}",
+  "nudgeSureTitle": "Tej byłeś pewien",
+  "nudgeSureBody": "{question} — powiedziałeś {sure}%.",
+  "nudgeTwoWeeksTitle": "Dwa tygodnie temu miałeś przeczytane {read} kart",
+  "nudgeTwoWeeksBody": "Twoja pewność była o {gap} punktów obok. Dziś: {question}",
+  "nudgeTwoWeeksBodyNoGap": "Dotąd {answered} odpowiedzi. Dziś: {question}"
 }

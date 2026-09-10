@@ -1,3 +1,5 @@
+import '../models/reminder.dart';
+
 /// The daily nudge, in a browser.
 ///
 /// There is nothing honest to implement here. A browser can only raise a
@@ -12,11 +14,6 @@ Future<bool> hasReminderPermission() async => false;
 
 Future<bool> ensureReminderPermission() async => false;
 
-Future<void> scheduleDailyReminder({
-  required int hour,
-  required int minute,
-  required String title,
-  required String body,
-}) async {}
+Future<void> armReminders(List<Reminder> plan) async {}
 
-Future<void> cancelDailyReminder() async {}
+Future<void> disarmReminders() async {}

@@ -300,5 +300,13 @@
   "lessLikeThis": "少一些这样的",
   "whatYouLikedLandsHere": "你会再读一遍的卡片",
   "holdToLikeLandsHere": "长按你喜欢的卡片，它就会出现在这里 — 应用也会给你更多类似的。",
-  "tapTheBookmarkLandsHere": "点一下卡片上的书签，它就会出现在这里 — 那些改变了你想法的卡片，留下来。"
+  "tapTheBookmarkLandsHere": "点一下卡片上的书签，它就会出现在这里 — 那些改变了你想法的卡片，留下来。",
+  "nudgeTitle": "今天的五张已就绪",
+  "nudgeFreezeTitle": "你的冻结还在生效",
+  "nudgeFreezeBody": "昨天已被覆盖。今天：{question}",
+  "nudgeSureTitle": "这一题你当时很确定",
+  "nudgeSureBody": "{question} — 你说了{sure}%。",
+  "nudgeTwoWeeksTitle": "两周前你已读了{read}张卡片",
+  "nudgeTwoWeeksBody": "你的自信偏差了{gap}分。今天：{question}",
+  "nudgeTwoWeeksBodyNoGap": "到目前为止答了{answered}题。今天：{question}"
 }

@@ -1255,4 +1255,38 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tapTheBookmarkLandsHere => '点一下卡片上的书签，它就会出现在这里 — 那些改变了你想法的卡片，留下来。';
+
+  @override
+  String get nudgeTitle => '今天的五张已就绪';
+
+  @override
+  String get nudgeFreezeTitle => '你的冻结还在生效';
+
+  @override
+  String nudgeFreezeBody(String question) {
+    return '昨天已被覆盖。今天：$question';
+  }
+
+  @override
+  String get nudgeSureTitle => '这一题你当时很确定';
+
+  @override
+  String nudgeSureBody(String question, int sure) {
+    return '$question — 你说了$sure%。';
+  }
+
+  @override
+  String nudgeTwoWeeksTitle(int read) {
+    return '两周前你已读了$read张卡片';
+  }
+
+  @override
+  String nudgeTwoWeeksBody(int gap, String question) {
+    return '你的自信偏差了$gap分。今天：$question';
+  }
+
+  @override
+  String nudgeTwoWeeksBodyNoGap(int answered, String question) {
+    return '到目前为止答了$answered题。今天：$question';
+  }
 }

@@ -417,5 +417,18 @@
   "lessLikeThis": "Less like this",
   "whatYouLikedLandsHere": "The ones you'd read again",
   "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
-  "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept."
+  "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.",
+  "nudgeTitle": "Your five are ready",
+  "nudgeFreezeTitle": "Your freeze is holding",
+  "nudgeFreezeBody": "Yesterday is covered. Today: {question}",
+  "@nudgeFreezeBody": {"placeholders": {"question": {"type": "String"}}},
+  "nudgeSureTitle": "You were sure about this one",
+  "nudgeSureBody": "{question} — you said {sure}%.",
+  "@nudgeSureBody": {"placeholders": {"question": {"type": "String"}, "sure": {"type": "int"}}},
+  "nudgeTwoWeeksTitle": "Two weeks ago you had read {read} cards",
+  "@nudgeTwoWeeksTitle": {"placeholders": {"read": {"type": "int"}}},
+  "nudgeTwoWeeksBody": "Your confidence sat {gap} points off. Today: {question}",
+  "@nudgeTwoWeeksBody": {"placeholders": {"gap": {"type": "int"}, "question": {"type": "String"}}},
+  "nudgeTwoWeeksBodyNoGap": "{answered} answered so far. Today: {question}",
+  "@nudgeTwoWeeksBodyNoGap": {"placeholders": {"answered": {"type": "int"}, "question": {"type": "String"}}}
 }
