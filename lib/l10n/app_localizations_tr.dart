@@ -1246,7 +1246,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get cameBack => 'Geri gelenler';
 
   @override
-  String get holdACardYouLike => 'Beğendiysen basılı tut';
+  String get holdACardYouLike => 'Beğendin mi? Basılı tut';
 
   @override
   String likedToday(int n) {

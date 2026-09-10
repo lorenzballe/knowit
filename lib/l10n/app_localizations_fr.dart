@@ -1257,7 +1257,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get cameBack => 'Revenues';
 
   @override
-  String get holdACardYouLike => 'Maintiens si tu aimes';
+  String get holdACardYouLike => 'Tu aimes ? Maintiens';
 
   @override
   String likedToday(int n) {

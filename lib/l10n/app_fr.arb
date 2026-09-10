@@ -289,7 +289,7 @@
   "saidSure": "sûr à {sure} %",
   "cardsCameBack": "{n, plural, =1{1 carte est revenue — réponds encore} other{{n} cartes sont revenues — réponds encore}}",
   "cameBack": "Revenues",
-  "holdACardYouLike": "Maintiens si tu aimes",
+  "holdACardYouLike": "Tu aimes ? Maintiens",
   "likedToday": "{n, plural, =1{1 aimée aujourd'hui} other{{n} aimées aujourd'hui}}",
   "liked": "Aimées",
   "likedN": "Aimées · {n}",

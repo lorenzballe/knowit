@@ -1253,7 +1253,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get cameBack => 'Zurückgekommen';
 
   @override
-  String get holdACardYouLike => 'Halten, wenn sie gefällt';
+  String get holdACardYouLike => 'Gefällt sie? Halten';
 
   @override
   String likedToday(int n) {
