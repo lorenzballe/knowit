@@ -24,6 +24,7 @@ class ReaderSnapshot {
     this.dislikedIds = const [],
     this.friendCodes = const [],
     this.rungDates = const {},
+    this.saidIds = const [],
     this.seenIds = const [],
     this.pillsRead = 0,
     this.answers = const {},
@@ -51,6 +52,9 @@ class ReaderSnapshot {
 
   /// The day each rung of the ladder was first reached, by rung id.
   final Map<String, String> rungDates;
+
+  /// Cards the reader has said out loud to somebody.
+  final List<String> saidIds;
   final List<String> seenIds;
   final int pillsRead;
   final Map<String, Answer> answers;
@@ -83,6 +87,7 @@ class ReaderSnapshot {
     'dislikedIds': dislikedIds,
     'friendCodes': friendCodes,
     'rungDates': rungDates,
+    'saidIds': saidIds,
     'seenIds': seenIds,
     'pillsRead': pillsRead,
     'answers': answers.map((k, v) => MapEntry(k, v.toJson())),
@@ -157,6 +162,7 @@ class ReaderSnapshot {
       dislikedIds: strings(raw['dislikedIds']),
       friendCodes: strings(raw['friendCodes']),
       rungDates: dates,
+      saidIds: strings(raw['saidIds']),
       seenIds: strings(raw['seenIds']),
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
       answers: answers,
@@ -242,6 +248,7 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     dislikedIds: union(local.dislikedIds, remote.dislikedIds),
     friendCodes: union(local.friendCodes, remote.friendCodes),
     rungDates: rungDates,
+    saidIds: union(local.saidIds, remote.saidIds),
     seenIds: union(local.seenIds, remote.seenIds),
     pillsRead: math.max(local.pillsRead, remote.pillsRead),
     answers: answers,

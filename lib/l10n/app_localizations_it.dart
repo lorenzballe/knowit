@@ -103,7 +103,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '${h}h ${m}m';
+    return '$h h $m min';
   }
 
   @override
@@ -1430,4 +1430,89 @@ class AppLocalizationsIt extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '$n su $of lette finora';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n lette';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Livello $n · $name';
+  }
+
+  @override
+  String get topLevel => 'Ultimo livello';
+
+  @override
+  String plusNToday(int n) {
+    return '+$n oggi';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'ancora con te · $n su $total';
+  }
+
+  @override
+  String get stillWithYouNothing => 'ancora con te · nessuna risposta';
+
+  @override
+  String get calibrationPointsOff => 'calibrazione · punti fuori';
+
+  @override
+  String get calibrationNotMeasured => 'calibrazione · non misurata';
+
+  @override
+  String inARowBest(int n) {
+    return 'di fila · record $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'mosse che riconosci',
+      one: 'mossa che riconosci',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n carte sono circa';
+  }
+
+  @override
+  String get nonFictionBooks => 'saggi';
+
+  @override
+  String get hoursOfDocumentaries => 'ore di documentari';
+
+  @override
+  String get lectures => 'lezioni';
+
+  @override
+  String inTotalACard(String time) {
+    return '$time in tutto · circa 40 secondi a carta';
+  }
+
+  @override
+  String get bySubject => 'Per materia';
+
+  @override
+  String get readOfTheShelf => 'lette · dello scaffale';
+
+  @override
+  String get toSayTonight => 'Da dire stasera';
+
+  @override
+  String get anotherOne => 'Un\'altra';
+
+  @override
+  String get saidIt => 'Detta';
+
+  @override
+  String get saidAlready => 'Detta';
 }

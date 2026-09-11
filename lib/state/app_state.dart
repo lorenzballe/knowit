@@ -74,6 +74,7 @@ class AppState extends ChangeNotifier {
   static const _kDeckHistory = 'knowit.deckHistory';
   static const _kDayStartRung = 'knowit.dayStartRung';
   static const _kRungDates = 'knowit.rungDates';
+  static const _kSaidIds = 'knowit.saidIds';
   static const _kExtraOpen = 'knowit.extraSetDate';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
@@ -138,6 +139,10 @@ class AppState extends ChangeNotifier {
   /// The day each rung was first reached, by rung id — the dates on the
   /// journey. Written the moment a rung is cleared and never moved.
   Map<String, String> rungDates = {};
+
+  /// Cards the reader has said out loud to somebody. The one thing the app
+  /// cannot check and the only one that proves the card left the phone.
+  List<String> saidIds = [];
 
   /// Card id -> what the reader last committed to, and when it comes back.
   Map<String, Answer> answers = {};
@@ -262,6 +267,7 @@ class AppState extends ChangeNotifier {
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
+    saidIds = _prefs.getStringList(_kSaidIds) ?? [];
     // Absent on an install that started the day on an older build: the
     // reader is where they are now, and today reports no climb.
     rungAtDayStart = _prefs.getInt(_kDayStartRung) ?? standing.at;
@@ -967,6 +973,23 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool hasSaid(String pillId) => saidIds.contains(pillId);
+
+  /// Marks a card as said out loud. Newest first, and never unsaid: it
+  /// either left the phone or it did not.
+  Future<void> markSaid(String pillId) async {
+    if (saidIds.contains(pillId)) return;
+    saidIds.insert(0, pillId);
+    await _prefs.setStringList(_kSaidIds, saidIds);
+    notifyListeners();
+  }
+
+  /// The moves the reader has down: a principle met in at least two
+  /// contexts and got right more often than not. What "something you can
+  /// explain" means here, counted rather than claimed.
+  int get movesDown =>
+      masteryByWeakness.where((m) => m.isSettled && m.share >= 0.5).length;
+
   bool isDisliked(String pillId) => dislikedIds.contains(pillId);
 
   /// A card thrown down: less of this. It leaves the liked shelf if it
@@ -1368,6 +1391,7 @@ class AppState extends ChangeNotifier {
     dislikedIds = [];
     friendCodes = [];
     rungDates = {};
+    saidIds = [];
     todayIndex = 0;
     pillsRead = 0;
     onboarded = false;
@@ -1435,6 +1459,7 @@ class AppState extends ChangeNotifier {
     dislikedIds: List<String>.from(dislikedIds),
     friendCodes: List<String>.from(friendCodes),
     rungDates: Map<String, String>.from(rungDates),
+    saidIds: List<String>.from(saidIds),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
     answers: Map<String, Answer>.from(answers),
@@ -1461,6 +1486,7 @@ class AppState extends ChangeNotifier {
     dislikedIds = List<String>.from(s.dislikedIds);
     friendCodes = List<String>.from(s.friendCodes);
     rungDates = Map<String, String>.from(s.rungDates);
+    saidIds = List<String>.from(s.saidIds);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
     answers = Map<String, Answer>.from(s.answers);
@@ -1482,6 +1508,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kFriendCodes, friendCodes);
     await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+    await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kTopics, pickedTopics.toList());

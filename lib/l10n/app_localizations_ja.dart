@@ -1391,4 +1391,88 @@ class AppLocalizationsJa extends AppLocalizations {
   String readSoFar(int n, int of) {
     return 'これまで$of枚中$n枚';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n枚';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'レベル$n · $name';
+  }
+
+  @override
+  String get topLevel => '最上位';
+
+  @override
+  String plusNToday(int n) {
+    return '今日 +$n';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'まだ覚えている · $total枚中$n枚';
+  }
+
+  @override
+  String get stillWithYouNothing => 'まだ覚えている · 未回答';
+
+  @override
+  String get calibrationPointsOff => '確信度 · ポイントのずれ';
+
+  @override
+  String get calibrationNotMeasured => '確信度 · 未測定';
+
+  @override
+  String inARowBest(int n) {
+    return '連続 · 最高$n日';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '見抜ける型$n個',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n枚はおよそ';
+  }
+
+  @override
+  String get nonFictionBooks => '冊のノンフィクション';
+
+  @override
+  String get hoursOfDocumentaries => '時間のドキュメンタリー';
+
+  @override
+  String get lectures => '回の講義';
+
+  @override
+  String inTotalACard(String time) {
+    return '合計$time · 1枚およそ40秒';
+  }
+
+  @override
+  String get bySubject => '分野別';
+
+  @override
+  String get readOfTheShelf => '読了 · 棚のうち';
+
+  @override
+  String get toSayTonight => '今夜話すなら';
+
+  @override
+  String get anotherOne => '別のを';
+
+  @override
+  String get saidIt => '話した';
+
+  @override
+  String get saidAlready => '話した';
 }

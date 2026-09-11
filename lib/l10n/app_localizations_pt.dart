@@ -103,7 +103,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '${h}h ${m}m';
+    return '$h h $m min';
   }
 
   @override
@@ -1429,4 +1429,89 @@ class AppLocalizationsPt extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '$n de $of lidas até agora';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n lidas';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Nível $n · $name';
+  }
+
+  @override
+  String get topLevel => 'Nível máximo';
+
+  @override
+  String plusNToday(int n) {
+    return '+$n hoje';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'ainda contigo · $n de $total';
+  }
+
+  @override
+  String get stillWithYouNothing => 'ainda contigo · nada respondido';
+
+  @override
+  String get calibrationPointsOff => 'calibração · pontos ao lado';
+
+  @override
+  String get calibrationNotMeasured => 'calibração · por medir';
+
+  @override
+  String inARowBest(int n) {
+    return 'seguidos · recorde $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'truques que apanhas',
+      one: 'truque que apanhas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n cartas são cerca de';
+  }
+
+  @override
+  String get nonFictionBooks => 'livros de não ficção';
+
+  @override
+  String get hoursOfDocumentaries => 'horas de documentários';
+
+  @override
+  String get lectures => 'aulas';
+
+  @override
+  String inTotalACard(String time) {
+    return '$time no total · cerca de 40 segundos por carta';
+  }
+
+  @override
+  String get bySubject => 'Por matéria';
+
+  @override
+  String get readOfTheShelf => 'lidas · da prateleira';
+
+  @override
+  String get toSayTonight => 'Para contar hoje à noite';
+
+  @override
+  String get anotherOne => 'Outra';
+
+  @override
+  String get saidIt => 'Contada';
+
+  @override
+  String get saidAlready => 'Contada';
 }

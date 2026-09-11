@@ -103,7 +103,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '${h}u ${m}m';
+    return '$h u $m min';
   }
 
   @override
@@ -1429,4 +1429,89 @@ class AppLocalizationsNl extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '$n van $of tot nu toe gelezen';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n gelezen';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Niveau $n · $name';
+  }
+
+  @override
+  String get topLevel => 'Hoogste niveau';
+
+  @override
+  String plusNToday(int n) {
+    return '+$n vandaag';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'nog bij je · $n van $total';
+  }
+
+  @override
+  String get stillWithYouNothing => 'nog bij je · nog niets beantwoord';
+
+  @override
+  String get calibrationPointsOff => 'kalibratie · punten ernaast';
+
+  @override
+  String get calibrationNotMeasured => 'kalibratie · nog niet gemeten';
+
+  @override
+  String inARowBest(int n) {
+    return 'op rij · record $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'trucs die je herkent',
+      one: 'truc die je herkent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n kaarten is ongeveer';
+  }
+
+  @override
+  String get nonFictionBooks => 'non-fictieboeken';
+
+  @override
+  String get hoursOfDocumentaries => 'uur documentaires';
+
+  @override
+  String get lectures => 'colleges';
+
+  @override
+  String inTotalACard(String time) {
+    return '$time in totaal · ongeveer 40 seconden per kaart';
+  }
+
+  @override
+  String get bySubject => 'Per vak';
+
+  @override
+  String get readOfTheShelf => 'gelezen · van de plank';
+
+  @override
+  String get toSayTonight => 'Vanavond vertellen';
+
+  @override
+  String get anotherOne => 'Nog een';
+
+  @override
+  String get saidIt => 'Verteld';
+
+  @override
+  String get saidAlready => 'Verteld';
 }

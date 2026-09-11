@@ -103,7 +103,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '${h}h ${m}m';
+    return '$h h $m min';
   }
 
   @override
@@ -1424,4 +1424,89 @@ class AppLocalizationsEn extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '$n of $of read so far';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n read';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Level $n · $name';
+  }
+
+  @override
+  String get topLevel => 'Top level';
+
+  @override
+  String plusNToday(int n) {
+    return '+$n today';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'still with you · $n of $total';
+  }
+
+  @override
+  String get stillWithYouNothing => 'still with you · nothing answered yet';
+
+  @override
+  String get calibrationPointsOff => 'calibration · points off';
+
+  @override
+  String get calibrationNotMeasured => 'calibration · not measured yet';
+
+  @override
+  String inARowBest(int n) {
+    return 'in a row · best $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'moves you can spot',
+      one: 'move you can spot',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n cards is about';
+  }
+
+  @override
+  String get nonFictionBooks => 'non-fiction books';
+
+  @override
+  String get hoursOfDocumentaries => 'hours of documentaries';
+
+  @override
+  String get lectures => 'lectures';
+
+  @override
+  String inTotalACard(String time) {
+    return '$time in total · about 40 seconds a card';
+  }
+
+  @override
+  String get bySubject => 'By subject';
+
+  @override
+  String get readOfTheShelf => 'read · of the shelf';
+
+  @override
+  String get toSayTonight => 'To say tonight';
+
+  @override
+  String get anotherOne => 'Another one';
+
+  @override
+  String get saidIt => 'Said it';
+
+  @override
+  String get saidAlready => 'Said';
 }

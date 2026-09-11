@@ -1459,4 +1459,91 @@ class AppLocalizationsRu extends AppLocalizations {
   String readSoFar(int n, int of) {
     return 'Пока прочитано $n из $of';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n прочитано';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Уровень $n · $name';
+  }
+
+  @override
+  String get topLevel => 'Высший уровень';
+
+  @override
+  String plusNToday(int n) {
+    return '+$n сегодня';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'ещё с вами · $n из $total';
+  }
+
+  @override
+  String get stillWithYouNothing => 'ещё с вами · пока нет ответов';
+
+  @override
+  String get calibrationPointsOff => 'калибровка · пунктов отклонения';
+
+  @override
+  String get calibrationNotMeasured => 'калибровка · не измерена';
+
+  @override
+  String inARowBest(int n) {
+    return 'подряд · рекорд $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'приёма, которые вы замечаете',
+      many: 'приёмов, которые вы замечаете',
+      few: 'приёма, которые вы замечаете',
+      one: 'приём, который вы замечаете',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n карточек — это примерно';
+  }
+
+  @override
+  String get nonFictionBooks => 'книг нон-фикшн';
+
+  @override
+  String get hoursOfDocumentaries => 'часов документальных фильмов';
+
+  @override
+  String get lectures => 'лекций';
+
+  @override
+  String inTotalACard(String time) {
+    return '$time всего · около 40 секунд на карточку';
+  }
+
+  @override
+  String get bySubject => 'По темам';
+
+  @override
+  String get readOfTheShelf => 'прочитано · с полки';
+
+  @override
+  String get toSayTonight => 'Рассказать сегодня вечером';
+
+  @override
+  String get anotherOne => 'Ещё одну';
+
+  @override
+  String get saidIt => 'Рассказал';
+
+  @override
+  String get saidAlready => 'Рассказано';
 }

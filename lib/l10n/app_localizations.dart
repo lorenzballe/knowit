@@ -237,7 +237,7 @@ abstract class AppLocalizations {
   /// No description provided for @hoursMinutes.
   ///
   /// In en, this message translates to:
-  /// **'{h}h {m}m'**
+  /// **'{h} h {m} min'**
   String hoursMinutes(int h, int m);
 
   /// No description provided for @tomorrowsFiveOpenIn.
@@ -2135,6 +2135,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} of {of} read so far'**
   String readSoFar(int n, int of);
+
+  /// No description provided for @nRead.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} read'**
+  String nRead(int n);
+
+  /// No description provided for @levelNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n} · {name}'**
+  String levelNamed(int n, String name);
+
+  /// No description provided for @topLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Top level'**
+  String get topLevel;
+
+  /// No description provided for @plusNToday.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} today'**
+  String plusNToday(int n);
+
+  /// No description provided for @stillWithYouOf.
+  ///
+  /// In en, this message translates to:
+  /// **'still with you · {n} of {total}'**
+  String stillWithYouOf(int n, int total);
+
+  /// No description provided for @stillWithYouNothing.
+  ///
+  /// In en, this message translates to:
+  /// **'still with you · nothing answered yet'**
+  String get stillWithYouNothing;
+
+  /// No description provided for @calibrationPointsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'calibration · points off'**
+  String get calibrationPointsOff;
+
+  /// No description provided for @calibrationNotMeasured.
+  ///
+  /// In en, this message translates to:
+  /// **'calibration · not measured yet'**
+  String get calibrationNotMeasured;
+
+  /// No description provided for @inARowBest.
+  ///
+  /// In en, this message translates to:
+  /// **'in a row · best {n}'**
+  String inARowBest(int n);
+
+  /// No description provided for @movesYouCanSpot.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{move you can spot} other{moves you can spot}}'**
+  String movesYouCanSpot(int n);
+
+  /// No description provided for @nCardsIsAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} cards is about'**
+  String nCardsIsAbout(int n);
+
+  /// No description provided for @nonFictionBooks.
+  ///
+  /// In en, this message translates to:
+  /// **'non-fiction books'**
+  String get nonFictionBooks;
+
+  /// No description provided for @hoursOfDocumentaries.
+  ///
+  /// In en, this message translates to:
+  /// **'hours of documentaries'**
+  String get hoursOfDocumentaries;
+
+  /// No description provided for @lectures.
+  ///
+  /// In en, this message translates to:
+  /// **'lectures'**
+  String get lectures;
+
+  /// No description provided for @inTotalACard.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} in total · about 40 seconds a card'**
+  String inTotalACard(String time);
+
+  /// No description provided for @bySubject.
+  ///
+  /// In en, this message translates to:
+  /// **'By subject'**
+  String get bySubject;
+
+  /// No description provided for @readOfTheShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'read · of the shelf'**
+  String get readOfTheShelf;
+
+  /// No description provided for @toSayTonight.
+  ///
+  /// In en, this message translates to:
+  /// **'To say tonight'**
+  String get toSayTonight;
+
+  /// No description provided for @anotherOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Another one'**
+  String get anotherOne;
+
+  /// No description provided for @saidIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Said it'**
+  String get saidIt;
+
+  /// No description provided for @saidAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'Said'**
+  String get saidAlready;
 }
 
 class _AppLocalizationsDelegate

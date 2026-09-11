@@ -1,93 +1,273 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
 
-import '../data/pills_repository.dart' show kPillsPerDay;
+import '../data/pills_data.dart';
+import '../data/topics.dart';
 import '../l10n/l10n.dart';
+import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
 import '../widgets/share_day.dart';
+import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
+import 'deck_viewer_screen.dart';
+import 'path_screen.dart';
 import 'progress_text.dart';
-import 'week_screen.dart';
 
-/// The journey: where the reader has been on the ladder, where they stand,
-/// and what comes next — with today at the top, as the day's five squares.
+/// Your journey — artboard 83a: the numbers first, the card to say last.
 ///
-/// A first drawing of it. The stops are the rungs, one under the other on
-/// a trail, each with the day it was reached; the one the reader stands on
-/// carries the bar and the single next step. Not a map of subjects, on
-/// purpose: it is the reader who climbs, not the topic.
-class JourneyScreen extends StatelessWidget {
+/// Everything on it is counted from what the app already writes down. The
+/// order is the argument: what the reading has come to (the level, the
+/// four numbers, what it is about), then where it has gone (by subject),
+/// and at the foot the one thing to do with it tonight — a card to say out
+/// loud to somebody. A page of statistics that ends in an action.
+class JourneyScreen extends StatefulWidget {
   const JourneyScreen({super.key, required this.app, required this.onBack});
 
   final AppState app;
   final VoidCallback onBack;
 
   @override
+  State<JourneyScreen> createState() => _JourneyScreenState();
+}
+
+class _JourneyScreenState extends State<JourneyScreen> {
+  /// How far down the queue of things to say the reader has pressed.
+  int _sayAt = 0;
+
+  AppState get app => widget.app;
+
+  /// What there is to say tonight: cards already read that carry a line to
+  /// bring them up with. Not said yet first, then the ones the reader
+  /// liked or kept, then the rest — and the order never moves under them.
+  List<Pill> get _sayable {
+    final read = kPillPool
+        .where((p) => app.seenIds.contains(p.id) && p.barMove.trim().isNotEmpty)
+        .toList();
+    int rank(Pill p) {
+      if (app.hasSaid(p.id)) return 3;
+      if (app.isLiked(p.id) || app.isSaved(p.id)) return 0;
+      if (app.answerFor(p.id) != null) return 1;
+      return 2;
+    }
+
+    read.sort((a, b) {
+      final byRank = rank(a).compareTo(rank(b));
+      return byRank != 0 ? byRank : a.id.compareTo(b.id);
+    });
+    return read;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
+    final List<Pill> sayable = _sayable;
+
     return Scaffold(
       backgroundColor: context.p.surface,
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(22, 8, 22, 32),
+        bottom: false,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 14),
+              child: Row(
+                children: [
+                  BackCircle(onPressed: widget.onBack),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l.yourJourney,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.display(
+                        size: 27,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        spacing: -0.8,
+                        color: ink,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  // The headline number, in the one place a reader looks
+                  // first. Cards read: the number every other number on
+                  // this page is a way of looking at.
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 11,
+                      vertical: 7,
+                    ),
+                    decoration: BoxDecoration(
+                      color: context.p.inverse,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      l.nRead(app.seenIds.length),
+                      style: AppText.body(
+                        size: 11.5,
+                        weight: FontWeight.w700,
+                        color: context.p.onInverse,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  ListView(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                    children: [
+                      _Level(app: app),
+                      const SizedBox(height: 18),
+                      _Tiles(app: app),
+                      const SizedBox(height: 18),
+                      if (app.seenIds.length >= _IsAbout.kWorthSaying) ...[
+                        _IsAbout(app: app),
+                        const SizedBox(height: 18),
+                      ],
+                      _BySubject(app: app),
+                      if (sayable.isNotEmpty) ...[
+                        const SizedBox(height: 18),
+                        Eyebrow(l.toSayTonight),
+                        const SizedBox(height: 8),
+                        _SayCard(
+                          pill: sayable[_sayAt % sayable.length],
+                          held: app.hasSaid(
+                            sayable[_sayAt % sayable.length].id,
+                          ),
+                          onAnother: () => setState(() => _sayAt++),
+                          onSaid: () async {
+                            HapticFeedback.mediumImpact();
+                            await app.markSaid(
+                              sayable[_sayAt % sayable.length].id,
+                            );
+                            if (mounted) setState(() => _sayAt++);
+                          },
+                        ),
+                      ],
+                      if (app.dayClosed) ...[
+                        const SizedBox(height: 18),
+                        Center(child: ShareDay(app: app)),
+                      ],
+                    ],
+                  ),
+                  // The list runs under the foot of the screen rather than
+                  // stopping at it, so there is always a reason to scroll.
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 36,
+                    child: IgnorePointer(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              context.p.surface.withValues(alpha: 0),
+                              context.p.surface,
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The rung as a level: where the reader stands, what stands between them
+/// and the next one, and a bar. Tapping it opens the whole path.
+class _Level extends StatelessWidget {
+  const _Level({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    final Standing standing = app.standing;
+    final Rung? next = standing.next;
+    final String? step = stepText(context, standing);
+    final int readToday = app.todayIndex;
+
+    return Semantics(
+      button: true,
+      key: const ValueKey('journey-level'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => PathScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
+            ),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
               children: [
-                BackCircle(onPressed: onBack),
-                const SizedBox(width: 12),
+                Text(
+                  l.levelNamed(
+                    standing.at + 1,
+                    rungName(context, standing.rung),
+                  ),
+                  style: AppText.body(
+                    size: 13,
+                    weight: FontWeight.w600,
+                    color: ink,
+                  ),
+                ),
+                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    l.yourJourney,
-                    style: AppText.display(
-                      size: 27,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: ink,
+                    [
+                      if (next != null && step != null)
+                        step
+                      else if (next == null)
+                        l.topLevel,
+                      if (readToday > 0) l.plusNToday(readToday),
+                    ].join(' · '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.right,
+                    style: AppText.body(
+                      size: 11.5,
+                      weight: FontWeight.w500,
+                      color: ink.withValues(alpha: 0.45),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 22),
-            Eyebrow(l.tabToday),
-            const SizedBox(height: 10),
-            _Today(app: app),
-            const SizedBox(height: 26),
-            Eyebrow(l.thePath),
-            const SizedBox(height: 14),
-            _Trail(app: app),
-            const SizedBox(height: 22),
-            // The week is the same question at another distance.
-            Semantics(
-              button: true,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (routeContext) => WeekScreen(
-                      app: app,
-                      onBack: () => Navigator.of(routeContext).pop(),
-                    ),
-                  ),
-                ),
-                child: Row(
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(9),
+              child: SizedBox(
+                height: 6,
+                child: Stack(
                   children: [
-                    Text(
-                      l.yourWeek,
-                      style: AppText.body(
-                        size: 14,
-                        weight: FontWeight.w600,
-                        color: context.p.link,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      '→',
-                      style: AppText.body(size: 14, color: context.p.link),
+                    Container(color: ink.withValues(alpha: 0.1)),
+                    FractionallySizedBox(
+                      widthFactor: standing.toNext.clamp(0.02, 1.0),
+                      child: Container(color: ink),
                     ),
                   ],
                 ),
@@ -100,286 +280,490 @@ class JourneyScreen extends StatelessWidget {
   }
 }
 
-/// Today's five as squares, the line under them, and the way to send it.
-/// Before the day is done, only how far it has got.
-class _Today extends StatelessWidget {
-  const _Today({required this.app});
+/// The four numbers, two by two.
+class _Tiles extends StatelessWidget {
+  const _Tiles({required this.app});
 
   final AppState app;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final Color ink = context.p.ink;
-    if (!app.dayClosed) {
-      return PaperCard(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-        child: Text(
-          l.readSoFar(app.todayIndex, kPillsPerDay),
-          style: AppText.body(
-            size: 14,
-            weight: FontWeight.w600,
-            color: ink.withValues(alpha: 0.7),
+    final int answered = app.answers.length;
+    final int held = app.heldCards;
+    final double? gap = app.confidenceGap;
+    final int moves = app.movesDown;
+
+    return Column(
+      children: [
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _Tile(
+                  value: answered == 0
+                      ? '—'
+                      : '${(held / answered * 100).round()}%',
+                  label: answered == 0
+                      ? l.stillWithYouNothing
+                      : l.stillWithYouOf(held, answered),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: _Tile(
+                  value: gap == null ? '—' : '${gap.round()}',
+                  label: gap == null
+                      ? l.calibrationNotMeasured
+                      : l.calibrationPointsOff,
+                ),
+              ),
+            ],
           ),
         ),
-      );
-    }
-    final d = app.daySummary;
-    final String? question = ShareDay.questionLine(
-      l,
-      d.questionRight,
-      d.questionSure,
+        const SizedBox(height: 6),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _Tile(
+                  value: '${app.liveStreak}',
+                  label: l.inARowBest(app.bestStreak),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: _Tile(value: '$moves', label: l.movesYouCanSpot(moves)),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
-    final verdict = [
-      if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
-      if (d.sure != null) l.saidSure(d.sure!.round()),
-    ].join(' · ');
-    return PaperCard(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({required this.value, required this.label});
+
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+      decoration: BoxDecoration(
+        color: ink.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // The squares and the button share a line where there is room,
-          // and the button drops under them where there is not — a long
-          // word for "share" must not push the squares off the card.
-          Wrap(
-            spacing: 12,
-            runSpacing: 10,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [_Squares(squares: d.squares), ShareDay(app: app)],
+          Text(
+            value,
+            maxLines: 1,
+            style: AppText.body(
+              size: 26,
+              weight: FontWeight.w700,
+              height: 1,
+              spacing: -1,
+              color: ink,
+            ),
           ),
-          if (question != null) ...[
-            const SizedBox(height: 12),
-            Text(
-              '${l.todaysQuestion}: $question',
-              style: AppText.body(
-                size: 13.5,
-                weight: FontWeight.w600,
-                color: ink,
-              ),
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: AppText.body(
+              size: 10.5,
+              weight: FontWeight.w500,
+              height: 1.2,
+              color: ink.withValues(alpha: 0.45),
             ),
-          ],
-          if (verdict.isNotEmpty) ...[
-            const SizedBox(height: 4),
-            Text(
-              verdict,
-              style: AppText.body(size: 13, color: ink.withValues(alpha: 0.6)),
-            ),
-          ],
+          ),
         ],
       ),
     );
   }
 }
 
-/// The squares drawn, rather than the emoji: the emoji are for a chat,
-/// where they are the only thing that survives the trip.
-class _Squares extends StatelessWidget {
-  const _Squares({required this.squares});
-
-  final String squares;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    Color fill(String square) => switch (square) {
-      DaySummary.rightSquare => const Color(0xFF2FBF71),
-      DaySummary.wrongSquare => const Color(0xFFE5484D),
-      DaySummary.sidedSquare => const Color(0xFFF2C14E),
-      DaySummary.passedSquare => ink.withValues(alpha: 0.35),
-      _ => ink.withValues(alpha: 0.12),
-    };
-    final runes = squares.runes.map(String.fromCharCode).toList();
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (var i = 0; i < runes.length; i++)
-          Padding(
-            padding: EdgeInsets.only(left: i == 0 ? 0 : 6),
-            child: Container(
-              width: 26,
-              height: 26,
-              decoration: BoxDecoration(
-                color: fill(runes[i]),
-                borderRadius: BorderRadius.circular(7),
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-/// The rungs, one under the other, on a trail.
-class _Trail extends StatelessWidget {
-  const _Trail({required this.app});
+/// What the pile of cards amounts to in things a person can picture. The
+/// conversions are stated rather than hidden — it is "about", and the
+/// eyebrow says so.
+class _IsAbout extends StatelessWidget {
+  const _IsAbout({required this.app});
 
   final AppState app;
 
-  @override
-  Widget build(BuildContext context) {
-    final standing = app.standing;
-    final int at = standing.at;
-    return Column(
-      children: [
-        for (var i = 0; i < kRungs.length; i++)
-          _Stop(
-            app: app,
-            rung: kRungs[i],
-            index: i,
-            at: at,
-            first: i == 0,
-            last: i == kRungs.length - 1,
-            standing: standing,
-          ),
-      ],
-    );
-  }
-}
+  /// Seconds a card takes to read, for the hours line.
+  static const int kSecondsACard = 40;
 
-class _Stop extends StatelessWidget {
-  const _Stop({
-    required this.app,
-    required this.rung,
-    required this.index,
-    required this.at,
-    required this.first,
-    required this.last,
-    required this.standing,
-  });
-
-  final AppState app;
-  final Rung rung;
-  final int index;
-  final int at;
-  final bool first;
-  final bool last;
-  final Standing standing;
-
-  bool get reached => index <= at;
-  bool get here => index == at;
-
-  String? _reachedOn(BuildContext context) {
-    final String? key = app.rungDates[rung.id];
-    if (key == null) return null;
-    final parts = key.split('-').map(int.tryParse).toList();
-    if (parts.length != 3 || parts.contains(null)) return null;
-    final date = DateTime(parts[0]!, parts[1]!, parts[2]!);
-    final String locale = Localizations.localeOf(context).toString();
-    return context.l10n.reachedOn(DateFormat.MMMd(locale).format(date));
-  }
+  /// Below this the comparison says nothing — "five cards is about zero
+  /// books" is worse than not asking the question yet.
+  static const int kWorthSaying = 25;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
-    final Color faint = ink.withValues(alpha: 0.28);
-    final String? when = reached ? _reachedOn(context) : null;
-    final String? step = here ? stepText(context, standing) : null;
-    final Rung? next = standing.next;
+    final int n = app.seenIds.length;
+    final int minutes = (n * kSecondsACard / 60).round();
+    final parts = <(String, String)>[
+      ('${(n / 50).round()}', l.nonFictionBooks),
+      ('${(n * 3 / 60).round()}', l.hoursOfDocumentaries),
+      ('${(n / 25).round()}', l.lectures),
+    ];
 
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            width: 28,
-            child: CustomPaint(
-              painter: _TrailPainter(
-                ink: ink,
-                reached: reached,
-                here: here,
-                first: first,
-                last: last,
-                nextReached: index + 1 <= at,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Eyebrow(l.nCardsIsAbout(n)),
+        const SizedBox(height: 8),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (var i = 0; i < parts.length; i++) ...[
+                if (i > 0) const SizedBox(width: 6),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 11,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ink.withValues(alpha: 0.06),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          parts[i].$1,
+                          style: AppText.body(
+                            size: 22,
+                            weight: FontWeight.w700,
+                            height: 1,
+                            spacing: -0.8,
+                            color: ink,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          parts[i].$2,
+                          style: AppText.body(
+                            size: 10.5,
+                            weight: FontWeight.w500,
+                            height: 1.25,
+                            color: ink.withValues(alpha: 0.6),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          l.inTotalACard(l.hoursMinutes(minutes ~/ 60, minutes % 60)),
+          style: AppText.body(
+            size: 11,
+            height: 1.35,
+            color: ink.withValues(alpha: 0.35),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Where the reading has actually gone, subject by subject: how much of
+/// each shelf has been read, most-read first.
+class _BySubject extends StatelessWidget {
+  const _BySubject({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+
+    final total = <String, int>{};
+    final read = <String, int>{};
+    for (final pill in kPillPool) {
+      total[pill.topic] = (total[pill.topic] ?? 0) + 1;
+      if (app.seenIds.contains(pill.id)) {
+        read[pill.topic] = (read[pill.topic] ?? 0) + 1;
+      }
+    }
+    final rows = kTopicOrder
+        .map((key) => kTopics[key]!)
+        .where((style) => (total[style.name] ?? 0) > 0)
+        .toList();
+    double share(TopicStyle s) =>
+        (read[s.name] ?? 0) / (total[s.name] ?? 1).clamp(1, 1 << 30);
+    rows.sort((a, b) {
+      final byShare = share(b).compareTo(share(a));
+      if (byShare != 0) return byShare;
+      return (read[b.name] ?? 0).compareTo(read[a.name] ?? 0);
+    });
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Expanded(child: Eyebrow(l.bySubject)),
+            Text(
+              l.readOfTheShelf,
+              style: AppText.body(
+                size: 10.5,
+                weight: FontWeight.w500,
+                color: ink.withValues(alpha: 0.3),
               ),
             ),
+          ],
+        ),
+        const SizedBox(height: 7),
+        for (final style in rows)
+          _SubjectRow(
+            app: app,
+            style: style,
+            read: read[style.name] ?? 0,
+            of: total[style.name] ?? 0,
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: last ? 0 : 22),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
+      ],
+    );
+  }
+}
+
+class _SubjectRow extends StatelessWidget {
+  const _SubjectRow({
+    required this.app,
+    required this.style,
+    required this.read,
+    required this.of,
+  });
+
+  final AppState app;
+  final TopicStyle style;
+  final int read;
+  final int of;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final double share = of == 0 ? 0 : read / of;
+    final bool any = read > 0;
+
+    // A subject that has been read opens what was read of it; one that has
+    // not is a row, not a button.
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: !any
+          ? null
+          : () {
+              final deck = kPillPool
+                  .where(
+                    (p) => p.topic == style.name && app.seenIds.contains(p.id),
+                  )
+                  .toList();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      DeckViewerScreen(app: app, deck: deck, title: style.name),
+                ),
+              );
+            },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        child: Row(
+          children: [
+            SubjectIcon(subject: style.name, size: 13, ink: style.color),
+            const SizedBox(width: 10),
+            SizedBox(
+              width: 84,
+              child: Text(
+                style.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w600,
+                  color: ink.withValues(alpha: any ? 0.82 : 0.3),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(9),
+                child: SizedBox(
+                  height: 7,
+                  child: Stack(
                     children: [
-                      Expanded(
-                        child: Text(
-                          rungName(context, rung),
-                          key: ValueKey('stop-${rung.id}'),
-                          style: AppText.display(
-                            size: here ? 21 : 17,
-                            weight: FontWeight.w600,
-                            spacing: -0.4,
-                            color: reached ? ink : faint,
-                          ),
-                        ),
+                      Container(color: ink.withValues(alpha: 0.06)),
+                      FractionallySizedBox(
+                        widthFactor: share.clamp(0.0, 1.0),
+                        child: Container(color: style.color),
                       ),
-                      if (here)
-                        Text(
-                          l.youAreHere,
-                          style: AppText.label(
-                            size: 10,
-                            weight: FontWeight.w700,
-                            spacing: 1.2,
-                            color: ink.withValues(alpha: 0.5),
-                          ),
-                        )
-                      else if (when != null)
-                        Text(
-                          when,
-                          style: AppText.body(
-                            size: 12,
-                            color: ink.withValues(alpha: 0.45),
-                          ),
-                        ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    rungClaim(context, rung),
-                    style: AppText.body(
-                      size: 13.5,
-                      height: 1.4,
-                      color: reached ? ink.withValues(alpha: 0.65) : faint,
-                    ),
-                  ),
-                  if (here && next != null) ...[
-                    const SizedBox(height: 12),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(3),
-                      child: SizedBox(
-                        height: 6,
-                        child: Stack(
-                          children: [
-                            Container(color: ink.withValues(alpha: 0.09)),
-                            FractionallySizedBox(
-                              widthFactor: standing.toNext.clamp(0.02, 1.0),
-                              child: Container(color: ink),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      step == null
-                          ? l.nextRung(rungName(context, next))
-                          : l.stepThenRung(step, rungName(context, next)),
-                      style: AppText.body(
-                        size: 13,
-                        weight: FontWeight.w500,
-                        height: 1.35,
-                        color: ink.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ],
+                ),
               ),
             ),
+            const SizedBox(width: 10),
+            SizedBox(
+              width: 36,
+              child: Text(
+                any ? '${(share * 100).round()}%' : '—',
+                textAlign: TextAlign.right,
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w700,
+                  color: ink.withValues(alpha: any ? 0.82 : 0.3),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 26,
+              child: Text(
+                any ? '$read' : '',
+                textAlign: TextAlign.right,
+                style: AppText.body(
+                  size: 10.5,
+                  weight: FontWeight.w500,
+                  color: ink.withValues(alpha: 0.4),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The card to say out loud tonight: the question, the answer, and the
+/// line to bring it up with — the one thing on this page that is not a
+/// number, and the only one that leaves the phone.
+class _SayCard extends StatelessWidget {
+  const _SayCard({
+    required this.pill,
+    required this.held,
+    required this.onAnother,
+    required this.onSaid,
+  });
+
+  final Pill pill;
+
+  /// True once this one has been said. The card stays sayable — a good
+  /// line is worth telling twice — but it says so.
+  final bool held;
+  final VoidCallback onAnother;
+  final VoidCallback onSaid;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = pill.ink;
+    final bool darkInk = ink.computeLuminance() < 0.5;
+    final Color sub = ink.withValues(alpha: darkInk ? 0.6 : 0.66);
+    final Color strong = ink.withValues(alpha: darkInk ? 0.8 : 0.86);
+
+    return Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: pill.color,
+        borderRadius: BorderRadius.circular(26),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SubjectIcon(subject: pill.topic, size: 14, ink: sub),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  pill.topic.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.label(
+                    size: 9.5,
+                    weight: FontWeight.w700,
+                    spacing: 1.4,
+                    color: sub,
+                  ),
+                ),
+              ),
+              if (held)
+                Text(
+                  l.saidAlready,
+                  style: AppText.body(
+                    size: 10,
+                    weight: FontWeight.w600,
+                    color: sub,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            pill.question,
+            style: AppText.display(
+              size: 24,
+              weight: FontWeight.w600,
+              height: 1.1,
+              spacing: -0.9,
+              color: ink,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            pill.answer,
+            style: AppText.body(size: 14.5, height: 1.4, color: strong),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            pill.barMove,
+            style: AppText.body(
+              size: 11,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: sub,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Row(
+            children: [
+              Expanded(
+                child: _SayButton(
+                  label: l.anotherOne,
+                  onTap: onAnother,
+                  fill: null,
+                  ink: ink,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _SayButton(
+                  label: l.saidIt,
+                  onTap: onSaid,
+                  fill: ink,
+                  ink: pill.color,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -387,56 +771,46 @@ class _Stop extends StatelessWidget {
   }
 }
 
-/// The dot and the line through it: solid where the reader has been, a
-/// ring where they are, faint where they are going.
-class _TrailPainter extends CustomPainter {
-  const _TrailPainter({
+class _SayButton extends StatelessWidget {
+  const _SayButton({
+    required this.label,
+    required this.onTap,
+    required this.fill,
     required this.ink,
-    required this.reached,
-    required this.here,
-    required this.first,
-    required this.last,
-    required this.nextReached,
   });
 
+  final String label;
+  final VoidCallback onTap;
+
+  /// Null draws the outlined one, in the card's own ink.
+  final Color? fill;
   final Color ink;
-  final bool reached;
-  final bool here;
-  final bool first;
-  final bool last;
-  final bool nextReached;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    const double dotY = 11;
-    final double x = size.width / 2;
-    final line = Paint()
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round;
-    if (!first) {
-      line.color = ink.withValues(alpha: reached ? 0.55 : 0.14);
-      canvas.drawLine(Offset(x, 0), Offset(x, dotY - 9), line);
-    }
-    if (!last) {
-      line.color = ink.withValues(alpha: nextReached ? 0.55 : 0.14);
-      canvas.drawLine(Offset(x, dotY + 9), Offset(x, size.height), line);
-    }
-    final dot = Paint()..style = PaintingStyle.fill;
-    if (here) {
-      dot.color = ink;
-      canvas.drawCircle(Offset(x, dotY), 7, dot);
-      dot.color = ink.withValues(alpha: 0.18);
-      canvas.drawCircle(Offset(x, dotY), 12, dot);
-    } else {
-      dot.color = reached ? ink : ink.withValues(alpha: 0.18);
-      canvas.drawCircle(Offset(x, dotY), 5, dot);
-    }
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          height: 44,
+          decoration: BoxDecoration(
+            color: fill,
+            borderRadius: BorderRadius.circular(14),
+            border: fill == null ? Border.all(color: ink, width: 1.5) : null,
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            label,
+            style: AppText.body(
+              size: 12.5,
+              weight: FontWeight.w700,
+              color: ink,
+            ),
+          ),
+        ),
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(_TrailPainter old) =>
-      old.reached != reached ||
-      old.here != here ||
-      old.nextReached != nextReached ||
-      old.ink != ink;
 }

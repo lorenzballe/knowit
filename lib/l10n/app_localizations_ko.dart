@@ -1395,4 +1395,88 @@ class AppLocalizationsKo extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '지금까지 $of장 중 $n장';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n장';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return '레벨 $n · $name';
+  }
+
+  @override
+  String get topLevel => '최고 레벨';
+
+  @override
+  String plusNToday(int n) {
+    return '오늘 +$n';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return '아직 기억함 · $total장 중 $n장';
+  }
+
+  @override
+  String get stillWithYouNothing => '아직 기억함 · 답한 카드 없음';
+
+  @override
+  String get calibrationPointsOff => '확신 정확도 · 어긋난 점수';
+
+  @override
+  String get calibrationNotMeasured => '확신 정확도 · 미측정';
+
+  @override
+  String inARowBest(int n) {
+    return '연속 · 최고 $n일';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '알아채는 수 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n장은 대략';
+  }
+
+  @override
+  String get nonFictionBooks => '권의 논픽션';
+
+  @override
+  String get hoursOfDocumentaries => '시간의 다큐멘터리';
+
+  @override
+  String get lectures => '번의 강의';
+
+  @override
+  String inTotalACard(String time) {
+    return '총 $time · 카드당 약 40초';
+  }
+
+  @override
+  String get bySubject => '분야별';
+
+  @override
+  String get readOfTheShelf => '읽음 · 서가 중';
+
+  @override
+  String get toSayTonight => '오늘 밤 말해볼 것';
+
+  @override
+  String get anotherOne => '다른 카드';
+
+  @override
+  String get saidIt => '말했어요';
+
+  @override
+  String get saidAlready => '말함';
 }

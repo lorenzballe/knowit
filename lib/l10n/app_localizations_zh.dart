@@ -103,7 +103,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '$h 小时 $m 分';
+    return '$h小时$m分';
   }
 
   @override
@@ -1384,4 +1384,88 @@ class AppLocalizationsZh extends AppLocalizations {
   String readSoFar(int n, int of) {
     return '目前已读$of张中的$n张';
   }
+
+  @override
+  String nRead(int n) {
+    return '已读$n张';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return '等级$n · $name';
+  }
+
+  @override
+  String get topLevel => '最高等级';
+
+  @override
+  String plusNToday(int n) {
+    return '今天 +$n';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return '仍记得 · $total张中$n张';
+  }
+
+  @override
+  String get stillWithYouNothing => '仍记得 · 还没作答';
+
+  @override
+  String get calibrationPointsOff => '自信校准 · 偏差分';
+
+  @override
+  String get calibrationNotMeasured => '自信校准 · 尚未测量';
+
+  @override
+  String inARowBest(int n) {
+    return '连续 · 最高$n天';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '能识破的套路$n个',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n张卡片大约相当于';
+  }
+
+  @override
+  String get nonFictionBooks => '本非虚构书';
+
+  @override
+  String get hoursOfDocumentaries => '小时纪录片';
+
+  @override
+  String get lectures => '节讲座';
+
+  @override
+  String inTotalACard(String time) {
+    return '共$time · 每张约40秒';
+  }
+
+  @override
+  String get bySubject => '按学科';
+
+  @override
+  String get readOfTheShelf => '已读 · 该书架';
+
+  @override
+  String get toSayTonight => '今晚可以说的';
+
+  @override
+  String get anotherOne => '换一张';
+
+  @override
+  String get saidIt => '说过了';
+
+  @override
+  String get saidAlready => '说过';
 }

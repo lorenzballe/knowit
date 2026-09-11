@@ -102,14 +102,36 @@ The second set sits under the button as a quiet line.
 
 ## Your journey
 
-`JourneyScreen`: today at the top — the five as squares, how the question
-of the day went, the day's line, and the button that hands it to a chat
-(see *The question of the day*) — and under it the path: the seven rungs
-one under the other on a trail, each with the day it was first reached,
-the one the reader stands on with the bar and the single next step, the
-ones ahead faint. The rung dates are written the moment a rung is cleared
-(`rungDates`, in the snapshot, earliest date winning in a merge) and never
-moved. A first drawing; the stops will get richer.
+Artboard 83a, and the order is the argument: the numbers first, the card
+to say last.
+
+`JourneyScreen` opens on the headline — cards read, as a pill — then the
+**level**: the rung in words ("Level 3 · Answering"), the one thing
+between the reader and the next one, and a bar. Then **four numbers**,
+two by two: how much of what was answered is still with them, how far off
+their confidence runs, the streak, and how many moves they can spot — a
+principle met in at least two contexts and got right more often than not,
+which is what "something you can explain" means here, counted rather than
+claimed. Then **what it is about**: the pile of cards in non-fiction
+books, hours of documentary and lectures, with the hours it took at forty
+seconds a card. It waits until twenty-five cards, because "five cards is
+about zero books" is worse than not asking yet. Then **by subject**: how
+much of each shelf has been read, most-read first, and tapping one opens
+what was read of it.
+
+And at the foot, the one thing on the page that is not a number: a card
+**to say tonight** — the question, the answer and the line to bring it up
+with — with *Another one* and *Said it*. What has been said is written
+down (`saidIds`, in the snapshot), because saying a card out loud is the
+only proof it left the phone, and the only thing the app cannot check for
+itself.
+
+The **path** — the seven rungs one under the other on a trail, each with
+the day it was first reached, the one the reader stands on with the bar
+and the single next step, the ones ahead faint — is one tap under the
+level, in `PathScreen`. The rung dates are written the moment a rung is
+cleared (`rungDates`, in the snapshot, earliest date winning in a merge)
+and never moved.
 
 The header is the same one line whether the day is running or done — a dot
 in the day's colour, "Day 6 · five read" (or "2 of 5 read"), and at the far

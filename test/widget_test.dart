@@ -1480,44 +1480,78 @@ void main() {
       );
     });
 
-    testWidgets(
-      'the way on is the journey, which says where the ladder stands',
-      (tester) async {
-        SharedPreferences.setMockInitialValues(_installed());
-        await tester.pumpWidget(const AstutoApp());
-        await _settle(tester);
-        await finish(tester);
+    testWidgets('the way on is the journey, and it opens on the numbers', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
 
-        // Explore is a tab already; the day just went somewhere on the
-        // ladder, and that is the one button worth having at the end of it.
-        expect(find.text("Explore today's best"), findsNothing);
-        await tester.tap(find.text('Your journey'));
-        await _settle(tester);
+      // Explore is a tab already; the day just went somewhere, and that is
+      // the one button worth having at the end of it.
+      expect(find.text("Explore today's best"), findsNothing);
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
 
-        // Today at the top, then the trail: the first stop reached today,
-        // the reader on it, fifteen cards to the next.
-        expect(find.byKey(const ValueKey('share-day')), findsOneWidget);
-        expect(find.text('1 of 2 right · said 75% sure'), findsNothing);
-        expect(find.byKey(const ValueKey('stop-day_one')), findsOneWidget);
-        expect(find.text('YOU ARE HERE'), findsOneWidget);
-        expect(find.text('15 more cards to read → Reading'), findsOneWidget);
-        expect(find.byKey(const ValueKey('stop-sharp')), findsOneWidget);
-        expect(find.textContaining('Reached'), findsNothing);
+      // Artboard 83a: the level, then the four numbers, then the subjects,
+      // and the card to say out loud at the foot.
+      expect(find.text('5 read'), findsOneWidget);
+      expect(find.text('Level 1 · Day one'), findsOneWidget);
+      expect(find.textContaining('15 more cards to read'), findsOneWidget);
+      expect(find.textContaining('+5 today'), findsOneWidget);
+      expect(
+        find.text('still with you · nothing answered yet'),
+        findsOneWidget,
+      );
+      expect(find.text('calibration · not measured yet'), findsOneWidget);
+      expect(find.text('in a row · best 1'), findsOneWidget);
+      expect(find.text('BY SUBJECT'), findsOneWidget);
+      // Five cards is about no books at all, so the comparison waits.
+      expect(find.textContaining('is about'), findsNothing);
+      expect(find.text('TO SAY TONIGHT'), findsOneWidget);
 
-        // The week link sits at the foot of the trail, below the fold.
-        await tester.dragUntilVisible(
-          find.text('Your week'),
-          find.byType(ListView).last,
-          const Offset(0, -200),
-        );
-        await _settle(tester);
-        await tester.tap(find.text('Your week'));
-        await _settle(tester);
-        expect(find.text('Your week'), findsWidgets);
-      },
-    );
+      // The path is one tap under the level, not the page itself.
+      await tester.tap(find.byKey(const ValueKey('journey-level')));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('stop-day_one')), findsOneWidget);
+      expect(find.text('YOU ARE HERE'), findsOneWidget);
+      expect(find.byKey(const ValueKey('stop-sharp')), findsOneWidget);
+      expect(find.text('15 more cards to read → Reading'), findsOneWidget);
+    });
 
-    testWidgets('a rung climbed today gets today on the trail', (tester) async {
+    testWidgets('a card can be said out loud, and is written down', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+
+      await tester.dragUntilVisible(
+        find.text('Said it'),
+        find.byType(ListView).last,
+        const Offset(0, -200),
+      );
+      await _settle(tester);
+      expect(find.text('Another one'), findsOneWidget);
+
+      await tester.tap(find.text('Said it'));
+      await _settle(tester);
+
+      final prefs = await SharedPreferences.getInstance();
+      final said = prefs.getStringList('knowit.saidIds')!;
+      expect(said, hasLength(1), reason: 'one card said, not the pile');
+      expect(
+        _todaysFive.map((p) => p.id),
+        contains(said.single),
+        reason: 'what is offered is what has been read',
+      );
+    });
+
+    testWidgets('a rung climbed today gets today on the path', (tester) async {
       // Nineteen read before today: the fifth card of the day is the
       // twentieth, and the twentieth is the first rung.
       final read = kPillPool
@@ -1535,8 +1569,11 @@ void main() {
 
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
+      expect(find.text('Level 2 · Reading'), findsOneWidget);
+      expect(find.text('24 read'), findsOneWidget);
 
-      // Day one reached, dated; Reading is where the reader stands now.
+      await tester.tap(find.byKey(const ValueKey('journey-level')));
+      await _settle(tester);
       expect(find.byKey(const ValueKey('stop-reading')), findsOneWidget);
       expect(find.text('YOU ARE HERE'), findsOneWidget);
       expect(find.textContaining('Reached'), findsOneWidget);
@@ -1573,8 +1610,14 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      // The day is sent from the journey, where it sits as five squares.
+      // The day is sent from the foot of the journey.
       await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+      await tester.dragUntilVisible(
+        find.byKey(const ValueKey('share-day')),
+        find.byType(ListView).last,
+        const Offset(0, -220),
+      );
       await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('share-day')));
       await _settle(tester);

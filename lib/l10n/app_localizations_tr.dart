@@ -103,7 +103,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String hoursMinutes(int h, int m) {
-    return '${h}s ${m}dk';
+    return '$h sa $m dk';
   }
 
   @override
@@ -1423,4 +1423,88 @@ class AppLocalizationsTr extends AppLocalizations {
   String readSoFar(int n, int of) {
     return 'Şimdiye kadar $of karttan $n okundu';
   }
+
+  @override
+  String nRead(int n) {
+    return '$n okundu';
+  }
+
+  @override
+  String levelNamed(int n, String name) {
+    return 'Seviye $n · $name';
+  }
+
+  @override
+  String get topLevel => 'En üst seviye';
+
+  @override
+  String plusNToday(int n) {
+    return 'bugün +$n';
+  }
+
+  @override
+  String stillWithYouOf(int n, int total) {
+    return 'hâlâ aklında · $total karttan $n';
+  }
+
+  @override
+  String get stillWithYouNothing => 'hâlâ aklında · henüz cevap yok';
+
+  @override
+  String get calibrationPointsOff => 'kalibrasyon · puan sapma';
+
+  @override
+  String get calibrationNotMeasured => 'kalibrasyon · ölçülmedi';
+
+  @override
+  String inARowBest(int n) {
+    return 'üst üste · rekor $n';
+  }
+
+  @override
+  String movesYouCanSpot(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'fark ettiğin $n numara',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCardsIsAbout(int n) {
+    return '$n kart yaklaşık';
+  }
+
+  @override
+  String get nonFictionBooks => 'kurgu dışı kitap';
+
+  @override
+  String get hoursOfDocumentaries => 'saat belgesel';
+
+  @override
+  String get lectures => 'ders';
+
+  @override
+  String inTotalACard(String time) {
+    return 'toplam $time · kart başına yaklaşık 40 saniye';
+  }
+
+  @override
+  String get bySubject => 'Konuya göre';
+
+  @override
+  String get readOfTheShelf => 'okundu · raftan';
+
+  @override
+  String get toSayTonight => 'Bu akşam anlat';
+
+  @override
+  String get anotherOne => 'Bir tane daha';
+
+  @override
+  String get saidIt => 'Anlattım';
+
+  @override
+  String get saidAlready => 'Anlatıldı';
 }
