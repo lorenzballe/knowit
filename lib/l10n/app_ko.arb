@@ -347,9 +347,9 @@
   "inARowBest": "연속 · 최고 {n}일",
   "movesYouCanSpot": "{n, plural, other{알아채는 수 {n}개}}",
   "nCardsIsAbout": "{n}장은 대략",
-  "nonFictionBooks": "권의 논픽션",
-  "hoursOfDocumentaries": "시간의 다큐멘터리",
-  "lectures": "번의 강의",
+  "nonFictionBooks": "{n, plural, other{권의 논픽션}}",
+  "hoursOfDocumentaries": "{n, plural, other{시간의 다큐멘터리}}",
+  "lectures": "{n, plural, other{번의 강의}}",
   "hoursMinutes": "{h}시간 {m}분",
   "inTotalACard": "총 {time} · 카드당 약 40초",
   "bySubject": "분야별",
@@ -357,5 +357,6 @@
   "toSayTonight": "오늘 밤 말해볼 것",
   "anotherOne": "다른 카드",
   "saidIt": "말했어요",
-  "saidAlready": "말함"
+  "saidAlready": "말함",
+  "justMinutes": "{m}분"
 }

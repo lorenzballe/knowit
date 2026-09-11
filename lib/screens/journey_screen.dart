@@ -224,37 +224,32 @@ class _Level extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                Text(
-                  l.levelNamed(
-                    standing.at + 1,
-                    rungName(context, standing.rung),
-                  ),
-                  style: AppText.body(
-                    size: 13,
-                    weight: FontWeight.w600,
-                    color: ink,
-                  ),
-                ),
-                const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    [
-                      if (next != null && step != null)
-                        step
-                      else if (next == null)
-                        l.topLevel,
-                      if (readToday > 0) l.plusNToday(readToday),
-                    ].join(' · '),
+                    l.levelNamed(
+                      standing.at + 1,
+                      rungName(context, standing.rung),
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.right,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: ink,
+                    ),
+                  ),
+                ),
+                if (readToday > 0) ...[
+                  const SizedBox(width: 10),
+                  Text(
+                    l.plusNToday(readToday),
                     style: AppText.body(
                       size: 11.5,
                       weight: FontWeight.w500,
                       color: ink.withValues(alpha: 0.45),
                     ),
                   ),
-                ),
+                ],
               ],
             ),
             const SizedBox(height: 8),
@@ -272,6 +267,34 @@ class _Level extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(height: 7),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    next == null
+                        ? l.topLevel
+                        : (step == null
+                              ? l.nextRung(rungName(context, next))
+                              : l.stepThenRung(step, rungName(context, next))),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 11.5,
+                      weight: FontWeight.w500,
+                      height: 1.35,
+                      color: ink.withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 17,
+                  color: ink.withValues(alpha: 0.3),
+                ),
+              ],
             ),
           ],
         ),
@@ -411,10 +434,13 @@ class _IsAbout extends StatelessWidget {
     final Color ink = context.p.ink;
     final int n = app.seenIds.length;
     final int minutes = (n * kSecondsACard / 60).round();
+    final int books = (n / 50).round();
+    final int hours = (n * 3 / 60).round();
+    final int lectures = (n / 25).round();
     final parts = <(String, String)>[
-      ('${(n / 50).round()}', l.nonFictionBooks),
-      ('${(n * 3 / 60).round()}', l.hoursOfDocumentaries),
-      ('${(n / 25).round()}', l.lectures),
+      ('$books', l.nonFictionBooks(books)),
+      ('$hours', l.hoursOfDocumentaries(hours)),
+      ('$lectures', l.lectures(lectures)),
     ];
 
     return Column(
@@ -471,7 +497,11 @@ class _IsAbout extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          l.inTotalACard(l.hoursMinutes(minutes ~/ 60, minutes % 60)),
+          l.inTotalACard(
+            minutes < 60
+                ? l.justMinutes(minutes)
+                : l.hoursMinutes(minutes ~/ 60, minutes % 60),
+          ),
           style: AppText.body(
             size: 11,
             height: 1.35,

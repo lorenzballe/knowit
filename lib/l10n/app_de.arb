@@ -347,9 +347,9 @@
   "inARowBest": "am Stück · Rekord {n}",
   "movesYouCanSpot": "{n, plural, =1{Muster, das du erkennst} other{Muster, die du erkennst}}",
   "nCardsIsAbout": "{n} Karten sind etwa",
-  "nonFictionBooks": "Sachbücher",
-  "hoursOfDocumentaries": "Stunden Dokus",
-  "lectures": "Vorlesungen",
+  "nonFictionBooks": "{n, plural, =1{Sachbuch} other{Sachbücher}}",
+  "hoursOfDocumentaries": "{n, plural, =1{Stunde Doku} other{Stunden Dokus}}",
+  "lectures": "{n, plural, =1{Vorlesung} other{Vorlesungen}}",
   "hoursMinutes": "{h} Std {m} Min",
   "inTotalACard": "{time} insgesamt · etwa 40 Sekunden pro Karte",
   "bySubject": "Nach Fach",
@@ -357,5 +357,6 @@
   "toSayTonight": "Heute Abend erzählen",
   "anotherOne": "Noch eine",
   "saidIt": "Erzählt",
-  "saidAlready": "Erzählt"
+  "saidAlready": "Erzählt",
+  "justMinutes": "{m} Min"
 }

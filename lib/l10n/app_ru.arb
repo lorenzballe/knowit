@@ -347,9 +347,9 @@
   "inARowBest": "подряд · рекорд {n}",
   "movesYouCanSpot": "{n, plural, one{приём, который вы замечаете} few{приёма, которые вы замечаете} many{приёмов, которые вы замечаете} other{приёма, которые вы замечаете}}",
   "nCardsIsAbout": "{n} карточек — это примерно",
-  "nonFictionBooks": "книг нон-фикшн",
-  "hoursOfDocumentaries": "часов документальных фильмов",
-  "lectures": "лекций",
+  "nonFictionBooks": "{n, plural, one{книга нон-фикшн} few{книги нон-фикшн} many{книг нон-фикшн} other{книги нон-фикшн}}",
+  "hoursOfDocumentaries": "{n, plural, one{час документальных фильмов} few{часа документальных фильмов} many{часов документальных фильмов} other{часа документальных фильмов}}",
+  "lectures": "{n, plural, one{лекция} few{лекции} many{лекций} other{лекции}}",
   "hoursMinutes": "{h} ч {m} мин",
   "inTotalACard": "{time} всего · около 40 секунд на карточку",
   "bySubject": "По темам",
@@ -357,5 +357,6 @@
   "toSayTonight": "Рассказать сегодня вечером",
   "anotherOne": "Ещё одну",
   "saidIt": "Рассказал",
-  "saidAlready": "Рассказано"
+  "saidAlready": "Рассказано",
+  "justMinutes": "{m} мин"
 }

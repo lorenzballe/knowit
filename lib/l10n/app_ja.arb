@@ -347,9 +347,9 @@
   "inARowBest": "連続 · 最高{n}日",
   "movesYouCanSpot": "{n, plural, other{見抜ける型{n}個}}",
   "nCardsIsAbout": "{n}枚はおよそ",
-  "nonFictionBooks": "冊のノンフィクション",
-  "hoursOfDocumentaries": "時間のドキュメンタリー",
-  "lectures": "回の講義",
+  "nonFictionBooks": "{n, plural, other{冊のノンフィクション}}",
+  "hoursOfDocumentaries": "{n, plural, other{時間のドキュメンタリー}}",
+  "lectures": "{n, plural, other{回の講義}}",
   "hoursMinutes": "{h}時間{m}分",
   "inTotalACard": "合計{time} · 1枚およそ40秒",
   "bySubject": "分野別",
@@ -357,5 +357,6 @@
   "toSayTonight": "今夜話すなら",
   "anotherOne": "別のを",
   "saidIt": "話した",
-  "saidAlready": "話した"
+  "saidAlready": "話した",
+  "justMinutes": "{m}分"
 }

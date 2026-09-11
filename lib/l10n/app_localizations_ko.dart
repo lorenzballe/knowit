@@ -1449,13 +1449,34 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get nonFictionBooks => '권의 논픽션';
+  String nonFictionBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '권의 논픽션',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get hoursOfDocumentaries => '시간의 다큐멘터리';
+  String hoursOfDocumentaries(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '시간의 다큐멘터리',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get lectures => '번의 강의';
+  String lectures(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '번의 강의',
+    );
+    return '$_temp0';
+  }
 
   @override
   String inTotalACard(String time) {
@@ -1479,4 +1500,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get saidAlready => '말함';
+
+  @override
+  String justMinutes(int m) {
+    return '$m분';
+  }
 }

@@ -1438,13 +1438,30 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get nonFictionBooks => '本非虚构书';
+  String nonFictionBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '本非虚构书',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get hoursOfDocumentaries => '小时纪录片';
+  String hoursOfDocumentaries(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '小时纪录片',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get lectures => '节讲座';
+  String lectures(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '节讲座');
+    return '$_temp0';
+  }
 
   @override
   String inTotalACard(String time) {
@@ -1468,4 +1485,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get saidAlready => '说过';
+
+  @override
+  String justMinutes(int m) {
+    return '$m分钟';
+  }
 }

@@ -347,9 +347,9 @@
   "inARowBest": "op rij · record {n}",
   "movesYouCanSpot": "{n, plural, =1{truc die je herkent} other{trucs die je herkent}}",
   "nCardsIsAbout": "{n} kaarten is ongeveer",
-  "nonFictionBooks": "non-fictieboeken",
-  "hoursOfDocumentaries": "uur documentaires",
-  "lectures": "colleges",
+  "nonFictionBooks": "{n, plural, =1{non-fictieboek} other{non-fictieboeken}}",
+  "hoursOfDocumentaries": "{n, plural, =1{uur documentaire} other{uur documentaires}}",
+  "lectures": "{n, plural, =1{college} other{colleges}}",
   "hoursMinutes": "{h} u {m} min",
   "inTotalACard": "{time} in totaal · ongeveer 40 seconden per kaart",
   "bySubject": "Per vak",
@@ -357,5 +357,6 @@
   "toSayTonight": "Vanavond vertellen",
   "anotherOne": "Nog een",
   "saidIt": "Verteld",
-  "saidAlready": "Verteld"
+  "saidAlready": "Verteld",
+  "justMinutes": "{m} min"
 }

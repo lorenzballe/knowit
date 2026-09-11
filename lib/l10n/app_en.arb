@@ -1,499 +1,1330 @@
 {
-  "@@locale": "en",
-  "appName": "Astut",
-  "plusName": "Astut+",
-  "tabToday": "Today",
-  "tabExplore": "Explore",
-  "tabProfile": "Profile",
-  "signInNotConnected": "{provider} sign-in is not connected yet. Your cards are kept on this device.",
-  "@signInNotConnected": {"placeholders": {"provider": {"type": "String"}}},
-  "couldNotSignInCarryOn": "Could not sign in with {label}. You can carry on without an account.",
-  "@couldNotSignInCarryOn": {"placeholders": {"label": {"type": "String"}}},
-
-  "streakDays": "{n, plural, =1{1 day} other{{n} days}}",
-  "@streakDays": {"placeholders": {"n": {"type": "int"}}},
-  "freezeKeptStreak": "A freeze kept the streak",
-  "countWord": "{n, select, 1{one} 2{two} 3{three} 4{four} 5{five} 6{six} 7{seven} 8{eight} 9{nine} 10{ten} other{{n}}}",
-  "@countWord": {"placeholders": {"n": {"type": "String"}}},
-  "dayRead": "Day {n} · {word} read",
-  "@dayRead": {"placeholders": {"n": {"type": "int"}, "word": {"type": "String"}}},
-  "shelfEyebrow": "TODAY'S {word} · SWIPE TO REVIEW",
-  "@shelfEyebrow": {"placeholders": {"word": {"type": "String"}}},
-  "weekLine": "Your week · {days} of 7 kept",
-  "@weekLine": {"placeholders": {"days": {"type": "int"}}},
-  "tapToFlip": "TAP TO FLIP",
-  "shareThisCard": "Share this card",
-  "removeFromSaved": "Remove from saved",
-  "saveThisPill": "Save this pill",
-  "shareThisPill": "Share this pill",
-  "cardOf": "Card {k} of {n}",
-  "@cardOf": {"placeholders": {"k": {"type": "int"}, "n": {"type": "int"}}},
-  "hoursMinutes": "{h}h {m}m",
-  "@hoursMinutes": {"placeholders": {"h": {"type": "int"}, "m": {"type": "int"}}},
-  "tomorrowsFiveOpenIn": "Tomorrow's five open in {when}",
-  "@tomorrowsFiveOpenIn": {"placeholders": {"when": {"type": "String"}}},
-  "topicOpensTomorrow": "{topic} opens tomorrow's five, in {when}",
-  "@topicOpensTomorrow": {"placeholders": {"topic": {"type": "String"}, "when": {"type": "String"}}},
-  "exploreTodaysBest": "Explore today's best",
-  "fiveMore": "Five more",
-  "unlockFiveExtra": "Unlock five extra pills",
-
-  "nothingInYet": "Nothing in {subject} yet.",
-  "@nothingInYet": {"placeholders": {"subject": {"type": "String"}}},
-  "here": "here",
-  "todaysShelf": "Today's shelf",
-  "sameForEveryone": "The same for everyone, and only today",
-  "onesThatAskTheMost": "The ones that ask the most",
-  "acrossEveryone": "Across everyone, not just your mix",
-  "becauseSitsAtFull": "Because {name} sits at full",
-  "@becauseSitsAtFull": {"placeholders": {"name": {"type": "String"}}},
-  "olderFromTurnedUp": "Older cards from the subjects you turned up",
-  "moreOn": "More on {name}",
-  "@moreOn": {"placeholders": {"name": {"type": "String"}}},
-  "subjectReadMost": "The subject you have read most of",
-  "monthOf": "A month of {name}",
-  "@monthOf": {"placeholders": {"name": {"type": "String"}}},
-  "somewhereToStart": "Somewhere to start that is not today",
-  "searchEveryCard": "Search every card",
-  "nothingForYet": "Nothing for \"{query}\" yet.",
-  "@nothingForYet": {"placeholders": {"query": {"type": "String"}}},
-  "matching": "{n} matching",
-  "@matching": {"placeholders": {"n": {"type": "int"}}},
-  "all": "All",
-
-  "theArchive": "The archive",
-  "results": "{n, plural, =1{1 result} other{{n} results}}",
-  "@results": {"placeholders": {"n": {"type": "int"}}},
-  "cardsTapADay": "{n} cards. Tap a day to open it.",
-  "@cardsTapADay": {"placeholders": {"n": {"type": "int"}}},
-  "whatYouHaveCovered": "What you have covered",
-  "searchNCards": "Search {n} cards",
-  "@searchNCards": {"placeholders": {"n": {"type": "int"}}},
-  "cancel": "Cancel",
-  "nCards": "{n, plural, =1{1 card} other{{n} cards}}",
-  "@nCards": {"placeholders": {"n": {"type": "int"}}},
-  "yesterday": "Yesterday",
-  "noPillsMatchFilter": "No pills match that filter yet.",
-  "nothingForTryTopic": "Nothing for \"{query}\". Try a topic instead.",
-  "@nothingForTryTopic": {"placeholders": {"query": {"type": "String"}}},
-
-  "saved": "Saved",
-  "removedFromSaved": "Removed from saved.",
-  "undo": "Undo",
-  "nothingKeptYet": "Nothing kept yet",
-  "nInTopic": "{n} in {topic}",
-  "@nInTopic": {"placeholders": {"n": {"type": "int"}, "topic": {"type": "String"}}},
-  "keepTheOnesYoullUse": "Keep the ones you'll actually use",
-  "backToTodaysFive": "BACK TO TODAY'S FIVE",
-  "archive": "Archive",
-
-  "yourWeek": "Your week",
-  "nothingThisWeekYet": "Nothing this week yet. Five cards start it.",
-  "keptDaysOfSeven": "Kept — {days} days of seven.",
-  "@keptDaysOfSeven": {"placeholders": {"days": {"type": "int"}}},
-  "daysOfSevenFiveKeeps": "{days, plural, =1{1 day of seven.} other{{days} days of seven.}} Five keeps the week.",
-  "@daysOfSevenFiveKeeps": {"placeholders": {"days": {"type": "int"}}},
-  "howSureAgainstHowRight": "How sure, against how right",
-  "sureAndWrong": "Sure, and wrong",
-  "worthGoingBackTo": "The ones worth going back to. Being wrong about something you were sure of is the only cheap way to find out what you actually believe.",
-  "whereThisIsGoing": "Where this is going",
-  "ofNRight": "of {n} right",
-  "@ofNRight": {"placeholders": {"n": {"type": "int"}}},
-  "sayHowSureOnMore": "Say how sure you are on a few more and the app will tell you what that confidence is worth.",
-  "confidenceOff": "Your confidence was {gap} points off what you actually knew.",
-  "@confidenceOff": {"placeholders": {"gap": {"type": "int"}}},
-  "confidenceClosing": "Your confidence was {gap} points off, against {before} last week. It is closing.",
-  "@confidenceClosing": {"placeholders": {"gap": {"type": "int"}, "before": {"type": "int"}}},
-  "confidenceOpened": "Your confidence was {gap} points off, against {before} last week. It opened up.",
-  "@confidenceOpened": {"placeholders": {"gap": {"type": "int"}, "before": {"type": "int"}}},
-  "nextRung": "Next: {name}",
-  "@nextRung": {"placeholders": {"name": {"type": "String"}}},
-  "youSaidPercentSure": "You said {n}% sure",
-  "@youSaidPercentSure": {"placeholders": {"n": {"type": "int"}}},
-
-  "rungName": "{id, select, day_one{Day one} reading{Reading} answering{Answering} saying_how_sure{Saying how sure} calibrated{Calibrated} holding{Holding} sharp{Sharp} other{{id}}}",
-  "@rungName": {"placeholders": {"id": {"type": "String"}}},
-  "rungClaim": "{id, select, day_one{Everybody starts here.} reading{The habit has started.} answering{You commit before you turn the card over.} saying_how_sure{You put a number on what you think you know.} calibrated{What you say you know, you know.} holding{It stays with you weeks later.} sharp{Sure when you should be, and right when you are.} other{{id}}}",
-  "@rungClaim": {"placeholders": {"id": {"type": "String"}}},
-  "stepRead": "{n} more cards to read",
-  "@stepRead": {"placeholders": {"n": {"type": "int"}}},
-  "stepAnswer": "{n} more cards to answer",
-  "@stepAnswer": {"placeholders": {"n": {"type": "int"}}},
-  "stepJudge": "{n} more answers with how sure you are",
-  "@stepJudge": {"placeholders": {"n": {"type": "int"}}},
-  "stepHold": "{n} more cards to hold",
-  "@stepHold": {"placeholders": {"n": {"type": "int"}}},
-  "stepGap": "your confidence is {gap} points off — {target} does it",
-  "@stepGap": {"placeholders": {"gap": {"type": "int"}, "target": {"type": "int"}}},
-  "stepBeforeJudged": "{n} more answers before the app will judge your confidence",
-  "@stepBeforeJudged": {"placeholders": {"n": {"type": "int"}}},
-  "stepThenRung": "{step} → {name}",
-  "@stepThenRung": {"placeholders": {"step": {"type": "String"}, "name": {"type": "String"}}},
-  "rungOfTotal": "{at} / {of}",
-  "@rungOfTotal": {"placeholders": {"at": {"type": "int"}, "of": {"type": "int"}}},
-
-  "signOutQuestion": "Sign out?",
-  "signOutBody": "Your streak, saved pills and record stay on your account. This clears them from this device.",
-  "signOut": "Sign out",
-  "signedInRecordOnAccount": "Signed in. Your streak and record are on your account now.",
-  "couldNotSignInWith": "Could not sign in with {label}.",
-  "@couldNotSignInWith": {"placeholders": {"label": {"type": "String"}}},
-  "signInNotAvailableBuild": "Signing in is not available on this build.",
-  "startOverQuestion": "Start over?",
-  "startOverBody": "Wipes everything on this device — streak, saved pills, answers, your judgement record, topics and plan — and reopens the intro.",
-  "wipeIt": "Wipe it",
-  "yourRecord": "Your record",
-  "appearance": "Appearance",
-  "themeLight": "Light",
-  "themeDark": "Dark",
-  "themeSystem": "System",
-  "yourTopics": "Your topics",
-  "edit": "Edit",
-  "howWellYouKnowYourself": "How well you know yourself",
-  "isTheGapClosing": "Is the gap closing?",
-  "movesYouKeepMissing": "The moves you keep missing",
-  "dailyNudge": "Daily nudge",
-  "everyDayAt": "Every day at {time}",
-  "@everyDayAt": {"placeholders": {"time": {"type": "String"}}},
-  "yourFivePillsBeforeCoffee": "Your 5 pills, before the first coffee.",
-  "browserOnlySpeaksOpen": "A browser can only speak while it is open, so this one needs the phone build.",
-  "nudgeOff": "Nudge off.",
-  "nudgeOnEveryDayAt": "Nudge on, every day at {time}.",
-  "@nudgeOnEveryDayAt": {"placeholders": {"time": {"type": "String"}}},
-  "nudgeOnSystemSaidNo": "Nudge on, but the system said no. Turn notifications on for Astut in settings.",
-  "nudgeOnNeedsPhone": "Nudge on. Delivery needs the phone build.",
-  "howMuchYouKnow": "How much you know",
-  "savedN": "Saved · {n}",
-  "@savedN": {"placeholders": {"n": {"type": "int"}}},
-  "manageSubscription": "Manage subscription",
-  "howPillsAreWritten": "How pills are written",
-  "signingIn": "Signing in…",
-  "signInWithApple": "Sign in with Apple",
-  "signInWithGoogle": "Sign in with Google",
-  "acrossNAnswersHowSure": "Across {n} answers you said how sure you were. Here is what happened.",
-  "@acrossNAnswersHowSure": {"placeholders": {"n": {"type": "int"}}},
-  "perfectlyCalibratedLine": "A perfectly calibrated person is right 70% of the time when they say 70%.",
-  "notEnoughAnswersYet": "Not enough answers yet",
-  "confidenceMatchesAccuracy": "Your confidence matches your accuracy",
-  "overconfidentBy": "You are overconfident by {points} points",
-  "@overconfidentBy": {"placeholders": {"points": {"type": "int"}}},
-  "underconfidentBy": "You are underconfident by {points} points",
-  "@underconfidentBy": {"placeholders": {"points": {"type": "int"}}},
-  "saidPercent": "Said {n}%",
-  "@saidPercent": {"placeholders": {"n": {"type": "int"}}},
-  "rightPercentOf": "right {pct}% ({right} of {count})",
-  "@rightPercentOf": {"placeholders": {"pct": {"type": "int"}, "right": {"type": "int"}, "count": {"type": "int"}}},
-  "moreOfThisToCome": "{n, plural, =1{1 more context of this to come} other{{n} more contexts of this to come}}",
-  "@moreOfThisToCome": {"placeholders": {"n": {"type": "int"}}},
-  "seeEveryPrincipleWithPlus": "See every principle with Astut plus",
-  "moreBeingTracked": "{n, plural, =1{1 more being tracked} other{{n} more being tracked}}",
-  "@moreBeingTracked": {"placeholders": {"n": {"type": "int"}}},
-  "shareMyRecord": "SHARE MY RECORD",
-  "lastCallsAgainstFirst": "Your last {n} calls, against your first {n}",
-  "@lastCallsAgainstFirst": {"placeholders": {"n": {"type": "int"}}},
-  "closedByPoints": "Closed by {n} points",
-  "@closedByPoints": {"placeholders": {"n": {"type": "int"}}},
-  "openedByPoints": "Opened by {n} points",
-  "@openedByPoints": {"placeholders": {"n": {"type": "int"}}},
-  "holdingSteady": "Holding steady",
-  "measurementRunningPlus": "The measurement is running. Astut+ shows you which way it is going.",
-  "firstN": "First {n}",
-  "@firstN": {"placeholders": {"n": {"type": "int"}}},
-  "lastN": "Last {n}",
-  "@lastN": {"placeholders": {"n": {"type": "int"}}},
-  "trackingMoreClosely": "Your confidence is tracking your accuracy more closely than it did.",
-  "distanceHasGrown": "The distance has grown. Worth slowing down before you commit.",
-  "noRealMovementYet": "No real movement yet. This takes weeks, not days.",
-  "seeWhichWay": "SEE WHICH WAY",
-  "spotOn": "spot on",
-  "pointsOver": "{n} over",
-  "@pointsOver": {"placeholders": {"n": {"type": "int"}}},
-  "pointsUnder": "{n} under",
-  "@pointsUnder": {"placeholders": {"n": {"type": "int"}}},
-  "plusNameCaps": "ASTUT+",
-  "sevenDaysFree": "7 days free",
-  "watchTheGapMove": "Watch the gap move.",
-  "measurementFreeForever": "The measurement is free and always will be. Astut+ is what tells you which way it is going.",
-  "seeThePlans": "SEE THE PLANS",
-  "recordStartsToday": "Your record starts today.",
-  "dayWord": "{n, plural, =1{day} other{days}}",
-  "@dayWord": {"placeholders": {"n": {"type": "int"}}},
-  "pillReadWord": "{n, plural, =1{pill read} other{pills read}}",
-  "@pillReadWord": {"placeholders": {"n": {"type": "int"}}},
-  "nPillsRead": "{n, plural, =1{1 pill read} other{{n} pills read}}",
-  "@nPillsRead": {"placeholders": {"n": {"type": "int"}}},
-  "nWeeksKept": "{n, plural, =1{1 week kept} other{{n} weeks kept}}",
-  "@nWeeksKept": {"placeholders": {"n": {"type": "int"}}},
-  "nComingBack": "{n} coming back",
-  "@nComingBack": {"placeholders": {"n": {"type": "int"}}},
-  "nFreezesInHand": "{n, plural, =1{1 freeze in hand} other{{n} freezes in hand}}",
-  "@nFreezesInHand": {"placeholders": {"n": {"type": "int"}}},
-  "freePlan": "Free plan",
-
-  "streakReset": "Streak reset",
-  "youMissedDays": "{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}",
-  "@youMissedDays": {"placeholders": {"n": {"type": "int"}}},
-  "bestStreakStillRecord": "{n, plural, =1{One day is} other{{n} days are}} still your record. Read today's five and the counter starts again from one.",
-  "@bestStreakStillRecord": {"placeholders": {"n": {"type": "int"}}},
-  "whileYouWereAway": "While you were away",
-  "pillsWentUnread": "{n, plural, =1{1 pill went unread} other{{n} pills went unread}}",
-  "@pillsWentUnread": {"placeholders": {"n": {"type": "int"}}},
-  "stillMostKeptTopic": "{topic} is still your most kept topic",
-  "@stillMostKeptTopic": {"placeholders": {"topic": {"type": "String"}}},
-  "cardsDueBackToday": "{n, plural, =1{1 card you got right is due back today} other{{n} cards you got right are due back today}}",
-  "@cardsDueBackToday": {"placeholders": {"n": {"type": "int"}}},
-  "startAgainWithTodaysFive": "Start again with today's five",
-  "moveMyReminderTo": "Move my reminder to {time}",
-  "@moveMyReminderTo": {"placeholders": {"time": {"type": "String"}}},
-  "dailyNudgeMovedTo": "Daily nudge moved to {time}.",
-  "@dailyNudgeMovedTo": {"placeholders": {"time": {"type": "String"}}},
-
-  "whatYouAlready": "What you already ",
-  "know": "know",
-  "knowIntro": "The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.",
-  "startWithMyFirstCards": "Start with my first cards",
-  "skipForNow": "Skip for now",
-  "levelCurious": "Curious",
-  "levelSome": "Some",
-  "levelSolid": "Solid",
-  "save": "Save",
-
-  "subjectsInTheMix": "{n} of {total} subjects in the mix",
-  "@subjectsInTheMix": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
-  "yourSpace": "Your ",
-  "mix": "mix",
-  "everythingIsInDrag": "Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.",
-  "next": "Next",
-
-  "whatShouldWeTalkAbout": "What should we talk about?",
-  "fivePillsADayPick": "Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.",
-  "nSelected": "{n} selected",
-  "@nSelected": {"placeholders": {"n": {"type": "int"}}},
-  "startWithNTopics": "Start with {n} topics",
-  "@startWithNTopics": {"placeholders": {"n": {"type": "int"}}},
-  "saveNTopics": "Save {n} topics",
-  "@saveNTopics": {"placeholders": {"n": {"type": "int"}}},
-  "pickAtLeastN": "Pick at least {n}",
-  "@pickAtLeastN": {"placeholders": {"n": {"type": "int"}}},
-
-  "swipeToSeeMore": "Swipe to see more",
-  "tagline": "Five smart things a day, ready to use in conversation",
-  "introTopicsTitle": "Twelve topics, five pills",
-  "introTopicsLine": "Written fresh every morning, and checked against a source.",
-  "introQuestionTitle": "A question, then the answer",
-  "introQuestionLine": "Every pill carries the one line that makes it worth saying out loud.",
-  "introMixTitle": "You choose the mix",
-  "introMixLine": "Turn a topic down to see less of it, or off for good.",
-  "introThirtyTitle": "Thirty seconds a day",
-  "introThirtyLine": "One notification, five cards, and a streak you will not want to break.",
-  "continueWithApple": "Continue with Apple",
-  "continueWithGoogle": "Continue with Google",
-  "continueWithEmail": "Continue with Email",
-  "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
-  "skip": "Skip",
-  "tapToRevealLower": "tap to reveal",
-  "barMoveCaps": "BAR MOVE",
-  "theBarMoveCaps": "THE BAR MOVE",
-  "dayStreakCaps": "DAY STREAK",
-  "sourceLabel": "Source · {source}",
-  "@sourceLabel": {"placeholders": {"source": {"type": "String"}}},
-
-  "perkRecordTitle": "Your record over time",
-  "perkRecordLine": "Whether the gap between how sure you were and how right you were is actually closing.",
-  "perkPrinciplesTitle": "Every principle you have met",
-  "perkPrinciplesLine": "Not just the three you are worst at — all of them, and the contexts you have not been shown yet.",
-  "perkFreezesTitle": "Three streak freezes, not one",
-  "perkFreezesLine": "Enough to cover a weekend away. A streak you can only lose is a streak that eventually goes.",
-  "perkExtraTitle": "5 extra pills every day",
-  "perkExtraLine": "A second set unlocks the moment you finish the first.",
-  "perkArchiveTitle": "The full archive",
-  "perkArchiveLine": "Every pill you have ever read, searchable by topic.",
-  "perkTopicsTitle": "Pick your own topics",
-  "perkTopicsLine": "Weight the mix toward what you actually like.",
-  "plusIsActive": "ASTUT+ IS ACTIVE",
-  "tryFreeThen": "Try 7 days free, then {price}{suffix}",
-  "@tryFreeThen": {"placeholders": {"price": {"type": "String"}, "suffix": {"type": "String"}}},
-  "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
-  "thatDidNotGoThrough": "That did not go through.",
-  "plusIsBack": "Astut+ is back.",
-  "nothingToRestore": "Nothing to restore on this account.",
-  "findOutIfBetter": "Find out if you are actually getting better.",
-  "perYear": "per year",
-  "aMonth": "{price} a month",
-  "@aMonth": {"placeholders": {"price": {"type": "String"}}},
-  "savePercent": "SAVE {n}%",
-  "@savePercent": {"placeholders": {"n": {"type": "int"}}},
-  "perMonth": "per month",
-  "billedMonthly": "billed monthly",
-  "cancelTheTrial": "Cancel the trial",
-  "cancelAnyTime": "Cancel any time",
-  "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
-  "restorePurchases": "Restore purchases",
-  "everythingOpensNothingCharged": "Everything opens. Nothing is charged.",
-  "dayN": "DAY {n}",
-  "@dayN": {"placeholders": {"n": {"type": "int"}}},
-  "reminderTwoDaysBefore": "A reminder, two days before it renews.",
-  "itRenewsUnlessCancelled": "It renews, unless you cancelled. You can, any time.",
-  "howTheFreeWeekWorks": "HOW THE FREE WEEK WORKS",
-  "planPrice": "{label}, {price} {per}",
-  "@planPrice": {"placeholders": {"label": {"type": "String"}, "price": {"type": "String"}, "per": {"type": "String"}}},
-
-  "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
-  "estimateCloseEnough": "Estimate. Close enough counts.",
-  "tapToReveal": "Tap to reveal",
-  "closeEnoughItIs": "Close enough · it is {answer}",
-  "@closeEnoughItIs": {"placeholders": {"answer": {"type": "String"}}},
-  "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
-  "@youSaidItIsCounted": {"placeholders": {"given": {"type": "String"}, "answer": {"type": "String"}, "band": {"type": "String"}}},
-  "youGotIt": "You got it",
-  "youSaidItIs": "You said {given} · it is {answer}",
-  "@youSaidItIs": {"placeholders": {"given": {"type": "String"}, "answer": {"type": "String"}}},
-  "almostEveryoneGetsThisWrong": "Almost everyone gets this wrong",
-  "lineYouSaidSure": "{line} · you said {pct}% sure",
-  "@lineYouSaidSure": {"placeholders": {"line": {"type": "String"}, "pct": {"type": "int"}}},
-  "giveMeANudge": "Give me a nudge",
-  "beingRightMattersLess": "Being right matters less than knowing how often you are.",
-  "writeItBeforeTheirs": "Write it before you read theirs.",
-  "youAnsweredThisOne": "You answered this one.",
-  "difficultyLabel": "{id, select, easy{Easy} medium{Medium} hard{Hard} other{{id}}}",
-  "@difficultyLabel": {"placeholders": {"id": {"type": "String"}}},
-  "commitBeforeYouTurn": "{difficulty} · commit before you turn it over.",
-  "@commitBeforeYouTurn": {"placeholders": {"difficulty": {"type": "String"}}},
-  "yourAnswer": "Your answer",
-  "checkMyAnswer": "Check my answer",
-  "howSureAreYou": "How sure are you?",
-  "percentSure": "{n} percent sure",
-  "@percentSure": {"placeholders": {"n": {"type": "int"}}},
-  "inOneLineWhy": "In one line — why?",
-  "because": "Because…",
-  "nowShowMeTheOtherSide": "Now show me the other side",
-  "skipShowMeAnyway": "Skip — show me anyway",
-  "youTookCaps": "YOU TOOK",
-  "putSimplyCaps": "PUT SIMPLY",
-  "explainLikeImThree": "Explain it like I am three",
-  "whatTheOtherSideSaysCaps": "WHAT THE OTHER SIDE SAYS",
-  "whatTheOtherSideSays": "What the other side says",
-  "theTrap": "The trap: {trap}",
-  "@theTrap": {"placeholders": {"trap": {"type": "String"}}},
-  "youTookTheSide": "You took the side: {side}",
-  "@youTookTheSide": {"placeholders": {"side": {"type": "String"}}},
-  "atPercentSure": " at {n}% sure",
-  "@atPercentSure": {"placeholders": {"n": {"type": "int"}}},
-  "youGotThisOne": "You got this one{sure}",
-  "@youGotThisOne": {"placeholders": {"sure": {"type": "String"}}},
-  "youSaidAnswer": "You said {answer}{sure}",
-  "@youSaidAnswer": {"placeholders": {"answer": {"type": "String"}, "sure": {"type": "String"}}},
-  "swipeForTheNextOne": "Swipe for the next one",
-  "thatWasTheOnlyOne": "That was the only one",
-  "indexOfN": "{i}/{n}",
-  "@indexOfN": {"placeholders": {"i": {"type": "int"}, "n": {"type": "int"}}},
-
-  "couldNotRenderCard": "Could not render the card.",
-  "textCopiedInstead": "Text copied instead.",
-  "copiedToClipboard": "Copied to clipboard.",
-  "rendering": "Rendering…",
-  "theSourceGoesWithIt": "The source goes with it",
-  "fiveADayALittleSharper": "Five a day. A little sharper.",
-  "shareMyDay": "Share day",
-  "climbedTo": "Today took you up to {rung}",
-  "@climbedTo": {"placeholders": {"rung": {"type": "String"}}},
-  "rightOfAsked": "{right} of {asked} right",
-  "@rightOfAsked": {"placeholders": {"right": {"type": "int"}, "asked": {"type": "int"}}},
-  "saidSure": "said {sure}% sure",
-  "@saidSure": {"placeholders": {"sure": {"type": "int"}}},
-  "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
-  "@cardsCameBack": {"placeholders": {"n": {"type": "int"}}},
-  "cameBack": "Came back",
-  "holdACardYouLike": "Hold a card you like",
-  "likedToday": "{n, plural, =1{1 liked today} other{{n} liked today}}",
-  "@likedToday": {"placeholders": {"n": {"type": "int"}}},
-  "liked": "Liked",
-  "likedN": "Liked · {n}",
-  "@likedN": {"placeholders": {"n": {"type": "int"}}},
-  "nothingLikedYet": "Nothing liked yet",
-  "likeThisPill": "Like this pill",
-  "removeFromLiked": "Remove from liked",
-  "removedFromLiked": "Removed from liked.",
-  "lessLikeThis": "Less like this",
-  "whatYouLikedLandsHere": "The ones you'd read again",
-  "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
-  "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.",
-  "nudgeTitle": "Your five are ready",
-  "nudgeFreezeTitle": "Your freeze is holding",
-  "nudgeFreezeBody": "Yesterday is covered. Today: {question}",
-  "@nudgeFreezeBody": {"placeholders": {"question": {"type": "String"}}},
-  "nudgeSureTitle": "You were sure about this one",
-  "nudgeSureBody": "{question} — you said {sure}%.",
-  "@nudgeSureBody": {"placeholders": {"question": {"type": "String"}, "sure": {"type": "int"}}},
-  "nudgeTwoWeeksTitle": "Two weeks ago you had read {read} cards",
-  "@nudgeTwoWeeksTitle": {"placeholders": {"read": {"type": "int"}}},
-  "nudgeTwoWeeksBody": "Your confidence sat {gap} points off. Today: {question}",
-  "@nudgeTwoWeeksBody": {"placeholders": {"gap": {"type": "int"}, "question": {"type": "String"}}},
-  "nudgeTwoWeeksBodyNoGap": "{answered} answered so far. Today: {question}",
-  "@nudgeTwoWeeksBodyNoGap": {"placeholders": {"answered": {"type": "int"}, "question": {"type": "String"}}},
-  "friends": "Friends",
-  "friendsN": "Friends · {n}",
-  "@friendsN": {"placeholders": {"n": {"type": "int"}}},
-  "yourFriendCode": "Your friend code",
-  "codeCopied": "Code copied.",
-  "addAFriend": "Add a friend",
-  "theirCode": "Their code",
-  "add": "Add",
-  "noFriendsYet": "Nobody yet. Swap codes with a friend and compare streaks and calibration — never answers.",
-  "friendsNeedAnAccount": "Comparing needs the phone app and an account. Your codes are kept.",
-  "noReaderWithCode": "No reader with that code.",
-  "thatsYourOwnCode": "That's your own code.",
-  "pointsOff": "{n} points off",
-  "@pointsOff": {"placeholders": {"n": {"type": "int"}}},
-  "notMeasuredYet": "not measured yet",
-  "thisWeekByCalibration": "This week, by calibration",
-  "notYetToday": "not yet today",
-  "nOfSeven": "{n} of 7",
-  "@nOfSeven": {"placeholders": {"n": {"type": "int"}}},
-  "you": "You",
-  "todaysQuestion": "Today's question",
-  "right": "right",
-  "wrong": "wrong",
-  "rightAtSure": "right, {sure}% sure",
-  "@rightAtSure": {"placeholders": {"sure": {"type": "int"}}},
-  "wrongAtSure": "wrong, {sure}% sure",
-  "@wrongAtSure": {"placeholders": {"sure": {"type": "int"}}},
-  "yourJourney": "Your journey",
-  "thePath": "The path",
-  "youAreHere": "YOU ARE HERE",
-  "reachedOn": "Reached {date}",
-  "@reachedOn": {"placeholders": {"date": {"type": "String"}}},
-  "readSoFar": "{n} of {of} read so far",
-  "@readSoFar": {"placeholders": {"n": {"type": "int"}, "of": {"type": "int"}}},
-  "nRead": "{n} read",
-  "@nRead": {"placeholders": {"n": {"type": "int"}}},
-  "levelNamed": "Level {n} · {name}",
-  "@levelNamed": {"placeholders": {"n": {"type": "int"}, "name": {"type": "String"}}},
-  "topLevel": "Top level",
-  "plusNToday": "+{n} today",
-  "@plusNToday": {"placeholders": {"n": {"type": "int"}}},
-  "stillWithYouOf": "still with you · {n} of {total}",
-  "@stillWithYouOf": {"placeholders": {"n": {"type": "int"}, "total": {"type": "int"}}},
-  "stillWithYouNothing": "still with you · nothing answered yet",
-  "calibrationPointsOff": "calibration · points off",
-  "calibrationNotMeasured": "calibration · not measured yet",
-  "inARowBest": "in a row · best {n}",
-  "@inARowBest": {"placeholders": {"n": {"type": "int"}}},
-  "movesYouCanSpot": "{n, plural, =1{move you can spot} other{moves you can spot}}",
-  "@movesYouCanSpot": {"placeholders": {"n": {"type": "int"}}},
-  "nCardsIsAbout": "{n} cards is about",
-  "@nCardsIsAbout": {"placeholders": {"n": {"type": "int"}}},
-  "nonFictionBooks": "non-fiction books",
-  "hoursOfDocumentaries": "hours of documentaries",
-  "lectures": "lectures",
-  "hoursMinutes": "{h} h {m} min",
-  "@hoursMinutes": {"placeholders": {"h": {"type": "int"}, "m": {"type": "int"}}},
-  "inTotalACard": "{time} in total · about 40 seconds a card",
-  "@inTotalACard": {"placeholders": {"time": {"type": "String"}}},
-  "bySubject": "By subject",
-  "readOfTheShelf": "read · of the shelf",
-  "toSayTonight": "To say tonight",
-  "anotherOne": "Another one",
-  "saidIt": "Said it",
-  "saidAlready": "Said"
+ "@@locale": "en",
+ "appName": "Astut",
+ "plusName": "Astut+",
+ "tabToday": "Today",
+ "tabExplore": "Explore",
+ "tabProfile": "Profile",
+ "signInNotConnected": "{provider} sign-in is not connected yet. Your cards are kept on this device.",
+ "@signInNotConnected": {
+  "placeholders": {
+   "provider": {
+    "type": "String"
+   }
+  }
+ },
+ "couldNotSignInCarryOn": "Could not sign in with {label}. You can carry on without an account.",
+ "@couldNotSignInCarryOn": {
+  "placeholders": {
+   "label": {
+    "type": "String"
+   }
+  }
+ },
+ "streakDays": "{n, plural, =1{1 day} other{{n} days}}",
+ "@streakDays": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "freezeKeptStreak": "A freeze kept the streak",
+ "countWord": "{n, select, 1{one} 2{two} 3{three} 4{four} 5{five} 6{six} 7{seven} 8{eight} 9{nine} 10{ten} other{{n}}}",
+ "@countWord": {
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "dayRead": "Day {n} · {word} read",
+ "@dayRead": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "word": {
+    "type": "String"
+   }
+  }
+ },
+ "shelfEyebrow": "TODAY'S {word} · SWIPE TO REVIEW",
+ "@shelfEyebrow": {
+  "placeholders": {
+   "word": {
+    "type": "String"
+   }
+  }
+ },
+ "weekLine": "Your week · {days} of 7 kept",
+ "@weekLine": {
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "tapToFlip": "TAP TO FLIP",
+ "shareThisCard": "Share this card",
+ "removeFromSaved": "Remove from saved",
+ "saveThisPill": "Save this pill",
+ "shareThisPill": "Share this pill",
+ "cardOf": "Card {k} of {n}",
+ "@cardOf": {
+  "placeholders": {
+   "k": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "hoursMinutes": "{h} h {m} min",
+ "@hoursMinutes": {
+  "placeholders": {
+   "h": {
+    "type": "int"
+   },
+   "m": {
+    "type": "int"
+   }
+  }
+ },
+ "tomorrowsFiveOpenIn": "Tomorrow's five open in {when}",
+ "@tomorrowsFiveOpenIn": {
+  "placeholders": {
+   "when": {
+    "type": "String"
+   }
+  }
+ },
+ "topicOpensTomorrow": "{topic} opens tomorrow's five, in {when}",
+ "@topicOpensTomorrow": {
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   },
+   "when": {
+    "type": "String"
+   }
+  }
+ },
+ "exploreTodaysBest": "Explore today's best",
+ "fiveMore": "Five more",
+ "unlockFiveExtra": "Unlock five extra pills",
+ "nothingInYet": "Nothing in {subject} yet.",
+ "@nothingInYet": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "here": "here",
+ "todaysShelf": "Today's shelf",
+ "sameForEveryone": "The same for everyone, and only today",
+ "onesThatAskTheMost": "The ones that ask the most",
+ "acrossEveryone": "Across everyone, not just your mix",
+ "becauseSitsAtFull": "Because {name} sits at full",
+ "@becauseSitsAtFull": {
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "olderFromTurnedUp": "Older cards from the subjects you turned up",
+ "moreOn": "More on {name}",
+ "@moreOn": {
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "subjectReadMost": "The subject you have read most of",
+ "monthOf": "A month of {name}",
+ "@monthOf": {
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "somewhereToStart": "Somewhere to start that is not today",
+ "searchEveryCard": "Search every card",
+ "nothingForYet": "Nothing for \"{query}\" yet.",
+ "@nothingForYet": {
+  "placeholders": {
+   "query": {
+    "type": "String"
+   }
+  }
+ },
+ "matching": "{n} matching",
+ "@matching": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "all": "All",
+ "theArchive": "The archive",
+ "results": "{n, plural, =1{1 result} other{{n} results}}",
+ "@results": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "cardsTapADay": "{n} cards. Tap a day to open it.",
+ "@cardsTapADay": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whatYouHaveCovered": "What you have covered",
+ "searchNCards": "Search {n} cards",
+ "@searchNCards": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "cancel": "Cancel",
+ "nCards": "{n, plural, =1{1 card} other{{n} cards}}",
+ "@nCards": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "yesterday": "Yesterday",
+ "noPillsMatchFilter": "No pills match that filter yet.",
+ "nothingForTryTopic": "Nothing for \"{query}\". Try a topic instead.",
+ "@nothingForTryTopic": {
+  "placeholders": {
+   "query": {
+    "type": "String"
+   }
+  }
+ },
+ "saved": "Saved",
+ "removedFromSaved": "Removed from saved.",
+ "undo": "Undo",
+ "nothingKeptYet": "Nothing kept yet",
+ "nInTopic": "{n} in {topic}",
+ "@nInTopic": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "keepTheOnesYoullUse": "Keep the ones you'll actually use",
+ "backToTodaysFive": "BACK TO TODAY'S FIVE",
+ "archive": "Archive",
+ "yourWeek": "Your week",
+ "nothingThisWeekYet": "Nothing this week yet. Five cards start it.",
+ "keptDaysOfSeven": "Kept — {days} days of seven.",
+ "@keptDaysOfSeven": {
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "daysOfSevenFiveKeeps": "{days, plural, =1{1 day of seven.} other{{days} days of seven.}} Five keeps the week.",
+ "@daysOfSevenFiveKeeps": {
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "howSureAgainstHowRight": "How sure, against how right",
+ "sureAndWrong": "Sure, and wrong",
+ "worthGoingBackTo": "The ones worth going back to. Being wrong about something you were sure of is the only cheap way to find out what you actually believe.",
+ "whereThisIsGoing": "Where this is going",
+ "ofNRight": "of {n} right",
+ "@ofNRight": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sayHowSureOnMore": "Say how sure you are on a few more and the app will tell you what that confidence is worth.",
+ "confidenceOff": "Your confidence was {gap} points off what you actually knew.",
+ "@confidenceOff": {
+  "placeholders": {
+   "gap": {
+    "type": "int"
+   }
+  }
+ },
+ "confidenceClosing": "Your confidence was {gap} points off, against {before} last week. It is closing.",
+ "@confidenceClosing": {
+  "placeholders": {
+   "gap": {
+    "type": "int"
+   },
+   "before": {
+    "type": "int"
+   }
+  }
+ },
+ "confidenceOpened": "Your confidence was {gap} points off, against {before} last week. It opened up.",
+ "@confidenceOpened": {
+  "placeholders": {
+   "gap": {
+    "type": "int"
+   },
+   "before": {
+    "type": "int"
+   }
+  }
+ },
+ "nextRung": "Next: {name}",
+ "@nextRung": {
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "youSaidPercentSure": "You said {n}% sure",
+ "@youSaidPercentSure": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "rungName": "{id, select, day_one{Day one} reading{Reading} answering{Answering} saying_how_sure{Saying how sure} calibrated{Calibrated} holding{Holding} sharp{Sharp} other{{id}}}",
+ "@rungName": {
+  "placeholders": {
+   "id": {
+    "type": "String"
+   }
+  }
+ },
+ "rungClaim": "{id, select, day_one{Everybody starts here.} reading{The habit has started.} answering{You commit before you turn the card over.} saying_how_sure{You put a number on what you think you know.} calibrated{What you say you know, you know.} holding{It stays with you weeks later.} sharp{Sure when you should be, and right when you are.} other{{id}}}",
+ "@rungClaim": {
+  "placeholders": {
+   "id": {
+    "type": "String"
+   }
+  }
+ },
+ "stepRead": "{n} more cards to read",
+ "@stepRead": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stepAnswer": "{n} more cards to answer",
+ "@stepAnswer": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stepJudge": "{n} more answers with how sure you are",
+ "@stepJudge": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stepHold": "{n} more cards to hold",
+ "@stepHold": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stepGap": "your confidence is {gap} points off — {target} does it",
+ "@stepGap": {
+  "placeholders": {
+   "gap": {
+    "type": "int"
+   },
+   "target": {
+    "type": "int"
+   }
+  }
+ },
+ "stepBeforeJudged": "{n} more answers before the app will judge your confidence",
+ "@stepBeforeJudged": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stepThenRung": "{step} → {name}",
+ "@stepThenRung": {
+  "placeholders": {
+   "step": {
+    "type": "String"
+   },
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "rungOfTotal": "{at} / {of}",
+ "@rungOfTotal": {
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "signOutQuestion": "Sign out?",
+ "signOutBody": "Your streak, saved pills and record stay on your account. This clears them from this device.",
+ "signOut": "Sign out",
+ "signedInRecordOnAccount": "Signed in. Your streak and record are on your account now.",
+ "couldNotSignInWith": "Could not sign in with {label}.",
+ "@couldNotSignInWith": {
+  "placeholders": {
+   "label": {
+    "type": "String"
+   }
+  }
+ },
+ "signInNotAvailableBuild": "Signing in is not available on this build.",
+ "startOverQuestion": "Start over?",
+ "startOverBody": "Wipes everything on this device — streak, saved pills, answers, your judgement record, topics and plan — and reopens the intro.",
+ "wipeIt": "Wipe it",
+ "yourRecord": "Your record",
+ "appearance": "Appearance",
+ "themeLight": "Light",
+ "themeDark": "Dark",
+ "themeSystem": "System",
+ "yourTopics": "Your topics",
+ "edit": "Edit",
+ "howWellYouKnowYourself": "How well you know yourself",
+ "isTheGapClosing": "Is the gap closing?",
+ "movesYouKeepMissing": "The moves you keep missing",
+ "dailyNudge": "Daily nudge",
+ "everyDayAt": "Every day at {time}",
+ "@everyDayAt": {
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "yourFivePillsBeforeCoffee": "Your 5 pills, before the first coffee.",
+ "browserOnlySpeaksOpen": "A browser can only speak while it is open, so this one needs the phone build.",
+ "nudgeOff": "Nudge off.",
+ "nudgeOnEveryDayAt": "Nudge on, every day at {time}.",
+ "@nudgeOnEveryDayAt": {
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "nudgeOnSystemSaidNo": "Nudge on, but the system said no. Turn notifications on for Astut in settings.",
+ "nudgeOnNeedsPhone": "Nudge on. Delivery needs the phone build.",
+ "howMuchYouKnow": "How much you know",
+ "savedN": "Saved · {n}",
+ "@savedN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "manageSubscription": "Manage subscription",
+ "howPillsAreWritten": "How pills are written",
+ "signingIn": "Signing in…",
+ "signInWithApple": "Sign in with Apple",
+ "signInWithGoogle": "Sign in with Google",
+ "acrossNAnswersHowSure": "Across {n} answers you said how sure you were. Here is what happened.",
+ "@acrossNAnswersHowSure": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "perfectlyCalibratedLine": "A perfectly calibrated person is right 70% of the time when they say 70%.",
+ "notEnoughAnswersYet": "Not enough answers yet",
+ "confidenceMatchesAccuracy": "Your confidence matches your accuracy",
+ "overconfidentBy": "You are overconfident by {points} points",
+ "@overconfidentBy": {
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "underconfidentBy": "You are underconfident by {points} points",
+ "@underconfidentBy": {
+  "placeholders": {
+   "points": {
+    "type": "int"
+   }
+  }
+ },
+ "saidPercent": "Said {n}%",
+ "@saidPercent": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "rightPercentOf": "right {pct}% ({right} of {count})",
+ "@rightPercentOf": {
+  "placeholders": {
+   "pct": {
+    "type": "int"
+   },
+   "right": {
+    "type": "int"
+   },
+   "count": {
+    "type": "int"
+   }
+  }
+ },
+ "moreOfThisToCome": "{n, plural, =1{1 more context of this to come} other{{n} more contexts of this to come}}",
+ "@moreOfThisToCome": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "seeEveryPrincipleWithPlus": "See every principle with Astut plus",
+ "moreBeingTracked": "{n, plural, =1{1 more being tracked} other{{n} more being tracked}}",
+ "@moreBeingTracked": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "shareMyRecord": "SHARE MY RECORD",
+ "lastCallsAgainstFirst": "Your last {n} calls, against your first {n}",
+ "@lastCallsAgainstFirst": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "closedByPoints": "Closed by {n} points",
+ "@closedByPoints": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "openedByPoints": "Opened by {n} points",
+ "@openedByPoints": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "holdingSteady": "Holding steady",
+ "measurementRunningPlus": "The measurement is running. Astut+ shows you which way it is going.",
+ "firstN": "First {n}",
+ "@firstN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "lastN": "Last {n}",
+ "@lastN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "trackingMoreClosely": "Your confidence is tracking your accuracy more closely than it did.",
+ "distanceHasGrown": "The distance has grown. Worth slowing down before you commit.",
+ "noRealMovementYet": "No real movement yet. This takes weeks, not days.",
+ "seeWhichWay": "SEE WHICH WAY",
+ "spotOn": "spot on",
+ "pointsOver": "{n} over",
+ "@pointsOver": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pointsUnder": "{n} under",
+ "@pointsUnder": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "plusNameCaps": "ASTUT+",
+ "sevenDaysFree": "7 days free",
+ "watchTheGapMove": "Watch the gap move.",
+ "measurementFreeForever": "The measurement is free and always will be. Astut+ is what tells you which way it is going.",
+ "seeThePlans": "SEE THE PLANS",
+ "recordStartsToday": "Your record starts today.",
+ "dayWord": "{n, plural, =1{day} other{days}}",
+ "@dayWord": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pillReadWord": "{n, plural, =1{pill read} other{pills read}}",
+ "@pillReadWord": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nPillsRead": "{n, plural, =1{1 pill read} other{{n} pills read}}",
+ "@nPillsRead": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nWeeksKept": "{n, plural, =1{1 week kept} other{{n} weeks kept}}",
+ "@nWeeksKept": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nComingBack": "{n} coming back",
+ "@nComingBack": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nFreezesInHand": "{n, plural, =1{1 freeze in hand} other{{n} freezes in hand}}",
+ "@nFreezesInHand": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "freePlan": "Free plan",
+ "streakReset": "Streak reset",
+ "youMissedDays": "{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}",
+ "@youMissedDays": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "bestStreakStillRecord": "{n, plural, =1{One day is} other{{n} days are}} still your record. Read today's five and the counter starts again from one.",
+ "@bestStreakStillRecord": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "whileYouWereAway": "While you were away",
+ "pillsWentUnread": "{n, plural, =1{1 pill went unread} other{{n} pills went unread}}",
+ "@pillsWentUnread": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stillMostKeptTopic": "{topic} is still your most kept topic",
+ "@stillMostKeptTopic": {
+  "placeholders": {
+   "topic": {
+    "type": "String"
+   }
+  }
+ },
+ "cardsDueBackToday": "{n, plural, =1{1 card you got right is due back today} other{{n} cards you got right are due back today}}",
+ "@cardsDueBackToday": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "startAgainWithTodaysFive": "Start again with today's five",
+ "moveMyReminderTo": "Move my reminder to {time}",
+ "@moveMyReminderTo": {
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "dailyNudgeMovedTo": "Daily nudge moved to {time}.",
+ "@dailyNudgeMovedTo": {
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "whatYouAlready": "What you already ",
+ "know": "know",
+ "knowIntro": "The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.",
+ "startWithMyFirstCards": "Start with my first cards",
+ "skipForNow": "Skip for now",
+ "levelCurious": "Curious",
+ "levelSome": "Some",
+ "levelSolid": "Solid",
+ "save": "Save",
+ "subjectsInTheMix": "{n} of {total} subjects in the mix",
+ "@subjectsInTheMix": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "yourSpace": "Your ",
+ "mix": "mix",
+ "everythingIsInDrag": "Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.",
+ "next": "Next",
+ "whatShouldWeTalkAbout": "What should we talk about?",
+ "fivePillsADayPick": "Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.",
+ "nSelected": "{n} selected",
+ "@nSelected": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "startWithNTopics": "Start with {n} topics",
+ "@startWithNTopics": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "saveNTopics": "Save {n} topics",
+ "@saveNTopics": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "pickAtLeastN": "Pick at least {n}",
+ "@pickAtLeastN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "swipeToSeeMore": "Swipe to see more",
+ "tagline": "Five smart things a day, ready to use in conversation",
+ "introTopicsTitle": "Twelve topics, five pills",
+ "introTopicsLine": "Written fresh every morning, and checked against a source.",
+ "introQuestionTitle": "A question, then the answer",
+ "introQuestionLine": "Every pill carries the one line that makes it worth saying out loud.",
+ "introMixTitle": "You choose the mix",
+ "introMixLine": "Turn a topic down to see less of it, or off for good.",
+ "introThirtyTitle": "Thirty seconds a day",
+ "introThirtyLine": "One notification, five cards, and a streak you will not want to break.",
+ "continueWithApple": "Continue with Apple",
+ "continueWithGoogle": "Continue with Google",
+ "continueWithEmail": "Continue with Email",
+ "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
+ "skip": "Skip",
+ "tapToRevealLower": "tap to reveal",
+ "barMoveCaps": "BAR MOVE",
+ "theBarMoveCaps": "THE BAR MOVE",
+ "dayStreakCaps": "DAY STREAK",
+ "sourceLabel": "Source · {source}",
+ "@sourceLabel": {
+  "placeholders": {
+   "source": {
+    "type": "String"
+   }
+  }
+ },
+ "perkRecordTitle": "Your record over time",
+ "perkRecordLine": "Whether the gap between how sure you were and how right you were is actually closing.",
+ "perkPrinciplesTitle": "Every principle you have met",
+ "perkPrinciplesLine": "Not just the three you are worst at — all of them, and the contexts you have not been shown yet.",
+ "perkFreezesTitle": "Three streak freezes, not one",
+ "perkFreezesLine": "Enough to cover a weekend away. A streak you can only lose is a streak that eventually goes.",
+ "perkExtraTitle": "5 extra pills every day",
+ "perkExtraLine": "A second set unlocks the moment you finish the first.",
+ "perkArchiveTitle": "The full archive",
+ "perkArchiveLine": "Every pill you have ever read, searchable by topic.",
+ "perkTopicsTitle": "Pick your own topics",
+ "perkTopicsLine": "Weight the mix toward what you actually like.",
+ "plusIsActive": "ASTUT+ IS ACTIVE",
+ "tryFreeThen": "Try 7 days free, then {price}{suffix}",
+ "@tryFreeThen": {
+  "placeholders": {
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
+ "thatDidNotGoThrough": "That did not go through.",
+ "plusIsBack": "Astut+ is back.",
+ "nothingToRestore": "Nothing to restore on this account.",
+ "findOutIfBetter": "Find out if you are actually getting better.",
+ "perYear": "per year",
+ "aMonth": "{price} a month",
+ "@aMonth": {
+  "placeholders": {
+   "price": {
+    "type": "String"
+   }
+  }
+ },
+ "savePercent": "SAVE {n}%",
+ "@savePercent": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "perMonth": "per month",
+ "billedMonthly": "billed monthly",
+ "cancelTheTrial": "Cancel the trial",
+ "cancelAnyTime": "Cancel any time",
+ "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
+ "restorePurchases": "Restore purchases",
+ "everythingOpensNothingCharged": "Everything opens. Nothing is charged.",
+ "dayN": "DAY {n}",
+ "@dayN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "reminderTwoDaysBefore": "A reminder, two days before it renews.",
+ "itRenewsUnlessCancelled": "It renews, unless you cancelled. You can, any time.",
+ "howTheFreeWeekWorks": "HOW THE FREE WEEK WORKS",
+ "planPrice": "{label}, {price} {per}",
+ "@planPrice": {
+  "placeholders": {
+   "label": {
+    "type": "String"
+   },
+   "price": {
+    "type": "String"
+   },
+   "per": {
+    "type": "String"
+   }
+  }
+ },
+ "pickASideNoRightAnswer": "Pick a side. There is no right answer.",
+ "estimateCloseEnough": "Estimate. Close enough counts.",
+ "tapToReveal": "Tap to reveal",
+ "closeEnoughItIs": "Close enough · it is {answer}",
+ "@closeEnoughItIs": {
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "youSaidItIsCounted": "You said {given} · it is {answer}, and {band} counted",
+ "@youSaidItIsCounted": {
+  "placeholders": {
+   "given": {
+    "type": "String"
+   },
+   "answer": {
+    "type": "String"
+   },
+   "band": {
+    "type": "String"
+   }
+  }
+ },
+ "youGotIt": "You got it",
+ "youSaidItIs": "You said {given} · it is {answer}",
+ "@youSaidItIs": {
+  "placeholders": {
+   "given": {
+    "type": "String"
+   },
+   "answer": {
+    "type": "String"
+   }
+  }
+ },
+ "almostEveryoneGetsThisWrong": "Almost everyone gets this wrong",
+ "lineYouSaidSure": "{line} · you said {pct}% sure",
+ "@lineYouSaidSure": {
+  "placeholders": {
+   "line": {
+    "type": "String"
+   },
+   "pct": {
+    "type": "int"
+   }
+  }
+ },
+ "giveMeANudge": "Give me a nudge",
+ "beingRightMattersLess": "Being right matters less than knowing how often you are.",
+ "writeItBeforeTheirs": "Write it before you read theirs.",
+ "youAnsweredThisOne": "You answered this one.",
+ "difficultyLabel": "{id, select, easy{Easy} medium{Medium} hard{Hard} other{{id}}}",
+ "@difficultyLabel": {
+  "placeholders": {
+   "id": {
+    "type": "String"
+   }
+  }
+ },
+ "commitBeforeYouTurn": "{difficulty} · commit before you turn it over.",
+ "@commitBeforeYouTurn": {
+  "placeholders": {
+   "difficulty": {
+    "type": "String"
+   }
+  }
+ },
+ "yourAnswer": "Your answer",
+ "checkMyAnswer": "Check my answer",
+ "howSureAreYou": "How sure are you?",
+ "percentSure": "{n} percent sure",
+ "@percentSure": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "inOneLineWhy": "In one line — why?",
+ "because": "Because…",
+ "nowShowMeTheOtherSide": "Now show me the other side",
+ "skipShowMeAnyway": "Skip — show me anyway",
+ "youTookCaps": "YOU TOOK",
+ "putSimplyCaps": "PUT SIMPLY",
+ "explainLikeImThree": "Explain it like I am three",
+ "whatTheOtherSideSaysCaps": "WHAT THE OTHER SIDE SAYS",
+ "whatTheOtherSideSays": "What the other side says",
+ "theTrap": "The trap: {trap}",
+ "@theTrap": {
+  "placeholders": {
+   "trap": {
+    "type": "String"
+   }
+  }
+ },
+ "youTookTheSide": "You took the side: {side}",
+ "@youTookTheSide": {
+  "placeholders": {
+   "side": {
+    "type": "String"
+   }
+  }
+ },
+ "atPercentSure": " at {n}% sure",
+ "@atPercentSure": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "youGotThisOne": "You got this one{sure}",
+ "@youGotThisOne": {
+  "placeholders": {
+   "sure": {
+    "type": "String"
+   }
+  }
+ },
+ "youSaidAnswer": "You said {answer}{sure}",
+ "@youSaidAnswer": {
+  "placeholders": {
+   "answer": {
+    "type": "String"
+   },
+   "sure": {
+    "type": "String"
+   }
+  }
+ },
+ "swipeForTheNextOne": "Swipe for the next one",
+ "thatWasTheOnlyOne": "That was the only one",
+ "indexOfN": "{i}/{n}",
+ "@indexOfN": {
+  "placeholders": {
+   "i": {
+    "type": "int"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "couldNotRenderCard": "Could not render the card.",
+ "textCopiedInstead": "Text copied instead.",
+ "copiedToClipboard": "Copied to clipboard.",
+ "rendering": "Rendering…",
+ "theSourceGoesWithIt": "The source goes with it",
+ "fiveADayALittleSharper": "Five a day. A little sharper.",
+ "shareMyDay": "Share day",
+ "climbedTo": "Today took you up to {rung}",
+ "@climbedTo": {
+  "placeholders": {
+   "rung": {
+    "type": "String"
+   }
+  }
+ },
+ "rightOfAsked": "{right} of {asked} right",
+ "@rightOfAsked": {
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "asked": {
+    "type": "int"
+   }
+  }
+ },
+ "saidSure": "said {sure}% sure",
+ "@saidSure": {
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   }
+  }
+ },
+ "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
+ "@cardsCameBack": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "cameBack": "Came back",
+ "holdACardYouLike": "Hold a card you like",
+ "likedToday": "{n, plural, =1{1 liked today} other{{n} liked today}}",
+ "@likedToday": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "liked": "Liked",
+ "likedN": "Liked · {n}",
+ "@likedN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nothingLikedYet": "Nothing liked yet",
+ "likeThisPill": "Like this pill",
+ "removeFromLiked": "Remove from liked",
+ "removedFromLiked": "Removed from liked.",
+ "lessLikeThis": "Less like this",
+ "whatYouLikedLandsHere": "The ones you'd read again",
+ "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
+ "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.",
+ "nudgeTitle": "Your five are ready",
+ "nudgeFreezeTitle": "Your freeze is holding",
+ "nudgeFreezeBody": "Yesterday is covered. Today: {question}",
+ "@nudgeFreezeBody": {
+  "placeholders": {
+   "question": {
+    "type": "String"
+   }
+  }
+ },
+ "nudgeSureTitle": "You were sure about this one",
+ "nudgeSureBody": "{question} — you said {sure}%.",
+ "@nudgeSureBody": {
+  "placeholders": {
+   "question": {
+    "type": "String"
+   },
+   "sure": {
+    "type": "int"
+   }
+  }
+ },
+ "nudgeTwoWeeksTitle": "Two weeks ago you had read {read} cards",
+ "@nudgeTwoWeeksTitle": {
+  "placeholders": {
+   "read": {
+    "type": "int"
+   }
+  }
+ },
+ "nudgeTwoWeeksBody": "Your confidence sat {gap} points off. Today: {question}",
+ "@nudgeTwoWeeksBody": {
+  "placeholders": {
+   "gap": {
+    "type": "int"
+   },
+   "question": {
+    "type": "String"
+   }
+  }
+ },
+ "nudgeTwoWeeksBodyNoGap": "{answered} answered so far. Today: {question}",
+ "@nudgeTwoWeeksBodyNoGap": {
+  "placeholders": {
+   "answered": {
+    "type": "int"
+   },
+   "question": {
+    "type": "String"
+   }
+  }
+ },
+ "friends": "Friends",
+ "friendsN": "Friends · {n}",
+ "@friendsN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "yourFriendCode": "Your friend code",
+ "codeCopied": "Code copied.",
+ "addAFriend": "Add a friend",
+ "theirCode": "Their code",
+ "add": "Add",
+ "noFriendsYet": "Nobody yet. Swap codes with a friend and compare streaks and calibration — never answers.",
+ "friendsNeedAnAccount": "Comparing needs the phone app and an account. Your codes are kept.",
+ "noReaderWithCode": "No reader with that code.",
+ "thatsYourOwnCode": "That's your own code.",
+ "pointsOff": "{n} points off",
+ "@pointsOff": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "notMeasuredYet": "not measured yet",
+ "thisWeekByCalibration": "This week, by calibration",
+ "notYetToday": "not yet today",
+ "nOfSeven": "{n} of 7",
+ "@nOfSeven": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "you": "You",
+ "todaysQuestion": "Today's question",
+ "right": "right",
+ "wrong": "wrong",
+ "rightAtSure": "right, {sure}% sure",
+ "@rightAtSure": {
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   }
+  }
+ },
+ "wrongAtSure": "wrong, {sure}% sure",
+ "@wrongAtSure": {
+  "placeholders": {
+   "sure": {
+    "type": "int"
+   }
+  }
+ },
+ "yourJourney": "Your journey",
+ "thePath": "The path",
+ "youAreHere": "YOU ARE HERE",
+ "reachedOn": "Reached {date}",
+ "@reachedOn": {
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "readSoFar": "{n} of {of} read so far",
+ "@readSoFar": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "nRead": "{n} read",
+ "@nRead": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "levelNamed": "Level {n} · {name}",
+ "@levelNamed": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "topLevel": "Top level",
+ "plusNToday": "+{n} today",
+ "@plusNToday": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "stillWithYouOf": "still with you · {n} of {total}",
+ "@stillWithYouOf": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "stillWithYouNothing": "still with you · nothing answered yet",
+ "calibrationPointsOff": "calibration · points off",
+ "calibrationNotMeasured": "calibration · not measured yet",
+ "inARowBest": "in a row · best {n}",
+ "@inARowBest": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "movesYouCanSpot": "{n, plural, =1{move you can spot} other{moves you can spot}}",
+ "@movesYouCanSpot": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nCardsIsAbout": "{n} cards is about",
+ "@nCardsIsAbout": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nonFictionBooks": "{n, plural, =1{non-fiction book} other{non-fiction books}}",
+ "hoursOfDocumentaries": "{n, plural, =1{hour of documentary} other{hours of documentaries}}",
+ "lectures": "{n, plural, =1{lecture} other{lectures}}",
+ "inTotalACard": "{time} in total · about 40 seconds a card",
+ "@inTotalACard": {
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "bySubject": "By subject",
+ "readOfTheShelf": "read · of the shelf",
+ "toSayTonight": "To say tonight",
+ "anotherOne": "Another one",
+ "saidIt": "Said it",
+ "saidAlready": "Said",
+ "justMinutes": "{m} min",
+ "@justMinutes": {
+  "placeholders": {
+   "m": {
+    "type": "int"
+   }
+  }
+ },
+ "@nonFictionBooks": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "@hoursOfDocumentaries": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "@lectures": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ }
 }

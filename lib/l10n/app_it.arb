@@ -347,9 +347,9 @@
   "inARowBest": "di fila · record {n}",
   "movesYouCanSpot": "{n, plural, =1{mossa che riconosci} other{mosse che riconosci}}",
   "nCardsIsAbout": "{n} carte sono circa",
-  "nonFictionBooks": "saggi",
-  "hoursOfDocumentaries": "ore di documentari",
-  "lectures": "lezioni",
+  "nonFictionBooks": "{n, plural, =1{saggio} other{saggi}}",
+  "hoursOfDocumentaries": "{n, plural, =1{ora di documentari} other{ore di documentari}}",
+  "lectures": "{n, plural, =1{lezione} other{lezioni}}",
   "hoursMinutes": "{h} h {m} min",
   "inTotalACard": "{time} in tutto · circa 40 secondi a carta",
   "bySubject": "Per materia",
@@ -357,5 +357,6 @@
   "toSayTonight": "Da dire stasera",
   "anotherOne": "Un'altra",
   "saidIt": "Detta",
-  "saidAlready": "Detta"
+  "saidAlready": "Detta",
+  "justMinutes": "{m} min"
 }

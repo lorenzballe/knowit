@@ -1486,13 +1486,37 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get nonFictionBooks => 'libros de no ficción';
+  String nonFictionBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'libros de no ficción',
+      one: 'libro de no ficción',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get hoursOfDocumentaries => 'horas de documentales';
+  String hoursOfDocumentaries(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'horas de documentales',
+      one: 'hora de documentales',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get lectures => 'clases';
+  String lectures(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'clases',
+      one: 'clase',
+    );
+    return '$_temp0';
+  }
 
   @override
   String inTotalACard(String time) {
@@ -1516,4 +1540,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get saidAlready => 'Contada';
+
+  @override
+  String justMinutes(int m) {
+    return '$m min';
+  }
 }

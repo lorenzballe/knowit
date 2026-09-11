@@ -347,9 +347,9 @@
   "inARowBest": "z rzędu · rekord {n}",
   "movesYouCanSpot": "{n, plural, =1{chwyt, który wyłapujesz} few{chwyty, które wyłapujesz} many{chwytów, które wyłapujesz} other{chwyty, które wyłapujesz}}",
   "nCardsIsAbout": "{n} kart to około",
-  "nonFictionBooks": "książek non-fiction",
-  "hoursOfDocumentaries": "godzin dokumentów",
-  "lectures": "wykładów",
+  "nonFictionBooks": "{n, plural, =1{książka non-fiction} few{książki non-fiction} many{książek non-fiction} other{książki non-fiction}}",
+  "hoursOfDocumentaries": "{n, plural, =1{godzina dokumentów} few{godziny dokumentów} many{godzin dokumentów} other{godziny dokumentów}}",
+  "lectures": "{n, plural, =1{wykład} few{wykłady} many{wykładów} other{wykłady}}",
   "hoursMinutes": "{h} godz {m} min",
   "inTotalACard": "{time} łącznie · około 40 sekund na kartę",
   "bySubject": "Według dziedziny",
@@ -357,5 +357,6 @@
   "toSayTonight": "Do opowiedzenia dziś wieczorem",
   "anotherOne": "Jeszcze jedna",
   "saidIt": "Opowiedziane",
-  "saidAlready": "Opowiedziane"
+  "saidAlready": "Opowiedziane",
+  "justMinutes": "{m} min"
 }

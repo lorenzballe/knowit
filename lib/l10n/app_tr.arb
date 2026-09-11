@@ -347,9 +347,9 @@
   "inARowBest": "üst üste · rekor {n}",
   "movesYouCanSpot": "{n, plural, other{fark ettiğin {n} numara}}",
   "nCardsIsAbout": "{n} kart yaklaşık",
-  "nonFictionBooks": "kurgu dışı kitap",
-  "hoursOfDocumentaries": "saat belgesel",
-  "lectures": "ders",
+  "nonFictionBooks": "{n, plural, other{kurgu dışı kitap}}",
+  "hoursOfDocumentaries": "{n, plural, other{saat belgesel}}",
+  "lectures": "{n, plural, other{ders}}",
   "hoursMinutes": "{h} sa {m} dk",
   "inTotalACard": "toplam {time} · kart başına yaklaşık 40 saniye",
   "bySubject": "Konuya göre",
@@ -357,5 +357,6 @@
   "toSayTonight": "Bu akşam anlat",
   "anotherOne": "Bir tane daha",
   "saidIt": "Anlattım",
-  "saidAlready": "Anlatıldı"
+  "saidAlready": "Anlatıldı",
+  "justMinutes": "{m} dk"
 }

@@ -2205,20 +2205,20 @@ abstract class AppLocalizations {
   /// No description provided for @nonFictionBooks.
   ///
   /// In en, this message translates to:
-  /// **'non-fiction books'**
-  String get nonFictionBooks;
+  /// **'{n, plural, =1{non-fiction book} other{non-fiction books}}'**
+  String nonFictionBooks(int n);
 
   /// No description provided for @hoursOfDocumentaries.
   ///
   /// In en, this message translates to:
-  /// **'hours of documentaries'**
-  String get hoursOfDocumentaries;
+  /// **'{n, plural, =1{hour of documentary} other{hours of documentaries}}'**
+  String hoursOfDocumentaries(int n);
 
   /// No description provided for @lectures.
   ///
   /// In en, this message translates to:
-  /// **'lectures'**
-  String get lectures;
+  /// **'{n, plural, =1{lecture} other{lectures}}'**
+  String lectures(int n);
 
   /// No description provided for @inTotalACard.
   ///
@@ -2261,6 +2261,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Said'**
   String get saidAlready;
+
+  /// No description provided for @justMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{m} min'**
+  String justMinutes(int m);
 }
 
 class _AppLocalizationsDelegate

@@ -1516,13 +1516,43 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get nonFictionBooks => 'книг нон-фикшн';
+  String nonFictionBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'книги нон-фикшн',
+      many: 'книг нон-фикшн',
+      few: 'книги нон-фикшн',
+      one: 'книга нон-фикшн',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get hoursOfDocumentaries => 'часов документальных фильмов';
+  String hoursOfDocumentaries(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'часа документальных фильмов',
+      many: 'часов документальных фильмов',
+      few: 'часа документальных фильмов',
+      one: 'час документальных фильмов',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get lectures => 'лекций';
+  String lectures(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'лекции',
+      many: 'лекций',
+      few: 'лекции',
+      one: 'лекция',
+    );
+    return '$_temp0';
+  }
 
   @override
   String inTotalACard(String time) {
@@ -1546,4 +1576,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get saidAlready => 'Рассказано';
+
+  @override
+  String justMinutes(int m) {
+    return '$m мин';
+  }
 }

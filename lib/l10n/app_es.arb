@@ -347,9 +347,9 @@
   "inARowBest": "seguidos · récord {n}",
   "movesYouCanSpot": "{n, plural, =1{truco que detectas} other{trucos que detectas}}",
   "nCardsIsAbout": "{n} tarjetas son como",
-  "nonFictionBooks": "libros de no ficción",
-  "hoursOfDocumentaries": "horas de documentales",
-  "lectures": "clases",
+  "nonFictionBooks": "{n, plural, =1{libro de no ficción} other{libros de no ficción}}",
+  "hoursOfDocumentaries": "{n, plural, =1{hora de documentales} other{horas de documentales}}",
+  "lectures": "{n, plural, =1{clase} other{clases}}",
   "hoursMinutes": "{h} h {m} min",
   "inTotalACard": "{time} en total · unos 40 segundos por tarjeta",
   "bySubject": "Por materia",
@@ -357,5 +357,6 @@
   "toSayTonight": "Para contar esta noche",
   "anotherOne": "Otra",
   "saidIt": "Contada",
-  "saidAlready": "Contada"
+  "saidAlready": "Contada",
+  "justMinutes": "{m} min"
 }

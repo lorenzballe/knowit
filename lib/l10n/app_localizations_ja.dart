@@ -1445,13 +1445,30 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get nonFictionBooks => '冊のノンフィクション';
+  String nonFictionBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '冊のノンフィクション',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get hoursOfDocumentaries => '時間のドキュメンタリー';
+  String hoursOfDocumentaries(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '時間のドキュメンタリー',
+    );
+    return '$_temp0';
+  }
 
   @override
-  String get lectures => '回の講義';
+  String lectures(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '回の講義');
+    return '$_temp0';
+  }
 
   @override
   String inTotalACard(String time) {
@@ -1475,4 +1492,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get saidAlready => '話した';
+
+  @override
+  String justMinutes(int m) {
+    return '$m分';
+  }
 }
