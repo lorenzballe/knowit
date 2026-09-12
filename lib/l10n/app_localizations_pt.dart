@@ -1543,4 +1543,26 @@ class AppLocalizationsPt extends AppLocalizations {
   String justMinutes(int m) {
     return '$m min';
   }
+
+  @override
+  String get pts => 'pontos';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n ainda contigo';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n truques',
+      one: '1 truque',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => 'A tua pontuação começa com as cinco de hoje.';
 }

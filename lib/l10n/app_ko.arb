@@ -358,5 +358,9 @@
   "anotherOne": "다른 카드",
   "saidIt": "말했어요",
   "saidAlready": "말함",
-  "justMinutes": "{m}분"
+  "justMinutes": "{m}분",
+  "pts": "점",
+  "nStillWithYou": "{n}장 아직 기억",
+  "nMoves": "{n, plural, other{수 {n}개}}",
+  "scoreStartsToday": "점수는 오늘의 다섯 장부터 시작해요."
 }

@@ -1497,4 +1497,21 @@ class AppLocalizationsJa extends AppLocalizations {
   String justMinutes(int m) {
     return '$m分';
   }
+
+  @override
+  String get pts => 'ポイント';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n枚がまだ記憶に';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '型$n個');
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => 'スコアは今日の5枚から始まります。';
 }

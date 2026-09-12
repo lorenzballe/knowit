@@ -358,5 +358,9 @@
   "anotherOne": "Nog een",
   "saidIt": "Verteld",
   "saidAlready": "Verteld",
-  "justMinutes": "{m} min"
+  "justMinutes": "{m} min",
+  "pts": "punten",
+  "nStillWithYou": "{n} nog bij je",
+  "nMoves": "{n, plural, =1{1 truc} other{{n} trucs}}",
+  "scoreStartsToday": "Je score begint met de vijf van vandaag."
 }

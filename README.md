@@ -105,8 +105,16 @@ The second set sits under the button as a quiet line.
 Artboard 83a, and the order is the argument: the numbers first, the card
 to say last.
 
-`JourneyScreen` opens on the headline — cards read, as a pill — then the
-**level**: the rung in words ("Level 3 · Answering"), the one thing
+`JourneyScreen` opens on **the score**, set large: the record as one
+number, with the bar under it that says where it came from. Four things
+are worth points and they are worth what they cost — a card read is one,
+because reading is the easy part; a card still with you weeks later is
+three, because that is the part that fails; a move you can spot in a
+context you have not seen is ten, because that is the whole promise; and
+a week kept is five, because the habit produces the other three. Nothing
+in it is invented and nothing in it goes down. Beside it, what today has
+added, exact: the score at the start of the day is written down with the
+deck. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
 between the reader and the next one, and a bar. Then **four numbers**,
 two by two: how much of what was answered is still with them, how far off
 their confidence runs, the streak, and how many moves they can spot — a

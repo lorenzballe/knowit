@@ -358,5 +358,9 @@
   "anotherOne": "换一张",
   "saidIt": "说过了",
   "saidAlready": "说过",
-  "justMinutes": "{m}分钟"
+  "justMinutes": "{m}分钟",
+  "pts": "分",
+  "nStillWithYou": "{n}张仍记得",
+  "nMoves": "{n, plural, other{{n}个套路}}",
+  "scoreStartsToday": "你的分数从今天的五张开始。"
 }

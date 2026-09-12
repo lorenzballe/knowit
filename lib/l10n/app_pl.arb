@@ -358,5 +358,9 @@
   "anotherOne": "Jeszcze jedna",
   "saidIt": "Opowiedziane",
   "saidAlready": "Opowiedziane",
-  "justMinutes": "{m} min"
+  "justMinutes": "{m} min",
+  "pts": "punktów",
+  "nStillWithYou": "{n} wciąż z tobą",
+  "nMoves": "{n, plural, =1{1 chwyt} few{{n} chwyty} many{{n} chwytów} other{{n} chwytu}}",
+  "scoreStartsToday": "Twój wynik zaczyna się od dzisiejszej piątki."
 }

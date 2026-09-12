@@ -358,5 +358,9 @@
   "anotherOne": "Une autre",
   "saidIt": "Racontée",
   "saidAlready": "Racontée",
-  "justMinutes": "{m} min"
+  "justMinutes": "{m} min",
+  "pts": "points",
+  "nStillWithYou": "{n} encore avec toi",
+  "nMoves": "{n, plural, =1{1 piège} other{{n} pièges}}",
+  "scoreStartsToday": "Ton score commence avec les cinq d'aujourd'hui."
 }

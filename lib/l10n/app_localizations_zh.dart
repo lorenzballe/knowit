@@ -1490,4 +1490,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String justMinutes(int m) {
     return '$m分钟';
   }
+
+  @override
+  String get pts => '分';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n张仍记得';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n个套路',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => '你的分数从今天的五张开始。';
 }

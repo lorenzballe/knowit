@@ -358,5 +358,9 @@
   "anotherOne": "別のを",
   "saidIt": "話した",
   "saidAlready": "話した",
-  "justMinutes": "{m}分"
+  "justMinutes": "{m}分",
+  "pts": "ポイント",
+  "nStillWithYou": "{n}枚がまだ記憶に",
+  "nMoves": "{n, plural, other{型{n}個}}",
+  "scoreStartsToday": "スコアは今日の5枚から始まります。"
 }

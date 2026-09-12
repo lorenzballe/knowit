@@ -1326,5 +1326,11 @@
     "type": "int"
    }
   }
- }
+ },
+  "pts": "points",
+  "nStillWithYou": "{n} still with you",
+  "@nStillWithYou": {"placeholders": {"n": {"type": "int"}}},
+  "nMoves": "{n, plural, =1{1 move} other{{n} moves}}",
+  "@nMoves": {"placeholders": {"n": {"type": "int"}}},
+  "scoreStartsToday": "Your score starts with today's five."
 }

@@ -1505,4 +1505,25 @@ class AppLocalizationsKo extends AppLocalizations {
   String justMinutes(int m) {
     return '$m분';
   }
+
+  @override
+  String get pts => '점';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n장 아직 기억';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '수 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => '점수는 오늘의 다섯 장부터 시작해요.';
 }

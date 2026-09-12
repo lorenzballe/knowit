@@ -1581,4 +1581,28 @@ class AppLocalizationsRu extends AppLocalizations {
   String justMinutes(int m) {
     return '$m мин';
   }
+
+  @override
+  String get pts => 'очков';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n ещё с вами';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n приёма',
+      many: '$n приёмов',
+      few: '$n приёма',
+      one: '$n приём',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => 'Ваш счёт начинается с сегодняшней пятёрки.';
 }

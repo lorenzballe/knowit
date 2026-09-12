@@ -358,5 +358,9 @@
   "anotherOne": "Ещё одну",
   "saidIt": "Рассказал",
   "saidAlready": "Рассказано",
-  "justMinutes": "{m} мин"
+  "justMinutes": "{m} мин",
+  "pts": "очков",
+  "nStillWithYou": "{n} ещё с вами",
+  "nMoves": "{n, plural, one{{n} приём} few{{n} приёма} many{{n} приёмов} other{{n} приёма}}",
+  "scoreStartsToday": "Ваш счёт начинается с сегодняшней пятёрки."
 }

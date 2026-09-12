@@ -358,5 +358,9 @@
   "anotherOne": "Bir tane daha",
   "saidIt": "Anlattım",
   "saidAlready": "Anlatıldı",
-  "justMinutes": "{m} dk"
+  "justMinutes": "{m} dk",
+  "pts": "puan",
+  "nStillWithYou": "{n} hâlâ aklında",
+  "nMoves": "{n, plural, other{{n} numara}}",
+  "scoreStartsToday": "Puanın bugünün beş kartıyla başlıyor."
 }

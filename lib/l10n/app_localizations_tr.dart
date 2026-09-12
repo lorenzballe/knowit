@@ -1529,4 +1529,25 @@ class AppLocalizationsTr extends AppLocalizations {
   String justMinutes(int m) {
     return '$m dk';
   }
+
+  @override
+  String get pts => 'puan';
+
+  @override
+  String nStillWithYou(int n) {
+    return '$n hâlâ aklında';
+  }
+
+  @override
+  String nMoves(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n numara',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get scoreStartsToday => 'Puanın bugünün beş kartıyla başlıyor.';
 }

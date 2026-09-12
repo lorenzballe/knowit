@@ -358,5 +358,9 @@
   "anotherOne": "Un'altra",
   "saidIt": "Detta",
   "saidAlready": "Detta",
-  "justMinutes": "{m} min"
+  "justMinutes": "{m} min",
+  "pts": "punti",
+  "nStillWithYou": "{n} ancora con te",
+  "nMoves": "{n, plural, =1{1 mossa} other{{n} mosse}}",
+  "scoreStartsToday": "Il tuo punteggio parte dalle cinque di oggi."
 }

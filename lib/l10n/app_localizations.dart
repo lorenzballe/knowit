@@ -2267,6 +2267,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{m} min'**
   String justMinutes(int m);
+
+  /// No description provided for @pts.
+  ///
+  /// In en, this message translates to:
+  /// **'points'**
+  String get pts;
+
+  /// No description provided for @nStillWithYou.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} still with you'**
+  String nStillWithYou(int n);
+
+  /// No description provided for @nMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 move} other{{n} moves}}'**
+  String nMoves(int n);
+
+  /// No description provided for @scoreStartsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score starts with today\'s five.'**
+  String get scoreStartsToday;
 }
 
 class _AppLocalizationsDelegate

@@ -358,5 +358,9 @@
   "anotherOne": "Otra",
   "saidIt": "Contada",
   "saidAlready": "Contada",
-  "justMinutes": "{m} min"
+  "justMinutes": "{m} min",
+  "pts": "puntos",
+  "nStillWithYou": "{n} aún contigo",
+  "nMoves": "{n, plural, =1{1 truco} other{{n} trucos}}",
+  "scoreStartsToday": "Tu puntuación empieza con las cinco de hoy."
 }

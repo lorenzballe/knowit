@@ -71,6 +71,45 @@ const List<Rung> kRungs = [
   Rung('sharp', read: 260, answered: 90, judged: 65, gap: 10, held: 35),
 ];
 
+/// The record as one number.
+///
+/// Four things are worth points, and they are worth what they cost: a card
+/// read is one, because reading is the easy part; a card still with you
+/// weeks later is three, because that is the part that fails; a move you
+/// can spot in a context you have not seen is ten, because that is the
+/// whole promise; and a week kept is five, because the habit is what
+/// produces the other three.
+///
+/// Nothing here can go down, and nothing is invented: every part is
+/// counted from what the app already writes down.
+class Score {
+  const Score({
+    required this.read,
+    required this.held,
+    required this.moves,
+    required this.weeks,
+  });
+
+  static const int perRead = 1;
+  static const int perHeld = 3;
+  static const int perMove = 10;
+  static const int perWeek = 5;
+
+  /// Cards read, cards that came back and stuck, principles the reader has
+  /// down, and weeks kept.
+  final int read;
+  final int held;
+  final int moves;
+  final int weeks;
+
+  int get fromRead => read * perRead;
+  int get fromHeld => held * perHeld;
+  int get fromMoves => moves * perMove;
+  int get fromWeeks => weeks * perWeek;
+
+  int get total => fromRead + fromHeld + fromMoves + fromWeeks;
+}
+
 /// What the reader has, measured against what the ladder asks.
 class Standing {
   const Standing({

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import '../data/pills_data.dart';
 import '../data/topics.dart';
@@ -91,28 +92,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  // The headline number, in the one place a reader looks
-                  // first. Cards read: the number every other number on
-                  // this page is a way of looking at.
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 11,
-                      vertical: 7,
-                    ),
-                    decoration: BoxDecoration(
-                      color: context.p.inverse,
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    child: Text(
-                      l.nRead(app.seenIds.length),
-                      style: AppText.body(
-                        size: 11.5,
-                        weight: FontWeight.w700,
-                        color: context.p.onInverse,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -122,6 +101,8 @@ class _JourneyScreenState extends State<JourneyScreen> {
                   ListView(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                     children: [
+                      _Score(app: app),
+                      const SizedBox(height: 20),
                       _Level(app: app),
                       const SizedBox(height: 18),
                       _Tiles(app: app),
@@ -188,6 +169,134 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 }
 
+/// The record as one number, set large, with the bar that says where it
+/// came from. A score nobody can see the parts of is a number to distrust.
+class _Score extends StatelessWidget {
+  const _Score({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    final Score score = app.score;
+    final int today = app.pointsToday;
+    final String locale = Localizations.localeOf(context).toString();
+    final NumberFormat number = NumberFormat.decimalPattern(locale);
+
+    // Held first: it is worth the most and it is the part that fails.
+    final parts = <(int, Color, String)>[
+      (score.fromHeld, ink, l.nStillWithYou(score.held)),
+      (score.fromRead, ink.withValues(alpha: 0.22), l.nRead(score.read)),
+      (score.fromMoves, context.p.link, l.nMoves(score.moves)),
+      (score.fromWeeks, ink.withValues(alpha: 0.5), l.nWeeksKept(score.weeks)),
+    ];
+    final int total = score.total;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(
+              number.format(total),
+              key: const ValueKey('journey-score'),
+              style: AppText.display(
+                size: 64,
+                weight: FontWeight.w600,
+                height: 1,
+                spacing: -3,
+                color: ink,
+              ),
+            ),
+            const SizedBox(width: 9),
+            Expanded(
+              child: Text(
+                l.pts,
+                style: AppText.body(
+                  size: 15,
+                  weight: FontWeight.w600,
+                  color: ink.withValues(alpha: 0.45),
+                ),
+              ),
+            ),
+            if (today > 0)
+              Text(
+                l.plusNToday(today),
+                style: AppText.body(
+                  size: 12.5,
+                  weight: FontWeight.w600,
+                  color: ink.withValues(alpha: 0.45),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        if (total > 0) ...[
+          ClipRRect(
+            borderRadius: BorderRadius.circular(9),
+            child: SizedBox(
+              height: 8,
+              child: Row(
+                children: [
+                  for (final part in parts)
+                    if (part.$1 > 0)
+                      Expanded(
+                        flex: part.$1,
+                        child: Container(color: part.$2),
+                      ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(
+            spacing: 14,
+            runSpacing: 6,
+            children: [
+              for (final part in parts)
+                if (part.$1 > 0)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 7,
+                        height: 7,
+                        decoration: BoxDecoration(
+                          color: part.$2,
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        part.$3,
+                        style: AppText.body(
+                          size: 11.5,
+                          weight: FontWeight.w500,
+                          color: ink.withValues(alpha: 0.55),
+                        ),
+                      ),
+                    ],
+                  ),
+            ],
+          ),
+        ] else
+          Text(
+            l.scoreStartsToday,
+            style: AppText.body(
+              size: 12.5,
+              height: 1.35,
+              color: ink.withValues(alpha: 0.45),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
 /// The rung as a level: where the reader stands, what stands between them
 /// and the next one, and a bar. Tapping it opens the whole path.
 class _Level extends StatelessWidget {
@@ -202,7 +311,6 @@ class _Level extends StatelessWidget {
     final Standing standing = app.standing;
     final Rung? next = standing.next;
     final String? step = stepText(context, standing);
-    final int readToday = app.todayIndex;
 
     return Semantics(
       button: true,
@@ -239,17 +347,6 @@ class _Level extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (readToday > 0) ...[
-                  const SizedBox(width: 10),
-                  Text(
-                    l.plusNToday(readToday),
-                    style: AppText.body(
-                      size: 11.5,
-                      weight: FontWeight.w500,
-                      color: ink.withValues(alpha: 0.45),
-                    ),
-                  ),
-                ],
               ],
             ),
             const SizedBox(height: 8),

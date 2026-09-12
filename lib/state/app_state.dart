@@ -73,6 +73,7 @@ class AppState extends ChangeNotifier {
   static const _kDeckIds = 'knowit.todayDeckIds';
   static const _kDeckHistory = 'knowit.deckHistory';
   static const _kDayStartRung = 'knowit.dayStartRung';
+  static const _kDayStartScore = 'knowit.dayStartScore';
   static const _kRungDates = 'knowit.rungDates';
   static const _kSaidIds = 'knowit.saidIds';
   static const _kExtraOpen = 'knowit.extraSetDate';
@@ -135,6 +136,9 @@ class AppState extends ChangeNotifier {
   /// The rung the reader stood on when today was dealt, so the end of the
   /// day can say whether they climbed.
   int rungAtDayStart = 0;
+
+  /// And what the score stood at, so the day can say what it was worth.
+  int scoreAtDayStart = 0;
 
   /// The day each rung was first reached, by rung id — the dates on the
   /// journey. Written the moment a rung is cleared and never moved.
@@ -271,6 +275,7 @@ class AppState extends ChangeNotifier {
     // Absent on an install that started the day on an older build: the
     // reader is where they are now, and today reports no climb.
     rungAtDayStart = _prefs.getInt(_kDayStartRung) ?? standing.at;
+    scoreAtDayStart = _prefs.getInt(_kDayStartScore) ?? score.total;
     await _noteClimb();
 
     final storedDay = _prefs.getString(_kTodayDate);
@@ -366,9 +371,11 @@ class AppState extends ChangeNotifier {
     };
     todayIndex = 0;
     rungAtDayStart = standing.at;
+    scoreAtDayStart = score.total;
     await _prefs.setString(_kTodayDate, dateKey(today));
     await _prefs.setInt(_kTodayIndex, 0);
     await _prefs.setInt(_kDayStartRung, rungAtDayStart);
+    await _prefs.setInt(_kDayStartScore, scoreAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
     await _noteDealt(today, todaysDeck);
   }
@@ -412,6 +419,16 @@ class AppState extends ChangeNotifier {
 
   /// True when today's five carried the reader up a rung.
   bool get climbedToday => standing.at > rungAtDayStart;
+
+  /// The record as one number, and what today has added to it.
+  Score get score => Score(
+    read: seenIds.length,
+    held: heldCards,
+    moves: movesDown,
+    weeks: keptWeeks,
+  );
+
+  int get pointsToday => (score.total - scoreAtDayStart).clamp(0, 1 << 30);
 
   /// Today's five as a row of squares, with nothing in it a friend could
   /// not be shown: which cards asked, and of those which went right — never

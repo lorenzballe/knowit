@@ -110,6 +110,28 @@ void main() {
     });
   });
 
+  group('The score', () {
+    test('is the four things, at what they cost', () {
+      const s = Score(read: 45, held: 12, moves: 2, weeks: 3);
+      expect(s.fromRead, 45);
+      expect(s.fromHeld, 36);
+      expect(s.fromMoves, 20);
+      expect(s.fromWeeks, 15);
+      expect(s.total, 116);
+      // A card still with you weeks later is worth three read, and a move
+      // you can spot is worth ten: the score says what the app is for.
+      expect(Score.perHeld, 3 * Score.perRead);
+      expect(Score.perMove, 10 * Score.perRead);
+    });
+
+    test('starts at nothing and only goes up', () {
+      const nothing = Score(read: 0, held: 0, moves: 0, weeks: 0);
+      expect(nothing.total, 0);
+      const later = Score(read: 5, held: 0, moves: 0, weeks: 0);
+      expect(later.total, greaterThan(nothing.total));
+    });
+  });
+
   group('Weeks kept', () {
     // A Wednesday, so both ends of the week are in play.
     final today = DateTime(2026, 9, 9);

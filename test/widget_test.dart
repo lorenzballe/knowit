@@ -1494,8 +1494,11 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // Artboard 83a: the level, then the four numbers, then the subjects,
-      // and the card to say out loud at the foot.
+      // Artboard 83a, with the score at its head: five cards read is five
+      // points, and the day says what it was worth.
+      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
+      expect(find.text('5'), findsOneWidget);
+      expect(find.text('points'), findsOneWidget);
       expect(find.text('5 read'), findsOneWidget);
       expect(find.text('Level 1 · Day one'), findsOneWidget);
       expect(find.textContaining('15 more cards to read'), findsOneWidget);
@@ -1509,7 +1512,20 @@ void main() {
       expect(find.text('BY SUBJECT'), findsOneWidget);
       // Five cards is about no books at all, so the comparison waits.
       expect(find.textContaining('is about'), findsNothing);
+      // And the card to say out loud is at the foot, under the subjects.
+      await tester.dragUntilVisible(
+        find.text('TO SAY TONIGHT'),
+        find.byType(ListView).last,
+        const Offset(0, -200),
+      );
+      await _settle(tester);
       expect(find.text('TO SAY TONIGHT'), findsOneWidget);
+      await tester.dragUntilVisible(
+        find.byKey(const ValueKey('journey-level')),
+        find.byType(ListView).last,
+        const Offset(0, 220),
+      );
+      await _settle(tester);
 
       // The path is one tap under the level, not the page itself.
       await tester.tap(find.byKey(const ValueKey('journey-level')));
@@ -1571,6 +1587,9 @@ void main() {
       await _settle(tester);
       expect(find.text('Level 2 · Reading'), findsOneWidget);
       expect(find.text('24 read'), findsOneWidget);
+      // Twenty-four read is twenty-four points, five of them today.
+      expect(find.text('24'), findsWidgets);
+      expect(find.text('+5 today'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('journey-level')));
       await _settle(tester);
@@ -2495,7 +2514,9 @@ void main() {
       seed: daySeed(DateTime.now()),
       count: 12,
     ).first;
-    await tester.tap(find.byKey(ValueKey('explore-${first.id}')));
+    // The same card can sit on two shelves — today's and the month's —
+    // and either one opens the same re-read.
+    await tester.tap(find.byKey(ValueKey('explore-${first.id}')).first);
     await _settle(tester);
 
     final reread = tester.getRect(find.byType(PillCardStack));
