@@ -169,14 +169,16 @@ List<Pill> arrangeDay(List<Pill> cards) {
   return out;
 }
 
+/// The pool by id, built once. A shelf being measured asks this per tap, and
+/// walking sixty cards to find one is a walk that can be spared.
+final Map<String, Pill> _byId = {for (final p in kPillPool) p.id: p};
+
+/// One pill by id, or null where the id is from a build that carried it and
+/// this one does not.
+Pill? pillById(String id) => _byId[id];
+
 /// Looks pills back up by id — used to restore a day's deck across restarts.
-List<Pill> pillsByIds(List<String> ids) {
-  final byId = {for (final p in kPillPool) p.id: p};
-  return [
-    for (final id in ids)
-      if (byId[id] != null) byId[id]!,
-  ];
-}
+List<Pill> pillsByIds(List<String> ids) => [for (final id in ids) ?_byId[id]];
 
 /// Front-loads one pill per topic so a day never opens with two in a row from
 /// the same subject.

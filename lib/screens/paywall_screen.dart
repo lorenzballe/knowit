@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../analytics.dart';
 import '../l10n/l10n.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -73,7 +74,13 @@ List<({IconData icon, String title, String sub})> _perks(
 class PaywallScreen extends StatefulWidget {
   final AppState app;
 
-  const PaywallScreen({super.key, required this.app});
+  /// What the reader reached for to end up here. Required, and a plain word
+  /// rather than a default, because "where did they come from" is the only
+  /// question a paywall's numbers ever really answer — and a default would be
+  /// a fifth of the traffic labelled `unknown` within a week.
+  final String source;
+
+  const PaywallScreen({super.key, required this.app, required this.source});
 
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
@@ -83,6 +90,20 @@ class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
   Subscription get _store => Subscription.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    Analytics.screen('paywall');
+    Analytics.capture('paywall shown', {
+      'source': widget.source,
+      'plan_shown': _plan.name,
+      // Whether the prices on screen are the store's or the ones written
+      // into the app. A conversion rate measured against a made-up price is
+      // not a conversion rate.
+      'store_answered': _store.ready && _store.offering != null,
+    });
+  }
 
   /// What the store charges, or the price written into the app when it has
   /// not answered.
@@ -103,6 +124,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   Future<void> _start() async {
     final Package? package = _package;
+    Analytics.capture('purchase started', {
+      'source': widget.source,
+      'plan': _plan.name,
+      'has_package': package != null,
+    });
 
     // No store to buy from: unlock locally so the gated screens can be seen,
     // and say so rather than letting it look like a purchase.
@@ -117,6 +143,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
 
     final outcome = await _store.buy(package);
+    Analytics.capture('purchase ended', {
+      'source': widget.source,
+      'plan': _plan.name,
+      'outcome': outcome.name,
+      'product': package.storeProduct.identifier,
+    });
     if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.bought:
@@ -135,6 +167,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// a new phone needs it before they will trust the first purchase.
   Future<void> _restore() async {
     final bool restored = await _store.restore();
+    Analytics.capture('purchases restored', {'found': restored});
     if (!mounted) return;
     if (restored) await widget.app.applyEntitlement(true);
     if (!mounted) return;

@@ -25,66 +25,69 @@ class PathScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(22, 8, 22, 32),
-          children: [
-            Row(
-              children: [
-                BackCircle(onPressed: onBack),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    l.thePath,
-                    style: AppText.display(
-                      size: 27,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: ink,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            _Trail(app: app),
-            const SizedBox(height: 22),
-            // The week is the same question at another distance.
-            Semantics(
-              button: true,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (routeContext) => WeekScreen(
-                      app: app,
-                      onBack: () => Navigator.of(routeContext).pop(),
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      l.yourWeek,
-                      style: AppText.body(
-                        size: 14,
+    return ScreenView(
+      name: 'path',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(22, 8, 22, 32),
+            children: [
+              Row(
+                children: [
+                  BackCircle(onPressed: onBack),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l.thePath,
+                      style: AppText.display(
+                        size: 27,
                         weight: FontWeight.w600,
-                        color: context.p.link,
+                        height: 1,
+                        spacing: -0.8,
+                        color: ink,
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    Text(
-                      '→',
-                      style: AppText.body(size: 14, color: context.p.link),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              _Trail(app: app),
+              const SizedBox(height: 22),
+              // The week is the same question at another distance.
+              Semantics(
+                button: true,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (routeContext) => WeekScreen(
+                        app: app,
+                        onBack: () => Navigator.of(routeContext).pop(),
+                      ),
                     ),
-                  ],
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        l.yourWeek,
+                        style: AppText.body(
+                          size: 14,
+                          weight: FontWeight.w600,
+                          color: context.p.link,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '→',
+                        style: AppText.body(size: 14, color: context.p.link),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

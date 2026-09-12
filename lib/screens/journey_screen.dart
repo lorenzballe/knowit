@@ -66,103 +66,106 @@ class _JourneyScreenState extends State<JourneyScreen> {
     final Color ink = context.p.ink;
     final List<Pill> sayable = _sayable;
 
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 14),
-              child: Row(
-                children: [
-                  BackCircle(onPressed: widget.onBack),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      l.yourJourney,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.display(
-                        size: 27,
-                        weight: FontWeight.w600,
-                        height: 1,
-                        spacing: -0.8,
-                        color: ink,
+    return ScreenView(
+      name: 'journey',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 14),
+                child: Row(
+                  children: [
+                    BackCircle(onPressed: widget.onBack),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        l.yourJourney,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.display(
+                          size: 27,
+                          weight: FontWeight.w600,
+                          height: 1,
+                          spacing: -0.8,
+                          color: ink,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: Stack(
-                children: [
-                  ListView(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
-                    children: [
-                      _Score(app: app),
-                      const SizedBox(height: 20),
-                      _Level(app: app),
-                      const SizedBox(height: 18),
-                      _Tiles(app: app),
-                      const SizedBox(height: 18),
-                      if (app.seenIds.length >= _IsAbout.kWorthSaying) ...[
-                        _IsAbout(app: app),
+              Expanded(
+                child: Stack(
+                  children: [
+                    ListView(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
+                      children: [
+                        _Score(app: app),
+                        const SizedBox(height: 20),
+                        _Level(app: app),
                         const SizedBox(height: 18),
-                      ],
-                      _BySubject(app: app),
-                      if (sayable.isNotEmpty) ...[
+                        _Tiles(app: app),
                         const SizedBox(height: 18),
-                        Eyebrow(l.toSayTonight),
-                        const SizedBox(height: 8),
-                        _SayCard(
-                          pill: sayable[_sayAt % sayable.length],
-                          held: app.hasSaid(
-                            sayable[_sayAt % sayable.length].id,
-                          ),
-                          onAnother: () => setState(() => _sayAt++),
-                          onSaid: () async {
-                            HapticFeedback.mediumImpact();
-                            await app.markSaid(
+                        if (app.seenIds.length >= _IsAbout.kWorthSaying) ...[
+                          _IsAbout(app: app),
+                          const SizedBox(height: 18),
+                        ],
+                        _BySubject(app: app),
+                        if (sayable.isNotEmpty) ...[
+                          const SizedBox(height: 18),
+                          Eyebrow(l.toSayTonight),
+                          const SizedBox(height: 8),
+                          _SayCard(
+                            pill: sayable[_sayAt % sayable.length],
+                            held: app.hasSaid(
                               sayable[_sayAt % sayable.length].id,
-                            );
-                            if (mounted) setState(() => _sayAt++);
-                          },
-                        ),
+                            ),
+                            onAnother: () => setState(() => _sayAt++),
+                            onSaid: () async {
+                              HapticFeedback.mediumImpact();
+                              await app.markSaid(
+                                sayable[_sayAt % sayable.length].id,
+                              );
+                              if (mounted) setState(() => _sayAt++);
+                            },
+                          ),
+                        ],
+                        if (app.dayClosed) ...[
+                          const SizedBox(height: 18),
+                          Center(child: ShareDay(app: app)),
+                        ],
                       ],
-                      if (app.dayClosed) ...[
-                        const SizedBox(height: 18),
-                        Center(child: ShareDay(app: app)),
-                      ],
-                    ],
-                  ),
-                  // The list runs under the foot of the screen rather than
-                  // stopping at it, so there is always a reason to scroll.
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: 36,
-                    child: IgnorePointer(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              context.p.surface.withValues(alpha: 0),
-                              context.p.surface,
-                            ],
+                    ),
+                    // The list runs under the foot of the screen rather than
+                    // stopping at it, so there is always a reason to scroll.
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 36,
+                      child: IgnorePointer(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                context.p.surface.withValues(alpha: 0),
+                                context.p.surface,
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

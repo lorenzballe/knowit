@@ -6,6 +6,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../analytics.dart';
 import '../data/daily.dart';
 import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
@@ -319,6 +320,11 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kFreezes, freezes);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setString(_kFrozeOn, frozeOn!);
+    Analytics.capture('streak frozen', {
+      'days_covered': missed,
+      'freezes_left': freezes,
+      'streak_days': streak,
+    });
   }
 
   /// True when a freeze saved the streak today and it has not been said yet.
@@ -331,6 +337,10 @@ class AppState extends ChangeNotifier {
     if (freezes >= freezeCapacity) return;
     freezes++;
     await _prefs.setInt(_kFreezes, freezes);
+    Analytics.capture('freeze earned', {
+      'freezes': freezes,
+      'streak_days': streak,
+    });
   }
 
   /// Deals a fresh day and records it, so a restart resumes the same deck.
@@ -378,6 +388,16 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kDayStartScore, scoreAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
     await _noteDealt(today, todaysDeck);
+    Analytics.capture('day started', {
+      'cards': todaysDeck.length,
+      // How much of the day is a re-asking. The whole claim of the review
+      // ladder is that this number matters, so it is on every day.
+      'reviews': reviewIdsToday.length,
+      'topics': pickedTopics.length,
+      'streak_days': streak,
+      'rung': standing.at,
+      'extra_set': extraSetOpen,
+    });
   }
 
   /// Writes down what a day was dealt, and forgets what is older than the
@@ -519,7 +539,19 @@ class AppState extends ChangeNotifier {
 
   Future<void> advance() async {
     if (todayCompleted) return;
-    seenIds.add(todaysDeck[todayIndex].id);
+    final Pill card = todaysDeck[todayIndex];
+    Analytics.capture('card advanced', {
+      'pill_id': card.id,
+      'topic': card.topic,
+      'difficulty': card.difficulty.name,
+      'graded': card.isGraded,
+      'review': reviewIdsToday.contains(card.id),
+      // Which of the day's cards this was, so the drop-off inside a day can
+      // be read as a curve rather than as a single completion rate.
+      'position': todayIndex + 1,
+      'of': todaysDeck.length,
+    });
+    seenIds.add(card.id);
     todayIndex += 1;
     pillsRead += 1;
     await _prefs.setInt(_kTodayIndex, todayIndex);
@@ -539,12 +571,27 @@ class AppState extends ChangeNotifier {
   Future<void> _noteClimb() async {
     var changed = false;
     final int at = standing.at;
+    // Whether this is the first climb of a fresh install — which dates every
+    // rung under the reader at once — or one step taken now. Only the second
+    // is a moment worth an event apiece.
+    final bool firstEver = rungDates.isEmpty;
     for (var i = 0; i <= at && i < kRungs.length; i++) {
       if (rungDates.containsKey(kRungs[i].id)) continue;
       rungDates[kRungs[i].id] = dateKey(today);
       changed = true;
+      if (!firstEver) {
+        Analytics.capture('rung reached', {
+          'rung': kRungs[i].id,
+          'rung_index': i,
+          'days_in': completedDates.length,
+          'pills_read': pillsRead,
+        });
+      }
     }
-    if (changed) await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+    if (changed) {
+      await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+      Analytics.register('rung', at);
+    }
   }
 
   static Map<String, String> _decodeDates(String? raw) {
@@ -574,6 +621,18 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+    Analytics.capture('day completed', {
+      'streak_days': streak,
+      'best_streak': bestStreak,
+      'cards': todaysDeck.length,
+      'days_completed': completedDates.length,
+      'rung': standing.at,
+      // What the day was worth, rather than what the reader now holds: the
+      // second number is the same on a day they did nothing.
+      'score_gained': score.total - scoreAtDayStart,
+      'rungs_climbed': standing.at - rungAtDayStart,
+      'is_plus': isPlus,
+    });
     await _earnFreeze();
   }
 
@@ -728,7 +787,7 @@ class AppState extends ChangeNotifier {
     final existing = answers[pillId];
     if (existing != null && !isDueForReview(pillId)) return;
 
-    final pill = kPillPool.where((p) => p.id == pillId).firstOrNull;
+    final pill = pillById(pillId);
     final graded = pill?.isGraded ?? false;
     final right = graded && (pill?.challenge.accepts(response) ?? false);
 
@@ -751,6 +810,21 @@ class AppState extends ChangeNotifier {
     }
 
     await _saveAnswers();
+    Analytics.capture('card answered', {
+      'pill_id': pillId,
+      'topic': pill?.topic,
+      'difficulty': pill?.difficulty.name,
+      'graded': graded,
+      // Only meaningful on a graded card; an ungraded one has nothing to be
+      // right about, and the property is left off rather than sent as false.
+      'correct': graded ? right : null,
+      // How sure they said they were. The number, never the reason they
+      // wrote beside it — that is prose, and prose stays on the phone.
+      'confidence': confidence,
+      'gave_reason': reason != null && reason.trim().isNotEmpty,
+      'review': existing != null,
+      'review_stage': existing?.stage,
+    });
     await _noteClimb();
     notifyListeners();
   }
@@ -950,12 +1024,18 @@ class AppState extends ChangeNotifier {
   bool isSaved(String pillId) => savedIds.contains(pillId);
 
   Future<void> toggleSaved(String pillId) async {
-    if (savedIds.contains(pillId)) {
+    final bool had = savedIds.contains(pillId);
+    if (had) {
       savedIds.remove(pillId);
     } else {
       savedIds.insert(0, pillId);
     }
     await _prefs.setStringList(_kSavedIds, savedIds);
+    Analytics.capture(had ? 'pill unsaved' : 'pill saved', {
+      'pill_id': pillId,
+      'topic': pillById(pillId)?.topic,
+      'shelf_size': savedIds.length,
+    });
     notifyListeners();
   }
 
@@ -972,7 +1052,8 @@ class AppState extends ChangeNotifier {
   /// A card held down. Liking one that was thrown down takes the throw
   /// back: the reader has changed their mind, and the newer word stands.
   Future<void> toggleLiked(String pillId) async {
-    if (likedIds.contains(pillId)) {
+    final bool had = likedIds.contains(pillId);
+    if (had) {
       likedIds.remove(pillId);
     } else {
       likedIds.insert(0, pillId);
@@ -980,6 +1061,11 @@ class AppState extends ChangeNotifier {
       await _prefs.setStringList(_kDislikedIds, dislikedIds);
     }
     await _prefs.setStringList(_kLikedIds, likedIds);
+    Analytics.capture(had ? 'pill unliked' : 'pill liked', {
+      'pill_id': pillId,
+      'topic': pillById(pillId)?.topic,
+      'shelf_size': likedIds.length,
+    });
     notifyListeners();
   }
 
@@ -998,6 +1084,13 @@ class AppState extends ChangeNotifier {
     if (saidIds.contains(pillId)) return;
     saidIds.insert(0, pillId);
     await _prefs.setStringList(_kSaidIds, saidIds);
+    // The one thing the app is actually for: a card that left the phone and
+    // was said to somebody. If any number here is the north star, it is this.
+    Analytics.capture('pill said', {
+      'pill_id': pillId,
+      'topic': pillById(pillId)?.topic,
+      'said_total': saidIds.length,
+    });
     notifyListeners();
   }
 
@@ -1017,6 +1110,10 @@ class AppState extends ChangeNotifier {
     likedIds.remove(pillId);
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kLikedIds, likedIds);
+    Analytics.capture('pill disliked', {
+      'pill_id': pillId,
+      'topic': pillById(pillId)?.topic,
+    });
     notifyListeners();
   }
 
@@ -1033,6 +1130,8 @@ class AppState extends ChangeNotifier {
     if (friendCodes.contains(code)) return;
     friendCodes = [...friendCodes, code];
     await _prefs.setStringList(_kFriendCodes, friendCodes);
+    // The count, never the codes. A friend code names a person.
+    Analytics.capture('friend added', {'friends': friendCodes.length});
     notifyListeners();
   }
 
@@ -1040,6 +1139,7 @@ class AppState extends ChangeNotifier {
     if (!friendCodes.contains(code)) return;
     friendCodes = friendCodes.where((c) => c != code).toList();
     await _prefs.setStringList(_kFriendCodes, friendCodes);
+    Analytics.capture('friend removed', {'friends': friendCodes.length});
     notifyListeners();
   }
 
@@ -1079,6 +1179,12 @@ class AppState extends ChangeNotifier {
   Future<void> completeOnboarding() async {
     onboarded = true;
     await _prefs.setBool(_kOnboarded, true);
+    Analytics.capture('onboarding completed', {
+      'topics': pickedTopics.length,
+      // Whether they answered the "what do you already know" screen or walked
+      // past it. A skipped level run deals a different first week.
+      'levels_set': topicLevels.isNotEmpty,
+    });
     notifyListeners();
   }
 
@@ -1091,6 +1197,7 @@ class AppState extends ChangeNotifier {
   Future<void> setThemeMode(ThemeMode mode) async {
     themeMode = mode;
     await _prefs.setString(_kTheme, mode.name);
+    Analytics.capture('theme set', {'theme': mode.name});
     notifyListeners();
   }
 
@@ -1103,6 +1210,7 @@ class AppState extends ChangeNotifier {
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
     await _prefs.setBool(_kNotifications, on);
+    Analytics.capture('reminder switched', {'on': on, 'at': notifyTime});
     // The switch shows the setting, not the platform's response time. Told
     // only after the notification centre answered, it sat on its old value
     // for as long as that took — and a second tap then flipped it back.
@@ -1114,6 +1222,9 @@ class AppState extends ChangeNotifier {
   Future<void> setNotifyTime(String time) async {
     notifyTime = time;
     await _prefs.setString(_kNotifyHour, time);
+    // The hour a reader picks is the hour the content pipeline has to be
+    // ready by, so it is worth knowing what they actually pick.
+    Analytics.capture('reminder time set', {'at': time});
     notifyListeners();
     await _applyReminder();
     notifyListeners();
@@ -1295,6 +1406,7 @@ class AppState extends ChangeNotifier {
   Future<void> setTopicLevels(Map<String, int> levels) async {
     topicLevels = {...levels};
     await _prefs.setString(_kTopicLevels, jsonEncode(levels));
+    Analytics.capture('levels set', {'subjects_rated': levels.length});
     notifyListeners();
   }
 
@@ -1322,6 +1434,18 @@ class AppState extends ChangeNotifier {
       jsonEncode(weights.map((k, v) => MapEntry(k, v))),
     );
     await _prefs.setStringList(_kTopics, pickedTopics.toList());
+    // Which subjects the wheel ended on, and how leaned it is. The names
+    // decide what the pipeline writes next.
+    Analytics.capture('mix set', {
+      'topics': pickedTopics.length,
+      'leaned_to': [
+        for (final e
+            in (weights.entries.toList()
+                  ..sort((a, b) => b.value.compareTo(a.value)))
+                .take(3))
+          e.key,
+      ].join(','),
+    });
     notifyListeners();
   }
 
@@ -1352,6 +1476,8 @@ class AppState extends ChangeNotifier {
   Future<void> startPlusTrial() async {
     isPlus = true;
     await _prefs.setBool(_kPlus, true);
+    Analytics.capture('trial started');
+    Analytics.register('is_plus', true);
     notifyListeners();
   }
 
@@ -1364,6 +1490,9 @@ class AppState extends ChangeNotifier {
     if (!canOpenExtraSet) return;
     extraSetOpen = true;
     await _prefs.setString(_kExtraOpen, dateKey(today));
+    // The perk a subscriber came back for. If nobody opens it, it is not
+    // what they are paying for.
+    Analytics.capture('extra set opened', {'streak_days': streak});
 
     final extra = pillsForDate(
       today,
@@ -1387,18 +1516,36 @@ class AppState extends ChangeNotifier {
     if (isPlus == active) return;
     isPlus = active;
     await _prefs.setBool(_kPlus, active);
+    // What the store said, not what a screen hoped: this is the one place
+    // the plan actually changes, so it is the one place it is counted.
+    Analytics.capture('plan changed', {'is_plus': active});
+    Analytics.register('is_plus', active);
     notifyListeners();
   }
 
   Future<void> endPlus() async {
     isPlus = false;
     await _prefs.setBool(_kPlus, false);
+    Analytics.register('is_plus', false);
     notifyListeners();
   }
 
   /// Wipes local state — used by "Sign out" on the profile.
   Future<void> signOut() async {
+    // Said before the wipe, while there is still a streak to report losing.
+    Analytics.capture('signed out', {
+      'streak_days': streak,
+      'days_completed': completedDates.length,
+      'pills_read': pillsRead,
+    });
     await _prefs.clear();
+    // The clear above took the reader's own answer to "measure this?" with
+    // it. An opt-out a sign-out quietly undoes is not a choice, it is a
+    // delay — so it goes back down before anything else is written.
+    unawaited(Analytics.persistChoice());
+    // And this phone is no longer that reader. What the next person does
+    // here is theirs, counted as somebody new.
+    unawaited(Analytics.reset());
     streak = 0;
     bestStreak = 0;
     lastCompletionDate = null;

@@ -66,6 +66,9 @@ dependencies:
   # For the nonce Apple's token is bound to: the hash goes to Apple and the
   # string behind it to Firebase.
   crypto: ^3.0.7
+  # Measurement. Off unless a key is passed at build time, so a fork, a test
+  # and the checked-out repo are all unmeasured by default — see lib/analytics.dart.
+  posthog_flutter: ^5.41.0
 
 dev_dependencies:
   flutter_test:

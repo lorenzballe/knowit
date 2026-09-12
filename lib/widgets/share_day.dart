@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../analytics.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
@@ -54,6 +55,11 @@ class ShareDay extends StatelessWidget {
     final messenger = ScaffoldMessenger.of(context);
     final l = context.l10n;
     final bool shared = await share(line);
+    Analytics.capture('day shared', {
+      'streak_days': app.streak,
+      'edition': app.daySummary.edition,
+      'as': shared ? 'sheet' : 'copied',
+    });
     if (shared) return;
     // No sheet to hand it to — a browser, a desktop — so it is copied,
     // which is one paste away from the same chat.

@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/ui.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/share_sheet.dart';
 
@@ -59,122 +60,125 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
-              child: Row(
-                children: [
-                  Semantics(
-                    button: true,
-                    label: 'Close',
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Container(
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: context.p.line),
+    return ScreenView(
+      name: 'deck viewer',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 6, 18, 0),
+                child: Row(
+                  children: [
+                    Semantics(
+                      button: true,
+                      label: 'Close',
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Container(
+                          width: 38,
+                          height: 38,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: context.p.line),
+                          ),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.close_rounded,
+                            size: 18,
+                            color: context.p.ink,
+                          ),
                         ),
-                        alignment: Alignment.center,
-                        child: Icon(
-                          Icons.close_rounded,
-                          size: 18,
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        widget.title,
+                        textAlign: TextAlign.center,
+                        style: AppText.display(
+                          size: 16,
+                          weight: FontWeight.w600,
+                          spacing: -0.3,
                           color: context.p.ink,
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.title,
-                      textAlign: TextAlign.center,
-                      style: AppText.display(
-                        size: 16,
-                        weight: FontWeight.w600,
-                        spacing: -0.3,
-                        color: context.p.ink,
+                    SizedBox(
+                      width: 38,
+                      child: Text(
+                        '${_index + 1}/${widget.deck.length}',
+                        textAlign: TextAlign.right,
+                        style: AppText.label(
+                          size: 11.5,
+                          color: context.p.inkFaint,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 38,
-                    child: Text(
-                      '${_index + 1}/${widget.deck.length}',
-                      textAlign: TextAlign.right,
-                      style: AppText.label(
-                        size: 11.5,
-                        color: context.p.inkFaint,
-                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // The same deck Today uses, not a second way of drawing a
+              // card. A re-read that looks unlike the day it is re-reading is
+              // two designs for one thing.
+              Expanded(
+                // The same margin Today gives it. Without this the viewer
+                // handed the deck the whole window, so a re-read card came out
+                // wider than the one dealt — and, being held to a proportion,
+                // taller with it.
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: kDeckMargin),
+                  child: PillCardStack(
+                    deck: widget.deck,
+                    index: _index,
+                    onAdvance: () => setState(
+                      () => _index = (_index + 1) % widget.deck.length,
                     ),
+                    reviewIds: widget.answering
+                        ? {for (final p in widget.deck) p.id}
+                        : const {},
+                    answering: widget.answering,
+                    answerFor: widget.app.answerFor,
+                    onAnswer: (id, response, confidence, reason) =>
+                        widget.app.recordAnswer(
+                          id,
+                          response,
+                          confidence: confidence,
+                          reason: reason,
+                        ),
+                    isSaved: widget.app.isSaved,
+                    onSave: (pill) {
+                      widget.app.toggleSaved(pill.id);
+                      setState(() {});
+                    },
+                    isLiked: widget.app.isLiked,
+                    onLike: (pill) {
+                      widget.app.toggleLiked(pill.id);
+                      setState(() {});
+                    },
+                    onShare: (pill) => showShareSheet(context, pill),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // The same deck Today uses, not a second way of drawing a
-            // card. A re-read that looks unlike the day it is re-reading is
-            // two designs for one thing.
-            Expanded(
-              // The same margin Today gives it. Without this the viewer
-              // handed the deck the whole window, so a re-read card came out
-              // wider than the one dealt — and, being held to a proportion,
-              // taller with it.
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: kDeckMargin),
-                child: PillCardStack(
-                  deck: widget.deck,
-                  index: _index,
-                  onAdvance: () => setState(
-                    () => _index = (_index + 1) % widget.deck.length,
-                  ),
-                  reviewIds: widget.answering
-                      ? {for (final p in widget.deck) p.id}
-                      : const {},
-                  answering: widget.answering,
-                  answerFor: widget.app.answerFor,
-                  onAnswer: (id, response, confidence, reason) =>
-                      widget.app.recordAnswer(
-                        id,
-                        response,
-                        confidence: confidence,
-                        reason: reason,
-                      ),
-                  isSaved: widget.app.isSaved,
-                  onSave: (pill) {
-                    widget.app.toggleSaved(pill.id);
-                    setState(() {});
-                  },
-                  isLiked: widget.app.isLiked,
-                  onLike: (pill) {
-                    widget.app.toggleLiked(pill.id);
-                    setState(() {});
-                  },
-                  onShare: (pill) => showShareSheet(context, pill),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 12),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 260),
-              child: Text(
-                _hint,
-                key: ValueKey(_hint),
-                style: AppText.body(
-                  size: 12.5,
-                  weight: FontWeight.w500,
-                  color: context.p.inkFaint,
+              const SizedBox(height: 12),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 260),
+                child: Text(
+                  _hint,
+                  key: ValueKey(_hint),
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: context.p.inkFaint,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

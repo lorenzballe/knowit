@@ -219,8 +219,12 @@ class ProfileScreen extends StatelessWidget {
               Eyebrow(context.l10n.yourTopics),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () =>
-                    requirePlus(context, app, () => _editTopics(context)),
+                onTap: () => requirePlus(
+                  context,
+                  app,
+                  () => _editTopics(context),
+                  source: 'edit topics',
+                ),
                 child: Row(
                   children: [
                     Text(
@@ -458,6 +462,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              source: 'archive',
             ),
           ),
           _LinkRow(
@@ -469,7 +474,10 @@ class ProfileScreen extends StatelessWidget {
             onTap: () => app.isPlus
                 ? Subscription.instance.presentCustomerCenter()
                 : Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => PaywallScreen(app: app)),
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          PaywallScreen(app: app, source: 'manage plan'),
+                    ),
                   ),
           ),
           _LinkRow(
@@ -959,7 +967,8 @@ class _Mastery extends StatelessWidget {
               label: context.l10n.seeEveryPrincipleWithPlus,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => requirePlus(context, app, () {}),
+                onTap: () =>
+                    requirePlus(context, app, () {}, source: 'principles'),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 2, bottom: 8),
                   child: Row(
@@ -1101,7 +1110,8 @@ class _TrendPanel extends StatelessWidget {
               height: 46,
               fill: context.p.inverse,
               ink: context.p.onInverse,
-              onPressed: () => requirePlus(context, app, () {}),
+              onPressed: () =>
+                  requirePlus(context, app, () {}, source: 'calibration'),
             ),
           ],
         ],
@@ -1244,9 +1254,12 @@ class _PlusCard extends StatelessWidget {
             height: 48,
             fill: context.p.inverse,
             ink: context.p.onInverse,
-            onPressed: () => Navigator.of(
-              context,
-            ).push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app))),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) =>
+                    PaywallScreen(app: app, source: 'see the plans'),
+              ),
+            ),
           ),
         ],
       ),

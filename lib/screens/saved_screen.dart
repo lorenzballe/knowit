@@ -85,126 +85,133 @@ class _SavedScreenState extends State<SavedScreen> {
         ? all
         : all.where((p) => p.topic == kTopics[_topic]!.name).toList();
 
-    return SafeArea(
-      bottom: false,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 8, 22, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // The way back. This screen is pushed over the profile and
-                // had nothing but the phone's own gesture to leave it.
-                BackCircle(onPressed: widget.onBackToToday),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    _liked ? context.l10n.liked : context.l10n.saved,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.display(
-                      size: 27,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: context.p.ink,
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => requirePlus(
-                    context,
-                    app,
-                    () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (routeContext) => ArchiveScreen(
-                          app: app,
-                          onBack: () => Navigator.of(routeContext).pop(),
-                        ),
+    return ScreenView(
+      name: 'saved',
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(22, 8, 22, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // The way back. This screen is pushed over the profile and
+                  // had nothing but the phone's own gesture to leave it.
+                  BackCircle(onPressed: widget.onBackToToday),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      _liked ? context.l10n.liked : context.l10n.saved,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.display(
+                        size: 27,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        spacing: -0.8,
+                        color: context.p.ink,
                       ),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search_rounded,
-                          size: 16,
-                          color: context.p.link,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          context.l10n.archive,
-                          style: AppText.body(
-                            size: 12.5,
-                            weight: FontWeight.w500,
-                            color: context.p.link,
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () => requirePlus(
+                      context,
+                      app,
+                      source: 'saved archive',
+                      () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (routeContext) => ArchiveScreen(
+                            app: app,
+                            onBack: () => Navigator.of(routeContext).pop(),
                           ),
                         ),
-                        PlusLock(locked: !app.isPlus),
-                      ],
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.search_rounded,
+                            size: 16,
+                            color: context.p.link,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            context.l10n.archive,
+                            style: AppText.body(
+                              size: 12.5,
+                              weight: FontWeight.w500,
+                              color: context.p.link,
+                            ),
+                          ),
+                          PlusLock(locked: !app.isPlus),
+                        ],
+                      ),
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 5),
+              Text(
+                all.isEmpty
+                    ? (_liked
+                          ? context.l10n.nothingLikedYet
+                          : context.l10n.nothingKeptYet)
+                    : _topic == null
+                    ? context.l10n.nCards(all.length)
+                    : context.l10n.nInTopic(
+                        saved.length,
+                        kTopics[_topic]!.name,
+                      ),
+                style: AppText.body(
+                  size: 12.5,
+                  height: 1.35,
+                  color: context.p.ink.withValues(alpha: 0.42),
+                ),
+              ),
+              if (present.length > 1) ...[
+                const SizedBox(height: 14),
+                TopicFilterRow(
+                  topics: present,
+                  picked: _topic,
+                  onPick: (key) => setState(() => _topic = key),
+                  keyPrefix: 'saved-filter',
                 ),
               ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              all.isEmpty
-                  ? (_liked
-                        ? context.l10n.nothingLikedYet
-                        : context.l10n.nothingKeptYet)
-                  : _topic == null
-                  ? context.l10n.nCards(all.length)
-                  : context.l10n.nInTopic(saved.length, kTopics[_topic]!.name),
-              style: AppText.body(
-                size: 12.5,
-                height: 1.35,
-                color: context.p.ink.withValues(alpha: 0.42),
-              ),
-            ),
-            if (present.length > 1) ...[
-              const SizedBox(height: 14),
-              TopicFilterRow(
-                topics: present,
-                picked: _topic,
-                onPick: (key) => setState(() => _topic = key),
-                keyPrefix: 'saved-filter',
-              ),
-            ],
-            const SizedBox(height: 16),
-            Expanded(
-              child: all.isEmpty
-                  ? _EmptyState(
-                      onBackToToday: widget.onBackToToday,
-                      liked: _liked,
-                    )
-                  : ListView.separated(
-                      padding: const EdgeInsets.only(bottom: 24),
-                      itemCount: saved.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 10),
-                      itemBuilder: (context, i) => RiseIn.staggered(
-                        i,
-                        child: _SavedRow(
-                          pill: saved[i],
-                          liked: _liked,
-                          onUnsave: () => _unsave(context, saved[i], i),
-                          onShare: () => showShareSheet(context, saved[i]),
-                          onOpen: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) =>
-                                  PillDetailScreen(pill: saved[i], app: app),
+              const SizedBox(height: 16),
+              Expanded(
+                child: all.isEmpty
+                    ? _EmptyState(
+                        onBackToToday: widget.onBackToToday,
+                        liked: _liked,
+                      )
+                    : ListView.separated(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        itemCount: saved.length,
+                        separatorBuilder: (_, _) => const SizedBox(height: 10),
+                        itemBuilder: (context, i) => RiseIn.staggered(
+                          i,
+                          child: _SavedRow(
+                            pill: saved[i],
+                            liked: _liked,
+                            onUnsave: () => _unsave(context, saved[i], i),
+                            onShare: () => showShareSheet(context, saved[i]),
+                            onOpen: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    PillDetailScreen(pill: saved[i], app: app),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
