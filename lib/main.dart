@@ -416,10 +416,15 @@ class _AstutoRootState extends State<AstutoRoot> {
         return AstutoShell(
           app: _app,
           account: _account,
-          onSignedOut: () => setState(() {
-            _stageResolved = true;
-            _stage = _Stage.intro;
-          }),
+          onSignedOut: () {
+            setState(() {
+              _stageResolved = true;
+              _stage = _Stage.intro;
+            });
+            // Back at the first screen, as a stranger: AppState.signOut has
+            // already told the funnel to forget who this was.
+            Analytics.screen(_Stage.intro.screen);
+          },
         );
     }
   }
