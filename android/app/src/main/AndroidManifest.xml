@@ -35,6 +35,17 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
+        <!-- PostHog is started from Dart, in lib/analytics.dart, because the
+             key arrives as a dart-define at build time and a manifest cannot
+             read one.
+             Left to start itself, the plugin looks here for a token, finds
+             none, and logs an error on every launch of a perfectly working
+             app — which is the kind of red line somebody spends an afternoon
+             chasing. This says the Dart side owns it. -->
+        <meta-data
+            android:name="com.posthog.posthog.AUTO_INIT"
+            android:value="false" />
+
         <!-- The home-screen widget: the question of the day. Redrawn by
              the app whenever it has something new, and by the system every
              half hour, which is how it turns over at midnight on its own. -->

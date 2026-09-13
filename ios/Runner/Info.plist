@@ -72,6 +72,13 @@
 	     Nothing here implements or bundles an algorithm of its own. -->
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<!-- PostHog is started from Dart, in lib/analytics.dart, because the key
+	     arrives as a dart-define at build time and this file cannot read
+	     one. Without
+	     this the plugin would also try to start itself from keys that are
+	     not here. -->
+	<key>com.posthog.posthog.AUTO_INIT</key>
+	<false/>
 	<!-- Google sign-in comes back to the app through this scheme: it is the
 	     REVERSED_CLIENT_ID out of GoogleService-Info.plist, and without it
 	     the browser has nowhere to return to. -->

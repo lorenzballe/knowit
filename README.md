@@ -304,6 +304,7 @@ the channel away on someone who does not yet know what the app is.
 
 ```
 lib/
+  analytics.dart  what is measured, and whether anything is
   data/        topic palette, the pill pool, the question of the day, the dealer
   models/      Pill, Reminder
   state/       AppState — streak, shelves, history, the ladder (persisted)
@@ -429,6 +430,64 @@ Until then the app builds and signs as before: the channel handler in
 entitlement is a private container nobody reads, and WidgetKit is asked
 to reload timelines that do not exist yet — both harmless.
 
+## What the app measures
+
+Nothing, unless a key was built into it. `lib/analytics.dart` is the one place
+that decides, the way `lib/cloud.dart` is for Firebase: no `POSTHOG_KEY`, no
+measurement — not "measurement into a project that does not exist", but every
+call returning without doing anything. That is what a fork gets, what a
+checkout gets, and what all 266 tests run under, which is why none of them
+reaches the network.
+
+    flutter build ipa      --dart-define=POSTHOG_KEY=phc_xxx
+    flutter build appbundle --dart-define=POSTHOG_KEY=phc_xxx
+
+The key is public in the same way the RevenueCat keys are: it names the
+project to write into and reads nothing back. `POSTHOG_HOST` picks the region
+and defaults to the EU one; a project made in the other region and pointed at
+from here accepts nothing and says nothing, which is a long afternoon.
+
+**Three rules hold at every call site.** It never throws and never blocks —
+measurement is not a feature the reader asked for, so it may not cost them a
+frame. It is off until told otherwise. And it carries no prose: ids, counts
+and enums go out; the name the reader typed, their email, their friend code,
+the text of an answer and the reason they wrote beside it do not. A card is a
+pill id and a subject. What a reader *said* is theirs, and there is a test
+that types a sentence into an answer and fails if it appears anywhere in what
+was sent.
+
+**The funnel is the app's own shape.** A day dealt, with how much of it is a
+re-asking. A card advanced, with its place in the five, so the drop-off inside
+a day reads as a curve rather than one completion rate. A card answered, with
+the confidence but never the reason. The day finished, with what it was worth
+rather than what the reader now holds. Then the things that decide whether
+there is a second week: a rung reached, a freeze earned and spent, a plan
+changed — and `pill said`, a card that left the phone and was said to
+somebody, which is the one number this app is actually for.
+
+The paywall takes the gate that opened it as a required argument rather than a
+defaulted one, so `archive`, `extra set` and `calibration` can be told apart. A
+default is how a fifth of the traffic ends up labelled `unknown` by the end of
+the first week.
+
+**Screens are named by hand.** The three tabs are one route and the rest are
+unnamed pushes, so a navigator observer would report `/` and call it a
+session. `ScreenView` in `lib/widgets/ui.dart` names each one where it is
+built, which means a screen reachable from two places is still one name.
+
+**The reader's switch** sits at the foot of the settings, above the debug
+section, on by default and off in one tap, in all thirteen languages. It is
+applied to PostHog the moment it moves, and written back after a sign-out —
+sign-out clears every key the app holds, and a choice a wipe undoes is a delay
+rather than a choice. Session replay is off, and that is a decision rather
+than a default: it records the screen, and the screen has the reader's own
+written reasons on it.
+
+On the web the plugin brings no library of its own, so
+`lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.
+Nothing waits on it: a blocked CDN or a dead network costs the preview its
+numbers and not its first paint.
+
 ## What is not real yet
 
 These are declared in the UI rather than faked:
@@ -454,7 +513,8 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 **Debug tools.** The foot of the profile carries a temporary section — wipe
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
-error, whether the store answered. It is on in release builds on purpose,
+error, whether the store answered, and whether PostHog is sending, opted out
+or not running at all. It is on in release builds on purpose,
 because TestFlight builds are release builds and that is where it is needed.
 One line in `lib/debug_flags.dart`, or `--dart-define=DEBUG_TOOLS=false`,
 turns it off.
