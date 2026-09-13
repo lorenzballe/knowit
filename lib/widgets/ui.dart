@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../analytics.dart';
-import '../l10n/l10n.dart';
 
 import '../data/topics.dart';
 
@@ -267,13 +266,24 @@ class TopicDot extends StatelessWidget {
 class NudgeSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
-  const NudgeSwitch({super.key, required this.value, required this.onChanged});
+
+  /// What a screen reader calls this switch, and what a test finds it by.
+  /// Required: there are two of these on the settings now, and an unnamed
+  /// switch is one nobody can point at.
+  final String label;
+
+  const NudgeSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       toggled: value,
-      label: context.l10n.dailyNudge,
+      label: label,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(!value),

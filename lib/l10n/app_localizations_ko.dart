@@ -1526,4 +1526,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get scoreStartsToday => '점수는 오늘의 다섯 장부터 시작해요.';
+
+  @override
+  String get anonymousUsage => '익명 사용 정보';
+
+  @override
+  String get anonymousUsageLine =>
+      '읽고, 담고, 말한 카드의 수만. 다음 카드를 더 좋게 만들기 위해서입니다. 이름도 이메일도, 적은 내용도 보내지 않습니다.';
+
+  @override
+  String get usageOn => '숫자만, 이름은 없습니다.';
+
+  @override
+  String get usageOff => '더 이상 아무것도 측정하지 않습니다.';
 }

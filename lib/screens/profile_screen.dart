@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../data/topics.dart';
 import 'mix_screen.dart';
+import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
@@ -338,6 +339,7 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(width: 14),
                 NudgeSwitch(
                   value: app.notificationsOn,
+                  label: context.l10n.dailyNudge,
                   onChanged: (v) async {
                     await app.setNotifications(v);
                     if (!context.mounted) return;
@@ -526,6 +528,10 @@ class ProfileScreen extends StatelessWidget {
               );
             },
           ),
+          const SizedBox(height: 24),
+          Eyebrow(context.l10n.anonymousUsage),
+          const SizedBox(height: 11),
+          const _UsageSwitch(),
           if (kDebugTools) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
@@ -571,6 +577,14 @@ class ProfileScreen extends StatelessWidget {
               Subscription.instance.offering?.identifier ?? 'none',
             ),
             _DebugLine('Entitlement asked for', kPlusEntitlement),
+            _DebugLine(
+              'Analytics',
+              Analytics.ready
+                  ? (Analytics.collecting ? 'sending' : 'opted out')
+                  : 'NOT running',
+            ),
+            if (Analytics.failure != null)
+              _DebugLine('Why', Analytics.failure!),
             const SizedBox(height: 10),
             _LinkRow(
               label: 'Wipe everything and restart',
@@ -587,6 +601,63 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// The reader's own switch over measurement.
+///
+/// Stateful, alone on this stateless screen, because what it shows is not
+/// part of AppState: it is a decision about this install rather than about
+/// this reader, so it does not travel to a new phone with the backup and
+/// there is no listener above to rebuild from.
+class _UsageSwitch extends StatefulWidget {
+  const _UsageSwitch();
+
+  @override
+  State<_UsageSwitch> createState() => _UsageSwitchState();
+}
+
+class _UsageSwitchState extends State<_UsageSwitch> {
+  late bool _on = Analytics.collecting;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return PaperCard(
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+      radius: 18,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              l.anonymousUsageLine,
+              style: AppText.body(
+                size: 12,
+                height: 1.35,
+                color: context.p.inkMuted,
+              ),
+            ),
+          ),
+          const SizedBox(width: 14),
+          NudgeSwitch(
+            value: _on,
+            label: l.anonymousUsage,
+            onChanged: (v) async {
+              // The switch moves first. Waiting on a write to disk to show a
+              // toggle is what makes a second tap look necessary.
+              setState(() => _on = v);
+              final messenger = ScaffoldMessenger.of(context);
+              await Analytics.setCollecting(v);
+              messenger
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(content: Text(v ? l.usageOn : l.usageOff)),
+                );
+            },
+          ),
         ],
       ),
     );

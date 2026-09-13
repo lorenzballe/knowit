@@ -2291,6 +2291,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your score starts with today\'s five.'**
   String get scoreStartsToday;
+
+  /// No description provided for @anonymousUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous usage'**
+  String get anonymousUsage;
+
+  /// No description provided for @anonymousUsageLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.'**
+  String get anonymousUsageLine;
+
+  /// No description provided for @usageOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts only, and no names.'**
+  String get usageOn;
+
+  /// No description provided for @usageOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing more is measured.'**
+  String get usageOff;
 }
 
 class _AppLocalizationsDelegate

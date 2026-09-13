@@ -1560,4 +1560,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'Your score starts with today\'s five.';
+
+  @override
+  String get anonymousUsage => 'Anonymous usage';
+
+  @override
+  String get anonymousUsageLine =>
+      'Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.';
+
+  @override
+  String get usageOn => 'Counts only, and no names.';
+
+  @override
+  String get usageOff => 'Nothing more is measured.';
 }

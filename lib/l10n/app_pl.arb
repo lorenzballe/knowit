@@ -362,5 +362,9 @@
   "pts": "punktów",
   "nStillWithYou": "{n} wciąż z tobą",
   "nMoves": "{n, plural, =1{1 chwyt} few{{n} chwyty} many{{n} chwytów} other{{n} chwytu}}",
-  "scoreStartsToday": "Twój wynik zaczyna się od dzisiejszej piątki."
+  "scoreStartsToday": "Twój wynik zaczyna się od dzisiejszej piątki.",
+  "anonymousUsage": "Anonimowe użycie",
+  "anonymousUsageLine": "Ile kart zostaje przeczytanych, zachowanych i powiedzianych, żeby następne były lepsze. Nigdy twoje imię, e-mail ani to, co piszesz.",
+  "usageOn": "Tylko liczby, żadnych imion.",
+  "usageOff": "Nic już nie jest mierzone."
 }

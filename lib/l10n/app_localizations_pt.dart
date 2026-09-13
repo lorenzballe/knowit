@@ -1565,4 +1565,17 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'A tua pontuação começa com as cinco de hoje.';
+
+  @override
+  String get anonymousUsage => 'Uso anónimo';
+
+  @override
+  String get anonymousUsageLine =>
+      'Quantas cartas são lidas, guardadas e ditas, para que as próximas sejam melhores. Nunca o teu nome, o teu email ou o que escreves.';
+
+  @override
+  String get usageOn => 'Apenas contagens, sem nomes.';
+
+  @override
+  String get usageOff => 'Já não se mede nada.';
 }

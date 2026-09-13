@@ -1567,4 +1567,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get scoreStartsToday =>
       'Dein Punktestand beginnt mit den fünf von heute.';
+
+  @override
+  String get anonymousUsage => 'Anonyme Nutzung';
+
+  @override
+  String get anonymousUsageLine =>
+      'Wie viele Karten gelesen, behalten und gesagt werden, damit die nächsten besser sind. Nie dein Name, deine E-Mail oder was du schreibst.';
+
+  @override
+  String get usageOn => 'Nur Zahlen, keine Namen.';
+
+  @override
+  String get usageOff => 'Es wird nichts mehr gemessen.';
 }

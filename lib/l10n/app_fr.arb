@@ -362,5 +362,9 @@
   "pts": "points",
   "nStillWithYou": "{n} encore avec toi",
   "nMoves": "{n, plural, =1{1 piège} other{{n} pièges}}",
-  "scoreStartsToday": "Ton score commence avec les cinq d'aujourd'hui."
+  "scoreStartsToday": "Ton score commence avec les cinq d'aujourd'hui.",
+  "anonymousUsage": "Usage anonyme",
+  "anonymousUsageLine": "Combien de cartes sont lues, gardées et dites, pour que les suivantes soient meilleures. Jamais ton nom, ton e-mail ni ce que tu écris.",
+  "usageOn": "Des comptes seulement, aucun nom.",
+  "usageOff": "Plus rien n’est mesuré."
 }

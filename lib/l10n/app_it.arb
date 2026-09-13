@@ -362,5 +362,9 @@
   "pts": "punti",
   "nStillWithYou": "{n} ancora con te",
   "nMoves": "{n, plural, =1{1 mossa} other{{n} mosse}}",
-  "scoreStartsToday": "Il tuo punteggio parte dalle cinque di oggi."
+  "scoreStartsToday": "Il tuo punteggio parte dalle cinque di oggi.",
+  "anonymousUsage": "Uso anonimo",
+  "anonymousUsageLine": "Quante carte vengono lette, tenute e dette, così le prossime saranno migliori. Mai il tuo nome, la tua email o quello che scrivi.",
+  "usageOn": "Solo conteggi, nessun nome.",
+  "usageOff": "Non si misura più nulla."
 }

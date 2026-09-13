@@ -362,5 +362,9 @@
   "pts": "ポイント",
   "nStillWithYou": "{n}枚がまだ記憶に",
   "nMoves": "{n, plural, other{型{n}個}}",
-  "scoreStartsToday": "スコアは今日の5枚から始まります。"
+  "scoreStartsToday": "スコアは今日の5枚から始まります。",
+  "anonymousUsage": "匿名の利用状況",
+  "anonymousUsageLine": "読まれた・保存された・話されたカードの数だけ。次のカードをよくするためです。名前もメールも、書いた内容も送りません。",
+  "usageOn": "数だけ、名前はなし。",
+  "usageOff": "もう何も計測しません。"
 }

@@ -1511,4 +1511,17 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get scoreStartsToday => '你的分数从今天的五张开始。';
+
+  @override
+  String get anonymousUsage => '匿名使用情况';
+
+  @override
+  String get anonymousUsageLine =>
+      '只统计有多少张卡被读过、留下和说出口，好让接下来的卡更好。绝不包括你的姓名、邮箱或你写下的任何内容。';
+
+  @override
+  String get usageOn => '只有数字，没有名字。';
+
+  @override
+  String get usageOff => '不再测量任何内容。';
 }

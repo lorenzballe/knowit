@@ -1332,5 +1332,9 @@
   "@nStillWithYou": {"placeholders": {"n": {"type": "int"}}},
   "nMoves": "{n, plural, =1{1 move} other{{n} moves}}",
   "@nMoves": {"placeholders": {"n": {"type": "int"}}},
-  "scoreStartsToday": "Your score starts with today's five."
+  "scoreStartsToday": "Your score starts with today's five.",
+  "anonymousUsage": "Anonymous usage",
+  "anonymousUsageLine": "Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.",
+  "usageOn": "Counts only, and no names.",
+  "usageOff": "Nothing more is measured."
 }

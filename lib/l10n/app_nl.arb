@@ -362,5 +362,9 @@
   "pts": "punten",
   "nStillWithYou": "{n} nog bij je",
   "nMoves": "{n, plural, =1{1 truc} other{{n} trucs}}",
-  "scoreStartsToday": "Je score begint met de vijf van vandaag."
+  "scoreStartsToday": "Je score begint met de vijf van vandaag.",
+  "anonymousUsage": "Anoniem gebruik",
+  "anonymousUsageLine": "Hoeveel kaarten gelezen, bewaard en gezegd worden, zodat de volgende beter zijn. Nooit je naam, je e-mail of wat je schrijft.",
+  "usageOn": "Alleen aantallen, geen namen.",
+  "usageOff": "Er wordt niets meer gemeten."
 }

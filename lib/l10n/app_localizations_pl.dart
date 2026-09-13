@@ -1611,4 +1611,17 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get scoreStartsToday =>
       'Twój wynik zaczyna się od dzisiejszej piątki.';
+
+  @override
+  String get anonymousUsage => 'Anonimowe użycie';
+
+  @override
+  String get anonymousUsageLine =>
+      'Ile kart zostaje przeczytanych, zachowanych i powiedzianych, żeby następne były lepsze. Nigdy twoje imię, e-mail ani to, co piszesz.';
+
+  @override
+  String get usageOn => 'Tylko liczby, żadnych imion.';
+
+  @override
+  String get usageOff => 'Nic już nie jest mierzone.';
 }

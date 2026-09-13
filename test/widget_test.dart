@@ -1205,13 +1205,20 @@ void main() {
     await _settle(tester);
     expect(find.text('Every day at 08:30'), findsOneWidget);
 
-    await tester.tap(find.byType(NudgeSwitch));
+    // Named rather than found by type: the settings carry a second switch of
+    // the same kind — the one over anonymous usage — and "the only switch on
+    // the screen" stopped being true the day that arrived.
+    final nudge = find.byWidgetPredicate(
+      (w) => w is NudgeSwitch && w.label == 'Daily nudge',
+    );
+
+    await tester.tap(nudge);
     await _settle(tester);
 
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.notifications'), isFalse);
 
-    await tester.tap(find.byType(NudgeSwitch));
+    await tester.tap(nudge);
     await _settle(tester);
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
