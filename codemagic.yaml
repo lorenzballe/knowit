@@ -25,12 +25,17 @@ workflows:
         # Declared once so an Android workflow can reuse them as they are.
         REVENUECAT_IOS_KEY: "appl_HWZZHYAnvPnnzHgAtscRyFDUhPs"
         REVENUECAT_ANDROID_KEY: "goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl"
-        # PostHog's project key, which is public in the same way those are.
-        # Empty on purpose: a build with no key is not measured at all rather
-        # than measured into nowhere (see lib/analytics.dart), so measurement
-        # is turned on by putting the key in Codemagic's environment — not by
-        # a code change, and not by a build anybody has to remember to flag.
-        POSTHOG_KEY: ""
+        # Where PostHog's events go. The project key itself is deliberately
+        # NOT declared here: Codemagic rejects an empty var ("ensure this
+        # value has at least 1 characters"), and the only two ways to satisfy
+        # it are both wrong — a real key committed to the repo, or a
+        # placeholder that would have the app start PostHog against a project
+        # that does not exist.
+        #
+        # So the key is set in Codemagic's own environment, or not at all. A
+        # build with no key is not measured (see lib/analytics.dart), which is
+        # what this repo gets, and turning measurement on stays a variable
+        # rather than a code change.
         POSTHOG_HOST: "https://eu.i.posthog.com"
       flutter: stable
       xcode: latest
@@ -109,7 +114,7 @@ workflows:
           flutter build ipa --release \
             --build-number=$(($LATEST + 1)) \
             --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
-            --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
+            --dart-define=POSTHOG_KEY=${POSTHOG_KEY:-} \
             --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
