@@ -6,6 +6,7 @@ import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/genres_screen.dart';
+import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/subject_icon.dart';
 
@@ -122,6 +123,31 @@ void main() {
       expect(_planetOf(tester, 'History'), closeTo(61, 0.5));
       expect(_planetOf(tester, 'Science'), closeTo(47, 0.5));
       expect(_planetOf(tester, 'Space'), closeTo(33, 0.5));
+    });
+
+    testWidgets('subjects left alone keep the order of the grid, not the map', (
+      tester,
+    ) async {
+      // The wheel starts everything all the way in, so a reader who drags a
+      // few subjects down leaves the rest tied at the top — and that tie is
+      // most of the list. It has to come out in the order of the grid they
+      // were just looking at; broken by kTopicOrder it read science, space,
+      // psychology against a grid that reads economics, sport, nature, and
+      // the screen looked like it had thrown the wheel away.
+      final app = await _app(
+        {for (final s in kMixSubjects) s.key: 1.0}..['science'] = 0.3,
+      );
+      await _pump(tester, app);
+
+      double y(String name) =>
+          tester.getTopLeft(find.text(name, skipOffstage: false)).dy;
+
+      // The grid opens on Economics, then Sport, then Nature.
+      expect(y('Economics'), lessThan(y('Sport')));
+      expect(y('Sport'), lessThan(y('Nature')));
+      // And the one subject actually turned down is below all of them,
+      // because weight still decides before the grid does.
+      expect(y('Nature'), lessThan(y('Science')));
     });
 
     testWidgets('a subject left out of the mix keeps a quiet line', (

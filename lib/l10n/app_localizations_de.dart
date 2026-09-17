@@ -501,9 +501,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Anstoß an. Die Zustellung braucht die Handy-Version.';
 
   @override
-  String get howMuchYouKnow => 'Wie viel du weißt';
-
-  @override
   String savedN(int n) {
     return 'Behalten · $n';
   }
@@ -796,34 +793,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Täglicher Anstoß auf $time verschoben.';
   }
-
-  @override
-  String get whatYouAlready => 'Was du schon ';
-
-  @override
-  String get know => 'weißt';
-
-  @override
-  String get knowIntro =>
-      'Die Fächer, die du am höchsten gedreht hast. Es ändert, was ein Tag in jedem von dir verlangt — solide bekommt Fragen, neugierig bekommt Erklärungen — nicht, wie viel du davon bekommst.';
-
-  @override
-  String get startWithMyFirstCards => 'Mit meinen ersten Karten starten';
-
-  @override
-  String get skipForNow => 'Vorerst überspringen';
-
-  @override
-  String get levelCurious => 'Neugierig';
-
-  @override
-  String get levelSome => 'Etwas';
-
-  @override
-  String get levelSolid => 'Solide';
-
-  @override
-  String get save => 'Speichern';
 
   @override
   String subjectsInTheMix(int n, int total) {

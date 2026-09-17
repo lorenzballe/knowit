@@ -10,7 +10,6 @@ import 'screens/comeback_screen.dart';
 import 'l10n/l10n.dart';
 import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
-import 'screens/know_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
@@ -142,7 +141,6 @@ enum _Stage {
   intro,
   subjects,
   genres,
-  know,
   comeback,
   shell;
 
@@ -153,7 +151,6 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
-    _Stage.know => 'onboarding level',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -402,18 +399,6 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            if (mounted) _go(_Stage.know);
-          },
-          onSkip: () => _go(_Stage.know),
-        );
-
-      // One more question, and a way past it: what the reader already
-      // knows of what they just asked for. The cards start either way.
-      case _Stage.know:
-        return KnowScreen(
-          app: _app,
-          onDone: (levels) async {
-            await _app.setTopicLevels(levels);
             await _finishOnboarding();
           },
           onSkip: _finishOnboarding,

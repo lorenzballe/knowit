@@ -507,9 +507,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Напоминание включено. Для доставки нужна версия для телефона.';
 
   @override
-  String get howMuchYouKnow => 'Сколько ты знаешь';
-
-  @override
   String savedN(int n) {
     return 'Сохранённые · $n';
   }
@@ -824,34 +821,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Ежедневное напоминание перенесено на $time.';
   }
-
-  @override
-  String get whatYouAlready => 'Что ты уже ';
-
-  @override
-  String get know => 'знаешь';
-
-  @override
-  String get knowIntro =>
-      'Темы, которые ты поднял выше всего. Это меняет, чего день требует от тебя в каждой из них — уверенный получает вопросы, любопытный получает объяснения, — а не сколько ты получаешь.';
-
-  @override
-  String get startWithMyFirstCards => 'Начать с первых карточек';
-
-  @override
-  String get skipForNow => 'Пока пропустить';
-
-  @override
-  String get levelCurious => 'Любопытно';
-
-  @override
-  String get levelSome => 'Немного';
-
-  @override
-  String get levelSolid => 'Уверенно';
-
-  @override
-  String get save => 'Сохранить';
 
   @override
   String subjectsInTheMix(int n, int total) {

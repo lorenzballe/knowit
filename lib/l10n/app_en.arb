@@ -449,7 +449,6 @@
  },
  "nudgeOnSystemSaidNo": "Nudge on, but the system said no. Turn notifications on for Astut in settings.",
  "nudgeOnNeedsPhone": "Nudge on. Delivery needs the phone build.",
- "howMuchYouKnow": "How much you know",
  "savedN": "Saved · {n}",
  "@savedN": {
   "placeholders": {
@@ -707,15 +706,6 @@
    }
   }
  },
- "whatYouAlready": "What you already ",
- "know": "know",
- "knowIntro": "The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.",
- "startWithMyFirstCards": "Start with my first cards",
- "skipForNow": "Skip for now",
- "levelCurious": "Curious",
- "levelSome": "Some",
- "levelSolid": "Solid",
- "save": "Save",
  "subjectsInTheMix": "{n} of {total} subjects in the mix",
  "@subjectsInTheMix": {
   "placeholders": {

@@ -501,9 +501,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Promemoria acceso. Per riceverlo serve la versione per telefono.';
 
   @override
-  String get howMuchYouKnow => 'Quanto ne sai';
-
-  @override
   String savedN(int n) {
     return 'Salvate · $n';
   }
@@ -796,34 +793,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Promemoria spostato alle $time.';
   }
-
-  @override
-  String get whatYouAlready => 'Cosa già ';
-
-  @override
-  String get know => 'sai';
-
-  @override
-  String get knowIntro =>
-      'Le materie che hai spinto più in alto. Cambia cosa una giornata ti chiede in ciascuna — solido riceve domande, curioso riceve spiegazioni — non quanta ne ricevi.';
-
-  @override
-  String get startWithMyFirstCards => 'Inizia con le mie prime carte';
-
-  @override
-  String get skipForNow => 'Salta per ora';
-
-  @override
-  String get levelCurious => 'Curioso';
-
-  @override
-  String get levelSome => 'Un po\'';
-
-  @override
-  String get levelSolid => 'Solido';
-
-  @override
-  String get save => 'Salva';
 
   @override
   String subjectsInTheMix(int n, int total) {

@@ -498,9 +498,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nudgeOnNeedsPhone => 'Nudge on. Delivery needs the phone build.';
 
   @override
-  String get howMuchYouKnow => 'How much you know';
-
-  @override
   String savedN(int n) {
     return 'Saved · $n';
   }
@@ -793,34 +790,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Daily nudge moved to $time.';
   }
-
-  @override
-  String get whatYouAlready => 'What you already ';
-
-  @override
-  String get know => 'know';
-
-  @override
-  String get knowIntro =>
-      'The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.';
-
-  @override
-  String get startWithMyFirstCards => 'Start with my first cards';
-
-  @override
-  String get skipForNow => 'Skip for now';
-
-  @override
-  String get levelCurious => 'Curious';
-
-  @override
-  String get levelSome => 'Some';
-
-  @override
-  String get levelSolid => 'Solid';
-
-  @override
-  String get save => 'Save';
 
   @override
   String subjectsInTheMix(int n, int total) {

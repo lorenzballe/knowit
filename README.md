@@ -73,8 +73,8 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run, then the
-genres under it), Today with
+**Free** — first run (the five-scene intro, then the subject run, and the
+genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (record, appearance, topics, coverage, calibration,
@@ -517,6 +517,17 @@ it — there is no backdrop and no Done button, and the list keeps its position,
 so the six a reader is comparing against stay on screen. A genre with some of
 its three turned off carries a small count; one with all three carries
 nothing, because a badge on every genre says nothing at all.
+
+It is also the last thing the onboarding asks. There used to be a third
+screen after it — *what you already know*, three answers a subject — and it
+has gone. It asked the reader to rate themselves before they had seen a
+single card, at the one moment they had least to go on, and then never asked
+again: the answer aged from the first morning and nothing updated it. The
+app already knows what it was trying to find out, and knows it from what
+actually happened — which subjects the reader gets right, and how sure they
+said they were. `topicLevels` still reaches the dealer and still travels in
+the backup, so a reader who set it keeps it; what is gone is the screen that
+asked. Filling it from measured accuracy instead is the next thing.
 
 The choice is stored as what was turned **off**, not what was left on. A genre
 added in a later build then reaches everybody, instead of being hidden from

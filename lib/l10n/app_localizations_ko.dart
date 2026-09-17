@@ -493,9 +493,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get nudgeOnNeedsPhone => '알림 켜짐. 전달에는 휴대폰 버전이 필요해요.';
 
   @override
-  String get howMuchYouKnow => '얼마나 아는가';
-
-  @override
   String savedN(int n) {
     return '보관함 · $n';
   }
@@ -783,34 +780,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return '매일 알림을 $time(으)로 옮겼어요.';
   }
-
-  @override
-  String get whatYouAlready => '이미 ';
-
-  @override
-  String get know => '아는 것';
-
-  @override
-  String get knowIntro =>
-      '가장 높이 올린 주제들입니다. 하루가 각 주제에서 무엇을 요구하는지가 바뀝니다 — 탄탄하면 질문을, 궁금하면 설명을 — 양은 그대로예요.';
-
-  @override
-  String get startWithMyFirstCards => '첫 카드로 시작';
-
-  @override
-  String get skipForNow => '지금은 건너뛰기';
-
-  @override
-  String get levelCurious => '궁금';
-
-  @override
-  String get levelSome => '조금';
-
-  @override
-  String get levelSolid => '탄탄';
-
-  @override
-  String get save => '저장';
 
   @override
   String subjectsInTheMix(int n, int total) {

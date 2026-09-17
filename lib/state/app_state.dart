@@ -1193,12 +1193,7 @@ class AppState extends ChangeNotifier {
   Future<void> completeOnboarding() async {
     onboarded = true;
     await _prefs.setBool(_kOnboarded, true);
-    Analytics.capture('onboarding completed', {
-      'topics': pickedTopics.length,
-      // Whether they answered the "what do you already know" screen or walked
-      // past it. A skipped level run deals a different first week.
-      'levels_set': topicLevels.isNotEmpty,
-    });
+    Analytics.capture('onboarding completed', {'topics': pickedTopics.length});
     notifyListeners();
   }
 

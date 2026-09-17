@@ -497,9 +497,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Hatırlatma açık. Teslimat için telefon sürümü gerekir.';
 
   @override
-  String get howMuchYouKnow => 'Ne kadar biliyorsun';
-
-  @override
   String savedN(int n) {
     return 'Saklananlar · $n';
   }
@@ -791,34 +788,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Günlük hatırlatma $time saatine alındı.';
   }
-
-  @override
-  String get whatYouAlready => 'Zaten ne ';
-
-  @override
-  String get know => 'biliyorsun';
-
-  @override
-  String get knowIntro =>
-      'En yükseğe çıkardığın konular. Bir günün her birinde senden ne istediğini değiştirir — sağlam olan soru alır, meraklı olan anlatım alır — ne kadar aldığını değil.';
-
-  @override
-  String get startWithMyFirstCards => 'İlk kartlarımla başla';
-
-  @override
-  String get skipForNow => 'Şimdilik atla';
-
-  @override
-  String get levelCurious => 'Meraklı';
-
-  @override
-  String get levelSome => 'Biraz';
-
-  @override
-  String get levelSolid => 'Sağlam';
-
-  @override
-  String get save => 'Kaydet';
 
   @override
   String subjectsInTheMix(int n, int total) {

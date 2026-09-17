@@ -786,12 +786,6 @@ abstract class AppLocalizations {
   /// **'Nudge on. Delivery needs the phone build.'**
   String get nudgeOnNeedsPhone;
 
-  /// No description provided for @howMuchYouKnow.
-  ///
-  /// In en, this message translates to:
-  /// **'How much you know'**
-  String get howMuchYouKnow;
-
   /// No description provided for @savedN.
   ///
   /// In en, this message translates to:
@@ -1121,60 +1115,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Daily nudge moved to {time}.'**
   String dailyNudgeMovedTo(String time);
-
-  /// No description provided for @whatYouAlready.
-  ///
-  /// In en, this message translates to:
-  /// **'What you already '**
-  String get whatYouAlready;
-
-  /// No description provided for @know.
-  ///
-  /// In en, this message translates to:
-  /// **'know'**
-  String get know;
-
-  /// No description provided for @knowIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.'**
-  String get knowIntro;
-
-  /// No description provided for @startWithMyFirstCards.
-  ///
-  /// In en, this message translates to:
-  /// **'Start with my first cards'**
-  String get startWithMyFirstCards;
-
-  /// No description provided for @skipForNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip for now'**
-  String get skipForNow;
-
-  /// No description provided for @levelCurious.
-  ///
-  /// In en, this message translates to:
-  /// **'Curious'**
-  String get levelCurious;
-
-  /// No description provided for @levelSome.
-  ///
-  /// In en, this message translates to:
-  /// **'Some'**
-  String get levelSome;
-
-  /// No description provided for @levelSolid.
-  ///
-  /// In en, this message translates to:
-  /// **'Solid'**
-  String get levelSolid;
-
-  /// No description provided for @save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get save;
 
   /// No description provided for @subjectsInTheMix.
   ///

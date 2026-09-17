@@ -499,9 +499,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Duwtje aan. Bezorging heeft de telefoonversie nodig.';
 
   @override
-  String get howMuchYouKnow => 'Hoeveel je weet';
-
-  @override
   String savedN(int n) {
     return 'Bewaard · $n';
   }
@@ -795,34 +792,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Dagelijks duwtje verzet naar $time.';
   }
-
-  @override
-  String get whatYouAlready => 'Wat je al ';
-
-  @override
-  String get know => 'weet';
-
-  @override
-  String get knowIntro =>
-      'De vakken die je het hoogst zette. Het verandert wat een dag in elk van je vraagt — stevig krijgt vragen, nieuwsgierig krijgt uitleg — niet hoeveel je ervan krijgt.';
-
-  @override
-  String get startWithMyFirstCards => 'Beginnen met mijn eerste kaarten';
-
-  @override
-  String get skipForNow => 'Voor nu overslaan';
-
-  @override
-  String get levelCurious => 'Nieuwsgierig';
-
-  @override
-  String get levelSome => 'Wat';
-
-  @override
-  String get levelSolid => 'Stevig';
-
-  @override
-  String get save => 'Opslaan';
 
   @override
   String subjectsInTheMix(int n, int total) {

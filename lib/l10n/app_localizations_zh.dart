@@ -488,9 +488,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nudgeOnNeedsPhone => '提醒已开启。送达需要手机版。';
 
   @override
-  String get howMuchYouKnow => '你知道多少';
-
-  @override
   String savedN(int n) {
     return '收藏 · $n';
   }
@@ -776,34 +773,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return '每日提醒已改到 $time。';
   }
-
-  @override
-  String get whatYouAlready => '你已经';
-
-  @override
-  String get know => '知道的';
-
-  @override
-  String get knowIntro =>
-      '你调得最高的主题。它改变的是一天在每个主题里向你要什么——扎实就多提问，好奇就多讲解——而不是你得到多少。';
-
-  @override
-  String get startWithMyFirstCards => '开始我的第一批卡片';
-
-  @override
-  String get skipForNow => '暂时跳过';
-
-  @override
-  String get levelCurious => '好奇';
-
-  @override
-  String get levelSome => '略懂';
-
-  @override
-  String get levelSolid => '扎实';
-
-  @override
-  String get save => '保存';
 
   @override
   String subjectsInTheMix(int n, int total) {

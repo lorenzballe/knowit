@@ -225,29 +225,17 @@ void main() {
     await tester.tap(find.text('Next'));
     await _settle(tester);
 
-    // Three: the same answer one layer finer — the six genres inside each
-    // subject, most asked-for subject first. Walked past here; it has a run
-    // of its own in test/genres_test.dart.
+    // Three, and last: the same answer one layer finer — the six genres
+    // inside each subject, most asked-for subject first. Walked past here;
+    // it has a run of its own in test/genres_test.dart.
     expect(find.text('Your mix'), findsOneWidget);
     await tester.tap(find.text('Skip — everything stays on'));
-    await _settle(tester);
-
-    // Four: what you already know, of the subjects pushed highest. One
-    // subject marked solid, the rest left as they are.
-    expect(find.text('know'), findsOneWidget);
-    expect(find.byKey(const ValueKey('know-economics-2')), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('know-economics-2')));
-    await _settle(tester);
-    await tester.tap(find.text('Start with my first cards'));
     await _settle(tester);
 
     // And the answers are kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
     final weights = jsonDecode(prefs.getString('knowit.topicWeights')!) as Map;
-    final levels = jsonDecode(prefs.getString('knowit.topicLevels')!) as Map;
     expect(prefs.getBool('knowit.onboarded'), isTrue);
-    expect(levels['economics'], 2);
-    expect(levels['sport'], 1);
 
     // Science was dragged to nothing, so it is not in the mix.
     expect(weights.containsKey('science'), isFalse);
@@ -1119,7 +1107,7 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is three screens and then the cards', (
+  testWidgets('the onboarding is two screens and then the cards', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
@@ -1135,14 +1123,10 @@ void main() {
     await tester.tap(find.text('Next'));
     await _settle(tester);
 
-    // Three: the genres under it, which can be walked past.
+    // Three: the genres under it, which can be walked past — and the cards
+    // start straight after, because there is nothing else to ask.
     expect(find.text('Your mix'), findsOneWidget);
     await tester.tap(find.text('Skip — everything stays on'));
-    await _settle(tester);
-
-    // Four: what you know, which can be skipped — the cards start anyway.
-    expect(find.text('Skip for now'), findsOneWidget);
-    await tester.tap(find.text('Skip for now'));
     await _settle(tester);
 
     expect(find.byType(PillCardStack), findsOneWidget);

@@ -8,6 +8,7 @@ import '../l10n/l10n.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/subject_icon.dart';
+import 'mix_screen.dart';
 import '../widgets/ui.dart';
 
 /// Artboard 86a: the mix, one layer down.
@@ -71,13 +72,28 @@ class _GenresScreenState extends State<GenresScreen> {
     final list = [for (final key in kGenres.keys) (key, mix[key] ?? 0.0)];
     list.sort((a, b) {
       final int byWeight = b.$2.compareTo(a.$2);
-      // Ties keep the wheel's own order rather than the map's, so two
-      // subjects left at the same amount do not swap places between builds.
-      return byWeight != 0
-          ? byWeight
-          : kTopicOrder.indexOf(a.$1).compareTo(kTopicOrder.indexOf(b.$1));
+      if (byWeight != 0) return byWeight;
+      // Ties keep the order of the grid the reader was just looking at.
+      //
+      // This matters more than it sounds. The wheel starts every subject all
+      // the way in, so a reader who drags three of them down leaves fifteen
+      // at exactly the same weight — and that tie is most of the list. Broken
+      // by kTopicOrder it came out in an order the reader had never seen:
+      // science, space, psychology… against a grid that reads economics,
+      // sport, nature. The screen looked like it had ignored the wheel,
+      // because the only part of it the reader could see was the part that
+      // owed nothing to them.
+      return _onTheGrid(a.$1).compareTo(_onTheGrid(b.$1));
     });
     return list;
+  }
+
+  /// Where a subject sat on the wheel. Anything the grid does not carry goes
+  /// last rather than first, which is the safe end for a subject nobody was
+  /// offered.
+  static int _onTheGrid(String key) {
+    final int at = kMixSubjects.indexWhere((s) => s.key == key);
+    return at < 0 ? kMixSubjects.length : at;
   }
 
   int get _genresOn => kAllGenres.length - _genresOff.length;
@@ -404,12 +420,21 @@ class _GenreChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                genre.label,
-                style: AppText.body(
-                  size: 11.5,
-                  weight: FontWeight.w600,
-                  color: label,
+              // Flexible, because a genre's name is written with the content
+              // and the chip is not. Most are two words; "Where things come
+              // from" is five, and on a narrow phone or at a large text size
+              // it is wider than the line it has to sit on. It gives up its
+              // own tail rather than running off the card.
+              Flexible(
+                child: Text(
+                  genre.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.body(
+                    size: 11.5,
+                    weight: FontWeight.w600,
+                    color: label,
+                  ),
                 ),
               ),
               // Only when some of the three are off. A chip that says "3" on
