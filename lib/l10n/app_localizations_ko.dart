@@ -1539,4 +1539,44 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get usageOff => '더 이상 아무것도 측정하지 않습니다.';
+
+  @override
+  String get yourMix => '나의 믹스';
+
+  @override
+  String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 세 갈래가 바로 아래에 열립니다.';
+
+  @override
+  String get insideGenre => '이 안에';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6개 중 $n개 켜짐';
+  }
+
+  @override
+  String get offInYourMix => '믹스에 없음';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '계속 · $total개 중 $on개 장르 켜짐';
+  }
+
+  @override
+  String get skipEverythingStaysOn => '건너뛰기 — 전부 켜진 채로';
+
+  @override
+  String get mixRarely => '드물게';
+
+  @override
+  String get mixSometimes => '가끔';
+
+  @override
+  String get mixOften => '자주';
+
+  @override
+  String get mixALot => '많이';
+
+  @override
+  String get mixFull => '가득';
 }

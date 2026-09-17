@@ -366,5 +366,17 @@
   "anonymousUsage": "匿名の利用状況",
   "anonymousUsageLine": "読まれた・保存された・話されたカードの数だけ。次のカードをよくするためです。名前もメールも、書いた内容も送りません。",
   "usageOn": "数だけ、名前はなし。",
-  "usageOff": "もう何も計測しません。"
+  "usageOff": "もう何も計測しません。",
+  "yourMix": "あなたのミックス",
+  "genresLine": "ジャンルをタップすると外せます。長押しすると、中の三つの筋がすぐ下に開きます。",
+  "insideGenre": "この中身",
+  "nOfSixOn": "6つ中{n}つオン",
+  "offInYourMix": "ミックスに入っていません",
+  "continueGenresOn": "続ける · {total}中{on}ジャンルがオン",
+  "skipEverythingStaysOn": "スキップ — すべてオンのまま",
+  "mixRarely": "まれに",
+  "mixSometimes": "ときどき",
+  "mixOften": "よく",
+  "mixALot": "たくさん",
+  "mixFull": "いっぱい"
 }

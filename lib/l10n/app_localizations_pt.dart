@@ -1578,4 +1578,45 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get usageOff => 'Já não se mede nada.';
+
+  @override
+  String get yourMix => 'A tua mistura';
+
+  @override
+  String get genresLine =>
+      'Toca num género para o saltar. Mantém premido e os três fios lá dentro abrem-se logo abaixo.';
+
+  @override
+  String get insideGenre => 'Dentro';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n de 6 ativos';
+  }
+
+  @override
+  String get offInYourMix => 'fora da tua mistura';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Continuar · $on de $total géneros ativos';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Saltar — fica tudo ativo';
+
+  @override
+  String get mixRarely => 'Raramente';
+
+  @override
+  String get mixSometimes => 'Às vezes';
+
+  @override
+  String get mixOften => 'Muitas vezes';
+
+  @override
+  String get mixALot => 'Muito';
+
+  @override
+  String get mixFull => 'No máximo';
 }

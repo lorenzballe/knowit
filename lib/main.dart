@@ -8,6 +8,7 @@ import 'cloud.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'l10n/l10n.dart';
+import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/know_screen.dart';
 import 'screens/profile_screen.dart';
@@ -140,6 +141,7 @@ class _PhoneFrame extends StatelessWidget {
 enum _Stage {
   intro,
   subjects,
+  genres,
   know,
   comeback,
   shell;
@@ -150,6 +152,7 @@ enum _Stage {
   String get screen => switch (this) {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
+    _Stage.genres => 'onboarding genres',
     _Stage.know => 'onboarding level',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
@@ -387,8 +390,21 @@ class _AstutoRootState extends State<AstutoRoot> {
         return MixScreen(
           onDone: (weights) async {
             await _app.setTopicMix(weights);
+            if (mounted) _go(_Stage.genres);
+          },
+        );
+
+      // The same answer, one layer finer: which six of each subject, and
+      // which three inside those. The wheel decides how much; this decides
+      // what of it.
+      case _Stage.genres:
+        return GenresScreen(
+          app: _app,
+          onDone: (genresOff, strandsOff) async {
+            await _app.setGenresOff(genresOff, strandsOff);
             if (mounted) _go(_Stage.know);
           },
+          onSkip: () => _go(_Stage.know),
         );
 
       // One more question, and a way past it: what the reader already

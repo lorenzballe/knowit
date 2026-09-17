@@ -366,5 +366,17 @@
   "anonymousUsage": "Anonim kullanım",
   "anonymousUsageLine": "Kaç kartın okunduğu, saklandığı ve söylendiği — sonrakiler daha iyi olsun diye. Adın, e-postan ya da yazdıkların asla.",
   "usageOn": "Yalnızca sayılar, isim yok.",
-  "usageOff": "Artık hiçbir şey ölçülmüyor."
+  "usageOff": "Artık hiçbir şey ölçülmüyor.",
+  "yourMix": "Senin karışımın",
+  "genresLine": "Atlamak için bir türe dokun. Basılı tut, içindeki üç damar hemen altında açılsın.",
+  "insideGenre": "İçinde",
+  "nOfSixOn": "6 türden {n} açık",
+  "offInYourMix": "karışımında değil",
+  "continueGenresOn": "Devam · {total} türden {on} açık",
+  "skipEverythingStaysOn": "Atla — hepsi açık kalır",
+  "mixRarely": "Nadiren",
+  "mixSometimes": "Bazen",
+  "mixOften": "Sık sık",
+  "mixALot": "Çok",
+  "mixFull": "Tam"
 }

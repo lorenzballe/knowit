@@ -1527,4 +1527,44 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get usageOff => 'もう何も計測しません。';
+
+  @override
+  String get yourMix => 'あなたのミックス';
+
+  @override
+  String get genresLine => 'ジャンルをタップすると外せます。長押しすると、中の三つの筋がすぐ下に開きます。';
+
+  @override
+  String get insideGenre => 'この中身';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6つ中$nつオン';
+  }
+
+  @override
+  String get offInYourMix => 'ミックスに入っていません';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '続ける · $total中$onジャンルがオン';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'スキップ — すべてオンのまま';
+
+  @override
+  String get mixRarely => 'まれに';
+
+  @override
+  String get mixSometimes => 'ときどき';
+
+  @override
+  String get mixOften => 'よく';
+
+  @override
+  String get mixALot => 'たくさん';
+
+  @override
+  String get mixFull => 'いっぱい';
 }

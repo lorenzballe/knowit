@@ -366,5 +366,17 @@
   "anonymousUsage": "Anoniem gebruik",
   "anonymousUsageLine": "Hoeveel kaarten gelezen, bewaard en gezegd worden, zodat de volgende beter zijn. Nooit je naam, je e-mail of wat je schrijft.",
   "usageOn": "Alleen aantallen, geen namen.",
-  "usageOff": "Er wordt niets meer gemeten."
+  "usageOff": "Er wordt niets meer gemeten.",
+  "yourMix": "Jouw mix",
+  "genresLine": "Tik op een genre om het over te slaan. Houd het vast en de drie draden erin openen er vlak onder.",
+  "insideGenre": "Binnenin",
+  "nOfSixOn": "{n} van 6 aan",
+  "offInYourMix": "niet in jouw mix",
+  "continueGenresOn": "Doorgaan · {on} van {total} genres aan",
+  "skipEverythingStaysOn": "Overslaan — alles blijft aan",
+  "mixRarely": "Zelden",
+  "mixSometimes": "Soms",
+  "mixOften": "Vaak",
+  "mixALot": "Veel",
+  "mixFull": "Vol"
 }

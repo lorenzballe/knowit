@@ -1578,4 +1578,45 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get usageOff => 'Er wordt niets meer gemeten.';
+
+  @override
+  String get yourMix => 'Jouw mix';
+
+  @override
+  String get genresLine =>
+      'Tik op een genre om het over te slaan. Houd het vast en de drie draden erin openen er vlak onder.';
+
+  @override
+  String get insideGenre => 'Binnenin';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n van 6 aan';
+  }
+
+  @override
+  String get offInYourMix => 'niet in jouw mix';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Doorgaan · $on van $total genres aan';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Overslaan — alles blijft aan';
+
+  @override
+  String get mixRarely => 'Zelden';
+
+  @override
+  String get mixSometimes => 'Soms';
+
+  @override
+  String get mixOften => 'Vaak';
+
+  @override
+  String get mixALot => 'Veel';
+
+  @override
+  String get mixFull => 'Vol';
 }

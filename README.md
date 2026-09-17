@@ -73,7 +73,8 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run), Today with
+**Free** — first run (the five-scene intro, then the subject run, then the
+genres under it), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (record, appearance, topics, coverage, calibration,
@@ -305,7 +306,8 @@ the channel away on someone who does not yet know what the app is.
 ```
 lib/
   analytics.dart  what is measured, and whether anything is
-  data/        topic palette, the pill pool, the question of the day, the dealer
+  data/        topic palette, the pill pool, the question of the day, the dealer,
+               and the genres under each subject
   models/      Pill, Reminder
   state/       AppState — streak, shelves, history, the ladder (persisted)
   sync/        the account, the snapshot and its merge, boards
@@ -488,6 +490,40 @@ On the web the plugin brings no library of its own, so
 Nothing waits on it: a blocked CDN or a dead network costs the preview its
 numbers and not its first paint.
 
+## The mix, one layer down
+
+Artboard 86a, and the third screen of the onboarding. A subject is too coarse
+to pick with: two readers both ask for Space and one of them means rockets
+while the other means how big the thing is. The wheel before it cannot tell
+them apart, and a day dealt from "Space" serves neither.
+
+So every subject carries six **genres**, and every genre three **strands**
+under it — 108 and 324 of them, in `lib/data/genres.dart`. They are in
+English, like the cards: these are names of things to write about rather than
+words the app says for itself, so the chrome around them is translated
+thirteen ways and a genre is content.
+
+The screen is a reading of the wheel rather than a second, unrelated list.
+The subjects are in the order the reader just put them in, and one asked for
+more is **drawn larger** — the planet runs from 26 to 61 points across, off
+the same number the wheel wrote down. A subject dragged to nothing keeps a
+dimmed line at the foot of the list rather than vanishing, because a subject
+that disappears reads as one the app does not have.
+
+Everything starts on, as the wheel does: the reader is turning things down,
+not building a deck out of nothing. A tap skips a genre. A **hold** opens its
+three strands *in place*, on a line under the row rather than in a sheet over
+it — there is no backdrop and no Done button, and the list keeps its position,
+so the six a reader is comparing against stay on screen. A genre with some of
+its three turned off carries a small count; one with all three carries
+nothing, because a badge on every genre says nothing at all.
+
+The choice is stored as what was turned **off**, not what was left on. A genre
+added in a later build then reaches everybody, instead of being hidden from
+every reader who chose before it existed. It travels in the backup under the
+same rule as the mix — the decision made most recently wins — because a union
+would quietly resurrect a genre this phone turned off.
+
 ## What is not real yet
 
 These are declared in the UI rather than faked:
@@ -504,6 +540,12 @@ These are declared in the UI rather than faked:
   pipeline is the thing standing between this and a product.
 - **The iOS widget target.** The Swift is written; the Xcode target has to be
   added by hand, as described under *The home-screen widget*.
+- **Dealing by genre.** The 108 genres are asked for, stored and backed up;
+  the pool is not tagged with them yet, so what a reader turns off is written
+  down and not yet acted on. It is the brief for what gets written next rather
+  than a filter over what already exists — and saying so is the point: sixty
+  cards that tell is twenty days, and the genres are how the next sixty get
+  chosen.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with

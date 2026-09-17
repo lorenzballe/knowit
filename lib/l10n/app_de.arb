@@ -366,5 +366,17 @@
   "anonymousUsage": "Anonyme Nutzung",
   "anonymousUsageLine": "Wie viele Karten gelesen, behalten und gesagt werden, damit die nächsten besser sind. Nie dein Name, deine E-Mail oder was du schreibst.",
   "usageOn": "Nur Zahlen, keine Namen.",
-  "usageOff": "Es wird nichts mehr gemessen."
+  "usageOff": "Es wird nichts mehr gemessen.",
+  "yourMix": "Dein Mix",
+  "genresLine": "Tippe ein Genre an, um es zu überspringen. Halte es, und die drei Stränge darin öffnen sich direkt darunter.",
+  "insideGenre": "Darin",
+  "nOfSixOn": "{n} von 6 an",
+  "offInYourMix": "nicht in deinem Mix",
+  "continueGenresOn": "Weiter · {on} von {total} Genres an",
+  "skipEverythingStaysOn": "Überspringen — alles bleibt an",
+  "mixRarely": "Selten",
+  "mixSometimes": "Manchmal",
+  "mixOften": "Oft",
+  "mixALot": "Viel",
+  "mixFull": "Voll"
 }

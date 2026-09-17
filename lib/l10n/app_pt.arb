@@ -366,5 +366,17 @@
   "anonymousUsage": "Uso anónimo",
   "anonymousUsageLine": "Quantas cartas são lidas, guardadas e ditas, para que as próximas sejam melhores. Nunca o teu nome, o teu email ou o que escreves.",
   "usageOn": "Apenas contagens, sem nomes.",
-  "usageOff": "Já não se mede nada."
+  "usageOff": "Já não se mede nada.",
+  "yourMix": "A tua mistura",
+  "genresLine": "Toca num género para o saltar. Mantém premido e os três fios lá dentro abrem-se logo abaixo.",
+  "insideGenre": "Dentro",
+  "nOfSixOn": "{n} de 6 ativos",
+  "offInYourMix": "fora da tua mistura",
+  "continueGenresOn": "Continuar · {on} de {total} géneros ativos",
+  "skipEverythingStaysOn": "Saltar — fica tudo ativo",
+  "mixRarely": "Raramente",
+  "mixSometimes": "Às vezes",
+  "mixOften": "Muitas vezes",
+  "mixALot": "Muito",
+  "mixFull": "No máximo"
 }

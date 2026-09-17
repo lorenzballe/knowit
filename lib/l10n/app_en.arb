@@ -1336,5 +1336,19 @@
   "anonymousUsage": "Anonymous usage",
   "anonymousUsageLine": "Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.",
   "usageOn": "Counts only, and no names.",
-  "usageOff": "Nothing more is measured."
+  "usageOff": "Nothing more is measured.",
+  "yourMix": "Your mix",
+  "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",
+  "insideGenre": "Inside",
+  "nOfSixOn": "{n} of 6 on",
+  "@nOfSixOn": {"placeholders": {"n": {"type": "int"}}},
+  "offInYourMix": "off in your mix",
+  "continueGenresOn": "Continue · {on} of {total} genres on",
+  "@continueGenresOn": {"placeholders": {"on": {"type": "int"}, "total": {"type": "int"}}},
+  "skipEverythingStaysOn": "Skip — everything stays on",
+  "mixRarely": "Rarely",
+  "mixSometimes": "Sometimes",
+  "mixOften": "Often",
+  "mixALot": "A lot",
+  "mixFull": "Full"
 }

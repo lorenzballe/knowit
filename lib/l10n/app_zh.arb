@@ -366,5 +366,17 @@
   "anonymousUsage": "匿名使用情况",
   "anonymousUsageLine": "只统计有多少张卡被读过、留下和说出口，好让接下来的卡更好。绝不包括你的姓名、邮箱或你写下的任何内容。",
   "usageOn": "只有数字，没有名字。",
-  "usageOff": "不再测量任何内容。"
+  "usageOff": "不再测量任何内容。",
+  "yourMix": "你的组合",
+  "genresLine": "点一下跳过某个类别。长按，里面的三条线索就在下面展开。",
+  "insideGenre": "里面有",
+  "nOfSixOn": "6 个中开启 {n} 个",
+  "offInYourMix": "不在你的组合里",
+  "continueGenresOn": "继续 · {total} 个类别中开启 {on} 个",
+  "skipEverythingStaysOn": "跳过 — 全部保持开启",
+  "mixRarely": "很少",
+  "mixSometimes": "有时",
+  "mixOften": "经常",
+  "mixALot": "很多",
+  "mixFull": "拉满"
 }

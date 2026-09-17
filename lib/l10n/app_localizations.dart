@@ -2315,6 +2315,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing more is measured.'**
   String get usageOff;
+
+  /// No description provided for @yourMix.
+  ///
+  /// In en, this message translates to:
+  /// **'Your mix'**
+  String get yourMix;
+
+  /// No description provided for @genresLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a genre to skip it. Hold one and the three strands inside open right below.'**
+  String get genresLine;
+
+  /// No description provided for @insideGenre.
+  ///
+  /// In en, this message translates to:
+  /// **'Inside'**
+  String get insideGenre;
+
+  /// No description provided for @nOfSixOn.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of 6 on'**
+  String nOfSixOn(int n);
+
+  /// No description provided for @offInYourMix.
+  ///
+  /// In en, this message translates to:
+  /// **'off in your mix'**
+  String get offInYourMix;
+
+  /// No description provided for @continueGenresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue · {on} of {total} genres on'**
+  String continueGenresOn(int on, int total);
+
+  /// No description provided for @skipEverythingStaysOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip — everything stays on'**
+  String get skipEverythingStaysOn;
+
+  /// No description provided for @mixRarely.
+  ///
+  /// In en, this message translates to:
+  /// **'Rarely'**
+  String get mixRarely;
+
+  /// No description provided for @mixSometimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Sometimes'**
+  String get mixSometimes;
+
+  /// No description provided for @mixOften.
+  ///
+  /// In en, this message translates to:
+  /// **'Often'**
+  String get mixOften;
+
+  /// No description provided for @mixALot.
+  ///
+  /// In en, this message translates to:
+  /// **'A lot'**
+  String get mixALot;
+
+  /// No description provided for @mixFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Full'**
+  String get mixFull;
 }
 
 class _AppLocalizationsDelegate

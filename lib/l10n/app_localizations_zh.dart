@@ -1524,4 +1524,44 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get usageOff => '不再测量任何内容。';
+
+  @override
+  String get yourMix => '你的组合';
+
+  @override
+  String get genresLine => '点一下跳过某个类别。长按，里面的三条线索就在下面展开。';
+
+  @override
+  String get insideGenre => '里面有';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6 个中开启 $n 个';
+  }
+
+  @override
+  String get offInYourMix => '不在你的组合里';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '继续 · $total 个类别中开启 $on 个';
+  }
+
+  @override
+  String get skipEverythingStaysOn => '跳过 — 全部保持开启';
+
+  @override
+  String get mixRarely => '很少';
+
+  @override
+  String get mixSometimes => '有时';
+
+  @override
+  String get mixOften => '经常';
+
+  @override
+  String get mixALot => '很多';
+
+  @override
+  String get mixFull => '拉满';
 }

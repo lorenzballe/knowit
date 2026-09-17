@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
 import '../data/daily.dart';
+import '../data/genres.dart';
 import '../data/pills_data.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
@@ -64,6 +65,8 @@ class AppState extends ChangeNotifier {
   static const _kTopics = 'knowit.topics';
   static const _kTopicWeights = 'knowit.topicWeights';
   static const _kTopicLevels = 'knowit.topicLevels';
+  static const _kGenresOff = 'knowit.genresOff';
+  static const _kStrandsOff = 'knowit.strandsOff';
   static const _kNotifications = 'knowit.notifications';
   static const _kNotifyHour = 'knowit.notifyHour';
   static const _kPillsRead = 'knowit.pillsRead';
@@ -167,6 +170,15 @@ class AppState extends ChangeNotifier {
   /// 1 some, 2 solid, by topic key. Only the subjects they were asked about
   /// are here; the rest count as 1.
   Map<String, int> topicLevels = {};
+
+  /// The genres, and the strands under them, the reader turned off.
+  ///
+  /// Off rather than on, so that everything starts in and a reader who walks
+  /// past the screen has turned nothing down — and so that a genre added in a
+  /// later build reaches everybody instead of being hidden from every reader
+  /// who chose before it existed.
+  Set<String> genresOff = {};
+  Set<String> strandsOff = {};
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
@@ -255,6 +267,8 @@ class AppState extends ChangeNotifier {
     onboarded = _prefs.getBool(_kOnboarded) ?? false;
     topicWeights = _decodeWeights(_prefs.getString(_kTopicWeights));
     topicLevels = _decodeLevels(_prefs.getString(_kTopicLevels));
+    genresOff = (_prefs.getStringList(_kGenresOff) ?? []).toSet();
+    strandsOff = (_prefs.getStringList(_kStrandsOff) ?? []).toSet();
     final storedTopics = _prefs.getStringList(_kTopics);
     if (storedTopics != null && storedTopics.isNotEmpty) {
       pickedTopics = storedTopics.toSet();
@@ -1403,6 +1417,30 @@ class AppState extends ChangeNotifier {
   /// written together and never separately.
   /// Keeps what the reader says they know. The whole answer at once: the
   /// screen that asks is the only writer, and it always writes all of it.
+  /// What the reader turned off one layer under the mix.
+  ///
+  /// Taken whole rather than a toggle at a time: the screen is one decision
+  /// made across a scrolling list, and writing to disk on every tap of a chip
+  /// would be a write per tap for a choice that is not final until they leave.
+  Future<void> setGenresOff(Set<String> genres, Set<String> strands) async {
+    genresOff = {...genres};
+    strandsOff = {...strands};
+    await _prefs.setStringList(_kGenresOff, genresOff.toList());
+    await _prefs.setStringList(_kStrandsOff, strandsOff.toList());
+    Analytics.capture('genres set', {
+      'genres_off': genresOff.length,
+      'strands_off': strandsOff.length,
+      'genres_on': kAllGenres.length - genresOff.length,
+    });
+    notifyListeners();
+  }
+
+  /// Whether this genre is dealt from. Everything is, until turned off.
+  bool genreIsOn(String id) => !genresOff.contains(id);
+
+  bool strandIsOn(String id) =>
+      !strandsOff.contains(id) && genreIsOn(genreIdOf(id));
+
   Future<void> setTopicLevels(Map<String, int> levels) async {
     topicLevels = {...levels};
     await _prefs.setString(_kTopicLevels, jsonEncode(levels));
@@ -1576,6 +1614,8 @@ class AppState extends ChangeNotifier {
     judgements = [];
     topicWeights = {};
     topicLevels = {};
+    genresOff = {};
+    strandsOff = {};
     deckHistory = {};
     await _startNewDay();
     notifyListeners();
@@ -1631,6 +1671,8 @@ class AppState extends ChangeNotifier {
     pickedTopics: pickedTopics.toList(),
     topicWeights: Map<String, double>.from(topicWeights),
     topicLevels: Map<String, int>.from(topicLevels),
+    genresOff: genresOff.toList(),
+    strandsOff: strandsOff.toList(),
     pushTokens: List<String>.from(pushTokens),
   );
 
@@ -1658,6 +1700,8 @@ class AppState extends ChangeNotifier {
     if (s.pickedTopics.isNotEmpty) pickedTopics = s.pickedTopics.toSet();
     topicWeights = Map<String, double>.from(s.topicWeights);
     topicLevels = Map<String, int>.from(s.topicLevels);
+    genresOff = s.genresOff.toSet();
+    strandsOff = s.strandsOff.toSet();
     pushTokens = List<String>.from(s.pushTokens);
 
     await _prefs.setString(_kName, name);

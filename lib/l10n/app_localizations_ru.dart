@@ -1618,4 +1618,45 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get usageOff => 'Больше ничего не измеряется.';
+
+  @override
+  String get yourMix => 'Твой микс';
+
+  @override
+  String get genresLine =>
+      'Коснись жанра, чтобы пропустить его. Задержи — и три ветки внутри откроются прямо под ним.';
+
+  @override
+  String get insideGenre => 'Внутри';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n из 6 включено';
+  }
+
+  @override
+  String get offInYourMix => 'вне твоего микса';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Дальше · $on из $total жанров включено';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Пропустить — всё останется включённым';
+
+  @override
+  String get mixRarely => 'Редко';
+
+  @override
+  String get mixSometimes => 'Иногда';
+
+  @override
+  String get mixOften => 'Часто';
+
+  @override
+  String get mixALot => 'Много';
+
+  @override
+  String get mixFull => 'По максимуму';
 }

@@ -1563,4 +1563,45 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get usageOff => 'Artık hiçbir şey ölçülmüyor.';
+
+  @override
+  String get yourMix => 'Senin karışımın';
+
+  @override
+  String get genresLine =>
+      'Atlamak için bir türe dokun. Basılı tut, içindeki üç damar hemen altında açılsın.';
+
+  @override
+  String get insideGenre => 'İçinde';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6 türden $n açık';
+  }
+
+  @override
+  String get offInYourMix => 'karışımında değil';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Devam · $total türden $on açık';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Atla — hepsi açık kalır';
+
+  @override
+  String get mixRarely => 'Nadiren';
+
+  @override
+  String get mixSometimes => 'Bazen';
+
+  @override
+  String get mixOften => 'Sık sık';
+
+  @override
+  String get mixALot => 'Çok';
+
+  @override
+  String get mixFull => 'Tam';
 }

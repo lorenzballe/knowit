@@ -366,5 +366,17 @@
   "anonymousUsage": "Anonimowe użycie",
   "anonymousUsageLine": "Ile kart zostaje przeczytanych, zachowanych i powiedzianych, żeby następne były lepsze. Nigdy twoje imię, e-mail ani to, co piszesz.",
   "usageOn": "Tylko liczby, żadnych imion.",
-  "usageOff": "Nic już nie jest mierzone."
+  "usageOff": "Nic już nie jest mierzone.",
+  "yourMix": "Twój miks",
+  "genresLine": "Dotknij gatunku, żeby go pominąć. Przytrzymaj, a trzy nurty w środku otworzą się tuż pod nim.",
+  "insideGenre": "W środku",
+  "nOfSixOn": "{n} z 6 włączonych",
+  "offInYourMix": "poza twoim miksem",
+  "continueGenresOn": "Dalej · {on} z {total} gatunków włączonych",
+  "skipEverythingStaysOn": "Pomiń — wszystko zostaje włączone",
+  "mixRarely": "Rzadko",
+  "mixSometimes": "Czasem",
+  "mixOften": "Często",
+  "mixALot": "Dużo",
+  "mixFull": "Maksymalnie"
 }
