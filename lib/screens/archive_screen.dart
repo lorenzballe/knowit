@@ -88,126 +88,129 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
     final results = _results;
     final bool asking = _query.trim().isNotEmpty || _topicFilter != null;
 
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _Head(
-                    searching: _searching,
-                    controller: _controller,
-                    focus: _focus,
-                    onBack: widget.onBack,
-                    onOpenSearch: () {
-                      setState(() => _searching = true);
-                      _focus.requestFocus();
-                    },
-                    onCloseSearch: () {
-                      _controller.clear();
-                      setState(() {
-                        _searching = false;
-                        _query = '';
-                      });
-                    },
-                    onChanged: (v) => setState(() => _query = v),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    asking
-                        ? context.l10n.results(results.length)
-                        : context.l10n.cardsTapADay(PillBank.cards.length),
-                    style: AppText.body(
-                      size: 12.5,
-                      height: 1.35,
-                      color: context.p.ink.withValues(alpha: 0.42),
+    return ScreenView(
+      name: 'archive',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _Head(
+                      searching: _searching,
+                      controller: _controller,
+                      focus: _focus,
+                      onBack: widget.onBack,
+                      onOpenSearch: () {
+                        setState(() => _searching = true);
+                        _focus.requestFocus();
+                      },
+                      onCloseSearch: () {
+                        _controller.clear();
+                        setState(() {
+                          _searching = false;
+                          _query = '';
+                        });
+                      },
+                      onChanged: (v) => setState(() => _query = v),
                     ),
-                  ),
-                  const SizedBox(height: 14),
-                  TopicFilterRow(
-                    topics: kTopicOrder,
-                    picked: _topicFilter,
-                    onPick: (key) => setState(() => _topicFilter = key),
-                    keyPrefix: 'archive-filter',
-                  ),
-                  const SizedBox(height: 14),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      asking
+                          ? context.l10n.results(results.length)
+                          : context.l10n.cardsTapADay(PillBank.cards.length),
+                      style: AppText.body(
+                        size: 12.5,
+                        height: 1.35,
+                        color: context.p.ink.withValues(alpha: 0.42),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    TopicFilterRow(
+                      topics: kTopicOrder,
+                      picked: _topicFilter,
+                      onPick: (key) => setState(() => _topicFilter = key),
+                      keyPrefix: 'archive-filter',
+                    ),
+                    const SizedBox(height: 14),
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              child: asking
-                  ? (results.isEmpty
-                        ? _NoResults(query: _query)
-                        : ListView.builder(
-                            keyboardDismissBehavior:
-                                ScrollViewKeyboardDismissBehavior.onDrag,
-                            padding: const EdgeInsets.fromLTRB(22, 6, 22, 24),
-                            itemCount: results.length,
-                            itemBuilder: (context, i) => RiseIn.staggered(
-                              i,
-                              step: const Duration(milliseconds: 34),
-                              child: _ResultRow(
-                                pill: results[i],
-                                saved: widget.app.isSaved(results[i].id),
-                                onTap: () => Navigator.of(context).push(
+              Expanded(
+                child: asking
+                    ? (results.isEmpty
+                          ? _NoResults(query: _query)
+                          : ListView.builder(
+                              keyboardDismissBehavior:
+                                  ScrollViewKeyboardDismissBehavior.onDrag,
+                              padding: const EdgeInsets.fromLTRB(22, 6, 22, 24),
+                              itemCount: results.length,
+                              itemBuilder: (context, i) => RiseIn.staggered(
+                                i,
+                                step: const Duration(milliseconds: 34),
+                                child: _ResultRow(
+                                  pill: results[i],
+                                  saved: widget.app.isSaved(results[i].id),
+                                  onTap: () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => PillDetailScreen(
+                                        pill: results[i],
+                                        app: widget.app,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ))
+                    : ListView(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
+                        children: [
+                          // What has been read, by subject, above the days it was read on.
+                          // It sat in the profile, where it read as a score; here it is what
+                          // it actually is, the map of the archive.
+                          if (widget.app.seenIds.isNotEmpty) ...[
+                            Eyebrow(context.l10n.whatYouHaveCovered),
+                            const SizedBox(height: 11),
+                            _Coverage(app: widget.app),
+                            const SizedBox(height: 22),
+                          ],
+                          for (final day in _days)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: _Day(
+                                day: day,
+                                cards: _deckOf(day),
+                                open:
+                                    (_openDay ?? dateKey(_days.first)) ==
+                                    dateKey(day),
+                                onToggle: () => setState(() {
+                                  _openDay =
+                                      (_openDay ?? dateKey(_days.first)) ==
+                                          dateKey(day)
+                                      ? ''
+                                      : dateKey(day);
+                                }),
+                                onOpen: (pill) => Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) => PillDetailScreen(
-                                      pill: results[i],
+                                      pill: pill,
                                       app: widget.app,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ))
-                  : ListView(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
-                      children: [
-                        // What has been read, by subject, above the days it was read on.
-                        // It sat in the profile, where it read as a score; here it is what
-                        // it actually is, the map of the archive.
-                        if (widget.app.seenIds.isNotEmpty) ...[
-                          Eyebrow(context.l10n.whatYouHaveCovered),
-                          const SizedBox(height: 11),
-                          _Coverage(app: widget.app),
-                          const SizedBox(height: 22),
                         ],
-                        for (final day in _days)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: _Day(
-                              day: day,
-                              cards: _deckOf(day),
-                              open:
-                                  (_openDay ?? dateKey(_days.first)) ==
-                                  dateKey(day),
-                              onToggle: () => setState(() {
-                                _openDay =
-                                    (_openDay ?? dateKey(_days.first)) ==
-                                        dateKey(day)
-                                    ? ''
-                                    : dateKey(day);
-                              }),
-                              onOpen: (pill) => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => PillDetailScreen(
-                                    pill: pill,
-                                    app: widget.app,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-            ),
-          ],
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

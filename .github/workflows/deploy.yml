@@ -42,10 +42,17 @@ jobs:
       # last build from cache, which on a page whose point is seeing the
       # newest one means a hard refresh after every deploy — and forgetting
       # to do it looks exactly like a change that did not land.
+      # The preview is measured only if a POSTHOG_KEY repository variable is
+      # set. Unset — which is what a fork gets — the key is empty and the
+      # build is not measured at all, rather than measured into nowhere. A
+      # variable and not a secret: the key is public, it ships inside the
+      # bundle either way, and a secret would only be masked in the log.
       - run: |
           flutter build web --release \
             --base-href /knowit/ \
-            --pwa-strategy=none
+            --pwa-strategy=none \
+            --dart-define=POSTHOG_KEY=${{ vars.POSTHOG_KEY }} \
+            --dart-define=POSTHOG_HOST=${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
 
       # Stamp the bundle with the commit. Removing the service worker stopped
       # it serving yesterday's build, but the plain HTTP cache still can:

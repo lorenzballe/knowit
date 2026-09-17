@@ -30,105 +30,108 @@ class _PillDetailScreenState extends State<PillDetailScreen> {
     final onCard = pill.ink;
     final answered = widget.app.answerFor(pill.id);
 
-    return Scaffold(
-      backgroundColor: pill.tint,
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(22, 12, 22, 28),
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                BackCircle(onPressed: () => Navigator.of(context).pop()),
-                Row(
-                  children: [
-                    _RoundAction(
-                      label: liked
-                          ? context.l10n.removeFromLiked
-                          : context.l10n.likeThisPill,
-                      icon: liked
-                          ? Icons.favorite_rounded
-                          : Icons.favorite_border_rounded,
-                      color: liked ? pill.color : context.p.ink,
-                      onTap: () async {
-                        await widget.app.toggleLiked(pill.id);
-                        if (mounted) setState(() {});
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    _RoundAction(
-                      label: saved
-                          ? context.l10n.removeFromSaved
-                          : context.l10n.saveThisPill,
-                      icon: saved
-                          ? Icons.bookmark_rounded
-                          : Icons.bookmark_border_rounded,
-                      color: saved ? pill.color : context.p.ink,
-                      onTap: () async {
-                        await widget.app.toggleSaved(pill.id);
-                        if (mounted) setState(() {});
-                      },
-                    ),
-                    const SizedBox(width: 8),
-                    _RoundAction(
-                      label: context.l10n.shareThisPill,
-                      icon: Icons.ios_share_rounded,
-                      color: context.p.ink,
-                      onTap: () => showShareSheet(context, pill),
+    return ScreenView(
+      name: 'pill detail',
+      child: Scaffold(
+        backgroundColor: pill.tint,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(22, 12, 22, 28),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BackCircle(onPressed: () => Navigator.of(context).pop()),
+                  Row(
+                    children: [
+                      _RoundAction(
+                        label: liked
+                            ? context.l10n.removeFromLiked
+                            : context.l10n.likeThisPill,
+                        icon: liked
+                            ? Icons.favorite_rounded
+                            : Icons.favorite_border_rounded,
+                        color: liked ? pill.color : context.p.ink,
+                        onTap: () async {
+                          await widget.app.toggleLiked(pill.id);
+                          if (mounted) setState(() {});
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      _RoundAction(
+                        label: saved
+                            ? context.l10n.removeFromSaved
+                            : context.l10n.saveThisPill,
+                        icon: saved
+                            ? Icons.bookmark_rounded
+                            : Icons.bookmark_border_rounded,
+                        color: saved ? pill.color : context.p.ink,
+                        onTap: () async {
+                          await widget.app.toggleSaved(pill.id);
+                          if (mounted) setState(() {});
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      _RoundAction(
+                        label: context.l10n.shareThisPill,
+                        icon: Icons.ios_share_rounded,
+                        color: context.p.ink,
+                        onTap: () => showShareSheet(context, pill),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(26),
+                decoration: BoxDecoration(
+                  color: pill.color,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x29000000),
+                      blurRadius: 36,
+                      offset: Offset(0, 16),
                     ),
                   ],
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      pill.topic.toUpperCase(),
+                      style: AppText.label(
+                        size: 10.5,
+                        spacing: 1.4,
+                        color: onCard.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    Text(
+                      pill.question,
+                      style: AppText.display(
+                        size: 26,
+                        weight: FontWeight.w600,
+                        height: 1.16,
+                        spacing: -0.9,
+                        color: onCard,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 22),
+              if (answered != null) ...[
+                _AnsweredLine(pill: pill, given: answered),
+                const SizedBox(height: 16),
               ],
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(26),
-              decoration: BoxDecoration(
-                color: pill.color,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x29000000),
-                    blurRadius: 36,
-                    offset: Offset(0, 16),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    pill.topic.toUpperCase(),
-                    style: AppText.label(
-                      size: 10.5,
-                      spacing: 1.4,
-                      color: onCard.withValues(alpha: 0.7),
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Text(
-                    pill.question,
-                    style: AppText.display(
-                      size: 26,
-                      weight: FontWeight.w600,
-                      height: 1.16,
-                      spacing: -0.9,
-                      color: onCard,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 22),
-            if (answered != null) ...[
-              _AnsweredLine(pill: pill, given: answered),
-              const SizedBox(height: 16),
+              // The same reveal the card shows. This used to print pill.answer
+              // alone, which on a worked problem is the last line of the
+              // solution and on a debate is one side of it.
+              RevealBody.onPage(pill, context.p),
             ],
-            // The same reveal the card shows. This used to print pill.answer
-            // alone, which on a worked problem is the last line of the
-            // solution and on a debate is one side of it.
-            RevealBody.onPage(pill, context.p),
-          ],
+          ),
         ),
       ),
     );

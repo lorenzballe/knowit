@@ -73,7 +73,8 @@ repaints at once, and the status bar follows it.
 
 ## Screens
 
-**Free** — first run (the five-scene intro, then the subject run), Today with
+**Free** — first run (the five-scene intro, then the subject run, and the
+genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
 empty state, Profile (record, appearance, topics, coverage, calibration,
@@ -304,7 +305,9 @@ the channel away on someone who does not yet know what the app is.
 
 ```
 lib/
-  data/        topic palette, the bank (embedded + downloaded), the calendar, the dealer
+  analytics.dart  what is measured, and whether anything is
+  data/        topic palette, the bank (embedded + downloaded), the calendar,
+               the dealer, and the genres under each subject
   models/      Pill, Reminder
   state/       AppState — streak, shelves, history, the ladder (persisted)
   sync/        the account, the snapshot and its merge, boards
@@ -313,6 +316,7 @@ lib/
   screens/     the screens listed above
 tool/
   cards/         the bank — one JSON file per card — and the generator that grows it
+  content/       the brief: what to write next, by genre, worked out from the bank
   icons/         the supplied artwork, and the script that resizes it
   illustrations/ the figures a card can carry — Python, run on a server
 web/cards/       cards.json, the bank as the site serves it
@@ -463,6 +467,109 @@ Until then the app builds and signs as before: the channel handler in
 entitlement is a private container nobody reads, and WidgetKit is asked
 to reload timelines that do not exist yet — both harmless.
 
+## What the app measures
+
+Nothing, unless a key was built into it. `lib/analytics.dart` is the one place
+that decides, the way `lib/cloud.dart` is for Firebase: no `POSTHOG_KEY`, no
+measurement — not "measurement into a project that does not exist", but every
+call returning without doing anything. That is what a fork gets, what a
+checkout gets, and what all 266 tests run under, which is why none of them
+reaches the network.
+
+    flutter build ipa      --dart-define=POSTHOG_KEY=phc_xxx
+    flutter build appbundle --dart-define=POSTHOG_KEY=phc_xxx
+
+The key is public in the same way the RevenueCat keys are: it names the
+project to write into and reads nothing back. `POSTHOG_HOST` picks the region
+and defaults to the EU one; a project made in the other region and pointed at
+from here accepts nothing and says nothing, which is a long afternoon.
+
+**Three rules hold at every call site.** It never throws and never blocks —
+measurement is not a feature the reader asked for, so it may not cost them a
+frame. It is off until told otherwise. And it carries no prose: ids, counts
+and enums go out; the name the reader typed, their email, their friend code,
+the text of an answer and the reason they wrote beside it do not. A card is a
+pill id and a subject. What a reader *said* is theirs, and there is a test
+that types a sentence into an answer and fails if it appears anywhere in what
+was sent.
+
+**The funnel is the app's own shape.** A day dealt, with how much of it is a
+re-asking. A card advanced, with its place in the five, so the drop-off inside
+a day reads as a curve rather than one completion rate. A card answered, with
+the confidence but never the reason. The day finished, with what it was worth
+rather than what the reader now holds. Then the things that decide whether
+there is a second week: a rung reached, a freeze earned and spent, a plan
+changed — and `pill said`, a card that left the phone and was said to
+somebody, which is the one number this app is actually for.
+
+The paywall takes the gate that opened it as a required argument rather than a
+defaulted one, so `archive`, `extra set` and `calibration` can be told apart. A
+default is how a fifth of the traffic ends up labelled `unknown` by the end of
+the first week.
+
+**Screens are named by hand.** The three tabs are one route and the rest are
+unnamed pushes, so a navigator observer would report `/` and call it a
+session. `ScreenView` in `lib/widgets/ui.dart` names each one where it is
+built, which means a screen reachable from two places is still one name.
+
+**The reader's switch** sits at the foot of the settings, above the debug
+section, on by default and off in one tap, in all thirteen languages. It is
+applied to PostHog the moment it moves, and written back after a sign-out —
+sign-out clears every key the app holds, and a choice a wipe undoes is a delay
+rather than a choice. Session replay is off, and that is a decision rather
+than a default: it records the screen, and the screen has the reader's own
+written reasons on it.
+
+On the web the plugin brings no library of its own, so
+`lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.
+Nothing waits on it: a blocked CDN or a dead network costs the preview its
+numbers and not its first paint.
+
+## The mix, one layer down
+
+Artboard 86a, and the third screen of the onboarding. A subject is too coarse
+to pick with: two readers both ask for Space and one of them means rockets
+while the other means how big the thing is. The wheel before it cannot tell
+them apart, and a day dealt from "Space" serves neither.
+
+So every subject carries six **genres**, and every genre three **strands**
+under it — 108 and 324 of them, in `lib/data/genres.dart`. They are in
+English, like the cards: these are names of things to write about rather than
+words the app says for itself, so the chrome around them is translated
+thirteen ways and a genre is content.
+
+The screen is a reading of the wheel rather than a second, unrelated list.
+The subjects are in the order the reader just put them in, and one asked for
+more is **drawn larger** — the planet runs from 26 to 61 points across, off
+the same number the wheel wrote down. A subject dragged to nothing keeps a
+dimmed line at the foot of the list rather than vanishing, because a subject
+that disappears reads as one the app does not have.
+
+Everything starts on, as the wheel does: the reader is turning things down,
+not building a deck out of nothing. A tap skips a genre. A **hold** opens its
+three strands *in place*, on a line under the row rather than in a sheet over
+it — there is no backdrop and no Done button, and the list keeps its position,
+so the six a reader is comparing against stay on screen. A genre with some of
+its three turned off carries a small count; one with all three carries
+nothing, because a badge on every genre says nothing at all.
+
+It is also the last thing the onboarding asks. There used to be a third
+screen after it — *what you already know*, three answers a subject — and it
+has gone. It asked the reader to rate themselves before they had seen a
+single card, at the one moment they had least to go on, and then never asked
+again: the answer aged from the first morning and nothing updated it. The
+app already knows what it was trying to find out, and knows it from what
+actually happened — which subjects the reader gets right, and how sure they
+said they were. `topicLevels` still reaches the dealer and still travels in
+the backup, so a reader who set it keeps it; what is gone is the screen that
+asked. Filling it from measured accuracy instead is the next thing.
+
+The choice is stored as what was turned **off**, not what was left on. A genre
+added in a later build then reaches everybody, instead of being hidden from
+every reader who chose before it existed. It travels in the backup under the
+same rule as the mix — the decision made most recently wins — because a union
+would quietly resurrect a genre this phone turned off.
+
 ## What is not real yet
 
 These are declared in the UI rather than faked:
@@ -480,6 +587,12 @@ These are declared in the UI rather than faked:
   a day, is twenty days of new reading.
 - **The iOS widget target.** The Swift is written; the Xcode target has to be
   added by hand, as described under *The home-screen widget*.
+- **Dealing by genre.** The 108 genres are asked for, stored and backed up;
+  the pool is not tagged with them yet, so what a reader turns off is written
+  down and not yet acted on. It is the brief for what gets written next rather
+  than a filter over what already exists — and saying so is the point: sixty
+  cards that tell is twenty days, and the genres are how the next sixty get
+  chosen.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with
@@ -489,7 +602,8 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 **Debug tools.** The foot of the profile carries a temporary section — wipe
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
-error, whether the store answered. It is on in release builds on purpose,
+error, whether the store answered, and whether PostHog is sending, opted out
+or not running at all. It is on in release builds on purpose,
 because TestFlight builds are release builds and that is where it is needed.
 One line in `lib/debug_flags.dart`, or `--dart-define=DEBUG_TOOLS=false`,
 turns it off.

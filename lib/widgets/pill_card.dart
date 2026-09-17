@@ -695,11 +695,22 @@ class _NumberInputState extends State<_NumberInput> {
                   ),
                 ),
                 if (unit.isNotEmpty)
-                  Text(
-                    unit,
-                    style: AppText.body(
-                      size: 14,
-                      color: pill.ink.withValues(alpha: 0.5),
+                  // Capped, because the unit is written with the card and the
+                  // row is not. Most are a word — "days", "codes" — but a
+                  // Fermi estimate counts "million journeys", and at a large
+                  // text size, in a wide face, or on a narrow phone that is a
+                  // label long enough to push the field it labels off the
+                  // card. It gives up its own tail first.
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 96),
+                    child: Text(
+                      unit,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 14,
+                        color: pill.ink.withValues(alpha: 0.5),
+                      ),
                     ),
                   ),
               ],

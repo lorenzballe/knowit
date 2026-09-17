@@ -1,11 +1,43 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/l10n.dart';
+import '../analytics.dart';
 
 import '../data/topics.dart';
 
 import '../theme.dart';
 import 'chunky.dart';
+
+/// Says which screen this is, once, when it opens.
+///
+/// The sub-screens are pushed routes with no names on them, so a navigator
+/// observer watching for `$screen` would see a stack of unnamed MaterialPage
+/// routes and report nothing useful. Naming them here rather than at the
+/// pushes means a screen reachable from two places is still one name, and a
+/// screen that gains a third way in is not quietly missed.
+///
+/// It is a wrapper and not a mixin because half of these screens are
+/// stateless, and giving each one a State to hold a single line would be a
+/// worse trade than one widget that renders its child.
+class ScreenView extends StatefulWidget {
+  final String name;
+  final Widget child;
+
+  const ScreenView({super.key, required this.name, required this.child});
+
+  @override
+  State<ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<ScreenView> {
+  @override
+  void initState() {
+    super.initState();
+    Analytics.screen(widget.name);
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}
 
 /// The app's primary action.
 ///
@@ -234,13 +266,24 @@ class TopicDot extends StatelessWidget {
 class NudgeSwitch extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
-  const NudgeSwitch({super.key, required this.value, required this.onChanged});
+
+  /// What a screen reader calls this switch, and what a test finds it by.
+  /// Required: there are two of these on the settings now, and an unnamed
+  /// switch is one nobody can point at.
+  final String label;
+
+  const NudgeSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       toggled: value,
-      label: context.l10n.dailyNudge,
+      label: label,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => onChanged(!value),

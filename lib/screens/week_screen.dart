@@ -28,85 +28,88 @@ class WeekScreen extends StatelessWidget {
     final WeekReport week = app.thisWeek;
     final ink = context.p.ink;
 
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        bottom: false,
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
-          children: [
-            Row(
-              children: [
-                BackCircle(onPressed: onBack),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    context.l10n.yourWeek,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.display(
-                      size: 27,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: ink,
+    return ScreenView(
+      name: 'week',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          bottom: false,
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
+            children: [
+              Row(
+                children: [
+                  BackCircle(onPressed: onBack),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      context.l10n.yourWeek,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.display(
+                        size: 27,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        spacing: -0.8,
+                        color: ink,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Text(
-              week.empty
-                  ? context.l10n.nothingThisWeekYet
-                  : week.kept
-                  ? context.l10n.keptDaysOfSeven(week.days)
-                  : context.l10n.daysOfSevenFiveKeeps(week.days),
-              style: AppText.body(
-                size: 12.5,
-                height: 1.35,
-                color: ink.withValues(alpha: 0.42),
+                ],
               ),
-            ),
-            const SizedBox(height: 18),
-            WeekStrip(week: app.weekCompletion(), barHeight: 40),
-            const SizedBox(height: 22),
-            if (week.answered > 0) ...[
-              Eyebrow(context.l10n.howSureAgainstHowRight),
-              const SizedBox(height: 11),
-              _Verdict(week: week),
-              const SizedBox(height: 22),
-            ],
-            if (week.misses.isNotEmpty) ...[
-              Eyebrow(context.l10n.sureAndWrong),
-              const SizedBox(height: 7),
+              const SizedBox(height: 5),
               Text(
-                context.l10n.worthGoingBackTo,
+                week.empty
+                    ? context.l10n.nothingThisWeekYet
+                    : week.kept
+                    ? context.l10n.keptDaysOfSeven(week.days)
+                    : context.l10n.daysOfSevenFiveKeeps(week.days),
                 style: AppText.body(
-                  size: 13,
-                  height: 1.45,
-                  color: context.p.inkMuted,
+                  size: 12.5,
+                  height: 1.35,
+                  color: ink.withValues(alpha: 0.42),
                 ),
               ),
-              const SizedBox(height: 12),
-              for (final miss in week.misses.take(3)) ...[
-                _MissRow(
-                  miss: miss,
-                  onOpen: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          PillDetailScreen(pill: miss.pill, app: app),
-                    ),
+              const SizedBox(height: 18),
+              WeekStrip(week: app.weekCompletion(), barHeight: 40),
+              const SizedBox(height: 22),
+              if (week.answered > 0) ...[
+                Eyebrow(context.l10n.howSureAgainstHowRight),
+                const SizedBox(height: 11),
+                _Verdict(week: week),
+                const SizedBox(height: 22),
+              ],
+              if (week.misses.isNotEmpty) ...[
+                Eyebrow(context.l10n.sureAndWrong),
+                const SizedBox(height: 7),
+                Text(
+                  context.l10n.worthGoingBackTo,
+                  style: AppText.body(
+                    size: 13,
+                    height: 1.45,
+                    color: context.p.inkMuted,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 12),
+                for (final miss in week.misses.take(3)) ...[
+                  _MissRow(
+                    miss: miss,
+                    onOpen: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            PillDetailScreen(pill: miss.pill, app: app),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+                const SizedBox(height: 12),
               ],
-              const SizedBox(height: 12),
+              Eyebrow(context.l10n.whereThisIsGoing),
+              const SizedBox(height: 11),
+              _Next(app: app),
             ],
-            Eyebrow(context.l10n.whereThisIsGoing),
-            const SizedBox(height: 11),
-            _Next(app: app),
-          ],
+          ),
         ),
       ),
     );

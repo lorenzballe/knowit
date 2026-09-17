@@ -498,9 +498,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nudgeOnNeedsPhone => 'Nudge on. Delivery needs the phone build.';
 
   @override
-  String get howMuchYouKnow => 'How much you know';
-
-  @override
   String savedN(int n) {
     return 'Saved · $n';
   }
@@ -793,34 +790,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Daily nudge moved to $time.';
   }
-
-  @override
-  String get whatYouAlready => 'What you already ';
-
-  @override
-  String get know => 'know';
-
-  @override
-  String get knowIntro =>
-      'The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.';
-
-  @override
-  String get startWithMyFirstCards => 'Start with my first cards';
-
-  @override
-  String get skipForNow => 'Skip for now';
-
-  @override
-  String get levelCurious => 'Curious';
-
-  @override
-  String get levelSome => 'Some';
-
-  @override
-  String get levelSolid => 'Solid';
-
-  @override
-  String get save => 'Save';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1560,4 +1529,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'Your score starts with today\'s five.';
+
+  @override
+  String get anonymousUsage => 'Anonymous usage';
+
+  @override
+  String get anonymousUsageLine =>
+      'Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.';
+
+  @override
+  String get usageOn => 'Counts only, and no names.';
+
+  @override
+  String get usageOff => 'Nothing more is measured.';
+
+  @override
+  String get yourMix => 'Your mix';
+
+  @override
+  String get genresLine =>
+      'Tap a genre to skip it. Hold one and the three strands inside open right below.';
+
+  @override
+  String get insideGenre => 'Inside';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n of 6 on';
+  }
+
+  @override
+  String get offInYourMix => 'off in your mix';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Continue · $on of $total genres on';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Skip — everything stays on';
+
+  @override
+  String get mixRarely => 'Rarely';
+
+  @override
+  String get mixSometimes => 'Sometimes';
+
+  @override
+  String get mixOften => 'Often';
+
+  @override
+  String get mixALot => 'A lot';
+
+  @override
+  String get mixFull => 'Full';
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,14 @@ const double kDeckMargin = 18;
 class PillCardStack extends StatefulWidget {
   final List<Pill> deck;
   final int index;
-  final VoidCallback onAdvance;
+
+  /// Moves the deck on, and is waited on.
+  ///
+  /// Waited on because the card that left has to stay gone until the next one
+  /// is actually here — see [_onPanEnd]. `FutureOr` rather than `Future` so a
+  /// parent that moves its own index in a line, like the deck viewer, is not
+  /// made to say `async` about it.
+  final FutureOr<void> Function() onAdvance;
 
   /// What the reader has already committed to, and where to record a new
   /// commitment. Raw strings: the challenge knows how to read its own.
@@ -171,12 +179,36 @@ class _PillCardStackState extends State<PillCardStack>
         length == 0 ? const Offset(480, 0) : heading * (1100 / length),
       );
       if (!mounted) return;
-      setState(() {
-        _drag = Offset.zero;
-        _flipped = false;
-      });
       if (down) widget.onDislike!(leaving);
-      widget.onAdvance();
+
+      // The card is gone, and it stays gone until the next one is here.
+      //
+      // This used to put the drag back first and move the deck on after,
+      // which is what the throw stuttered on. The index arrives on the far
+      // side of three writes to disk — `AppState.advance` records the new
+      // position, the cards read and the ids seen before it tells anyone —
+      // so for every frame in between, the deck drew the card that had just
+      // left back in the middle of the screen at full size, and the card
+      // behind it dropped from where it had risen to back down to where it
+      // started. Two cards moving backwards, which is the whole of it.
+      //
+      // Waiting means the new index and the cleared drag land in the same
+      // frame: didUpdateWidget clears it the moment a new card is on top, so
+      // nothing is ever drawn in between.
+      await widget.onAdvance();
+      if (!mounted) return;
+
+      // Unless nothing arrived. A deck of one wraps to the same index, and a
+      // state that declines to advance would otherwise leave the reader
+      // looking at the empty square where their card used to be. By here the
+      // clear above has already happened when there was one to do, so this
+      // is a no-op in every case but that.
+      if (_drag != Offset.zero || _flipped) {
+        setState(() {
+          _drag = Offset.zero;
+          _flipped = false;
+        });
+      }
     } else if (_dragTotalMove < 7) {
       // Barely moved: put it back where it was and turn it over, with
       // nothing to settle first — the card never went anywhere.
@@ -266,33 +298,46 @@ class _PillCardStackState extends State<PillCardStack>
 
       final given = widget.answerFor(pill.id);
 
-      Widget card = isTop
-          ? FlipCard(
-              showBack: _flipped,
-              front: PillCard(
-                pill: pill,
-                flipped: false,
-                isReview: widget.reviewIds.contains(pill.id),
-                given: given,
-                saved: widget.isSaved(pill.id),
-                onSave: () => widget.onSave(pill),
-                liked: widget.isLiked?.call(pill.id) ?? false,
-                onLike: widget.onLike == null
-                    ? null
-                    : () => widget.onLike!(pill),
-                onShare: () => widget.onShare(pill),
-                onAnswer: !widget.answering
-                    ? null
-                    : (response, confidence, reason) {
-                        HapticFeedback.mediumImpact();
-                        widget.onAnswer(pill.id, response, confidence, reason);
-                        setState(() {
-                          _answeredHere = true;
-                          _flipped = true;
-                        });
-                      },
-              ),
-              back: PillCard(
+      // Every depth is built the same shape, whether or not it is the one
+      // being read. A card used to be a bare PillCard underneath and a
+      // FlipCard on top, which meant the frame the deck landed on threw away
+      // the card the reader was about to look at and built it again from
+      // nothing — a whole card laid out in the one frame that has to be
+      // smooth. Same widgets at every depth, and the card that rises keeps
+      // the element it already had: that frame now pays for a transform.
+      //
+      // The back face is the exception, because it is the one thing a card
+      // underneath truly does not have. FlipCard does not build it below a
+      // half turn, and nothing but the top card is ever turned.
+      final bool controls = isTop;
+      Widget card = FlipCard(
+        showBack: isTop && _flipped,
+        front: PillCard(
+          pill: pill,
+          flipped: false,
+          isReview: widget.reviewIds.contains(pill.id),
+          given: controls ? given : null,
+          saved: controls && widget.isSaved(pill.id),
+          onSave: controls ? () => widget.onSave(pill) : null,
+          liked: controls && (widget.isLiked?.call(pill.id) ?? false),
+          onLike: !controls || widget.onLike == null
+              ? null
+              : () => widget.onLike!(pill),
+          onShare: controls ? () => widget.onShare(pill) : null,
+          onAnswer: !controls || !widget.answering
+              ? null
+              : (response, confidence, reason) {
+                  HapticFeedback.mediumImpact();
+                  widget.onAnswer(pill.id, response, confidence, reason);
+                  setState(() {
+                    _answeredHere = true;
+                    _flipped = true;
+                  });
+                },
+        ),
+        back: !isTop
+            ? const SizedBox.shrink()
+            : PillCard(
                 pill: pill,
                 flipped: true,
                 isReview: widget.reviewIds.contains(pill.id),
@@ -305,12 +350,7 @@ class _PillCardStackState extends State<PillCardStack>
                     : () => widget.onLike!(pill),
                 onShare: () => widget.onShare(pill),
               ),
-            )
-          : PillCard(
-              pill: pill,
-              flipped: false,
-              isReview: widget.reviewIds.contains(pill.id),
-            );
+      );
 
       // Continuous depth: 1 becomes 0 as the top card leaves.
       final depth = isTop ? 0.0 : d - progress;
@@ -350,18 +390,22 @@ class _PillCardStackState extends State<PillCardStack>
         ),
       );
 
+      // Same reason as above: one shape at every depth. The card underneath
+      // is not listening because it is inside an IgnorePointer, not because
+      // it was given a different widget to be.
       layers.add(
         Positioned.fill(
           key: ValueKey(pill.id),
-          child: isTop
-              ? GestureDetector(
-                  onTap: _turnOver,
-                  onPanStart: _onPanStart,
-                  onPanUpdate: _onPanUpdate,
-                  onPanEnd: _onPanEnd,
-                  child: card,
-                )
-              : IgnorePointer(child: card),
+          child: IgnorePointer(
+            ignoring: !isTop,
+            child: GestureDetector(
+              onTap: _turnOver,
+              onPanStart: _onPanStart,
+              onPanUpdate: _onPanUpdate,
+              onPanEnd: _onPanEnd,
+              child: card,
+            ),
+          ),
         ),
       );
     }

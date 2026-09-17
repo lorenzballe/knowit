@@ -491,9 +491,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get nudgeOnNeedsPhone => '通知オン。届けるにはスマホ版が必要です。';
 
   @override
-  String get howMuchYouKnow => 'どれだけ知っているか';
-
-  @override
   String savedN(int n) {
     return '保存済み · $n';
   }
@@ -780,34 +777,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return '毎日の通知を$timeに変更しました。';
   }
-
-  @override
-  String get whatYouAlready => 'すでに';
-
-  @override
-  String get know => '知っていること';
-
-  @override
-  String get knowIntro =>
-      'いちばん上げた分野です。1日に求められる内容が変わります — 得意なら問いが増え、興味なら説明が増えます — 量は変わりません。';
-
-  @override
-  String get startWithMyFirstCards => '最初のカードを始める';
-
-  @override
-  String get skipForNow => '今はスキップ';
-
-  @override
-  String get levelCurious => '興味';
-
-  @override
-  String get levelSome => '少し';
-
-  @override
-  String get levelSolid => '得意';
-
-  @override
-  String get save => '保存';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1514,4 +1483,57 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'スコアは今日の5枚から始まります。';
+
+  @override
+  String get anonymousUsage => '匿名の利用状況';
+
+  @override
+  String get anonymousUsageLine =>
+      '読まれた・保存された・話されたカードの数だけ。次のカードをよくするためです。名前もメールも、書いた内容も送りません。';
+
+  @override
+  String get usageOn => '数だけ、名前はなし。';
+
+  @override
+  String get usageOff => 'もう何も計測しません。';
+
+  @override
+  String get yourMix => 'あなたのミックス';
+
+  @override
+  String get genresLine => 'ジャンルをタップすると外せます。長押しすると、中の三つの筋がすぐ下に開きます。';
+
+  @override
+  String get insideGenre => 'この中身';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6つ中$nつオン';
+  }
+
+  @override
+  String get offInYourMix => 'ミックスに入っていません';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '続ける · $total中$onジャンルがオン';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'スキップ — すべてオンのまま';
+
+  @override
+  String get mixRarely => 'まれに';
+
+  @override
+  String get mixSometimes => 'ときどき';
+
+  @override
+  String get mixOften => 'よく';
+
+  @override
+  String get mixALot => 'たくさん';
+
+  @override
+  String get mixFull => 'いっぱい';
 }

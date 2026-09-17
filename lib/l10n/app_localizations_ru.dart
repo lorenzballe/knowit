@@ -507,9 +507,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'Напоминание включено. Для доставки нужна версия для телефона.';
 
   @override
-  String get howMuchYouKnow => 'Сколько ты знаешь';
-
-  @override
   String savedN(int n) {
     return 'Сохранённые · $n';
   }
@@ -824,34 +821,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Ежедневное напоминание перенесено на $time.';
   }
-
-  @override
-  String get whatYouAlready => 'Что ты уже ';
-
-  @override
-  String get know => 'знаешь';
-
-  @override
-  String get knowIntro =>
-      'Темы, которые ты поднял выше всего. Это меняет, чего день требует от тебя в каждой из них — уверенный получает вопросы, любопытный получает объяснения, — а не сколько ты получаешь.';
-
-  @override
-  String get startWithMyFirstCards => 'Начать с первых карточек';
-
-  @override
-  String get skipForNow => 'Пока пропустить';
-
-  @override
-  String get levelCurious => 'Любопытно';
-
-  @override
-  String get levelSome => 'Немного';
-
-  @override
-  String get levelSolid => 'Уверенно';
-
-  @override
-  String get save => 'Сохранить';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1605,4 +1574,58 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'Ваш счёт начинается с сегодняшней пятёрки.';
+
+  @override
+  String get anonymousUsage => 'Анонимная статистика';
+
+  @override
+  String get anonymousUsageLine =>
+      'Сколько карточек прочитано, сохранено и сказано вслух — чтобы следующие были лучше. Никогда ваше имя, почта или то, что вы пишете.';
+
+  @override
+  String get usageOn => 'Только цифры, без имён.';
+
+  @override
+  String get usageOff => 'Больше ничего не измеряется.';
+
+  @override
+  String get yourMix => 'Твой микс';
+
+  @override
+  String get genresLine =>
+      'Коснись жанра, чтобы пропустить его. Задержи — и три ветки внутри откроются прямо под ним.';
+
+  @override
+  String get insideGenre => 'Внутри';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n из 6 включено';
+  }
+
+  @override
+  String get offInYourMix => 'вне твоего микса';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Дальше · $on из $total жанров включено';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Пропустить — всё останется включённым';
+
+  @override
+  String get mixRarely => 'Редко';
+
+  @override
+  String get mixSometimes => 'Иногда';
+
+  @override
+  String get mixOften => 'Часто';
+
+  @override
+  String get mixALot => 'Много';
+
+  @override
+  String get mixFull => 'По максимуму';
 }

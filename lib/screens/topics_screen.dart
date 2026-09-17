@@ -36,107 +36,110 @@ class _TopicsScreenState extends State<TopicsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (widget.isOnboarding)
-                Row(
-                  children: List.generate(3, (i) {
-                    return Expanded(
-                      child: Container(
-                        margin: EdgeInsets.only(right: i == 2 ? 0 : 8),
-                        height: 3,
-                        decoration: BoxDecoration(
-                          color: i < 2 ? context.p.ink : context.p.line,
-                          borderRadius: BorderRadius.circular(9),
+    return ScreenView(
+      name: 'topics',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(22, 12, 22, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.isOnboarding)
+                  Row(
+                    children: List.generate(3, (i) {
+                      return Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(right: i == 2 ? 0 : 8),
+                          height: 3,
+                          decoration: BoxDecoration(
+                            color: i < 2 ? context.p.ink : context.p.line,
+                            borderRadius: BorderRadius.circular(9),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-                )
-              else if (widget.onBack != null)
-                BackCircle(onPressed: widget.onBack!),
-              const SizedBox(height: 22),
-              Text(
-                context.l10n.whatShouldWeTalkAbout,
-                style: AppText.display(
-                  size: 33,
-                  weight: FontWeight.w700,
-                  height: 1.06,
-                  spacing: -1.3,
-                  color: context.p.ink,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                context.l10n.fivePillsADayPick,
-                style: AppText.body(
-                  size: 15,
-                  height: 1.5,
-                  color: context.p.inkMuted,
-                ),
-              ),
-              const SizedBox(height: 22),
-              // All of them at once, no box to scroll inside: a mix is a
-              // thing you see whole or it is not a mix. The chips are cut
-              // to fit a phone; the scroll view under them is the net for
-              // a screen shorter than any phone sold in years, and on a
-              // phone it never moves.
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    // Every subject the onboarding offers, in its order, and
-                    // every one of them switchable. Editing a mix while being
-                    // shown a shorter list than the one you were first given
-                    // is how a setting starts feeling like it lost something.
-                    children: kMixSubjects.map((subject) {
-                      final key = subject.key;
-                      final on = _picked.contains(key);
-                      return _TopicChip(
-                        label: subject.name,
-                        on: on,
-                        color: subject.color,
-                        onColor: inkOn(subject.color),
-                        onTap: () => setState(() {
-                          if (on) {
-                            _picked.remove(key);
-                          } else {
-                            _picked.add(key);
-                          }
-                        }),
                       );
-                    }).toList(),
+                    }),
+                  )
+                else if (widget.onBack != null)
+                  BackCircle(onPressed: widget.onBack!),
+                const SizedBox(height: 22),
+                Text(
+                  context.l10n.whatShouldWeTalkAbout,
+                  style: AppText.display(
+                    size: 33,
+                    weight: FontWeight.w700,
+                    height: 1.06,
+                    spacing: -1.3,
+                    color: context.p.ink,
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                child: Text(
-                  context.l10n.nSelected(_picked.length),
-                  textAlign: TextAlign.center,
-                  style: AppText.body(size: 12.5, color: context.p.inkFaint),
+                const SizedBox(height: 10),
+                Text(
+                  context.l10n.fivePillsADayPick,
+                  style: AppText.body(
+                    size: 15,
+                    height: 1.5,
+                    color: context.p.inkMuted,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              PrimaryButton(
-                label: _enough
-                    ? (widget.isOnboarding
-                          ? context.l10n.startWithNTopics(_picked.length)
-                          : context.l10n.saveNTopics(_picked.length))
-                    : context.l10n.pickAtLeastN(_minTopics),
-                background: _enough ? context.p.ink : context.p.line,
-                foreground: _enough ? null : context.p.inkFaint,
-                onPressed: _enough ? () => widget.onDone(_picked) : null,
-              ),
-            ],
+                const SizedBox(height: 22),
+                // All of them at once, no box to scroll inside: a mix is a
+                // thing you see whole or it is not a mix. The chips are cut
+                // to fit a phone; the scroll view under them is the net for
+                // a screen shorter than any phone sold in years, and on a
+                // phone it never moves.
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      // Every subject the onboarding offers, in its order, and
+                      // every one of them switchable. Editing a mix while being
+                      // shown a shorter list than the one you were first given
+                      // is how a setting starts feeling like it lost something.
+                      children: kMixSubjects.map((subject) {
+                        final key = subject.key;
+                        final on = _picked.contains(key);
+                        return _TopicChip(
+                          label: subject.name,
+                          on: on,
+                          color: subject.color,
+                          onColor: inkOn(subject.color),
+                          onTap: () => setState(() {
+                            if (on) {
+                              _picked.remove(key);
+                            } else {
+                              _picked.add(key);
+                            }
+                          }),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    context.l10n.nSelected(_picked.length),
+                    textAlign: TextAlign.center,
+                    style: AppText.body(size: 12.5, color: context.p.inkFaint),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                PrimaryButton(
+                  label: _enough
+                      ? (widget.isOnboarding
+                            ? context.l10n.startWithNTopics(_picked.length)
+                            : context.l10n.saveNTopics(_picked.length))
+                      : context.l10n.pickAtLeastN(_minTopics),
+                  background: _enough ? context.p.ink : context.p.line,
+                  foreground: _enough ? null : context.p.inkFaint,
+                  onPressed: _enough ? () => widget.onDone(_picked) : null,
+                ),
+              ],
+            ),
           ),
         ),
       ),

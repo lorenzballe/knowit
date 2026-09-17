@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import '../analytics.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
@@ -15,6 +16,11 @@ import 'ui.dart';
 /// Opens the share sheet for [pill] — the square export preview plus the
 /// three actions under it.
 Future<void> showShareSheet(BuildContext context, Pill pill) {
+  Analytics.capture('share sheet opened', {
+    'kind': 'pill',
+    'pill_id': pill.id,
+    'topic': pill.topic,
+  });
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -99,6 +105,13 @@ class _ShareSheetState extends State<_ShareSheet> {
       // say the image was "web-only", which meant the one thing this sheet
       // is for did not work on the one device anybody uses it on.
       final shared = await shareCardImage(bytes, name, _shareText);
+      Analytics.capture('pill shared', {
+        'pill_id': widget.pill.id,
+        'topic': widget.pill.topic,
+        // Whether the image reached the system sheet, or the app fell back
+        // to putting the words on the clipboard.
+        'as': shared ? 'image' : 'text',
+      });
       if (!shared) {
         await Clipboard.setData(ClipboardData(text: _shareText));
         _toast(l.textCopiedInstead);
@@ -111,6 +124,11 @@ class _ShareSheetState extends State<_ShareSheet> {
   Future<void> _copyText() async {
     final l = context.l10n;
     await Clipboard.setData(ClipboardData(text: _shareText));
+    Analytics.capture('pill shared', {
+      'pill_id': widget.pill.id,
+      'topic': widget.pill.topic,
+      'as': 'copied',
+    });
     _toast(l.copiedToClipboard);
   }
 

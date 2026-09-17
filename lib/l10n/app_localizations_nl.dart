@@ -499,9 +499,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Duwtje aan. Bezorging heeft de telefoonversie nodig.';
 
   @override
-  String get howMuchYouKnow => 'Hoeveel je weet';
-
-  @override
   String savedN(int n) {
     return 'Bewaard · $n';
   }
@@ -795,34 +792,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Dagelijks duwtje verzet naar $time.';
   }
-
-  @override
-  String get whatYouAlready => 'Wat je al ';
-
-  @override
-  String get know => 'weet';
-
-  @override
-  String get knowIntro =>
-      'De vakken die je het hoogst zette. Het verandert wat een dag in elk van je vraagt — stevig krijgt vragen, nieuwsgierig krijgt uitleg — niet hoeveel je ervan krijgt.';
-
-  @override
-  String get startWithMyFirstCards => 'Beginnen met mijn eerste kaarten';
-
-  @override
-  String get skipForNow => 'Voor nu overslaan';
-
-  @override
-  String get levelCurious => 'Nieuwsgierig';
-
-  @override
-  String get levelSome => 'Wat';
-
-  @override
-  String get levelSolid => 'Stevig';
-
-  @override
-  String get save => 'Opslaan';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1565,4 +1534,58 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'Je score begint met de vijf van vandaag.';
+
+  @override
+  String get anonymousUsage => 'Anoniem gebruik';
+
+  @override
+  String get anonymousUsageLine =>
+      'Hoeveel kaarten gelezen, bewaard en gezegd worden, zodat de volgende beter zijn. Nooit je naam, je e-mail of wat je schrijft.';
+
+  @override
+  String get usageOn => 'Alleen aantallen, geen namen.';
+
+  @override
+  String get usageOff => 'Er wordt niets meer gemeten.';
+
+  @override
+  String get yourMix => 'Jouw mix';
+
+  @override
+  String get genresLine =>
+      'Tik op een genre om het over te slaan. Houd het vast en de drie draden erin openen er vlak onder.';
+
+  @override
+  String get insideGenre => 'Binnenin';
+
+  @override
+  String nOfSixOn(int n) {
+    return '$n van 6 aan';
+  }
+
+  @override
+  String get offInYourMix => 'niet in jouw mix';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Doorgaan · $on van $total genres aan';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Overslaan — alles blijft aan';
+
+  @override
+  String get mixRarely => 'Zelden';
+
+  @override
+  String get mixSometimes => 'Soms';
+
+  @override
+  String get mixOften => 'Vaak';
+
+  @override
+  String get mixALot => 'Veel';
+
+  @override
+  String get mixFull => 'Vol';
 }

@@ -32,6 +32,8 @@ class ReaderSnapshot {
     this.pickedTopics = const [],
     this.topicWeights = const {},
     this.topicLevels = const {},
+    this.genresOff = const [],
+    this.strandsOff = const [],
     this.pushTokens = const [],
   });
 
@@ -65,6 +67,13 @@ class ReaderSnapshot {
   /// What the reader said they already know of each subject, by key.
   final Map<String, int> topicLevels;
 
+  /// The genres and strands the reader turned off, said in the same breath as
+  /// the mix. Off rather than on, so a build that adds a genre gives it to
+  /// everybody instead of hiding it from every reader who chose before it
+  /// existed.
+  final List<String> genresOff;
+  final List<String> strandsOff;
+
   /// Where to send a notification, one entry per phone the reader uses.
   final List<String> pushTokens;
 
@@ -95,6 +104,8 @@ class ReaderSnapshot {
     'pickedTopics': pickedTopics,
     'topicWeights': topicWeights,
     'topicLevels': topicLevels,
+    'genresOff': genresOff,
+    'strandsOff': strandsOff,
     'pushTokens': pushTokens,
   };
 
@@ -170,6 +181,8 @@ class ReaderSnapshot {
       pickedTopics: strings(raw['pickedTopics']),
       topicWeights: weights,
       topicLevels: levels,
+      genresOff: strings(raw['genresOff']),
+      strandsOff: strings(raw['strandsOff']),
       pushTokens: strings(raw['pushTokens']),
     );
   }
@@ -259,6 +272,10 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     topicWeights: localChoseMix ? local.topicWeights : remote.topicWeights,
     // Said in the same breath as the mix, so it travels with it.
     topicLevels: localChoseMix ? local.topicLevels : remote.topicLevels,
+    // And so do the genres under it, for the same reason and by the same
+    // rule: a union would quietly resurrect a genre this phone turned off.
+    genresOff: localChoseMix ? local.genresOff : remote.genresOff,
+    strandsOff: localChoseMix ? local.strandsOff : remote.strandsOff,
     // A reader with two phones should be reachable on both.
     pushTokens: union(local.pushTokens, remote.pushTokens),
   );

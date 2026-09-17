@@ -786,12 +786,6 @@ abstract class AppLocalizations {
   /// **'Nudge on. Delivery needs the phone build.'**
   String get nudgeOnNeedsPhone;
 
-  /// No description provided for @howMuchYouKnow.
-  ///
-  /// In en, this message translates to:
-  /// **'How much you know'**
-  String get howMuchYouKnow;
-
   /// No description provided for @savedN.
   ///
   /// In en, this message translates to:
@@ -1121,60 +1115,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Daily nudge moved to {time}.'**
   String dailyNudgeMovedTo(String time);
-
-  /// No description provided for @whatYouAlready.
-  ///
-  /// In en, this message translates to:
-  /// **'What you already '**
-  String get whatYouAlready;
-
-  /// No description provided for @know.
-  ///
-  /// In en, this message translates to:
-  /// **'know'**
-  String get know;
-
-  /// No description provided for @knowIntro.
-  ///
-  /// In en, this message translates to:
-  /// **'The subjects you pushed highest. It changes what a day asks of you in each — solid gets questions, curious gets told — not how much of it you get.'**
-  String get knowIntro;
-
-  /// No description provided for @startWithMyFirstCards.
-  ///
-  /// In en, this message translates to:
-  /// **'Start with my first cards'**
-  String get startWithMyFirstCards;
-
-  /// No description provided for @skipForNow.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip for now'**
-  String get skipForNow;
-
-  /// No description provided for @levelCurious.
-  ///
-  /// In en, this message translates to:
-  /// **'Curious'**
-  String get levelCurious;
-
-  /// No description provided for @levelSome.
-  ///
-  /// In en, this message translates to:
-  /// **'Some'**
-  String get levelSome;
-
-  /// No description provided for @levelSolid.
-  ///
-  /// In en, this message translates to:
-  /// **'Solid'**
-  String get levelSolid;
-
-  /// No description provided for @save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get save;
 
   /// No description provided for @subjectsInTheMix.
   ///
@@ -2291,6 +2231,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your score starts with today\'s five.'**
   String get scoreStartsToday;
+
+  /// No description provided for @anonymousUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous usage'**
+  String get anonymousUsage;
+
+  /// No description provided for @anonymousUsageLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.'**
+  String get anonymousUsageLine;
+
+  /// No description provided for @usageOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts only, and no names.'**
+  String get usageOn;
+
+  /// No description provided for @usageOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing more is measured.'**
+  String get usageOff;
+
+  /// No description provided for @yourMix.
+  ///
+  /// In en, this message translates to:
+  /// **'Your mix'**
+  String get yourMix;
+
+  /// No description provided for @genresLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a genre to skip it. Hold one and the three strands inside open right below.'**
+  String get genresLine;
+
+  /// No description provided for @insideGenre.
+  ///
+  /// In en, this message translates to:
+  /// **'Inside'**
+  String get insideGenre;
+
+  /// No description provided for @nOfSixOn.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of 6 on'**
+  String nOfSixOn(int n);
+
+  /// No description provided for @offInYourMix.
+  ///
+  /// In en, this message translates to:
+  /// **'off in your mix'**
+  String get offInYourMix;
+
+  /// No description provided for @continueGenresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue · {on} of {total} genres on'**
+  String continueGenresOn(int on, int total);
+
+  /// No description provided for @skipEverythingStaysOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip — everything stays on'**
+  String get skipEverythingStaysOn;
+
+  /// No description provided for @mixRarely.
+  ///
+  /// In en, this message translates to:
+  /// **'Rarely'**
+  String get mixRarely;
+
+  /// No description provided for @mixSometimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Sometimes'**
+  String get mixSometimes;
+
+  /// No description provided for @mixOften.
+  ///
+  /// In en, this message translates to:
+  /// **'Often'**
+  String get mixOften;
+
+  /// No description provided for @mixALot.
+  ///
+  /// In en, this message translates to:
+  /// **'A lot'**
+  String get mixALot;
+
+  /// No description provided for @mixFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Full'**
+  String get mixFull;
 }
 
 class _AppLocalizationsDelegate

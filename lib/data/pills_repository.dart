@@ -169,6 +169,12 @@ List<Pill> arrangeDay(List<Pill> cards) {
   return out;
 }
 
+/// One pill by id, or null where the id is from a build that carried it and
+/// this one does not. The bank keeps the index — a shelf being measured
+/// asks this per tap, and walking the cards to find one is a walk that can
+/// be spared — and a retired card still answers.
+Pill? pillById(String id) => PillBank.byId(id);
+
 /// Looks pills back up by id — used to restore a day's deck across restarts.
 /// A card retired since the deck was dealt still comes back: the deck was
 /// dealt, and a hole in it would read as the app losing a card.

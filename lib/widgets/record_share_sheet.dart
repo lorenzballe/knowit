@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import '../analytics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../utils/image_saver.dart';
@@ -16,6 +17,10 @@ import 'ui.dart';
 /// thing this app makes that nobody else holds, so it is the one worth
 /// putting in someone else's chat.
 Future<void> showRecordShareSheet(BuildContext context, AppState app) {
+  Analytics.capture('share sheet opened', {
+    'kind': 'record',
+    'streak_days': app.streak,
+  });
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -129,6 +134,10 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         return;
       }
       final saved = await savePng(bytes, 'knowit-record.png');
+      Analytics.capture('record shared', {
+        'streak_days': widget.app.streak,
+        'as': saved ? 'image' : 'copied',
+      });
       if (saved) {
         _toast('Image saved.');
       } else {
@@ -142,6 +151,10 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
 
   Future<void> _copyText() async {
     await Clipboard.setData(ClipboardData(text: _shareText));
+    Analytics.capture('record shared', {
+      'streak_days': widget.app.streak,
+      'as': 'copied',
+    });
     _toast('Copied to clipboard.');
   }
 

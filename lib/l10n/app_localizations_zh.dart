@@ -488,9 +488,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nudgeOnNeedsPhone => '提醒已开启。送达需要手机版。';
 
   @override
-  String get howMuchYouKnow => '你知道多少';
-
-  @override
   String savedN(int n) {
     return '收藏 · $n';
   }
@@ -776,34 +773,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return '每日提醒已改到 $time。';
   }
-
-  @override
-  String get whatYouAlready => '你已经';
-
-  @override
-  String get know => '知道的';
-
-  @override
-  String get knowIntro =>
-      '你调得最高的主题。它改变的是一天在每个主题里向你要什么——扎实就多提问，好奇就多讲解——而不是你得到多少。';
-
-  @override
-  String get startWithMyFirstCards => '开始我的第一批卡片';
-
-  @override
-  String get skipForNow => '暂时跳过';
-
-  @override
-  String get levelCurious => '好奇';
-
-  @override
-  String get levelSome => '略懂';
-
-  @override
-  String get levelSolid => '扎实';
-
-  @override
-  String get save => '保存';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1511,4 +1480,57 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get scoreStartsToday => '你的分数从今天的五张开始。';
+
+  @override
+  String get anonymousUsage => '匿名使用情况';
+
+  @override
+  String get anonymousUsageLine =>
+      '只统计有多少张卡被读过、留下和说出口，好让接下来的卡更好。绝不包括你的姓名、邮箱或你写下的任何内容。';
+
+  @override
+  String get usageOn => '只有数字，没有名字。';
+
+  @override
+  String get usageOff => '不再测量任何内容。';
+
+  @override
+  String get yourMix => '你的组合';
+
+  @override
+  String get genresLine => '点一下跳过某个类别。长按，里面的三条线索就在下面展开。';
+
+  @override
+  String get insideGenre => '里面有';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6 个中开启 $n 个';
+  }
+
+  @override
+  String get offInYourMix => '不在你的组合里';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '继续 · $total 个类别中开启 $on 个';
+  }
+
+  @override
+  String get skipEverythingStaysOn => '跳过 — 全部保持开启';
+
+  @override
+  String get mixRarely => '很少';
+
+  @override
+  String get mixSometimes => '有时';
+
+  @override
+  String get mixOften => '经常';
+
+  @override
+  String get mixALot => '很多';
+
+  @override
+  String get mixFull => '拉满';
 }

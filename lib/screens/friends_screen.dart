@@ -88,141 +88,144 @@ class _FriendsScreenState extends State<FriendsScreen> {
     final String? mine = widget.account.friendCode;
     final Color ink = context.p.ink;
 
-    return Scaffold(
-      backgroundColor: context.p.surface,
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
-          children: [
-            Row(
-              children: [
-                BackCircle(onPressed: widget.onBack),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    l.friends,
-                    style: AppText.display(
-                      size: 27,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: ink,
+    return ScreenView(
+      name: 'friends',
+      child: Scaffold(
+        backgroundColor: context.p.surface,
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
+            children: [
+              Row(
+                children: [
+                  BackCircle(onPressed: widget.onBack),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      l.friends,
+                      style: AppText.display(
+                        size: 27,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        spacing: -0.8,
+                        color: ink,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 22),
-
-            // The reader's own code, big enough to read across a table.
-            Eyebrow(l.yourFriendCode),
-            const SizedBox(height: 10),
-            _CodeCard(
-              code: mine,
-              onCopy: mine == null ? null : () => _copyCode(mine),
-            ),
-            if (!widget.account.canCompare) ...[
-              const SizedBox(height: 10),
-              Text(
-                l.friendsNeedAnAccount,
-                style: AppText.body(
-                  size: 13,
-                  height: 1.45,
-                  color: ink.withValues(alpha: 0.55),
-                ),
+                ],
               ),
-            ],
+              const SizedBox(height: 22),
 
-            const SizedBox(height: 24),
-            Eyebrow(l.addAFriend),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    key: const ValueKey('friend-code'),
-                    controller: _typed,
-                    textCapitalization: TextCapitalization.characters,
-                    maxLength: 7,
-                    onSubmitted: (_) => _add(),
-                    style: AppText.body(
-                      size: 16,
-                      weight: FontWeight.w600,
-                      spacing: 2,
-                      color: ink,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: l.theirCode,
-                      counterText: '',
-                      isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 12,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: context.p.line),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: context.p.line),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                // A width of its own: the chunky button fills what it is
-                // given, and a row gives it nothing.
-                SizedBox(
-                  width: 96,
-                  child: PrimaryButton(
-                    label: l.add,
-                    height: 46,
-                    onPressed: _add,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 24),
-            if (app.friendCodes.isEmpty)
-              Text(
-                l.noFriendsYet,
-                style: AppText.body(
-                  size: 14,
-                  height: 1.5,
-                  color: context.p.inkMuted,
-                ),
-              )
-            else ...[
-              for (var i = 0; i < app.friendCodes.length; i++) ...[
-                if (i > 0) const SizedBox(height: 10),
-                RiseIn.staggered(
-                  i,
-                  child: FutureBuilder<Board?>(
-                    future: _boardOf(app.friendCodes[i]),
-                    builder: (context, snap) => _FriendRow(
-                      code: app.friendCodes[i],
-                      board: snap.data,
-                      waiting: snap.connectionState != ConnectionState.done,
-                      today: editionOf(app.today),
-                      onRemove: () async {
-                        await app.removeFriend(app.friendCodes[i]);
-                        if (mounted) setState(() {});
-                      },
-                    ),
-                  ),
-                ),
-              ],
-              const SizedBox(height: 26),
-              // The week, side by side: not who read the most, but whose
-              // confidence is closest to their record — the one race in
-              // this app worth running against a friend.
-              Eyebrow(l.thisWeekByCalibration),
+              // The reader's own code, big enough to read across a table.
+              Eyebrow(l.yourFriendCode),
               const SizedBox(height: 10),
-              _League(app: app, account: widget.account, boards: _boards),
+              _CodeCard(
+                code: mine,
+                onCopy: mine == null ? null : () => _copyCode(mine),
+              ),
+              if (!widget.account.canCompare) ...[
+                const SizedBox(height: 10),
+                Text(
+                  l.friendsNeedAnAccount,
+                  style: AppText.body(
+                    size: 13,
+                    height: 1.45,
+                    color: ink.withValues(alpha: 0.55),
+                  ),
+                ),
+              ],
+
+              const SizedBox(height: 24),
+              Eyebrow(l.addAFriend),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      key: const ValueKey('friend-code'),
+                      controller: _typed,
+                      textCapitalization: TextCapitalization.characters,
+                      maxLength: 7,
+                      onSubmitted: (_) => _add(),
+                      style: AppText.body(
+                        size: 16,
+                        weight: FontWeight.w600,
+                        spacing: 2,
+                        color: ink,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: l.theirCode,
+                        counterText: '',
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide(color: context.p.line),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide(color: context.p.line),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  // A width of its own: the chunky button fills what it is
+                  // given, and a row gives it nothing.
+                  SizedBox(
+                    width: 96,
+                    child: PrimaryButton(
+                      label: l.add,
+                      height: 46,
+                      onPressed: _add,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+              if (app.friendCodes.isEmpty)
+                Text(
+                  l.noFriendsYet,
+                  style: AppText.body(
+                    size: 14,
+                    height: 1.5,
+                    color: context.p.inkMuted,
+                  ),
+                )
+              else ...[
+                for (var i = 0; i < app.friendCodes.length; i++) ...[
+                  if (i > 0) const SizedBox(height: 10),
+                  RiseIn.staggered(
+                    i,
+                    child: FutureBuilder<Board?>(
+                      future: _boardOf(app.friendCodes[i]),
+                      builder: (context, snap) => _FriendRow(
+                        code: app.friendCodes[i],
+                        board: snap.data,
+                        waiting: snap.connectionState != ConnectionState.done,
+                        today: editionOf(app.today),
+                        onRemove: () async {
+                          await app.removeFriend(app.friendCodes[i]);
+                          if (mounted) setState(() {});
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 26),
+                // The week, side by side: not who read the most, but whose
+                // confidence is closest to their record — the one race in
+                // this app worth running against a friend.
+                Eyebrow(l.thisWeekByCalibration),
+                const SizedBox(height: 10),
+                _League(app: app, account: widget.account, boards: _boards),
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

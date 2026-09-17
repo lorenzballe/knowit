@@ -497,9 +497,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Hatırlatma açık. Teslimat için telefon sürümü gerekir.';
 
   @override
-  String get howMuchYouKnow => 'Ne kadar biliyorsun';
-
-  @override
   String savedN(int n) {
     return 'Saklananlar · $n';
   }
@@ -791,34 +788,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return 'Günlük hatırlatma $time saatine alındı.';
   }
-
-  @override
-  String get whatYouAlready => 'Zaten ne ';
-
-  @override
-  String get know => 'biliyorsun';
-
-  @override
-  String get knowIntro =>
-      'En yükseğe çıkardığın konular. Bir günün her birinde senden ne istediğini değiştirir — sağlam olan soru alır, meraklı olan anlatım alır — ne kadar aldığını değil.';
-
-  @override
-  String get startWithMyFirstCards => 'İlk kartlarımla başla';
-
-  @override
-  String get skipForNow => 'Şimdilik atla';
-
-  @override
-  String get levelCurious => 'Meraklı';
-
-  @override
-  String get levelSome => 'Biraz';
-
-  @override
-  String get levelSolid => 'Sağlam';
-
-  @override
-  String get save => 'Kaydet';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1550,4 +1519,58 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get scoreStartsToday => 'Puanın bugünün beş kartıyla başlıyor.';
+
+  @override
+  String get anonymousUsage => 'Anonim kullanım';
+
+  @override
+  String get anonymousUsageLine =>
+      'Kaç kartın okunduğu, saklandığı ve söylendiği — sonrakiler daha iyi olsun diye. Adın, e-postan ya da yazdıkların asla.';
+
+  @override
+  String get usageOn => 'Yalnızca sayılar, isim yok.';
+
+  @override
+  String get usageOff => 'Artık hiçbir şey ölçülmüyor.';
+
+  @override
+  String get yourMix => 'Senin karışımın';
+
+  @override
+  String get genresLine =>
+      'Atlamak için bir türe dokun. Basılı tut, içindeki üç damar hemen altında açılsın.';
+
+  @override
+  String get insideGenre => 'İçinde';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6 türden $n açık';
+  }
+
+  @override
+  String get offInYourMix => 'karışımında değil';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return 'Devam · $total türden $on açık';
+  }
+
+  @override
+  String get skipEverythingStaysOn => 'Atla — hepsi açık kalır';
+
+  @override
+  String get mixRarely => 'Nadiren';
+
+  @override
+  String get mixSometimes => 'Bazen';
+
+  @override
+  String get mixOften => 'Sık sık';
+
+  @override
+  String get mixALot => 'Çok';
+
+  @override
+  String get mixFull => 'Tam';
 }

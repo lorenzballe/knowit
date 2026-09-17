@@ -8,17 +8,24 @@ import '../theme.dart';
 /// these opens the paywall for readers on the free plan.
 ///
 /// Runs [action] when the reader has Astut+, otherwise pushes the paywall.
+///
+/// [source] names the gate that was reached for, and travels to the paywall
+/// so its numbers can say which perk actually sells.
 Future<void> requirePlus(
   BuildContext context,
   AppState app,
-  VoidCallback action,
-) async {
+  VoidCallback action, {
+  required String source,
+}) async {
   if (app.isPlus) {
     action();
     return;
   }
-  await Navigator.of(context)
-      .push(MaterialPageRoute(builder: (_) => PaywallScreen(app: app)));
+  await Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (_) => PaywallScreen(app: app, source: source),
+    ),
+  );
   // Coming back with the trial started, go straight through to what they
   // were reaching for.
   if (app.isPlus && context.mounted) action();

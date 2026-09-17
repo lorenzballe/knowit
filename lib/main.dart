@@ -3,12 +3,13 @@ import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'analytics.dart';
 import 'cloud.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'l10n/l10n.dart';
+import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
-import 'screens/know_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
@@ -24,6 +25,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Never blocks the app: see Cloud.start.
   await Cloud.start();
+  // Nor this, and for the same reason: see Analytics.start. It goes before
+  // runApp so that the reader's opt-out is read before the first event could
+  // be sent, and not one launch later.
+  await Analytics.start();
   runApp(const AstutoApp());
 }
 
@@ -132,7 +137,24 @@ class _PhoneFrame extends StatelessWidget {
 /// The onboarding is two screens and no more: the intro that says what the
 /// app is, then the subject run that fills the deck. Everything else waits
 /// until there is something worth signing in to keep.
-enum _Stage { intro, subjects, know, comeback, shell }
+enum _Stage {
+  intro,
+  subjects,
+  genres,
+  comeback,
+  shell;
+
+  /// What this stage is called in the funnel. The onboarding is the one part
+  /// of the app worth watching screen by screen: it is the only place a
+  /// reader can be lost before they have seen a single card.
+  String get screen => switch (this) {
+    _Stage.intro => 'intro',
+    _Stage.subjects => 'onboarding subjects',
+    _Stage.genres => 'onboarding genres',
+    _Stage.comeback => 'comeback',
+    _Stage.shell => 'today',
+  };
+}
 
 class AstutoRoot extends StatefulWidget {
   final AppState app;
@@ -183,6 +205,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _startAccountAndStore() async {
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
+    _identify();
     final Subscription store = Subscription.instance
       ..addListener(_onEntitlementChanged);
     await store.start(accountId: _account.uid);
@@ -208,8 +231,10 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _askForPush() async {
     if (_askingForPush) return;
     _askingForPush = true;
+    Analytics.capture('push permission asked');
     final String? token = await _push.ask();
     if (!mounted) return;
+    Analytics.capture('push permission answered', {'granted': token != null});
     await _app.notedPushAnswer(token: token);
     _askingForPush = false;
   }
@@ -223,11 +248,17 @@ class _AstutoRootState extends State<AstutoRoot> {
         _stageResolved = true;
         if (!_app.onboarded) {
           _stage = _Stage.intro;
+          Analytics.capture('onboarding started');
         } else if (_app.shouldShowComeback) {
           _stage = _Stage.comeback;
+          Analytics.capture('comeback shown', {
+            'days_missed': _app.missedDays,
+            'streak_lost': _app.streak,
+          });
         } else {
           _stage = _Stage.shell;
         }
+        Analytics.screen(_stage.screen);
       }
     });
     if (_stage == _Stage.shell && _app.shouldAskForPush) _askForPush();
@@ -242,7 +273,10 @@ class _AstutoRootState extends State<AstutoRoot> {
     super.dispose();
   }
 
-  void _go(_Stage stage) => setState(() => _stage = stage);
+  void _go(_Stage stage) {
+    setState(() => _stage = stage);
+    Analytics.screen(stage.screen);
+  }
 
   /// Returns whether the intro should move on. Only backing out of the
   /// provider's own sheet keeps the reader where they are.
@@ -250,13 +284,22 @@ class _AstutoRootState extends State<AstutoRoot> {
     String label,
     Future<SignInOutcome> Function(AppState) run,
   ) async {
+    Analytics.capture('sign in started', {'method': label});
     final outcome = await run(_app);
     if (!mounted) return false;
+    Analytics.capture('sign in ended', {
+      'method': label,
+      'outcome': outcome.name,
+      // Which road it took — the phone's own sheet or Firebase's browser.
+      // Two rounds were spent working that out by hand once already.
+      'route': _account.lastRoute,
+    });
     switch (outcome) {
       case SignInOutcome.signedIn:
         // The account id may have changed, and the entitlement belongs to the
         // reader rather than to the phone.
         await Subscription.instance.switchTo(_account.uid);
+        _identify(method: label);
         return true;
       // Firebase is not running. This used to move on in silence, which made
       // a broken build look exactly like a successful sign-in: press, no
@@ -278,6 +321,21 @@ class _AstutoRootState extends State<AstutoRoot> {
         );
         return false;
     }
+  }
+
+  /// Tells the funnel which account this phone is, without telling it who.
+  ///
+  /// The id is the Firebase uid: the same one the backup is keyed by, so a
+  /// reader who restores onto a new phone is one person here rather than two.
+  /// The email and the name they typed stay on the phone — see Analytics.
+  void _identify({String? method}) {
+    final String? uid = _account.uid;
+    if (uid == null) return;
+    Analytics.identify(
+      uid,
+      anonymous: !_account.signedInForReal,
+      method: method,
+    );
   }
 
   void _say(String message) {
@@ -329,17 +387,18 @@ class _AstutoRootState extends State<AstutoRoot> {
         return MixScreen(
           onDone: (weights) async {
             await _app.setTopicMix(weights);
-            if (mounted) _go(_Stage.know);
+            if (mounted) _go(_Stage.genres);
           },
         );
 
-      // One more question, and a way past it: what the reader already
-      // knows of what they just asked for. The cards start either way.
-      case _Stage.know:
-        return KnowScreen(
+      // The same answer, one layer finer: which six of each subject, and
+      // which three inside those. The wheel decides how much; this decides
+      // what of it.
+      case _Stage.genres:
+        return GenresScreen(
           app: _app,
-          onDone: (levels) async {
-            await _app.setTopicLevels(levels);
+          onDone: (genresOff, strandsOff) async {
+            await _app.setGenresOff(genresOff, strandsOff);
             await _finishOnboarding();
           },
           onSkip: _finishOnboarding,
@@ -358,10 +417,15 @@ class _AstutoRootState extends State<AstutoRoot> {
         return AstutoShell(
           app: _app,
           account: _account,
-          onSignedOut: () => setState(() {
-            _stageResolved = true;
-            _stage = _Stage.intro;
-          }),
+          onSignedOut: () {
+            setState(() {
+              _stageResolved = true;
+              _stage = _Stage.intro;
+            });
+            // Back at the first screen, as a stranger: AppState.signOut has
+            // already told the funnel to forget who this was.
+            Analytics.screen(_Stage.intro.screen);
+          },
         );
     }
   }
@@ -527,6 +591,7 @@ class _AstutoShellState extends State<AstutoShell>
     HapticFeedback.selectionClick();
     final int from = _tab;
     setState(() => _tab = tab);
+    _noteTab(tab, by: 'bar');
     if ((tab - from).abs() == 1) {
       _jump.stop();
       _pages.animateToPage(
@@ -550,8 +615,23 @@ class _AstutoShellState extends State<AstutoShell>
   bool _settle(ScrollNotification note) {
     if (note is! ScrollEndNotification || !_pages.hasClients) return false;
     final int page = (_pages.page ?? _tab.toDouble()).round();
-    if (page != _tab) setState(() => _tab = page);
+    if (page != _tab) {
+      setState(() => _tab = page);
+      _noteTab(page, by: 'swipe');
+    }
     return false;
+  }
+
+  /// Says which of the three the reader is now on.
+  ///
+  /// The tabs are one route, so the navigator has nothing to observe: pushing
+  /// a PostHog route observer at this app would report "/" three times and
+  /// call it a session. The shell knows, so the shell says.
+  void _noteTab(int tab, {required String by}) {
+    const List<String> names = ['today', 'explore', 'profile'];
+    if (tab < 0 || tab >= names.length) return;
+    Analytics.screen(names[tab]);
+    Analytics.capture('tab opened', {'tab': names[tab], 'by': by});
   }
 
   @override

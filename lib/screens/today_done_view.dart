@@ -1348,7 +1348,10 @@ class _Actions extends StatelessWidget {
                   await app.openExtraSet();
                 } else {
                   await Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => PaywallScreen(app: app)),
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          PaywallScreen(app: app, source: 'extra set'),
+                    ),
                   );
                 }
               },

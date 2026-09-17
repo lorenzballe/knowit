@@ -493,9 +493,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get nudgeOnNeedsPhone => '알림 켜짐. 전달에는 휴대폰 버전이 필요해요.';
 
   @override
-  String get howMuchYouKnow => '얼마나 아는가';
-
-  @override
   String savedN(int n) {
     return '보관함 · $n';
   }
@@ -783,34 +780,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String dailyNudgeMovedTo(String time) {
     return '매일 알림을 $time(으)로 옮겼어요.';
   }
-
-  @override
-  String get whatYouAlready => '이미 ';
-
-  @override
-  String get know => '아는 것';
-
-  @override
-  String get knowIntro =>
-      '가장 높이 올린 주제들입니다. 하루가 각 주제에서 무엇을 요구하는지가 바뀝니다 — 탄탄하면 질문을, 궁금하면 설명을 — 양은 그대로예요.';
-
-  @override
-  String get startWithMyFirstCards => '첫 카드로 시작';
-
-  @override
-  String get skipForNow => '지금은 건너뛰기';
-
-  @override
-  String get levelCurious => '궁금';
-
-  @override
-  String get levelSome => '조금';
-
-  @override
-  String get levelSolid => '탄탄';
-
-  @override
-  String get save => '저장';
 
   @override
   String subjectsInTheMix(int n, int total) {
@@ -1526,4 +1495,57 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get scoreStartsToday => '점수는 오늘의 다섯 장부터 시작해요.';
+
+  @override
+  String get anonymousUsage => '익명 사용 정보';
+
+  @override
+  String get anonymousUsageLine =>
+      '읽고, 담고, 말한 카드의 수만. 다음 카드를 더 좋게 만들기 위해서입니다. 이름도 이메일도, 적은 내용도 보내지 않습니다.';
+
+  @override
+  String get usageOn => '숫자만, 이름은 없습니다.';
+
+  @override
+  String get usageOff => '더 이상 아무것도 측정하지 않습니다.';
+
+  @override
+  String get yourMix => '나의 믹스';
+
+  @override
+  String get genresLine => '장르를 탭하면 건너뜁니다. 길게 누르면 안의 세 갈래가 바로 아래에 열립니다.';
+
+  @override
+  String get insideGenre => '이 안에';
+
+  @override
+  String nOfSixOn(int n) {
+    return '6개 중 $n개 켜짐';
+  }
+
+  @override
+  String get offInYourMix => '믹스에 없음';
+
+  @override
+  String continueGenresOn(int on, int total) {
+    return '계속 · $total개 중 $on개 장르 켜짐';
+  }
+
+  @override
+  String get skipEverythingStaysOn => '건너뛰기 — 전부 켜진 채로';
+
+  @override
+  String get mixRarely => '드물게';
+
+  @override
+  String get mixSometimes => '가끔';
+
+  @override
+  String get mixOften => '자주';
+
+  @override
+  String get mixALot => '많이';
+
+  @override
+  String get mixFull => '가득';
 }
