@@ -1,0 +1,18 @@
+{
+  "id": "thinking-13",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "An estate agent shows you the most expensive house on the street first. Why?",
+  "options": [
+    "It is the best one",
+    "Every later price is judged against it",
+    "To gauge your budget"
+  ],
+  "correct": 1,
+  "answer": "The first number becomes the reference the rest are measured from, even when you know it was chosen to impress. The effect persists when people are warned about it, and when the anchor is plainly arbitrary.",
+  "move": "Whoever names the first number has already moved yours.",
+  "trap": "Believing your sense of a fair price is your own.",
+  "source": "Anchoring in negotiation"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-14",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After a widely reported plane crash, bookings fall and more people drive instead. What happens to total deaths?",
+  "options": [
+    "They fall, flying is riskier for a while",
+    "They rise, because driving is more dangerous per kilometre",
+    "No measurable change"
+  ],
+  "correct": 1,
+  "answer": "Road travel kills far more people per kilometre than flying. Measured after the 2001 attacks, the shift from planes to cars in the following months was estimated to have cost more American lives than were lost aboard the aircraft.",
+  "move": "The safest place after a plane crash is on a plane.",
+  "trap": "Fear tracks how vivid a risk is, not how large.",
+  "source": "Gigerenzer, Risk Analysis, 2006"
+}

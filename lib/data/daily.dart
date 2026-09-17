@@ -14,7 +14,7 @@ library;
 import 'dart:math';
 
 import '../models/pill.dart';
-import 'pills_data.dart';
+import 'pill_bank.dart';
 import 'pills_repository.dart';
 
 /// The day the calendar began. Edition 1.
@@ -38,33 +38,51 @@ int asksInADay(int count) => (count * kAskShare).round();
 
 final Map<int, Pill> _questions = {};
 
+/// Which bank the chain above was dealt from. A newer bundle brings its own
+/// calendar, and a chain dealt from the old one would contradict it.
+BankBundle? _dealtFrom;
+
 /// The question of the day for [date].
 Pill questionOfTheDay(DateTime date) => questionOfEdition(editionOf(date));
 
 /// The question of the day for an edition.
 ///
-/// Chained: each edition keeps clear of what the editions before it asked,
-/// for three quarters of a lap of the cards that can be marked, so the same
-/// question does not come round again for months. The chain runs from the
-/// first edition on every phone that holds the same pool, which is what
-/// makes it the same question everywhere — and when the pool grows the
-/// chain is re-dealt from the start, which is why the archive keeps a note
-/// of what was actually dealt rather than trusting this to say.
+/// The bank carries a calendar — edition to card id — frozen when it was
+/// built and extended a year ahead every night, so the same question is
+/// asked on every phone whatever else the bank did in between. Past the end
+/// of the calendar, or on a phone that never updates, the chain below takes
+/// over: each edition keeps clear of what the editions before it asked, for
+/// three quarters of a lap of the cards that can be marked, so the same
+/// question does not come round again for months. The archive still keeps a
+/// note of what was actually dealt rather than trusting either to say.
 Pill questionOfEdition(int edition) {
+  if (!identical(_dealtFrom, PillBank.current)) {
+    _questions.clear();
+    _dealtFrom = PillBank.current;
+  }
   final cached = _questions[edition];
   if (cached != null) return cached;
   // Everything before the calendar is dealt on its own, chained to nothing:
   // it is an archive that was never really shared.
   final int start = edition < 1 ? edition : 1;
   for (var e = start; e <= edition; e++) {
-    _questions[e] ??= _ask(e);
+    _questions[e] ??= _frozen(e) ?? _ask(e);
   }
   return _questions[edition]!;
 }
 
+Pill? _frozen(int edition) {
+  final id = PillBank.editions[edition];
+  if (id == null) return null;
+  final pill = PillBank.byId(id);
+  return (pill != null && pill.asksSomething && pill.isGraded) ? pill : null;
+}
+
 Pill _ask(int edition) {
-  final pool = kPillPool.where((p) => p.asksSomething && p.isGraded).toList();
-  if (pool.isEmpty) return kPillPool.first;
+  final pool = PillBank.cards
+      .where((p) => p.asksSomething && p.isGraded)
+      .toList();
+  if (pool.isEmpty) return PillBank.cards.first;
   final int window = max(0, (pool.length * 0.75).floor());
   final recent = <String>{
     for (var e = edition - window; e < edition; e++) ?_questions[e]?.id,
@@ -111,5 +129,6 @@ List<Pill> dealDay({
   return arrangeDay([question, ...review, ...rest]);
 }
 
-/// Forgets every deal. For tests that change what the pool holds.
+/// Forgets every deal: for tests that change what the pool holds, and for
+/// the bank when a newer bundle is adopted.
 void resetCalendar() => _questions.clear();

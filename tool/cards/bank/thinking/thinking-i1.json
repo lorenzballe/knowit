@@ -1,0 +1,18 @@
+{
+  "id": "thinking-i1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?",
+  "options": [
+    "Yes, the team needs variety",
+    "Not as stated — the past hires do not change this candidate",
+    "Yes, three is already too many"
+  ],
+  "correct": 1,
+  "answer": "There may be a real case for varied backgrounds, but that case does not come from the run. As stated, the manager is treating independent decisions as though the earlier ones changed the odds of the next — the same move as expecting tails after four heads.",
+  "move": "A good reason for a decision is not the same as the feeling that produced it.",
+  "trap": "Feeling that a run has to be balanced out.",
+  "source": "Gambler's fallacy in hiring"
+}

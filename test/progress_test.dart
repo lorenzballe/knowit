@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/models/pill.dart';
-import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/state/progress.dart';
@@ -226,9 +226,9 @@ void main() {
     test('the misses are the ones said with certainty', () {
       final report = weekReport(
         judgements: [
-          said(90, right: false, on: key(monday), pill: kPillPool.first.id),
+          said(90, right: false, on: key(monday), pill: PillBank.cards.first.id),
           // Wrong, but nobody claimed to know.
-          said(50, right: false, on: key(monday), pill: kPillPool.first.id),
+          said(50, right: false, on: key(monday), pill: PillBank.cards.first.id),
         ],
         completedDates: const [],
         today: today,
@@ -247,7 +247,7 @@ void main() {
     setUpAll(() {
       final asks = <String, int>{};
       final reads = <String, int>{};
-      for (final p in kPillPool) {
+      for (final p in PillBank.cards) {
         final m = p.asksSomething ? asks : reads;
         m[p.topic] = (m[p.topic] ?? 0) + 1;
       }

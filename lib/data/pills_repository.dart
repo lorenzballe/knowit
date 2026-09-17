@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:math' as math;
 
 import '../models/pill.dart';
-import 'pills_data.dart';
+import 'pill_bank.dart';
 import 'topics.dart';
 
 String dateKey(DateTime d) =>
@@ -52,7 +52,7 @@ List<Pill> pillsForDate(
   int? asking,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
-  final pool = List<Pill>.from(kPillPool);
+  final pool = List<Pill>.from(PillBank.cards);
   pool.shuffle(Random(seed));
 
   final wanted = <String>{};
@@ -170,13 +170,11 @@ List<Pill> arrangeDay(List<Pill> cards) {
 }
 
 /// Looks pills back up by id — used to restore a day's deck across restarts.
-List<Pill> pillsByIds(List<String> ids) {
-  final byId = {for (final p in kPillPool) p.id: p};
-  return [
-    for (final id in ids)
-      if (byId[id] != null) byId[id]!,
-  ];
-}
+/// A card retired since the deck was dealt still comes back: the deck was
+/// dealt, and a hole in it would read as the app losing a card.
+List<Pill> pillsByIds(List<String> ids) => [
+  for (final id in ids) ?PillBank.byId(id),
+];
 
 /// Front-loads one pill per topic so a day never opens with two in a row from
 /// the same subject.
@@ -196,8 +194,8 @@ List<Pill> _oneTopicFirst(List<Pill> pills) {
 /// Free-text search across the whole pool — question, answer and topic.
 List<Pill> searchPills(String query) {
   final q = query.trim().toLowerCase();
-  if (q.isEmpty) return List<Pill>.from(kPillPool);
-  return kPillPool.where((p) {
+  if (q.isEmpty) return List<Pill>.from(PillBank.cards);
+  return PillBank.cards.where((p) {
     final hay = '${p.question} ${p.answer} ${p.topic} ${p.barMove}';
     return hay.toLowerCase().contains(q);
   }).toList();
@@ -262,8 +260,8 @@ List<Pill> pickedPills({
   String? topic,
 }) {
   final pool = topic == null
-      ? List<Pill>.from(kPillPool)
-      : kPillPool.where((p) => p.topic == topic).toList();
+      ? List<Pill>.from(PillBank.cards)
+      : PillBank.cards.where((p) => p.topic == topic).toList();
 
   int rank(Pill p) => switch (p.difficulty) {
     Difficulty.hard => 0,

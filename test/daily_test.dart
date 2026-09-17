@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/data/daily.dart';
-import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/models/pill.dart';
@@ -32,9 +34,11 @@ void main() {
     });
 
     test('does not come round again for months', () {
-      final pool = kPillPool.where((p) => p.asksSomething && p.isGraded);
-      final int window = (pool.length * 0.75).floor();
-      expect(window, greaterThanOrEqualTo(30), reason: 'the pool is thin');
+      // The calendar is frozen in the bank, and the bundler keeps a
+      // question out for three quarters of a lap of the graded pool and
+      // never less than two months — so two months is what a phone may
+      // rely on, whatever the pool has grown to since an edition was set.
+      const gap = 60;
       final lastSeen = <String, int>{};
       for (var e = 1; e <= 300; e++) {
         final id = questionOfEdition(e).id;
@@ -42,12 +46,26 @@ void main() {
         if (before != null) {
           expect(
             e - before,
-            greaterThan(window),
+            greaterThanOrEqualTo(gap),
             reason: '$id came back after ${e - before} days',
           );
         }
         lastSeen[id] = e;
       }
+    });
+
+    test('is frozen in the bank a year ahead, and dealt past its end', () {
+      expect(PillBank.editions.length, greaterThanOrEqualTo(400));
+      for (var e = 1; e <= 400; e++) {
+        expect(questionOfEdition(e).id, PillBank.editions[e], reason: '$e');
+      }
+      // Beyond the calendar the app chains on from where it left off.
+      final beyond = PillBank.editions.keys.reduce(max) + 1;
+      expect(questionOfEdition(beyond).isGraded, isTrue);
+      expect(
+        questionOfEdition(beyond).id,
+        isNot(PillBank.editions[beyond - 1]),
+      );
     });
 
     test('days before the calendar still have one', () {
@@ -88,7 +106,7 @@ void main() {
     test('a card that came due takes the second asking slot', () {
       final day = DateTime(2026, 10, 14);
       final question = questionOfTheDay(day);
-      final due = kPillPool.firstWhere(
+      final due = PillBank.cards.firstWhere(
         (p) => p.isGraded && p.asksSomething && p.id != question.id,
       );
       final deck = dealDay(date: day, reviews: [due]);
@@ -106,11 +124,11 @@ void main() {
 
     test('is the same deal for the same date and history', () {
       final day = DateTime(2026, 10, 14);
-      final seen = {kPillPool.first.id, kPillPool.last.id};
+      final seen = {PillBank.cards.first.id, PillBank.cards.last.id};
       final a = dealDay(date: day, exclude: seen).map((p) => p.id).toList();
       final b = dealDay(date: day, exclude: seen).map((p) => p.id).toList();
       expect(a, b);
-      expect(a, isNot(contains(kPillPool.first.id)));
+      expect(a, isNot(contains(PillBank.cards.first.id)));
     });
 
     test('keeps two questions a day, whatever the pool', () {

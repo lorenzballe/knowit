@@ -1,0 +1,20 @@
+{
+  "id": "thinking-e4",
+  "topic": "thinking",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many passenger journeys does one city bus make in its working life, in millions?",
+  "value": 2,
+  "unit": "million journeys",
+  "withinFactor": 3,
+  "answer": "A bus serves 12 to 15 years: ~1.7 million boardings.",
+  "move": "One bus moves more people in its life than live in Milan.",
+  "hint": "Journeys per day, times days per year, times years of service.",
+  "steps": [
+    "A busy city bus carries roughly 400 boardings a day.",
+    "It runs around 320 days a year: ~128,000 a year.",
+    "A bus serves 12 to 15 years: ~1.7 million boardings."
+  ],
+  "source": "Urban transit fleet statistics"
+}

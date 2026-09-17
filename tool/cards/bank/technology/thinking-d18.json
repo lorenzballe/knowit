@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d18",
+  "topic": "technology",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should political advertising be banned from targeting narrow groups?",
+  "sides": [
+    "Yes, ban the targeting",
+    "No, allow it"
+  ],
+  "answer": "A promise made to eight thousand people that nobody else ever sees cannot be checked, contradicted or held against you. Broadcast advertising was accountable precisely because everyone saw the same claim — remove that and a campaign can tell every group a different story.",
+  "move": "Both sides are describing the same feature: reaching a few people cheaply.",
+  "counterpoint": "Targeting is also what lets a small campaign reach the people it is actually for, without buying national airtime. Ban it and the advantage returns to whoever can already afford to talk to everyone, which is the incumbent.",
+  "source": "Contested question in election law"
+}

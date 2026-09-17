@@ -1,0 +1,18 @@
+{
+  "id": "thinking-a2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A shop marks an item \"was €200, now €80\". Why does the crossed-out price work even when it was never charged?",
+  "options": [
+    "People assume it is a real discount",
+    "It sets the number you judge €80 against",
+    "It signals quality"
+  ],
+  "correct": 1,
+  "answer": "The first figure becomes the reference point, and €80 is then read as a saving rather than as a price. It works on people who doubt the original price was ever real — which is why the practice is regulated rather than merely mocked.",
+  "move": "The crossed-out number is not information. It is the ruler.",
+  "trap": "Thinking the effect depends on believing the old price.",
+  "source": "Reference price effects in retail"
+}

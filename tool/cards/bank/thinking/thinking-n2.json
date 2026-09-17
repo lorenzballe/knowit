@@ -1,0 +1,18 @@
+{
+  "id": "thinking-n2",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A league of 12 teams plays every other team twice. How many matches in a season?",
+  "value": 132,
+  "unit": "matches",
+  "answer": "Each pair plays twice: 66 x 2 = 132.",
+  "move": "Rounds in a league grow with the square of the teams, not the teams.",
+  "hint": "First count each pairing once, then remember they meet twice.",
+  "steps": [
+    "Pairings: 12 x 11 / 2 = 66.",
+    "Each pair plays twice: 66 x 2 = 132."
+  ],
+  "source": "Round-robin scheduling"
+}

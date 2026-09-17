@@ -66,6 +66,7 @@ dependencies:
   # For the nonce Apple's token is bound to: the hash goes to Apple and the
   # string behind it to Firebase.
   crypto: ^3.0.7
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

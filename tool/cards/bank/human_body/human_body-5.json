@@ -1,0 +1,11 @@
+{
+  "id": "human_body-5",
+  "topic": "human_body",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes a heart beat?",
+  "answer": "The heart does. A cluster of pacemaker cells generates its own rhythm, and the brain only speeds it up or slows it down. A heart removed from the body and supplied with oxygen keeps beating on its own — which is precisely why transplantation is possible.",
+  "move": "The brain does not start the heartbeat. It only argues about the tempo.",
+  "source": "Sinoatrial node automaticity, standard physiology"
+}

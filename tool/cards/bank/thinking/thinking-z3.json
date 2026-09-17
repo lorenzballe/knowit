@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z3",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A factory sensor flags machines likely to fail this week. Failures are rare; the sensor is usually right. Most flags turn out to be nothing. Is the sensor broken?",
+  "options": [
+    "Yes, replace it",
+    "No, that is what a rare event looks like",
+    "Only if it misses failures"
+  ],
+  "correct": 1,
+  "answer": "When the thing being looked for almost never happens, even a good detector produces mostly false alarms — there is simply far more of everything else. The number worth watching is how many real failures it misses, not how many alarms are quiet.",
+  "move": "Judge a detector by what it misses, not by how often it cries wolf.",
+  "trap": "Judging a detector by how often its alarms are real.",
+  "source": "Precision and recall on rare events"
+}

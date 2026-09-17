@@ -1,0 +1,18 @@
+{
+  "id": "thinking-f4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "A study tests 20 foods against cancer risk and finds one significant at p < 0.05. What should you think?",
+  "options": [
+    "Convincing — that is the standard threshold",
+    "Expected by chance: 20 tests, 1 in 20 odds",
+    "They should have tested more foods"
+  ],
+  "correct": 1,
+  "answer": "A 5% threshold means one false positive in twenty tests on average. Run twenty tests and finding one \"result\" is what should happen if nothing is going on. The fix is to say up front what you are testing.",
+  "move": "Ask how many things they measured before you believe the one they report.",
+  "trap": "Reading a single p-value without asking how many tests were run.",
+  "source": "Multiple comparisons problem"
+}

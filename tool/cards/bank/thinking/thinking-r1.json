@@ -1,0 +1,18 @@
+{
+  "id": "thinking-r1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A company sends consultants to its worst-performing sales region. Next quarter it improves. What is the safest reading?",
+  "options": [
+    "The consultants worked",
+    "Some of it would have happened anyway",
+    "The region was under-managed"
+  ],
+  "correct": 1,
+  "answer": "A region is picked because it had an unusually bad quarter, and unusual results are partly luck. The next quarter drifts back toward that region's own average whatever anyone does. Without a comparable region left alone, you cannot tell the treatment from the drift.",
+  "move": "Anything chosen for being extreme will look improved next time.",
+  "trap": "Crediting the intervention with the whole improvement.",
+  "source": "Regression to the mean in management"
+}

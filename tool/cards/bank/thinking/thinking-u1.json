@@ -1,0 +1,17 @@
+{
+  "id": "thinking-u1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "You paid for a year of a service and stopped using it after two months. Should the year you paid for keep you subscribed?",
+  "options": [
+    "Yes, get your money's worth",
+    "No, the year is gone either way"
+  ],
+  "correct": 1,
+  "answer": "The payment is the same whether you use it or not, so it cannot inform the choice. The only live question is whether the next ten months are worth your attention — and annual pricing exists partly because that reasoning is so hard to apply.",
+  "move": "You cannot get money back by spending time on top of it.",
+  "trap": "Staying to redeem money that is already spent.",
+  "source": "Sunk cost in subscriptions"
+}

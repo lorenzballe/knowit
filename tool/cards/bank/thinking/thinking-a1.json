@@ -1,0 +1,18 @@
+{
+  "id": "thinking-a1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Judges were shown a sentencing demand rolled on dice before deciding a case. What happened?",
+  "options": [
+    "Nothing — they are trained to ignore it",
+    "Higher rolls produced longer sentences",
+    "They sentenced more leniently overall"
+  ],
+  "correct": 1,
+  "answer": "Experienced judges gave longer sentences after a high roll than a low one, knowing the number came from dice. Expertise does not remove the anchor; it makes people more certain they were not anchored.",
+  "move": "Whoever names a figure first has already moved the room, expert or not.",
+  "trap": "Assuming expertise protects against an irrelevant number.",
+  "source": "Englich, Mussweiler & Strack, 2006"
+}

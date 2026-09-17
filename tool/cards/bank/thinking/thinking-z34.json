@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z34",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "A university's overall acceptance rate is lower for one group, yet higher in every single department. Possible?",
+  "options": [
+    "No",
+    "Yes, if they apply to different departments",
+    "Only with an error"
+  ],
+  "correct": 1,
+  "answer": "If one group applies mainly to departments that reject nearly everyone, its overall rate can be lower while it does better in each. The total and the parts are answering different questions.",
+  "move": "Before comparing totals, ask whether the two groups were doing the same thing.",
+  "trap": "Assuming the whole has to move with all of its parts.",
+  "source": "Simpson's paradox in admissions"
+}

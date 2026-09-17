@@ -1,0 +1,18 @@
+{
+  "id": "thinking-4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Order codes are generated at random from a million possibilities. After how many orders is a repeat more likely than not?",
+  "options": [
+    "About half a million",
+    "About 1,200",
+    "About 100,000"
+  ],
+  "correct": 1,
+  "answer": "With n orders there are about n squared over two pairs that could clash, and a clash beats even odds once that count nears a million — around 1,200 orders. Collisions come from pairs, and pairs grow far faster than the list does.",
+  "move": "Coincidence needs far fewer people than anyone expects.",
+  "trap": "Thinking about your code, rather than every pair of codes.",
+  "source": "The birthday bound, applied to identifiers"
+}

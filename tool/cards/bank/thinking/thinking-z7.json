@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z7",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A city puts speed cameras at its worst accident blackspots. Accidents there fall the following year. What is the safest reading?",
+  "options": [
+    "The cameras worked",
+    "Some of the fall would have happened anyway",
+    "The cameras made drivers worse elsewhere"
+  ],
+  "correct": 1,
+  "answer": "Blackspots are picked in their worst year, and an unusually bad year is usually followed by a less bad one whatever you do. Some of the improvement is real and some is the site returning to its normal rate — separating them needs comparison sites, not before-and-after.",
+  "move": "A blackspot picked in its worst year would have eased on its own.",
+  "trap": "A site is chosen because it had an unusually bad year.",
+  "source": "Regression to the mean in road safety"
+}

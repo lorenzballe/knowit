@@ -1,0 +1,18 @@
+{
+  "id": "thinking-5",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "\"Vintage tools were better made — every one I own still works.\" What is wrong?",
+  "options": [
+    "Nothing, that is evidence",
+    "The broken ones were thrown away decades ago",
+    "Old steel really is harder"
+  ],
+  "correct": 1,
+  "answer": "You are looking at what survived fifty years of use and disposal. The badly made ones broke and went in the bin long ago, so the tools left to buy are the durable tail of their generation — not a fair picture of what was on sale.",
+  "move": "Anything you can still buy from 1960 is, by definition, what did not break.",
+  "trap": "The surviving objects are treated as a sample of what was made.",
+  "source": "Survivorship bias in surviving artefacts"
+}

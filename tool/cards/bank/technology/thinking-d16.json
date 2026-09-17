@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d16",
+  "topic": "technology",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should an AI system be allowed to make a diagnosis without a doctor signing it off?",
+  "sides": [
+    "Yes, let it diagnose",
+    "No, keep a doctor in the loop"
+  ],
+  "answer": "In several narrow tasks these systems already match specialists, and they do it at three in the morning in places with no specialist at all. Requiring a signature from someone who is not available is not a safety measure, it is a shortage dressed as one.",
+  "move": "The real question is not accuracy on average. It is what happens on the case that falls outside the training data.",
+  "counterpoint": "A doctor who signs off catches the case the model has never seen, and the model does not know which case that is. Add a rubber-stamping human and you get the worst of both: nobody actually checking, and nobody clearly responsible when it is wrong.",
+  "source": "Contested question in medical regulation"
+}

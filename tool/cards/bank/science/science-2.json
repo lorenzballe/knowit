@@ -1,0 +1,11 @@
+{
+  "id": "science-2",
+  "topic": "science",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did peer review become normal?",
+  "answer": "Later than you would guess. Nature only made external refereeing compulsory in 1973. Einstein's 1905 papers were not refereed, and neither was Watson and Crick's DNA structure. \"Peer reviewed\" describes a process younger than the polio vaccine, not a timeless standard.",
+  "move": "Peer review is younger than the polio vaccine.",
+  "source": "Baldwin, Notes and Records of the Royal Society, 2015"
+}

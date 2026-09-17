@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z8",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A struggling shop gets a new manager and takes more the next quarter. What would make the case convincing?",
+  "options": [
+    "A bigger rise",
+    "Other shops that kept their manager",
+    "A longer quarter"
+  ],
+  "correct": 1,
+  "answer": "You need shops that were also having a bad quarter and did not change manager. Without them, the ordinary bounce from a bad quarter and the effect of the new manager are the same number and cannot be told apart.",
+  "move": "The comparison you need is the one that did nothing.",
+  "trap": "The manager arrived precisely because the quarter was bad.",
+  "source": "Regression to the mean in management"
+}

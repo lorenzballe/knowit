@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d4",
+  "topic": "thinking",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should we bring back extinct species we have the technology to revive?",
+  "sides": [
+    "Yes, revive them",
+    "No, leave them extinct"
+  ],
+  "answer": "We caused most of these extinctions, and restoring a lost species can repair an ecosystem that lost its engineer. The techniques developed also help species that are still alive but failing.",
+  "move": "The strongest objection is not scientific. It is what the promise does to the incentive.",
+  "counterpoint": "The money is finite, and it competes directly with protecting species that still exist. A revived animal returns to a habitat that has moved on without it, and the promise of reversal weakens the argument for not causing extinctions in the first place.",
+  "source": "Contested question in conservation biology"
+}

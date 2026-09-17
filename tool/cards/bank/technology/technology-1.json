@@ -1,0 +1,11 @@
+{
+  "id": "technology-1",
+  "topic": "technology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the internet physically go?",
+  "answer": "Under the sea. Around 99% of intercontinental data travels through a few hundred fibre-optic cables lying on the seabed, not through satellites. \"The cloud\" is mostly glass on a seafloor, and its main hazards are ships' anchors and fishing trawlers.",
+  "move": "The cloud is a few hundred cables on the bottom of the ocean.",
+  "source": "TeleGeography Submarine Cable Map"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d2",
+  "topic": "thinking",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A self-driving car must choose: swerve and kill one, or continue and kill five. What should it be built to do?",
+  "sides": [
+    "Minimise deaths",
+    "Protect its passenger"
+  ],
+  "answer": "A machine should do what a clear-headed person would want in advance, and almost nobody, asked in the abstract, prefers five deaths to one. Building anything else means writing a rule that some lives count less because of where they are standing.",
+  "move": "The gap between what people say they want and what they would buy is the whole problem.",
+  "counterpoint": "People say they want the car to minimise deaths, and then say they would not buy that car. A vehicle that might sacrifice its passenger will not sell, so the ethical version never reaches the road and the far larger benefit — fewer crashes overall — never arrives.",
+  "source": "Bonnefon, Shariff & Rahwan, Science, 2016"
+}

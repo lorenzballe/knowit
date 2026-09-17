@@ -1,0 +1,11 @@
+{
+  "id": "science-1",
+  "topic": "science",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did we know what a kilogram was?",
+  "answer": "Until 2019, a kilogram was a metal cylinder in a vault near Paris. Its official copies drifted apart by around 50 micrograms over a century — and nobody could say which had changed, because the cylinder was the definition. It is now fixed to a constant of nature instead.",
+  "move": "For 130 years the kilogram could not be wrong, only different.",
+  "source": "BIPM, 2019 redefinition of the SI"
+}

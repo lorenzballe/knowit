@@ -1,0 +1,11 @@
+{
+  "id": "psychology-1",
+  "topic": "psychology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do IQ tests keep being rescored?",
+  "answer": "Because raw scores kept rising — roughly three points a decade through the 20th century, across many countries. Tests are re-normed to keep the average at 100, which hides the drift. Score as an average adult today and you would have sat near the top of the distribution a century ago.",
+  "move": "The average is held at 100 by moving the goalposts every few years.",
+  "source": "Flynn, Psychological Bulletin, 1987"
+}

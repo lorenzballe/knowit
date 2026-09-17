@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d14",
+  "topic": "science",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should we fund research into cooling the planet by putting particles in the stratosphere?",
+  "sides": [
+    "Yes, study it",
+    "No, do not start"
+  ],
+  "answer": "Not studying something does not stop it happening; it just guarantees that whoever tries it first will do so without knowing what follows. Research is not deployment, and the option value of understanding a lever we may be desperate for in forty years is very high.",
+  "move": "Research and deployment are separable in principle. The disagreement is whether they have ever been separated in practice.",
+  "counterpoint": "Every serious programme of this kind has ended in deployment, and the moral hazard is not hypothetical: the credible promise of a thermostat weakens the argument for cutting emissions today. It also hands one country a lever over everyone else's rainfall, with no mechanism to say no.",
+  "source": "Contested question in climate policy"
+}

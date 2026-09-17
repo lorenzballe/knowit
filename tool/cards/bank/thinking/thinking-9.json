@@ -1,0 +1,18 @@
+{
+  "id": "thinking-9",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Buy three, get the cheapest free. The items cost €10, €20 and €30. What is the discount?",
+  "options": [
+    "About a third",
+    "About a sixth",
+    "About a quarter"
+  ],
+  "correct": 1,
+  "answer": "You pay €50 instead of €60, so you save a sixth. One item in three is free, which sounds like 33% — but it is the cheapest item, and it was never a third of the money.",
+  "move": "One item in three free is nothing like a third off.",
+  "trap": "The word \"free\" attaches to an item, not to the bill.",
+  "source": "Framing of multi-buy discounts"
+}

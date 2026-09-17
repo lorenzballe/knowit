@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d17",
+  "topic": "philosophy",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When a treatment that works already exists, should new drugs still be tested against a sugar pill?",
+  "sides": [
+    "Yes, use placebo",
+    "No, test against the best existing drug"
+  ],
+  "answer": "A placebo arm is the cleanest measurement there is, needs fewer patients, and answers the question that regulators actually ask. Against an existing drug you can only show something is not much worse, which is how a slow drift towards weaker medicines begins.",
+  "move": "The cleanest experiment and the useful question are pulling in opposite directions here.",
+  "counterpoint": "It means deliberately giving a patient nothing when something known to help exists. And the answer it produces is not the one anybody needs: no doctor is choosing between this drug and nothing, they are choosing between this drug and the one already on the shelf.",
+  "source": "Declaration of Helsinki, contested since 2000"
+}

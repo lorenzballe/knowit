@@ -1,0 +1,18 @@
+{
+  "id": "thinking-f2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "\"Hospitals are dangerous: far more people die in them than at home.\" What is wrong?",
+  "options": [
+    "The figures are probably made up",
+    "People go to hospital because they are already dying",
+    "Home deaths are under-reported"
+  ],
+  "correct": 1,
+  "answer": "The comparison assumes the two groups are alike, and they are not: hospitals concentrate the sickest people. Judging a treatment needs comparable groups, which is what a control group is for.",
+  "move": "Any statistic comparing two groups invites one question: who ended up in each?",
+  "trap": "Treating a place where sick people are sent as a cause of their outcome.",
+  "source": "Confounding by indication"
+}

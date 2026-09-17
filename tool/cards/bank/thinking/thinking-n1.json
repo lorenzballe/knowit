@@ -1,0 +1,19 @@
+{
+  "id": "thinking-n1",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A lift serves floors 1 to 20. How many different journeys are there from a lower floor to a higher one?",
+  "value": 190,
+  "unit": "journeys",
+  "answer": "380 / 2 = 190.",
+  "move": "Every \"how many pairs\" question is the same question wearing a costume.",
+  "hint": "Every journey is just a pair of floors, and the lower one comes first.",
+  "steps": [
+    "Choose any two of the 20 floors: 20 x 19 = 380 ordered pairs.",
+    "Each unordered pair gives exactly one upward journey, so halve it.",
+    "380 / 2 = 190."
+  ],
+  "source": "Combinations, C(20,2)"
+}

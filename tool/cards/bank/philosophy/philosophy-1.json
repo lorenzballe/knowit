@@ -1,0 +1,11 @@
+{
+  "id": "philosophy-1",
+  "topic": "philosophy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Two drunk drivers, one hits a child. Are they equally guilty?",
+  "answer": "Both made the same decision and took the same risk; only one had a child step out. We punish them very differently, and most people feel that is right. But the difference was luck, and if luck can change how blameworthy you are, control is not what blame rests on.",
+  "move": "The only difference between the two drivers was who walked into the road.",
+  "source": "Williams and Nagel, Moral Luck, 1976"
+}

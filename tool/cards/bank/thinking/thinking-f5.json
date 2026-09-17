@@ -1,0 +1,18 @@
+{
+  "id": "thinking-f5",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "\"Nobody I know voted for it, so the result must be rigged.\" Where is the error?",
+  "options": [
+    "They probably did not check carefully",
+    "The people you know are not a random sample",
+    "One election is too small a sample"
+  ],
+  "correct": 1,
+  "answer": "People cluster with people like themselves, so your circle is one of the least random samples available. Pauline Kael is often misquoted saying this about Nixon; the underlying error is real regardless.",
+  "move": "Your social circle is evidence about your social circle.",
+  "trap": "Treating the people around you as if they were drawn at random.",
+  "source": "Sampling bias"
+}

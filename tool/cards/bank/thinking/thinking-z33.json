@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z33",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "A hospital has a worse survival rate than the next one, but does better on both mild and severe cases. Which is better?",
+  "options": [
+    "The other one",
+    "The one doing better on both",
+    "Impossible to say"
+  ],
+  "correct": 1,
+  "answer": "The first hospital takes more severe cases, and severe cases die more wherever they go. Comparing overall rates compares the patients, not the care — which is why crude league tables punish the hospitals that take the hardest work.",
+  "move": "A crude league table measures who walked in, not what was done.",
+  "trap": "The overall figure feels like the summary of the parts.",
+  "source": "Case-mix in hospital comparison"
+}

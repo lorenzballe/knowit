@@ -1,0 +1,18 @@
+{
+  "id": "thinking-12",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "A city has spent €400m of a planned €1bn tunnel. New figures show it will never repay its cost. What should decide whether to continue?",
+  "options": [
+    "The €400m already spent",
+    "Only the remaining €600m against the benefit",
+    "Both, weighted"
+  ],
+  "correct": 1,
+  "answer": "The €400m is gone whichever way you choose, so it cannot favour either. The only live question is whether the remaining €600m buys more than €600m of anything else. Counting the spent money is how projects that everyone knows are failing get finished.",
+  "move": "The money already spent has no vote.",
+  "trap": "The spent money feels like it would be wasted by stopping.",
+  "source": "Sunk cost in public works"
+}

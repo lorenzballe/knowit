@@ -1,0 +1,18 @@
+{
+  "id": "thinking-f1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "\"Every successful founder I interviewed woke at 5am. So waking early makes you successful.\" Where does this break?",
+  "options": [
+    "Waking early is not that helpful",
+    "Nobody asked the founders who failed",
+    "Five is too early to be realistic"
+  ],
+  "correct": 1,
+  "answer": "The sample was chosen by its outcome. If half of all failed founders also woke at 5am, the habit tells you nothing. You cannot learn what causes success by studying only successes.",
+  "move": "Ask who is missing from the sample before you argue about the finding.",
+  "trap": "Arguing about whether waking early works, instead of about the sample.",
+  "source": "Selection on the dependent variable"
+}

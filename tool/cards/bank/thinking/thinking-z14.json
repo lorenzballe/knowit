@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z14",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A gym reports that members who use the pool visit more often. Should it build another pool?",
+  "options": [
+    "Yes",
+    "Not on this evidence",
+    "Only if the pool is full"
+  ],
+  "correct": 1,
+  "answer": "People who come often have more chances to use the pool, so heavy users show up in the pool statistics whatever the pool does. The question is whether members who did not swim start coming more once they do — which this cannot answer.",
+  "move": "Frequent users turn up in every feature's numbers.",
+  "trap": "Reading a habit of the keenest members as a cause.",
+  "source": "Usage-frequency confounding"
+}

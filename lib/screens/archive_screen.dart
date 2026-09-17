@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
-import '../data/pills_data.dart';
+import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
@@ -122,7 +122,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                   Text(
                     asking
                         ? context.l10n.results(results.length)
-                        : context.l10n.cardsTapADay(kPillPool.length),
+                        : context.l10n.cardsTapADay(PillBank.cards.length),
                     style: AppText.body(
                       size: 12.5,
                       height: 1.35,
@@ -271,7 +271,7 @@ class _Head extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        hintText: context.l10n.searchNCards(kPillPool.length),
+                        hintText: context.l10n.searchNCards(PillBank.cards.length),
                         hintStyle: AppText.body(
                           size: 14.5,
                           color: context.p.inkFaint,
@@ -633,7 +633,7 @@ class _Coverage extends StatelessWidget {
   Widget build(BuildContext context) {
     final byTopic = <String, int>{};
     final seenByTopic = <String, int>{};
-    for (final pill in kPillPool) {
+    for (final pill in PillBank.cards) {
       byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
       if (app.seenIds.contains(pill.id)) {
         seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;

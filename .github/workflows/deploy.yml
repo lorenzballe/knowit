@@ -27,6 +27,15 @@ jobs:
 
       - run: flutter pub get
 
+      # The bank's own gate, and both copies of it current: a card edited by
+      # hand and not bundled would ship one thing to the phone and another
+      # to the site.
+      - run: |
+          pip install -q -r tool/cards/requirements.txt
+          python3 tool/cards/check.py
+          python3 tool/cards/bundle.py --check
+          python3 -m unittest discover -s tool/cards -p "test_*.py"
+
       - run: flutter test
 
       # No service worker on the preview. Its whole job is to serve the

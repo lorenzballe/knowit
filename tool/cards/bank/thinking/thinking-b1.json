@@ -1,0 +1,18 @@
+{
+  "id": "thinking-b1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A camera that identifies faces with 99% accuracy scans 100,000 travellers to find one wanted person. Roughly how many alarms will be wrong?",
+  "options": [
+    "Almost none",
+    "About a thousand",
+    "A few dozen"
+  ],
+  "correct": 1,
+  "answer": "One per cent of 100,000 innocent people is about 1,000 false alarms, against the single real match. Almost every alarm is wrong — not because the camera is bad, but because there is only one of them and a hundred thousand of us.",
+  "move": "A very accurate test looking for something very rare is mostly wrong.",
+  "trap": "Hearing 99% and picturing a system that is almost always right.",
+  "source": "Base rate neglect applied to screening"
+}

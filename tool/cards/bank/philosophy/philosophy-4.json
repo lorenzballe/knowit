@@ -1,0 +1,11 @@
+{
+  "id": "philosophy-4",
+  "topic": "philosophy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is survival what you actually care about?",
+  "answer": "Parfit argued not. If you were replaced by someone psychologically continuous with you, what matters to you would carry on — so the question \"but would it be me?\" may be empty rather than hard. He thought realising this made death less frightening, and said so while dying.",
+  "move": "Parfit's claim: identity is not what matters. Continuity is.",
+  "source": "Parfit, Reasons and Persons, 1984"
+}

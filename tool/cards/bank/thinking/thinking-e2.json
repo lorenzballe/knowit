@@ -1,0 +1,21 @@
+{
+  "id": "thinking-e2",
+  "topic": "thinking",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many bricks are in a typical four-storey apartment building, in thousands?",
+  "value": 250,
+  "unit": "thousand bricks",
+  "withinFactor": 3,
+  "answer": "2,500 x 60 = ~150,000. With party walls and returns, a few hundred thousand.",
+  "move": "The building you live in is a quarter of a million bricks somebody laid by hand.",
+  "hint": "Work out the wall area, then bricks per square metre.",
+  "steps": [
+    "A brick face is about 21 x 6 cm with mortar, so ~60 bricks per square metre per leaf.",
+    "A 20 m x 12 m building, 12 m tall: perimeter 64 m x 12 m = ~770 square metres of wall.",
+    "Two leaves and internal walls, call it ~2,500 square metres of brickwork.",
+    "2,500 x 60 = ~150,000. With party walls and returns, a few hundred thousand."
+  ],
+  "source": "Standard brick dimensions and coursing"
+}

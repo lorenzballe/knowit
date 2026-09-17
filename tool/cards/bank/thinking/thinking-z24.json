@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z24",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "A team has spent nine months on a feature and new research says users do not want it. What is the right question?",
+  "options": [
+    "How to salvage the nine months",
+    "Whether the next month is worth spending",
+    "Who was wrong"
+  ],
+  "correct": 1,
+  "answer": "The nine months are spent whatever happens next. Framing it as salvage is what turns a stopped project into a shipped one nobody uses, because it makes finishing feel like recovering rather than spending.",
+  "move": "You cannot get spent time back by spending more of it.",
+  "trap": "Nine months of work feels like something that can still be recovered.",
+  "source": "Escalation of commitment"
+}

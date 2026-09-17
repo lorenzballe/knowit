@@ -1,0 +1,18 @@
+{
+  "id": "thinking-s2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "A fund family advertises the ten-year returns of its funds. Why is the average flattering?",
+  "options": [
+    "They pick the best years",
+    "The funds that did badly were closed and left the table",
+    "Ten years is too short"
+  ],
+  "correct": 1,
+  "answer": "Poor funds get merged away or shut, and their records leave with them. What remains is the survivors, so the family average describes a group selected for having done well. Regulators require some disclosure of this precisely because it flatters so reliably.",
+  "move": "Any performance table is a list of the ones still allowed to be on it.",
+  "trap": "Assuming the table lists every fund they ever ran.",
+  "source": "Survivorship bias in fund performance"
+}

@@ -6,7 +6,7 @@
 /// reader to make any of it true.
 library;
 
-import '../data/pills_data.dart';
+import '../data/pill_bank.dart';
 import '../models/pill.dart';
 
 /// How many judgements before the app is willing to say anything about how
@@ -219,7 +219,7 @@ class Miss {
 /// The cards worth going back to: wrong, and said with some certainty.
 /// Newest first, because the point is what you believed lately.
 List<Miss> missesFrom(Iterable<Judgement> judgements, {int from = 70}) {
-  final byId = {for (final p in kPillPool) p.id: p};
+  final byId = {for (final p in PillBank.cards) p.id: p};
   final out = <Miss>[];
   for (final j in judgements.toList().reversed) {
     if (j.correct || j.confidence < from) continue;

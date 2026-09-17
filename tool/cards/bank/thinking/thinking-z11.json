@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z11",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A menu opens with a €95 tasting menu almost nobody orders. Why is it there?",
+  "options": [
+    "Some people order it",
+    "It makes €40 look modest",
+    "Prestige"
+  ],
+  "correct": 1,
+  "answer": "The expensive item sets the scale everything else is read against. Its job is not to sell; it is to make the middle of the menu feel like restraint. Remove it and the same €40 dish starts to feel expensive.",
+  "move": "The dish nobody orders is doing most of the work on the menu.",
+  "trap": "Assuming a price is there to be paid.",
+  "source": "Anchoring in menu design"
+}

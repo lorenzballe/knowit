@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z19",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "A researcher measures 30 outcomes in one trial and reports the two that reached significance. What is the problem?",
+  "options": [
+    "Too few outcomes",
+    "Two in thirty is what chance produces",
+    "The outcomes were wrong"
+  ],
+  "correct": 1,
+  "answer": "At the usual threshold, roughly one measurement in twenty comes out significant by chance alone. Thirty measurements should produce about one or two even if nothing is happening. Reporting only those two turns noise into a finding.",
+  "move": "Ask how many things were measured before you ask what was found.",
+  "trap": "Reading a threshold designed for one question as if it survived thirty.",
+  "source": "Multiple comparisons in trial reporting"
+}

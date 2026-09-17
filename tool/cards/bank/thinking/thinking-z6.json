@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z6",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "A study of letters written home from a war finds morale was high. What should you check first?",
+  "options": [
+    "The sample size",
+    "Whose letters survived",
+    "The dates"
+  ],
+  "correct": 1,
+  "answer": "Letters survive when someone kept them, which usually means the writer came home. Letters from those who did not are far likelier to have been lost — so the archive is filtered by the outcome you might be trying to study.",
+  "move": "An archive is not a sample. It is what somebody chose to keep.",
+  "trap": "Treating an archive as a sample of what was written.",
+  "source": "Survivorship in historical sources"
+}

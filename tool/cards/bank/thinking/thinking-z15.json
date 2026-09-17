@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z15",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "An airline surveys passengers at the gate about punctuality. What is skewed?",
+  "options": [
+    "Nothing",
+    "The badly delayed have gone home",
+    "The time of day"
+  ],
+  "correct": 1,
+  "answer": "Passengers whose flights were cancelled or badly delayed are not standing at the gate to be asked. The survey systematically misses the experiences it most needs.",
+  "move": "Ask where the people you need are, not where the people are.",
+  "trap": "Surveying where the people are, rather than where the answer is.",
+  "source": "Survivorship in customer surveys"
+}

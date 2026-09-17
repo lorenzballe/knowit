@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z16",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Children who own more books score better at school. Should the state post books to families?",
+  "options": [
+    "Yes",
+    "Not on this alone",
+    "Only to poorer families"
+  ],
+  "correct": 1,
+  "answer": "Books in a house come with parents who read, time, income and quiet — any of which could do the work. Posting books tests whether the books mattered, and when it has been tried the effect is far smaller than the correlation suggested.",
+  "move": "The object in the house is rarely the thing doing the work.",
+  "trap": "A visible thing standing in for everything invisible around it.",
+  "source": "Confounding in educational research"
+}

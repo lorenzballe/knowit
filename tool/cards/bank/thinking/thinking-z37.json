@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z37",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Which is more likely next year: a serious flood in one named city, or a serious flood somewhere caused by a river breaching a defence?",
+  "options": [
+    "The named city",
+    "The second, by a wide margin",
+    "Equally likely"
+  ],
+  "correct": 1,
+  "answer": "The second covers every river and every defence, and the first is one city. Adding detail makes a forecast more believable and less likely at the same time — which is why detailed predictions win arguments and lose money.",
+  "move": "The more specific a forecast, the more convincing and the less likely.",
+  "trap": "A story with a mechanism in it feels more probable than a bare claim.",
+  "source": "Conjunction in expert forecasting"
+}

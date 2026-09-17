@@ -1,0 +1,18 @@
+{
+  "id": "thinking-g2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Online ratings for most products cluster at five stars and one star, with little between. Why?",
+  "options": [
+    "Products really are either great or terrible",
+    "Only the delighted and the furious bother to write",
+    "Fake reviews at both ends"
+  ],
+  "correct": 1,
+  "answer": "Writing a review costs effort, and only strong feeling pays for it. The many people who found it fine never appear, so the distribution is about who writes, not about what the product is like.",
+  "move": "The middle of any rating scale is missing, not empty.",
+  "trap": "Reading the shape of the ratings as the shape of the experience.",
+  "source": "Self-selection in ratings"
+}

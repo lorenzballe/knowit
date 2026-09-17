@@ -1,0 +1,18 @@
+{
+  "id": "thinking-m1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "A team tests 15 versions of a button and one beats the original at p < 0.05. What should they do?",
+  "options": [
+    "Ship it",
+    "Run that one again on its own",
+    "Test 15 more versions"
+  ],
+  "correct": 1,
+  "answer": "With 15 tests, a false winner at the 5% threshold is more likely than not. The number means something only for a test decided in advance, so the finding has to survive being the only thing you are looking at.",
+  "move": "The winner of a search is not the same as the winner of a test.",
+  "trap": "Treating the winner of many tests like the winner of one.",
+  "source": "Multiple comparisons in experimentation"
+}

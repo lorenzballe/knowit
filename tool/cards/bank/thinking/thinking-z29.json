@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z29",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "In a country of 60 million, roughly how often will a genuinely one-in-a-million event happen today?",
+  "options": [
+    "Almost never",
+    "About sixty times",
+    "Once"
+  ],
+  "correct": 1,
+  "answer": "Sixty million people each having a one-in-a-million day produces about sixty such days, today, and again tomorrow. Extraordinary coincidences are not evidence of anything: at scale they are compulsory.",
+  "move": "At a country's scale, the impossible happens daily and gets reported.",
+  "trap": "One in a million sounds like a synonym for never.",
+  "source": "The law of truly large numbers"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-c1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "You think a colleague dislikes you, and start noticing the evidence. Why does the evidence keep arriving?",
+  "options": [
+    "Because it is true",
+    "Because you are only counting what fits",
+    "Because they can tell you suspect it"
+  ],
+  "correct": 1,
+  "answer": "The neutral moments are not stored, so the pile can only grow one way. The test that would tell you something is looking for the times they went out of their way for you — and noticing whether you had been discounting them.",
+  "move": "A theory that only ever gains evidence is not being tested.",
+  "trap": "Treating a growing pile of confirming moments as proof.",
+  "source": "Confirmation bias in everyday judgement"
+}

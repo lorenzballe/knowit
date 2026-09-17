@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/daily.dart';
-import '../data/pills_data.dart';
+import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../l10n/app_localizations.dart';
@@ -217,6 +217,9 @@ class AppState extends ChangeNotifier {
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
+    // The newest bank the last run downloaded, before a card is dealt from
+    // the one built in. Adopting later, mid-day, would re-deal the table.
+    PillBank.restore(_prefs);
     today = DateTime.now();
 
     // Stored state is read defensively. A value written by an older build,
@@ -236,6 +239,8 @@ class AppState extends ChangeNotifier {
     // this never prompts — it only re-arms what is already permitted.
     unawaited(refreshDailyReminder());
     unawaited(refreshHomeWidget());
+    // Nor on the bank: whatever it downloads is for tomorrow's start.
+    unawaited(PillBank.refresh(_prefs));
   }
 
   Future<void> _restore() async {
@@ -622,7 +627,7 @@ class AppState extends ChangeNotifier {
   /// Cards answered, paired with the pill, for the ones that can be marked.
   Iterable<MapEntry<Pill, Answer>> get _graded sync* {
     for (final e in answers.entries) {
-      final pill = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      final pill = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
       if (pill != null && pill.isGraded) yield MapEntry(pill, e.value);
     }
   }
@@ -691,7 +696,7 @@ class AppState extends ChangeNotifier {
   Map<String, double> get leanedWeights {
     if (likedIds.isEmpty && dislikedIds.isEmpty) return topicWeights;
     final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
-    final byId = {for (final p in kPillPool) p.id: p};
+    final byId = {for (final p in PillBank.cards) p.id: p};
     final lean = <String, double>{};
     void nudge(Iterable<String> ids, double by) {
       for (final id in ids) {
@@ -728,7 +733,7 @@ class AppState extends ChangeNotifier {
     final existing = answers[pillId];
     if (existing != null && !isDueForReview(pillId)) return;
 
-    final pill = kPillPool.where((p) => p.id == pillId).firstOrNull;
+    final pill = PillBank.cards.where((p) => p.id == pillId).firstOrNull;
     final graded = pill?.isGraded ?? false;
     final right = graded && (pill?.challenge.accepts(response) ?? false);
 
@@ -811,7 +816,7 @@ class AppState extends ChangeNotifier {
       ..sort((a, b) => a.value.dueOn!.compareTo(b.value.dueOn!));
 
     for (final e in entries) {
-      final original = kPillPool.where((p) => p.id == e.key).firstOrNull;
+      final original = PillBank.cards.where((p) => p.id == e.key).firstOrNull;
       if (original == null) continue;
       final pick = _freshInstanceOf(original, claimed, on);
       claimed.add(pick.id);
@@ -842,7 +847,7 @@ class AppState extends ChangeNotifier {
   Pill _freshInstanceOf(Pill original, Set<String> claimed, DateTime on) {
     if (!original.principle.isReal) return original;
 
-    final siblings = kPillPool
+    final siblings = PillBank.cards
         .where(
           (p) =>
               p.principle == original.principle &&
@@ -871,7 +876,7 @@ class AppState extends ChangeNotifier {
       met++;
       if (e.key.challenge.accepts(e.value.response)) right++;
     }
-    final total = kPillPool.where((p) => p.principle == principle).length;
+    final total = PillBank.cards.where((p) => p.principle == principle).length;
     return Mastery(principle, met: met, right: right, contexts: total);
   }
 

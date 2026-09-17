@@ -1,0 +1,11 @@
+{
+  "id": "psychology-4",
+  "topic": "psychology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do you know how a zip works?",
+  "answer": "Ask someone to rate their understanding of a zip, a toilet or a bicycle and they rate it high. Ask them to write the step-by-step mechanism and the rating collapses. We routinely mistake familiarity for understanding, and only notice when forced to produce the explanation.",
+  "move": "Try explaining how a zip works. Out loud. Right now.",
+  "source": "Rozenblit & Keil, Cognitive Science, 2002"
+}
