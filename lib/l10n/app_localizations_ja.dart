@@ -77,11 +77,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return '今週 · 7日中$days日';
-  }
-
-  @override
   String get tapToFlip => 'タップでめくる';
 
   @override

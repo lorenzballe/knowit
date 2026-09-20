@@ -77,11 +77,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return '이번 주 · 7일 중 $days일';
-  }
-
-  @override
   String get tapToFlip => '탭하여 뒤집기';
 
   @override

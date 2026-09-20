@@ -57,14 +57,6 @@
    }
   }
  },
- "weekLine": "Your week · {days} of 7 kept",
- "@weekLine": {
-  "placeholders": {
-   "days": {
-    "type": "int"
-   }
-  }
- },
  "tapToFlip": "TAP TO FLIP",
  "shareThisCard": "Share this card",
  "removeFromSaved": "Remove from saved",

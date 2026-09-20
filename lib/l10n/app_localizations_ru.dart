@@ -79,11 +79,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return 'Твоя неделя · $days из 7';
-  }
-
-  @override
   String get tapToFlip => 'НАЖМИ, ЧТОБЫ ПЕРЕВЕРНУТЬ';
 
   @override

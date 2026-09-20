@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{1} 2{2} 3{3} 4{4} 5{5} 6{6} 7{7} 8{8} 9{9} 10{10} other{{n}}}",
   "dayRead": "{n}일째 · {word}장 읽음",
   "shelfEyebrow": "오늘의 {word}장 · 밀어서 다시 보기",
-  "weekLine": "이번 주 · 7일 중 {days}일",
   "tapToFlip": "탭하여 뒤집기",
   "shareThisCard": "이 카드 공유",
   "removeFromSaved": "보관에서 빼기",

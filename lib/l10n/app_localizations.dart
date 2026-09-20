@@ -192,12 +192,6 @@ abstract class AppLocalizations {
   /// **'TODAY\'S {word} · SWIPE TO REVIEW'**
   String shelfEyebrow(String word);
 
-  /// No description provided for @weekLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Your week · {days} of 7 kept'**
-  String weekLine(int days);
-
   /// No description provided for @tapToFlip.
   ///
   /// In en, this message translates to:

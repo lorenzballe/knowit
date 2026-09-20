@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{bir} 2{iki} 3{üç} 4{dört} 5{beş} 6{altı} 7{yedi} 8{sekiz} 9{dokuz} 10{on} other{{n}}}",
   "dayRead": "{n}. gün · {word} okundu",
   "shelfEyebrow": "BUGÜNÜN {word} KARTI · TEKRAR İÇİN KAYDIR",
-  "weekLine": "Haftan · 7 günden {days} tamam",
   "tapToFlip": "ÇEVİRMEK İÇİN DOKUN",
   "shareThisCard": "Bu kartı paylaş",
   "removeFromSaved": "Saklananlardan çıkar",

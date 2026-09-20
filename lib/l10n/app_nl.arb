@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{één} 2{twee} 3{drie} 4{vier} 5{vijf} 6{zes} 7{zeven} 8{acht} 9{negen} 10{tien} other{{n}}}",
   "dayRead": "Dag {n} · {word} gelezen",
   "shelfEyebrow": "DE {word} VAN VANDAAG · VEEG OM TERUG TE KIJKEN",
-  "weekLine": "Je week · {days} van 7 gehaald",
   "tapToFlip": "TIK OM TE DRAAIEN",
   "shareThisCard": "Deze kaart delen",
   "removeFromSaved": "Uit bewaard halen",

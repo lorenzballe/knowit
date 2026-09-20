@@ -77,11 +77,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return 'Haftan · 7 günden $days tamam';
-  }
-
-  @override
   String get tapToFlip => 'ÇEVİRMEK İÇİN DOKUN';
 
   @override

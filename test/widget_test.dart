@@ -321,7 +321,12 @@ void main() {
       count: 12,
     );
     final Pill elsewhere = shelf.firstWhere((p) => p.topic != 'Economics');
-    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
+    // On a shelf, not on exactly one: the three shelves are three framings
+    // of the same pool — today's, the ones that ask most, everybody's — and
+    // a card can honestly qualify for two of them at once. What is being
+    // tested here is the filter, so what matters is that it is somewhere
+    // before and nowhere after.
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
     await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
     await _settle(tester);
@@ -334,7 +339,7 @@ void main() {
     await _settle(tester);
     expect(find.byKey(const ValueKey('subject-All-on')), findsOneWidget);
     expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
-    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
     // And the lens opens a field over the whole pool.
     await tester.tap(find.byKey(const ValueKey('explore-search')));

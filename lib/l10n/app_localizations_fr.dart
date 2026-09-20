@@ -77,11 +77,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return 'Ta semaine · $days sur 7 tenus';
-  }
-
-  @override
   String get tapToFlip => 'TOUCHE POUR RETOURNER';
 
   @override
