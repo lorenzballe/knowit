@@ -45,15 +45,14 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
-/// Reads the five through and waits out the card that follows them — the
-/// one that offers five more stays a few seconds, then the shelf comes up.
+/// Reads the day through: the five, and the card after them that offers
+/// five more, which is thrown like the rest. Stops when the deck is gone.
 Future<void> _finishDay(WidgetTester tester) async {
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 6; i++) {
+    if (find.byType(PillCardStack).evaluate().isEmpty) break;
     await _swipeCardAway(tester);
     await _settle(tester);
   }
-  await tester.pump(kMagicMoment + const Duration(milliseconds: 600));
-  await _settle(tester);
 }
 
 /// What a fresh install is dealt today: every subject, nothing read, no
@@ -1299,53 +1298,60 @@ void main() {
     }
 
     testWidgets(
-      'one card more appears, offers five more, and leaves on its own',
+      'one card more waits under the fifth, comes up, and is thrown',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed());
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+
+        // Four thrown: the fifth is on top and the offer peeks from under it.
+        for (var i = 0; i < 4; i++) {
+          await _swipeCardAway(tester);
+          await _settle(tester);
+        }
+        expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
+        expect(find.text('Day 1 · five read'), findsNothing);
+
+        // The fifth thrown: the offer is the card on top, with every bar lit
+        // and no shelf yet. Nothing times out; nothing says skip.
+        await _swipeCardAway(tester);
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
+        expect(find.text('Want five more?'), findsOneWidget);
+        expect(find.text('Unlock five extra pills'), findsOneWidget);
+        expect(find.text('Skip'), findsNothing);
+        await tester.pump(const Duration(seconds: 6));
+        await _settle(tester);
+        expect(find.text('Day 1 · five read'), findsNothing);
+
+        // Thrown like any other card: the shelf.
+        await _swipeCardAway(tester);
+        await _settle(tester);
+        expect(find.byType(PillCardStack), findsNothing);
+        expect(find.text('Day 1 · five read'), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'on the free plan the offer is the paywall, and the card waits',
       (tester) async {
         SharedPreferences.setMockInitialValues(_installed());
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         await readFive(tester);
-
-        // In the deck's place, with every bar lit: not the shelf yet.
-        expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('Want five more?'), findsOneWidget);
-        expect(find.text('Unlock five extra pills'), findsOneWidget);
-        expect(find.text('Day 1 · five read'), findsNothing);
-
-        // A few seconds later the shelf is up, and the card is gone.
-        await tester.pump(kMagicMoment + const Duration(milliseconds: 600));
+        await tester.tap(find.text('Unlock five extra pills'));
         await _settle(tester);
-        expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+        expect(find.byType(PaywallScreen), findsOneWidget);
+        // Back without the trial: the card is still on the table.
+        Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
+        await _settle(tester);
+        expect(find.byType(PaywallScreen), findsNothing);
+        expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
+        await _swipeCardAway(tester);
+        await _settle(tester);
         expect(find.text('Day 1 · five read'), findsOneWidget);
       },
     );
-
-    testWidgets('skip goes straight to the shelf', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await readFive(tester);
-      await tester.tap(find.text('Skip'));
-      await _settle(tester);
-      expect(find.byKey(const ValueKey('magic-card')), findsNothing);
-      expect(find.text('Day 1 · five read'), findsOneWidget);
-    });
-
-    testWidgets('on the free plan the offer is the paywall', (tester) async {
-      SharedPreferences.setMockInitialValues(_installed());
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await readFive(tester);
-      await tester.tap(find.text('Unlock five extra pills'));
-      await _settle(tester);
-      expect(find.byType(PaywallScreen), findsOneWidget);
-      // Back without the trial: the shelf, and no card lingering.
-      Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
-      await _settle(tester);
-      expect(find.byType(PaywallScreen), findsNothing);
-      expect(find.byKey(const ValueKey('magic-card')), findsNothing);
-      expect(find.text('Day 1 · five read'), findsOneWidget);
-    });
 
     testWidgets('with Astute+ it deals the second set on the spot', (
       tester,
@@ -1357,13 +1363,15 @@ void main() {
       expect(find.text('Five more'), findsOneWidget);
       await tester.tap(find.text('Five more'));
       await _settle(tester);
-      // Five more cards, being read from the sixth — and no second offer
-      // after them.
+      // Five more cards, being read from the sixth — and no offer after
+      // them, because there is nothing left to offer.
       final stack = tester.widget<PillCardStack>(find.byType(PillCardStack));
       expect(stack.deck, hasLength(10));
       expect(stack.index, 5);
+      expect(stack.trailing, isNull);
       await readFive(tester);
       expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+      expect(find.byType(PillCardStack), findsNothing);
     });
 
     testWidgets(
@@ -1388,6 +1396,82 @@ void main() {
     Future<void> finish(WidgetTester tester) async {
       await _finishDay(tester);
     }
+
+    /// Swipes the shelf on past the fifth card.
+    Future<void> toTheSixth(WidgetTester tester) async {
+      for (var i = 0; i < 5; i++) {
+        await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
+        await _settle(tester);
+      }
+    }
+
+    testWidgets('the shelf ends on the card that offers five more', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await finish(tester);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      await toTheSixth(tester);
+
+      // Past the fifth: the offer, at the front, and the counter gives way
+      // to the plan's name. No skip here — a swipe is the way back.
+      expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
+      expect(find.text('Want five more?'), findsOneWidget);
+      expect(find.text('Skip'), findsNothing);
+      expect(find.text('06 / 05'), findsNothing);
+      expect(find.text('ASTUTE+'), findsWidgets);
+      await tester.tap(
+        find.descendant(
+          of: find.byKey(const ValueKey('shelf-magic')),
+          matching: find.text('Unlock five extra pills'),
+        ),
+      );
+      await _settle(tester);
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
+      await _settle(tester);
+
+      // The sixth dot jumps to it, and the first dot back to the first.
+      await tester.tap(find.bySemanticsLabel('Card 1 of 5'));
+      await _settle(tester);
+      expect(find.text('01 / 05'), findsOneWidget);
+      await tester.tap(find.bySemanticsLabel('ASTUTE+'));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
+    });
+
+    testWidgets(
+      'with Astute+ the sixth card deals the second set, and then there is no sixth',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed(plus: true));
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await finish(tester);
+        await toTheSixth(tester);
+        expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(const ValueKey('shelf-magic')),
+            matching: find.text('Five more'),
+          ),
+        );
+        await _settle(tester);
+        final stack = tester.widget<PillCardStack>(find.byType(PillCardStack));
+        expect(stack.deck, hasLength(10));
+
+        // Ten read: the shelf holds ten, and nothing to sell after them.
+        await finish(tester);
+        expect(find.text('01 / 10'), findsOneWidget);
+        for (var i = 0; i < 10; i++) {
+          await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
+          await _settle(tester);
+        }
+        expect(find.text('10 / 10'), findsOneWidget);
+        expect(find.byKey(const ValueKey('shelf-magic')), findsNothing);
+      },
+    );
 
     testWidgets('a tap turns the front card over, and back', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());

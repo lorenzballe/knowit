@@ -22,8 +22,8 @@ class MagicCard extends StatefulWidget {
     required this.line,
     required this.action,
     required this.onAction,
-    required this.skip,
-    required this.onSkip,
+    this.skip,
+    this.onSkip,
   });
 
   final String eyebrow;
@@ -31,8 +31,10 @@ class MagicCard extends StatefulWidget {
   final String line;
   final String action;
   final VoidCallback onAction;
-  final String skip;
-  final VoidCallback onSkip;
+
+  /// The quiet way past the card. Absent on the shelf, where a swipe is.
+  final String? skip;
+  final VoidCallback? onSkip;
 
   @override
   State<MagicCard> createState() => _MagicCardState();
@@ -112,10 +114,15 @@ class _MagicCardState extends State<MagicCard>
             ),
             const Spacer(),
             PrimaryButton(label: widget.action, onPressed: widget.onAction),
-            const SizedBox(height: 4),
-            Center(
-              child: QuietButton(label: widget.skip, onPressed: widget.onSkip),
-            ),
+            if (widget.skip != null && widget.onSkip != null) ...[
+              const SizedBox(height: 4),
+              Center(
+                child: QuietButton(
+                  label: widget.skip!,
+                  onPressed: widget.onSkip!,
+                ),
+              ),
+            ],
           ],
         ),
       ),

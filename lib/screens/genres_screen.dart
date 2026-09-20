@@ -130,53 +130,59 @@ class _GenresScreenState extends State<GenresScreen> {
         bottom: false,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l.yourMix,
-                    style: AppText.display(
-                      size: 28,
-                      weight: FontWeight.w600,
-                      spacing: -0.9,
-                      color: p.ink,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    l.genresLine,
-                    style: AppText.body(
-                      size: 12.5,
-                      height: 1.4,
-                      color: p.inkMuted,
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: Stack(
                 children: [
-                  ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-                    itemCount: _subjects.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 20),
+                  // The head scrolls with the subjects rather than sitting
+                  // over them: it is the first thing on the page, not a bar.
+                  ListView.builder(
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+                    itemCount: _subjects.length + 1,
                     itemBuilder: (context, i) {
-                      final (String key, double weight) = _subjects[i];
-                      return weight > 0
-                          ? _Subject(
-                              topicKey: key,
-                              weight: weight,
-                              genresOff: _genresOff,
-                              strandsOff: _strandsOff,
-                              open: _open,
-                              onTapGenre: _toggleGenre,
-                              onHoldGenre: _openGenre,
-                              onTapStrand: _toggleStrand,
-                            )
-                          : _SubjectOff(topicKey: key);
+                      if (i == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 18),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                l.yourMix,
+                                style: AppText.display(
+                                  size: 28,
+                                  weight: FontWeight.w600,
+                                  spacing: -0.9,
+                                  color: p.ink,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                l.genresLine,
+                                style: AppText.body(
+                                  size: 12.5,
+                                  height: 1.4,
+                                  color: p.inkMuted,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      final (String key, double weight) = _subjects[i - 1];
+                      return Padding(
+                        padding: EdgeInsets.only(top: i > 1 ? 20 : 0),
+                        child: weight > 0
+                            ? _Subject(
+                                topicKey: key,
+                                weight: weight,
+                                genresOff: _genresOff,
+                                strandsOff: _strandsOff,
+                                open: _open,
+                                onTapGenre: _toggleGenre,
+                                onHoldGenre: _openGenre,
+                                onTapStrand: _toggleStrand,
+                              )
+                            : _SubjectOff(topicKey: key),
+                      );
                     },
                   ),
                   // The list runs under the footer rather than stopping short

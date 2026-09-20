@@ -21,6 +21,13 @@ class PillCardStack extends StatefulWidget {
   final List<Pill> deck;
   final int index;
 
+  /// One card after the deck, if there is one: it peeks from under the last
+  /// pill like any next card, comes to the top when that one is thrown, and
+  /// is thrown the same way. It has no back, asks nothing, and is never
+  /// liked, saved or shared — it is drawn as given. Throwing it calls
+  /// [onAdvance] like every other card; the caller knows it was the last.
+  final Widget? trailing;
+
   /// Moves the deck on, and is waited on.
   ///
   /// Waited on because the card that left has to stay gone until the next one
@@ -69,7 +76,11 @@ class PillCardStack extends StatefulWidget {
   /// down is a throw like any other.
   final ValueChanged<Pill>? onDislike;
 
+  /// How many cards the stack holds: the deck, and the one after it.
+  int get count => deck.length + (trailing != null ? 1 : 0);
+
   const PillCardStack({
+    this.trailing,
     super.key,
     required this.deck,
     required this.index,
@@ -129,7 +140,7 @@ class _PillCardStackState extends State<PillCardStack>
   }
 
   void _onPanStart(DragStartDetails d) {
-    if (widget.index >= widget.deck.length) return;
+    if (widget.index >= widget.count) return;
     _controller.stop();
     _dragging = true;
     _dragTotalMove = 0;
@@ -164,7 +175,12 @@ class _PillCardStackState extends State<PillCardStack>
       // card is never sent in by accident, so it can mean something —
       // less like this. A drag that drifts downward on its way sideways
       // is not it.
+      // The card after the deck is not a pill: it cannot be disliked.
+      final Pill? leaving = widget.index < widget.deck.length
+          ? widget.deck[widget.index]
+          : null;
       final bool down =
+          leaving != null &&
           widget.onDislike != null &&
           thrown.dy > 520 &&
           thrown.dy > thrown.dx.abs() * 1.8;
@@ -173,7 +189,6 @@ class _PillCardStackState extends State<PillCardStack>
       } else {
         HapticFeedback.lightImpact();
       }
-      final Pill leaving = widget.deck[widget.index];
       final double length = heading.distance;
       await _animateTo(
         length == 0 ? const Offset(480, 0) : heading * (1100 / length),
@@ -228,6 +243,8 @@ class _PillCardStackState extends State<PillCardStack>
   /// all. It is a tap, so it is on the tap.
   void _turnOver() {
     if (!mounted) return;
+    // The card after the deck has no back.
+    if (widget.index >= widget.deck.length) return;
     // A card that asks turns over when the reader commits, not on a stray
     // tap — otherwise the answer can be reached without ever guessing. A
     // card that has come back has an answer already, so it must be asked
@@ -283,7 +300,7 @@ class _PillCardStackState extends State<PillCardStack>
 
   @override
   Widget build(BuildContext context) {
-    final remaining = widget.deck.length - widget.index;
+    final remaining = widget.count - widget.index;
     // Three: the card being read, the one behind it, and the one after
     // that waiting at nothing — it fades in only as the top card leaves,
     // so what is on screen is never more than the next question.
@@ -293,10 +310,10 @@ class _PillCardStackState extends State<PillCardStack>
 
     final layers = <Widget>[];
     for (var d = visible - 1; d >= 0; d--) {
-      final pill = widget.deck[widget.index + d];
+      final int k = widget.index + d;
       final isTop = d == 0;
-
-      final given = widget.answerFor(pill.id);
+      final Pill? pill = k < widget.deck.length ? widget.deck[k] : null;
+      final given = pill == null ? null : widget.answerFor(pill.id);
 
       // Every depth is built the same shape, whether or not it is the one
       // being read. A card used to be a bare PillCard underneath and a
@@ -310,47 +327,49 @@ class _PillCardStackState extends State<PillCardStack>
       // underneath truly does not have. FlipCard does not build it below a
       // half turn, and nothing but the top card is ever turned.
       final bool controls = isTop;
-      Widget card = FlipCard(
-        showBack: isTop && _flipped,
-        front: PillCard(
-          pill: pill,
-          flipped: false,
-          isReview: widget.reviewIds.contains(pill.id),
-          given: controls ? given : null,
-          saved: controls && widget.isSaved(pill.id),
-          onSave: controls ? () => widget.onSave(pill) : null,
-          liked: controls && (widget.isLiked?.call(pill.id) ?? false),
-          onLike: !controls || widget.onLike == null
-              ? null
-              : () => widget.onLike!(pill),
-          onShare: controls ? () => widget.onShare(pill) : null,
-          onAnswer: !controls || !widget.answering
-              ? null
-              : (response, confidence, reason) {
-                  HapticFeedback.mediumImpact();
-                  widget.onAnswer(pill.id, response, confidence, reason);
-                  setState(() {
-                    _answeredHere = true;
-                    _flipped = true;
-                  });
-                },
-        ),
-        back: !isTop
-            ? const SizedBox.shrink()
-            : PillCard(
+      Widget card = pill == null
+          ? widget.trailing!
+          : FlipCard(
+              showBack: isTop && _flipped,
+              front: PillCard(
                 pill: pill,
-                flipped: true,
+                flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
-                given: given,
-                saved: widget.isSaved(pill.id),
-                onSave: () => widget.onSave(pill),
-                liked: widget.isLiked?.call(pill.id) ?? false,
-                onLike: widget.onLike == null
+                given: controls ? given : null,
+                saved: controls && widget.isSaved(pill.id),
+                onSave: controls ? () => widget.onSave(pill) : null,
+                liked: controls && (widget.isLiked?.call(pill.id) ?? false),
+                onLike: !controls || widget.onLike == null
                     ? null
                     : () => widget.onLike!(pill),
-                onShare: () => widget.onShare(pill),
+                onShare: controls ? () => widget.onShare(pill) : null,
+                onAnswer: !controls || !widget.answering
+                    ? null
+                    : (response, confidence, reason) {
+                        HapticFeedback.mediumImpact();
+                        widget.onAnswer(pill.id, response, confidence, reason);
+                        setState(() {
+                          _answeredHere = true;
+                          _flipped = true;
+                        });
+                      },
               ),
-      );
+              back: !isTop
+                  ? const SizedBox.shrink()
+                  : PillCard(
+                      pill: pill,
+                      flipped: true,
+                      isReview: widget.reviewIds.contains(pill.id),
+                      given: given,
+                      saved: widget.isSaved(pill.id),
+                      onSave: () => widget.onSave(pill),
+                      liked: widget.isLiked?.call(pill.id) ?? false,
+                      onLike: widget.onLike == null
+                          ? null
+                          : () => widget.onLike!(pill),
+                      onShare: () => widget.onShare(pill),
+                    ),
+            );
 
       // Continuous depth: 1 becomes 0 as the top card leaves.
       final depth = isTop ? 0.0 : d - progress;
@@ -395,7 +414,7 @@ class _PillCardStackState extends State<PillCardStack>
       // it was given a different widget to be.
       layers.add(
         Positioned.fill(
-          key: ValueKey(pill.id),
+          key: ValueKey(pill?.id ?? 'trailing'),
           child: IgnorePointer(
             ignoring: !isTop,
             child: GestureDetector(

@@ -101,19 +101,27 @@ that came due and found no room in the five waits here too. The way on is
 the one thing worth a button at the end of it; Explore is a tab already.
 The second set sits under the button as a quiet line.
 
-## After the fifth card
+## The sixth card
 
-The one card in the app that is not a card. When the fifth is thrown, the
-deck's place is taken for four seconds by a card with a rim of every colour
-the deck has, turning, with its light spilling onto the table — and one
-offer: five more. On the free plan the button is the paywall; with Astute+
-it deals the second set on the spot. *Skip* goes straight to the shelf, and
-so does waiting. It appears only when the day is finished *in this session*
-— opening the app onto a day already done goes to the shelf — and only
-while there is something to offer, so nobody meets it twice in a day.
-`MagicCard` paints the rim itself, from the palette's own spectrum, so it
-takes the card's size; a phone that asked for less motion gets the rim
-standing still.
+The one card in the app that is not a card. It is the last card in the
+deck: it peeks from under the fifth like any next card, comes to the top
+when the fifth is thrown, and is thrown the same way — a rim of every
+colour the deck has, turning, with its light spilling onto the table, and
+one offer: five more. On the free plan the button is the paywall; with
+Astute+ it deals the second set on the spot. Nothing times out and nothing
+says skip; a throw is the way past it, as it is past every other card.
+Then it is the last card on the shelf too, after the five, with the counter
+giving way to the plan's name and a dot of every colour under it.
+
+It is dealt only when the day is finished *in this session* — opening the
+app onto a day already done goes to the shelf — and only while there is
+something to offer, so nobody is sold what they already have. `MagicCard`
+paints the rim itself, from the palette's own spectrum, so it takes the
+card's size; a phone that asked for less motion gets the rim standing
+still. `PillCardStack` takes it as `trailing`, one card after the deck
+with no back and nothing to answer; the shell keeps the tabs locked while
+any deck is on the table, the sixth card included, because a throw and a
+swipe to the next tab are the same gesture and the deck has to win it.
 
 ## Your journey
 

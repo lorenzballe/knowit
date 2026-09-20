@@ -15,6 +15,9 @@ import '../widgets/hold_to_keep.dart';
 import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
 import '../widgets/motion.dart';
+import '../widgets/magic_card.dart';
+import '../widgets/premium.dart';
+import '../data/topics.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
 import 'paywall_screen.dart';
@@ -90,6 +93,23 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardWidth = _artWidth;
   double _cardHeight = _artHeight;
 
+  /// Whether the shelf ends on the card that offers five more. It does
+  /// while there is something to offer — the second set not yet dealt —
+  /// and never after it, so nobody is sold what they already have.
+  bool get _offer => !widget.app.extraSetOpen;
+
+  /// How many cards the shelf holds: the deck, and the offer after it.
+  int _count(List<Pill> deck) => deck.length + (_offer ? 1 : 0);
+
+  /// Five more: dealt on the spot with Astute+, otherwise the paywall,
+  /// which deals them itself if the trial starts.
+  Future<void> _fiveMore() => requirePlus(
+    context,
+    widget.app,
+    () => widget.app.openExtraSet(),
+    source: 'sixth card',
+  );
+
   /// Tomorrow's opening card, dealt once per state of the record rather
   /// than on every frame of a drag. The deal depends on the date, what has
   /// been read and answered, today's deck and the mix, so those are the key.
@@ -157,7 +177,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
     // Either carried far enough or thrown hard enough: distance alone makes
     // a quick flick do nothing, and the flick is the gesture people make.
     int target = at;
-    if ((_dx < -60 || thrown < -500) && at < deck.length - 1) {
+    if ((_dx < -60 || thrown < -500) && at < _count(deck) - 1) {
       target = at + 1;
     } else if ((_dx > 60 || thrown > 500) && at > 0) {
       target = at - 1;
@@ -207,7 +227,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
     final Offset centre = stage.center(Offset.zero);
     for (final off in const [0, -1, 1]) {
       final int k = at + off;
-      if (k < 0 || k >= deck.length) continue;
+      if (k < 0 || k >= _count(deck)) continue;
       final double x = off * _step + _dx;
       final double scale = 1 - math.min(x.abs() / _step, 1) * 0.07;
       final Rect box = Rect.fromCenter(
@@ -217,7 +237,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
       );
       if (!box.contains(d.localPosition)) continue;
       if (off == 0) {
-        _flip();
+        // The offer has no back; its button is its own.
+        if (k < deck.length) _flip();
       } else {
         _goTo(k);
       }
@@ -230,7 +251,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
     final app = widget.app;
     final deck = app.todaysDeck;
     if (deck.isEmpty) return const SizedBox.shrink();
-    final int at = widget.at.clamp(0, deck.length - 1);
+    final int count = _count(deck);
+    final int at = widget.at.clamp(0, count - 1);
     final Color ink = context.p.ink;
 
     return Column(
@@ -259,7 +281,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
               ),
               const SizedBox(width: 12),
               Text(
-                '${_two(at + 1)} / ${_two(deck.length)}',
+                at < deck.length
+                    ? '${_two(at + 1)} / ${_two(deck.length)}'
+                    : context.l10n.plusNameCaps,
                 style: AppText.label(
                   size: 10.5,
                   weight: FontWeight.w700,
@@ -271,7 +295,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
           ),
         ),
         Expanded(child: _shelf(context, deck, at)),
-        _Dots(deck: deck, at: at, onPick: _goTo),
+        _Dots(deck: deck, count: count, at: at, onPick: _goTo),
         // Close under the dots: they count the deck, but they read as
         // belonging to whatever line they sit nearest, and that line is
         // the one about tomorrow.
@@ -321,7 +345,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
 
         // Painted furthest-from-the-front first, so the front card is on
         // top, and only what could actually be on screen.
-        final order = List<int>.generate(deck.length, (k) => k)
+        final order = List<int>.generate(_count(deck), (k) => k)
           ..sort((a, b) => (b - at).abs().compareTo((a - at).abs()));
         final layers = <Widget>[];
         for (final k in order) {
@@ -337,15 +361,19 @@ class _TodayDoneViewState extends State<TodayDoneView>
                 child: Opacity(
                   opacity: 1 - dist * 0.5,
                   child: front
-                      ? _card(k, deck[k], glow: 1 - dist, front: true)
+                      ? (k < deck.length
+                            ? _card(k, deck[k], glow: 1 - dist, front: true)
+                            : _sixth(context))
                       : ExcludeSemantics(
                           child: IgnorePointer(
-                            child: _card(
-                              k,
-                              deck[k],
-                              glow: 1 - dist,
-                              front: false,
-                            ),
+                            child: k < deck.length
+                                ? _card(
+                                    k,
+                                    deck[k],
+                                    glow: 1 - dist,
+                                    front: false,
+                                  )
+                                : _sixth(context),
                           ),
                         ),
                 ),
@@ -408,6 +436,26 @@ class _TodayDoneViewState extends State<TodayDoneView>
       ground: pill.color,
       onToggle: () => app.toggleLiked(pill.id),
       child: FlipCard(showBack: _flipped, front: face(false), back: face(true)),
+    );
+  }
+
+  /// The card after the five: the same one that appears when the fifth is
+  /// thrown, kept here as the last card on the shelf, with no way past it
+  /// but a swipe — which is the way past every other card.
+  Widget _sixth(BuildContext context) {
+    final app = widget.app;
+    final l = context.l10n;
+    return SizedBox(
+      key: const ValueKey('shelf-magic'),
+      width: _cardWidth,
+      height: _cardHeight,
+      child: MagicCard(
+        eyebrow: l.plusNameCaps,
+        headline: l.magicHeadline,
+        line: l.perkExtraLine,
+        action: app.isPlus ? l.fiveMore : l.unlockFiveExtra,
+        onAction: _fiveMore,
+      ),
     );
   }
 
@@ -1072,9 +1120,18 @@ class _HeartButtonState extends State<_HeartButton>
 
 /// One dot a card, the front one drawn long and in its colour.
 class _Dots extends StatelessWidget {
-  const _Dots({required this.deck, required this.at, required this.onPick});
+  const _Dots({
+    required this.deck,
+    required this.count,
+    required this.at,
+    required this.onPick,
+  });
 
   final List<Pill> deck;
+
+  /// The dots to draw: one per card, and one more for the offer after
+  /// them, which takes every colour rather than one.
+  final int count;
   final int at;
   final ValueChanged<int> onPick;
 
@@ -1089,11 +1146,13 @@ class _Dots extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          for (int k = 0; k < deck.length; k++)
+          for (int k = 0; k < count; k++)
             Semantics(
               button: true,
               selected: k == at,
-              label: context.l10n.cardOf(k + 1, deck.length),
+              label: k < deck.length
+                  ? context.l10n.cardOf(k + 1, deck.length)
+                  : context.l10n.plusNameCaps,
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => onPick(k),
@@ -1110,9 +1169,12 @@ class _Dots extends StatelessWidget {
                       width: k == at ? 22 : 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: k == at
-                            ? deck[k].color
-                            : context.p.ink.withValues(alpha: 0.18),
+                        color: k != at
+                            ? context.p.ink.withValues(alpha: 0.18)
+                            : (k < deck.length ? deck[k].color : null),
+                        gradient: k == at && k >= deck.length
+                            ? const LinearGradient(colors: kSpectrum)
+                            : null,
                         borderRadius: BorderRadius.circular(9),
                       ),
                     ),

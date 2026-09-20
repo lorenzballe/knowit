@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -9,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../data/topics.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/pill_card_stack.dart';
 import '../widgets/premium.dart';
@@ -36,32 +35,36 @@ class TodayScreen extends StatefulWidget {
   /// not be thrown at a row of buttons.
   final ValueChanged<bool>? onCardMotion;
 
+  /// True while there is a deck on the table — the five, or the card after
+  /// them — and false once the shelf is up. The shell locks the tabs while
+  /// it is true, so a throw is never taken for a swipe to the next tab.
+  /// The day being finished is not the same thing: the sixth card is on
+  /// the table after the fifth is thrown, and it is thrown too.
+  final ValueChanged<bool>? onDeckOnTable;
+
   const TodayScreen({
     super.key,
     required this.app,
     this.onBack,
     this.onCardMotion,
+    this.onDeckOnTable,
   });
 
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
 
-/// How long the card after the fifth stays before the shelf comes up on
-/// its own. Long enough to be read, short enough not to be a wall.
-const Duration kMagicMoment = Duration(seconds: 4);
-
 class _TodayScreenState extends State<TodayScreen> {
   /// Whether the day was done at the last build — null before the first,
   /// so opening the app onto a finished day is not mistaken for finishing it.
   bool? _wasDone;
 
-  /// Whether the card after the fifth is on the table. It appears only when
-  /// the day is finished *here*, in this session — opening the app onto a
-  /// day already done goes straight to the shelf — and only while there is
-  /// something to offer: five more to unlock, or five more to deal.
+  /// Whether the card after the fifth is still on the table. It is dealt
+  /// only when the day is finished *here*, in this session — opening the
+  /// app onto a day already done goes straight to the shelf — and only
+  /// while there is something to offer: five more to unlock, or five more
+  /// to deal. It leaves the way every card leaves: thrown.
   bool _magic = false;
-  Timer? _magicTimer;
 
   /// Which of the finished day's cards is at the front of the shelf. Held
   /// here rather than in the shelf because the header's dot and the glow
@@ -74,43 +77,48 @@ class _TodayScreenState extends State<TodayScreen> {
   void _markCompletion(bool completed) {
     final bool? before = _wasDone;
     _wasDone = completed;
-    if (before == null || before == completed || !completed) return;
+    if (before == null || before == completed) return;
+    if (!completed) {
+      // A second set dealt: the table is a deck again, and the offer that
+      // dealt it is gone with it.
+      _magic = false;
+      return;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
-    if (!widget.app.extraSetOpen) {
-      _magic = true;
-      _magicTimer?.cancel();
-      _magicTimer = Timer(kMagicMoment, _dismissMagic);
-    }
+    if (!widget.app.extraSetOpen) _magic = true;
   }
 
-  void _dismissMagic() {
-    _magicTimer?.cancel();
-    _magicTimer = null;
+  /// What the shell was last told about the table.
+  bool? _toldOnTable;
+
+  /// Tells the shell whether a deck is on the table, once per change and
+  /// after the frame, so it is a side effect of the state and not of
+  /// painting.
+  void _tellShell(bool onTable) {
+    if (onTable == _toldOnTable) return;
+    _toldOnTable = onTable;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) widget.onDeckOnTable?.call(onTable);
+    });
+  }
+
+  /// The card after the fifth, thrown.
+  void _throwMagic() {
     if (!mounted || !_magic) return;
     setState(() => _magic = false);
   }
 
   /// Five more: dealt on the spot with Astute+, and otherwise the paywall,
-  /// which deals them itself if the trial starts.
-  Future<void> _fiveMore(BuildContext context) async {
-    final app = widget.app;
-    _magicTimer?.cancel();
-    await requirePlus(
-      context,
-      app,
-      () => app.openExtraSet(),
-      source: 'magic card',
-    );
-    _dismissMagic();
-  }
-
-  @override
-  void dispose() {
-    _magicTimer?.cancel();
-    super.dispose();
-  }
+  /// which deals them itself if the trial starts. Coming back without
+  /// them, the card is still on the table, to be thrown like any other.
+  Future<void> _fiveMore(BuildContext context) => requirePlus(
+    context,
+    widget.app,
+    () => widget.app.openExtraSet(),
+    source: 'sixth card',
+  );
 
   /// Less like this — said once, quietly, with the way back.
   void _dislike(BuildContext context, Pill pill) {
@@ -136,56 +144,16 @@ class _TodayScreenState extends State<TodayScreen> {
     final bool done = app.todayCompleted;
     _markCompletion(done);
 
+    // The sixth card keeps the deck on the table after the fifth is gone:
+    // the shelf comes up when it, too, has been thrown.
+    final bool onTable = !done || _magic;
+    _tellShell(onTable);
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,
-      child: done
-          ? (_magic
-                ? _afterTheFifth(context, key: const ValueKey('magic'))
-                : _shelf(context, key: const ValueKey('shelf')))
-          : _reading(context, key: const ValueKey('deck')),
-    );
-  }
-
-  /// The moment after the fifth card: the bars all lit, and in the deck's
-  /// place the one card that offers five more. It leaves on its own.
-  Widget _afterTheFifth(BuildContext context, {required Key key}) {
-    final app = widget.app;
-    final l = context.l10n;
-    return Padding(
-      key: key,
-      padding: const EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _ReadingHeader(
-            streak: app.liveStreak,
-            frozen: app.streakWasFrozen,
-            onBack: widget.onBack,
-          ),
-          const SizedBox(height: 16),
-          _ProgressBars(
-            total: app.todaysDeck.length,
-            index: app.todaysDeck.length,
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(6, 6, 6, 12),
-              child: MagicCard(
-                key: const ValueKey('magic-card'),
-                eyebrow: l.plusNameCaps,
-                headline: l.magicHeadline,
-                line: l.perkExtraLine,
-                action: app.isPlus ? l.fiveMore : l.unlockFiveExtra,
-                onAction: () => _fiveMore(context),
-                skip: l.skip,
-                onSkip: _dismissMagic,
-              ),
-            ),
-          ),
-        ],
-      ),
+      child: onTable
+          ? _reading(context, key: const ValueKey('deck'))
+          : _shelf(context, key: const ValueKey('shelf')),
     );
   }
 
@@ -214,7 +182,23 @@ class _TodayScreenState extends State<TodayScreen> {
             child: PillCardStack(
               deck: app.todaysDeck,
               index: app.todayIndex,
-              onAdvance: () => app.advance(),
+              // After the last pill, the card that offers five more — while
+              // there is something to offer. It is thrown like the rest.
+              trailing: app.extraSetOpen
+                  ? null
+                  : MagicCard(
+                      key: const ValueKey('magic-card'),
+                      eyebrow: context.l10n.plusNameCaps,
+                      headline: context.l10n.magicHeadline,
+                      line: context.l10n.perkExtraLine,
+                      action: app.isPlus
+                          ? context.l10n.fiveMore
+                          : context.l10n.unlockFiveExtra,
+                      onAction: () => _fiveMore(context),
+                    ),
+              onAdvance: () => app.todayIndex >= app.todaysDeck.length
+                  ? _throwMagic()
+                  : app.advance(),
               isSaved: app.isSaved,
               onSave: (pill) => app.toggleSaved(pill.id),
               isLiked: app.isLiked,
@@ -249,19 +233,23 @@ class _TodayScreenState extends State<TodayScreen> {
       _shelfDeck = deck;
       _shelfAt = 0;
     }
-    final int at = _shelfAt.clamp(0, deck.length - 1);
-    final Pill front = deck[at];
+    // The shelf ends on the card that offers five more, while there is
+    // something to offer; that card has no subject, so the tab takes the
+    // spectrum's violet behind it rather than the last card's colour.
+    final int count = deck.length + (app.extraSetOpen ? 0 : 1);
+    final int at = _shelfAt.clamp(0, count - 1);
+    final Color colour = at < deck.length ? deck[at].color : kSpectrum[9];
 
     return Stack(
       key: key,
       children: [
-        Positioned.fill(child: _Glow(colour: front.color)),
+        Positioned.fill(child: _Glow(colour: colour)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 15),
-              child: _ShelfHeader(app: app, colour: front.color),
+              child: _ShelfHeader(app: app, colour: colour),
             ),
             Expanded(
               child: TodayDoneView(

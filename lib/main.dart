@@ -524,6 +524,11 @@ class _AstutoShellState extends State<AstutoShell>
   /// True while a card is under the finger.
   bool _cardMoving = false;
 
+  /// True while a deck is on the Today tab — the five, or the card after
+  /// them. The tabs are locked for as long as it is, because a throw and a
+  /// swipe to the next tab are the same gesture and the deck must win it.
+  bool _deckOnTable = true;
+
   /// The Explore tab keeps its state across tab changes, which is right
   /// until the finished day sends the reader to "today's best" and finds
   /// the tab still on last week's month filter.
@@ -642,6 +647,9 @@ class _AstutoShellState extends State<AstutoShell>
         onCardMotion: (moving) {
           if (moving != _cardMoving) setState(() => _cardMoving = moving);
         },
+        onDeckOnTable: (onTable) {
+          if (onTable != _deckOnTable) setState(() => _deckOnTable = onTable);
+        },
       ),
       ExploreScreen(key: _explore, app: widget.app),
       ProfileScreen(
@@ -696,7 +704,7 @@ class _AstutoShellState extends State<AstutoShell>
               onNotification: _settle,
               child: PageView(
                 controller: _pages,
-                physics: _tab == 0 && !widget.app.todayCompleted
+                physics: _tab == 0 && _deckOnTable
                     ? const NeverScrollableScrollPhysics()
                     : null,
                 // The next tab is built before it is reached, so the first
