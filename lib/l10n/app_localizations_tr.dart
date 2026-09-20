@@ -121,6 +121,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get unlockFiveExtra => 'Beş ek hapın kilidini aç';
 
   @override
+  String get magicHeadline => 'Beş tane daha ister misin?';
+
+  @override
   String nothingInYet(String subject) {
     return '$subject içinde henüz bir şey yok.';
   }

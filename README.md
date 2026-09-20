@@ -101,6 +101,20 @@ that came due and found no room in the five waits here too. The way on is
 the one thing worth a button at the end of it; Explore is a tab already.
 The second set sits under the button as a quiet line.
 
+## After the fifth card
+
+The one card in the app that is not a card. When the fifth is thrown, the
+deck's place is taken for four seconds by a card with a rim of every colour
+the deck has, turning, with its light spilling onto the table — and one
+offer: five more. On the free plan the button is the paywall; with Astute+
+it deals the second set on the spot. *Skip* goes straight to the shelf, and
+so does waiting. It appears only when the day is finished *in this session*
+— opening the app onto a day already done goes to the shelf — and only
+while there is something to offer, so nobody meets it twice in a day.
+`MagicCard` paints the rim itself, from the palette's own spectrum, so it
+takes the card's size; a phone that asked for less motion gets the rim
+standing still.
+
 ## Your journey
 
 Artboard 83a, and the order is the argument: the numbers first, the card

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -7,7 +9,9 @@ import 'package:flutter/services.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../widgets/magic_card.dart';
 import '../widgets/pill_card_stack.dart';
+import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
 import 'today_done_view.dart';
@@ -43,8 +47,21 @@ class TodayScreen extends StatefulWidget {
   State<TodayScreen> createState() => _TodayScreenState();
 }
 
+/// How long the card after the fifth stays before the shelf comes up on
+/// its own. Long enough to be read, short enough not to be a wall.
+const Duration kMagicMoment = Duration(seconds: 4);
+
 class _TodayScreenState extends State<TodayScreen> {
-  bool _celebrated = false;
+  /// Whether the day was done at the last build — null before the first,
+  /// so opening the app onto a finished day is not mistaken for finishing it.
+  bool? _wasDone;
+
+  /// Whether the card after the fifth is on the table. It appears only when
+  /// the day is finished *here*, in this session — opening the app onto a
+  /// day already done goes straight to the shelf — and only while there is
+  /// something to offer: five more to unlock, or five more to deal.
+  bool _magic = false;
+  Timer? _magicTimer;
 
   /// Which of the finished day's cards is at the front of the shelf. Held
   /// here rather than in the shelf because the header's dot and the glow
@@ -55,12 +72,44 @@ class _TodayScreenState extends State<TodayScreen> {
   /// Finishing the day is the one moment worth marking. Fired after the frame
   /// so the feedback is a side effect of the state, not of painting.
   void _markCompletion(bool completed) {
-    if (completed == _celebrated) return;
-    _celebrated = completed;
-    if (!completed) return;
+    final bool? before = _wasDone;
+    _wasDone = completed;
+    if (before == null || before == completed || !completed) return;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
+    if (!widget.app.extraSetOpen) {
+      _magic = true;
+      _magicTimer?.cancel();
+      _magicTimer = Timer(kMagicMoment, _dismissMagic);
+    }
+  }
+
+  void _dismissMagic() {
+    _magicTimer?.cancel();
+    _magicTimer = null;
+    if (!mounted || !_magic) return;
+    setState(() => _magic = false);
+  }
+
+  /// Five more: dealt on the spot with Astute+, and otherwise the paywall,
+  /// which deals them itself if the trial starts.
+  Future<void> _fiveMore(BuildContext context) async {
+    final app = widget.app;
+    _magicTimer?.cancel();
+    await requirePlus(
+      context,
+      app,
+      () => app.openExtraSet(),
+      source: 'magic card',
+    );
+    _dismissMagic();
+  }
+
+  @override
+  void dispose() {
+    _magicTimer?.cancel();
+    super.dispose();
   }
 
   /// Less like this — said once, quietly, with the way back.
@@ -91,8 +140,52 @@ class _TodayScreenState extends State<TodayScreen> {
       duration: const Duration(milliseconds: 420),
       switchInCurve: Curves.easeOutCubic,
       child: done
-          ? _shelf(context, key: const ValueKey('shelf'))
+          ? (_magic
+                ? _afterTheFifth(context, key: const ValueKey('magic'))
+                : _shelf(context, key: const ValueKey('shelf')))
           : _reading(context, key: const ValueKey('deck')),
+    );
+  }
+
+  /// The moment after the fifth card: the bars all lit, and in the deck's
+  /// place the one card that offers five more. It leaves on its own.
+  Widget _afterTheFifth(BuildContext context, {required Key key}) {
+    final app = widget.app;
+    final l = context.l10n;
+    return Padding(
+      key: key,
+      padding: const EdgeInsets.fromLTRB(kDeckMargin, 10, kDeckMargin, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ReadingHeader(
+            streak: app.liveStreak,
+            frozen: app.streakWasFrozen,
+            onBack: widget.onBack,
+          ),
+          const SizedBox(height: 16),
+          _ProgressBars(
+            total: app.todaysDeck.length,
+            index: app.todaysDeck.length,
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(6, 6, 6, 12),
+              child: MagicCard(
+                key: const ValueKey('magic-card'),
+                eyebrow: l.plusNameCaps,
+                headline: l.magicHeadline,
+                line: l.perkExtraLine,
+                action: app.isPlus ? l.fiveMore : l.unlockFiveExtra,
+                onAction: () => _fiveMore(context),
+                skip: l.skip,
+                onSkip: _dismissMagic,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

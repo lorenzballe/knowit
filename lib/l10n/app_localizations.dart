@@ -264,6 +264,12 @@ abstract class AppLocalizations {
   /// **'Unlock five extra pills'**
   String get unlockFiveExtra;
 
+  /// No description provided for @magicHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Want five more?'**
+  String get magicHeadline;
+
   /// No description provided for @nothingInYet.
   ///
   /// In en, this message translates to:

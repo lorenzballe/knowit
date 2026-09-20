@@ -106,6 +106,7 @@
  "exploreTodaysBest": "Explore today's best",
  "fiveMore": "Five more",
  "unlockFiveExtra": "Unlock five extra pills",
+ "magicHeadline": "Want five more?",
  "nothingInYet": "Nothing in {subject} yet.",
  "@nothingInYet": {
   "placeholders": {

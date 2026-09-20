@@ -121,6 +121,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get unlockFiveExtra => '추가 알약 다섯 장 잠금 해제';
 
   @override
+  String get magicHeadline => '다섯 장 더 볼까요?';
+
+  @override
   String nothingInYet(String subject) {
     return '$subject에는 아직 아무것도 없어요.';
   }

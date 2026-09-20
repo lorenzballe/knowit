@@ -121,6 +121,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get unlockFiveExtra => 'Fünf zusätzliche Pillen freischalten';
 
   @override
+  String get magicHeadline => 'Noch fünf?';
+
+  @override
   String nothingInYet(String subject) {
     return 'Noch nichts in $subject.';
   }

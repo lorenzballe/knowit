@@ -123,6 +123,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get unlockFiveExtra => 'Открыть пять дополнительных пилюль';
 
   @override
+  String get magicHeadline => 'Ещё пять?';
+
+  @override
   String nothingInYet(String subject) {
     return 'В $subject пока ничего нет.';
   }

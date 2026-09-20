@@ -18,6 +18,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/models/reminder.dart';
 import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/today_done_view.dart';
+import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
@@ -42,6 +43,17 @@ Future<void> _settle(WidgetTester tester) async {
   for (var i = 0; i < 10; i++) {
     await tester.pump(const Duration(milliseconds: 100));
   }
+}
+
+/// Reads the five through and waits out the card that follows them — the
+/// one that offers five more stays a few seconds, then the shelf comes up.
+Future<void> _finishDay(WidgetTester tester) async {
+  for (var i = 0; i < 5; i++) {
+    await _swipeCardAway(tester);
+    await _settle(tester);
+  }
+  await tester.pump(kMagicMoment + const Duration(milliseconds: 600));
+  await _settle(tester);
 }
 
 /// What a fresh install is dealt today: every subject, nothing read, no
@@ -1082,10 +1094,7 @@ void main() {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
-    for (var i = 0; i < 5; i++) {
-      await _swipeCardAway(tester);
-      await _settle(tester);
-    }
+    await _finishDay(tester);
 
     // The carousel keeps a drag that lands on it...
     await tester.drag(find.byType(TodayDoneView), const Offset(-200, 0));
@@ -1231,10 +1240,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    for (var i = 0; i < 5; i++) {
-      await _swipeCardAway(tester);
-      await _settle(tester);
-    }
+    await _finishDay(tester);
 
     // The second set is a button on the closing screen now, beside the way
     // back into the five, rather than a panel of its own below them.
@@ -1253,10 +1259,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    for (var i = 0; i < 5; i++) {
-      await _swipeCardAway(tester);
-      await _settle(tester);
-    }
+    await _finishDay(tester);
 
     // The header says where the day got to, the eyebrow says what the
     // screen now is, and the first card is at the front, face up, with
@@ -1278,10 +1281,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    for (var i = 0; i < 5; i++) {
-      await _swipeCardAway(tester);
-      await _settle(tester);
-    }
+    await _finishDay(tester);
 
     // The upsell is not on this screen at all now. It sits in the profile,
     // where it can say something about the reader's own record — and the
@@ -1290,13 +1290,103 @@ void main() {
     expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
   });
 
-  group('The finished day is a shelf', () {
-    /// Reads the day through, which is what turns the tab into the shelf.
-    Future<void> finish(WidgetTester tester) async {
+  group('After the fifth card', () {
+    Future<void> readFive(WidgetTester tester) async {
       for (var i = 0; i < 5; i++) {
         await _swipeCardAway(tester);
         await _settle(tester);
       }
+    }
+
+    testWidgets(
+      'one card more appears, offers five more, and leaves on its own',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed());
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await readFive(tester);
+
+        // In the deck's place, with every bar lit: not the shelf yet.
+        expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
+        expect(find.text('Want five more?'), findsOneWidget);
+        expect(find.text('Unlock five extra pills'), findsOneWidget);
+        expect(find.text('Day 1 · five read'), findsNothing);
+
+        // A few seconds later the shelf is up, and the card is gone.
+        await tester.pump(kMagicMoment + const Duration(milliseconds: 600));
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+        expect(find.text('Day 1 · five read'), findsOneWidget);
+      },
+    );
+
+    testWidgets('skip goes straight to the shelf', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await readFive(tester);
+      await tester.tap(find.text('Skip'));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+      expect(find.text('Day 1 · five read'), findsOneWidget);
+    });
+
+    testWidgets('on the free plan the offer is the paywall', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await readFive(tester);
+      await tester.tap(find.text('Unlock five extra pills'));
+      await _settle(tester);
+      expect(find.byType(PaywallScreen), findsOneWidget);
+      // Back without the trial: the shelf, and no card lingering.
+      Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
+      await _settle(tester);
+      expect(find.byType(PaywallScreen), findsNothing);
+      expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+      expect(find.text('Day 1 · five read'), findsOneWidget);
+    });
+
+    testWidgets('with Astute+ it deals the second set on the spot', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed(plus: true));
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await readFive(tester);
+      expect(find.text('Five more'), findsOneWidget);
+      await tester.tap(find.text('Five more'));
+      await _settle(tester);
+      // Five more cards, being read from the sixth — and no second offer
+      // after them.
+      final stack = tester.widget<PillCardStack>(find.byType(PillCardStack));
+      expect(stack.deck, hasLength(10));
+      expect(stack.index, 5);
+      await readFive(tester);
+      expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+    });
+
+    testWidgets(
+      'opening the app onto a finished day shows the shelf, not the offer',
+      (tester) async {
+        SharedPreferences.setMockInitialValues({
+          ..._installed(),
+          'knowit.todayDate': dateKey(DateTime.now()),
+          'knowit.todayDeckIds': _todaysFive.map((p) => p.id).toList(),
+          'knowit.todayIndex': 5,
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        expect(find.byKey(const ValueKey('magic-card')), findsNothing);
+        expect(find.text('Day 1 · five read'), findsOneWidget);
+      },
+    );
+  });
+
+  group('The finished day is a shelf', () {
+    /// Reads the day through, which is what turns the tab into the shelf.
+    Future<void> finish(WidgetTester tester) async {
+      await _finishDay(tester);
     }
 
     testWidgets('a tap turns the front card over, and back', (tester) async {
@@ -2148,10 +2238,7 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      for (var i = 0; i < 5; i++) {
-        await _swipeCardAway(tester);
-        await _settle(tester);
-      }
+      await _finishDay(tester);
 
       // Under the shelf, and no longer inside a scrolling page — the
       // closing screen is one screenful, and its last line is about

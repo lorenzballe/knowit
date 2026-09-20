@@ -121,6 +121,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get unlockFiveExtra => '解锁额外五颗药丸';
 
   @override
+  String get magicHeadline => '再来五张？';
+
+  @override
   String nothingInYet(String subject) {
     return '$subject 里还没有内容。';
   }

@@ -121,6 +121,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get unlockFiveExtra => '追加の5枚を解放';
 
   @override
+  String get magicHeadline => 'あと5枚どうですか？';
+
+  @override
   String nothingInYet(String subject) {
     return '$subjectにはまだ何もありません。';
   }
