@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{una} 2{dos} 3{tres} 4{cuatro} 5{cinco} 6{seis} 7{siete} 8{ocho} 9{nueve} 10{diez} other{{n}}}",
   "dayRead": "Día {n} · {word} leídas",
   "shelfEyebrow": "LAS {word} DE HOY · DESLIZA PARA REPASAR",
-  "weekLine": "Tu semana · {days} de 7 cumplidos",
   "tapToFlip": "TOCA PARA GIRAR",
   "shareThisCard": "Compartir esta tarjeta",
   "removeFromSaved": "Quitar de guardadas",

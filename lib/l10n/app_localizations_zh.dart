@@ -77,11 +77,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return '本周 · 7 天完成 $days 天';
-  }
-
-  @override
   String get tapToFlip => '点按翻面';
 
   @override

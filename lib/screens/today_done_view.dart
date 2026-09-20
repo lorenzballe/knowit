@@ -14,7 +14,6 @@ import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
 import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
-import 'week_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -291,14 +290,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
           child: _Actions(app: app),
         ),
-        // Once a week, where the week ends. A verdict nobody is invited to
-        // read is a page nobody reads, and the end of Sunday's five is the
-        // one moment the reader is already looking at what a day came to.
-        if (app.today.weekday == DateTime.sunday)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
-            child: _WeekLine(app: app),
-          ),
         // What the canvas leaves between the last line and the tab bar.
         const SizedBox(height: 16),
       ],
@@ -421,56 +412,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
   }
 
   static String _two(int n) => n.toString().padLeft(2, '0');
-}
-
-/// Sunday's invitation to the week's verdict.
-class _WeekLine extends StatelessWidget {
-  const _WeekLine({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final week = app.thisWeek;
-    final Color ink = context.p.ink;
-    return Semantics(
-      button: true,
-      key: const ValueKey('week-line'),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => WeekScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              context.l10n.weekLine(week.days),
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                color: ink.withValues(alpha: 0.6),
-              ),
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '\u2192',
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                color: ink.withValues(alpha: 0.42),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 /// The cards that came due and found no room in the five — the day has

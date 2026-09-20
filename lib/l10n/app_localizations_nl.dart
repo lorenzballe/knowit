@@ -77,11 +77,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return 'Je week · $days van 7 gehaald';
-  }
-
-  @override
   String get tapToFlip => 'TIK OM TE DRAAIEN';
 
   @override

@@ -77,11 +77,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String weekLine(int days) {
-    return 'Your week · $days of 7 kept';
-  }
-
-  @override
   String get tapToFlip => 'TAP TO FLIP';
 
   @override

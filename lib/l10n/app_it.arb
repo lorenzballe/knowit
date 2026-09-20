@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{una} 2{due} 3{tre} 4{quattro} 5{cinque} 6{sei} 7{sette} 8{otto} 9{nove} 10{dieci} other{{n}}}",
   "dayRead": "Giorno {n} · {word} lette",
   "shelfEyebrow": "LE {word} DI OGGI · SCORRI PER RIVEDERE",
-  "weekLine": "La tua settimana · {days} su 7 tenuti",
   "tapToFlip": "TOCCA PER GIRARE",
   "shareThisCard": "Condividi questa carta",
   "removeFromSaved": "Togli dai salvati",

@@ -12,7 +12,6 @@
   "countWord": "{n, select, 1{一} 2{两} 3{三} 4{四} 5{五} 6{六} 7{七} 8{八} 9{九} 10{十} other{{n}}}",
   "dayRead": "第 {n} 天 · 已读{word}张",
   "shelfEyebrow": "今日{word}张 · 滑动回顾",
-  "weekLine": "本周 · 7 天完成 {days} 天",
   "tapToFlip": "点按翻面",
   "shareThisCard": "分享这张卡片",
   "removeFromSaved": "取消收藏",
