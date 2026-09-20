@@ -73,7 +73,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return '오늘의 $word장 · 밀어서 다시 보기';
+    return '오늘의 $word장';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get magicHeadline => '다섯 장 더 볼까요?';
+
+  @override
+  String get magicUnlock => '다섯 장 더 열기';
 
   @override
   String nothingInYet(String subject) {
@@ -943,6 +946,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get findOutIfBetter => '정말 나아지고 있는지 알아보세요.';
+
+  @override
+  String get planYearly => '연간';
+
+  @override
+  String get planMonthly => '월간';
+
+  @override
+  String get perYearShort => '/년';
+
+  @override
+  String get perMonthShort => '/월';
 
   @override
   String get perYear => '/년';

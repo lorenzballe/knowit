@@ -1239,10 +1239,13 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    await _finishDay(tester);
+    for (var i = 0; i < 5; i++) {
+      await _swipeCardAway(tester);
+      await _settle(tester);
+    }
 
-    // The second set is a button on the closing screen now, beside the way
-    // back into the five, rather than a panel of its own below them.
+    // The second set is the sixth card's own button now — there is no line
+    // for it under the shelf's button any more.
     expect(find.text('Five more'), findsOneWidget);
     await tester.tap(find.text('Five more'));
     await _settle(tester);
@@ -1266,7 +1269,7 @@ void main() {
     expect(find.text('Day 1 · five read'), findsOneWidget);
     expect(_todayTitle, findsNothing);
     expect(find.text('Hold a card you like'), findsOneWidget);
-    expect(find.text("TODAY'S FIVE · SWIPE TO REVIEW"), findsOneWidget);
+    expect(find.text("TODAY'S FIVE"), findsOneWidget);
     expect(find.text('01 / 05'), findsOneWidget);
 
     final front = _todaysFive.first;
@@ -1318,7 +1321,7 @@ void main() {
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
         expect(find.text('Want five more?'), findsOneWidget);
-        expect(find.text('Unlock five extra pills'), findsOneWidget);
+        expect(find.text('Unlock five more'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
@@ -1339,7 +1342,7 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         await readFive(tester);
-        await tester.tap(find.text('Unlock five extra pills'));
+        await tester.tap(find.text('Unlock five more'));
         await _settle(tester);
         expect(find.byType(PaywallScreen), findsOneWidget);
         // Back without the trial: the card is still on the table.
@@ -1425,7 +1428,7 @@ void main() {
       await tester.tap(
         find.descendant(
           of: find.byKey(const ValueKey('shelf-magic')),
-          matching: find.text('Unlock five extra pills'),
+          matching: find.text('Unlock five more'),
         ),
       );
       await _settle(tester);

@@ -20,7 +20,6 @@ import '../widgets/premium.dart';
 import '../data/topics.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
-import 'paywall_screen.dart';
 
 /// The Today tab once the five are done, from artboard 66a.
 ///
@@ -453,7 +452,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
         eyebrow: l.plusNameCaps,
         headline: l.magicHeadline,
         line: l.perkExtraLine,
-        action: app.isPlus ? l.fiveMore : l.unlockFiveExtra,
+        action: app.isPlus ? l.fiveMore : l.magicUnlock,
         onAction: _fiveMore,
       ),
     );
@@ -1325,54 +1324,17 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? extra = app.isPlus
-        ? (app.canOpenExtraSet ? context.l10n.fiveMore : null)
-        : context.l10n.unlockFiveExtra;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _JourneyButton(
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (routeContext) => JourneyScreen(
-                app: app,
-                onBack: () => Navigator.of(routeContext).pop(),
-              ),
-            ),
+    // Only the way on. The offer of five more is the sixth card on the
+    // shelf, not a line under the button.
+    return _JourneyButton(
+      onPressed: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (routeContext) => JourneyScreen(
+            app: app,
+            onBack: () => Navigator.of(routeContext).pop(),
           ),
         ),
-        if (extra != null)
-          Semantics(
-            button: true,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () async {
-                if (app.canOpenExtraSet) {
-                  await app.openExtraSet();
-                } else {
-                  await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          PaywallScreen(app: app, source: 'extra set'),
-                    ),
-                  );
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 11),
-                child: Text(
-                  extra,
-                  textAlign: TextAlign.center,
-                  style: AppText.body(
-                    size: 12,
-                    weight: FontWeight.w600,
-                    color: context.p.ink.withValues(alpha: 0.42),
-                  ),
-                ),
-              ),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }

@@ -101,6 +101,9 @@ class _ChunkyButtonState extends State<ChunkyButton> {
               borderRadius: BorderRadius.circular(widget.radius),
             ),
             alignment: Alignment.center,
+            // Room at the ends, so a label shrunk to fit still stops short
+            // of the corners instead of running into them.
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -108,16 +111,21 @@ class _ChunkyButtonState extends State<ChunkyButton> {
                   widget.leading!,
                   const SizedBox(width: 9),
                 ],
+                // A label that would not fit shrinks rather than ends in
+                // dots: "Fünf weitere freischalten" is a button too, and a
+                // button whose word is cut off is a button nobody presses.
                 Flexible(
-                  child: Text(
-                    widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 15,
-                      weight: FontWeight.w700,
-                      spacing: 0.6,
-                      color: ink,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      widget.label,
+                      maxLines: 1,
+                      style: AppText.body(
+                        size: 15,
+                        weight: FontWeight.w700,
+                        spacing: 0.6,
+                        color: ink,
+                      ),
                     ),
                   ),
                 ),

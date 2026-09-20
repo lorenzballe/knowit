@@ -10,6 +10,7 @@ import '../theme.dart';
 import '../widgets/motion.dart';
 import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
+import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'pill_detail_screen.dart';
@@ -102,10 +103,12 @@ class _SavedScreenState extends State<SavedScreen> {
                   BackCircle(onPressed: widget.onBackToToday),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(
+                    // One line, at whatever size one line takes: "Saved"
+                    // is five letters and "Сохранённые" is eleven.
+                    child: FitText(
                       _liked ? context.l10n.liked : context.l10n.saved,
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      minSize: 20,
                       style: AppText.display(
                         size: 27,
                         weight: FontWeight.w600,

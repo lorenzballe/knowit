@@ -881,7 +881,12 @@ class _AstutoTabBar extends StatelessWidget {
                 on,
               )!;
 
+              // The lit tab is the one with a word in it, so it is the
+              // one that gets the room: three equal thirds fit "Today" and
+              // not "Aujourd'hui". The extra is taken back as the light
+              // moves on, so the bar rebalances with it.
               return Expanded(
+                flex: 100 + (60 * on).round(),
                 child: Semantics(
                   key: ValueKey('tab-${tab.label}'),
                   button: true,

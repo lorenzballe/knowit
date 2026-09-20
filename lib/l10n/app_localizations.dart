@@ -189,7 +189,7 @@ abstract class AppLocalizations {
   /// No description provided for @shelfEyebrow.
   ///
   /// In en, this message translates to:
-  /// **'TODAY\'S {word} · SWIPE TO REVIEW'**
+  /// **'TODAY\'S {word}'**
   String shelfEyebrow(String word);
 
   /// No description provided for @tapToFlip.
@@ -269,6 +269,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Want five more?'**
   String get magicHeadline;
+
+  /// No description provided for @magicUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock five more'**
+  String get magicUnlock;
 
   /// No description provided for @nothingInYet.
   ///
@@ -1415,6 +1421,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Find out if you are actually getting better.'**
   String get findOutIfBetter;
+
+  /// No description provided for @planYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get planYearly;
+
+  /// No description provided for @planMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get planMonthly;
+
+  /// No description provided for @perYearShort.
+  ///
+  /// In en, this message translates to:
+  /// **'/yr'**
+  String get perYearShort;
+
+  /// No description provided for @perMonthShort.
+  ///
+  /// In en, this message translates to:
+  /// **'/mo'**
+  String get perMonthShort;
 
   /// No description provided for @perYear.
   ///

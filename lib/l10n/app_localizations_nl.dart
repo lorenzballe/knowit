@@ -73,7 +73,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return 'DE $word VAN VANDAAG · VEEG OM TERUG TE KIJKEN';
+    return 'DE $word VAN VANDAAG';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get magicHeadline => 'Nog vijf?';
+
+  @override
+  String get magicUnlock => 'Nog vijf ontgrendelen';
 
   @override
   String nothingInYet(String subject) {
@@ -950,7 +953,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String tryFreeThen(String price, String suffix) {
-    return 'Probeer 7 dagen gratis, daarna $price$suffix';
+    return '7 dagen gratis, daarna $price$suffix';
   }
 
   @override
@@ -968,6 +971,18 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get findOutIfBetter => 'Ontdek of je echt beter wordt.';
+
+  @override
+  String get planYearly => 'Jaarlijks';
+
+  @override
+  String get planMonthly => 'Maandelijks';
+
+  @override
+  String get perYearShort => '/jaar';
+
+  @override
+  String get perMonthShort => '/maand';
 
   @override
   String get perYear => 'per jaar';

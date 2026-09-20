@@ -73,7 +73,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return 'BUGÜNÜN $word KARTI · TEKRAR İÇİN KAYDIR';
+    return 'BUGÜNÜN $word KARTI';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get magicHeadline => 'Beş tane daha ister misin?';
+
+  @override
+  String get magicUnlock => 'Beş tane daha aç';
 
   @override
   String nothingInYet(String subject) {
@@ -944,7 +947,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String tryFreeThen(String price, String suffix) {
-    return '7 gün ücretsiz dene, sonra $price$suffix';
+    return '7 gün ücretsiz, sonra $price$suffix';
   }
 
   @override
@@ -962,6 +965,18 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get findOutIfBetter => 'Gerçekten gelişip gelişmediğini öğren.';
+
+  @override
+  String get planYearly => 'Yıllık';
+
+  @override
+  String get planMonthly => 'Aylık';
+
+  @override
+  String get perYearShort => '/yıl';
+
+  @override
+  String get perMonthShort => '/ay';
 
   @override
   String get perYear => 'yıllık';

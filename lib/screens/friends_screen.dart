@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -408,6 +410,28 @@ class _League extends StatelessWidget {
   final Account account;
   final Map<String, Future<Board?>> boards;
 
+  /// The width of the widest of [lines] set in [style], as the screen will
+  /// set it.
+  static double _widest(
+    BuildContext context,
+    List<String> lines,
+    TextStyle style,
+  ) {
+    final TextStyle base = DefaultTextStyle.of(context).style.merge(style);
+    double widest = 0;
+    for (final line in lines) {
+      final painter = TextPainter(
+        text: TextSpan(text: line, style: base),
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+        maxLines: 1,
+      )..layout();
+      widest = math.max(widest, painter.width);
+      painter.dispose();
+    }
+    return widest.ceilToDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -428,6 +452,18 @@ class _League extends StatelessWidget {
               return b.$2.days.compareTo(a.$2.days);
             });
         final Color ink = context.p.ink;
+        // The last column is one column: the same width on every row, so
+        // the numbers line up — and as wide as its widest line in this
+        // language, which is "100 points off" in one and "100 пунктов
+        // отклонения" in another.
+        final TextStyle gapStyle = AppText.body(
+          size: 13,
+          color: ink.withValues(alpha: 0.6),
+        );
+        final double gapWidth = _widest(context, [
+          l.notMeasuredYet,
+          l.pointsOff(100),
+        ], gapStyle);
         return Column(
           children: [
             for (var i = 0; i < rows.length; i++)
@@ -466,7 +502,7 @@ class _League extends StatelessWidget {
                     ),
                     const SizedBox(width: 14),
                     SizedBox(
-                      width: 118,
+                      width: gapWidth,
                       child: Text(
                         rows[i].$2.gap == null
                             ? l.notMeasuredYet
@@ -474,10 +510,7 @@ class _League extends StatelessWidget {
                         textAlign: TextAlign.right,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppText.body(
-                          size: 13,
-                          color: ink.withValues(alpha: 0.6),
-                        ),
+                        style: gapStyle,
                       ),
                     ),
                   ],

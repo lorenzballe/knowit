@@ -73,7 +73,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return 'TODAY\'S $word · SWIPE TO REVIEW';
+    return 'TODAY\'S $word';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get magicHeadline => 'Want five more?';
+
+  @override
+  String get magicUnlock => 'Unlock five more';
 
   @override
   String nothingInYet(String subject) {
@@ -966,6 +969,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get findOutIfBetter => 'Find out if you are actually getting better.';
+
+  @override
+  String get planYearly => 'Yearly';
+
+  @override
+  String get planMonthly => 'Monthly';
+
+  @override
+  String get perYearShort => '/yr';
+
+  @override
+  String get perMonthShort => '/mo';
 
   @override
   String get perYear => 'per year';

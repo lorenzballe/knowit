@@ -73,7 +73,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return '今日$word张 · 滑动回顾';
+    return '今日$word张';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get magicHeadline => '再来五张？';
+
+  @override
+  String get magicUnlock => '解锁再来五张';
 
   @override
   String nothingInYet(String subject) {
@@ -935,6 +938,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get findOutIfBetter => '看看你是不是真的在进步。';
+
+  @override
+  String get planYearly => '年付';
+
+  @override
+  String get planMonthly => '月付';
+
+  @override
+  String get perYearShort => '/年';
+
+  @override
+  String get perMonthShort => '/月';
 
   @override
   String get perYear => '每年';

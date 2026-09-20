@@ -115,7 +115,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   String get _cta {
     if (widget.app.isPlus) return context.l10n.plusIsActive;
-    final String suffix = _plan == Plan.year ? '/yr' : '/mo';
+    final String suffix = _plan == Plan.year
+        ? context.l10n.perYearShort
+        : context.l10n.perMonthShort;
     return context.l10n.tryFreeThen(_priceFor(_plan), suffix);
   }
 
@@ -265,7 +267,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   const _TrialSteps(),
                   const SizedBox(height: 22),
                   _PlanTile(
-                    label: 'Yearly',
+                    label: context.l10n.planYearly,
                     price: _euros(kYearlyCents),
                     per: context.l10n.perYear,
                     note: context.l10n.aMonth(_euros(kYearlyCents ~/ 12)),
@@ -278,7 +280,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   ),
                   const SizedBox(height: 10),
                   _PlanTile(
-                    label: 'Monthly',
+                    label: context.l10n.planMonthly,
                     price: _euros(kMonthlyCents),
                     per: context.l10n.perMonth,
                     note: context.l10n.billedMonthly,
@@ -546,22 +548,24 @@ class _PlanTile extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    // The badge sits beside the name while the two share
+                    // a line, and drops under it where they do not —
+                    // "Annuale" with "RISPARMI 30%" is a line and a half
+                    // on a small phone. Neither is ever cut.
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Flexible(
-                          child: Text(
-                            label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.body(
-                              size: 15.5,
-                              weight: FontWeight.w700,
-                              color: context.p.ink,
-                            ),
+                        Text(
+                          label,
+                          style: AppText.body(
+                            size: 15.5,
+                            weight: FontWeight.w700,
+                            color: context.p.ink,
                           ),
                         ),
-                        if (badge != null) ...[
-                          const SizedBox(width: 8),
+                        if (badge != null)
                           Container(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 8,
@@ -581,7 +585,6 @@ class _PlanTile extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ],
                       ],
                     ),
                     const SizedBox(height: 2),

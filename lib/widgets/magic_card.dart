@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../data/topics.dart';
 import '../theme.dart';
+import 'fit_text.dart';
 import 'ui.dart';
 
-/// The one card in the app that is not a card: it appears after the fifth,
-/// stays a few seconds, and offers five more.
+/// The one card in the app that is not a card: the last in the deck, after
+/// the fifth, and it offers five more.
 ///
 /// It looks like nothing else on purpose — a rim of every colour the deck
 /// has, turning, with light spilling off it — because it is the one moment
@@ -93,8 +94,12 @@ class _MagicCardState extends State<MagicCard>
               ],
             ),
             const Spacer(),
-            Text(
+            // Two lines at most, in whatever size two lines take: the
+            // Italian is two words longer, the German longer again.
+            FitText(
               widget.headline,
+              maxLines: 2,
+              minSize: 24,
               style: AppText.display(
                 size: 40,
                 weight: FontWeight.w600,

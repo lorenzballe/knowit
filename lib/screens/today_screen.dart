@@ -193,7 +193,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       line: context.l10n.perkExtraLine,
                       action: app.isPlus
                           ? context.l10n.fiveMore
-                          : context.l10n.unlockFiveExtra,
+                          : context.l10n.magicUnlock,
                       onAction: () => _fiveMore(context),
                     ),
               onAdvance: () => app.todayIndex >= app.todaysDeck.length
@@ -479,43 +479,40 @@ class _ShelfHeader extends StatelessWidget {
           decoration: BoxDecoration(color: colour, shape: BoxShape.circle),
         ),
         const SizedBox(width: 10),
-        // The day's line eats the room, so the aside is pushed flush to the
-        // far edge — the canvas's `flex:1` spacer between the two. Sharing
-        // the room between them instead left the aside stranded in the
-        // middle with the leftover piled up after it.
+        // Side by side while they fit — the day's line at the left, the
+        // aside flush to the far edge — and in a language where they do
+        // not, the aside steps down under the day's line rather than
+        // either of them being cut. Polish spends twenty-six letters on
+        // "Day 1 · five read" and twenty-three on the aside; one line of a
+        // small phone holds one of those.
         Expanded(
-          flex: 3,
-          child: Text(
-            context.l10n.dayRead(
-              app.dayNumber,
-              context.l10n.countWord('${app.todaysDeck.length}'),
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.body(
-              size: 17,
-              weight: FontWeight.w600,
-              spacing: -0.2,
-              color: context.p.ink,
-            ),
-          ),
-        ),
-        const SizedBox(width: 12),
-        // The aside gives way before the day's line does: in a language
-        // where "hold a card you like" runs long, it is the aside that is
-        // cut, not "Day 6".
-        Flexible(
-          flex: 2,
-          child: Text(
-            _aside(context),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.right,
-            style: AppText.body(
-              size: 12,
-              weight: FontWeight.w500,
-              color: context.p.ink.withValues(alpha: 0.38),
-            ),
+          child: Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 12,
+            runSpacing: 3,
+            children: [
+              Text(
+                context.l10n.dayRead(
+                  app.dayNumber,
+                  context.l10n.countWord('${app.todaysDeck.length}'),
+                ),
+                style: AppText.body(
+                  size: 17,
+                  weight: FontWeight.w600,
+                  spacing: -0.2,
+                  color: context.p.ink,
+                ),
+              ),
+              Text(
+                _aside(context),
+                style: AppText.body(
+                  size: 12,
+                  weight: FontWeight.w500,
+                  color: context.p.ink.withValues(alpha: 0.38),
+                ),
+              ),
+            ],
           ),
         ),
       ],

@@ -73,7 +73,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return '今日の$word枚 · スワイプで振り返る';
+    return '今日の$word枚';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get magicHeadline => 'あと5枚どうですか？';
+
+  @override
+  String get magicUnlock => 'あと5枚を解放';
 
   @override
   String nothingInYet(String subject) {
@@ -940,6 +943,18 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get findOutIfBetter => '本当に上達しているかを知る。';
+
+  @override
+  String get planYearly => '年額';
+
+  @override
+  String get planMonthly => '月額';
+
+  @override
+  String get perYearShort => '/年';
+
+  @override
+  String get perMonthShort => '/月';
 
   @override
   String get perYear => '/年';

@@ -49,7 +49,7 @@
    }
   }
  },
- "shelfEyebrow": "TODAY'S {word} · SWIPE TO REVIEW",
+ "shelfEyebrow": "TODAY'S {word}",
  "@shelfEyebrow": {
   "placeholders": {
    "word": {
@@ -107,6 +107,7 @@
  "fiveMore": "Five more",
  "unlockFiveExtra": "Unlock five extra pills",
  "magicHeadline": "Want five more?",
+ "magicUnlock": "Unlock five more",
  "nothingInYet": "Nothing in {subject} yet.",
  "@nothingInYet": {
   "placeholders": {
@@ -804,6 +805,10 @@
  "plusIsBack": "Astute+ is back.",
  "nothingToRestore": "Nothing to restore on this account.",
  "findOutIfBetter": "Find out if you are actually getting better.",
+ "planYearly": "Yearly",
+ "planMonthly": "Monthly",
+ "perYearShort": "/yr",
+ "perMonthShort": "/mo",
  "perYear": "per year",
  "aMonth": "{price} a month",
  "@aMonth": {

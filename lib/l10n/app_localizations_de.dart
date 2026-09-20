@@ -73,7 +73,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String shelfEyebrow(String word) {
-    return 'DIE $word VON HEUTE · WISCHEN ZUM WIEDERHOLEN';
+    return 'DIE $word VON HEUTE';
   }
 
   @override
@@ -122,6 +122,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get magicHeadline => 'Noch fünf?';
+
+  @override
+  String get magicUnlock => 'Fünf weitere freischalten';
 
   @override
   String nothingInYet(String subject) {
@@ -952,7 +955,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String tryFreeThen(String price, String suffix) {
-    return '7 Tage gratis testen, dann $price$suffix';
+    return '7 Tage gratis, dann $price$suffix';
   }
 
   @override
@@ -970,6 +973,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get findOutIfBetter => 'Finde heraus, ob du wirklich besser wirst.';
+
+  @override
+  String get planYearly => 'Jährlich';
+
+  @override
+  String get planMonthly => 'Monatlich';
+
+  @override
+  String get perYearShort => '/Jahr';
+
+  @override
+  String get perMonthShort => '/Monat';
 
   @override
   String get perYear => 'pro Jahr';
