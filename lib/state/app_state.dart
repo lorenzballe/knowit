@@ -122,7 +122,7 @@ class AppState extends ChangeNotifier {
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
 
-  /// True once the Astut+ second set has been unlocked today.
+  /// True once the Astute+ second set has been unlocked today.
   bool extraSetOpen = false;
 
   /// Which of today's cards the reader has already answered once — the
@@ -182,7 +182,7 @@ class AppState extends ChangeNotifier {
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
-  /// Astut+ — gates the archive, image export and the topic mix.
+  /// Astute+ — gates the archive, image export and the topic mix.
   bool isPlus = false;
   String name = 'You';
   Plan plan = Plan.year;
@@ -241,7 +241,7 @@ class AppState extends ChangeNotifier {
     try {
       await _restore();
     } catch (error, stack) {
-      debugPrint('Astut: could not restore stored state, starting fresh');
+      debugPrint('Astute: could not restore stored state, starting fresh');
       debugPrintStack(stackTrace: stack, label: '$error');
       await _startNewDay();
     }
@@ -1509,7 +1509,7 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Unlocks the Astut+ screens locally. No billing is wired up, so this
+  /// Unlocks the Astute+ screens locally. No billing is wired up, so this
   /// only flips a stored flag — the paywall says as much when it calls it.
   Future<void> startPlusTrial() async {
     isPlus = true;
@@ -1519,11 +1519,11 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// True when the reader is on Astut+, has finished the day and has a
+  /// True when the reader is on Astute+, has finished the day and has a
   /// second set still waiting.
   bool get canOpenExtraSet => isPlus && todayCompleted && !extraSetOpen;
 
-  /// Unlocks the second set of the day — the "5 extra pills" Astut+ perk.
+  /// Unlocks the second set of the day — the "5 extra pills" Astute+ perk.
   Future<void> openExtraSet() async {
     if (!canOpenExtraSet) return;
     extraSetOpen = true;

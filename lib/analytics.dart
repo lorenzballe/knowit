@@ -239,7 +239,7 @@ class Analytics {
     try {
       await call();
     } catch (error) {
-      debugPrint('Astut: an event did not send: $error');
+      debugPrint('Astute: an event did not send: $error');
     }
   }
 }

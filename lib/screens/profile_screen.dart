@@ -573,7 +573,7 @@ class ProfileScreen extends StatelessWidget {
               onTap: () => _confirmReset(context),
             ),
             _LinkRow(
-              label: app.isPlus ? 'Turn Astut+ off' : 'Turn Astut+ on',
+              label: app.isPlus ? 'Turn Astute+ off' : 'Turn Astute+ on',
               onTap: () async {
                 if (app.isPlus) {
                   await app.endPlus();
@@ -935,7 +935,7 @@ class _Mastery extends StatelessWidget {
   Widget build(BuildContext context) {
     // The three you are worst at are the ones worth acting on, and they are
     // free: a reader has to see the measurement before paying to keep it.
-    // What Astut+ adds is the rest of the board.
+    // What Astute+ adds is the rest of the board.
     final all = app.masteryByWeakness;
     final rows = app.isPlus ? all : all.take(3).toList();
     final hidden = all.length - rows.length;
@@ -1078,7 +1078,7 @@ class _ShareRecord extends StatelessWidget {
 /// subscription is sold on, so it has to exist before it is sold.
 ///
 /// Free readers see that the answer is being kept and how many calls it
-/// rests on; the number itself is what Astut+ opens.
+/// rests on; the number itself is what Astute+ opens.
 class _TrendPanel extends StatelessWidget {
   final AppState app;
   const _TrendPanel({required this.app});
@@ -1235,7 +1235,7 @@ class _TrendRow extends StatelessWidget {
   }
 }
 
-/// The Astut+ offer, on the screen where the reader is already looking at
+/// The Astute+ offer, on the screen where the reader is already looking at
 /// what the app knows about them.
 class _PlusCard extends StatelessWidget {
   final AppState app;

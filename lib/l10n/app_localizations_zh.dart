@@ -10,10 +10,10 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => '今天';
@@ -482,7 +482,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get nudgeOnSystemSaidNo => '提醒已开启，但系统拒绝了。请在设置中允许 Astut 的通知。';
+  String get nudgeOnSystemSaidNo => '提醒已开启，但系统拒绝了。请在设置中允许 Astute 的通知。';
 
   @override
   String get nudgeOnNeedsPhone => '提醒已开启。送达需要手机版。';
@@ -553,7 +553,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get seeEveryPrincipleWithPlus => '用 Astut plus 查看每一条原则';
+  String get seeEveryPrincipleWithPlus => '用 Astute plus 查看每一条原则';
 
   @override
   String moreBeingTracked(int n) {
@@ -588,7 +588,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get holdingSteady => '保持不变';
 
   @override
-  String get measurementRunningPlus => '测量正在进行。Astut+ 会告诉你它朝哪个方向走。';
+  String get measurementRunningPlus => '测量正在进行。Astute+ 会告诉你它朝哪个方向走。';
 
   @override
   String firstN(int n) {
@@ -626,7 +626,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '免费 7 天';
@@ -635,7 +635,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get watchTheGapMove => '看着差距变化。';
 
   @override
-  String get measurementFreeForever => '测量永远免费。Astut+ 告诉你它朝哪个方向走。';
+  String get measurementFreeForever => '测量永远免费。Astute+ 告诉你它朝哪个方向走。';
 
   @override
   String get seeThePlans => '查看方案';
@@ -916,7 +916,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkTopicsLine => '把组合偏向你真正喜欢的内容。';
 
   @override
-  String get plusIsActive => 'ASTUT+ 已激活';
+  String get plusIsActive => 'ASTUTE+ 已激活';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -930,7 +930,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get thatDidNotGoThrough => '没有成功。';
 
   @override
-  String get plusIsBack => 'Astut+ 回来了。';
+  String get plusIsBack => 'Astute+ 回来了。';
 
   @override
   String get nothingToRestore => '此账号没有可恢复的内容。';

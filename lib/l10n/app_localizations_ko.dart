@@ -10,10 +10,10 @@ class AppLocalizationsKo extends AppLocalizations {
   AppLocalizationsKo([String locale = 'ko']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => '오늘';
@@ -487,7 +487,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nudgeOnSystemSaidNo =>
-      '알림은 켜져 있지만 시스템이 거부했어요. 설정에서 Astut 알림을 허용하세요.';
+      '알림은 켜져 있지만 시스템이 거부했어요. 설정에서 Astute 알림을 허용하세요.';
 
   @override
   String get nudgeOnNeedsPhone => '알림 켜짐. 전달에는 휴대폰 버전이 필요해요.';
@@ -559,7 +559,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get seeEveryPrincipleWithPlus => 'Astut plus로 모든 원칙 보기';
+  String get seeEveryPrincipleWithPlus => 'Astute plus로 모든 원칙 보기';
 
   @override
   String moreBeingTracked(int n) {
@@ -594,7 +594,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get holdingSteady => '변동 없음';
 
   @override
-  String get measurementRunningPlus => '측정이 진행 중입니다. Astut+가 어느 방향인지 보여줍니다.';
+  String get measurementRunningPlus => '측정이 진행 중입니다. Astute+가 어느 방향인지 보여줍니다.';
 
   @override
   String firstN(int n) {
@@ -632,7 +632,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '7일 무료';
@@ -642,7 +642,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get measurementFreeForever =>
-      '측정은 언제나 무료입니다. Astut+는 그것이 어느 방향인지 알려줍니다.';
+      '측정은 언제나 무료입니다. Astute+는 그것이 어느 방향인지 알려줍니다.';
 
   @override
   String get seeThePlans => '요금제 보기';
@@ -924,7 +924,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkTopicsLine => '정말 좋아하는 쪽으로 믹스를 기울이세요.';
 
   @override
-  String get plusIsActive => 'ASTUT+ 활성화됨';
+  String get plusIsActive => 'ASTUTE+ 활성화됨';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -938,7 +938,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get thatDidNotGoThrough => '처리되지 않았어요.';
 
   @override
-  String get plusIsBack => 'Astut+가 돌아왔어요.';
+  String get plusIsBack => 'Astute+가 돌아왔어요.';
 
   @override
   String get nothingToRestore => '이 계정에 복원할 것이 없어요.';

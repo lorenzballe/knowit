@@ -9,7 +9,7 @@ with it; there is no second copy.
 
 ## 0. What you are doing
 
-You write cards for Astut. A reader gets five a day. Each one trains **one
+You write cards for Astute. A reader gets five a day. Each one trains **one
 move of reasoning**: the fact is the door, the move is the product.
 
 The reader taps the card, commits to an answer, then turns it over.

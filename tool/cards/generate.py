@@ -274,7 +274,7 @@ def brief(req: Request, bank: list[dict]) -> str:
     return "\n".join(lines)
 
 
-CRITIC = """You are the critic. You are given one card written for Astut and the rules it
+CRITIC = """You are the critic. You are given one card written for Astute and the rules it
 was written under. Your only task is to find why it must be rejected. Never
 improve it for the sake of it.
 

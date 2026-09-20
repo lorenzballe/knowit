@@ -7,7 +7,7 @@ import '../l10n/l10n.dart';
 import '../theme.dart';
 import '../widgets/ambient.dart';
 
-/// The first thing the app shows: five scenes that say what Astut is, over a
+/// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
 ///
 /// Swipe left or tap for the next scene, swipe right for the previous, or take
@@ -351,7 +351,7 @@ class _SceneCopy extends StatelessWidget {
   final int index;
 
   static const List<(String, String)> _copy = [
-    ('Astut', 'Five smart things a day, ready to use in conversation'),
+    ('Astute', 'Five smart things a day, ready to use in conversation'),
     (
       'Twelve topics, five pills',
       // Two lines, like the rest. Three made this scene's block taller than

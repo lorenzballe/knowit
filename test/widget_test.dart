@@ -189,7 +189,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('Astut'), findsOneWidget);
+    expect(find.text('Astute'), findsOneWidget);
     expect(
       find.text('Five smart things a day, ready to use in conversation'),
       findsOneWidget,
@@ -321,7 +321,8 @@ void main() {
       count: 12,
     );
     final Pill elsewhere = shelf.firstWhere((p) => p.topic != 'Economics');
-    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
+    // On some days the same card sits on two shelves; present is enough.
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
     await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
     await _settle(tester);
@@ -334,7 +335,7 @@ void main() {
     await _settle(tester);
     expect(find.byKey(const ValueKey('subject-All-on')), findsOneWidget);
     expect(find.byKey(const ValueKey('subject-Economics-off')), findsOneWidget);
-    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsOneWidget);
+    expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
     // And the lens opens a field over the whole pool.
     await tester.tap(find.byKey(const ValueKey('explore-search')));
@@ -381,7 +382,7 @@ void main() {
     });
   });
 
-  group('Astut+ gates the three perks', () {
+  group('Astute+ gates the three perks', () {
     testWidgets('the archive opens the paywall on the free plan', (
       tester,
     ) async {
@@ -422,7 +423,7 @@ void main() {
       expect(find.text('What should we talk about?'), findsNothing);
     });
 
-    testWidgets('the archive opens for real on Astut+', (tester) async {
+    testWidgets('the archive opens for real on Astute+', (tester) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -843,7 +844,7 @@ void main() {
       expect(app.streakWasFrozen, isFalse);
     });
 
-    test('the free plan holds one, Astut+ holds three', () async {
+    test('the free plan holds one, Astute+ holds three', () async {
       final free = await appWith({});
       expect(free.freezeCapacity, 1);
 
@@ -1219,7 +1220,7 @@ void main() {
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 
-  testWidgets('Astut+ hands over the second set once the day is done', (
+  testWidgets('Astute+ hands over the second set once the day is done', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed(plus: true));
@@ -1647,7 +1648,7 @@ void main() {
       // No share sheet under a test, so it is copied — and what is copied
       // names the edition, shows five squares, and quotes no card.
       final String text = copied!;
-      expect(text, startsWith('Astut #${editionOf(DateTime.now())}'));
+      expect(text, startsWith('Astute #${editionOf(DateTime.now())}'));
       final String squares = text.split('\n')[1];
       expect(squares.runes.length, kPillsPerDay);
       for (final pill in _todaysFive) {
@@ -3234,7 +3235,7 @@ void main() {
       await _settle(tester);
 
       // The app is past the splash and dealing a real day. The header used
-      // to say Astut, which is not something a screen has to tell you about
+      // to say Astute, which is not something a screen has to tell you about
       // the app you just opened; it says the date now, so the tab bar and
       // the deck are what stand for "it came back".
       expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
@@ -3539,7 +3540,7 @@ void main() {
       expect(prefs.getBool('knowit.onboarded'), isNot(true));
     });
 
-    testWidgets('the plan toggle turns Astut+ on and off', (tester) async {
+    testWidgets('the plan toggle turns Astute+ on and off', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -3559,10 +3560,10 @@ void main() {
 
       final prefs = await SharedPreferences.getInstance();
 
-      await tapToggle('Turn Astut+ on');
+      await tapToggle('Turn Astute+ on');
       expect(prefs.getBool('knowit.plus'), isTrue);
 
-      await tapToggle('Turn Astut+ off');
+      await tapToggle('Turn Astute+ off');
       expect(prefs.getBool('knowit.plus'), isFalse);
     });
   });
@@ -3637,7 +3638,7 @@ void main() {
         (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
       ];
       const titles = [
-        'Astut',
+        'Astute',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',
@@ -3705,7 +3706,7 @@ void main() {
       await pumpIntro(tester);
 
       const titles = [
-        'Astut',
+        'Astute',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',

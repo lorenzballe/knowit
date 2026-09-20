@@ -123,13 +123,13 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Astut'**
+  /// **'Astute'**
   String get appName;
 
   /// No description provided for @plusName.
   ///
   /// In en, this message translates to:
-  /// **'Astut+'**
+  /// **'Astute+'**
   String get plusName;
 
   /// No description provided for @tabToday.
@@ -777,7 +777,7 @@ abstract class AppLocalizations {
   /// No description provided for @nudgeOnSystemSaidNo.
   ///
   /// In en, this message translates to:
-  /// **'Nudge on, but the system said no. Turn notifications on for Astut in settings.'**
+  /// **'Nudge on, but the system said no. Turn notifications on for Astute in settings.'**
   String get nudgeOnSystemSaidNo;
 
   /// No description provided for @nudgeOnNeedsPhone.
@@ -879,7 +879,7 @@ abstract class AppLocalizations {
   /// No description provided for @seeEveryPrincipleWithPlus.
   ///
   /// In en, this message translates to:
-  /// **'See every principle with Astut plus'**
+  /// **'See every principle with Astute plus'**
   String get seeEveryPrincipleWithPlus;
 
   /// No description provided for @moreBeingTracked.
@@ -921,7 +921,7 @@ abstract class AppLocalizations {
   /// No description provided for @measurementRunningPlus.
   ///
   /// In en, this message translates to:
-  /// **'The measurement is running. Astut+ shows you which way it is going.'**
+  /// **'The measurement is running. Astute+ shows you which way it is going.'**
   String get measurementRunningPlus;
 
   /// No description provided for @firstN.
@@ -981,7 +981,7 @@ abstract class AppLocalizations {
   /// No description provided for @plusNameCaps.
   ///
   /// In en, this message translates to:
-  /// **'ASTUT+'**
+  /// **'ASTUTE+'**
   String get plusNameCaps;
 
   /// No description provided for @sevenDaysFree.
@@ -999,7 +999,7 @@ abstract class AppLocalizations {
   /// No description provided for @measurementFreeForever.
   ///
   /// In en, this message translates to:
-  /// **'The measurement is free and always will be. Astut+ is what tells you which way it is going.'**
+  /// **'The measurement is free and always will be. Astute+ is what tells you which way it is going.'**
   String get measurementFreeForever;
 
   /// No description provided for @seeThePlans.
@@ -1377,7 +1377,7 @@ abstract class AppLocalizations {
   /// No description provided for @plusIsActive.
   ///
   /// In en, this message translates to:
-  /// **'ASTUT+ IS ACTIVE'**
+  /// **'ASTUTE+ IS ACTIVE'**
   String get plusIsActive;
 
   /// No description provided for @tryFreeThen.
@@ -1401,7 +1401,7 @@ abstract class AppLocalizations {
   /// No description provided for @plusIsBack.
   ///
   /// In en, this message translates to:
-  /// **'Astut+ is back.'**
+  /// **'Astute+ is back.'**
   String get plusIsBack;
 
   /// No description provided for @nothingToRestore.

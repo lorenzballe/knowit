@@ -10,10 +10,10 @@ class AppLocalizationsPt extends AppLocalizations {
   AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => 'Hoje';
@@ -493,7 +493,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get nudgeOnSystemSaidNo =>
-      'Lembrete ligado, mas o sistema recusou. Ativa as notificações do Astut nas definições.';
+      'Lembrete ligado, mas o sistema recusou. Ativa as notificações do Astute nas definições.';
 
   @override
   String get nudgeOnNeedsPhone =>
@@ -568,7 +568,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get seeEveryPrincipleWithPlus =>
-      'Vê todos os princípios com o Astut plus';
+      'Vê todos os princípios com o Astute plus';
 
   @override
   String moreBeingTracked(int n) {
@@ -604,7 +604,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get measurementRunningPlus =>
-      'A medição está a decorrer. O Astut+ mostra-te para onde vai.';
+      'A medição está a decorrer. O Astute+ mostra-te para onde vai.';
 
   @override
   String firstN(int n) {
@@ -645,7 +645,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '7 dias grátis';
@@ -655,7 +655,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get measurementFreeForever =>
-      'A medição é grátis e será sempre. O Astut+ é o que te diz para onde vai.';
+      'A medição é grátis e será sempre. O Astute+ é o que te diz para onde vai.';
 
   @override
   String get seeThePlans => 'VER OS PLANOS';
@@ -949,7 +949,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get perkTopicsLine => 'Inclina a mistura para o que gostas mesmo.';
 
   @override
-  String get plusIsActive => 'ASTUT+ ESTÁ ATIVO';
+  String get plusIsActive => 'ASTUTE+ ESTÁ ATIVO';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -964,7 +964,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get thatDidNotGoThrough => 'Isso não passou.';
 
   @override
-  String get plusIsBack => 'O Astut+ está de volta.';
+  String get plusIsBack => 'O Astute+ está de volta.';
 
   @override
   String get nothingToRestore => 'Nada para restaurar nesta conta.';

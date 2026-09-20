@@ -12,7 +12,7 @@ import '../widgets/chunky.dart';
 import '../data/topics.dart';
 import '../widgets/motion.dart';
 
-/// What Astut+ costs, in cents, so the saving can be worked out rather than
+/// What Astute+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 48%" is a number that quietly stops being true
 /// the first time a price moves.
 const int kMonthlyCents = 399;
@@ -64,7 +64,7 @@ List<({IconData icon, String title, String sub})> _perks(
   (icon: Icons.tune_rounded, title: l.perkTopicsTitle, sub: l.perkTopicsLine),
 ];
 
-/// Astut+.
+/// Astute+.
 ///
 /// Prices come from the store when it answers, so what is shown is what the
 /// reader's App Store will actually charge, in their currency. Where it has

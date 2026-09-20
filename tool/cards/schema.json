@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://lorenzballe.github.io/knowit/cards/card.schema.json",
-  "title": "Astut card",
+  "title": "Astute card",
   "description": "One card in the bank: what it asks, what it answers, and the one move it trains. The field names match lib/data/card_json.dart; check.py enforces what a schema cannot say.",
   "type": "object",
   "additionalProperties": false,

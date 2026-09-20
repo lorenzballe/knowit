@@ -652,7 +652,7 @@ class _Coverage extends StatelessWidget {
     // The most any one subject has been read. The bars are drawn against
     // this, not against how many cards exist: the pool is written to keep
     // growing, so a total would be a number that quietly stops being true —
-    // and one that says "you have read 3% of Astut", which is nobody's idea
+    // and one that says "you have read 3% of Astute", which is nobody's idea
     // of progress.
     final int busiest = rows
         .map((style) => seenByTopic[style.name] ?? 0)

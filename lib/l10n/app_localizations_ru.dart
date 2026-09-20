@@ -10,10 +10,10 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => 'Сегодня';
@@ -500,7 +500,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nudgeOnSystemSaidNo =>
-      'Напоминание включено, но система отказала. Включи уведомления для Astut в настройках.';
+      'Напоминание включено, но система отказала. Включи уведомления для Astute в настройках.';
 
   @override
   String get nudgeOnNeedsPhone =>
@@ -576,7 +576,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get seeEveryPrincipleWithPlus => 'Все принципы — с Astut plus';
+  String get seeEveryPrincipleWithPlus => 'Все принципы — с Astute plus';
 
   @override
   String moreBeingTracked(int n) {
@@ -614,7 +614,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get measurementRunningPlus =>
-      'Измерение идёт. Astut+ показывает, в какую сторону.';
+      'Измерение идёт. Astute+ показывает, в какую сторону.';
 
   @override
   String firstN(int n) {
@@ -655,7 +655,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '7 дней бесплатно';
@@ -665,7 +665,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get measurementFreeForever =>
-      'Измерение бесплатно и останется таким. Astut+ — это то, что говорит, куда оно движется.';
+      'Измерение бесплатно и останется таким. Astute+ — это то, что говорит, куда оно движется.';
 
   @override
   String get seeThePlans => 'ПОСМОТРЕТЬ ТАРИФЫ';
@@ -975,7 +975,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get perkTopicsLine => 'Сдвинь микс к тому, что тебе правда нравится.';
 
   @override
-  String get plusIsActive => 'ASTUT+ АКТИВЕН';
+  String get plusIsActive => 'ASTUTE+ АКТИВЕН';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -990,7 +990,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get thatDidNotGoThrough => 'Не получилось.';
 
   @override
-  String get plusIsBack => 'Astut+ снова с тобой.';
+  String get plusIsBack => 'Astute+ снова с тобой.';
 
   @override
   String get nothingToRestore => 'В этом аккаунте нечего восстанавливать.';

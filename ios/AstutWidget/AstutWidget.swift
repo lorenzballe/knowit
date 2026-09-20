@@ -85,7 +85,7 @@ struct AstutWidgetView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
-      Text(entry.edition > 0 ? "ASTUT · #\(entry.edition)" : "ASTUT")
+      Text(entry.edition > 0 ? "ASTUTE · #\(entry.edition)" : "ASTUTE")
         .font(.system(size: 10, weight: .bold))
         .tracking(1.4)
         .foregroundColor(.white.opacity(0.6))

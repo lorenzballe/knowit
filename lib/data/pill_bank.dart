@@ -190,7 +190,7 @@ class PillBank {
       await prefs.setString(_kStored, body);
       return true;
     } catch (error) {
-      debugPrint('Astut: the bank did not refresh: $error');
+      debugPrint('Astute: the bank did not refresh: $error');
       return false;
     }
   }

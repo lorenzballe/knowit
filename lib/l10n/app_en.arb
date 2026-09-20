@@ -1,7 +1,7 @@
 {
  "@@locale": "en",
- "appName": "Astut",
- "plusName": "Astut+",
+ "appName": "Astute",
+ "plusName": "Astute+",
  "tabToday": "Today",
  "tabExplore": "Explore",
  "tabProfile": "Profile",
@@ -447,7 +447,7 @@
    }
   }
  },
- "nudgeOnSystemSaidNo": "Nudge on, but the system said no. Turn notifications on for Astut in settings.",
+ "nudgeOnSystemSaidNo": "Nudge on, but the system said no. Turn notifications on for Astute in settings.",
  "nudgeOnNeedsPhone": "Nudge on. Delivery needs the phone build.",
  "savedN": "Saved · {n}",
  "@savedN": {
@@ -519,7 +519,7 @@
    }
   }
  },
- "seeEveryPrincipleWithPlus": "See every principle with Astut plus",
+ "seeEveryPrincipleWithPlus": "See every principle with Astute plus",
  "moreBeingTracked": "{n, plural, =1{1 more being tracked} other{{n} more being tracked}}",
  "@moreBeingTracked": {
   "placeholders": {
@@ -554,7 +554,7 @@
   }
  },
  "holdingSteady": "Holding steady",
- "measurementRunningPlus": "The measurement is running. Astut+ shows you which way it is going.",
+ "measurementRunningPlus": "The measurement is running. Astute+ shows you which way it is going.",
  "firstN": "First {n}",
  "@firstN": {
   "placeholders": {
@@ -592,10 +592,10 @@
    }
   }
  },
- "plusNameCaps": "ASTUT+",
+ "plusNameCaps": "ASTUTE+",
  "sevenDaysFree": "7 days free",
  "watchTheGapMove": "Watch the gap move.",
- "measurementFreeForever": "The measurement is free and always will be. Astut+ is what tells you which way it is going.",
+ "measurementFreeForever": "The measurement is free and always will be. Astute+ is what tells you which way it is going.",
  "seeThePlans": "SEE THE PLANS",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
@@ -794,7 +794,7 @@
  "perkArchiveLine": "Every pill you have ever read, searchable by topic.",
  "perkTopicsTitle": "Pick your own topics",
  "perkTopicsLine": "Weight the mix toward what you actually like.",
- "plusIsActive": "ASTUT+ IS ACTIVE",
+ "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try 7 days free, then {price}{suffix}",
  "@tryFreeThen": {
   "placeholders": {
@@ -808,7 +808,7 @@
  },
  "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
  "thatDidNotGoThrough": "That did not go through.",
- "plusIsBack": "Astut+ is back.",
+ "plusIsBack": "Astute+ is back.",
  "nothingToRestore": "Nothing to restore on this account.",
  "findOutIfBetter": "Find out if you are actually getting better.",
  "perYear": "per year",

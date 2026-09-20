@@ -1,4 +1,4 @@
-# Astut
+# Astute
 
 Five AI-written "pills" a day — bite-size facts across science, history, psychology,
 economics, tech, weird facts, the human body, philosophy, pop culture, nature and
@@ -81,7 +81,7 @@ empty state, Profile (record, appearance, topics, coverage, calibration,
 daily nudge), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
-**Astut+** — three perks, all delivered: the searchable **Archive**, the
+**Astute+** — three perks, all delivered: the searchable **Archive**, the
 **topic picker**, and a **second set of five pills** handed over from the shelf
 once the first five are done. On the free plan the first two carry a lock chip
 and open the paywall instead.
@@ -245,7 +245,7 @@ and the merge below is what brings this phone's week across.
 
 Signing in asks the phone, not a browser. Firebase will run the whole flow
 itself, and for a while this app let it: a browser sheet titled
-`astuto-3d398.firebaseapp.com` rather than Astut, opening a session that
+`astuto-3d398.firebaseapp.com` rather than Astute, opening a session that
 knows none of the accounts the phone is signed into, so it asks someone to
 type an email address and a password on the second screen of an app they have
 not decided to keep. Nobody finishes that. Apple's own sheet is a glance at
@@ -312,7 +312,7 @@ lib/
   state/       AppState — streak, shelves, history, the ladder (persisted)
   sync/        the account, the snapshot and its merge, boards
   utils/       reminders, the widget channel, sharing — each web-safe
-  widgets/     card stack, share sheet, shared UI, the Astut+ gate
+  widgets/     card stack, share sheet, shared UI, the Astute+ gate
   screens/     the screens listed above
 tool/
   cards/         the bank — one JSON file per card — and the generator that grows it
@@ -859,7 +859,7 @@ So:
   your own words is what stops the other side being explained away on sight.
   Skipping is allowed: a reader made to type before they may read on stops
   reading on.
-- **Astut+ sells depth, not volume.** More cards is the pitch every rival
+- **Astute+ sells depth, not volume.** More cards is the pitch every rival
   makes better. What is gated instead is whether the gap is closing over time
   (`Trend`) and the full principle board; the measurement itself stays free,
   because a reader has to see it before they will pay to keep it.
