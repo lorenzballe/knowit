@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z22",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which do people consistently overestimate: deaths from homicide, or from diabetes?",
+  "options": [
+    "Homicide",
+    "Diabetes",
+    "Neither"
+  ],
+  "correct": 0,
+  "answer": "Homicide is reported and diabetes is not, so people overestimate the first and underestimate the second by large factors. What is dangerous and what is memorable are almost unrelated.",
+  "move": "The quiet causes are the big ones. That is why they are quiet.",
+  "trap": "Causes that make the news are the ones the mind reaches first.",
+  "source": "Lichtenstein et al., judged frequency of lethal events"
+}

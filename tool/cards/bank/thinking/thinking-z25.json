@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z25",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "A test for a rare condition never gives a false negative but sometimes a false positive. You test negative. What do you know?",
+  "options": [
+    "Little",
+    "You almost certainly do not have it",
+    "Nothing"
+  ],
+  "correct": 1,
+  "answer": "A test that never misses makes a negative decisive: if you had it, the test would have said so. The same test's positives are weak, because false positives are the only kind of error it makes. One test, two very different kinds of answer.",
+  "move": "Ask which way the test can be wrong. It changes what each result means.",
+  "trap": "Treating positive and negative results as equally informative.",
+  "source": "Asymmetric test errors"
+}

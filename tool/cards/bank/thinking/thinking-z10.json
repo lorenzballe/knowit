@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z10",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "You want to know whether a diet is working, so you weigh yourself whenever you feel lighter. What have you measured?",
+  "options": [
+    "Your weight",
+    "When you feel lighter",
+    "The diet"
+  ],
+  "correct": 1,
+  "answer": "Choosing when to measure by how you feel makes the readings a record of your mood rather than your weight. A fixed schedule you cannot move is the whole difference between data and self-portraiture.",
+  "move": "Decide when you will measure before you know what it will say.",
+  "trap": "The measurement is triggered by the thing being measured.",
+  "source": "Selection of measurement occasions"
+}

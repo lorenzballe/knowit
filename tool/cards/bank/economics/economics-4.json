@@ -1,0 +1,11 @@
+{
+  "id": "economics-4",
+  "topic": "economics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can average pay rise while everyone earns less?",
+  "answer": "Yes. If well-paid jobs grow as a share of the workforce, the average can climb even when pay falls within every single group. The overall number and the group-by-group numbers can point in opposite directions, and both are correct — which is why the headline needs the breakdown.",
+  "move": "An average can rise while every part of it falls.",
+  "source": "Simpson's paradox in labour statistics"
+}

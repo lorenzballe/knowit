@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z20",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "A company tries 12 subject lines and one gets a much better open rate. What should it do next?",
+  "options": [
+    "Use it everywhere",
+    "Run that one again on its own",
+    "Try 12 more"
+  ],
+  "correct": 1,
+  "answer": "The best of twelve is the best partly because it caught a good sample. Running it alone against the original is what separates a real effect from the luckiest draw — and often it comes back to the middle.",
+  "move": "The winner of a big search has to win again to count.",
+  "trap": "The winner of a wide search is partly a winner by luck.",
+  "source": "Winner's curse in A/B testing"
+}

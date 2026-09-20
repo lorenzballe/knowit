@@ -1,4 +1,4 @@
-# Astut
+# Astute
 
 Five AI-written "pills" a day — bite-size facts across science, history, psychology,
 economics, tech, weird facts, the human body, philosophy, pop culture, nature and
@@ -81,7 +81,7 @@ empty state, Profile (record, appearance, topics, coverage, calibration,
 daily nudge), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
-**Astut+** — three perks, all delivered: the searchable **Archive**, the
+**Astute+** — three perks, all delivered: the searchable **Archive**, the
 **topic picker**, and a **second set of five pills** handed over from the shelf
 once the first five are done. On the free plan the first two carry a lock chip
 and open the paywall instead.
@@ -245,7 +245,7 @@ and the merge below is what brings this phone's week across.
 
 Signing in asks the phone, not a browser. Firebase will run the whole flow
 itself, and for a while this app let it: a browser sheet titled
-`astuto-3d398.firebaseapp.com` rather than Astut, opening a session that
+`astuto-3d398.firebaseapp.com` rather than Astute, opening a session that
 knows none of the accounts the phone is signed into, so it asks someone to
 type an email address and a password on the second screen of an app they have
 not decided to keep. Nobody finishes that. Apple's own sheet is a glance at
@@ -306,18 +306,52 @@ the channel away on someone who does not yet know what the app is.
 ```
 lib/
   analytics.dart  what is measured, and whether anything is
-  data/        topic palette, the pill pool, the question of the day, the dealer,
-               and the genres under each subject
+  data/        topic palette, the bank (embedded + downloaded), the calendar,
+               the dealer, and the genres under each subject
   models/      Pill, Reminder
   state/       AppState — streak, shelves, history, the ladder (persisted)
   sync/        the account, the snapshot and its merge, boards
   utils/       reminders, the widget channel, sharing — each web-safe
-  widgets/     card stack, share sheet, shared UI, the Astut+ gate
+  widgets/     card stack, share sheet, shared UI, the Astute+ gate
   screens/     the screens listed above
 tool/
+  cards/         the bank — one JSON file per card — and the generator that grows it
+  content/       the brief: what to write next, by genre, worked out from the bank
   icons/         the supplied artwork, and the script that resizes it
   illustrations/ the figures a card can carry — Python, run on a server
+web/cards/       cards.json, the bank as the site serves it
 ```
+
+## Where the cards come from
+
+Cards are not code. Each is a JSON file under `tool/cards/bank/<topic>/`,
+and `lib/data/card_json.dart` is the one place the field names are decided —
+the round trip is a test. The app holds the bank twice: baked in at build
+time as `lib/data/embedded_bank.dart` (generated; `tool/cards/bundle.py`
+writes it and CI checks it is current) so the first day works offline, and
+downloaded as `cards.json` from the same site that serves the preview, kept
+in the phone's own storage and adopted the next time the app starts — never
+mid-day, so a deck on the table is not re-dealt under the reader. A phone
+with no signal keeps what it has. `PillBank` is that one static.
+
+The bank grows at night. `.github/workflows/cards.yml` borrows a machine at
+03:00, and `tool/cards/generate.py` asks the model for what the bank is short
+of — every subject towards forty reads, twenty graded questions and three
+debates; every principle towards eight cards — with `tool/cards/RULES.md` as
+the whole of its instructions. A gate (`check.py`) refuses anything
+mis-shaped, a twin of a card already there, or anything on the blacklist; a
+second call with the opposite brief and web search opens the reference,
+redoes the numbers and tries to defend the wrong options. What survives
+arrives as a pull request, one file per card, with the cards listed in its
+body. **Merging is the review.** The deploy then publishes the new
+`cards.json`, and every phone picks it up. `tool/cards/README.md` has the
+loop in full, the cost of a card, and how to retire one.
+
+The question of the day travels with the bank as a calendar, edition to
+card id, frozen when written and extended a year ahead every night. Before
+the calendar existed it was computed from the pool on the fly, and a card
+added anywhere re-dealt every day since the epoch; now the app only
+computes past the calendar's end.
 
 **Figures.** `tool/illustrations` draws the picture that sometimes goes
 with a question: a hundred dots with one of them filled, a circle inside
@@ -332,7 +366,8 @@ somewhere else is otherwise nobody's to break.
 
 Today's deck is dealt deterministically from the date and the reading
 history, so it does not reshuffle mid-day, and it is stored by id so a
-restart resumes the same five. Pills already read are kept out of later
+restart resumes the same five — a card retired from the bank since still
+opens in a deck that holds it. Pills already read are kept out of later
 days until the pool runs dry.
 
 ## The question of the day
@@ -545,10 +580,11 @@ These are declared in the UI rather than faked:
 - **Email sign-in.** Apple and Google are wired; the email button says plainly
   that it is not connected. Firebase's email link needs a domain of ours with
   universal links, since Dynamic Links was retired.
-- **The pool runs out.** Sixty cards that tell, at three a day, is twenty
-  days of new reading; the ninety questions that can be marked, one of them
-  everybody's each day, about three months. The app asks for a subscription that renews annually, so the content
-  pipeline is the thing standing between this and a product.
+- **The bank is still the first hundred and seventy.** The pipeline that
+  grows it is built and tested against a canned model; the first real night
+  needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
+  allowed to open pull requests. Until then sixty cards that tell, at three
+  a day, is twenty days of new reading.
 - **The iOS widget target.** The Swift is written; the Xcode target has to be
   added by hand, as described under *The home-screen widget*.
 - **Dealing by genre.** The 108 genres are asked for, stored and backed up;
@@ -823,7 +859,7 @@ So:
   your own words is what stops the other side being explained away on sight.
   Skipping is allowed: a reader made to type before they may read on stops
   reading on.
-- **Astut+ sells depth, not volume.** More cards is the pitch every rival
+- **Astute+ sells depth, not volume.** More cards is the pitch every rival
   makes better. What is gated instead is whether the gap is closing over time
   (`Trend`) and the full principle board; the measurement itself stays free,
   because a reader has to see it before they will pay to keep it.

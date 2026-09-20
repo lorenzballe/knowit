@@ -1,0 +1,20 @@
+{
+  "id": "thinking-e3",
+  "topic": "thinking",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many words does a person speak in a day?",
+  "value": 16000,
+  "unit": "words",
+  "withinFactor": 3,
+  "answer": "130 x 120 = ~15,600 words.",
+  "move": "Men and women came out within a few hundred words of each other when it was measured.",
+  "hint": "Speaking runs at roughly 130 words a minute; the question is how many minutes.",
+  "steps": [
+    "Recorded speech runs about 130 words per minute.",
+    "People actually speak for perhaps 2 hours of a waking day.",
+    "130 x 120 = ~15,600 words."
+  ],
+  "source": "Mehl et al., Science, 2007"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-p1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A shop raises a price by 10%, then advertises 10% off. Where are you?",
+  "options": [
+    "Back where you started",
+    "One per cent below the old price",
+    "Ten per cent below"
+  ],
+  "correct": 1,
+  "answer": "Take €100: up 10% is €110, then 10% off €110 is €99. The rises and the falls are percentages of different numbers, so they never cancel. The same asymmetry is why a 50% loss needs a 100% gain to undo.",
+  "move": "A percentage is always a percentage of something, and the something changes.",
+  "trap": "Cancelling the two tens, because they look like the same ten.",
+  "source": "Percentage change, arithmetic"
+}

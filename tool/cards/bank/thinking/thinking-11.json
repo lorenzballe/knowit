@@ -1,0 +1,18 @@
+{
+  "id": "thinking-11",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "A random quality check has passed 40 units in a row. Is the next more likely to fail?",
+  "options": [
+    "Yes, a failure is due",
+    "No, unchanged",
+    "Yes, the machine is warming up"
+  ],
+  "correct": 1,
+  "answer": "If the checks really are independent, the line has no memory of the last 40. The run should make you ask a different question instead: whether the failure rate is lower than you assumed, or whether the check is actually testing anything.",
+  "move": "A run of luck does not owe you anything, but it might be telling you something else.",
+  "trap": "Feeling that a run has to even out.",
+  "source": "Independence and the gambler's fallacy"
+}

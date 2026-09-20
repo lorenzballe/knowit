@@ -2,13 +2,13 @@ import 'dart:math';
 import 'dart:math' as math;
 
 import '../models/pill.dart';
-import 'pills_data.dart';
+import 'pill_bank.dart';
 import 'topics.dart';
 
 String dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-/// How many pills a free day holds. Astut+ unlocks a second set of the same
+/// How many pills a free day holds. Astute+ unlocks a second set of the same
 /// size once the first is done.
 const int kPillsPerDay = 5;
 
@@ -52,7 +52,7 @@ List<Pill> pillsForDate(
   int? asking,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
-  final pool = List<Pill>.from(kPillPool);
+  final pool = List<Pill>.from(PillBank.cards);
   pool.shuffle(Random(seed));
 
   final wanted = <String>{};
@@ -169,16 +169,18 @@ List<Pill> arrangeDay(List<Pill> cards) {
   return out;
 }
 
-/// The pool by id, built once. A shelf being measured asks this per tap, and
-/// walking sixty cards to find one is a walk that can be spared.
-final Map<String, Pill> _byId = {for (final p in kPillPool) p.id: p};
-
 /// One pill by id, or null where the id is from a build that carried it and
-/// this one does not.
-Pill? pillById(String id) => _byId[id];
+/// this one does not. The bank keeps the index — a shelf being measured
+/// asks this per tap, and walking the cards to find one is a walk that can
+/// be spared — and a retired card still answers.
+Pill? pillById(String id) => PillBank.byId(id);
 
 /// Looks pills back up by id — used to restore a day's deck across restarts.
-List<Pill> pillsByIds(List<String> ids) => [for (final id in ids) ?_byId[id]];
+/// A card retired since the deck was dealt still comes back: the deck was
+/// dealt, and a hole in it would read as the app losing a card.
+List<Pill> pillsByIds(List<String> ids) => [
+  for (final id in ids) ?PillBank.byId(id),
+];
 
 /// Front-loads one pill per topic so a day never opens with two in a row from
 /// the same subject.
@@ -198,8 +200,8 @@ List<Pill> _oneTopicFirst(List<Pill> pills) {
 /// Free-text search across the whole pool — question, answer and topic.
 List<Pill> searchPills(String query) {
   final q = query.trim().toLowerCase();
-  if (q.isEmpty) return List<Pill>.from(kPillPool);
-  return kPillPool.where((p) {
+  if (q.isEmpty) return List<Pill>.from(PillBank.cards);
+  return PillBank.cards.where((p) {
     final hay = '${p.question} ${p.answer} ${p.topic} ${p.barMove}';
     return hay.toLowerCase().contains(q);
   }).toList();
@@ -264,8 +266,8 @@ List<Pill> pickedPills({
   String? topic,
 }) {
   final pool = topic == null
-      ? List<Pill>.from(kPillPool)
-      : kPillPool.where((p) => p.topic == topic).toList();
+      ? List<Pill>.from(PillBank.cards)
+      : PillBank.cards.where((p) => p.topic == topic).toList();
 
   int rank(Pill p) => switch (p.difficulty) {
     Difficulty.hard => 0,

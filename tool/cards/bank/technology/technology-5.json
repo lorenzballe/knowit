@@ -1,0 +1,11 @@
+{
+  "id": "technology-5",
+  "topic": "technology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the most software-heavy thing you own?",
+  "answer": "Probably your car. A modern vehicle runs on the order of a hundred million lines of code across dozens of processors — considerably more than a passenger aircraft. Most of it is not the engine; it is entertainment, comfort and the screens.",
+  "move": "Your car carries more code than the plane you flew in.",
+  "source": "Charette, IEEE Spectrum, automotive software"
+}

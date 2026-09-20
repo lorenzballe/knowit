@@ -1,0 +1,18 @@
+{
+  "id": "thinking-15",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A recruiter believes graduates of one university do better, so only interviews those. How could they ever discover they were wrong?",
+  "options": [
+    "From the performance of who they hire",
+    "They could not — the test never runs",
+    "By comparing to industry data"
+  ],
+  "correct": 1,
+  "answer": "Everyone hired comes from that university, so every good hire confirms the rule and no rejected candidate ever gets to disprove it. The belief is not surviving tests; it is preventing them.",
+  "move": "Ask what result would have changed your mind. If none could, nothing is being tested.",
+  "trap": "A belief that keeps being confirmed feels like a belief that keeps being tested.",
+  "source": "Confirmation and the untested counterfactual"
+}

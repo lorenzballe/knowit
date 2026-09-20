@@ -10,10 +10,10 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => 'Today';
@@ -487,7 +487,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nudgeOnSystemSaidNo =>
-      'Nudge on, but the system said no. Turn notifications on for Astut in settings.';
+      'Nudge on, but the system said no. Turn notifications on for Astute in settings.';
 
   @override
   String get nudgeOnNeedsPhone => 'Nudge on. Delivery needs the phone build.';
@@ -560,7 +560,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get seeEveryPrincipleWithPlus => 'See every principle with Astut plus';
+  String get seeEveryPrincipleWithPlus =>
+      'See every principle with Astute plus';
 
   @override
   String moreBeingTracked(int n) {
@@ -596,7 +597,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get measurementRunningPlus =>
-      'The measurement is running. Astut+ shows you which way it is going.';
+      'The measurement is running. Astute+ shows you which way it is going.';
 
   @override
   String firstN(int n) {
@@ -637,7 +638,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '7 days free';
@@ -647,7 +648,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get measurementFreeForever =>
-      'The measurement is free and always will be. Astut+ is what tells you which way it is going.';
+      'The measurement is free and always will be. Astute+ is what tells you which way it is going.';
 
   @override
   String get seeThePlans => 'SEE THE PLANS';
@@ -940,7 +941,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get perkTopicsLine => 'Weight the mix toward what you actually like.';
 
   @override
-  String get plusIsActive => 'ASTUT+ IS ACTIVE';
+  String get plusIsActive => 'ASTUTE+ IS ACTIVE';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -955,7 +956,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thatDidNotGoThrough => 'That did not go through.';
 
   @override
-  String get plusIsBack => 'Astut+ is back.';
+  String get plusIsBack => 'Astute+ is back.';
 
   @override
   String get nothingToRestore => 'Nothing to restore on this account.';

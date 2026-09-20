@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z9",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A doctor is convinced a treatment works and prescribes it mainly to patients who are only mildly ill. What happens to their view?",
+  "options": [
+    "It gets tested",
+    "It becomes unfalsifiable",
+    "It gets weaker"
+  ],
+  "correct": 1,
+  "answer": "Mild cases mostly recover anyway, so the treatment appears to work every time. The belief is not surviving a test, it is choosing patients who cannot disconfirm it — and the more it is confirmed the more confident it gets.",
+  "move": "Ask which patients would have proved you wrong, and whether you gave it to them.",
+  "trap": "Getting the result you expect feels like evidence for the belief.",
+  "source": "Confirmation through selective application"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-6",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "You took a new remedy on the very worst day of a cold, and felt clearly better the next morning. What is the safest reading?",
+  "options": [
+    "The remedy worked",
+    "The worst day is usually followed by a better one",
+    "It works but only when you are very ill"
+  ],
+  "correct": 1,
+  "answer": "You reach for a remedy when you feel worst, and the worst point of anything that fluctuates is usually followed by improvement whatever you do. That is why almost every treatment tried at the bottom appears to work.",
+  "move": "Anything you try at your worst moment will seem to help.",
+  "trap": "The improvement is real, so it feels like it needs a cause.",
+  "source": "Regression to the mean in self-treatment"
+}

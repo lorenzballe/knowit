@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z27",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Two engineers check the same drawing independently and both approve it. Is the drawing twice as safe?",
+  "options": [
+    "Yes",
+    "Only if their mistakes are unrelated",
+    "No, less safe"
+  ],
+  "correct": 1,
+  "answer": "Two checks only multiply if they can fail for different reasons. Trained the same way, working from the same brief, they tend to miss the same things — which is why serious systems try to make their checks disagree.",
+  "move": "Two checks that would fail together are one check.",
+  "trap": "Adding checks feels like multiplying safety.",
+  "source": "Common-mode failure"
+}

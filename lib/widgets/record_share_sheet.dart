@@ -106,7 +106,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         'I was right ${s.wasRight.round()}% of the time.\n'
         '${s.verdict}.\n\n'
         'How close would yours be?\n'
-        '— Astut · lorenzballe.github.io/knowit';
+        '— Astute · lorenzballe.github.io/knowit';
   }
 
   void _toast(String message) {
@@ -243,7 +243,7 @@ class RecordCard extends StatelessWidget {
 
   // Black, with the reader's own spectrum on it. This leaves as an image
   // into a feed of other images, where being recognisable is the whole job,
-  // and what makes Astut recognisable is no longer one accent colour: it is
+  // and what makes Astute recognisable is no longer one accent colour: it is
   // the wheel of subjects, which nobody else's card carries.
   static const _ground = Color(0xFF08080A);
   static const _ink = Color(0xFFF2F1EC);
@@ -322,7 +322,7 @@ class RecordCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Astut',
+                  'Astute',
                   style: AppText.display(
                     size: 14,
                     weight: FontWeight.w600,

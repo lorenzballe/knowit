@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "An insurer flags 2% of claims as suspicious. About 1 claim in 400 is actually fraudulent, and the flag catches most of those. Your claim is flagged. Odds it is fraud?",
+  "options": [
+    "Very high",
+    "Around one in ten",
+    "About even"
+  ],
+  "correct": 1,
+  "answer": "In 40,000 claims, 100 are fraud and the flag catches most — say 80. But 2% of 40,000 is 800 flags. Eighty real against 800 raised: roughly one flagged claim in ten is fraud, and nine honest people get a letter.",
+  "move": "A flag on a rare thing is mostly a flag on an ordinary one.",
+  "trap": "The flag feels like an accusation, so it feels like evidence.",
+  "source": "Base rate neglect in claims screening"
+}

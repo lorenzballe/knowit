@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z30",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Someone dreams of an old friend and gets a call from them the next day. How surprising is it?",
+  "options": [
+    "Very",
+    "Not, given how many dreams and how many people",
+    "Impossible to say"
+  ],
+  "correct": 1,
+  "answer": "You have thousands of dreams a year about hundreds of people, and remember only the ones followed by something. The near-misses leave no trace, so the rate of coincidence is measured only from its successes.",
+  "move": "The hits get remembered and the misses never happened as far as you know.",
+  "trap": "Counting the hit and not the misses.",
+  "source": "Base rate of remembered coincidences"
+}

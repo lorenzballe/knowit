@@ -4,10 +4,10 @@ import '../screens/paywall_screen.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 
-/// The three Astut+ perks the paywall sells. Anything gated behind one of
+/// The three Astute+ perks the paywall sells. Anything gated behind one of
 /// these opens the paywall for readers on the free plan.
 ///
-/// Runs [action] when the reader has Astut+, otherwise pushes the paywall.
+/// Runs [action] when the reader has Astute+, otherwise pushes the paywall.
 ///
 /// [source] names the gate that was reached for, and travels to the paywall
 /// so its numbers can say which perk actually sells.
@@ -52,7 +52,7 @@ class PlusLock extends StatelessWidget {
           Icon(Icons.lock_rounded, size: 10, color: context.p.link),
           const SizedBox(width: 4),
           Text(
-            'Astut+',
+            'Astute+',
             style: AppText.label(
               size: 9,
               weight: FontWeight.w600,

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z32",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A cost grows 3% a year and a budget grows 1%. After 30 years, how much larger is the cost relative to the budget?",
+  "options": [
+    "About 2% larger",
+    "About 80% larger",
+    "About 30% larger"
+  ],
+  "correct": 1,
+  "answer": "The ratio grows at about 2% a year, and 1.02 to the thirtieth is roughly 1.8. Two points a year is not a small difference in the end; it is nearly double.",
+  "move": "Two percentage points, compounded for a career, is a doubling.",
+  "trap": "Reading a two-point gap as a small permanent difference.",
+  "source": "Compound growth of a ratio"
+}

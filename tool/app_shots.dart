@@ -14,7 +14,7 @@ import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
@@ -51,7 +51,7 @@ void _installed() {
 /// same grey, which is a picture of the empty state rather than of the
 /// screen. This is what the profile actually looks like in use.
 void _wellUsed() {
-  final read = kPillPool.take(46).map((pill) => pill.id).toList();
+  final read = PillBank.cards.take(46).map((pill) => pill.id).toList();
   // ignore: invalid_use_of_visible_for_testing_member
   SharedPreferences.setMockInitialValues({
     'knowit.onboarded': true,
@@ -208,7 +208,7 @@ void main() {
   });
 
   testWidgets('the topics editor, with every subject live', (tester) async {
-    // On the paid plan, because editing the mix is behind Astut+ and the
+    // On the paid plan, because editing the mix is behind Astute+ and the
     // free plan quite rightly answers that tap with the paywall.
     // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues({
@@ -251,7 +251,7 @@ void main() {
       'knowit.todayDeckIds': deck,
       'knowit.todayIndex': 5,
       'knowit.streak': 13,
-      'knowit.seenIds': kPillPool.take(46).map((pill) => pill.id).toList(),
+      'knowit.seenIds': PillBank.cards.take(46).map((pill) => pill.id).toList(),
       'knowit.completedDates': [
         for (var back = 0; back < 5; back++)
           dateKey(DateTime.now().subtract(Duration(days: back))),

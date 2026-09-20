@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import '../data/pills_data.dart';
+import '../data/pill_bank.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
@@ -43,7 +43,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
   /// bring them up with. Not said yet first, then the ones the reader
   /// liked or kept, then the rest — and the order never moves under them.
   List<Pill> get _sayable {
-    final read = kPillPool
+    final read = PillBank.cards
         .where((p) => app.seenIds.contains(p.id) && p.barMove.trim().isNotEmpty)
         .toList();
     int rank(Pill p) {
@@ -627,7 +627,7 @@ class _BySubject extends StatelessWidget {
 
     final total = <String, int>{};
     final read = <String, int>{};
-    for (final pill in kPillPool) {
+    for (final pill in PillBank.cards) {
       total[pill.topic] = (total[pill.topic] ?? 0) + 1;
       if (app.seenIds.contains(pill.id)) {
         read[pill.topic] = (read[pill.topic] ?? 0) + 1;
@@ -702,7 +702,7 @@ class _SubjectRow extends StatelessWidget {
       onTap: !any
           ? null
           : () {
-              final deck = kPillPool
+              final deck = PillBank.cards
                   .where(
                     (p) => p.topic == style.name && app.seenIds.contains(p.id),
                   )

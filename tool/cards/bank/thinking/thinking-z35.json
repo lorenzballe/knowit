@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z35",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A firm's training course is followed by higher sales among those who took it. What is the missing number?",
+  "options": [
+    "Course cost",
+    "How the people who did not take it did",
+    "Sales before"
+  ],
+  "correct": 1,
+  "answer": "People who volunteer for training are already the ones putting effort in. Without the salespeople who did not take it — ideally chosen at random — the course and the kind of person who signs up cannot be separated.",
+  "move": "Every claim about an effect is a claim about what would have happened otherwise.",
+  "trap": "A before-and-after with no one to compare against.",
+  "source": "The missing control group"
+}

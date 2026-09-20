@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d1",
+  "topic": "thinking",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should social media have a legal minimum age of 16?",
+  "sides": [
+    "Yes, set a minimum",
+    "No, leave it to parents"
+  ],
+  "answer": "A minimum age treats a designed-to-be-addictive product the way we treat alcohol and gambling. Parents cannot realistically opt one child out of where every classmate lives, so the choice is not free in practice — a floor removes that trap for everyone at once.",
+  "move": "Whichever side you took, the enforcement question is the one that decides it.",
+  "counterpoint": "Bans push teenagers to lie about their age rather than stay off, which makes them less visible and less protected. Enforcement means verifying identity for everyone, handing platforms more personal data than they hold now. And the evidence on harm is contested — much of it is correlational, and the effect sizes found are often small.",
+  "source": "Contested policy question"
+}

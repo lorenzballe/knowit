@@ -1,0 +1,81 @@
+# Material a card may not be built on. One entry per line; a line starting
+# with # is a comment. check.py refuses any card whose question or answer
+# contains an entry, case-insensitively — and the generator is shown the
+# list, so the refusal is the second line of defence, not the first.
+#
+# The listicle. Everything here has been run by every "did you know"
+# account, so a reader has met it and learns nothing.
+honey never
+cleopatra
+sharks or trees
+sharks are older
+bananas are radioactive
+jumping the shark
+ship of theseus
+tickle yourself
+goosebumps
+shortest war
+turning it off and on
+freeze faster
+braaam
+mpemba
+great wall of china from space
+we only use 10%
+ten percent of our brain
+10% of our brain
+goldfish memory
+three-second memory
+lightning never strikes
+napoleon was short
+vikings wore horns
+horned helmet
+einstein failed
+sugar makes children hyperactive
+sugar rush
+cracking your knuckles
+swallowed gum
+seven years to digest
+carrots improve eyesight
+carrots help you see
+bulls hate red
+ostriches bury
+lemmings
+touching a baby bird
+daddy longlegs
+bats are blind
+dropped penny
+penny from the empire state
+left brain
+right-brained
+mozart effect
+five senses
+tongue map
+taste map
+hair grows after death
+nails grow after death
+eight glasses of water
+# Psychology that did not replicate. A card built on it teaches a result
+# that is not there.
+ego depletion
+power pose
+power posing
+priming
+marshmallow test
+stanford prison
+milgram
+dunning-kruger
+dunning kruger
+growth mindset
+10,000 hours
+ten thousand hours
+learning styles
+facial feedback
+# The textbook instances. The principle is met in a context the reader has
+# not already got an answer for, because that is what transfer means.
+linda is
+bank teller
+monty hall
+mammogram
+mammography
+bullet holes
+wald

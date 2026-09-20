@@ -1,0 +1,18 @@
+{
+  "id": "thinking-n6",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Two bus routes leave the same stop every 12 and every 18 minutes, together at 6am. How many minutes until they leave together again?",
+  "value": 36,
+  "unit": "minutes",
+  "answer": "The least common multiple takes the highest power of each: 2 x 2 x 3 x 3 = 36.",
+  "move": "Coincidences repeat on the least common multiple, never sooner.",
+  "hint": "You want the first time that is a whole number of both intervals.",
+  "steps": [
+    "12 = 2 x 2 x 3 and 18 = 2 x 3 x 3.",
+    "The least common multiple takes the highest power of each: 2 x 2 x 3 x 3 = 36."
+  ],
+  "source": "Least common multiple"
+}

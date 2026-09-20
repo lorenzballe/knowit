@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z36",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A government says a scheme created 40,000 jobs. What has to be true for that to be the effect?",
+  "options": [
+    "The jobs exist",
+    "That those jobs would not otherwise exist",
+    "The scheme cost less"
+  ],
+  "correct": 1,
+  "answer": "Some of those jobs would have been created anyway, and some were moved from elsewhere. The effect is the difference against a world without the scheme, which is harder to measure and much smaller than the headline.",
+  "move": "Ask what the number would have been anyway. That is the whole claim.",
+  "trap": "Counting what happened as if nothing else would have.",
+  "source": "Additionality in policy evaluation"
+}

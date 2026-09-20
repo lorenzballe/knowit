@@ -1,0 +1,11 @@
+{
+  "id": "weird_facts-4",
+  "topic": "weird_facts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did container ships get slower?",
+  "answer": "Deliberately, after 2008. Fuel use rises steeply with speed, so cutting speed by around a tenth saves a disproportionate share of the fuel. When freight rates collapsed and fuel stayed dear, slowing down beat sailing fast — and much of the fleet never sped back up.",
+  "move": "The world's cargo slowed down on purpose and mostly stayed slow.",
+  "source": "Slow steaming, adopted across container shipping post-2008"
+}

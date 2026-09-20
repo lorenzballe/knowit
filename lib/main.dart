@@ -78,7 +78,7 @@ class _AstutoAppState extends State<AstutoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Astut',
+      title: 'Astute',
       // Every language the app has strings for, and the phone's own
       // choice among them. Anything the phone asks for that is not here
       // falls back to English; anything not yet translated inside a
@@ -96,7 +96,7 @@ class _AstutoAppState extends State<AstutoApp> {
   }
 }
 
-/// Astut is a phone app served from a web page, so on anything wider than a
+/// Astute is a phone app served from a web page, so on anything wider than a
 /// handset it sits in a centred column at handset width rather than stretching
 /// a card across a desktop monitor.
 class _PhoneFrame extends StatelessWidget {
@@ -452,7 +452,7 @@ class _Splash extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Astut',
+                  'Astute',
                   style: AppText.display(
                     size: 30,
                     weight: FontWeight.w700,

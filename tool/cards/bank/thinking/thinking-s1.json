@@ -1,0 +1,18 @@
+{
+  "id": "thinking-s1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "\"Old buildings were built to last — look how many are still standing.\" What is wrong with this?",
+  "options": [
+    "Nothing, older methods were better",
+    "The badly built ones already fell down",
+    "Old buildings are repaired more often"
+  ],
+  "correct": 1,
+  "answer": "Every era built badly and well. Only the well-built survive to be admired, so any century looks like a golden age from far enough away. The comparison you want is against everything built then, most of which is gone.",
+  "move": "Every past era looks well made, because the bad parts are not there to see.",
+  "trap": "Judging a period by what is left of it.",
+  "source": "Survivorship bias in the built environment"
+}

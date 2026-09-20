@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z18",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "People who take vitamins live longer. What kind of person takes vitamins?",
+  "options": [
+    "Anyone",
+    "Someone already doing several other healthy things",
+    "Older people"
+  ],
+  "correct": 1,
+  "answer": "Vitamin takers exercise more, smoke less, and see doctors sooner. Trials that assign vitamins at random to people who were not already taking them mostly find nothing, which is what the correlation was hiding.",
+  "move": "The healthy-user effect turns almost any voluntary habit into a miracle.",
+  "trap": "The pill is easy to measure; the life around it is not.",
+  "source": "Healthy-user bias in nutrition studies"
+}

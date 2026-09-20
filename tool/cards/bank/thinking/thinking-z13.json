@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z13",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A radio phone-in finds 78% of callers oppose a new law. What has it measured?",
+  "options": [
+    "Public opinion",
+    "Who felt strongly enough to ring",
+    "Radio listeners"
+  ],
+  "correct": 1,
+  "answer": "Phoning in costs time and requires a reason, so the line collects people with a strong view — usually against something. Ten thousand callers chosen by their own motivation tell you less than a thousand chosen at random.",
+  "move": "Anyone who selected themselves is not a sample of anybody else.",
+  "trap": "A large number of responses feels like a large sample.",
+  "source": "Self-selection in call-in polling"
+}

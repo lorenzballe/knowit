@@ -34,7 +34,7 @@ class ShareDay extends StatelessWidget {
       if (d.sure != null) l.saidSure(d.sure!.round()),
     ].join(' · ');
     return [
-      'Astut #${d.edition}${d.streak > 0 ? ' · \u{1f525}${d.streak}' : ''}',
+      'Astute #${d.edition}${d.streak > 0 ? ' · \u{1f525}${d.streak}' : ''}',
       d.squares,
       if (question != null) '${l.todaysQuestion}: $question',
       if (verdict.isNotEmpty) verdict,

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-x1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Employees who use the company gym take fewer sick days. Should the company expand the gym?",
+  "options": [
+    "Yes — the effect is clear",
+    "Not on this evidence: healthy people use gyms",
+    "Only if the gym is free"
+  ],
+  "correct": 1,
+  "answer": "Nobody assigned people to the gym; they chose. Whatever makes someone a gym user — health, age, energy, a job with slack in it — also affects sick days. The gym could do nothing and the figures would look the same.",
+  "move": "When people chose their own group, the groups differ before you do anything.",
+  "trap": "Reading a difference between two self-selected groups as an effect.",
+  "source": "Healthy-user bias"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-b2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A hiring tool spots the 5% of applicants who become top performers, with 80% accuracy. You are flagged. What are your odds?",
+  "options": [
+    "About 80%",
+    "About one in five",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "Of 1,000 applicants, 50 are top performers and 40 get flagged. But 20% of the other 950 get flagged too: 190 more. So about 40 of 230 flags are real — under one in five.",
+  "move": "Ask how rare the thing is before you ask how good the test is.",
+  "trap": "Reading the tool's accuracy as the chance it is right about you.",
+  "source": "Base rate neglect in selection"
+}

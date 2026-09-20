@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z26",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Nine in ten people who take up rowing were swimmers. Does that mean swimming leads to rowing?",
+  "options": [
+    "Yes",
+    "Not without knowing how many swimmers there are",
+    "Only for adults"
+  ],
+  "correct": 1,
+  "answer": "That most rowers swam says nothing about how many swimmers row. If swimming is very common, almost every activity will be full of former swimmers without swimming leading anywhere in particular.",
+  "move": "\"Most A are B\" and \"most B are A\" are different sentences with different answers.",
+  "trap": "Reading the share one way round as if it read the other.",
+  "source": "Confusing the conditional"
+}

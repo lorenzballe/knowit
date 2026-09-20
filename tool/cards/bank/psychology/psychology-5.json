@@ -1,0 +1,11 @@
+{
+  "id": "psychology-5",
+  "topic": "psychology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Would you notice if your own choice were swapped?",
+  "answer": "Often not. Shown two faces, asked to pick the more attractive, then handed back the other one and asked why — most people explain the choice they did not make, in detail, without noticing the swap. The reasons arrive after the decision and fit whatever is in front of us.",
+  "move": "People will argue confidently for a choice they never made.",
+  "source": "Johansson et al., Science, 2005"
+}

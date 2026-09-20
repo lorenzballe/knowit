@@ -1254,7 +1254,7 @@ class _JourneyButtonState extends State<_JourneyButton> {
 }
 
 /// The way on: the journey, and under it the second set — as an offer on
-/// the free plan, as a deal on Astut+, and not at all once it has been
+/// the free plan, as a deal on Astute+, and not at all once it has been
 /// dealt.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});

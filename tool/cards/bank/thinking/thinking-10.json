@@ -1,0 +1,19 @@
+{
+  "id": "thinking-10",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A landfill fills in 40 years at current waste growth of 7% a year. At 10% growth, roughly how much sooner?",
+  "options": [
+    "About four years",
+    "About twelve years",
+    "Barely any difference"
+  ],
+  "correct": 1,
+  "answer": "At 7% the volume doubles roughly every ten years; at 10% roughly every seven. Over four decades that gap compounds into more than a decade of life gone. Small differences in a growth rate are not small differences in an outcome.",
+  "move": "Three percentage points on a growth rate cost this landfill twelve years.",
+  "trap": "Treating a few extra percent as a small change.",
+  "simply": "A pile that doubles every ten years is nothing for ages and then swallows the room. Make it double every seven instead and you do not add a little — you lose a decade.",
+  "source": "Doubling time and compound growth"
+}

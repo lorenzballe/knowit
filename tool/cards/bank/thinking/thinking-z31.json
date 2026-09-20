@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z31",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A rumour reaches three new people a day, each of whom does the same. Roughly how long to reach a town of 20,000?",
+  "options": [
+    "Weeks",
+    "About nine days",
+    "Months"
+  ],
+  "correct": 1,
+  "answer": "Three to the ninth is about 20,000. The first days look like nothing at all, which is exactly why anything spreading this way is always noticed too late to be stopped early.",
+  "move": "Nine days from one person to a whole town, and the first six look like nothing.",
+  "trap": "Repeated multiplication feels like repeated addition.",
+  "source": "Powers of three"
+}

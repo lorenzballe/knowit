@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/daily.dart';
-import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/l10n.dart';
@@ -189,7 +189,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('Astut'), findsOneWidget);
+    expect(find.text('Astute'), findsOneWidget);
     expect(
       find.text('Five smart things a day, ready to use in conversation'),
       findsOneWidget,
@@ -386,7 +386,7 @@ void main() {
     });
   });
 
-  group('Astut+ gates the three perks', () {
+  group('Astute+ gates the three perks', () {
     testWidgets('the archive opens the paywall on the free plan', (
       tester,
     ) async {
@@ -427,7 +427,7 @@ void main() {
       expect(find.text('What should we talk about?'), findsNothing);
     });
 
-    testWidgets('the archive opens for real on Astut+', (tester) async {
+    testWidgets('the archive opens for real on Astute+', (tester) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -728,7 +728,7 @@ void main() {
 
     test('the days a lapse reaches say something about the reader', () async {
       final yesterday = DateTime.now().subtract(const Duration(days: 1));
-      final miss = kPillPool.firstWhere((p) => p.isGraded);
+      final miss = PillBank.cards.firstWhere((p) => p.isGraded);
       final t = build(
         granted: true,
         extra: {
@@ -848,7 +848,7 @@ void main() {
       expect(app.streakWasFrozen, isFalse);
     });
 
-    test('the free plan holds one, Astut+ holds three', () async {
+    test('the free plan holds one, Astute+ holds three', () async {
       final free = await appWith({});
       expect(free.freezeCapacity, 1);
 
@@ -1224,7 +1224,7 @@ void main() {
     expect(prefs.getBool('knowit.notifications'), isTrue);
   });
 
-  testWidgets('Astut+ hands over the second set once the day is done', (
+  testWidgets('Astute+ hands over the second set once the day is done', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed(plus: true));
@@ -1578,7 +1578,7 @@ void main() {
     testWidgets('a rung climbed today gets today on the path', (tester) async {
       // Nineteen read before today: the fifth card of the day is the
       // twentieth, and the twentieth is the first rung.
-      final read = kPillPool
+      final read = PillBank.cards
           .where((p) => !_todaysFive.contains(p))
           .take(19)
           .map((p) => p.id)
@@ -1652,7 +1652,7 @@ void main() {
       // No share sheet under a test, so it is copied — and what is copied
       // names the edition, shows five squares, and quotes no card.
       final String text = copied!;
-      expect(text, startsWith('Astut #${editionOf(DateTime.now())}'));
+      expect(text, startsWith('Astute #${editionOf(DateTime.now())}'));
       final String squares = text.split('\n')[1];
       expect(squares.runes.length, kPillsPerDay);
       for (final pill in _todaysFive) {
@@ -1671,13 +1671,13 @@ void main() {
       // day's second asking slot; the other has nowhere to go and waits
       // after the five.
       final question = questionOfTheDay(DateTime.now());
-      final first = kPillPool.firstWhere(
+      final first = PillBank.cards.firstWhere(
         (p) =>
             p.isGraded &&
             p.principle.isReal &&
             p.principle != question.principle,
       );
-      final second = kPillPool.firstWhere(
+      final second = PillBank.cards.firstWhere(
         (p) =>
             p.isGraded &&
             p.principle.isReal &&
@@ -1776,7 +1776,7 @@ void main() {
       final app = AppState();
       await app.init();
       final tomorrow = DateTime.now().add(const Duration(days: 1));
-      final original = kPillPool.firstWhere(
+      final original = PillBank.cards.firstWhere(
         (p) =>
             p.isGraded &&
             p.principle.isReal &&
@@ -1852,14 +1852,15 @@ void main() {
 
   group('The content pool', () {
     test('has unique ids and a full set per topic', () {
-      final ids = kPillPool.map((p) => p.id).toList();
+      final ids = PillBank.cards.map((p) => p.id).toList();
       expect(ids.toSet(), hasLength(ids.length), reason: 'duplicate pill id');
 
       final perTopic = <String, int>{};
-      for (final p in kPillPool) {
+      for (final p in PillBank.cards) {
         perTopic[p.topic] = (perTopic[p.topic] ?? 0) + 1;
       }
-      expect(perTopic, hasLength(13));
+      // Thirteen subjects were written for; the bank may have grown since.
+      expect(perTopic.length, greaterThanOrEqualTo(13));
       // Every topic carries enough that a single-topic mix still fills a day.
       for (final entry in perTopic.entries) {
         expect(
@@ -1953,7 +1954,7 @@ void main() {
           .where((w) => w.length > 2 && !noise.contains(w))
           .toSet();
 
-      final byId = {for (final p in kPillPool) p.id: words(p.question)};
+      final byId = {for (final p in PillBank.cards) p.id: words(p.question)};
       final ids = byId.keys.toList();
       for (var i = 0; i < ids.length; i++) {
         for (var j = i + 1; j < ids.length; j++) {
@@ -1993,7 +1994,7 @@ void main() {
         'freeze faster',
         'braaam',
       ];
-      for (final pill in kPillPool) {
+      for (final pill in PillBank.cards) {
         final hay = '${pill.question} ${pill.answer}'.toLowerCase();
         for (final phrase in tired) {
           expect(
@@ -2006,7 +2007,7 @@ void main() {
     });
 
     test('every pill is complete and the answer stays short', () {
-      for (final p in kPillPool) {
+      for (final p in PillBank.cards) {
         expect(
           p.question.trim(),
           isNotEmpty,
@@ -2285,7 +2286,7 @@ void main() {
   });
 
   test('the dealer falls back to read pills once the pool runs dry', () {
-    final everything = kPillPool.map((p) => p.id).toSet();
+    final everything = PillBank.cards.map((p) => p.id).toSet();
     final deck = pillsForDate(DateTime(2026, 1, 1), exclude: everything);
     // Still a full day rather than an empty one.
     expect(deck, hasLength(5));
@@ -2326,8 +2327,8 @@ void main() {
       SharedPreferences.setMockInitialValues(
         _installed(
           saved: [
-            kPillPool.firstWhere((p) => p.topic == 'Science').id,
-            kPillPool.firstWhere((p) => p.topic == 'History').id,
+            PillBank.cards.firstWhere((p) => p.topic == 'Science').id,
+            PillBank.cards.firstWhere((p) => p.topic == 'History').id,
           ],
         ),
       );
@@ -2375,7 +2376,7 @@ void main() {
 
   group('Liked shelf', () {
     testWidgets('what was held down has a shelf of its own', (tester) async {
-      final liked = kPillPool.firstWhere((p) => p.topic == 'Space');
+      final liked = PillBank.cards.firstWhere((p) => p.topic == 'Space');
       SharedPreferences.setMockInitialValues({
         ..._installed(),
         'knowit.likedIds': <String>[liked.id],
@@ -2395,8 +2396,8 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
-      final space = kPillPool.firstWhere((p) => p.topic == 'Space');
-      final history = kPillPool.firstWhere((p) => p.topic == 'History');
+      final space = PillBank.cards.firstWhere((p) => p.topic == 'Space');
+      final history = PillBank.cards.firstWhere((p) => p.topic == 'History');
 
       expect(app.leanedWeights, app.topicWeights, reason: 'nothing said yet');
       await app.toggleLiked(space.id);
@@ -2416,7 +2417,7 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
-      final pill = kPillPool.first;
+      final pill = PillBank.cards.first;
 
       await app.dislike(pill.id);
       await app.toggleLiked(pill.id);
@@ -2551,7 +2552,7 @@ void main() {
       tester,
     ) async {
       final app = await freshApp();
-      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pick = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
       final correct = (pick.challenge as PickOne).correct;
       await app.recordAnswer(pick.id, '$correct', confidence: 70);
 
@@ -2573,7 +2574,7 @@ void main() {
 
     testWidgets('the re-read shows which option you took', (tester) async {
       final app = await freshApp();
-      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pick = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
       final options = (pick.challenge as PickOne).options;
       await app.recordAnswer(pick.id, '1', confidence: 70);
 
@@ -2603,7 +2604,7 @@ void main() {
 
     testWidgets('a card that was skipped still opens', (tester) async {
       final app = await freshApp();
-      final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pick = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
 
       await tester.pumpWidget(viewer(app, [pick]));
       await tester.pumpAndSettle();
@@ -2621,7 +2622,7 @@ void main() {
       tester,
     ) async {
       final app = await freshApp();
-      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
+      final fact = PillBank.cards.firstWhere((p) => p.challenge is NoChallenge);
 
       await tester.pumpWidget(viewer(app, [fact]));
       await tester.pumpAndSettle();
@@ -2635,7 +2636,7 @@ void main() {
       tester,
     ) async {
       final app = await freshApp();
-      final facts = kPillPool
+      final facts = PillBank.cards
           .where((p) => p.challenge is NoChallenge)
           .take(2)
           .toList();
@@ -2662,7 +2663,7 @@ void main() {
       tester,
     ) async {
       final app = await freshApp();
-      final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
+      final fact = PillBank.cards.firstWhere((p) => p.challenge is NoChallenge);
 
       await tester.pumpWidget(viewer(app, [fact]));
       await tester.pumpAndSettle();
@@ -2709,11 +2710,11 @@ void main() {
       );
     }
 
-    final fact = kPillPool.firstWhere((p) => p.challenge is NoChallenge);
-    final pick = kPillPool.firstWhere((p) => p.challenge is PickOne);
-    final number = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
-    final guess = kPillPool.firstWhere((p) => p.challenge is Estimate);
-    final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+    final fact = PillBank.cards.firstWhere((p) => p.challenge is NoChallenge);
+    final pick = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
+    final number = PillBank.cards.firstWhere((p) => p.challenge is TypeNumber);
+    final guess = PillBank.cards.firstWhere((p) => p.challenge is Estimate);
+    final debate = PillBank.cards.firstWhere((p) => p.challenge is TakeASide);
 
     testWidgets('a fact turns over on a tap', (tester) async {
       await tester.pumpWidget(host([fact], {}));
@@ -2892,8 +2893,13 @@ void main() {
       expect(find.text('"Because of the cost."'), findsOneWidget);
 
       // The other side is one tap away, and not shown before it is asked for.
+      // A long case pushes the tap below the fold of the card's back.
       expect(find.text(debate.counterpoint), findsNothing);
+      await tester.ensureVisible(find.text('What the other side says'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('What the other side says'));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text(debate.counterpoint));
       await tester.pumpAndSettle();
       expect(find.text(debate.counterpoint), findsOneWidget);
     });
@@ -2943,7 +2949,7 @@ void main() {
     testWidgets('the plain-words retelling waits to be asked for', (
       tester,
     ) async {
-      final pill = kPillPool.firstWhere((p) => p.hasSimply);
+      final pill = PillBank.cards.firstWhere((p) => p.hasSimply);
       await tester.pumpWidget(
         host([pill], {pill.id: const Answer('0', confidence: 50)}),
       );
@@ -2972,7 +2978,7 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
-      final pill = kPillPool.firstWhere((p) => p.hasSteps);
+      final pill = PillBank.cards.firstWhere((p) => p.hasSteps);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -2998,7 +3004,7 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       final app = AppState();
       await app.init();
-      final pill = kPillPool.firstWhere((p) => p.hasCounterpoint);
+      final pill = PillBank.cards.firstWhere((p) => p.hasCounterpoint);
 
       await tester.pumpWidget(
         MaterialApp(
@@ -3014,6 +3020,13 @@ void main() {
       expect(find.text(pill.counterpoint), findsNothing);
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
+      // A long debate pushes the other side below the fold, and a list
+      // only builds what is on screen.
+      await tester.dragUntilVisible(
+        find.text(pill.counterpoint),
+        find.byType(ListView).last,
+        const Offset(0, -200),
+      );
       expect(find.text(pill.counterpoint), findsOneWidget);
     });
   });
@@ -3053,7 +3066,7 @@ void main() {
         Principle.multipleComparisons,
       ];
       for (final principle in wanted) {
-        final contexts = kPillPool.where((p) => p.principle == principle);
+        final contexts = PillBank.cards.where((p) => p.principle == principle);
         expect(
           contexts.length,
           greaterThanOrEqualTo(2),
@@ -3068,7 +3081,7 @@ void main() {
       await app.init();
 
       // Get a base-rate card wrong, then force it due.
-      final card = kPillPool.firstWhere(
+      final card = PillBank.cards.firstWhere(
         (p) => p.principle == Principle.baseRate,
       );
       await app.recordAnswer(card.id, 'rubbish', confidence: 90);
@@ -3091,7 +3104,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final cards = kPillPool
+      final cards = PillBank.cards
           .where((p) => p.principle == Principle.baseRate)
           .toList();
       expect(cards.length, greaterThanOrEqualTo(2));
@@ -3116,7 +3129,7 @@ void main() {
         final app = AppState();
         await app.init();
 
-        final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+        final pill = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
         final challenge = pill.challenge as PickOne;
         final wrong = challenge.correct == 0 ? 1 : 0;
 
@@ -3141,7 +3154,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pill = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
       final right = '${(pill.challenge as PickOne).correct}';
 
       var answer = app.answerFor(pill.id);
@@ -3164,7 +3177,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      final debate = PillBank.cards.firstWhere((p) => p.challenge is TakeASide);
       await app.recordAnswer(debate.id, '0');
 
       expect(app.answerFor(debate.id)!.dueOn, isNull);
@@ -3174,7 +3187,7 @@ void main() {
     testWidgets('a card that came back has to be answered again', (
       tester,
     ) async {
-      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pill = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
       final given = <String, Answer>{pill.id: const Answer('0')};
 
       await tester.pumpWidget(
@@ -3226,7 +3239,7 @@ void main() {
       await _settle(tester);
 
       // The app is past the splash and dealing a real day. The header used
-      // to say Astut, which is not something a screen has to tell you about
+      // to say Astute, which is not something a screen has to tell you about
       // the app you just opened; it says the date now, so the tab bar and
       // the deck are what stand for "it came back".
       expect(find.byKey(const ValueKey('tab-Today')), findsOneWidget);
@@ -3241,7 +3254,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final graded = kPillPool.where((p) => p.isGraded).toList();
+      final graded = PillBank.cards.where((p) => p.isGraded).toList();
       String right(Pill p) => switch (p.challenge) {
         PickOne(:final correct) => '$correct',
         TypeNumber(:final answer) => '$answer',
@@ -3353,7 +3366,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      final debate = PillBank.cards.firstWhere((p) => p.challenge is TakeASide);
       await app.recordAnswer(debate.id, '0');
 
       expect(app.calibratedAnswers, 0);
@@ -3365,7 +3378,7 @@ void main() {
       SharedPreferences.setMockInitialValues(_installed());
       final first = AppState();
       await first.init();
-      final pill = kPillPool.firstWhere((p) => p.challenge is PickOne);
+      final pill = PillBank.cards.firstWhere((p) => p.challenge is PickOne);
       await first.recordAnswer(pill.id, '1', confidence: 70);
 
       // A fresh install reading the same store.
@@ -3414,7 +3427,7 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final pill = kPillPool.firstWhere((p) => p.challenge is TypeNumber);
+      final pill = PillBank.cards.firstWhere((p) => p.challenge is TypeNumber);
       final challenge = pill.challenge as TypeNumber;
 
       await app.recordAnswer(pill.id, '${challenge.answer}', confidence: 90);
@@ -3428,7 +3441,7 @@ void main() {
 
       // Taking a side is not an answer that can be marked, so the tally
       // must not move.
-      final debate = kPillPool.firstWhere((p) => p.challenge is TakeASide);
+      final debate = PillBank.cards.firstWhere((p) => p.challenge is TakeASide);
       await app.recordAnswer(debate.id, '0');
       expect(app.puzzlesAnswered, 1);
       expect(app.puzzlesRight, 1);
@@ -3531,7 +3544,7 @@ void main() {
       expect(prefs.getBool('knowit.onboarded'), isNot(true));
     });
 
-    testWidgets('the plan toggle turns Astut+ on and off', (tester) async {
+    testWidgets('the plan toggle turns Astute+ on and off', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
@@ -3551,10 +3564,10 @@ void main() {
 
       final prefs = await SharedPreferences.getInstance();
 
-      await tapToggle('Turn Astut+ on');
+      await tapToggle('Turn Astute+ on');
       expect(prefs.getBool('knowit.plus'), isTrue);
 
-      await tapToggle('Turn Astut+ off');
+      await tapToggle('Turn Astute+ off');
       expect(prefs.getBool('knowit.plus'), isFalse);
     });
   });
@@ -3629,7 +3642,7 @@ void main() {
         (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
       ];
       const titles = [
-        'Astut',
+        'Astute',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',
@@ -3697,7 +3710,7 @@ void main() {
       await pumpIntro(tester);
 
       const titles = [
-        'Astut',
+        'Astute',
         'Twelve topics, five pills',
         'A question, then the answer',
         'You choose the mix',

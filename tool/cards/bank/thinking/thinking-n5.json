@@ -1,0 +1,19 @@
+{
+  "id": "thinking-n5",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "You start with €1 and double it every day. On which day do you first pass €1,000,000?",
+  "value": 21,
+  "unit": "days",
+  "answer": "2^20 = 1,048,576, so day 21 passes it.",
+  "move": "Three weeks of doubling turns one euro into a million.",
+  "hint": "Doubling ten times multiplies by about a thousand.",
+  "steps": [
+    "Day 1 is €1, so on day n you have 2^(n-1).",
+    "2^19 = 524,288 — day 20 is still under a million.",
+    "2^20 = 1,048,576, so day 21 passes it."
+  ],
+  "source": "Powers of two"
+}

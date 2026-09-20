@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z12",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A charity asks whether you would give €500, then asks what you would actually give. Why not just ask the second question?",
+  "options": [
+    "Politeness",
+    "The first number moves the second",
+    "Legal reasons"
+  ],
+  "correct": 1,
+  "answer": "The opening number becomes the reference the real answer is judged against, and people asked the big question first give more. It works even when the first figure is obviously beyond what anyone would give.",
+  "move": "Whoever speaks first has already moved your number.",
+  "trap": "Believing your own figure came from your own budget.",
+  "source": "Anchoring in fundraising"
+}

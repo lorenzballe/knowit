@@ -1,0 +1,18 @@
+{
+  "id": "thinking-g1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A survey is emailed to customers and 4% reply, overwhelmingly positive. What has it measured?",
+  "options": [
+    "Customer satisfaction",
+    "The views of people who still open your email",
+    "Nothing, 4% is too small"
+  ],
+  "correct": 1,
+  "answer": "A small random sample would be fine. This one is not random: it excludes everyone who has stopped opening your email, which is exactly the unhappy. The size is not the problem — who is missing is.",
+  "move": "The people who did not answer are the finding.",
+  "trap": "Reading a low response rate as merely a small sample.",
+  "source": "Non-response bias"
+}

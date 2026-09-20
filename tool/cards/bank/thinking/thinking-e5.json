@@ -1,0 +1,20 @@
+{
+  "id": "thinking-e5",
+  "topic": "thinking",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "How many hours of video are uploaded to the world's video platforms every minute, in thousands?",
+  "value": 1,
+  "unit": "thousand hours",
+  "withinFactor": 3,
+  "answer": "That is more than a month of footage produced every minute.",
+  "move": "More video is uploaded each minute than one person could watch in a month.",
+  "hint": "You only need the order of magnitude, not the exact platform figures.",
+  "steps": [
+    "Reported uploads to the largest platform alone run to several hundred hours a minute.",
+    "Adding the rest brings it to the order of a thousand hours per minute.",
+    "That is more than a month of footage produced every minute."
+  ],
+  "source": "Platform disclosures, order-of-magnitude"
+}

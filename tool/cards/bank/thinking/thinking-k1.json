@@ -1,0 +1,18 @@
+{
+  "id": "thinking-k1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A factory changes supplier and defects drop 12%. What would make this convincing?",
+  "options": [
+    "A bigger drop",
+    "Knowing what defects did on the lines that did not change",
+    "A longer measurement period"
+  ],
+  "correct": 1,
+  "answer": "If defects fell 15% everywhere that quarter, the new supplier did worse than doing nothing. A number with no comparison cannot support a claim about cause, however large it is.",
+  "move": "\"Compared to what\" beats any figure quoted on its own.",
+  "trap": "Judging a change with nothing to compare it to.",
+  "source": "Counterfactual reasoning in operations"
+}

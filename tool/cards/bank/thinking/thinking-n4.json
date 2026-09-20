@@ -1,0 +1,18 @@
+{
+  "id": "thinking-n4",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A door code is 4 different letters from the 26-letter alphabet, order mattering. How many codes?",
+  "value": 358800,
+  "unit": "codes",
+  "answer": "26 x 25 x 24 x 23 = 358,800.",
+  "move": "Forbidding repeats barely dents the count. It is still a third of a million.",
+  "hint": "Each position has one fewer letter available than the last.",
+  "steps": [
+    "26 choices, then 25, then 24, then 23.",
+    "26 x 25 x 24 x 23 = 358,800."
+  ],
+  "source": "Permutations without repetition"
+}

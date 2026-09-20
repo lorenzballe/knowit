@@ -1,0 +1,18 @@
+{
+  "id": "thinking-w1",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "In a country of 60 million, how often should a genuine one-in-a-million-per-day event happen?",
+  "options": [
+    "Almost never",
+    "About 60 times a day",
+    "About once a month"
+  ],
+  "correct": 1,
+  "answer": "One in a million per person per day, across 60 million people, is 60 occurrences a day. Astonishing coincidences are guaranteed at scale — which is why a coincidence needs to be surprising *given how many chances there were*.",
+  "move": "With enough people, the miraculous is scheduled.",
+  "trap": "Hearing \"one in a million\" as \"essentially impossible\".",
+  "source": "Law of truly large numbers"
+}

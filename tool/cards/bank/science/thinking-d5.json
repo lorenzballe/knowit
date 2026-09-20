@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d5",
+  "topic": "science",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should some research grants be handed out by lottery among the proposals that clear a quality bar?",
+  "sides": [
+    "Yes, draw lots",
+    "No, keep ranking them"
+  ],
+  "answer": "Panels agree on which proposals are excellent and then cannot reliably separate the top slice from each other — re-scoring the same applications gives different winners. A lottery admits that honestly, costs a fraction of the reviewing effort, and stops rewarding whoever writes grants best rather than whoever does science best.",
+  "move": "Both sides accept the scoring is noisy. They disagree on whether noise is worse than no judgement at all.",
+  "counterpoint": "A draw removes the one moment where a field decides what matters most right now. Ranking is noisy, but it is not random, and the top of a good panel's list does outperform the middle. A lottery also strips accountability: nobody has to defend a bad allocation, because nobody made it.",
+  "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation"
+}

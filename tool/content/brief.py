@@ -34,20 +34,20 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-POOL = ROOT / "lib" / "data" / "pills_data.dart"
+BANK = ROOT / "tool" / "cards" / "bank"
 GENRES = ROOT / "lib" / "data" / "genres.dart"
 REPOSITORY = ROOT / "lib" / "data" / "pills_repository.dart"
 TOPICS = ROOT / "lib" / "data" / "topics.dart"
 
-# How each card is built in the pool, and whether that kind asks anything.
-# The pool is written through these five helpers and nothing else, which is
-# what makes it readable from here without a Dart runtime.
+# The five kinds a card can be, as the bank names them, and whether that
+# kind asks anything. The bank is one JSON file per card under
+# tool/cards/bank/<topic>/, which is what makes it readable from here.
 KINDS = {
-    "_p": ("tells", False),
-    "_q": ("pick one", True),
-    "_n": ("type a number", True),
-    "_e": ("estimate", True),
-    "_d": ("take a side", True),
+    "read": ("tells", False),
+    "pickOne": ("pick one", True),
+    "number": ("type a number", True),
+    "estimate": ("estimate", True),
+    "debate": ("take a side", True),
 }
 
 
@@ -102,32 +102,26 @@ def _fail(message: str) -> None:
 
 
 def read_pool() -> list[Card]:
-    src = POOL.read_text(encoding="utf-8")
     cards: list[Card] = []
-    openers = 0
-    for helper, (kind, asks) in KINDS.items():
-        for match in re.finditer(rf"\n  {re.escape(helper)}\(\s*\n", src):
-            openers += 1
-            chunk = src[match.end() : match.end() + 1200]
-            strings = re.findall(r"'((?:[^'\\]|\\.)*)'", chunk)
-            if len(strings) < 3:
-                _fail(f"a {helper} card near offset {match.start()} has no id")
-            cards.append(
-                Card(
-                    id=strings[0],
-                    topic_key=strings[1],
-                    kind=kind,
-                    asks=asks,
-                    question=strings[2],
-                )
+    for path in sorted(BANK.glob("*/*.json")):
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        if raw.get("disabled"):
+            continue
+        kind = raw.get("kind", "read")
+        if kind not in KINDS:
+            _fail(f"{path.name} is a {kind!r}, which is not a kind this knows")
+        label, asks = KINDS[kind]
+        cards.append(
+            Card(
+                id=raw["id"],
+                topic_key=raw["topic"],
+                kind=label,
+                asks=asks,
+                question=raw["question"],
             )
-    # Every `_x(` opener in the file has to have become a card. If the pool
-    # gains a sixth helper, this is where it gets noticed.
-    every = len(re.findall(r"\n  _[a-z]\(\s*\n", src))
-    if every != openers:
-        _fail(f"read {openers} cards but the file holds {every} — a new helper?")
+        )
     if not cards:
-        _fail("the pool came back empty")
+        _fail("the bank came back empty")
     return cards
 
 

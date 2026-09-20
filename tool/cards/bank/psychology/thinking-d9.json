@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d9",
+  "topic": "psychology",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should schools sort pupils into classes by ability?",
+  "sides": [
+    "Yes, group by ability",
+    "No, teach mixed classes"
+  ],
+  "answer": "A single class spanning four years of attainment fails at both ends: the strongest coast, the weakest drown, and the teacher aims at a middle that nobody occupies. Grouping lets the material meet the pupil where they are, which is the one thing that reliably moves attainment.",
+  "move": "Ask what happens to the child placed in the bottom set by mistake, and how they would ever get out.",
+  "counterpoint": "The gains concentrate almost entirely in the top set, and the bottom set loses more than the top gains. Placement tracks family income as much as ability, gets made early, and rarely gets revisited — so a decision about a nine-year-old quietly becomes a decision about their adult life.",
+  "source": "Contested question in education research"
+}

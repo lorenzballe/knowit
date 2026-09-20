@@ -1,0 +1,3 @@
+anthropic>=1.6
+jsonschema>=4.23
+pydantic>=2.9

@@ -3,6 +3,12 @@
 Sixty cards that tell is twenty days of reading. The pipeline is what stands
 between that and a product, and this is the shape it takes.
 
+> **Where it is now.** The brief below is built here. Write, gate, sign-off
+> and emit are built in `tool/cards/` — the bank is one JSON file per card
+> there, not Dart, so *emit* writes a file and a pull request rather than
+> Dart through the helpers; `tool/cards/README.md` has the loop as it runs.
+> The brief reads that bank.
+
 ## The order, and why it is this order
 
     brief  →  write  →  gate  →  sign-off  →  emit

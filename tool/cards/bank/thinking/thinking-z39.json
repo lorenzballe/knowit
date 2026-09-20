@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z39",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A queue moves at 6 people a minute and 200 people are ahead. How long to the front?",
+  "options": [
+    "About 33 minutes",
+    "About 20 minutes",
+    "About an hour"
+  ],
+  "correct": 0,
+  "answer": "Two hundred divided by six is about 33. The useful habit is not the arithmetic but taking the rate and the amount separately: almost every waiting-time question is one division nobody performs.",
+  "move": "Two numbers and one division answers most waiting questions.",
+  "trap": "Estimating from how the queue feels rather than the rate.",
+  "source": "Rate problems"
+}

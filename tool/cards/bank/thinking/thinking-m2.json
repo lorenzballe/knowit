@@ -1,0 +1,18 @@
+{
+  "id": "thinking-m2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "\"The campaign did not work overall, but it worked for women aged 25-34 in the north.\" What is the risk?",
+  "options": [
+    "The segment is too small",
+    "The segment was found by looking, not chosen first",
+    "It probably works for other segments too"
+  ],
+  "correct": 1,
+  "answer": "Cut any dataset enough ways and some slice will look like a success by chance alone. A subgroup named before the data was collected is evidence; one found afterwards is a hypothesis, and needs its own test.",
+  "move": "A result found by slicing has to survive being predicted.",
+  "trap": "Accepting a slice as a finding because the numbers in it are real.",
+  "source": "Subgroup analysis"
+}

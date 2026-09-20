@@ -10,10 +10,10 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appName => 'Astut';
+  String get appName => 'Astute';
 
   @override
-  String get plusName => 'Astut+';
+  String get plusName => 'Astute+';
 
   @override
   String get tabToday => '今日';
@@ -480,7 +480,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nudgeOnSystemSaidNo =>
-      '通知はオンですが、システムに拒否されました。設定でAstutの通知を許可してください。';
+      '通知はオンですが、システムに拒否されました。設定でAstuteの通知を許可してください。';
 
   @override
   String get nudgeOnNeedsPhone => '通知オン。届けるにはスマホ版が必要です。';
@@ -551,7 +551,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get seeEveryPrincipleWithPlus => 'Astut plusですべての原則を見る';
+  String get seeEveryPrincipleWithPlus => 'Astute plusですべての原則を見る';
 
   @override
   String moreBeingTracked(int n) {
@@ -586,7 +586,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get holdingSteady => '横ばい';
 
   @override
-  String get measurementRunningPlus => '計測は進行中です。Astut+がどちらに向かっているかを示します。';
+  String get measurementRunningPlus => '計測は進行中です。Astute+がどちらに向かっているかを示します。';
 
   @override
   String firstN(int n) {
@@ -624,7 +624,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get plusNameCaps => 'ASTUT+';
+  String get plusNameCaps => 'ASTUTE+';
 
   @override
   String get sevenDaysFree => '7日間無料';
@@ -634,7 +634,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get measurementFreeForever =>
-      '計測はずっと無料です。Astut+は、それがどちらに向かっているかを教えます。';
+      '計測はずっと無料です。Astute+は、それがどちらに向かっているかを教えます。';
 
   @override
   String get seeThePlans => 'プランを見る';
@@ -916,7 +916,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkTopicsLine => '本当に好きなものにミックスを寄せる。';
 
   @override
-  String get plusIsActive => 'ASTUT+ 有効';
+  String get plusIsActive => 'ASTUTE+ 有効';
 
   @override
   String tryFreeThen(String price, String suffix) {
@@ -930,7 +930,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get thatDidNotGoThrough => '処理できませんでした。';
 
   @override
-  String get plusIsBack => 'Astut+が戻りました。';
+  String get plusIsBack => 'Astute+が戻りました。';
 
   @override
   String get nothingToRestore => 'このアカウントに復元するものはありません。';

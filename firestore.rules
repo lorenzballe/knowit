@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Astut stores one document per reader, and one board per reader that a
+// Astute stores one document per reader, and one board per reader that a
 // friend may look at. The policy: you may read and write your own, anyone
 // signed in may read a board, and nothing else exists.
 //

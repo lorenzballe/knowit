@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:astuto/data/pills_data.dart';
+import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
 import 'package:astuto/widgets/pill_card.dart';
@@ -79,7 +79,7 @@ Future<void> _throw(WidgetTester tester, Offset from) async {
 }
 
 void main() {
-  final List<Pill> deck = kPillPool.take(4).toList();
+  final List<Pill> deck = PillBank.cards.take(4).toList();
 
   testWidgets('a card thrown away does not come back while the next is on '
       'its way', (tester) async {

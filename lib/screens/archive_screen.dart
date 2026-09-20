@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
-import '../data/pills_data.dart';
+import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
@@ -124,7 +124,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     Text(
                       asking
                           ? context.l10n.results(results.length)
-                          : context.l10n.cardsTapADay(kPillPool.length),
+                          : context.l10n.cardsTapADay(PillBank.cards.length),
                       style: AppText.body(
                         size: 12.5,
                         height: 1.35,
@@ -274,7 +274,7 @@ class _Head extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        hintText: context.l10n.searchNCards(kPillPool.length),
+                        hintText: context.l10n.searchNCards(PillBank.cards.length),
                         hintStyle: AppText.body(
                           size: 14.5,
                           color: context.p.inkFaint,
@@ -636,7 +636,7 @@ class _Coverage extends StatelessWidget {
   Widget build(BuildContext context) {
     final byTopic = <String, int>{};
     final seenByTopic = <String, int>{};
-    for (final pill in kPillPool) {
+    for (final pill in PillBank.cards) {
       byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
       if (app.seenIds.contains(pill.id)) {
         seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;
@@ -652,7 +652,7 @@ class _Coverage extends StatelessWidget {
     // The most any one subject has been read. The bars are drawn against
     // this, not against how many cards exist: the pool is written to keep
     // growing, so a total would be a number that quietly stops being true —
-    // and one that says "you have read 3% of Astut", which is nobody's idea
+    // and one that says "you have read 3% of Astute", which is nobody's idea
     // of progress.
     final int busiest = rows
         .map((style) => seenByTopic[style.name] ?? 0)

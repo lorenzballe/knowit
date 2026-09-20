@@ -1,0 +1,11 @@
+{
+  "id": "language-1",
+  "topic": "language",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is there a word every language shares?",
+  "answer": "Possibly one. \"Huh?\" — the sound for signalling you did not catch something — appears in essentially every language studied, with a strikingly similar form. It looks less like a word inherited from a common ancestor and more like one every language independently converges on, because conversation needs it.",
+  "move": "Every language on record has its own version of \"huh?\", and they all sound alike.",
+  "source": "Dingemanse, Torreira & Enfield, PLOS ONE, 2013"
+}

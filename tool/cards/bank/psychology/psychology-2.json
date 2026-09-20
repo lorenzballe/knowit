@@ -1,0 +1,11 @@
+{
+  "id": "psychology-2",
+  "topic": "psychology",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who were the experiments actually run on?",
+  "answer": "Overwhelmingly, undergraduates in rich Western universities — a group later shown to be among the least typical humans on measures from fairness to visual illusions. A field describing \"human nature\" had been sampling the most unusual population available, because it was the one down the corridor.",
+  "move": "The default human in psychology was a Western undergraduate.",
+  "source": "Henrich, Heine & Norenzayan, Behavioral and Brain Sciences, 2010"
+}

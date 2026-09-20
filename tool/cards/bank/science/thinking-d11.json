@@ -1,0 +1,16 @@
+{
+  "id": "thinking-d11",
+  "topic": "science",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should peer review be signed rather than anonymous?",
+  "sides": [
+    "Yes, sign reviews",
+    "No, keep it blind"
+  ],
+  "answer": "Anonymity protects the reviewer who kills a rival's paper, sits on it for eight months, or demands their own work be cited. A name attached to a judgement makes the judgement more careful, and readers can finally see who vouched for what.",
+  "move": "Whichever you picked, the question is who carries the cost of an honest opinion.",
+  "counterpoint": "The junior reviewer who signs a hard review of a powerful lab is the one who pays for it, at their next grant or job application. Remove anonymity and criticism does not become fairer, it becomes quieter — and the people it goes quiet for are exactly those with the most power already.",
+  "source": "Contested question in scientific publishing"
+}

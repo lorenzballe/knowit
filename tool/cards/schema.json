@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lorenzballe.github.io/knowit/cards/card.schema.json",
+  "title": "Astute card",
+  "description": "One card in the bank: what it asks, what it answers, and the one move it trains. The field names match lib/data/card_json.dart; check.py enforces what a schema cannot say.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "topic", "kind", "difficulty", "principle", "question", "answer", "move", "source"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z_]+-[a-z0-9][a-z0-9-]*$",
+      "description": "Topic key, a dash, then anything unique. Never reused, even for a retired card."
+    },
+    "topic": {
+      "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food"]
+    },
+    "kind": {
+      "enum": ["read", "pickOne", "number", "estimate", "debate"],
+      "description": "read: turn it over. pickOne: commit to an option. number: work out an exact number. estimate: a Fermi estimate, judged within a factor. debate: take a side, then meet the other one; never graded."
+    },
+    "difficulty": { "enum": ["easy", "medium", "hard"] },
+    "principle": {
+      "enum": ["none", "baseRate", "survivorship", "regression", "confirmation", "anchoring", "sampling", "confounding", "counterfactual", "multipleComparisons", "availability", "sunkCost", "conjunction", "conditional", "independence", "coincidence", "exponential", "reflection", "simpson", "estimation", "computation"],
+      "description": "What the card is an instance of. Every graded card has one; a read and a debate have none."
+    },
+    "question": { "type": "string", "minLength": 1 },
+    "answer": { "type": "string", "description": "The reveal. On a number or estimate card it is the last line of the steps." },
+    "move": { "type": "string", "minLength": 1, "description": "The one line that survives the card." },
+    "trap": { "type": "string", "description": "The wrong answer most people reach for first, and why it feels right." },
+    "hint": { "type": "string", "description": "A way in, without the number." },
+    "steps": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "The worked solution, one move per line." },
+    "simply": { "type": "string", "description": "A second way in: a concrete image, not the same words made smaller." },
+    "counterpoint": { "type": "string", "description": "On a debate, the strongest case against whichever side was taken." },
+    "options": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 2, "maxItems": 3 },
+    "correct": { "type": "integer", "minimum": 0 },
+    "value": { "type": "number" },
+    "unit": { "type": "string" },
+    "tolerance": { "type": "number", "minimum": 0 },
+    "withinFactor": { "type": "number", "minimum": 1 },
+    "sides": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 2, "maxItems": 2 },
+    "source": { "type": "string", "minLength": 1, "description": "The short label the reader sees: institution and document, or the name of the result." },
+    "reference": { "type": "string", "description": "Where the claim can be checked: a URL, a DOI, or a book and page. Required on every generated card." },
+    "written": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The day the card was generated." },
+    "disabled": { "type": "boolean", "description": "Retired: never dealt again, still opens in a deck that already holds it." }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z21",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After a shark attack is in the news, what happens to how risky people rate swimming?",
+  "options": [
+    "Nothing much",
+    "It rises, for months",
+    "It falls, from familiarity"
+  ],
+  "correct": 1,
+  "answer": "Risk feels like whatever the mind can picture fastest, and a vivid recent story is very fast. The measured jump is real and fades slowly, which is why coverage shapes fear far more than statistics do.",
+  "move": "Fear tracks vividness. It does not track frequency.",
+  "trap": "How easily an example comes to mind stands in for how often it happens.",
+  "source": "Availability heuristic in risk perception"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "nature-5",
+  "topic": "nature",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do trees really share food through a fungal network?",
+  "answer": "Less than the story suggests. Trees are certainly connected to fungi, but the claim that they deliberately send resources to their neighbours rests on a small number of studies, several of which do not support it on re-reading. Recent reviews find the popular version outran the evidence.",
+  "move": "The wood wide web is real. The generosity is not established.",
+  "source": "Karst, Jones & Hoeksema, Nature Ecology & Evolution, 2023"
+}

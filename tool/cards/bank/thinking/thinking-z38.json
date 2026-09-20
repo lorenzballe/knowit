@@ -1,0 +1,18 @@
+{
+  "id": "thinking-z38",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A shop sells 40% of its stock in a sale, then 40% of what is left the next week. What share is gone?",
+  "options": [
+    "80%",
+    "64%",
+    "76%"
+  ],
+  "correct": 1,
+  "answer": "The second 40% is of the remaining 60%, so it clears 24%. Forty plus twenty-four is sixty-four per cent gone, and thirty-six left. Percentages of percentages never add.",
+  "move": "Two forty-per-cent cuts leave more than a fifth standing.",
+  "trap": "Adding two percentages that are taken of different things.",
+  "source": "Successive proportions"
+}

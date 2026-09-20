@@ -1,0 +1,11 @@
+{
+  "id": "space-2",
+  "topic": "space",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What actually limits how far a probe can go?",
+  "answer": "Not physics — plutonium-238. Deep-space probes run on its heat because sunlight is too weak out there. The United States stopped making it in 1988, ran down its stock, and only restarted production in 2015. Missions were planned around the size of a shelf.",
+  "move": "The edge of the solar system is a supply-chain problem.",
+  "source": "US Department of Energy, Pu-238 supply programme"
+}

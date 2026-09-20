@@ -59,7 +59,7 @@ class AstutWidget : AppWidgetProvider() {
             val streak = prefs.getInt("streak", 0)
             val done = sameDay && prefs.getBoolean("done", false)
 
-            val eyebrow = if (edition > 0) "ASTUT · #$edition" else "ASTUT"
+            val eyebrow = if (edition > 0) "ASTUTE · #$edition" else "ASTUTE"
             val foot = when {
                 done -> "Done for today · 🔥$streak"
                 streak > 0 -> "🔥$streak · five cards, two minutes"

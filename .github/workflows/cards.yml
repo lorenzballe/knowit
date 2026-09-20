@@ -1,0 +1,82 @@
+name: Write tonight's cards
+
+# The bank grows at night. A borrowed machine runs the generator against the
+# Anthropic API, the gate and the critic refuse what they refuse, and what is
+# left arrives as a pull request: one file per card, which is what a person
+# reads in the morning. Merging is the review — the deploy workflow then
+# publishes web/cards/cards.json and every phone picks it up.
+#
+# Needs two things set once in the repository:
+#   Settings → Secrets → Actions → ANTHROPIC_API_KEY
+#   Settings → Actions → General → "Allow GitHub Actions to create and
+#   approve pull requests"
+#
+# Run it by hand from the Actions tab with a count and, optionally, a topic.
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      count:
+        description: How many cards to ask for
+        default: "20"
+      topics:
+        description: Only these topics, space-separated (empty = whatever the bank is short of)
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: cards
+  cancel-in-progress: false
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r tool/cards/requirements.txt
+
+      - name: The bank as it stands has to pass its own gate
+        run: python3 tool/cards/check.py
+
+      - name: Write the cards
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          only="${{ github.event.inputs.topics }}"
+          python3 tool/cards/generate.py --plan \
+            --count "${{ github.event.inputs.count || '20' }}" \
+            ${only:+--only $only} \
+            --report cards-report.md
+
+      - name: Gate the bank again, with the new cards in it, and bundle
+        run: |
+          python3 tool/cards/check.py
+          python3 tool/cards/bundle.py
+
+      - name: Open the pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: cards/${{ github.run_id }}
+          delete-branch: true
+          title: "Cards: tonight's batch"
+          body-path: cards-report.md
+          commit-message: |
+            Tonight's cards, from the generator
+
+            The gate and the critic passed these; a person has not yet.
+          add-paths: |
+            tool/cards/bank/**
+            tool/cards/editions.json
+            lib/data/embedded_bank.dart
+            web/cards/cards.json
+          labels: cards
