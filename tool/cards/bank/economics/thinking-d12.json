@@ -1,6 +1,8 @@
 {
   "id": "thinking-d12",
   "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "A market makes people pay for being wrong, which is why prediction markets have often beaten polls. Money in the market is information nobody else is collecting, and banning it does not stop forecasting — it just leaves it to pundits who face no cost for a bad call.",
   "move": "The forecasting argument and the manipulation argument are both correct, which is what makes this hard.",
   "counterpoint": "A market on an outcome that people can influence is a market with an incentive to influence it. Enough money on a result gives someone a reason to suppress turnout, seed a story, or worse, and the sums that would move a contract are small next to the sums already in politics.",
+  "keywords": [
+    "prediction markets",
+    "election betting",
+    "polls",
+    "forecasting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in market regulation"
 }

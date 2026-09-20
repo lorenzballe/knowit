@@ -376,7 +376,10 @@ class AppState extends ChangeNotifier {
       date: today,
       topics: pickedTopics,
       weights: leanedWeights,
-      levels: topicLevels,
+      levels: measuredLevels,
+      taste: taste,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
       exclude: seenIds,
       reviews: reviews,
     );
@@ -387,7 +390,10 @@ class AppState extends ChangeNotifier {
           today,
           topics: pickedTopics,
           weights: leanedWeights,
-          levels: topicLevels,
+          levels: measuredLevels,
+          taste: taste,
+          genresOff: genresOff,
+          strandsOff: strandsOff,
           exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
           count: size - todaysDeck.length,
         ),
@@ -452,7 +458,10 @@ class AppState extends ChangeNotifier {
       date: day,
       topics: pickedTopics,
       weights: leanedWeights,
-      levels: topicLevels,
+      levels: measuredLevels,
+      taste: taste,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
     );
   }
 
@@ -792,6 +801,69 @@ class AppState extends ChangeNotifier {
   /// How much one like, or one throw, moves its subject's weight.
   static const double kLean = 0.15;
 
+  /// How much one like, or one throw, moves each of a card's traits. A card
+  /// carries about eight, so a card sharing everything with a liked one
+  /// comes out at roughly kLean more than the like did for its subject.
+  static const double kTasteLean = 0.08;
+
+  /// The reader's lean on every tag value, from what they held and what
+  /// they threw down: `genre:space.the_moon` to a signed amount, and the
+  /// same for the strand, the era, the hook, the mood and the rest. The
+  /// dealer reads it through [leanOf]; nothing here ever leaves the phone.
+  Map<String, double> get taste {
+    if (likedIds.isEmpty && dislikedIds.isEmpty) return const {};
+    final lean = <String, double>{};
+    void nudge(Iterable<String> ids, double by) {
+      for (final id in ids) {
+        for (final trait in PillBank.byId(id)?.traits ?? const <String>[]) {
+          lean[trait] = (lean[trait] ?? 0) + by;
+        }
+      }
+    }
+
+    nudge(likedIds, kTasteLean);
+    nudge(dislikedIds, -kTasteLean);
+    return lean;
+  }
+
+  /// How many of a subject's most recent judgements decide its level, and
+  /// how many there have to be before they decide anything.
+  static const int kLevelSample = 8;
+  static const int kLevelFloor = 4;
+
+  /// What the reader knows of each subject, measured rather than asked.
+  ///
+  /// The onboarding once asked the reader to rate themselves before they
+  /// had seen a card, and nothing ever updated the answer. This does: the
+  /// last [kLevelSample] judgements on a subject, once there are
+  /// [kLevelFloor] of them, set its level — three in four right is solid,
+  /// two in five or fewer is curious, between is some — over whatever the
+  /// reader said. A subject they have not been asked about keeps what they
+  /// said, or the middle.
+  Map<String, int> get measuredLevels {
+    final out = Map<String, int>.from(topicLevels);
+    final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
+    final recent = <String, List<bool>>{};
+    for (final j in judgements.reversed) {
+      final String? id = j.pillId;
+      if (id == null) continue;
+      final String? key = keyOf[PillBank.byId(id)?.topic];
+      if (key == null) continue;
+      final list = recent.putIfAbsent(key, () => []);
+      if (list.length < kLevelSample) list.add(j.correct);
+    }
+    for (final e in recent.entries) {
+      if (e.value.length < kLevelFloor) continue;
+      final double share = e.value.where((c) => c).length / e.value.length;
+      out[e.key] = share >= 0.75
+          ? 2
+          : share <= 0.4
+          ? 0
+          : 1;
+    }
+    return out;
+  }
+
   /// Records a commitment.
   ///
   /// A card can be answered again only when it has come back for review —
@@ -924,7 +996,10 @@ class AppState extends ChangeNotifier {
       date: tomorrow,
       topics: pickedTopics,
       weights: leanedWeights,
-      levels: topicLevels,
+      levels: measuredLevels,
+      taste: taste,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
     );
@@ -1536,7 +1611,10 @@ class AppState extends ChangeNotifier {
       today,
       topics: pickedTopics,
       weights: leanedWeights,
-      levels: topicLevels,
+      levels: measuredLevels,
+      taste: taste,
+      genresOff: genresOff,
+      strandsOff: strandsOff,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       count: kPillsPerDay,
     );

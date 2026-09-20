@@ -14,5 +14,20 @@
   "answer": "Some of those jobs would have been created anyway, and some were moved from elsewhere. The effect is the difference against a world without the scheme, which is harder to measure and much smaller than the headline.",
   "move": "Ask what the number would have been anyway. That is the whole claim.",
   "trap": "Counting what happened as if nothing else would have.",
+  "keywords": [
+    "counterfactual",
+    "job creation",
+    "deadweight",
+    "displacement"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Additionality in policy evaluation"
 }

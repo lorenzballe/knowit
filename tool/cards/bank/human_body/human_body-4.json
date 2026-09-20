@@ -1,11 +1,28 @@
 {
   "id": "human_body-4",
   "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does that shirt match indoors and clash outside?",
   "answer": "Because colour vision takes only three samples of a continuous spectrum. Two objects reflecting quite different light can produce identical signals — a metameric match — under one light and separate under another. The colours did not change. The sampling did.",
   "move": "Two colours can be the same colour, until you carry them to a window.",
+  "keywords": [
+    "colour vision",
+    "metamerism",
+    "cones",
+    "light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "CIE colorimetry, metamerism"
 }

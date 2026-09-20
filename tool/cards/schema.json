@@ -5,7 +5,7 @@
   "description": "One card in the bank: what it asks, what it answers, and the one move it trains. The field names match lib/data/card_json.dart; check.py enforces what a schema cannot say.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "topic", "kind", "difficulty", "principle", "question", "answer", "move", "source"],
+  "required": ["id", "topic", "kind", "difficulty", "principle", "question", "answer", "move", "source", "keywords", "era", "region", "hook", "mood", "numeracy", "abstraction", "shelf_life", "mature", "language"],
   "properties": {
     "id": {
       "type": "string",
@@ -39,6 +39,73 @@
     "tolerance": { "type": "number", "minimum": 0 },
     "withinFactor": { "type": "number", "minimum": 1 },
     "sides": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 2, "maxItems": 2 },
+    "genre": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z0-9_]+$",
+      "description": "One of the six genres under the topic, by id (`space.black_holes`), from lib/data/genres.dart. Every card but a Thinking one has it."
+    },
+    "strand": {
+      "type": "string",
+      "pattern": "^[a-z_]+\\.[a-z0-9_]+\\.[a-z0-9_]+$",
+      "description": "One of the three strands under the genre, by id (`space.black_holes.event_horizons`). What a reader would name if asked what they wanted to read about."
+    },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2, "maxLength": 40 },
+      "minItems": 3,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "description": "Three to six lowercase handles for what the card is about — the things, people, places and ideas in it — for search and for telling two cards apart."
+    },
+    "era": {
+      "enum": ["timeless", "ancient", "medieval", "early_modern", "nineteenth", "twentieth", "recent"],
+      "description": "When the matter is set. `timeless` for a mechanism or a principle; `recent` is the last twenty-five years."
+    },
+    "region": {
+      "enum": ["none", "world", "europe", "americas", "africa", "middle_east", "asia", "oceania"],
+      "description": "Where it is set. `none` when the card has no place; `world` when it is everywhere at once."
+    },
+    "hook": {
+      "enum": ["misconception", "puzzle", "story", "number", "mechanism", "paradox", "practical", "origin"],
+      "description": "What pulls the reader in: a belief to overturn, a thing to work out, something that happened, a figure that surprises, how it works, two truths that clash, something to use today, where a thing came from."
+    },
+    "mood": {
+      "enum": ["wonder", "practical", "sober", "dark", "playful"],
+      "description": "The register the card is read in."
+    },
+    "numeracy": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "description": "How much number-sense the card asks for: 0 none, 1 a figure to take in, 2 a comparison or a ratio, 3 a calculation."
+    },
+    "abstraction": {
+      "enum": ["concrete", "mixed", "abstract"],
+      "description": "Whether the card is about a thing you can picture, an idea, or one through the other."
+    },
+    "shelf_life": {
+      "enum": ["evergreen", "years", "months"],
+      "description": "How soon the claim could go stale: never, in a few years, within the year. Anything but evergreen is re-checked."
+    },
+    "mature": {
+      "type": "boolean",
+      "description": "Sex, drugs, violence, gambling or death in detail. Kept out of a family setting."
+    },
+    "language": {
+      "enum": ["en", "it", "es", "fr", "de", "pt", "nl", "pl", "ru", "tr", "ja", "ko", "zh"],
+      "description": "The language the card is written in."
+    },
+    "builds_on": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 3,
+      "uniqueItems": true,
+      "description": "Ids of cards a reader is better off having met first. The dealer holds this one back until they have, where it can."
+    },
+    "figure": {
+      "enum": ["none", "dots", "nested_circles", "doubling", "bars", "timeline", "map"],
+      "description": "The picture that would help, if one would, in the vocabulary tool/illustrations can draw."
+    },
     "source": { "type": "string", "minLength": 1, "description": "The short label the reader sees: institution and document, or the name of the result." },
     "reference": { "type": "string", "description": "Where the claim can be checked: a URL, a DOI, or a book and page. Required on every generated card." },
     "written": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The day the card was generated." },

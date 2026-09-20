@@ -1,11 +1,28 @@
 {
   "id": "language-2",
   "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What was writing invented for?",
   "answer": "Accounting. The oldest substantial writing is Mesopotamian bookkeeping: receipts for grain, beer and livestock, and records of who owed what. Literature comes many centuries later. Writing began as an administrative technology and was only afterwards turned to anything anyone would read for pleasure.",
   "move": "The first thing anyone wrote down was a receipt.",
+  "keywords": [
+    "cuneiform",
+    "accounting",
+    "mesopotamia",
+    "origins of writing"
+  ],
+  "era": "ancient",
+  "region": "middle_east",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Schmandt-Besserat, Before Writing, 1992"
 }

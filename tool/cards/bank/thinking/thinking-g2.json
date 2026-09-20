@@ -14,5 +14,20 @@
   "answer": "Writing a review costs effort, and only strong feeling pays for it. The many people who found it fine never appear, so the distribution is about who writes, not about what the product is like.",
   "move": "The middle of any rating scale is missing, not empty.",
   "trap": "Reading the shape of the ratings as the shape of the experience.",
+  "keywords": [
+    "online reviews",
+    "ratings",
+    "self-selection",
+    "effort"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Self-selection in ratings"
 }

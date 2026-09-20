@@ -14,5 +14,20 @@
   "answer": "The best of twelve is the best partly because it caught a good sample. Running it alone against the original is what separates a real effect from the luckiest draw — and often it comes back to the middle.",
   "move": "The winner of a big search has to win again to count.",
   "trap": "The winner of a wide search is partly a winner by luck.",
+  "keywords": [
+    "multiple comparisons",
+    "email subject lines",
+    "open rates",
+    "winner's curse"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Winner's curse in A/B testing"
 }

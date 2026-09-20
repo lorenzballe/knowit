@@ -1,11 +1,28 @@
 {
   "id": "philosophy-3",
   "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "When does a heap stop being a heap?",
   "answer": "Remove one grain from a heap and it is still a heap. Repeat. Somewhere it stops, but no single grain did it. This is not wordplay: the same structure decides who counts as poor enough for support, or ill enough for treatment. A line gets drawn where nature has none.",
   "move": "Every threshold in every policy is one grain of sand away from arbitrary.",
+  "keywords": [
+    "sorites",
+    "heap",
+    "vagueness",
+    "thresholds"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "The sorites paradox, attributed to Eubulides"
 }

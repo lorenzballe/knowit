@@ -1,6 +1,8 @@
 {
   "id": "thinking-d5",
   "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "Panels agree on which proposals are excellent and then cannot reliably separate the top slice from each other — re-scoring the same applications gives different winners. A lottery admits that honestly, costs a fraction of the reviewing effort, and stops rewarding whoever writes grants best rather than whoever does science best.",
   "move": "Both sides accept the scoring is noisy. They disagree on whether noise is worse than no judgement at all.",
   "counterpoint": "A draw removes the one moment where a field decides what matters most right now. Ranking is noisy, but it is not random, and the top of a good panel's list does outperform the middle. A lottery also strips accountability: nobody has to defend a bad allocation, because nobody made it.",
+  "keywords": [
+    "grant lotteries",
+    "research funding",
+    "peer review",
+    "randomisation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation"
 }

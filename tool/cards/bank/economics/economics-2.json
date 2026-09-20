@@ -1,11 +1,28 @@
 {
   "id": "economics-2",
   "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How do the world's flowers get priced?",
   "answer": "Mostly through a few enormous clocks in the Netherlands. At the Aalsmeer auction the price starts high and counts down until a buyer stops it — so hesitating costs you the lot. A large share of the cut flowers sold worldwide passes through that building within hours of being cut.",
   "move": "Most of the world's flowers are priced by a clock running backwards.",
+  "keywords": [
+    "flower auction",
+    "aalsmeer",
+    "dutch auction",
+    "netherlands"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Royal FloraHolland, Aalsmeer"
 }

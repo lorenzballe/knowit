@@ -14,5 +14,20 @@
   "answer": "Blackspots are picked in their worst year, and an unusually bad year is usually followed by a less bad one whatever you do. Some of the improvement is real and some is the site returning to its normal rate — separating them needs comparison sites, not before-and-after.",
   "move": "A blackspot picked in its worst year would have eased on its own.",
   "trap": "A site is chosen because it had an unusually bad year.",
+  "keywords": [
+    "regression to the mean",
+    "speed cameras",
+    "accidents",
+    "blackspots"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Regression to the mean in road safety"
 }

@@ -14,5 +14,20 @@
   "answer": "With n orders there are about n squared over two pairs that could clash, and a clash beats even odds once that count nears a million — around 1,200 orders. Collisions come from pairs, and pairs grow far faster than the list does.",
   "move": "Coincidence needs far fewer people than anyone expects.",
   "trap": "Thinking about your code, rather than every pair of codes.",
+  "keywords": [
+    "birthday paradox",
+    "collisions",
+    "random codes",
+    "pairs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "The birthday bound, applied to identifiers"
 }

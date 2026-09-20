@@ -14,5 +14,20 @@
   "answer": "The opening number becomes the reference the real answer is judged against, and people asked the big question first give more. It works even when the first figure is obviously beyond what anyone would give.",
   "move": "Whoever speaks first has already moved your number.",
   "trap": "Believing your own figure came from your own budget.",
+  "keywords": [
+    "anchoring",
+    "charity asks",
+    "donations",
+    "reference points"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Anchoring in fundraising"
 }

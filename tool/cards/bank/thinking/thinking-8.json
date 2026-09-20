@@ -15,5 +15,21 @@
   "move": "A total and its parts can honestly point opposite ways.",
   "trap": "Assuming the total has to move with its parts.",
   "simply": "Two classes both got better at spelling this year. But the big struggling class grew and the small strong class shrank. The school's average went down. Everybody improved and the school looks worse.",
+  "keywords": [
+    "simpson's paradox",
+    "on-time rate",
+    "weighting",
+    "mix"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
   "source": "Simpson's paradox in operational metrics"
 }

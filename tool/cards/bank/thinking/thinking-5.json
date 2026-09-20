@@ -14,5 +14,20 @@
   "answer": "You are looking at what survived fifty years of use and disposal. The badly made ones broke and went in the bin long ago, so the tools left to buy are the durable tail of their generation — not a fair picture of what was on sale.",
   "move": "Anything you can still buy from 1960 is, by definition, what did not break.",
   "trap": "The surviving objects are treated as a sample of what was made.",
+  "keywords": [
+    "survivorship bias",
+    "vintage tools",
+    "durability",
+    "selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship bias in surviving artefacts"
 }

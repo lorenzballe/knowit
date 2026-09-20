@@ -14,5 +14,20 @@
   "answer": "The neutral moments are not stored, so the pile can only grow one way. The test that would tell you something is looking for the times they went out of their way for you — and noticing whether you had been discounting them.",
   "move": "A theory that only ever gains evidence is not being tested.",
   "trap": "Treating a growing pile of confirming moments as proof.",
+  "keywords": [
+    "confirmation bias",
+    "noticing",
+    "evidence",
+    "relationships"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confirmation bias in everyday judgement"
 }

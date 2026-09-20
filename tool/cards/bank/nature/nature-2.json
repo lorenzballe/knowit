@@ -1,11 +1,28 @@
 {
   "id": "nature-2",
   "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why is the world running out of sand?",
   "answer": "Because desert sand is useless for building. Wind rounds the grains smooth so they will not lock together in concrete; construction needs angular river and seabed sand. Demand has outrun supply enough to support organised theft and illegal dredging.",
   "move": "A country can sit in a desert and still have to import sand.",
+  "keywords": [
+    "sand",
+    "concrete",
+    "desert sand",
+    "construction"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "UNEP, Sand and Sustainability, 2019"
 }

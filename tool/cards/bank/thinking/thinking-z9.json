@@ -14,5 +14,20 @@
   "answer": "Mild cases mostly recover anyway, so the treatment appears to work every time. The belief is not surviving a test, it is choosing patients who cannot disconfirm it — and the more it is confirmed the more confident it gets.",
   "move": "Ask which patients would have proved you wrong, and whether you gave it to them.",
   "trap": "Getting the result you expect feels like evidence for the belief.",
+  "keywords": [
+    "confirmation bias",
+    "treatments",
+    "mild cases",
+    "testing beliefs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confirmation through selective application"
 }

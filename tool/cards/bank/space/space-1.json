@@ -1,11 +1,28 @@
 {
   "id": "space-1",
   "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does the catalogue of known planets look so strange?",
   "answer": "Almost every exoplanet was found either by the star wobbling or by the star dimming as the planet crosses it. Both work best on big planets orbiting close in. So the catalogue is not a census of planets — it is a census of the planets those two methods can see.",
   "move": "The list of known planets is a list of what the instruments can detect.",
+  "keywords": [
+    "exoplanets",
+    "transit method",
+    "radial velocity",
+    "selection effect"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "NASA Exoplanet Archive, detection-method bias"
 }

@@ -1,11 +1,28 @@
 {
   "id": "technology-2",
   "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Was QWERTY designed to slow you down?",
   "answer": "Almost certainly not. The jamming story is folklore attached after the fact. The arrangement grew from how early machines were built and used — including telegraph operators transcribing Morse, who needed certain letters close together. It stuck because everyone had already learned it, which is the real lesson.",
   "move": "The layout on your phone was settled by 1870s telegraph habits.",
+  "keywords": [
+    "qwerty",
+    "typewriters",
+    "keyboard layout",
+    "folklore"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Yasuoka & Yasuoka, Kyoto University, 2011"
 }

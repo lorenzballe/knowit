@@ -14,5 +14,20 @@
   "answer": "Everyone hired comes from that university, so every good hire confirms the rule and no rejected candidate ever gets to disprove it. The belief is not surviving tests; it is preventing them.",
   "move": "Ask what result would have changed your mind. If none could, nothing is being tested.",
   "trap": "A belief that keeps being confirmed feels like a belief that keeps being tested.",
+  "keywords": [
+    "confirmation bias",
+    "hiring",
+    "feedback",
+    "selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confirmation and the untested counterfactual"
 }

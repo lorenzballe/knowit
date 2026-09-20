@@ -369,6 +369,33 @@ body. **Merging is the review.** The deploy then publishes the new
 `cards.json`, and every phone picks it up. `tool/cards/README.md` has the
 loop in full, the cost of a card, and how to retire one.
 
+**Tags.** Every card carries what it is about and like, beyond what it
+asks: its genre and strand (`space.the_moon.tides`), three to six keywords,
+an era, a region, a hook (a belief to overturn, a thing to work out, a
+story, a figure, a mechanism, a paradox, something to use, an origin), a
+mood, how much number-sense it wants, whether it is a thing or an idea, how
+soon its answer could go stale, whether it is mature, its language, the
+cards it builds on, and the picture that would help. The tags are the
+levers the dealer pulls for one reader and not another, so each is a claim
+about the card and is checked like one: the vocabulary lives in
+`tool/cards/schema.json`, the gate holds every card to it, the writer
+describes a new card with them and the critic reads them against it. The
+plan reaches for the thinnest strand under each subject before any strand
+gets a third card, and offers the writer the three thinnest principles
+rather than one, so the principle fits the strand instead of being forced
+onto it. The 170 cards written before the tags existed were tagged by hand
+and sit under the nearest strand; `tool/cards/tag.py` asks the model to tag
+whatever has none.
+
+On the phone the tags are read three ways. A genre or strand the reader
+turned off in the mix goes behind every card that is on, never out of the
+pool. What they hold and what they throw down moves a **taste**, a lean on
+every trait of that card — its genre, strand, era, hook, mood, numeracy —
+and a card sharing several traits with what was liked is dealt sooner,
+one like what was thrown down later, between a fifth and three times the
+draw. And no two of a day's cards share a strand while the same tier of
+the pool can help it; a card that builds on another waits for it.
+
 The question of the day travels with the bank as a calendar, edition to
 card id, frozen when written and extended a year ahead every night. Before
 the calendar existed it was computed from the pool on the fly, and a card
@@ -584,7 +611,11 @@ app already knows what it was trying to find out, and knows it from what
 actually happened — which subjects the reader gets right, and how sure they
 said they were. `topicLevels` still reaches the dealer and still travels in
 the backup, so a reader who set it keeps it; what is gone is the screen that
-asked. Filling it from measured accuracy instead is the next thing.
+asked. And the measurement now fills it: `measuredLevels` takes a subject's
+last eight judgements, once there are four, and sets its level from them —
+three in four right is solid, two in five or fewer is curious — over
+whatever the reader said. A subject they have never been asked about keeps
+what they said, or the middle.
 
 The choice is stored as what was turned **off**, not what was left on. A genre
 added in a later build then reaches everybody, instead of being hidden from
@@ -609,12 +640,12 @@ These are declared in the UI rather than faked:
   a day, is twenty days of new reading.
 - **The iOS widget target.** The Swift is written; the Xcode target has to be
   added by hand, as described under *The home-screen widget*.
-- **Dealing by genre.** The 108 genres are asked for, stored and backed up;
-  the pool is not tagged with them yet, so what a reader turns off is written
-  down and not yet acted on. It is the brief for what gets written next rather
-  than a filter over what already exists — and saying so is the point: sixty
-  cards that tell is twenty days, and the genres are how the next sixty get
-  chosen.
+- **Depth under every strand.** Every card is tagged with a strand and the
+  dealer honours the switches, but 170 cards over 324 strands is a card
+  under half of them and nothing under the rest; a reader who turns
+  everything off but *Space · Rockets* is dealt those cards and then
+  whatever is nearest. The generator writes towards the thinnest strands
+  first, so this closes at the pace of the nightly run.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with

@@ -1,11 +1,28 @@
 {
   "id": "technology-4",
   "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Is a photo a record of what was there?",
   "answer": "Partly a reconstruction. Each pixel on a camera sensor measures only one colour, behind a red, green or blue filter. The other two values are interpolated from the neighbours. Every ordinary digital photograph is roughly two-thirds informed guesswork, done well enough that nobody notices.",
   "move": "Two of every three colour values in your photos were guessed.",
+  "keywords": [
+    "camera sensors",
+    "bayer filter",
+    "demosaicing",
+    "pixels"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Bayer filter demosaicing, standard in digital sensors"
 }

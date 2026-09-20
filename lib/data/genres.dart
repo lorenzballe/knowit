@@ -11,10 +11,11 @@
 /// rather than words the app says for itself: the chrome around them is
 /// translated thirteen ways, and a genre is content.
 ///
-/// Nothing is dealt from these yet. The pool is not tagged with them, so what
-/// the reader turns off here is written down and not yet acted on — it is the
-/// brief for what gets written next, which is the one thing standing between
-/// this and a product. See the README.
+/// Every card in the bank carries one strand (`Pill.strand`), and the dealer
+/// puts a card from a genre or strand turned off here behind every card that
+/// is on. The generator reads this same file — `tool/cards/genres.py` parses
+/// it — and writes towards the strands with the fewest cards, so what a
+/// reader turns on has something under it as soon as the bank can manage.
 library;
 
 /// One of the three strands inside a genre.

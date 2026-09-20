@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -138,6 +139,183 @@ void main() {
         expect(debates, lessThanOrEqualTo(1), reason: 'day $d');
         expect(deck.where((p) => p.asksSomething).length, 2, reason: 'day $d');
       }
+    });
+  });
+
+  group('What the tags let the dealer do', () {
+    // A small bank with strands on every card: two reads each on tides,
+    // moon dust, launch windows and event horizons, a third on event
+    // horizons that builds on a tides card, one space question, and the
+    // three thinking questions the calendar needs.
+    Map<String, Object?> card(
+      String id, {
+      required String strand,
+      String topic = 'space',
+      List<String> buildsOn = const [],
+      bool asks = false,
+    }) => {
+      'id': id,
+      'topic': topic,
+      if (strand.isNotEmpty)
+        'genre': strand.substring(0, strand.lastIndexOf('.')),
+      if (strand.isNotEmpty) 'strand': strand,
+      'kind': asks ? 'pickOne' : 'read',
+      'difficulty': asks ? 'medium' : 'easy',
+      'principle': asks ? 'baseRate' : 'none',
+      'question': 'What is $id about?',
+      if (asks) 'options': ['This', 'That'],
+      if (asks) 'correct': 1,
+      'answer': 'It is about $id, and that is all it is about.',
+      'move': 'The move of $id.',
+      if (asks) 'trap': 'Picking this.',
+      'keywords': [id, 'tests', 'strands'],
+      'era': 'timeless',
+      'region': 'none',
+      'hook': 'mechanism',
+      'mood': 'sober',
+      'numeracy': 0,
+      'abstraction': 'concrete',
+      'shelf_life': 'evergreen',
+      'mature': false,
+      'language': 'en',
+      if (buildsOn.isNotEmpty) 'builds_on': buildsOn,
+      'source': 'A source',
+    };
+
+    const tides = 'space.the_moon.tides';
+    const dust = 'space.the_moon.moon_dust';
+    const windows = 'space.rockets.launch_windows';
+    const horizons = 'space.black_holes.event_horizons';
+    final cards = [
+      card('space-t1', strand: tides),
+      card('space-t2', strand: tides),
+      card('space-d1', strand: dust),
+      card('space-d2', strand: dust),
+      card('space-r1', strand: windows),
+      card('space-r2', strand: windows),
+      card('space-h1', strand: horizons),
+      card('space-h2', strand: horizons),
+      card('space-b1', strand: horizons, buildsOn: ['space-t1']),
+      card('space-a1', strand: 'space.rockets.fuel_chemistry', asks: true),
+      card('thinking-q1', strand: '', topic: 'thinking', asks: true),
+      card('thinking-q2', strand: '', topic: 'thinking', asks: true),
+      card('thinking-q3', strand: '', topic: 'thinking', asks: true),
+    ];
+
+    setUp(() {
+      PillBank.adopt(
+        BankBundle.parse(
+          jsonEncode({
+            'format': 1,
+            'version': 1,
+            'built': '2026-09-20T03:00:00Z',
+            'cards': cards,
+            'editions': <String, String>{},
+          }),
+        ),
+      );
+      resetCalendar();
+    });
+
+    tearDown(() {
+      PillBank.reset();
+      resetCalendar();
+    });
+
+    List<Pill> reads(List<Pill> deck) =>
+        deck.where((p) => !p.asksSomething).toList();
+
+    test(
+      'no two of the reader\'s cards share a strand while it can help it',
+      () {
+        for (var d = 0; d < 20; d++) {
+          final deck = dealDay(
+            date: DateTime(2026, 10, 1).add(Duration(days: d)),
+            topics: {'space'},
+          );
+          final strands = reads(deck).map((p) => p.strand).toList();
+          expect(strands.toSet(), hasLength(strands.length), reason: 'day $d');
+        }
+      },
+    );
+
+    test('a genre turned off comes after everything that is on', () {
+      final deck = dealDay(
+        date: DateTime(2026, 10, 14),
+        topics: {'space'},
+        genresOff: {'space.the_moon'},
+      );
+      expect(reads(deck), hasLength(3));
+      for (final p in reads(deck)) {
+        expect(p.genre, isNot('space.the_moon'), reason: p.id);
+      }
+
+      // Only event horizons left on: two cards, then the one that waits
+      // for a tides card — which still comes before a strand turned off.
+      final one = dealDay(
+        date: DateTime(2026, 10, 14),
+        topics: {'space'},
+        strandsOff: {tides, dust, windows},
+      );
+      expect(reads(one).map((p) => p.id), contains('space-b1'));
+      // A reader who turned everything off still gets a full day.
+      expect(one, hasLength(kPillsPerDay));
+    });
+
+    test('a card waits for the card it builds on', () {
+      final fresh = dealDay(date: DateTime(2026, 10, 14), topics: {'space'});
+      expect(fresh.map((p) => p.id), isNot(contains('space-b1')));
+      final later = dealDay(
+        date: DateTime(2026, 10, 14),
+        topics: {'space'},
+        exclude: {
+          'space-t1',
+          'space-t2',
+          'space-d1',
+          'space-d2',
+          'space-r1',
+          'space-r2',
+          'space-h1',
+          'space-h2',
+        },
+      );
+      expect(later.map((p) => p.id), contains('space-b1'));
+    });
+
+    test('the taste leans the draw without emptying the pool', () {
+      final moon = PillBank.byId('space-t1')!;
+      expect(leanOf(moon, const {}), 1);
+      expect(leanOf(moon, const {'genre:space.the_moon': 0.5}), 1.5);
+      expect(
+        leanOf(moon, const {'hook:puzzle': 0.5}),
+        1,
+        reason: 'not its trait',
+      );
+      expect(leanOf(moon, const {'genre:space.the_moon': -5}), 0.2);
+      expect(leanOf(moon, const {'strand:$tides': 5}), 3);
+
+      int moonDays(Map<String, double> taste) {
+        var n = 0;
+        for (var d = 0; d < 40; d++) {
+          final deck = dealDay(
+            date: DateTime(2026, 10, 1).add(Duration(days: d)),
+            topics: {'space'},
+            taste: taste,
+          );
+          n += reads(deck).where((p) => p.genre == 'space.the_moon').length;
+        }
+        return n;
+      }
+
+      final plain = moonDays(const {});
+      final leaned = moonDays(const {'genre:space.the_moon': -3});
+      expect(leaned, lessThan(plain));
+      expect(leaned, greaterThan(0), reason: 'thrown down, not thrown out');
+    });
+
+    test('the search reads the keywords', () {
+      expect(searchPills('strands').map((p) => p.id), contains('space-t1'));
+      expect(searchPills('space-d2').map((p) => p.id), ['space-d2']);
     });
   });
 }

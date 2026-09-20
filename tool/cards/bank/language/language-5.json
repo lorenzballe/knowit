@@ -1,11 +1,28 @@
 {
   "id": "language-5",
   "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why was silent reading once remarkable?",
   "answer": "Because text was written to be spoken. Early manuscripts ran words together with little punctuation, and reading aloud was how you parsed them. Augustine noted with some surprise that Ambrose read without moving his lips. Spacing and punctuation are technologies for reading quietly.",
   "move": "The space between words is an invention, and a fairly late one.",
+  "keywords": [
+    "silent reading",
+    "scriptio continua",
+    "punctuation",
+    "manuscripts"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Saenger, Space Between Words, 1997"
 }

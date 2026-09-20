@@ -14,5 +14,20 @@
   "answer": "Streets get planted where a council invests, and investment brings lighting, repairs and maintenance with it. Trees may help — some trials suggest greening does — but the raw correlation is mostly a map of where money went.",
   "move": "When two good things appear together, look for the third that bought both.",
   "trap": "Two things moving together, and only one of them is easy to see.",
+  "keywords": [
+    "confounding",
+    "trees",
+    "crime",
+    "investment"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confounding by investment"
 }

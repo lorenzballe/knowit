@@ -1,6 +1,8 @@
 {
   "id": "thinking-d15",
   "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "The monopoly is paid for in lives: people who cannot afford a drug that costs cents to manufacture. A shorter term still rewards invention while moving the moment of cheap generics closer, and much of the underlying science was publicly funded anyway.",
   "move": "Both sides are arguing about the same number from different ends of the development timeline.",
   "counterpoint": "The patent clock starts at discovery, not at approval, so a drug that spends a decade in trials may see only a few protected years already. Cut it further and the projects that die first are the slow ones — antibiotics, rare diseases — where the payback was marginal to begin with.",
+  "keywords": [
+    "drug patents",
+    "monopoly",
+    "pharmaceutical prices",
+    "innovation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in pharmaceutical economics"
 }

@@ -70,6 +70,22 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.hasSteps) out['steps'] = p.steps;
   if (p.hasSimply) out['simply'] = p.simply;
   if (p.hasCounterpoint) out['counterpoint'] = p.counterpoint;
+  if (p.genre.isNotEmpty) out['genre'] = p.genre;
+  if (p.strand.isNotEmpty) out['strand'] = p.strand;
+  if (p.isTagged) {
+    out['keywords'] = p.keywords;
+    out['era'] = p.era;
+    out['region'] = p.region;
+    out['hook'] = p.hook;
+    out['mood'] = p.mood;
+    out['numeracy'] = p.numeracy;
+    out['abstraction'] = p.abstraction;
+    out['shelf_life'] = p.shelfLife;
+    out['mature'] = p.mature;
+    out['language'] = p.language;
+  }
+  if (p.buildsOn.isNotEmpty) out['builds_on'] = p.buildsOn;
+  if (p.figure.isNotEmpty) out['figure'] = p.figure;
   out['source'] = p.source;
   return out;
 }
@@ -169,5 +185,19 @@ Pill cardFromJson(Map<String, Object?> raw) {
     counterpoint: text('counterpoint'),
     difficulty: difficulty,
     principle: principle,
+    genre: text('genre'),
+    strand: text('strand'),
+    keywords: list('keywords'),
+    era: text('era'),
+    region: text('region'),
+    hook: text('hook'),
+    mood: text('mood'),
+    numeracy: number('numeracy', fallback: 0).toInt(),
+    abstraction: text('abstraction'),
+    shelfLife: text('shelf_life'),
+    mature: raw['mature'] == true,
+    language: text('language', fallback: 'en'),
+    buildsOn: list('builds_on'),
+    figure: text('figure'),
   );
 }

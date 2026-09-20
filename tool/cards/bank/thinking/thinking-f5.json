@@ -14,5 +14,20 @@
   "answer": "People cluster with people like themselves, so your circle is one of the least random samples available. Pauline Kael is often misquoted saying this about Nixon; the underlying error is real regardless.",
   "move": "Your social circle is evidence about your social circle.",
   "trap": "Treating the people around you as if they were drawn at random.",
+  "keywords": [
+    "sampling",
+    "social circles",
+    "elections",
+    "polling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Sampling bias"
 }

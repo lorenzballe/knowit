@@ -1,6 +1,8 @@
 {
   "id": "thinking-d19",
   "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "The survival curve is not gradual: being struck at 50 kills a pedestrian far more often than being struck at 30, and city journeys are so dominated by junctions and lights that the lower limit costs almost no real time.",
   "move": "Notice that one side is arguing about physics and the other about behaviour. Both can be right.",
   "counterpoint": "Compliance is what actually determines speed, and a limit drivers regard as absurd gets ignored, which erodes the limits that matter. The same money spent on separating pedestrians from traffic saves more lives than a number on a sign.",
+  "keywords": [
+    "speed limits",
+    "pedestrian survival",
+    "road deaths",
+    "cities"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in road safety"
 }

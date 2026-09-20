@@ -14,5 +14,21 @@
   "move": "Adding detail makes a claim more convincing and less probable at the same time.",
   "trap": "The second one fits the picture better, so it feels more probable.",
   "simply": "Every dog wearing a hat is a dog. So there can never be more dogs-in-hats than there are dogs. However well the hat fits the story.",
+  "keywords": [
+    "conjunction fallacy",
+    "probability",
+    "stereotypes",
+    "subsets"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
   "source": "Conjunction rule of probability"
 }

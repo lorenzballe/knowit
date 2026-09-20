@@ -1,11 +1,28 @@
 {
   "id": "human_body-1",
   "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How big is your blind spot?",
   "answer": "Each eye has a hole in its field of view where the optic nerve leaves — large enough to swallow several full moons at arm's length. You never see it, because the brain fills the gap with a guess based on the surrounding pattern. The guess is usually right, which is the unsettling part.",
   "move": "Your brain is painting over a hole in your vision. Continuously.",
+  "keywords": [
+    "blind spot",
+    "optic nerve",
+    "vision",
+    "filling in"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Ramachandran, Nature, filling-in of the blind spot"
 }

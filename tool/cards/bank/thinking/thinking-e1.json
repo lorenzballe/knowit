@@ -17,5 +17,20 @@
     "14 g x 59 million = ~830 tonnes a day.",
     "x 365 = ~300,000 tonnes. The reported figure is around 370,000."
   ],
+  "keywords": [
+    "coffee",
+    "italy",
+    "consumption",
+    "fermi estimate"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "International Coffee Organization"
 }

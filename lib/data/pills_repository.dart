@@ -47,6 +47,24 @@ List<Pill> pillsForDate(
   /// card: somebody solid on a subject is asked, somebody new to it is told.
   Map<String, int> levels = const {},
 
+  /// The reader's lean on the cards' tags, `dimension:value` to a signed
+  /// amount: what they held and what they threw down, by genre, strand,
+  /// era, hook, mood and the rest. A card sharing several traits with what
+  /// was liked is dealt sooner; with what was thrown down, later. See
+  /// [leanOf].
+  Map<String, double> taste = const {},
+
+  /// The genres, and the strands under them, the reader turned off one
+  /// layer under the mix. A card from one is dealt after every card that
+  /// is on — never never, because a reader who turned everything off still
+  /// gets a day.
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+
+  /// Strands already on the table today — the question of the day's, a
+  /// review's — so the four do not double up on them either.
+  Set<String> strandsDealt = const {},
+
   /// How many of the [count] should ask, when the caller has already dealt
   /// some asking cards of its own. Null takes the day's usual share.
   int? asking,
@@ -62,18 +80,33 @@ List<Pill> pillsForDate(
   }
 
   bool onTopic(Pill p) => wanted.isEmpty || wanted.contains(p.topic);
+  bool onMix(Pill p) =>
+      onTopic(p) &&
+      !genresOff.contains(p.genre) &&
+      !strandsOff.contains(p.strand);
+  // A card that builds on others waits for them, where the day can spare
+  // it: it goes behind the cards that stand alone, not out of the deck.
+  bool ready(Pill p) => p.buildsOn.every(exclude.contains);
 
-  // Best to worst: unread and on-topic, unread anything, then read again once
-  // the pool cannot cover a fresh day.
-  final tiers = [
-    pool.where((p) => onTopic(p) && !exclude.contains(p.id)).toList(),
-    pool.where((p) => !onTopic(p) && !exclude.contains(p.id)).toList(),
-    pool.where((p) => onTopic(p) && exclude.contains(p.id)).toList(),
-    pool.where((p) => !onTopic(p) && exclude.contains(p.id)).toList(),
-  ];
+  // Best to worst. Unread before read, and inside each: on the mix and
+  // ready, on the mix but waiting for a card it builds on, on the subject
+  // but under a genre turned off, off the subject altogether — the last
+  // three being how a day stays full when the mix is narrow.
+  int tierOf(Pill p) {
+    final int read = exclude.contains(p.id) ? 4 : 0;
+    if (onMix(p)) return read + (ready(p) ? 0 : 1);
+    if (onTopic(p)) return read + 2;
+    return read + 3;
+  }
 
-  // With a mix to honour, order by it. Without one, spread the topics out so
-  // a day never opens with two of the same subject running together.
+  final tiers = List.generate(8, (_) => <Pill>[]);
+  for (final p in pool) {
+    tiers[tierOf(p)].add(p);
+  }
+
+  // With a mix, a level or a taste to honour, order by it. Without any,
+  // spread the topics out so a day never opens with two of the same
+  // subject running together.
   final byName = {
     for (final entry in kTopics.entries)
       entry.value.name: weights[entry.key] ?? 0.0,
@@ -82,19 +115,21 @@ List<Pill> pillsForDate(
     for (final entry in kTopics.entries)
       if (levels[entry.key] != null) entry.value.name: levels[entry.key]!,
   };
-  final ordered = weights.isEmpty && levels.isEmpty
-      ? [for (final tier in tiers) ..._oneTopicFirst(tier)]
-      : [
-          for (final tier in tiers)
-            ..._weightedOrder(
+  final bool plain = weights.isEmpty && levels.isEmpty && taste.isEmpty;
+  final ordered = [
+    for (final tier in tiers)
+      plain
+          ? _oneTopicFirst(tier)
+          : _weightedOrder(
               tier,
               weights.isEmpty
                   ? {for (final name in byName.keys) name: 1.0}
                   : byName,
               Random(seed),
               levels: levelByName,
+              taste: taste,
             ),
-        ];
+  ];
 
   // Fill the asking slots first, then top the day up with reading. Both
   // fall back to whatever is left, so a reader who has turned every asking
@@ -107,25 +142,54 @@ List<Pill> pillsForDate(
   // row and measure nothing at all.
   const maxDebates = 1;
   var debates = 0;
-  final asks = <Pill>[];
-  for (final p in ordered.where((p) => p.asksSomething)) {
-    if (asks.length >= wantAsks) break;
-    final isDebate = p.challenge is TakeASide;
-    if (isDebate) {
-      if (debates >= maxDebates) continue;
-      debates++;
+  final strands = {...strandsDealt};
+
+  // Takes up to [n] cards a tier at a time, and inside a tier the ones on
+  // a strand the day has not got yet before a second card of the same
+  // strand: two cards on tides is one card on tides told twice. The rule
+  // never crosses a tier — a reader who asked for one subject gets a
+  // second card of a strand before a card of another subject.
+  List<Pill> take(int n, bool Function(Pill) wants) {
+    final picked = <Pill>[];
+    bool admit(Pill p) {
+      if (p.challenge is TakeASide) {
+        if (debates >= maxDebates) return false;
+        debates++;
+      }
+      picked.add(p);
+      if (p.strand.isNotEmpty) strands.add(p.strand);
+      return true;
     }
-    asks.add(p);
+
+    for (final tier in ordered) {
+      final held = <Pill>[];
+      for (final p in tier.where(wants)) {
+        if (picked.length >= n) break;
+        if (p.strand.isNotEmpty && strands.contains(p.strand)) {
+          held.add(p);
+          continue;
+        }
+        admit(p);
+      }
+      for (final p in held) {
+        if (picked.length >= n) break;
+        admit(p);
+      }
+      if (picked.length >= n) break;
+    }
+    return picked;
   }
-  final reads = ordered
-      .where((p) => !p.asksSomething)
-      .take(count - asks.length)
-      .toList();
+
+  final asks = take(wantAsks, (p) => p.asksSomething);
+  final reads = take(count - asks.length, (p) => !p.asksSomething);
 
   final deck = [...asks, ...reads];
   if (deck.length < count) {
     deck.addAll(
-      ordered.where((p) => !deck.contains(p)).take(count - deck.length),
+      ordered
+          .expand((tier) => tier)
+          .where((p) => !deck.contains(p))
+          .take(count - deck.length),
     );
   }
   return arrangeDay(deck);
@@ -202,7 +266,9 @@ List<Pill> searchPills(String query) {
   final q = query.trim().toLowerCase();
   if (q.isEmpty) return List<Pill>.from(PillBank.cards);
   return PillBank.cards.where((p) {
-    final hay = '${p.question} ${p.answer} ${p.topic} ${p.barMove}';
+    final hay =
+        '${p.question} ${p.answer} ${p.topic} ${p.barMove} '
+        '${p.keywords.join(' ')}';
     return hay.toLowerCase().contains(q);
   }).toList();
 }
@@ -217,11 +283,15 @@ List<Pill> _weightedOrder(
   Map<String, double> byName,
   Random rng, {
   Map<String, int> levels = const {},
+  Map<String, double> taste = const {},
 }) {
   if (pills.isEmpty) return pills;
   final keyed = <(double, Pill)>[];
   for (final pill in pills) {
-    final w = (byName[pill.topic] ?? 0.0) * _fit(pill, levels[pill.topic]);
+    final w =
+        (byName[pill.topic] ?? 0.0) *
+        _fit(pill, levels[pill.topic]) *
+        leanOf(pill, taste);
     // A subject pushed all the way in still exists — it just goes last,
     // which is what keeps a day full when the mix is narrow.
     final weight = w <= 0 ? 1e-6 : w;
@@ -230,6 +300,23 @@ List<Pill> _weightedOrder(
   }
   keyed.sort((a, b) => a.$1.compareTo(b.$1));
   return [for (final entry in keyed) entry.$2];
+}
+
+/// How much the reader's taste favours a card: one plus the sum of their
+/// lean on each of its traits, held between a fifth and three times.
+///
+/// A like on a card moves every one of its traits a little, so a card that
+/// shares the genre, the hook and the mood of three liked cards comes up
+/// well ahead of one that shares nothing, and a card like the ones thrown
+/// down drops back — without ever being taken out of the pool, which is
+/// what the mix is for.
+double leanOf(Pill pill, Map<String, double> taste) {
+  if (taste.isEmpty) return 1;
+  var lean = 0.0;
+  for (final trait in pill.traits) {
+    lean += taste[trait] ?? 0;
+  }
+  return (1 + lean).clamp(0.2, 3.0);
 }
 
 /// How well a card suits what the reader says they know of its subject.

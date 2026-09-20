@@ -1,11 +1,29 @@
 {
   "id": "history-3",
   "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What killed soldiers in the nineteenth century?",
   "answer": "Disease, not the enemy — by a wide margin in most campaigns. Florence Nightingale's real achievement was statistical: she invented diagrams that made the ratio impossible to argue with, because the officials who could change things would not read a table.",
   "move": "She is remembered for the lamp. The argument was won with a chart.",
+  "keywords": [
+    "florence nightingale",
+    "crimean war",
+    "disease",
+    "statistics"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
   "source": "Nightingale, Notes on Matters Affecting the Health of the British Army, 1858"
 }

@@ -14,5 +14,20 @@
   "answer": "Books in a house come with parents who read, time, income and quiet — any of which could do the work. Posting books tests whether the books mattered, and when it has been tried the effect is far smaller than the correlation suggested.",
   "move": "The object in the house is rarely the thing doing the work.",
   "trap": "A visible thing standing in for everything invisible around it.",
+  "keywords": [
+    "confounding",
+    "books",
+    "school results",
+    "households"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confounding in educational research"
 }

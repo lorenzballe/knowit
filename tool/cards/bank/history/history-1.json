@@ -1,11 +1,28 @@
 {
   "id": "history-1",
   "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Is there a human fingerprint on the ice cores before industry?",
   "answer": "There is a dip. Atmospheric CO2 fell in the early 1600s, and the timing matches the collapse of the Americas' population after 1492. Tens of millions of hectares of farmland reverted to forest, and the regrowth pulled down enough carbon to show up in ice.",
   "move": "A population collapse is visible in the ice, two centuries before the factories.",
+  "keywords": [
+    "ice cores",
+    "carbon dioxide",
+    "columbian exchange",
+    "depopulation"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Koch et al., Quaternary Science Reviews, 2019"
 }

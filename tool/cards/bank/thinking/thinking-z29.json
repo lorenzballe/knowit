@@ -14,5 +14,20 @@
   "answer": "Sixty million people each having a one-in-a-million day produces about sixty such days, today, and again tomorrow. Extraordinary coincidences are not evidence of anything: at scale they are compulsory.",
   "move": "At a country's scale, the impossible happens daily and gets reported.",
   "trap": "One in a million sounds like a synonym for never.",
+  "keywords": [
+    "coincidence",
+    "law of large numbers",
+    "rare events",
+    "scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "The law of truly large numbers"
 }

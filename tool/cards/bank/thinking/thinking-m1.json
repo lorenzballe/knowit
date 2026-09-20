@@ -14,5 +14,20 @@
   "answer": "With 15 tests, a false winner at the 5% threshold is more likely than not. The number means something only for a test decided in advance, so the finding has to survive being the only thing you are looking at.",
   "move": "The winner of a search is not the same as the winner of a test.",
   "trap": "Treating the winner of many tests like the winner of one.",
+  "keywords": [
+    "multiple comparisons",
+    "a/b tests",
+    "p-values",
+    "false winners"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Multiple comparisons in experimentation"
 }

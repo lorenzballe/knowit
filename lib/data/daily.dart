@@ -106,6 +106,9 @@ List<Pill> dealDay({
   Set<String>? topics,
   Map<String, double> weights = const {},
   Map<String, int> levels = const {},
+  Map<String, double> taste = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
   Set<String> exclude = const {},
   List<Pill> reviews = const [],
   int count = kPillsPerDay,
@@ -122,6 +125,13 @@ List<Pill> dealDay({
     topics: topics,
     weights: weights,
     levels: levels,
+    taste: taste,
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+    strandsDealt: {
+      for (final p in [question, ...review])
+        if (p.strand.isNotEmpty) p.strand,
+    },
     exclude: {...exclude, question.id, ...review.map((p) => p.id)},
     count: count - 1 - review.length,
     asking: personalAsks,

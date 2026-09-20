@@ -1,11 +1,28 @@
 {
   "id": "weird_facts-3",
   "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What is most vanilla made of?",
   "answer": "Not vanilla. The overwhelming majority of vanillin is synthesised from petrochemicals or wood pulp. Real vanilla is so valuable per kilogram that Madagascan growers guard their vines, harvest early to prevent theft, and sometimes lose the crop to violence.",
   "move": "Almost all the vanilla you have eaten came from wood pulp or oil.",
+  "keywords": [
+    "vanilla",
+    "vanillin",
+    "synthetic flavour",
+    "orchids"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "FAO; vanillin production statistics"
 }

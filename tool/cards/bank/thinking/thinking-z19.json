@@ -14,5 +14,21 @@
   "answer": "At the usual threshold, roughly one measurement in twenty comes out significant by chance alone. Thirty measurements should produce about one or two even if nothing is happening. Reporting only those two turns noise into a finding.",
   "move": "Ask how many things were measured before you ask what was found.",
   "trap": "Reading a threshold designed for one question as if it survived thirty.",
+  "keywords": [
+    "multiple comparisons",
+    "outcomes",
+    "trials",
+    "significance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Multiple comparisons in trial reporting"
 }

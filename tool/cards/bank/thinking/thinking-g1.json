@@ -14,5 +14,20 @@
   "answer": "A small random sample would be fine. This one is not random: it excludes everyone who has stopped opening your email, which is exactly the unhappy. The size is not the problem — who is missing is.",
   "move": "The people who did not answer are the finding.",
   "trap": "Reading a low response rate as merely a small sample.",
+  "keywords": [
+    "sampling",
+    "surveys",
+    "response rate",
+    "non-response"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Non-response bias"
 }

@@ -1,6 +1,8 @@
 {
   "id": "thinking-d8",
   "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "Screening moves a diagnosis from late to early, and early is where treatment works. Someone whose tumour is caught at stage one gets a different life from someone caught at stage three, and the cost of a scan is trivial against the cost of chemotherapy.",
   "move": "Survival going up and deaths going down are not the same measurement, and only one of them is the point.",
   "counterpoint": "In a population where the disease is rare, most positives are false, and each one buys biopsies, anxiety and sometimes surgery. Screening also finds tumours that would never have caused harm, and treating those is pure loss. Five-year survival rises whenever you diagnose earlier, even when the date of death does not move at all.",
+  "keywords": [
+    "cancer screening",
+    "overdiagnosis",
+    "early detection",
+    "lead time"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in preventive medicine"
 }

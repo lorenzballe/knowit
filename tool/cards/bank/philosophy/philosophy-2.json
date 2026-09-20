@@ -1,11 +1,28 @@
 {
   "id": "philosophy-2",
   "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Two boxes. Do you take one or both?",
   "answer": "A reliable predictor has already put a million in box B if it foresaw you taking B alone, and nothing if it foresaw you taking both. Box A holds a thousand either way. Taking both dominates. Taking B alone has a far better track record. Decision theorists still split on it.",
   "move": "Two solid arguments, opposite answers, fifty years and no resolution.",
+  "keywords": [
+    "newcomb's problem",
+    "decision theory",
+    "prediction",
+    "two boxes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Nozick, Newcomb's Problem and Two Principles of Choice, 1969"
 }

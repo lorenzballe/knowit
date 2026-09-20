@@ -14,5 +14,20 @@
   "answer": "Poor funds get merged away or shut, and their records leave with them. What remains is the survivors, so the family average describes a group selected for having done well. Regulators require some disclosure of this precisely because it flatters so reliably.",
   "move": "Any performance table is a list of the ones still allowed to be on it.",
   "trap": "Assuming the table lists every fund they ever ran.",
+  "keywords": [
+    "survivorship bias",
+    "investment funds",
+    "returns",
+    "closed funds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship bias in fund performance"
 }

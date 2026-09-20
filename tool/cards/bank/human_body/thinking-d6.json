@@ -1,6 +1,8 @@
 {
   "id": "thinking-d6",
   "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "Defaults decide outcomes for anything people do not get round to. Most people say they support donation and never register, so opt-in measures paperwork rather than willingness. Countries that switched report more organs available, and objecting stays a single form away.",
   "move": "The default changed the register. Whether it changed the operating theatre is a separate question.",
   "counterpoint": "The jump in donations in opt-out countries mostly tracks transplant infrastructure and how families are approached, not the default itself — Spain's results came years after its law. And consent that was never given is not consent: families asked at the worst hour of their lives may refuse harder when the state has already assumed an answer.",
+  "keywords": [
+    "organ donation",
+    "defaults",
+    "opt-out",
+    "transplants"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in transplant policy"
 }

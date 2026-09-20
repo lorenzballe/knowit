@@ -8,9 +8,9 @@
 
 One card per request. The rules (RULES.md) go in the system prompt with the
 blacklist and a few cards from the bank as examples of the house style, all
-of it cached across the run; the brief — topic, kind, principle, and every
-question the topic already asks — goes in the user turn. The draft comes
-back as JSON in the card schema. Then:
+of it cached across the run; the brief — topic, genre and strand, kind,
+principle, and every question the topic already asks — goes in the user
+turn. The draft comes back as JSON in the card schema, tags included. Then:
 
 1. the gate (check.py, strict) refuses anything mis-shaped, and the model
    gets one round to fix what it named;
@@ -39,6 +39,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 import check
+import genres
 
 HERE = Path(__file__).resolve().parent
 RULES = HERE / "RULES.md"
@@ -58,6 +59,11 @@ TARGET_DEBATES = 3
 PRINCIPLE_FLOOR = 8
 ASK_MIX = {"pickOne": 0.70, "number": 0.15, "estimate": 0.15}
 HARD_SHARE = 0.15
+# How many cards a strand should hold before the plan stops reaching for
+# it by name. Two: one a reader meets, and one for the day they ask for
+# more of the same. Coverage comes before depth — a strand with nothing in
+# it is a strand a reader turned on and is never dealt from.
+STRAND_TARGET = 2
 
 # The bank's own best, one or two per kind, shown to the model as the style.
 EXEMPLARS = ["space-2", "thinking-1", "thinking-2", "thinking-n1", "thinking-e1", "thinking-d1"]
@@ -69,7 +75,43 @@ TOPICS = check.load_schema()["properties"]["topic"]["enum"]
 # --------------------------------------------------------------------------
 # What the model returns
 
-class Draft(BaseModel):
+# The vocabularies are the schema's, through check.py, so a value the gate
+# would refuse cannot be produced in the first place.
+Era = Literal[tuple(check.TAGS["era"])]
+Region = Literal[tuple(check.TAGS["region"])]
+Hook = Literal[tuple(check.TAGS["hook"])]
+Mood = Literal[tuple(check.TAGS["mood"])]
+Abstraction = Literal[tuple(check.TAGS["abstraction"])]
+ShelfLife = Literal[tuple(check.TAGS["shelf_life"])]
+Figure = Literal[tuple(check.TAGS["figure"])]
+
+
+class Described(BaseModel):
+    """What a card is about and like: the tags the writer describes it with.
+
+    The genre and strand are not here — they are asked for, not described —
+    and neither is the language, which the run sets.
+    """
+    keywords: list[str] = Field(description="Three to six lowercase handles, one to four words each: the things, people, places and ideas in the card.")
+    era: Era = Field(description="When the matter is set; timeless for a mechanism or a principle.")
+    region: Region = Field(description="Where it is set; none when the card has no place in it.")
+    hook: Hook = Field(description="What pulls the reader in. One, the strongest.")
+    mood: Mood = Field(description="The register the card is read in.")
+    numeracy: int = Field(description="0 no number, 1 a figure to take in, 2 a comparison or a ratio, 3 a calculation.")
+    abstraction: Abstraction
+    shelf_life: ShelfLife = Field(description="evergreen unless the answer could differ in a few years, or within the year.")
+    mature: bool = Field(description="Sex, drugs, violence, gambling or death in detail.")
+    builds_on: list[str] = Field(description="Ids from the brief a reader is better off having met first. Usually empty.")
+    figure: Figure = Field(description="The picture that would help, or none.")
+
+
+class Tags(Described):
+    """The tags alone, for a card that was written before there were tags."""
+    genre: str = Field(description="The genre id from the list given; empty on a thinking card.")
+    strand: str = Field(description="The strand id under that genre; empty on a thinking card.")
+
+
+class Draft(Described):
     """A card as the model writes it: every field present, empty when unused.
 
     Structured outputs want every property required and no numeric or
@@ -132,7 +174,24 @@ def to_card(draft: Draft) -> dict:
         card["steps"] = [s.strip() for s in d["steps"] if s.strip()]
     card["source"] = d["source"].strip()
     card["reference"] = d["reference"].strip()
+    card.update(described(draft))
     return card
+
+
+def described(tags: Described) -> dict:
+    """The tag fields as the bank keeps them: cleaned, and absent when empty."""
+    d = tags.model_dump()
+    out = {
+        "keywords": [k.strip().lower() for k in d["keywords"] if k.strip()],
+        "era": d["era"], "region": d["region"], "hook": d["hook"], "mood": d["mood"],
+        "numeracy": int(d["numeracy"]), "abstraction": d["abstraction"],
+        "shelf_life": d["shelf_life"], "mature": bool(d["mature"]),
+    }
+    if d["builds_on"]:
+        out["builds_on"] = [b.strip() for b in d["builds_on"] if b.strip()]
+    if d["figure"] != "none":
+        out["figure"] = d["figure"]
+    return out
 
 
 def _tidy(x: float) -> int | float:
@@ -147,19 +206,47 @@ class Request(BaseModel):
     kind: str
     difficulty: str
     principle: str
+    # The genre and the strand under it, by id; empty on a thinking card.
+    genre: str = ""
+    strand: str = ""
+    language: str = "en"
+    # On a graded card, the principles the writer may choose between: the
+    # thinnest few, so that the one that fits the strand is taken rather
+    # than one forced onto it. `principle` is the first of them until the
+    # card is written, and then whichever the writer chose.
+    principles: list[str] = []
 
     def __str__(self) -> str:
-        tail = f" · {self.principle}" if self.principle != "none" else ""
-        return f"{self.topic} · {self.kind} · {self.difficulty}{tail}"
+        where = f" · {genres.describe(self.strand)}" if self.strand else ""
+        tail = ""
+        if len(self.principles) > 1:
+            tail = " · one of " + "/".join(self.principles)
+        elif self.principle != "none":
+            tail = f" · {self.principle}"
+        return f"{self.topic}{where} · {self.kind} · {self.difficulty}{tail}"
+
+
+def for_strand(strand: genres.Strand | None, topic: str, **rest) -> Request:
+    """A request placed on a strand — or on none, for Thinking."""
+    if strand is None:
+        return Request(topic=topic, **rest)
+    return Request(topic=strand.topic, genre=strand.genre, strand=strand.id, **rest)
 
 
 def plan(bank: list[dict], count: int, *, topics: list[str] | None = None, seed: int = 0) -> list[Request]:
-    """The next [count] cards to ask for, biggest gap first, subjects interleaved."""
+    """The next [count] cards to ask for, biggest gap first, subjects interleaved.
+
+    Inside a subject the card lands on its thinnest strand: every strand
+    towards STRAND_TARGET before any has a third. So a night's twenty
+    reach twenty strands across as many subjects as are short, and the
+    mix a reader set has something under every name on it as soon as the
+    bank can manage."""
     live = [c for c in bank if not c.get("disabled")]
     by_topic: dict[str, Counter] = {t: Counter() for t in (topics or TOPICS)}
     for c in live:
         if c["topic"] in by_topic:
             by_topic[c["topic"]][c["kind"]] += 1
+    per_strand = strand_counts(live)
     principle_count = Counter(c["principle"] for c in live if c["principle"] != "none")
     for p in PRINCIPLES:
         principle_count.setdefault(p, 0)
@@ -172,7 +259,8 @@ def plan(bank: list[dict], count: int, *, topics: list[str] | None = None, seed:
     def deficit(t: str) -> int:
         k = by_topic[t]
         return (max(0, TARGET_READS - k["read"]) + max(0, TARGET_ASKS - asks(t))
-                + max(0, TARGET_DEBATES - k["debate"]))
+                + max(0, TARGET_DEBATES - k["debate"])
+                + sum(max(0, STRAND_TARGET - per_strand[s.id]) for s in genres.strands_of(t)))
 
     out: list[Request] = []
     while len(out) < count:
@@ -191,23 +279,42 @@ def plan(bank: list[dict], count: int, *, topics: list[str] | None = None, seed:
             short_read = max(0, TARGET_READS - k["read"]) / TARGET_READS
             short_ask = max(0, TARGET_ASKS - asks(t)) / TARGET_ASKS
             short_debate = max(0, TARGET_DEBATES - k["debate"]) / TARGET_DEBATES
+            strand = thinnest_strand(t, per_strand, rng)
             if (short_ask >= short_read and short_ask >= short_debate and short_ask > 0) or deficit(t) == 0:
                 kind = _ask_kind(k)
-                principle = _principle_for(t, principle_count, per_topic_principles[t], rng, kind)
+                choice = _principles_for(t, principle_count, per_topic_principles[t], rng, kind)
                 hard = (asks(t) + 1) % int(round(1 / HARD_SHARE)) == 0
-                req = Request(topic=t, kind=kind, difficulty="hard" if hard else "medium", principle=principle)
-                principle_count[principle] += 1
-                per_topic_principles[t][principle] += 1
+                req = for_strand(strand, t, kind=kind, difficulty="hard" if hard else "medium",
+                                 principle=choice[0], principles=choice)
+                principle_count[choice[0]] += 1
+                per_topic_principles[t][choice[0]] += 1
             elif short_read >= short_debate and short_read > 0:
-                req = Request(topic=t, kind="read", difficulty="easy", principle="none")
+                req = for_strand(strand, t, kind="read", difficulty="easy", principle="none")
             else:
-                req = Request(topic=t, kind="debate", difficulty="medium", principle="none")
+                req = for_strand(strand, t, kind="debate", difficulty="medium", principle="none")
             by_topic[t][req.kind] += 1
+            if strand is not None:
+                per_strand[strand.id] += 1
             out.append(req)
             progressed = True
         if not progressed:
             break
     return out
+
+
+def strand_counts(cards: list[dict]) -> Counter:
+    """How many live cards each strand holds."""
+    return Counter(c["strand"] for c in cards if c.get("strand") and not c.get("disabled"))
+
+
+def thinnest_strand(topic: str, per_strand: Counter, rng: random.Random) -> genres.Strand | None:
+    """The strand under [topic] with the fewest cards; None for Thinking.
+    Ties go by the seed, so the same bank plans the same night."""
+    strands = genres.strands_of(topic)
+    if not strands:
+        return None
+    low = min(per_strand[s.id] for s in strands)
+    return rng.choice([s for s in strands if per_strand[s.id] == low])
 
 
 def _ask_kind(k: Counter) -> str:
@@ -216,15 +323,20 @@ def _ask_kind(k: Counter) -> str:
     return max(short, key=lambda x: (short[x], x == "pickOne"))
 
 
-def _principle_for(topic: str, overall: Counter, in_topic: Counter, rng: random.Random, kind: str) -> str:
+PRINCIPLE_CHOICE = 3
+
+
+def _principles_for(topic: str, overall: Counter, in_topic: Counter, rng: random.Random, kind: str) -> list[str]:
+    """The thinnest few principles, first the ones this subject has never
+    met, in a stable order. An estimate is always estimation."""
     if kind == "estimate":
-        return "estimation"
+        return ["estimation"]
     pool = [p for p in PRINCIPLES if p not in ("estimation", "computation")] if kind == "pickOne" else PRINCIPLES
     unused_here = [p for p in pool if in_topic[p] == 0]
     candidates = unused_here or pool
-    low = min(overall[p] for p in candidates)
-    thinnest = [p for p in candidates if overall[p] == low]
-    return rng.choice(thinnest)
+    rng.shuffle(candidates)
+    candidates.sort(key=lambda p: overall[p])
+    return candidates[:PRINCIPLE_CHOICE]
 
 
 # --------------------------------------------------------------------------
@@ -248,29 +360,37 @@ def brief(req: Request, bank: list[dict]) -> str:
     live = [c for c in bank if not c.get("disabled")]
     in_topic = [c for c in live if c["topic"] == req.topic]
     same_principle = [c for c in live if req.principle != "none" and c["principle"] == req.principle]
-    lines = [
-        "Write one card.",
-        "",
-        f"topic: {req.topic}",
-        f"kind: {req.kind}",
-        f"difficulty: {req.difficulty}",
-        f"principle: {req.principle}",
-        "",
-    ]
+    lines = ["Write one card.", "", f"topic: {req.topic}"]
+    if req.strand:
+        strand = genres.strands_by_id()[req.strand]
+        genre = genres.genres_by_id()[req.genre]
+        lines += [f"genre: {genre.label} ({genre.id})", f"strand: {strand.label} ({strand.id})"]
+    principle = req.principle
+    if len(req.principles) > 1:
+        principle = "one of " + ", ".join(req.principles) + " — whichever the strand has a real instance of"
+    lines += [f"kind: {req.kind}", f"difficulty: {req.difficulty}", f"principle: {principle}", ""]
+    if req.strand:
+        others = ", ".join(s.label for s in genre.strands if s.id != strand.id)
+        lines.append(f"The card is about {strand.label} and nothing beside it. The genre's other strands, which are not this card: {others}.")
+        in_strand = [c for c in in_topic if c.get("strand") == req.strand]
+        if in_strand:
+            lines.append(f"Cards already in {strand.label} — the new one sits beside these and says something none of them says:")
+            lines += [f"- [{c['id']}] {c['question']}" for c in in_strand]
+        lines.append("")
     if same_principle:
         lines.append(f"Contexts already used for {req.principle} — do not reuse their domain or their example:")
         lines += [f"- {c['question']}" for c in same_principle[-12:]]
         lines.append("")
     if in_topic:
         lines.append(f"Every question already in {req.topic} — a twin of any of these is refused:")
-        lines += [f"- {c['question']}" for c in in_topic]
+        lines += [f"- [{c['id']}] {c['question']}" for c in in_topic]
         lines.append("")
     moves = [c["move"] for c in (same_principle or in_topic)]
     if moves:
         lines.append("Moves already in the bank — do not repeat one, even reworded:")
         lines += [f"- {m}" for m in moves[-20:]]
         lines.append("")
-    lines.append("Return the card as JSON in the schema. Leave a field empty when the kind has no use for it.")
+    lines.append("Return the card as JSON in the schema, tags included (§19). Leave a field empty when the kind has no use for it. builds_on may name only ids listed above, and is usually empty.")
     return "\n".join(lines)
 
 
@@ -288,6 +408,11 @@ Do all of this:
    blacklist.
 5. Check that the trap is the principle going wrong, and that the move stands
    without the card.
+6. Read the tags against the card: the strand is what the card is about,
+   the era and region are where it is set, the hook is what pulls, the
+   numeracy is what the reader has to do with numbers, the shelf life is
+   how soon the answer could change, mature is honest. A tag that is not
+   true of the card is a fix.
 
 Return pass when everything held; fix when one thing is wrong and you can
 correct it without rewriting the card (a figure, a reference, a unit, one
@@ -363,6 +488,15 @@ class Claude:
         )
         return verdict
 
+    def tag(self, system: str, card_text: str) -> Tags:
+        tags, _ = self._parse(
+            system=system,
+            messages=[{"role": "user", "content": card_text}],
+            output_format=Tags,
+            effort="medium",
+        )
+        return tags
+
     def receipt(self) -> str:
         u = self.usage
         cost = sum(u[k] * PRICE[k] / 1e6 for k in PRICE)
@@ -373,9 +507,11 @@ class Claude:
 class Fake:
     """A model that returns what it is told to. For tests and --fake."""
 
-    def __init__(self, drafts: list[Draft] | None = None, verdicts: list[Verdict] | None = None):
+    def __init__(self, drafts: list[Draft] | None = None, verdicts: list[Verdict] | None = None,
+                 tags: list[Tags] | None = None):
         self.drafts = list(drafts or [])
         self.verdicts = list(verdicts or [])
+        self.tags = list(tags or [])
         self.calls: list[str] = []
 
     def write(self, system: str, brief_text: str):
@@ -389,6 +525,19 @@ class Fake:
     def critique(self, rules: str, card: dict) -> Verdict:
         self.calls.append("critique")
         return self.verdicts.pop(0) if self.verdicts else Verdict(verdict="pass", reason="canned", fixed=None)
+
+    def tag(self, system: str, card_text: str) -> Tags:
+        self.calls.append("tag")
+        if self.tags:
+            return self.tags.pop(0)
+        card = json.loads(card_text[card_text.index("{"):card_text.rindex("}") + 1])
+        strands = genres.strands_of(card["topic"])
+        first = strands[0] if strands else None
+        return Tags(
+            **canned_tags(card["kind"], ["canned", "plumbing", "pipes"]),
+            genre=first.genre if first else "",
+            strand=first.id if first else "",
+        )
 
     def receipt(self) -> str:
         return "no tokens: the model was canned"
@@ -414,6 +563,7 @@ def canned(brief_text: str) -> Draft:
     picked = [vocabulary[(stamp * 6 + i) % len(vocabulary)] for i in range(6)]
     base = dict(
         topic=topic, kind=kind, difficulty=fields.get("difficulty", "easy"), principle=principle,
+        **canned_tags(kind, picked[:3]),
         question=f"Which {picked[0]} {picked[1]} {picked[2]} {picked[3]} {picked[4]} {picked[5]} was tried?",
         answer=" ".join(["The plumbing handed it a canned card, and the gate read it the same way it reads a real one:"] + ["word"] * 22) + ".",
         move=f"A canned card proves the pipes, never the water {stamp}.",
@@ -432,6 +582,15 @@ def canned(brief_text: str) -> Draft:
     return Draft(**base)
 
 
+def canned_tags(kind: str, keywords: list[str]) -> dict:
+    """Tags that pass the gate, for a card that only has to exist."""
+    return dict(
+        keywords=keywords, era="timeless", region="none", hook="mechanism", mood="sober",
+        numeracy=2 if kind in ("number", "estimate") else 0, abstraction="concrete",
+        shelf_life="evergreen", mature=False, builds_on=[], figure="none",
+    )
+
+
 # --------------------------------------------------------------------------
 # The pipeline
 
@@ -445,8 +604,16 @@ class Outcome(BaseModel):
 
 def conform(card: dict, req: Request) -> dict:
     """The card as an answer to [req]: the model does not get to change the
-    subject, the kind, or the principle it was asked for."""
-    card["topic"], card["kind"], card["principle"] = req.topic, req.kind, req.principle
+    subject, the strand, the kind, the principle or the language it was
+    asked for."""
+    card["topic"], card["kind"] = req.topic, req.kind
+    card["principle"] = card.get("principle") if card.get("principle") in req.principles else req.principle
+    if req.strand:
+        card["genre"], card["strand"] = req.genre, req.strand
+    else:
+        card.pop("genre", None)
+        card.pop("strand", None)
+    card["language"] = req.language
     if req.kind == "read":
         card["difficulty"] = "easy"
     elif card["difficulty"] == "easy":
@@ -473,7 +640,9 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
 
     def gate(card: dict) -> list[str]:
         card = dict(card, id=next_id(card["topic"], today, taken), written=today.isoformat())
-        return check.check_card(card, strict=True, schema=schema, banned=banned) + check.check_twins([card], against=bank + written)
+        return (check.check_card(card, strict=True, schema=schema, banned=banned)
+                + check.check_twins([card], against=bank + written)
+                + check.check_links([card], against=bank + written))
 
     for req in requests:
         log(f"· {req}")
@@ -507,7 +676,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
             taken.add(card["id"])
             folder = out / req.topic
             folder.mkdir(parents=True, exist_ok=True)
-            (folder / f"{card['id']}.json").write_text(json.dumps(card, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            (folder / f"{card['id']}.json").write_text(json.dumps(check.ordered(card), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             written.append(card)
             outcomes.append(Outcome(request=req, status="written", id=card["id"], question=card["question"]))
             log(f"  wrote {card['id']}")
@@ -522,7 +691,8 @@ def report(outcomes: list[Outcome], receipt: str, today: dt.date) -> str:
     written = [o for o in outcomes if o.status == "written"]
     lines = [f"## {len(written)} new card{'s' if len(written) != 1 else ''} · {today:%-d %B %Y}", ""]
     for o in written:
-        lines.append(f"- **{o.id}** — {o.question}")
+        where = f" · *{genres.describe(o.request.strand)}*" if o.request.strand else ""
+        lines.append(f"- **{o.id}** — {o.question}{where}")
     rest = [o for o in outcomes if o.status != "written"]
     if rest:
         lines += ["", f"### Not written ({len(rest)})", ""]
@@ -539,6 +709,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--plan", action="store_true", help="ask for what the bank is short of")
     ap.add_argument("--count", type=int, default=1)
     ap.add_argument("--topic", choices=TOPICS)
+    ap.add_argument("--genre", choices=sorted(genres.genres_by_id()), metavar="GENRE", help="a genre id; the card lands on its thinnest strand")
+    ap.add_argument("--strand", choices=sorted(genres.strands_by_id()), metavar="STRAND", help="a strand id")
     ap.add_argument("--kind", choices=["read", "pickOne", "number", "estimate", "debate"])
     ap.add_argument("--principle", choices=["none"] + PRINCIPLES)
     ap.add_argument("--difficulty", choices=["easy", "medium", "hard"])
@@ -556,12 +728,21 @@ def main(argv: list[str] | None = None) -> int:
     if args.plan:
         requests = plan(bank, args.count, topics=args.only)
     else:
-        if not (args.topic and args.kind):
-            ap.error("give --plan, or --topic and --kind")
+        if not ((args.topic or args.genre or args.strand) and args.kind):
+            ap.error("give --plan, or --kind with one of --topic, --genre, --strand")
+        per_strand = strand_counts(bank)
+        if args.strand:
+            strand = genres.strands_by_id()[args.strand]
+        elif args.genre:
+            genre = genres.genres_by_id()[args.genre]
+            strand = min(genre.strands, key=lambda s: (per_strand[s.id], s.id))
+        else:
+            strand = thinnest_strand(args.topic, per_strand, random.Random(0))
+        topic = strand.topic if strand else args.topic
         kind = args.kind
         principle = args.principle or ("none" if kind in ("read", "debate") else "computation" if kind == "number" else "estimation" if kind == "estimate" else "baseRate")
         difficulty = args.difficulty or ("easy" if kind == "read" else "medium")
-        requests = [Request(topic=args.topic, kind=kind, difficulty=difficulty, principle=principle)] * args.count
+        requests = [for_strand(strand, topic, kind=kind, difficulty=difficulty, principle=principle)] * args.count
 
     if args.dry_run:
         print(f"{len(requests)} request{'s' if len(requests) != 1 else ''}:")

@@ -14,5 +14,20 @@
   "answer": "Passengers whose flights were cancelled or badly delayed are not standing at the gate to be asked. The survey systematically misses the experiences it most needs.",
   "move": "Ask where the people you need are, not where the people are.",
   "trap": "Surveying where the people are, rather than where the answer is.",
+  "keywords": [
+    "sampling",
+    "airlines",
+    "punctuality",
+    "missing respondents"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship in customer surveys"
 }

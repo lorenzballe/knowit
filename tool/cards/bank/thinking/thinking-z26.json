@@ -14,5 +14,20 @@
   "answer": "That most rowers swam says nothing about how many swimmers row. If swimming is very common, almost every activity will be full of former swimmers without swimming leading anywhere in particular.",
   "move": "\"Most A are B\" and \"most B are A\" are different sentences with different answers.",
   "trap": "Reading the share one way round as if it read the other.",
+  "keywords": [
+    "conditional probability",
+    "inverse conditionals",
+    "rowing",
+    "swimming"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confusing the conditional"
 }

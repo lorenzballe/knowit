@@ -16,5 +16,20 @@
     "It runs around 320 days a year: ~128,000 a year.",
     "A bus serves 12 to 15 years: ~1.7 million boardings."
   ],
+  "keywords": [
+    "city bus",
+    "passenger journeys",
+    "lifetime",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Urban transit fleet statistics"
 }

@@ -14,5 +14,20 @@
     "12 = 2 x 2 x 3 and 18 = 2 x 3 x 3.",
     "The least common multiple takes the highest power of each: 2 x 2 x 3 x 3 = 36."
   ],
+  "keywords": [
+    "least common multiple",
+    "bus timetables",
+    "cycles",
+    "arithmetic"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Least common multiple"
 }

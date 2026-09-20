@@ -14,5 +14,20 @@
   "answer": "The second 40% is of the remaining 60%, so it clears 24%. Forty plus twenty-four is sixty-four per cent gone, and thirty-six left. Percentages of percentages never add.",
   "move": "Two forty-per-cent cuts leave more than a fifth standing.",
   "trap": "Adding two percentages that are taken of different things.",
+  "keywords": [
+    "percentages",
+    "sales",
+    "compounding discounts",
+    "arithmetic"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Successive proportions"
 }

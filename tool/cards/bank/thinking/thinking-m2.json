@@ -14,5 +14,20 @@
   "answer": "Cut any dataset enough ways and some slice will look like a success by chance alone. A subgroup named before the data was collected is evidence; one found afterwards is a hypothesis, and needs its own test.",
   "move": "A result found by slicing has to survive being predicted.",
   "trap": "Accepting a slice as a finding because the numbers in it are real.",
+  "keywords": [
+    "subgroup analysis",
+    "multiple comparisons",
+    "marketing",
+    "data dredging"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Subgroup analysis"
 }

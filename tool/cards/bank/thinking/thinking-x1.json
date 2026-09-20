@@ -14,5 +14,20 @@
   "answer": "Nobody assigned people to the gym; they chose. Whatever makes someone a gym user — health, age, energy, a job with slack in it — also affects sick days. The gym could do nothing and the figures would look the same.",
   "move": "When people chose their own group, the groups differ before you do anything.",
   "trap": "Reading a difference between two self-selected groups as an effect.",
+  "keywords": [
+    "confounding",
+    "gym",
+    "sick days",
+    "self-selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Healthy-user bias"
 }

@@ -1,11 +1,28 @@
 {
   "id": "language-4",
   "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Are sign languages signed versions of speech?",
   "answer": "Not at all — they have their own grammar, unrelated to the surrounding spoken language. The clearest proof arrived in 1980s Nicaragua, where deaf children brought together for the first time built a full language from scratch within a couple of school generations.",
   "move": "Deaf children in Nicaragua invented a complete language in about a decade.",
+  "keywords": [
+    "sign language",
+    "nicaraguan sign language",
+    "grammar",
+    "deaf children"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Senghas & Coppola, Psychological Science, 2001"
 }

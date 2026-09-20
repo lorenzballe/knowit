@@ -14,5 +14,20 @@
   "answer": "The no-degree file could break it, so open that. The two-years file could break it if that person has no degree, so open that. The degree file is not covered by the rule, and six years' experience can never break it — checking those two can only confirm what you already believe.",
   "move": "Look for the file that could prove you wrong, not the one that agrees.",
   "trap": "Checking the case that would confirm the rule rather than break it.",
+  "keywords": [
+    "wason selection task",
+    "rules",
+    "falsification",
+    "hiring"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "The Wason selection task, in a hiring file"
 }

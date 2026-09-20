@@ -14,5 +14,20 @@
   "answer": "Phoning in costs time and requires a reason, so the line collects people with a strong view — usually against something. Ten thousand callers chosen by their own motivation tell you less than a thousand chosen at random.",
   "move": "Anyone who selected themselves is not a sample of anybody else.",
   "trap": "A large number of responses feels like a large sample.",
+  "keywords": [
+    "sampling",
+    "phone-ins",
+    "self-selection",
+    "opinion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Self-selection in call-in polling"
 }

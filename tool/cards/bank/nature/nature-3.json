@@ -1,11 +1,28 @@
 {
   "id": "nature-3",
   "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How would you know if the ocean used to be fuller?",
   "answer": "You probably would not. Each generation of scientists takes the sea they first studied as the natural baseline, so every generation measures decline from an already-depleted state. Daniel Pauly named this shifting baseline syndrome, and it makes long collapses look like normal variation.",
   "move": "Everyone measures the decline from whatever they found when they arrived.",
+  "keywords": [
+    "shifting baselines",
+    "fisheries",
+    "ocean",
+    "daniel pauly"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Pauly, Trends in Ecology & Evolution, 1995"
 }

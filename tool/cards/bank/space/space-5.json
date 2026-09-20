@@ -1,11 +1,28 @@
 {
   "id": "space-5",
   "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Is space really silent?",
   "answer": "Sound needs a medium, and space has a thin one. Ripples through the gas of the Perseus galaxy cluster have been measured as pressure waves — a note about 57 octaves below middle C. Space is not silent so much as impossibly deep and impossibly quiet.",
   "move": "There is a note in the Perseus cluster. Nobody could ever hear it.",
+  "keywords": [
+    "sound in space",
+    "perseus cluster",
+    "pressure waves",
+    "black hole"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Chandra X-ray Observatory, Perseus cluster"
 }

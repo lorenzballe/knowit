@@ -14,5 +14,21 @@
   "answer": "Of 1,000 applicants, 50 are top performers and 40 get flagged. But 20% of the other 950 get flagged too: 190 more. So about 40 of 230 flags are real — under one in five.",
   "move": "Ask how rare the thing is before you ask how good the test is.",
   "trap": "Reading the tool's accuracy as the chance it is right about you.",
+  "keywords": [
+    "base rate",
+    "hiring tools",
+    "false positives",
+    "screening"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Base rate neglect in selection"
 }

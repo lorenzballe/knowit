@@ -14,5 +14,20 @@
     "Pairings: 12 x 11 / 2 = 66.",
     "Each pair plays twice: 66 x 2 = 132."
   ],
+  "keywords": [
+    "combinations",
+    "fixtures",
+    "counting",
+    "league"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Round-robin scheduling"
 }

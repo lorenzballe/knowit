@@ -13,5 +13,20 @@
   "answer": "Suicide takes roughly twice as many lives as homicide worldwide. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
   "move": "What you can recall easily is a fact about the news, not about the world.",
   "trap": "Reaching for the one that gets reported.",
+  "keywords": [
+    "availability",
+    "suicide",
+    "homicide",
+    "news coverage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": true,
+  "language": "en",
   "source": "WHO global health estimates"
 }

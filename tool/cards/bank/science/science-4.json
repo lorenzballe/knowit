@@ -1,11 +1,28 @@
 {
   "id": "science-4",
   "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Did cleaning up shipping fuel warm the planet?",
   "answer": "Yes, measurably. Ships burned high-sulphur fuel that seeded brighter clouds over the oceans, reflecting sunlight. A 2020 rule cut that sulphur by around 80% almost overnight, the clouds dimmed, and the extra warming is estimated at roughly two to three years' worth.",
   "move": "One pollution rule ran the planet's most accidental experiment.",
+  "keywords": [
+    "ship emissions",
+    "sulphur",
+    "clouds",
+    "aerosols"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Yuan et al., Communications Earth & Environment, 2024"
 }

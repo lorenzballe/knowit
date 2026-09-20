@@ -13,5 +13,20 @@
   "answer": "The payment is the same whether you use it or not, so it cannot inform the choice. The only live question is whether the next ten months are worth your attention — and annual pricing exists partly because that reasoning is so hard to apply.",
   "move": "You cannot get money back by spending time on top of it.",
   "trap": "Staying to redeem money that is already spent.",
+  "keywords": [
+    "sunk cost",
+    "subscriptions",
+    "money's worth",
+    "decisions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Sunk cost in subscriptions"
 }

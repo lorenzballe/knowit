@@ -14,5 +14,21 @@
   "answer": "One per cent of 100,000 innocent people is about 1,000 false alarms, against the single real match. Almost every alarm is wrong — not because the camera is bad, but because there is only one of them and a hundred thousand of us.",
   "move": "A very accurate test looking for something very rare is mostly wrong.",
   "trap": "Hearing 99% and picturing a system that is almost always right.",
+  "keywords": [
+    "false positives",
+    "face recognition",
+    "base rate",
+    "surveillance"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Base rate neglect applied to screening"
 }

@@ -1,6 +1,8 @@
 {
   "id": "thinking-d7",
   "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "A challenge trial can answer in weeks what a field trial answers in a year, and during an epidemic that gap is counted in deaths. Healthy adult volunteers already accept comparable risks in kidney donation and firefighting, and the risk here is bounded, monitored and reversible.",
   "move": "Notice the argument is not about the numbers. It is about who is allowed to accept a risk on behalf of everyone.",
   "counterpoint": "You cannot fully consent to a disease nobody has yet characterised, and the volunteers most willing to sign up are often those with the least to fall back on. A single death in a trial where the researchers caused the infection would be a very different event, both morally and for every trial that came after it.",
+  "keywords": [
+    "challenge trials",
+    "vaccines",
+    "volunteers",
+    "epidemics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in research ethics"
 }

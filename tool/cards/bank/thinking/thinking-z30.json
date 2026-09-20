@@ -14,5 +14,20 @@
   "answer": "You have thousands of dreams a year about hundreds of people, and remember only the ones followed by something. The near-misses leave no trace, so the rate of coincidence is measured only from its successes.",
   "move": "The hits get remembered and the misses never happened as far as you know.",
   "trap": "Counting the hit and not the misses.",
+  "keywords": [
+    "coincidence",
+    "dreams",
+    "selective memory",
+    "probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Base rate of remembered coincidences"
 }

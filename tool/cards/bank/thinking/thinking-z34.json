@@ -14,5 +14,21 @@
   "answer": "If one group applies mainly to departments that reject nearly everyone, its overall rate can be lower while it does better in each. The total and the parts are answering different questions.",
   "move": "Before comparing totals, ask whether the two groups were doing the same thing.",
   "trap": "Assuming the whole has to move with all of its parts.",
+  "keywords": [
+    "simpson's paradox",
+    "admissions",
+    "departments",
+    "berkeley"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
   "source": "Simpson's paradox in admissions"
 }

@@ -14,5 +14,20 @@
   "answer": "You need shops that were also having a bad quarter and did not change manager. Without them, the ordinary bounce from a bad quarter and the effect of the new manager are the same number and cannot be told apart.",
   "move": "The comparison you need is the one that did nothing.",
   "trap": "The manager arrived precisely because the quarter was bad.",
+  "keywords": [
+    "regression to the mean",
+    "managers",
+    "comparison",
+    "luck"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Regression to the mean in management"
 }

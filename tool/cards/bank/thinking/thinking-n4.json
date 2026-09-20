@@ -14,5 +14,20 @@
     "26 choices, then 25, then 24, then 23.",
     "26 x 25 x 24 x 23 = 358,800."
   ],
+  "keywords": [
+    "permutations",
+    "codes",
+    "counting",
+    "alphabet"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Permutations without repetition"
 }

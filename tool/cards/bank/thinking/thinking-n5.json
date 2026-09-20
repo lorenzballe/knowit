@@ -15,5 +15,21 @@
     "2^19 = 524,288 — day 20 is still under a million.",
     "2^20 = 1,048,576, so day 21 passes it."
   ],
+  "keywords": [
+    "doubling",
+    "powers of two",
+    "exponential growth",
+    "money"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
   "source": "Powers of two"
 }

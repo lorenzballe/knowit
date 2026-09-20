@@ -17,5 +17,20 @@
     "Two leaves and internal walls, call it ~2,500 square metres of brickwork.",
     "2,500 x 60 = ~150,000. With party walls and returns, a few hundred thousand."
   ],
+  "keywords": [
+    "bricks",
+    "apartment building",
+    "construction",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Standard brick dimensions and coursing"
 }

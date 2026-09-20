@@ -1,11 +1,28 @@
 {
   "id": "pop_culture-2",
   "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did records get louder for thirty years?",
   "answer": "Because louder sounds better in a first comparison, so each release pushed the level up — flattening the quiet parts until the dynamics were gone. Streaming ended the incentive by normalising loudness on playback, so a squashed master now just sounds squashed.",
   "move": "The loudness war ended when the platforms turned everything down equally.",
+  "keywords": [
+    "loudness war",
+    "mastering",
+    "dynamic range",
+    "compression"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Vickers, Audio Engineering Society, 2010"
 }

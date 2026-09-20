@@ -14,5 +14,21 @@
   "answer": "If crime fell 12% nationally, this mayor did worse than doing nothing. A number with no comparison group cannot support a claim about cause — that is what a counterfactual is for.",
   "move": "\"Compared to what?\" is the most useful question in any argument.",
   "trap": "Judging a change without anything to compare it against.",
+  "keywords": [
+    "counterfactual",
+    "crime statistics",
+    "policy",
+    "comparison group"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
   "source": "Counterfactual reasoning"
 }

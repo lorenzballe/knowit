@@ -362,6 +362,50 @@ class Pill {
   /// varied contexts that make it stick.
   final Principle principle;
 
+  // ── The tags ──────────────────────────────────────────────────────────
+  //
+  // What the card is about and like, beyond what it asks — the levers the
+  // dealer pulls for one reader and not another. Kept as plain strings
+  // rather than enums: the bank is the authority on the vocabulary, and a
+  // value this build has not heard of must be dealt, not refused.
+
+  /// The genre under the topic and the strand under the genre, by id
+  /// (`space.the_moon`, `space.the_moon.tides`). Empty on a Thinking card.
+  final String genre;
+  final String strand;
+
+  /// Three to six lowercase handles for what is in the card.
+  final List<String> keywords;
+
+  /// When and where the matter is set.
+  final String era;
+  final String region;
+
+  /// What pulls the reader in, and the register it is read in.
+  final String hook;
+  final String mood;
+
+  /// How much number-sense the card asks for, 0 to 3.
+  final int numeracy;
+
+  /// A thing you can picture, an idea, or one through the other.
+  final String abstraction;
+
+  /// How soon the answer could go stale: evergreen, years, months.
+  final String shelfLife;
+
+  /// Sex, drugs, violence, gambling or death in detail.
+  final bool mature;
+
+  /// The language the card is written in.
+  final String language;
+
+  /// Cards a reader is better off having met first, by id.
+  final List<String> buildsOn;
+
+  /// The picture that would help, if one would.
+  final String figure;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -380,7 +424,40 @@ class Pill {
     this.counterpoint = '',
     this.difficulty = Difficulty.easy,
     this.principle = Principle.none,
+    this.genre = '',
+    this.strand = '',
+    this.keywords = const [],
+    this.era = '',
+    this.region = '',
+    this.hook = '',
+    this.mood = '',
+    this.numeracy = 0,
+    this.abstraction = '',
+    this.shelfLife = '',
+    this.mature = false,
+    this.language = 'en',
+    this.buildsOn = const [],
+    this.figure = '',
   });
+
+  /// Whether the card carries its tags. Every card in the bank does; a card
+  /// built in a test, or from a bundle older than the tags, may not.
+  bool get isTagged => era.isNotEmpty;
+
+  /// The tag values a reader can lean towards or away from, as
+  /// `dimension:value`, which is how the taste map keys them. A like on a
+  /// card nudges every one of these; a card sharing several with what was
+  /// liked is dealt sooner.
+  List<String> get traits => [
+    if (genre.isNotEmpty) 'genre:$genre',
+    if (strand.isNotEmpty) 'strand:$strand',
+    if (era.isNotEmpty) 'era:$era',
+    if (region.isNotEmpty && region != 'none') 'region:$region',
+    if (hook.isNotEmpty) 'hook:$hook',
+    if (mood.isNotEmpty) 'mood:$mood',
+    if (isTagged) 'numeracy:$numeracy',
+    if (abstraction.isNotEmpty) 'abstraction:$abstraction',
+  ];
 
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;

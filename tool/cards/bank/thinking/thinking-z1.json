@@ -14,5 +14,21 @@
   "answer": "In 40,000 claims, 100 are fraud and the flag catches most — say 80. But 2% of 40,000 is 800 flags. Eighty real against 800 raised: roughly one flagged claim in ten is fraud, and nine honest people get a letter.",
   "move": "A flag on a rare thing is mostly a flag on an ordinary one.",
   "trap": "The flag feels like an accusation, so it feels like evidence.",
+  "keywords": [
+    "base rate",
+    "fraud detection",
+    "false positives",
+    "insurance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Base rate neglect in claims screening"
 }

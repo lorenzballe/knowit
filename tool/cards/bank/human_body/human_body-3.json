@@ -1,11 +1,28 @@
 {
   "id": "human_body-3",
   "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Does your gut have a brain?",
   "answer": "It has a nervous system of its own — hundreds of millions of neurons in the wall of the intestine — and it keeps coordinating digestion when the connection to the brain is severed. It is the only organ system that can run its reflexes without asking.",
   "move": "The gut keeps working with the line to head office cut.",
+  "keywords": [
+    "enteric nervous system",
+    "gut",
+    "neurons",
+    "digestion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Furness, Nature Reviews Gastroenterology & Hepatology, 2012"
 }

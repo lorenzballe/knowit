@@ -14,5 +14,20 @@
   "answer": "Music lessons cost money and stable time, which travel with a great deal else. Randomised studies of music training find much smaller effects on school attainment than the correlation suggests — the gap between the two is the confounding.",
   "move": "Ask what else comes with the thing before you credit the thing.",
   "trap": "Accepting an appealing cause because the correlation is real.",
+  "keywords": [
+    "confounding",
+    "music lessons",
+    "school results",
+    "family income"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confounding by family background"
 }

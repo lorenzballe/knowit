@@ -1,11 +1,28 @@
 {
   "id": "space-3",
   "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Where does the atmosphere end?",
   "answer": "Nowhere in particular. The Karman line at 100 km is a round number chosen for convenience, not a boundary in nature. There is still enough air well above it to drag satellites down, which is why the space station has to be pushed back up several times a year.",
   "move": "The edge of space is an agreed convention, not a discovery.",
+  "keywords": [
+    "karman line",
+    "atmosphere",
+    "edge of space",
+    "orbit"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Federation Aeronautique Internationale; ISS reboost logs"
 }

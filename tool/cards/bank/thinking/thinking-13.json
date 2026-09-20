@@ -14,5 +14,20 @@
   "answer": "The first number becomes the reference the rest are measured from, even when you know it was chosen to impress. The effect persists when people are warned about it, and when the anchor is plainly arbitrary.",
   "move": "Whoever names the first number has already moved yours.",
   "trap": "Believing your sense of a fair price is your own.",
+  "keywords": [
+    "anchoring",
+    "house prices",
+    "estate agents",
+    "reference points"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Anchoring in negotiation"
 }

@@ -14,5 +14,20 @@
   "answer": "Every era built badly and well. Only the well-built survive to be admired, so any century looks like a golden age from far enough away. The comparison you want is against everything built then, most of which is gone.",
   "move": "Every past era looks well made, because the bad parts are not there to see.",
   "trap": "Judging a period by what is left of it.",
+  "keywords": [
+    "survivorship bias",
+    "old buildings",
+    "durability",
+    "selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship bias in the built environment"
 }

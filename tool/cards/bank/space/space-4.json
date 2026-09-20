@@ -1,11 +1,28 @@
 {
   "id": "space-4",
   "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Where did most of the tracked space junk come from?",
   "answer": "Two events. A 2007 anti-satellite test and a 2009 collision between a working satellite and a dead one together produced a large share of everything now catalogued in low orbit. The problem is not gradual litter; it is a handful of very bad days.",
   "move": "Most of the debris up there came from two afternoons.",
+  "keywords": [
+    "space junk",
+    "anti-satellite test",
+    "kessler syndrome",
+    "collisions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "NASA Orbital Debris Program Office"
 }

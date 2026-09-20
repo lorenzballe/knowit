@@ -14,5 +14,20 @@
   "answer": "Choosing when to measure by how you feel makes the readings a record of your mood rather than your weight. A fixed schedule you cannot move is the whole difference between data and self-portraiture.",
   "move": "Decide when you will measure before you know what it will say.",
   "trap": "The measurement is triggered by the thing being measured.",
+  "keywords": [
+    "confirmation bias",
+    "diets",
+    "measurement",
+    "timing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Selection of measurement occasions"
 }

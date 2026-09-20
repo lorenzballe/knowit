@@ -1,11 +1,29 @@
 {
   "id": "weird_facts-1",
   "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How much concrete has been poured?",
   "answer": "Most of it recently. China used more cement in three years — roughly 2011 to 2013 — than the United States used across the entire twentieth century. The built world is not an inheritance from the distant past so much as something assembled within living memory.",
   "move": "China poured more cement in three years than America did in a hundred.",
+  "keywords": [
+    "cement",
+    "china",
+    "construction",
+    "twentieth century"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
   "source": "US Geological Survey; International Cement Review"
 }

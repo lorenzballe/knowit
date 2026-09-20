@@ -15,5 +15,21 @@
   "move": "How rare the thing is matters more than how good the test is.",
   "trap": "Reading 90% as the chance the flag is right.",
   "simply": "Picture a village of 2,000. Four people are ill. The machine points at those four — and at about a hundred healthy people as well. When it points at you, look around: you are standing in a crowd of roughly a hundred, and four of you are ill.",
+  "keywords": [
+    "screening",
+    "false positives",
+    "base rate",
+    "bayes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Base rate neglect in universal screening"
 }

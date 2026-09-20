@@ -14,5 +14,20 @@
   "answer": "Diversification comes from holdings that fall for different reasons. Thirty companies exposed to the same rates, the same customers and the same supply chain behave in a crisis like a smaller number of positions.",
   "move": "Count the reasons things could fall, not the number of things.",
   "trap": "Counting holdings rather than the things that could sink them.",
+  "keywords": [
+    "diversification",
+    "independence",
+    "portfolios",
+    "correlation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Correlation in portfolio risk"
 }

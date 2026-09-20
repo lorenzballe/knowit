@@ -14,5 +14,20 @@
   "answer": "A test that never misses makes a negative decisive: if you had it, the test would have said so. The same test's positives are weak, because false positives are the only kind of error it makes. One test, two very different kinds of answer.",
   "move": "Ask which way the test can be wrong. It changes what each result means.",
   "trap": "Treating positive and negative results as equally informative.",
+  "keywords": [
+    "conditional probability",
+    "medical tests",
+    "false negatives",
+    "certainty"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Asymmetric test errors"
 }

@@ -1,6 +1,8 @@
 {
   "id": "thinking-d20",
   "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "If the exam certifies the knowledge, then the knowledge is what should be certified, however it was acquired. Locking the assessment behind three years of fees turns a measure of competence into a measure of who could afford to be measured.",
   "move": "What is on the exam and what the degree is for may be two different things.",
   "counterpoint": "Most of what a degree gives is not on the exam: the supervision, the arguing, the lab where you learn what an experiment feels like when it fails. Certify only the testable part and universities will drift towards teaching only the testable part.",
+  "keywords": [
+    "degrees",
+    "exams",
+    "credentials",
+    "universities"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in higher education"
 }

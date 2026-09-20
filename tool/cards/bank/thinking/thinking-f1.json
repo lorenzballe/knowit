@@ -14,5 +14,20 @@
   "answer": "The sample was chosen by its outcome. If half of all failed founders also woke at 5am, the habit tells you nothing. You cannot learn what causes success by studying only successes.",
   "move": "Ask who is missing from the sample before you argue about the finding.",
   "trap": "Arguing about whether waking early works, instead of about the sample.",
+  "keywords": [
+    "survivorship bias",
+    "founders",
+    "habits",
+    "success stories"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Selection on the dependent variable"
 }

@@ -1,11 +1,28 @@
 {
   "id": "economics-3",
   "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What made global manufacturing possible?",
   "answer": "A steel box. Before standard containers, cargo was loaded piece by piece and moving goods across an ocean could cost a substantial fraction of their value. Standardising the box — not the ship — collapsed that cost until where something is made stopped depending much on where it is sold.",
   "move": "The container, not the ship, is what moved the factories.",
+  "keywords": [
+    "shipping container",
+    "freight",
+    "standardisation",
+    "trade"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Levinson, The Box, 2006"
 }

@@ -36,6 +36,9 @@ One JSON object per card, in the schema you are given. The fields:
 | `value`, `unit`, `steps`, `hint` | | `number` (with `tolerance` if not whole), `estimate` (with `withinFactor`) |
 | `sides`, `counterpoint` | | `debate` |
 | `simply` | | any, and only when there is a genuinely second way in |
+| `genre`, `strand` | every card but `thinking` | as requested |
+| `keywords`, `era`, `region`, `hook`, `mood`, `numeracy`, `abstraction`, `shelf_life`, `mature`, `language` | yes | see §19 |
+| `builds_on`, `figure` | | when true |
 
 Kinds: `read` — turn it over and read. `pickOne` — commit to one option.
 `number` — work out an exact number. `estimate` — a Fermi estimate, judged
@@ -281,6 +284,53 @@ Run your card against this list and discard it yourself if it fails.
 9. Is the principle exactly what goes wrong in the trap?
 10. One idea?
 
+
+## 19. The tags
+
+A card is dealt to one reader and not another on its tags, so every tag
+is a claim about the card and is checked like one. Say what the card *is*,
+never what would make it dealt more.
+
+- `genre`, `strand`: the ones in the brief, by id. The card is *about* the
+  strand — not the genre in general, not a neighbouring strand. A card
+  about tides is `space.the_moon.tides`, not `space.the_moon.moon_dust`
+  with the tide mentioned. `thinking` cards have neither.
+- `keywords`: three to six, lowercase, one to four words each: the
+  things, people, places and ideas in the card. Nouns a reader would
+  search for. Never the topic name alone, never adjectives.
+- `era`: when the matter is set. `timeless` for a mechanism, a principle,
+  a thing that is true of every year; otherwise `ancient` (before 500),
+  `medieval` (to 1500), `early_modern` (to 1800), `nineteenth`,
+  `twentieth`, `recent` (the last twenty-five years).
+- `region`: where it is set. `none` for a card with no place in it; `world`
+  when it is everywhere at once; otherwise the continent it is about.
+- `hook`: what pulls the reader in. `misconception` — a belief to overturn;
+  `puzzle` — something to work out; `story` — something that happened;
+  `number` — a figure that surprises; `mechanism` — how a thing works;
+  `paradox` — two truths that clash; `practical` — something to use today;
+  `origin` — where a thing came from. One, the strongest.
+- `mood`: `wonder`, `practical`, `sober`, `dark` (death, cruelty, loss,
+  told plainly), `playful`.
+- `numeracy`: 0 no number; 1 a figure to take in; 2 a comparison, a ratio,
+  a rate; 3 a calculation. A `number` or `estimate` card is at least 2.
+- `abstraction`: `concrete` — a thing you can picture; `abstract` — an
+  idea; `mixed` — an idea reached through a thing.
+- `shelf_life`: `evergreen` unless the answer could be different in a few
+  years (`years`: a record, a price, a count, a policy) or within the year
+  (`months`: anything about a current event). Anything but `evergreen` is
+  re-checked before it is dealt again.
+- `mature`: true when the card has sex, drugs, violence, gambling or death
+  in detail. A body count in a history card is not detail; how the plague
+  killed is.
+- `language`: the language the card is written in. `en`.
+- `builds_on`: up to three ids from the brief that a reader is better off
+  having met first. Empty is the norm; a card that needs another card is
+  usually a card that needs rewriting.
+- `figure`: the picture that would help, if one would — `dots` (a hundred
+  of something, a few filled), `nested_circles` (a part inside a whole),
+  `doubling` (a curve that runs away), `bars`, `timeline`, `map` — else
+  `none`.
+
 ## 18. The critic
 
 A second pass, with the opposite brief: **find why this card must be
@@ -288,7 +338,8 @@ rejected.** Never improve it.
 
 The critic opens the reference and says whether it supports the claim; redoes
 every number; tries to defend each wrong option; looks for the textbook
-instance; checks the blacklist. It returns `reject`, `fix` or `pass` with one
+instance; checks the blacklist; reads the tags against the card and corrects
+one that is not true of it. It returns `reject`, `fix` or `pass` with one
 line of reason. A number it cannot verify is a `reject` — never the benefit
 of the doubt.
 

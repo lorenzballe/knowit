@@ -14,5 +14,21 @@
   "answer": "When the thing being looked for almost never happens, even a good detector produces mostly false alarms — there is simply far more of everything else. The number worth watching is how many real failures it misses, not how many alarms are quiet.",
   "move": "Judge a detector by what it misses, not by how often it cries wolf.",
   "trap": "Judging a detector by how often its alarms are real.",
+  "keywords": [
+    "base rate",
+    "sensors",
+    "false alarms",
+    "maintenance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Precision and recall on rare events"
 }

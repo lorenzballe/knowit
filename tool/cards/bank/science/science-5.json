@@ -1,11 +1,28 @@
 {
   "id": "science-5",
   "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Where did the nitrogen in your body come from?",
   "answer": "Roughly half of it passed through a factory. Air is 78% nitrogen that living things cannot use; the Haber-Bosch process forces it into fertiliser. That reaction now underwrites the food supply of about half the people alive, which makes it hard to name a more consequential chemistry.",
   "move": "About half the nitrogen atoms in you came out of a chemical plant.",
+  "keywords": [
+    "haber-bosch",
+    "nitrogen",
+    "fertiliser",
+    "ammonia"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Erisman et al., Nature Geoscience, 2008"
 }

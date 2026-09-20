@@ -14,5 +14,20 @@
   "answer": "You pay €50 instead of €60, so you save a sixth. One item in three is free, which sounds like 33% — but it is the cheapest item, and it was never a third of the money.",
   "move": "One item in three free is nothing like a third off.",
   "trap": "The word \"free\" attaches to an item, not to the bill.",
+  "keywords": [
+    "discounts",
+    "percentages",
+    "promotions",
+    "shopping"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Framing of multi-buy discounts"
 }

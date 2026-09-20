@@ -14,5 +14,20 @@
   "answer": "The comparison assumes the two groups are alike, and they are not: hospitals concentrate the sickest people. Judging a treatment needs comparable groups, which is what a control group is for.",
   "move": "Any statistic comparing two groups invites one question: who ended up in each?",
   "trap": "Treating a place where sick people are sent as a cause of their outcome.",
+  "keywords": [
+    "confounding",
+    "hospitals",
+    "mortality",
+    "comparison"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Confounding by indication"
 }

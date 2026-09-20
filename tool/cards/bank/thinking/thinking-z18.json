@@ -14,5 +14,20 @@
   "answer": "Vitamin takers exercise more, smoke less, and see doctors sooner. Trials that assign vitamins at random to people who were not already taking them mostly find nothing, which is what the correlation was hiding.",
   "move": "The healthy-user effect turns almost any voluntary habit into a miracle.",
   "trap": "The pill is easy to measure; the life around it is not.",
+  "keywords": [
+    "confounding",
+    "vitamins",
+    "healthy users",
+    "trials"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Healthy-user bias in nutrition studies"
 }

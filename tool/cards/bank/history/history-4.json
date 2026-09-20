@@ -1,11 +1,28 @@
 {
   "id": "history-4",
   "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "When was aluminium a luxury metal?",
   "answer": "In the 1850s. It is one of the commonest elements in the crust but was brutally hard to separate, so it cost more than gold — Napoleon III is said to have reserved aluminium cutlery for his most important guests. A new electrolytic process collapsed the price within about a decade.",
   "move": "Aluminium went from imperial cutlery to disposable foil in one lifetime.",
+  "keywords": [
+    "aluminium",
+    "napoleon iii",
+    "electrolysis",
+    "luxury"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Hall-Heroult process, 1886"
 }

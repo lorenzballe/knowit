@@ -14,5 +14,20 @@
   "answer": "Letters survive when someone kept them, which usually means the writer came home. Letters from those who did not are far likelier to have been lost — so the archive is filtered by the outcome you might be trying to study.",
   "move": "An archive is not a sample. It is what somebody chose to keep.",
   "trap": "Treating an archive as a sample of what was written.",
+  "keywords": [
+    "survivorship bias",
+    "wartime letters",
+    "morale",
+    "sources"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship in historical sources"
 }

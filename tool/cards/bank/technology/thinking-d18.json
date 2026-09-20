@@ -1,6 +1,8 @@
 {
   "id": "thinking-d18",
   "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "A promise made to eight thousand people that nobody else ever sees cannot be checked, contradicted or held against you. Broadcast advertising was accountable precisely because everyone saw the same claim — remove that and a campaign can tell every group a different story.",
   "move": "Both sides are describing the same feature: reaching a few people cheaply.",
   "counterpoint": "Targeting is also what lets a small campaign reach the people it is actually for, without buying national airtime. Ban it and the advantage returns to whoever can already afford to talk to everyone, which is the incumbent.",
+  "keywords": [
+    "microtargeting",
+    "political ads",
+    "elections",
+    "privacy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in election law"
 }

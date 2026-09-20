@@ -14,5 +14,21 @@
   "answer": "Three to the ninth is about 20,000. The first days look like nothing at all, which is exactly why anything spreading this way is always noticed too late to be stopped early.",
   "move": "Nine days from one person to a whole town, and the first six look like nothing.",
   "trap": "Repeated multiplication feels like repeated addition.",
+  "keywords": [
+    "exponential growth",
+    "rumours",
+    "spread",
+    "powers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
   "source": "Powers of three"
 }

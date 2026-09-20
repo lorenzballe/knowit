@@ -14,5 +14,20 @@
   "answer": "The nine months are spent whatever happens next. Framing it as salvage is what turns a stopped project into a shipped one nobody uses, because it makes finishing feel like recovering rather than spending.",
   "move": "You cannot get spent time back by spending more of it.",
   "trap": "Nine months of work feels like something that can still be recovered.",
+  "keywords": [
+    "sunk cost",
+    "product teams",
+    "features",
+    "stopping"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Escalation of commitment"
 }

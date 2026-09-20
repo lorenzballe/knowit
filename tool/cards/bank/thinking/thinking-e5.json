@@ -16,5 +16,20 @@
     "Adding the rest brings it to the order of a thousand hours per minute.",
     "That is more than a month of footage produced every minute."
   ],
+  "keywords": [
+    "video uploads",
+    "platforms",
+    "scale",
+    "fermi estimate"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Platform disclosures, order-of-magnitude"
 }

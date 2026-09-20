@@ -14,5 +14,20 @@
   "answer": "The first figure becomes the reference point, and €80 is then read as a saving rather than as a price. It works on people who doubt the original price was ever real — which is why the practice is regulated rather than merely mocked.",
   "move": "The crossed-out number is not information. It is the ruler.",
   "trap": "Thinking the effect depends on believing the old price.",
+  "keywords": [
+    "anchoring",
+    "reference prices",
+    "discounts",
+    "retail"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Reference price effects in retail"
 }

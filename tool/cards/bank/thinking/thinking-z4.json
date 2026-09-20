@@ -14,5 +14,20 @@
   "answer": "Hundreds of films were released each year in the seventies, and the forgettable ones stopped being shown decades ago. You are comparing this year's whole output against fifty years of filtering, which is not a comparison anyone can win.",
   "move": "Every decade was mostly rubbish. Only the good part gets carried forward.",
   "trap": "Comparing everything made now against what survived fifty years.",
+  "keywords": [
+    "survivorship bias",
+    "films",
+    "nostalgia",
+    "selection"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship in cultural comparison"
 }

@@ -16,5 +16,20 @@
     "People actually speak for perhaps 2 hours of a waking day.",
     "130 x 120 = ~15,600 words."
   ],
+  "keywords": [
+    "words spoken",
+    "speech",
+    "daily life",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Mehl et al., Science, 2007"
 }

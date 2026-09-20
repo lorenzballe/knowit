@@ -16,5 +16,20 @@
     "From 2 m to 4.40 m at 20 cm a year takes 12 years... (4.40 - 2.00) / 0.20 = 12.",
     "So it passes 5 m during the growth of year 13. Counting the first summer as one: summer 13."
   ],
+  "keywords": [
+    "arithmetic",
+    "growth",
+    "hedge",
+    "off-by-one"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Net-progress problems"
 }

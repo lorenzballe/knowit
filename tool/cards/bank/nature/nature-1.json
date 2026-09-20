@@ -1,11 +1,28 @@
 {
   "id": "nature-1",
   "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What fertilises the Amazon?",
   "answer": "Dust from Chad. Heavy rain strips phosphorus out of rainforest soil, and the shortfall is largely made up by dust blown across the Atlantic from the Bodele Depression — a dried lakebed that supplies a striking share of the phosphorus reaching the basin each year.",
   "move": "The Amazon is fed by a dried-up lake three thousand miles away.",
+  "keywords": [
+    "amazon",
+    "saharan dust",
+    "phosphorus",
+    "bodélé depression"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Yu et al., Geophysical Research Letters, 2015"
 }

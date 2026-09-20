@@ -14,5 +14,21 @@
   "answer": "A 5% threshold means one false positive in twenty tests on average. Run twenty tests and finding one \"result\" is what should happen if nothing is going on. The fix is to say up front what you are testing.",
   "move": "Ask how many things they measured before you believe the one they report.",
   "trap": "Reading a single p-value without asking how many tests were run.",
+  "keywords": [
+    "multiple comparisons",
+    "p-values",
+    "nutrition studies",
+    "false positives"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
   "source": "Multiple comparisons problem"
 }

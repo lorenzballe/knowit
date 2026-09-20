@@ -1,11 +1,28 @@
 {
   "id": "weird_facts-2",
   "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Where does new mercury pollution come from?",
   "answer": "Mostly from people panning for gold. Small-scale artisanal mining, not heavy industry, is the largest single source of mercury released by humans — miners mix it with ore to bind the gold, then burn it off, usually with no protection and often near where they live.",
   "move": "The biggest mercury polluter on Earth is people looking for gold by hand.",
+  "keywords": [
+    "mercury",
+    "artisanal gold mining",
+    "pollution",
+    "amalgam"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "UNEP Global Mercury Assessment"
 }

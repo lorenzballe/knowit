@@ -15,5 +15,21 @@
   "move": "Three percentage points on a growth rate cost this landfill twelve years.",
   "trap": "Treating a few extra percent as a small change.",
   "simply": "A pile that doubles every ten years is nothing for ages and then swallows the room. Make it double every seven instead and you do not add a little — you lose a decade.",
+  "keywords": [
+    "exponential growth",
+    "landfill",
+    "doubling time",
+    "waste"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
   "source": "Doubling time and compound growth"
 }

@@ -15,5 +15,20 @@
     "Each unordered pair gives exactly one upward journey, so halve it.",
     "380 / 2 = 190."
   ],
+  "keywords": [
+    "combinations",
+    "pairs",
+    "counting",
+    "lifts"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Combinations, C(20,2)"
 }

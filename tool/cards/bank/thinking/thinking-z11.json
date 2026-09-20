@@ -14,5 +14,20 @@
   "answer": "The expensive item sets the scale everything else is read against. Its job is not to sell; it is to make the middle of the menu feel like restraint. Remove it and the same €40 dish starts to feel expensive.",
   "move": "The dish nobody orders is doing most of the work on the menu.",
   "trap": "Assuming a price is there to be paid.",
+  "keywords": [
+    "anchoring",
+    "menus",
+    "restaurants",
+    "pricing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Anchoring in menu design"
 }

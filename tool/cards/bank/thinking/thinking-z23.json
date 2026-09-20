@@ -14,5 +14,20 @@
   "answer": "The 200 read are gone whichever way you choose. The only live question is whether the next 200 beat anything else you could read — and the answer is usually no, which is why so many people finish books they disliked.",
   "move": "The only pages that can still cost you are the ones ahead.",
   "trap": "The pages behind you feel like an investment to protect.",
+  "keywords": [
+    "sunk cost",
+    "novels",
+    "reading",
+    "quitting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Sunk cost in everyday choices"
 }

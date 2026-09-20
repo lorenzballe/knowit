@@ -1,6 +1,8 @@
 {
   "id": "thinking-d17",
   "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "A placebo arm is the cleanest measurement there is, needs fewer patients, and answers the question that regulators actually ask. Against an existing drug you can only show something is not much worse, which is how a slow drift towards weaker medicines begins.",
   "move": "The cleanest experiment and the useful question are pulling in opposite directions here.",
   "counterpoint": "It means deliberately giving a patient nothing when something known to help exists. And the answer it produces is not the one anybody needs: no doctor is choosing between this drug and nothing, they are choosing between this drug and the one already on the shelf.",
+  "keywords": [
+    "placebo controls",
+    "clinical trials",
+    "research ethics",
+    "helsinki declaration"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Declaration of Helsinki, contested since 2000"
 }

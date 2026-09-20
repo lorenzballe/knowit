@@ -5,8 +5,8 @@
     python3 tool/cards/check.py --strict a.json # generated cards, held higher
 
 Two levels. The bank is checked against the floor every card must clear:
-shape, limits, the listicle, no two cards asking the same thing, and a
-calendar that names real questions. A *generated* card is also checked
+shape, limits, the listicle, the tags and the strand they name, no two cards
+asking the same thing, and a calendar that names real questions. A *generated* card is also checked
 against the rules the model was given — the tighter word counts, a real
 reference, the forbidden words — because those are the rules of the house
 and the house was built after the first hundred and seventy.
@@ -28,6 +28,8 @@ try:
 except ImportError:  # pragma: no cover - the workflow installs it
     jsonschema = None
 
+import genres
+
 HERE = Path(__file__).resolve().parent
 BANK = HERE / "bank"
 SCHEMA = HERE / "schema.json"
@@ -36,6 +38,43 @@ EDITIONS = HERE / "editions.json"
 
 GRADED = {"pickOne", "number", "estimate"}
 ASKS = GRADED | {"debate"}
+
+# The tags: what a card is *about* and *like*, beyond what it asks. Every
+# value here is a lever the dealer can pull for one reader and not another,
+# which is the whole reason they exist — a tag nothing reads is a tag nobody
+# keeps accurate. The vocabularies are the schema's; this is the one place
+# in Python that names them, so the generator's output types are built from
+# here and cannot drift.
+TAGS: dict[str, list[str]] = {
+    key: list(value["enum"])
+    for key, value in json.loads((HERE / "schema.json").read_text(encoding="utf-8"))["properties"].items()
+    if key in ("era", "region", "hook", "mood", "abstraction", "shelf_life", "figure", "language")
+}
+NUMERACY_MAX = 3
+# Lowercase words in any alphabet, with the punctuation a term can carry:
+# "bodélé depression", "a/b tests", "carbon-14", "money's worth".
+KEYWORD = re.compile(r"^[^\W_][\w '\-/&.]*$")
+
+# The tags every card carries, in the order a file shows them.
+TAG_KEYS = ("keywords", "era", "region", "hook", "mood", "numeracy", "abstraction", "shelf_life", "mature", "language")
+
+# The order keys take in a file: what it is, what it asks, what it answers,
+# what it is about, where it came from. Written this way by everything that
+# writes a card, so two files read alike and a diff shows a change rather
+# than a reordering.
+KEY_ORDER = [
+    "id", "topic", "genre", "strand", "kind", "difficulty", "principle", "question",
+    "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
+    "answer", "move", "trap", "hint", "steps", "simply", "counterpoint",
+    *TAG_KEYS, "builds_on", "figure",
+    "source", "reference", "written", "disabled",
+]
+
+
+def ordered(card: dict) -> dict:
+    """The card with its keys in the house order; unknown keys go last."""
+    rank = {k: i for i, k in enumerate(KEY_ORDER)}
+    return {k: card[k] for k in sorted(public(card), key=lambda k: (rank.get(k, len(rank)), k))}
 
 # A question of the day may not come round again within this many editions.
 # Two months, whatever the pool: the calendar is frozen, so the window it was
@@ -226,8 +265,44 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
         if phrase in hay:
             problems.append(f"built on banned material: {phrase!r}")
 
+    problems.extend(check_tags(card))
+
     if strict:
         problems.extend(check_strict(card))
+    return problems
+
+
+def check_tags(card: dict) -> list[str]:
+    """The tags: present, in the vocabulary, and telling the truth about
+    the kind of card they sit on. The schema has already checked the shape."""
+    problems: list[str] = []
+    topic = card["topic"]
+    kind = card["kind"]
+    genre = card.get("genre")
+    strand = card.get("strand")
+    if topic == "thinking":
+        if genre or strand:
+            problems.append("a thinking card has no genre: it is the principle in the open")
+    else:
+        if not genre or not strand:
+            problems.append(f"a {topic} card names its genre and strand")
+        else:
+            known = genres.strands_by_id().get(strand)
+            if known is None:
+                problems.append(f"no strand is called {strand!r}")
+            elif known.genre != genre:
+                problems.append(f"strand {strand!r} is not under genre {genre!r}")
+            elif known.topic != topic:
+                problems.append(f"strand {strand!r} belongs to {known.topic}, not {topic}")
+    for word in card.get("keywords", []):
+        if word != word.lower() or not KEYWORD.match(word):
+            problems.append(f"keyword {word!r} is not lowercase words")
+        elif len(word.split()) > 4:
+            problems.append(f"keyword {word!r} runs past four words")
+    if kind in ("number", "estimate") and card.get("numeracy", 0) < 2:
+        problems.append(f"a {kind} card works a number out: numeracy is at least 2")
+    if card["id"] in card.get("builds_on", []):
+        problems.append("a card does not build on itself")
     return problems
 
 
@@ -326,6 +401,21 @@ def check_twins(cards: list[dict], against: list[dict] | None = None) -> list[st
     return problems
 
 
+def check_links(cards: list[dict], against: list[dict] | None = None) -> list[str]:
+    """Every `builds_on` names a card in the bank, and never a retired one."""
+    pool = {c["id"]: c for c in (against if against is not None else cards)}
+    for c in cards:
+        pool.setdefault(c["id"], c)
+    problems = []
+    for c in cards:
+        for other in c.get("builds_on", []):
+            if other not in pool:
+                problems.append(f"{c['id']} builds on {other}, which is not in the bank")
+            elif pool[other].get("disabled"):
+                problems.append(f"{c['id']} builds on {other}, which is retired")
+    return problems
+
+
 def check_editions(editions: dict, cards: list[dict]) -> list[str]:
     problems = []
     by_id = {c["id"]: c for c in cards}
@@ -362,7 +452,7 @@ def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool 
         seen.add(c["id"])
         if problems:
             out[c["id"]] = problems
-    whole = check_twins(cards)
+    whole = check_twins(cards) + check_links(cards)
     if editions is not None:
         whole += check_editions(editions, cards)
     if whole:
@@ -386,7 +476,7 @@ def main(argv: list[str] | None = None) -> int:
             for p in problems:
                 print(f"{path}: {p}")
             bad += bool(problems)
-        for p in check_twins(fresh, against=bank):
+        for p in check_twins(fresh, against=bank) + check_links(fresh, against=bank):
             print(f"*: {p}")
             bad += 1
         print(f"{len(fresh) - bad} of {len(fresh)} pass" if bad else f"all {len(fresh)} pass")

@@ -14,5 +14,20 @@
   "answer": "If defects fell 15% everywhere that quarter, the new supplier did worse than doing nothing. A number with no comparison cannot support a claim about cause, however large it is.",
   "move": "\"Compared to what\" beats any figure quoted on its own.",
   "trap": "Judging a change with nothing to compare it to.",
+  "keywords": [
+    "counterfactual",
+    "defects",
+    "suppliers",
+    "comparison group"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Counterfactual reasoning in operations"
 }

@@ -1,11 +1,28 @@
 {
   "id": "pop_culture-5",
   "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How were television ratings actually measured?",
   "answer": "By a few thousand households standing in for a nation. Nielsen fitted meters to a small sample and extrapolated; shows lived or died on the result. Whole genres disappeared because the sample did not happen to contain many of the people who watched them.",
   "move": "A few thousand homes decided what a hundred million people could watch.",
+  "keywords": [
+    "nielsen ratings",
+    "audience measurement",
+    "sampling",
+    "television"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Nielsen ratings methodology"
 }

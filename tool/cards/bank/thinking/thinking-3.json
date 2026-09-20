@@ -14,5 +14,20 @@
   "answer": "They were always going to be able to name a rejected candidate among the other two, whoever wins — so hearing one name tells you nothing about you. Your one-in-three stands, and the remaining finalist now carries two-thirds.",
   "move": "Information only moves the odds if it could have come out differently.",
   "trap": "Two candidates left, so it feels like a coin flip.",
+  "keywords": [
+    "conditional probability",
+    "monty hall",
+    "interviews",
+    "information"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "The three prisoners problem, Gardner 1959"
 }

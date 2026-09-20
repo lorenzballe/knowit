@@ -1,11 +1,28 @@
 {
   "id": "economics-1",
   "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What does GDP actually count?",
   "answer": "Activity, not wellbeing. A car crash raises it: the ambulance, the repairs, the legal fees all count. Cleaning up after a hurricane counts. Raising your own children does not. Simon Kuznets, who built the measure in 1934, warned in the same report that it should never be read as welfare.",
   "move": "GDP counts the crash and ignores the childcare. That was known from day one.",
+  "keywords": [
+    "gdp",
+    "national accounts",
+    "measurement",
+    "growth"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Kuznets, National Income 1929-1932, US Senate, 1934"
 }

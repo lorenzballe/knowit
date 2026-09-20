@@ -1,11 +1,28 @@
 {
   "id": "history-2",
   "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "How do you date something from the last seventy years?",
   "answer": "By the bomb. Atmospheric nuclear testing from 1955 to 1963 nearly doubled carbon-14 in the air, then it declined on a known curve. Anything alive during that window carries a datable signature, accurate to a year or two — used on forged paintings, wine and human remains.",
   "move": "Nuclear testing accidentally left the world a precise clock.",
+  "keywords": [
+    "carbon-14",
+    "bomb pulse",
+    "nuclear tests",
+    "dating"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating"
 }

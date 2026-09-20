@@ -14,5 +14,21 @@
   "answer": "The ratio grows at about 2% a year, and 1.02 to the thirtieth is roughly 1.8. Two points a year is not a small difference in the end; it is nearly double.",
   "move": "Two percentage points, compounded for a career, is a doubling.",
   "trap": "Reading a two-point gap as a small permanent difference.",
+  "keywords": [
+    "exponential growth",
+    "budgets",
+    "compounding",
+    "ratios"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
   "source": "Compound growth of a ratio"
 }

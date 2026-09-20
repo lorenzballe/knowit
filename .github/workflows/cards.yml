@@ -48,6 +48,14 @@ jobs:
       - name: The bank as it stands has to pass its own gate
         run: python3 tool/cards/check.py
 
+      # A card that reached the bank without tags — a hand edit, a bundle
+      # from before the tags — is tagged before anything new is written.
+      # Usually nothing to do.
+      - name: Tag what has no tags
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 tool/cards/tag.py --missing
+
       - name: Write the cards
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

@@ -1,11 +1,28 @@
 {
   "id": "weird_facts-5",
   "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What runs out before oil?",
   "answer": "Possibly phosphorus. There is no substitute for it in fertiliser and no way to synthesise it; economically minable phosphate rock sits in a handful of countries, with a very large share in one disputed territory. Meanwhile a great deal of it is flushed into the sea through sewage.",
   "move": "You can invent a new energy source. You cannot invent a new element.",
+  "keywords": [
+    "phosphorus",
+    "phosphate rock",
+    "fertiliser",
+    "peak phosphorus"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "USGS phosphate rock; Cordell et al., Global Environmental Change, 2009"
 }

@@ -14,5 +14,20 @@
   "answer": "Risk feels like whatever the mind can picture fastest, and a vivid recent story is very fast. The measured jump is real and fades slowly, which is why coverage shapes fear far more than statistics do.",
   "move": "Fear tracks vividness. It does not track frequency.",
   "trap": "How easily an example comes to mind stands in for how often it happens.",
+  "keywords": [
+    "availability",
+    "shark attacks",
+    "risk perception",
+    "news"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Availability heuristic in risk perception"
 }

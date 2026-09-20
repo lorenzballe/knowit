@@ -1,6 +1,8 @@
 {
   "id": "thinking-d9",
   "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -12,5 +14,20 @@
   "answer": "A single class spanning four years of attainment fails at both ends: the strongest coast, the weakest drown, and the teacher aims at a middle that nobody occupies. Grouping lets the material meet the pupil where they are, which is the one thing that reliably moves attainment.",
   "move": "Ask what happens to the child placed in the bottom set by mistake, and how they would ever get out.",
   "counterpoint": "The gains concentrate almost entirely in the top set, and the bottom set loses more than the top gains. Placement tracks family income as much as ability, gets made early, and rarely gets revisited — so a decision about a nine-year-old quietly becomes a decision about their adult life.",
+  "keywords": [
+    "ability grouping",
+    "streaming",
+    "schools",
+    "expectations"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
   "source": "Contested question in education research"
 }

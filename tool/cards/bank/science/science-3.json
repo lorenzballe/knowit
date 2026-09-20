@@ -1,11 +1,28 @@
 {
   "id": "science-3",
   "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Did we create antibiotic resistance?",
   "answer": "We selected it; we did not invent it. Genes conferring resistance to several antibiotic classes have been recovered from 30,000-year-old permafrost, long before any human made a drug. Resistance is an ancient feature of microbial life that our use of antibiotics turned into an emergency.",
   "move": "Resistance genes are older than agriculture.",
+  "keywords": [
+    "antibiotic resistance",
+    "permafrost",
+    "ancient genes",
+    "selection"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "D'Costa et al., Nature, 2011"
 }

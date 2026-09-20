@@ -14,5 +14,20 @@
   "answer": "You cannot see the dozen that opened and shut on the same street. A street where restaurants fail fast and a street where they thrive both end up showing you only the ones still trading.",
   "move": "Ask what used to be in the empty unit.",
   "trap": "Only the survivors are still standing there to be counted.",
+  "keywords": [
+    "survivorship bias",
+    "restaurants",
+    "failures",
+    "selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Survivorship in local business"
 }

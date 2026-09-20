@@ -14,5 +14,20 @@
   "answer": "The €400m is gone whichever way you choose, so it cannot favour either. The only live question is whether the remaining €600m buys more than €600m of anything else. Counting the spent money is how projects that everyone knows are failing get finished.",
   "move": "The money already spent has no vote.",
   "trap": "The spent money feels like it would be wasted by stopping.",
+  "keywords": [
+    "sunk cost",
+    "tunnel",
+    "public projects",
+    "decisions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Sunk cost in public works"
 }

@@ -14,5 +14,20 @@
   "answer": "You reach for a remedy when you feel worst, and the worst point of anything that fluctuates is usually followed by improvement whatever you do. That is why almost every treatment tried at the bottom appears to work.",
   "move": "Anything you try at your worst moment will seem to help.",
   "trap": "The improvement is real, so it feels like it needs a cause.",
+  "keywords": [
+    "regression to the mean",
+    "cold remedies",
+    "recovery",
+    "timing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Regression to the mean in self-treatment"
 }

@@ -14,5 +14,20 @@
   "answer": "There may be a real case for varied backgrounds, but that case does not come from the run. As stated, the manager is treating independent decisions as though the earlier ones changed the odds of the next — the same move as expecting tails after four heads.",
   "move": "A good reason for a decision is not the same as the feeling that produced it.",
   "trap": "Feeling that a run has to be balanced out.",
+  "keywords": [
+    "independence",
+    "hiring",
+    "runs",
+    "variety"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Gambler's fallacy in hiring"
 }

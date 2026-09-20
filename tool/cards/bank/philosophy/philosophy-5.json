@@ -1,11 +1,28 @@
 {
   "id": "philosophy-5",
   "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Is a bigger world a better one?",
   "answer": "Take a happy population. Adding people whose lives are worth living seems no worse. Repeat, trading a little quality for more numbers each time, and you arrive at an enormous population whose lives are barely worth living — rated better than the first. Forty years on, nobody has an agreed way out.",
   "move": "Every reasonable-looking rule about population leads somewhere nobody accepts.",
+  "keywords": [
+    "repugnant conclusion",
+    "population ethics",
+    "parfit",
+    "utilitarianism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Parfit, Reasons and Persons, 1984; the repugnant conclusion"
 }

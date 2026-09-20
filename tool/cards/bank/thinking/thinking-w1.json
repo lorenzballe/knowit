@@ -14,5 +14,20 @@
   "answer": "One in a million per person per day, across 60 million people, is 60 occurrences a day. Astonishing coincidences are guaranteed at scale — which is why a coincidence needs to be surprising *given how many chances there were*.",
   "move": "With enough people, the miraculous is scheduled.",
   "trap": "Hearing \"one in a million\" as \"essentially impossible\".",
+  "keywords": [
+    "coincidence",
+    "law of large numbers",
+    "rare events",
+    "scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
   "source": "Law of truly large numbers"
 }
