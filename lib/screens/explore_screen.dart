@@ -357,7 +357,7 @@ class _Head extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        hintText: 'Search every card',
+                        hintText: context.l10n.searchEveryCard,
                         hintStyle: AppText.body(
                           size: 14.5,
                           color: context.p.inkFaint,
@@ -375,7 +375,7 @@ class _Head extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 12),
               child: Text(
-                'Cancel',
+                context.l10n.cancel,
                 style: AppText.body(
                   size: 14,
                   weight: FontWeight.w500,
@@ -404,7 +404,7 @@ class _Head extends StatelessWidget {
         Semantics(
           key: const ValueKey('explore-search'),
           button: true,
-          label: 'Search every card',
+          label: context.l10n.searchEveryCard,
           child: GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onOpenSearch,
