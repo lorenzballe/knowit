@@ -14,6 +14,7 @@ import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
 import 'path_screen.dart';
+import 'week_screen.dart';
 import 'progress_text.dart';
 
 /// Your journey — artboard 83a: the numbers first, the card to say last.
@@ -104,6 +105,8 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                       children: [
                         _Score(app: app),
+                        const SizedBox(height: 20),
+                        _Week(app: app),
                         const SizedBox(height: 20),
                         _Level(app: app),
                         const SizedBox(height: 18),
@@ -378,6 +381,100 @@ class _Level extends StatelessWidget {
                         : (step == null
                               ? l.nextRung(rungName(context, next))
                               : l.stepThenRung(step, rungName(context, next))),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 11.5,
+                      weight: FontWeight.w500,
+                      height: 1.35,
+                      color: ink.withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 17,
+                  color: ink.withValues(alpha: 0.3),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The week: seven bars and how many were kept, under the score and above
+/// the level — the day is too close to see a direction from, and the level
+/// too far. Tapping opens the week read back in full.
+class _Week extends StatelessWidget {
+  const _Week({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    final WeekReport week = app.thisWeek;
+
+    return Semantics(
+      button: true,
+      key: const ValueKey('journey-week'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => WeekScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
+            ),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    l.yourWeek,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: ink,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  l.nOfSeven(week.days),
+                  style: AppText.body(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    color: ink.withValues(alpha: 0.45),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            WeekStrip(week: app.weekCompletion(), barHeight: 26),
+            const SizedBox(height: 7),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    week.empty
+                        ? l.nothingThisWeekYet
+                        : week.kept
+                        ? l.keptDaysOfSeven(week.days)
+                        : l.daysOfSevenFiveKeeps(week.days),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.body(

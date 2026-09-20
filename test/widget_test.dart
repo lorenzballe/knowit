@@ -1504,6 +1504,18 @@ void main() {
       expect(find.text('5'), findsOneWidget);
       expect(find.text('points'), findsOneWidget);
       expect(find.text('5 read'), findsOneWidget);
+      // The week sits under the score and above the level: today is the
+      // first day kept, and the strip says so. It opens the week in full.
+      expect(find.byKey(const ValueKey('journey-week')), findsOneWidget);
+      expect(find.text('1 of 7'), findsOneWidget);
+      expect(find.text('1 day of seven. Five keeps the week.'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('journey-week')));
+      await _settle(tester);
+      expect(find.text('Your week'), findsOneWidget);
+      expect(find.text('WHERE THIS IS GOING'), findsOneWidget);
+      await tester.tap(find.byType(BackCircle));
+      await _settle(tester);
+      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
       expect(find.text('Level 1 · Day one'), findsOneWidget);
       expect(find.textContaining('15 more cards to read'), findsOneWidget);
       expect(find.textContaining('+5 today'), findsOneWidget);

@@ -25,7 +25,6 @@ import 'progress_text.dart';
 import 'friends_screen.dart';
 import 'journey_screen.dart';
 import 'saved_screen.dart';
-import 'week_screen.dart';
 import 'how_screen.dart';
 import 'paywall_screen.dart';
 import 'topics_screen.dart';
@@ -361,19 +360,6 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-          // The week, which is the only distance from which a direction is
-          // visible at all — the day is too close to it.
-          _LinkRow(
-            label: context.l10n.yourWeek,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (routeContext) => WeekScreen(
-                  app: app,
-                  onBack: () => Navigator.of(routeContext).pop(),
-                ),
-              ),
-            ),
-          ),
           // Your own shelf, which is a thing you own and not a place to go
           // looking — so it lives here, with the rest of what is yours,
           // rather than taking one of three tabs.
