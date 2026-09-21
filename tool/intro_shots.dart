@@ -80,9 +80,10 @@ void main() {
     );
 
     for (int i = 0; i < 5; i++) {
-      // Never pumpAndSettle: the ambient loops never end. A few frames is
-      // enough to let the entrances play and catch the motion mid-flight.
-      for (int f = 0; f < 8; f++) {
+      // Never pumpAndSettle: the ambient loops never end. Two seconds of
+      // frames lets every entrance land, so the picture is the scene at
+      // rest rather than a chip still popping in.
+      for (int f = 0; f < 16; f++) {
         await tester.pump(const Duration(milliseconds: 120));
       }
       await expectLater(
@@ -134,7 +135,7 @@ void main() {
           const Offset(-300, 0),
           900,
         );
-        for (int f = 0; f < 10; f++) {
+        for (int f = 0; f < 16; f++) {
           await tester.pump(const Duration(milliseconds: 120));
         }
       }
