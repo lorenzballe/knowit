@@ -106,6 +106,21 @@
       "enum": ["none", "dots", "nested_circles", "doubling", "bars", "timeline", "map"],
       "description": "The picture that would help, if one would, in the vocabulary tool/illustrations can draw."
     },
+    "also": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z_]+\\.[a-z0-9_]+\\.[a-z0-9_]+$" },
+      "maxItems": 3,
+      "uniqueItems": true,
+      "description": "Other strands the card is genuinely about, by id, in any subject: a card on tides is the Moon and also Gravity. A reader who turned the primary strand off and one of these on still meets it."
+    },
+    "source_kind": {
+      "enum": ["paper", "statistics", "primary_document", "institution", "reference_work", "book", "standard", "news_archive", "company", "arithmetic"],
+      "description": "What kind of thing the reference is. arithmetic: no source but the reader, who can redo it. The plan spreads these so a strand is not all papers or all press pages."
+    },
+    "quote": {
+      "type": "string",
+      "description": "The passage of the reference, verbatim and at most forty words, that states the claim. Copied by the reader stage from the page it opened, and checked against the page by a program. The card's figures are in it."
+    },
     "source": { "type": "string", "minLength": 1, "description": "The short label the reader sees: institution and document, or the name of the result." },
     "reference": { "type": "string", "description": "Where the claim can be checked: a URL, a DOI, or a book and page. Required on every generated card." },
     "written": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The day the card was generated." },

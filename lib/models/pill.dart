@@ -374,6 +374,11 @@ class Pill {
   final String genre;
   final String strand;
 
+  /// Other strands the card is genuinely about, in any subject: a card on
+  /// tides is the Moon and also Gravity. A reader who turned the strand
+  /// off and one of these on still meets it.
+  final List<String> also;
+
   /// Three to six lowercase handles for what is in the card.
   final List<String> keywords;
 
@@ -426,6 +431,7 @@ class Pill {
     this.principle = Principle.none,
     this.genre = '',
     this.strand = '',
+    this.also = const [],
     this.keywords = const [],
     this.era = '',
     this.region = '',
@@ -444,6 +450,9 @@ class Pill {
   /// built in a test, or from a bundle older than the tags, may not.
   bool get isTagged => era.isNotEmpty;
 
+  /// Every strand the card is dealt under: its own, then the others.
+  List<String> get strands => [if (strand.isNotEmpty) strand, ...also];
+
   /// The tag values a reader can lean towards or away from, as
   /// `dimension:value`, which is how the taste map keys them. A like on a
   /// card nudges every one of these; a card sharing several with what was
@@ -451,6 +460,7 @@ class Pill {
   List<String> get traits => [
     if (genre.isNotEmpty) 'genre:$genre',
     if (strand.isNotEmpty) 'strand:$strand',
+    for (final s in also) 'strand:$s',
     if (era.isNotEmpty) 'era:$era',
     if (region.isNotEmpty && region != 'none') 'region:$region',
     if (hook.isNotEmpty) 'hook:$hook',

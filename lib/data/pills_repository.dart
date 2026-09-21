@@ -80,10 +80,14 @@ List<Pill> pillsForDate(
   }
 
   bool onTopic(Pill p) => wanted.isEmpty || wanted.contains(p.topic);
+  // A strand is on unless it, or the genre it sits under, was turned off.
+  bool strandOn(String strand) =>
+      !strandsOff.contains(strand) &&
+      !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
+  // On the mix through any strand it is about: a card on tides is the
+  // Moon and also Gravity, and a reader who kept either keeps it.
   bool onMix(Pill p) =>
-      onTopic(p) &&
-      !genresOff.contains(p.genre) &&
-      !strandsOff.contains(p.strand);
+      onTopic(p) && (p.strands.isEmpty || p.strands.any(strandOn));
   // A card that builds on others waits for them, where the day can spare
   // it: it goes behind the cards that stand alone, not out of the deck.
   bool ready(Pill p) => p.buildsOn.every(exclude.contains);

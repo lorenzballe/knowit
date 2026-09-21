@@ -38,7 +38,9 @@ One JSON object per card, in the schema you are given. The fields:
 | `simply` | | any, and only when there is a genuinely second way in |
 | `genre`, `strand` | every card but `thinking` | as requested |
 | `keywords`, `era`, `region`, `hook`, `mood`, `numeracy`, `abstraction`, `shelf_life`, `mature`, `language` | yes | see §19 |
-| `builds_on`, `figure` | | when true |
+| `builds_on`, `figure`, `also` | | when true |
+| `source_kind` | yes | see §20 |
+| `quote` | every card written from a page | see §20 |
 
 Kinds: `read` — turn it over and read. `pickOne` — commit to one option.
 `number` — work out an exact number. `estimate` — a Fermi estimate, judged
@@ -201,7 +203,8 @@ Every card that asks carries **one** principle. `read` cards carry none.
   (*"NASA Orbital Debris Program Office"*), or the name of the result
   (*"Conjunction rule of probability"*), or author-and-year for a study.
   **If you cannot find the source, you do not write the card.** Never invent
-  a study, a percentage, or a quotation.
+  a study, a percentage, or a quotation. What counts as a source, and how
+  one is found and read before the card is written, is §20.
 - If the figure is contested, say so in the answer in a word ("contested",
   "estimates range"); do not flatten it.
 - Between a true fact and a surprising one, the true one. Always.
@@ -285,6 +288,21 @@ Run your card against this list and discard it yourself if it fails.
 10. One idea?
 
 
+## 18. The critic
+
+A second pass, with the opposite brief: **find why this card must be
+rejected.** Never improve it.
+
+The critic opens the reference and says whether it supports the claim; redoes
+every number; tries to defend each wrong option; looks for the textbook
+instance; checks the blacklist; reads the tags against the card and corrects
+one that is not true of it. It returns `reject`, `fix` or `pass` with one
+line of reason. A number it cannot verify is a `reject` — never the benefit
+of the doubt.
+
+What passes the critic goes to the bank. Every question of the day also
+passes a person.
+
 ## 19. The tags
 
 A card is dealt to one reader and not another on its tags, so every tag
@@ -331,17 +349,40 @@ never what would make it dealt more.
   `doubling` (a curve that runs away), `bars`, `timeline`, `map` — else
   `none`.
 
-## 18. The critic
+## 20. Sources
 
-A second pass, with the opposite brief: **find why this card must be
-rejected.** Never improve it.
+A card is written **from a page that was read**, not from memory. Before
+the writer sees a brief, a scout has searched the open web for what the
+card could be built on, and a reader has opened the page and copied the
+passage that states it. The writer gets that passage and writes from it.
+The critic opens the same page again.
 
-The critic opens the reference and says whether it supports the claim; redoes
-every number; tries to defend each wrong option; looks for the textbook
-instance; checks the blacklist; reads the tags against the card and corrects
-one that is not true of it. It returns `reject`, `fix` or `pass` with one
-line of reason. A number it cannot verify is a `reject` — never the benefit
-of the doubt.
-
-What passes the critic goes to the bank. Every question of the day also
-passes a person.
+- **What counts.** The page that states the claim, from the body that made
+  or holds it. The kinds, in `source_kind`: `paper` (peer-reviewed, or a
+  preprint with its data), `statistics` (the release or dataset of the
+  body that collects it), `primary_document` (the law, treaty, letter,
+  transcript, patent, court record or filing itself), `institution` (the
+  agency, university, observatory, museum or laboratory's own page),
+  `reference_work` (a dictionary, an encyclopaedia of record, a handbook,
+  a catalogue), `book` (a monograph, with the page), `standard` (the body
+  that sets it), `news_archive` (a newspaper's own archive, for an event
+  on its day), `company` (the maker's filing, report or technical note),
+  `arithmetic` (no source but the reader, who can redo it — every
+  `thinking` card).
+- **What never counts.** An encyclopaedia entry, a fact site, a list, a
+  forum, a feed, a press release without the document behind it. Wikipedia
+  may lead to the source; it is never the source.
+- **Variety is a rule, not a taste.** Two cards on one strand never cite
+  the same site. The plan asks for the kind of source a strand has least
+  of, and the scout returns finds from different domains and different
+  kinds.
+- **The quote.** `quote` is the passage, verbatim and at most forty words,
+  that states the claim, copied from the page by the reader and checked
+  against the page by a program. **Every figure in the card is in the
+  quote**, or follows from it by arithmetic shown in the steps. A card
+  that needs a figure the passage does not give is a different card.
+- **The reference** is the URL of the page the quote came from. `source`
+  is what the reader sees: institution and document, two to eight words.
+- **`also`.** Up to three other strands the card is genuinely about, in
+  any subject, from the list of strands you are given. A card on tides is
+  the Moon and also Gravity. Empty when it is about one thing.

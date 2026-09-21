@@ -1,0 +1,349 @@
+# Where a card's claim may and may not come from.
+#
+# [blocked] is handed to the search and fetch tools as blocked_domains: the
+# model never sees these pages. Lists of facts, content farms, social feeds,
+# question sites — the places a listicle is born.
+#
+# [never a reference] may be read on the way to a source and may never be
+# the source: a card's reference must be the page that states the claim,
+# and an encyclopaedia entry states what somebody else found.
+#
+# [preferred <topic>] is a suggestion the scout is shown, not a fence: the
+# places readers of that subject would trust first. A find from elsewhere
+# is fine when it is the page that actually states the thing.
+#
+# [kinds <topic>] are the kinds of source (schema.json, source_kind) a
+# subject's cards are built from; the plan asks for the one the subject has
+# least of. A subject not listed may use any kind but arithmetic.
+
+[blocked]
+buzzfeed.com
+mentalfloss.com
+factretriever.com
+thefactsite.com
+boredpanda.com
+listverse.com
+ranker.com
+quora.com
+reddit.com
+answers.com
+brainly.com
+wikihow.com
+pinterest.com
+facebook.com
+instagram.com
+tiktok.com
+x.com
+twitter.com
+youtube.com
+linkedin.com
+medium.com
+howstuffworks.com
+thoughtco.com
+iflscience.com
+sciencealert.com
+dailymail.co.uk
+the-sun.com
+mirror.co.uk
+express.co.uk
+nypost.com
+fandom.com
+
+[never a reference]
+wikipedia.org
+wikimedia.org
+wikiwand.com
+snopes.com
+scholarpedia.org
+
+[preferred space]
+nasa.gov
+esa.int
+jpl.nasa.gov
+adsabs.harvard.edu
+arxiv.org
+iau.org
+eso.org
+
+[preferred technology]
+ieee.org
+ietf.org
+w3.org
+acm.org
+computerhistory.org
+uspto.gov
+epo.org
+nist.gov
+itu.int
+
+[preferred language]
+oed.com
+etymonline.com
+ethnologue.com
+glottolog.org
+unicode.org
+bl.uk
+linguisticsociety.org
+
+[preferred nature]
+iucnredlist.org
+fao.org
+noaa.gov
+usgs.gov
+kew.org
+nhm.ac.uk
+ipcc.ch
+nature.com
+
+[preferred economics]
+fred.stlouisfed.org
+oecd.org
+worldbank.org
+imf.org
+bis.org
+ecb.europa.eu
+bls.gov
+ons.gov.uk
+istat.it
+nber.org
+ourworldindata.org
+
+[preferred pop_culture]
+bfi.org.uk
+boxofficemojo.com
+the-numbers.com
+riaa.com
+ifpi.org
+nielsen.com
+emmys.com
+guinnessworldrecords.com
+
+[preferred science]
+nature.com
+science.org
+aps.org
+nist.gov
+bipm.org
+rsc.org
+iop.org
+pnas.org
+
+[preferred history]
+nationalarchives.gov.uk
+loc.gov
+archives.gov
+britishmuseum.org
+jstor.org
+archive.org
+cambridge.org
+academic.oup.com
+
+[preferred psychology]
+apa.org
+psycnet.apa.org
+osf.io
+pnas.org
+nature.com
+journals.sagepub.com
+
+[preferred weird_facts]
+guinnessworldrecords.com
+census.gov
+ons.gov.uk
+legislation.gov.uk
+unstats.un.org
+
+[preferred human_body]
+nih.gov
+nhs.uk
+physiology.org
+nature.com
+thelancet.com
+
+[preferred philosophy]
+plato.stanford.edu
+iep.utm.edu
+jstor.org
+academic.oup.com
+
+[preferred sport]
+olympics.com
+worldathletics.org
+fifa.com
+uci.org
+worldaquatics.com
+wada-ama.org
+
+[preferred cinema]
+bfi.org.uk
+oscars.org
+the-numbers.com
+boxofficemojo.com
+loc.gov
+
+[preferred music]
+grammy.com
+riaa.com
+ifpi.org
+loc.gov
+bl.uk
+jstor.org
+
+[preferred art]
+metmuseum.org
+nga.gov
+tate.org.uk
+louvre.fr
+getty.edu
+rijksmuseum.nl
+britishmuseum.org
+
+[preferred medicine]
+nejm.org
+thelancet.com
+bmj.com
+cochranelibrary.com
+who.int
+cdc.gov
+nice.org.uk
+pubmed.ncbi.nlm.nih.gov
+ema.europa.eu
+
+[preferred food]
+fao.org
+usda.gov
+efsa.europa.eu
+ars.usda.gov
+foodtimeline.org
+
+[kinds space]
+institution
+paper
+statistics
+book
+reference_work
+news_archive
+
+[kinds technology]
+standard
+institution
+paper
+company
+primary_document
+book
+news_archive
+
+[kinds language]
+reference_work
+paper
+book
+institution
+primary_document
+
+[kinds nature]
+paper
+institution
+statistics
+book
+reference_work
+
+[kinds economics]
+statistics
+paper
+institution
+primary_document
+company
+news_archive
+book
+
+[kinds pop_culture]
+statistics
+news_archive
+company
+institution
+book
+primary_document
+
+[kinds science]
+paper
+institution
+standard
+reference_work
+book
+
+[kinds history]
+primary_document
+institution
+book
+paper
+news_archive
+reference_work
+
+[kinds psychology]
+paper
+book
+institution
+reference_work
+
+[kinds weird_facts]
+statistics
+primary_document
+institution
+news_archive
+reference_work
+
+[kinds human_body]
+paper
+institution
+reference_work
+book
+
+[kinds philosophy]
+reference_work
+book
+paper
+primary_document
+
+[kinds sport]
+statistics
+institution
+news_archive
+primary_document
+book
+
+[kinds cinema]
+institution
+statistics
+book
+news_archive
+primary_document
+company
+
+[kinds music]
+institution
+book
+statistics
+paper
+primary_document
+news_archive
+
+[kinds art]
+institution
+book
+reference_work
+primary_document
+paper
+
+[kinds medicine]
+paper
+institution
+statistics
+reference_work
+book
+
+[kinds food]
+paper
+institution
+statistics
+book
+reference_work

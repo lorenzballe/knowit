@@ -72,6 +72,7 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.hasCounterpoint) out['counterpoint'] = p.counterpoint;
   if (p.genre.isNotEmpty) out['genre'] = p.genre;
   if (p.strand.isNotEmpty) out['strand'] = p.strand;
+  if (p.also.isNotEmpty) out['also'] = p.also;
   if (p.isTagged) {
     out['keywords'] = p.keywords;
     out['era'] = p.era;
@@ -187,6 +188,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     principle: principle,
     genre: text('genre'),
     strand: text('strand'),
+    also: list('also'),
     keywords: list('keywords'),
     era: text('era'),
     region: text('region'),

@@ -92,8 +92,15 @@ void main() {
         // Word for word: an edit to a file that was not bundled is the
         // other way a phone and the bank could disagree.
         final id = raw['id'] as String;
+        // The bank keeps more than the phone reads: where the claim was
+        // checked stays with the file.
         raw.removeWhere(
-          (k, _) => k == 'reference' || k == 'written' || k == 'disabled',
+          (k, _) =>
+              k == 'reference' ||
+              k == 'written' ||
+              k == 'disabled' ||
+              k == 'source_kind' ||
+              k == 'quote',
         );
         expect(
           cardToJson(PillBank.byId(id)!),

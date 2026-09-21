@@ -14,6 +14,7 @@ import bundle
 import check
 import generate
 import genres
+import sources
 import tag
 
 TODAY = dt.date(2026, 9, 18)
@@ -44,13 +45,16 @@ def read_card(**over) -> dict:
         "shelf_life": "years",
         "mature": False,
         "language": "en",
+        "source_kind": "institution",
     }
     card.update(over)
     return card
 
 
 def thinking_card(**over) -> dict:
-    card = read_card(kind="pickOne", difficulty="medium", principle="baseRate", options=["A", "B"], correct=0, trap="Taking B.", topic="thinking", numeracy=3)
+    card = read_card(id="thinking-20260918-1", kind="pickOne", difficulty="medium", principle="baseRate", options=["A", "B"], correct=0,
+                     trap="Taking B, which feels like the safer answer.", topic="thinking", numeracy=3, source_kind="arithmetic",
+                     reference="The conjunction rule, Tversky and Kahneman 1983")
     for key in ("genre", "strand"):
         card.pop(key, None)
     card.update(over)
@@ -134,6 +138,29 @@ class TheGate(unittest.TestCase):
         self.assertTrue(any("itself" in p for p in self.check(read_card(builds_on=["space-20260918-1"]))))
         self.assertTrue(any("cabbage" in p for p in self.check(read_card(hook="cabbage"))))
 
+    def test_the_sources_are_held_to_the_house(self):
+        self.assertTrue(any("not a strand" in p for p in self.check(read_card(also=["space.nowhere.here"]))))
+        self.assertTrue(any("own strand" in p for p in self.check(read_card(also=["space.stars_and_light.colours_of_stars"]))))
+        self.assertEqual(self.check(read_card(also=["science.physics.gravity"])), [])
+        self.assertTrue(any("passage, not a page" in p for p in self.check(read_card(quote=" ".join(["w"] * 70)))))
+        self.assertTrue(any("quotes nobody" in p for p in self.check(thinking_card(quote="A quoted passage of six words here."))))
+        strict = lambda **over: self.check(read_card(**over), strict=True)
+        self.assertTrue(any("source_kind" in p for p in self.check({k: v for k, v in read_card().items() if k != "source_kind"}, strict=True)))
+        self.assertEqual(strict(source_kind="institution"), [])
+        self.assertTrue(any("is its URL" in p for p in strict(source_kind="paper", quote="A passage of six words at least.", reference="Author, 2020")))
+        self.assertTrue(any("never the reference" in p for p in strict(source_kind="paper", reference="https://en.wikipedia.org/wiki/Exoplanet")))
+        self.assertTrue(any("blocked" in p for p in strict(source_kind="paper", reference="https://www.buzzfeed.com/x")))
+        self.assertTrue(any("thinking card's source" in p for p in self.check(thinking_card(source_kind="company"), strict=True)))
+        self.assertEqual(self.check(thinking_card(source_kind="arithmetic"), strict=True), [])
+
+    def test_two_cards_on_a_strand_do_not_cite_one_site(self):
+        a = read_card(id="space-a", reference="https://www.nasa.gov/one")
+        b = read_card(id="space-b", question="How many probes have left the solar system so far?", move="Count the probes, not the press releases about them.", reference="https://science.nasa.gov/two")
+        c = dict(b, id="space-c", reference="https://www.esa.int/two")
+        self.assertTrue(any("as space-a on the same strand" in p for p in check.check_sources([b], against=[a])))
+        self.assertEqual(check.check_sources([c], against=[a]), [])
+        self.assertEqual(check.check_sources([b], against=[dict(a, strand="space.the_moon.tides", genre="space.the_moon")]), [])
+
     def test_links_name_real_cards(self):
         a = read_card(id="space-a")
         b = read_card(id="space-b", question="How many probes have left the solar system so far?", move="Count the probes, not the press releases about them.", builds_on=["space-a"])
@@ -144,7 +171,7 @@ class TheGate(unittest.TestCase):
     def test_the_house_order_of_keys(self):
         keys = list(check.ordered(read_card(reference="x", written="2026-09-18")))
         self.assertEqual(keys[:4], ["id", "topic", "genre", "strand"])
-        self.assertEqual(keys[-3:], ["source", "reference", "written"])
+        self.assertEqual(keys[-4:], ["source", "source_kind", "reference", "written"])
         self.assertLess(keys.index("keywords"), keys.index("source"))
         self.assertGreater(keys.index("keywords"), keys.index("move"))
 
@@ -213,6 +240,11 @@ class ThePlan(unittest.TestCase):
         for r in asks:
             self.assertIn(r.principle, r.principles)
             self.assertLessEqual(len(r.principles), generate.PRINCIPLE_CHOICE)
+        for r in requests:
+            if r.topic == "thinking":
+                self.assertEqual(r.source_kind, "arithmetic")
+            else:
+                self.assertIn(r.source_kind, sources.kinds_for(r.topic), str(r))
 
     def test_reaches_for_the_thinnest_strand_first(self):
         bank = check.load_bank()
@@ -235,6 +267,121 @@ class ThePlan(unittest.TestCase):
         self.assertEqual(generate.plan(bank, 10), generate.plan(bank, 10))
 
 
+class TheSources(unittest.TestCase):
+    def test_a_domain_is_the_registrable_one(self):
+        self.assertEqual(sources.domain_of("https://www.nasa.gov/mission/x"), "nasa.gov")
+        self.assertEqual(sources.domain_of("https://data.ons.gov.uk/a/b"), "ons.gov.uk")
+        self.assertEqual(sources.domain_of("http://en.wikipedia.org/wiki/Tide"), "wikipedia.org")
+        self.assertEqual(sources.domain_of("https://plato.stanford.edu/entries/zeno"), "stanford.edu")
+        self.assertTrue(sources.is_under("en.wikipedia.org", "wikipedia.org"))
+        self.assertFalse(sources.is_under("notwikipedia.org", "wikipedia.org"))
+
+    def test_a_quote_is_found_through_the_accidents_of_copying(self):
+        page = "The Moon’s gravity raises two bulges — one on each side of the Earth.\nA line break, a soft\u00adhyphen and “curly quotes” change nothing."
+        self.assertTrue(sources.same_quote("The Moon's gravity raises two bulges, one on each side", page))
+        self.assertTrue(sources.same_quote('a soft-hyphen and "curly quotes" change nothing', page))
+        self.assertFalse(sources.same_quote("The Moon's gravity raises three bulges on each side", page))
+        self.assertFalse(sources.same_quote("two bulges", page), "shorter than a sentence")
+
+    def test_the_lists_are_read_and_a_find_is_held_to_them(self):
+        self.assertIn("buzzfeed.com", sources.blocked())
+        self.assertIn("wikipedia.org", sources.never_a_reference())
+        self.assertIn("nasa.gov", sources.preferred("space"))
+        self.assertEqual(sources.preferred("thinking"), [])
+        self.assertNotIn("arithmetic", sources.kinds_for("art"))
+        self.assertNotIn("standard", sources.kinds_for("art"))
+        ok = generate.Find(claim="c", figures="", source="s", url="https://www.nasa.gov/x", source_kind="institution", why_not_textbook="w")
+        self.assertTrue(generate.usable_find(ok))
+        self.assertFalse(generate.usable_find(ok.model_copy(update={"url": "https://en.wikipedia.org/wiki/X"})))
+        self.assertFalse(generate.usable_find(ok.model_copy(update={"url": "https://www.reddit.com/r/x"})))
+        self.assertFalse(generate.usable_find(ok.model_copy(update={"url": "NASA, 2020"})))
+
+
+def _fetched(page: str | None):
+    """A message as the API returns it after a fetch, or with no fetch at all."""
+    from types import SimpleNamespace as NS
+    if page is None:
+        return NS(content=[NS(type="text", text="{}")])
+    doc = NS(source=NS(type="text", data=page))
+    return NS(content=[NS(type="web_fetch_tool_result", content=NS(type="web_fetch_result", content=doc)), NS(type="text", text="{}")])
+
+
+class TheReader(unittest.TestCase):
+    def test_a_quote_has_to_be_on_the_page(self):
+        page = "Tides on Earth are raised mostly by the Moon, and the Sun adds about half as much again."
+        good = generate.Reading(supported=True, quote="Tides on Earth are raised mostly by the Moon", figures="", note="")
+        self.assertEqual(generate.verify_reading(good, _fetched(page)), ("checked", ""))
+        invented = good.model_copy(update={"quote": "Tides on Earth are raised entirely by the Sun alone"})
+        self.assertEqual(generate.verify_reading(invented, _fetched(page))[0], "not on page")
+        self.assertEqual(generate.verify_reading(good, _fetched(None))[0], "unchecked", "a PDF: the reader's word stands, and the report says so")
+        self.assertEqual(generate.verify_reading(good.model_copy(update={"supported": False, "note": "no"}), _fetched(page)), ("unsupported", "no"))
+        self.assertEqual(generate.verify_reading(good.model_copy(update={"quote": "the Moon"}), _fetched(page))[0], "no quote")
+        self.assertEqual(generate.verify_reading(good.model_copy(update={"quote": " ".join(["word"] * 70)}), _fetched(page))[0], "no quote")
+
+
+class TheBatch(unittest.TestCase):
+    """The Message Batches path, against a client that answers at once."""
+
+    def _client(self, replies):
+        from types import SimpleNamespace as NS
+        calls = {}
+
+        class Batches:
+            def create(self_, *, requests, betas):
+                calls["requests"] = requests
+                calls["betas"] = betas
+                return NS(id="b1", processing_status="ended")
+
+            def retrieve(self_, batch_id, *, betas):
+                return NS(id=batch_id, processing_status="ended")
+
+            def results(self_, batch_id, *, betas):
+                out = []
+                for i, reply in enumerate(replies):
+                    custom_id = f"write-{i}"
+                    if reply is None:
+                        out.append(NS(custom_id=custom_id, result=NS(type="errored", error="boom")))
+                    else:
+                        message = NS(stop_reason="end_turn", content=[NS(type="text", text=reply)],
+                                     usage=NS(input_tokens=100, output_tokens=50, cache_read_input_tokens=1000,
+                                              cache_creation_input_tokens=0, server_tool_use=NS(web_search_requests=2, web_fetch_requests=0)))
+                        out.append(NS(custom_id=custom_id, result=NS(type="succeeded", message=message)))
+                return out
+
+        return NS(beta=NS(messages=NS(batches=Batches()))), calls
+
+    def test_a_stage_goes_through_one_batch_and_comes_back_in_order(self):
+        good = generate.canned("topic: space\nkind: read\ndifficulty: easy\nprinciple: none").model_dump_json()
+        client, calls = self._client([good, None, "not json"])
+        model = object.__new__(generate.Claude)
+        model.client, model.model, model.batch, model.usage = client, generate.MODEL, True, {}
+        specs = [generate.Spec("s", [{"role": "user", "content": f"card {i}"}], generate.Draft) for i in range(3)]
+        results = model.calls(specs, "write")
+        self.assertEqual(len(calls["requests"]), 3)
+        self.assertEqual(calls["requests"][0]["custom_id"], "write-0")
+        self.assertEqual(calls["requests"][0]["params"]["output_config"]["format"]["type"], "json_schema")
+        self.assertFalse(calls["requests"][0]["params"]["output_config"]["format"]["schema"]["additionalProperties"])
+        self.assertEqual(calls["requests"][0]["params"]["fallbacks"], "default")
+        self.assertIn(generate.FALLBACK_BETA, calls["betas"])
+        self.assertIsInstance(results[0].parsed, generate.Draft)
+        self.assertIsNone(results[0].error)
+        self.assertIn("errored", results[1].error)
+        self.assertIn("not the JSON", results[2].error)
+        self.assertEqual(model.usage["write"]["searches"], 4)
+        self.assertIn("at batch prices", model.receipt())
+        self.assertIn("4 searches", model.receipt())
+
+    def test_a_refusal_and_a_pause_are_errors_not_cards(self):
+        from types import SimpleNamespace as NS
+        model = object.__new__(generate.Claude)
+        model.client, model.model, model.batch, model.usage = None, generate.MODEL, False, {}
+        spec = generate.Spec("s", [], generate.Draft)
+        refused = NS(stop_reason="refusal", stop_details=NS(explanation="no"), content=[])
+        self.assertIn("declined", model._finish(spec, refused).error)
+        paused = NS(stop_reason="pause_turn", content=[])
+        self.assertIn("paused", model._finish(spec, paused).error)
+
+
 class ThePlumbing(unittest.TestCase):
     def test_a_canned_model_flows_into_the_bank(self):
         bank = check.load_bank()
@@ -254,6 +401,59 @@ class ThePlumbing(unittest.TestCase):
                 self.assertEqual(card["language"], "en")
                 self.assertEqual("strand" in card, card["topic"] != "thinking")
                 self.assertEqual(list(card)[:2], ["id", "topic"])
+                # Written from a page: the reference is the page, the quote is on the card.
+                self.assertTrue(card["reference"].startswith("https://example"), card["reference"])
+                self.assertIn(card["source_kind"], sources.KINDS)
+                self.assertTrue(card["quote"])
+            self.assertEqual(outcomes[0].domain, sources.domain_of(files and json.loads(files[0].read_text())["reference"]))
+
+    def test_a_thinking_card_is_arithmetic_and_skips_the_scout(self):
+        bank = check.load_bank()
+        req = generate.for_strand(None, "thinking", kind="pickOne", difficulty="medium", principle="baseRate", principles=["baseRate"])
+        model = generate.Fake()
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = generate.run([req], model, bank, out=Path(tmp), today=TODAY, log=lambda *_: None)
+            self.assertEqual(model.calls, ["write", "critic"])
+            self.assertEqual(outcomes[0].status, "written")
+            card = json.loads(next(Path(tmp).glob("*/*.json")).read_text())
+            self.assertEqual(card["source_kind"], "arithmetic")
+            self.assertNotIn("quote", card)
+            self.assertNotIn("strand", card)
+
+    def test_a_find_that_does_not_hold_is_dropped_for_the_next(self):
+        bank = check.load_bank()
+        req = generate.for_strand(genres.strands_by_id()["space.the_moon.tides"], "space", kind="read", difficulty="easy", principle="none", source_kind="institution")
+        unsupported = generate.Reading(supported=False, quote="", figures="", note="the page says nothing of the kind")
+        model = generate.Fake(readings=[unsupported, generate.canned_reading()])
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = generate.run([req], model, bank, out=Path(tmp), today=TODAY, critic=False, log=lambda *_: None)
+            self.assertEqual(model.calls, ["scout", "read", "read", "write"])
+            self.assertEqual(outcomes[0].status, "written")
+            self.assertTrue(outcomes[0].domain.endswith("1.org"), "the second find's site")
+
+    def test_no_find_holding_leaves_the_card_unsourced(self):
+        bank = check.load_bank()
+        req = generate.for_strand(genres.strands_by_id()["space.the_moon.tides"], "space", kind="read", difficulty="easy", principle="none")
+        nothing = generate.Reading(supported=False, quote="", figures="", note="no")
+        model = generate.Fake(readings=[nothing, nothing, nothing])
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = generate.run([req], model, bank, out=Path(tmp), today=TODAY, log=lambda *_: None)
+            self.assertEqual(outcomes[0].status, "unsourced")
+            self.assertEqual(outcomes[0].stage, "read")
+            self.assertEqual(model.calls, ["scout", "read", "read", "read"])
+            self.assertEqual(list(Path(tmp).glob("*/*.json")), [])
+
+    def test_without_research_the_writer_writes_from_memory(self):
+        bank = check.load_bank()
+        req = generate.for_strand(genres.strands_by_id()["space.the_moon.tides"], "space", kind="read", difficulty="easy", principle="none")
+        model = generate.Fake()
+        with tempfile.TemporaryDirectory() as tmp:
+            outcomes = generate.run([req], model, bank, out=Path(tmp), today=TODAY, research=False, critic=False, log=lambda *_: None)
+            self.assertEqual(model.calls, ["write"])
+            self.assertEqual(outcomes[0].status, "written")
+            card = json.loads(next(Path(tmp).glob("*/*.json")).read_text())
+            self.assertNotIn("quote", card)
+            self.assertEqual(card["source_kind"], "institution", "the canned draft's own")
 
     def test_a_rejected_card_is_not_written_and_a_bad_one_is_repaired_once(self):
         bank = check.load_bank()
@@ -264,8 +464,9 @@ class ThePlumbing(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             model = generate.Fake(drafts=[bad, good], verdicts=[generate.Verdict(verdict="reject", reason="made up", fixed=None)])
             outcomes = generate.run([req], model, bank, out=Path(tmp), today=TODAY, log=lambda *_: None)
-            self.assertEqual(model.calls, ["write", "repair", "critique"])
+            self.assertEqual(model.calls, ["scout", "read", "write", "repair", "critic"])
             self.assertEqual(outcomes[0].status, "rejected")
+            self.assertEqual(outcomes[0].stage, "critic")
             self.assertEqual(list(Path(tmp).glob("*/*.json")), [])
 
     def test_the_writer_keeps_the_strand_it_was_given(self):
@@ -278,6 +479,14 @@ class ThePlumbing(unittest.TestCase):
         self.assertEqual(other["principle"], "baseRate", "a principle that was not offered is not kept")
         self.assertIn("The card is about Tides", generate.brief(req, []))
         self.assertIn("one of baseRate, sampling", generate.brief(req, []))
+        find = generate.canned_finds("strand: Tides").finds[0]
+        reading = generate.canned_reading()
+        sourced = generate.conform(generate.to_card(draft.model_copy(update={"also": ["science.physics.gravity", "space.the_moon.tides", "nowhere.at.all"]})), req, find, reading)
+        self.assertEqual(sourced["reference"], find.url)
+        self.assertEqual(sourced["source_kind"], find.source_kind)
+        self.assertEqual(sourced["quote"], reading.quote)
+        self.assertEqual(sourced["also"], ["science.physics.gravity"], "its own strand and an unknown one are dropped")
+        self.assertIn("passage from the page, verbatim", generate.from_find(find, reading))
 
     def test_the_tagger_fills_a_card_that_has_none(self):
         bank = check.load_bank()
@@ -303,6 +512,11 @@ class ThePlumbing(unittest.TestCase):
         self.assertIn("1 new card", text)
         self.assertIn("space-20260918-1", text)
         self.assertIn("The Moon · Tides", text)
+        sourced = generate.Outcome(request=req, status="written", id="space-20260918-2", question="How?", domain="nasa.gov", source_kind="institution", checked=False)
+        unsourced = generate.Outcome(request=req, status="unsourced", stage="read", note="no find held up")
+        text = generate.report([sourced, unsourced], "0 tokens", TODAY)
+        self.assertIn("nasa.gov (quote not machine-checked)", text)
+        self.assertIn("*unsourced at the read*", text)
         self.assertIn("Not written (1)", text)
 
 

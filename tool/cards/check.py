@@ -29,6 +29,7 @@ except ImportError:  # pragma: no cover - the workflow installs it
     jsonschema = None
 
 import genres
+import sources
 
 HERE = Path(__file__).resolve().parent
 BANK = HERE / "bank"
@@ -63,12 +64,16 @@ TAG_KEYS = ("keywords", "era", "region", "hook", "mood", "numeracy", "abstractio
 # writes a card, so two files read alike and a diff shows a change rather
 # than a reordering.
 KEY_ORDER = [
-    "id", "topic", "genre", "strand", "kind", "difficulty", "principle", "question",
+    "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "trap", "hint", "steps", "simply", "counterpoint",
     *TAG_KEYS, "builds_on", "figure",
-    "source", "reference", "written", "disabled",
+    "source", "source_kind", "reference", "quote", "written", "disabled",
 ]
+
+# The longest a quoted passage may run. Forty words is the rule; a few over
+# is a sentence that would not break, not a page copied in.
+QUOTE_WORDS = 60
 
 
 def ordered(card: dict) -> dict:
@@ -303,6 +308,17 @@ def check_tags(card: dict) -> list[str]:
         problems.append(f"a {kind} card works a number out: numeracy is at least 2")
     if card["id"] in card.get("builds_on", []):
         problems.append("a card does not build on itself")
+    for other in card.get("also", []):
+        known = genres.strands_by_id().get(other)
+        if known is None:
+            problems.append(f"also names {other!r}, which is not a strand")
+        elif other == strand:
+            problems.append("also repeats the card's own strand")
+    quote = card.get("quote", "").strip()
+    if quote and words(quote) > QUOTE_WORDS:
+        problems.append(f"the quote runs to {words(quote)} words; a passage, not a page")
+    if quote and topic == "thinking":
+        problems.append("a thinking card is arithmetic; it quotes nobody")
     return problems
 
 
@@ -349,6 +365,7 @@ def check_strict(card: dict) -> list[str]:
         problems.append("no written date")
     if kind == "read" and card["principle"] != "none":
         problems.append("a read card has no principle")
+    problems.extend(check_source(card))
 
     every_text = " ".join(
         str(v) for k, v in card.items()
@@ -362,6 +379,30 @@ def check_strict(card: dict) -> list[str]:
     for phrase in FORBIDDEN_STRICT:
         if phrase in low:
             problems.append(f"forbidden phrase: {phrase!r}")
+    return problems
+
+
+def check_source(card: dict) -> list[str]:
+    """The rules of the house on where a generated card's claim comes from:
+    a named kind; and, when a passage was quoted, a page it was quoted from
+    that a reader could open and that is not an encyclopaedia's retelling."""
+    problems: list[str] = []
+    if not card.get("source_kind"):
+        problems.append("no source_kind: a generated card says what kind of thing its reference is")
+    ref = card.get("reference", "").strip()
+    quote = card.get("quote", "").strip()
+    if quote and not sources.is_url(ref):
+        problems.append("a quoted passage comes from a page: the reference is its URL")
+    if sources.is_url(ref):
+        domain = sources.domain_of(ref)
+        for never in sources.never_a_reference():
+            if sources.is_under(domain, never):
+                problems.append(f"{domain} is never the reference: cite the page it points to")
+        for blocked in sources.blocked():
+            if sources.is_under(domain, blocked):
+                problems.append(f"{domain} is blocked as a source")
+    if card["topic"] == "thinking" and card.get("source_kind") not in (None, "", "arithmetic", "paper", "book", "reference_work"):
+        problems.append("a thinking card's source is arithmetic, or the paper, book or reference work that names the result")
     return problems
 
 
@@ -413,6 +454,26 @@ def check_links(cards: list[dict], against: list[dict] | None = None) -> list[st
                 problems.append(f"{c['id']} builds on {other}, which is not in the bank")
             elif pool[other].get("disabled"):
                 problems.append(f"{c['id']} builds on {other}, which is retired")
+    return problems
+
+
+def check_sources(cards: list[dict], against: list[dict] | None = None) -> list[str]:
+    """No two cards on one strand cite the same site. Variety of source is
+    variety of card: a strand read entirely off one agency's pages is one
+    page read five times."""
+    pool = against if against is not None else cards
+    problems = []
+    for c in cards:
+        ref = c.get("reference", "")
+        if not c.get("strand") or not sources.is_url(ref):
+            continue
+        domain = sources.domain_of(ref)
+        for other in pool:
+            if other["id"] == c["id"] or other.get("disabled") or other.get("strand") != c["strand"]:
+                continue
+            if sources.is_url(other.get("reference", "")) and sources.domain_of(other["reference"]) == domain:
+                problems.append(f"{c['id']} cites {domain}, as {other['id']} on the same strand already does")
+                break
     return problems
 
 
@@ -476,7 +537,10 @@ def main(argv: list[str] | None = None) -> int:
             for p in problems:
                 print(f"{path}: {p}")
             bad += bool(problems)
-        for p in check_twins(fresh, against=bank) + check_links(fresh, against=bank):
+        whole = check_twins(fresh, against=bank) + check_links(fresh, against=bank)
+        if args.strict:
+            whole += check_sources(fresh, against=bank)
+        for p in whole:
             print(f"*: {p}")
             bad += 1
         print(f"{len(fresh) - bad} of {len(fresh)} pass" if bad else f"all {len(fresh)} pass")

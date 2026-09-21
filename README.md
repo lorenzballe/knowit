@@ -357,17 +357,26 @@ mid-day, so a deck on the table is not re-dealt under the reader. A phone
 with no signal keeps what it has. `PillBank` is that one static.
 
 The bank grows at night. `.github/workflows/cards.yml` borrows a machine at
-03:00, and `tool/cards/generate.py` asks the model for what the bank is short
-of — every subject towards forty reads, twenty graded questions and three
-debates; every principle towards eight cards — with `tool/cards/RULES.md` as
-the whole of its instructions. A gate (`check.py`) refuses anything
-mis-shaped, a twin of a card already there, or anything on the blacklist; a
-second call with the opposite brief and web search opens the reference,
-redoes the numbers and tries to defend the wrong options. What survives
-arrives as a pull request, one file per card, with the cards listed in its
-body. **Merging is the review.** The deploy then publishes the new
-`cards.json`, and every phone picks it up. `tool/cards/README.md` has the
-loop in full, the cost of a card, and how to retire one.
+03:00, and `tool/cards/generate.py` asks for what the bank is short of —
+every strand towards two cards, every subject towards forty reads, twenty
+graded questions and three debates, every principle towards eight — with
+`tool/cards/RULES.md` as the whole of the writer's instructions. A card is
+**written from a page that was read**, not from memory: a scout searches
+the open web for three finds the card could be built on, from three sites
+and three kinds of source; a reader opens the first find's page and copies
+the passage that states the claim, verbatim, and a program checks the
+passage is on the page; the writer writes from that passage and nothing
+else, so every figure on the card is in it. A gate (`check.py`) refuses
+anything mis-shaped, a twin of a card already there, anything on the
+blacklist, a reference that is not the page, a site cited twice on one
+strand; the critic, with the opposite brief, search and the page, redoes
+the numbers against the passage and tries to defend the wrong options.
+What survives arrives as a pull request, one file per card, with the
+cards, their sites and the receipt in its body. **Merging is the review.**
+The deploy then publishes the new `cards.json`, and every phone picks it
+up. Every stage runs through the Batches API at half the token price.
+`tool/cards/README.md` has the loop in full, the cost of a card, and how
+to retire one.
 
 **Tags.** Every card carries what it is about and like, beyond what it
 asks: its genre and strand (`space.the_moon.tides`), three to six keywords,

@@ -11,7 +11,9 @@ tool/cards/
   banned.txt               material a card may not be built on
   check.py                 the gate
   genres.py                the genres and strands, read off lib/data/genres.dart
-  generate.py              the model, the gate, the critic, the files
+  sources.py               domains, source kinds, and the verbatim check on a quote
+  domains.txt              sites blocked, sites never a reference, sites trusted per subject
+  generate.py              scout, reader, writer, gate, critic, files
   tag.py                   tags for cards that have none
   bundle.py                bank → lib/data/embedded_bank.dart + web/cards/cards.json
   test_cards.py            the pipeline without the model
@@ -28,27 +30,46 @@ tool/cards/
    two cards before any has a third — and a graded card is offered the three
    thinnest principles rather than one, so the writer takes the one the
    strand has a real instance of.
-3. For each request the **model** (`claude-opus-5`) gets `RULES.md`, the
-   blacklist and six cards from the bank as the house style — one cached
-   system prompt — and a brief: topic, genre and strand, kind, principle,
-   the cards already on the strand, every question the topic already asks,
-   every context the principle has been met in. It returns JSON in the card
-   schema, tags included.
-4. The **gate** (`check.py --strict`) refuses anything mis-shaped: word
-   counts, options, a real reference, the listicle, a twin of a card already
-   in the bank, a tag outside its vocabulary or a strand that is not under
-   the subject. The model gets one round to fix what the gate named.
-5. The **critic** is a second call with the opposite brief and web search:
-   open the reference, redo the numbers, defend the wrong options, look for
-   the textbook instance. `pass`, `fix` (one correction, returned whole) or
-   `reject`.
-6. What survives is written to `bank/<topic>/<topic>-<date>-<n>.json` with
-   the date it was written, the bank is gated again, `bundle.py` extends the
-   calendar and regenerates both copies, and a **pull request** opens with
-   the cards listed in its body.
-7. A person reads the pull request. **Merging is the review.** The deploy
+3. The **scout** (`claude-opus-5`, web search, eight searches) is given the
+   strand, the kind of card, the principles on offer, the kind of source
+   the subject has least of and the sites its readers trust first, and
+   returns three finds: a claim, its figures, the page that states it, the
+   kind of source, and why it is not the textbook instance. Three sites,
+   three kinds. List sites are blocked at the tool; Wikipedia may lead to a
+   source and is never one.
+4. The **reader** (web fetch, that one site) opens the first find's page
+   and copies the passage that states the claim, verbatim, at most forty
+   words. A program then looks for the passage on the page the tool
+   brought back: not there, and the find is dropped and the next is read.
+   A page that is not plain text (a PDF) cannot be checked this way and the
+   pull request says so.
+5. The **writer** gets `RULES.md`, the blacklist, the house style and every
+   strand — one cached system prompt — the brief, and the verified find:
+   claim, source, page, kind, passage. It writes the card from the passage
+   and nothing else, tags included. Every figure in the card is in the
+   passage or follows from it by arithmetic shown in the steps.
+6. The **gate** (`check.py --strict`) refuses anything mis-shaped: word
+   counts, options, the listicle, a twin of a card already in the bank, a
+   tag outside its vocabulary, a strand that is not under the subject, a
+   reference that is not the page, a site cited twice on one strand. The
+   writer gets one round to fix what the gate named.
+7. The **critic** is the opposite brief, with search and the page: redo
+   the numbers against the passage, defend the wrong options, look for the
+   textbook instance, read the tags. `pass`, `fix` (one correction,
+   returned whole) or `reject`.
+8. What survives is written to `bank/<topic>/<topic>-<date>-<n>.json` with
+   the date, the source kind and the quote, the bank is gated again,
+   `bundle.py` extends the calendar and regenerates both copies, and a
+   **pull request** opens with the cards, their strands, their sites and
+   the receipt in its body.
+9. A person reads the pull request. **Merging is the review.** The deploy
    workflow then publishes `web/cards/cards.json`; the app downloads it at
    start, keeps it, and deals from it the next morning.
+
+Thinking cards are arithmetic: they skip the scout and the reader, and the
+critic redoes their numbers. With `--batch`, which the nightly run uses,
+every stage goes through the Message Batches API at half the token price,
+one batch per stage, and the run waits for each.
 
 Nothing about a card is decided on a phone. The phone downloads a file.
 
@@ -72,6 +93,9 @@ gate holds to a vocabulary (`schema.json`; the rules for choosing are §19 of
 | `language` | what the card is written in | the translation pass, when there is one |
 | `builds_on` | ids a reader should meet first | the dealer, which holds the card back until they have |
 | `figure` | dots, nested circles, doubling, bars, timeline, map | `tool/illustrations` |
+| `also` | other strands the card is about, in any subject | the mix's switches, through any of them; the taste |
+| `source_kind` | paper, statistics, primary document, institution, reference work, book, standard, news archive, company, arithmetic | the plan, which asks for the kind a subject has least of |
+| `quote` | the passage of the reference that states the claim, verbatim | the critic; a program, against the page |
 
 Thinking cards have no genre or strand: Thinking is the principle in the
 open, and it is never off anybody's deck. Everything else has both, and
@@ -92,6 +116,8 @@ python3 tool/cards/generate.py --topic space --kind pickOne --principle baseRate
 python3 tool/cards/generate.py --strand space.the_moon.tides --kind read
 python3 tool/cards/generate.py --genre history.middle_ages --kind pickOne   # its thinnest strand
 python3 tool/cards/generate.py --plan --count 5 --fake         # the plumbing, no model
+python3 tool/cards/generate.py --plan --count 30 --batch       # the nightly run, at half price
+python3 tool/cards/generate.py --strand space.the_moon.tides --kind read --no-research   # from memory, as before
 python3 tool/cards/tag.py --missing --dry-run                  # cards without tags
 python3 tool/cards/bundle.py                         # after any change to the bank
 python3 -m unittest discover tool/cards              # the pipeline's own tests
@@ -102,10 +128,13 @@ edits a card by hand has to run the bundler too.
 
 ## What a card costs
 
-One card is roughly a writing call and a critic call, both against a cached
-system prompt: twenty to fifty cents at Claude Opus 5 rates, printed as a receipt
-at the end of every run and in the pull request body. Twenty a night is
-five to ten dollars, before the cards the gate and the critic refuse.
+One card is a scout with eight searches, a page read, a writing call and a
+critic call, all against cached system prompts: about sixty cents at Claude
+Opus 5 rates, thirty at batch prices, and a Thinking card a quarter of that.
+The receipt at the end of every run and in the pull request body splits it
+by stage. Thirty requests a night at batch prices is six to nine dollars,
+before the cards the gate and the critic refuse; a card that is refused
+costs its scout and its reading, not its writing.
 
 ## The calendar
 

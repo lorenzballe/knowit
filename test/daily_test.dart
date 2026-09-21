@@ -152,6 +152,7 @@ void main() {
       required String strand,
       String topic = 'space',
       List<String> buildsOn = const [],
+      List<String> also = const [],
       bool asks = false,
     }) => {
       'id': id,
@@ -159,6 +160,7 @@ void main() {
       if (strand.isNotEmpty)
         'genre': strand.substring(0, strand.lastIndexOf('.')),
       if (strand.isNotEmpty) 'strand': strand,
+      if (also.isNotEmpty) 'also': also,
       'kind': asks ? 'pickOne' : 'read',
       'difficulty': asks ? 'medium' : 'easy',
       'principle': asks ? 'baseRate' : 'none',
@@ -193,7 +195,7 @@ void main() {
       card('space-d2', strand: dust),
       card('space-r1', strand: windows),
       card('space-r2', strand: windows),
-      card('space-h1', strand: horizons),
+      card('space-h1', strand: horizons, also: [tides]),
       card('space-h2', strand: horizons),
       card('space-b1', strand: horizons, buildsOn: ['space-t1']),
       card('space-a1', strand: 'space.rockets.fuel_chemistry', asks: true),
@@ -260,6 +262,23 @@ void main() {
       expect(reads(one).map((p) => p.id), contains('space-b1'));
       // A reader who turned everything off still gets a full day.
       expect(one, hasLength(kPillsPerDay));
+    });
+
+    test('a card is on the mix through any strand it is also about', () {
+      final h1 = PillBank.byId('space-h1')!;
+      expect(h1.strands, [horizons, tides]);
+      expect(h1.traits, contains('strand:$tides'));
+      // Black holes and rockets off, moon dust off: tides is the one
+      // strand on, and h1 is on through it while h2 is not.
+      final deck = dealDay(
+        date: DateTime(2026, 10, 14),
+        topics: {'space'},
+        genresOff: {'space.black_holes', 'space.rockets'},
+        strandsOff: {dust},
+      );
+      final ids = reads(deck).map((p) => p.id).toList();
+      expect(ids, contains('space-h1'));
+      expect(ids, isNot(contains('space-h2')));
     });
 
     test('a card waits for the card it builds on', () {
