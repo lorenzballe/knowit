@@ -249,6 +249,18 @@ void main() {
         await tester.pumpWidget(host(locale, entry.value));
         await settle(tester);
         note(locale, entry.key, tester);
+        // The intro is five scenes; the first is not the long one.
+        if (entry.key == 'intro') {
+          for (var scene = 2; scene <= 5; scene++) {
+            await tester.fling(
+              find.byType(IntroScreen),
+              const Offset(-300, 0),
+              900,
+            );
+            await settle(tester);
+            note(locale, 'intro $scene', tester);
+          }
+        }
         // The fold: one screen further down, where the long lines live.
         final scrollable = find.byType(Scrollable);
         if (scrollable.evaluate().isNotEmpty) {

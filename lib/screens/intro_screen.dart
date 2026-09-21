@@ -27,8 +27,10 @@ import '../widgets/fit_text.dart';
 /// above the dots, which nobody looks at. Named here so the layout check
 /// can hold the app to them.
 const double kIntroSkipRow = 28;
-const double kIntroCopyGap = 24;
-const double kIntroTitleBox = 48;
+const double kIntroCopyGap = 14;
+// Two lines of the scene title at its full size: a title that needs both
+// gets them, and one that needs one sits in the middle of the same box.
+const double kIntroTitleBox = 68;
 const double kIntroSubtitleGap = 12;
 
 /// How far the orbit scene sits below the centre of its band. The mark is
@@ -431,14 +433,16 @@ class _SceneCopy extends StatelessWidget {
       children: [
         // A box of one height with the title centred in it: the wordmark is
         // Fraunces at 46 and the rest are Figtree at 30, and centred in the
-        // same box their middles land on the same line.
+        // same box their middles land on the same line. A title takes two
+        // lines when it needs them, and a size smaller before a third.
         SizedBox(
           height: kIntroTitleBox,
           child: Center(
-            child: Text(
+            child: FitText(
               title,
               textAlign: TextAlign.center,
-              maxLines: 1,
+              maxLines: wordmark ? 1 : 2,
+              minSize: 24,
               style: wordmark
                   ? AppText.display(
                       size: 46,
