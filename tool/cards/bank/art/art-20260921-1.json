@@ -1,0 +1,38 @@
+{
+  "id": "art-20260921-1",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which ferrule nipple bib tee union reducer was tried?",
+  "options": [
+    "Line 3",
+    "The water",
+    "Neither"
+  ],
+  "correct": 0,
+  "answer": "The plumbing handed it a canned card, and the gate read it the same way it reads a real one: word word word word word word word word word word word word word word word word word word word word word word.",
+  "move": "A canned card proves the pipes, never the water 3.",
+  "trap": "Reading the pipe as the water it carries.",
+  "keywords": [
+    "ferrule",
+    "nipple",
+    "bib"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "The plumbing test",
+  "source_kind": "statistics",
+  "reference": "https://example00.org/plumbing/0",
+  "quote": "The plumbing handed the reader a canned page and the reader copied this line from it.",
+  "written": "2026-09-21"
+}

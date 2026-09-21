@@ -1,8 +1,84 @@
 {
  "format": 1,
- "version": 202609202030,
- "built": "2026-09-20T20:30:56Z",
+ "version": 202609211227,
+ "built": "2026-09-21T12:27:50Z",
  "cards": [
+  {
+   "id": "art-20260921-1",
+   "topic": "art",
+   "genre": "art.photography",
+   "strand": "art.photography.first_photos",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Which ferrule nipple bib tee union reducer was tried?",
+   "options": [
+    "Line 3",
+    "The water",
+    "Neither"
+   ],
+   "correct": 0,
+   "answer": "The plumbing handed it a canned card, and the gate read it the same way it reads a real one: word word word word word word word word word word word word word word word word word word word word word word.",
+   "move": "A canned card proves the pipes, never the water 3.",
+   "trap": "Reading the pipe as the water it carries.",
+   "keywords": [
+    "ferrule",
+    "nipple",
+    "bib"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "source": "The plumbing test",
+   "source_kind": "statistics",
+   "reference": "https://example00.org/plumbing/0",
+   "quote": "The plumbing handed the reader a canned page and the reader copied this line from it.",
+   "written": "2026-09-21"
+  },
+  {
+   "id": "cinema-20260921-1",
+   "topic": "cinema",
+   "genre": "cinema.sound_design",
+   "strand": "cinema.sound_design.foley",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "conjunction",
+   "question": "Which bushing clamp hanger strainer bleeder riser was tried?",
+   "options": [
+    "Line 4",
+    "The water",
+    "Neither"
+   ],
+   "correct": 0,
+   "answer": "The plumbing handed it a canned card, and the gate read it the same way it reads a real one: word word word word word word word word word word word word word word word word word word word word word word.",
+   "move": "A canned card proves the pipes, never the water 4.",
+   "trap": "Reading the pipe as the water it carries.",
+   "keywords": [
+    "bushing",
+    "clamp",
+    "hanger"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "source": "The plumbing test",
+   "source_kind": "statistics",
+   "reference": "https://example10.org/plumbing/0",
+   "quote": "The plumbing handed the reader a canned page and the reader copied this line from it.",
+   "written": "2026-09-21"
+  },
   {
    "id": "economics-1",
    "topic": "economics",
@@ -275,6 +351,44 @@
    "mature": false,
    "language": "en",
    "source": "Contested question in higher education"
+  },
+  {
+   "id": "food-20260921-1",
+   "topic": "food",
+   "genre": "food.bread_and_baking",
+   "strand": "food.bread_and_baking.crust",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Which stack vent sleeve collar seal float was tried?",
+   "options": [
+    "Line 5",
+    "The water",
+    "Neither"
+   ],
+   "correct": 0,
+   "answer": "The plumbing handed it a canned card, and the gate read it the same way it reads a real one: word word word word word word word word word word word word word word word word word word word word word word.",
+   "move": "A canned card proves the pipes, never the water 5.",
+   "trap": "Reading the pipe as the water it carries.",
+   "keywords": [
+    "stack",
+    "vent",
+    "sleeve"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "source": "The plumbing test",
+   "source_kind": "statistics",
+   "reference": "https://example20.org/plumbing/0",
+   "quote": "The plumbing handed the reader a canned page and the reader copied this line from it.",
+   "written": "2026-09-21"
   },
   {
    "id": "history-1",
@@ -5764,6 +5878,7 @@
   "417": "thinking-n5",
   "418": "thinking-z36",
   "419": "thinking-z16",
-  "420": "thinking-r1"
+  "420": "thinking-r1",
+  "421": "thinking-1"
  }
 }

@@ -1,0 +1,38 @@
+{
+  "id": "food-20260921-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which stack vent sleeve collar seal float was tried?",
+  "options": [
+    "Line 5",
+    "The water",
+    "Neither"
+  ],
+  "correct": 0,
+  "answer": "The plumbing handed it a canned card, and the gate read it the same way it reads a real one: word word word word word word word word word word word word word word word word word word word word word word.",
+  "move": "A canned card proves the pipes, never the water 5.",
+  "trap": "Reading the pipe as the water it carries.",
+  "keywords": [
+    "stack",
+    "vent",
+    "sleeve"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "source": "The plumbing test",
+  "source_kind": "statistics",
+  "reference": "https://example20.org/plumbing/0",
+  "quote": "The plumbing handed the reader a canned page and the reader copied this line from it.",
+  "written": "2026-09-21"
+}
