@@ -34,11 +34,6 @@ const double kIntroCopyGap = 14;
 const double kIntroTitleBox = 68;
 const double kIntroSubtitleGap = 12;
 
-/// How far the orbit scene sits below the centre of its band. The mark is
-/// small and its rings are faint, so at dead centre it read as riding high
-/// against the four scenes that fill their band to the bottom.
-const double kIntroOrbitDrop = 18;
-
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
     super.key,
@@ -176,8 +171,12 @@ class _IntroScreenState extends State<IntroScreen> {
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 22,
                               ),
+                              // Pinned by the top: the copy going out and
+                              // the copy coming in share a top edge, so
+                              // nothing jumps.
                               child: _Swap(
                                 scene: _scene,
+                                alignment: Alignment.topCenter,
                                 child: _SceneCopy(index: _scene),
                               ),
                             ),
@@ -272,14 +271,17 @@ class _Scrim extends StatelessWidget {
 
 /// Gives a scene the whole width of the screen.
 ///
-/// The scenes are composed on a 344 square. Fitting that square inside the
-/// space available scales it to whichever side is shorter, which on a phone
-/// is the height — so it came out small with the width unused on both sides,
-/// looking like a picture in a frame rather than like the app.
+/// The scenes are drawn on a band 344 by 252, and the stage is given a band
+/// of the same shape as wide as the screen. The drawing is laid out at the
+/// size it was drawn for and then fitted to the stage, so it lands exactly
+/// on it: the top of the drawing on the top of the band, the bottom on the
+/// bottom.
 ///
-/// It is scaled to the width instead, and allowed to run a little past the
-/// top and bottom, where the fade takes it. The clamp stops that becoming a
-/// crop on a short screen.
+/// It used to be scaled in place instead, and the box it was scaled from
+/// took the stage's size, not the drawing's — so the drawing sat at the top
+/// of a box larger than itself and the scale, running from the middle of
+/// that box, pushed it twenty points above the band on every phone. Cards
+/// and the streak ring ran off under the notch, and the mark rode high.
 class _SceneStage extends StatelessWidget {
   const _SceneStage({super.key, required this.child});
 
@@ -292,25 +294,30 @@ class _SceneStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, box) {
-        // Scaled to the width. Nothing is cropped, because the band it is
-        // scaled into is the same shape as the band it was drawn in.
-        return Transform.scale(
-          scale: box.maxWidth / width,
-          child: SizedBox(width: width, height: bandHeight, child: child),
-        );
-      },
+    return FittedBox(
+      // Contain, not fill: the stage is the band's shape to within a
+      // rounding, and contain never stretches a drawing over that rounding.
+      fit: BoxFit.contain,
+      child: SizedBox(width: width, height: bandHeight, child: child),
     );
   }
 }
 
 /// Fades and lifts whatever changes when the scene does.
 class _Swap extends StatelessWidget {
-  const _Swap({required this.scene, required this.child});
+  const _Swap({
+    required this.scene,
+    required this.child,
+    this.alignment = Alignment.center,
+  });
 
   final int scene;
   final Widget child;
+
+  /// Where the one going out and the one coming in are held together. The
+  /// drawings sit in the middle of their band, and the words hang from the
+  /// top of theirs.
+  final Alignment alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -325,12 +332,8 @@ class _Swap extends StatelessWidget {
           child: child,
         ),
       ),
-      // Top-aligned: the words are pinned by their top, so the copy going
-      // out and the copy coming in share a top edge and nothing jumps.
-      layoutBuilder: (current, previous) => Stack(
-        alignment: Alignment.topCenter,
-        children: [...previous, ?current],
-      ),
+      layoutBuilder: (current, previous) =>
+          Stack(alignment: alignment, children: [...previous, ?current]),
       child: KeyedSubtree(key: ValueKey(scene), child: child),
     );
   }
@@ -635,56 +638,53 @@ class _SceneOrbits extends StatelessWidget {
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
-      child: Transform.translate(
-        offset: const Offset(0, kIntroOrbitDrop),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            _Orbit(
-              size: 236,
-              period: const Duration(seconds: 38),
-              opacity: 0.09,
-              satellites: const [
-                _Satellite(angle: -90, size: 10, color: Color(0xFFFF2E9C)),
-                _Satellite(angle: 133, size: 6, color: Color(0xFF00B083)),
-              ],
-            ),
-            _Orbit(
-              size: 178,
-              period: const Duration(seconds: 24),
-              reverse: true,
-              opacity: 0.13,
-              satellites: const [
-                _Satellite(angle: -25, size: 9, color: Color(0xFF2B4BFF)),
-                _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
-              ],
-            ),
-            const _Pulse(size: 146, color: Color(0x992B4BFF)),
-            _Pop(
-              duration: const Duration(milliseconds: 850),
-              child: Container(
-                width: 104,
-                height: 104,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0xB3000000),
-                      blurRadius: 60,
-                      offset: Offset(0, 24),
-                    ),
-                  ],
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: Image.asset(
-                  'assets/brand/mark-light.png',
-                  fit: BoxFit.cover,
-                  filterQuality: FilterQuality.medium,
-                ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          _Orbit(
+            size: 236,
+            period: const Duration(seconds: 38),
+            opacity: 0.09,
+            satellites: const [
+              _Satellite(angle: -90, size: 10, color: Color(0xFFFF2E9C)),
+              _Satellite(angle: 133, size: 6, color: Color(0xFF00B083)),
+            ],
+          ),
+          _Orbit(
+            size: 178,
+            period: const Duration(seconds: 24),
+            reverse: true,
+            opacity: 0.13,
+            satellites: const [
+              _Satellite(angle: -25, size: 9, color: Color(0xFF2B4BFF)),
+              _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
+            ],
+          ),
+          const _Pulse(size: 146, color: Color(0x992B4BFF)),
+          _Pop(
+            duration: const Duration(milliseconds: 850),
+            child: Container(
+              width: 104,
+              height: 104,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xB3000000),
+                    blurRadius: 60,
+                    offset: Offset(0, 24),
+                  ),
+                ],
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Image.asset(
+                'assets/brand/mark-light.png',
+                fit: BoxFit.cover,
+                filterQuality: FilterQuality.medium,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -911,15 +911,22 @@ class _SceneRain extends StatelessWidget {
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
       child: ShaderMask(
-        // Cards leave the picture by fading, not by meeting the bottom of
-        // their box. A row of cards ending on a straight line is the edge of
-        // a container, and there should not be one to see.
+        // Cards enter and leave the picture by fading, not by crossing the
+        // edge of their box. A row of cards cut on a straight line is the
+        // edge of a container, and there should not be one to see — and
+        // the top of the box is a line a phone with a notch draws just
+        // under its status bar.
         blendMode: BlendMode.dstIn,
         shaderCallback: (rect) => const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFFFFFFFF), Color(0xFFFFFFFF), Color(0x00FFFFFF)],
-          stops: [0, 0.62, 1],
+          colors: [
+            Color(0x00FFFFFF),
+            Color(0xFFFFFFFF),
+            Color(0xFFFFFFFF),
+            Color(0x00FFFFFF),
+          ],
+          stops: [0, 0.18, 0.62, 1],
         ).createShader(rect),
         child: ClipRect(
           child: Stack(

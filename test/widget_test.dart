@@ -3954,5 +3954,81 @@ void main() {
         expect(titleRect.top, greaterThanOrEqualTo(drawing.bottom));
       }
     });
+
+    testWidgets('every drawing sits inside its band, clear of Skip', (
+      tester,
+    ) async {
+      // The drawings are made on a band of one shape and the stage is that
+      // shape, so each should land on it exactly — and it did not: the box
+      // the drawing was scaled from took the stage's size, and scaling it
+      // from its middle lifted the drawing twenty points above the band.
+      // The ring, the chips and the card then ran off under the notch, and
+      // Skip, in the top right corner, printed over the chips.
+      await pumpIntro(tester);
+
+      final stage = find.byKey(const ValueKey('intro-stage'));
+      final Rect band = tester.getRect(stage);
+      final Rect skip = tester.getRect(find.text('Skip'));
+
+      // Scene by scene, what is drawn and where it must stay.
+      const List<List<String>> drawn = [
+        [], // the mark, found by its image below
+        [], // falling cards, whose box is checked as a whole
+        ['ECONOMICS', 'tap to reveal', 'BAR MOVE', 'Source · Stanford GSB'],
+        ['Space', 'Psychology', 'Economics', 'Technology', 'Human body'],
+        ['13', 'DAY STREAK'],
+      ];
+
+      for (int scene = 0; scene < drawn.length; scene++) {
+        if (scene > 0) {
+          await tester.fling(
+            find.byType(IntroScreen),
+            const Offset(-300, 0),
+            900,
+          );
+          await _settle(tester);
+        }
+        final List<Rect> parts = [
+          for (final text in drawn[scene]) tester.getRect(find.text(text)),
+        ];
+        if (scene == 0) {
+          // The mark sits on the middle of the band, where it was drawn.
+          final Rect mark = tester.getRect(
+            find.descendant(of: stage, matching: find.byType(Image)),
+          );
+          expect(mark.center.dx, closeTo(band.center.dx, 0.5));
+          expect(mark.center.dy, closeTo(band.center.dy, 0.5));
+          parts.add(mark);
+        }
+        if (scene == 1) {
+          // The cards' box is the band, to the pixel: fitted, not scaled
+          // from the middle of something larger.
+          final Rect box = tester.getRect(
+            find.descendant(of: stage, matching: find.byType(ShaderMask)),
+          );
+          expect(box.top, closeTo(band.top, 0.5));
+          expect(box.bottom, closeTo(band.bottom, 0.5));
+          expect(box.left, closeTo(band.left, 0.5));
+          expect(box.right, closeTo(band.right, 0.5));
+        }
+        for (final Rect part in parts) {
+          expect(
+            part.top,
+            greaterThanOrEqualTo(band.top),
+            reason: 'scene ${scene + 1} runs off the top of its band',
+          );
+          expect(
+            part.bottom,
+            lessThanOrEqualTo(band.bottom + 0.5),
+            reason: 'scene ${scene + 1} runs off the bottom of its band',
+          );
+          expect(
+            part.overlaps(skip),
+            isFalse,
+            reason: 'scene ${scene + 1} draws under Skip',
+          );
+        }
+      }
+    });
   });
 }

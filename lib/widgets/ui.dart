@@ -135,11 +135,21 @@ class SkipCorner extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
             child: Text(
               context.l10n.skip,
-              style: AppText.body(
-                size: 14,
-                weight: FontWeight.w500,
-                color: (color ?? context.p.ink).withValues(alpha: 0.5),
-              ),
+              style:
+                  AppText.body(
+                    size: 14,
+                    weight: FontWeight.w500,
+                    color: (color ?? context.p.ink).withValues(alpha: 0.5),
+                  ).copyWith(
+                    // On a picture, a shadow: the intro's cards fall past this
+                    // corner, and a word in half-white on a yellow card is not
+                    // a word. On black the shadow is not there to see.
+                    shadows: color == null
+                        ? null
+                        : const [
+                            Shadow(color: Color(0xB3000000), blurRadius: 10),
+                          ],
+                  ),
             ),
           ),
         ),
