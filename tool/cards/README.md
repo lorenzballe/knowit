@@ -30,7 +30,7 @@ tool/cards/
    two cards before any has a third — and a graded card is offered the three
    thinnest principles rather than one, so the writer takes the one the
    strand has a real instance of.
-3. The **scout** (`claude-opus-5`, web search, eight searches) is given the
+3. The **scout** (`claude-opus-5`, web search, ten searches) is given the
    strand, the kind of card, the principles on offer, the kind of source
    the subject has least of and the sites its readers trust first, and
    returns three finds: a claim, its figures, the page that states it, the
