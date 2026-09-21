@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 import '../theme.dart';
 import '../widgets/ambient.dart';
 import '../widgets/fit_text.dart';
+import '../widgets/ui.dart';
 
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
@@ -26,7 +27,7 @@ import '../widgets/fit_text.dart';
 /// distance under that. What varies from scene to scene is the room left
 /// above the dots, which nobody looks at. Named here so the layout check
 /// can hold the app to them.
-const double kIntroSkipRow = 28;
+const double kIntroSkipRow = SkipCorner.height;
 const double kIntroCopyGap = 14;
 // Two lines of the scene title at its full size: a title that needs both
 // gets them, and one that needs one sits in the middle of the same box.
@@ -147,27 +148,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: kIntroSkipRow,
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: widget.onContinue,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
-                              child: Text(
-                                context.l10n.skip,
-                                style: AppText.body(
-                                  size: 14,
-                                  weight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.5),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      SkipCorner(onTap: widget.onContinue, color: Colors.white),
                       // The words start a set distance under the picture's
                       // band, whatever the words say: the band is this tall
                       // from the top of the safe area, and the skip row and

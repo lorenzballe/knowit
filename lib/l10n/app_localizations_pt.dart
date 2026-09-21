@@ -1585,9 +1585,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Saltar — fica tudo ativo';
-
-  @override
   String get mixRarely => 'Raramente';
 
   @override

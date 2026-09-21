@@ -240,7 +240,7 @@ void main() {
     // inside each subject, most asked-for subject first. Walked past here;
     // it has a run of its own in test/genres_test.dart.
     expect(find.text('Your mix'), findsOneWidget);
-    await tester.tap(find.text('Skip — everything stays on'));
+    await tester.tap(find.text('Skip'));
     await _settle(tester);
 
     // And the answers are kept, not just used once.
@@ -265,7 +265,7 @@ void main() {
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: MixScreen(onDone: (_) {}),
+        home: MixScreen(onDone: (_) {}, onSkip: () {}),
       ),
     );
     await _settle(tester);
@@ -1139,7 +1139,7 @@ void main() {
     // Three: the genres under it, which can be walked past — and the cards
     // start straight after, because there is nothing else to ask.
     expect(find.text('Your mix'), findsOneWidget);
-    await tester.tap(find.text('Skip — everything stays on'));
+    await tester.tap(find.text('Skip'));
     await _settle(tester);
 
     expect(find.byType(PillCardStack), findsOneWidget);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../analytics.dart';
 
 import '../data/topics.dart';
+import '../l10n/l10n.dart';
 
 import '../theme.dart';
 import 'chunky.dart';
@@ -99,6 +100,47 @@ class QuietButton extends StatelessWidget {
             size: 13,
             weight: FontWeight.w500,
             color: context.p.inkMuted,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "Skip", top right, the same on every screen of the onboarding: the
+/// intro's five scenes, the mix, and the genres under it. One row of one
+/// height, one size, one colour, so a reader who found it once finds it
+/// again without looking for it.
+class SkipCorner extends StatelessWidget {
+  const SkipCorner({super.key, required this.onTap, this.color});
+
+  final VoidCallback onTap;
+
+  /// The ink to fade. The intro sits on black whatever the theme and passes
+  /// white; the themed screens leave it to the palette.
+  final Color? color;
+
+  static const double height = 28;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: height,
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
+            child: Text(
+              context.l10n.skip,
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w500,
+                color: (color ?? context.p.ink).withValues(alpha: 0.5),
+              ),
+            ),
           ),
         ),
       ),

@@ -1545,9 +1545,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => '건너뛰기 — 전부 켜진 채로';
-
-  @override
   String get mixRarely => '드물게';
 
   @override

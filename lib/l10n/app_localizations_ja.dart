@@ -1533,9 +1533,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'スキップ — すべてオンのまま';
-
-  @override
   String get mixRarely => 'まれに';
 
   @override

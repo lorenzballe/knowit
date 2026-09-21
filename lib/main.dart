@@ -389,6 +389,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
+          onSkip: _finishOnboarding,
         );
 
       // The same answer, one layer finer: which six of each subject, and

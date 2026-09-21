@@ -1530,9 +1530,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => '跳过 — 全部保持开启';
-
-  @override
   String get mixRarely => '很少';
 
   @override

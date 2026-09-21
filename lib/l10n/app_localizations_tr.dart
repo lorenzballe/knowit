@@ -1570,9 +1570,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Atla — hepsi açık kalır';
-
-  @override
   String get mixRarely => 'Nadiren';
 
   @override

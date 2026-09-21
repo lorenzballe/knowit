@@ -1631,9 +1631,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Pomiń — wszystko zostaje włączone';
-
-  @override
   String get mixRarely => 'Rzadko';
 
   @override

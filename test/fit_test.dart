@@ -233,7 +233,7 @@ void main() {
           onGoogle: () async => false,
           onNotConnected: (_) {},
         ),
-        'mix': MixScreen(onDone: (_) {}),
+        'mix': MixScreen(onDone: (_) {}, onSkip: () {}),
         'genres': GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {}),
         'comeback': ComebackScreen(app: app, onContinue: () {}),
         'topics': TopicsScreen(initial: app.pickedTopics, onDone: (_) {}),

@@ -1585,9 +1585,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Overslaan — alles blijft aan';
-
-  @override
   String get mixRarely => 'Zelden';
 
   @override

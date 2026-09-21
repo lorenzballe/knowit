@@ -1591,9 +1591,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Passer — tout reste actif';
-
-  @override
   String get mixRarely => 'Rarement';
 
   @override

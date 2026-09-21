@@ -1586,9 +1586,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Salta — resta tutto attivo';
-
-  @override
   String get mixRarely => 'Di rado';
 
   @override

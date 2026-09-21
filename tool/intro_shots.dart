@@ -37,6 +37,8 @@ Future<void> _loadFonts() async {
 
 void _nothing(Map<String, double> _) {}
 
+void _noSkip() {}
+
 void _noop() {}
 Future<bool> _no() async => false;
 void _ignore(String _) {}
@@ -147,7 +149,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         home: MediaQuery(
           data: const MediaQueryData(size: phone, padding: insets),
-          child: MixScreen(onDone: (_) {}),
+          child: MixScreen(onDone: (_) {}, onSkip: () {}),
         ),
       ),
     );
@@ -176,7 +178,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         home: const MediaQuery(
           data: MediaQueryData(size: small, padding: EdgeInsets.only(top: 20)),
-          child: MixScreen(onDone: _nothing),
+          child: MixScreen(onDone: _nothing, onSkip: _noSkip),
         ),
       ),
     );
@@ -205,7 +207,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         home: MediaQuery(
           data: const MediaQueryData(size: phone, padding: insets),
-          child: MixScreen(onDone: _nothing),
+          child: MixScreen(onDone: _nothing, onSkip: _noSkip),
         ),
       ),
     );

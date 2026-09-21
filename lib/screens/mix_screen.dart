@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
+import '../widgets/ui.dart';
 
 import 'package:flutter/services.dart';
 
@@ -56,7 +57,10 @@ const int kMixFloor = 6;
 /// rather than building a deck from nothing — an empty grid asks somebody who
 /// has never used the app to decide what they like about it.
 class MixScreen extends StatefulWidget {
-  const MixScreen({super.key, required this.onDone});
+  const MixScreen({super.key, required this.onDone, required this.onSkip});
+
+  /// The corner. Everything stays in, evenly, and the cards start.
+  final VoidCallback onSkip;
 
   /// Weights by topic key, 0..1. A subject dragged to nothing is absent.
   final ValueChanged<Map<String, double>> onDone;
@@ -112,10 +116,9 @@ class _MixScreenState extends State<MixScreen> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           18,
-          // The canvas clears its own status bar with 54. A real notch is
-          // taller than the one it draws, so take whichever is bigger —
-          // never less, or the title runs under the clock.
-          safe.top > 54 ? safe.top : 54,
+          // Under the notch, and then the same row the intro puts Skip on:
+          // fourteen down, a row of one height, and the heading under it.
+          safe.top + 14,
           18,
           // 22, as the canvas has it. The artboard is already a phone with a
           // home indicator and the designer put the button here; only a
@@ -126,6 +129,8 @@ class _MixScreenState extends State<MixScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SkipCorner(onTap: widget.onSkip, color: Colors.white),
+            const SizedBox(height: 12),
             const _MixHeading(),
             const SizedBox(height: 14),
             // grid-auto-rows:1fr — the nine rows share whatever height is

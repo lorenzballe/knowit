@@ -1333,7 +1333,6 @@
   "offInYourMix": "off in your mix",
   "continueGenresOn": "Continue · {on} of {total} genres on",
   "@continueGenresOn": {"placeholders": {"on": {"type": "int"}, "total": {"type": "int"}}},
-  "skipEverythingStaysOn": "Skip — everything stays on",
   "mixRarely": "Rarely",
   "mixSometimes": "Sometimes",
   "mixOften": "Often",

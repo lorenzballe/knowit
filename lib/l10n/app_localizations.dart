@@ -2322,12 +2322,6 @@ abstract class AppLocalizations {
   /// **'Continue · {on} of {total} genres on'**
   String continueGenresOn(int on, int total);
 
-  /// No description provided for @skipEverythingStaysOn.
-  ///
-  /// In en, this message translates to:
-  /// **'Skip — everything stays on'**
-  String get skipEverythingStaysOn;
-
   /// No description provided for @mixRarely.
   ///
   /// In en, this message translates to:

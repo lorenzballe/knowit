@@ -1625,9 +1625,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Пропустить — всё останется включённым';
-
-  @override
   String get mixRarely => 'Редко';
 
   @override

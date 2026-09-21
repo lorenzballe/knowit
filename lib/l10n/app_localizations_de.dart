@@ -1588,9 +1588,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get skipEverythingStaysOn => 'Überspringen — alles bleibt an';
-
-  @override
   String get mixRarely => 'Selten';
 
   @override
