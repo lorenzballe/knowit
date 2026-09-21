@@ -24,15 +24,36 @@ import '../widgets/ui.dart';
 /// as words drifting up and down while the picture held still. Now the
 /// title's box starts a fixed distance under the picture's band, is a fixed
 /// height with the title centred in it, and the subtitle starts a fixed
-/// distance under that. What varies from scene to scene is the room left
-/// above the dots, which nobody looks at. Named here so the layout check
-/// can hold the app to them.
-const double kIntroSkipRow = SkipCorner.height;
+/// distance under that; the dots follow at a fixed distance again. Named
+/// here so the layout check can hold the app to them.
 const double kIntroCopyGap = 14;
 // Two lines of the scene title at its full size: a title that needs both
 // gets them, and one that needs one sits in the middle of the same box.
 const double kIntroTitleBox = 68;
 const double kIntroSubtitleGap = 12;
+const double kIntroSubtitleSize = 17.5;
+const double kIntroSubtitleLeading = 1.44;
+
+/// The words, title box to the foot of a two-line subtitle. The audit holds
+/// every language to two lines, so this is what the words take at most.
+const double kIntroCopyHeight =
+    kIntroTitleBox +
+    kIntroSubtitleGap +
+    2 * kIntroSubtitleSize * kIntroSubtitleLeading;
+const double kIntroDotsGap = 18;
+const double kIntroDotsHeight = 7 + 2 * 6;
+
+/// Under the dots: the swipe hint on the first scene, with the room a line
+/// of it takes in any language, and on every scene the least room there is
+/// between the dots and the buttons.
+const double kIntroHintSlot = 26;
+
+/// How the room left over is shared, above the picture against below the
+/// dots. Mostly above: the picture, the words and the dots stay close to
+/// the buttons, and a taller phone shows more sky under its notch rather
+/// than a wider gap over its buttons.
+const int kIntroSpareAbove = 3;
+const int kIntroSpareBelow = 1;
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
@@ -76,6 +97,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final EdgeInsets safe = MediaQuery.paddingOf(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: GestureDetector(
@@ -98,148 +120,144 @@ class _IntroScreenState extends State<IntroScreen> {
         onTap: () {
           if (_moved < 8) _next();
         },
-        child: LayoutBuilder(
-          builder: (context, box) => Stack(
-            children: [
-              Positioned.fill(child: AmbientBlooms(colors: _blooms)),
-              const Positioned.fill(child: Bokeh()),
-              const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
+        child: Stack(
+          children: [
+            Positioned.fill(child: AmbientBlooms(colors: _blooms)),
+            const Positioned.fill(child: Bokeh()),
+            const Positioned(left: 0, right: 0, top: 0, child: LightSweep()),
 
-              // The picture is the background, not a panel inside the layout.
-              // It runs off all three edges it can reach, so there is nothing
-              // to see the end of, and it keeps the same size whatever the
-              // copy under it happens to say.
-              Positioned(
-                left: 0,
-                right: 0,
-                // Below the notch, not behind it. The blooms may run under
-                // the status bar because they are a wash; the drawing may
-                // not, or every phone with an inset shows it shifted up by
-                // however deep that inset is — which a browser, having none,
-                // will never reveal.
-                top: MediaQuery.paddingOf(context).top,
-                // The scenes are drawn for a band 344 by 252 — the shape of
-                // the room actually free above the copy. Drawn square, as
-                // they were, a picture at full width is taller than that
-                // space and has to either run off the top or sit under the
-                // title. That was not something to tune: the shape was wrong.
-                height: box.maxWidth * _SceneStage.ratio,
-                child: _SceneStage(
-                  key: const ValueKey('intro-stage'),
-                  child: _Swap(
-                    scene: _scene,
-                    child: _IntroScene(index: _scene),
-                  ),
-                ),
-              ),
+            // What makes the words readable: the blooms go dark under them.
+            const Positioned.fill(child: _Scrim()),
 
-              // What makes text on top of a picture readable. It also takes
-              // the picture's lower edge away, which is why the scene needs
-              // no fade of its own down there.
-              const Positioned.fill(child: _Scrim()),
-
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
-                  child: Column(
-                    children: [
-                      SkipCorner(onTap: widget.onContinue, color: Colors.white),
-                      // The words start a set distance under the picture's
-                      // band, whatever the words say: the band is this tall
-                      // from the top of the safe area, and the skip row and
-                      // the padding above it are already spent.
-                      SizedBox(
-                        height: math.max(
-                          0,
-                          box.maxWidth * _SceneStage.ratio +
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, room) {
+                          // The picture's band is as tall as the screen's
+                          // width wants it, or as tall as the room above the
+                          // buttons allows once the words, the dots and the
+                          // hint have taken theirs: a short phone gets a
+                          // smaller picture, never a picture over the words.
+                          final double wanted =
+                              room.maxWidth * _SceneStage.ratio;
+                          final double spare =
+                              room.maxHeight -
                               kIntroCopyGap -
-                              14 -
-                              kIntroSkipRow,
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          // On a screen too short for the words and the
-                          // buttons both, the words run down over the dots
-                          // rather than the layout failing.
-                          child: OverflowBox(
-                            alignment: Alignment.topCenter,
-                            minHeight: 0,
-                            maxHeight: double.infinity,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 22,
+                              kIntroCopyHeight -
+                              kIntroDotsGap -
+                              kIntroDotsHeight -
+                              kIntroHintSlot;
+                          final double band = math.max(
+                            0,
+                            math.min(wanted, spare),
+                          );
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              const Spacer(flex: kIntroSpareAbove),
+                              // The picture runs off both sides, so there
+                              // is nothing to see the end of, and keeps the
+                              // same size whatever the words under it say.
+                              SizedBox(
+                                height: band,
+                                child: _SceneStage(
+                                  key: const ValueKey('intro-stage'),
+                                  child: _Swap(
+                                    scene: _scene,
+                                    child: _IntroScene(index: _scene),
+                                  ),
+                                ),
                               ),
-                              // Pinned by the top: the copy going out and
-                              // the copy coming in share a top edge, so
-                              // nothing jumps.
-                              child: _Swap(
-                                scene: _scene,
-                                alignment: Alignment.topCenter,
-                                child: _SceneCopy(index: _scene),
+                              const SizedBox(height: kIntroCopyGap),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 22,
+                                ),
+                                // Pinned by the top: the copy going out and
+                                // the copy coming in share a top edge, so
+                                // nothing jumps.
+                                child: _Swap(
+                                  scene: _scene,
+                                  alignment: Alignment.topCenter,
+                                  child: _SceneCopy(index: _scene),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      _Dots(
-                        key: const ValueKey('intro-dots'),
-                        count: _sceneCount,
-                        active: _scene,
-                        onTap: _go,
-                      ),
-                      SizedBox(
-                        height: 26,
-                        child: AnimatedOpacity(
-                          opacity: _moved == 0 && _scene == 0 ? 1 : 0,
-                          duration: const Duration(milliseconds: 350),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              context.l10n.swipeToSeeMore,
-                              style: AppText.body(
-                                size: 12.5,
-                                weight: FontWeight.w500,
-                                color: Colors.white.withValues(alpha: 0.4),
+                              const SizedBox(height: kIntroDotsGap),
+                              _Dots(
+                                key: const ValueKey('intro-dots'),
+                                count: _sceneCount,
+                                active: _scene,
+                                onTap: _go,
                               ),
-                            ),
-                          ),
-                        ),
+                              SizedBox(
+                                height: kIntroHintSlot,
+                                child: AnimatedOpacity(
+                                  opacity: _moved == 0 && _scene == 0 ? 1 : 0,
+                                  duration: const Duration(milliseconds: 350),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 6),
+                                    child: Text(
+                                      context.l10n.swipeToSeeMore,
+                                      textAlign: TextAlign.center,
+                                      style: AppText.body(
+                                        size: 12.5,
+                                        weight: FontWeight.w500,
+                                        color: Colors.white.withValues(
+                                          alpha: 0.4,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Spacer(flex: kIntroSpareBelow),
+                            ],
+                          );
+                        },
                       ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 22),
-                        child: _SignInBlock(
-                          onApple: () async {
-                            if (await widget.onApple()) widget.onContinue();
-                          },
-                          onGoogle: () async {
-                            if (await widget.onGoogle()) widget.onContinue();
-                          },
-                          onEmail: () {
-                            widget.onNotConnected('Email');
-                            widget.onContinue();
-                          },
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      child: _SignInBlock(
+                        onApple: () async {
+                          if (await widget.onApple()) widget.onContinue();
+                        },
+                        onGoogle: () async {
+                          if (await widget.onGoogle()) widget.onContinue();
+                        },
+                        onEmail: () {
+                          widget.onNotConnected('Email');
+                          widget.onContinue();
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+
+            // Skip, over the top right corner of the picture. It takes no
+            // room: the picture starts where it would if the word were not
+            // there, and the drawings keep out of that corner.
+            Positioned(
+              left: 0,
+              right: 0,
+              top: safe.top + 8,
+              child: SkipCorner(onTap: widget.onContinue, color: Colors.white),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-/// Darkens the lower half so text sits on something rather than on a picture.
-///
-/// It is what lets the scene run all the way down without an edge: the
-/// picture does not stop, it is covered.
+/// Darkens the lower half of the blooms, so the words sit on black rather
+/// than on a wash of colour.
 class _Scrim extends StatelessWidget {
   const _Scrim();
 
@@ -258,8 +276,7 @@ class _Scrim extends StatelessWidget {
               Colors.black.withValues(alpha: 0.96),
               Colors.black.withValues(alpha: 0.98),
             ],
-            // Fully dark by the row the copy starts on. A title lying across
-            // a bright card is legible and still looks like an accident.
+            // Fully dark by the row the copy starts on.
             stops: const [0, 0.30, 0.42, 0.56, 1],
           ),
         ),
@@ -275,7 +292,8 @@ class _Scrim extends StatelessWidget {
 /// of the same shape as wide as the screen. The drawing is laid out at the
 /// size it was drawn for and then fitted to the stage, so it lands exactly
 /// on it: the top of the drawing on the top of the band, the bottom on the
-/// bottom.
+/// bottom. On a phone too short for that band the stage is shallower, and
+/// the drawing is fitted to its height instead, smaller and centred.
 ///
 /// It used to be scaled in place instead, and the box it was scaled from
 /// took the stage's size, not the drawing's — so the drawing sat at the top
@@ -296,7 +314,8 @@ class _SceneStage extends StatelessWidget {
   Widget build(BuildContext context) {
     return FittedBox(
       // Contain, not fill: the stage is the band's shape to within a
-      // rounding, and contain never stretches a drawing over that rounding.
+      // rounding, or shallower on a short phone, and contain never
+      // stretches a drawing over either.
       fit: BoxFit.contain,
       child: SizedBox(width: width, height: bandHeight, child: child),
     );
@@ -451,8 +470,8 @@ class _SceneCopy extends StatelessWidget {
             minSize: 14,
             textAlign: TextAlign.center,
             style: AppText.body(
-              size: 17.5,
-              height: 1.44,
+              size: kIntroSubtitleSize,
+              height: kIntroSubtitleLeading,
               color: Colors.white.withValues(alpha: 0.58),
             ),
           ),
@@ -887,9 +906,9 @@ class _SceneRain extends StatelessWidget {
   const _SceneRain();
 
   /// How far above the band the box reaches, in the band's own units.
-  /// Deeper than any phone's status bar once scaled, so the top of the box
-  /// is always off the screen.
-  static const double above = 70;
+  /// Deeper than a phone's status bar and the sky under it once scaled, so
+  /// the top of the box is off the screen.
+  static const double above = 100;
   static const double boxHeight = _SceneStage.bandHeight + above;
 
   static const List<Color> _palette = [

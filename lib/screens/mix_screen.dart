@@ -116,9 +116,11 @@ class _MixScreenState extends State<MixScreen> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           18,
-          // Under the notch, and then fourteen down, where the intro puts
-          // Skip: here Skip ends the heading's row.
-          safe.top + 14,
+          // The canvas clears its own status bar with 54. A real notch is
+          // taller than the one it draws, so take whichever is bigger —
+          // never less, or the title runs under the clock. Skip takes no
+          // room here: it ends the heading's row.
+          safe.top > 54 ? safe.top : 54,
           18,
           // 22, as the canvas has it. The artboard is already a phone with a
           // home indicator and the designer put the button here; only a

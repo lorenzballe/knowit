@@ -3955,6 +3955,97 @@ void main() {
       }
     });
 
+    testWidgets('the picture and the words sit low, close to the buttons', (
+      tester,
+    ) async {
+      // The room a tall phone has left over used to open up between the
+      // dots and the buttons, where it read as a hole. It goes above the
+      // picture now, three parts to one: the picture, the words and the
+      // dots sit close to the buttons, and the sky is under the notch.
+      await pumpIntro(tester);
+
+      final Rect band = tester.getRect(
+        find.byKey(const ValueKey('intro-stage')),
+      );
+      final Rect dots = tester.getRect(
+        find.byKey(const ValueKey('intro-dots')),
+      );
+      // The button, not the word centred in it.
+      final Rect apple = tester.getRect(
+        find
+            .ancestor(
+              of: find.text('Continue with Apple'),
+              matching: find.byType(Container),
+            )
+            .first,
+      );
+
+      final double above = band.top - insets.top - 14;
+      final double below = apple.top - dots.bottom - kIntroHintSlot;
+      expect(above, greaterThanOrEqualTo(0));
+      expect(below, greaterThanOrEqualTo(-0.5));
+      expect(
+        above,
+        closeTo(below * kIntroSpareAbove / kIntroSpareBelow, 1),
+        reason: 'the spare room is not shared three to one',
+      );
+      // And the picture is the size the width wants: nothing was given up
+      // to make room on a phone that has it.
+      expect(band.height, closeTo(band.width * 252 / 344, 0.5));
+    });
+
+    testWidgets(
+      'a short phone gets a smaller picture, never one over the words',
+      (tester) async {
+        // An SE: the rows under the picture take what they take, and the
+        // picture is what is left, fitted to a shallower band. Nothing
+        // overflows — a RenderFlex overflow fails the test on its own.
+        const Size small = Size(375, 667);
+        tester.view.physicalSize = small * 2;
+        tester.view.devicePixelRatio = 2;
+        await tester.pumpWidget(
+          MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+
+            theme: buildAstutoTheme(Brightness.dark),
+            home: MediaQuery(
+              data: const MediaQueryData(
+                padding: EdgeInsets.only(top: 20),
+                size: small,
+              ),
+              child: IntroScreen(
+                onContinue: () {},
+                onApple: () async => false,
+                onGoogle: () async => false,
+                onNotConnected: (_) {},
+              ),
+            ),
+          ),
+        );
+        await _settle(tester);
+
+        final Rect band = tester.getRect(
+          find.byKey(const ValueKey('intro-stage')),
+        );
+        expect(band.height, lessThan(small.width * 252 / 344));
+        expect(band.top, greaterThanOrEqualTo(20));
+        final Rect title = tester.getRect(find.text('Astute'));
+        expect(title.top, greaterThanOrEqualTo(band.bottom));
+        final Rect apple = tester.getRect(find.text('Continue with Apple'));
+        expect(apple.bottom, lessThanOrEqualTo(small.height));
+        // The drawing is fitted to the shallower band: whole, and centred.
+        final Rect mark = tester.getRect(
+          find.descendant(
+            of: find.byKey(const ValueKey('intro-stage')),
+            matching: find.byType(Image),
+          ),
+        );
+        expect(mark.center.dx, closeTo(band.center.dx, 0.5));
+        expect(mark.center.dy, closeTo(band.center.dy, 0.5));
+      },
+    );
+
     testWidgets('every drawing sits inside its band, clear of Skip', (
       tester,
     ) async {

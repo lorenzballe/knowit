@@ -130,14 +130,13 @@ class _GenresScreenState extends State<GenresScreen> {
         bottom: false,
         child: Column(
           children: [
-            const SizedBox(height: 14),
             Expanded(
               child: Stack(
                 children: [
                   // The head scrolls with the subjects rather than sitting
                   // over them: it is the first thing on the page, not a bar.
                   ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                    padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
                     itemCount: _subjects.length + 1,
                     itemBuilder: (context, i) {
                       if (i == 0) {
