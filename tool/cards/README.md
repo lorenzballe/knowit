@@ -115,8 +115,9 @@ python3 tool/cards/generate.py --plan --count 20 --dry-run     # what would be a
 python3 tool/cards/generate.py --topic space --kind pickOne --principle baseRate
 python3 tool/cards/generate.py --strand space.the_moon.tides --kind read
 python3 tool/cards/generate.py --genre history.middle_ages --kind pickOne   # its thinnest strand
-python3 tool/cards/generate.py --plan --count 5 --fake         # the plumbing, no model
+python3 tool/cards/generate.py --plan --count 5 --fake         # the plumbing, no model, no key
 python3 tool/cards/generate.py --plan --count 30 --batch       # the nightly run, at half price
+python3 tool/cards/generate.py --plan --count 5 --batch --model claude-sonnet-5   # a trial night, cheaper
 python3 tool/cards/generate.py --strand space.the_moon.tides --kind read --no-research   # from memory, as before
 python3 tool/cards/tag.py --missing --dry-run                  # cards without tags
 python3 tool/cards/bundle.py                         # after any change to the bank
@@ -135,6 +136,16 @@ The receipt at the end of every run and in the pull request body splits it
 by stage. Thirty requests a night at batch prices is six to nine dollars,
 before the cards the gate and the critic refuse; a card that is refused
 costs its scout and its reading, not its writing.
+
+Most of that is the searches, which cost a cent each on any model. So a
+cheaper model saves less than it seems: `--model claude-sonnet-5` takes the
+same request as Opus at two and a half times less per token and brings a
+card to roughly two thirds of the price, which is the way to run a trial
+night; Haiku would save cents more, needs other tool versions, and writes
+worse cards, so the generator does not offer it. A run with `--fake` costs
+nothing at all and needs no key: it exercises everything but the writing,
+and the nightly workflow takes it as an input, opening a pull request that
+says in its title it is not to be merged.
 
 ## The calendar
 

@@ -64,8 +64,18 @@ MODEL = "claude-opus-5"
 # fallback for the refusal category, inside the same call.
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
-# Dollars per million tokens, and per web search, for the run's own receipt.
-PRICE = {"input": 5.0, "output": 25.0, "cache_read": 0.5, "cache_write": 6.25}
+# Dollars per million tokens, by model, for the run's own receipt — and the
+# models the generator may be run on. Sonnet takes the same request as Opus
+# (the same search and fetch tools, effort, structured output), at two and a
+# half times less per token; it is the cheap way to try the pipeline. Haiku
+# is not here: it takes older tool versions and no effort setting, and since
+# most of a card's cost is its searches, which cost the same on any model,
+# it would save cents and write worse cards.
+PRICES = {
+    "claude-opus-5": {"input": 5.0, "output": 25.0, "cache_read": 0.5, "cache_write": 6.25},
+    "claude-sonnet-5": {"input": 2.0, "output": 10.0, "cache_read": 0.2, "cache_write": 2.5},
+}
+PRICE = PRICES[MODEL]
 SEARCH_PRICE = 0.01
 
 # How hard each stage may search, and how long a batch may take.
@@ -715,6 +725,8 @@ class Claude:
     def __init__(self, model: str = MODEL, *, batch: bool = False):
         import anthropic
 
+        if model not in PRICES:
+            raise ValueError(f"{model} is not a model the generator runs on; one of {', '.join(PRICES)}")
         self.anthropic = anthropic
         self.client = anthropic.Anthropic()
         self.model = model
@@ -816,7 +828,8 @@ class Claude:
 
     def cost(self, u: Counter) -> float:
         discount = 0.5 if self.batch else 1.0
-        return sum(u[k] * PRICE[k] / 1e6 for k in PRICE) * discount + u["searches"] * SEARCH_PRICE
+        price = PRICES[self.model]
+        return sum(u[k] * price[k] / 1e6 for k in price) * discount + u["searches"] * SEARCH_PRICE
 
     def receipt(self) -> str:
         if not self.usage:
@@ -1266,6 +1279,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--no-critic", action="store_true")
     ap.add_argument("--no-research", action="store_true", help="write from memory, as before the scout and the reader")
     ap.add_argument("--batch", action="store_true", help="every stage through the Message Batches API, at half the token price")
+    ap.add_argument("--model", choices=sorted(PRICES), default=MODEL, help="the model every stage runs on (default: %(default)s)")
     ap.add_argument("--dry-run", action="store_true", help="print the briefs; call nothing")
     ap.add_argument("--fake", action="store_true", help="a canned model: exercises everything but the writing")
     ap.add_argument("--today", help="YYYY-MM-DD for the ids and the written date")
@@ -1313,7 +1327,7 @@ def main(argv: list[str] | None = None) -> int:
         if not os.environ.get("ANTHROPIC_API_KEY"):
             print("ANTHROPIC_API_KEY is not set; nothing was written. Use --dry-run to see the plan.", file=sys.stderr)
             return 2
-        model = Claude(batch=args.batch)
+        model = Claude(args.model, batch=args.batch)
 
     outcomes = run(requests, model, bank, out=args.out, today=today, critic=not args.no_critic, research=not args.no_research)
     text = report(outcomes, model.receipt(), today)

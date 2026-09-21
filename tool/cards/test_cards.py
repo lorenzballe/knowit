@@ -382,6 +382,33 @@ class TheBatch(unittest.TestCase):
         self.assertIn("paused", model._finish(spec, paused).error)
 
 
+class TheModel(unittest.TestCase):
+    """Which model the stages run on, and what the receipt charges for it."""
+
+    def _model(self, name, batch=False):
+        model = object.__new__(generate.Claude)
+        model.client, model.model, model.batch, model.usage = None, name, batch, {}
+        return model
+
+    def test_the_receipt_charges_each_model_its_own_price(self):
+        from collections import Counter
+        u = Counter(input=1_000_000, output=0, cache_read=0, cache_write=0, searches=10)
+        self.assertAlmostEqual(self._model("claude-opus-5").cost(u), 5.0 + 0.10)
+        self.assertAlmostEqual(self._model("claude-sonnet-5").cost(u), 2.0 + 0.10)
+        # The batch halves the tokens and never the searches.
+        self.assertAlmostEqual(self._model("claude-sonnet-5", batch=True).cost(u), 1.0 + 0.10)
+
+    def test_the_stages_ask_the_model_they_were_given(self):
+        model = self._model("claude-sonnet-5")
+        spec = generate.Spec("s", [{"role": "user", "content": "x"}], generate.Draft)
+        self.assertEqual(model._params(spec)["model"], "claude-sonnet-5")
+
+    def test_a_model_the_generator_does_not_run_on_is_refused(self):
+        # Before any client is built, so no key is needed to be told.
+        with self.assertRaises(ValueError):
+            generate.Claude("claude-haiku-4-5")
+
+
 class ThePlumbing(unittest.TestCase):
     def test_a_canned_model_flows_into_the_bank(self):
         bank = check.load_bank()

@@ -14,6 +14,11 @@ name: Write tonight's cards
 #   approve pull requests"
 #
 # Run it by hand from the Actions tab with a count and, optionally, a topic.
+# "fake" runs the whole thing on a canned model — no key, no cost — and
+# opens a pull request that says so in its title: it proves the machinery,
+# and it is never merged. "model" picks what the real stages run on: Sonnet
+# takes the same request as Opus at a fraction of the token price, for a
+# trial night.
 
 on:
   schedule:
@@ -26,6 +31,17 @@ on:
       topics:
         description: Only these topics, space-separated (empty = whatever the bank is short of)
         default: ""
+      model:
+        description: The model every stage runs on
+        type: choice
+        options:
+          - claude-opus-5
+          - claude-sonnet-5
+        default: claude-opus-5
+      fake:
+        description: A canned model instead of the API — no key, no cost, nothing to merge
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -57,6 +73,7 @@ jobs:
       # from before the tags — is tagged before anything new is written.
       # Usually nothing to do.
       - name: Tag what has no tags
+        if: ${{ inputs.fake != true }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 tool/cards/tag.py --missing
@@ -68,6 +85,8 @@ jobs:
           only="${{ github.event.inputs.topics }}"
           python3 tool/cards/generate.py --plan --batch \
             --count "${{ github.event.inputs.count || '30' }}" \
+            --model "${{ github.event.inputs.model || 'claude-opus-5' }}" \
+            ${{ inputs.fake == true && '--fake' || '' }} \
             ${only:+--only $only} \
             --report cards-report.md
 
@@ -81,7 +100,7 @@ jobs:
         with:
           branch: cards/${{ github.run_id }}
           delete-branch: true
-          title: "Cards: tonight's batch"
+          title: "${{ inputs.fake == true && 'Cards: a dry run on a canned model, do not merge' || 'Cards: tonight''s batch' }}"
           body-path: cards-report.md
           commit-message: |
             Tonight's cards, from the generator
@@ -92,4 +111,4 @@ jobs:
             tool/cards/editions.json
             lib/data/embedded_bank.dart
             web/cards/cards.json
-          labels: cards
+          labels: "${{ inputs.fake == true && 'cards, dry-run' || 'cards' }}"
