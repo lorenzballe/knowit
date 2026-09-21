@@ -3888,23 +3888,34 @@ void main() {
 
     testWidgets('the words hold still from scene to scene', (tester) async {
       // With the real typeface, not the test one: whether the five scenes
-      // agree depends entirely on how many lines each subtitle takes, and
-      // the stand-in font every widget test uses breaks lines somewhere
-      // else entirely. This is the check that means anything — lengthen one
-      // of these five sentences and it fails, which is exactly when the
-      // titles start moving between scenes again.
+      // agree depends on how the subtitles break, and the stand-in font
+      // every widget test uses breaks lines somewhere else entirely.
       await pumpIntro(tester);
 
-      const titles = [
-        'Astute',
-        'Twelve topics, five pills',
-        'A question, then the answer',
-        'You choose the mix',
-        'Thirty seconds a day',
+      const copy = [
+        ('Astute', 'Five smart things a day, ready to use in conversation'),
+        (
+          'Twelve topics, five pills',
+          'Written fresh every morning, and checked against a source.',
+        ),
+        (
+          'A question, then the answer',
+          'Every pill carries the one line that makes it worth saying out loud.',
+        ),
+        (
+          'You choose the mix',
+          'Turn a topic down to see less of it, or off for good.',
+        ),
+        (
+          'Thirty seconds a day',
+          'One notification, five cards, and a streak you will not want to break.',
+        ),
       ];
 
-      double? foot;
-      for (int scene = 0; scene < titles.length; scene++) {
+      double? middle;
+      double? subTop;
+      double? dots;
+      for (int scene = 0; scene < copy.length; scene++) {
         if (scene > 0) {
           await tester.fling(
             find.byType(IntroScreen),
@@ -3913,24 +3924,34 @@ void main() {
           );
           await _settle(tester);
         }
-        // Read against the scene's own deliberate lift, so a copy change
-        // that adds a line still fails by twenty-five points while the
-        // fourteen that three scenes are raised by on purpose does not.
-        final bottom =
-            tester.getRect(find.text(titles[scene])).bottom +
-            kIntroCopyLift[scene];
-        foot ??= bottom;
+        final (title, sub) = copy[scene];
+        final titleRect = tester.getRect(find.text(title));
+        final subRect = tester.getRect(find.text(sub));
+        final dotsTop = tester
+            .getTopLeft(find.byKey(const ValueKey('intro-dots')))
+            .dy;
+        middle ??= titleRect.center.dy;
+        subTop ??= subRect.top;
+        dots ??= dotsTop;
+        // The title is centred in a box of one height, so two faces at two
+        // sizes put their middles on the same line; the subtitle starts a
+        // set distance under that box; the dots never move at all.
         expect(
-          bottom,
-          // Three points of slack: the wordmark is Fraunces at 46 and the
-          // rest are Figtree at 30, and two faces at two sizes do not put
-          // their boxes on exactly the same pixel. A subtitle gaining a line
-          // moves this by twenty-five, which is what the check is for.
-          closeTo(foot, 3),
-          reason:
-              'scene ${scene + 1} puts its title on a different line from '
-              'the first — the copy under it has changed length',
+          titleRect.center.dy,
+          closeTo(middle, 0.5),
+          reason: 'scene ${scene + 1} puts its title on another line',
         );
+        expect(
+          subRect.top,
+          closeTo(subTop, 0.5),
+          reason: 'scene ${scene + 1} puts its subtitle on another line',
+        );
+        expect(dotsTop, closeTo(dots, 0.5), reason: 'the dots moved');
+        // And the words start under the picture, not over it.
+        final drawing = tester.getRect(
+          find.byKey(const ValueKey('intro-stage')),
+        );
+        expect(titleRect.top, greaterThanOrEqualTo(drawing.bottom));
       }
     });
   });

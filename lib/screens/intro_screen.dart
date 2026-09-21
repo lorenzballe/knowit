@@ -6,6 +6,7 @@ import '../l10n/l10n.dart';
 
 import '../theme.dart';
 import '../widgets/ambient.dart';
+import '../widgets/fit_text.dart';
 
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
@@ -15,14 +16,25 @@ import '../widgets/ambient.dart';
 /// because no account is created here. The copy on the next screen makes that
 /// promise explicit: an account is asked for once there is a streak worth
 /// keeping.
-/// How far each scene's words are lifted off where the block alone would put
-/// them.
+/// Where the words sit, scene after scene: the same place.
 ///
-/// The wordmark scene is set much larger and the long title wraps to two
-/// lines, so those two ride higher on their own; without this the other three
-/// read as having sagged. Named here rather than buried in the build so the
-/// layout check can hold the app to it.
-const List<double> kIntroCopyLift = [0, 14, 0, 14, 14];
+/// The copy used to be anchored by its foot, above the dots, so a title set
+/// larger or a subtitle a line longer started higher — and five scenes read
+/// as words drifting up and down while the picture held still. Now the
+/// title's box starts a fixed distance under the picture's band, is a fixed
+/// height with the title centred in it, and the subtitle starts a fixed
+/// distance under that. What varies from scene to scene is the room left
+/// above the dots, which nobody looks at. Named here so the layout check
+/// can hold the app to them.
+const double kIntroSkipRow = 28;
+const double kIntroCopyGap = 24;
+const double kIntroTitleBox = 48;
+const double kIntroSubtitleGap = 12;
+
+/// How far the orbit scene sits below the centre of its band. The mark is
+/// small and its rings are faint, so at dead centre it read as riding high
+/// against the four scenes that fill their band to the bottom.
+const double kIntroOrbitDrop = 18;
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
@@ -133,42 +145,69 @@ class _IntroScreenState extends State<IntroScreen> {
                   padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: widget.onContinue,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
-                            child: Text(
-                              context.l10n.skip,
-                              style: AppText.body(
-                                size: 14,
-                                weight: FontWeight.w500,
-                                color: Colors.white.withValues(alpha: 0.5),
+                      SizedBox(
+                        height: kIntroSkipRow,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: widget.onContinue,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
+                              child: Text(
+                                context.l10n.skip,
+                                style: AppText.body(
+                                  size: 14,
+                                  weight: FontWeight.w500,
+                                  color: Colors.white.withValues(alpha: 0.5),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      const Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 22),
-                        // Three of the five sit a touch lower than the rest —
-                        // the wordmark scene is set larger and the long title
-                        // wraps, so those two ride higher on their own. A
-                        // translation rather than padding: the words move,
-                        // and the dots and the buttons under them do not.
-                        child: Transform.translate(
-                          offset: Offset(0, -kIntroCopyLift[_scene]),
-                          child: _Swap(
-                            scene: _scene,
-                            child: _SceneCopy(index: _scene),
+                      // The words start a set distance under the picture's
+                      // band, whatever the words say: the band is this tall
+                      // from the top of the safe area, and the skip row and
+                      // the padding above it are already spent.
+                      SizedBox(
+                        height: math.max(
+                          0,
+                          box.maxWidth * _SceneStage.ratio +
+                              kIntroCopyGap -
+                              14 -
+                              kIntroSkipRow,
+                        ),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          // On a screen too short for the words and the
+                          // buttons both, the words run down over the dots
+                          // rather than the layout failing.
+                          child: OverflowBox(
+                            alignment: Alignment.topCenter,
+                            minHeight: 0,
+                            maxHeight: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22,
+                              ),
+                              child: _Swap(
+                                scene: _scene,
+                                child: _SceneCopy(index: _scene),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 18),
-                      _Dots(count: _sceneCount, active: _scene, onTap: _go),
+                      _Dots(
+                        key: const ValueKey('intro-dots'),
+                        count: _sceneCount,
+                        active: _scene,
+                        onTap: _go,
+                      ),
                       SizedBox(
                         height: 26,
                         child: AnimatedOpacity(
@@ -303,15 +342,24 @@ class _Swap extends StatelessWidget {
           child: child,
         ),
       ),
-      layoutBuilder: (current, previous) =>
-          Stack(alignment: Alignment.center, children: [...previous, ?current]),
+      // Top-aligned: the words are pinned by their top, so the copy going
+      // out and the copy coming in share a top edge and nothing jumps.
+      layoutBuilder: (current, previous) => Stack(
+        alignment: Alignment.topCenter,
+        children: [...previous, ?current],
+      ),
       child: KeyedSubtree(key: ValueKey(scene), child: child),
     );
   }
 }
 
 class _Dots extends StatelessWidget {
-  const _Dots({required this.count, required this.active, required this.onTap});
+  const _Dots({
+    super.key,
+    required this.count,
+    required this.active,
+    required this.onTap,
+  });
 
   final int count;
   final int active;
@@ -379,40 +427,53 @@ class _SceneCopy extends StatelessWidget {
     final (String title, String sub) = _copy[index];
     final bool wordmark = index == 0;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: wordmark
-              ? AppText.display(
-                  size: 46,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  spacing: -1.6,
-                  color: Colors.white,
-                )
-              // The canvas sets the scene titles in Outfit, which the app does
-              // not ship. Figtree at 700 is the closest face already bundled;
-              // adding a third family for five lines is not worth the weight.
-              : AppText.body(
-                  size: 30,
-                  weight: FontWeight.w700,
-                  height: 1.12,
-                  spacing: -1.2,
-                  color: Colors.white,
-                ),
+        // A box of one height with the title centred in it: the wordmark is
+        // Fraunces at 46 and the rest are Figtree at 30, and centred in the
+        // same box their middles land on the same line.
+        SizedBox(
+          height: kIntroTitleBox,
+          child: Center(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              style: wordmark
+                  ? AppText.display(
+                      size: 46,
+                      weight: FontWeight.w600,
+                      height: 1,
+                      spacing: -1.6,
+                      color: Colors.white,
+                    )
+                  // The canvas sets the scene titles in Outfit, which the app
+                  // does not ship. Figtree at 700 is the closest face already
+                  // bundled; adding a third family for five lines is not
+                  // worth the weight.
+                  : AppText.body(
+                      size: 30,
+                      weight: FontWeight.w700,
+                      height: 1.12,
+                      spacing: -1.2,
+                      color: Colors.white,
+                    ),
+            ),
+          ),
         ),
-        const SizedBox(height: wordmarkGap),
+        const SizedBox(height: kIntroSubtitleGap),
+        // Two lines, in whatever size two lines take: the same style on
+        // every scene, so the second line lands where it did on the last.
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 302),
-          child: Text(
+          child: FitText(
             sub,
+            maxLines: 2,
+            minSize: 14,
             textAlign: TextAlign.center,
             style: AppText.body(
-              size: wordmark ? 18.5 : 17.5,
-              height: wordmark ? 1.4 : 1.44,
+              size: 17.5,
+              height: 1.44,
               color: Colors.white.withValues(alpha: 0.58),
             ),
           ),
@@ -420,8 +481,6 @@ class _SceneCopy extends StatelessWidget {
       ],
     );
   }
-
-  static const double wordmarkGap = 14;
 }
 
 class _SignInBlock extends StatelessWidget {
@@ -591,53 +650,56 @@ class _SceneOrbits extends StatelessWidget {
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          _Orbit(
-            size: 236,
-            period: const Duration(seconds: 38),
-            opacity: 0.09,
-            satellites: const [
-              _Satellite(angle: -90, size: 10, color: Color(0xFFFF2E9C)),
-              _Satellite(angle: 133, size: 6, color: Color(0xFF00B083)),
-            ],
-          ),
-          _Orbit(
-            size: 178,
-            period: const Duration(seconds: 24),
-            reverse: true,
-            opacity: 0.13,
-            satellites: const [
-              _Satellite(angle: -25, size: 9, color: Color(0xFF2B4BFF)),
-              _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
-            ],
-          ),
-          const _Pulse(size: 146, color: Color(0x992B4BFF)),
-          _Pop(
-            duration: const Duration(milliseconds: 850),
-            child: Container(
-              width: 104,
-              height: 104,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0xB3000000),
-                    blurRadius: 60,
-                    offset: Offset(0, 24),
-                  ),
-                ],
-              ),
-              clipBehavior: Clip.antiAlias,
-              child: Image.asset(
-                'assets/brand/mark-light.png',
-                fit: BoxFit.cover,
-                filterQuality: FilterQuality.medium,
+      child: Transform.translate(
+        offset: const Offset(0, kIntroOrbitDrop),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            _Orbit(
+              size: 236,
+              period: const Duration(seconds: 38),
+              opacity: 0.09,
+              satellites: const [
+                _Satellite(angle: -90, size: 10, color: Color(0xFFFF2E9C)),
+                _Satellite(angle: 133, size: 6, color: Color(0xFF00B083)),
+              ],
+            ),
+            _Orbit(
+              size: 178,
+              period: const Duration(seconds: 24),
+              reverse: true,
+              opacity: 0.13,
+              satellites: const [
+                _Satellite(angle: -25, size: 9, color: Color(0xFF2B4BFF)),
+                _Satellite(angle: 104, size: 5, color: Color(0xFFFFC93C)),
+              ],
+            ),
+            const _Pulse(size: 146, color: Color(0x992B4BFF)),
+            _Pop(
+              duration: const Duration(milliseconds: 850),
+              child: Container(
+                width: 104,
+                height: 104,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0xB3000000),
+                      blurRadius: 60,
+                      offset: Offset(0, 24),
+                    ),
+                  ],
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Image.asset(
+                  'assets/brand/mark-light.png',
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.medium,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
