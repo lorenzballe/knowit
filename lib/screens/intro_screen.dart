@@ -901,15 +901,22 @@ class _PopState extends State<_Pop> with SingleTickerProviderStateMixin {
 /// Its box reaches [above] the band, to the top edge of the screen and past
 /// it: a card enters the picture from behind the status bar, whole, rather
 /// than appearing on the line the band starts on — which on a phone with
-/// a notch is a line drawn just under the clock.
+/// a notch is a line drawn just under the clock. At the foot of the box
+/// each card fades itself out before it gets there, so no card is ever cut
+/// on the line the box ends on. A gradient mask over the box did that job
+/// before, and on the phone it did not: the cards reached the line at a
+/// third of their colour and stopped dead on it.
 class _SceneRain extends StatelessWidget {
   const _SceneRain();
 
   /// How far above the band the box reaches, in the band's own units.
-  /// Deeper than a phone's status bar and the sky under it once scaled, so
-  /// the top of the box is off the screen.
-  static const double above = 100;
+  /// Deeper than a phone's status bar and the sky under it once scaled, on
+  /// the tallest phone, so the top of the box is off the screen.
+  static const double above = 130;
   static const double boxHeight = _SceneStage.bandHeight + above;
+
+  /// Over how much of the box's foot a card goes from whole to gone.
+  static const double fadeLength = 90;
 
   static const List<Color> _palette = [
     Color(0xFFFF2E9C),
@@ -935,61 +942,44 @@ class _SceneRain extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         minHeight: boxHeight,
         maxHeight: boxHeight,
-        child: ShaderMask(
-          // Cards leave the picture by fading, not by meeting the bottom
-          // of their box: a row of cards ending on a straight line is the
-          // edge of a container, and there should not be one to see. At
-          // the top they fade in over the part of the box that is off the
-          // screen, so what is on it is whole.
-          blendMode: BlendMode.dstIn,
-          shaderCallback: (rect) => const LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0x00FFFFFF),
-              Color(0xFFFFFFFF),
-              Color(0xFFFFFFFF),
-              Color(0x00FFFFFF),
-            ],
-            stops: [0, 50 / boxHeight, (above + 156) / boxHeight, 1],
-          ).createShader(rect),
-          child: ClipRect(
-            child: Stack(
-              children: [
-                Opacity(
-                  opacity: 0.5,
-                  child: Stack(
-                    children: [
-                      for (int i = 0; i < 10; i++)
-                        _FallingCard(
-                          left: 4 + seeded(i, 33.19) * 88,
-                          width: 16 + seeded(i, 45.11) * 12,
-                          height: 22 + seeded(i, 45.11) * 16,
-                          color: _palette[(i + 2) % _palette.length],
-                          turns: (seeded(i, 78.233) * 40 - 20) / 360,
-                          seconds: 10 + seeded(i, 21.7) * 6,
-                          offset: seeded(i, 9.13) * 14,
-                          opacity: 1,
-                          radius: 6,
-                        ),
-                    ],
-                  ),
+        // Clipped to the box: its top is off the screen, and no card
+        // reaches its foot while it can still be seen.
+        child: ClipRect(
+          child: Stack(
+            children: [
+              Opacity(
+                opacity: 0.5,
+                child: Stack(
+                  children: [
+                    for (int i = 0; i < 10; i++)
+                      _FallingCard(
+                        left: 4 + seeded(i, 33.19) * 88,
+                        width: 16 + seeded(i, 45.11) * 12,
+                        height: 22 + seeded(i, 45.11) * 16,
+                        color: _palette[(i + 2) % _palette.length],
+                        turns: (seeded(i, 78.233) * 40 - 20) / 360,
+                        seconds: 10 + seeded(i, 21.7) * 6,
+                        offset: seeded(i, 9.13) * 14,
+                        opacity: 1,
+                        radius: 6,
+                      ),
+                  ],
                 ),
-                for (int i = 0; i < 18; i++)
-                  _FallingCard(
-                    left: 2 + seeded(i, 12.9898) * 90,
-                    width: 26 + seeded(i, 45.11) * 30,
-                    height: 36 + seeded(i, 45.11) * 42,
-                    color: _palette[i % _palette.length],
-                    turns: (seeded(i, 78.233) * 46 - 23) / 360,
-                    seconds: 6.5 + seeded(i, 21.7) * 5,
-                    offset: seeded(i, 9.13) * 11,
-                    opacity: 0.5 + seeded(i, 33.7) * 0.5,
-                    radius: 8,
-                    shadow: true,
-                  ),
-              ],
-            ),
+              ),
+              for (int i = 0; i < 18; i++)
+                _FallingCard(
+                  left: 2 + seeded(i, 12.9898) * 90,
+                  width: 26 + seeded(i, 45.11) * 30,
+                  height: 36 + seeded(i, 45.11) * 42,
+                  color: _palette[i % _palette.length],
+                  turns: (seeded(i, 78.233) * 46 - 23) / 360,
+                  seconds: 6.5 + seeded(i, 21.7) * 5,
+                  offset: seeded(i, 9.13) * 11,
+                  opacity: 0.5 + seeded(i, 33.7) * 0.5,
+                  radius: 8,
+                  shadow: true,
+                ),
+            ],
           ),
         ),
       ),
@@ -1084,15 +1074,22 @@ class _FallingCardState extends State<_FallingCard>
               animation: _c,
               builder: (context, child) {
                 final double t = _c.value;
-                final double fade = t < 0.1
-                    ? t / 0.1
-                    : t > 0.82
-                    ? 1 - (t - 0.82) / 0.18
-                    : 1;
+                final double y = -170 + (_SceneRain.boxHeight + 210) * t;
+                // Gone before its foot reaches the foot of the box, which
+                // is where the clip is: a card cut on a straight line is
+                // the edge of a container. The foot allows for the turn.
+                final double foot =
+                    y +
+                    widget.height +
+                    widget.width * math.sin(widget.turns.abs() * 2 * math.pi);
+                final double leaving =
+                    ((_SceneRain.boxHeight - foot) / _SceneRain.fadeLength)
+                        .clamp(0.0, 1.0);
+                final double arriving = t < 0.1 ? t / 0.1 : 1.0;
                 return Transform.translate(
-                  offset: Offset(0, -170 + (_SceneRain.boxHeight + 210) * t),
+                  offset: Offset(0, y),
                   child: Opacity(
-                    opacity: (widget.opacity * fade).clamp(0, 1),
+                    opacity: (widget.opacity * arriving * leaving).clamp(0, 1),
                     child: child,
                   ),
                 );

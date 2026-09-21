@@ -4110,7 +4110,7 @@ void main() {
           // comes in whole from behind the status bar rather than
           // appearing, cut, on the line the band starts on.
           final Rect box = tester.getRect(
-            find.descendant(of: stage, matching: find.byType(ShaderMask)),
+            find.descendant(of: stage, matching: find.byType(ClipRect)),
           );
           expect(box.top, lessThan(0));
           expect(box.bottom, closeTo(band.bottom, 0.5));
