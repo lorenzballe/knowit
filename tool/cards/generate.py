@@ -79,7 +79,7 @@ PRICE = PRICES[MODEL]
 SEARCH_PRICE = 0.01
 
 # How hard each stage may search, and how long a batch may take.
-SCOUT_SEARCHES = 8
+SCOUT_SEARCHES = 10
 CRITIC_SEARCHES = 4
 FINDS = 3
 BATCH_POLL_SECONDS = 30
@@ -471,8 +471,17 @@ a list of facts, a forum or a feed is never a find.
 Refuse the textbook instance of the strand — the example every reader has
 met — and anything on the blacklist. Prefer what a curious reader has not
 met: the second-best-known figure, the document behind the famous claim,
-the number that surprises. Three finds, best first, each from a different
-site and, where you can, a different kind of source."""
+the number that surprises.
+
+Work in two steps. First name, to yourself, the three things every article
+on this strand says: the famous example, the round number, the origin story
+everyone tells. Then search for what none of them says — the mechanism
+under the fact, the constraint that decides it, the document behind the
+famous claim, the figure a specialist knows and a general reader does not.
+Search past the first page of results: a specialist journal, a national
+statistics office, an archive, a technical note. In why_not_textbook, name
+the obvious angle each find is not. Three finds, best first, each from a
+different site and, where you can, a different kind of source."""
 
 KIND_WANTS = {
     "read": "a card that tells: something worth turning the card over for, with the figure that makes it true",
@@ -621,6 +630,10 @@ Do all of this:
    numeracy is what the reader has to do with numbers, the shelf life is
    how soon the answer could change, mature is honest, source_kind is what
    the reference is. A tag that is not true of the card is a fix.
+7. Ask what a well-read adult learns here. A read card whose answer such a
+   reader already holds, or a figure with nothing under it — no mechanism,
+   no constraint, no consequence — is a reject. A card that asks is judged
+   on its trap: if the trap still catches a competent reader, it stands.
 
 Return pass when everything held; fix when one thing is wrong and you can
 correct it without rewriting the card (a figure, a reference, a unit, one

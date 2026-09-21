@@ -129,7 +129,7 @@ edits a card by hand has to run the bundler too.
 
 ## What a card costs
 
-One card is a scout with eight searches, a page read, a writing call and a
+One card is a scout with ten searches, a page read, a writing call and a
 critic call, all against cached system prompts: about sixty cents at Claude
 Opus 5 rates, thirty at batch prices, and a Thinking card a quarter of that.
 The receipt at the end of every run and in the pull request body splits it
