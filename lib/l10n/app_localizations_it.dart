@@ -1009,27 +1009,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Disdici quando vuoi · Nessun pagamento in questa versione';
 
   @override
+  String get trialTerms =>
+      'Oggi non paghi niente. Un promemoria il giorno 5; si rinnova il giorno 7 se non disdici.';
+
+  @override
   String get restorePurchases => 'Ripristina acquisti';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Si apre tutto. Non paghi niente.';
-
-  @override
-  String dayN(int n) {
-    return 'GIORNO $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Un promemoria, due giorni prima del rinnovo.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Si rinnova, a meno che tu non abbia disdetto. Puoi farlo quando vuoi.';
-
-  @override
-  String get howTheFreeWeekWorks => 'COME FUNZIONA LA SETTIMANA GRATIS';
 
   @override
   String planPrice(String label, String price, String per) {

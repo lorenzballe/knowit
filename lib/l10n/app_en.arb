@@ -829,19 +829,8 @@
  "cancelTheTrial": "Cancel the trial",
  "cancelAnyTime": "Cancel any time",
  "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
+ "trialTerms": "Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.",
  "restorePurchases": "Restore purchases",
- "everythingOpensNothingCharged": "Everything opens. Nothing is charged.",
- "dayN": "DAY {n}",
- "@dayN": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "reminderTwoDaysBefore": "A reminder, two days before it renews.",
- "itRenewsUnlessCancelled": "It renews, unless you cancelled. You can, any time.",
- "howTheFreeWeekWorks": "HOW THE FREE WEEK WORKS",
  "planPrice": "{label}, {price} {per}",
  "@planPrice": {
   "placeholders": {

@@ -1039,27 +1039,11 @@ class AppLocalizationsPl extends AppLocalizations {
       'Anuluj, kiedy chcesz · W tej wersji nic nie jest pobierane';
 
   @override
+  String get trialTerms =>
+      'Dziś nic nie płacisz. Przypomnienie w dniu 5; w dniu 7 odnawia się, chyba że anulujesz.';
+
+  @override
   String get restorePurchases => 'Przywróć zakupy';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Wszystko się otwiera. Nic nie jest pobierane.';
-
-  @override
-  String dayN(int n) {
-    return 'DZIEŃ $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Przypomnienie, dwa dni przed odnowieniem.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Odnawia się, chyba że anulowałeś. Możesz to zrobić w każdej chwili.';
-
-  @override
-  String get howTheFreeWeekWorks => 'JAK DZIAŁA DARMOWY TYDZIEŃ';
 
   @override
   String planPrice(String label, String price, String per) {

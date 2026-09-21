@@ -1482,41 +1482,17 @@ abstract class AppLocalizations {
   /// **'Cancel any time · No payment is taken in this build'**
   String get cancelAnyTimeNoPayment;
 
+  /// No description provided for @trialTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.'**
+  String get trialTerms;
+
   /// No description provided for @restorePurchases.
   ///
   /// In en, this message translates to:
   /// **'Restore purchases'**
   String get restorePurchases;
-
-  /// No description provided for @everythingOpensNothingCharged.
-  ///
-  /// In en, this message translates to:
-  /// **'Everything opens. Nothing is charged.'**
-  String get everythingOpensNothingCharged;
-
-  /// No description provided for @dayN.
-  ///
-  /// In en, this message translates to:
-  /// **'DAY {n}'**
-  String dayN(int n);
-
-  /// No description provided for @reminderTwoDaysBefore.
-  ///
-  /// In en, this message translates to:
-  /// **'A reminder, two days before it renews.'**
-  String get reminderTwoDaysBefore;
-
-  /// No description provided for @itRenewsUnlessCancelled.
-  ///
-  /// In en, this message translates to:
-  /// **'It renews, unless you cancelled. You can, any time.'**
-  String get itRenewsUnlessCancelled;
-
-  /// No description provided for @howTheFreeWeekWorks.
-  ///
-  /// In en, this message translates to:
-  /// **'HOW THE FREE WEEK WORKS'**
-  String get howTheFreeWeekWorks;
 
   /// No description provided for @planPrice.
   ///

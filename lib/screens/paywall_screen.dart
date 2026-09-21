@@ -9,6 +9,7 @@ import '../state/app_state.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
+import '../widgets/fit_text.dart';
 import '../data/topics.dart';
 import '../widgets/motion.dart';
 
@@ -184,180 +185,207 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final bool store = _store.offering != null;
     return Scaffold(
       backgroundColor: context.p.surface,
+      // One screen, no scrolling. What is for sale is read at a glance or
+      // it is not read: the perks share whatever height the plans and the
+      // button leave them, and a phone too short for their lines shows
+      // their titles alone rather than a scrollbar.
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(22, 8, 22, 8),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(22, 4, 22, 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // The badge and the way out share a row.
+              Row(
                 children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Semantics(
-                      button: true,
-                      label: 'Close',
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => Navigator.of(context).pop(),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Icon(
-                            Icons.close_rounded,
-                            size: 22,
-                            color: context.p.inkFaint,
-                          ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: context.p.inverse,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      l.plusNameCaps,
+                      style: AppText.label(
+                        size: 11,
+                        weight: FontWeight.w700,
+                        spacing: 1.3,
+                        color: context.p.onInverse,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  Semantics(
+                    button: true,
+                    label: 'Close',
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: Icon(
+                          Icons.close_rounded,
+                          size: 22,
+                          color: context.p.inkFaint,
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 6),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: context.p.inverse,
-                        borderRadius: BorderRadius.circular(999),
-                      ),
-                      child: Text(
-                        context.l10n.plusNameCaps,
-                        style: AppText.label(
-                          size: 11,
-                          weight: FontWeight.w700,
-                          spacing: 1.3,
-                          color: context.p.onInverse,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    context.l10n.findOutIfBetter,
-                    style: AppText.display(
-                      size: 33,
-                      weight: FontWeight.w700,
-                      height: 1.06,
-                      spacing: -1.4,
-                      color: context.p.ink,
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  ..._perks(context.l10n).indexed.map(
-                    (e) => RiseIn.staggered(
-                      e.$1,
-                      step: const Duration(milliseconds: 50),
-                      child: _Perk(
-                        icon: e.$2.icon,
-                        title: e.$2.title,
-                        sub: e.$2.sub,
-                        // Six points, six hues off the wheel — the same
-                        // wheel the reader's own record is drawn in. A
-                        // column of identical grey chips says nothing about
-                        // what the app is.
-                        colour: kSpectrum[(e.$1 * 3) % kSpectrum.length],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const _TrialSteps(),
-                  const SizedBox(height: 22),
-                  _PlanTile(
-                    label: context.l10n.planYearly,
-                    price: _euros(kYearlyCents),
-                    per: context.l10n.perYear,
-                    note: context.l10n.aMonth(_euros(kYearlyCents ~/ 12)),
-                    badge: context.l10n.savePercent(kYearlySavingPercent),
-                    selected: _plan == Plan.year,
-                    onTap: () {
-                      setState(() => _plan = Plan.year);
-                      widget.app.setPlan(Plan.year);
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  _PlanTile(
-                    label: context.l10n.planMonthly,
-                    price: _euros(kMonthlyCents),
-                    per: context.l10n.perMonth,
-                    note: context.l10n.billedMonthly,
-                    selected: _plan == Plan.month,
-                    onTap: () {
-                      setState(() => _plan = Plan.month);
-                      widget.app.setPlan(Plan.month);
-                    },
                   ),
                 ],
               ),
-            ),
-
-            // The one button whose job is revenue does not scroll away.
-            Container(
-              padding: const EdgeInsets.fromLTRB(22, 12, 22, 12),
-              decoration: BoxDecoration(
-                color: context.p.surface,
-                border: Border(top: BorderSide(color: context.p.line)),
+              const SizedBox(height: 10),
+              FitText(
+                l.findOutIfBetter,
+                maxLines: 2,
+                minSize: 24,
+                style: AppText.display(
+                  size: 30,
+                  weight: FontWeight.w700,
+                  height: 1.06,
+                  spacing: -1.2,
+                  color: context.p.ink,
+                ),
               ),
-              child: Column(
+              const SizedBox(height: 12),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, room) {
+                    final perks = _perks(l);
+                    final bool full =
+                        room.maxHeight >=
+                        perks.length * _Perk.fullHeight +
+                            (perks.length - 1) * _Perk.leastGap;
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (final (int i, perk) in perks.indexed)
+                          RiseIn.staggered(
+                            i,
+                            step: const Duration(milliseconds: 50),
+                            child: _Perk(
+                              icon: perk.icon,
+                              title: perk.title,
+                              sub: perk.sub,
+                              // Six points, six hues off the wheel — the
+                              // same wheel the reader's own record is drawn
+                              // in. A column of identical grey chips says
+                              // nothing about what the app is.
+                              colour: kSpectrum[(i * 3) % kSpectrum.length],
+                              compact: !full,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Side by side: two tiles stacked were the height of two
+              // perks. They come out the same height on their own, being
+              // three lines each, every line fitted to the tile's width.
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ChunkyButton(
-                    label: _cta,
-                    height: 56,
-                    fill: context.p.inverse,
-                    ink: context.p.onInverse,
-                    onPressed: widget.app.isPlus ? null : _start,
+                  Expanded(
+                    child: _PlanTile(
+                      label: l.planYearly,
+                      price: _priceFor(Plan.year),
+                      per: l.perYearShort,
+                      note: l.aMonth(_euros(kYearlyCents ~/ 12)),
+                      badge: l.savePercent(kYearlySavingPercent),
+                      selected: _plan == Plan.year,
+                      onTap: () {
+                        setState(() => _plan = Plan.year);
+                        widget.app.setPlan(Plan.year);
+                      },
+                    ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _PlanTile(
+                      label: l.planMonthly,
+                      price: _priceFor(Plan.month),
+                      per: l.perMonthShort,
+                      note: l.billedMonthly,
+                      selected: _plan == Plan.month,
+                      onTap: () {
+                        setState(() => _plan = Plan.month);
+                        widget.app.setPlan(Plan.month);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ChunkyButton(
+                label: _cta,
+                height: 56,
+                fill: context.p.inverse,
+                ink: context.p.onInverse,
+                onPressed: widget.app.isPlus ? null : _start,
+              ),
+              const SizedBox(height: 8),
+              if (widget.app.isPlus)
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () async {
+                    await widget.app.endPlus();
+                    if (context.mounted) Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    l.cancelTheTrial,
+                    textAlign: TextAlign.center,
+                    style: AppText.body(
+                      size: 11.5,
+                      height: 1.4,
+                      color: context.p.inkFaint,
+                    ),
+                  ),
+                )
+              else ...[
+                // What the seven days actually do, in a line. The thing
+                // that stops people starting a trial is not the price, it
+                // is not knowing when they will be charged. Where there is
+                // no store, say instead that nothing is taken at all.
+                Text(
+                  store ? l.trialTerms : l.cancelAnyTimeNoPayment,
+                  textAlign: TextAlign.center,
+                  style: AppText.body(
+                    size: 11.5,
+                    height: 1.4,
+                    color: context.p.inkFaint,
+                  ),
+                ),
+                // Apple requires a way back to something already paid for,
+                // and it only means anything when there is a store.
+                if (store)
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: widget.app.isPlus
-                        ? () async {
-                            await widget.app.endPlus();
-                            if (context.mounted) {
-                              Navigator.of(context).pop();
-                            }
-                          }
-                        : null,
-                    child: Text(
-                      widget.app.isPlus
-                          ? context.l10n.cancelTheTrial
-                          : _store.offering != null
-                          ? context.l10n.cancelAnyTime
-                          : context.l10n.cancelAnyTimeNoPayment,
-                      textAlign: TextAlign.center,
-                      style: AppText.body(
-                        size: 11.5,
-                        height: 1.4,
-                        color: context.p.inkFaint,
-                      ),
-                    ),
-                  ),
-                  // Apple requires a way back to something already paid for,
-                  // and it only means anything when there is a store.
-                  if (_store.offering != null && !widget.app.isPlus)
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: _restore,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          context.l10n.restorePurchases,
-                          textAlign: TextAlign.center,
-                          style: AppText.body(
-                            size: 12.5,
-                            weight: FontWeight.w600,
-                            color: context.p.inkMuted,
-                          ),
+                    onTap: _restore,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        l.restorePurchases,
+                        textAlign: TextAlign.center,
+                        style: AppText.body(
+                          size: 12.5,
+                          weight: FontWeight.w600,
+                          color: context.p.inkMuted,
                         ),
                       ),
                     ),
-                ],
-              ),
-            ),
-          ],
+                  ),
+              ],
+            ],
+          ),
         ),
       ),
     );
@@ -370,47 +398,62 @@ class _Perk extends StatelessWidget {
   final String sub;
   final Color colour;
 
+  /// The title alone, for a phone too short for six perks with their lines.
+  final bool compact;
+
   const _Perk({
     required this.icon,
     required this.title,
     required this.sub,
     required this.colour,
+    this.compact = false,
   });
+
+  /// A title and two lines under it, which is what the longest line takes
+  /// at the smallest size the text is allowed to shrink to.
+  static const double fullHeight = 56;
+  static const double leastGap = 4;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 34,
-            height: 34,
-            decoration: BoxDecoration(
-              color: colour.withValues(alpha: 0.18),
-              borderRadius: BorderRadius.circular(11),
-            ),
-            alignment: Alignment.center,
-            child: Icon(icon, size: 18, color: colour),
+    return Row(
+      crossAxisAlignment: compact
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 34,
+          height: 34,
+          decoration: BoxDecoration(
+            color: colour.withValues(alpha: 0.18),
+            borderRadius: BorderRadius.circular(11),
           ),
-          const SizedBox(width: 13),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppText.body(
-                    size: 15,
-                    weight: FontWeight.w700,
-                    height: 1.25,
-                    color: context.p.ink,
-                  ),
+          alignment: Alignment.center,
+          child: Icon(icon, size: 18, color: colour),
+        ),
+        const SizedBox(width: 13),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FitText(
+                title,
+                maxLines: 1,
+                minSize: 12.5,
+                style: AppText.body(
+                  size: 14.5,
+                  weight: FontWeight.w700,
+                  height: 1.25,
+                  color: context.p.ink,
                 ),
+              ),
+              if (!compact) ...[
                 const SizedBox(height: 3),
-                Text(
+                FitText(
                   sub,
+                  maxLines: 2,
+                  minSize: 11,
                   style: AppText.body(
                     size: 12.5,
                     height: 1.4,
@@ -418,85 +461,10 @@ class _Perk extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-/// What the seven days actually do.
-///
-/// The thing that stops people starting a trial is not the price, it is not
-/// knowing when they will be charged. Saying it plainly costs nothing and is
-/// the honest version of what every app that sells trials does here.
-class _TrialSteps extends StatelessWidget {
-  const _TrialSteps();
-
-  static List<({String day, String text})> _steps(BuildContext context) => [
-    (
-      day: context.l10n.tabToday.toUpperCase(),
-      text: context.l10n.everythingOpensNothingCharged,
-    ),
-    (day: context.l10n.dayN(5), text: context.l10n.reminderTwoDaysBefore),
-    (day: context.l10n.dayN(7), text: context.l10n.itRenewsUnlessCancelled),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 6),
-      decoration: BoxDecoration(
-        color: context.p.surfaceRaised,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: context.p.line),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.l10n.howTheFreeWeekWorks,
-            style: AppText.label(
-              size: 10,
-              spacing: 1.3,
-              color: context.p.inkFaint,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ..._steps(context).map(
-            (s) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 54,
-                    child: Text(
-                      s.day,
-                      style: AppText.label(
-                        size: 10,
-                        spacing: 0.8,
-                        color: context.p.inverse,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      s.text,
-                      style: AppText.body(
-                        size: 13,
-                        height: 1.35,
-                        color: context.p.ink,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -531,94 +499,105 @@ class _PlanTile extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(16, 15, 16, 15),
-          decoration: BoxDecoration(
-            color: selected
-                ? context.p.inverse.withValues(alpha: 0.13)
-                : context.p.surfaceRaised,
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(color: edge, width: selected ? 2 : 1.4),
-          ),
-          child: Row(
-            children: [
-              _Radio(on: selected),
-              const SizedBox(width: 13),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // The badge sits beside the name while the two share
-                    // a line, and drops under it where they do not —
-                    // "Annuale" with "RISPARMI 30%" is a line and a half
-                    // on a small phone. Neither is ever cut.
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+              decoration: BoxDecoration(
+                color: selected
+                    ? context.p.inverse.withValues(alpha: 0.13)
+                    : context.p.surfaceRaised,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: edge, width: selected ? 2 : 1.4),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      _Radio(on: selected),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: FitText(
                           label,
+                          maxLines: 1,
+                          minSize: 12,
                           style: AppText.body(
-                            size: 15.5,
+                            size: 14.5,
                             weight: FontWeight.w700,
                             color: context.p.ink,
                           ),
                         ),
-                        if (badge != null)
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 3,
-                            ),
-                            decoration: BoxDecoration(
-                              color: context.p.inverse,
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Text(
-                              badge!,
-                              style: AppText.label(
-                                size: 9.5,
-                                weight: FontWeight.w700,
-                                spacing: 0.8,
-                                color: context.p.onInverse,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      note,
-                      style: AppText.body(
-                        size: 12.5,
-                        color: context.p.inkMuted,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    price,
-                    style: AppText.display(
-                      size: 19,
-                      weight: FontWeight.w700,
-                      spacing: -0.5,
-                      color: context.p.ink,
-                    ),
+                    ],
                   ),
-                  Text(
-                    per,
-                    style: AppText.body(size: 11, color: context.p.inkFaint),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Flexible(
+                        child: FitText(
+                          price,
+                          maxLines: 1,
+                          minSize: 14,
+                          style: AppText.display(
+                            size: 19,
+                            weight: FontWeight.w700,
+                            spacing: -0.5,
+                            color: context.p.ink,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 3),
+                      Text(
+                        per,
+                        style: AppText.body(
+                          size: 11,
+                          color: context.p.inkFaint,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  FitText(
+                    note,
+                    maxLines: 1,
+                    minSize: 10,
+                    style: AppText.body(size: 11.5, color: context.p.inkMuted),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            // The saving rides the tile's top edge rather than taking a
+            // row inside it, so the two tiles stay the same height.
+            if (badge != null)
+              Positioned(
+                top: -9,
+                right: 12,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.p.inverse,
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    badge!,
+                    style: AppText.label(
+                      size: 9.5,
+                      weight: FontWeight.w700,
+                      spacing: 0.8,
+                      color: context.p.onInverse,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -632,8 +611,8 @@ class _Radio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 22,
-      height: 22,
+      width: 20,
+      height: 20,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: on ? context.p.inverse : Colors.transparent,
@@ -643,7 +622,7 @@ class _Radio extends StatelessWidget {
         ),
       ),
       child: on
-          ? Icon(Icons.check_rounded, size: 14, color: context.p.onInverse)
+          ? Icon(Icons.check_rounded, size: 13, color: context.p.onInverse)
           : null,
     );
   }

@@ -469,8 +469,6 @@ void main() {
 
       // The paywall stands in for the archive; taking the trial should carry
       // the reader through to what they reached for.
-      await tester.scrollUntilVisible(find.text('Monthly'), 260);
-      await _settle(tester);
       await tester.tap(find.textContaining('Try 7 days free'));
       await _settle(tester);
 
@@ -1155,10 +1153,10 @@ void main() {
     await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
-    // The perks scroll now, so each is reached the way a reader reaches it.
-    // The two the pivot added have to exist as screens before they may be
-    // sold — both are on the profile, so naming them here is a promise this
-    // test holds the paywall to.
+    // All six on one screen, nothing to scroll to. The two the pivot added
+    // have to exist as screens before they may be sold — both are on the
+    // profile, so naming them here is a promise this test holds the paywall
+    // to.
     for (final perk in const [
       'Your record over time',
       'Every principle you have met',
@@ -1167,10 +1165,9 @@ void main() {
       'The full archive',
       'Pick your own topics',
     ]) {
-      await tester.scrollUntilVisible(find.text(perk), 200);
-      await _settle(tester);
       expect(find.text(perk), findsOneWidget);
     }
+    expect(find.byType(Scrollable), findsNothing);
     // Sharing left the paywall when it became free.
     expect(find.text('Share as image'), findsNothing);
   });
@@ -1187,12 +1184,9 @@ void main() {
     await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
-    // Yearly leads and is preselected, so the call to action opens on it —
-    // and the call to action is pinned, so it never scrolls away.
+    // Yearly leads and is preselected, so the call to action opens on it.
     expect(find.text('Try 7 days free, then €24,99/yr'), findsOneWidget);
 
-    await tester.scrollUntilVisible(find.text('Monthly'), 260);
-    await _settle(tester);
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 48%'), findsOneWidget);
     await tester.tap(find.text('Monthly'));

@@ -1012,27 +1012,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Annule quand tu veux · Aucun paiement dans cette version';
 
   @override
+  String get trialTerms =>
+      'Rien n\'est débité aujourd\'hui. Un rappel le jour 5 ; renouvellement le jour 7 sauf annulation.';
+
+  @override
   String get restorePurchases => 'Restaurer les achats';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Tout s\'ouvre. Rien n\'est débité.';
-
-  @override
-  String dayN(int n) {
-    return 'JOUR $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Un rappel, deux jours avant le renouvellement.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Ça se renouvelle, sauf si tu as annulé. Tu peux le faire à tout moment.';
-
-  @override
-  String get howTheFreeWeekWorks => 'COMMENT MARCHE LA SEMAINE GRATUITE';
 
   @override
   String planPrice(String label, String price, String per) {

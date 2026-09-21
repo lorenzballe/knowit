@@ -1008,27 +1008,11 @@ class AppLocalizationsNl extends AppLocalizations {
       'Altijd opzegbaar · In deze versie wordt niets afgeschreven';
 
   @override
+  String get trialTerms =>
+      'Vandaag wordt niets afgeschreven. Een herinnering op dag 5; op dag 7 verlengt het, tenzij je opzegt.';
+
+  @override
   String get restorePurchases => 'Aankopen herstellen';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Alles gaat open. Er wordt niets afgeschreven.';
-
-  @override
-  String dayN(int n) {
-    return 'DAG $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Een herinnering, twee dagen voor de verlenging.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Het verlengt, tenzij je hebt opgezegd. Dat kan altijd.';
-
-  @override
-  String get howTheFreeWeekWorks => 'ZO WERKT DE GRATIS WEEK';
 
   @override
   String planPrice(String label, String price, String per) {

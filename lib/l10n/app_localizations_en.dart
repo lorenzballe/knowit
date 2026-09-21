@@ -1006,26 +1006,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Cancel any time · No payment is taken in this build';
 
   @override
+  String get trialTerms =>
+      'Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.';
+
+  @override
   String get restorePurchases => 'Restore purchases';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Everything opens. Nothing is charged.';
-
-  @override
-  String dayN(int n) {
-    return 'DAY $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore => 'A reminder, two days before it renews.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'It renews, unless you cancelled. You can, any time.';
-
-  @override
-  String get howTheFreeWeekWorks => 'HOW THE FREE WEEK WORKS';
 
   @override
   String planPrice(String label, String price, String per) {

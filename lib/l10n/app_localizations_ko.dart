@@ -982,24 +982,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get cancelAnyTimeNoPayment => '언제든 취소 가능 · 이 빌드에서는 결제되지 않음';
 
   @override
+  String get trialTerms => '오늘은 결제되지 않습니다. 5일째에 알림, 취소하지 않으면 7일째에 갱신됩니다.';
+
+  @override
   String get restorePurchases => '구매 복원';
-
-  @override
-  String get everythingOpensNothingCharged => '모든 것이 열립니다. 청구는 없어요.';
-
-  @override
-  String dayN(int n) {
-    return '$n일째';
-  }
-
-  @override
-  String get reminderTwoDaysBefore => '갱신 이틀 전에 알려드려요.';
-
-  @override
-  String get itRenewsUnlessCancelled => '취소하지 않으면 갱신됩니다. 언제든 취소할 수 있어요.';
-
-  @override
-  String get howTheFreeWeekWorks => '무료 일주일은 이렇게';
 
   @override
   String planPrice(String label, String price, String per) {

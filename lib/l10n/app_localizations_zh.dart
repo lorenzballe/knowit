@@ -974,24 +974,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cancelAnyTimeNoPayment => '随时可取消 · 此版本不会扣款';
 
   @override
+  String get trialTerms => '今天不会扣费。第5天提醒，第7天自动续订，除非你取消。';
+
+  @override
   String get restorePurchases => '恢复购买';
-
-  @override
-  String get everythingOpensNothingCharged => '全部开放。不收费。';
-
-  @override
-  String dayN(int n) {
-    return '第 $n 天';
-  }
-
-  @override
-  String get reminderTwoDaysBefore => '续订前两天会提醒你。';
-
-  @override
-  String get itRenewsUnlessCancelled => '除非你取消，否则会续订。随时都可以取消。';
-
-  @override
-  String get howTheFreeWeekWorks => '免费一周是怎么回事';
 
   @override
   String planPrice(String label, String price, String per) {

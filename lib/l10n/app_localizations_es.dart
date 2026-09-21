@@ -1011,26 +1011,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Cancela cuando quieras · No se cobra nada en esta versión';
 
   @override
+  String get trialTerms =>
+      'Hoy no se cobra nada. Un aviso el día 5; se renueva el día 7 si no cancelas.';
+
+  @override
   String get restorePurchases => 'Restaurar compras';
-
-  @override
-  String get everythingOpensNothingCharged => 'Se abre todo. No se cobra nada.';
-
-  @override
-  String dayN(int n) {
-    return 'DÍA $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Un recordatorio, dos días antes de renovarse.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Se renueva, salvo que hayas cancelado. Puedes hacerlo cuando quieras.';
-
-  @override
-  String get howTheFreeWeekWorks => 'CÓMO FUNCIONA LA SEMANA GRATIS';
 
   @override
   String planPrice(String label, String price, String per) {

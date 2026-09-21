@@ -1002,27 +1002,11 @@ class AppLocalizationsTr extends AppLocalizations {
       'İstediğin zaman iptal et · Bu sürümde ödeme alınmaz';
 
   @override
+  String get trialTerms =>
+      'Bugün ücret alınmaz. 5. gün bir hatırlatma; iptal etmezsen 7. gün yenilenir.';
+
+  @override
   String get restorePurchases => 'Satın alımları geri yükle';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Her şey açılır. Hiçbir ücret alınmaz.';
-
-  @override
-  String dayN(int n) {
-    return '$n. GÜN';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Yenilenmeden iki gün önce bir hatırlatma.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'İptal etmediysen yenilenir. İstediğin zaman edebilirsin.';
-
-  @override
-  String get howTheFreeWeekWorks => 'ÜCRETSİZ HAFTA NASIL İŞLER';
 
   @override
   String planPrice(String label, String price, String per) {

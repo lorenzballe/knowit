@@ -12,10 +12,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
+import 'package:astuto/screens/paywall_screen.dart';
+import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
 
 Future<void> _loadFonts() async {
@@ -253,5 +256,48 @@ void main() {
       find.byType(MixScreen),
       matchesGoldenFile('shots/mix-down.png'),
     );
+  });
+
+  testWidgets('the paywall, on a phone', (tester) async {
+    // The phone in the reader's own screenshots, with its notch and its
+    // home indicator: the paywall has to fit it without scrolling.
+    const Size mine = Size(393, 852);
+    const EdgeInsets notch = EdgeInsets.only(top: 59, bottom: 34);
+    await tester.binding.setSurfaceSize(mine);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    final app = AppState();
+    await app.init();
+
+    for (final (String tag, Locale locale) in [
+      ('en', const Locale('en')),
+      ('it', const Locale('it')),
+      ('de', const Locale('de')),
+    ]) {
+      await tester.pumpWidget(
+        MaterialApp(
+          locale: locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          debugShowCheckedModeBanner: false,
+          home: MediaQuery(
+            data: const MediaQueryData(size: mine, padding: notch),
+            child: PaywallScreen(app: app, source: 'camera'),
+          ),
+        ),
+      );
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
+      );
+      for (int f = 0; f < 16; f++) {
+        await tester.pump(const Duration(milliseconds: 120));
+      }
+      await expectLater(
+        find.byType(PaywallScreen),
+        matchesGoldenFile('shots/paywall-$tag.png'),
+      );
+    }
   });
 }

@@ -1010,27 +1010,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Jederzeit kündbar · In dieser Version wird nichts abgebucht';
 
   @override
+  String get trialTerms =>
+      'Heute wird nichts abgebucht. Eine Erinnerung an Tag 5; an Tag 7 verlängert es sich, falls du nicht kündigst.';
+
+  @override
   String get restorePurchases => 'Käufe wiederherstellen';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Alles öffnet sich. Nichts wird abgebucht.';
-
-  @override
-  String dayN(int n) {
-    return 'TAG $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore =>
-      'Eine Erinnerung, zwei Tage vor der Verlängerung.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Es verlängert sich, außer du hast gekündigt. Das geht jederzeit.';
-
-  @override
-  String get howTheFreeWeekWorks => 'SO FUNKTIONIERT DIE GRATIS-WOCHE';
 
   @override
   String planPrice(String label, String price, String per) {

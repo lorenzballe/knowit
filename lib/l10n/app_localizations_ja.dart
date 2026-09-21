@@ -979,24 +979,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get cancelAnyTimeNoPayment => 'いつでもキャンセル可能 · このビルドでは請求されません';
 
   @override
+  String get trialTerms => '今日は課金されません。5日目にお知らせ、7日目に解約していなければ更新されます。';
+
+  @override
   String get restorePurchases => '購入を復元';
-
-  @override
-  String get everythingOpensNothingCharged => 'すべて開きます。請求はありません。';
-
-  @override
-  String dayN(int n) {
-    return '$n日目';
-  }
-
-  @override
-  String get reminderTwoDaysBefore => '更新の2日前にお知らせします。';
-
-  @override
-  String get itRenewsUnlessCancelled => 'キャンセルしない限り更新されます。いつでもキャンセルできます。';
-
-  @override
-  String get howTheFreeWeekWorks => '無料週間のしくみ';
 
   @override
   String planPrice(String label, String price, String per) {

@@ -1035,26 +1035,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Отмена в любой момент · В этой сборке ничего не списывается';
 
   @override
+  String get trialTerms =>
+      'Сегодня ничего не списывается. Напоминание на 5-й день; на 7-й день подписка продлится, если не отменить.';
+
+  @override
   String get restorePurchases => 'Восстановить покупки';
-
-  @override
-  String get everythingOpensNothingCharged =>
-      'Открывается всё. Ничего не списывается.';
-
-  @override
-  String dayN(int n) {
-    return 'ДЕНЬ $n';
-  }
-
-  @override
-  String get reminderTwoDaysBefore => 'Напоминание за два дня до продления.';
-
-  @override
-  String get itRenewsUnlessCancelled =>
-      'Продлевается, если ты не отменил. Отменить можно в любой момент.';
-
-  @override
-  String get howTheFreeWeekWorks => 'КАК РАБОТАЕТ БЕСПЛАТНАЯ НЕДЕЛЯ';
 
   @override
   String planPrice(String label, String price, String per) {
