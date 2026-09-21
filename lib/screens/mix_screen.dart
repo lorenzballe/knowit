@@ -116,8 +116,8 @@ class _MixScreenState extends State<MixScreen> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           18,
-          // Under the notch, and then the same row the intro puts Skip on:
-          // fourteen down, a row of one height, and the heading under it.
+          // Under the notch, and then fourteen down, where the intro puts
+          // Skip: here Skip ends the heading's row.
           safe.top + 14,
           18,
           // 22, as the canvas has it. The artboard is already a phone with a
@@ -129,9 +129,7 @@ class _MixScreenState extends State<MixScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SkipCorner(onTap: widget.onSkip, color: Colors.white),
-            const SizedBox(height: 12),
-            const _MixHeading(),
+            _MixHeading(onSkip: widget.onSkip),
             const SizedBox(height: 14),
             // grid-auto-rows:1fr — the nine rows share whatever height is
             // left, so a shorter phone gets shorter tiles instead of a
@@ -199,7 +197,9 @@ class _MixGrid extends StatelessWidget {
 }
 
 class _MixHeading extends StatelessWidget {
-  const _MixHeading();
+  const _MixHeading({required this.onSkip});
+
+  final VoidCallback onSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -208,17 +208,22 @@ class _MixHeading extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              context.l10n.yourSpace,
-              style: AppText.display(
-                size: 30,
-                weight: FontWeight.w600,
-                height: 1.04,
-                spacing: -1,
-                color: Colors.white,
+            // White, all of it, as the genres screen has it. The second
+            // word used to walk the spectrum, which made the two screens
+            // that share this heading look like two different things.
+            Expanded(
+              child: Text(
+                context.l10n.yourMix,
+                style: AppText.display(
+                  size: 30,
+                  weight: FontWeight.w600,
+                  height: 1.04,
+                  spacing: -1,
+                  color: Colors.white,
+                ),
               ),
             ),
-            SpectrumWord(context.l10n.mix),
+            SkipCorner(onTap: onSkip, color: Colors.white, inset: 18),
           ],
         ),
         const SizedBox(height: 7),
@@ -231,80 +236,6 @@ class _MixHeading extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// A word that walks the spectrum, slowly enough to be noticed rather than
-/// watched. Eight colours over eighty seconds, each held most of its turn and
-/// then crossed to the next, as the canvas's mixColor keyframes have it.
-class SpectrumWord extends StatefulWidget {
-  const SpectrumWord(this.text, {super.key, this.size = 30});
-
-  final String text;
-  final double size;
-
-  @override
-  State<SpectrumWord> createState() => _SpectrumWordState();
-}
-
-class _SpectrumWordState extends State<SpectrumWord>
-    with SingleTickerProviderStateMixin {
-  static const List<Color> _ramp = [
-    Color(0xFFFFE600),
-    Color(0xFFA6FF00),
-    Color(0xFF00D451),
-    Color(0xFF00D9D9),
-    Color(0xFF2B5CFF),
-    Color(0xFF9B5CFF),
-    Color(0xFFFF00A8),
-    Color(0xFFFF7A1A),
-  ];
-
-  /// Each colour holds for 9 of its 12.5 per cent, then crosses over.
-  static const double _hold = 9 / 12.5;
-
-  // The canvas walks the eight over eighty seconds, which on a screen nobody
-  // sits on for eighty seconds means the word looks fixed. Twenty is a colour
-  // you can watch move without it becoming a flicker.
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: const Duration(seconds: 20),
-  )..repeat();
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle style(Color c) => AppText.display(
-      size: widget.size,
-      weight: FontWeight.w600,
-      height: 1.04,
-      spacing: -1,
-      color: c,
-    );
-
-    if (MediaQuery.disableAnimationsOf(context)) {
-      return Text(widget.text, style: style(_ramp.first));
-    }
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (context, _) {
-        final double at = _c.value * _ramp.length;
-        final int i = at.floor() % _ramp.length;
-        final double into = at - at.floor();
-        final double t = into <= _hold ? 0 : (into - _hold) / (1 - _hold);
-        final Color colour = Color.lerp(
-          _ramp[i],
-          _ramp[(i + 1) % _ramp.length],
-          t,
-        )!;
-        return Text(widget.text, style: style(colour));
-      },
     );
   }
 }

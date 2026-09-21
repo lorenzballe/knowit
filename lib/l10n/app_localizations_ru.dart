@@ -829,12 +829,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'Твой ';
-
-  @override
-  String get mix => 'микс';
-
-  @override
   String get everythingIsInDrag =>
       'Всё включено. Потяни тему вниз, чтобы видеть её реже, или до нуля, чтобы убрать.';
 
@@ -875,7 +869,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tagline => 'Пять умных вещей в день, готовых для разговора';
 
   @override
-  String get introTopicsTitle => 'Двенадцать тем, пять пилюль';
+  String get introTopicsTitle => 'Восемнадцать тем, пять пилюль';
 
   @override
   String get introTopicsLine => 'Пишутся каждое утро и сверяются с источником.';

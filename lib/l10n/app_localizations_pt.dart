@@ -801,12 +801,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'A tua ';
-
-  @override
-  String get mix => 'mistura';
-
-  @override
   String get everythingIsInDrag =>
       'Está tudo dentro. Arrasta um tema para baixo para ver menos, ou até zero para o tirar.';
 
@@ -848,7 +842,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'Cinco coisas inteligentes por dia, prontas a usar numa conversa';
 
   @override
-  String get introTopicsTitle => 'Doze temas, cinco pílulas';
+  String get introTopicsTitle => 'Dezoito temas, cinco pílulas';
 
   @override
   String get introTopicsLine =>

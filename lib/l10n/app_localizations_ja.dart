@@ -785,12 +785,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'あなたの';
-
-  @override
-  String get mix => 'ミックス';
-
-  @override
   String get everythingIsInDrag => 'すべて入っています。分野を下にドラッグすると減り、ゼロまで下げると外れます。';
 
   @override
@@ -830,7 +824,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tagline => '1日5つの賢い話題。会話でそのまま使えます';
 
   @override
-  String get introTopicsTitle => '12の分野、5枚のピル';
+  String get introTopicsTitle => '18の分野、5枚のピル';
 
   @override
   String get introTopicsLine => '毎朝新しく書かれ、出典と照合されます。';

@@ -801,12 +801,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'Il tuo ';
-
-  @override
-  String get mix => 'mix';
-
-  @override
   String get everythingIsInDrag =>
       'C\'è tutto. Trascina una materia verso il basso per vederne meno, o fino a zero per toglierla.';
 
@@ -848,7 +842,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Cinque cose intelligenti al giorno, pronte da usare in conversazione';
 
   @override
-  String get introTopicsTitle => 'Dodici materie, cinque pillole';
+  String get introTopicsTitle => 'Diciotto materie, cinque pillole';
 
   @override
   String get introTopicsLine =>

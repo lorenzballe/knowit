@@ -788,12 +788,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => '나의 ';
-
-  @override
-  String get mix => '믹스';
-
-  @override
   String get everythingIsInDrag => '모두 들어 있어요. 주제를 아래로 끌면 덜 보이고, 0까지 내리면 빠집니다.';
 
   @override
@@ -833,7 +827,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tagline => '하루 다섯 가지 똑똑한 이야기, 대화에서 바로 쓸 수 있게';
 
   @override
-  String get introTopicsTitle => '열두 개 주제, 다섯 장의 알약';
+  String get introTopicsTitle => '열여덟 개 주제, 다섯 장의 알약';
 
   @override
   String get introTopicsLine => '매일 아침 새로 쓰고, 출처와 대조합니다.';

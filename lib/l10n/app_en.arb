@@ -711,8 +711,6 @@
    }
   }
  },
- "yourSpace": "Your ",
- "mix": "mix",
  "everythingIsInDrag": "Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.",
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
@@ -751,7 +749,7 @@
  },
  "swipeToSeeMore": "Swipe to see more",
  "tagline": "Five smart things a day, ready to use in conversation",
- "introTopicsTitle": "Twelve topics, five pills",
+ "introTopicsTitle": "Eighteen topics, five pills",
  "introTopicsLine": "Written fresh every morning, and checked against a source.",
  "introQuestionTitle": "A question, then the answer",
  "introQuestionLine": "Every pill carries the one line that makes it worth saying out loud.",

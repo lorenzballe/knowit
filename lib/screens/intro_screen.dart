@@ -332,8 +332,13 @@ class _Swap extends StatelessWidget {
           child: child,
         ),
       ),
-      layoutBuilder: (current, previous) =>
-          Stack(alignment: alignment, children: [...previous, ?current]),
+      // Unclipped: the falling cards come in from above the band, and the
+      // words never reach the edge of theirs.
+      layoutBuilder: (current, previous) => Stack(
+        alignment: alignment,
+        clipBehavior: Clip.none,
+        children: [...previous, ?current],
+      ),
       child: KeyedSubtree(key: ValueKey(scene), child: child),
     );
   }
@@ -384,33 +389,19 @@ class _SceneCopy extends StatelessWidget {
 
   final int index;
 
-  static const List<(String, String)> _copy = [
-    ('Astute', 'Five smart things a day, ready to use in conversation'),
-    (
-      'Twelve topics, five pills',
-      // Two lines, like the rest. Three made this scene's block taller than
-      // the others, and since the copy is anchored by its foot, a taller
-      // block starts higher — which is the whole reason the title moved
-      // between scenes. Shorter copy, not machinery.
-      'Written fresh every morning, and checked against a source.',
-    ),
-    (
-      'A question, then the answer',
-      'Every pill carries the one line that makes it worth saying out loud.',
-    ),
-    (
-      'You choose the mix',
-      'Turn a topic down to see less of it, or off for good.',
-    ),
-    (
-      'Thirty seconds a day',
-      'One notification, five cards, and a streak you will not want to break.',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final (String title, String sub) = _copy[index];
+    // From the translations, like every other word in the app. The titles
+    // and lines were sitting in the language files in every language while
+    // the screen showed its own English copy.
+    final l = context.l10n;
+    final (String title, String sub) = switch (index) {
+      0 => (l.appName, l.tagline),
+      1 => (l.introTopicsTitle, l.introTopicsLine),
+      2 => (l.introQuestionTitle, l.introQuestionLine),
+      3 => (l.introMixTitle, l.introMixLine),
+      _ => (l.introThirtyTitle, l.introThirtyLine),
+    };
     final bool wordmark = index == 0;
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -887,8 +878,19 @@ class _PopState extends State<_Pop> with SingleTickerProviderStateMixin {
 }
 
 /// Scene 1 — cards falling past, near layer over a blurred far one.
+///
+/// Its box reaches [above] the band, to the top edge of the screen and past
+/// it: a card enters the picture from behind the status bar, whole, rather
+/// than appearing on the line the band starts on — which on a phone with
+/// a notch is a line drawn just under the clock.
 class _SceneRain extends StatelessWidget {
   const _SceneRain();
+
+  /// How far above the band the box reaches, in the band's own units.
+  /// Deeper than any phone's status bar once scaled, so the top of the box
+  /// is always off the screen.
+  static const double above = 70;
+  static const double boxHeight = _SceneStage.bandHeight + above;
 
   static const List<Color> _palette = [
     Color(0xFFFF2E9C),
@@ -910,60 +912,65 @@ class _SceneRain extends StatelessWidget {
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
-      child: ShaderMask(
-        // Cards enter and leave the picture by fading, not by crossing the
-        // edge of their box. A row of cards cut on a straight line is the
-        // edge of a container, and there should not be one to see — and
-        // the top of the box is a line a phone with a notch draws just
-        // under its status bar.
-        blendMode: BlendMode.dstIn,
-        shaderCallback: (rect) => const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0x00FFFFFF),
-            Color(0xFFFFFFFF),
-            Color(0xFFFFFFFF),
-            Color(0x00FFFFFF),
-          ],
-          stops: [0, 0.18, 0.62, 1],
-        ).createShader(rect),
-        child: ClipRect(
-          child: Stack(
-            children: [
-              Opacity(
-                opacity: 0.5,
-                child: Stack(
-                  children: [
-                    for (int i = 0; i < 10; i++)
-                      _FallingCard(
-                        left: 4 + seeded(i, 33.19) * 88,
-                        width: 16 + seeded(i, 45.11) * 12,
-                        height: 22 + seeded(i, 45.11) * 16,
-                        color: _palette[(i + 2) % _palette.length],
-                        turns: (seeded(i, 78.233) * 40 - 20) / 360,
-                        seconds: 10 + seeded(i, 21.7) * 6,
-                        offset: seeded(i, 9.13) * 14,
-                        opacity: 1,
-                        radius: 6,
-                      ),
-                  ],
-                ),
-              ),
-              for (int i = 0; i < 18; i++)
-                _FallingCard(
-                  left: 2 + seeded(i, 12.9898) * 90,
-                  width: 26 + seeded(i, 45.11) * 30,
-                  height: 36 + seeded(i, 45.11) * 42,
-                  color: _palette[i % _palette.length],
-                  turns: (seeded(i, 78.233) * 46 - 23) / 360,
-                  seconds: 6.5 + seeded(i, 21.7) * 5,
-                  offset: seeded(i, 9.13) * 11,
-                  opacity: 0.5 + seeded(i, 33.7) * 0.5,
-                  radius: 8,
-                  shadow: true,
-                ),
+      child: OverflowBox(
+        alignment: Alignment.bottomCenter,
+        minHeight: boxHeight,
+        maxHeight: boxHeight,
+        child: ShaderMask(
+          // Cards leave the picture by fading, not by meeting the bottom
+          // of their box: a row of cards ending on a straight line is the
+          // edge of a container, and there should not be one to see. At
+          // the top they fade in over the part of the box that is off the
+          // screen, so what is on it is whole.
+          blendMode: BlendMode.dstIn,
+          shaderCallback: (rect) => const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0x00FFFFFF),
+              Color(0xFFFFFFFF),
+              Color(0xFFFFFFFF),
+              Color(0x00FFFFFF),
             ],
+            stops: [0, 50 / boxHeight, (above + 156) / boxHeight, 1],
+          ).createShader(rect),
+          child: ClipRect(
+            child: Stack(
+              children: [
+                Opacity(
+                  opacity: 0.5,
+                  child: Stack(
+                    children: [
+                      for (int i = 0; i < 10; i++)
+                        _FallingCard(
+                          left: 4 + seeded(i, 33.19) * 88,
+                          width: 16 + seeded(i, 45.11) * 12,
+                          height: 22 + seeded(i, 45.11) * 16,
+                          color: _palette[(i + 2) % _palette.length],
+                          turns: (seeded(i, 78.233) * 40 - 20) / 360,
+                          seconds: 10 + seeded(i, 21.7) * 6,
+                          offset: seeded(i, 9.13) * 14,
+                          opacity: 1,
+                          radius: 6,
+                        ),
+                    ],
+                  ),
+                ),
+                for (int i = 0; i < 18; i++)
+                  _FallingCard(
+                    left: 2 + seeded(i, 12.9898) * 90,
+                    width: 26 + seeded(i, 45.11) * 30,
+                    height: 36 + seeded(i, 45.11) * 42,
+                    color: _palette[i % _palette.length],
+                    turns: (seeded(i, 78.233) * 46 - 23) / 360,
+                    seconds: 6.5 + seeded(i, 21.7) * 5,
+                    offset: seeded(i, 9.13) * 11,
+                    opacity: 0.5 + seeded(i, 33.7) * 0.5,
+                    radius: 8,
+                    shadow: true,
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -1064,7 +1071,7 @@ class _FallingCardState extends State<_FallingCard>
                     ? 1 - (t - 0.82) / 0.18
                     : 1;
                 return Transform.translate(
-                  offset: Offset(0, -170 + (_SceneStage.bandHeight + 210) * t),
+                  offset: Offset(0, -170 + (_SceneRain.boxHeight + 210) * t),
                   child: Opacity(
                     opacity: (widget.opacity * fade).clamp(0, 1),
                     child: child,
@@ -1172,7 +1179,9 @@ class _SceneCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 4,
+            // In from the edge by the same margin the source keeps on the
+            // left. Four points off it, it read as cut.
+            right: 14,
             bottom: 2,
             child: _SlideIn(
               delay: const Duration(milliseconds: 460),
@@ -1378,10 +1387,13 @@ class _SlideInState extends State<_SlideIn>
   }
 }
 
-/// Scene 3 — the topic chips, half of them lit.
+/// Scene 3 — the topic chips, a dozen of them lit.
 class _SceneChips extends StatelessWidget {
   const _SceneChips();
 
+  /// In the order the rows take them: three to a row, four rows. Nine in
+  /// three rows filled little more than half the band and left a hole
+  /// between the last row and the title.
   static const List<String> _names = [
     'Space',
     'Psychology',
@@ -1392,11 +1404,14 @@ class _SceneChips extends StatelessWidget {
     'Technology',
     'Philosophy',
     'Human body',
+    'Science',
+    'Music',
+    'Cinema',
   ];
 
-  /// One colour each, and no two the same. A grid where four are lit and
-  /// five are grey reads as a form half filled in; the point of the scene is
-  /// that there are twelve subjects and they are not all alike.
+  /// One colour each, and no two the same. A grid where some are lit and
+  /// the rest grey reads as a form half filled in; the point of the scene
+  /// is that there are many subjects and they are not all alike.
   static const List<Color> _palette = [
     Color(0xFF2B4BFF),
     Color(0xFFFF4E2D),
@@ -1407,25 +1422,34 @@ class _SceneChips extends StatelessWidget {
     Color(0xFF00A3FF),
     Color(0xFFC24BE0),
     Color(0xFF7A5CFF),
+    Color(0xFFA6FF00),
+    Color(0xFFFF2E9C),
+    Color(0xFFFF9500),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 334,
-      child: Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        alignment: WrapAlignment.center,
-        runAlignment: WrapAlignment.center,
-        children: [
-          for (int i = 0; i < _names.length; i++)
-            _Pop(
-              duration: const Duration(milliseconds: 620),
-              delay: Duration(milliseconds: (120 + i * 60)),
-              child: _chip(i),
-            ),
-        ],
+      // Four rows sit in the middle of the band, which puts the first row
+      // level with Skip in the corner; this much lower and the row clears
+      // it, with the last row still short of the band's foot.
+      child: Padding(
+        padding: const EdgeInsets.only(top: 18),
+        child: Wrap(
+          spacing: 10,
+          runSpacing: 12,
+          alignment: WrapAlignment.center,
+          runAlignment: WrapAlignment.center,
+          children: [
+            for (int i = 0; i < _names.length; i++)
+              _Pop(
+                duration: const Duration(milliseconds: 620),
+                delay: Duration(milliseconds: (120 + i * 60)),
+                child: _chip(i),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -1435,9 +1459,7 @@ class _SceneChips extends StatelessWidget {
     // Yellow and orange want dark type on them; everything else takes white.
     final bool pale = base.computeLuminance() > 0.45;
     return Container(
-      // Tight enough that nine of them settle into three rows. At four rows
-      // the last one reached down into the copy, which is the sort of thing
-      // that reads as a mistake however good the colours are.
+      // Tight enough that three settle into each row.
       padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 11),
       decoration: BoxDecoration(
         color: base,

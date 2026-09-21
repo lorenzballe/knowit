@@ -13,17 +13,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/theme.dart';
 
 Future<void> _loadFonts() async {
-  const fonts = {
+  final fonts = {
     'Fraunces': 'assets/fonts/Fraunces.ttf',
     'Figtree': 'assets/fonts/Figtree.ttf',
     // Without this the Apple mark on the button comes out as an empty box,
     // which would be a picture of a fault the app does not have.
-    'MaterialIcons': '/opt/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+    'MaterialIcons':
+        '${Platform.environment['FLUTTER_ROOT'] ?? '/opt/flutter'}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
   };
   for (final entry in fonts.entries) {
     final loader = FontLoader(entry.key);
@@ -55,6 +57,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: MediaQuery(
@@ -99,6 +103,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: const MediaQuery(
@@ -145,6 +151,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: MediaQuery(
@@ -174,6 +182,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: const MediaQuery(
@@ -203,6 +213,8 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: buildAstutoTheme(Brightness.dark),
         debugShowCheckedModeBanner: false,
         home: MediaQuery(

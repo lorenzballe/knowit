@@ -3829,7 +3829,7 @@ void main() {
       ];
       const titles = [
         'Astute',
-        'Twelve topics, five pills',
+        'Eighteen topics, five pills',
         'A question, then the answer',
         'You choose the mix',
         'Thirty seconds a day',
@@ -3895,7 +3895,7 @@ void main() {
       const copy = [
         ('Astute', 'Five smart things a day, ready to use in conversation'),
         (
-          'Twelve topics, five pills',
+          'Eighteen topics, five pills',
           'Written fresh every morning, and checked against a source.',
         ),
         (
@@ -3975,8 +3975,8 @@ void main() {
         [], // the mark, found by its image below
         [], // falling cards, whose box is checked as a whole
         ['ECONOMICS', 'tap to reveal', 'BAR MOVE', 'Source · Stanford GSB'],
-        ['Space', 'Psychology', 'Economics', 'Technology', 'Human body'],
-        ['13', 'DAY STREAK'],
+        ['Space', 'Economics', 'Technology', 'Human body', 'Science', 'Cinema'],
+        [],
       ];
 
       for (int scene = 0; scene < drawn.length; scene++) {
@@ -3988,8 +3988,19 @@ void main() {
           );
           await _settle(tester);
         }
+        // Each word's box, where it has one — a chip, the card, the bar
+        // move, the source — because the box is what can meet Skip while
+        // the word inside it still stays clear.
         final List<Rect> parts = [
-          for (final text in drawn[scene]) tester.getRect(find.text(text)),
+          for (final text in drawn[scene])
+            tester.getRect(
+              find
+                  .ancestor(
+                    of: find.text(text),
+                    matching: find.byType(Container),
+                  )
+                  .first,
+            ),
         ];
         if (scene == 0) {
           // The mark sits on the middle of the band, where it was drawn.
@@ -4000,13 +4011,23 @@ void main() {
           expect(mark.center.dy, closeTo(band.center.dy, 0.5));
           parts.add(mark);
         }
+        if (scene == 4) {
+          // The ring is the streak's box: the count sits in its middle.
+          final Rect count = tester.getRect(find.text('13'));
+          parts.add(
+            Rect.fromCenter(center: count.center, width: 158, height: 158),
+          );
+        }
         if (scene == 1) {
-          // The cards' box is the band, to the pixel: fitted, not scaled
-          // from the middle of something larger.
+          // The cards' box stands on the band's foot and is its width, to
+          // the pixel: fitted, not scaled from the middle of something
+          // larger. It reaches up past the top of the screen, so a card
+          // comes in whole from behind the status bar rather than
+          // appearing, cut, on the line the band starts on.
           final Rect box = tester.getRect(
             find.descendant(of: stage, matching: find.byType(ShaderMask)),
           );
-          expect(box.top, closeTo(band.top, 0.5));
+          expect(box.top, lessThan(0));
           expect(box.bottom, closeTo(band.bottom, 0.5));
           expect(box.left, closeTo(band.left, 0.5));
           expect(box.right, closeTo(band.right, 0.5));

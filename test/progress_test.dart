@@ -226,9 +226,19 @@ void main() {
     test('the misses are the ones said with certainty', () {
       final report = weekReport(
         judgements: [
-          said(90, right: false, on: key(monday), pill: PillBank.cards.first.id),
+          said(
+            90,
+            right: false,
+            on: key(monday),
+            pill: PillBank.cards.first.id,
+          ),
           // Wrong, but nobody claimed to know.
-          said(50, right: false, on: key(monday), pill: PillBank.cards.first.id),
+          said(
+            50,
+            right: false,
+            on: key(monday),
+            pill: PillBank.cards.first.id,
+          ),
         ],
         completedDates: const [],
         today: today,

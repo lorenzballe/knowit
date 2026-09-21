@@ -796,12 +796,6 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'Senin ';
-
-  @override
-  String get mix => 'karışımın';
-
-  @override
   String get everythingIsInDrag =>
       'Her şey içeride. Daha az görmek için bir konuyu aşağı sürükle, çıkarmak için sıfıra kadar.';
 
@@ -842,7 +836,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tagline => 'Günde beş akıllı şey, sohbette kullanmaya hazır';
 
   @override
-  String get introTopicsTitle => 'On iki konu, beş hap';
+  String get introTopicsTitle => 'On sekiz konu, beş hap';
 
   @override
   String get introTopicsLine =>

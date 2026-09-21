@@ -799,12 +799,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'Your ';
-
-  @override
-  String get mix => 'mix';
-
-  @override
   String get everythingIsInDrag =>
       'Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.';
 
@@ -845,7 +839,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tagline => 'Five smart things a day, ready to use in conversation';
 
   @override
-  String get introTopicsTitle => 'Twelve topics, five pills';
+  String get introTopicsTitle => 'Eighteen topics, five pills';
 
   @override
   String get introTopicsLine =>

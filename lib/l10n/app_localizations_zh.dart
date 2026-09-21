@@ -781,12 +781,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => '你的';
-
-  @override
-  String get mix => '组合';
-
-  @override
   String get everythingIsInDrag => '全部都在。把主题往下拖会少看到它，拖到零则移除。';
 
   @override
@@ -825,7 +819,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tagline => '每天五件聪明事，随时可以拿来聊';
 
   @override
-  String get introTopicsTitle => '十二个主题，五颗药丸';
+  String get introTopicsTitle => '十八个主题，五颗药丸';
 
   @override
   String get introTopicsLine => '每天早上新写，并与来源核对。';

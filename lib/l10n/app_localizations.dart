@@ -1128,18 +1128,6 @@ abstract class AppLocalizations {
   /// **'{n} of {total} subjects in the mix'**
   String subjectsInTheMix(int n, int total);
 
-  /// No description provided for @yourSpace.
-  ///
-  /// In en, this message translates to:
-  /// **'Your '**
-  String get yourSpace;
-
-  /// No description provided for @mix.
-  ///
-  /// In en, this message translates to:
-  /// **'mix'**
-  String get mix;
-
   /// No description provided for @everythingIsInDrag.
   ///
   /// In en, this message translates to:
@@ -1203,7 +1191,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Twelve topics, five pills'**
+  /// **'Eighteen topics, five pills'**
   String get introTopicsTitle;
 
   /// No description provided for @introTopicsLine.

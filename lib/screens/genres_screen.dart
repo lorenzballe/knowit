@@ -131,14 +131,13 @@ class _GenresScreenState extends State<GenresScreen> {
         child: Column(
           children: [
             const SizedBox(height: 14),
-            SkipCorner(onTap: widget.onSkip),
             Expanded(
               child: Stack(
                 children: [
                   // The head scrolls with the subjects rather than sitting
                   // over them: it is the first thing on the page, not a bar.
                   ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
                     itemCount: _subjects.length + 1,
                     itemBuilder: (context, i) {
                       if (i == 0) {
@@ -147,14 +146,24 @@ class _GenresScreenState extends State<GenresScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                l.yourMix,
-                                style: AppText.display(
-                                  size: 28,
-                                  weight: FontWeight.w600,
-                                  spacing: -0.9,
-                                  color: p.ink,
-                                ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      l.yourMix,
+                                      style: AppText.display(
+                                        size: 28,
+                                        weight: FontWeight.w600,
+                                        spacing: -0.9,
+                                        color: p.ink,
+                                      ),
+                                    ),
+                                  ),
+                                  // Level with the title, ending the same
+                                  // distance from the edge as on the intro
+                                  // and the mix.
+                                  SkipCorner(onTap: widget.onSkip, inset: 20),
+                                ],
                               ),
                               const SizedBox(height: 6),
                               Text(

@@ -274,7 +274,9 @@ class _Head extends StatelessWidget {
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
-                        hintText: context.l10n.searchNCards(PillBank.cards.length),
+                        hintText: context.l10n.searchNCards(
+                          PillBank.cards.length,
+                        ),
                         hintStyle: AppText.body(
                           size: 14.5,
                           color: context.p.inkFaint,

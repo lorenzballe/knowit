@@ -109,10 +109,21 @@ class QuietButton extends StatelessWidget {
 
 /// "Skip", top right, the same on every screen of the onboarding: the
 /// intro's five scenes, the mix, and the genres under it. One row of one
-/// height, one size, one colour, so a reader who found it once finds it
-/// again without looking for it.
+/// height, one size, one colour, its word ending the same distance from
+/// the edge, so a reader who found it once finds it again without looking
+/// for it.
+///
+/// It takes no room of its own. On the intro it lies over the top of the
+/// picture; on the mix and the genres it ends the row the heading is on,
+/// level with it, rather than sitting in a row above and pushing the
+/// heading down.
 class SkipCorner extends StatelessWidget {
-  const SkipCorner({super.key, required this.onTap, this.color});
+  const SkipCorner({
+    super.key,
+    required this.onTap,
+    this.color,
+    this.inset = 0,
+  });
 
   final VoidCallback onTap;
 
@@ -120,7 +131,14 @@ class SkipCorner extends StatelessWidget {
   /// white; the themed screens leave it to the palette.
   final Color? color;
 
+  /// The page's own side margin, already outside this widget. The word ends
+  /// [edge] from the screen's edge whatever the page's margin is.
+  final double inset;
+
   static const double height = 28;
+
+  /// How far the word ends from the right edge of the screen.
+  static const double edge = 24;
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +150,7 @@ class SkipCorner extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(22, 4, 24, 4),
+            padding: EdgeInsets.fromLTRB(22, 4, edge - inset, 4),
             child: Text(
               context.l10n.skip,
               style:

@@ -800,12 +800,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get yourSpace => 'Jouw ';
-
-  @override
-  String get mix => 'mix';
-
-  @override
   String get everythingIsInDrag =>
       'Alles zit erin. Sleep een vak omlaag om er minder van te zien, of tot nul om het te laten vallen.';
 
@@ -847,7 +841,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Vijf slimme dingen per dag, klaar voor het volgende gesprek';
 
   @override
-  String get introTopicsTitle => 'Twaalf vakken, vijf pillen';
+  String get introTopicsTitle => 'Achttien vakken, vijf pillen';
 
   @override
   String get introTopicsLine =>
