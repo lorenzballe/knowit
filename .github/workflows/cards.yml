@@ -21,8 +21,11 @@ name: Write tonight's cards
 # trial night.
 
 on:
-  schedule:
-    - cron: "0 3 * * *"
+  # No schedule for now: the generator runs only when someone starts it from
+  # the Actions tab, so nothing is spent unasked. To run it every night,
+  # put back:
+  #   schedule:
+  #     - cron: "0 3 * * *"
   workflow_dispatch:
     inputs:
       count:
