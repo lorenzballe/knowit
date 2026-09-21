@@ -792,15 +792,19 @@ class Claude:
             return Result(None, None, f"{type(error).__name__}: {error}")
 
     def _batched(self, specs: list[Spec], stage: str) -> list[Result]:
-        requests = [{"custom_id": f"{stage}-{i}", "params": self._params(spec)} for i, spec in enumerate(specs)]
-        batch = self.client.beta.messages.batches.create(requests=requests, betas=[FALLBACK_BETA])
+        # A batch takes no fallbacks: the API refuses the whole batch over
+        # the parameter, and did, on the first night the key was set. A
+        # refusal in a batch comes back as a refusal and is treated as one.
+        requests = [{"custom_id": f"{stage}-{i}", "params": {k: v for k, v in self._params(spec).items() if k != "fallbacks"}}
+                    for i, spec in enumerate(specs)]
+        batch = self.client.beta.messages.batches.create(requests=requests)
         deadline = time.time() + BATCH_WAIT_SECONDS
         while batch.processing_status != "ended":
             if time.time() > deadline:
                 raise RuntimeError(f"batch {batch.id} for {stage} did not end within {BATCH_WAIT_SECONDS // 3600} hours")
             time.sleep(BATCH_POLL_SECONDS)
-            batch = self.client.beta.messages.batches.retrieve(batch.id, betas=[FALLBACK_BETA])
-        results = {r.custom_id: r for r in self.client.beta.messages.batches.results(batch.id, betas=[FALLBACK_BETA])}
+            batch = self.client.beta.messages.batches.retrieve(batch.id)
+        results = {r.custom_id: r for r in self.client.beta.messages.batches.results(batch.id)}
         out: list[Result] = []
         for i, spec in enumerate(specs):
             r = results.get(f"{stage}-{i}")

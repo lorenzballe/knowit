@@ -327,15 +327,15 @@ class TheBatch(unittest.TestCase):
         calls = {}
 
         class Batches:
-            def create(self_, *, requests, betas):
+            def create(self_, *, requests, **kw):
                 calls["requests"] = requests
-                calls["betas"] = betas
+                calls["kw"] = kw
                 return NS(id="b1", processing_status="ended")
 
-            def retrieve(self_, batch_id, *, betas):
+            def retrieve(self_, batch_id, **kw):
                 return NS(id=batch_id, processing_status="ended")
 
-            def results(self_, batch_id, *, betas):
+            def results(self_, batch_id, **kw):
                 out = []
                 for i, reply in enumerate(replies):
                     custom_id = f"write-{i}"
@@ -361,8 +361,10 @@ class TheBatch(unittest.TestCase):
         self.assertEqual(calls["requests"][0]["custom_id"], "write-0")
         self.assertEqual(calls["requests"][0]["params"]["output_config"]["format"]["type"], "json_schema")
         self.assertFalse(calls["requests"][0]["params"]["output_config"]["format"]["schema"]["additionalProperties"])
-        self.assertEqual(calls["requests"][0]["params"]["fallbacks"], "default")
-        self.assertIn(generate.FALLBACK_BETA, calls["betas"])
+        # No fallbacks in a batch: the API refuses the whole batch over the
+        # parameter, so it stays a single-call thing.
+        self.assertNotIn("fallbacks", calls["requests"][0]["params"])
+        self.assertNotIn("betas", calls["kw"])
         self.assertIsInstance(results[0].parsed, generate.Draft)
         self.assertIsNone(results[0].error)
         self.assertIn("errored", results[1].error)
