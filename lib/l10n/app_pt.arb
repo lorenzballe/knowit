@@ -357,14 +357,10 @@
   "everyCardForYou": "Cada carta, escolhida para ti.",
   "perkOwnTitle": "Cinco cartas por dia, todas tuas",
   "perkOwnLine": "Dos teus fios, ao nível que mostras, nunca uma já lida. Grátis tens duas por dia.",
-  "perkMapTitle": "O teu mapa",
-  "perkMapLine": "O que sabes fio a fio, o que ainda te lembras, e se as tuas respostas estão a melhorar.",
   "plusCardHeadline": "As cinco, tuas.",
-  "plusCardLine": "Cinco cartas por dia da tua mistura, ao teu nível. O teu mapa. Todo o teu arquivo.",
+  "plusCardLine": "Cinco cartas por dia da tua mistura, ao teu nível. O que sabes mesmo. Todo o teu arquivo.",
   "continueFree": "Continuar grátis",
   "archiveBeforeThisWeek": "Antes desta semana",
-  "yourMap": "O teu mapa",
-  "mapLine": "O que sabes, tema a tema — e o que fica.",
   "whatStays": "O que fica",
   "strandsWithPlus": "Que fios, e até onde — com Astute+",
   "nReadOfN": "{read} de {total} lidas",
@@ -373,5 +369,7 @@
   "nKeptOnReturn": "{n, plural, =1{1 ainda certa ao voltar} other{{n} ainda certas ao voltar}}",
   "nothingBackYet": "Ainda não voltou nada. Uma carta volta ao fim de três dias, depois uma semana, depois um mês — e o que acertas então é o que sabes mesmo.",
   "memoryWithPlus": "O que realmente te lembras, carta a carta — com Astute+.",
-  "weekKeptThreeOwn": "Uma semana seguida: amanhã três das cinco são tuas."
+  "weekKeptThreeOwn": "Uma semana seguida: amanhã três das cinco são tuas.",
+  "perkKnowTitle": "O que sabes mesmo",
+  "perkKnowLine": "A tua viagem abre cada tema fio a fio, mostra o que ficou quando uma carta voltou, e se as tuas respostas melhoram."
 }

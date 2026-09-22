@@ -1558,30 +1558,17 @@ class AppLocalizationsEs extends AppLocalizations {
       'De tus ramas, al nivel que demuestras, nunca una ya leída. Gratis tienes dos al día.';
 
   @override
-  String get perkMapTitle => 'Tu mapa';
-
-  @override
-  String get perkMapLine =>
-      'Lo que sabes rama por rama, lo que aún recuerdas y si tus respuestas van mejorando.';
-
-  @override
   String get plusCardHeadline => 'Las cinco, tuyas.';
 
   @override
   String get plusCardLine =>
-      'Cinco cartas al día de tu mezcla, a tu nivel. Tu mapa. Todo tu archivo.';
+      'Cinco cartas al día de tu mezcla, a tu nivel. Lo que sabes de verdad. Todo tu archivo.';
 
   @override
   String get continueFree => 'Continuar gratis';
 
   @override
   String get archiveBeforeThisWeek => 'Antes de esta semana';
-
-  @override
-  String get yourMap => 'Tu mapa';
-
-  @override
-  String get mapLine => 'Lo que sabes, tema por tema — y lo que se queda.';
 
   @override
   String get whatStays => 'Lo que se queda';
@@ -1638,4 +1625,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Una semana seguida: mañana tres de las cinco son tuyas.';
+
+  @override
+  String get perkKnowTitle => 'Lo que sabes de verdad';
+
+  @override
+  String get perkKnowLine =>
+      'Tu viaje abre cada tema rama por rama, muestra lo que se quedó cuando una carta volvió, y si tus respuestas mejoran.';
 }

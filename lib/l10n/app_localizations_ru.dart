@@ -1597,30 +1597,17 @@ class AppLocalizationsRu extends AppLocalizations {
       'Из твоих веток, на измеренном уровне, ни одной уже прочитанной. Бесплатно — две в день.';
 
   @override
-  String get perkMapTitle => 'Твоя карта';
-
-  @override
-  String get perkMapLine =>
-      'Что ты знаешь по каждой ветке, что действительно помнишь и становятся ли твои ответы лучше.';
-
-  @override
   String get plusCardHeadline => 'Все пять — твои.';
 
   @override
   String get plusCardLine =>
-      'Пять карточек в день из твоего микса, на твоём уровне. Твоя карта. Весь твой архив.';
+      'Пять карточек в день из твоего микса, на твоём уровне. Что ты знаешь на самом деле. Весь твой архив.';
 
   @override
   String get continueFree => 'Продолжить бесплатно';
 
   @override
   String get archiveBeforeThisWeek => 'До этой недели';
-
-  @override
-  String get yourMap => 'Твоя карта';
-
-  @override
-  String get mapLine => 'Что ты знаешь по каждому предмету — и что остаётся.';
 
   @override
   String get whatStays => 'Что остаётся';
@@ -1677,4 +1664,11 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Неделя подряд: завтра три карточки из пяти — твои.';
+
+  @override
+  String get perkKnowTitle => 'Что ты знаешь на самом деле';
+
+  @override
+  String get perkKnowLine =>
+      'Твой путь открывает каждый предмет по веткам, показывает, что осталось, когда карточка вернулась, и становятся ли твои ответы лучше.';
 }

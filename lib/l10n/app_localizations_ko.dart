@@ -1521,28 +1521,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkOwnLine => '당신이 고른 갈래에서, 측정된 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
 
   @override
-  String get perkMapTitle => '나의 지도';
-
-  @override
-  String get perkMapLine => '갈래별로 무엇을 알고, 무엇을 기억하고, 판단이 나아지고 있는지.';
-
-  @override
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
 
   @override
-  String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 나의 지도. 모든 기록.';
+  String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 정말로 아는 것. 모든 기록.';
 
   @override
   String get continueFree => '무료로 계속하기';
 
   @override
   String get archiveBeforeThisWeek => '이번 주 이전의 모든 것';
-
-  @override
-  String get yourMap => '나의 지도';
-
-  @override
-  String get mapLine => '주제별로 무엇을 알고, 무엇이 남는지.';
 
   @override
   String get whatStays => '남는 것';
@@ -1594,4 +1582,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.';
+
+  @override
+  String get perkKnowTitle => '정말로 아는 것';
+
+  @override
+  String get perkKnowLine =>
+      '당신의 여정은 모든 주제를 갈래별로 열어, 카드가 돌아왔을 때 무엇이 남았는지, 판단이 나아지고 있는지 보여줍니다.';
 }

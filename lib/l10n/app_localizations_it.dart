@@ -1557,30 +1557,17 @@ class AppLocalizationsIt extends AppLocalizations {
       'Dai tuoi filoni, al livello che misuri, mai una già letta. Gratis ne hai due al giorno.';
 
   @override
-  String get perkMapTitle => 'La tua mappa';
-
-  @override
-  String get perkMapLine =>
-      'Cosa sai filone per filone, cosa ricordi davvero, e se le tue risposte stanno migliorando.';
-
-  @override
   String get plusCardHeadline => 'Tutte e cinque, tue.';
 
   @override
   String get plusCardLine =>
-      'Cinque carte al giorno dal tuo mix, al tuo livello. La tua mappa. Tutto il tuo archivio.';
+      'Cinque carte al giorno dal tuo mix, al tuo livello. Cosa sai davvero. Tutto il tuo archivio.';
 
   @override
   String get continueFree => 'Continua gratis';
 
   @override
   String get archiveBeforeThisWeek => 'Prima di questa settimana';
-
-  @override
-  String get yourMap => 'La tua mappa';
-
-  @override
-  String get mapLine => 'Cosa sai, materia per materia — e cosa resta.';
 
   @override
   String get whatStays => 'Cosa resta';
@@ -1637,4 +1624,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Una settimana di fila: domani tre carte su cinque sono tue.';
+
+  @override
+  String get perkKnowTitle => 'Cosa sai davvero';
+
+  @override
+  String get perkKnowLine =>
+      'Il tuo viaggio apre ogni materia filone per filone, mostra cosa ti è rimasto quando una carta è tornata, e se le tue risposte migliorano.';
 }

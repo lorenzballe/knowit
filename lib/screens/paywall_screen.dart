@@ -35,13 +35,14 @@ int get kYearlySavingPercent {
 }
 
 // Three things, and everything else is the same on both plans. The day made
-// entirely of the reader's own cards; the map of what they know; the whole
-// archive. Six perks read as a list of features; three read as a reason.
+// entirely of the reader's own cards; what they actually know, on the
+// journey; the whole archive. Six perks read as a list of features; three
+// read as a reason.
 List<({IconData icon, String title, String sub})> _perks(
   AppLocalizations l,
 ) => [
   (icon: Icons.auto_awesome_rounded, title: l.perkOwnTitle, sub: l.perkOwnLine),
-  (icon: Icons.map_rounded, title: l.perkMapTitle, sub: l.perkMapLine),
+  (icon: Icons.psychology_rounded, title: l.perkKnowTitle, sub: l.perkKnowLine),
   (
     icon: Icons.inventory_2_rounded,
     title: l.perkArchiveTitle,

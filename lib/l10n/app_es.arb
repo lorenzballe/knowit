@@ -357,14 +357,10 @@
   "everyCardForYou": "Cada carta, elegida para ti.",
   "perkOwnTitle": "Cinco cartas al día, todas tuyas",
   "perkOwnLine": "De tus ramas, al nivel que demuestras, nunca una ya leída. Gratis tienes dos al día.",
-  "perkMapTitle": "Tu mapa",
-  "perkMapLine": "Lo que sabes rama por rama, lo que aún recuerdas y si tus respuestas van mejorando.",
   "plusCardHeadline": "Las cinco, tuyas.",
-  "plusCardLine": "Cinco cartas al día de tu mezcla, a tu nivel. Tu mapa. Todo tu archivo.",
+  "plusCardLine": "Cinco cartas al día de tu mezcla, a tu nivel. Lo que sabes de verdad. Todo tu archivo.",
   "continueFree": "Continuar gratis",
   "archiveBeforeThisWeek": "Antes de esta semana",
-  "yourMap": "Tu mapa",
-  "mapLine": "Lo que sabes, tema por tema — y lo que se queda.",
   "whatStays": "Lo que se queda",
   "strandsWithPlus": "Qué ramas, y hasta dónde — con Astute+",
   "nReadOfN": "{read} de {total} leídas",
@@ -373,5 +369,7 @@
   "nKeptOnReturn": "{n, plural, =1{1 aún correcta al volver} other{{n} aún correctas al volver}}",
   "nothingBackYet": "Aún no ha vuelto nada. Una carta vuelve a los tres días, luego a la semana, luego al mes — y lo que aciertas entonces es lo que de verdad sabes.",
   "memoryWithPlus": "Lo que de verdad recuerdas, carta a carta — con Astute+.",
-  "weekKeptThreeOwn": "Una semana seguida: mañana tres de las cinco son tuyas."
+  "weekKeptThreeOwn": "Una semana seguida: mañana tres de las cinco son tuyas.",
+  "perkKnowTitle": "Lo que sabes de verdad",
+  "perkKnowLine": "Tu viaje abre cada tema rama por rama, muestra lo que se quedó cuando una carta volvió, y si tus respuestas mejoran."
 }

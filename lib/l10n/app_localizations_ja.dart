@@ -1509,28 +1509,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkOwnLine => 'あなたの選んだ系統から、測定されたレベルで、既読は二度と出ません。無料版は1日2枚。';
 
   @override
-  String get perkMapTitle => 'あなたの地図';
-
-  @override
-  String get perkMapLine => '系統ごとに何を知っていて、何を覚えていて、判断が良くなっているか。';
-
-  @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
 
   @override
-  String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。あなたの地図。アーカイブすべて。';
+  String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。本当に知っていること。アーカイブすべて。';
 
   @override
   String get continueFree => '無料で続ける';
 
   @override
   String get archiveBeforeThisWeek => '今週より前のすべて';
-
-  @override
-  String get yourMap => 'あなたの地図';
-
-  @override
-  String get mapLine => '分野ごとに何を知っていて、何が残っているか。';
 
   @override
   String get whatStays => '残るもの';
@@ -1582,4 +1570,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '1週間続きました。明日は5枚のうち3枚があなたのものです。';
+
+  @override
+  String get perkKnowTitle => '本当に知っていること';
+
+  @override
+  String get perkKnowLine =>
+      'あなたの旅は各分野を系統ごとに開き、カードが戻ってきたとき何が残ったか、判断が良くなっているかを示します。';
 }

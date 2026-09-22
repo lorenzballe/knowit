@@ -2262,18 +2262,6 @@ abstract class AppLocalizations {
   /// **'From your strands, at the level you measure at, never one you have read. Free days give you two.'**
   String get perkOwnLine;
 
-  /// No description provided for @perkMapTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Your map'**
-  String get perkMapTitle;
-
-  /// No description provided for @perkMapLine.
-  ///
-  /// In en, this message translates to:
-  /// **'What you know strand by strand, what you still remember, and whether your calls are getting better.'**
-  String get perkMapLine;
-
   /// No description provided for @plusCardHeadline.
   ///
   /// In en, this message translates to:
@@ -2283,7 +2271,7 @@ abstract class AppLocalizations {
   /// No description provided for @plusCardLine.
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day from your mix, at your level. Your map. Your whole archive.'**
+  /// **'Five cards a day from your mix, at your level. What you actually know. Your whole archive.'**
   String get plusCardLine;
 
   /// No description provided for @continueFree.
@@ -2297,18 +2285,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Before this week'**
   String get archiveBeforeThisWeek;
-
-  /// No description provided for @yourMap.
-  ///
-  /// In en, this message translates to:
-  /// **'Your map'**
-  String get yourMap;
-
-  /// No description provided for @mapLine.
-  ///
-  /// In en, this message translates to:
-  /// **'What you know, subject by subject — and what stays.'**
-  String get mapLine;
 
   /// No description provided for @whatStays.
   ///
@@ -2363,6 +2339,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A week kept: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
+
+  /// No description provided for @perkKnowTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What you actually know'**
+  String get perkKnowTitle;
+
+  /// No description provided for @perkKnowLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey opens every subject strand by strand, shows what stayed when a card came back, and whether your calls are getting better.'**
+  String get perkKnowLine;
 }
 
 class _AppLocalizationsDelegate

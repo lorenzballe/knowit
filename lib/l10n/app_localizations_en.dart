@@ -1553,30 +1553,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'From your strands, at the level you measure at, never one you have read. Free days give you two.';
 
   @override
-  String get perkMapTitle => 'Your map';
-
-  @override
-  String get perkMapLine =>
-      'What you know strand by strand, what you still remember, and whether your calls are getting better.';
-
-  @override
   String get plusCardHeadline => 'Make all five yours.';
 
   @override
   String get plusCardLine =>
-      'Five cards a day from your mix, at your level. Your map. Your whole archive.';
+      'Five cards a day from your mix, at your level. What you actually know. Your whole archive.';
 
   @override
   String get continueFree => 'Continue free';
 
   @override
   String get archiveBeforeThisWeek => 'Before this week';
-
-  @override
-  String get yourMap => 'Your map';
-
-  @override
-  String get mapLine => 'What you know, subject by subject — and what stays.';
 
   @override
   String get whatStays => 'What stays';
@@ -1633,4 +1620,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'A week kept: tomorrow three of the five are yours.';
+
+  @override
+  String get perkKnowTitle => 'What you actually know';
+
+  @override
+  String get perkKnowLine =>
+      'Your journey opens every subject strand by strand, shows what stayed when a card came back, and whether your calls are getting better.';
 }

@@ -1562,30 +1562,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'De tes fils, au niveau que tu montres, jamais une déjà lue. En gratuit, deux par jour.';
 
   @override
-  String get perkMapTitle => 'Ta carte';
-
-  @override
-  String get perkMapLine =>
-      'Ce que tu sais fil par fil, ce que tu retiens vraiment, et si tes réponses s\'améliorent.';
-
-  @override
   String get plusCardHeadline => 'Les cinq, à toi.';
 
   @override
   String get plusCardLine =>
-      'Cinq cartes par jour de ton mix, à ton niveau. Ta carte. Toute ton archive.';
+      'Cinq cartes par jour de ton mix, à ton niveau. Ce que tu sais vraiment. Toute ton archive.';
 
   @override
   String get continueFree => 'Continuer gratuitement';
 
   @override
   String get archiveBeforeThisWeek => 'Avant cette semaine';
-
-  @override
-  String get yourMap => 'Ta carte';
-
-  @override
-  String get mapLine => 'Ce que tu sais, sujet par sujet — et ce qui reste.';
 
   @override
   String get whatStays => 'Ce qui reste';
@@ -1642,4 +1629,11 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Une semaine tenue : demain, trois des cinq sont à toi.';
+
+  @override
+  String get perkKnowTitle => 'Ce que tu sais vraiment';
+
+  @override
+  String get perkKnowLine =>
+      'Ton voyage ouvre chaque sujet fil par fil, montre ce qui est resté quand une carte est revenue, et si tes réponses s\'améliorent.';
 }

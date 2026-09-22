@@ -1542,30 +1542,17 @@ class AppLocalizationsTr extends AppLocalizations {
       'Senin konu dallarından, ölçülen seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
 
   @override
-  String get perkMapTitle => 'Haritan';
-
-  @override
-  String get perkMapLine =>
-      'Her dalda ne bildiğin, neyi hâlâ hatırladığın ve cevaplarının iyileşip iyileşmediği.';
-
-  @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
 
   @override
   String get plusCardLine =>
-      'Karışımından, seviyende günde beş kart. Haritan. Tüm arşivin.';
+      'Karışımından, seviyende günde beş kart. Gerçekte ne bildiğin. Tüm arşivin.';
 
   @override
   String get continueFree => 'Ücretsiz devam et';
 
   @override
   String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
-
-  @override
-  String get yourMap => 'Haritan';
-
-  @override
-  String get mapLine => 'Konu konu ne bildiğin — ve ne kaldığı.';
 
   @override
   String get whatStays => 'Ne kalıyor';
@@ -1622,4 +1609,11 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Bir hafta tamam: yarın beş karttan üçü senin.';
+
+  @override
+  String get perkKnowTitle => 'Gerçekte ne bildiğin';
+
+  @override
+  String get perkKnowLine =>
+      'Yolculuğun her konuyu dal dal açar, bir kart geri geldiğinde ne kaldığını ve cevaplarının iyileşip iyileşmediğini gösterir.';
 }

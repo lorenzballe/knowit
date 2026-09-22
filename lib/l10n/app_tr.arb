@@ -357,14 +357,10 @@
   "everyCardForYou": "Her kart, senin için seçilmiş.",
   "perkOwnTitle": "Günde beş kart, hepsi senin",
   "perkOwnLine": "Senin konu dallarından, ölçülen seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.",
-  "perkMapTitle": "Haritan",
-  "perkMapLine": "Her dalda ne bildiğin, neyi hâlâ hatırladığın ve cevaplarının iyileşip iyileşmediği.",
   "plusCardHeadline": "Beşi de senin olsun.",
-  "plusCardLine": "Karışımından, seviyende günde beş kart. Haritan. Tüm arşivin.",
+  "plusCardLine": "Karışımından, seviyende günde beş kart. Gerçekte ne bildiğin. Tüm arşivin.",
   "continueFree": "Ücretsiz devam et",
   "archiveBeforeThisWeek": "Bu haftadan öncesi",
-  "yourMap": "Haritan",
-  "mapLine": "Konu konu ne bildiğin — ve ne kaldığı.",
   "whatStays": "Ne kalıyor",
   "strandsWithPlus": "Hangi dallar, ne kadar derin — Astute+ ile",
   "nReadOfN": "{total} karttan {read} okundu",
@@ -373,5 +369,7 @@
   "nKeptOnReturn": "{n, plural, =1{1 tanesi dönüşte hâlâ doğru} other{{n} tanesi dönüşte hâlâ doğru}}",
   "nothingBackYet": "Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.",
   "memoryWithPlus": "Gerçekten neyi hatırladığın, kart kart — Astute+ ile.",
-  "weekKeptThreeOwn": "Bir hafta tamam: yarın beş karttan üçü senin."
+  "weekKeptThreeOwn": "Bir hafta tamam: yarın beş karttan üçü senin.",
+  "perkKnowTitle": "Gerçekte ne bildiğin",
+  "perkKnowLine": "Yolculuğun her konuyu dal dal açar, bir kart geri geldiğinde ne kaldığını ve cevaplarının iyileşip iyileşmediğini gösterir."
 }

@@ -1556,30 +1556,17 @@ class AppLocalizationsNl extends AppLocalizations {
       'Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
 
   @override
-  String get perkMapTitle => 'Jouw landkaart';
-
-  @override
-  String get perkMapLine =>
-      'Wat je draad voor draad weet, wat je nog onthoudt, en of je oordeel beter wordt.';
-
-  @override
   String get plusCardHeadline => 'Alle vijf van jou.';
 
   @override
   String get plusCardLine =>
-      'Vijf kaarten per dag uit je mix, op jouw niveau. Jouw landkaart. Je hele archief.';
+      'Vijf kaarten per dag uit je mix, op jouw niveau. Wat je echt weet. Je hele archief.';
 
   @override
   String get continueFree => 'Gratis verdergaan';
 
   @override
   String get archiveBeforeThisWeek => 'Vóór deze week';
-
-  @override
-  String get yourMap => 'Jouw landkaart';
-
-  @override
-  String get mapLine => 'Wat je weet, vak voor vak — en wat blijft.';
 
   @override
   String get whatStays => 'Wat blijft';
@@ -1636,4 +1623,11 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Een week volgehouden: morgen zijn drie van de vijf van jou.';
+
+  @override
+  String get perkKnowTitle => 'Wat je echt weet';
+
+  @override
+  String get perkKnowLine =>
+      'Je reis opent elk vak draad voor draad, laat zien wat bleef toen een kaart terugkwam, en of je oordeel beter wordt.';
 }

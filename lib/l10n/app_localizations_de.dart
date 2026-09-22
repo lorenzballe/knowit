@@ -1558,30 +1558,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Aus deinen Strängen, auf deinem gemessenen Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.';
 
   @override
-  String get perkMapTitle => 'Deine Landkarte';
-
-  @override
-  String get perkMapLine =>
-      'Was du Strang für Strang weißt, was du noch behältst, und ob deine Urteile besser werden.';
-
-  @override
   String get plusCardHeadline => 'Alle fünf, deine.';
 
   @override
   String get plusCardLine =>
-      'Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Deine Landkarte. Dein ganzes Archiv.';
+      'Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Was du wirklich weißt. Dein ganzes Archiv.';
 
   @override
   String get continueFree => 'Gratis weiter';
 
   @override
   String get archiveBeforeThisWeek => 'Vor dieser Woche';
-
-  @override
-  String get yourMap => 'Deine Landkarte';
-
-  @override
-  String get mapLine => 'Was du weißt, Fach für Fach — und was bleibt.';
 
   @override
   String get whatStays => 'Was bleibt';
@@ -1638,4 +1625,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Eine Woche gehalten: morgen sind drei der fünf deine.';
+
+  @override
+  String get perkKnowTitle => 'Was du wirklich weißt';
+
+  @override
+  String get perkKnowLine =>
+      'Deine Reise öffnet jedes Fach Strang für Strang, zeigt, was blieb, als eine Karte zurückkam, und ob deine Urteile besser werden.';
 }

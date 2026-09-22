@@ -21,7 +21,6 @@ import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
-import 'map_screen.dart';
 import 'progress_text.dart';
 import 'friends_screen.dart';
 import 'journey_screen.dart';
@@ -412,22 +411,8 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          // What the reader knows, subject by subject, and what stays: the
-          // map. Open to everyone; what Astute+ adds is inside it, where
-          // the reader can see the shape of what they would be paying for.
-          _LinkRow(
-            label: context.l10n.yourMap,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (routeContext) => MapScreen(
-                  app: app,
-                  onBack: () => Navigator.of(routeContext).pop(),
-                ),
-              ),
-            ),
-          ),
-          // The same for the archive: a week of it on the free plan, and
-          // the lock on everything before that, inside.
+          // The archive: a week of it on the free plan, and the lock on
+          // everything before that, inside.
           _LinkRow(
             label: context.l10n.archive,
             onTap: () => Navigator.of(context).push(

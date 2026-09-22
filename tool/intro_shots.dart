@@ -17,7 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
-import 'package:astuto/screens/map_screen.dart';
+import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/screens/archive_screen.dart';
 
 import 'dart:convert';
@@ -307,10 +307,10 @@ void main() {
     }
   });
 
-  /// The map and the archive, on both plans, as the reader's phone shows
-  /// them — with a fortnight of reading behind them, so there is something
-  /// on the map and something behind the archive's lock.
-  testWidgets('the map and the archive, on a phone', (tester) async {
+  /// The journey and the archive, on both plans, as the reader's phone
+  /// shows them — with a fortnight of reading behind them, so there is
+  /// something on the journey and something behind the archive's lock.
+  testWidgets('the journey and the archive, on a phone', (tester) async {
     const Size mine = Size(393, 852);
     const EdgeInsets notch = EdgeInsets.only(top: 59, bottom: 34);
     await tester.binding.setSurfaceSize(mine);
@@ -366,26 +366,33 @@ void main() {
         }
       }
 
-      await tester.pumpWidget(host(MapScreen(app: app, onBack: () {})));
+      await tester.pumpWidget(host(JourneyScreen(app: app, onBack: () {})));
       await settle();
-      if (plus) {
-        await tester.tap(find.byKey(const ValueKey('map-space')));
-        await settle();
-      }
-      await expectLater(
-        find.byType(MapScreen),
-        matchesGoldenFile('shots/map-$tag.png'),
-      );
-      // The foot of the map: what stays.
-      await tester.drag(
-        find.byType(Scrollable).first,
-        const Offset(0, -900),
-        warnIfMissed: false,
+      // Down to the subjects, and Space open to its strands.
+      final Finder list = find.byType(Scrollable).first;
+      await tester.dragUntilVisible(
+        find.byKey(const ValueKey('subject-space')),
+        list,
+        const Offset(0, -200),
       );
       await settle();
+      await tester.tap(find.byKey(const ValueKey('subject-space')));
+      await settle();
       await expectLater(
-        find.byType(MapScreen),
-        matchesGoldenFile('shots/map-$tag-foot.png'),
+        find.byType(JourneyScreen),
+        matchesGoldenFile('shots/journey-$tag-subjects.png'),
+      );
+      // The foot of the journey: what stays.
+      await tester.dragUntilVisible(
+        find.text('COSA RESTA'),
+        list,
+        const Offset(0, -200),
+      );
+      await tester.drag(list, const Offset(0, -260), warnIfMissed: false);
+      await settle();
+      await expectLater(
+        find.byType(JourneyScreen),
+        matchesGoldenFile('shots/journey-$tag-foot.png'),
       );
 
       await tester.pumpWidget(host(ArchiveScreen(app: app, onBack: () {})));

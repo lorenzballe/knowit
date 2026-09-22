@@ -22,7 +22,7 @@ import 'package:astuto/screens/today_done_view.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/screens/today_screen.dart';
 import 'package:astuto/screens/intro_screen.dart';
-import 'package:astuto/screens/map_screen.dart';
+import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/screens/profile_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
@@ -66,6 +66,19 @@ List<Pill> get _todaysFive => dealDay(date: DateTime.now()).cards;
 
 /// The paywall's headline, which is what a gate opens onto.
 final Finder _paywallHeadline = find.text('Every card, chosen for you.');
+
+/// Opens the journey from the profile: the level card is the way in.
+Future<void> _openJourney(WidgetTester tester) async {
+  await _openProfile(tester);
+  await tester.tap(find.text('Day one'));
+  await _settle(tester);
+  expect(find.byType(JourneyScreen), findsOneWidget);
+}
+
+/// A text on the journey itself — not on the profile still under it, which
+/// has an offer of its own with the same button.
+Finder _onJourney(String text) =>
+    find.descendant(of: find.byType(JourneyScreen), matching: find.text(text));
 
 /// Walks past the offer the onboarding ends on.
 Future<void> _continueFree(WidgetTester tester) async {
@@ -479,7 +492,7 @@ void main() {
     });
 
     testWidgets(
-      'the map shows the subjects to everyone and the inside to Astute+',
+      'the journey shows the subjects to everyone and the inside to Astute+',
       (tester) async {
         // One card of Space read, on a strand the bank has written under.
         final Pill read = PillBank.cards.firstWhere(
@@ -492,35 +505,46 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
 
-        await _openSetting(tester, 'Your map');
+        await _openJourney(tester);
+        final Finder list = find.descendant(
+          of: find.byType(JourneyScreen),
+          matching: find.byType(Scrollable),
+        );
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('subject-space')),
+          200,
+          scrollable: list,
+        );
+        await _settle(tester);
         expect(find.text('BY SUBJECT'), findsOneWidget);
-        expect(find.byKey(const ValueKey('map-space')), findsOneWidget);
-        // The strands are behind the lock: a tap on a subject is the paywall.
-        await tester.tap(find.byKey(const ValueKey('map-space')));
+        // A subject opens for everyone; inside, the strands are behind the
+        // lock, which says what it keeps, and the cards read of it are not.
+        await tester.tap(find.byKey(const ValueKey('subject-space')));
+        await _settle(tester);
+        expect(
+          find.text('Which strands, and how deep — with Astute+'),
+          findsOneWidget,
+        );
+        expect(find.text('1 card \u2192'), findsOneWidget);
+        await tester.tap(
+          find.text('Which strands, and how deep — with Astute+'),
+        );
         await _settle(tester);
         expect(_paywallHeadline, findsOneWidget);
         Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
         await _settle(tester);
 
         // Under the subjects, what stays — locked too, with the offer.
-        final Finder mapList = find.descendant(
-          of: find.byType(MapScreen),
-          matching: find.byType(Scrollable),
-        );
         await tester.scrollUntilVisible(
-          find.text('SEE THE PLANS'),
+          _onJourney('WHAT STAYS'),
           200,
-          scrollable: mapList,
+          scrollable: list,
         );
         await _settle(tester);
-        expect(
-          find.text('Which strands, and how deep — with Astute+'),
-          findsOneWidget,
-        );
-        expect(find.text('WHAT STAYS'), findsOneWidget);
+        expect(_onJourney('SEE THE PLANS'), findsOneWidget);
 
-        // With the trial, the same tap opens the subject to its strands.
-        await tester.tap(find.text('SEE THE PLANS'));
+        // With the trial, the same subject opens to its strands.
+        await tester.tap(_onJourney('SEE THE PLANS'));
         await _settle(tester);
         await tester.tap(find.textContaining('Try 7 days free, then'));
         await _settle(tester);
@@ -529,12 +553,10 @@ void main() {
           findsOneWidget,
         );
         await tester.dragUntilVisible(
-          find.byKey(const ValueKey('map-space')),
-          mapList,
+          find.byKey(const ValueKey('subject-space')),
+          list,
           const Offset(0, 300),
         );
-        await _settle(tester);
-        await tester.tap(find.byKey(const ValueKey('map-space')));
         await _settle(tester);
         final Genre genre = kGenres['space']!.firstWhere(
           (g) => g.strands.any((s) => s.id == read.strand),
@@ -575,22 +597,22 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await _openSetting(tester, 'Your map');
-      final Finder mapList = find.descendant(
-        of: find.byType(MapScreen),
+      await _openJourney(tester);
+      final Finder list = find.descendant(
+        of: find.byType(JourneyScreen),
         matching: find.byType(Scrollable),
       );
       await tester.scrollUntilVisible(
-        find.text('SEE THE PLANS'),
+        _onJourney('WHAT STAYS'),
         200,
-        scrollable: mapList,
+        scrollable: list,
       );
       await _settle(tester);
       expect(
         find.text('What you actually remember, card by card — with Astute+.'),
         findsOneWidget,
       );
-      await tester.tap(find.text('SEE THE PLANS'));
+      await tester.tap(_onJourney('SEE THE PLANS'));
       await _settle(tester);
 
       // The paywall stands in for the memory panel; taking the trial should
@@ -1296,13 +1318,13 @@ void main() {
     await _settle(tester);
 
     // Three things on one screen, nothing to scroll to. Each has to exist
-    // as a screen before it may be sold — the day is dealt by the state,
-    // the map and the archive are on the profile — so naming them here is
-    // a promise this test holds the paywall to.
+    // before it may be sold — the day is dealt by the state, what the
+    // reader knows is on the journey, the archive is on the profile — so
+    // naming them here is a promise this test holds the paywall to.
     expect(_paywallHeadline, findsOneWidget);
     for (final perk in const [
       'Five cards a day, all yours',
-      'Your map',
+      'What you actually know',
       'Your whole archive',
     ]) {
       expect(find.text(perk), findsOneWidget);

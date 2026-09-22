@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
+import '../data/genres.dart';
 import '../data/pill_bank.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
@@ -9,6 +10,8 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
+import '../widgets/chunky.dart';
+import '../widgets/premium.dart';
 import '../widgets/share_day.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
@@ -37,6 +40,9 @@ class JourneyScreen extends StatefulWidget {
 class _JourneyScreenState extends State<JourneyScreen> {
   /// How far down the queue of things to say the reader has pressed.
   int _sayAt = 0;
+
+  /// The subject open to its strands, if one is.
+  String? _openSubject;
 
   AppState get app => widget.app;
 
@@ -116,7 +122,27 @@ class _JourneyScreenState extends State<JourneyScreen> {
                           _IsAbout(app: app),
                           const SizedBox(height: 18),
                         ],
-                        _BySubject(app: app),
+                        _BySubject(
+                          app: app,
+                          open: _openSubject,
+                          onToggle: (key) => setState(() {
+                            _openSubject = _openSubject == key ? null : key;
+                          }),
+                          onChanged: () => setState(() {}),
+                        ),
+                        // Under what has been read, what stayed: the only
+                        // number on the page that measures memory rather
+                        // than reading, and the second thing Astute+ is.
+                        const SizedBox(height: 18),
+                        Row(
+                          children: [
+                            Eyebrow(l.whatStays),
+                            const Spacer(),
+                            PlusLock(locked: !app.isPlus),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        _Memory(app: app, onChanged: () => setState(() {})),
                         if (sayable.isNotEmpty) ...[
                           const SizedBox(height: 18),
                           Eyebrow(l.toSayTonight),
@@ -713,9 +739,22 @@ class _IsAbout extends StatelessWidget {
 /// Where the reading has actually gone, subject by subject: how much of
 /// each shelf has been read, most-read first.
 class _BySubject extends StatelessWidget {
-  const _BySubject({required this.app});
+  const _BySubject({
+    required this.app,
+    required this.open,
+    required this.onToggle,
+    required this.onChanged,
+  });
 
   final AppState app;
+
+  /// The subject open to its strands, by topic key, if one is.
+  final String? open;
+  final ValueChanged<String> onToggle;
+
+  /// Something changed under the page — the trial started from a lock
+  /// inside it — and the page should look again.
+  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -731,151 +770,458 @@ class _BySubject extends StatelessWidget {
       }
     }
     final rows = kTopicOrder
-        .map((key) => kTopics[key]!)
-        .where((style) => (total[style.name] ?? 0) > 0)
+        .where((key) => (total[kTopics[key]!.name] ?? 0) > 0)
         .toList();
-    double share(TopicStyle s) =>
-        (read[s.name] ?? 0) / (total[s.name] ?? 1).clamp(1, 1 << 30);
+    double share(String key) {
+      final String name = kTopics[key]!.name;
+      return (read[name] ?? 0) / (total[name] ?? 1).clamp(1, 1 << 30);
+    }
+
     rows.sort((a, b) {
       final byShare = share(b).compareTo(share(a));
       if (byShare != 0) return byShare;
-      return (read[b.name] ?? 0).compareTo(read[a.name] ?? 0);
+      return (read[kTopics[b]!.name] ?? 0).compareTo(
+        read[kTopics[a]!.name] ?? 0,
+      );
     });
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Both ends give way: a long translation of either wraps or
+        // trails off rather than pushing the row past its edge.
         Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
           children: [
-            Expanded(child: Eyebrow(l.bySubject)),
-            Text(
-              l.readOfTheShelf,
-              style: AppText.body(
-                size: 10.5,
-                weight: FontWeight.w500,
-                color: ink.withValues(alpha: 0.3),
+            Flexible(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(child: Eyebrow(l.bySubject)),
+                  PlusLock(locked: !app.isPlus),
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: Text(
+                l.readOfTheShelf,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.right,
+                style: AppText.body(
+                  size: 10.5,
+                  weight: FontWeight.w500,
+                  color: ink.withValues(alpha: 0.3),
+                ),
               ),
             ),
           ],
         ),
         const SizedBox(height: 7),
-        for (final style in rows)
+        for (final key in rows)
           _SubjectRow(
+            key: ValueKey('subject-$key'),
             app: app,
-            style: style,
-            read: read[style.name] ?? 0,
-            of: total[style.name] ?? 0,
+            topicKey: key,
+            style: kTopics[key]!,
+            read: read[kTopics[key]!.name] ?? 0,
+            of: total[kTopics[key]!.name] ?? 0,
+            open: open == key,
+            onToggle: () => onToggle(key),
+            onChanged: onChanged,
           ),
       ],
     );
   }
 }
 
+/// One subject: its bar, and — open — the genres and strands inside it
+/// with how much of each has been read, which is what Astute+ shows, and
+/// the way back into the cards of it that were read, which is everybody's.
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({
+    super.key,
     required this.app,
+    required this.topicKey,
     required this.style,
     required this.read,
     required this.of,
+    required this.open,
+    required this.onToggle,
+    required this.onChanged,
   });
 
   final AppState app;
+  final String topicKey;
   final TopicStyle style;
   final int read;
   final int of;
+  final bool open;
+  final VoidCallback onToggle;
+  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
     final Color ink = context.p.ink;
     final double share = of == 0 ? 0 : read / of;
     final bool any = read > 0;
+    // Thinking is not a subject and has no strands; unread, it is a row
+    // and not a button.
+    final List<Genre> genres = kGenres[topicKey] ?? const [];
+    final bool opens = genres.isNotEmpty || any;
 
-    // A subject that has been read opens what was read of it; one that has
-    // not is a row, not a button.
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: !any
-          ? null
-          : () {
-              final deck = PillBank.cards
-                  .where(
-                    (p) => p.topic == style.name && app.seenIds.contains(p.id),
-                  )
-                  .toList();
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) =>
-                      DeckViewerScreen(app: app, deck: deck, title: style.name),
-                ),
-              );
-            },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-        child: Row(
-          children: [
-            SubjectIcon(subject: style.name, size: 13, ink: style.color),
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 84,
-              child: Text(
-                style.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w600,
-                  color: ink.withValues(alpha: any ? 0.82 : 0.3),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(9),
-                child: SizedBox(
-                  height: 7,
-                  child: Stack(
-                    children: [
-                      Container(color: ink.withValues(alpha: 0.06)),
-                      FractionallySizedBox(
-                        widthFactor: share.clamp(0.0, 1.0),
-                        child: Container(color: style.color),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          button: opens,
+          expanded: opens ? open : null,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: opens ? onToggle : null,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              child: Row(
+                children: [
+                  SubjectIcon(subject: style.name, size: 13, ink: style.color),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 84,
+                    child: Text(
+                      style.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: 12,
+                        weight: FontWeight.w600,
+                        color: ink.withValues(alpha: any ? 0.82 : 0.3),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(9),
+                      child: SizedBox(
+                        height: 7,
+                        child: Stack(
+                          children: [
+                            Container(color: ink.withValues(alpha: 0.06)),
+                            FractionallySizedBox(
+                              widthFactor: share.clamp(0.0, 1.0),
+                              child: Container(color: style.color),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 36,
+                    child: Text(
+                      any ? '${(share * 100).round()}%' : '—',
+                      textAlign: TextAlign.right,
+                      style: AppText.body(
+                        size: 12,
+                        weight: FontWeight.w700,
+                        color: ink.withValues(alpha: any ? 0.82 : 0.3),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 18,
+                    child: opens
+                        ? Icon(
+                            open
+                                ? Icons.expand_less_rounded
+                                : Icons.expand_more_rounded,
+                            size: 16,
+                            color: ink.withValues(alpha: 0.35),
+                          )
+                        : null,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 10),
-            SizedBox(
-              width: 36,
-              child: Text(
-                any ? '${(share * 100).round()}%' : '—',
-                textAlign: TextAlign.right,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w700,
-                  color: ink.withValues(alpha: any ? 0.82 : 0.3),
-                ),
+          ),
+        ),
+        if (open)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(31, 0, 8, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (genres.isNotEmpty)
+                  if (app.isPlus)
+                    for (final genre in genres)
+                      _GenreLines(genre: genre, seenIds: app.seenIds)
+                  else
+                    // The strands are behind the lock, and the lock says
+                    // what it is keeping.
+                    Semantics(
+                      button: true,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () => requirePlus(
+                          context,
+                          app,
+                          onChanged,
+                          source: 'strands',
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.lock_rounded,
+                                size: 12,
+                                color: ink.withValues(alpha: 0.4),
+                              ),
+                              const SizedBox(width: 7),
+                              Expanded(
+                                child: Text(
+                                  l.strandsWithPlus,
+                                  style: AppText.body(
+                                    size: 12,
+                                    height: 1.35,
+                                    color: ink.withValues(alpha: 0.5),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                if (any)
+                  // What was read of it, to read again.
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: () {
+                      final deck = PillBank.cards
+                          .where(
+                            (p) =>
+                                p.topic == style.name &&
+                                app.seenIds.contains(p.id),
+                          )
+                          .toList();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => DeckViewerScreen(
+                            app: app,
+                            deck: deck,
+                            title: style.name,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        '${l.nCards(read)} \u2192',
+                        style: AppText.body(
+                          size: 12,
+                          weight: FontWeight.w600,
+                          color: context.p.link,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+/// One genre's strands, each with how much of it has been read — only the
+/// strands the bank has written something under, so a reader sees what is
+/// there to know rather than a list of empty rooms.
+class _GenreLines extends StatelessWidget {
+  const _GenreLines({required this.genre, required this.seenIds});
+
+  final Genre genre;
+  final Set<String> seenIds;
+
+  @override
+  Widget build(BuildContext context) {
+    final lines = <(Strand, int, int)>[];
+    for (final strand in genre.strands) {
+      var total = 0;
+      var read = 0;
+      for (final Pill pill in PillBank.cards) {
+        if (!pill.strands.contains(strand.id)) continue;
+        total++;
+        if (seenIds.contains(pill.id)) read++;
+      }
+      if (total > 0) lines.add((strand, read, total));
+    }
+    if (lines.isEmpty) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            genre.label,
+            style: AppText.body(
+              size: 11.5,
+              weight: FontWeight.w600,
+              color: context.p.inkMuted,
+            ),
+          ),
+          const SizedBox(height: 3),
+          for (final (strand, read, total) in lines)
+            Padding(
+              padding: const EdgeInsets.only(top: 3),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      strand.label,
+                      style: AppText.body(
+                        size: 12.5,
+                        color: read > 0 ? context.p.ink : context.p.inkFaint,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    context.l10n.nReadOfN(read, total),
+                    style: AppText.body(size: 11.5, color: context.p.inkFaint),
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              width: 26,
-              child: Text(
-                any ? '$read' : '',
-                textAlign: TextAlign.right,
-                style: AppText.body(
-                  size: 10.5,
-                  weight: FontWeight.w500,
-                  color: ink.withValues(alpha: 0.4),
-                ),
+        ],
+      ),
+    );
+  }
+}
+
+/// What stayed: of the cards answered, how many came back, and how many
+/// were still right when they did. That last number is the only one in the
+/// app that measures memory rather than reading.
+class _Memory extends StatelessWidget {
+  const _Memory({required this.app, required this.onChanged});
+
+  final AppState app;
+  final VoidCallback onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    if (!app.isPlus) {
+      return PaperCard(
+        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l.memoryWithPlus,
+              style: AppText.body(
+                size: 13.5,
+                height: 1.45,
+                color: context.p.inkMuted,
               ),
+            ),
+            const SizedBox(height: 12),
+            ChunkyButton(
+              label: l.seeThePlans,
+              height: 46,
+              fill: context.p.inverse,
+              ink: context.p.onInverse,
+              onPressed: () =>
+                  requirePlus(context, app, onChanged, source: 'memory'),
             ),
           ],
         ),
-      ),
+      );
+    }
+
+    // Judgements are appended, never rewritten, so a card judged twice is a
+    // card that came back — and the last judgement on it is whether it
+    // stayed.
+    final runs = <String, List<Judgement>>{};
+    for (final j in app.judgements) {
+      final String? id = j.pillId;
+      if (id == null) continue;
+      runs.putIfAbsent(id, () => []).add(j);
+    }
+    final int answered = runs.length;
+    final returned = runs.values.where((run) => run.length > 1).toList();
+    final int kept = returned.where((run) => run.last.correct).length;
+
+    return PaperCard(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      child: returned.isEmpty
+          ? Text(
+              l.nothingBackYet,
+              style: AppText.body(
+                size: 13.5,
+                height: 1.45,
+                color: context.p.inkMuted,
+              ),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _MemoryLine(
+                  icon: Icons.check_circle_outline_rounded,
+                  text: l.nAnswered(answered),
+                ),
+                const SizedBox(height: 8),
+                _MemoryLine(
+                  icon: Icons.replay_rounded,
+                  text: l.nCameBackAgain(returned.length),
+                ),
+                const SizedBox(height: 8),
+                _MemoryLine(
+                  icon: Icons.psychology_alt_rounded,
+                  text: l.nKeptOnReturn(kept),
+                  strong: true,
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class _MemoryLine extends StatelessWidget {
+  const _MemoryLine({
+    required this.icon,
+    required this.text,
+    this.strong = false,
+  });
+
+  final IconData icon;
+  final String text;
+  final bool strong;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 17,
+          color: strong ? context.p.ink : context.p.inkFaint,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            text,
+            style: AppText.body(
+              size: 13.5,
+              weight: strong ? FontWeight.w600 : FontWeight.w500,
+              height: 1.35,
+              color: strong ? context.p.ink : context.p.inkMuted,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

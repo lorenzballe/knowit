@@ -357,14 +357,10 @@
   "everyCardForYou": "Elke kaart, voor jou gekozen.",
   "perkOwnTitle": "Vijf kaarten per dag, allemaal van jou",
   "perkOwnLine": "Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.",
-  "perkMapTitle": "Jouw landkaart",
-  "perkMapLine": "Wat je draad voor draad weet, wat je nog onthoudt, en of je oordeel beter wordt.",
   "plusCardHeadline": "Alle vijf van jou.",
-  "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Jouw landkaart. Je hele archief.",
+  "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Wat je echt weet. Je hele archief.",
   "continueFree": "Gratis verdergaan",
   "archiveBeforeThisWeek": "Vóór deze week",
-  "yourMap": "Jouw landkaart",
-  "mapLine": "Wat je weet, vak voor vak — en wat blijft.",
   "whatStays": "Wat blijft",
   "strandsWithPlus": "Welke draden, en hoe diep — met Astute+",
   "nReadOfN": "{read} van {total} gelezen",
@@ -373,5 +369,7 @@
   "nKeptOnReturn": "{n, plural, =1{1 nog goed bij terugkomst} other{{n} nog goed bij terugkomst}}",
   "nothingBackYet": "Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.",
   "memoryWithPlus": "Wat je echt onthoudt, kaart voor kaart — met Astute+.",
-  "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou."
+  "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou.",
+  "perkKnowTitle": "Wat je echt weet",
+  "perkKnowLine": "Je reis opent elk vak draad voor draad, laat zien wat bleef toen een kaart terugkwam, en of je oordeel beter wordt."
 }

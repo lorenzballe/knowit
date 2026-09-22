@@ -1601,30 +1601,17 @@ class AppLocalizationsPl extends AppLocalizations {
       'Z twoich wątków, na zmierzonym poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.';
 
   @override
-  String get perkMapTitle => 'Twoja mapa';
-
-  @override
-  String get perkMapLine =>
-      'Co wiesz wątek po wątku, co naprawdę pamiętasz i czy twoje odpowiedzi są coraz lepsze.';
-
-  @override
   String get plusCardHeadline => 'Wszystkie pięć, twoje.';
 
   @override
   String get plusCardLine =>
-      'Pięć kart dziennie z twojego miksu, na twoim poziomie. Twoja mapa. Całe twoje archiwum.';
+      'Pięć kart dziennie z twojego miksu, na twoim poziomie. Co naprawdę wiesz. Całe twoje archiwum.';
 
   @override
   String get continueFree => 'Kontynuuj za darmo';
 
   @override
   String get archiveBeforeThisWeek => 'Sprzed tego tygodnia';
-
-  @override
-  String get yourMap => 'Twoja mapa';
-
-  @override
-  String get mapLine => 'Co wiesz, temat po temacie — i co zostaje.';
 
   @override
   String get whatStays => 'Co zostaje';
@@ -1681,4 +1668,11 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get weekKeptThreeOwn =>
       'Tydzień z rzędu: jutro trzy z pięciu są twoje.';
+
+  @override
+  String get perkKnowTitle => 'Co naprawdę wiesz';
+
+  @override
+  String get perkKnowLine =>
+      'Twoja podróż otwiera każdy temat wątek po wątku, pokazuje, co zostało, gdy karta wróciła, i czy twoje odpowiedzi są coraz lepsze.';
 }

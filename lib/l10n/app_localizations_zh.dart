@@ -1506,28 +1506,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkOwnLine => '来自你选的分支，按你测得的水平，绝不重复已读。免费版每天两张。';
 
   @override
-  String get perkMapTitle => '你的地图';
-
-  @override
-  String get perkMapLine => '你在每个分支知道什么、真正记住了什么，以及你的判断是否在进步。';
-
-  @override
   String get plusCardHeadline => '让五张全都为你。';
 
   @override
-  String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你的地图。你的全部档案。';
+  String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你真正知道的。你的全部档案。';
 
   @override
   String get continueFree => '免费继续';
 
   @override
   String get archiveBeforeThisWeek => '本周之前的一切';
-
-  @override
-  String get yourMap => '你的地图';
-
-  @override
-  String get mapLine => '你在每个学科知道什么，以及什么留了下来。';
 
   @override
   String get whatStays => '留下的';
@@ -1579,4 +1567,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张为你而选。';
+
+  @override
+  String get perkKnowTitle => '你真正知道的';
+
+  @override
+  String get perkKnowLine => '你的旅程逐个分支打开每个学科，显示卡片再现时你记住了什么，以及你的判断是否在进步。';
 }
