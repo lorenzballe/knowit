@@ -1978,7 +1978,7 @@ void main() {
     testWidgets('the day can be sent as five squares and nothing else', (
       tester,
     ) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues(_installed(plus: true));
       String? copied;
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform,
@@ -2002,9 +2002,15 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      // The day is sent from the finished day itself, beside the journey
-      // button — on the free plan, because sharing is how the app spreads.
-      expect(find.byType(JourneyScreen), findsNothing);
+      // The day is sent from the foot of the journey.
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+      await tester.dragUntilVisible(
+        find.byKey(const ValueKey('share-day')),
+        find.byType(ListView).last,
+        const Offset(0, -220),
+      );
+      await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('share-day')));
       await _settle(tester);
 

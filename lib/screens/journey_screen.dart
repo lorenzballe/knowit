@@ -10,6 +10,7 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
+import '../widgets/share_day.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
@@ -151,6 +152,10 @@ class _JourneyScreenState extends State<JourneyScreen> {
                               if (mounted) setState(() => _sayAt++);
                             },
                           ),
+                        ],
+                        if (app.dayClosed) ...[
+                          const SizedBox(height: 18),
+                          Center(child: ShareDay(app: app)),
                         ],
                       ],
                     ),

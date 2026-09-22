@@ -89,8 +89,7 @@ all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the card to say tonight — the screen is Astute+; the profile keeps the
-record itself free, and the day is shared from the finished day on either
-plan. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 seven days free, offered once at the end of the onboarding with "continue
 free" written under it. The mix, the streak, the freezes, the friends, the
 sharing and the search are free: they are how the app spreads.

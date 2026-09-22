@@ -17,7 +17,6 @@ import 'journey_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
-import '../widgets/share_day.dart';
 import '../data/topics.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -1350,9 +1349,9 @@ class _JourneyButtonState extends State<_JourneyButton> {
   }
 }
 
-/// The way on: the journey, which is Astute+, and beside it the day sent
-/// as five squares, which is everybody's — sharing is how the app spreads,
-/// so it never sits behind the lock.
+/// The way on: the journey, which is Astute+. Only the one button — the
+/// offer is the sixth card on the shelf, and the day is shared from the
+/// foot of the journey, not from a second button here.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});
 
@@ -1360,29 +1359,21 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _JourneyButton(
-            locked: !app.isPlus,
-            onPressed: () => requirePlus(
-              context,
-              app,
-              () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (routeContext) => JourneyScreen(
-                    app: app,
-                    onBack: () => Navigator.of(routeContext).pop(),
-                  ),
-                ),
-              ),
-              source: 'journey',
+    return _JourneyButton(
+      locked: !app.isPlus,
+      onPressed: () => requirePlus(
+        context,
+        app,
+        () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => JourneyScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
             ),
           ),
         ),
-        const SizedBox(width: 10),
-        ShareDay(app: app, square: 52),
-      ],
+        source: 'journey',
+      ),
     );
   }
 }
