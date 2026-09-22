@@ -1601,7 +1601,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get plusCardLine =>
-      'Пять карточек в день из твоего микса, на твоём уровне. Что ты знаешь на самом деле. Весь твой архив.';
+      'Пять карточек в день из твоего микса, на твоём уровне. Твой путь. Весь твой архив.';
 
   @override
   String get continueFree => 'Продолжить бесплатно';
@@ -1611,9 +1611,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get whatStays => 'Что остаётся';
-
-  @override
-  String get strandsWithPlus => 'Какие ветки и насколько глубоко — с Astute+';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1658,17 +1655,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пока ничего не вернулось. Карточка возвращается через три дня, потом через неделю, потом через месяц — и то, что ты угадываешь тогда, ты знаешь по-настоящему.';
 
   @override
-  String get memoryWithPlus =>
-      'Что ты действительно помнишь, карточка за карточкой — с Astute+.';
-
-  @override
   String get weekKeptThreeOwn =>
       'Неделя подряд: завтра три карточки из пяти — твои.';
 
   @override
-  String get perkKnowTitle => 'Что ты знаешь на самом деле';
-
-  @override
-  String get perkKnowLine =>
-      'Твой путь открывает каждый предмет по веткам, показывает, что осталось, когда карточка вернулась, и становятся ли твои ответы лучше.';
+  String get perkJourneyLine =>
+      'Твой уровень и твои цифры, каждый предмет по веткам, что осталось, когда карточка вернулась, и карточка, о которой рассказать сегодня вечером.';
 }

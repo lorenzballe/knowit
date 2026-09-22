@@ -67,12 +67,14 @@ List<Pill> get _todaysFive => dealDay(date: DateTime.now()).cards;
 /// The paywall's headline, which is what a gate opens onto.
 final Finder _paywallHeadline = find.text('Every card, chosen for you.');
 
-/// Opens the journey from the profile: the level card is the way in.
-Future<void> _openJourney(WidgetTester tester) async {
+/// Opens the journey from the profile: the level card is the way in — on
+/// Astute+; on the free plan it is the paywall, and this expects that too.
+Future<void> _openJourney(WidgetTester tester, {bool plus = true}) async {
   await _openProfile(tester);
   await tester.tap(find.text('Day one'));
   await _settle(tester);
-  expect(find.byType(JourneyScreen), findsOneWidget);
+  expect(find.byType(JourneyScreen), plus ? findsOneWidget : findsNothing);
+  if (!plus) expect(_paywallHeadline, findsOneWidget);
 }
 
 /// A text on the journey itself — not on the profile still under it, which
@@ -491,84 +493,80 @@ void main() {
       expect(find.text('What should we talk about?'), findsOneWidget);
     });
 
-    testWidgets(
-      'the journey shows the subjects to everyone and the inside to Astute+',
-      (tester) async {
-        // One card of Space read, on a strand the bank has written under.
-        final Pill read = PillBank.cards.firstWhere(
-          (p) => p.topic == 'Space' && p.strand.isNotEmpty,
-        );
-        SharedPreferences.setMockInitialValues({
-          ..._installed(),
-          'knowit.seenIds': <String>[read.id],
-        });
-        await tester.pumpWidget(const AstutoApp());
-        await _settle(tester);
+    testWidgets('the journey is Astute+, from the profile and from the day', (
+      tester,
+    ) async {
+      // One card of Space read, on a strand the bank has written under.
+      final Pill read = PillBank.cards.firstWhere(
+        (p) => p.topic == 'Space' && p.strand.isNotEmpty,
+      );
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.seenIds': <String>[read.id],
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
 
-        await _openJourney(tester);
-        final Finder list = find.descendant(
-          of: find.byType(JourneyScreen),
-          matching: find.byType(Scrollable),
-        );
-        await tester.scrollUntilVisible(
-          find.byKey(const ValueKey('subject-space')),
-          200,
-          scrollable: list,
-        );
-        await _settle(tester);
-        expect(find.text('BY SUBJECT'), findsOneWidget);
-        // A subject opens for everyone; inside, the strands are behind the
-        // lock, which says what it keeps, and the cards read of it are not.
-        await tester.tap(find.byKey(const ValueKey('subject-space')));
-        await _settle(tester);
-        expect(
-          find.text('Which strands, and how deep — with Astute+'),
-          findsOneWidget,
-        );
-        expect(find.text('1 card \u2192'), findsOneWidget);
-        await tester.tap(
-          find.text('Which strands, and how deep — with Astute+'),
-        );
-        await _settle(tester);
-        expect(_paywallHeadline, findsOneWidget);
-        Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
-        await _settle(tester);
+      // The level card on the profile is the paywall on the free plan, and
+      // says so with a lock before it is pressed.
+      await _openJourney(tester, plus: false);
+      Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
+      await _settle(tester);
 
-        // Under the subjects, what stays — locked too, with the offer.
-        await tester.scrollUntilVisible(
-          _onJourney('WHAT STAYS'),
-          200,
-          scrollable: list,
-        );
-        await _settle(tester);
-        expect(_onJourney('SEE THE PLANS'), findsOneWidget);
+      // Taking the trial carries the reader through to the journey.
+      await tester.tap(find.text('Day one'));
+      await _settle(tester);
+      await tester.tap(find.textContaining('Try 7 days free, then'));
+      await _settle(tester);
+      expect(find.byType(JourneyScreen), findsOneWidget);
 
-        // With the trial, the same subject opens to its strands.
-        await tester.tap(_onJourney('SEE THE PLANS'));
-        await _settle(tester);
-        await tester.tap(find.textContaining('Try 7 days free, then'));
-        await _settle(tester);
-        expect(
-          find.textContaining('Nothing has come back yet'),
-          findsOneWidget,
-        );
-        await tester.dragUntilVisible(
-          find.byKey(const ValueKey('subject-space')),
-          list,
-          const Offset(0, 300),
-        );
-        await _settle(tester);
-        final Genre genre = kGenres['space']!.firstWhere(
-          (g) => g.strands.any((s) => s.id == read.strand),
-        );
-        final Strand strand = genre.strands.firstWhere(
-          (s) => s.id == read.strand,
-        );
-        expect(find.text(genre.label), findsOneWidget);
-        expect(find.text(strand.label), findsOneWidget);
-        expect(find.textContaining('1 of '), findsWidgets);
-      },
-    );
+      // A subject opens to its strands, and the cards read of it.
+      final Finder list = find.descendant(
+        of: find.byType(JourneyScreen),
+        matching: find.byType(Scrollable),
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('subject-space')),
+        200,
+        scrollable: list,
+      );
+      await _settle(tester);
+      expect(find.text('BY SUBJECT'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('subject-space')));
+      await _settle(tester);
+      final Genre genre = kGenres['space']!.firstWhere(
+        (g) => g.strands.any((s) => s.id == read.strand),
+      );
+      final Strand strand = genre.strands.firstWhere(
+        (s) => s.id == read.strand,
+      );
+      expect(find.text(genre.label), findsOneWidget);
+      expect(find.text(strand.label), findsOneWidget);
+      expect(find.textContaining('1 of '), findsWidgets);
+      expect(find.text('1 card \u2192'), findsOneWidget);
+
+      // Under the subjects, what stays.
+      await tester.scrollUntilVisible(
+        _onJourney('WHAT STAYS'),
+        200,
+        scrollable: list,
+      );
+      await _settle(tester);
+      expect(find.textContaining('Nothing has come back yet'), findsOneWidget);
+    });
+
+    testWidgets('the button after the day is the paywall on the free plan', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+      await tester.tap(find.text('Your journey'));
+      await _settle(tester);
+      expect(_paywallHeadline, findsOneWidget);
+      expect(find.byType(JourneyScreen), findsNothing);
+    });
 
     testWidgets('the archive opens whole on Astute+', (tester) async {
       SharedPreferences.setMockInitialValues(_installed(plus: true));
@@ -597,32 +595,16 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await _openJourney(tester);
-      final Finder list = find.descendant(
-        of: find.byType(JourneyScreen),
-        matching: find.byType(Scrollable),
-      );
-      await tester.scrollUntilVisible(
-        _onJourney('WHAT STAYS'),
-        200,
-        scrollable: list,
-      );
-      await _settle(tester);
-      expect(
-        find.text('What you actually remember, card by card — with Astute+.'),
-        findsOneWidget,
-      );
-      await tester.tap(_onJourney('SEE THE PLANS'));
-      await _settle(tester);
-
-      // The paywall stands in for the memory panel; taking the trial should
+      // The paywall stands in for the journey; taking the trial should
       // carry the reader through to what they reached for.
+      await _openJourney(tester, plus: false);
       await tester.tap(find.textContaining('Try 7 days free, then'));
       await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
-      expect(find.textContaining('Nothing has come back yet'), findsOneWidget);
+      expect(find.byType(JourneyScreen), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
     });
   });
 
@@ -1318,13 +1300,13 @@ void main() {
     await _settle(tester);
 
     // Three things on one screen, nothing to scroll to. Each has to exist
-    // before it may be sold — the day is dealt by the state, what the
-    // reader knows is on the journey, the archive is on the profile — so
-    // naming them here is a promise this test holds the paywall to.
+    // before it may be sold — the day is dealt by the state, the journey
+    // and the archive are screens — so naming them here is a promise this
+    // test holds the paywall to.
     expect(_paywallHeadline, findsOneWidget);
     for (final perk in const [
       'Five cards a day, all yours',
-      'What you actually know',
+      'Your journey',
       'Your whole archive',
     ]) {
       expect(find.text(perk), findsOneWidget);
@@ -1862,7 +1844,7 @@ void main() {
     testWidgets('the way on is the journey, and it opens on the numbers', (
       tester,
     ) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues(_installed(plus: true));
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
@@ -1930,7 +1912,7 @@ void main() {
     testWidgets('a card can be said out loud, and is written down', (
       tester,
     ) async {
-      SharedPreferences.setMockInitialValues(_installed());
+      SharedPreferences.setMockInitialValues(_installed(plus: true));
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await finish(tester);
@@ -1967,7 +1949,7 @@ void main() {
           .map((p) => p.id)
           .toList();
       SharedPreferences.setMockInitialValues({
-        ..._installed(),
+        ..._installed(plus: true),
         'knowit.seenIds': read,
       });
       await tester.pumpWidget(const AstutoApp());
@@ -2020,15 +2002,9 @@ void main() {
       await _settle(tester);
       await finish(tester);
 
-      // The day is sent from the foot of the journey.
-      await tester.tap(find.text('Your journey'));
-      await _settle(tester);
-      await tester.dragUntilVisible(
-        find.byKey(const ValueKey('share-day')),
-        find.byType(ListView).last,
-        const Offset(0, -220),
-      );
-      await _settle(tester);
+      // The day is sent from the finished day itself, beside the journey
+      // button — on the free plan, because sharing is how the app spreads.
+      expect(find.byType(JourneyScreen), findsNothing);
       await tester.tap(find.byKey(const ValueKey('share-day')));
       await _settle(tester);
 

@@ -1512,7 +1512,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
 
   @override
-  String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。本当に知っていること。アーカイブすべて。';
+  String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。あなたの旅。アーカイブすべて。';
 
   @override
   String get continueFree => '無料で続ける';
@@ -1522,9 +1522,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get whatStays => '残るもの';
-
-  @override
-  String get strandsWithPlus => 'どの系統を、どこまで深く — Astute+で';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1566,15 +1563,9 @@ class AppLocalizationsJa extends AppLocalizations {
       'まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。';
 
   @override
-  String get memoryWithPlus => '本当に覚えていることを、カードごとに — Astute+で。';
-
-  @override
   String get weekKeptThreeOwn => '1週間続きました。明日は5枚のうち3枚があなたのものです。';
 
   @override
-  String get perkKnowTitle => '本当に知っていること';
-
-  @override
-  String get perkKnowLine =>
-      'あなたの旅は各分野を系統ごとに開き、カードが戻ってきたとき何が残ったか、判断が良くなっているかを示します。';
+  String get perkJourneyLine =>
+      'あなたのレベルと数字、系統ごとに開く各分野、カードが戻ってきたとき何が残ったか、そして今夜話すカード。';
 }

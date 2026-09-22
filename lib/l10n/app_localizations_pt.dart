@@ -1561,7 +1561,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get plusCardLine =>
-      'Cinco cartas por dia da tua mistura, ao teu nível. O que sabes mesmo. Todo o teu arquivo.';
+      'Cinco cartas por dia da tua mistura, ao teu nível. A tua viagem. Todo o teu arquivo.';
 
   @override
   String get continueFree => 'Continuar grátis';
@@ -1571,9 +1571,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get whatStays => 'O que fica';
-
-  @override
-  String get strandsWithPlus => 'Que fios, e até onde — com Astute+';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1618,17 +1615,10 @@ class AppLocalizationsPt extends AppLocalizations {
       'Ainda não voltou nada. Uma carta volta ao fim de três dias, depois uma semana, depois um mês — e o que acertas então é o que sabes mesmo.';
 
   @override
-  String get memoryWithPlus =>
-      'O que realmente te lembras, carta a carta — com Astute+.';
-
-  @override
   String get weekKeptThreeOwn =>
       'Uma semana seguida: amanhã três das cinco são tuas.';
 
   @override
-  String get perkKnowTitle => 'O que sabes mesmo';
-
-  @override
-  String get perkKnowLine =>
-      'A tua viagem abre cada tema fio a fio, mostra o que ficou quando uma carta voltou, e se as tuas respostas melhoram.';
+  String get perkJourneyLine =>
+      'O teu nível e os teus números, cada tema aberto fio a fio, o que ficou quando uma carta voltou, e a carta para contar hoje à noite.';
 }

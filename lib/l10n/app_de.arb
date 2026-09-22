@@ -358,18 +358,15 @@
   "perkOwnTitle": "Fünf Karten am Tag, alle deine",
   "perkOwnLine": "Aus deinen Strängen, auf deinem gemessenen Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.",
   "plusCardHeadline": "Alle fünf, deine.",
-  "plusCardLine": "Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Was du wirklich weißt. Dein ganzes Archiv.",
+  "plusCardLine": "Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Deine Reise. Dein ganzes Archiv.",
   "continueFree": "Gratis weiter",
   "archiveBeforeThisWeek": "Vor dieser Woche",
   "whatStays": "Was bleibt",
-  "strandsWithPlus": "Welche Stränge, und wie tief — mit Astute+",
   "nReadOfN": "{read} von {total} gelesen",
   "nAnswered": "{n, plural, =1{1 Karte beantwortet} other{{n} Karten beantwortet}}",
   "nCameBackAgain": "{n, plural, =1{1 kam zurück} other{{n} kamen zurück}}",
   "nKeptOnReturn": "{n, plural, =1{1 beim Zurückkommen noch richtig} other{{n} beim Zurückkommen noch richtig}}",
   "nothingBackYet": "Noch ist nichts zurückgekommen. Eine Karte kommt nach drei Tagen wieder, dann nach einer Woche, dann nach einem Monat — und was du dann richtig hast, weißt du wirklich.",
-  "memoryWithPlus": "Was du wirklich behältst, Karte für Karte — mit Astute+.",
   "weekKeptThreeOwn": "Eine Woche gehalten: morgen sind drei der fünf deine.",
-  "perkKnowTitle": "Was du wirklich weißt",
-  "perkKnowLine": "Deine Reise öffnet jedes Fach Strang für Strang, zeigt, was blieb, als eine Karte zurückkam, und ob deine Urteile besser werden."
+  "perkJourneyLine": "Dein Niveau und deine Zahlen, jedes Fach Strang für Strang geöffnet, was blieb, als eine Karte zurückkam, und die Karte für heute Abend."
 }

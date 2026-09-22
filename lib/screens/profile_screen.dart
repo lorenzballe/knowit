@@ -1411,16 +1411,23 @@ class _Path extends StatelessWidget {
     final Rung? next = standing.next;
     final String? step = stepText(context, standing);
 
-    // The card is also the way into the journey it is a moment of.
+    // The card is also the way into the journey it is a moment of — and
+    // the journey is Astute+, so on the free plan it is the paywall, with
+    // the lock on the card saying so first.
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (routeContext) => JourneyScreen(
-            app: app,
-            onBack: () => Navigator.of(routeContext).pop(),
+      onTap: () => requirePlus(
+        context,
+        app,
+        () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => JourneyScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
+            ),
           ),
         ),
+        source: 'journey',
       ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
@@ -1462,14 +1469,23 @@ class _Path extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  context.l10n.rungOfTotal(standing.at + 1, kRungs.length),
-                  style: AppText.label(
-                    size: 11,
-                    weight: FontWeight.w700,
-                    spacing: 1,
-                    color: context.p.ink.withValues(alpha: 0.32),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      context.l10n.rungOfTotal(standing.at + 1, kRungs.length),
+                      style: AppText.label(
+                        size: 11,
+                        weight: FontWeight.w700,
+                        spacing: 1,
+                        color: context.p.ink.withValues(alpha: 0.32),
+                      ),
+                    ),
+                    if (!app.isPlus) ...[
+                      const SizedBox(height: 6),
+                      const PlusLock(locked: true),
+                    ],
+                  ],
                 ),
               ],
             ),

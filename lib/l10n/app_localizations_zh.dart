@@ -1509,7 +1509,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plusCardHeadline => '让五张全都为你。';
 
   @override
-  String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你真正知道的。你的全部档案。';
+  String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你的旅程。你的全部档案。';
 
   @override
   String get continueFree => '免费继续';
@@ -1519,9 +1519,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get whatStays => '留下的';
-
-  @override
-  String get strandsWithPlus => '哪些分支、有多深 — 使用 Astute+';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1563,14 +1560,8 @@ class AppLocalizationsZh extends AppLocalizations {
       '还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。';
 
   @override
-  String get memoryWithPlus => '你真正记住了什么，逐张可见 — 使用 Astute+。';
-
-  @override
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张为你而选。';
 
   @override
-  String get perkKnowTitle => '你真正知道的';
-
-  @override
-  String get perkKnowLine => '你的旅程逐个分支打开每个学科，显示卡片再现时你记住了什么，以及你的判断是否在进步。';
+  String get perkJourneyLine => '你的等级和数字、逐分支打开的每个学科、卡片再现时你记住了什么，以及今晚要讲的那张卡片。';
 }

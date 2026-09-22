@@ -1557,7 +1557,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get plusCardLine =>
-      'Five cards a day from your mix, at your level. What you actually know. Your whole archive.';
+      'Five cards a day from your mix, at your level. Your journey. Your whole archive.';
 
   @override
   String get continueFree => 'Continue free';
@@ -1567,9 +1567,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatStays => 'What stays';
-
-  @override
-  String get strandsWithPlus => 'Which strands, and how deep — with Astute+';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1614,17 +1611,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.';
 
   @override
-  String get memoryWithPlus =>
-      'What you actually remember, card by card — with Astute+.';
-
-  @override
   String get weekKeptThreeOwn =>
       'A week kept: tomorrow three of the five are yours.';
 
   @override
-  String get perkKnowTitle => 'What you actually know';
-
-  @override
-  String get perkKnowLine =>
-      'Your journey opens every subject strand by strand, shows what stayed when a card came back, and whether your calls are getting better.';
+  String get perkJourneyLine =>
+      'Your level and your numbers, every subject opened strand by strand, what stayed when a card came back, and the card to say tonight.';
 }

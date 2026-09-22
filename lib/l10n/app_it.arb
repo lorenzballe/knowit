@@ -358,18 +358,15 @@
   "perkOwnTitle": "Cinque carte al giorno, tutte tue",
   "perkOwnLine": "Dai tuoi filoni, al livello che misuri, mai una già letta. Gratis ne hai due al giorno.",
   "plusCardHeadline": "Tutte e cinque, tue.",
-  "plusCardLine": "Cinque carte al giorno dal tuo mix, al tuo livello. Cosa sai davvero. Tutto il tuo archivio.",
+  "plusCardLine": "Cinque carte al giorno dal tuo mix, al tuo livello. Il tuo viaggio. Tutto il tuo archivio.",
   "continueFree": "Continua gratis",
   "archiveBeforeThisWeek": "Prima di questa settimana",
   "whatStays": "Cosa resta",
-  "strandsWithPlus": "Quali filoni, e quanto a fondo — con Astute+",
   "nReadOfN": "{read} su {total} lette",
   "nAnswered": "{n, plural, =1{1 carta risposta} other{{n} carte risposte}}",
   "nCameBackAgain": "{n, plural, =1{1 è tornata} other{{n} sono tornate}}",
   "nKeptOnReturn": "{n, plural, =1{1 ancora giusta al ritorno} other{{n} ancora giuste al ritorno}}",
   "nothingBackYet": "Non è ancora tornato niente. Una carta torna dopo tre giorni, poi una settimana, poi un mese — e quello che azzecchi allora è quello che sai davvero.",
-  "memoryWithPlus": "Cosa ricordi davvero, carta per carta — con Astute+.",
   "weekKeptThreeOwn": "Una settimana di fila: domani tre carte su cinque sono tue.",
-  "perkKnowTitle": "Cosa sai davvero",
-  "perkKnowLine": "Il tuo viaggio apre ogni materia filone per filone, mostra cosa ti è rimasto quando una carta è tornata, e se le tue risposte migliorano."
+  "perkJourneyLine": "Il tuo livello e i tuoi numeri, ogni materia aperta filone per filone, cosa ti è rimasto quando una carta è tornata, e la carta da dire stasera."
 }

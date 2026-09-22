@@ -17,6 +17,7 @@ import 'journey_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
 import '../widgets/premium.dart';
+import '../widgets/share_day.dart';
 import '../data/topics.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/subject_icon.dart';
@@ -1271,9 +1272,13 @@ class _Tomorrow extends StatelessWidget {
 /// commitment — an answer, a purchase — and too heavy for a door out of a
 /// screen that is finished. It still gives under the finger.
 class _JourneyButton extends StatefulWidget {
-  const _JourneyButton({required this.onPressed});
+  const _JourneyButton({required this.onPressed, this.locked = false});
 
   final VoidCallback onPressed;
+
+  /// True on the free plan, where the journey is Astute+ and the button
+  /// says so before it is pressed: a lock where the arrow would be.
+  final bool locked;
 
   @override
   State<_JourneyButton> createState() => _JourneyButtonState();
@@ -1323,13 +1328,19 @@ class _JourneyButtonState extends State<_JourneyButton> {
                   ),
                 ),
                 const SizedBox(width: 9),
-                Text(
-                  '\u2192',
-                  style: AppText.body(
-                    size: 14,
-                    color: ink.withValues(alpha: 0.45),
-                  ),
-                ),
+                widget.locked
+                    ? Icon(
+                        Icons.lock_rounded,
+                        size: 13,
+                        color: ink.withValues(alpha: 0.55),
+                      )
+                    : Text(
+                        '\u2192',
+                        style: AppText.body(
+                          size: 14,
+                          color: ink.withValues(alpha: 0.45),
+                        ),
+                      ),
               ],
             ),
           ),
@@ -1339,9 +1350,9 @@ class _JourneyButtonState extends State<_JourneyButton> {
   }
 }
 
-/// The way on: the journey, and under it the second set — as an offer on
-/// the free plan, as a deal on Astute+, and not at all once it has been
-/// dealt.
+/// The way on: the journey, which is Astute+, and beside it the day sent
+/// as five squares, which is everybody's — sharing is how the app spreads,
+/// so it never sits behind the lock.
 class _Actions extends StatelessWidget {
   const _Actions({required this.app});
 
@@ -1349,17 +1360,29 @@ class _Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Only the way on. The offer of five more is the sixth card on the
-    // shelf, not a line under the button.
-    return _JourneyButton(
-      onPressed: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (routeContext) => JourneyScreen(
-            app: app,
-            onBack: () => Navigator.of(routeContext).pop(),
+    return Row(
+      children: [
+        Expanded(
+          child: _JourneyButton(
+            locked: !app.isPlus,
+            onPressed: () => requirePlus(
+              context,
+              app,
+              () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (routeContext) => JourneyScreen(
+                    app: app,
+                    onBack: () => Navigator.of(routeContext).pop(),
+                  ),
+                ),
+              ),
+              source: 'journey',
+            ),
           ),
         ),
-      ),
+        const SizedBox(width: 10),
+        ShareDay(app: app, square: 52),
+      ],
     );
   }
 }

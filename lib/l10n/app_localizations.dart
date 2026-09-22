@@ -2271,7 +2271,7 @@ abstract class AppLocalizations {
   /// No description provided for @plusCardLine.
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day from your mix, at your level. What you actually know. Your whole archive.'**
+  /// **'Five cards a day from your mix, at your level. Your journey. Your whole archive.'**
   String get plusCardLine;
 
   /// No description provided for @continueFree.
@@ -2291,12 +2291,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What stays'**
   String get whatStays;
-
-  /// No description provided for @strandsWithPlus.
-  ///
-  /// In en, this message translates to:
-  /// **'Which strands, and how deep — with Astute+'**
-  String get strandsWithPlus;
 
   /// No description provided for @nReadOfN.
   ///
@@ -2328,29 +2322,17 @@ abstract class AppLocalizations {
   /// **'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.'**
   String get nothingBackYet;
 
-  /// No description provided for @memoryWithPlus.
-  ///
-  /// In en, this message translates to:
-  /// **'What you actually remember, card by card — with Astute+.'**
-  String get memoryWithPlus;
-
   /// No description provided for @weekKeptThreeOwn.
   ///
   /// In en, this message translates to:
   /// **'A week kept: tomorrow three of the five are yours.'**
   String get weekKeptThreeOwn;
 
-  /// No description provided for @perkKnowTitle.
+  /// No description provided for @perkJourneyLine.
   ///
   /// In en, this message translates to:
-  /// **'What you actually know'**
-  String get perkKnowTitle;
-
-  /// No description provided for @perkKnowLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Your journey opens every subject strand by strand, shows what stayed when a card came back, and whether your calls are getting better.'**
-  String get perkKnowLine;
+  /// **'Your level and your numbers, every subject opened strand by strand, what stayed when a card came back, and the card to say tonight.'**
+  String get perkJourneyLine;
 }
 
 class _AppLocalizationsDelegate

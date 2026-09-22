@@ -10,9 +10,6 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../theme.dart';
-import '../widgets/chunky.dart';
-import '../widgets/premium.dart';
-import '../widgets/share_day.dart';
 import '../widgets/subject_icon.dart';
 import '../widgets/ui.dart';
 import 'deck_viewer_screen.dart';
@@ -128,21 +125,14 @@ class _JourneyScreenState extends State<JourneyScreen> {
                           onToggle: (key) => setState(() {
                             _openSubject = _openSubject == key ? null : key;
                           }),
-                          onChanged: () => setState(() {}),
                         ),
                         // Under what has been read, what stayed: the only
                         // number on the page that measures memory rather
-                        // than reading, and the second thing Astute+ is.
+                        // than reading.
                         const SizedBox(height: 18),
-                        Row(
-                          children: [
-                            Eyebrow(l.whatStays),
-                            const Spacer(),
-                            PlusLock(locked: !app.isPlus),
-                          ],
-                        ),
+                        Eyebrow(l.whatStays),
                         const SizedBox(height: 8),
-                        _Memory(app: app, onChanged: () => setState(() {})),
+                        _Memory(app: app),
                         if (sayable.isNotEmpty) ...[
                           const SizedBox(height: 18),
                           Eyebrow(l.toSayTonight),
@@ -161,10 +151,6 @@ class _JourneyScreenState extends State<JourneyScreen> {
                               if (mounted) setState(() => _sayAt++);
                             },
                           ),
-                        ],
-                        if (app.dayClosed) ...[
-                          const SizedBox(height: 18),
-                          Center(child: ShareDay(app: app)),
                         ],
                       ],
                     ),
@@ -743,7 +729,6 @@ class _BySubject extends StatelessWidget {
     required this.app,
     required this.open,
     required this.onToggle,
-    required this.onChanged,
   });
 
   final AppState app;
@@ -751,10 +736,6 @@ class _BySubject extends StatelessWidget {
   /// The subject open to its strands, by topic key, if one is.
   final String? open;
   final ValueChanged<String> onToggle;
-
-  /// Something changed under the page — the trial started from a lock
-  /// inside it — and the page should look again.
-  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -792,15 +773,7 @@ class _BySubject extends StatelessWidget {
         // trails off rather than pushing the row past its edge.
         Row(
           children: [
-            Flexible(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(child: Eyebrow(l.bySubject)),
-                  PlusLock(locked: !app.isPlus),
-                ],
-              ),
-            ),
+            Flexible(child: Eyebrow(l.bySubject)),
             const SizedBox(width: 10),
             Flexible(
               child: Text(
@@ -828,7 +801,6 @@ class _BySubject extends StatelessWidget {
             of: total[kTopics[key]!.name] ?? 0,
             open: open == key,
             onToggle: () => onToggle(key),
-            onChanged: onChanged,
           ),
       ],
     );
@@ -836,8 +808,8 @@ class _BySubject extends StatelessWidget {
 }
 
 /// One subject: its bar, and — open — the genres and strands inside it
-/// with how much of each has been read, which is what Astute+ shows, and
-/// the way back into the cards of it that were read, which is everybody's.
+/// with how much of each has been read, and the way back into the cards
+/// of it that were read.
 class _SubjectRow extends StatelessWidget {
   const _SubjectRow({
     super.key,
@@ -848,7 +820,6 @@ class _SubjectRow extends StatelessWidget {
     required this.of,
     required this.open,
     required this.onToggle,
-    required this.onChanged,
   });
 
   final AppState app;
@@ -858,7 +829,6 @@ class _SubjectRow extends StatelessWidget {
   final int of;
   final bool open;
   final VoidCallback onToggle;
-  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -953,48 +923,8 @@ class _SubjectRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (genres.isNotEmpty)
-                  if (app.isPlus)
-                    for (final genre in genres)
-                      _GenreLines(genre: genre, seenIds: app.seenIds)
-                  else
-                    // The strands are behind the lock, and the lock says
-                    // what it is keeping.
-                    Semantics(
-                      button: true,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () => requirePlus(
-                          context,
-                          app,
-                          onChanged,
-                          source: 'strands',
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 6),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.lock_rounded,
-                                size: 12,
-                                color: ink.withValues(alpha: 0.4),
-                              ),
-                              const SizedBox(width: 7),
-                              Expanded(
-                                child: Text(
-                                  l.strandsWithPlus,
-                                  style: AppText.body(
-                                    size: 12,
-                                    height: 1.35,
-                                    color: ink.withValues(alpha: 0.5),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                for (final genre in genres)
+                  _GenreLines(genre: genre, seenIds: app.seenIds),
                 if (any)
                   // What was read of it, to read again.
                   GestureDetector(
@@ -1105,42 +1035,13 @@ class _GenreLines extends StatelessWidget {
 /// were still right when they did. That last number is the only one in the
 /// app that measures memory rather than reading.
 class _Memory extends StatelessWidget {
-  const _Memory({required this.app, required this.onChanged});
+  const _Memory({required this.app});
 
   final AppState app;
-  final VoidCallback onChanged;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    if (!app.isPlus) {
-      return PaperCard(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              l.memoryWithPlus,
-              style: AppText.body(
-                size: 13.5,
-                height: 1.45,
-                color: context.p.inkMuted,
-              ),
-            ),
-            const SizedBox(height: 12),
-            ChunkyButton(
-              label: l.seeThePlans,
-              height: 46,
-              fill: context.p.inverse,
-              ink: context.p.onInverse,
-              onPressed: () =>
-                  requirePlus(context, app, onChanged, source: 'memory'),
-            ),
-          ],
-        ),
-      );
-    }
-
     // Judgements are appended, never rewritten, so a card judged twice is a
     // card that came back — and the last judgement on it is whether it
     // stayed.

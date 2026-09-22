@@ -358,18 +358,15 @@
   "perkOwnTitle": "Vijf kaarten per dag, allemaal van jou",
   "perkOwnLine": "Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.",
   "plusCardHeadline": "Alle vijf van jou.",
-  "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Wat je echt weet. Je hele archief.",
+  "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Je reis. Je hele archief.",
   "continueFree": "Gratis verdergaan",
   "archiveBeforeThisWeek": "Vóór deze week",
   "whatStays": "Wat blijft",
-  "strandsWithPlus": "Welke draden, en hoe diep — met Astute+",
   "nReadOfN": "{read} van {total} gelezen",
   "nAnswered": "{n, plural, =1{1 kaart beantwoord} other{{n} kaarten beantwoord}}",
   "nCameBackAgain": "{n, plural, =1{1 kwam terug} other{{n} kwamen terug}}",
   "nKeptOnReturn": "{n, plural, =1{1 nog goed bij terugkomst} other{{n} nog goed bij terugkomst}}",
   "nothingBackYet": "Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.",
-  "memoryWithPlus": "Wat je echt onthoudt, kaart voor kaart — met Astute+.",
   "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou.",
-  "perkKnowTitle": "Wat je echt weet",
-  "perkKnowLine": "Je reis opent elk vak draad voor draad, laat zien wat bleef toen een kaart terugkwam, en of je oordeel beter wordt."
+  "perkJourneyLine": "Je niveau en je cijfers, elk vak draad voor draad geopend, wat bleef toen een kaart terugkwam, en de kaart om vanavond te vertellen."
 }

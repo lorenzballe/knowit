@@ -10,7 +10,11 @@ import '../utils/share_text.dart';
 /// The day as five squares and a line, for a chat. Nothing in it that
 /// spoils a card: which ones asked and how those went, never what.
 class ShareDay extends StatelessWidget {
-  const ShareDay({super.key, required this.app});
+  const ShareDay({super.key, required this.app, this.square});
+
+  /// Drawn as a square button of this size, icon only, where it sits
+  /// beside another button rather than on its own line.
+  final double? square;
 
   final AppState app;
 
@@ -75,6 +79,32 @@ class ShareDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double? square = this.square;
+    if (square != null) {
+      return Semantics(
+        button: true,
+        label: context.l10n.shareMyDay,
+        child: GestureDetector(
+          key: const ValueKey('share-day'),
+          behavior: HitTestBehavior.opaque,
+          onTap: () => _share(context),
+          child: Container(
+            width: square,
+            height: square,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: context.p.lineStrong),
+            ),
+            alignment: Alignment.center,
+            child: Icon(
+              Icons.ios_share_rounded,
+              size: 19,
+              color: context.p.ink,
+            ),
+          ),
+        ),
+      );
+    }
     return Semantics(
       button: true,
       label: context.l10n.shareMyDay,

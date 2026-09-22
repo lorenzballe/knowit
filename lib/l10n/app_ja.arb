@@ -358,18 +358,15 @@
   "perkOwnTitle": "毎日5枚、すべてあなたのもの",
   "perkOwnLine": "あなたの選んだ系統から、測定されたレベルで、既読は二度と出ません。無料版は1日2枚。",
   "plusCardHeadline": "5枚すべてを、あなたのものに。",
-  "plusCardLine": "あなたのミックスから、あなたのレベルで毎日5枚。本当に知っていること。アーカイブすべて。",
+  "plusCardLine": "あなたのミックスから、あなたのレベルで毎日5枚。あなたの旅。アーカイブすべて。",
   "continueFree": "無料で続ける",
   "archiveBeforeThisWeek": "今週より前のすべて",
   "whatStays": "残るもの",
-  "strandsWithPlus": "どの系統を、どこまで深く — Astute+で",
   "nReadOfN": "{total}枚中{read}枚を読了",
   "nAnswered": "{n, plural, other{{n}枚に回答}}",
   "nCameBackAgain": "{n, plural, other{{n}枚が戻ってきた}}",
   "nKeptOnReturn": "{n, plural, other{{n}枚は戻ってきても正解}}",
   "nothingBackYet": "まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。",
-  "memoryWithPlus": "本当に覚えていることを、カードごとに — Astute+で。",
   "weekKeptThreeOwn": "1週間続きました。明日は5枚のうち3枚があなたのものです。",
-  "perkKnowTitle": "本当に知っていること",
-  "perkKnowLine": "あなたの旅は各分野を系統ごとに開き、カードが戻ってきたとき何が残ったか、判断が良くなっているかを示します。"
+  "perkJourneyLine": "あなたのレベルと数字、系統ごとに開く各分野、カードが戻ってきたとき何が残ったか、そして今夜話すカード。"
 }

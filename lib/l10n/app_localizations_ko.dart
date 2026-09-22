@@ -1524,7 +1524,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
 
   @override
-  String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 정말로 아는 것. 모든 기록.';
+  String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 나의 여정. 모든 기록.';
 
   @override
   String get continueFree => '무료로 계속하기';
@@ -1534,9 +1534,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get whatStays => '남는 것';
-
-  @override
-  String get strandsWithPlus => '어떤 갈래를, 얼마나 깊이 — Astute+로';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1578,15 +1575,9 @@ class AppLocalizationsKo extends AppLocalizations {
       '아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.';
 
   @override
-  String get memoryWithPlus => '진짜 기억하는 것을, 카드별로 — Astute+로.';
-
-  @override
   String get weekKeptThreeOwn => '일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.';
 
   @override
-  String get perkKnowTitle => '정말로 아는 것';
-
-  @override
-  String get perkKnowLine =>
-      '당신의 여정은 모든 주제를 갈래별로 열어, 카드가 돌아왔을 때 무엇이 남았는지, 판단이 나아지고 있는지 보여줍니다.';
+  String get perkJourneyLine =>
+      '당신의 레벨과 숫자, 갈래별로 열리는 모든 주제, 카드가 돌아왔을 때 남은 것, 그리고 오늘 밤 말할 카드.';
 }

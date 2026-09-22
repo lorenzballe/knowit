@@ -86,9 +86,11 @@ both plans. **Five cards a day, all yours**: on the free plan two of the
 five are dealt from the reader's mix and three are everybody's — the
 question of the day and two more from the day's edition — and with Astute+
 all five are the reader's own, at the level the app has measured, with a
-card that came due for review. **What you actually know**: on the journey,
-the subjects are everybody's, the strands inside them and what actually
-stayed are Astute+. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+card that came due for review. **Your journey**: the level and the numbers,
+every subject opened strand by strand, what stayed when a card came back,
+and the card to say tonight — the screen is Astute+; the profile keeps the
+record itself free, and the day is shared from the finished day on either
+plan. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 seven days free, offered once at the end of the onboarding with "continue
 free" written under it. The mix, the streak, the freezes, the friends, the
 sharing and the search are free: they are how the app spreads.
@@ -584,8 +586,8 @@ changed — and `pill said`, a card that left the phone and was said to
 somebody, which is the one number this app is actually for.
 
 The paywall takes the gate that opened it as a required argument rather than a
-defaulted one, so `onboarding`, `sixth card`, `strands`, `memory`, `archive`
-and `calibration` can be told apart. A default is how a fifth of the traffic ends
+defaulted one, so `onboarding`, `sixth card`, `journey`, `archive` and
+`calibration` can be told apart. A default is how a fifth of the traffic ends
 up labelled `unknown` by the end of the first week.
 
 **Screens are named by hand.** The three tabs are one route and the rest are
@@ -949,11 +951,10 @@ So:
   the pitch every rival makes better, and the day stays five cards on both
   plans. What is sold is whose they are — five from the reader's mix at the
   level the app has measured, against two — and then what the app knows
-  about the reader: the journey's subjects opened strand by strand, with
-  what stayed, and whether the gap is closing over time (`Trend`). The
-  measurement itself stays free, because a reader has to see it before
-  they will pay to keep it; the subjects on the journey are free for the
-  same reason.
+  about the reader: the journey — the level, the numbers, every subject
+  opened strand by strand, what stayed — and whether the gap is closing
+  over time (`Trend`). The measurement itself stays free on the profile,
+  because a reader has to see it before they will pay to keep it.
 
 The promise on the welcome screen changed with it. "Five a day" was a claim
 about volume. What the evidence actually supports is narrower and more

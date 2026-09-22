@@ -1546,7 +1546,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get plusCardLine =>
-      'Karışımından, seviyende günde beş kart. Gerçekte ne bildiğin. Tüm arşivin.';
+      'Karışımından, seviyende günde beş kart. Yolculuğun. Tüm arşivin.';
 
   @override
   String get continueFree => 'Ücretsiz devam et';
@@ -1556,9 +1556,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatStays => 'Ne kalıyor';
-
-  @override
-  String get strandsWithPlus => 'Hangi dallar, ne kadar derin — Astute+ ile';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1603,17 +1600,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.';
 
   @override
-  String get memoryWithPlus =>
-      'Gerçekten neyi hatırladığın, kart kart — Astute+ ile.';
-
-  @override
   String get weekKeptThreeOwn =>
       'Bir hafta tamam: yarın beş karttan üçü senin.';
 
   @override
-  String get perkKnowTitle => 'Gerçekte ne bildiğin';
-
-  @override
-  String get perkKnowLine =>
-      'Yolculuğun her konuyu dal dal açar, bir kart geri geldiğinde ne kaldığını ve cevaplarının iyileşip iyileşmediğini gösterir.';
+  String get perkJourneyLine =>
+      'Seviyen ve sayıların, dal dal açılan her konu, bir kart geri geldiğinde ne kaldığı ve bu akşam anlatacağın kart.';
 }

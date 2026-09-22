@@ -366,34 +366,37 @@ void main() {
         }
       }
 
-      await tester.pumpWidget(host(JourneyScreen(app: app, onBack: () {})));
-      await settle();
-      // Down to the subjects, and Space open to its strands.
-      final Finder list = find.byType(Scrollable).first;
-      await tester.dragUntilVisible(
-        find.byKey(const ValueKey('subject-space')),
-        list,
-        const Offset(0, -200),
-      );
-      await settle();
-      await tester.tap(find.byKey(const ValueKey('subject-space')));
-      await settle();
-      await expectLater(
-        find.byType(JourneyScreen),
-        matchesGoldenFile('shots/journey-$tag-subjects.png'),
-      );
-      // The foot of the journey: what stays.
-      await tester.dragUntilVisible(
-        find.text('COSA RESTA'),
-        list,
-        const Offset(0, -200),
-      );
-      await tester.drag(list, const Offset(0, -260), warnIfMissed: false);
-      await settle();
-      await expectLater(
-        find.byType(JourneyScreen),
-        matchesGoldenFile('shots/journey-$tag-foot.png'),
-      );
+      // The journey is Astute+, so it is rendered on that plan only.
+      if (plus) {
+        await tester.pumpWidget(host(JourneyScreen(app: app, onBack: () {})));
+        await settle();
+        // Down to the subjects, and Space open to its strands.
+        final Finder list = find.byType(Scrollable).first;
+        await tester.dragUntilVisible(
+          find.byKey(const ValueKey('subject-space')),
+          list,
+          const Offset(0, -200),
+        );
+        await settle();
+        await tester.tap(find.byKey(const ValueKey('subject-space')));
+        await settle();
+        await expectLater(
+          find.byType(JourneyScreen),
+          matchesGoldenFile('shots/journey-subjects.png'),
+        );
+        // The foot of the journey: what stays.
+        await tester.dragUntilVisible(
+          find.text('COSA RESTA'),
+          list,
+          const Offset(0, -200),
+        );
+        await tester.drag(list, const Offset(0, -260), warnIfMissed: false);
+        await settle();
+        await expectLater(
+          find.byType(JourneyScreen),
+          matchesGoldenFile('shots/journey-foot.png'),
+        );
+      }
 
       await tester.pumpWidget(host(ArchiveScreen(app: app, onBack: () {})));
       await settle();

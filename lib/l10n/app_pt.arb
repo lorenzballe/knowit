@@ -358,18 +358,15 @@
   "perkOwnTitle": "Cinco cartas por dia, todas tuas",
   "perkOwnLine": "Dos teus fios, ao nível que mostras, nunca uma já lida. Grátis tens duas por dia.",
   "plusCardHeadline": "As cinco, tuas.",
-  "plusCardLine": "Cinco cartas por dia da tua mistura, ao teu nível. O que sabes mesmo. Todo o teu arquivo.",
+  "plusCardLine": "Cinco cartas por dia da tua mistura, ao teu nível. A tua viagem. Todo o teu arquivo.",
   "continueFree": "Continuar grátis",
   "archiveBeforeThisWeek": "Antes desta semana",
   "whatStays": "O que fica",
-  "strandsWithPlus": "Que fios, e até onde — com Astute+",
   "nReadOfN": "{read} de {total} lidas",
   "nAnswered": "{n, plural, =1{1 carta respondida} other{{n} cartas respondidas}}",
   "nCameBackAgain": "{n, plural, =1{1 voltou} other{{n} voltaram}}",
   "nKeptOnReturn": "{n, plural, =1{1 ainda certa ao voltar} other{{n} ainda certas ao voltar}}",
   "nothingBackYet": "Ainda não voltou nada. Uma carta volta ao fim de três dias, depois uma semana, depois um mês — e o que acertas então é o que sabes mesmo.",
-  "memoryWithPlus": "O que realmente te lembras, carta a carta — com Astute+.",
   "weekKeptThreeOwn": "Uma semana seguida: amanhã três das cinco são tuas.",
-  "perkKnowTitle": "O que sabes mesmo",
-  "perkKnowLine": "A tua viagem abre cada tema fio a fio, mostra o que ficou quando uma carta voltou, e se as tuas respostas melhoram."
+  "perkJourneyLine": "O teu nível e os teus números, cada tema aberto fio a fio, o que ficou quando uma carta voltou, e a carta para contar hoje à noite."
 }

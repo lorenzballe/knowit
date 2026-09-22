@@ -1560,7 +1560,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get plusCardLine =>
-      'Vijf kaarten per dag uit je mix, op jouw niveau. Wat je echt weet. Je hele archief.';
+      'Vijf kaarten per dag uit je mix, op jouw niveau. Je reis. Je hele archief.';
 
   @override
   String get continueFree => 'Gratis verdergaan';
@@ -1570,9 +1570,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get whatStays => 'Wat blijft';
-
-  @override
-  String get strandsWithPlus => 'Welke draden, en hoe diep — met Astute+';
 
   @override
   String nReadOfN(int read, int total) {
@@ -1617,17 +1614,10 @@ class AppLocalizationsNl extends AppLocalizations {
       'Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.';
 
   @override
-  String get memoryWithPlus =>
-      'Wat je echt onthoudt, kaart voor kaart — met Astute+.';
-
-  @override
   String get weekKeptThreeOwn =>
       'Een week volgehouden: morgen zijn drie van de vijf van jou.';
 
   @override
-  String get perkKnowTitle => 'Wat je echt weet';
-
-  @override
-  String get perkKnowLine =>
-      'Je reis opent elk vak draad voor draad, laat zien wat bleef toen een kaart terugkwam, en of je oordeel beter wordt.';
+  String get perkJourneyLine =>
+      'Je niveau en je cijfers, elk vak draad voor draad geopend, wat bleef toen een kaart terugkwam, en de kaart om vanavond te vertellen.';
 }

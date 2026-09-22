@@ -358,18 +358,15 @@
   "perkOwnTitle": "每天五张，全部为你",
   "perkOwnLine": "来自你选的分支，按你测得的水平，绝不重复已读。免费版每天两张。",
   "plusCardHeadline": "让五张全都为你。",
-  "plusCardLine": "每天五张来自你的组合、匹配你的水平。你真正知道的。你的全部档案。",
+  "plusCardLine": "每天五张来自你的组合、匹配你的水平。你的旅程。你的全部档案。",
   "continueFree": "免费继续",
   "archiveBeforeThisWeek": "本周之前的一切",
   "whatStays": "留下的",
-  "strandsWithPlus": "哪些分支、有多深 — 使用 Astute+",
   "nReadOfN": "已读 {read} / {total}",
   "nAnswered": "{n, plural, other{已回答 {n} 张}}",
   "nCameBackAgain": "{n, plural, other{{n} 张再次出现}}",
   "nKeptOnReturn": "{n, plural, other{{n} 张再现时仍答对}}",
   "nothingBackYet": "还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。",
-  "memoryWithPlus": "你真正记住了什么，逐张可见 — 使用 Astute+。",
   "weekKeptThreeOwn": "坚持了一周：明天五张里有三张为你而选。",
-  "perkKnowTitle": "你真正知道的",
-  "perkKnowLine": "你的旅程逐个分支打开每个学科，显示卡片再现时你记住了什么，以及你的判断是否在进步。"
+  "perkJourneyLine": "你的等级和数字、逐分支打开的每个学科、卡片再现时你记住了什么，以及今晚要讲的那张卡片。"
 }
