@@ -4,8 +4,9 @@ import '../screens/paywall_screen.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 
-/// The three Astute+ perks the paywall sells. Anything gated behind one of
-/// these opens the paywall for readers on the free plan.
+/// The three things Astute+ is: every card of the day the reader's own,
+/// the map of what they know, and the whole archive. Anything gated behind
+/// one of these opens the paywall for readers on the free plan.
 ///
 /// Runs [action] when the reader has Astute+, otherwise pushes the paywall.
 ///

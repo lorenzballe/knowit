@@ -8,7 +8,6 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
-import '../widgets/premium.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
@@ -120,16 +119,11 @@ class _SavedScreenState extends State<SavedScreen> {
                   ),
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => requirePlus(
-                      context,
-                      app,
-                      source: 'saved archive',
-                      () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (routeContext) => ArchiveScreen(
-                            app: app,
-                            onBack: () => Navigator.of(routeContext).pop(),
-                          ),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (routeContext) => ArchiveScreen(
+                          app: app,
+                          onBack: () => Navigator.of(routeContext).pop(),
                         ),
                       ),
                     ),
@@ -151,7 +145,6 @@ class _SavedScreenState extends State<SavedScreen> {
                               color: context.p.link,
                             ),
                           ),
-                          PlusLock(locked: !app.isPlus),
                         ],
                       ),
                     ),

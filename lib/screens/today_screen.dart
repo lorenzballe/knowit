@@ -61,9 +61,9 @@ class _TodayScreenState extends State<TodayScreen> {
 
   /// Whether the card after the fifth is still on the table. It is dealt
   /// only when the day is finished *here*, in this session — opening the
-  /// app onto a day already done goes straight to the shelf — and only
-  /// while there is something to offer: five more to unlock, or five more
-  /// to deal. It leaves the way every card leaves: thrown.
+  /// app onto a day already done goes straight to the shelf — and only on
+  /// the free plan, where there is something to offer: the other three
+  /// cards, the reader's own. It leaves the way every card leaves: thrown.
   bool _magic = false;
 
   /// Which of the finished day's cards is at the front of the shelf. Held
@@ -79,15 +79,14 @@ class _TodayScreenState extends State<TodayScreen> {
     _wasDone = completed;
     if (before == null || before == completed) return;
     if (!completed) {
-      // A second set dealt: the table is a deck again, and the offer that
-      // dealt it is gone with it.
+      // A new day: the table is a deck again, and nothing is on offer yet.
       _magic = false;
       return;
     }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       HapticFeedback.heavyImpact();
     });
-    if (!widget.app.extraSetOpen) _magic = true;
+    if (!widget.app.isPlus) _magic = true;
   }
 
   /// What the shell was last told about the table.
@@ -110,15 +109,11 @@ class _TodayScreenState extends State<TodayScreen> {
     setState(() => _magic = false);
   }
 
-  /// Five more: dealt on the spot with Astute+, and otherwise the paywall,
-  /// which deals them itself if the trial starts. Coming back without
-  /// them, the card is still on the table, to be thrown like any other.
-  Future<void> _fiveMore(BuildContext context) => requirePlus(
-    context,
-    widget.app,
-    () => widget.app.openExtraSet(),
-    source: 'sixth card',
-  );
+  /// The offer: the paywall. Coming back without the trial, the card is
+  /// still on the table, to be thrown like any other; with it, tomorrow's
+  /// five are all the reader's own, and the card says so.
+  Future<void> _offer(BuildContext context) =>
+      requirePlus(context, widget.app, () {}, source: 'sixth card');
 
   /// Less like this — said once, quietly, with the way back.
   void _dislike(BuildContext context, Pill pill) {
@@ -182,19 +177,20 @@ class _TodayScreenState extends State<TodayScreen> {
             child: PillCardStack(
               deck: app.todaysDeck,
               index: app.todayIndex,
-              // After the last pill, the card that offers five more — while
-              // there is something to offer. It is thrown like the rest.
-              trailing: app.extraSetOpen
+              // After the last pill, on the free plan, the card that offers
+              // the rest of the day: the cards that were everybody's, the
+              // reader's own instead. It is thrown like the rest.
+              trailing: app.isPlus
                   ? null
                   : MagicCard(
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
-                      headline: context.l10n.magicHeadline,
-                      line: context.l10n.perkExtraLine,
-                      action: app.isPlus
-                          ? context.l10n.fiveMore
-                          : context.l10n.magicUnlock,
-                      onAction: () => _fiveMore(context),
+                      headline: context.l10n.theOthersYours(
+                        app.todaysDeck.length - app.ownIdsToday.length,
+                      ),
+                      line: context.l10n.magicLine,
+                      action: context.l10n.magicUnlock,
+                      onAction: () => _offer(context),
                     ),
               onAdvance: () => app.todayIndex >= app.todaysDeck.length
                   ? _throwMagic()
@@ -207,6 +203,9 @@ class _TodayScreenState extends State<TodayScreen> {
               onShare: (pill) => showShareSheet(context, pill),
               onMotion: widget.onCardMotion,
               reviewIds: app.reviewIdsToday,
+              // Which cards are the reader's own, on the day that has
+              // others: Astute+ has no others to tell them from.
+              ownIds: app.isPlus ? const {} : app.ownIdsToday,
               answerFor: app.answerFor,
               onAnswer: (id, response, confidence, reason) => app.recordAnswer(
                 id,
@@ -233,10 +232,10 @@ class _TodayScreenState extends State<TodayScreen> {
       _shelfDeck = deck;
       _shelfAt = 0;
     }
-    // The shelf ends on the card that offers five more, while there is
-    // something to offer; that card has no subject, so the tab takes the
-    // spectrum's violet behind it rather than the last card's colour.
-    final int count = deck.length + (app.extraSetOpen ? 0 : 1);
+    // On the free plan the shelf ends on the card that offers the rest of
+    // the day; that card has no subject, so the tab takes the spectrum's
+    // violet behind it rather than the last card's colour.
+    final int count = deck.length + (app.isPlus ? 0 : 1);
     final int at = _shelfAt.clamp(0, count - 1);
     final Color colour = at < deck.length ? deck[at].color : kSpectrum[9];
 

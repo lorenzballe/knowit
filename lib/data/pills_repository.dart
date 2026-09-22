@@ -8,8 +8,8 @@ import 'topics.dart';
 String dateKey(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-/// How many pills a free day holds. Astute+ unlocks a second set of the same
-/// size once the first is done.
+/// How many pills a day holds, on every plan. What Astute+ changes is not
+/// how many but whose: see `ownCardsFor` in daily.dart.
 const int kPillsPerDay = 5;
 
 /// How much of a day should ask something of the reader rather than tell.

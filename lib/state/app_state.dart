@@ -80,7 +80,7 @@ class AppState extends ChangeNotifier {
   static const _kDayStartScore = 'knowit.dayStartScore';
   static const _kRungDates = 'knowit.rungDates';
   static const _kSaidIds = 'knowit.saidIds';
-  static const _kExtraOpen = 'knowit.extraSetDate';
+  static const _kOwnIds = 'knowit.todayOwnIds';
   static const _kAnswers = 'knowit.answersJson';
   static const _kJudgements = 'knowit.judgements';
   static const _kTheme = 'knowit.theme';
@@ -122,8 +122,10 @@ class AppState extends ChangeNotifier {
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
 
-  /// True once the Astute+ second set has been unlocked today.
-  bool extraSetOpen = false;
+  /// Which of today's cards are the reader's own — dealt from their mix
+  /// rather than from the edition everybody gets. Two of five on the free
+  /// plan, and every one of them on Astute+.
+  Set<String> ownIdsToday = {};
 
   /// Which of today's cards the reader has already answered once — the
   /// calendar can deal a card round again, and a card met before shows
@@ -182,7 +184,8 @@ class AppState extends ChangeNotifier {
   bool notificationsOn = true;
   String notifyTime = '08:30';
 
-  /// Astute+ — gates the archive, image export and the topic mix.
+  /// Astute+ — every card of the day the reader's own, the map of what
+  /// they know, and the whole archive.
   bool isPlus = false;
   String name = 'You';
   Plan plan = Plan.year;
@@ -284,7 +287,7 @@ class AppState extends ChangeNotifier {
     isPlus = _prefs.getBool(_kPlus) ?? false;
     themeMode = _decodeTheme(_prefs.getString(_kTheme));
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
-    extraSetOpen = _prefs.getString(_kExtraOpen) == dateKey(today);
+    ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
@@ -362,43 +365,51 @@ class AppState extends ChangeNotifier {
     });
   }
 
+  /// How many of a day's cards are the reader's own: all five on Astute+;
+  /// two on the free plan, and three on the morning after a full week
+  /// kept — the streak's own reward, tasted once a week.
+  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
+
+  /// Deals a day for this reader. See [dealDay] for what a day is.
+  ///
+  /// On Astute+ the cards are dealt at the level the app has measured,
+  /// leaned by what the reader held and threw down, with a card that came
+  /// due for review. On the free plan they are dealt at the level the
+  /// reader said, from the subjects and strands they kept on — the mix is
+  /// everybody's — and what came due waits after the day instead.
+  Deal _deal(
+    DateTime date, {
+    required Set<String> exclude,
+    required List<Pill> reviews,
+    required int own,
+  }) => dealDay(
+    date: date,
+    topics: pickedTopics,
+    weights: leanedWeights,
+    levels: isPlus ? measuredLevels : topicLevels,
+    taste: isPlus ? taste : const {},
+    genresOff: genresOff,
+    strandsOff: strandsOff,
+    exclude: exclude,
+    reviews: isPlus ? reviews : const [],
+    own: own,
+  );
+
   /// Deals a fresh day and records it, so a restart resumes the same deck.
   ///
-  /// Four cards of the reader's own — dealt from their mix, what they said
-  /// they know, and what came due for review — around the one card that is
-  /// everybody's, the question of the day. An app that never re-asks what
-  /// you got wrong is not teaching, it is entertaining: a card that came
-  /// due takes the day's second asking slot before any fresh question does.
+  /// An app that never re-asks what you got wrong is not teaching, it is
+  /// entertaining: on Astute+ a card that came due takes an asking slot
+  /// before any fresh question does.
   Future<void> _startNewDay() async {
-    final size = extraSetOpen ? kPillsPerDay * 2 : kPillsPerDay;
     final reviews = dueReviews;
-    todaysDeck = dealDay(
-      date: today,
-      topics: pickedTopics,
-      weights: leanedWeights,
-      levels: measuredLevels,
-      taste: taste,
-      genresOff: genresOff,
-      strandsOff: strandsOff,
+    final Deal deal = _deal(
+      today,
       exclude: seenIds,
       reviews: reviews,
+      own: ownCardsToday,
     );
-    if (size > todaysDeck.length) {
-      todaysDeck = [
-        ...todaysDeck,
-        ...pillsForDate(
-          today,
-          topics: pickedTopics,
-          weights: leanedWeights,
-          levels: measuredLevels,
-          taste: taste,
-          genresOff: genresOff,
-          strandsOff: strandsOff,
-          exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
-          count: size - todaysDeck.length,
-        ),
-      ];
-    }
+    todaysDeck = deal.cards;
+    ownIdsToday = deal.own;
     final dealtReviews = reviews.map((p) => p.id).toSet();
     reviewIdsToday = {
       for (final p in todaysDeck)
@@ -412,16 +423,19 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kDayStartRung, rungAtDayStart);
     await _prefs.setInt(_kDayStartScore, scoreAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    await _prefs.setStringList(_kOwnIds, ownIdsToday.toList());
     await _noteDealt(today, todaysDeck);
     Analytics.capture('day started', {
       'cards': todaysDeck.length,
-      // How much of the day is a re-asking. The whole claim of the review
-      // ladder is that this number matters, so it is on every day.
+      // How much of the day is the reader's own, and how much of it is a
+      // re-asking. The whole claim of the plan is the first number; the
+      // whole claim of the review ladder is the second.
+      'own': ownIdsToday.length,
       'reviews': reviewIdsToday.length,
       'topics': pickedTopics.length,
       'streak_days': streak,
       'rung': standing.at,
-      'extra_set': extraSetOpen,
+      'is_plus': isPlus,
     });
   }
 
@@ -454,15 +468,12 @@ class AppState extends ChangeNotifier {
     if (dateKey(day) == dateKey(today)) return todaysDeck;
     final noted = deckHistory[dateKey(day)];
     if (noted != null && noted.isNotEmpty) return pillsByIds(noted);
-    return dealDay(
-      date: day,
-      topics: pickedTopics,
-      weights: leanedWeights,
-      levels: measuredLevels,
-      taste: taste,
-      genresOff: genresOff,
-      strandsOff: strandsOff,
-    );
+    return _deal(
+      day,
+      exclude: const {},
+      reviews: const [],
+      own: ownCardsFor(plus: isPlus, streak: 0),
+    ).cards;
   }
 
   /// True when today's five carried the reader up a rung.
@@ -992,17 +1003,37 @@ class AppState extends ChangeNotifier {
   /// tonight can say what opens the morning and the morning will agree.
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    return dealDay(
-      date: tomorrow,
-      topics: pickedTopics,
-      weights: leanedWeights,
-      levels: measuredLevels,
-      taste: taste,
-      genresOff: genresOff,
-      strandsOff: strandsOff,
+    return _deal(
+      tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-    );
+      own: ownCardsFor(plus: isPlus, streak: liveStreak),
+    ).cards;
+  }
+
+  /// True when tomorrow is the morning after a full week kept, and so has
+  /// three cards of the reader's own instead of two. Astute+ has five every
+  /// day, so there it is nothing to say.
+  bool get tomorrowIsRewarded =>
+      !isPlus && liveStreak > 0 && liveStreak % 7 == 0;
+
+  /// The card a morning opens on — for the reminder that quotes it and the
+  /// widget that shows it. The question of the day on the free plan, where
+  /// it is dealt; on Astute+ the first of the reader's own that asks, dealt
+  /// the way that morning will deal it for a reader who has been away since
+  /// tonight, which is the reader a reminder is for.
+  Pill leadOn(DateTime day) {
+    if (!isPlus) return questionOfTheDay(day);
+    final List<Pill> deck = dateKey(day) == dateKey(today)
+        ? todaysDeck
+        : _deal(
+            day,
+            exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+            reviews: _reviewsDue(day),
+            own: kPillsPerDay,
+          ).cards;
+    if (deck.isEmpty) return questionOfTheDay(day);
+    return deck.firstWhere((p) => p.asksSomething, orElse: () => deck.first);
   }
 
   /// Another card teaching the same principle that the reader has not met,
@@ -1406,7 +1437,7 @@ class AppState extends ChangeNotifier {
       final at = DateTime(day.year, day.month, day.day, hour, minute);
       if (!at.isAfter(clock)) continue;
       if (i == 0 && todayCompleted) continue;
-      final Pill lead = questionOfTheDay(day);
+      final Pill lead = leadOn(day);
 
       // How long the reader will have been away when this one lands.
       final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
@@ -1434,17 +1465,18 @@ class AppState extends ChangeNotifier {
   /// What the home-screen widget shows, handed over whenever it could
   /// have changed: at launch, on coming back, and when the day is done.
   ///
-  /// The question of the day and the streak, and the question for each of
+  /// The card the morning opens on and the streak, and the same for each of
   /// the next fourteen mornings, so the widget turns over at midnight on
-  /// its own. Nothing personal beyond the streak: the widget is on the
-  /// home screen, where anyone can read it.
+  /// its own. The question of the day on the free plan; on Astute+ one of
+  /// the reader's own. Nothing about the reader beyond the streak: the
+  /// widget is on the home screen, where anyone can read it.
   Map<String, Object?> homeWidgetData() {
     final ahead = <String, String>{};
     for (var i = 0; i <= kPlannedDays; i++) {
       final day = DateTime(today.year, today.month, today.day + i);
-      ahead[dateKey(day)] = questionOfTheDay(day).question;
+      ahead[dateKey(day)] = leadOn(day).question;
     }
-    final Pill lead = questionOfTheDay(today);
+    final Pill lead = leadOn(today);
     return {
       'edition': editionOf(today),
       'date': dateKey(today),
@@ -1594,36 +1626,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// True when the reader is on Astute+, has finished the day and has a
-  /// second set still waiting.
-  bool get canOpenExtraSet => isPlus && todayCompleted && !extraSetOpen;
-
-  /// Unlocks the second set of the day — the "5 extra pills" Astute+ perk.
-  Future<void> openExtraSet() async {
-    if (!canOpenExtraSet) return;
-    extraSetOpen = true;
-    await _prefs.setString(_kExtraOpen, dateKey(today));
-    // The perk a subscriber came back for. If nobody opens it, it is not
-    // what they are paying for.
-    Analytics.capture('extra set opened', {'streak_days': streak});
-
-    final extra = pillsForDate(
-      today,
-      topics: pickedTopics,
-      weights: leanedWeights,
-      levels: measuredLevels,
-      taste: taste,
-      genresOff: genresOff,
-      strandsOff: strandsOff,
-      exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
-      count: kPillsPerDay,
-    );
-    todaysDeck = [...todaysDeck, ...extra];
-    await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
-    await _noteDealt(today, todaysDeck);
-    notifyListeners();
-  }
-
   /// What the store says the reader is entitled to.
   ///
   /// Kept in prefs so a launch with no network still opens on the right side
@@ -1686,7 +1688,7 @@ class AppState extends ChangeNotifier {
     seenIds = {};
     pushAsked = false;
     pushTokens = [];
-    extraSetOpen = false;
+    ownIdsToday = {};
     reviewIdsToday = {};
     answers = {};
     judgements = [];

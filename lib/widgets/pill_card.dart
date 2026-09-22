@@ -33,6 +33,10 @@ class PillCard extends StatelessWidget {
   /// True when this card is in today's deck because it came back.
   final bool isReview;
 
+  /// True when this card was dealt from the reader's own mix on a day
+  /// where the others were everybody's — the free day says which is which.
+  final bool isOwn;
+
   const PillCard({
     super.key,
     required this.pill,
@@ -41,6 +45,7 @@ class PillCard extends StatelessWidget {
     this.given,
     this.onAnswer,
     this.isReview = false,
+    this.isOwn = false,
     this.saved = false,
     this.onSave,
     this.liked = false,
@@ -141,7 +146,7 @@ class PillCard extends StatelessWidget {
                       color: pill.ink.withValues(alpha: 0.72),
                     ),
                   ),
-                  if (isReview) ...[
+                  if (isReview || isOwn) ...[
                     const SizedBox(width: 9),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -153,7 +158,9 @@ class PillCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(999),
                       ),
                       child: Text(
-                        'AGAIN',
+                        isReview
+                            ? context.l10n.againChip
+                            : context.l10n.forYouChip,
                         style: AppText.label(
                           size: 9.5,
                           spacing: 1,
@@ -635,6 +642,10 @@ class _NumberInput extends StatefulWidget {
 }
 
 class _NumberInputState extends State<_NumberInput> {
+  /// The least width the hint is shown in: what the longest of its
+  /// translations takes at the hint's size, with a little over.
+  static const double _hintRoom = 104;
+
   final _controller = TextEditingController();
 
   @override
@@ -669,27 +680,35 @@ class _NumberInputState extends State<_NumberInput> {
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    onChanged: (_) => setState(() {}),
-                    onSubmitted: (_) => _submit(),
-                    keyboardType: const TextInputType.numberWithOptions(
-                      decimal: true,
-                      signed: true,
-                    ),
-                    textInputAction: TextInputAction.done,
-                    style: AppText.display(
-                      size: 22,
-                      weight: FontWeight.w600,
-                      color: pill.ink,
-                    ),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      border: InputBorder.none,
-                      hintText: context.l10n.yourAnswer,
-                      hintStyle: AppText.body(
-                        size: 15,
-                        color: pill.ink.withValues(alpha: 0.4),
+                  child: LayoutBuilder(
+                    builder: (context, room) => TextField(
+                      controller: _controller,
+                      onChanged: (_) => setState(() {}),
+                      onSubmitted: (_) => _submit(),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                        signed: true,
+                      ),
+                      textInputAction: TextInputAction.done,
+                      style: AppText.display(
+                        size: 22,
+                        weight: FontWeight.w600,
+                        color: pill.ink,
+                      ),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: InputBorder.none,
+                        // A hint only where it fits. Beside a long unit on
+                        // a narrow phone the field is a few digits wide,
+                        // and a hint cut short says less than none — the
+                        // unit beside it already says what to type.
+                        hintText: room.maxWidth >= _hintRoom
+                            ? context.l10n.yourAnswer
+                            : null,
+                        hintStyle: AppText.body(
+                          size: 14,
+                          color: pill.ink.withValues(alpha: 0.4),
+                        ),
                       ),
                     ),
                   ),
@@ -702,7 +721,7 @@ class _NumberInputState extends State<_NumberInput> {
                   // label long enough to push the field it labels off the
                   // card. It gives up its own tail first.
                   ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 96),
+                    constraints: const BoxConstraints(maxWidth: 84),
                     child: Text(
                       unit,
                       maxLines: 1,

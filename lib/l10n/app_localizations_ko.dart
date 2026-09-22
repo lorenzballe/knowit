@@ -115,16 +115,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get exploreTodaysBest => '오늘의 베스트 보기';
 
   @override
-  String get fiveMore => '다섯 장 더';
-
-  @override
-  String get unlockFiveExtra => '추가 알약 다섯 장 잠금 해제';
-
-  @override
-  String get magicHeadline => '다섯 장 더 볼까요?';
-
-  @override
-  String get magicUnlock => '다섯 장 더 열기';
+  String get magicUnlock => '7일 무료로 시작하기';
 
   @override
   String nothingInYet(String subject) {
@@ -639,13 +630,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sevenDaysFree => '7일 무료';
 
   @override
-  String get watchTheGapMove => '간격이 움직이는 것을 지켜보세요.';
-
-  @override
-  String get measurementFreeForever =>
-      '측정은 언제나 무료입니다. Astute+는 그것이 어느 방향인지 알려줍니다.';
-
-  @override
   String get seeThePlans => '요금제 보기';
 
   @override
@@ -883,40 +867,10 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => '시간에 따른 내 기록';
+  String get perkArchiveTitle => '당신의 모든 기록';
 
   @override
-  String get perkRecordLine => '확신과 정답 사이의 간격이 정말 좁아지고 있는지.';
-
-  @override
-  String get perkPrinciplesTitle => '만난 모든 원칙';
-
-  @override
-  String get perkPrinciplesLine => '가장 약한 세 가지만이 아니라 전부, 아직 보지 못한 문맥까지.';
-
-  @override
-  String get perkFreezesTitle => '연속 기록 프리즈 세 개';
-
-  @override
-  String get perkFreezesLine => '주말 여행에도 충분합니다. 잃을 수만 있는 연속 기록은 결국 사라집니다.';
-
-  @override
-  String get perkExtraTitle => '매일 추가 알약 5장';
-
-  @override
-  String get perkExtraLine => '첫 세트를 끝내는 순간 두 번째 세트가 열립니다.';
-
-  @override
-  String get perkArchiveTitle => '전체 아카이브';
-
-  @override
-  String get perkArchiveLine => '지금까지 읽은 모든 알약을 주제별로 검색.';
-
-  @override
-  String get perkTopicsTitle => '주제를 직접 고르기';
-
-  @override
-  String get perkTopicsLine => '정말 좋아하는 쪽으로 믹스를 기울이세요.';
+  String get perkArchiveLine => '읽은 모든 날을 영원히. 무료는 일주일.';
 
   @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';
@@ -937,9 +891,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nothingToRestore => '이 계정에 복원할 것이 없어요.';
-
-  @override
-  String get findOutIfBetter => '정말 나아지고 있는지 알아보세요.';
 
   @override
   String get planYearly => '연간';
@@ -1538,4 +1489,109 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get mixFull => '가득';
+
+  @override
+  String get forYouChip => '당신을 위한';
+
+  @override
+  String get againChip => '다시';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '나머지 $n장도 당신의 것으로.',
+      one: '나머지 한 장도 당신의 것으로.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine =>
+      '매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.';
+
+  @override
+  String get everyCardForYou => '모든 카드를, 당신을 위해.';
+
+  @override
+  String get perkOwnTitle => '매일 다섯 장, 전부 당신의 것';
+
+  @override
+  String get perkOwnLine => '당신이 고른 갈래에서, 측정된 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
+
+  @override
+  String get perkMapTitle => '나의 지도';
+
+  @override
+  String get perkMapLine => '갈래별로 무엇을 알고, 무엇을 기억하고, 판단이 나아지고 있는지.';
+
+  @override
+  String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
+
+  @override
+  String get plusCardLine => '당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 나의 지도. 모든 기록.';
+
+  @override
+  String get continueFree => '무료로 계속하기';
+
+  @override
+  String get archiveBeforeThisWeek => '이번 주 이전의 모든 것';
+
+  @override
+  String get yourMap => '나의 지도';
+
+  @override
+  String get mapLine => '주제별로 무엇을 알고, 무엇이 남는지.';
+
+  @override
+  String get whatStays => '남는 것';
+
+  @override
+  String get strandsWithPlus => '어떤 갈래를, 얼마나 깊이 — Astute+로';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '$total장 중 $read장 읽음';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장 답함',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장 돌아옴',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장은 돌아와도 정답',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      '아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.';
+
+  @override
+  String get memoryWithPlus => '진짜 기억하는 것을, 카드별로 — Astute+로.';
+
+  @override
+  String get weekKeptThreeOwn => '일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.';
 }

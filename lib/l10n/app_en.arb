@@ -104,10 +104,7 @@
   }
  },
  "exploreTodaysBest": "Explore today's best",
- "fiveMore": "Five more",
- "unlockFiveExtra": "Unlock five extra pills",
- "magicHeadline": "Want five more?",
- "magicUnlock": "Unlock five more",
+ "magicUnlock": "Try 7 days free",
  "nothingInYet": "Nothing in {subject} yet.",
  "@nothingInYet": {
   "placeholders": {
@@ -588,8 +585,6 @@
  },
  "plusNameCaps": "ASTUTE+",
  "sevenDaysFree": "7 days free",
- "watchTheGapMove": "Watch the gap move.",
- "measurementFreeForever": "The measurement is free and always will be. Astute+ is what tells you which way it is going.",
  "seeThePlans": "SEE THE PLANS",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
@@ -774,18 +769,8 @@
    }
   }
  },
- "perkRecordTitle": "Your record over time",
- "perkRecordLine": "Whether the gap between how sure you were and how right you were is actually closing.",
- "perkPrinciplesTitle": "Every principle you have met",
- "perkPrinciplesLine": "Not just the three you are worst at — all of them, and the contexts you have not been shown yet.",
- "perkFreezesTitle": "Three streak freezes, not one",
- "perkFreezesLine": "Enough to cover a weekend away. A streak you can only lose is a streak that eventually goes.",
- "perkExtraTitle": "5 extra pills every day",
- "perkExtraLine": "A second set unlocks the moment you finish the first.",
- "perkArchiveTitle": "The full archive",
- "perkArchiveLine": "Every pill you have ever read, searchable by topic.",
- "perkTopicsTitle": "Pick your own topics",
- "perkTopicsLine": "Weight the mix toward what you actually like.",
+ "perkArchiveTitle": "Your whole archive",
+ "perkArchiveLine": "Every day you have read, kept for good. The free plan keeps a week.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try 7 days free, then {price}{suffix}",
  "@tryFreeThen": {
@@ -802,7 +787,6 @@
  "thatDidNotGoThrough": "That did not go through.",
  "plusIsBack": "Astute+ is back.",
  "nothingToRestore": "Nothing to restore on this account.",
- "findOutIfBetter": "Find out if you are actually getting better.",
  "planYearly": "Yearly",
  "planMonthly": "Monthly",
  "perYearShort": "/yr",
@@ -1302,27 +1286,116 @@
    }
   }
  },
-  "pts": "points",
-  "nStillWithYou": "{n} still with you",
-  "@nStillWithYou": {"placeholders": {"n": {"type": "int"}}},
-  "nMoves": "{n, plural, =1{1 move} other{{n} moves}}",
-  "@nMoves": {"placeholders": {"n": {"type": "int"}}},
-  "scoreStartsToday": "Your score starts with today's five.",
-  "anonymousUsage": "Anonymous usage",
-  "anonymousUsageLine": "Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.",
-  "usageOn": "Counts only, and no names.",
-  "usageOff": "Nothing more is measured.",
-  "yourMix": "Your mix",
-  "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",
-  "insideGenre": "Inside",
-  "nOfSixOn": "{n} of 6 on",
-  "@nOfSixOn": {"placeholders": {"n": {"type": "int"}}},
-  "offInYourMix": "off in your mix",
-  "continueGenresOn": "Continue · {on} of {total} genres on",
-  "@continueGenresOn": {"placeholders": {"on": {"type": "int"}, "total": {"type": "int"}}},
-  "mixRarely": "Rarely",
-  "mixSometimes": "Sometimes",
-  "mixOften": "Often",
-  "mixALot": "A lot",
-  "mixFull": "Full"
+ "pts": "points",
+ "nStillWithYou": "{n} still with you",
+ "@nStillWithYou": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nMoves": "{n, plural, =1{1 move} other{{n} moves}}",
+ "@nMoves": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "scoreStartsToday": "Your score starts with today's five.",
+ "anonymousUsage": "Anonymous usage",
+ "anonymousUsageLine": "Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.",
+ "usageOn": "Counts only, and no names.",
+ "usageOff": "Nothing more is measured.",
+ "yourMix": "Your mix",
+ "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",
+ "insideGenre": "Inside",
+ "nOfSixOn": "{n} of 6 on",
+ "@nOfSixOn": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "offInYourMix": "off in your mix",
+ "continueGenresOn": "Continue · {on} of {total} genres on",
+ "@continueGenresOn": {
+  "placeholders": {
+   "on": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "mixRarely": "Rarely",
+ "mixSometimes": "Sometimes",
+ "mixOften": "Often",
+ "mixALot": "A lot",
+ "mixFull": "Full",
+ "forYouChip": "FOR YOU",
+ "againChip": "AGAIN",
+ "theOthersYours": "{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}",
+ "@theOthersYours": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
+ "everyCardForYou": "Every card, chosen for you.",
+ "perkOwnTitle": "Five cards a day, all yours",
+ "perkOwnLine": "From your strands, at the level you measure at, never one you have read. Free days give you two.",
+ "perkMapTitle": "Your map",
+ "perkMapLine": "What you know strand by strand, what you still remember, and whether your calls are getting better.",
+ "plusCardHeadline": "Make all five yours.",
+ "plusCardLine": "Five cards a day from your mix, at your level. Your map. Your whole archive.",
+ "continueFree": "Continue free",
+ "archiveBeforeThisWeek": "Before this week",
+ "yourMap": "Your map",
+ "mapLine": "What you know, subject by subject — and what stays.",
+ "whatStays": "What stays",
+ "strandsWithPlus": "Which strands, and how deep — with Astute+",
+ "nReadOfN": "{read} of {total} read",
+ "@nReadOfN": {
+  "placeholders": {
+   "read": {
+    "type": "int"
+   },
+   "total": {
+    "type": "int"
+   }
+  }
+ },
+ "nAnswered": "{n, plural, =1{1 card answered} other{{n} cards answered}}",
+ "@nAnswered": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nCameBackAgain": "{n, plural, =1{1 came back} other{{n} came back}}",
+ "@nCameBackAgain": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nKeptOnReturn": "{n, plural, =1{1 still right when it came back} other{{n} still right when they came back}}",
+ "@nKeptOnReturn": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
+ "memoryWithPlus": "What you actually remember, card by card — with Astute+.",
+ "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours."
 }

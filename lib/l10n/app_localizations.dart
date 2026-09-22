@@ -252,28 +252,10 @@ abstract class AppLocalizations {
   /// **'Explore today\'s best'**
   String get exploreTodaysBest;
 
-  /// No description provided for @fiveMore.
-  ///
-  /// In en, this message translates to:
-  /// **'Five more'**
-  String get fiveMore;
-
-  /// No description provided for @unlockFiveExtra.
-  ///
-  /// In en, this message translates to:
-  /// **'Unlock five extra pills'**
-  String get unlockFiveExtra;
-
-  /// No description provided for @magicHeadline.
-  ///
-  /// In en, this message translates to:
-  /// **'Want five more?'**
-  String get magicHeadline;
-
   /// No description provided for @magicUnlock.
   ///
   /// In en, this message translates to:
-  /// **'Unlock five more'**
+  /// **'Try 7 days free'**
   String get magicUnlock;
 
   /// No description provided for @nothingInYet.
@@ -996,18 +978,6 @@ abstract class AppLocalizations {
   /// **'7 days free'**
   String get sevenDaysFree;
 
-  /// No description provided for @watchTheGapMove.
-  ///
-  /// In en, this message translates to:
-  /// **'Watch the gap move.'**
-  String get watchTheGapMove;
-
-  /// No description provided for @measurementFreeForever.
-  ///
-  /// In en, this message translates to:
-  /// **'The measurement is free and always will be. Astute+ is what tells you which way it is going.'**
-  String get measurementFreeForever;
-
   /// No description provided for @seeThePlans.
   ///
   /// In en, this message translates to:
@@ -1296,77 +1266,17 @@ abstract class AppLocalizations {
   /// **'Source · {source}'**
   String sourceLabel(String source);
 
-  /// No description provided for @perkRecordTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Your record over time'**
-  String get perkRecordTitle;
-
-  /// No description provided for @perkRecordLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Whether the gap between how sure you were and how right you were is actually closing.'**
-  String get perkRecordLine;
-
-  /// No description provided for @perkPrinciplesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Every principle you have met'**
-  String get perkPrinciplesTitle;
-
-  /// No description provided for @perkPrinciplesLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Not just the three you are worst at — all of them, and the contexts you have not been shown yet.'**
-  String get perkPrinciplesLine;
-
-  /// No description provided for @perkFreezesTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Three streak freezes, not one'**
-  String get perkFreezesTitle;
-
-  /// No description provided for @perkFreezesLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Enough to cover a weekend away. A streak you can only lose is a streak that eventually goes.'**
-  String get perkFreezesLine;
-
-  /// No description provided for @perkExtraTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'5 extra pills every day'**
-  String get perkExtraTitle;
-
-  /// No description provided for @perkExtraLine.
-  ///
-  /// In en, this message translates to:
-  /// **'A second set unlocks the moment you finish the first.'**
-  String get perkExtraLine;
-
   /// No description provided for @perkArchiveTitle.
   ///
   /// In en, this message translates to:
-  /// **'The full archive'**
+  /// **'Your whole archive'**
   String get perkArchiveTitle;
 
   /// No description provided for @perkArchiveLine.
   ///
   /// In en, this message translates to:
-  /// **'Every pill you have ever read, searchable by topic.'**
+  /// **'Every day you have read, kept for good. The free plan keeps a week.'**
   String get perkArchiveLine;
-
-  /// No description provided for @perkTopicsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick your own topics'**
-  String get perkTopicsTitle;
-
-  /// No description provided for @perkTopicsLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Weight the mix toward what you actually like.'**
-  String get perkTopicsLine;
 
   /// No description provided for @plusIsActive.
   ///
@@ -1403,12 +1313,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing to restore on this account.'**
   String get nothingToRestore;
-
-  /// No description provided for @findOutIfBetter.
-  ///
-  /// In en, this message translates to:
-  /// **'Find out if you are actually getting better.'**
-  String get findOutIfBetter;
 
   /// No description provided for @planYearly.
   ///
@@ -2315,6 +2219,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full'**
   String get mixFull;
+
+  /// No description provided for @forYouChip.
+  ///
+  /// In en, this message translates to:
+  /// **'FOR YOU'**
+  String get forYouChip;
+
+  /// No description provided for @againChip.
+  ///
+  /// In en, this message translates to:
+  /// **'AGAIN'**
+  String get againChip;
+
+  /// No description provided for @theOthersYours.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}'**
+  String theOthersYours(int n);
+
+  /// No description provided for @magicLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.'**
+  String get magicLine;
+
+  /// No description provided for @everyCardForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Every card, chosen for you.'**
+  String get everyCardForYou;
+
+  /// No description provided for @perkOwnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day, all yours'**
+  String get perkOwnTitle;
+
+  /// No description provided for @perkOwnLine.
+  ///
+  /// In en, this message translates to:
+  /// **'From your strands, at the level you measure at, never one you have read. Free days give you two.'**
+  String get perkOwnLine;
+
+  /// No description provided for @perkMapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your map'**
+  String get perkMapTitle;
+
+  /// No description provided for @perkMapLine.
+  ///
+  /// In en, this message translates to:
+  /// **'What you know strand by strand, what you still remember, and whether your calls are getting better.'**
+  String get perkMapLine;
+
+  /// No description provided for @plusCardHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Make all five yours.'**
+  String get plusCardHeadline;
+
+  /// No description provided for @plusCardLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards a day from your mix, at your level. Your map. Your whole archive.'**
+  String get plusCardLine;
+
+  /// No description provided for @continueFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue free'**
+  String get continueFree;
+
+  /// No description provided for @archiveBeforeThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Before this week'**
+  String get archiveBeforeThisWeek;
+
+  /// No description provided for @yourMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Your map'**
+  String get yourMap;
+
+  /// No description provided for @mapLine.
+  ///
+  /// In en, this message translates to:
+  /// **'What you know, subject by subject — and what stays.'**
+  String get mapLine;
+
+  /// No description provided for @whatStays.
+  ///
+  /// In en, this message translates to:
+  /// **'What stays'**
+  String get whatStays;
+
+  /// No description provided for @strandsWithPlus.
+  ///
+  /// In en, this message translates to:
+  /// **'Which strands, and how deep — with Astute+'**
+  String get strandsWithPlus;
+
+  /// No description provided for @nReadOfN.
+  ///
+  /// In en, this message translates to:
+  /// **'{read} of {total} read'**
+  String nReadOfN(int read, int total);
+
+  /// No description provided for @nAnswered.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card answered} other{{n} cards answered}}'**
+  String nAnswered(int n);
+
+  /// No description provided for @nCameBackAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 came back} other{{n} came back}}'**
+  String nCameBackAgain(int n);
+
+  /// No description provided for @nKeptOnReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 still right when it came back} other{{n} still right when they came back}}'**
+  String nKeptOnReturn(int n);
+
+  /// No description provided for @nothingBackYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.'**
+  String get nothingBackYet;
+
+  /// No description provided for @memoryWithPlus.
+  ///
+  /// In en, this message translates to:
+  /// **'What you actually remember, card by card — with Astute+.'**
+  String get memoryWithPlus;
+
+  /// No description provided for @weekKeptThreeOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'A week kept: tomorrow three of the five are yours.'**
+  String get weekKeptThreeOwn;
 }
 
 class _AppLocalizationsDelegate

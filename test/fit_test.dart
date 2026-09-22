@@ -133,7 +133,7 @@ void main() {
   final Map<String, Object> done = {
     'knowit.onboarded': true,
     'knowit.todayDate': dateKey(DateTime.now()),
-    'knowit.todayDeckIds': dealDay(date: DateTime.now())
+    'knowit.todayDeckIds': dealDay(date: DateTime.now()).cards
         .map((p) => p.id)
         .toList(),
     'knowit.todayIndex': 5,

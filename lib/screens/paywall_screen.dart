@@ -14,10 +14,13 @@ import '../data/topics.dart';
 import '../widgets/motion.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
-/// asserted. A hardcoded "save 48%" is a number that quietly stops being true
+/// asserted. A hardcoded "save 37%" is a number that quietly stops being true
 /// the first time a price moves.
+///
+/// €3,99 a month is the anchor; €29,99 a year is the plan, preselected, at
+/// two and a half a month. No lifetime, no third tier.
 const int kMonthlyCents = 399;
-const int kYearlyCents = 2499;
+const int kYearlyCents = 2999;
 
 String _euros(int cents) {
   final whole = cents ~/ 100;
@@ -31,38 +34,19 @@ int get kYearlySavingPercent {
   return (100 * (full - kYearlyCents) / full).round();
 }
 
-// Volume is what every other daily-learning app is already selling, and
-// several of them can afford to sell it harder. What this app has that they
-// do not is a measurement of the reader, so that is what leads.
+// Three things, and everything else is the same on both plans. The day made
+// entirely of the reader's own cards; the map of what they know; the whole
+// archive. Six perks read as a list of features; three read as a reason.
 List<({IconData icon, String title, String sub})> _perks(
   AppLocalizations l,
 ) => [
+  (icon: Icons.auto_awesome_rounded, title: l.perkOwnTitle, sub: l.perkOwnLine),
+  (icon: Icons.map_rounded, title: l.perkMapTitle, sub: l.perkMapLine),
   (
-    icon: Icons.show_chart_rounded,
-    title: l.perkRecordTitle,
-    sub: l.perkRecordLine,
-  ),
-  (
-    icon: Icons.grid_view_rounded,
-    title: l.perkPrinciplesTitle,
-    sub: l.perkPrinciplesLine,
-  ),
-  (
-    icon: Icons.ac_unit_rounded,
-    title: l.perkFreezesTitle,
-    sub: l.perkFreezesLine,
-  ),
-  (
-    icon: Icons.add_circle_outline_rounded,
-    title: l.perkExtraTitle,
-    sub: l.perkExtraLine,
-  ),
-  (
-    icon: Icons.search_rounded,
+    icon: Icons.inventory_2_rounded,
     title: l.perkArchiveTitle,
     sub: l.perkArchiveLine,
   ),
-  (icon: Icons.tune_rounded, title: l.perkTopicsTitle, sub: l.perkTopicsLine),
 ];
 
 /// Astute+.
@@ -81,7 +65,18 @@ class PaywallScreen extends StatefulWidget {
   /// a fifth of the traffic labelled `unknown` within a week.
   final String source;
 
-  const PaywallScreen({super.key, required this.app, required this.source});
+  /// Where the screen goes when it is done — the way out, and where a trial
+  /// lands. Set by the onboarding, where this is a stage rather than a
+  /// route pushed over another screen and there is nothing to pop back to;
+  /// absent, the screen pops itself.
+  final VoidCallback? onClose;
+
+  const PaywallScreen({
+    super.key,
+    required this.app,
+    required this.source,
+    this.onClose,
+  });
 
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
@@ -125,6 +120,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// The package for the plan on screen, if the store has offered one.
   Package? get _package => _plan == Plan.year ? _store.yearly : _store.monthly;
 
+  /// The way out, whichever way this screen was reached.
+  void _leave() {
+    final VoidCallback? onClose = widget.onClose;
+    if (onClose != null) {
+      onClose();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   Future<void> _start() async {
     final Package? package = _package;
     Analytics.capture('purchase started', {
@@ -141,7 +146,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.trialStartedNoPayment)),
       );
-      Navigator.of(context).pop();
+      _leave();
       return;
     }
 
@@ -156,7 +161,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
     switch (outcome) {
       case PurchaseOutcome.bought:
         await widget.app.applyEntitlement(true);
-        if (mounted) Navigator.of(context).pop();
+        if (mounted) _leave();
       case PurchaseOutcome.cancelled:
         break;
       case PurchaseOutcome.failed:
@@ -190,9 +195,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
     return Scaffold(
       backgroundColor: context.p.surface,
       // One screen, no scrolling. What is for sale is read at a glance or
-      // it is not read: the perks share whatever height the plans and the
-      // button leave them, and a phone too short for their lines shows
-      // their titles alone rather than a scrollbar.
+      // it is not read: the three perks sit in whatever height the plans
+      // and the button leave them, and a phone too short for their lines
+      // shows their titles alone rather than a scrollbar.
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(22, 4, 22, 12),
@@ -227,7 +232,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     label: 'Close',
                     child: GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () => Navigator.of(context).pop(),
+                      onTap: _leave,
                       child: Padding(
                         padding: const EdgeInsets.all(6),
                         child: Icon(
@@ -242,7 +247,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
               ),
               const SizedBox(height: 10),
               FitText(
-                l.findOutIfBetter,
+                l.everyCardForYou,
                 maxLines: 2,
                 minSize: 24,
                 style: AppText.display(
@@ -261,12 +266,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     final bool full =
                         room.maxHeight >=
                         perks.length * _Perk.fullHeight +
-                            (perks.length - 1) * _Perk.leastGap;
+                            (perks.length - 1) * _Perk.gap;
+                    // Spread through the room rather than huddled in the
+                    // middle of it: three things, each with air around it,
+                    // is what three things looks like.
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        for (final (int i, perk) in perks.indexed)
+                        for (final (int i, perk) in perks.indexed) ...[
+                          if (i > 0 && !full)
+                            const SizedBox(height: _Perk.leastGap),
                           RiseIn.staggered(
                             i,
                             step: const Duration(milliseconds: 50),
@@ -274,14 +284,15 @@ class _PaywallScreenState extends State<PaywallScreen> {
                               icon: perk.icon,
                               title: perk.title,
                               sub: perk.sub,
-                              // Six points, six hues off the wheel — the
-                              // same wheel the reader's own record is drawn
-                              // in. A column of identical grey chips says
-                              // nothing about what the app is.
-                              colour: kSpectrum[(i * 3) % kSpectrum.length],
+                              // Three points, three hues off the wheel —
+                              // the same wheel the reader's own record is
+                              // drawn in. A column of identical grey chips
+                              // says nothing about what the app is.
+                              colour: kSpectrum[(i * 4) % kSpectrum.length],
                               compact: !full,
                             ),
                           ),
+                        ],
                       ],
                     );
                   },
@@ -338,7 +349,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                     await widget.app.endPlus();
-                    if (context.mounted) Navigator.of(context).pop();
+                    if (context.mounted) _leave();
                   },
                   child: Text(
                     l.cancelTheTrial,
@@ -383,6 +394,30 @@ class _PaywallScreenState extends State<PaywallScreen> {
                       ),
                     ),
                   ),
+                // In the onboarding the way out is written down, under the
+                // offer, in small — a soft paywall says so rather than
+                // leaving the reader to find the cross.
+                if (widget.onClose != null)
+                  Semantics(
+                    button: true,
+                    label: l.continueFree,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _leave,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          l.continueFree,
+                          textAlign: TextAlign.center,
+                          style: AppText.body(
+                            size: 13,
+                            weight: FontWeight.w600,
+                            color: context.p.inkMuted,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ],
           ),
@@ -398,7 +433,7 @@ class _Perk extends StatelessWidget {
   final String sub;
   final Color colour;
 
-  /// The title alone, for a phone too short for six perks with their lines.
+  /// The title alone, for a phone too short for three perks with their lines.
   final bool compact;
 
   const _Perk({
@@ -409,10 +444,11 @@ class _Perk extends StatelessWidget {
     this.compact = false,
   });
 
-  /// A title and two lines under it, which is what the longest line takes
+  /// A title and three lines under it, which is what the longest line takes
   /// at the smallest size the text is allowed to shrink to.
-  static const double fullHeight = 56;
-  static const double leastGap = 4;
+  static const double fullHeight = 84;
+  static const double gap = 22;
+  static const double leastGap = 6;
 
   @override
   Widget build(BuildContext context) {
@@ -422,16 +458,16 @@ class _Perk extends StatelessWidget {
           : CrossAxisAlignment.start,
       children: [
         Container(
-          width: 34,
-          height: 34,
+          width: 46,
+          height: 46,
           decoration: BoxDecoration(
             color: colour.withValues(alpha: 0.18),
-            borderRadius: BorderRadius.circular(11),
+            borderRadius: BorderRadius.circular(15),
           ),
           alignment: Alignment.center,
-          child: Icon(icon, size: 18, color: colour),
+          child: Icon(icon, size: 23, color: colour),
         ),
-        const SizedBox(width: 13),
+        const SizedBox(width: 15),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -440,22 +476,22 @@ class _Perk extends StatelessWidget {
               FitText(
                 title,
                 maxLines: 1,
-                minSize: 12.5,
+                minSize: 13,
                 style: AppText.body(
-                  size: 14.5,
+                  size: 17,
                   weight: FontWeight.w700,
                   height: 1.25,
                   color: context.p.ink,
                 ),
               ),
               if (!compact) ...[
-                const SizedBox(height: 3),
+                const SizedBox(height: 5),
                 FitText(
                   sub,
-                  maxLines: 2,
-                  minSize: 11,
+                  maxLines: 3,
+                  minSize: 11.5,
                   style: AppText.body(
-                    size: 12.5,
+                    size: 14,
                     height: 1.4,
                     color: context.p.inkMuted,
                   ),

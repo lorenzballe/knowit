@@ -9,8 +9,14 @@ import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
+import '../widgets/premium.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
+
+/// How many days back the free plan's archive goes. A week: long enough
+/// to find the card from Tuesday, short enough that the day before it is
+/// visibly behind a lock. Astute+ keeps every day.
+const int kFreeArchiveDays = 7;
 
 /// Everything ever dealt — artboard 70e, with the search that was already
 /// here kept over it.
@@ -20,6 +26,10 @@ import 'pill_detail_screen.dart';
 /// it something — type, or pick a subject — and it becomes the list of
 /// what matched. A search field over an empty screen is a question with
 /// no reason to be asked; the days give it one.
+///
+/// On the free plan the days stop a week back, and the row after them
+/// names what is behind the lock rather than pretending the archive ends
+/// there.
 class ArchiveScreen extends StatefulWidget {
   final AppState app;
   final VoidCallback onBack;
@@ -64,7 +74,9 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
   /// The days there are to show: today, then every day finished before it.
   ///
   /// Only days the reader was actually here for. A run of empty rows going
-  /// back to the launch date would be a longer list saying less.
+  /// back to the launch date would be a longer list saying less. On the
+  /// free plan the list stops [kFreeArchiveDays] back; [_hidden] counts
+  /// what it stopped short of.
   List<DateTime> get _days {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -74,9 +86,29 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
       if (!seen.add(key)) continue;
       final parts = key.split('-').map(int.tryParse).toList();
       if (parts.length != 3 || parts.contains(null)) continue;
-      out.add(DateTime(parts[0]!, parts[1]!, parts[2]!));
+      final day = DateTime(parts[0]!, parts[1]!, parts[2]!);
+      if (!widget.app.isPlus &&
+          today.difference(day).inDays >= kFreeArchiveDays) {
+        continue;
+      }
+      out.add(day);
     }
     return out;
+  }
+
+  /// How many finished days the free plan is not showing.
+  int get _hidden {
+    if (widget.app.isPlus) return 0;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    var hidden = 0;
+    for (final key in widget.app.completedDates.toSet()) {
+      final parts = key.split('-').map(int.tryParse).toList();
+      if (parts.length != 3 || parts.contains(null)) continue;
+      final day = DateTime(parts[0]!, parts[1]!, parts[2]!);
+      if (today.difference(day).inDays >= kFreeArchiveDays) hidden++;
+    }
+    return hidden;
   }
 
   /// What that day held: today's real deck, or what the phone wrote down
@@ -171,15 +203,6 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     : ListView(
                         padding: const EdgeInsets.fromLTRB(20, 10, 20, 28),
                         children: [
-                          // What has been read, by subject, above the days it was read on.
-                          // It sat in the profile, where it read as a score; here it is what
-                          // it actually is, the map of the archive.
-                          if (widget.app.seenIds.isNotEmpty) ...[
-                            Eyebrow(context.l10n.whatYouHaveCovered),
-                            const SizedBox(height: 11),
-                            _Coverage(app: widget.app),
-                            const SizedBox(height: 22),
-                          ],
                           for (final day in _days)
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8),
@@ -204,6 +227,19 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                                     ),
                                   ),
                                 ),
+                              ),
+                            ),
+                          // The days the free plan is not showing, named,
+                          // with the lock on them. The archive does not end
+                          // a week back; the plan does.
+                          if (_hidden > 0)
+                            _LockedDays(
+                              count: _hidden,
+                              onTap: () => requirePlus(
+                                context,
+                                widget.app,
+                                () => setState(() {}),
+                                source: 'archive',
                               ),
                             ),
                         ],
@@ -630,98 +666,60 @@ class _NoResults extends StatelessWidget {
   }
 }
 
-class _Coverage extends StatelessWidget {
-  final AppState app;
-  const _Coverage({required this.app});
+/// The row after the free plan's week: what is behind the lock, and the
+/// lock. Tapping it is the paywall; coming back with the trial, the days
+/// are simply there.
+class _LockedDays extends StatelessWidget {
+  const _LockedDays({required this.count, required this.onTap});
+
+  final int count;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final byTopic = <String, int>{};
-    final seenByTopic = <String, int>{};
-    for (final pill in PillBank.cards) {
-      byTopic[pill.topic] = (byTopic[pill.topic] ?? 0) + 1;
-      if (app.seenIds.contains(pill.id)) {
-        seenByTopic[pill.topic] = (seenByTopic[pill.topic] ?? 0) + 1;
-      }
-    }
-
-    final rows = kTopicOrder
-        .where(app.pickedTopics.contains)
-        .map((key) => kTopics[key]!)
-        .where((style) => (byTopic[style.name] ?? 0) > 0)
-        .toList();
-
-    // The most any one subject has been read. The bars are drawn against
-    // this, not against how many cards exist: the pool is written to keep
-    // growing, so a total would be a number that quietly stops being true —
-    // and one that says "you have read 3% of Astute", which is nobody's idea
-    // of progress.
-    final int busiest = rows
-        .map((style) => seenByTopic[style.name] ?? 0)
-        .fold(0, (a, b) => a > b ? a : b);
-
-    return PaperCard(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...rows.map((style) {
-            final seen = seenByTopic[style.name] ?? 0;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      // The subject's own colour, present before any of it
-                      // has been read. An empty bar is the same grey for
-                      // every topic, which loses the one thing that tells
-                      // them apart at a glance.
-                      Container(
-                        width: 9,
-                        height: 9,
-                        margin: const EdgeInsets.only(right: 9),
-                        decoration: BoxDecoration(
-                          color: style.color,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          style.name,
-                          style: AppText.body(
-                            size: 13,
-                            weight: FontWeight.w500,
-                            color: context.p.ink,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '$seen',
-                        style: AppText.body(
-                          size: 12,
-                          weight: FontWeight.w500,
-                          color: context.p.inkFaint,
-                        ),
-                      ),
-                    ],
+    return Semantics(
+      button: true,
+      key: const ValueKey('archive-locked'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(15, 14, 15, 14),
+          decoration: BoxDecoration(
+            border: Border.all(color: context.p.line),
+            borderRadius: BorderRadius.circular(18),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.lock_rounded, size: 15, color: context.p.inkFaint),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  context.l10n.archiveBeforeThisWeek,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.body(
+                    size: 14.5,
+                    weight: FontWeight.w600,
+                    height: 1.2,
+                    spacing: -0.2,
+                    color: context.p.ink,
                   ),
-                  const SizedBox(height: 6),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: busiest == 0 ? 0 : seen / busiest,
-                      minHeight: 5,
-                      backgroundColor: context.p.line,
-                      valueColor: AlwaysStoppedAnimation(style.color),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            );
-          }),
-        ],
+              Text(
+                context.l10n.streakDays(count),
+                style: AppText.body(
+                  size: 11,
+                  weight: FontWeight.w500,
+                  height: 1,
+                  color: context.p.ink.withValues(alpha: 0.3),
+                ),
+              ),
+              const PlusLock(locked: true),
+            ],
+          ),
+        ),
       ),
     );
   }

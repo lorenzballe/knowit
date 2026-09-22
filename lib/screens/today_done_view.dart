@@ -92,22 +92,17 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardWidth = _artWidth;
   double _cardHeight = _artHeight;
 
-  /// Whether the shelf ends on the card that offers five more. It does
-  /// while there is something to offer — the second set not yet dealt —
-  /// and never after it, so nobody is sold what they already have.
-  bool get _offer => !widget.app.extraSetOpen;
+  /// Whether the shelf ends on the card that offers the rest of the day.
+  /// It does on the free plan, where three of the five were everybody's,
+  /// and never on Astute+, so nobody is sold what they already have.
+  bool get _offer => !widget.app.isPlus;
 
   /// How many cards the shelf holds: the deck, and the offer after it.
   int _count(List<Pill> deck) => deck.length + (_offer ? 1 : 0);
 
-  /// Five more: dealt on the spot with Astute+, otherwise the paywall,
-  /// which deals them itself if the trial starts.
-  Future<void> _fiveMore() => requirePlus(
-    context,
-    widget.app,
-    () => widget.app.openExtraSet(),
-    source: 'sixth card',
-  );
+  /// The offer: the paywall.
+  Future<void> _sell() =>
+      requirePlus(context, widget.app, () {}, source: 'sixth card');
 
   /// Tomorrow's opening card, dealt once per state of the record rather
   /// than on every frame of a drag. The deal depends on the date, what has
@@ -300,7 +295,10 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // the one about tomorrow.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
-          child: _Tomorrow(lead: _tomorrowsLead(app)),
+          child: _Tomorrow(
+            lead: _tomorrowsLead(app),
+            rewarded: app.tomorrowIsRewarded,
+          ),
         ),
         if (app.reviewsWaiting.isNotEmpty)
           Padding(
@@ -450,10 +448,12 @@ class _TodayDoneViewState extends State<TodayDoneView>
       height: _cardHeight,
       child: MagicCard(
         eyebrow: l.plusNameCaps,
-        headline: l.magicHeadline,
-        line: l.perkExtraLine,
-        action: app.isPlus ? l.fiveMore : l.magicUnlock,
-        onAction: _fiveMore,
+        headline: l.theOthersYours(
+          app.todaysDeck.length - app.ownIdsToday.length,
+        ),
+        line: l.magicLine,
+        action: l.magicUnlock,
+        onAction: _sell,
       ),
     );
   }
@@ -1193,10 +1193,16 @@ class _Dots extends StatelessWidget {
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({required this.lead});
+  const _Tomorrow({required this.lead, this.rewarded = false});
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
+
+  /// True the evening a week is kept on the free plan: tomorrow has three
+  /// cards of the reader's own instead of two, and this is where it is
+  /// said — once, the night before, where it reads as a reward rather
+  /// than as a rule.
+  final bool rewarded;
 
   @override
   Widget build(BuildContext context) {
@@ -1223,16 +1229,35 @@ class _Tomorrow extends StatelessWidget {
           const SizedBox(width: 12),
         ],
         Expanded(
-          child: Text(
-            lead == null
-                ? context.l10n.tomorrowsFiveOpenIn(when)
-                : context.l10n.topicOpensTomorrow(lead.topic, when),
-            style: AppText.body(
-              size: 13.5,
-              weight: FontWeight.w500,
-              height: 1.35,
-              color: context.p.ink.withValues(alpha: 0.6),
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                lead == null
+                    ? context.l10n.tomorrowsFiveOpenIn(when)
+                    : context.l10n.topicOpensTomorrow(lead.topic, when),
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w500,
+                  height: 1.35,
+                  color: context.p.ink.withValues(alpha: 0.6),
+                ),
+              ),
+              if (rewarded)
+                Padding(
+                  padding: const EdgeInsets.only(top: 3),
+                  child: Text(
+                    context.l10n.weekKeptThreeOwn,
+                    key: const ValueKey('week-reward'),
+                    style: AppText.body(
+                      size: 12.5,
+                      weight: FontWeight.w600,
+                      height: 1.35,
+                      color: context.p.ink.withValues(alpha: 0.8),
+                    ),
+                  ),
+                ),
+            ],
           ),
         ),
       ],

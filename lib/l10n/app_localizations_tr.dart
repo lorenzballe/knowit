@@ -115,16 +115,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get exploreTodaysBest => 'Bugünün en iyilerini keşfet';
 
   @override
-  String get fiveMore => 'Beş tane daha';
-
-  @override
-  String get unlockFiveExtra => 'Beş ek hapın kilidini aç';
-
-  @override
-  String get magicHeadline => 'Beş tane daha ister misin?';
-
-  @override
-  String get magicUnlock => 'Beş tane daha aç';
+  String get magicUnlock => '7 gün ücretsiz dene';
 
   @override
   String nothingInYet(String subject) {
@@ -647,13 +638,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sevenDaysFree => '7 gün ücretsiz';
 
   @override
-  String get watchTheGapMove => 'Aralığın hareketini izle.';
-
-  @override
-  String get measurementFreeForever =>
-      'Ölçüm ücretsiz ve hep öyle kalacak. Astute+ hangi yöne gittiğini söyler.';
-
-  @override
   String get seeThePlans => 'PLANLARI GÖR';
 
   @override
@@ -897,44 +881,11 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => 'Zaman içinde sicilin';
+  String get perkArchiveTitle => 'Tüm arşivin';
 
   @override
-  String get perkRecordLine =>
-      'Ne kadar emin olduğunla ne kadar doğru olduğun arasındaki aralık gerçekten kapanıyor mu.';
-
-  @override
-  String get perkPrinciplesTitle => 'Karşılaştığın her ilke';
-
-  @override
-  String get perkPrinciplesLine =>
-      'Yalnızca en zayıf olduğun üçü değil — hepsi, ve henüz gösterilmeyen bağlamlar.';
-
-  @override
-  String get perkFreezesTitle => 'Bir değil, üç seri dondurma';
-
-  @override
-  String get perkFreezesLine =>
-      'Bir hafta sonu tatiline yeter. Yalnızca kaybedilebilen bir seri, eninde sonunda gider.';
-
-  @override
-  String get perkExtraTitle => 'Her gün 5 ek hap';
-
-  @override
-  String get perkExtraLine => 'İlkini bitirdiğin anda ikinci set açılır.';
-
-  @override
-  String get perkArchiveTitle => 'Tam arşiv';
-
-  @override
-  String get perkArchiveLine => 'Okuduğun her hap, konuya göre aranabilir.';
-
-  @override
-  String get perkTopicsTitle => 'Kendi konularını seç';
-
-  @override
-  String get perkTopicsLine =>
-      'Karışımı gerçekten sevdiğin şeye doğru ağırlıklandır.';
+  String get perkArchiveLine =>
+      'Okuduğun her gün, kalıcı olarak. Ücretsizde bir hafta kalır.';
 
   @override
   String get plusIsActive => 'ASTUTE+ ETKİN';
@@ -956,9 +907,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nothingToRestore => 'Bu hesapta geri yüklenecek bir şey yok.';
-
-  @override
-  String get findOutIfBetter => 'Gerçekten gelişip gelişmediğini öğren.';
 
   @override
   String get planYearly => 'Yıllık';
@@ -1561,4 +1509,117 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get mixFull => 'Tam';
+
+  @override
+  String get forYouChip => 'SANA ÖZEL';
+
+  @override
+  String get againChip => 'TEKRAR';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Diğer $n kart da senin.',
+      one: 'Diğeri de senin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine =>
+      'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
+
+  @override
+  String get everyCardForYou => 'Her kart, senin için seçilmiş.';
+
+  @override
+  String get perkOwnTitle => 'Günde beş kart, hepsi senin';
+
+  @override
+  String get perkOwnLine =>
+      'Senin konu dallarından, ölçülen seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
+
+  @override
+  String get perkMapTitle => 'Haritan';
+
+  @override
+  String get perkMapLine =>
+      'Her dalda ne bildiğin, neyi hâlâ hatırladığın ve cevaplarının iyileşip iyileşmediği.';
+
+  @override
+  String get plusCardHeadline => 'Beşi de senin olsun.';
+
+  @override
+  String get plusCardLine =>
+      'Karışımından, seviyende günde beş kart. Haritan. Tüm arşivin.';
+
+  @override
+  String get continueFree => 'Ücretsiz devam et';
+
+  @override
+  String get archiveBeforeThisWeek => 'Bu haftadan öncesi';
+
+  @override
+  String get yourMap => 'Haritan';
+
+  @override
+  String get mapLine => 'Konu konu ne bildiğin — ve ne kaldığı.';
+
+  @override
+  String get whatStays => 'Ne kalıyor';
+
+  @override
+  String get strandsWithPlus => 'Hangi dallar, ne kadar derin — Astute+ ile';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '$total karttan $read okundu';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kart cevaplandı',
+      one: '1 kart cevaplandı',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tanesi geri geldi',
+      one: '1 tanesi geri geldi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tanesi dönüşte hâlâ doğru',
+      one: '1 tanesi dönüşte hâlâ doğru',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      'Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.';
+
+  @override
+  String get memoryWithPlus =>
+      'Gerçekten neyi hatırladığın, kart kart — Astute+ ile.';
+
+  @override
+  String get weekKeptThreeOwn =>
+      'Bir hafta tamam: yarın beş karttan üçü senin.';
 }

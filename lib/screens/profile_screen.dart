@@ -21,6 +21,7 @@ import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
+import 'map_screen.dart';
 import 'progress_text.dart';
 import 'friends_screen.dart';
 import 'journey_screen.dart';
@@ -216,26 +217,19 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Eyebrow(context.l10n.yourTopics),
+              // The mix is everybody's: it is what the two cards of the
+              // reader's own are dealt from on the free plan, so gating it
+              // would gate the one thing the free day has to show.
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () => requirePlus(
-                  context,
-                  app,
-                  () => _editTopics(context),
-                  source: 'edit topics',
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      context.l10n.edit,
-                      style: AppText.body(
-                        size: 12.5,
-                        weight: FontWeight.w500,
-                        color: context.p.link,
-                      ),
-                    ),
-                    PlusLock(locked: !app.isPlus),
-                  ],
+                onTap: () => _editTopics(context),
+                child: Text(
+                  context.l10n.edit,
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w500,
+                    color: context.p.link,
+                  ),
                 ),
               ),
             ],
@@ -418,21 +412,31 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
+          // What the reader knows, subject by subject, and what stays: the
+          // map. Open to everyone; what Astute+ adds is inside it, where
+          // the reader can see the shape of what they would be paying for.
           _LinkRow(
-            label: context.l10n.archive,
-            locked: !app.isPlus,
-            onTap: () => requirePlus(
-              context,
-              app,
-              () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (routeContext) => ArchiveScreen(
-                    app: app,
-                    onBack: () => Navigator.of(routeContext).pop(),
-                  ),
+            label: context.l10n.yourMap,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => MapScreen(
+                  app: app,
+                  onBack: () => Navigator.of(routeContext).pop(),
                 ),
               ),
-              source: 'archive',
+            ),
+          ),
+          // The same for the archive: a week of it on the free plan, and
+          // the lock on everything before that, inside.
+          _LinkRow(
+            label: context.l10n.archive,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (routeContext) => ArchiveScreen(
+                  app: app,
+                  onBack: () => Navigator.of(routeContext).pop(),
+                ),
+              ),
             ),
           ),
           _LinkRow(
@@ -636,13 +640,11 @@ class _LinkRow extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
   final bool muted;
-  final bool locked;
 
   const _LinkRow({
     required this.label,
     required this.onTap,
     this.muted = false,
-    this.locked = false,
   });
 
   @override
@@ -677,7 +679,6 @@ class _LinkRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  PlusLock(locked: locked),
                 ],
               ),
             ),
@@ -1269,7 +1270,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            context.l10n.watchTheGapMove,
+            context.l10n.plusCardHeadline,
             style: AppText.display(
               size: 22,
               weight: FontWeight.w700,
@@ -1280,7 +1281,7 @@ class _PlusCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            context.l10n.measurementFreeForever,
+            context.l10n.plusCardLine,
             style: AppText.body(
               size: 13,
               height: 1.45,

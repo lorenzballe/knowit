@@ -50,6 +50,10 @@ class PillCardStack extends StatefulWidget {
   /// Which of these cards are back for another go.
   final Set<String> reviewIds;
 
+  /// Which of these cards were dealt from the reader's own mix, where the
+  /// day marks them — on the free plan, where the others are everybody's.
+  final Set<String> ownIds;
+
   /// True while a card is under the finger, so the chrome can step out of
   /// the way of the gesture.
   final ValueChanged<bool>? onMotion;
@@ -88,6 +92,7 @@ class PillCardStack extends StatefulWidget {
     required this.answerFor,
     required this.onAnswer,
     required this.reviewIds,
+    this.ownIds = const {},
     required this.isSaved,
     required this.onSave,
     required this.onShare,
@@ -335,6 +340,7 @@ class _PillCardStackState extends State<PillCardStack>
                 pill: pill,
                 flipped: false,
                 isReview: widget.reviewIds.contains(pill.id),
+                isOwn: widget.ownIds.contains(pill.id),
                 given: controls ? given : null,
                 saved: controls && widget.isSaved(pill.id),
                 onSave: controls ? () => widget.onSave(pill) : null,
@@ -360,6 +366,7 @@ class _PillCardStackState extends State<PillCardStack>
                       pill: pill,
                       flipped: true,
                       isReview: widget.reviewIds.contains(pill.id),
+                      isOwn: widget.ownIds.contains(pill.id),
                       given: given,
                       saved: widget.isSaved(pill.id),
                       onSave: () => widget.onSave(pill),

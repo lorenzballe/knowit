@@ -81,10 +81,17 @@ empty state, Profile (record, appearance, topics, coverage, calibration,
 daily nudge), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
-**Astute+** — three perks, all delivered: the searchable **Archive**, the
-**topic picker**, and a **second set of five pills** handed over from the shelf
-once the first five are done. On the free plan the first two carry a lock chip
-and open the paywall instead.
+**Astute+** — three things, all delivered, and everything else the same on
+both plans. **Five cards a day, all yours**: on the free plan two of the
+five are dealt from the reader's mix and three are everybody's — the
+question of the day and two more from the day's edition — and with Astute+
+all five are the reader's own, at the level the app has measured, with a
+card that came due for review. **Your map**: the subjects are everybody's,
+the strands inside them and what actually stayed are Astute+. **Your whole
+archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+seven days free, offered once at the end of the onboarding with "continue
+free" written under it. The mix, the streak, the freezes, the friends, the
+sharing and the search are free: they are how the app spreads.
 
 ## Today, done
 
@@ -99,23 +106,24 @@ it names is the one that will actually be on top in the morning. A card
 that came due and found no room in the five waits here too. The way on is
 **Your journey** — the day just went somewhere on the ladder, and that is
 the one thing worth a button at the end of it; Explore is a tab already.
-The second set sits under the button as a quiet line.
+The evening a week is kept, the line about tomorrow says that three of
+tomorrow's five are the reader's own instead of two.
 
 ## The sixth card
 
-The one card in the app that is not a card. It is the last card in the
-deck: it peeks from under the fifth like any next card, comes to the top
-when the fifth is thrown, and is thrown the same way — a rim of every
-colour the deck has, turning, with its light spilling onto the table, and
-one offer: five more. On the free plan the button is the paywall; with
-Astute+ it deals the second set on the spot. Nothing times out and nothing
-says skip; a throw is the way past it, as it is past every other card.
-Then it is the last card on the shelf too, after the five, with the counter
-giving way to the plan's name and a dot of every colour under it.
+The one card in the app that is not a card. On the free plan it is the
+last card in the deck: it peeks from under the fifth like any next card,
+comes to the top when the fifth is thrown, and is thrown the same way — a
+rim of every colour the deck has, turning, with its light spilling onto
+the table, and one offer: "the other three, yours". The button is the
+paywall. Nothing times out and nothing says skip; a throw is the way past
+it, as it is past every other card. Then it is the last card on the shelf
+too, after the five, with the counter giving way to the plan's name and a
+dot of every colour under it. With Astute+ there is no sixth card at all:
+the five were all the reader's own, and there is nothing left to sell.
 
 It is dealt only when the day is finished *in this session* — opening the
-app onto a day already done goes to the shelf — and only while there is
-something to offer, so nobody is sold what they already have. `MagicCard`
+app onto a day already done goes to the shelf. `MagicCard`
 paints the rim itself, from the palette's own spectrum, so it takes the
 card's size; a phone that asked for less motion gets the rim standing
 still. `PillCardStack` takes it as `trailing`, one card after the deck
@@ -428,35 +436,49 @@ restart resumes the same five — a card retired from the bank since still
 opens in a deck that holds it. Pills already read are kept out of later
 days until the pool runs dry.
 
-## The question of the day
+## The day, and whose it is
 
-A day is five cards, four of them the reader's own and one that every
-reader in the world meets on the same day. The four are dealt from the mix,
-from what the reader said they know, and from what came due for review;
-the fifth is the question of the day (`lib/data/daily.dart`) — one edition
-a day from the first of September 2026, chained so the same question does
-not come round again for months, and dealt from the first edition on every
-phone that holds the same pool, which is what makes it the same question
-everywhere.
+A day is five cards on both plans. On the free plan two of them are the
+reader's own — dealt from the mix, from the subjects and strands they kept
+on, at the level they said they were — and three are everybody's: the
+question of the day, and two more from the day's edition, the same for
+every free reader in the world (`commonOfEdition`, chained so a card does
+not come round for weeks, never two of one subject; a reader who has
+already read one takes the edition's next spare). The morning after the
+streak reaches a multiple of seven, three of the five are the reader's own
+— nothing to redeem, the deck simply has one more (`ownCardsFor`). With
+Astute+ all five are the reader's own: at the level the app has measured
+rather than the one they said, leaned by what they held and threw down,
+with a card that came due for review in an asking slot — and no question
+of the day, because there is nothing left in the day that is not theirs.
+`dealDay` returns a `Deal`: the cards, and which of them are the reader's
+own, which the free day marks on the card ("FOR YOU") so the difference is
+visible every morning rather than described once on a paywall.
 
-It costs the mix nothing. Every card that asks and can be marked lives
-under Thinking, and Thinking was never off anybody's deck: the three cards
-that tell, and the second card that asks, are the mix's entirely. What the
-shared question buys is a common object — the card a friend can be asked
-about ("did you get it?"), the one the morning notification can quote a
-fortnight ahead, the one square in the shared grid that means the same
-thing on every phone.
+The question of the day (`lib/data/daily.dart`) is one edition a day from
+the first of September 2026, chained so the same question does not come
+round again for months, and dealt from the first edition on every phone
+that holds the same pool, which is what makes it the same question
+everywhere. It costs the mix nothing. Every card that asks and can be
+marked lives under Thinking, and Thinking was never off anybody's deck.
+What the shared question buys is a common object — the card a friend can
+be asked about ("did you get it?"), the one the morning notification can
+quote a fortnight ahead, the one square in the shared grid that means the
+same thing on every phone. A subscriber's morning opens on one of their
+own instead, and the reminder and the widget quote that one (`leadOn`),
+dealt the way the morning will deal it for a reader who has been away.
 
 **Two of five ask.** It was four, on the evidence that only answering
 trains anything, and the evidence has not changed — but a day that is four
 decisions long is a day that gets put off, and a day put off trains
 nothing. Two questions is still two judgements with a confidence on each,
 which is what the calibration record is made of; the other three are the
-reason to open the app before coffee. The ladder is paced to that. The two
-asking slots go first to the question of the day and then to a card that
-came due for review, if one did; only when none did does the second go to
-a fresh question from the mix. What came due and found no room waits after
-the five, on the finished day.
+reason to open the app before coffee. The ladder is paced to that. On the
+free plan the question of the day takes the first asking slot and the
+second is the reader's own. With Astute+ a card that came due for review
+takes an asking slot before any fresh question does — one at most, so a
+day always has one question it has never asked. What came due and found
+no room waits after the five, on the finished day, on either plan.
 
 **Share my day.** Five squares — read, right, wrong, a side taken, passed —
 the edition, the streak, how the question of the day went ("right, 80%
@@ -494,13 +516,14 @@ by their owner.
 
 ## The home-screen widget
 
-The question of the day, and the streak, on the home screen. The widget is
-native — WidgetKit on iOS, an `AppWidgetProvider` on Android — and neither
-can run Dart, so the app hands over what the widget will need through the
-`astut/widget` channel: the question of the day, the streak, and the
-question for each of the next fourteen mornings, so the widget turns over at midnight
-whether or not the app is opened, and goes quiet after a fortnight rather
-than lying.
+The card the morning opens on, and the streak, on the home screen — the
+question of the day on the free plan, one of the reader's own with
+Astute+. The widget is native — WidgetKit on iOS, an `AppWidgetProvider`
+on Android — and neither can run Dart, so the app hands over what the
+widget will need through the `astut/widget` channel: today's card, the
+streak, and the card for each of the next fourteen mornings, so the widget
+turns over at midnight whether or not the app is opened, and goes quiet
+after a fortnight rather than lying.
 
 Android is complete in the tree: `AstutWidget.kt`, its layout, and the
 receiver in the manifest. (`MainActivity` also moved to `com.astuto.app`,
@@ -561,9 +584,9 @@ changed — and `pill said`, a card that left the phone and was said to
 somebody, which is the one number this app is actually for.
 
 The paywall takes the gate that opened it as a required argument rather than a
-defaulted one, so `archive`, `extra set` and `calibration` can be told apart. A
-default is how a fifth of the traffic ends up labelled `unknown` by the end of
-the first week.
+defaulted one, so `onboarding`, `sixth card`, `map`, `memory`, `archive` and
+`calibration` can be told apart. A default is how a fifth of the traffic ends
+up labelled `unknown` by the end of the first week.
 
 **Screens are named by hand.** The three tabs are one route and the rest are
 unnamed pushes, so a navigator observer would report `/` and call it a
@@ -827,9 +850,10 @@ a reader is already looking at what a day came to.
 **The nudge carries the question.** Not "three days in a row, keep it up" —
 that is a message about the app's counter. The reminder is the first
 question of the deck waiting, which is a message about the reader's own
-head. And since the question of the day is everybody's, the app plans a
-fortnight of them at a time (`reminderPlan`), each with the question of
-the morning it lands on. On the days a lapse reaches it says something about the reader
+head. The app plans a fortnight of them at a time (`reminderPlan`), each
+with the question of the morning it lands on: the question of the day,
+which is everybody's, or with Astute+ the reader's own lead, dealt the way
+that morning will deal it for a reader who has been away. On the days a lapse reaches it says something about the reader
 instead of the app — day two, that the freeze is holding; day seven, the
 card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
@@ -921,10 +945,14 @@ So:
   your own words is what stops the other side being explained away on sight.
   Skipping is allowed: a reader made to type before they may read on stops
   reading on.
-- **Astute+ sells depth, not volume.** More cards is the pitch every rival
-  makes better. What is gated instead is whether the gap is closing over time
-  (`Trend`) and the full principle board; the measurement itself stays free,
-  because a reader has to see it before they will pay to keep it.
+- **Astute+ sells the reader's own day, not more of it.** More cards is
+  the pitch every rival makes better, and the day stays five cards on both
+  plans. What is sold is whose they are — five from the reader's mix at the
+  level the app has measured, against two — and then what the app knows
+  about the reader: the map, strand by strand, with what stayed, and
+  whether the gap is closing over time (`Trend`). The measurement itself
+  stays free, because a reader has to see it before they will pay to keep
+  it; the subjects on the map are free for the same reason.
 
 The promise on the welcome screen changed with it. "Five a day" was a claim
 about volume. What the evidence actually supports is narrower and more

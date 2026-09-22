@@ -13,6 +13,7 @@ import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
+import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
@@ -141,6 +142,7 @@ enum _Stage {
   intro,
   subjects,
   genres,
+  offer,
   comeback,
   shell;
 
@@ -151,6 +153,7 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
+    _Stage.offer => 'onboarding offer',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -389,7 +392,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          onSkip: _finishOnboarding,
+          onSkip: () => _go(_Stage.offer),
         );
 
       // The same answer, one layer finer: which six of each subject, and
@@ -400,9 +403,21 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            await _finishOnboarding();
+            if (mounted) _go(_Stage.offer);
           },
-          onSkip: _finishOnboarding,
+          onSkip: () => _go(_Stage.offer),
+        );
+
+      // The offer, once, straight after the mix: the reader has just said
+      // what they want to read about, and this is where the day made of
+      // exactly that is sold — with the way past it written under it.
+      // Skipping the mix lands here too; the offer is not a reward for
+      // finishing a form.
+      case _Stage.offer:
+        return PaywallScreen(
+          app: _app,
+          source: 'onboarding',
+          onClose: _finishOnboarding,
         );
 
       case _Stage.comeback:

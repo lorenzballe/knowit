@@ -17,6 +17,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/screens/intro_screen.dart';
 import 'package:astuto/screens/mix_screen.dart';
+import 'package:astuto/screens/map_screen.dart';
+import 'package:astuto/screens/archive_screen.dart';
+
+import 'dart:convert';
+
+import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/screens/paywall_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/theme.dart';
@@ -297,6 +303,96 @@ void main() {
       await expectLater(
         find.byType(PaywallScreen),
         matchesGoldenFile('shots/paywall-$tag.png'),
+      );
+    }
+  });
+
+  /// The map and the archive, on both plans, as the reader's phone shows
+  /// them — with a fortnight of reading behind them, so there is something
+  /// on the map and something behind the archive's lock.
+  testWidgets('the map and the archive, on a phone', (tester) async {
+    const Size mine = Size(393, 852);
+    const EdgeInsets notch = EdgeInsets.only(top: 59, bottom: 34);
+    await tester.binding.setSurfaceSize(mine);
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+    final now = DateTime.now();
+    String ago(int days) => dateKey(now.subtract(Duration(days: days)));
+    final judgements = [
+      {'c': 80, 'k': true, 'p': 'science-4', 'd': ago(9)},
+      {'c': 60, 'k': true, 'p': 'science-4', 'd': ago(2)},
+      {'c': 90, 'k': true, 'p': 'space-1', 'd': ago(10)},
+      {'c': 70, 'k': false, 'p': 'space-1', 'd': ago(1)},
+      {'c': 50, 'k': true, 'p': 'thinking-1', 'd': ago(1)},
+    ];
+    for (final (String tag, bool plus) in [('free', false), ('plus', true)]) {
+      // ignore: invalid_use_of_visible_for_testing_member
+      SharedPreferences.setMockInitialValues({
+        'knowit.onboarded': true,
+        'knowit.plus': plus,
+        'knowit.streak': 2,
+        'knowit.lastCompletionDate': ago(1),
+        'knowit.completedDates': [ago(12), ago(10), ago(9), ago(2), ago(1)],
+        'knowit.seenIds': [
+          'science-4',
+          'thinking-1',
+          'space-1',
+          'space-2',
+          'space-3',
+          'history-1',
+          'psychology-2',
+        ],
+        'knowit.judgements': jsonEncode(judgements),
+      });
+      final app = AppState();
+      await app.init();
+
+      Widget host(Widget screen) => MaterialApp(
+        locale: const Locale('it'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        theme: buildAstutoTheme(Brightness.dark),
+        debugShowCheckedModeBanner: false,
+        home: MediaQuery(
+          data: const MediaQueryData(size: mine, padding: notch),
+          child: screen,
+        ),
+      );
+      Future<void> settle() async {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 300)),
+        );
+        for (int f = 0; f < 16; f++) {
+          await tester.pump(const Duration(milliseconds: 120));
+        }
+      }
+
+      await tester.pumpWidget(host(MapScreen(app: app, onBack: () {})));
+      await settle();
+      if (plus) {
+        await tester.tap(find.byKey(const ValueKey('map-space')));
+        await settle();
+      }
+      await expectLater(
+        find.byType(MapScreen),
+        matchesGoldenFile('shots/map-$tag.png'),
+      );
+      // The foot of the map: what stays.
+      await tester.drag(
+        find.byType(Scrollable).first,
+        const Offset(0, -900),
+        warnIfMissed: false,
+      );
+      await settle();
+      await expectLater(
+        find.byType(MapScreen),
+        matchesGoldenFile('shots/map-$tag-foot.png'),
+      );
+
+      await tester.pumpWidget(host(ArchiveScreen(app: app, onBack: () {})));
+      await settle();
+      await expectLater(
+        find.byType(ArchiveScreen),
+        matchesGoldenFile('shots/archive-$tag.png'),
       );
     }
   });

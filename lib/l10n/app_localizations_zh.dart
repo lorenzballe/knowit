@@ -115,16 +115,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreTodaysBest => '探索今日精选';
 
   @override
-  String get fiveMore => '再来五张';
-
-  @override
-  String get unlockFiveExtra => '解锁额外五颗药丸';
-
-  @override
-  String get magicHeadline => '再来五张？';
-
-  @override
-  String get magicUnlock => '解锁再来五张';
+  String get magicUnlock => '免费试用7天';
 
   @override
   String nothingInYet(String subject) {
@@ -633,12 +624,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sevenDaysFree => '免费 7 天';
 
   @override
-  String get watchTheGapMove => '看着差距变化。';
-
-  @override
-  String get measurementFreeForever => '测量永远免费。Astute+ 告诉你它朝哪个方向走。';
-
-  @override
   String get seeThePlans => '查看方案';
 
   @override
@@ -875,40 +860,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => '你随时间变化的记录';
+  String get perkArchiveTitle => '你的全部档案';
 
   @override
-  String get perkRecordLine => '你的把握和你的正确率之间的差距，是否真的在缩小。';
-
-  @override
-  String get perkPrinciplesTitle => '你遇到过的每一条原则';
-
-  @override
-  String get perkPrinciplesLine => '不只是最弱的三条——全部，包括还没展示给你的情境。';
-
-  @override
-  String get perkFreezesTitle => '三次冻结，而不是一次';
-
-  @override
-  String get perkFreezesLine => '足够覆盖一个外出的周末。只能失去的连续记录，终究会断。';
-
-  @override
-  String get perkExtraTitle => '每天额外 5 颗药丸';
-
-  @override
-  String get perkExtraLine => '读完第一组的那一刻，第二组就会解锁。';
-
-  @override
-  String get perkArchiveTitle => '完整档案';
-
-  @override
-  String get perkArchiveLine => '你读过的每一颗药丸，可按主题搜索。';
-
-  @override
-  String get perkTopicsTitle => '自己选主题';
-
-  @override
-  String get perkTopicsLine => '把组合偏向你真正喜欢的内容。';
+  String get perkArchiveLine => '你读过的每一天，永久保存。免费版保留一周。';
 
   @override
   String get plusIsActive => 'ASTUTE+ 已激活';
@@ -929,9 +884,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nothingToRestore => '此账号没有可恢复的内容。';
-
-  @override
-  String get findOutIfBetter => '看看你是不是真的在进步。';
 
   @override
   String get planYearly => '年付';
@@ -1523,4 +1475,108 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get mixFull => '拉满';
+
+  @override
+  String get forYouChip => '为你而选';
+
+  @override
+  String get againChip => '再来一次';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '剩下的$n张，也为你。',
+      one: '剩下的一张，也为你。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
+
+  @override
+  String get everyCardForYou => '每一张卡片，都为你而选。';
+
+  @override
+  String get perkOwnTitle => '每天五张，全部为你';
+
+  @override
+  String get perkOwnLine => '来自你选的分支，按你测得的水平，绝不重复已读。免费版每天两张。';
+
+  @override
+  String get perkMapTitle => '你的地图';
+
+  @override
+  String get perkMapLine => '你在每个分支知道什么、真正记住了什么，以及你的判断是否在进步。';
+
+  @override
+  String get plusCardHeadline => '让五张全都为你。';
+
+  @override
+  String get plusCardLine => '每天五张来自你的组合、匹配你的水平。你的地图。你的全部档案。';
+
+  @override
+  String get continueFree => '免费继续';
+
+  @override
+  String get archiveBeforeThisWeek => '本周之前的一切';
+
+  @override
+  String get yourMap => '你的地图';
+
+  @override
+  String get mapLine => '你在每个学科知道什么，以及什么留了下来。';
+
+  @override
+  String get whatStays => '留下的';
+
+  @override
+  String get strandsWithPlus => '哪些分支、有多深 — 使用 Astute+';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '已读 $read / $total';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '已回答 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 张再次出现',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 张再现时仍答对',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      '还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。';
+
+  @override
+  String get memoryWithPlus => '你真正记住了什么，逐张可见 — 使用 Astute+。';
+
+  @override
+  String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张为你而选。';
 }

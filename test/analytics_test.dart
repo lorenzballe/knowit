@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
+import 'package:astuto/data/daily.dart';
 import 'package:astuto/state/app_state.dart';
 
 /// A sink that keeps what it was given, so what the app measures can be read
@@ -139,7 +140,8 @@ void main() {
       expect(day, isNotNull);
       expect(day!['cards'], 5);
       expect(day['reviews'], 0);
-      expect(day['extra_set'], false);
+      expect(day['own'], kOwnCardsFree);
+      expect(day['is_plus'], false);
     });
 
     test('a card advanced carries its place in the five', () async {

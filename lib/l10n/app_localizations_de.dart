@@ -115,16 +115,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exploreTodaysBest => 'Das Beste von heute entdecken';
 
   @override
-  String get fiveMore => 'Fünf mehr';
-
-  @override
-  String get unlockFiveExtra => 'Fünf zusätzliche Pillen freischalten';
-
-  @override
-  String get magicHeadline => 'Noch fünf?';
-
-  @override
-  String get magicUnlock => 'Fünf weitere freischalten';
+  String get magicUnlock => '7 Tage gratis testen';
 
   @override
   String nothingInYet(String subject) {
@@ -653,13 +644,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sevenDaysFree => '7 Tage gratis';
 
   @override
-  String get watchTheGapMove => 'Sieh zu, wie sich die Lücke bewegt.';
-
-  @override
-  String get measurementFreeForever =>
-      'Die Messung ist gratis und bleibt es. Astute+ sagt dir, in welche Richtung sie geht.';
-
-  @override
   String get seeThePlans => 'TARIFE ANSEHEN';
 
   @override
@@ -903,46 +887,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => 'Deine Bilanz über die Zeit';
-
-  @override
-  String get perkRecordLine =>
-      'Ob sich die Lücke zwischen deiner Sicherheit und deiner Trefferquote wirklich schließt.';
-
-  @override
-  String get perkPrinciplesTitle => 'Jedes Prinzip, dem du begegnet bist';
-
-  @override
-  String get perkPrinciplesLine =>
-      'Nicht nur die drei, bei denen du am schwächsten bist — alle, und die Kontexte, die du noch nicht gesehen hast.';
-
-  @override
-  String get perkFreezesTitle => 'Drei Serien-Freezes statt einem';
-
-  @override
-  String get perkFreezesLine =>
-      'Genug für ein Wochenende weg. Eine Serie, die man nur verlieren kann, geht irgendwann verloren.';
-
-  @override
-  String get perkExtraTitle => '5 zusätzliche Pillen jeden Tag';
-
-  @override
-  String get perkExtraLine =>
-      'Ein zweiter Satz schaltet sich frei, sobald du den ersten beendest.';
-
-  @override
-  String get perkArchiveTitle => 'Das ganze Archiv';
+  String get perkArchiveTitle => 'Dein ganzes Archiv';
 
   @override
   String get perkArchiveLine =>
-      'Jede Pille, die du je gelesen hast, nach Fach durchsuchbar.';
-
-  @override
-  String get perkTopicsTitle => 'Wähl deine eigenen Fächer';
-
-  @override
-  String get perkTopicsLine =>
-      'Gewichte den Mix zu dem, was dich wirklich interessiert.';
+      'Jeder gelesene Tag, für immer. Gratis bleibt eine Woche.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IST AKTIV';
@@ -964,9 +913,6 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get nothingToRestore => 'Nichts zum Wiederherstellen in diesem Konto.';
-
-  @override
-  String get findOutIfBetter => 'Finde heraus, ob du wirklich besser wirst.';
 
   @override
   String get planYearly => 'Jährlich';
@@ -1579,4 +1525,117 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get mixFull => 'Voll';
+
+  @override
+  String get forYouChip => 'FÜR DICH';
+
+  @override
+  String get againChip => 'NOCHMAL';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Die anderen $n, deine.',
+      one: 'Die andere, deine.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine =>
+      'Fünf Karten am Tag, für dich gewählt: aus deinem Mix, auf deinem Niveau, nie eine schon gelesene. Ab morgen.';
+
+  @override
+  String get everyCardForYou => 'Jede Karte, für dich gewählt.';
+
+  @override
+  String get perkOwnTitle => 'Fünf Karten am Tag, alle deine';
+
+  @override
+  String get perkOwnLine =>
+      'Aus deinen Strängen, auf deinem gemessenen Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.';
+
+  @override
+  String get perkMapTitle => 'Deine Landkarte';
+
+  @override
+  String get perkMapLine =>
+      'Was du Strang für Strang weißt, was du noch behältst, und ob deine Urteile besser werden.';
+
+  @override
+  String get plusCardHeadline => 'Alle fünf, deine.';
+
+  @override
+  String get plusCardLine =>
+      'Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Deine Landkarte. Dein ganzes Archiv.';
+
+  @override
+  String get continueFree => 'Gratis weiter';
+
+  @override
+  String get archiveBeforeThisWeek => 'Vor dieser Woche';
+
+  @override
+  String get yourMap => 'Deine Landkarte';
+
+  @override
+  String get mapLine => 'Was du weißt, Fach für Fach — und was bleibt.';
+
+  @override
+  String get whatStays => 'Was bleibt';
+
+  @override
+  String get strandsWithPlus => 'Welche Stränge, und wie tief — mit Astute+';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '$read von $total gelesen';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n Karten beantwortet',
+      one: '1 Karte beantwortet',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kamen zurück',
+      one: '1 kam zurück',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n beim Zurückkommen noch richtig',
+      one: '1 beim Zurückkommen noch richtig',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      'Noch ist nichts zurückgekommen. Eine Karte kommt nach drei Tagen wieder, dann nach einer Woche, dann nach einem Monat — und was du dann richtig hast, weißt du wirklich.';
+
+  @override
+  String get memoryWithPlus =>
+      'Was du wirklich behältst, Karte für Karte — mit Astute+.';
+
+  @override
+  String get weekKeptThreeOwn =>
+      'Eine Woche gehalten: morgen sind drei der fünf deine.';
 }

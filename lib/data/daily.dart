@@ -1,14 +1,22 @@
-/// The question of the day: one card that asks, the same for everybody.
+/// The day: what is the reader's own in it, and what is everybody's.
 ///
-/// A day is five cards, four of them the reader's own — dealt from their
-/// mix, what they said they know, what came due for review — and one that
-/// every reader in the world meets on the same day. That one is the
-/// question of the day. It is the card a friend can be asked about ("did
-/// you get it?"), the one the morning notification can quote a fortnight
-/// ahead, and the one square in the shared grid that means the same thing
-/// on every phone. It costs the mix nothing: every card that asks and can
-/// be marked lives under Thinking, and Thinking was never off anybody's
-/// deck.
+/// A day is five cards. On the free plan two of them are the reader's own —
+/// dealt from their mix, at the level they said they were — and three are
+/// everybody's: the question of the day, and two more that every free
+/// reader in the world meets on the same day. The day after a full week
+/// kept, three are the reader's own and two are everybody's.
+///
+/// With Astute+ all five are the reader's own: from the strands they keep
+/// on, at the level the app has measured rather than the one they said,
+/// never a card already read, with a card that came due for review, and
+/// leaned by what they held and what they threw down.
+///
+/// The question of the day is the one card a friend can be asked about
+/// ("did you get it?"), the one the morning notification can quote a
+/// fortnight ahead, and the one square in the shared grid that means the
+/// same thing on every phone. It costs the mix nothing: every card that
+/// asks and can be marked lives under Thinking, and Thinking was never off
+/// anybody's deck.
 library;
 
 import 'dart:math';
@@ -19,6 +27,25 @@ import 'pills_repository.dart';
 
 /// The day the calendar began. Edition 1.
 final DateTime kEpoch = DateTime(2026, 9, 1);
+
+/// How many of a free day's five are the reader's own.
+const int kOwnCardsFree = 2;
+
+/// How many are the reader's own the day after a full week kept: the
+/// streak's own reward, and the thing Astute+ has more of, tasted once a
+/// week by a reader who has not paid for it.
+const int kOwnCardsRewarded = 3;
+
+/// How many of a day's [kPillsPerDay] are the reader's own.
+///
+/// All of them on Astute+. On the free plan [kOwnCardsFree], or
+/// [kOwnCardsRewarded] on the morning after the streak reaches a multiple
+/// of seven — nothing to redeem and nothing to press: the deck simply has
+/// one more.
+int ownCardsFor({required bool plus, required int streak}) {
+  if (plus) return kPillsPerDay;
+  return streak > 0 && streak % 7 == 0 ? kOwnCardsRewarded : kOwnCardsFree;
+}
 
 /// Which edition a date is: the first day is 1, and every day after it one
 /// more. Days before the calendar started come out at zero and below, and
@@ -37,10 +64,18 @@ DateTime dateOfEdition(int edition) =>
 int asksInADay(int count) => (count * kAskShare).round();
 
 final Map<int, Pill> _questions = {};
+final Map<int, List<Pill>> _commons = {};
 
-/// Which bank the chain above was dealt from. A newer bundle brings its own
-/// calendar, and a chain dealt from the old one would contradict it.
+/// Which bank the chains above were dealt from. A newer bundle brings its
+/// own calendar, and a chain dealt from the old one would contradict it.
 BankBundle? _dealtFrom;
+
+void _followTheBank() {
+  if (identical(_dealtFrom, PillBank.current)) return;
+  _questions.clear();
+  _commons.clear();
+  _dealtFrom = PillBank.current;
+}
 
 /// The question of the day for [date].
 Pill questionOfTheDay(DateTime date) => questionOfEdition(editionOf(date));
@@ -56,10 +91,7 @@ Pill questionOfTheDay(DateTime date) => questionOfEdition(editionOf(date));
 /// question does not come round again for months. The archive still keeps a
 /// note of what was actually dealt rather than trusting either to say.
 Pill questionOfEdition(int edition) {
-  if (!identical(_dealtFrom, PillBank.current)) {
-    _questions.clear();
-    _dealtFrom = PillBank.current;
-  }
+  _followTheBank();
   final cached = _questions[edition];
   if (cached != null) return cached;
   // Everything before the calendar is dealt on its own, chained to nothing:
@@ -95,13 +127,81 @@ Pill _ask(int edition) {
   return stale.first;
 }
 
-/// A day: the question of the day, and four cards of the reader's own.
+/// How many cards an edition holds in common besides its question: the two
+/// a free day deals, and two spares for a reader who has already read one.
+const int kCommonSpares = 4;
+
+/// The cards that are everybody's on an edition, besides the question of
+/// the day, in the order a free day takes them.
 ///
-/// The two asking slots go first to the question of the day and then to a
-/// card that came due for review, if one did; only when none did does the
-/// second go to a fresh question from the mix. The three reading slots are
-/// the mix's entirely. Then the day is arranged rather than sorted.
-List<Pill> dealDay({
+/// Cards that tell rather than ask, from the whole bank rather than any
+/// mix — that is what makes them everybody's — each edition chained clear
+/// of the ones before it, so the same card does not come round for weeks,
+/// and never two of one subject in the same edition. A free day takes the
+/// first [kOwnCardsFree]-ish it has not already read, so two readers who
+/// have read different things still mostly share the same three.
+List<Pill> commonOfEdition(int edition) {
+  _followTheBank();
+  final cached = _commons[edition];
+  if (cached != null) return cached;
+  final int start = edition < 1 ? edition : 1;
+  for (var e = start; e <= edition; e++) {
+    _commons[e] ??= _tell(e);
+  }
+  return _commons[edition]!;
+}
+
+List<Pill> _tell(int edition) {
+  final pool = PillBank.cards.where((p) => !p.asksSomething).toList();
+  if (pool.isEmpty) return const [];
+  // A lap of the reading cards, at four an edition, keeps a card out for
+  // as long as the pool allows; on a bank of a few hundred that is weeks,
+  // and the bank grows every night.
+  final int window = max(0, (pool.length * 0.75).floor() ~/ kCommonSpares);
+  final recent = <String>{
+    for (var e = edition - window; e < edition; e++)
+      ...?_commons[e]?.map((p) => p.id),
+  };
+  final rng = Random(edition * 6007 + 91);
+  final fresh = pool.where((p) => !recent.contains(p.id)).toList()
+    ..shuffle(rng);
+  final stale = pool.where(recent.contains).toList()..shuffle(rng);
+  final picked = <Pill>[];
+  final topics = <String>{};
+  for (final p in [...fresh, ...stale]) {
+    if (picked.length >= kCommonSpares) break;
+    if (!topics.add(p.topic)) continue;
+    picked.add(p);
+  }
+  return picked;
+}
+
+/// A day, dealt: the cards in the order they are read, and which of them
+/// are the reader's own.
+class Deal {
+  const Deal({required this.cards, required this.own, this.question});
+
+  final List<Pill> cards;
+
+  /// The ids of the cards dealt from the reader's mix — the ones a free
+  /// day marks, and the ones Astute+ makes all five of.
+  final Set<String> own;
+
+  /// The question of the day, when the day carries it. A day that is all
+  /// the reader's own does not.
+  final Pill? question;
+}
+
+/// A day: [own] cards of the reader's own, and the rest everybody's.
+///
+/// Every card the reader's own when [own] reaches [count]: the asking
+/// slots go first to a card that came due for review, if one did, and then
+/// to a fresh question from the mix, and the reading slots are the mix's
+/// entirely. Otherwise the question of the day takes the first asking slot
+/// and the edition's common cards fill what the reader's own leave, which
+/// puts the day's second question among the reader's own. Then the day is
+/// arranged rather than sorted.
+Deal dealDay({
   required DateTime date,
   Set<String>? topics,
   Map<String, double> weights = const {},
@@ -112,14 +212,31 @@ List<Pill> dealDay({
   Set<String> exclude = const {},
   List<Pill> reviews = const [],
   int count = kPillsPerDay,
+  int own = kOwnCardsFree,
 }) {
-  final Pill question = questionOfTheDay(date);
   final int asks = asksInADay(count);
+  final bool whole = own >= count;
+  final Pill? question = whole ? null : questionOfTheDay(date);
+  // A review is the reader's own, coming back. One at most, so a day
+  // always has one question it has never asked.
   final review = reviews
-      .where((p) => p.id != question.id)
+      .where((p) => p.id != question?.id)
       .take(max(0, asks - 1))
       .toList();
-  final int personalAsks = max(0, asks - 1 - review.length);
+
+  final taken = <String>{...exclude, ?question?.id, ...review.map((p) => p.id)};
+  final common = <Pill>[];
+  if (!whole) {
+    final int wanted = max(0, count - 1 - own);
+    for (final p in commonOfEdition(editionOf(date))) {
+      if (common.length >= wanted) break;
+      if (!taken.add(p.id)) continue;
+      common.add(p);
+    }
+  }
+
+  final int dealt = (question == null ? 0 : 1) + common.length;
+  final int ownAsks = max(0, asks - (question == null ? 0 : 1));
   final rest = pillsForDate(
     date,
     topics: topics,
@@ -129,16 +246,24 @@ List<Pill> dealDay({
     genresOff: genresOff,
     strandsOff: strandsOff,
     strandsDealt: {
-      for (final p in [question, ...review])
+      for (final p in [?question, ...common, ...review])
         if (p.strand.isNotEmpty) p.strand,
     },
-    exclude: {...exclude, question.id, ...review.map((p) => p.id)},
-    count: count - 1 - review.length,
-    asking: personalAsks,
+    exclude: taken,
+    count: max(0, count - dealt - review.length),
+    asking: max(0, ownAsks - review.length),
   );
-  return arrangeDay([question, ...review, ...rest]);
+  final mine = [...review, ...rest];
+  return Deal(
+    cards: arrangeDay([?question, ...common, ...mine]),
+    own: {for (final p in mine) p.id},
+    question: question,
+  );
 }
 
 /// Forgets every deal: for tests that change what the pool holds, and for
 /// the bank when a newer bundle is adopted.
-void resetCalendar() => _questions.clear();
+void resetCalendar() {
+  _questions.clear();
+  _commons.clear();
+}

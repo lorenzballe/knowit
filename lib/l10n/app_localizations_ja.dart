@@ -115,16 +115,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreTodaysBest => '今日のベストを見る';
 
   @override
-  String get fiveMore => 'あと5枚';
-
-  @override
-  String get unlockFiveExtra => '追加の5枚を解放';
-
-  @override
-  String get magicHeadline => 'あと5枚どうですか？';
-
-  @override
-  String get magicUnlock => 'あと5枚を解放';
+  String get magicUnlock => '7日間無料で試す';
 
   @override
   String nothingInYet(String subject) {
@@ -636,13 +627,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sevenDaysFree => '7日間無料';
 
   @override
-  String get watchTheGapMove => '差の動きを見守る。';
-
-  @override
-  String get measurementFreeForever =>
-      '計測はずっと無料です。Astute+は、それがどちらに向かっているかを教えます。';
-
-  @override
   String get seeThePlans => 'プランを見る';
 
   @override
@@ -880,40 +864,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => '記録の推移';
+  String get perkArchiveTitle => 'あなたのアーカイブすべて';
 
   @override
-  String get perkRecordLine => '自信と正解率の差が本当に縮まっているかどうか。';
-
-  @override
-  String get perkPrinciplesTitle => '出会ったすべての原則';
-
-  @override
-  String get perkPrinciplesLine => '苦手な3つだけでなく、すべて。まだ見ていない文脈も。';
-
-  @override
-  String get perkFreezesTitle => 'フリーズが1個ではなく3個';
-
-  @override
-  String get perkFreezesLine => '週末の外出にも足ります。失うしかない連続記録は、いつか途切れます。';
-
-  @override
-  String get perkExtraTitle => '毎日5枚の追加ピル';
-
-  @override
-  String get perkExtraLine => '1セット目を終えた瞬間、2セット目が開きます。';
-
-  @override
-  String get perkArchiveTitle => 'アーカイブのすべて';
-
-  @override
-  String get perkArchiveLine => 'これまで読んだすべてのピルを、分野で検索。';
-
-  @override
-  String get perkTopicsTitle => '分野を自分で選ぶ';
-
-  @override
-  String get perkTopicsLine => '本当に好きなものにミックスを寄せる。';
+  String get perkArchiveLine => '読んだ日をすべて、ずっと保存。無料版は1週間。';
 
   @override
   String get plusIsActive => 'ASTUTE+ 有効';
@@ -934,9 +888,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nothingToRestore => 'このアカウントに復元するものはありません。';
-
-  @override
-  String get findOutIfBetter => '本当に上達しているかを知る。';
 
   @override
   String get planYearly => '年額';
@@ -1526,4 +1477,109 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mixFull => 'いっぱい';
+
+  @override
+  String get forYouChip => 'あなた向け';
+
+  @override
+  String get againChip => 'もう一度';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '残りの$n枚も、あなたのものに。',
+      one: '残りの1枚も、あなたのものに。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine =>
+      '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
+
+  @override
+  String get everyCardForYou => 'すべてのカードを、あなたのために。';
+
+  @override
+  String get perkOwnTitle => '毎日5枚、すべてあなたのもの';
+
+  @override
+  String get perkOwnLine => 'あなたの選んだ系統から、測定されたレベルで、既読は二度と出ません。無料版は1日2枚。';
+
+  @override
+  String get perkMapTitle => 'あなたの地図';
+
+  @override
+  String get perkMapLine => '系統ごとに何を知っていて、何を覚えていて、判断が良くなっているか。';
+
+  @override
+  String get plusCardHeadline => '5枚すべてを、あなたのものに。';
+
+  @override
+  String get plusCardLine => 'あなたのミックスから、あなたのレベルで毎日5枚。あなたの地図。アーカイブすべて。';
+
+  @override
+  String get continueFree => '無料で続ける';
+
+  @override
+  String get archiveBeforeThisWeek => '今週より前のすべて';
+
+  @override
+  String get yourMap => 'あなたの地図';
+
+  @override
+  String get mapLine => '分野ごとに何を知っていて、何が残っているか。';
+
+  @override
+  String get whatStays => '残るもの';
+
+  @override
+  String get strandsWithPlus => 'どの系統を、どこまで深く — Astute+で';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '$total枚中$read枚を読了';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚に回答',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚が戻ってきた',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n枚は戻ってきても正解',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      'まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。';
+
+  @override
+  String get memoryWithPlus => '本当に覚えていることを、カードごとに — Astute+で。';
+
+  @override
+  String get weekKeptThreeOwn => '1週間続きました。明日は5枚のうち3枚があなたのものです。';
 }

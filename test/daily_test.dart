@@ -9,6 +9,25 @@ import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/models/pill.dart';
 
+/// A day that is all the reader's own, as a list: the day the tags govern
+/// every card of.
+List<Pill> _whole({
+  required DateTime date,
+  Set<String>? topics,
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+  Map<String, double> taste = const {},
+}) => dealDay(
+  date: date,
+  topics: topics,
+  genresOff: genresOff,
+  strandsOff: strandsOff,
+  exclude: exclude,
+  taste: taste,
+  own: kPillsPerDay,
+).cards;
+
 void main() {
   group('The question of the day', () {
     test('is the same question for everybody, and for the same day twice', () {
@@ -75,69 +94,184 @@ void main() {
     });
   });
 
-  group('A day dealt around it', () {
-    test('holds the question of the day and four of the reader\'s own', () {
+  group('A free day', () {
+    test('is the question of the day, two of the edition\'s and two of the reader\'s own', () {
       final day = DateTime(2026, 10, 14);
-      final deck = dealDay(date: day);
-      expect(deck, hasLength(kPillsPerDay));
-      expect(deck.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
-      expect(deck.map((p) => p.id), contains(questionOfTheDay(day).id));
+      final deal = dealDay(date: day);
+      final cards = deal.cards;
+      expect(cards, hasLength(kPillsPerDay));
+      expect(cards.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
+      expect(deal.question?.id, questionOfTheDay(day).id);
+      expect(cards.map((p) => p.id), contains(questionOfTheDay(day).id));
+      expect(deal.own, hasLength(kOwnCardsFree));
+      expect(deal.own, isNot(contains(deal.question!.id)));
+      // The other two are the edition's: the same for everybody, and they
+      // tell rather than ask.
+      final common = cards
+          .where((p) => !deal.own.contains(p.id) && p.id != deal.question!.id)
+          .toList();
+      expect(common, hasLength(2));
+      final edition = commonOfEdition(editionOf(day)).map((p) => p.id);
+      for (final p in common) {
+        expect(edition, contains(p.id));
+        expect(p.asksSomething, isFalse, reason: p.id);
+      }
       expect(
-        deck.where((p) => p.asksSomething).length,
+        cards.where((p) => p.asksSomething).length,
         asksInADay(kPillsPerDay),
       );
-      expect(deck.first.asksSomething, isFalse, reason: 'opens on a read');
+      expect(cards.first.asksSomething, isFalse, reason: 'opens on a read');
     });
 
-    test('the mix governs the four, and the question ignores it', () {
+    test('the mix governs the reader\'s own, and the rest ignores it', () {
       final day = DateTime(2026, 10, 14);
-      final deck = dealDay(
+      final deal = dealDay(
         date: day,
         topics: {'space', 'history'},
         weights: const {'space': 1, 'history': 1},
       );
-      final question = questionOfTheDay(day);
-      for (final p in deck.where((p) => !p.asksSomething)) {
-        expect(p.topic, anyOf('Space', 'History'), reason: p.id);
+      // The card that asks lives under Thinking, whatever the mix; the
+      // card that tells is the mix's entirely.
+      for (final id in deal.own) {
+        final Pill p = PillBank.byId(id)!;
+        if (p.asksSomething) continue;
+        expect(p.topic, anyOf('Space', 'History'), reason: id);
       }
-      expect(deck.map((p) => p.id), contains(question.id));
+      final question = questionOfTheDay(day);
+      expect(deal.cards.map((p) => p.id), contains(question.id));
       expect(kTopics['thinking']!.name, question.topic);
     });
 
-    test('a card that came due takes the second asking slot', () {
+    test('a week kept makes three of the five the reader\'s own', () {
+      expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
+      expect(ownCardsFor(plus: false, streak: 6), kOwnCardsFree);
+      expect(ownCardsFor(plus: false, streak: 7), kOwnCardsRewarded);
+      expect(ownCardsFor(plus: false, streak: 8), kOwnCardsFree);
+      expect(ownCardsFor(plus: false, streak: 14), kOwnCardsRewarded);
+      expect(ownCardsFor(plus: true, streak: 0), kPillsPerDay);
+      expect(ownCardsFor(plus: true, streak: 7), kPillsPerDay);
+
       final day = DateTime(2026, 10, 14);
-      final question = questionOfTheDay(day);
-      final due = PillBank.cards.firstWhere(
-        (p) => p.isGraded && p.asksSomething && p.id != question.id,
+      final deal = dealDay(date: day, own: kOwnCardsRewarded);
+      expect(deal.cards, hasLength(kPillsPerDay));
+      expect(deal.own, hasLength(kOwnCardsRewarded));
+      expect(deal.cards.map((p) => p.id), contains(questionOfTheDay(day).id));
+    });
+
+    test(
+      'the edition\'s cards are everybody\'s, and keep clear of yesterday\'s',
+      () {
+        final a = commonOfEdition(40).map((p) => p.id).toList();
+        resetCalendar();
+        expect(commonOfEdition(40).map((p) => p.id).toList(), a);
+        expect(a, hasLength(kCommonSpares));
+        // Never two of one subject, and never a question.
+        final cards = commonOfEdition(40);
+        expect(cards.map((p) => p.topic).toSet(), hasLength(cards.length));
+        expect(cards.any((p) => p.asksSomething), isFalse);
+        for (var e = 2; e <= 60; e++) {
+          final today = commonOfEdition(e).map((p) => p.id).toSet();
+          final yesterday = commonOfEdition(e - 1).map((p) => p.id).toSet();
+          expect(today.intersection(yesterday), isEmpty, reason: 'edition $e');
+        }
+      },
+    );
+
+    test(
+      'a reader who has read one of the edition\'s takes the next spare',
+      () {
+        final day = DateTime(2026, 10, 14);
+        final edition = commonOfEdition(editionOf(day))
+            .map((p) => p.id)
+            .toList();
+        final deal = dealDay(date: day, exclude: {edition.first});
+        final ids = deal.cards.map((p) => p.id).toList();
+        expect(ids, isNot(contains(edition.first)));
+        expect(ids, contains(edition[1]));
+        expect(ids, contains(edition[2]));
+        expect(deal.cards, hasLength(kPillsPerDay));
+      },
+    );
+  });
+
+  group('A day that is all the reader\'s own', () {
+    test('holds five from the mix and no question of the day', () {
+      final day = DateTime(2026, 10, 14);
+      final deal = dealDay(date: day, own: kPillsPerDay);
+      expect(deal.question, isNull);
+      expect(deal.cards, hasLength(kPillsPerDay));
+      expect(deal.own, hasLength(kPillsPerDay));
+      expect(
+        deal.cards.map((p) => p.id),
+        isNot(contains(questionOfTheDay(day).id)),
       );
-      final deck = dealDay(date: day, reviews: [due]);
-      expect(deck.map((p) => p.id), contains(due.id));
-      expect(deck.map((p) => p.id), contains(question.id));
-      // And no third question is dealt to make room for it.
+      expect(
+        deal.cards.where((p) => p.asksSomething).length,
+        asksInADay(kPillsPerDay),
+      );
+      expect(
+        deal.cards.first.asksSomething,
+        isFalse,
+        reason: 'opens on a read',
+      );
+    });
+
+    test('a card that came due takes an asking slot, one at most', () {
+      final day = DateTime(2026, 10, 14);
+      final due = PillBank.cards
+          .where((p) => p.isGraded && p.asksSomething)
+          .take(2)
+          .toList();
+      final deck = dealDay(date: day, reviews: due, own: kPillsPerDay).cards;
+      expect(deck.map((p) => p.id), contains(due.first.id));
+      // The second waits: a day always has one question it has never asked.
+      expect(deck.map((p) => p.id), isNot(contains(due.last.id)));
       expect(
         deck.where((p) => p.asksSomething).length,
         asksInADay(kPillsPerDay),
       );
-      // The question of the day coming due is not dealt twice.
-      final twice = dealDay(date: day, reviews: [question]);
-      expect(twice.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
+      // On a free day the review is the reader's own, beside the question
+      // of the day.
+      final free = dealDay(date: day, reviews: due);
+      expect(free.cards.map((p) => p.id), contains(due.first.id));
+      expect(free.own, contains(due.first.id));
+      expect(free.cards.map((p) => p.id), contains(questionOfTheDay(day).id));
+      expect(free.cards.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
     });
 
     test('is the same deal for the same date and history', () {
       final day = DateTime(2026, 10, 14);
       final seen = {PillBank.cards.first.id, PillBank.cards.last.id};
-      final a = dealDay(date: day, exclude: seen).map((p) => p.id).toList();
-      final b = dealDay(date: day, exclude: seen).map((p) => p.id).toList();
-      expect(a, b);
-      expect(a, isNot(contains(PillBank.cards.first.id)));
+      for (final own in [kOwnCardsFree, kPillsPerDay]) {
+        final a = dealDay(
+          date: day,
+          exclude: seen,
+          own: own,
+        ).cards.map((p) => p.id).toList();
+        final b = dealDay(
+          date: day,
+          exclude: seen,
+          own: own,
+        ).cards.map((p) => p.id).toList();
+        expect(a, b);
+        expect(a, isNot(contains(PillBank.cards.first.id)));
+      }
     });
 
-    test('keeps two questions a day, whatever the pool', () {
+    test('keeps two questions a day, whatever the pool and the plan', () {
       for (var d = 0; d < 60; d++) {
-        final deck = dealDay(date: DateTime(2026, 9, 1).add(Duration(days: d)));
-        final debates = deck.where((p) => p.challenge is TakeASide).length;
-        expect(debates, lessThanOrEqualTo(1), reason: 'day $d');
-        expect(deck.where((p) => p.asksSomething).length, 2, reason: 'day $d');
+        final date = DateTime(2026, 9, 1).add(Duration(days: d));
+        for (final own in [kOwnCardsFree, kOwnCardsRewarded, kPillsPerDay]) {
+          final deck = dealDay(date: date, own: own).cards;
+          final debates = deck.where((p) => p.challenge is TakeASide).length;
+          expect(debates, lessThanOrEqualTo(1), reason: 'day $d own $own');
+          expect(
+            deck.where((p) => p.asksSomething).length,
+            2,
+            reason: 'day $d own $own',
+          );
+          expect(deck.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
+        }
       }
     });
   });
@@ -231,7 +365,7 @@ void main() {
       'no two of the reader\'s cards share a strand while it can help it',
       () {
         for (var d = 0; d < 20; d++) {
-          final deck = dealDay(
+          final deck = _whole(
             date: DateTime(2026, 10, 1).add(Duration(days: d)),
             topics: {'space'},
           );
@@ -242,7 +376,7 @@ void main() {
     );
 
     test('a genre turned off comes after everything that is on', () {
-      final deck = dealDay(
+      final deck = _whole(
         date: DateTime(2026, 10, 14),
         topics: {'space'},
         genresOff: {'space.the_moon'},
@@ -254,7 +388,7 @@ void main() {
 
       // Only event horizons left on: two cards, then the one that waits
       // for a tides card — which still comes before a strand turned off.
-      final one = dealDay(
+      final one = _whole(
         date: DateTime(2026, 10, 14),
         topics: {'space'},
         strandsOff: {tides, dust, windows},
@@ -270,7 +404,7 @@ void main() {
       expect(h1.traits, contains('strand:$tides'));
       // Black holes and rockets off, moon dust off: tides is the one
       // strand on, and h1 is on through it while h2 is not.
-      final deck = dealDay(
+      final deck = _whole(
         date: DateTime(2026, 10, 14),
         topics: {'space'},
         genresOff: {'space.black_holes', 'space.rockets'},
@@ -282,9 +416,9 @@ void main() {
     });
 
     test('a card waits for the card it builds on', () {
-      final fresh = dealDay(date: DateTime(2026, 10, 14), topics: {'space'});
+      final fresh = _whole(date: DateTime(2026, 10, 14), topics: {'space'});
       expect(fresh.map((p) => p.id), isNot(contains('space-b1')));
-      final later = dealDay(
+      final later = _whole(
         date: DateTime(2026, 10, 14),
         topics: {'space'},
         exclude: {
@@ -316,7 +450,7 @@ void main() {
       int moonDays(Map<String, double> taste) {
         var n = 0;
         for (var d = 0; d < 40; d++) {
-          final deck = dealDay(
+          final deck = _whole(
             date: DateTime(2026, 10, 1).add(Duration(days: d)),
             topics: {'space'},
             taste: taste,

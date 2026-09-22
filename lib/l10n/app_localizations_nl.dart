@@ -115,16 +115,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get exploreTodaysBest => 'Ontdek het beste van vandaag';
 
   @override
-  String get fiveMore => 'Nog vijf';
-
-  @override
-  String get unlockFiveExtra => 'Vijf extra pillen ontgrendelen';
-
-  @override
-  String get magicHeadline => 'Nog vijf?';
-
-  @override
-  String get magicUnlock => 'Nog vijf ontgrendelen';
+  String get magicUnlock => 'Probeer 7 dagen gratis';
 
   @override
   String nothingInYet(String subject) {
@@ -650,13 +641,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sevenDaysFree => '7 dagen gratis';
 
   @override
-  String get watchTheGapMove => 'Zie het gat bewegen.';
-
-  @override
-  String get measurementFreeForever =>
-      'De meting is gratis en blijft dat. Astute+ vertelt je welke kant het op gaat.';
-
-  @override
   String get seeThePlans => 'BEKIJK DE ABONNEMENTEN';
 
   @override
@@ -902,45 +886,11 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get perkRecordTitle => 'Je staat van dienst door de tijd';
-
-  @override
-  String get perkRecordLine =>
-      'Of het gat tussen hoe zeker je was en hoe goed je zat echt sluit.';
-
-  @override
-  String get perkPrinciplesTitle => 'Elk principe dat je tegenkwam';
-
-  @override
-  String get perkPrinciplesLine =>
-      'Niet alleen de drie waar je het slechtst in bent — allemaal, en de contexten die je nog niet zag.';
-
-  @override
-  String get perkFreezesTitle => 'Drie reeks-freezes, niet één';
-
-  @override
-  String get perkFreezesLine =>
-      'Genoeg voor een weekend weg. Een reeks die je alleen kunt verliezen, gaat uiteindelijk verloren.';
-
-  @override
-  String get perkExtraTitle => '5 extra pillen elke dag';
-
-  @override
-  String get perkExtraLine =>
-      'Een tweede set gaat open zodra je de eerste af hebt.';
-
-  @override
-  String get perkArchiveTitle => 'Het volledige archief';
+  String get perkArchiveTitle => 'Je hele archief';
 
   @override
   String get perkArchiveLine =>
-      'Elke pil die je ooit las, doorzoekbaar per vak.';
-
-  @override
-  String get perkTopicsTitle => 'Kies je eigen vakken';
-
-  @override
-  String get perkTopicsLine => 'Weeg de mix naar wat je echt leuk vindt.';
+      'Elke dag die je las, voorgoed bewaard. Gratis blijft een week.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IS ACTIEF';
@@ -962,9 +912,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get nothingToRestore => 'Niets te herstellen op dit account.';
-
-  @override
-  String get findOutIfBetter => 'Ontdek of je echt beter wordt.';
 
   @override
   String get planYearly => 'Jaarlijks';
@@ -1576,4 +1523,117 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get mixFull => 'Vol';
+
+  @override
+  String get forYouChip => 'VOOR JOU';
+
+  @override
+  String get againChip => 'OPNIEUW';
+
+  @override
+  String theOthersYours(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'De andere $n, van jou.',
+      one: 'De andere, van jou.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get magicLine =>
+      'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.';
+
+  @override
+  String get everyCardForYou => 'Elke kaart, voor jou gekozen.';
+
+  @override
+  String get perkOwnTitle => 'Vijf kaarten per dag, allemaal van jou';
+
+  @override
+  String get perkOwnLine =>
+      'Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
+
+  @override
+  String get perkMapTitle => 'Jouw landkaart';
+
+  @override
+  String get perkMapLine =>
+      'Wat je draad voor draad weet, wat je nog onthoudt, en of je oordeel beter wordt.';
+
+  @override
+  String get plusCardHeadline => 'Alle vijf van jou.';
+
+  @override
+  String get plusCardLine =>
+      'Vijf kaarten per dag uit je mix, op jouw niveau. Jouw landkaart. Je hele archief.';
+
+  @override
+  String get continueFree => 'Gratis verdergaan';
+
+  @override
+  String get archiveBeforeThisWeek => 'Vóór deze week';
+
+  @override
+  String get yourMap => 'Jouw landkaart';
+
+  @override
+  String get mapLine => 'Wat je weet, vak voor vak — en wat blijft.';
+
+  @override
+  String get whatStays => 'Wat blijft';
+
+  @override
+  String get strandsWithPlus => 'Welke draden, en hoe diep — met Astute+';
+
+  @override
+  String nReadOfN(int read, int total) {
+    return '$read van $total gelezen';
+  }
+
+  @override
+  String nAnswered(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kaarten beantwoord',
+      one: '1 kaart beantwoord',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nCameBackAgain(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n kwamen terug',
+      one: '1 kwam terug',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String nKeptOnReturn(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nog goed bij terugkomst',
+      one: '1 nog goed bij terugkomst',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingBackYet =>
+      'Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.';
+
+  @override
+  String get memoryWithPlus =>
+      'Wat je echt onthoudt, kaart voor kaart — met Astute+.';
+
+  @override
+  String get weekKeptThreeOwn =>
+      'Een week volgehouden: morgen zijn drie van de vijf van jou.';
 }
