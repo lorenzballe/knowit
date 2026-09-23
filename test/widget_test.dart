@@ -1594,7 +1594,7 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('The other 3, yours.'), findsOneWidget);
+        expect(find.text('The other 4, yours.'), findsOneWidget);
         expect(find.text('Try 7 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         await tester.pump(const Duration(seconds: 6));
@@ -1695,7 +1695,7 @@ void main() {
       // Past the fifth: the offer, at the front, and the counter gives way
       // to the plan's name. No skip here — a swipe is the way back.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('The other 3, yours.'), findsOneWidget);
+      expect(find.text('The other 4, yours.'), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);

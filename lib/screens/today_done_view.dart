@@ -1247,7 +1247,7 @@ class _Tomorrow extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(
-                    context.l10n.weekKeptThreeOwn,
+                    context.l10n.weekKeptTwoOwn,
                     key: const ValueKey('week-reward'),
                     style: AppText.body(
                       size: 12.5,

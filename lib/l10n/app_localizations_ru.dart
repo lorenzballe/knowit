@@ -1624,7 +1624,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Из твоих веток, на твоём уровне, ни одной уже прочитанной. Бесплатно — две в день.';
+      'Из твоих веток, на твоём уровне, ни одной уже прочитанной. Бесплатно — одна в день.';
 
   @override
   String get plusCardHeadline => 'Все пять — твои.';
@@ -1685,8 +1685,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пока ничего не вернулось. Карточка возвращается через три дня, потом через неделю, потом через месяц — и то, что ты угадываешь тогда, ты знаешь по-настоящему.';
 
   @override
-  String get weekKeptThreeOwn =>
-      'Неделя подряд: завтра три карточки из пяти — твои.';
+  String get weekKeptTwoOwn => 'Неделя подряд: завтра две из пяти — твои.';
 
   @override
   String get perkJourneyLine =>

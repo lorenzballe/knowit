@@ -95,7 +95,7 @@ void main() {
   });
 
   group('A free day', () {
-    test('is the question of the day, two of the edition\'s and two of the reader\'s own', () {
+    test('is the question of the day, three of the edition\'s and one of the reader\'s own', () {
       final day = DateTime(2026, 10, 14);
       final deal = dealDay(date: day);
       final cards = deal.cards;
@@ -105,12 +105,12 @@ void main() {
       expect(cards.map((p) => p.id), contains(questionOfTheDay(day).id));
       expect(deal.own, hasLength(kOwnCardsFree));
       expect(deal.own, isNot(contains(deal.question!.id)));
-      // The other two are the edition's: the same for everybody, and they
+      // The other three are the edition's: the same for everybody, and they
       // tell rather than ask.
       final common = cards
           .where((p) => !deal.own.contains(p.id) && p.id != deal.question!.id)
           .toList();
-      expect(common, hasLength(2));
+      expect(common, hasLength(3));
       final edition = commonOfEdition(editionOf(day)).map((p) => p.id);
       for (final p in common) {
         expect(edition, contains(p.id));
@@ -142,7 +142,7 @@ void main() {
       expect(kTopics['thinking']!.name, question.topic);
     });
 
-    test('a week kept makes three of the five the reader\'s own', () {
+    test('a week kept makes two of the five the reader\'s own', () {
       expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
       expect(ownCardsFor(plus: false, streak: 6), kOwnCardsFree);
       expect(ownCardsFor(plus: false, streak: 7), kOwnCardsRewarded);

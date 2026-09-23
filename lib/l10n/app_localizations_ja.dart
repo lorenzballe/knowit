@@ -1534,7 +1534,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkOwnTitle => '毎日5枚、すべてあなたのもの';
 
   @override
-  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日2枚。';
+  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日1枚。';
 
   @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
@@ -1591,7 +1591,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。';
 
   @override
-  String get weekKeptThreeOwn => '1週間続きました。明日は5枚のうち3枚があなたのものです。';
+  String get weekKeptTwoOwn => '1週間続いた：明日は5枚のうち2枚があなたのカード。';
 
   @override
   String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。';

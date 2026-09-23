@@ -362,7 +362,7 @@
   "magicLine": "매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.",
   "everyCardForYou": "모든 카드를, 당신을 위해.",
   "perkOwnTitle": "매일 다섯 장, 전부 당신의 것",
-  "perkOwnLine": "당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.",
+  "perkOwnLine": "당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 한 장.",
   "plusCardHeadline": "다섯 장 모두, 당신의 것으로.",
   "plusCardLine": "당신의 믹스에서, 당신의 수준으로 매일 다섯 장. 나의 여정. 모든 기록.",
   "continueFree": "무료로 계속하기",
@@ -373,6 +373,6 @@
   "nCameBackAgain": "{n, plural, other{{n}장 돌아옴}}",
   "nKeptOnReturn": "{n, plural, other{{n}장은 돌아와도 정답}}",
   "nothingBackYet": "아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.",
-  "weekKeptThreeOwn": "일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.",
+  "weekKeptTwoOwn": "일주일 달성: 내일은 다섯 장 중 두 장이 당신의 카드.",
   "perkJourneyLine": "당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드."
 }

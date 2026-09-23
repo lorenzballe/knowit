@@ -362,7 +362,7 @@
   "magicLine": "Pięć kart dziennie wybranych dla ciebie: z twojego miksu, na twoim poziomie, nigdy już przeczytana. Od jutra.",
   "everyCardForYou": "Każda karta wybrana dla ciebie.",
   "perkOwnTitle": "Pięć kart dziennie, wszystkie twoje",
-  "perkOwnLine": "Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.",
+  "perkOwnLine": "Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz jedną dziennie.",
   "plusCardHeadline": "Wszystkie pięć, twoje.",
   "plusCardLine": "Pięć kart dziennie z twojego miksu, na twoim poziomie. Twoja podróż. Całe twoje archiwum.",
   "continueFree": "Kontynuuj za darmo",
@@ -373,6 +373,6 @@
   "nCameBackAgain": "{n, plural, =1{1 wróciła} other{{n} wróciło}}",
   "nKeptOnReturn": "{n, plural, =1{1 nadal dobrze po powrocie} other{{n} nadal dobrze po powrocie}}",
   "nothingBackYet": "Nic jeszcze nie wróciło. Karta wraca po trzech dniach, potem po tygodniu, potem po miesiącu — a to, co wtedy trafisz, naprawdę wiesz.",
-  "weekKeptThreeOwn": "Tydzień z rzędu: jutro trzy z pięciu są twoje.",
+  "weekKeptTwoOwn": "Tydzień z rzędu: jutro dwie z pięciu są twoje.",
   "perkJourneyLine": "Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem."
 }

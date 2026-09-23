@@ -1582,7 +1582,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Dai tuoi filoni, al tuo livello, mai una già letta. Gratis ne hai due al giorno.';
+      'Dai tuoi filoni, al tuo livello, mai una già letta. Gratis ne hai una al giorno.';
 
   @override
   String get plusCardHeadline => 'Tutte e cinque, tue.';
@@ -1643,8 +1643,8 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è ancora tornato niente. Una carta torna dopo tre giorni, poi una settimana, poi un mese — e quello che azzecchi allora è quello che sai davvero.';
 
   @override
-  String get weekKeptThreeOwn =>
-      'Una settimana di fila: domani tre carte su cinque sono tue.';
+  String get weekKeptTwoOwn =>
+      'Una settimana di fila: domani due delle cinque sono tue.';
 
   @override
   String get perkJourneyLine =>

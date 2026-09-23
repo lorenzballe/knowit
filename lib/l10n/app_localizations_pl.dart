@@ -1627,7 +1627,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.';
+      'Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz jedną dziennie.';
 
   @override
   String get plusCardHeadline => 'Wszystkie pięć, twoje.';
@@ -1688,8 +1688,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Nic jeszcze nie wróciło. Karta wraca po trzech dniach, potem po tygodniu, potem po miesiącu — a to, co wtedy trafisz, naprawdę wiesz.';
 
   @override
-  String get weekKeptThreeOwn =>
-      'Tydzień z rzędu: jutro trzy z pięciu są twoje.';
+  String get weekKeptTwoOwn => 'Tydzień z rzędu: jutro dwie z pięciu są twoje.';
 
   @override
   String get perkJourneyLine =>

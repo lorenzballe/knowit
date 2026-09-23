@@ -362,7 +362,7 @@
   "magicLine": "Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.",
   "everyCardForYou": "Elke kaart, voor jou gekozen.",
   "perkOwnTitle": "Vijf kaarten per dag, allemaal van jou",
-  "perkOwnLine": "Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.",
+  "perkOwnLine": "Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er één per dag.",
   "plusCardHeadline": "Alle vijf van jou.",
   "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Je reis. Je hele archief.",
   "continueFree": "Gratis verdergaan",
@@ -373,6 +373,6 @@
   "nCameBackAgain": "{n, plural, =1{1 kwam terug} other{{n} kwamen terug}}",
   "nKeptOnReturn": "{n, plural, =1{1 nog goed bij terugkomst} other{{n} nog goed bij terugkomst}}",
   "nothingBackYet": "Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.",
-  "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou.",
+  "weekKeptTwoOwn": "Een week volgehouden: morgen zijn twee van de vijf van jou.",
   "perkJourneyLine": "Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen."
 }

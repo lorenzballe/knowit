@@ -82,9 +82,9 @@ daily nudge), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
 **Astute+** — three things, all delivered, and everything else the same on
-both plans. **Five cards a day, all yours**: on the free plan two of the
-five are dealt from the reader's mix and three are everybody's — the
-question of the day and two more from the day's edition — and with Astute+
+both plans. **Five cards a day, all yours**: on the free plan one of the
+five is dealt from the reader's mix and four are everybody's — the
+question of the day and three more from the day's edition — and with Astute+
 all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
@@ -441,14 +441,14 @@ days until the pool runs dry.
 
 ## The day, and whose it is
 
-A day is five cards on both plans. On the free plan two of them are the
+A day is five cards on both plans. On the free plan one of them is the
 reader's own — dealt from the mix, from the subjects and strands they kept
-on, at the level they said they were — and three are everybody's: the
-question of the day, and two more from the day's edition, the same for
+on, at the level they said they were — and four are everybody's: the
+question of the day, and three more from the day's edition, the same for
 every free reader in the world (`commonOfEdition`, chained so a card does
 not come round for weeks, never two of one subject; a reader who has
 already read one takes the edition's next spare). The morning after the
-streak reaches a multiple of seven, three of the five are the reader's own
+streak reaches a multiple of seven, two of the five are the reader's own
 — nothing to redeem, the deck simply has one more (`ownCardsFor`). With
 Astute+ all five are the reader's own: at the level the app has measured
 rather than the one they said, leaned by what they held and threw down,

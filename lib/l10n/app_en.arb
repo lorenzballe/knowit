@@ -1383,7 +1383,7 @@
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "everyCardForYou": "Every card, chosen for you.",
  "perkOwnTitle": "Five cards a day, all yours",
- "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you two.",
+ "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you one.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
@@ -1425,6 +1425,6 @@
   }
  },
  "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
- "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
+ "weekKeptTwoOwn": "A week kept: tomorrow two of the five are yours.",
  "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight."
 }

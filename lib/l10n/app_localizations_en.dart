@@ -1577,7 +1577,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'From your strands, at your level, never one you have read. Free days give you two.';
+      'From your strands, at your level, never one you have read. Free days give you one.';
 
   @override
   String get plusCardHeadline => 'Make all five yours.';
@@ -1638,8 +1638,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.';
 
   @override
-  String get weekKeptThreeOwn =>
-      'A week kept: tomorrow three of the five are yours.';
+  String get weekKeptTwoOwn =>
+      'A week kept: tomorrow two of the five are yours.';
 
   @override
   String get perkJourneyLine =>

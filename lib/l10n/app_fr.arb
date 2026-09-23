@@ -362,7 +362,7 @@
   "magicLine": "Cinq cartes par jour choisies pour toi : de ton mix, à ton niveau, jamais une déjà lue. Dès demain.",
   "everyCardForYou": "Chaque carte, choisie pour toi.",
   "perkOwnTitle": "Cinq cartes par jour, toutes à toi",
-  "perkOwnLine": "De tes fils, à ton niveau, jamais une déjà lue. En gratuit, deux par jour.",
+  "perkOwnLine": "De tes fils, à ton niveau, jamais une déjà lue. En gratuit, une par jour.",
   "plusCardHeadline": "Les cinq, à toi.",
   "plusCardLine": "Cinq cartes par jour de ton mix, à ton niveau. Ton voyage. Toute ton archive.",
   "continueFree": "Continuer gratuitement",
@@ -373,6 +373,6 @@
   "nCameBackAgain": "{n, plural, =1{1 est revenue} other{{n} sont revenues}}",
   "nKeptOnReturn": "{n, plural, =1{1 encore juste au retour} other{{n} encore justes au retour}}",
   "nothingBackYet": "Rien n'est encore revenu. Une carte revient après trois jours, puis une semaine, puis un mois — et ce que tu réussis alors est ce que tu sais vraiment.",
-  "weekKeptThreeOwn": "Une semaine tenue : demain, trois des cinq sont à toi.",
+  "weekKeptTwoOwn": "Une semaine tenue : demain, deux des cinq sont à toi.",
   "perkJourneyLine": "Ton niveau, chaque sujet fil par fil, ce qui est resté, et la carte à raconter ce soir."
 }

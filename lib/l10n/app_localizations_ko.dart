@@ -1546,7 +1546,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkOwnTitle => '매일 다섯 장, 전부 당신의 것';
 
   @override
-  String get perkOwnLine => '당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
+  String get perkOwnLine => '당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 한 장.';
 
   @override
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
@@ -1603,7 +1603,7 @@ class AppLocalizationsKo extends AppLocalizations {
       '아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.';
 
   @override
-  String get weekKeptThreeOwn => '일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.';
+  String get weekKeptTwoOwn => '일주일 달성: 내일은 다섯 장 중 두 장이 당신의 카드.';
 
   @override
   String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드.';

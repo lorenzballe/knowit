@@ -1531,7 +1531,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkOwnTitle => '每天五张，全部为你';
 
   @override
-  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天两张。';
+  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天一张。';
 
   @override
   String get plusCardHeadline => '让五张全都为你。';
@@ -1588,7 +1588,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。';
 
   @override
-  String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张为你而选。';
+  String get weekKeptTwoOwn => '坚持了一周：明天五张里有两张是你的。';
 
   @override
   String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。';

@@ -28,13 +28,14 @@ import 'pills_repository.dart';
 /// The day the calendar began. Edition 1.
 final DateTime kEpoch = DateTime(2026, 9, 1);
 
-/// How many of a free day's five are the reader's own.
-const int kOwnCardsFree = 2;
+/// How many of a free day's five are the reader's own: one, beside the
+/// question of the day and three of the edition's. Astute+ makes it five.
+const int kOwnCardsFree = 1;
 
 /// How many are the reader's own the day after a full week kept: the
 /// streak's own reward, and the thing Astute+ has more of, tasted once a
 /// week by a reader who has not paid for it.
-const int kOwnCardsRewarded = 3;
+const int kOwnCardsRewarded = 2;
 
 /// How many of a day's [kPillsPerDay] are the reader's own.
 ///
@@ -127,9 +128,9 @@ Pill _ask(int edition) {
   return stale.first;
 }
 
-/// How many cards an edition holds in common besides its question: the two
+/// How many cards an edition holds in common besides its question: the three
 /// a free day deals, and two spares for a reader who has already read one.
-const int kCommonSpares = 4;
+const int kCommonSpares = 5;
 
 /// The cards that are everybody's on an edition, besides the question of
 /// the day, in the order a free day takes them.
@@ -154,7 +155,7 @@ List<Pill> commonOfEdition(int edition) {
 List<Pill> _tell(int edition) {
   final pool = PillBank.cards.where((p) => !p.asksSomething).toList();
   if (pool.isEmpty) return const [];
-  // A lap of the reading cards, at four an edition, keeps a card out for
+  // A lap of the reading cards, at five an edition, keeps a card out for
   // as long as the pool allows; on a bank of a few hundred that is weeks,
   // and the bank grows every night.
   final int window = max(0, (pool.length * 0.75).floor() ~/ kCommonSpares);
