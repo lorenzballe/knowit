@@ -20,10 +20,11 @@ import 'package:astuto/main.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 
 Future<void> _loadFonts() async {
-  const fonts = {
+  final fonts = {
     'Fraunces': 'assets/fonts/Fraunces.ttf',
     'Figtree': 'assets/fonts/Figtree.ttf',
-    'MaterialIcons': '/opt/flutter/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
+    'MaterialIcons':
+        '${Platform.environment['FLUTTER_ROOT'] ?? '/opt/flutter'}/bin/cache/artifacts/material_fonts/MaterialIcons-Regular.otf',
   };
   for (final entry in fonts.entries) {
     final loader = FontLoader(entry.key);
