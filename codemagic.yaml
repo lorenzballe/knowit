@@ -19,6 +19,11 @@ workflows:
       vars:
         APP_STORE_APPLE_ID: 6806852300
         BUNDLE_ID: "com.astuto.app"
+        # The home-screen widget is its own bundle inside the app's, signed
+        # with its own profile, and it shares the app's group so it can read
+        # what the app writes down for it.
+        WIDGET_BUNDLE_ID: "com.astuto.app.AstutWidget"
+        APP_GROUP: "group.com.astuto.app"
         # RevenueCat's public SDK keys. They identify the app and grant
         # nothing, which is why they ship inside the binary — unlike the
         # secret key (sk_), which is for a server and must never be here.
@@ -48,29 +53,44 @@ workflows:
       - name: Get Flutter packages
         script: flutter pub get
 
-      - name: Let the App ID grant Sign in with Apple
+      - name: Let the App IDs grant what the entitlements ask for
         script: |
           set -e
-          # Runner.entitlements asking for Sign in with Apple is only half of
-          # it: a profile will not sign a build that claims a capability the
-          # App ID does not carry, and that fails the export rather than the
-          # sign-in. So the App ID is brought up to date here, before any
-          # profile is minted — and the App Store profiles that already exist
-          # are dropped, because Apple marks them invalid when a capability
-          # changes rather than updating them in place.
-          BUNDLE_UUID=$(app-store-connect bundle-ids list \
-            --bundle-id-identifier "$BUNDLE_ID" \
-            --strict-match-identifier --json 2>/dev/null \
-            | jq -r 'if type=="array" then (.[0].id // empty) else (.id // empty) end' 2>/dev/null || true)
-          if [ -z "$BUNDLE_UUID" ]; then
-            echo "No App ID registered for $BUNDLE_ID yet — fetch-signing-files will create one."
-          else
-            echo "App ID $BUNDLE_ID is $BUNDLE_UUID"
+          # An entitlements file asking for a capability is only half of it:
+          # a profile will not sign a build that claims a capability the App
+          # ID does not carry, and that fails the export rather than the
+          # feature. So both App IDs are brought up to date here, before any
+          # profile is minted — Sign in with Apple and App Groups on the app,
+          # App Groups on the widget — and the App Store profiles that already
+          # exist are dropped, because Apple marks them invalid when a
+          # capability changes rather than updating them in place.
+          #
+          # The group itself ($APP_GROUP) cannot be made from here: the App
+          # Store Connect API turns the capability on but has no call that
+          # registers a group or ticks it on an App ID. That is done once, by
+          # hand, at developer.apple.com → Identifiers → App Groups (register
+          # it), then on each of the two App IDs → App Groups → Configure →
+          # tick it. Until then the widget's profile signs nothing.
+          for ID in "$BUNDLE_ID" "$WIDGET_BUNDLE_ID"; do
+            BUNDLE_UUID=$(app-store-connect bundle-ids list \
+              --bundle-id-identifier "$ID" \
+              --strict-match-identifier --json 2>/dev/null \
+              | jq -r 'if type=="array" then (.[0].id // empty) else (.id // empty) end' 2>/dev/null || true)
+            if [ -z "$BUNDLE_UUID" ]; then
+              echo "No App ID registered for $ID yet — fetch-signing-files will create one."
+              continue
+            fi
+            echo "App ID $ID is $BUNDLE_UUID"
             # Already enabled is the outcome we want, and the API reports that
             # as an error, so it must not stop the build.
+            if [ "$ID" = "$BUNDLE_ID" ]; then
+              app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
+                --capability "Sign In with Apple" \
+                || echo "  Sign in with Apple was already enabled, or could not be changed."
+            fi
             app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
-              --capability "Sign In with Apple" \
-              || echo "  Sign in with Apple was already enabled, or could not be changed."
+              --capability "App Groups" \
+              || echo "  App Groups was already enabled, or could not be changed."
             app-store-connect bundle-ids profiles --bundle-ids "$BUNDLE_UUID" \
               --type IOS_APP_STORE --json 2>/dev/null \
               | jq -r 'if type=="array" then .[].id else .id end' 2>/dev/null \
@@ -80,7 +100,7 @@ workflows:
                     app-store-connect profiles delete "$pid" --ignore-not-found || true
                   fi
                 done
-          fi
+          done
 
       - name: Reset signing — create a certificate we own + App Store profile
         script: |
@@ -95,14 +115,23 @@ workflows:
               app-store-connect certificates delete "$cid" || true
             fi
           done
-          echo "Generating our OWN private key, then the certificate + App Store profile..."
+          echo "Generating our OWN private key, then the certificate + App Store profiles..."
           # fetch-signing-files needs a private key to create the certificate — give it a fresh one.
           openssl genrsa -out /tmp/cert_key.pem 2048
+          # Two profiles, one certificate: the second call finds the
+          # certificate the first one minted for this key and reuses it.
+          # The widget's App ID is created here too if it does not exist.
           app-store-connect fetch-signing-files "$BUNDLE_ID" \
             --type IOS_APP_STORE \
             --certificate-key=@file:/tmp/cert_key.pem \
             --create
+          app-store-connect fetch-signing-files "$WIDGET_BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --certificate-key=@file:/tmp/cert_key.pem \
+            --create
           keychain add-certificates
+          # Applies each profile to the target whose bundle id it matches:
+          # the app's to Runner, the widget's to AstutWidgetExtension.
           xcode-project use-profiles
 
       - name: Install CocoaPods dependencies

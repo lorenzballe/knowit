@@ -921,17 +921,45 @@ void main() {
       // Handed over at launch, without being asked.
       expect(pushed, hasLength(1));
       final data = pushed.single;
+      final Pill lead = questionOfTheDay(DateTime.now());
       expect(data['edition'], editionOf(DateTime.now()));
-      expect(data['question'], questionOfTheDay(DateTime.now()).question);
+      expect(data['question'], lead.question);
       expect(data['streak'], 7);
       expect(data['done'], isFalse);
 
+      // The card's own colour and ink, so the widget draws it the way the
+      // app does — as "#RRGGBB", which is all Swift and Kotlin need to read.
+      expect(data['topic'], lead.topic);
+      expect(data['color'], AppState.hexOf(lead.color));
+      expect(data['ink'], AppState.hexOf(lead.ink));
+      expect(data['color'], matches(RegExp(r'^#[0-9A-F]{6}$')));
+
+      // The foot's three lines, already in the reader's language: the
+      // widget has no translations of its own.
+      expect(data['footPlain'], 'Five cards, two minutes.');
+      expect(data['footStreak'], '7-day streak');
+      expect(data['footDone'], 'Done for today');
+
       // The next fortnight, one question a day, so the widget turns over
-      // at midnight without the app.
+      // at midnight without the app — with each morning's colour and
+      // subject beside its question.
       final ahead = data['ahead'] as Map<String, String>;
       expect(ahead, hasLength(AppState.kPlannedDays + 1));
       final third = DateTime.now().add(const Duration(days: 3));
       expect(ahead[dateKey(third)], questionOfTheDay(third).question);
+      final aheadColor = data['aheadColor'] as Map<String, String>;
+      final aheadTopic = data['aheadTopic'] as Map<String, String>;
+      final aheadInk = data['aheadInk'] as Map<String, String>;
+      expect(aheadColor.keys, orderedEquals(ahead.keys));
+      expect(
+        aheadColor[dateKey(third)],
+        AppState.hexOf(questionOfTheDay(third).color),
+      );
+      expect(
+        aheadInk[dateKey(third)],
+        AppState.hexOf(questionOfTheDay(third).ink),
+      );
+      expect(aheadTopic[dateKey(third)], questionOfTheDay(third).topic);
       // And nothing a stranger reading the home screen should not see.
       expect(data.keys, isNot(contains('answers')));
 
@@ -942,6 +970,14 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       expect(pushed.last['done'], isTrue);
       expect(pushed.last['streak'], 8);
+      expect(pushed.last['footStreak'], '8-day streak');
+    });
+
+    test('writes a colour the way the widgets read it', () {
+      expect(AppState.hexOf(const Color(0xFF2B5CFF)), '#2B5CFF');
+      expect(AppState.hexOf(const Color(0xFF000000)), '#000000');
+      // Opaque whatever the alpha: a widget ground is never see-through.
+      expect(AppState.hexOf(const Color(0x80FFE600)), '#FFE600');
     });
   });
 

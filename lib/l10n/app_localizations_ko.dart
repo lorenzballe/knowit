@@ -859,6 +859,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String get theBarMoveCaps => '대화용 한 문장';
 
   @override
+  String get widgetFootPlain => '카드 다섯 장, 2분.';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 연속',
+      one: '1일 연속',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => '오늘 완료';
+
+  @override
   String get dayStreakCaps => '일 연속';
 
   @override

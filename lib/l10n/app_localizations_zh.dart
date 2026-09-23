@@ -852,6 +852,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get theBarMoveCaps => '饭桌上的那句话';
 
   @override
+  String get widgetFootPlain => '五张卡片，两分钟。';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '连续 $n 天',
+      one: '连续 1 天',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => '今天已完成';
+
+  @override
   String get dayStreakCaps => '天连续';
 
   @override

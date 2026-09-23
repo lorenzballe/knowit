@@ -879,6 +879,23 @@ class AppLocalizationsPt extends AppLocalizations {
   String get theBarMoveCaps => 'A FRASE DE BAR';
 
   @override
+  String get widgetFootPlain => 'Cinco cartas, dois minutos.';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n dias seguidos',
+      one: '1 dia seguido',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => 'Feito por hoje';
+
+  @override
   String get dayStreakCaps => 'DIAS SEGUIDOS';
 
   @override

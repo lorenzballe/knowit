@@ -760,6 +760,23 @@
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "BAR MOVE",
  "theBarMoveCaps": "THE BAR MOVE",
+ "widgetFootPlain": "Five cards, two minutes.",
+ "@widgetFootPlain": {
+  "description": "The home-screen widget's foot on a morning with no streak to show."
+ },
+ "widgetFootStreak": "{n, plural, =1{1-day streak} other{{n}-day streak}}",
+ "@widgetFootStreak": {
+  "description": "The home-screen widget's foot while a streak is live.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "widgetFootDone": "Done for today",
+ "@widgetFootDone": {
+  "description": "The home-screen widget's foot once today's cards are read."
+ },
  "dayStreakCaps": "DAY STREAK",
  "sourceLabel": "Source · {source}",
  "@sourceLabel": {

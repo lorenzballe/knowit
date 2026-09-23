@@ -856,6 +856,23 @@ class AppLocalizationsJa extends AppLocalizations {
   String get theBarMoveCaps => '会話のひと言';
 
   @override
+  String get widgetFootPlain => '5枚のカード、2分。';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n日連続',
+      one: '1日連続',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => '今日は完了';
+
+  @override
   String get dayStreakCaps => '日連続';
 
   @override

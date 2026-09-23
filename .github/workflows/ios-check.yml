@@ -1,0 +1,44 @@
+name: iOS build check
+
+# Builds the iOS app, widget extension included, on a Mac nobody owns: a
+# GitHub runner. No signing, no upload — only whether the Xcode project as
+# checked in still compiles, which is the one thing a phone cannot tell.
+# Free on a public repository; a run takes about a quarter of an hour.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ios/**"
+      - "lib/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - ".github/workflows/ios-check.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: ios-check
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Build the iOS app and its widget, unsigned
+        run: flutter build ios --release --no-codesign
+
+      - name: Show what was built
+        run: |
+          ls -la build/ios/iphoneos/Runner.app/PlugIns || echo "no PlugIns folder: the widget was not embedded"
+          plutil -p build/ios/iphoneos/Runner.app/PlugIns/AstutWidgetExtension.appex/Info.plist | grep -E "CFBundleIdentifier|CFBundleShortVersionString|CFBundleVersion|NSExtensionPointIdentifier"
+          plutil -p build/ios/iphoneos/Runner.app/Info.plist | grep -E "CFBundleShortVersionString|CFBundleVersion"

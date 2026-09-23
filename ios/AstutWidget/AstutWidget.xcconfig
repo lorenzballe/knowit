@@ -1,0 +1,12 @@
+// The widget extension's build settings that the app's own come from.
+//
+// Flutter writes the version and the build number into Generated.xcconfig
+// before every build, and the Runner target reads them through its own
+// xcconfigs. An extension has to carry the same two numbers as the app that
+// embeds it, or App Store Connect refuses the upload — so it reads the same
+// file. Only that file: the Runner's Debug/Release xcconfigs also pull in
+// CocoaPods settings meant for the app, which an extension must not link.
+#include "../Flutter/Generated.xcconfig"
+
+MARKETING_VERSION = $(FLUTTER_BUILD_NAME)
+CURRENT_PROJECT_VERSION = $(FLUTTER_BUILD_NUMBER)

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="widget_description">The question of the day, and your streak.</string>
+    <string name="widget_description">The card the morning opens on, and your streak.</string>
 </resources>

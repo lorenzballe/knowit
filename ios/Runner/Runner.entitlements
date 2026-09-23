@@ -17,5 +17,13 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<!-- The home-screen widget reads what the app writes into this group.
+	     The App ID in the developer portal has to carry App Groups with the
+	     same group ticked, and so does the extension's, or the profile will
+	     not sign a build that asks for it. -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.astuto.app</string>
+	</array>
 </dict>
 </plist>

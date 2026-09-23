@@ -873,6 +873,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';
 
   @override
+  String get widgetFootPlain => 'Beş kart, iki dakika.';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n günlük seri',
+      one: '1 günlük seri',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => 'Bugünlük tamam';
+
+  @override
   String get dayStreakCaps => 'GÜNLÜK SERİ';
 
   @override

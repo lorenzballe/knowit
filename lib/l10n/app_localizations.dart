@@ -1254,6 +1254,24 @@ abstract class AppLocalizations {
   /// **'THE BAR MOVE'**
   String get theBarMoveCaps;
 
+  /// The home-screen widget's foot on a morning with no streak to show.
+  ///
+  /// In en, this message translates to:
+  /// **'Five cards, two minutes.'**
+  String get widgetFootPlain;
+
+  /// The home-screen widget's foot while a streak is live.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1-day streak} other{{n}-day streak}}'**
+  String widgetFootStreak(int n);
+
+  /// The home-screen widget's foot once today's cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'Done for today'**
+  String get widgetFootDone;
+
   /// No description provided for @dayStreakCaps.
   ///
   /// In en, this message translates to:

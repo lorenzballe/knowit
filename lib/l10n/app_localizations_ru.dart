@@ -905,6 +905,25 @@ class AppLocalizationsRu extends AppLocalizations {
   String get theBarMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
 
   @override
+  String get widgetFootPlain => 'Пять карточек, две минуты.';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня подряд',
+      many: '$n дней подряд',
+      few: '$n дня подряд',
+      one: '$n день подряд',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => 'На сегодня всё';
+
+  @override
   String get dayStreakCaps => 'ДНЕЙ ПОДРЯД';
 
   @override

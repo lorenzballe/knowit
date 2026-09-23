@@ -519,35 +519,49 @@ by their owner.
 
 The card the morning opens on, and the streak, on the home screen — the
 question of the day on the free plan, one of the reader's own with
-Astute+. The widget is native — WidgetKit on iOS, an `AppWidgetProvider`
+Astute+ — drawn the way the app draws a card: the subject's colour for a
+ground, the subject as an eyebrow, the question set large, the streak in
+the foot. The widget is native — WidgetKit on iOS, an `AppWidgetProvider`
 on Android — and neither can run Dart, so the app hands over what the
-widget will need through the `astut/widget` channel: today's card, the
-streak, and the card for each of the next fourteen mornings, so the widget
-turns over at midnight whether or not the app is opened, and goes quiet
-after a fortnight rather than lying.
+widget will need through the `astut/widget` channel (`homeWidgetData`):
+today's card with its colour and ink, the streak, the three lines the foot
+can say already in the reader's language, and the card, colour and subject
+for each of the next fourteen mornings, so the widget turns over at
+midnight whether or not the app is opened, and goes quiet after a
+fortnight rather than lying. Tapping it opens the app.
 
-Android is complete in the tree: `AstutWidget.kt`, its layout, and the
-receiver in the manifest. (`MainActivity` also moved to `com.astuto.app`,
-the package the manifest actually resolves it in.) iOS needs steps in
-Xcode that a file cannot do, and they have to be done together, because
-the provisioning profile Codemagic signs with has to carry the same
-capabilities as the entitlements or the archive fails to sign:
+**Android** is `AstutWidget.kt`, its layout (a white rounded ground the
+provider tints per card, since `RemoteViews` cannot recolour a shape), and
+the receiver in the manifest; it is resizable from two cells up.
 
-1. Runner target → Signing & Capabilities → **+ App Groups** →
-   `group.com.astuto.app`. Xcode adds the entitlement to
-   `Runner.entitlements` and, with automatic signing, regenerates the
-   profile; with a manual profile, add App Groups to the App ID in the
-   developer portal and download the profile again.
-2. File → New → Target → **Widget Extension**, named `AstutWidget`,
-   without configuration intent. Replace its generated Swift with
-   `ios/AstutWidget/AstutWidget.swift`, point it at
-   `ios/AstutWidget/Info.plist`, and give it the same App Group
-   (`ios/AstutWidget/AstutWidget.entitlements` is ready to attach).
+**iOS** is the `AstutWidgetExtension` target in `Runner.xcodeproj`, built
+from `ios/AstutWidget/`: the SwiftUI widget (small, medium, and the
+lock-screen rectangle on iOS 16+), its `Info.plist`, its entitlements, and
+an xcconfig that reads Flutter's `Generated.xcconfig` so the extension
+carries the same version and build number as the app — App Store Connect
+refuses an upload where they differ. The target was written into the
+project file by hand, and Runner embeds it as a foundation extension and
+depends on it, so `flutter build ios` builds both. Both the app and the
+widget carry the App Group `group.com.astuto.app` in their entitlements:
+`AppDelegate.swift` writes the hand-over into the group's defaults and asks
+WidgetKit to reload; the widget's timeline provider reads them back.
 
-Until then the app builds and signs as before: the channel handler in
-`AppDelegate.swift` writes to the group's defaults, which without the
-entitlement is a private container nobody reads, and WidgetKit is asked
-to reload timelines that do not exist yet — both harmless.
+Two things the tree cannot do by itself:
+
+- **The group has to exist.** The App Store Connect API can turn the App
+  Groups capability on — `codemagic.yaml` does, on both App IDs, before it
+  mints the profiles — but has no call that registers a group or ticks it
+  on an App ID. That is done once at developer.apple.com → Certificates,
+  Identifiers & Profiles → Identifiers: register the App Group
+  `group.com.astuto.app`, then on each of `com.astuto.app` and
+  `com.astuto.app.AstutWidget` (the build registers the second if it is
+  missing) open App Groups → Configure and tick it. Until then the widget's
+  profile will not sign a build that asks for the group.
+- **Compiling it needs a Mac**, so `.github/workflows/ios-check.yml` runs
+  `flutter build ios --release --no-codesign` on a GitHub macOS runner on
+  every push to `main` that touches `ios/` or `lib/`, and lists what was
+  embedded. It signs nothing and uploads nothing; it only says whether the
+  project as checked in still compiles, which a phone cannot.
 
 ## What the app measures
 
@@ -671,8 +685,12 @@ These are declared in the UI rather than faked:
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
   allowed to open pull requests. Until then sixty cards that tell, at three
   a day, is twenty days of new reading.
-- **The iOS widget target.** The Swift is written; the Xcode target has to be
-  added by hand, as described under *The home-screen widget*.
+- **The App Group in the developer portal.** The widget target, its
+  entitlements and the signing are all in the tree, but the group
+  `group.com.astuto.app` has to be registered and ticked on both App IDs
+  by hand, as described under *The home-screen widget*; until it is, the
+  TestFlight build fails at signing rather than shipping a widget that
+  cannot read.
 - **Depth under every strand.** Every card is tagged with a strand and the
   dealer honours the switches, but 170 cards over 324 strands is a card
   under half of them and nothing under the rest; a reader who turns

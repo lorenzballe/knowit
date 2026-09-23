@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart'
-    show ThemeMode, basicLocaleListResolution;
+    show Color, ThemeMode, basicLocaleListResolution;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -1470,23 +1470,51 @@ class AppState extends ChangeNotifier {
   /// its own. The question of the day on the free plan; on Astute+ one of
   /// the reader's own. Nothing about the reader beyond the streak: the
   /// widget is on the home screen, where anyone can read it.
+  /// Everything the home-screen widget will need, handed over whole.
+  ///
+  /// The widget draws the card the way the app does — the subject's colour
+  /// for a ground, the subject as an eyebrow, the question set large — so it
+  /// is given the colour and the ink of each morning's card, not only its
+  /// question, and the three lines of its foot already in the reader's
+  /// language, since the widget has no translations of its own.
   Map<String, Object?> homeWidgetData() {
     final ahead = <String, String>{};
+    final aheadTopic = <String, String>{};
+    final aheadColor = <String, String>{};
+    final aheadInk = <String, String>{};
     for (var i = 0; i <= kPlannedDays; i++) {
       final day = DateTime(today.year, today.month, today.day + i);
-      ahead[dateKey(day)] = leadOn(day).question;
+      final Pill lead = leadOn(day);
+      final String key = dateKey(day);
+      ahead[key] = lead.question;
+      aheadTopic[key] = lead.topic;
+      aheadColor[key] = hexOf(lead.color);
+      aheadInk[key] = hexOf(lead.ink);
     }
     final Pill lead = leadOn(today);
+    final AppLocalizations l = _strings;
     return {
       'edition': editionOf(today),
       'date': dateKey(today),
       'question': lead.question,
       'topic': lead.topic,
+      'color': hexOf(lead.color),
+      'ink': hexOf(lead.ink),
       'streak': liveStreak,
       'done': dayClosed,
+      'footPlain': l.widgetFootPlain,
+      'footStreak': l.widgetFootStreak(liveStreak),
+      'footDone': l.widgetFootDone,
       'ahead': ahead,
+      'aheadTopic': aheadTopic,
+      'aheadColor': aheadColor,
+      'aheadInk': aheadInk,
     };
   }
+
+  /// A colour as the widgets read it: `#RRGGBB`, opaque.
+  static String hexOf(Color c) =>
+      '#${(c.toARGB32() & 0xFFFFFF).toRadixString(16).padLeft(6, '0').toUpperCase()}';
 
   Future<void> refreshHomeWidget() async {
     try {

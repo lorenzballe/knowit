@@ -882,6 +882,23 @@ class AppLocalizationsFr extends AppLocalizations {
   String get theBarMoveCaps => 'LA PHRASE DE COMPTOIR';
 
   @override
+  String get widgetFootPlain => 'Cinq cartes, deux minutes.';
+
+  @override
+  String widgetFootStreak(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Série de $n jours',
+      one: 'Série de 1 jour',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get widgetFootDone => 'Terminé pour aujourd\'hui';
+
+  @override
   String get dayStreakCaps => 'JOURS DE SÉRIE';
 
   @override
