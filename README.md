@@ -557,8 +557,9 @@ Two things the tree cannot do by itself:
   Identifiers & Profiles → Identifiers: register the App Group
   `group.com.astuto.app`, then on each of `com.astuto.app` and
   `com.astuto.app.AstutWidget` (the build registers the second if it is
-  missing) open App Groups → Configure and tick it. Until then the widget's
-  profile will not sign a build that asks for the group.
+  missing) open App Groups → Configure and tick it. Until then the build
+  checks the profiles, leaves the group out of both entitlements instead of
+  failing at signing, and the widget shows its fixed line.
 - **Compiling it needs a Mac**, so `.github/workflows/ios-check.yml` runs
   `flutter build ios --release --no-codesign` on a GitHub macOS runner on
   every push to `main` that touches `ios/` or `lib/`, and lists what was
@@ -687,22 +688,19 @@ These are declared in the UI rather than faked:
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
   allowed to open pull requests. Until then sixty cards that tell, at three
   a day, is twenty days of new reading.
-- **The kept signing key.** `codemagic.yaml` signs with one private key kept
-  in Codemagic as `CERTIFICATE_PRIVATE_KEY` (group `signing`, Secret), the
-  same key in every app of the account, and stops in its first second when
-  the key is missing. It used to revoke every distribution certificate in the
-  account on each run and mint a throwaway one; a certificate revoked after
-  upload fails every build it signed at App Review with ITMS-90035, and the
-  account is shared with Improvy, whose 1.16.0 (40) and 1.17.0 (49) were
-  refused that way. Making the key needs no Mac: in the free a-Shell mini
-  app on the iPhone, `ssh-keygen -t rsa -b 2048 -m PEM -f key -q -N ""` and
-  `pbcopy < key`, then paste it into each app's environment variables.
+- **The kept signing key.** Optional. Without it `codemagic.yaml` signs as it
+  always has: it revokes every distribution certificate in the account and
+  mints a new one, which needs nothing set up but fails, with ITMS-90035,
+  any build of any app in the account that is still waiting for App Review
+  (Improvy 1.16.0 (40) and 1.17.0 (49) were refused that way). With a key
+  kept in Codemagic as `CERTIFICATE_PRIVATE_KEY`, group `signing`, Secret,
+  the same certificate is reused and nothing is revoked.
 - **The App Group in the developer portal.** The widget target, its
   entitlements and the signing are all in the tree, but the group
   `group.com.astuto.app` has to be registered and ticked on both App IDs
-  by hand, as described under *The home-screen widget*; until it is, the
-  TestFlight build fails at signing rather than shipping a widget that
-  cannot read.
+  by hand, as described under *The home-screen widget*. Until it is, the
+  build leaves the group out rather than failing at signing, and the
+  widget shows its fixed line instead of the day's card.
 - **Depth under every strand.** Every card is tagged with a strand and the
   dealer honours the switches, but 170 cards over 324 strands is a card
   under half of them and nothing under the rest; a reader who turns
