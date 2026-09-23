@@ -1,12 +1,18 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Astute — iOS build & TestFlight on Codemagic (no Mac).
 #
-# Signing strategy: because a distribution certificate's PRIVATE KEY only exists
-# where the cert was first created, any pre-existing cert in the Apple account is
-# unusable on this build machine ("Cannot save Signing Certificates without
-# certificate private key"). So the build itself deletes existing distribution
-# certificates via the App Store Connect API and mints a fresh one whose private
-# key it generates and keeps — then creates the matching App Store profile.
+# Signing: one private key, kept in Codemagic as CERTIFICATE_PRIVATE_KEY
+# (group "signing", Secret) and shared with every app in the Apple account.
+# fetch-signing-files finds the distribution certificate made from that key, or
+# makes it the first time, and makes the profiles; nothing is ever revoked.
+#
+# This workflow used to revoke every distribution certificate in the account on
+# each run and mint a throwaway one. A certificate revoked after upload makes
+# every build it signed fail App Review with ITMS-90035 (Invalid Signature), and
+# the account is shared: that is how Improvy 1.16.0 (40) and 1.17.0 (49) were
+# refused, each signed an hour before one of these builds revoked its
+# certificate. So without the kept key this workflow now stops, rather than
+# sign by revoking.
 # ─────────────────────────────────────────────────────────────────────────────
 workflows:
   ios-testflight:
@@ -16,6 +22,10 @@ workflows:
     integrations:
       app_store_connect: chiaveapipercodemagic
     environment:
+      # CERTIFICATE_PRIVATE_KEY lives here. A variable set in the Codemagic UI
+      # reaches a codemagic.yaml build only through a group imported by name.
+      groups:
+        - signing
       vars:
         APP_STORE_APPLE_ID: 6806852300
         BUNDLE_ID: "com.astuto.app"
@@ -50,6 +60,28 @@ workflows:
         - $HOME/.pub-cache
         - $HOME/Library/Caches/CocoaPods
     scripts:
+      # First, before a minute is spent on anything else: without the kept key
+      # the only way left to sign is the one that revokes other builds.
+      - name: Refuse to sign without the kept key
+        script: |
+          if [ -z "${CERTIFICATE_PRIVATE_KEY:-}" ]; then
+            echo "CERTIFICATE_PRIVATE_KEY is not set, so this build stops here."
+            echo ""
+            echo "Signing uses one private key, kept, shared by every app in the"
+            echo "account. Without it the only way to sign is to revoke every"
+            echo "distribution certificate and mint a new one, which is what this"
+            echo "workflow used to do: it invalidated Improvy's builds while they"
+            echo "waited for App Review (ITMS-90035)."
+            echo ""
+            echo "Once, on the iPhone, in the free a-Shell mini app:"
+            echo "  ssh-keygen -t rsa -b 2048 -m PEM -f key -q -N \"\" && pbcopy < key"
+            echo "then Codemagic → this app → Environment variables: name"
+            echo "CERTIFICATE_PRIVATE_KEY, value paste, group signing, Secret, Add."
+            echo "The same key, in the same group, in Improvy's app too."
+            exit 1
+          fi
+          echo "The kept signing key is here."
+
       - name: Get Flutter packages
         script: flutter pub get
 
@@ -102,36 +134,32 @@ workflows:
                 done
           done
 
-      - name: Reset signing — create a certificate we own + App Store profile
+      - name: Signing — the kept certificate, and profiles for both bundles
         script: |
           set -e
           keychain initialize
-          echo "Removing existing distribution certificates (we don't hold their private keys)..."
-          for T in IOS_DISTRIBUTION DISTRIBUTION; do
-            app-store-connect certificates list --type "$T" --json 2>/dev/null | jq -r '.[].id' 2>/dev/null || true
-          done | sort -u | while read -r cid; do
-            if [ -n "$cid" ]; then
-              echo "  deleting certificate $cid"
-              app-store-connect certificates delete "$cid" || true
+          # The first run with a new key makes its certificate; every run after
+          # finds it. The profiles are made against it for the app and for the
+          # widget. Nothing here deletes a certificate: one revoked after
+          # upload fails every build it signed at App Review (ITMS-90035),
+          # this app's and every other app's in the account alike.
+          for B in "$BUNDLE_ID" "$WIDGET_BUNDLE_ID"; do
+            if ! app-store-connect fetch-signing-files "$B" \
+                --type IOS_APP_STORE \
+                --certificate-key=@env:CERTIFICATE_PRIVATE_KEY \
+                --delete-stale-profiles \
+                --create; then
+              echo ""
+              echo "Could not find or make the signing files for $B."
+              echo "If Apple answered that the account already has its maximum"
+              echo "of distribution certificates: developer.apple.com →"
+              echo "Certificates, revoke the oldest Distribution one — never one"
+              echo "that signed a build still waiting for App Review — and run"
+              echo "this build again."
+              exit 1
             fi
           done
-          echo "Generating our OWN private key, then the certificate + App Store profiles..."
-          # fetch-signing-files needs a private key to create the certificate — give it a fresh one.
-          openssl genrsa -out /tmp/cert_key.pem 2048
-          # Two profiles, one certificate: the second call finds the
-          # certificate the first one minted for this key and reuses it.
-          # The widget's App ID is created here too if it does not exist.
-          app-store-connect fetch-signing-files "$BUNDLE_ID" \
-            --type IOS_APP_STORE \
-            --certificate-key=@file:/tmp/cert_key.pem \
-            --create
-          app-store-connect fetch-signing-files "$WIDGET_BUNDLE_ID" \
-            --type IOS_APP_STORE \
-            --certificate-key=@file:/tmp/cert_key.pem \
-            --create
           keychain add-certificates
-          # Applies each profile to the target whose bundle id it matches:
-          # the app's to Runner, the widget's to AstutWidgetExtension.
           xcode-project use-profiles
 
       - name: Install CocoaPods dependencies

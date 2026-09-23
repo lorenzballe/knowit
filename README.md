@@ -685,6 +685,16 @@ These are declared in the UI rather than faked:
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
   allowed to open pull requests. Until then sixty cards that tell, at three
   a day, is twenty days of new reading.
+- **The kept signing key.** `codemagic.yaml` signs with one private key kept
+  in Codemagic as `CERTIFICATE_PRIVATE_KEY` (group `signing`, Secret), the
+  same key in every app of the account, and stops in its first second when
+  the key is missing. It used to revoke every distribution certificate in the
+  account on each run and mint a throwaway one; a certificate revoked after
+  upload fails every build it signed at App Review with ITMS-90035, and the
+  account is shared with Improvy, whose 1.16.0 (40) and 1.17.0 (49) were
+  refused that way. Making the key needs no Mac: in the free a-Shell mini
+  app on the iPhone, `ssh-keygen -t rsa -b 2048 -m PEM -f key -q -N ""` and
+  `pbcopy < key`, then paste it into each app's environment variables.
 - **The App Group in the developer portal.** The widget target, its
   entitlements and the signing are all in the tree, but the group
   `group.com.astuto.app` has to be registered and ticked on both App IDs
