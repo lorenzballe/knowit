@@ -12,6 +12,7 @@ import '../models/pill.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
 import 'ui.dart';
+import 'scaled_text.dart';
 
 /// Opens the share sheet for [pill] — the square export preview plus the
 /// three actions under it.
@@ -248,17 +249,25 @@ class _ShareCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 18),
-            Text(
-              pill.question,
-              style: AppText.display(
-                size: 27,
-                weight: FontWeight.w600,
-                height: 1.14,
-                spacing: -0.9,
-                color: onCard,
+            // Set as large as the space above the bar move will take: the
+            // card is four by five whatever the question's length, so a long
+            // question comes down in size rather than running off the foot.
+            Expanded(
+              child: ScaledText(
+                text: pill.question,
+                min: 16,
+                max: 27,
+                alignment: Alignment.topLeft,
+                styleFor: (size) => AppText.display(
+                  size: size,
+                  weight: FontWeight.w600,
+                  height: 1.14,
+                  spacing: -0.9 * size / 27,
+                  color: onCard,
+                ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(height: 14),
             Container(
               padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
               decoration: BoxDecoration(
