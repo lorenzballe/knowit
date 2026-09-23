@@ -866,7 +866,10 @@ class _AstutoTabBar extends StatelessWidget {
         height: 58,
         decoration: BoxDecoration(
           color: context.p.surfaceRaised,
-          borderRadius: BorderRadius.circular(999),
+          // A little less round than a pill: 26 on the bar and 16 on the lit
+          // tab, the pair chosen on the tab-bar sheet (107b). Only the
+          // corners changed; every size, weight and icon is as it was.
+          borderRadius: BorderRadius.circular(26),
           border: Border.all(color: context.p.line),
           boxShadow: [
             BoxShadow(
@@ -919,7 +922,7 @@ class _AstutoTabBar extends StatelessWidget {
                         ),
                         decoration: BoxDecoration(
                           color: context.p.inverse.withValues(alpha: on),
-                          borderRadius: BorderRadius.circular(999),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
