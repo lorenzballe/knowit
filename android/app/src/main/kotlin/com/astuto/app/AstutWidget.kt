@@ -104,7 +104,7 @@ class AstutWidget : AppWidgetProvider() {
             if (s.length != 7 || !s.startsWith("#")) return fallback
             return try {
                 Color.parseColor(s)
-            } catch (_: IllegalArgumentException) {
+            } catch (e: IllegalArgumentException) {
                 fallback
             }
         }
@@ -116,7 +116,7 @@ class AstutWidget : AppWidgetProvider() {
                 val a = format.parse(from)?.time ?: return 0
                 val b = format.parse(to)?.time ?: return 0
                 ((b - a) / 86_400_000L).toInt()
-            } catch (_: Exception) {
+            } catch (e: Exception) {
                 0
             }
         }
