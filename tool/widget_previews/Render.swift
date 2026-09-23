@@ -169,6 +169,8 @@ struct Gallery: View {
     .background(
       RoundedRectangle(cornerRadius: 28, style: .continuous)
         .fill(Color.black.opacity(0.35)))
+    // The lock screen is dark whatever the phone's setting.
+    .environment(\.colorScheme, .dark)
   }
 }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The dark widgets' ground: the app's night paper with the paywall's three
-     lights — yellow, teal and violet — glowing in from the top. Each light
-     is its own rounded layer, so none of it spills past the corners. -->
+<!-- The streak's ground: the app's night paper with two of the paywall's
+     lights, violet from the top corner and teal beside it, as on the
+     iPhone. Each light is its own rounded layer, so none of it spills past
+     the corners. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
@@ -14,22 +15,10 @@
             <corners android:radius="24dp" />
             <gradient
                 android:type="radial"
-                android:centerX="0.12"
+                android:centerX="0.2"
                 android:centerY="0.0"
-                android:gradientRadius="120dp"
-                android:startColor="#38FFE14D"
-                android:endColor="#00FFE14D" />
-        </shape>
-    </item>
-    <item>
-        <shape android:shape="rectangle">
-            <corners android:radius="24dp" />
-            <gradient
-                android:type="radial"
-                android:centerX="0.6"
-                android:centerY="0.0"
-                android:gradientRadius="130dp"
-                android:startColor="#2B2DE0D2"
+                android:gradientRadius="110dp"
+                android:startColor="#332DE0D2"
                 android:endColor="#002DE0D2" />
         </shape>
     </item>
@@ -38,10 +27,10 @@
             <corners android:radius="24dp" />
             <gradient
                 android:type="radial"
-                android:centerX="1.0"
-                android:centerY="0.2"
-                android:gradientRadius="120dp"
-                android:startColor="#388B6CFF"
+                android:centerX="0.9"
+                android:centerY="0.05"
+                android:gradientRadius="140dp"
+                android:startColor="#618B6CFF"
                 android:endColor="#008B6CFF" />
         </shape>
     </item>

@@ -40,6 +40,9 @@
             android:text=""
             android:textColor="#F2F1EC"
             android:textSize="52sp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="22sp"
+            android:autoSizeMaxTextSize="56sp"
             android:fontFamily="serif"
             android:textStyle="bold"
             android:maxLines="1" />

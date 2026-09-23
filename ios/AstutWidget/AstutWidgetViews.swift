@@ -80,29 +80,31 @@ enum AstutPalette {
   static let cream = Color(red: 242 / 255, green: 241 / 255, blue: 236 / 255)
 }
 
-/// The three soft lights behind the paywall — yellow, teal and violet,
-/// blurred into one another — behind the dark widgets, so they belong to
-/// the same app as the screen they open.
+/// Two of the paywall's lights — violet from the top corner, teal beside
+/// it — on the night ground, so the dark widgets belong to the same app as
+/// the screen they open. The yellow stays on the paywall: that dim, on a
+/// ground this small, reads as a smudge rather than a light.
 struct AstutLights: View {
   var body: some View {
     GeometryReader { box in
       let w = box.size.width
+      let h = box.size.height
       ZStack {
+        // The ground is not blurred with the lights, or its edges would
+        // go soft and let the wallpaper through.
         AstutPalette.night
-        Ellipse()
-          .fill(Color(red: 1, green: 225 / 255, blue: 77 / 255).opacity(0.22))
-          .frame(width: w * 0.62, height: w * 0.5)
-          .position(x: w * 0.12, y: 0)
-        Ellipse()
-          .fill(Color(red: 45 / 255, green: 224 / 255, blue: 210 / 255).opacity(0.17))
-          .frame(width: w * 0.66, height: w * 0.55)
-          .position(x: w * 0.6, y: -box.size.height * 0.08)
-        Ellipse()
-          .fill(Color(red: 139 / 255, green: 108 / 255, blue: 1).opacity(0.22))
-          .frame(width: w * 0.6, height: w * 0.5)
-          .position(x: w * 1.02, y: box.size.height * 0.2)
+        ZStack {
+          Ellipse()
+            .fill(Color(red: 45 / 255, green: 224 / 255, blue: 210 / 255).opacity(0.3))
+            .frame(width: w * 0.7, height: w * 0.4)
+            .position(x: w * 0.2, y: -h * 0.05)
+          Ellipse()
+            .fill(Color(red: 139 / 255, green: 108 / 255, blue: 1).opacity(0.5))
+            .frame(width: w, height: w * 0.7)
+            .position(x: w * 0.9, y: h * 0.05)
+        }
+        .blur(radius: w * 0.18)
       }
-      .blur(radius: w * 0.12)
     }
   }
 }
@@ -362,11 +364,13 @@ struct StreakView: View {
   /// A ring for the week, and the days in a row inside it.
   private var circular: some View {
     let doneThisWeek = data.week.filter { $0 }.count
+    // In the lock screen's own tint: the track a shade of it, the week in
+    // full.
     return ZStack {
-      Circle().stroke(Color.primary.opacity(0.25), lineWidth: 4.5)
+      Circle().stroke(.tertiary, lineWidth: 4.5)
       Circle()
         .trim(from: 0, to: CGFloat(doneThisWeek) / 7)
-        .stroke(Color.primary, style: StrokeStyle(lineWidth: 4.5, lineCap: .round))
+        .stroke(.primary, style: StrokeStyle(lineWidth: 4.5, lineCap: .round))
         .rotationEffect(.degrees(-90))
       Text("\(data.streak)")
         .font(AstutType.fraunces(data.streak > 99 ? 15 : 20, weight: 600))
