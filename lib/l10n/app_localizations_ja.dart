@@ -895,6 +895,20 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return '$price$suffixで登録';
+  }
+
+  @override
+  String get noChargeTodayCancel => '今日は請求なし · いつでもキャンセル可能';
+
+  @override
+  String get chargedTodayCancel => '今日請求されます · いつでもキャンセル可能';
+
+  @override
+  String get everyCardForYouMark => 'あなた';
+
+  @override
   String get trialStartedNoPayment => 'トライアル開始。このビルドでは支払いは接続されていません。';
 
   @override
@@ -945,9 +959,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cancelAnyTimeNoPayment => 'いつでもキャンセル可能 · このビルドでは請求されません';
-
-  @override
-  String get trialTerms => '今日は課金されません。5日目にお知らせ、7日目に解約していなければ更新されます。';
 
   @override
   String get restorePurchases => '購入を復元';
@@ -1523,7 +1534,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkOwnTitle => '毎日5枚、すべてあなたのもの';
 
   @override
-  String get perkOwnLine => 'あなたの選んだ系統から、測定されたレベルで、既読は二度と出ません。無料版は1日2枚。';
+  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日2枚。';
 
   @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
@@ -1583,6 +1594,5 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weekKeptThreeOwn => '1週間続きました。明日は5枚のうち3枚があなたのものです。';
 
   @override
-  String get perkJourneyLine =>
-      'あなたのレベルと数字、系統ごとに開く各分野、カードが戻ってきたとき何が残ったか、そして今夜話すカード。';
+  String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。';
 }

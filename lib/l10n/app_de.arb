@@ -198,6 +198,10 @@
   "perkArchiveLine": "Jeder gelesene Tag, für immer. Gratis bleibt eine Woche.",
   "plusIsActive": "ASTUTE+ IST AKTIV",
   "tryFreeThen": "7 Tage gratis, dann {price}{suffix}",
+  "subscribeFor": "Abonnieren für {price}{suffix}",
+  "noChargeTodayCancel": "Heute keine Abbuchung · jederzeit kündbar",
+  "chargedTodayCancel": "Heute abgebucht · jederzeit kündbar",
+  "everyCardForYouMark": "dich",
   "trialStartedNoPayment": "Test gestartet. In dieser Version ist keine Zahlung angebunden.",
   "thatDidNotGoThrough": "Das hat nicht geklappt.",
   "plusIsBack": "Astute+ ist zurück.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Test abbrechen",
   "cancelAnyTime": "Jederzeit kündbar",
   "cancelAnyTimeNoPayment": "Jederzeit kündbar · In dieser Version wird nichts abgebucht",
-  "trialTerms": "Heute wird nichts abgebucht. Eine Erinnerung an Tag 5; an Tag 7 verlängert es sich, falls du nicht kündigst.",
   "restorePurchases": "Käufe wiederherstellen",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Wähl eine Seite. Es gibt keine richtige Antwort.",
@@ -359,7 +362,7 @@
   "magicLine": "Fünf Karten am Tag, für dich gewählt: aus deinem Mix, auf deinem Niveau, nie eine schon gelesene. Ab morgen.",
   "everyCardForYou": "Jede Karte, für dich gewählt.",
   "perkOwnTitle": "Fünf Karten am Tag, alle deine",
-  "perkOwnLine": "Aus deinen Strängen, auf deinem gemessenen Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.",
+  "perkOwnLine": "Aus deinen Strängen, auf deinem Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.",
   "plusCardHeadline": "Alle fünf, deine.",
   "plusCardLine": "Fünf Karten am Tag aus deinem Mix, auf deinem Niveau. Deine Reise. Dein ganzes Archiv.",
   "continueFree": "Gratis weiter",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 beim Zurückkommen noch richtig} other{{n} beim Zurückkommen noch richtig}}",
   "nothingBackYet": "Noch ist nichts zurückgekommen. Eine Karte kommt nach drei Tagen wieder, dann nach einer Woche, dann nach einem Monat — und was du dann richtig hast, weißt du wirklich.",
   "weekKeptThreeOwn": "Eine Woche gehalten: morgen sind drei der fünf deine.",
-  "perkJourneyLine": "Dein Niveau und deine Zahlen, jedes Fach Strang für Strang geöffnet, was blieb, als eine Karte zurückkam, und die Karte für heute Abend."
+  "perkJourneyLine": "Dein Niveau, jedes Fach Strang für Strang, was blieb, und die Karte für heute Abend."
 }

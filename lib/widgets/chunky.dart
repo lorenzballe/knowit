@@ -36,6 +36,15 @@ class ChunkyButton extends StatefulWidget {
   final Widget? leading;
   final Widget? trailing;
 
+  /// How far the face sits above its edge, and the label's size and
+  /// tracking. Every button but the paywall's keeps the shared ones.
+  final double depth;
+  final double labelSize;
+  final double labelSpacing;
+
+  /// A shadow under the whole button, for the one that has to float.
+  final List<BoxShadow>? shadow;
+
   const ChunkyButton({
     super.key,
     required this.label,
@@ -47,6 +56,10 @@ class ChunkyButton extends StatefulWidget {
     this.radius = 16,
     this.leading,
     this.trailing,
+    this.depth = kChunkDepth,
+    this.labelSize = 15,
+    this.labelSpacing = 0.6,
+    this.shadow,
   });
 
   @override
@@ -88,12 +101,13 @@ class _ChunkyButtonState extends State<ChunkyButton> {
           decoration: BoxDecoration(
             color: edge,
             borderRadius: BorderRadius.circular(widget.radius),
+            boxShadow: _enabled ? widget.shadow : null,
           ),
           // Total height never changes; the face slides down into the edge,
           // so the button compresses instead of moving.
           padding: EdgeInsets.only(
-            top: pressed ? kChunkDepth : 0,
-            bottom: pressed ? 0 : kChunkDepth,
+            top: pressed ? widget.depth : 0,
+            bottom: pressed ? 0 : widget.depth,
           ),
           child: Container(
             decoration: BoxDecoration(
@@ -121,9 +135,9 @@ class _ChunkyButtonState extends State<ChunkyButton> {
                       widget.label,
                       maxLines: 1,
                       style: AppText.body(
-                        size: 15,
+                        size: widget.labelSize,
                         weight: FontWeight.w700,
-                        spacing: 0.6,
+                        spacing: widget.labelSpacing,
                         color: ink,
                       ),
                     ),

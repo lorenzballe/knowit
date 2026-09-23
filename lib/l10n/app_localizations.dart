@@ -1308,6 +1308,30 @@ abstract class AppLocalizations {
   /// **'Try 7 days free, then {price}{suffix}'**
   String tryFreeThen(String price, String suffix);
 
+  /// The paywall's button for a plan that starts without a free trial.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscribe for {price}{suffix}'**
+  String subscribeFor(String price, String suffix);
+
+  /// No description provided for @noChargeTodayCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'No charge today · cancel any time'**
+  String get noChargeTodayCancel;
+
+  /// No description provided for @chargedTodayCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Charged today · cancel any time'**
+  String get chargedTodayCancel;
+
+  /// The part of everyCardForYou painted in the gradient: the word for 'you', exactly as it is written there.
+  ///
+  /// In en, this message translates to:
+  /// **'you.'**
+  String get everyCardForYouMark;
+
   /// No description provided for @trialStartedNoPayment.
   ///
   /// In en, this message translates to:
@@ -1403,12 +1427,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Cancel any time · No payment is taken in this build'**
   String get cancelAnyTimeNoPayment;
-
-  /// No description provided for @trialTerms.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.'**
-  String get trialTerms;
 
   /// No description provided for @restorePurchases.
   ///
@@ -2277,7 +2295,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkOwnLine.
   ///
   /// In en, this message translates to:
-  /// **'From your strands, at the level you measure at, never one you have read. Free days give you two.'**
+  /// **'From your strands, at your level, never one you have read. Free days give you two.'**
   String get perkOwnLine;
 
   /// No description provided for @plusCardHeadline.
@@ -2349,7 +2367,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkJourneyLine.
   ///
   /// In en, this message translates to:
-  /// **'Your level and your numbers, every subject opened strand by strand, what stayed when a card came back, and the card to say tonight.'**
+  /// **'Your level, every subject strand by strand, what stayed, and the card to say tonight.'**
   String get perkJourneyLine;
 }
 

@@ -913,6 +913,22 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return '$price$suffix ile abone ol';
+  }
+
+  @override
+  String get noChargeTodayCancel =>
+      'Bugün ücret yok · istediğin zaman iptal et';
+
+  @override
+  String get chargedTodayCancel =>
+      'Bugün ücretlendirilir · istediğin zaman iptal et';
+
+  @override
+  String get everyCardForYouMark => 'senin';
+
+  @override
   String get trialStartedNoPayment =>
       'Deneme başladı. Bu sürümde ödeme bağlı değil.';
 
@@ -965,10 +981,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'İstediğin zaman iptal et · Bu sürümde ödeme alınmaz';
-
-  @override
-  String get trialTerms =>
-      'Bugün ücret alınmaz. 5. gün bir hatırlatma; iptal etmezsen 7. gün yenilenir.';
 
   @override
   String get restorePurchases => 'Satın alımları geri yükle';
@@ -1556,7 +1568,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Senin konu dallarından, ölçülen seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
+      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
 
   @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
@@ -1622,5 +1634,5 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Seviyen ve sayıların, dal dal açılan her konu, bir kart geri geldiğinde ne kaldığı ve bu akşam anlatacağın kart.';
+      'Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart.';
 }

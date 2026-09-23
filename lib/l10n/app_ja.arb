@@ -198,6 +198,10 @@
   "perkArchiveLine": "読んだ日をすべて、ずっと保存。無料版は1週間。",
   "plusIsActive": "ASTUTE+ 有効",
   "tryFreeThen": "7日間無料で試す。その後{price}{suffix}",
+  "subscribeFor": "{price}{suffix}で登録",
+  "noChargeTodayCancel": "今日は請求なし · いつでもキャンセル可能",
+  "chargedTodayCancel": "今日請求されます · いつでもキャンセル可能",
+  "everyCardForYouMark": "あなた",
   "trialStartedNoPayment": "トライアル開始。このビルドでは支払いは接続されていません。",
   "thatDidNotGoThrough": "処理できませんでした。",
   "plusIsBack": "Astute+が戻りました。",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "トライアルをキャンセル",
   "cancelAnyTime": "いつでもキャンセル可能",
   "cancelAnyTimeNoPayment": "いつでもキャンセル可能 · このビルドでは請求されません",
-  "trialTerms": "今日は課金されません。5日目にお知らせ、7日目に解約していなければ更新されます。",
   "restorePurchases": "購入を復元",
   "planPrice": "{label}、{price} {per}",
   "pickASideNoRightAnswer": "どちらかを選んでください。正解はありません。",
@@ -359,7 +362,7 @@
   "magicLine": "毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。",
   "everyCardForYou": "すべてのカードを、あなたのために。",
   "perkOwnTitle": "毎日5枚、すべてあなたのもの",
-  "perkOwnLine": "あなたの選んだ系統から、測定されたレベルで、既読は二度と出ません。無料版は1日2枚。",
+  "perkOwnLine": "あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日2枚。",
   "plusCardHeadline": "5枚すべてを、あなたのものに。",
   "plusCardLine": "あなたのミックスから、あなたのレベルで毎日5枚。あなたの旅。アーカイブすべて。",
   "continueFree": "無料で続ける",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, other{{n}枚は戻ってきても正解}}",
   "nothingBackYet": "まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。",
   "weekKeptThreeOwn": "1週間続きました。明日は5枚のうち3枚があなたのものです。",
-  "perkJourneyLine": "あなたのレベルと数字、系統ごとに開く各分野、カードが戻ってきたとき何が残ったか、そして今夜話すカード。"
+  "perkJourneyLine": "あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。"
 }

@@ -919,6 +919,21 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'Subscrever por $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel =>
+      'Sem cobrança hoje · cancela quando quiseres';
+
+  @override
+  String get chargedTodayCancel => 'Cobrado hoje · cancela quando quiseres';
+
+  @override
+  String get everyCardForYouMark => 'ti.';
+
+  @override
   String get trialStartedNoPayment =>
       'Período de teste iniciado. Nesta versão não há pagamento ligado.';
 
@@ -971,10 +986,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Cancela quando quiseres · Nesta versão não é cobrado nada';
-
-  @override
-  String get trialTerms =>
-      'Hoje não é cobrado nada. Um lembrete no dia 5; renova no dia 7 se não cancelares.';
 
   @override
   String get restorePurchases => 'Restaurar compras';
@@ -1571,7 +1582,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Dos teus fios, ao nível que mostras, nunca uma já lida. Grátis tens duas por dia.';
+      'Dos teus fios, ao teu nível, nunca uma já lida. Grátis tens duas por dia.';
 
   @override
   String get plusCardHeadline => 'As cinco, tuas.';
@@ -1637,5 +1648,5 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'O teu nível e os teus números, cada tema aberto fio a fio, o que ficou quando uma carta voltou, e a carta para contar hoje à noite.';
+      'O teu nível, cada tema fio a fio, o que ficou, e a carta para contar hoje à noite.';
 }

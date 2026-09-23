@@ -950,6 +950,20 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'Subskrybuj za $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel => 'Dziś bez opłat · anuluj, kiedy chcesz';
+
+  @override
+  String get chargedTodayCancel => 'Opłata dziś · anuluj, kiedy chcesz';
+
+  @override
+  String get everyCardForYouMark => 'ciebie.';
+
+  @override
   String get trialStartedNoPayment =>
       'Okres próbny rozpoczęty. W tej wersji nie ma podłączonej płatności.';
 
@@ -1002,10 +1016,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Anuluj, kiedy chcesz · W tej wersji nic nie jest pobierane';
-
-  @override
-  String get trialTerms =>
-      'Dziś nic nie płacisz. Przypomnienie w dniu 5; w dniu 7 odnawia się, chyba że anulujesz.';
 
   @override
   String get restorePurchases => 'Przywróć zakupy';
@@ -1617,7 +1627,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Z twoich wątków, na zmierzonym poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.';
+      'Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.';
 
   @override
   String get plusCardHeadline => 'Wszystkie pięć, twoje.';
@@ -1683,5 +1693,5 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Twój poziom i twoje liczby, każdy temat otwarty wątek po wątku, co zostało, gdy karta wróciła, i karta do opowiedzenia dziś wieczorem.';
+      'Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem.';
 }

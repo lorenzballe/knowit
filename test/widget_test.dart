@@ -440,6 +440,22 @@ void main() {
         expect(keysOf(f), template, reason: f.path);
       }
     });
+
+    test(
+      'the paywall\'s painted word is in its headline, in every language',
+      () {
+        // The gradient falls on the word for "you" wherever the language puts
+        // it; a mark that is not in the line paints nothing at all, silently.
+        for (final f in Directory('lib/l10n').listSync().whereType<File>()) {
+          if (!f.path.endsWith('.arb')) continue;
+          final strings = jsonDecode(f.readAsStringSync()) as Map;
+          final String line = strings['everyCardForYou'] as String;
+          final String mark = strings['everyCardForYouMark'] as String;
+          expect(mark, isNotEmpty, reason: f.path);
+          expect(line, contains(mark), reason: f.path);
+        }
+      },
+    );
   });
 
   group('Astute+ is three things, and the free plan shows their shape', () {
@@ -1367,14 +1383,43 @@ void main() {
     await tester.tap(find.text('SEE THE PLANS'));
     await _settle(tester);
 
-    // Yearly leads and is preselected, so the call to action opens on it.
+    // Yearly leads and is preselected, so the call to action opens on it:
+    // the year starts with a free week, and says nothing is charged today.
     expect(find.text('Try 7 days free, then €29,99/yr'), findsOneWidget);
+    expect(find.text('No charge today · cancel any time'), findsOneWidget);
 
     // The saving is worked out from the two prices rather than asserted.
     expect(find.text('SAVE 37%'), findsOneWidget);
+
+    // The month has no free week, so it does not promise one. With no store
+    // behind this build nothing is charged at all, and the line says that
+    // rather than "charged today".
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
-    expect(find.text('Try 7 days free, then €3,99/mo'), findsOneWidget);
+    expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
+    expect(find.textContaining('Try 7 days free'), findsNothing);
+    expect(
+      find.text('Cancel any time · No payment is taken in this build'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('the headline paints only the word for "you"', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _openProfile(tester);
+    await tester.tap(find.text('SEE THE PLANS'));
+    await _settle(tester);
+
+    // The whole line is one text, for a screen reader and for a finder; the
+    // gradient is a layer over "you." alone.
+    expect(_paywallHeadline, findsOneWidget);
+    final masked = find.descendant(
+      of: find.byType(PaywallScreen),
+      matching: find.byType(ShaderMask),
+    );
+    expect(masked, findsOneWidget);
   });
 
   testWidgets('the daily nudge toggle flips and persists', (tester) async {

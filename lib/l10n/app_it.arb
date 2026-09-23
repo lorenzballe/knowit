@@ -198,6 +198,10 @@
   "perkArchiveLine": "Ogni giorno che hai letto, per sempre. Gratis resta una settimana.",
   "plusIsActive": "ASTUTE+ È ATTIVO",
   "tryFreeThen": "7 giorni gratis, poi {price}{suffix}",
+  "subscribeFor": "Abbonati a {price}{suffix}",
+  "noChargeTodayCancel": "Nessun addebito oggi · disdici quando vuoi",
+  "chargedTodayCancel": "Addebito oggi · disdici quando vuoi",
+  "everyCardForYouMark": "te.",
   "trialStartedNoPayment": "Prova avviata. Nessun pagamento è collegato in questa versione.",
   "thatDidNotGoThrough": "Non è andata a buon fine.",
   "plusIsBack": "Astute+ è tornato.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Annulla la prova",
   "cancelAnyTime": "Disdici quando vuoi",
   "cancelAnyTimeNoPayment": "Disdici quando vuoi · Nessun pagamento in questa versione",
-  "trialTerms": "Oggi non paghi niente. Un promemoria il giorno 5; si rinnova il giorno 7 se non disdici.",
   "restorePurchases": "Ripristina acquisti",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Scegli una parte. Non c'è una risposta giusta.",
@@ -359,7 +362,7 @@
   "magicLine": "Cinque carte al giorno scelte per te: dal tuo mix, al tuo livello, mai una già letta. Da domani.",
   "everyCardForYou": "Ogni carta, scelta per te.",
   "perkOwnTitle": "Cinque carte al giorno, tutte tue",
-  "perkOwnLine": "Dai tuoi filoni, al livello che misuri, mai una già letta. Gratis ne hai due al giorno.",
+  "perkOwnLine": "Dai tuoi filoni, al tuo livello, mai una già letta. Gratis ne hai due al giorno.",
   "plusCardHeadline": "Tutte e cinque, tue.",
   "plusCardLine": "Cinque carte al giorno dal tuo mix, al tuo livello. Il tuo viaggio. Tutto il tuo archivio.",
   "continueFree": "Continua gratis",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 ancora giusta al ritorno} other{{n} ancora giuste al ritorno}}",
   "nothingBackYet": "Non è ancora tornato niente. Una carta torna dopo tre giorni, poi una settimana, poi un mese — e quello che azzecchi allora è quello che sai davvero.",
   "weekKeptThreeOwn": "Una settimana di fila: domani tre carte su cinque sono tue.",
-  "perkJourneyLine": "Il tuo livello e i tuoi numeri, ogni materia aperta filone per filone, cosa ti è rimasto quando una carta è tornata, e la carta da dire stasera."
+  "perkJourneyLine": "Il tuo livello, ogni materia filone per filone, cosa ti è rimasto, e la carta da dire stasera."
 }

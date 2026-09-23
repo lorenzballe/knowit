@@ -198,6 +198,10 @@
   "perkArchiveLine": "Każdy przeczytany dzień, na zawsze. Za darmo zostaje tydzień.",
   "plusIsActive": "ASTUTE+ JEST AKTYWNY",
   "tryFreeThen": "7 dni gratis, potem {price}{suffix}",
+  "subscribeFor": "Subskrybuj za {price}{suffix}",
+  "noChargeTodayCancel": "Dziś bez opłat · anuluj, kiedy chcesz",
+  "chargedTodayCancel": "Opłata dziś · anuluj, kiedy chcesz",
+  "everyCardForYouMark": "ciebie.",
   "trialStartedNoPayment": "Okres próbny rozpoczęty. W tej wersji nie ma podłączonej płatności.",
   "thatDidNotGoThrough": "To się nie powiodło.",
   "plusIsBack": "Astute+ wrócił.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Anuluj okres próbny",
   "cancelAnyTime": "Anuluj, kiedy chcesz",
   "cancelAnyTimeNoPayment": "Anuluj, kiedy chcesz · W tej wersji nic nie jest pobierane",
-  "trialTerms": "Dziś nic nie płacisz. Przypomnienie w dniu 5; w dniu 7 odnawia się, chyba że anulujesz.",
   "restorePurchases": "Przywróć zakupy",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Wybierz stronę. Nie ma dobrej odpowiedzi.",
@@ -359,7 +362,7 @@
   "magicLine": "Pięć kart dziennie wybranych dla ciebie: z twojego miksu, na twoim poziomie, nigdy już przeczytana. Od jutra.",
   "everyCardForYou": "Każda karta wybrana dla ciebie.",
   "perkOwnTitle": "Pięć kart dziennie, wszystkie twoje",
-  "perkOwnLine": "Z twoich wątków, na zmierzonym poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.",
+  "perkOwnLine": "Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.",
   "plusCardHeadline": "Wszystkie pięć, twoje.",
   "plusCardLine": "Pięć kart dziennie z twojego miksu, na twoim poziomie. Twoja podróż. Całe twoje archiwum.",
   "continueFree": "Kontynuuj za darmo",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 nadal dobrze po powrocie} other{{n} nadal dobrze po powrocie}}",
   "nothingBackYet": "Nic jeszcze nie wróciło. Karta wraca po trzech dniach, potem po tygodniu, potem po miesiącu — a to, co wtedy trafisz, naprawdę wiesz.",
   "weekKeptThreeOwn": "Tydzień z rzędu: jutro trzy z pięciu są twoje.",
-  "perkJourneyLine": "Twój poziom i twoje liczby, każdy temat otwarty wątek po wątku, co zostało, gdy karta wróciła, i karta do opowiedzenia dziś wieczorem."
+  "perkJourneyLine": "Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem."
 }

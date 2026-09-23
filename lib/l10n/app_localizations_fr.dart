@@ -922,6 +922,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'S\'abonner pour $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel =>
+      'Rien à payer aujourd\'hui · annule quand tu veux';
+
+  @override
+  String get chargedTodayCancel => 'Payé aujourd\'hui · annule quand tu veux';
+
+  @override
+  String get everyCardForYouMark => 'toi.';
+
+  @override
   String get trialStartedNoPayment =>
       'Essai lancé. Aucun paiement n\'est branché dans cette version.';
 
@@ -974,10 +989,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Annule quand tu veux · Aucun paiement dans cette version';
-
-  @override
-  String get trialTerms =>
-      'Rien n\'est débité aujourd\'hui. Un rappel le jour 5 ; renouvellement le jour 7 sauf annulation.';
 
   @override
   String get restorePurchases => 'Restaurer les achats';
@@ -1576,7 +1587,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'De tes fils, au niveau que tu montres, jamais une déjà lue. En gratuit, deux par jour.';
+      'De tes fils, à ton niveau, jamais une déjà lue. En gratuit, deux par jour.';
 
   @override
   String get plusCardHeadline => 'Les cinq, à toi.';
@@ -1642,5 +1653,5 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Ton niveau et tes chiffres, chaque sujet ouvert fil par fil, ce qui est resté quand une carte est revenue, et la carte à raconter ce soir.';
+      'Ton niveau, chaque sujet fil par fil, ce qui est resté, et la carte à raconter ce soir.';
 }

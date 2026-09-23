@@ -198,6 +198,10 @@
   "perkArchiveLine": "Okuduğun her gün, kalıcı olarak. Ücretsizde bir hafta kalır.",
   "plusIsActive": "ASTUTE+ ETKİN",
   "tryFreeThen": "7 gün ücretsiz, sonra {price}{suffix}",
+  "subscribeFor": "{price}{suffix} ile abone ol",
+  "noChargeTodayCancel": "Bugün ücret yok · istediğin zaman iptal et",
+  "chargedTodayCancel": "Bugün ücretlendirilir · istediğin zaman iptal et",
+  "everyCardForYouMark": "senin",
   "trialStartedNoPayment": "Deneme başladı. Bu sürümde ödeme bağlı değil.",
   "thatDidNotGoThrough": "Bu gerçekleşmedi.",
   "plusIsBack": "Astute+ geri döndü.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Denemeyi iptal et",
   "cancelAnyTime": "İstediğin zaman iptal et",
   "cancelAnyTimeNoPayment": "İstediğin zaman iptal et · Bu sürümde ödeme alınmaz",
-  "trialTerms": "Bugün ücret alınmaz. 5. gün bir hatırlatma; iptal etmezsen 7. gün yenilenir.",
   "restorePurchases": "Satın alımları geri yükle",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Bir taraf seç. Doğru yanıt yok.",
@@ -359,7 +362,7 @@
   "magicLine": "Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.",
   "everyCardForYou": "Her kart, senin için seçilmiş.",
   "perkOwnTitle": "Günde beş kart, hepsi senin",
-  "perkOwnLine": "Senin konu dallarından, ölçülen seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.",
+  "perkOwnLine": "Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.",
   "plusCardHeadline": "Beşi de senin olsun.",
   "plusCardLine": "Karışımından, seviyende günde beş kart. Yolculuğun. Tüm arşivin.",
   "continueFree": "Ücretsiz devam et",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 tanesi dönüşte hâlâ doğru} other{{n} tanesi dönüşte hâlâ doğru}}",
   "nothingBackYet": "Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.",
   "weekKeptThreeOwn": "Bir hafta tamam: yarın beş karttan üçü senin.",
-  "perkJourneyLine": "Seviyen ve sayıların, dal dal açılan her konu, bir kart geri geldiğinde ne kaldığı ve bu akşam anlatacağın kart."
+  "perkJourneyLine": "Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart."
 }

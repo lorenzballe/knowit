@@ -916,6 +916,20 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'Subscribe for $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel => 'No charge today · cancel any time';
+
+  @override
+  String get chargedTodayCancel => 'Charged today · cancel any time';
+
+  @override
+  String get everyCardForYouMark => 'you.';
+
+  @override
   String get trialStartedNoPayment =>
       'Trial started. No payment is connected in this build.';
 
@@ -968,10 +982,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Cancel any time · No payment is taken in this build';
-
-  @override
-  String get trialTerms =>
-      'Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.';
 
   @override
   String get restorePurchases => 'Restore purchases';
@@ -1567,7 +1577,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'From your strands, at the level you measure at, never one you have read. Free days give you two.';
+      'From your strands, at your level, never one you have read. Free days give you two.';
 
   @override
   String get plusCardHeadline => 'Make all five yours.';
@@ -1633,5 +1643,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Your level and your numbers, every subject opened strand by strand, what stayed when a card came back, and the card to say tonight.';
+      'Your level, every subject strand by strand, what stayed, and the card to say tonight.';
 }

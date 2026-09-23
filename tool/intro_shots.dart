@@ -290,7 +290,7 @@ void main() {
           debugShowCheckedModeBanner: false,
           home: MediaQuery(
             data: const MediaQueryData(size: mine, padding: notch),
-            child: PaywallScreen(app: app, source: 'camera'),
+            child: PaywallScreen(app: app, source: 'camera', onClose: () {}),
           ),
         ),
       );

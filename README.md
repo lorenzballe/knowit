@@ -91,7 +91,9 @@ every subject opened strand by strand, what stayed when a card came back,
 and the card to say tonight — the screen is Astute+; the profile keeps the
 record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 seven days free, offered once at the end of the onboarding with "continue
-free" written under it. The mix, the streak, the freezes, the friends, the
+free" written under it. The paywall is sheet 111a, with the app's own three
+icon tiles; its button promises the free week only where the store's
+introductory offer gives one, and says "charged today" otherwise. The mix, the streak, the freezes, the friends, the
 sharing and the search are free: they are how the app spreads.
 
 ## Today, done

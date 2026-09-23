@@ -947,6 +947,21 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'Подписаться за $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel =>
+      'Сегодня без списания · отмена в любой момент';
+
+  @override
+  String get chargedTodayCancel => 'Списание сегодня · отмена в любой момент';
+
+  @override
+  String get everyCardForYouMark => 'тебя.';
+
+  @override
   String get trialStartedNoPayment =>
       'Пробный период начат. В этой сборке оплата не подключена.';
 
@@ -999,10 +1014,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Отмена в любой момент · В этой сборке ничего не списывается';
-
-  @override
-  String get trialTerms =>
-      'Сегодня ничего не списывается. Напоминание на 5-й день; на 7-й день подписка продлится, если не отменить.';
 
   @override
   String get restorePurchases => 'Восстановить покупки';
@@ -1613,7 +1624,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Из твоих веток, на измеренном уровне, ни одной уже прочитанной. Бесплатно — две в день.';
+      'Из твоих веток, на твоём уровне, ни одной уже прочитанной. Бесплатно — две в день.';
 
   @override
   String get plusCardHeadline => 'Все пять — твои.';
@@ -1679,5 +1690,5 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Твой уровень и твои цифры, каждый предмет по веткам, что осталось, когда карточка вернулась, и карточка, о которой рассказать сегодня вечером.';
+      'Твой уровень, каждый предмет по веткам, что осталось, и карточка, о которой рассказать сегодня вечером.';
 }

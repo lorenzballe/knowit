@@ -198,6 +198,10 @@
   "perkArchiveLine": "你读过的每一天，永久保存。免费版保留一周。",
   "plusIsActive": "ASTUTE+ 已激活",
   "tryFreeThen": "免费试用 7 天，之后 {price}{suffix}",
+  "subscribeFor": "以 {price}{suffix} 订阅",
+  "noChargeTodayCancel": "今天不扣款 · 随时可取消",
+  "chargedTodayCancel": "今天扣款 · 随时可取消",
+  "everyCardForYouMark": "你",
   "trialStartedNoPayment": "试用已开始。此版本未接入付款。",
   "thatDidNotGoThrough": "没有成功。",
   "plusIsBack": "Astute+ 回来了。",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "取消试用",
   "cancelAnyTime": "随时可取消",
   "cancelAnyTimeNoPayment": "随时可取消 · 此版本不会扣款",
-  "trialTerms": "今天不会扣费。第5天提醒，第7天自动续订，除非你取消。",
   "restorePurchases": "恢复购买",
   "planPrice": "{label}，{price} {per}",
   "pickASideNoRightAnswer": "选一边。没有标准答案。",
@@ -359,7 +362,7 @@
   "magicLine": "每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。",
   "everyCardForYou": "每一张卡片，都为你而选。",
   "perkOwnTitle": "每天五张，全部为你",
-  "perkOwnLine": "来自你选的分支，按你测得的水平，绝不重复已读。免费版每天两张。",
+  "perkOwnLine": "来自你选的分支，按你的水平，绝不重复已读。免费版每天两张。",
   "plusCardHeadline": "让五张全都为你。",
   "plusCardLine": "每天五张来自你的组合、匹配你的水平。你的旅程。你的全部档案。",
   "continueFree": "免费继续",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, other{{n} 张再现时仍答对}}",
   "nothingBackYet": "还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。",
   "weekKeptThreeOwn": "坚持了一周：明天五张里有三张为你而选。",
-  "perkJourneyLine": "你的等级和数字、逐分支打开的每个学科、卡片再现时你记住了什么，以及今晚要讲的那张卡片。"
+  "perkJourneyLine": "你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。"
 }

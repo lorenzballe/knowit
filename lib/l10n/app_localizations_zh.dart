@@ -891,6 +891,20 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return '以 $price$suffix 订阅';
+  }
+
+  @override
+  String get noChargeTodayCancel => '今天不扣款 · 随时可取消';
+
+  @override
+  String get chargedTodayCancel => '今天扣款 · 随时可取消';
+
+  @override
+  String get everyCardForYouMark => '你';
+
+  @override
   String get trialStartedNoPayment => '试用已开始。此版本未接入付款。';
 
   @override
@@ -941,9 +955,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cancelAnyTimeNoPayment => '随时可取消 · 此版本不会扣款';
-
-  @override
-  String get trialTerms => '今天不会扣费。第5天提醒，第7天自动续订，除非你取消。';
 
   @override
   String get restorePurchases => '恢复购买';
@@ -1520,7 +1531,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkOwnTitle => '每天五张，全部为你';
 
   @override
-  String get perkOwnLine => '来自你选的分支，按你测得的水平，绝不重复已读。免费版每天两张。';
+  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天两张。';
 
   @override
   String get plusCardHeadline => '让五张全都为你。';
@@ -1580,5 +1591,5 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张为你而选。';
 
   @override
-  String get perkJourneyLine => '你的等级和数字、逐分支打开的每个学科、卡片再现时你记住了什么，以及今晚要讲的那张卡片。';
+  String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。';
 }

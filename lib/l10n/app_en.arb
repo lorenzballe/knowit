@@ -800,6 +800,24 @@
    }
   }
  },
+ "subscribeFor": "Subscribe for {price}{suffix}",
+ "@subscribeFor": {
+  "description": "The paywall's button for a plan that starts without a free trial.",
+  "placeholders": {
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "noChargeTodayCancel": "No charge today · cancel any time",
+ "chargedTodayCancel": "Charged today · cancel any time",
+ "everyCardForYouMark": "you.",
+ "@everyCardForYouMark": {
+  "description": "The part of everyCardForYou painted in the gradient: the word for 'you', exactly as it is written there."
+ },
  "trialStartedNoPayment": "Trial started. No payment is connected in this build.",
  "thatDidNotGoThrough": "That did not go through.",
  "plusIsBack": "Astute+ is back.",
@@ -830,7 +848,6 @@
  "cancelTheTrial": "Cancel the trial",
  "cancelAnyTime": "Cancel any time",
  "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
- "trialTerms": "Nothing is charged today. A reminder on day 5; it renews on day 7 unless you cancel.",
  "restorePurchases": "Restore purchases",
  "planPrice": "{label}, {price} {per}",
  "@planPrice": {
@@ -1366,7 +1383,7 @@
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "everyCardForYou": "Every card, chosen for you.",
  "perkOwnTitle": "Five cards a day, all yours",
- "perkOwnLine": "From your strands, at the level you measure at, never one you have read. Free days give you two.",
+ "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you two.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
@@ -1409,5 +1426,5 @@
  },
  "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
- "perkJourneyLine": "Your level and your numbers, every subject opened strand by strand, what stayed when a card came back, and the card to say tonight."
+ "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight."
 }

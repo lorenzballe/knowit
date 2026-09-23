@@ -918,6 +918,20 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return 'Abonneer voor $price$suffix';
+  }
+
+  @override
+  String get noChargeTodayCancel => 'Vandaag niets betalen · altijd opzegbaar';
+
+  @override
+  String get chargedTodayCancel => 'Vandaag afgeschreven · altijd opzegbaar';
+
+  @override
+  String get everyCardForYouMark => 'jou';
+
+  @override
   String get trialStartedNoPayment =>
       'Proefperiode gestart. In deze versie is geen betaling aangesloten.';
 
@@ -970,10 +984,6 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get cancelAnyTimeNoPayment =>
       'Altijd opzegbaar · In deze versie wordt niets afgeschreven';
-
-  @override
-  String get trialTerms =>
-      'Vandaag wordt niets afgeschreven. Een herinnering op dag 5; op dag 7 verlengt het, tenzij je opzegt.';
 
   @override
   String get restorePurchases => 'Aankopen herstellen';
@@ -1570,7 +1580,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
+      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
 
   @override
   String get plusCardHeadline => 'Alle vijf van jou.';
@@ -1636,5 +1646,5 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Je niveau en je cijfers, elk vak draad voor draad geopend, wat bleef toen een kaart terugkwam, en de kaart om vanavond te vertellen.';
+      'Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen.';
 }

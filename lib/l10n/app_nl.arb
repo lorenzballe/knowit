@@ -198,6 +198,10 @@
   "perkArchiveLine": "Elke dag die je las, voorgoed bewaard. Gratis blijft een week.",
   "plusIsActive": "ASTUTE+ IS ACTIEF",
   "tryFreeThen": "7 dagen gratis, daarna {price}{suffix}",
+  "subscribeFor": "Abonneer voor {price}{suffix}",
+  "noChargeTodayCancel": "Vandaag niets betalen · altijd opzegbaar",
+  "chargedTodayCancel": "Vandaag afgeschreven · altijd opzegbaar",
+  "everyCardForYouMark": "jou",
   "trialStartedNoPayment": "Proefperiode gestart. In deze versie is geen betaling aangesloten.",
   "thatDidNotGoThrough": "Dat is niet gelukt.",
   "plusIsBack": "Astute+ is terug.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Proefperiode stoppen",
   "cancelAnyTime": "Altijd opzegbaar",
   "cancelAnyTimeNoPayment": "Altijd opzegbaar · In deze versie wordt niets afgeschreven",
-  "trialTerms": "Vandaag wordt niets afgeschreven. Een herinnering op dag 5; op dag 7 verlengt het, tenzij je opzegt.",
   "restorePurchases": "Aankopen herstellen",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Kies een kant. Er is geen goed antwoord.",
@@ -359,7 +362,7 @@
   "magicLine": "Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.",
   "everyCardForYou": "Elke kaart, voor jou gekozen.",
   "perkOwnTitle": "Vijf kaarten per dag, allemaal van jou",
-  "perkOwnLine": "Uit jouw draden, op je gemeten niveau, nooit een die je al las. Gratis krijg je er twee per dag.",
+  "perkOwnLine": "Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.",
   "plusCardHeadline": "Alle vijf van jou.",
   "plusCardLine": "Vijf kaarten per dag uit je mix, op jouw niveau. Je reis. Je hele archief.",
   "continueFree": "Gratis verdergaan",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 nog goed bij terugkomst} other{{n} nog goed bij terugkomst}}",
   "nothingBackYet": "Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.",
   "weekKeptThreeOwn": "Een week volgehouden: morgen zijn drie van de vijf van jou.",
-  "perkJourneyLine": "Je niveau en je cijfers, elk vak draad voor draad geopend, wat bleef toen een kaart terugkwam, en de kaart om vanavond te vertellen."
+  "perkJourneyLine": "Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen."
 }

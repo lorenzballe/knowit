@@ -198,6 +198,10 @@
   "perkArchiveLine": "Cada día que has leído, para siempre. Gratis se guarda una semana.",
   "plusIsActive": "ASTUTE+ ESTÁ ACTIVO",
   "tryFreeThen": "7 días gratis, luego {price}{suffix}",
+  "subscribeFor": "Suscríbete por {price}{suffix}",
+  "noChargeTodayCancel": "Sin cargo hoy · cancela cuando quieras",
+  "chargedTodayCancel": "Se cobra hoy · cancela cuando quieras",
+  "everyCardForYouMark": "ti.",
   "trialStartedNoPayment": "Prueba iniciada. No hay pago conectado en esta versión.",
   "thatDidNotGoThrough": "Eso no se completó.",
   "plusIsBack": "Astute+ ha vuelto.",
@@ -214,7 +218,6 @@
   "cancelTheTrial": "Cancelar la prueba",
   "cancelAnyTime": "Cancela cuando quieras",
   "cancelAnyTimeNoPayment": "Cancela cuando quieras · No se cobra nada en esta versión",
-  "trialTerms": "Hoy no se cobra nada. Un aviso el día 5; se renueva el día 7 si no cancelas.",
   "restorePurchases": "Restaurar compras",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Elige un bando. No hay respuesta correcta.",
@@ -359,7 +362,7 @@
   "magicLine": "Cinco cartas al día elegidas para ti: de tu mezcla, a tu nivel, nunca una ya leída. Desde mañana.",
   "everyCardForYou": "Cada carta, elegida para ti.",
   "perkOwnTitle": "Cinco cartas al día, todas tuyas",
-  "perkOwnLine": "De tus ramas, al nivel que demuestras, nunca una ya leída. Gratis tienes dos al día.",
+  "perkOwnLine": "De tus ramas, a tu nivel, nunca una ya leída. Gratis tienes dos al día.",
   "plusCardHeadline": "Las cinco, tuyas.",
   "plusCardLine": "Cinco cartas al día de tu mezcla, a tu nivel. Tu viaje. Todo tu archivo.",
   "continueFree": "Continuar gratis",
@@ -371,5 +374,5 @@
   "nKeptOnReturn": "{n, plural, =1{1 aún correcta al volver} other{{n} aún correctas al volver}}",
   "nothingBackYet": "Aún no ha vuelto nada. Una carta vuelve a los tres días, luego a la semana, luego al mes — y lo que aciertas entonces es lo que de verdad sabes.",
   "weekKeptThreeOwn": "Una semana seguida: mañana tres de las cinco son tuyas.",
-  "perkJourneyLine": "Tu nivel y tus números, cada tema abierto rama por rama, lo que se quedó cuando una carta volvió, y la carta para contar esta noche."
+  "perkJourneyLine": "Tu nivel, cada tema rama por rama, lo que se quedó, y la carta para contar esta noche."
 }

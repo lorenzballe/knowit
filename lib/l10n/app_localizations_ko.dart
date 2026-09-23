@@ -898,6 +898,20 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String subscribeFor(String price, String suffix) {
+    return '$price$suffix에 구독하기';
+  }
+
+  @override
+  String get noChargeTodayCancel => '오늘은 결제 없음 · 언제든 취소 가능';
+
+  @override
+  String get chargedTodayCancel => '오늘 결제됨 · 언제든 취소 가능';
+
+  @override
+  String get everyCardForYouMark => '당신을';
+
+  @override
   String get trialStartedNoPayment => '체험이 시작됐어요. 이 빌드에는 결제가 연결되어 있지 않습니다.';
 
   @override
@@ -948,9 +962,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get cancelAnyTimeNoPayment => '언제든 취소 가능 · 이 빌드에서는 결제되지 않음';
-
-  @override
-  String get trialTerms => '오늘은 결제되지 않습니다. 5일째에 알림, 취소하지 않으면 7일째에 갱신됩니다.';
 
   @override
   String get restorePurchases => '구매 복원';
@@ -1535,7 +1546,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkOwnTitle => '매일 다섯 장, 전부 당신의 것';
 
   @override
-  String get perkOwnLine => '당신이 고른 갈래에서, 측정된 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
+  String get perkOwnLine => '당신이 고른 갈래에서, 당신의 수준으로, 읽은 카드는 다시 없이. 무료는 하루 두 장.';
 
   @override
   String get plusCardHeadline => '다섯 장 모두, 당신의 것으로.';
@@ -1595,6 +1606,5 @@ class AppLocalizationsKo extends AppLocalizations {
   String get weekKeptThreeOwn => '일주일을 지켰습니다. 내일은 다섯 장 중 세 장이 당신의 것입니다.';
 
   @override
-  String get perkJourneyLine =>
-      '당신의 레벨과 숫자, 갈래별로 열리는 모든 주제, 카드가 돌아왔을 때 남은 것, 그리고 오늘 밤 말할 카드.';
+  String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드.';
 }

@@ -48,8 +48,10 @@ class Bloom extends StatelessWidget {
 }
 
 /// Drives a value that runs 0 → 1 → 0 forever, for the slow ambient drifts.
-class _Loop extends StatefulWidget {
-  const _Loop({
+/// Still, at the middle of its swing, when the platform asks for no motion.
+class AmbientLoop extends StatefulWidget {
+  const AmbientLoop({
+    super.key,
     required this.period,
     required this.builder,
     this.reverse = true,
@@ -60,10 +62,11 @@ class _Loop extends StatefulWidget {
   final Widget Function(BuildContext context, double t) builder;
 
   @override
-  State<_Loop> createState() => _LoopState();
+  State<AmbientLoop> createState() => _AmbientLoopState();
 }
 
-class _LoopState extends State<_Loop> with SingleTickerProviderStateMixin {
+class _AmbientLoopState extends State<AmbientLoop>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
     duration: widget.period,
@@ -126,7 +129,7 @@ class AmbientBlooms extends StatelessWidget {
             Positioned(
               left: -130,
               top: -70,
-              child: _Loop(
+              child: AmbientLoop(
                 period: const Duration(seconds: 19),
                 builder: (context, t) => Transform.translate(
                   offset: Offset(34 * t, -30 * t),
@@ -140,7 +143,7 @@ class AmbientBlooms extends StatelessWidget {
             Positioned(
               right: -150,
               top: 40,
-              child: _Loop(
+              child: AmbientLoop(
                 period: const Duration(seconds: 26),
                 builder: (context, t) => Transform.translate(
                   offset: Offset(-30 * t, 26 * t),
@@ -154,7 +157,7 @@ class AmbientBlooms extends StatelessWidget {
             Positioned(
               left: 20,
               top: 290,
-              child: _Loop(
+              child: AmbientLoop(
                 // A different period is what keeps the three from breathing
                 // in step; it does not need a delay to start out of phase.
                 period: const Duration(seconds: 23),
@@ -276,7 +279,7 @@ class Bokeh extends StatelessWidget {
     return Positioned(
       left: left,
       top: top,
-      child: _Loop(
+      child: AmbientLoop(
         period: period,
         builder: (context, t) => Transform.translate(
           offset: Offset(22 * t, -30 * t),
@@ -331,7 +334,7 @@ class LightSweep extends StatelessWidget {
       child: SizedBox(
         height: height,
         child: ClipRect(
-          child: _Loop(
+          child: AmbientLoop(
             // 8s of sweep plus a 1.5s pause, folded into one period so the
             // gap needs no timer of its own.
             period: const Duration(milliseconds: 9500),
