@@ -1,0 +1,60 @@
+name: Widget previews
+
+# Draws the home-screen and lock-screen widgets to pictures on a Mac, from
+# the same SwiftUI the widget extension uses, and publishes them on the
+# widget-previews branch — the widgets, seen, without a phone. Nothing is
+# built or signed; a run takes a couple of minutes on a public repository's
+# free macOS runner.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ios/AstutWidget/**"
+      - "tool/widget_previews/**"
+      - "assets/fonts/**"
+      - ".github/workflows/widget-previews.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: widget-previews
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the renderer from the widget's own views
+        run: |
+          swiftc -O -parse-as-library -target arm64-apple-macos14.0 \
+            ios/AstutWidget/AstutWidgetViews.swift \
+            tool/widget_previews/Render.swift \
+            -o "$RUNNER_TEMP/render"
+
+      - name: Draw the widgets
+        run: |
+          mkdir -p "$RUNNER_TEMP/previews"
+          "$RUNNER_TEMP/render" assets/fonts/Fraunces.ttf assets/fonts/Figtree.ttf "$RUNNER_TEMP/previews"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: widget-previews
+          path: ${{ runner.temp }}/previews
+
+      # One commit on a branch of its own, replaced each run: the pictures
+      # of the widgets as they are on main now.
+      - name: Publish on the widget-previews branch
+        run: |
+          cd "$RUNNER_TEMP/previews"
+          git init -q
+          git checkout -q -b widget-previews
+          git add .
+          git -c user.name="widget-previews" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Widget previews for ${GITHUB_SHA::7}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" widget-previews

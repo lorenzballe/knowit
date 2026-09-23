@@ -54,6 +54,11 @@ jobs:
             --dart-define=POSTHOG_KEY=${{ vars.POSTHOG_KEY }} \
             --dart-define=POSTHOG_HOST=${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
 
+      # The question of the day for the next two months, where the iPhone
+      # widget looks when the app has not handed it anything yet.
+      - name: Publish the widget's days
+        run: flutter test tool/widget_days.dart
+
       # Stamp the bundle with the commit. Removing the service worker stopped
       # it serving yesterday's build, but the plain HTTP cache still can:
       # main.dart.js is requested at the same URL every deploy, so a browser

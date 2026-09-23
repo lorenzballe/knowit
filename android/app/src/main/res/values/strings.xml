@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- The widgets' names and lines in the widget picker, and what they say
+     before the app has run once. The same words as the iPhone's, in
+     ios/AstutWidget/Localizable.xcstrings. -->
 <resources>
+    <string name="widget_card_label">Today\'s card</string>
     <string name="widget_description">The card the morning opens on, and your streak.</string>
+    <string name="widget_streak_label">Streak</string>
+    <string name="widget_streak_description">Your days in a row, and the week.</string>
+    <string name="widget_five_label">Today\'s five</string>
+    <string name="widget_five_description">The five cards of the day, and how far you are.</string>
+    <string name="widget_card_empty">Five cards a day, two minutes.</string>
+    <string name="widget_streak_open">Open Astute to see your streak here.</string>
+    <string name="widget_five_open">Open Astute to see today\'s five here.</string>
 </resources>

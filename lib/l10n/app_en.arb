@@ -777,6 +777,31 @@
  "@widgetFootDone": {
   "description": "The home-screen widget's foot once today's cards are read."
  },
+ "widgetStreakStart": "Read today's five to start a streak.",
+ "@widgetStreakStart": {
+  "description": "The streak widget's line while there is no streak."
+ },
+ "widgetFiveTitle": "TODAY'S FIVE",
+ "@widgetFiveTitle": {
+  "description": "The five widget's heading, in capitals."
+ },
+ "widgetFiveRead": "{n} of 5 read",
+ "@widgetFiveRead": {
+  "description": "The five widget's count of today's cards read.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "widgetFiveDone": "All five read",
+ "@widgetFiveDone": {
+  "description": "The five widget once all of today's cards are read."
+ },
+ "widgetFiveWaiting": "A new five is waiting",
+ "@widgetFiveWaiting": {
+  "description": "The five widget after midnight, before the app has dealt the new day."
+ },
  "dayStreakCaps": "DAY STREAK",
  "sourceLabel": "Source · {source}",
  "@sourceLabel": {

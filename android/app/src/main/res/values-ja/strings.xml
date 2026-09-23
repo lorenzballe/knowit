@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">今日のカード</string>
+    <string name="widget_description">朝いちばんのカードと、あなたの連続記録。</string>
+    <string name="widget_streak_label">連続記録</string>
+    <string name="widget_streak_description">連続日数と、この一週間。</string>
+    <string name="widget_five_label">今日の5枚</string>
+    <string name="widget_five_description">今日の5枚と、どこまで読んだか。</string>
+    <string name="widget_card_empty">5枚のカード、2分。</string>
+    <string name="widget_streak_open">Astuteを開くと、ここに連続記録が表示されます。</string>
+    <string name="widget_five_open">Astuteを開くと、ここに今日の5枚が表示されます。</string>
+</resources>

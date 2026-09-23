@@ -19,6 +19,10 @@
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		A57E0000000000000000B001 /* AstutWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F001 /* AstutWidget.swift */; };
 		A57E0000000000000000B002 /* AstutWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F002 /* AstutWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A57E0000000000000000B003 /* AstutWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F006 /* AstutWidgetViews.swift */; };
+		A57E0000000000000000B004 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F007 /* Localizable.xcstrings */; };
+		A57E0000000000000000B005 /* Fraunces.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F008 /* Fraunces.ttf */; };
+		A57E0000000000000000B006 /* Figtree.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A57E0000000000000000F009 /* Figtree.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +90,10 @@
 		A57E0000000000000000F003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A57E0000000000000000F004 /* AstutWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AstutWidget.entitlements; sourceTree = "<group>"; };
 		A57E0000000000000000F005 /* AstutWidget.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AstutWidget.xcconfig; sourceTree = "<group>"; };
+		A57E0000000000000000F006 /* AstutWidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstutWidgetViews.swift; sourceTree = "<group>"; };
+		A57E0000000000000000F007 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A57E0000000000000000F008 /* Fraunces.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fraunces.ttf; path = ../assets/fonts/Fraunces.ttf; sourceTree = SOURCE_ROOT; };
+		A57E0000000000000000F009 /* Figtree.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Figtree.ttf; path = ../assets/fonts/Figtree.ttf; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +160,10 @@
 			isa = PBXGroup;
 			children = (
 				A57E0000000000000000F001 /* AstutWidget.swift */,
+				A57E0000000000000000F006 /* AstutWidgetViews.swift */,
+				A57E0000000000000000F007 /* Localizable.xcstrings */,
+				A57E0000000000000000F008 /* Fraunces.ttf */,
+				A57E0000000000000000F009 /* Figtree.ttf */,
 				A57E0000000000000000F003 /* Info.plist */,
 				A57E0000000000000000F004 /* AstutWidget.entitlements */,
 				A57E0000000000000000F005 /* AstutWidget.xcconfig */,
@@ -268,6 +280,18 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
+				de,
+				fr,
+				es,
+				pt,
+				pl,
+				nl,
+				tr,
+				ja,
+				ko,
+				"zh-Hans",
+				ru,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
@@ -308,6 +332,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57E0000000000000000B004 /* Localizable.xcstrings in Resources */,
+				A57E0000000000000000B005 /* Fraunces.ttf in Resources */,
+				A57E0000000000000000B006 /* Figtree.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A57E0000000000000000B001 /* AstutWidget.swift in Sources */,
+				A57E0000000000000000B003 /* AstutWidgetViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

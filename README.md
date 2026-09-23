@@ -517,36 +517,68 @@ nearest their record, which is the one race this app is for. Boards live at
 `boards/{code}` in Firestore, readable by anyone signed in and written only
 by their owner.
 
-## The home-screen widget
+## The home-screen widgets
 
-The card the morning opens on, and the streak, on the home screen — the
-question of the day on the free plan, one of the reader's own with
-Astute+ — drawn the way the app draws a card: the subject's colour for a
-ground, the subject as an eyebrow, the question set large, the streak in
-the foot. The widget is native — WidgetKit on iOS, an `AppWidgetProvider`
-on Android — and neither can run Dart, so the app hands over what the
-widget will need through the `astut/widget` channel (`homeWidgetData`):
-today's card with its colour and ink, the streak, the three lines the foot
-can say already in the reader's language, and the card, colour and subject
-for each of the next fourteen mornings, so the widget turns over at
-midnight whether or not the app is opened, and goes quiet after a
-fortnight rather than lying. Tapping it opens the app.
+Three, drawn in the app's own type and colours, and each opens the app when
+tapped:
 
-**Android** is `AstutWidget.kt`, its layout (a white rounded ground the
-provider tints per card, since `RemoteViews` cannot recolour a shape), and
-the receiver in the manifest; it is resizable from two cells up.
+- **Today's card** — the card the morning opens on: the question of the day
+  on the free plan, one of the reader's own with Astute+, on the subject's
+  colour, with the subject as an eyebrow, the question set large and the
+  streak in the foot. Small, medium, large (with a dot for each of the
+  five), and the lock-screen rectangle on iOS 16+.
+- **Streak** — the days in a row, large, and the week under it: seven dots,
+  filled for a day read through, today's ringed. Small, and on the lock
+  screen a ring for the week round the number, and a line.
+- **Today's five** — the day's five cards in their colours, in the order
+  they are read, solid with a tick once read, and how far the day has got.
+  Medium.
+
+The widgets are native — WidgetKit on iOS, `AppWidgetProvider`s on
+Android — and neither can run Dart, so the app hands over what they will
+need through the `astut/widget` channel (`homeWidgetData`), at launch, on
+coming back to the foreground and after every card: today's card with its
+colour and ink, the card, colour and subject for each of the next fourteen
+mornings, the streak and the week, today's five and tomorrow's, and every
+line they can say, already in the reader's language. So they turn over at
+midnight whether or not the app is opened — the week rolls a dot on, the
+five turn to tomorrow's, all still to read — and go quiet after a
+fortnight rather than lying.
+
+On iOS, before the app has ever handed anything over — or while the App
+Group below is missing — today's card is not blank: it reads the question
+of the day from `widget/days.json`, which the web deploy publishes beside
+the app (`tool/widget_days.dart`, two months of editions), and keeps the
+last copy for when the phone is offline.
+
+**Android** is `AstutWidget.kt`, `AstutStreakWidget.kt` and
+`AstutFiveWidget.kt`, their layouts (grounds drawn white and tinted by the
+provider, since `RemoteViews` cannot recolour a shape), and the receivers in
+the manifest, named in the widget picker in all thirteen languages.
+`.github/workflows/android-check.yml` builds a debug APK on every push that
+touches them.
 
 **iOS** is the `AstutWidgetExtension` target in `Runner.xcodeproj`, built
-from `ios/AstutWidget/`: the SwiftUI widget (small, medium, and the
-lock-screen rectangle on iOS 16+), its `Info.plist`, its entitlements, and
-an xcconfig that reads Flutter's `Generated.xcconfig` so the extension
-carries the same version and build number as the app — App Store Connect
-refuses an upload where they differ. The target was written into the
-project file by hand, and Runner embeds it as a foundation extension and
-depends on it, so `flutter build ios` builds both. Both the app and the
-widget carry the App Group `group.com.astuto.app` in their entitlements:
-`AppDelegate.swift` writes the hand-over into the group's defaults and asks
-WidgetKit to reload; the widget's timeline provider reads them back.
+from `ios/AstutWidget/`: the three widgets in one `WidgetBundle`
+(`AstutWidget.swift`), the views they draw (`AstutWidgetViews.swift`),
+their names in the widget gallery in every language
+(`Localizable.xcstrings`), the fonts, taken from `assets/fonts/`, its
+`Info.plist`, its entitlements, and an xcconfig that reads Flutter's
+`Generated.xcconfig` so the extension carries the same version and build
+number as the app — App Store Connect refuses an upload where they differ.
+The target was written into the project file by hand, and Runner embeds it
+as a foundation extension and depends on it, so `flutter build ios` builds
+both. Both the app and the widget carry the App Group
+`group.com.astuto.app` in their entitlements: `AppDelegate.swift` writes
+the hand-over into the group's defaults and asks WidgetKit to reload; the
+widgets' timeline providers read them back.
+
+**Seeing them without a phone.** `tool/widget_previews/Render.swift` draws
+every widget, home screen and lock screen, in Italian and in English, from
+the very views the extension uses, and
+`.github/workflows/widget-previews.yml` runs it on a Mac on every change
+and publishes the pictures on the `widget-previews` branch
+(`widgets-it.png`, `widgets-en.png`).
 
 Two things the tree cannot do by itself:
 
@@ -559,7 +591,8 @@ Two things the tree cannot do by itself:
   `com.astuto.app.AstutWidget` (the build registers the second if it is
   missing) open App Groups → Configure and tick it. Until then the build
   checks the profiles, leaves the group out of both entitlements instead of
-  failing at signing, and the widget shows its fixed line.
+  failing at signing: today's card shows the question of the day from the
+  web, and the streak and the five ask for the app to be opened.
 - **Compiling it needs a Mac**, so `.github/workflows/ios-check.yml` runs
   `flutter build ios --release --no-codesign` on a GitHub macOS runner on
   every push to `main` that touches `ios/` or `lib/`, and lists what was
@@ -698,9 +731,10 @@ These are declared in the UI rather than faked:
 - **The App Group in the developer portal.** The widget target, its
   entitlements and the signing are all in the tree, but the group
   `group.com.astuto.app` has to be registered and ticked on both App IDs
-  by hand, as described under *The home-screen widget*. Until it is, the
-  build leaves the group out rather than failing at signing, and the
-  widget shows its fixed line instead of the day's card.
+  by hand, as described under *The home-screen widgets*. Until it is, the
+  build leaves the group out rather than failing at signing: today's card
+  shows the question of the day from the web instead of the reader's own,
+  and the streak and the five ask for the app to be opened.
 - **Depth under every strand.** Every card is tagged with a strand and the
   dealer honours the switches, but 170 cards over 324 strands is a card
   under half of them and nothing under the rest; a reader who turns

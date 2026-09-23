@@ -924,6 +924,24 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetFootDone => 'На сегодня всё';
 
   @override
+  String get widgetStreakStart =>
+      'Прочитай сегодняшние пять, чтобы начать серию.';
+
+  @override
+  String get widgetFiveTitle => 'ПЯТЬ НА СЕГОДНЯ';
+
+  @override
+  String widgetFiveRead(int n) {
+    return 'Прочитано $n из 5';
+  }
+
+  @override
+  String get widgetFiveDone => 'Все пять прочитаны';
+
+  @override
+  String get widgetFiveWaiting => 'Ждут пять новых карточек';
+
+  @override
   String get dayStreakCaps => 'ДНЕЙ ПОДРЯД';
 
   @override

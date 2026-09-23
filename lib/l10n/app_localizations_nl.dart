@@ -895,6 +895,24 @@ class AppLocalizationsNl extends AppLocalizations {
   String get widgetFootDone => 'Klaar voor vandaag';
 
   @override
+  String get widgetStreakStart =>
+      'Lees de vijf van vandaag om een reeks te starten.';
+
+  @override
+  String get widgetFiveTitle => 'DE VIJF VAN VANDAAG';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '$n van 5 gelezen';
+  }
+
+  @override
+  String get widgetFiveDone => 'Alle vijf gelezen';
+
+  @override
+  String get widgetFiveWaiting => 'Er wachten vijf nieuwe kaarten';
+
+  @override
   String get dayStreakCaps => 'DAGEN OP RIJ';
 
   @override

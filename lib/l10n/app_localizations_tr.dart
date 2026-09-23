@@ -890,6 +890,23 @@ class AppLocalizationsTr extends AppLocalizations {
   String get widgetFootDone => 'Bugünlük tamam';
 
   @override
+  String get widgetStreakStart => 'Seri başlatmak için bugünün beşini oku.';
+
+  @override
+  String get widgetFiveTitle => 'BUGÜNÜN BEŞİ';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '5\'te $n okundu';
+  }
+
+  @override
+  String get widgetFiveDone => 'Beşi de okundu';
+
+  @override
+  String get widgetFiveWaiting => 'Yeni beş kart seni bekliyor';
+
+  @override
   String get dayStreakCaps => 'GÜNLÜK SERİ';
 
   @override

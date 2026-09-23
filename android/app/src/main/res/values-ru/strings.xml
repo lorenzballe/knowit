@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">Карточка дня</string>
+    <string name="widget_description">Карточка, с которой начинается утро, и твоя серия.</string>
+    <string name="widget_streak_label">Серия</string>
+    <string name="widget_streak_description">Твои дни подряд и вся неделя.</string>
+    <string name="widget_five_label">Пять на сегодня</string>
+    <string name="widget_five_description">Пять карточек дня и сколько ты уже прочитал.</string>
+    <string name="widget_card_empty">Пять карточек, две минуты.</string>
+    <string name="widget_streak_open">Открой Astute, чтобы видеть здесь свою серию.</string>
+    <string name="widget_five_open">Открой Astute, чтобы видеть здесь пять на сегодня.</string>
+</resources>

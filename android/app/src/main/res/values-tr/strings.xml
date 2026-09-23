@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">Bugünün kartı</string>
+    <string name="widget_description">Sabahın açıldığı kart ve serin.</string>
+    <string name="widget_streak_label">Seri</string>
+    <string name="widget_streak_description">Art arda günlerin ve hafta.</string>
+    <string name="widget_five_label">Bugünün beşi</string>
+    <string name="widget_five_description">Günün beş kartı ve ne kadar ilerlediğin.</string>
+    <string name="widget_card_empty">Beş kart, iki dakika.</string>
+    <string name="widget_streak_open">Serini burada görmek için Astute\'u aç.</string>
+    <string name="widget_five_open">Bugünün beşini burada görmek için Astute\'u aç.</string>
+</resources>

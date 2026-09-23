@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">La carta di oggi</string>
+    <string name="widget_description">La carta con cui si apre la mattina, e la tua serie.</string>
+    <string name="widget_streak_label">Serie</string>
+    <string name="widget_streak_description">I tuoi giorni di fila, e la settimana.</string>
+    <string name="widget_five_label">Le cinque di oggi</string>
+    <string name="widget_five_description">Le cinque carte del giorno, e a che punto sei.</string>
+    <string name="widget_card_empty">Cinque carte, due minuti.</string>
+    <string name="widget_streak_open">Apri Astute per vedere qui la tua serie.</string>
+    <string name="widget_five_open">Apri Astute per vedere qui le cinque di oggi.</string>
+</resources>

@@ -896,6 +896,24 @@ class AppLocalizationsIt extends AppLocalizations {
   String get widgetFootDone => 'Fatto per oggi';
 
   @override
+  String get widgetStreakStart =>
+      'Leggi le cinque di oggi per iniziare una serie.';
+
+  @override
+  String get widgetFiveTitle => 'LE CINQUE DI OGGI';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '$n su 5 lette';
+  }
+
+  @override
+  String get widgetFiveDone => 'Tutte e cinque lette';
+
+  @override
+  String get widgetFiveWaiting => 'Ti aspettano cinque carte nuove';
+
+  @override
   String get dayStreakCaps => 'GIORNI DI SERIE';
 
   @override

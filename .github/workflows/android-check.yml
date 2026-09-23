@@ -1,0 +1,48 @@
+name: Android build check
+
+# Builds the Android app, its home-screen widgets included, on a machine
+# with the Android SDK — the check a phone cannot run and this sandbox
+# cannot either. A debug APK, unsigned and thrown away: only whether the
+# Kotlin and the widget layouts compile.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "android/**"
+      - "lib/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - ".github/workflows/android-check.yml"
+  workflow_dispatch: {}
+
+concurrency:
+  group: android-check
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Build a debug APK
+        run: flutter build apk --debug
+
+      - name: Show the widget receivers in the built manifest
+        run: |
+          ls -la build/app/outputs/flutter-apk/
+          unzip -p build/app/outputs/flutter-apk/app-debug.apk AndroidManifest.xml | strings | grep -i -E "AstutWidget|AstutStreak|AstutFive" | sort -u || true

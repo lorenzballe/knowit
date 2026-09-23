@@ -869,6 +869,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get widgetFootDone => '今天已完成';
 
   @override
+  String get widgetStreakStart => '读完今天的五张，开始连续记录。';
+
+  @override
+  String get widgetFiveTitle => '今天的五张';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '已读 $n/5';
+  }
+
+  @override
+  String get widgetFiveDone => '五张全部读完';
+
+  @override
+  String get widgetFiveWaiting => '新的五张在等你';
+
+  @override
   String get dayStreakCaps => '天连续';
 
   @override

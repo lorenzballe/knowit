@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart'
     show Color, ThemeMode, basicLocaleListResolution;
 import 'package:flutter/foundation.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/date_symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
@@ -596,10 +598,9 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kTodayIndex, todayIndex);
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
-    if (todayCompleted) {
-      await _completeToday();
-      unawaited(refreshHomeWidget());
-    }
+    if (todayCompleted) await _completeToday();
+    // After every card, not only the last: the five widget counts them.
+    unawaited(refreshHomeWidget());
     await _noteClimb();
     notifyListeners();
   }
@@ -1493,6 +1494,37 @@ class AppState extends ChangeNotifier {
     }
     final Pill lead = leadOn(today);
     final AppLocalizations l = _strings;
+
+    // The streak widget's week: the last seven days, oldest first, as a
+    // row of 1s and 0s for read through or not, and each day's initial in
+    // the reader's language. Initials repeat every seven days, so a widget
+    // that has not heard from the app for a while can still roll them on.
+    final Set<String> readThrough = completedDates.toSet();
+    final Map<dynamic, dynamic> symbols = dateTimeSymbolMap();
+    final List<String> initials =
+        (symbols[l.localeName] as DateSymbols? ?? symbols['en'] as DateSymbols)
+            .NARROWWEEKDAYS;
+    final week = StringBuffer();
+    final weekLabels = <String>[];
+    for (var i = 6; i >= 0; i--) {
+      final day = DateTime(today.year, today.month, today.day - i);
+      week.write(readThrough.contains(dateKey(day)) ? '1' : '0');
+      weekLabels.add(initials[day.weekday % 7]);
+    }
+
+    // Today's five in the order they are read, and tomorrow's, so the five
+    // widget has the new day's colours at midnight without the app.
+    List<Map<String, Object>> five(List<Pill> deck, int read) => [
+      for (final (int i, Pill p) in deck.indexed)
+        {
+          'topic': p.topic,
+          'color': hexOf(p.color),
+          'ink': hexOf(p.ink),
+          'read': i < read,
+        },
+    ];
+    final int readToday = todayIndex.clamp(0, todaysDeck.length);
+
     return {
       'edition': editionOf(today),
       'date': dateKey(today),
@@ -1509,6 +1541,18 @@ class AppState extends ChangeNotifier {
       'aheadTopic': aheadTopic,
       'aheadColor': aheadColor,
       'aheadInk': aheadInk,
+      'streakCaption': l.dayStreakCaps,
+      'streakText': l.streakDays(liveStreak),
+      'streakStart': l.widgetStreakStart,
+      'weekDone': week.toString(),
+      'weekLabels': jsonEncode(weekLabels),
+      'fiveJson': jsonEncode(five(todaysDeck, readToday)),
+      'fiveTomorrowJson': jsonEncode(five(tomorrowsDeck, 0)),
+      'fiveRead': readToday,
+      'fiveTitle': l.widgetFiveTitle,
+      'fiveReadText': l.widgetFiveRead(readToday),
+      'fiveDone': l.widgetFiveDone,
+      'fiveWaiting': l.widgetFiveWaiting,
     };
   }
 

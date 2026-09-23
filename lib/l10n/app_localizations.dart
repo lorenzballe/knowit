@@ -1272,6 +1272,36 @@ abstract class AppLocalizations {
   /// **'Done for today'**
   String get widgetFootDone;
 
+  /// The streak widget's line while there is no streak.
+  ///
+  /// In en, this message translates to:
+  /// **'Read today\'s five to start a streak.'**
+  String get widgetStreakStart;
+
+  /// The five widget's heading, in capitals.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY\'S FIVE'**
+  String get widgetFiveTitle;
+
+  /// The five widget's count of today's cards read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of 5 read'**
+  String widgetFiveRead(int n);
+
+  /// The five widget once all of today's cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'All five read'**
+  String get widgetFiveDone;
+
+  /// The five widget after midnight, before the app has dealt the new day.
+  ///
+  /// In en, this message translates to:
+  /// **'A new five is waiting'**
+  String get widgetFiveWaiting;
+
   /// No description provided for @dayStreakCaps.
   ///
   /// In en, this message translates to:

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A day not read through: a faint ring. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#00000000" />
+    <stroke android:width="1.3dp" android:color="#52F2F1EC" />
+    <size android:width="9dp" android:height="9dp" />
+</shape>

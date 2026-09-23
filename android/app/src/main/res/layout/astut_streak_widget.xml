@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The streak: the days in a row, large, and the week under it — seven
+     dots, filled for a day read through, the last one today's. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/streak_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_night"
+        android:contentDescription="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/streak_caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ASTUTE"
+            android:textColor="#9EF2F1EC"
+            android:textSize="10sp"
+            android:letterSpacing="0.15"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/streak_number"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="#F2F1EC"
+            android:textSize="52sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/streak_start"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:text=""
+            android:textColor="#F2F1EC"
+            android:textSize="15sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:maxLines="4"
+            android:ellipsize="end" />
+
+        <LinearLayout
+            android:id="@+id/streak_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_0"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_1"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_2"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_3"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_4"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_5"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/week_dot_6"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:src="@drawable/dot_open"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/week_label_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="#6BF2F1EC"
+                    android:textSize="8.5sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

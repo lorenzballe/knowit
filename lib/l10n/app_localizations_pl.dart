@@ -927,6 +927,24 @@ class AppLocalizationsPl extends AppLocalizations {
   String get widgetFootDone => 'Na dziś gotowe';
 
   @override
+  String get widgetStreakStart =>
+      'Przeczytaj dzisiejszą piątkę, by zacząć serię.';
+
+  @override
+  String get widgetFiveTitle => 'DZISIEJSZA PIĄTKA';
+
+  @override
+  String widgetFiveRead(int n) {
+    return 'Przeczytane: $n z 5';
+  }
+
+  @override
+  String get widgetFiveDone => 'Wszystkie pięć przeczytane';
+
+  @override
+  String get widgetFiveWaiting => 'Czeka nowa piątka';
+
+  @override
   String get dayStreakCaps => 'DNI SERII';
 
   @override

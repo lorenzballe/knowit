@@ -1,8 +1,5 @@
 package com.astuto.app
 
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
-import android.content.Context
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -10,9 +7,10 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        // The home-screen widget cannot run Dart, so the app hands it what
-        // it will need — today's question, the streak, and the question for
-        // each of the next fourteen mornings — and asks it to redraw.
+        // The home-screen widgets cannot run Dart, so the app hands them what
+        // they will need — today's question and the question for each of the
+        // next fourteen mornings, the streak and the week, today's five and
+        // tomorrow's — and asks them all to redraw.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "astut/widget")
             .setMethodCallHandler { call, result ->
                 if (call.method != "update") {
@@ -25,9 +23,7 @@ class MainActivity : FlutterActivity() {
                     return@setMethodCallHandler
                 }
                 AstutWidget.store(this, data)
-                val manager = AppWidgetManager.getInstance(this)
-                val ids = manager.getAppWidgetIds(ComponentName(this, AstutWidget::class.java))
-                AstutWidget.render(this, manager, ids)
+                AstutWidget.refreshAll(this)
                 result.success(null)
             }
     }

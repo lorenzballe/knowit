@@ -873,6 +873,23 @@ class AppLocalizationsJa extends AppLocalizations {
   String get widgetFootDone => '今日は完了';
 
   @override
+  String get widgetStreakStart => '今日の5枚を読んで連続記録を始めよう。';
+
+  @override
+  String get widgetFiveTitle => '今日の5枚';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '5枚中$n枚読了';
+  }
+
+  @override
+  String get widgetFiveDone => '5枚すべて読了';
+
+  @override
+  String get widgetFiveWaiting => '新しい5枚が待っています';
+
+  @override
   String get dayStreakCaps => '日連続';
 
   @override

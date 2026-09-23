@@ -989,6 +989,86 @@ void main() {
       expect(pushed.last['footStreak'], '8-day streak');
     });
 
+    test('hands the streak its week and the five their colours', () async {
+      final now = DateTime.now();
+      DateTime ago(int n) => DateTime(now.year, now.month, now.day - n);
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 2,
+        'knowit.lastCompletionDate': dateKey(ago(1)),
+        'knowit.completedDates': [
+          dateKey(ago(5)),
+          dateKey(ago(2)),
+          dateKey(ago(1)),
+        ],
+      });
+      final pushed = <Map<String, Object?>>[];
+      final app = AppState(pushWidget: (data) async => pushed.add(data));
+      await app.init();
+      await Future<void>.delayed(Duration.zero);
+      var data = pushed.last;
+
+      // The week, oldest first and today last: a 1 for a day read through.
+      expect(data['weekDone'], '0100110');
+      // Each day's initial in the reader's language, the last one today's.
+      final labels = (jsonDecode(data['weekLabels'] as String) as List)
+          .cast<String>();
+      expect(labels, hasLength(7));
+      const initials = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+      expect(labels.last, initials[now.weekday % 7]);
+      expect(labels.first, initials[ago(6).weekday % 7]);
+      expect(data['streakCaption'], 'DAY STREAK');
+      expect(data['streakText'], '2 days');
+      expect(data['streakStart'], "Read today's five to start a streak.");
+
+      // Today's five, in the order they are read, none of them yet; and
+      // tomorrow's, for midnight.
+      List<Map<String, Object?>> five(String key) => [
+        for (final c in jsonDecode(data[key] as String) as List)
+          (c as Map).cast<String, Object?>(),
+      ];
+      expect(five('fiveJson'), hasLength(kPillsPerDay));
+      expect(
+        five('fiveJson').map((c) => c['topic']),
+        orderedEquals(app.todaysDeck.map((p) => p.topic)),
+      );
+      expect(
+        five('fiveJson').map((c) => c['color']),
+        orderedEquals(app.todaysDeck.map((p) => AppState.hexOf(p.color))),
+      );
+      expect(five('fiveJson').where((c) => c['read'] == true), isEmpty);
+      expect(
+        five('fiveTomorrowJson').map((c) => c['topic']),
+        orderedEquals(app.tomorrowsDeck.map((p) => p.topic)),
+      );
+      expect(data['fiveRead'], 0);
+      expect(data['fiveTitle'], "TODAY'S FIVE");
+      expect(data['fiveReadText'], '0 of 5 read');
+      expect(data['fiveDone'], 'All five read');
+      expect(data['fiveWaiting'], 'A new five is waiting');
+
+      // Two cards in, the widget hears of it.
+      await app.advance();
+      await app.advance();
+      await Future<void>.delayed(Duration.zero);
+      data = pushed.last;
+      expect(data['fiveRead'], 2);
+      expect(data['fiveReadText'], '2 of 5 read');
+      expect(
+        five('fiveJson').map((c) => c['read']),
+        orderedEquals([true, true, false, false, false]),
+      );
+
+      // And the whole day: today's dot fills in.
+      for (var i = 2; i < kPillsPerDay; i++) {
+        await app.advance();
+      }
+      await Future<void>.delayed(Duration.zero);
+      data = pushed.last;
+      expect(data['weekDone'], '0100111');
+      expect(five('fiveJson').every((c) => c['read'] == true), isTrue);
+    });
+
     test('writes a colour the way the widgets read it', () {
       expect(AppState.hexOf(const Color(0xFF2B5CFF)), '#2B5CFF');
       expect(AppState.hexOf(const Color(0xFF000000)), '#000000');

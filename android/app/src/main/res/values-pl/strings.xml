@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">Dzisiejsza karta</string>
+    <string name="widget_description">Karta, od której zaczyna się ranek, i twoja seria.</string>
+    <string name="widget_streak_label">Seria</string>
+    <string name="widget_streak_description">Twoje dni z rzędu i cały tydzień.</string>
+    <string name="widget_five_label">Dzisiejsza piątka</string>
+    <string name="widget_five_description">Pięć kart dnia i to, jak daleko jesteś.</string>
+    <string name="widget_card_empty">Pięć kart, dwie minuty.</string>
+    <string name="widget_streak_open">Otwórz Astute, by zobaczyć tu swoją serię.</string>
+    <string name="widget_five_open">Otwórz Astute, by zobaczyć tu dzisiejszą piątkę.</string>
+</resources>

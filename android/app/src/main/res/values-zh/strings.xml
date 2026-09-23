@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">今天的卡片</string>
+    <string name="widget_description">清晨的第一张卡片，以及你的连续记录。</string>
+    <string name="widget_streak_label">连续记录</string>
+    <string name="widget_streak_description">你的连续天数，以及这一周。</string>
+    <string name="widget_five_label">今天的五张</string>
+    <string name="widget_five_description">今天的五张卡片，以及你读到了哪里。</string>
+    <string name="widget_card_empty">五张卡片，两分钟。</string>
+    <string name="widget_streak_open">打开 Astute，在这里查看你的连续记录。</string>
+    <string name="widget_five_open">打开 Astute，在这里查看今天的五张。</string>
+</resources>

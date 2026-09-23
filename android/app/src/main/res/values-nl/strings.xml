@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">De kaart van vandaag</string>
+    <string name="widget_description">De kaart waarmee de ochtend opent, en je reeks.</string>
+    <string name="widget_streak_label">Reeks</string>
+    <string name="widget_streak_description">Je dagen op rij, en de week.</string>
+    <string name="widget_five_label">De vijf van vandaag</string>
+    <string name="widget_five_description">De vijf kaarten van de dag, en hoe ver je bent.</string>
+    <string name="widget_card_empty">Vijf kaarten, twee minuten.</string>
+    <string name="widget_streak_open">Open Astute om hier je reeks te zien.</string>
+    <string name="widget_five_open">Open Astute om hier de vijf van vandaag te zien.</string>
+</resources>

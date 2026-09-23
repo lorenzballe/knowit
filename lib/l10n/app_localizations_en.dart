@@ -893,6 +893,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetFootDone => 'Done for today';
 
   @override
+  String get widgetStreakStart => 'Read today\'s five to start a streak.';
+
+  @override
+  String get widgetFiveTitle => 'TODAY\'S FIVE';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '$n of 5 read';
+  }
+
+  @override
+  String get widgetFiveDone => 'All five read';
+
+  @override
+  String get widgetFiveWaiting => 'A new five is waiting';
+
+  @override
   String get dayStreakCaps => 'DAY STREAK';
 
   @override

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">La carta de hoy</string>
+    <string name="widget_description">La carta con la que empieza la mañana, y tu racha.</string>
+    <string name="widget_streak_label">Racha</string>
+    <string name="widget_streak_description">Tus días seguidos, y la semana.</string>
+    <string name="widget_five_label">Las cinco de hoy</string>
+    <string name="widget_five_description">Las cinco cartas del día, y por dónde vas.</string>
+    <string name="widget_card_empty">Cinco cartas, dos minutos.</string>
+    <string name="widget_streak_open">Abre Astute para ver aquí tu racha.</string>
+    <string name="widget_five_open">Abre Astute para ver aquí las cinco de hoy.</string>
+</resources>

@@ -876,6 +876,23 @@ class AppLocalizationsKo extends AppLocalizations {
   String get widgetFootDone => '오늘 완료';
 
   @override
+  String get widgetStreakStart => '오늘의 다섯 장을 읽고 연속 기록을 시작하세요.';
+
+  @override
+  String get widgetFiveTitle => '오늘의 다섯 장';
+
+  @override
+  String widgetFiveRead(int n) {
+    return '5장 중 $n장 읽음';
+  }
+
+  @override
+  String get widgetFiveDone => '다섯 장 모두 읽음';
+
+  @override
+  String get widgetFiveWaiting => '새로운 다섯 장이 기다려요';
+
+  @override
   String get dayStreakCaps => '일 연속';
 
   @override

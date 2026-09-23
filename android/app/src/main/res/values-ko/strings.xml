@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_card_label">오늘의 카드</string>
+    <string name="widget_description">아침을 여는 카드와 당신의 연속 기록.</string>
+    <string name="widget_streak_label">연속 기록</string>
+    <string name="widget_streak_description">연속한 날들과 이번 주.</string>
+    <string name="widget_five_label">오늘의 다섯 장</string>
+    <string name="widget_five_description">오늘의 카드 다섯 장과 얼마나 읽었는지.</string>
+    <string name="widget_card_empty">카드 다섯 장, 2분.</string>
+    <string name="widget_streak_open">Astute를 열면 여기에 연속 기록이 보여요.</string>
+    <string name="widget_five_open">Astute를 열면 여기에 오늘의 다섯 장이 보여요.</string>
+</resources>
