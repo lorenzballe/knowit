@@ -405,6 +405,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Serie, pillole salvate e record restano sul tuo account. Questo li cancella da questo dispositivo.';
 
   @override
+  String get deleteAccount => 'Elimina account';
+
+  @override
+  String get deletingAccount => 'Eliminazione dell\'account…';
+
+  @override
+  String get deleteAccountQuestion => 'Eliminare il tuo account?';
+
+  @override
+  String get deleteAccountBody =>
+      'Il tuo account, il suo backup e la scheda che vedono i tuoi amici vengono eliminati per sempre, e questo dispositivo riparte dall\'inizio. Astute+ non viene disdetto: l\'abbonamento si gestisce nelle impostazioni dell\'App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Elimina per sempre';
+
+  @override
+  String get accountDeleted => 'Il tuo account è stato eliminato.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Non è stato possibile eliminare l\'account. Riprova tra poco.';
+
+  @override
   String get signOut => 'Esci';
 
   @override

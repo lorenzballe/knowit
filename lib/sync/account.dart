@@ -9,9 +9,13 @@ import 'board.dart';
 import 'identity.dart';
 import 'reader_snapshot.dart';
 import 'reader_store.dart';
+import 'subscription.dart';
 
 /// How a sign-in ended, in terms the screen can act on.
 enum SignInOutcome { signedIn, cancelled, unavailable, failed }
+
+/// How deleting the account ended.
+enum DeleteOutcome { deleted, cancelled, failed }
 
 /// The reader's account, and the one place that folds a phone into it.
 ///
@@ -382,6 +386,131 @@ class Account extends ChangeNotifier {
     _pending = null;
     await _firebase?.signOut();
     notifyListeners();
+  }
+
+  bool _deleting = false;
+
+  /// True while the account is being deleted, so the row can say so.
+  bool get deleting => _deleting;
+
+  /// Deletes the reader's account and everything kept with it, then this
+  /// phone's copy: the way out Apple asks every app that makes accounts to
+  /// offer inside it (guideline 5.1.1(v)).
+  ///
+  /// In this order, because each step needs the one before it still
+  /// standing. Whoever signed in with Apple or Google says so once more: a
+  /// sign-in is the one thing Firebase will not delete on an old session,
+  /// and Apple's fresh authorisation is also what revokes the app's access
+  /// to the Apple ID. Then the backup and the board go, while this phone is
+  /// still their owner; then the sign-in itself; then the store's hold on
+  /// the account, and this phone.
+  Future<DeleteOutcome> deleteAccount(AppState app) async {
+    if (_deleting || _busy) return DeleteOutcome.cancelled;
+    lastError = null;
+    _deleting = true;
+    notifyListeners();
+    try {
+      final FirebaseAuth? auth = _firebase;
+      final User? current = auth?.currentUser;
+      final String? who = uid;
+      _pending?.cancel();
+      _pending = null;
+
+      if (auth != null && current != null && !current.isAnonymous) {
+        if (!await _confirmIdentity(auth, current)) {
+          return lastError == null
+              ? DeleteOutcome.cancelled
+              : DeleteOutcome.failed;
+        }
+      }
+
+      if (who != null) {
+        await _readers?.delete(who);
+        try {
+          await _boards?.remove(friendCodeOf(who), who);
+        } catch (error) {
+          // A board left behind names nobody once the account is gone, and
+          // is no reason to keep the account.
+          debugPrint('Could not take the board down: $error');
+        }
+      }
+
+      if (current != null) {
+        try {
+          await current.delete();
+        } on FirebaseAuthException catch (error) {
+          // An anonymous account cannot sign in again to prove the session
+          // is recent. Its backup and board are already gone, so there is
+          // nothing left in it, and signing out below lets it go.
+          if (!current.isAnonymous || error.code != 'requires-recent-login') {
+            rethrow;
+          }
+        }
+      }
+      await auth?.signOut();
+      await Subscription.instance.logOut();
+      await app.signOut();
+      return DeleteOutcome.deleted;
+    } on FirebaseAuthException catch (error) {
+      lastError = '${error.code}: ${error.message}';
+      debugPrint('Could not delete the account: $lastError');
+      return DeleteOutcome.failed;
+    } catch (error) {
+      lastError = '$error';
+      debugPrint('Could not delete the account: $error');
+      return DeleteOutcome.failed;
+    } finally {
+      _deleting = false;
+      notifyListeners();
+    }
+  }
+
+  /// Asks whoever signed in with Apple or Google to do it once more, which
+  /// is what Firebase wants before it deletes a sign-in and, for Apple, what
+  /// lets the app give up its access to the Apple ID. False when the reader
+  /// backed out, or when it failed — [lastError] says which.
+  Future<bool> _confirmIdentity(FirebaseAuth auth, User current) async {
+    final Set<String> providers = {
+      for (final UserInfo info in current.providerData) info.providerId,
+    };
+    final bool apple = providers.contains('apple.com');
+    if (!apple && !providers.contains('google.com')) return true;
+
+    final IdentityResult identity = apple
+        ? await _identity.apple()
+        : await _identity.google();
+    switch (identity.outcome) {
+      case IdentityOutcome.cancelled:
+        return false;
+      case IdentityOutcome.failed:
+        lastError = identity.error ?? 'The sign-in sheet failed.';
+        return false;
+      case IdentityOutcome.noSheet:
+        // Where there is no sheet, Firebase's own browser flow asks instead.
+        await current.reauthenticateWithProvider(
+          apple ? AppleAuthProvider() : GoogleAuthProvider(),
+        );
+        return true;
+      case IdentityOutcome.got:
+        final AuthCredential? credential = identity.credential;
+        if (credential == null) {
+          lastError = 'The sign-in sheet returned no credential.';
+          return false;
+        }
+        await current.reauthenticateWithCredential(credential);
+        final String? code = identity.authorizationCode;
+        if (apple && code != null) {
+          try {
+            await auth.revokeTokenWithAuthorizationCode(code);
+          } catch (error) {
+            // Revoking needs Apple's key on Firebase's Apple provider. The
+            // account is deleted without it, and the reader can still remove
+            // the app from their Apple ID in Settings.
+            debugPrint('Could not revoke the Apple token: $error');
+          }
+        }
+        return true;
+    }
   }
 
   @override

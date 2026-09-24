@@ -10,6 +10,9 @@ abstract class ReaderStore {
   Future<ReaderSnapshot?> read(String uid);
 
   Future<void> write(String uid, ReaderSnapshot snapshot);
+
+  /// Removes the reader's copy, when they delete their account.
+  Future<void> delete(String uid);
 }
 
 /// One document per reader, at readers/{uid}, matching firestore.rules.
@@ -32,6 +35,9 @@ class FirestoreReaderStore implements ReaderStore {
   @override
   Future<void> write(String uid, ReaderSnapshot snapshot) =>
       _doc(uid).set(snapshot.toJson());
+
+  @override
+  Future<void> delete(String uid) => _doc(uid).delete();
 }
 
 /// Keeps a snapshot in memory. Used by the tests, and by nothing else.
@@ -51,4 +57,7 @@ class MemoryReaderStore implements ReaderStore {
     writes += 1;
     _store[uid] = snapshot;
   }
+
+  @override
+  Future<void> delete(String uid) async => _store.remove(uid);
 }

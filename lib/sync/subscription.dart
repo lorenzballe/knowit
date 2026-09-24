@@ -136,6 +136,20 @@ class Subscription extends ChangeNotifier {
     }
   }
 
+  /// Lets go of the account when it is deleted: on this phone the store
+  /// goes back to a customer of its own. What was bought stays Apple's, and
+  /// comes back with Restore on an account that owns it.
+  Future<void> logOut() async {
+    if (_key.isEmpty) return;
+    try {
+      _apply(await Purchases.logOut());
+    } catch (error) {
+      // Already anonymous, or no store: either way nothing is held for the
+      // deleted account.
+      debugPrint('Could not log out of the store: $error');
+    }
+  }
+
   Future<void> _loadOffering() async {
     try {
       _offering = (await Purchases.getOfferings()).current;

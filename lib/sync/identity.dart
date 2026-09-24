@@ -29,12 +29,21 @@ enum IdentityOutcome {
 
 /// An identity, or why there isn't one.
 class IdentityResult {
-  const IdentityResult(this.outcome, {this.credential, this.error});
+  const IdentityResult(
+    this.outcome, {
+    this.credential,
+    this.error,
+    this.authorizationCode,
+  });
 
   final IdentityOutcome outcome;
 
   /// Set only for [IdentityOutcome.got].
   final AuthCredential? credential;
+
+  /// Apple's one-time authorization code, which is what revokes the app's
+  /// access to the Apple ID when the account is deleted. Apple only.
+  final String? authorizationCode;
 
   /// Why, in terms the debug section can print. Set for [IdentityOutcome.failed],
   /// and for a [IdentityOutcome.noSheet] that came from something going wrong
@@ -148,6 +157,7 @@ class Identity {
 
       return IdentityResult(
         IdentityOutcome.got,
+        authorizationCode: apple.authorizationCode,
         // Apple hands over a name only on the very first authorisation, so it
         // travels with the credential or it is gone for good.
         credential: AppleAuthProvider.credentialWithIDToken(

@@ -403,6 +403,28 @@ class AppLocalizationsTr extends AppLocalizations {
       'Serin, sakladığın haplar ve sicilin hesabında kalır. Bu, onları bu cihazdan siler.';
 
   @override
+  String get deleteAccount => 'Hesabı sil';
+
+  @override
+  String get deletingAccount => 'Hesabın siliniyor…';
+
+  @override
+  String get deleteAccountQuestion => 'Hesabın silinsin mi?';
+
+  @override
+  String get deleteAccountBody =>
+      'Hesabın, yedeği ve arkadaşlarının gördüğü pano kalıcı olarak silinir ve bu cihaz en baştan başlar. Bu, Astute+ aboneliğini iptal etmez: abonelik App Store ayarlarından yönetilir.';
+
+  @override
+  String get deleteAccountConfirm => 'Kalıcı olarak sil';
+
+  @override
+  String get accountDeleted => 'Hesabın silindi.';
+
+  @override
+  String get couldNotDeleteAccount => 'Hesap silinemedi. Birazdan tekrar dene.';
+
+  @override
   String get signOut => 'Çıkış yap';
 
   @override

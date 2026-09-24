@@ -404,6 +404,29 @@ class AppLocalizationsPt extends AppLocalizations {
       'A tua sequência, pílulas guardadas e registo ficam na tua conta. Isto apaga-os deste aparelho.';
 
   @override
+  String get deleteAccount => 'Apagar conta';
+
+  @override
+  String get deletingAccount => 'A apagar a tua conta…';
+
+  @override
+  String get deleteAccountQuestion => 'Apagar a tua conta?';
+
+  @override
+  String get deleteAccountBody =>
+      'A tua conta, a cópia de segurança e o quadro que os teus amigos veem são apagados para sempre, e este aparelho recomeça do início. Isto não cancela o Astute+: a subscrição gere-se nas definições da App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Apagar para sempre';
+
+  @override
+  String get accountDeleted => 'A tua conta foi apagada.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Não foi possível apagar a conta. Tenta de novo daqui a pouco.';
+
+  @override
   String get signOut => 'Terminar sessão';
 
   @override

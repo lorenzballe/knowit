@@ -624,6 +624,48 @@ abstract class AppLocalizations {
   /// **'Your streak, saved pills and record stay on your account. This clears them from this device.'**
   String get signOutBody;
 
+  /// Profile row that deletes the reader's account (Apple requires it in the app).
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccount;
+
+  /// The same row while the deletion runs.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting your account…'**
+  String get deletingAccount;
+
+  /// Title of the confirmation before deleting the account.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete your account?'**
+  String get deleteAccountQuestion;
+
+  /// Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account, its backup and the board your friends see are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.'**
+  String get deleteAccountBody;
+
+  /// The destructive button of that confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete for good'**
+  String get deleteAccountConfirm;
+
+  /// Shown once the account is gone.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been deleted.'**
+  String get accountDeleted;
+
+  /// Shown when the deletion failed.
+  ///
+  /// In en, this message translates to:
+  /// **'The account could not be deleted. Try again in a moment.'**
+  String get couldNotDeleteAccount;
+
   /// No description provided for @signOut.
   ///
   /// In en, this message translates to:

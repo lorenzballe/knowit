@@ -405,6 +405,29 @@ class AppLocalizationsDe extends AppLocalizations {
       'Serie, behaltene Pillen und Bilanz bleiben in deinem Konto. Das hier löscht sie von diesem Gerät.';
 
   @override
+  String get deleteAccount => 'Konto löschen';
+
+  @override
+  String get deletingAccount => 'Dein Konto wird gelöscht…';
+
+  @override
+  String get deleteAccountQuestion => 'Dein Konto löschen?';
+
+  @override
+  String get deleteAccountBody =>
+      'Dein Konto, seine Sicherung und die Tafel, die deine Freunde sehen, werden endgültig gelöscht, und dieses Gerät beginnt wieder von vorn. Astute+ wird dadurch nicht gekündigt: Ein Abo verwaltest du in den App-Store-Einstellungen.';
+
+  @override
+  String get deleteAccountConfirm => 'Endgültig löschen';
+
+  @override
+  String get accountDeleted => 'Dein Konto wurde gelöscht.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Das Konto konnte nicht gelöscht werden. Versuch es gleich noch einmal.';
+
+  @override
   String get signOut => 'Abmelden';
 
   @override

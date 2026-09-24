@@ -412,6 +412,29 @@ class AppLocalizationsPl extends AppLocalizations {
       'Twoja seria, zachowane pigułki i historia zostają na koncie. To usuwa je z tego urządzenia.';
 
   @override
+  String get deleteAccount => 'Usuń konto';
+
+  @override
+  String get deletingAccount => 'Usuwanie konta…';
+
+  @override
+  String get deleteAccountQuestion => 'Usunąć konto?';
+
+  @override
+  String get deleteAccountBody =>
+      'Twoje konto, jego kopia zapasowa i tablica widoczna dla znajomych zostaną usunięte na zawsze, a to urządzenie zacznie od początku. Nie anuluje to Astute+: subskrypcją zarządzasz w ustawieniach App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Usuń na zawsze';
+
+  @override
+  String get accountDeleted => 'Twoje konto zostało usunięte.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Nie udało się usunąć konta. Spróbuj ponownie za chwilę.';
+
+  @override
   String get signOut => 'Wyloguj się';
 
   @override

@@ -47,6 +47,22 @@ class Board {
   final bool? questionRight;
   final int? questionSure;
 
+  /// A board with nothing on it: what is left at a code whose reader has
+  /// deleted their account, where the board could not be deleted outright.
+  const Board.empty({required this.uid, required this.code})
+    : name = '',
+      streak = 0,
+      weeks = 0,
+      days = 0,
+      gap = null,
+      edition = 0,
+      squares = '',
+      right = 0,
+      asked = 0,
+      updated = '',
+      questionRight = null,
+      questionSure = null;
+
   Map<String, dynamic> toJson() => {
     'uid': uid,
     'code': code,
@@ -132,6 +148,9 @@ abstract class BoardStore {
   Future<void> publish(Board board);
 
   Future<Board?> read(String code);
+
+  /// Takes a reader's board down, when they delete their account.
+  Future<void> remove(String code, String uid);
 }
 
 /// One document per reader at boards/{code}, readable by anyone signed in
@@ -154,6 +173,18 @@ class FirestoreBoardStore implements BoardStore {
     if (!snap.exists) return null;
     return Board.fromJson(snap.data());
   }
+
+  /// Deleted where the rules allow its owner to; where the rules deployed
+  /// are older and do not, emptied instead — the name and every number
+  /// gone, so nothing of the reader is left for a friend to read.
+  @override
+  Future<void> remove(String code, String uid) async {
+    try {
+      await _doc(code).delete();
+    } on FirebaseException {
+      await publish(Board.empty(uid: uid, code: code));
+    }
+  }
 }
 
 /// Keeps boards in memory. Used by the tests, and by nothing else.
@@ -168,4 +199,7 @@ class MemoryBoardStore implements BoardStore {
 
   @override
   Future<Board?> read(String code) async => boards[code];
+
+  @override
+  Future<void> remove(String code, String uid) async => boards.remove(code);
 }

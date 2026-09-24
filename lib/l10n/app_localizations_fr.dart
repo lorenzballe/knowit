@@ -407,6 +407,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ta série, tes pilules gardées et ton historique restent sur ton compte. Ceci les efface de cet appareil.';
 
   @override
+  String get deleteAccount => 'Supprimer le compte';
+
+  @override
+  String get deletingAccount => 'Suppression du compte…';
+
+  @override
+  String get deleteAccountQuestion => 'Supprimer ton compte ?';
+
+  @override
+  String get deleteAccountBody =>
+      'Ton compte, sa sauvegarde et le tableau que voient tes amis sont supprimés définitivement, et cet appareil repart de zéro. Astute+ n\'est pas résilié pour autant : l\'abonnement se gère dans les réglages de l\'App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Supprimer définitivement';
+
+  @override
+  String get accountDeleted => 'Ton compte a été supprimé.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Impossible de supprimer le compte. Réessaie dans un instant.';
+
+  @override
   String get signOut => 'Se déconnecter';
 
   @override

@@ -107,6 +107,65 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _confirmDelete(BuildContext context) async {
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: context.p.surface,
+        title: Text(
+          l.deleteAccountQuestion,
+          style: AppText.display(size: 19, color: context.p.ink),
+        ),
+        content: Text(
+          l.deleteAccountBody,
+          style: AppText.body(
+            size: 14,
+            height: 1.45,
+            color: context.p.inkMuted,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(
+              l.cancel,
+              style: AppText.body(size: 14, color: context.p.ink),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              l.deleteAccountConfirm,
+              style: AppText.body(
+                size: 14,
+                weight: FontWeight.w600,
+                color: context.p.alert,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    final DeleteOutcome outcome = await account.deleteAccount(app);
+    switch (outcome) {
+      case DeleteOutcome.deleted:
+        // As after signing out, the phone keeps an account of its own, a
+        // new and empty one, so what happens next has somewhere to go.
+        await account.ensureAnonymous(app);
+        messenger?.showSnackBar(SnackBar(content: Text(l.accountDeleted)));
+        onSignedOut();
+      case DeleteOutcome.failed:
+        messenger?.showSnackBar(
+          SnackBar(content: Text(l.couldNotDeleteAccount)),
+        );
+      case DeleteOutcome.cancelled:
+        break;
+    }
+  }
+
   Future<void> _signIn(
     BuildContext context,
     String label,
@@ -454,7 +513,7 @@ class ProfileScreen extends StatelessWidget {
             builder: (context, _) {
               if (account.signedInForReal) {
                 return _LinkRow(
-                  label: 'Sign out',
+                  label: context.l10n.signOut,
                   muted: true,
                   onTap: () => _confirmSignOut(context),
                 );
@@ -483,6 +542,23 @@ class ProfileScreen extends StatelessWidget {
                         _signIn(context, 'Google', account.signInWithGoogle),
                   ),
                 ],
+              );
+            },
+          ),
+          // Deleting the account, for anyone who has one — the phone makes
+          // one of its own before anybody signs in, and that one holds a
+          // backup too. Muted, under the sign-in: where a reader looking for
+          // it finds it, and where nobody trips on it.
+          ListenableBuilder(
+            listenable: account,
+            builder: (context, _) {
+              if (!account.signedIn) return const SizedBox.shrink();
+              return _LinkRow(
+                label: account.deleting
+                    ? context.l10n.deletingAccount
+                    : context.l10n.deleteAccount,
+                muted: true,
+                onTap: account.deleting ? () {} : () => _confirmDelete(context),
               );
             },
           ),

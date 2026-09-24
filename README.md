@@ -627,6 +627,15 @@ dashboards, and has to agree with three names here.
   (`lib/legal.dart`), in English and Italian, naming every service that
   handles a reader's data — a test holds it to that list. The listing's
   description needs the terms link too.
+- **A way out of the account**, which Apple requires inside any app that
+  makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
+  account rows. Whoever signed in with Apple or Google confirms with the
+  same sheet — Firebase deletes a sign-in only on a fresh session, and
+  Apple's fresh authorisation is what revokes the app's access to the Apple
+  ID (that needs Apple's key on Firebase's Apple provider; without it the
+  account is still deleted). Then the backup and the board go, the sign-in,
+  the store's hold on the account, and everything on the phone. A board the
+  deployed rules will not let its owner delete is emptied instead.
 
 **Checking it from the phone.** The debug section at the foot of the
 profile reads back what the store answered: whether it did, the offering,

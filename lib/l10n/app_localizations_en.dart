@@ -403,6 +403,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your streak, saved pills and record stay on your account. This clears them from this device.';
 
   @override
+  String get deleteAccount => 'Delete account';
+
+  @override
+  String get deletingAccount => 'Deleting your account…';
+
+  @override
+  String get deleteAccountQuestion => 'Delete your account?';
+
+  @override
+  String get deleteAccountBody =>
+      'Your account, its backup and the board your friends see are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete for good';
+
+  @override
+  String get accountDeleted => 'Your account has been deleted.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'The account could not be deleted. Try again in a moment.';
+
+  @override
   String get signOut => 'Sign out';
 
   @override

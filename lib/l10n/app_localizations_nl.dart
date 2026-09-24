@@ -404,6 +404,29 @@ class AppLocalizationsNl extends AppLocalizations {
       'Je reeks, bewaarde pillen en staat van dienst blijven in je account. Dit wist ze van dit apparaat.';
 
   @override
+  String get deleteAccount => 'Account verwijderen';
+
+  @override
+  String get deletingAccount => 'Je account wordt verwijderd…';
+
+  @override
+  String get deleteAccountQuestion => 'Je account verwijderen?';
+
+  @override
+  String get deleteAccountBody =>
+      'Je account, de back-up ervan en het bord dat je vrienden zien worden definitief verwijderd, en dit apparaat begint weer bij het begin. Astute+ wordt hiermee niet opgezegd: een abonnement beheer je in de App Store-instellingen.';
+
+  @override
+  String get deleteAccountConfirm => 'Definitief verwijderen';
+
+  @override
+  String get accountDeleted => 'Je account is verwijderd.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Het account kon niet worden verwijderd. Probeer het zo nog eens.';
+
+  @override
   String get signOut => 'Uitloggen';
 
   @override

@@ -94,6 +94,57 @@ void main() {
     expect(done.edition, editionOf(DateTime.now()));
   });
 
+  test(
+    'deleting the account takes the backup, the board and the phone',
+    () async {
+      SharedPreferences.setMockInitialValues({
+        'knowit.onboarded': true,
+        'knowit.name': 'Marco',
+        'knowit.streak': 4,
+        'knowit.lastCompletionDate': dateKey(
+          DateTime.now().subtract(const Duration(days: 1)),
+        ),
+      });
+      final app = AppState();
+      await app.init();
+      final readers = MemoryReaderStore();
+      final boards = MemoryBoardStore();
+      final account = Account(
+        uidOverride: 'u1',
+        storeOverride: readers,
+        boardsOverride: boards,
+      );
+      await account.push(app);
+      expect(await readers.read('u1'), isNotNull);
+      expect(boards.boards[friendCodeOf('u1')], isNotNull);
+
+      // Apple asks for this inside the app, for any app that makes accounts.
+      final DeleteOutcome outcome = await account.deleteAccount(app);
+      expect(outcome, DeleteOutcome.deleted);
+      expect(account.deleting, isFalse);
+
+      // Nothing of the reader is left where it was kept, or for a friend to
+      // read, or on this phone.
+      expect(await readers.read('u1'), isNull);
+      expect(boards.boards[friendCodeOf('u1')], isNull);
+      expect(app.name, 'You');
+      expect(app.streak, 0);
+      expect(app.onboarded, isFalse);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('knowit.name'), isNull);
+    },
+  );
+
+  test('a board that cannot be deleted is emptied of the reader', () {
+    const Board empty = Board.empty(uid: 'u1', code: 'ABCDEF');
+    expect(empty.name, isEmpty);
+    expect(empty.streak, 0);
+    expect(empty.squares, isEmpty);
+    expect(empty.gap, isNull);
+    // Still the owner's, or the rules would refuse the write that empties it.
+    expect(empty.toJson()['uid'], 'u1');
+  });
+
   group('The friends screen', () {
     Widget host(AppState app, Account account) => MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -399,6 +399,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signOutBody => '连续记录、收藏的药丸和记录会保留在账号里。此操作只会从这台设备上清除它们。';
 
   @override
+  String get deleteAccount => '删除账号';
+
+  @override
+  String get deletingAccount => '正在删除账号…';
+
+  @override
+  String get deleteAccountQuestion => '删除你的账号？';
+
+  @override
+  String get deleteAccountBody =>
+      '你的账号、它的备份以及好友能看到的看板将被永久删除，这台设备会从头开始。这不会取消 Astute+：订阅请在 App Store 设置中管理。';
+
+  @override
+  String get deleteAccountConfirm => '永久删除';
+
+  @override
+  String get accountDeleted => '你的账号已删除。';
+
+  @override
+  String get couldNotDeleteAccount => '无法删除账号。请稍后再试。';
+
+  @override
   String get signOut => '退出登录';
 
   @override

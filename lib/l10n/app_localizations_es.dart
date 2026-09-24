@@ -405,6 +405,29 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tu racha, tus píldoras guardadas y tu historial se quedan en tu cuenta. Esto los borra de este dispositivo.';
 
   @override
+  String get deleteAccount => 'Eliminar cuenta';
+
+  @override
+  String get deletingAccount => 'Eliminando tu cuenta…';
+
+  @override
+  String get deleteAccountQuestion => '¿Eliminar tu cuenta?';
+
+  @override
+  String get deleteAccountBody =>
+      'Tu cuenta, su copia de seguridad y el tablero que ven tus amigos se eliminan para siempre, y este dispositivo vuelve a empezar desde el principio. Esto no cancela Astute+: la suscripción se gestiona en los ajustes del App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Eliminar para siempre';
+
+  @override
+  String get accountDeleted => 'Tu cuenta se ha eliminado.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'No se ha podido eliminar la cuenta. Inténtalo de nuevo en un momento.';
+
+  @override
   String get signOut => 'Cerrar sesión';
 
   @override

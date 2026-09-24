@@ -394,6 +394,34 @@
  },
  "signOutQuestion": "Sign out?",
  "signOutBody": "Your streak, saved pills and record stay on your account. This clears them from this device.",
+ "deleteAccount": "Delete account",
+ "@deleteAccount": {
+  "description": "Profile row that deletes the reader's account (Apple requires it in the app)."
+ },
+ "deletingAccount": "Deleting your account…",
+ "@deletingAccount": {
+  "description": "The same row while the deletion runs."
+ },
+ "deleteAccountQuestion": "Delete your account?",
+ "@deleteAccountQuestion": {
+  "description": "Title of the confirmation before deleting the account."
+ },
+ "deleteAccountBody": "Your account, its backup and the board your friends see are deleted for good, and this device starts again from the beginning. This does not cancel Astute+: a subscription is managed in your App Store settings.",
+ "@deleteAccountBody": {
+  "description": "Body of that confirmation: what is deleted, that it cannot be undone, and that the App Store subscription is not cancelled by it."
+ },
+ "deleteAccountConfirm": "Delete for good",
+ "@deleteAccountConfirm": {
+  "description": "The destructive button of that confirmation."
+ },
+ "accountDeleted": "Your account has been deleted.",
+ "@accountDeleted": {
+  "description": "Shown once the account is gone."
+ },
+ "couldNotDeleteAccount": "The account could not be deleted. Try again in a moment.",
+ "@couldNotDeleteAccount": {
+  "description": "Shown when the deletion failed."
+ },
  "signOut": "Sign out",
  "signedInRecordOnAccount": "Signed in. Your streak and record are on your account now.",
  "couldNotSignInWith": "Could not sign in with {label}.",

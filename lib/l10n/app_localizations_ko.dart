@@ -401,6 +401,28 @@ class AppLocalizationsKo extends AppLocalizations {
   String get signOutBody => '연속 기록, 보관한 알약, 기록은 계정에 남습니다. 이 기기에서만 지워집니다.';
 
   @override
+  String get deleteAccount => '계정 삭제';
+
+  @override
+  String get deletingAccount => '계정을 삭제하는 중…';
+
+  @override
+  String get deleteAccountQuestion => '계정을 삭제할까요?';
+
+  @override
+  String get deleteAccountBody =>
+      '계정과 백업, 친구에게 보이는 보드가 영구적으로 삭제되고 이 기기는 처음부터 다시 시작합니다. Astute+ 구독은 해지되지 않습니다. 구독은 App Store 설정에서 관리하세요.';
+
+  @override
+  String get deleteAccountConfirm => '영구 삭제';
+
+  @override
+  String get accountDeleted => '계정이 삭제되었습니다.';
+
+  @override
+  String get couldNotDeleteAccount => '계정을 삭제하지 못했습니다. 잠시 후 다시 시도하세요.';
+
+  @override
   String get signOut => '로그아웃';
 
   @override

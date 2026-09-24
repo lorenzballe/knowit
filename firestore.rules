@@ -43,7 +43,8 @@ service cloud.firestore {
         request.resource.data.uid == request.auth.uid;
       allow update: if isOwner(resource.data.uid) &&
         request.resource.data.uid == request.auth.uid;
-      allow delete: if false;
+      // Its owner takes it down when they delete their account.
+      allow delete: if isOwner(resource.data.uid);
     }
 
     // Anything not named above is closed, including reads of other readers.

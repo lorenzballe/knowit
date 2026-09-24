@@ -413,6 +413,29 @@ class AppLocalizationsRu extends AppLocalizations {
       'Серия, сохранённые пилюли и история остаются в аккаунте. Это удалит их с этого устройства.';
 
   @override
+  String get deleteAccount => 'Удалить аккаунт';
+
+  @override
+  String get deletingAccount => 'Удаление аккаунта…';
+
+  @override
+  String get deleteAccountQuestion => 'Удалить аккаунт?';
+
+  @override
+  String get deleteAccountBody =>
+      'Аккаунт, его резервная копия и доска, которую видят друзья, удаляются навсегда, а это устройство начинает всё с начала. Подписка Astute+ при этом не отменяется: ею управляют в настройках App Store.';
+
+  @override
+  String get deleteAccountConfirm => 'Удалить навсегда';
+
+  @override
+  String get accountDeleted => 'Аккаунт удалён.';
+
+  @override
+  String get couldNotDeleteAccount =>
+      'Не удалось удалить аккаунт. Попробуйте ещё раз чуть позже.';
+
+  @override
   String get signOut => 'Выйти';
 
   @override

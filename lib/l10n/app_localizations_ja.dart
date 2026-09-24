@@ -400,6 +400,28 @@ class AppLocalizationsJa extends AppLocalizations {
   String get signOutBody => '連続記録、保存したピル、記録はアカウントに残ります。この端末からは消去されます。';
 
   @override
+  String get deleteAccount => 'アカウントを削除';
+
+  @override
+  String get deletingAccount => 'アカウントを削除しています…';
+
+  @override
+  String get deleteAccountQuestion => 'アカウントを削除しますか？';
+
+  @override
+  String get deleteAccountBody =>
+      'アカウントとそのバックアップ、友達に見えるボードが完全に削除され、この端末は最初からやり直しになります。Astute+ は解約されません。サブスクリプションは App Store の設定で管理してください。';
+
+  @override
+  String get deleteAccountConfirm => '完全に削除';
+
+  @override
+  String get accountDeleted => 'アカウントを削除しました。';
+
+  @override
+  String get couldNotDeleteAccount => 'アカウントを削除できませんでした。少し待ってからもう一度お試しください。';
+
+  @override
   String get signOut => 'ログアウト';
 
   @override
