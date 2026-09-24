@@ -874,6 +874,14 @@
  "cancelAnyTime": "Cancel any time",
  "cancelAnyTimeNoPayment": "Cancel any time · No payment is taken in this build",
  "restorePurchases": "Restore purchases",
+ "termsOfUse": "Terms of Use",
+ "@termsOfUse": {
+  "description": "Link under the paywall to the terms of use (Apple's standard licence). Shares one line with Restore purchases and the privacy link, so keep it short."
+ },
+ "privacyPolicy": "Privacy Policy",
+ "@privacyPolicy": {
+  "description": "Link under the paywall to the privacy policy. Shares one line with Restore purchases and the terms link, so keep it short."
+ },
  "planPrice": "{label}, {price} {per}",
  "@planPrice": {
   "placeholders": {

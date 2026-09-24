@@ -224,6 +224,8 @@
   "cancelAnyTime": "Jederzeit kündbar",
   "cancelAnyTimeNoPayment": "Jederzeit kündbar · In dieser Version wird nichts abgebucht",
   "restorePurchases": "Käufe wiederherstellen",
+  "termsOfUse": "Nutzungsbedingungen",
+  "privacyPolicy": "Datenschutz",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Wähl eine Seite. Es gibt keine richtige Antwort.",
   "estimateCloseEnough": "Schätze. Nah dran zählt.",

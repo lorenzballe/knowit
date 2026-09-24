@@ -984,6 +984,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get restorePurchases => '구매 복원';
 
   @override
+  String get termsOfUse => '이용약관';
+
+  @override
+  String get privacyPolicy => '개인정보 처리방침';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label, $price $per';
   }

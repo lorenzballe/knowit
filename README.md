@@ -599,6 +599,41 @@ Two things the tree cannot do by itself:
   embedded. It signs nothing and uploads nothing; it only says whether the
   project as checked in still compiles, which a phone cannot.
 
+## Selling Astute+
+
+The app sells one entitlement through RevenueCat and knows nothing about
+product ids: it asks the current offering for a yearly and a monthly package
+and believes the store about who has paid. So the whole setup lives in two
+dashboards, and has to agree with three names here.
+
+- **App Store Connect**, app Astute: a subscription group *Astute+* with
+  two auto-renewable subscriptions, `com.astuto.app.plus.yearly` (a year,
+  €29,99, an introductory offer of one free week) and
+  `com.astuto.app.plus.monthly` (a month, €3,99, no offer). The ids carry
+  the bundle id so they can never meet another app's in the same account.
+  The week has to be seven days: the paywall says "Try 7 days free" when
+  the store reports a free introductory offer, and nothing else.
+- **RevenueCat**, in a project of Astute's own: the App Store app with
+  bundle `com.astuto.app` (its public key is `REVENUECAT_IOS_KEY` in
+  `codemagic.yaml`), the account's In-App Purchase key uploaded to it, both
+  products imported, one entitlement named exactly `astuto_pro`
+  (`kPlusEntitlement`) with both attached, and the `default` offering, set
+  as current, holding an *Annual* package for the year and a *Monthly* one
+  for the month.
+- **Beside the price**, Apple wants a way to restore and links to the terms
+  of use and the privacy policy, in the app and in the listing (3.1.2). The
+  paywall's last line carries all three; the terms are Apple's standard
+  licence and the privacy policy is `web/privacy.html` on this site
+  (`lib/legal.dart`). The listing's description needs the terms link too.
+
+**Checking it from the phone.** The debug section at the foot of the
+profile reads back what the store answered: whether it did, the offering,
+the product, price and free week of each plan as the store priced them, and
+whether the entitlement is active. A plan that reads "not in the offering"
+is a RevenueCat package missing; one whose price never arrives is an App
+Store product not yet *Ready to Submit*. The first subscriptions go to App
+Review with an app version, attached on the version's page.
+
 ## What the app measures
 
 Nothing, unless a key was built into it. `lib/analytics.dart` is the one place
@@ -614,7 +649,11 @@ reaches the network.
 The key is public in the same way the RevenueCat keys are: it names the
 project to write into and reads nothing back. `POSTHOG_HOST` picks the region
 and defaults to the EU one; a project made in the other region and pointed at
-from here accepts nothing and says nothing, which is a long afternoon.
+from here accepts nothing and says nothing, which is a long afternoon. For
+the TestFlight build the key is set in Codemagic, as `POSTHOG_KEY` in the
+`signing` group, which `codemagic.yaml` imports. Astute's project sits in a
+PostHog organization of its own: the free plan allows one project per
+organization, and the account's other app has the first.
 
 **Three rules hold at every call site.** It never throws and never blocks —
 measurement is not a feature the reader asked for, so it may not cost them a

@@ -13,6 +13,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/l10n.dart';
+import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
 import 'package:astuto/screens/pill_detail_screen.dart';
 import 'package:astuto/models/pill.dart';
@@ -1484,6 +1485,29 @@ void main() {
     );
   });
 
+  testWidgets('the paywall links the terms and the privacy policy', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _openProfile(tester);
+    await tester.tap(find.text('SEE THE PLANS'));
+    await _settle(tester);
+
+    // Apple refuses a subscription without both beside it (3.1.2): the
+    // terms of use and the privacy policy, as links that open.
+    expect(find.text('Terms of Use'), findsOneWidget);
+    expect(find.text('Privacy Policy'), findsOneWidget);
+    expect(kTermsUrl, startsWith('https://www.apple.com/legal/'));
+    expect(kPrivacyUrl, endsWith('/privacy.html'));
+    // Restoring means something only with a store behind the build, and
+    // this one has none.
+    expect(find.text('Restore purchases'), findsNothing);
+    // Still one screen with nothing to scroll.
+    expect(find.byType(Scrollable), findsNothing);
+  });
+
   testWidgets('the headline paints only the word for "you"', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
@@ -2094,8 +2118,11 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       final said = prefs.getStringList('knowit.saidIds')!;
       expect(said, hasLength(1), reason: 'one card said, not the pile');
+      // Against the day this reader was actually dealt: on Astute+ all five
+      // are their own, which the free plan's deal is not, so working it out
+      // again here would agree only on the days the two happen to overlap.
       expect(
-        _todaysFive.map((p) => p.id),
+        prefs.getStringList('knowit.todayDeckIds'),
         contains(said.single),
         reason: 'what is offered is what has been read',
       );

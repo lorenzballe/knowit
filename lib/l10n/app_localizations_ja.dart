@@ -981,6 +981,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get restorePurchases => '購入を復元';
 
   @override
+  String get termsOfUse => '利用規約';
+
+  @override
+  String get privacyPolicy => 'プライバシー';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label、$price $per';
   }

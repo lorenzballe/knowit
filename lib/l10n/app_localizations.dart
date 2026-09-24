@@ -1464,6 +1464,18 @@ abstract class AppLocalizations {
   /// **'Restore purchases'**
   String get restorePurchases;
 
+  /// Link under the paywall to the terms of use (Apple's standard licence). Shares one line with Restore purchases and the privacy link, so keep it short.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsOfUse;
+
+  /// Link under the paywall to the privacy policy. Shares one line with Restore purchases and the terms link, so keep it short.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
   /// No description provided for @planPrice.
   ///
   /// In en, this message translates to:

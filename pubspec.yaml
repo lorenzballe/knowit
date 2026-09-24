@@ -70,6 +70,9 @@ dependencies:
   # Measurement. Off unless a key is passed at build time, so a fork, a test
   # and the checked-out repo are all unmeasured by default — see lib/analytics.dart.
   posthog_flutter: ^5.41.0
+  # The paywall's two links, the terms and the privacy policy, which Apple
+  # requires beside a subscription (lib/legal.dart).
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

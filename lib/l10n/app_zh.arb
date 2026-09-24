@@ -224,6 +224,8 @@
   "cancelAnyTime": "随时可取消",
   "cancelAnyTimeNoPayment": "随时可取消 · 此版本不会扣款",
   "restorePurchases": "恢复购买",
+  "termsOfUse": "使用条款",
+  "privacyPolicy": "隐私政策",
   "planPrice": "{label}，{price} {per}",
   "pickASideNoRightAnswer": "选一边。没有标准答案。",
   "estimateCloseEnough": "估一下。接近就算对。",

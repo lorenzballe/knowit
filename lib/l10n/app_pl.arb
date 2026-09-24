@@ -224,6 +224,8 @@
   "cancelAnyTime": "Anuluj, kiedy chcesz",
   "cancelAnyTimeNoPayment": "Anuluj, kiedy chcesz · W tej wersji nic nie jest pobierane",
   "restorePurchases": "Przywróć zakupy",
+  "termsOfUse": "Warunki",
+  "privacyPolicy": "Prywatność",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Wybierz stronę. Nie ma dobrej odpowiedzi.",
   "estimateCloseEnough": "Oszacuj. Blisko też się liczy.",

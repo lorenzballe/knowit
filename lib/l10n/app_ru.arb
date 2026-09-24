@@ -224,6 +224,8 @@
   "cancelAnyTime": "Отмена в любой момент",
   "cancelAnyTimeNoPayment": "Отмена в любой момент · В этой сборке ничего не списывается",
   "restorePurchases": "Восстановить покупки",
+  "termsOfUse": "Условия",
+  "privacyPolicy": "Конфиденциальность",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Выбери сторону. Правильного ответа нет.",
   "estimateCloseEnough": "Оцени. Близко — уже засчитывается.",

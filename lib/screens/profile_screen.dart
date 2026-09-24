@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../l10n/l10n.dart';
 
@@ -534,12 +535,22 @@ class ProfileScreen extends StatelessWidget {
               Subscription.instance.offering?.identifier ?? 'none',
             ),
             _DebugLine('Entitlement asked for', kPlusEntitlement),
+            // What the offering holds, as the store priced it: enough to
+            // check the whole RevenueCat and App Store setup from the phone —
+            // the product each plan sells, its price, and the free week.
+            _DebugLine('Yearly', _packageLine(Subscription.instance.yearly)),
+            _DebugLine('Monthly', _packageLine(Subscription.instance.monthly)),
+            _DebugLine(
+              'Astute+ from the store',
+              Subscription.instance.isPlus ? 'active' : 'not active',
+            ),
             _DebugLine(
               'Analytics',
               Analytics.ready
                   ? (Analytics.collecting ? 'sending' : 'opted out')
                   : 'NOT running',
             ),
+            _DebugLine('Analytics host', kPostHogHost),
             if (Analytics.failure != null)
               _DebugLine('Why', Analytics.failure!),
             const SizedBox(height: 10),
@@ -1293,6 +1304,20 @@ class _PlusCard extends StatelessWidget {
 }
 
 /// One fact about the running app, for the debug section.
+/// A plan as the store answered for it: the product, its price, and its
+/// introductory offer — "P1W" free is the week the paywall promises.
+String _packageLine(Package? package) {
+  if (package == null) return 'not in the offering';
+  final StoreProduct product = package.storeProduct;
+  final IntroductoryPrice? intro = product.introductoryPrice;
+  final String offer = intro == null
+      ? ''
+      : intro.price == 0
+      ? ' · free ${intro.period}'
+      : ' · intro ${intro.priceString} ${intro.period}';
+  return '${product.identifier} · ${product.priceString}$offer';
+}
+
 class _DebugLine extends StatelessWidget {
   const _DebugLine(this.label, this.value);
 

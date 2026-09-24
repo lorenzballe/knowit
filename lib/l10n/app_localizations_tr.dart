@@ -1003,6 +1003,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get restorePurchases => 'Satın alımları geri yükle';
 
   @override
+  String get termsOfUse => 'Kullanım koşulları';
+
+  @override
+  String get privacyPolicy => 'Gizlilik';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label, $price $per';
   }

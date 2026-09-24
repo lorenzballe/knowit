@@ -224,6 +224,8 @@
   "cancelAnyTime": "いつでもキャンセル可能",
   "cancelAnyTimeNoPayment": "いつでもキャンセル可能 · このビルドでは請求されません",
   "restorePurchases": "購入を復元",
+  "termsOfUse": "利用規約",
+  "privacyPolicy": "プライバシー",
   "planPrice": "{label}、{price} {per}",
   "pickASideNoRightAnswer": "どちらかを選んでください。正解はありません。",
   "estimateCloseEnough": "見積もってください。近ければ正解です。",

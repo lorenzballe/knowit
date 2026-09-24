@@ -224,6 +224,8 @@
   "cancelAnyTime": "Altijd opzegbaar",
   "cancelAnyTimeNoPayment": "Altijd opzegbaar · In deze versie wordt niets afgeschreven",
   "restorePurchases": "Aankopen herstellen",
+  "termsOfUse": "Voorwaarden",
+  "privacyPolicy": "Privacy",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Kies een kant. Er is geen goed antwoord.",
   "estimateCloseEnough": "Schat. Dichtbij telt.",

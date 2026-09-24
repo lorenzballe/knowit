@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../analytics.dart';
 import '../l10n/l10n.dart';
+import '../legal.dart';
 
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -435,21 +436,39 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         style: _smallPrint(context),
                       ),
                     ),
-                    // Apple requires a way back to something already paid
-                    // for, and it only means anything when there is a store.
-                    if (store)
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: _restore,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            l.restorePurchases,
-                            textAlign: TextAlign.center,
-                            style: _smallPrint(context),
-                          ),
+                    // What Apple requires beside a subscription, on one
+                    // line so the screen still does not scroll: a way back
+                    // to something already paid for, which only means
+                    // anything when there is a store, and the terms and the
+                    // privacy policy.
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (store) ...[
+                              _SmallLink(
+                                l.restorePurchases,
+                                onTap: _restore,
+                                link: false,
+                              ),
+                              _SmallLink.dot(context),
+                            ],
+                            _SmallLink(
+                              l.termsOfUse,
+                              onTap: () => openLink(kTermsUrl),
+                            ),
+                            _SmallLink.dot(context),
+                            _SmallLink(
+                              l.privacyPolicy,
+                              onTap: () => openLink(kPrivacyUrl),
+                            ),
+                          ],
                         ),
                       ),
+                    ),
                     // In the onboarding the way out is written down, under
                     // the offer — a soft paywall says so rather than leaving
                     // the reader to find the cross.
@@ -485,11 +504,42 @@ class _PaywallScreenState extends State<PaywallScreen> {
     );
   }
 
-  TextStyle _smallPrint(BuildContext context) => AppText.body(
-    size: 12.5,
-    weight: FontWeight.w500,
-    height: 1.4,
-    color: context.p.ink.withValues(alpha: 0.45),
+  TextStyle _smallPrint(BuildContext context) => _smallPrintStyle(context);
+}
+
+TextStyle _smallPrintStyle(BuildContext context) => AppText.body(
+  size: 12.5,
+  weight: FontWeight.w500,
+  height: 1.4,
+  color: context.p.ink.withValues(alpha: 0.45),
+);
+
+/// A piece of the last line of small print that does something when
+/// tapped — restore, the terms, the privacy policy — and the dot between two
+/// of them.
+class _SmallLink extends StatelessWidget {
+  const _SmallLink(this.label, {required this.onTap, this.link = true});
+
+  final String label;
+  final VoidCallback onTap;
+
+  /// A page that opens, rather than an action the app takes.
+  final bool link;
+
+  static Widget dot(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 6),
+    child: ExcludeSemantics(child: Text('·', style: _smallPrintStyle(context))),
+  );
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    link: link,
+    button: !link,
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Text(label, style: _smallPrintStyle(context)),
+    ),
   );
 }
 

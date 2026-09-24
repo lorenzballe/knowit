@@ -224,6 +224,8 @@
   "cancelAnyTime": "Cancela quando quiseres",
   "cancelAnyTimeNoPayment": "Cancela quando quiseres · Nesta versão não é cobrado nada",
   "restorePurchases": "Restaurar compras",
+  "termsOfUse": "Termos de uso",
+  "privacyPolicy": "Privacidade",
   "planPrice": "{label}, {price} {per}",
   "pickASideNoRightAnswer": "Escolhe um lado. Não há resposta certa.",
   "estimateCloseEnough": "Estima. Chegar perto conta.",

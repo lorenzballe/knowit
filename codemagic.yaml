@@ -45,10 +45,11 @@ workflows:
         # placeholder that would have the app start PostHog against a project
         # that does not exist.
         #
-        # So the key is set in Codemagic's own environment, or not at all. A
-        # build with no key is not measured (see lib/analytics.dart), which is
-        # what this repo gets, and turning measurement on stays a variable
-        # rather than a code change.
+        # So the key is set in Codemagic's own environment — POSTHOG_KEY in
+        # the "signing" group above — or not at all. A build with no key is
+        # not measured (see lib/analytics.dart), which is what this repo
+        # gets, and turning measurement on stays a variable rather than a
+        # code change.
         POSTHOG_HOST: "https://eu.i.posthog.com"
       flutter: stable
       xcode: latest

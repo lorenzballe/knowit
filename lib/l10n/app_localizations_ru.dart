@@ -1037,6 +1037,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get restorePurchases => 'Восстановить покупки';
 
   @override
+  String get termsOfUse => 'Условия';
+
+  @override
+  String get privacyPolicy => 'Конфиденциальность';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label, $price $per';
   }

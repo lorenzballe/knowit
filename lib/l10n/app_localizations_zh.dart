@@ -977,6 +977,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get restorePurchases => '恢复购买';
 
   @override
+  String get termsOfUse => '使用条款';
+
+  @override
+  String get privacyPolicy => '隐私政策';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label，$price $per';
   }

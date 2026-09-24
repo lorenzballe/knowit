@@ -1004,6 +1004,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restorePurchases => 'Restore purchases';
 
   @override
+  String get termsOfUse => 'Terms of Use';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
   String planPrice(String label, String price, String per) {
     return '$label, $price $per';
   }
