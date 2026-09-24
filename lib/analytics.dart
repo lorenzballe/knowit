@@ -55,6 +55,17 @@ abstract class AnalyticsSink {
 
   /// Stops or resumes collection. The reader's own switch.
   Future<void> setCollecting(bool on);
+
+  /// The reader's profile: what it says now ([set]) and what it said the
+  /// first time ([setOnce]).
+  Future<void> setPerson(Map<String, Object> set, Map<String, Object> setOnce);
+
+  /// An error the app caught and carried on from, for error tracking.
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  );
 }
 
 /// What the app measures, and the one place that decides whether it does.
@@ -127,11 +138,26 @@ class Analytics {
         // A person is only made once there is someone to be: an install that
         // never signs in stays an event with no profile attached to it.
         ..personProfiles = PostHogPersonProfiles.identifiedOnly
-        // Off, and a decision rather than a default. Session replay records
-        // the screen, and the screen has the reader's own written reasons on
-        // it. Nothing in the funnel below is worth that.
-        ..sessionReplay = false
+        // Recorded, so PostHog can see where readers get stuck — the
+        // self-driving loop reads replays, errors and rage taps — but with
+        // every word on the screen hidden. The screen carries the reader's
+        // own written reasons, and a recording of them is not worth any
+        // finding. Layout, taps and scrolls are what is left, and they are
+        // what a stuck reader looks like.
+        ..sessionReplay = true
         ..debug = kDebugMode;
+      config.sessionReplayConfig
+        ..maskAllTexts = true
+        ..maskAllImages = false
+        ..captureTouches = true;
+      // Every error the app does not catch, Dart's and the phone's own, goes
+      // to error tracking with the steps that led to it.
+      config.errorTrackingConfig
+        ..captureFlutterErrors = true
+        ..capturePlatformDispatcherErrors = true
+        ..captureIsolateErrors = true
+        ..captureNativeExceptions = true
+        ..inAppIncludes.add('package:astuto');
 
       // The browser has no plugin to set up: posthog-js has to be on the page
       // first, and this is what puts it there. A no-op everywhere else.
@@ -233,6 +259,59 @@ class Analytics {
   static Future<void> register(String key, Object value) =>
       _guard(() => _sink?.register(key, value));
 
+  /// The reader's profile in PostHog: plan, streak, how far up the ladder,
+  /// what they have set up — counts and enums, like everything else here.
+  /// Null values are left out rather than sent as nothing.
+  static Future<void> person({
+    Map<String, Object?> set = const {},
+    Map<String, Object?> setOnce = const {},
+  }) => _guard(
+    () => _sink?.setPerson(
+      {
+        for (final e in set.entries)
+          if (e.value != null) e.key: e.value!,
+      },
+      {
+        for (final e in setOnce.entries)
+          if (e.value != null) e.key: e.value!,
+      },
+    ),
+  );
+
+  /// An error the app caught and carried on from — a backup that failed, a
+  /// store that would not answer — sent to error tracking with [where] it
+  /// happened. Uncaught errors are sent by the SDK on its own.
+  static Future<void> error(
+    Object error,
+    StackTrace? stack, {
+    required String where,
+    Map<String, Object?> properties = const {},
+  }) => _guard(
+    () => _sink?.error(error, stack, {
+      'where': where,
+      for (final e in properties.entries)
+        if (e.value != null) e.key: e.value!,
+    }),
+  );
+
+  // ── Timing ────────────────────────────────────────────────────────────
+
+  static final Stopwatch _sinceLaunch = Stopwatch();
+
+  /// Called first thing in main(), so the time to the first frame is the
+  /// reader's wait and not the framework's.
+  static void launched() => _sinceLaunch.start();
+
+  /// Milliseconds since [launched].
+  static int get msSinceLaunch => _sinceLaunch.elapsedMilliseconds;
+
+  /// An error as a short line for a property: enough to group by, not a
+  /// wall of text.
+  static String short(Object error) {
+    final String text = '$error'.replaceAll(RegExp(r'\s+'), ' ').trim();
+    return text.length <= 140 ? text : '${text.substring(0, 140)}…';
+  }
+
   /// Nothing measurement does may reach the reader. Failures are swallowed
   /// here, once, rather than at every call site.
   static Future<void> _guard(Future<void>? Function() call) async {
@@ -269,4 +348,27 @@ class _PostHogSink implements AnalyticsSink {
   @override
   Future<void> setCollecting(bool on) =>
       on ? Posthog().enable() : Posthog().disable();
+
+  @override
+  Future<void> setPerson(
+    Map<String, Object> set,
+    Map<String, Object> setOnce,
+  ) async {
+    if (set.isEmpty && setOnce.isEmpty) return;
+    await Posthog().setPersonProperties(
+      userPropertiesToSet: set.isEmpty ? null : set,
+      userPropertiesToSetOnce: setOnce.isEmpty ? null : setOnce,
+    );
+  }
+
+  @override
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  ) => Posthog().captureException(
+    error: error,
+    stackTrace: stack,
+    properties: properties,
+  );
 }

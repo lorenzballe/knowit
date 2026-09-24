@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../screens/paywall_screen.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
+import '../analytics.dart';
 
 /// The three things Astute+ is: every card of the day the reader's own,
 /// the map of what they know, and the whole archive. Anything gated behind
@@ -18,6 +19,12 @@ Future<void> requirePlus(
   VoidCallback action, {
   required String source,
 }) async {
+  // Which locked door the reader walked into, and whether they came back
+  // through it: the gates that sell, and the ones that only stop people.
+  Analytics.capture('plus gate reached', {
+    'source': source,
+    'is_plus': app.isPlus,
+  });
   if (app.isPlus) {
     action();
     return;
@@ -27,6 +34,10 @@ Future<void> requirePlus(
       builder: (_) => PaywallScreen(app: app, source: source),
     ),
   );
+  Analytics.capture('plus gate left', {
+    'source': source,
+    'unlocked': app.isPlus,
+  });
   // Coming back with the trial started, go straight through to what they
   // were reaching for.
   if (app.isPlus && context.mounted) action();

@@ -698,9 +698,43 @@ built, which means a screen reachable from two places is still one name.
 section, on by default and off in one tap, in all thirteen languages. It is
 applied to PostHog the moment it moves, and written back after a sign-out —
 sign-out clears every key the app holds, and a choice a wipe undoes is a delay
-rather than a choice. Session replay is off, and that is a decision rather
-than a default: it records the screen, and the screen has the reader's own
-written reasons on it.
+rather than a choice. It turns off everything below as well.
+
+**Replays, with every word hidden.** Session replay is on, because PostHog's
+self-driving loop reads replays, errors and rage taps to find where readers
+get stuck and to propose fixes — but with `maskAllTexts`, so every word on
+the screen is a grey bar in the recording. The screen carries the reader's
+own written reasons, and a recording of them is not worth any finding;
+layout, taps and scrolls are what is left, and they are what a stuck reader
+looks like. `PostHogWidget` wraps the app for it, only where measurement is
+running.
+
+**Errors.** Every error the app does not catch — Flutter's, Dart's, the
+isolate's and the phone's own — goes to PostHog's error tracking with the
+steps that led to it. The ones the app catches and carries on from (a backup
+that failed, a store that would not answer, a sign-in or a purchase that
+broke, an account that would not delete) are sent with `Analytics.error` and
+where they happened.
+
+**What else is measured, and how finely.** Every card event carries the
+card's own tags (`AppState.cardFacts`): its subject, genre and strand, the
+principle it teaches, its difficulty and kind of question, era, region, hook,
+mood, numeracy, abstraction and shelf life — and, when it is one of today's,
+its place in the five and why it was dealt (the question of the day, the
+reader's own, the edition's, or a review). A card is *viewed* when it comes
+up and *advanced* with how long it held the reader; answered with how long it
+took. The day says which slot each card fills; the end of the day how many
+were right and wrong. A streak that breaks is said once, milestones and
+records when they happen. The first run is measured step by step and scene by
+scene, with how long each held the reader and where it was skipped. The
+paywall says which plan was picked, how long it was open, how it was left and
+which link was opened; the store says what it put on sale and every change to
+the subscription — trial, renewal switched off, billing issue, expiry. Then
+the health of the app: the time to the first frame, Firebase starting, the
+store answering, the cards refreshing from the site, backups failing, and
+which reminder or widget brought the reader in, and which widgets they have
+placed. The profile in PostHog is kept to counts and choices — plan, streak,
+rung, what is set up — and a handful of them ride on every event.
 
 On the web the plugin brings no library of its own, so
 `lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.

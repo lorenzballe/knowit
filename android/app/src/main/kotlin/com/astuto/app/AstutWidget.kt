@@ -90,7 +90,7 @@ class AstutWidget : AppWidgetProvider() {
             val dim = (ink and 0x00FFFFFF) or (0xB8 shl 24)
             val faint = (ink and 0x00FFFFFF) or (0xC7 shl 24)
 
-            val pending = openApp(context)
+            val pending = openApp(context, "card.home")
             val empty = context.getString(R.string.widget_card_empty)
             for (id in ids) {
                 val views = RemoteViews(context.packageName, R.layout.astut_widget)
@@ -108,11 +108,30 @@ class AstutWidget : AppWidgetProvider() {
             }
         }
 
-        /// Tapping any of the widgets opens the app.
-        internal fun openApp(context: Context): PendingIntent = PendingIntent.getActivity(
-            context, 0, Intent(context, MainActivity::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
-        )
+        /// The extra that names the widget a tap came from.
+        internal const val EXTRA_FROM = "astut_widget_from"
+
+        /// Tapping any of the widgets opens the app, saying which widget it
+        /// was. A request code per widget, or the last one made would carry
+        /// its name into all of them.
+        internal fun openApp(context: Context, from: String): PendingIntent =
+            PendingIntent.getActivity(
+                context,
+                from.hashCode(),
+                Intent(context, MainActivity::class.java).putExtra(EXTRA_FROM, from),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+            )
+
+        /// The widgets placed on the home screen, as "kind.home", one entry
+        /// per widget.
+        fun installed(context: Context): List<String> {
+            val manager = AppWidgetManager.getInstance(context)
+            fun count(provider: Class<*>) =
+                manager.getAppWidgetIds(ComponentName(context, provider)).size
+            return List(count(AstutWidget::class.java)) { "card.home" } +
+                List(count(AstutStreakWidget::class.java)) { "streak.home" } +
+                List(count(AstutFiveWidget::class.java)) { "five.home" }
+        }
 
         internal fun todayKey(): String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
 

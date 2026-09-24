@@ -310,9 +310,13 @@ struct CardWidgetView: View {
   var body: some View {
     switch size {
     case .rectangular:
-      CardView(data: entry.data, size: .rectangular).astutBackground(Color.clear)
+      CardView(data: entry.data, size: .rectangular)
+        .astutBackground(Color.clear)
+        .widgetURL(AstutLink.from("card", family))
     default:
-      CardView(data: entry.data, size: size).astutBackground(entry.data.color)
+      CardView(data: entry.data, size: size)
+        .astutBackground(entry.data.color)
+        .widgetURL(AstutLink.from("card", family))
     }
   }
 }
@@ -424,11 +428,17 @@ struct StreakWidgetView: View {
   var body: some View {
     switch size {
     case .circular:
-      StreakView(data: entry.data, size: .circular).astutAccessoryBackground()
+      StreakView(data: entry.data, size: .circular)
+        .astutAccessoryBackground()
+        .widgetURL(AstutLink.from("streak", family))
     case .inline:
-      StreakView(data: entry.data, size: .inline).astutBackground(Color.clear)
+      StreakView(data: entry.data, size: .inline)
+        .astutBackground(Color.clear)
+        .widgetURL(AstutLink.from("streak", family))
     case .small:
-      StreakView(data: entry.data, size: .small).astutBackground { AstutLights() }
+      StreakView(data: entry.data, size: .small)
+        .astutBackground { AstutLights() }
+        .widgetURL(AstutLink.from("streak", family))
     }
   }
 }
@@ -531,7 +541,9 @@ struct FiveWidget: Widget {
 
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: kind, provider: FiveProvider()) { entry in
-      FiveView(data: entry.data).astutBackground(AstutPalette.night)
+      FiveView(data: entry.data)
+        .astutBackground(AstutPalette.night)
+        .widgetURL(AstutLink.from("five", .systemMedium))
     }
     .configurationDisplayName("Today's five")
     .description("The five cards of the day, and how far you are.")
@@ -547,6 +559,17 @@ struct AstutWidgets: WidgetBundle {
     TodayCardWidget()
     StreakWidget()
     FiveWidget()
+  }
+}
+
+// MARK: - Which widget opened the app
+
+/// The link a widget opens the app on, naming itself — "card.systemSmall",
+/// "streak.accessoryCircular" — so the app can say which widgets bring
+/// readers in.
+enum AstutLink {
+  static func from(_ kind: String, _ family: WidgetFamily) -> URL? {
+    URL(string: "astute://widget?from=\(kind).\(family)")
   }
 }
 

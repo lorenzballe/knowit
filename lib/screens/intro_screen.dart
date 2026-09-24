@@ -8,6 +8,7 @@ import '../theme.dart';
 import '../widgets/ambient.dart';
 import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
+import '../analytics.dart';
 
 /// The first thing the app shows: five scenes that say what Astute is, over a
 /// dark ground that keeps moving.
@@ -89,11 +90,39 @@ class _IntroScreenState extends State<IntroScreen> {
 
   List<Color> get _blooms => kSceneBlooms[_scene % kSceneBlooms.length];
 
-  void _go(int i) => setState(() => _scene = i % _sceneCount);
+  /// When the scene now showing came up, for how long it held the reader.
+  final Stopwatch _sceneClock = Stopwatch()..start();
 
-  void _next() => _go(_scene + 1);
+  void _go(int i, {required String by}) {
+    final int to = i % _sceneCount;
+    // The intro, scene by scene: which one was left for which, how, and
+    // after how long. Five scenes is a lot to ask before a card, and this
+    // is what says whether it is too many.
+    Analytics.capture('intro scene changed', {
+      'from': _scene + 1,
+      'to': to + 1,
+      'by': by,
+      'ms_on_scene': _sceneClock.elapsedMilliseconds,
+    });
+    _sceneClock
+      ..reset()
+      ..start();
+    setState(() => _scene = to);
+  }
 
-  void _prev() => _go(_scene == 0 ? _sceneCount - 1 : _scene - 1);
+  void _next({String by = 'tap'}) => _go(_scene + 1, by: by);
+
+  void _prev() =>
+      _go(_scene == 0 ? _sceneCount - 1 : _scene - 1, by: 'swipe back');
+
+  /// Skip, from the corner: said with the scene it left from.
+  void _skipIntro() {
+    Analytics.capture('intro skipped', {
+      'at_scene': _scene + 1,
+      'ms_on_scene': _sceneClock.elapsedMilliseconds,
+    });
+    widget.onContinue();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +141,7 @@ class _IntroScreenState extends State<IntroScreen> {
         },
         onHorizontalDragEnd: (_) {
           if (_dragX < -50) {
-            _next();
+            _next(by: 'swipe');
           } else if (_dragX > 50) {
             _prev();
           }
@@ -191,7 +220,7 @@ class _IntroScreenState extends State<IntroScreen> {
                                 key: const ValueKey('intro-dots'),
                                 count: _sceneCount,
                                 active: _scene,
-                                onTap: _go,
+                                onTap: (i) => _go(i, by: 'dot'),
                               ),
                               SizedBox(
                                 height: kIntroHintSlot,
@@ -247,7 +276,7 @@ class _IntroScreenState extends State<IntroScreen> {
               left: 0,
               right: 0,
               top: safe.top + 8,
-              child: SkipCorner(onTap: widget.onContinue, color: Colors.white),
+              child: SkipCorner(onTap: _skipIntro, color: Colors.white),
             ),
           ],
         ),

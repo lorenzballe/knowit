@@ -13,6 +13,7 @@ import '../widgets/fit_text.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
 import 'pill_detail_screen.dart';
+import '../analytics.dart';
 
 /// Which of the reader's two shelves this is: the cards they bookmarked
 /// to find again, or the cards they held down because they liked them.
@@ -174,7 +175,12 @@ class _SavedScreenState extends State<SavedScreen> {
                 TopicFilterRow(
                   topics: present,
                   picked: _topic,
-                  onPick: (key) => setState(() => _topic = key),
+                  onPick: (key) {
+                    Analytics.capture('shelf filtered', {
+                      'subject': key ?? 'all',
+                    });
+                    setState(() => _topic = key);
+                  },
                   keyPrefix: 'saved-filter',
                 ),
               ],

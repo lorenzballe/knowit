@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/foundation.dart' show ValueListenable, kIsWeb;
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'analytics.dart';
 import 'cloud.dart';
@@ -19,18 +21,56 @@ import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
+import 'utils/home_widget.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
 
 Future<void> main() async {
+  Analytics.launched();
   WidgetsFlutterBinding.ensureInitialized();
   // Never blocks the app: see Cloud.start.
+  final Stopwatch cloud = Stopwatch()..start();
   await Cloud.start();
+  final int cloudMs = cloud.elapsedMilliseconds;
   // Nor this, and for the same reason: see Analytics.start. It goes before
   // runApp so that the reader's opt-out is read before the first event could
   // be sent, and not one launch later.
   await Analytics.start();
-  runApp(const AstutoApp());
+  // Said once measurement is up: a Firebase that would not start is the
+  // cause of half the bug reports this app could ever get.
+  Analytics.capture('cloud started', {
+    'ok': Cloud.ready,
+    'ms': cloudMs,
+    'failure': Cloud.failure == null ? null : Analytics.short(Cloud.failure!),
+  });
+  // Session replay takes its pictures from under this widget. Only where
+  // measurement is running and the platform records at all.
+  runApp(
+    Analytics.ready && !kIsWeb
+        ? const PostHogWidget(child: AstutoApp())
+        : const AstutoApp(),
+  );
+  WidgetsBinding.instance.addPostFrameCallback((_) => _saidStarted());
+}
+
+/// The first frame is on screen: how long the reader waited for it, and the
+/// phone it happened on, as far as it changes what they see — the language,
+/// the text size they chose, dark or light, and whether they asked for less
+/// motion.
+void _saidStarted() {
+  final dispatcher = WidgetsBinding.instance.platformDispatcher;
+  final view = dispatcher.views.isEmpty ? null : dispatcher.views.first;
+  Analytics.capture('app started', {
+    'ms_to_first_frame': Analytics.msSinceLaunch,
+    'locale': dispatcher.locale.toLanguageTag(),
+    'text_scale': (dispatcher.textScaleFactor * 100).round() / 100,
+    'system_dark': dispatcher.platformBrightness == Brightness.dark,
+    'reduce_motion': dispatcher.accessibilityFeatures.disableAnimations,
+    'bold_text': dispatcher.accessibilityFeatures.boldText,
+    'screen_width': view == null
+        ? null
+        : (view.physicalSize.width / view.devicePixelRatio).round(),
+  });
 }
 
 /// On the web a list should follow the mouse the way it follows a finger.
@@ -195,6 +235,7 @@ class _AstutoRootState extends State<AstutoRoot> {
       onResume: () {
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
+        _sayWidgets();
       },
     );
     _refreshPushToken();
@@ -209,9 +250,42 @@ class _AstutoRootState extends State<AstutoRoot> {
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
     _identify();
+    await _sayWidgets();
     final Subscription store = Subscription.instance
       ..addListener(_onEntitlementChanged);
     await store.start(accountId: _account.uid);
+  }
+
+  static const _kWidgetsSaid = 'knowit.widgetsSaid';
+
+  /// Whether a widget's tap brought the reader in, and which widgets they
+  /// have placed — said when the set changes, not at every launch, and
+  /// carried on every event as a count.
+  Future<void> _sayWidgets() async {
+    final String? from = await takeWidgetOpen();
+    if (from != null) {
+      Analytics.capture('app opened from widget', {'widget': from});
+    }
+    final List<String> placed = await installedHomeWidgets();
+    final String summary = placed.isEmpty
+        ? 'none'
+        : (List.of(placed)..sort()).join(',');
+    Analytics.register('widgets_placed', placed.length);
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (prefs.getString(_kWidgetsSaid) == summary) return;
+      await prefs.setString(_kWidgetsSaid, summary);
+    } catch (_) {
+      return;
+    }
+    Analytics.capture('widgets placed', {
+      'count': placed.length,
+      'widgets': summary,
+      'kinds': {for (final w in placed) w.split('.').first}.join(','),
+    });
+    Analytics.person(
+      set: {'widgets_placed': placed.length, 'widgets': summary},
+    );
   }
 
   void _onEntitlementChanged() {
@@ -276,9 +350,35 @@ class _AstutoRootState extends State<AstutoRoot> {
     super.dispose();
   }
 
+  /// How long the reader has been on the current stage of the first run.
+  final Stopwatch _stageClock = Stopwatch()..start();
+
   void _go(_Stage stage) {
+    final _Stage from = _stage;
+    // The first run, step by step: which step was left for which, and how
+    // long it held the reader. Where a funnel drops, this says how long
+    // people stood there first.
+    if (from != _Stage.shell && from != _Stage.comeback && from != stage) {
+      Analytics.capture('onboarding step done', {
+        'step': from.screen,
+        'next': stage.screen,
+        'ms_on_step': _stageClock.elapsedMilliseconds,
+      });
+    }
+    _stageClock
+      ..reset()
+      ..start();
     setState(() => _stage = stage);
     Analytics.screen(stage.screen);
+  }
+
+  /// A step passed over rather than answered.
+  void _skip(_Stage from, _Stage to) {
+    Analytics.capture('onboarding step skipped', {
+      'step': from.screen,
+      'ms_on_step': _stageClock.elapsedMilliseconds,
+    });
+    _go(to);
   }
 
   /// Returns whether the intro should move on. Only backing out of the
@@ -392,7 +492,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          onSkip: () => _go(_Stage.offer),
+          onSkip: () => _skip(_Stage.subjects, _Stage.offer),
         );
 
       // The same answer, one layer finer: which six of each subject, and
@@ -405,7 +505,7 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setGenresOff(genresOff, strandsOff);
             if (mounted) _go(_Stage.offer);
           },
-          onSkip: () => _go(_Stage.offer),
+          onSkip: () => _skip(_Stage.genres, _Stage.offer),
         );
 
       // The offer, once, straight after the mix: the reader has just said

@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/analytics.dart';
 import 'package:astuto/data/daily.dart';
+import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/state/app_state.dart';
 
 /// A sink that keeps what it was given, so what the app measures can be read
@@ -45,6 +46,26 @@ class _Recorder implements AnalyticsSink {
 
   @override
   Future<void> setCollecting(bool on) async => collecting = on;
+
+  final Map<String, Object> person = {};
+  final Map<String, Object> personOnce = {};
+  final List<(Object, Map<String, Object>)> errors = [];
+
+  @override
+  Future<void> setPerson(
+    Map<String, Object> set,
+    Map<String, Object> setOnce,
+  ) async {
+    person.addAll(set);
+    personOnce.addAll(setOnce);
+  }
+
+  @override
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  ) async => errors.add((error, properties));
 }
 
 /// An app past the first run, so a day can be read without the onboarding.
@@ -234,6 +255,111 @@ void main() {
     });
   });
 
+  group('the finer measurement', () {
+    test(
+      'the first card of the day is seen, as the kind of card it is',
+      () async {
+        final app = await _ready();
+
+        final seen = sink.last('card viewed');
+        expect(seen, isNotNull);
+        expect(seen!['position'], 1);
+        expect(seen['of'], app.todaysDeck.length);
+        expect(
+          seen['slot'],
+          isIn(['question_of_day', 'own', 'common', 'review']),
+        );
+        expect(
+          seen['challenge'],
+          isIn(['fact', 'pick_one', 'type_number', 'estimate', 'take_a_side']),
+        );
+        expect(seen['edition'], isA<int>());
+        // The day says which slot each of its cards fills, in order.
+        expect(
+          (sink.last('day started')!['slots'] as String).split(','),
+          hasLength(app.todaysDeck.length),
+        );
+      },
+    );
+
+    test('a card advanced says how long it held the reader', () async {
+      final app = await _ready();
+      sink.events.clear();
+
+      await app.advance();
+
+      final card = sink.last('card advanced')!;
+      expect(card['ms_on_card'], isA<int>());
+      expect(card['slot'], isNotNull);
+      // And the next card comes up.
+      expect(sink.last('card viewed')!['position'], 2);
+    });
+
+    test(
+      'the profile holds counts and choices, never what was typed',
+      () async {
+        final app = await _ready({'knowit.name': 'Marco Rossi'});
+
+        await app.toggleSaved(app.todaysDeck.first.id);
+
+        expect(sink.person['is_plus'], false);
+        expect(sink.person['saved_count'], 1);
+        expect(sink.person['app_language'], isA<String>());
+        expect(sink.registered['theme'], isA<String>());
+        expect(sink.registered['streak_days'], isA<int>());
+        expect('${sink.person} ${sink.registered}', isNot(contains('Marco')));
+      },
+    );
+
+    test('a streak the freezes cannot cover is said broken, once', () async {
+      final String lastKept = dateKey(
+        DateTime.now().subtract(const Duration(days: 4)),
+      );
+      await _ready({
+        'knowit.streak': 6,
+        'knowit.bestStreak': 6,
+        'knowit.lastCompletionDate': lastKept,
+        'knowit.freezes': 0,
+      });
+
+      final broken = sink.last('streak broken');
+      expect(broken, isNotNull);
+      expect(broken!['streak_lost'], 6);
+      expect(broken['days_missed'], greaterThanOrEqualTo(3));
+
+      // Opening the app again on the same lapse does not say it twice.
+      sink.events.clear();
+      final again = AppState(
+        hasPermission: () async => false,
+        askPermission: () async => false,
+        arm: (_) async {},
+        disarm: () async {},
+        pushWidget: (_) async {},
+      );
+      await again.init();
+      expect(sink.names, isNot(contains('streak broken')));
+    });
+
+    test('an error the app carried on from says where it was', () async {
+      await Analytics.error(
+        StateError('the backup is down'),
+        StackTrace.current,
+        where: 'backup',
+        properties: {'code': 'unavailable', 'nothing': null},
+      );
+
+      final (error, properties) = sink.errors.single;
+      expect(error, isA<StateError>());
+      expect(properties, {'where': 'backup', 'code': 'unavailable'});
+    });
+
+    test('an error is shortened to a line a chart can group by', () {
+      final String long = 'x' * 500;
+      expect(Analytics.short(long).length, lessThanOrEqualTo(141));
+      expect(Analytics.short('a\n  b'), 'a b');
+    });
+  });
+
   group('the plan and the ladder are stamped on everything after them', () {
     test('the store answering registers the plan', () async {
       final app = await _ready();
@@ -277,4 +403,17 @@ class _Exploding implements AnalyticsSink {
 
   @override
   Future<void> setCollecting(bool on) async => throw StateError('no');
+
+  @override
+  Future<void> setPerson(
+    Map<String, Object> set,
+    Map<String, Object> setOnce,
+  ) async => throw StateError('no');
+
+  @override
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  ) async => throw StateError('no');
 }

@@ -8,6 +8,7 @@ import '../theme.dart';
 import '../widgets/reveal_body.dart';
 import '../widgets/share_sheet.dart';
 import '../widgets/ui.dart';
+import '../analytics.dart';
 
 /// A single pill opened out of the archive or the saved list: the whole thing
 /// at once, no flip needed.
@@ -22,6 +23,19 @@ class PillDetailScreen extends StatefulWidget {
 }
 
 class _PillDetailScreenState extends State<PillDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Which cards get opened again, from the shelves and the archive: the
+    // card's tags, and whether the reader had kept or liked it.
+    Analytics.capture('pill opened', {
+      ...widget.app.cardFacts(widget.pill.id),
+      'saved': widget.app.savedIds.contains(widget.pill.id),
+      'liked': widget.app.isLiked(widget.pill.id),
+      'answered': widget.app.answers.containsKey(widget.pill.id),
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final pill = widget.pill;

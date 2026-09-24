@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+import '../analytics.dart';
 import '../cloud.dart';
 import '../state/app_state.dart';
 import 'board.dart';
@@ -202,14 +203,26 @@ class Account extends ChangeNotifier {
       if (signed == null) return SignInOutcome.failed;
       await foldInto(app, signed.uid);
       return SignInOutcome.signedIn;
-    } on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException catch (error, stack) {
       if (isCancellation(error.code)) return SignInOutcome.cancelled;
       lastError = '${error.code}: ${error.message}';
       debugPrint('$label sign-in failed: $lastError');
+      Analytics.error(
+        error,
+        stack,
+        where: 'sign in',
+        properties: {'method': label, 'code': error.code},
+      );
       return SignInOutcome.failed;
-    } catch (error) {
+    } catch (error, stack) {
       lastError = '$error';
       debugPrint('$label sign-in failed: $error');
+      Analytics.error(
+        error,
+        stack,
+        where: 'sign in',
+        properties: {'method': label},
+      );
       return SignInOutcome.failed;
     } finally {
       _busy = false;
@@ -297,12 +310,23 @@ class Account extends ChangeNotifier {
     if (store == null) return null;
 
     final ReaderSnapshot local = app.snapshot();
-    final ReaderSnapshot remote =
-        await store.read(uid) ?? const ReaderSnapshot();
+    final ReaderSnapshot? held = await store.read(uid);
+    final ReaderSnapshot remote = held ?? const ReaderSnapshot();
     final ReaderSnapshot merged = mergeSnapshots(local, remote);
 
     await app.adopt(merged);
     await store.write(uid, merged);
+    // What a sign-in brought with it: a reader arriving on a new phone
+    // carries days in from the account; one signing in for the first time
+    // carries days up to it. Counts only.
+    Analytics.capture('account merged', {
+      'account_had_backup': held != null,
+      'days_on_phone': local.completedDates.length,
+      'days_in_account': remote.completedDates.length,
+      'days_after': merged.completedDates.length,
+      'saved_after': merged.savedIds.length,
+      'cards_seen_after': merged.seenIds.length,
+    });
     return merged;
   }
 
@@ -313,17 +337,20 @@ class Account extends ChangeNotifier {
     if (who == null || store == null) return;
     try {
       await store.write(who, app.snapshot());
-    } catch (error) {
-      // A backup that fails is not something to interrupt a reader over.
+    } catch (error, stack) {
+      // A backup that fails is not something to interrupt a reader over,
+      // and it is something to hear about.
       debugPrint('Could not push the snapshot: $error');
+      Analytics.error(error, stack, where: 'backup');
     }
     // And the board, which is the part of the record a friend can see.
     final BoardStore? boards = _boards;
     if (boards == null) return;
     try {
       await boards.publish(app.board(who));
-    } catch (error) {
+    } catch (error, stack) {
       debugPrint('Could not publish the board: $error');
+      Analytics.error(error, stack, where: 'board');
     }
   }
 
@@ -409,6 +436,26 @@ class Account extends ChangeNotifier {
     lastError = null;
     _deleting = true;
     notifyListeners();
+    final String how = user == null
+        ? 'none'
+        : user!.isAnonymous
+        ? 'anonymous'
+        : user!.providerData.map((p) => p.providerId).join(',');
+    Analytics.capture('account deletion started', {'account': how});
+    final DeleteOutcome outcome = await _delete(app);
+    // Said before and after, since the event after the deletion belongs to
+    // nobody: the account it would be tied to is the one that just went.
+    Analytics.capture('account deletion ended', {
+      'outcome': outcome.name,
+      'account': how,
+      'error': outcome == DeleteOutcome.failed && lastError != null
+          ? Analytics.short(lastError!)
+          : null,
+    });
+    return outcome;
+  }
+
+  Future<DeleteOutcome> _delete(AppState app) async {
     try {
       final FirebaseAuth? auth = _firebase;
       final User? current = auth?.currentUser;
@@ -451,13 +498,20 @@ class Account extends ChangeNotifier {
       await Subscription.instance.logOut();
       await app.signOut();
       return DeleteOutcome.deleted;
-    } on FirebaseAuthException catch (error) {
+    } on FirebaseAuthException catch (error, stack) {
       lastError = '${error.code}: ${error.message}';
       debugPrint('Could not delete the account: $lastError');
+      Analytics.error(
+        error,
+        stack,
+        where: 'account deletion',
+        properties: {'code': error.code},
+      );
       return DeleteOutcome.failed;
-    } catch (error) {
+    } catch (error, stack) {
       lastError = '$error';
       debugPrint('Could not delete the account: $error');
+      Analytics.error(error, stack, where: 'account deletion');
       return DeleteOutcome.failed;
     } finally {
       _deleting = false;

@@ -64,7 +64,7 @@ class AstutFiveWidget : AppWidgetProvider() {
             val title = if (stored.isEmpty()) "ASTUTE" else text("fiveTitle").ifEmpty { "ASTUTE" }
             val count = if (cards.isEmpty()) "" else "${cards.count { it.read }}/${cards.size}"
 
-            val pending = AstutWidget.openApp(context)
+            val pending = AstutWidget.openApp(context, "five.home")
             for (id in ids) {
                 val views = RemoteViews(context.packageName, R.layout.astut_five_widget)
                 views.setTextViewText(R.id.five_title, title)

@@ -18,3 +18,31 @@ Future<void> pushHomeWidget(Map<String, Object?> data) async {
     // The native side declined; the widget keeps what it last had.
   }
 }
+
+/// The widgets the reader has placed, as "kind.family" — `card.systemSmall`,
+/// `streak.accessoryCircular` — one entry per widget on a screen. Empty where
+/// there are none, or nothing to ask.
+Future<List<String>> installedHomeWidgets() async {
+  try {
+    final List<Object?>? found = await _channel.invokeMethod<List<Object?>>(
+      'installed',
+    );
+    return [for (final item in found ?? const []) '$item'];
+  } on MissingPluginException {
+    return const [];
+  } on PlatformException {
+    return const [];
+  }
+}
+
+/// The widget whose tap opened the app, once: asking clears it. Null when
+/// the app was opened any other way.
+Future<String?> takeWidgetOpen() async {
+  try {
+    return await _channel.invokeMethod<String>('takeOpenedFrom');
+  } on MissingPluginException {
+    return null;
+  } on PlatformException {
+    return null;
+  }
+}

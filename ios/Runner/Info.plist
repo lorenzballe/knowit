@@ -92,6 +92,16 @@
 				<string>com.googleusercontent.apps.582789807174-gqik2m8lr283qu6pr1s99gqgsj9lfas4</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>com.astuto.app.widget</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>astute</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

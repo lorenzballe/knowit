@@ -5,6 +5,8 @@ import 'package:timezone/timezone.dart' as tz;
 
 import '../models/reminder.dart';
 
+import '../analytics.dart';
+
 /// The daily nudge, on a phone.
 ///
 /// A daily app that never speaks first is a daily app somebody opens twice.
@@ -49,8 +51,32 @@ Future<void> _init() async {
         requestSoundPermission: false,
       ),
     ),
+    onDidReceiveNotificationResponse: (response) =>
+        _sayOpened(response.payload, launched: false),
   );
   _ready = true;
+  // A reminder that opened the app from nothing arrives here instead.
+  try {
+    final launch = await _plugin.getNotificationAppLaunchDetails();
+    if (launch?.didNotificationLaunchApp ?? false) {
+      _sayOpened(launch?.notificationResponse?.payload, launched: true);
+    }
+  } catch (_) {
+    // Only a measurement; the app opens either way.
+  }
+}
+
+/// Which reminder brought the reader in: its slot in the fortnight's plan,
+/// how many days ahead of planning it was set, and whether it started the
+/// app or brought it forward.
+void _sayOpened(String? payload, {required bool launched}) {
+  if (payload == null || !payload.startsWith('reminder:')) return;
+  final parts = payload.split(':');
+  Analytics.capture('reminder opened', {
+    'slot': parts.length > 1 ? int.tryParse(parts[1]) : null,
+    'planned_for': parts.length > 2 ? parts[2] : null,
+    'launched_app': launched,
+  });
 }
 
 /// Whether permission is already held — without asking. What re-arms the
@@ -141,6 +167,10 @@ Future<void> armReminders(List<Reminder> plan) async {
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.wallClockTime,
+      // Which reminder this was, for when it is opened: its slot and the
+      // day it was meant for. Nothing it says.
+      payload:
+          'reminder:${r.id}:${r.when.year}-${r.when.month.toString().padLeft(2, '0')}-${r.when.day.toString().padLeft(2, '0')}',
     );
   }
 }

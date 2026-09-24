@@ -110,6 +110,10 @@ class ProfileScreen extends StatelessWidget {
   Future<void> _confirmDelete(BuildContext context) async {
     final l = context.l10n;
     final messenger = ScaffoldMessenger.maybeOf(context);
+    Analytics.capture('account deletion asked', {
+      'signed_in': account.signedInForReal,
+      'is_plus': app.isPlus,
+    });
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -148,7 +152,10 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
     );
-    if (confirmed != true) return;
+    if (confirmed != true) {
+      Analytics.capture('account deletion cancelled');
+      return;
+    }
     final DeleteOutcome outcome = await account.deleteAccount(app);
     switch (outcome) {
       case DeleteOutcome.deleted:
@@ -490,14 +497,19 @@ class ProfileScreen extends StatelessWidget {
             // and none of that belongs on a screen built to sell. RevenueCat's
             // customer centre does all of it; the paywall is for everyone
             // else.
-            onTap: () => app.isPlus
-                ? Subscription.instance.presentCustomerCenter()
-                : Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          PaywallScreen(app: app, source: 'manage plan'),
-                    ),
-                  ),
+            onTap: () {
+              Analytics.capture('manage subscription opened', {
+                'is_plus': app.isPlus,
+              });
+              app.isPlus
+                  ? Subscription.instance.presentCustomerCenter()
+                  : Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            PaywallScreen(app: app, source: 'manage plan'),
+                      ),
+                    );
+            },
           ),
           _LinkRow(
             label: context.l10n.howPillsAreWritten,
@@ -694,7 +706,15 @@ class _UsageSwitchState extends State<_UsageSwitch> {
               // toggle is what makes a second tap look necessary.
               setState(() => _on = v);
               final messenger = ScaffoldMessenger.of(context);
+              // Said while it can still be said: turning measurement off is
+              // the last event, turning it on the first.
+              if (!v) {
+                Analytics.capture('usage sharing switched', {'on': false});
+              }
               await Analytics.setCollecting(v);
+              if (v) {
+                Analytics.capture('usage sharing switched', {'on': true});
+              }
               messenger
                 ..hideCurrentSnackBar()
                 ..showSnackBar(

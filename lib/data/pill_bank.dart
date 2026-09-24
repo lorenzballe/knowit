@@ -26,6 +26,8 @@ import '../models/pill.dart';
 import 'card_json.dart';
 import 'embedded_bank.dart';
 
+import '../analytics.dart';
+
 /// Where the newest bundle is published. The deploy workflow copies
 /// `web/cards/` into the site, so this is a static file behind a CDN: no
 /// server, no key, and a reader who is offline simply keeps what they have.
@@ -182,15 +184,34 @@ class PillBank {
   /// whether something newer than the bank in use was stored. Never throws:
   /// a phone with no signal is the normal case, not an error.
   static Future<bool> refresh(SharedPreferences prefs) async {
+    final Stopwatch took = Stopwatch()..start();
+    // How the cards reach the phone: whether the site answered, how fast,
+    // and whether it had anything newer than the copy in use.
+    void say(String outcome, [BankBundle? got]) =>
+        Analytics.capture('cards refreshed', {
+          'outcome': outcome,
+          'ms': took.elapsedMilliseconds,
+          'version_in_use': version,
+          'version_fetched': got?.version,
+          'cards_fetched': got?.cards.length,
+        });
     try {
       final body = await fetch(kBankUrl);
-      if (body == null) return false;
+      if (body == null) {
+        say('no answer');
+        return false;
+      }
       final bundle = BankBundle.parse(body);
-      if (bundle.version <= version) return false;
+      if (bundle.version <= version) {
+        say('up to date', bundle);
+        return false;
+      }
       await prefs.setString(_kStored, body);
+      say('newer', bundle);
       return true;
     } catch (error) {
       debugPrint('Astute: the bank did not refresh: $error');
+      say('failed');
       return false;
     }
   }

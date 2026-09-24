@@ -90,6 +90,13 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   late Plan _plan = widget.app.plan;
 
+  /// How long the offer was on screen, how it was left, and how often the
+  /// reader went between the plans — the three things a paywall's own
+  /// numbers are made of.
+  final Stopwatch _open = Stopwatch()..start();
+  String _leftBy = 'back';
+  int _planChanges = 0;
+
   Subscription get _store => Subscription.instance;
 
   @override
@@ -151,6 +158,45 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// The package for the plan on screen, if the store has offered one.
   Package? get _package => _plan == Plan.year ? _store.yearly : _store.monthly;
 
+  @override
+  void dispose() {
+    Analytics.capture('paywall closed', {
+      'source': widget.source,
+      'left_by': _leftBy,
+      'ms_open': _open.elapsedMilliseconds,
+      'plan': _plan.name,
+      'plan_changes': _planChanges,
+      'is_plus': widget.app.isPlus,
+    });
+    super.dispose();
+  }
+
+  void _pick(Plan plan) {
+    if (plan == _plan) return;
+    _planChanges += 1;
+    Analytics.capture('paywall plan selected', {
+      'source': widget.source,
+      'plan': plan.name,
+      'from': _plan.name,
+      'ms_open': _open.elapsedMilliseconds,
+    });
+    setState(() => _plan = plan);
+    widget.app.setPlan(plan);
+  }
+
+  void _leaveBy(String how) {
+    _leftBy = how;
+    _leave();
+  }
+
+  void _openLink(String which, String url) {
+    Analytics.capture('paywall link opened', {
+      'source': widget.source,
+      'link': which,
+    });
+    openLink(url);
+  }
+
   /// The way out, whichever way this screen was reached.
   void _leave() {
     final VoidCallback? onClose = widget.onClose;
@@ -177,7 +223,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.trialStartedNoPayment)),
       );
-      _leave();
+      _leaveBy('unlocked without a store');
       return;
     }
 
@@ -187,12 +233,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
       'plan': _plan.name,
       'outcome': outcome.name,
       'product': package.storeProduct.identifier,
+      'price': package.storeProduct.price,
+      'currency': package.storeProduct.currencyCode,
+      'trial': package.storeProduct.introductoryPrice?.price == 0,
+      'ms_open': _open.elapsedMilliseconds,
+      'plan_changes': _planChanges,
     });
     if (!mounted) return;
     switch (outcome) {
       case PurchaseOutcome.bought:
         await widget.app.applyEntitlement(true);
-        if (mounted) _leave();
+        if (mounted) _leaveBy('bought');
       case PurchaseOutcome.cancelled:
         break;
       case PurchaseOutcome.failed:
@@ -286,7 +337,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         label: 'Close',
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: _leave,
+                          onTap: () => _leaveBy('close'),
                           child: Container(
                             width: 34,
                             height: 34,
@@ -362,10 +413,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           note: l.aMonth(_euros(kYearlyCents ~/ 12)),
                           badge: l.savePercent(kYearlySavingPercent),
                           selected: _plan == Plan.year,
-                          onTap: () {
-                            setState(() => _plan = Plan.year);
-                            widget.app.setPlan(Plan.year);
-                          },
+                          onTap: () => _pick(Plan.year),
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -376,10 +424,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           per: l.perMonthShort,
                           note: l.billedMonthly,
                           selected: _plan == Plan.month,
-                          onTap: () {
-                            setState(() => _plan = Plan.month);
-                            widget.app.setPlan(Plan.month);
-                          },
+                          onTap: () => _pick(Plan.month),
                         ),
                       ),
                     ],
@@ -458,12 +503,12 @@ class _PaywallScreenState extends State<PaywallScreen> {
                             ],
                             _SmallLink(
                               l.termsOfUse,
-                              onTap: () => openLink(kTermsUrl),
+                              onTap: () => _openLink('terms', kTermsUrl),
                             ),
                             _SmallLink.dot(context),
                             _SmallLink(
                               l.privacyPolicy,
-                              onTap: () => openLink(kPrivacyUrl),
+                              onTap: () => _openLink('privacy', kPrivacyUrl),
                             ),
                           ],
                         ),
@@ -478,7 +523,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
                         label: l.continueFree,
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          onTap: _leave,
+                          onTap: () => _leaveBy('continue free'),
                           child: Padding(
                             padding: const EdgeInsets.only(top: 14),
                             child: Text(

@@ -11,6 +11,7 @@ import '../sync/board.dart';
 import '../theme.dart';
 import '../widgets/motion.dart';
 import '../widgets/ui.dart';
+import '../analytics.dart';
 
 /// Friends: a code to give, a code to type, and what those codes show.
 ///
@@ -50,11 +51,24 @@ class _FriendsScreenState extends State<FriendsScreen> {
     super.dispose();
   }
 
-  Future<Board?> _boardOf(String code) =>
-      _boards.putIfAbsent(code, () => widget.account.board(code));
+  Future<Board?> _boardOf(String code) => _boards.putIfAbsent(code, () async {
+    final Board? board = await widget.account.board(code);
+    // Whether a friend's board was there to read, and how far along it was,
+    // in the same buckets a streak is read in anywhere else.
+    Analytics.capture('friend board read', {
+      'found': board != null,
+      'their_streak': board?.streak,
+      'their_weeks': board?.weeks,
+    });
+    return board;
+  });
 
   Future<void> _copyCode(String code) async {
     HapticFeedback.lightImpact();
+    // That the code was copied, never the code: it names a person.
+    Analytics.capture('friend code copied', {
+      'friends': widget.app.friendCodes.length,
+    });
     await Clipboard.setData(ClipboardData(text: code));
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(

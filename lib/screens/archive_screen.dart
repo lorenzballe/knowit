@@ -12,6 +12,7 @@ import '../widgets/motion.dart';
 import '../widgets/premium.dart';
 import '../widgets/ui.dart';
 import 'pill_detail_screen.dart';
+import '../analytics.dart';
 
 /// How many days back the free plan's archive goes. A week: long enough
 /// to find the card from Tuesday, short enough that the day before it is
@@ -167,7 +168,12 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                     TopicFilterRow(
                       topics: kTopicOrder,
                       picked: _topicFilter,
-                      onPick: (key) => setState(() => _topicFilter = key),
+                      onPick: (key) {
+                        Analytics.capture('archive filtered', {
+                          'subject': key ?? 'all',
+                        });
+                        setState(() => _topicFilter = key);
+                      },
                       keyPrefix: 'archive-filter',
                     ),
                     const SizedBox(height: 14),

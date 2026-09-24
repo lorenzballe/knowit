@@ -3,6 +3,8 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
+import '../analytics.dart';
+
 /// The one entitlement Astute sells. Everything gated asks this by name.
 ///
 /// Configurable at build time because the name lives in RevenueCat, not here,
@@ -112,6 +114,7 @@ class Subscription extends ChangeNotifier {
   /// leaves a reader on the free plan, not in front of a crash.
   Future<void> start({required String? accountId}) async {
     if (_key.isEmpty) return;
+    final Stopwatch took = Stopwatch()..start();
     try {
       await Purchases.setLogLevel(LogLevel.warn);
       await Purchases.configure(
@@ -120,8 +123,24 @@ class Subscription extends ChangeNotifier {
       Purchases.addCustomerInfoUpdateListener(_apply);
       _apply(await Purchases.getCustomerInfo());
       await _loadOffering();
-    } catch (error) {
+      // What the store put on sale, as it priced it: a plan missing here is
+      // a paywall selling with prices written into the app.
+      final StoreProduct? year = yearly?.storeProduct;
+      final StoreProduct? month = monthly?.storeProduct;
+      Analytics.capture('store answered', {
+        'ms': took.elapsedMilliseconds,
+        'offering': _offering?.identifier,
+        'yearly_product': year?.identifier,
+        'yearly_price': year?.price,
+        'yearly_trial': year?.introductoryPrice?.period,
+        'monthly_product': month?.identifier,
+        'monthly_price': month?.price,
+        'currency': year?.currencyCode ?? month?.currencyCode,
+        'is_plus': _isPlus,
+      });
+    } catch (error, stack) {
       debugPrint('RevenueCat did not start: $error');
+      Analytics.error(error, stack, where: 'store start');
     }
   }
 
@@ -154,17 +173,55 @@ class Subscription extends ChangeNotifier {
     try {
       _offering = (await Purchases.getOfferings()).current;
       notifyListeners();
-    } catch (error) {
+    } catch (error, stack) {
       debugPrint('Could not read the offerings: $error');
+      Analytics.error(error, stack, where: 'store offerings');
     }
   }
 
   void _apply(CustomerInfo info) {
     _ready = true;
     final bool active = info.entitlements.active.containsKey(kPlusEntitlement);
+    _noteEntitlement(info.entitlements.all[kPlusEntitlement], active);
     if (active == _isPlus) return;
     _isPlus = active;
     notifyListeners();
+  }
+
+  String? _entitlementSaid;
+
+  /// Says what the store holds for the reader whenever any of it moves: a
+  /// trial started, turned into a paid year, set not to renew, hit a billing
+  /// problem, or ran out. Those are the moments a subscription business is
+  /// made of, and only the store sees them.
+  void _noteEntitlement(EntitlementInfo? plus, bool active) {
+    final String state = [
+      active,
+      plus?.productIdentifier,
+      plus?.periodType.name,
+      plus?.willRenew,
+      plus?.billingIssueDetectedAt,
+    ].join('|');
+    if (state == _entitlementSaid) return;
+    final bool first = _entitlementSaid == null;
+    _entitlementSaid = state;
+    Analytics.register(
+      'plan_period',
+      active ? (plus?.periodType.name ?? 'unknown') : 'none',
+    );
+    // A reader who never subscribed has nothing to report at launch.
+    if (first && plus == null) return;
+    Analytics.capture(first ? 'entitlement read' : 'entitlement changed', {
+      'active': active,
+      'product': plus?.productIdentifier,
+      'period_type': plus?.periodType.name,
+      'will_renew': plus?.willRenew,
+      'store': plus?.store.name,
+      'sandbox': plus?.isSandbox,
+      'expires': plus?.expirationDate,
+      'unsubscribed': plus?.unsubscribeDetectedAt != null,
+      'billing_issue': plus?.billingIssueDetectedAt != null,
+    });
   }
 
   /// Buys a package. Returns whether the reader came away entitled — backing
@@ -175,15 +232,25 @@ class Subscription extends ChangeNotifier {
       final result = await Purchases.purchase(PurchaseParams.package(package));
       _apply(result.customerInfo);
       return _isPlus ? PurchaseOutcome.bought : PurchaseOutcome.failed;
-    } on PlatformException catch (error) {
+    } on PlatformException catch (error, stack) {
       final code = PurchasesErrorHelper.getErrorCode(error);
       if (code == PurchasesErrorCode.purchaseCancelledError) {
         return PurchaseOutcome.cancelled;
       }
       debugPrint('Purchase failed: $code');
+      Analytics.error(
+        error,
+        stack,
+        where: 'purchase',
+        properties: {
+          'code': code.name,
+          'product': package.storeProduct.identifier,
+        },
+      );
       return PurchaseOutcome.failed;
-    } catch (error) {
+    } catch (error, stack) {
       debugPrint('Purchase failed: $error');
+      Analytics.error(error, stack, where: 'purchase');
       return PurchaseOutcome.failed;
     }
   }
@@ -203,8 +270,9 @@ class Subscription extends ChangeNotifier {
     try {
       await RevenueCatUI.presentCustomerCenter();
       _apply(await Purchases.getCustomerInfo());
-    } catch (error) {
+    } catch (error, stack) {
       debugPrint('Could not open the customer centre: $error');
+      Analytics.error(error, stack, where: 'customer centre');
     }
   }
 
@@ -214,8 +282,9 @@ class Subscription extends ChangeNotifier {
     try {
       _apply(await Purchases.restorePurchases());
       return _isPlus;
-    } catch (error) {
+    } catch (error, stack) {
       debugPrint('Could not restore: $error');
+      Analytics.error(error, stack, where: 'restore');
       return false;
     }
   }

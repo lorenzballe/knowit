@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -12,6 +14,7 @@ import '../widgets/scaled_text.dart';
 import '../widgets/subject_icon.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart';
+import '../analytics.dart';
 
 /// Cards nobody dealt you — artboard 72a.
 ///
@@ -45,8 +48,27 @@ class ExploreScreenState extends State<ExploreScreen> {
   bool _searching = false;
   String _query = '';
 
+  /// A search is said once the reader stops typing, not at every letter —
+  /// and only what shape it had: how long, and how much it found. What was
+  /// typed stays on the phone.
+  Timer? _searchSettle;
+
+  void _typed(String q) {
+    setState(() => _query = q);
+    _searchSettle?.cancel();
+    if (!Analytics.ready || q.trim().isEmpty) return;
+    _searchSettle = Timer(const Duration(milliseconds: 1200), () {
+      Analytics.capture('explore searched', {
+        'query_length': q.trim().length,
+        'words': q.trim().split(RegExp(r'\s+')).length,
+        'results': searchPills(q).length,
+      });
+    });
+  }
+
   @override
   void dispose() {
+    _searchSettle?.cancel();
     _field.dispose();
     _focus.dispose();
     _shelves.dispose();
@@ -83,17 +105,21 @@ class ExploreScreenState extends State<ExploreScreen> {
             field: _field,
             focus: _focus,
             onOpenSearch: () {
+              Analytics.capture('explore search opened');
               setState(() => _searching = true);
               _focus.requestFocus();
             },
             onCloseSearch: () {
+              Analytics.capture('explore search closed', {
+                'had_query': _query.trim().isNotEmpty,
+              });
               _field.clear();
               setState(() {
                 _searching = false;
                 _query = '';
               });
             },
-            onChanged: (q) => setState(() => _query = q),
+            onChanged: _typed,
           ),
         ),
         if (!_searching)
@@ -101,8 +127,11 @@ class ExploreScreenState extends State<ExploreScreen> {
             selected: _subject,
             // A subject, All, or the lit subject again — the last two both
             // clear it, so the way back is whichever the finger finds first.
-            onPick: (name) =>
-                setState(() => _subject = name == _subject ? null : name),
+            onPick: (name) {
+              final String? next = name == _subject ? null : name;
+              Analytics.capture('explore filtered', {'subject': next ?? 'all'});
+              setState(() => _subject = next);
+            },
           ),
         Expanded(child: _searching ? _found(context) : _shelfList(context)),
       ],

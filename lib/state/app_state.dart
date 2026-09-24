@@ -314,11 +314,35 @@ class AppState extends ChangeNotifier {
         for (final p in todaysDeck)
           if (answers.containsKey(p.id)) p.id,
       };
-      if (todaysDeck.isEmpty) await _startNewDay();
+      if (todaysDeck.isEmpty) {
+        await _startNewDay();
+      } else {
+        _sayCardUp(resumed: true);
+      }
     } else {
       await _spendFreezeIfMissed();
+      await _sayStreakBroken();
       await _startNewDay();
     }
+  }
+
+  static const _kBrokenSaid = 'knowit.streakBrokenSaid';
+
+  /// A streak the freezes could not cover is gone, and that is said once —
+  /// not on every morning of the lapse. The last day kept marks which
+  /// streak it was.
+  Future<void> _sayStreakBroken() async {
+    final String? last = lastCompletionDate;
+    if (last == null || streak < 1 || missedDays < 1) return;
+    if (_prefs.getString(_kBrokenSaid) == last) return;
+    await _prefs.setString(_kBrokenSaid, last);
+    Analytics.capture('streak broken', {
+      'streak_lost': streak,
+      'best_streak': bestStreak,
+      'days_missed': missedDays,
+      'freezes_left': freezes,
+      'is_plus': isPlus,
+    });
   }
 
   /// How many freezes can be held at once.
@@ -438,7 +462,15 @@ class AppState extends ChangeNotifier {
       'streak_days': streak,
       'rung': standing.at,
       'is_plus': isPlus,
+      // Which of the day's cards are which, in order.
+      'slots': [for (final p in todaysDeck) cardFacts(p.id)['slot']].join(','),
+      'challenges': [for (final p in todaysDeck) challengeKind(p.challenge)]
+          .join(','),
+      'question_of_day': todaysDeck.any(
+        (p) => p.id == questionOfTheDay(today).id,
+      ),
     });
+    _sayCardUp();
   }
 
   /// Writes down what a day was dealt, and forgets what is older than the
@@ -576,21 +608,93 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ── What a card is, for measurement ──────────────────────────────────
+
+  /// A card as every event about it describes it: what kind of card it is,
+  /// from its own tags, and — when it is one of today's — where it sits in
+  /// the day and why it was dealt. Never the card's text, and never what
+  /// the reader wrote about it.
+  Map<String, Object?> cardFacts(String pillId) {
+    final Pill? p = pillById(pillId);
+    String? tag(String? value) =>
+        value == null || value.trim().isEmpty ? null : value;
+    final int at = todaysDeck.indexWhere((c) => c.id == pillId);
+    final String? slot = at < 0
+        ? null
+        : reviewIdsToday.contains(pillId)
+        ? 'review'
+        : questionOfTheDay(today).id == pillId
+        ? 'question_of_day'
+        : ownIdsToday.contains(pillId)
+        ? 'own'
+        : 'common';
+    return {
+      'pill_id': pillId,
+      'topic': p?.topic,
+      'genre': tag(p?.genre),
+      'strand': tag(p?.strand),
+      'principle': p == null || !p.principle.isReal ? null : p.principle.name,
+      'difficulty': p?.difficulty.name,
+      'challenge': p == null ? null : challengeKind(p.challenge),
+      'graded': p?.isGraded,
+      'era': tag(p?.era),
+      'region': tag(p?.region),
+      'hook': tag(p?.hook),
+      'mood': tag(p?.mood),
+      'numeracy': p?.numeracy,
+      'abstraction': tag(p?.abstraction),
+      'shelf_life': tag(p?.shelfLife),
+      'has_figure': p?.figure.trim().isNotEmpty,
+      'position': at < 0 ? null : at + 1,
+      'of': at < 0 ? null : todaysDeck.length,
+      'slot': slot,
+      'edition': editionOf(today),
+      'is_plus': isPlus,
+    };
+  }
+
+  /// The kind of question a card asks, as a word an event can carry.
+  static String challengeKind(Challenge challenge) => switch (challenge) {
+    NoChallenge() => 'fact',
+    PickOne() => 'pick_one',
+    TypeNumber() => 'type_number',
+    Estimate() => 'estimate',
+    TakeASide() => 'take_a_side',
+  };
+
+  /// When the card in front of the reader came up, for how long they
+  /// stayed on it.
+  DateTime? _cardUpAt;
+
+  /// The card now in front of the reader, said as seen. [resumed] when the
+  /// app opened on a day already under way.
+  void _sayCardUp({bool resumed = false}) {
+    if (todayIndex >= todaysDeck.length) {
+      _cardUpAt = null;
+      return;
+    }
+    _cardUpAt = DateTime.now();
+    Analytics.capture('card viewed', {
+      ...cardFacts(todaysDeck[todayIndex].id),
+      'resumed': resumed ? true : null,
+    });
+  }
+
   // ── Reading ───────────────────────────────────────────────────────────
 
   Future<void> advance() async {
     if (todayCompleted) return;
     final Pill card = todaysDeck[todayIndex];
+    final DateTime? upAt = _cardUpAt;
     Analytics.capture('card advanced', {
-      'pill_id': card.id,
-      'topic': card.topic,
-      'difficulty': card.difficulty.name,
-      'graded': card.isGraded,
-      'review': reviewIdsToday.contains(card.id),
       // Which of the day's cards this was, so the drop-off inside a day can
-      // be read as a curve rather than as a single completion rate.
-      'position': todayIndex + 1,
-      'of': todaysDeck.length,
+      // be read as a curve rather than as a single completion rate — and
+      // what kind of card it was, and how long it held the reader.
+      ...cardFacts(card.id),
+      'review': reviewIdsToday.contains(card.id),
+      'ms_on_card': upAt == null
+          ? null
+          : DateTime.now().difference(upAt).inMilliseconds,
     });
     seenIds.add(card.id);
     todayIndex += 1;
@@ -599,6 +703,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     if (todayCompleted) await _completeToday();
+    _sayCardUp();
     // After every card, not only the last: the five widget counts them.
     unawaited(refreshHomeWidget());
     await _noteClimb();
@@ -648,6 +753,7 @@ class AppState extends ChangeNotifier {
     if (lastCompletionDate == key) return;
 
     final yesterday = dateKey(today.subtract(const Duration(days: 1)));
+    final int bestBefore = bestStreak;
     streak = (lastCompletionDate == yesterday) ? streak + 1 : 1;
     lastCompletionDate = key;
     if (streak > bestStreak) bestStreak = streak;
@@ -672,7 +778,29 @@ class AppState extends ChangeNotifier {
       'score_gained': score.total - scoreAtDayStart,
       'rungs_climbed': standing.at - rungAtDayStart,
       'is_plus': isPlus,
+      // How the day went: the questions got right and got wrong today.
+      'answered_right': judgements
+          .where((j) => j.on == key && j.correct)
+          .length,
+      'answered_wrong': judgements
+          .where((j) => j.on == key && !j.correct)
+          .length,
+      'reviews': reviewIdsToday.length,
+      'own': ownIdsToday.length,
     });
+    // The streaks worth a moment of their own, and the day a record falls.
+    if (const {3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 365}.contains(streak)) {
+      Analytics.capture('streak milestone', {
+        'streak_days': streak,
+        'is_plus': isPlus,
+      });
+    }
+    if (streak > bestBefore && bestBefore > 0) {
+      Analytics.capture('best streak beaten', {
+        'streak_days': streak,
+        'previous_best': bestBefore,
+      });
+    }
     await _earnFreeze();
   }
 
@@ -914,10 +1042,11 @@ class AppState extends ChangeNotifier {
 
     await _saveAnswers();
     Analytics.capture('card answered', {
-      'pill_id': pillId,
-      'topic': pill?.topic,
-      'difficulty': pill?.difficulty.name,
+      ...cardFacts(pillId),
       'graded': graded,
+      'ms_to_answer': _cardUpAt == null
+          ? null
+          : DateTime.now().difference(_cardUpAt!).inMilliseconds,
       // Only meaningful on a graded card; an ungraded one has nothing to be
       // right about, and the property is left off rather than sent as false.
       'correct': graded ? right : null,
@@ -1158,8 +1287,7 @@ class AppState extends ChangeNotifier {
     }
     await _prefs.setStringList(_kSavedIds, savedIds);
     Analytics.capture(had ? 'pill unsaved' : 'pill saved', {
-      'pill_id': pillId,
-      'topic': pillById(pillId)?.topic,
+      ...cardFacts(pillId),
       'shelf_size': savedIds.length,
     });
     notifyListeners();
@@ -1170,6 +1298,7 @@ class AppState extends ChangeNotifier {
     if (savedIds.contains(pillId)) return;
     savedIds.insert(at.clamp(0, savedIds.length), pillId);
     await _prefs.setStringList(_kSavedIds, savedIds);
+    Analytics.capture('pill unsave undone', cardFacts(pillId));
     notifyListeners();
   }
 
@@ -1188,8 +1317,7 @@ class AppState extends ChangeNotifier {
     }
     await _prefs.setStringList(_kLikedIds, likedIds);
     Analytics.capture(had ? 'pill unliked' : 'pill liked', {
-      'pill_id': pillId,
-      'topic': pillById(pillId)?.topic,
+      ...cardFacts(pillId),
       'shelf_size': likedIds.length,
     });
     notifyListeners();
@@ -1199,6 +1327,7 @@ class AppState extends ChangeNotifier {
     if (likedIds.contains(pillId)) return;
     likedIds.insert(at.clamp(0, likedIds.length), pillId);
     await _prefs.setStringList(_kLikedIds, likedIds);
+    Analytics.capture('pill unlike undone', cardFacts(pillId));
     notifyListeners();
   }
 
@@ -1213,8 +1342,7 @@ class AppState extends ChangeNotifier {
     // The one thing the app is actually for: a card that left the phone and
     // was said to somebody. If any number here is the north star, it is this.
     Analytics.capture('pill said', {
-      'pill_id': pillId,
-      'topic': pillById(pillId)?.topic,
+      ...cardFacts(pillId),
       'said_total': saidIds.length,
     });
     notifyListeners();
@@ -1237,8 +1365,8 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kLikedIds, likedIds);
     Analytics.capture('pill disliked', {
-      'pill_id': pillId,
-      'topic': pillById(pillId)?.topic,
+      ...cardFacts(pillId),
+      'disliked_total': dislikedIds.length,
     });
     notifyListeners();
   }
@@ -1247,6 +1375,7 @@ class AppState extends ChangeNotifier {
   Future<void> undislike(String pillId) async {
     if (!dislikedIds.remove(pillId)) return;
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
+    Analytics.capture('pill dislike undone', cardFacts(pillId));
     notifyListeners();
   }
 
@@ -1554,6 +1683,65 @@ class AppState extends ChangeNotifier {
       'fiveDone': l.widgetFiveDone,
       'fiveWaiting': l.widgetFiveWaiting,
     };
+  }
+
+  /// The reader as PostHog's profile holds them: the slow-moving facts
+  /// worth cutting every chart by. Counts and enums, like every event.
+  Map<String, Object> get analyticsProfile => {
+    'is_plus': isPlus,
+    'rung': standing.at,
+    'streak_days': streak,
+    'best_streak': bestStreak,
+    'days_completed': completedDates.length,
+    'weeks_kept': keptWeeks,
+    'topics_count': pickedTopics.length,
+    'genres_off': genresOff.length,
+    'strands_off': strandsOff.length,
+    'saved_count': savedIds.length,
+    'liked_count': likedIds.length,
+    'disliked_count': dislikedIds.length,
+    'friends_count': friendCodes.length,
+    'reminders_on': notificationsOn,
+    'reminder_hour': int.tryParse(notifyTime.split(':').first) ?? -1,
+    'theme': themeMode.name,
+    'app_language': _strings.localeName,
+    'onboarded': onboarded,
+    'freezes': freezes,
+  };
+
+  /// The facts every event carries as well, so a funnel can be cut by them
+  /// without a join.
+  static const List<String> _everyEvent = [
+    'is_plus',
+    'rung',
+    'streak_days',
+    'days_completed',
+    'topics_count',
+    'reminders_on',
+    'theme',
+    'app_language',
+  ];
+
+  Map<String, Object>? _profileSent;
+
+  /// Keeps PostHog's picture of the reader current. Sent only when something
+  /// in it moved, so reading a card is not a profile update.
+  void _syncAnalytics() {
+    if (!ready || !Analytics.ready) return;
+    final Map<String, Object> profile = analyticsProfile;
+    if (mapEquals(profile, _profileSent)) return;
+    _profileSent = profile;
+    for (final String key in _everyEvent) {
+      final Object? value = profile[key];
+      if (value != null) Analytics.register(key, value);
+    }
+    Analytics.person(set: profile);
+  }
+
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+    _syncAnalytics();
   }
 
   /// A colour as the widgets read it: `#RRGGBB`, opaque.
