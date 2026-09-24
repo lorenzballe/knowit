@@ -624,7 +624,9 @@ dashboards, and has to agree with three names here.
   of use and the privacy policy, in the app and in the listing (3.1.2). The
   paywall's last line carries all three; the terms are Apple's standard
   licence and the privacy policy is `web/privacy.html` on this site
-  (`lib/legal.dart`). The listing's description needs the terms link too.
+  (`lib/legal.dart`), in English and Italian, naming every service that
+  handles a reader's data — a test holds it to that list. The listing's
+  description needs the terms link too.
 
 **Checking it from the phone.** The debug section at the foot of the
 profile reads back what the store answered: whether it did, the offering,
