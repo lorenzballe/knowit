@@ -651,11 +651,11 @@ reaches the network.
 The key is public in the same way the RevenueCat keys are: it names the
 project to write into and reads nothing back. `POSTHOG_HOST` picks the region
 and defaults to the EU one; a project made in the other region and pointed at
-from here accepts nothing and says nothing, which is a long afternoon. For
-the TestFlight build the key is set in Codemagic, as `POSTHOG_KEY` in the
-`signing` group, which `codemagic.yaml` imports. Astute's project sits in a
-PostHog organization of its own: the free plan allows one project per
-organization, and the account's other app has the first.
+from here accepts nothing and says nothing, which is a long afternoon. The
+TestFlight build takes it from `codemagic.yaml`, beside the RevenueCat keys;
+a build made anywhere else has none. Astute's project sits in a PostHog
+organization of its own: the free plan allows one project per organization,
+and the account's other app has the first.
 
 **Three rules hold at every call site.** It never throws and never blocks —
 measurement is not a feature the reader asked for, so it may not cost them a

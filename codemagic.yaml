@@ -38,18 +38,16 @@ workflows:
         # Declared once so an Android workflow can reuse them as they are.
         REVENUECAT_IOS_KEY: "appl_HWZZHYAnvPnnzHgAtscRyFDUhPs"
         REVENUECAT_ANDROID_KEY: "goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl"
-        # Where PostHog's events go. The project key itself is deliberately
-        # NOT declared here: Codemagic rejects an empty var ("ensure this
-        # value has at least 1 characters"), and the only two ways to satisfy
-        # it are both wrong — a real key committed to the repo, or a
-        # placeholder that would have the app start PostHog against a project
-        # that does not exist.
-        #
-        # So the key is set in Codemagic's own environment — POSTHOG_KEY in
-        # the "signing" group above — or not at all. A build with no key is
-        # not measured (see lib/analytics.dart), which is what this repo
-        # gets, and turning measurement on stays a variable rather than a
-        # code change.
+        # Where PostHog's events go: Astute's own project, in an organization
+        # of its own so it keeps PostHog's free plan (one project each). The
+        # project key is public in the same way the RevenueCat keys are: it
+        # names the project to write into, reads nothing back, and ships
+        # inside the binary anyway — so it is written here, as the owner
+        # asked, like the other app's. The host has to be the project's
+        # region: a key sent to the other region is accepted by nobody,
+        # silently. A build made anywhere else, without these, measures
+        # nothing (see lib/analytics.dart).
+        POSTHOG_KEY: "phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF"
         POSTHOG_HOST: "https://eu.i.posthog.com"
       flutter: stable
       xcode: latest
@@ -199,7 +197,7 @@ workflows:
           flutter build ipa --release \
             --build-number=$(($LATEST + 1)) \
             --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
-            --dart-define=POSTHOG_KEY=${POSTHOG_KEY:-} \
+            --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
             --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
