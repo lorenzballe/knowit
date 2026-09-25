@@ -25,8 +25,9 @@ on:
 env:
   DOMAIN: astutetheapp.com
   WAIT: ${{ github.event_name == 'push' && '0' || inputs.wait }}
-  # GitHub Pages' own four addresses.
+  # GitHub Pages' own four addresses, and the name www should point at.
   PAGES: "185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
+  CNAME: lorenzballe.github.io
 
 jobs:
   check:
@@ -73,10 +74,11 @@ jobs:
           last=""
           while :; do
             a=$(addresses "$DOMAIN" "$ns")
-            www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr '\n' ' ' | sed 's/ $//')
-            said="A: ${a:-none} · www: ${www:-none}"
+            www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr 'A-Z' 'a-z' | tr '\n' ' ' | sed 's/ $//')
+            wwwa=$(addresses "www.$DOMAIN" "$ns")
+            said="A: ${a:-none} · www: ${www:-${wwwa:-none}}"
             [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
-            if pages_only "$a"; then echo "RECORDS=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if pages_only "$a" && [ "$www" = "$CNAME." ]; then echo "RECORDS=ok" >> "$GITHUB_ENV"; exit 0; fi
             if late; then echo "The records do not point at GitHub Pages yet."; exit 1; fi
             sleep 20
           done
@@ -90,9 +92,13 @@ jobs:
           while :; do
             g=$(addresses "$DOMAIN" 8.8.8.8)
             c=$(addresses "$DOMAIN" 1.1.1.1)
-            said="Google: ${g:-none} · Cloudflare: ${c:-none}"
+            gw=$(addresses "www.$DOMAIN" 8.8.8.8)
+            cw=$(addresses "www.$DOMAIN" 1.1.1.1)
+            said="Google: ${g:-none} / www ${gw:-none} · Cloudflare: ${c:-none} / www ${cw:-none}"
             [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
-            if pages_only "$g" && pages_only "$c"; then echo "WORLD=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if pages_only "$g" && pages_only "$c" && pages_only "$gw" && pages_only "$cw"; then
+              echo "WORLD=ok" >> "$GITHUB_ENV"; exit 0
+            fi
             if late; then echo "The public DNS still gives the old answer."; exit 1; fi
             sleep 30
           done
@@ -117,8 +123,8 @@ jobs:
             said="https: $good/6 answer${bad:+ · last miss: $bad}"
             [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
             if [ "$clean" -ge 2 ]; then echo "HTTPS=ok" >> "$GITHUB_ENV"; exit 0; fi
-            if late; then echo "The certificate for $DOMAIN is not served everywhere yet."; exit 1; fi
-            sleep 30
+            if [ "$clean" = 0 ] && late; then echo "The certificate for $DOMAIN is not served everywhere yet."; exit 1; fi
+            if [ "$clean" = 1 ]; then sleep 5; else sleep 30; fi
           done
 
       - name: What answers there
@@ -128,8 +134,8 @@ jobs:
           ns=$(dig +short NS "$DOMAIN" @1.1.1.1 | head -1)
           ns=${ns:-braelyn.ns.cloudflare.com.}
           a=$(addresses "$DOMAIN" "$ns")
-          www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr '\n' ' ' | sed 's/ $//')
-          echo "== At $ns: A ${a:-none} · www CNAME ${www:-none}"
+          www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr 'A-Z' 'a-z' | tr '\n' ' ' | sed 's/ $//')
+          echo "== At $ns: A ${a:-none} · www CNAME ${www:-none} · www A $(addresses "www.$DOMAIN" "$ns")"
           err="$RUNNER_TEMP/curl.err"
           for path in / /privacy /terms /support /app/ /cards/cards.json /widget/days.json; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>"$err") || true
@@ -140,15 +146,19 @@ jobs:
           echo "== http://www.$DOMAIN/ → $(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://www.$DOMAIN/" 2>&1 || true)"
           echo "== The certificate, three times"
           for i in 1 2 3; do
-            echo | openssl s_client -connect "$DOMAIN:443" -servername "$DOMAIN" 2>/dev/null \
-              | openssl x509 -noout -subject -ext subjectAltName 2>/dev/null | tr '\n' ' ' || true
-            echo
+            cert=$(echo | openssl s_client -connect "$DOMAIN:443" -servername "$DOMAIN" 2>/dev/null \
+              | openssl x509 -noout -subject -ext subjectAltName 2>/dev/null | tr '\n' ' ' || true)
+            echo "${cert:-none}"
           done
           echo "== What is left"
           missing=""
           for ip in $PAGES; do case " $a " in *" $ip "*) ;; *) missing="$missing $ip" ;; esac; done
           [ -z "$missing" ] || echo "- add A @ →$missing"
-          case "$www" in lorenzballe.github.io.) ;; *) echo "- add CNAME www → lorenzballe.github.io" ;; esac
+          if [ "$www" != "$CNAME." ]; then
+            echo "- add CNAME www → $CNAME"
+          else
+            case "$cert" in *"DNS:www.$DOMAIN"*) ;; *) echo "- the certificate does not cover www yet: Check again on Pages" ;; esac
+          fi
           case "$http" in 301\ https://*) ;; *) echo "- tick Enforce HTTPS" ;; esac
           echo "== Verdict: records=${RECORDS:-no} world=${WORLD:-no} https=${HTTPS:-no}"
           [ "$HTTPS" = ok ]
