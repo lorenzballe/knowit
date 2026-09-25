@@ -3,22 +3,55 @@ name: Domain check
 # Asks the world's DNS what astutetheapp.com points at, and what answers
 # there — the check a phone cannot run and the development sandbox is not
 # allowed to. Run it by hand from the Actions tab, or change this file.
+#
+# It keeps asking until the site answers over HTTPS, for up to the minutes
+# given (170 unless told otherwise; 0 just looks), one step per stage, so
+# whoever watches the run can tell how far it has got: the records at
+# Cloudflare itself, then the world's DNS (which may remember an empty
+# answer for half an hour), then GitHub's certificate.
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      wait:
+        description: "Minutes to wait for the domain to come up (0 = just look)"
+        default: "170"
   push:
     branches: [main]
     paths:
       - ".github/workflows/domain-check.yml"
 
+env:
+  DOMAIN: astutetheapp.com
+  WAIT: ${{ inputs.wait || '170' }}
+  # GitHub Pages' own four addresses.
+  PAGES: "185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - name: What the DNS says
         run: |
           sudo apt-get install -y -qq whois dnsutils >/dev/null 2>&1 || true
-          for name in astutetheapp.com www.astutetheapp.com; do
+          case "$WAIT" in ''|*[!0-9]*) WAIT=0 ;; esac
+          [ "$WAIT" -le 170 ] || WAIT=170
+          echo "DEADLINE=$(( $(date +%s) + WAIT * 60 ))" >> "$GITHUB_ENV"
+          cat > "$RUNNER_TEMP/lib.sh" <<'EOF'
+          # Every address in "$1" is one of GitHub Pages' own, and there is one.
+          pages_only() {
+            [ -n "$1" ] || return 1
+            for ip in $1; do
+              case " $PAGES " in *" $ip "*) ;; *) return 1 ;; esac
+            done
+          }
+          # The addresses a server gives for a name, sorted, on one line.
+          addresses() { dig +short A "$1" @"$2" | grep -E '^[0-9.]+$' | sort | tr '\n' ' ' | sed 's/ $//'; }
+          late() { [ "$(date +%s)" -ge "$DEADLINE" ]; }
+          now() { date -u +%H:%M:%S; }
+          EOF
+          for name in "$DOMAIN" "www.$DOMAIN"; do
             echo "== $name"
             for type in NS SOA A AAAA CNAME; do
               echo "-- $type via Google: $(dig +short @8.8.8.8 "$name" "$type" | tr '\n' ' ')"
@@ -26,13 +59,70 @@ jobs:
             done
           done
           echo "== The registry"
-          whois astutetheapp.com | grep -i -E "registrar:|name server|creation date|domain status" | head -20 || true
+          whois "$DOMAIN" | grep -i -E "registrar:|name server|creation date|domain status" | head -20 || true
+
+      # Straight from the domain's own name server, past every cache: the
+      # moment a record is saved at Cloudflare, it shows here.
+      - name: The records at Cloudflare
+        run: |
+          . "$RUNNER_TEMP/lib.sh"
+          ns=$(dig +short NS "$DOMAIN" @1.1.1.1 | head -1)
+          ns=${ns:-braelyn.ns.cloudflare.com.}
+          echo "Asking $ns"
+          last=""
+          while :; do
+            a=$(addresses "$DOMAIN" "$ns")
+            www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr '\n' ' ' | sed 's/ $//')
+            said="A: ${a:-none} · www: ${www:-none}"
+            [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
+            if pages_only "$a"; then echo "RECORDS=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if late; then echo "The records do not point at GitHub Pages yet."; exit 1; fi
+            sleep 20
+          done
+
+      - name: The world's DNS
+        if: always()
+        run: |
+          . "$RUNNER_TEMP/lib.sh"
+          [ "$RECORDS" = ok ] || { echo "Skipped: the records are not there."; exit 1; }
+          last=""
+          while :; do
+            g=$(addresses "$DOMAIN" 8.8.8.8)
+            c=$(addresses "$DOMAIN" 1.1.1.1)
+            said="Google: ${g:-none} · Cloudflare: ${c:-none}"
+            [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
+            if pages_only "$g" && pages_only "$c"; then echo "WORLD=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if late; then echo "The public DNS still gives the old answer."; exit 1; fi
+            sleep 30
+          done
+
+      - name: GitHub's certificate
+        if: always()
+        run: |
+          . "$RUNNER_TEMP/lib.sh"
+          [ "$WORLD" = ok ] || { echo "Skipped: the DNS is not there."; exit 1; }
+          err="$RUNNER_TEMP/curl.err"
+          last=""
+          while :; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN/" 2>"$err") || true
+            said="https: $code $(tail -1 "$err")"
+            [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
+            if [ "$code" = 200 ]; then echo "HTTPS=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if late; then echo "No certificate for $DOMAIN yet."; exit 1; fi
+            sleep 30
+          done
 
       - name: What answers there
+        if: always()
         run: |
-          echo "== http"
-          curl -sSI -m 20 http://astutetheapp.com/ | head -12 || true
-          echo "== https"
-          curl -sSI -m 20 https://astutetheapp.com/ | head -12 || true
-          echo "== www"
-          curl -sSI -m 20 http://www.astutetheapp.com/ | head -12 || true
+          for path in / /privacy /terms /support /app/ /cards/cards.json /widget/days.json; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>/dev/null) || true
+            echo "https://$DOMAIN$path  ${code:-none}"
+          done
+          echo "== http://$DOMAIN/ → $(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://$DOMAIN/" 2>&1 || true)"
+          echo "== http://www.$DOMAIN/ → $(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://www.$DOMAIN/" 2>&1 || true)"
+          echo "== The certificate"
+          echo | openssl s_client -connect "$DOMAIN:443" -servername "$DOMAIN" 2>/dev/null \
+            | openssl x509 -noout -subject -issuer -enddate 2>/dev/null || echo "none"
+          echo "== Verdict: records=${RECORDS:-no} world=${WORLD:-no} https=${HTTPS:-no}"
+          [ "$HTTPS" = ok ]
