@@ -99,31 +99,16 @@ void main() {
 
     await shoot(tester, 'today');
 
-    await tester.tap(find.byKey(const ValueKey('tab-Search')));
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await settle(tester);
     await shoot(tester, 'search');
 
     // And with a subject picked, which is the shelf a reader actually uses.
-    // The chip, not the subject label on a card row — the shelf now
-    // carries Science cards too, so the plain finder is ambiguous.
+    // The chip, not the subject label on a card row — the shelf carries
+    // Science cards too, so the plain finder is ambiguous.
     await tester.tap(find.text('Science').first);
     await settle(tester);
     await shoot(tester, 'search-topic');
-
-    await tester.tap(find.text('All time'));
-    await settle(tester);
-    await shoot(tester, 'search-alltime');
-
-    // And a card opened from the shelf, which has to come out the size of
-    // one dealt on Today.
-    await tester.tap(find.text('TOP ALL TIME'));
-    await settle(tester);
-    await shoot(tester, 'reread');
-
-    // Back out of the route, or the tab bar is gone for whatever runs next.
-    // The viewer carries its own close button, not a platform back arrow.
-    await tester.tap(find.byIcon(Icons.close_rounded).first);
-    await settle(tester);
 
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
