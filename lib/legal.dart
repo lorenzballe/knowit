@@ -6,10 +6,10 @@ import 'package:url_launcher/url_launcher.dart';
 /// in the App Store listing (guideline 3.1.2). The terms are Apple's own
 /// standard licence, which the App Store applies to any app that does not
 /// bring one; the privacy policy is a page of the site this repository
-/// publishes, `web/privacy.html`.
+/// publishes at astutetheapp.com, `site/privacy.html`.
 const String kTermsUrl =
     'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
-const String kPrivacyUrl = 'https://lorenzballe.github.io/knowit/privacy.html';
+const String kPrivacyUrl = 'https://astutetheapp.com/privacy';
 
 /// Opens a page in the phone's own browser sheet, and says nothing if it
 /// cannot: a link that does not open is not worth an error over a paywall.

@@ -1500,7 +1500,7 @@ void main() {
     expect(find.text('Terms of Use'), findsOneWidget);
     expect(find.text('Privacy Policy'), findsOneWidget);
     expect(kTermsUrl, startsWith('https://www.apple.com/legal/'));
-    expect(kPrivacyUrl, endsWith('/privacy.html'));
+    expect(kPrivacyUrl, 'https://astutetheapp.com/privacy');
     // Restoring means something only with a store behind the build, and
     // this one has none.
     expect(find.text('Restore purchases'), findsNothing);
@@ -2212,7 +2212,7 @@ void main() {
         expect(text, isNot(contains(pill.question)));
         expect(text, isNot(contains(pill.answer)));
       }
-      expect(text, contains('lorenzballe.github.io/knowit'));
+      expect(text, contains('astutetheapp.com'));
       expect(find.text('Copied to clipboard.'), findsOneWidget);
     });
 

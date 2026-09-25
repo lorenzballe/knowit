@@ -106,7 +106,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         'I was right ${s.wasRight.round()}% of the time.\n'
         '${s.verdict}.\n\n'
         'How close would yours be?\n'
-        '— Astute · lorenzballe.github.io/knowit';
+        '— Astute · astutetheapp.com';
   }
 
   void _toast(String message) {

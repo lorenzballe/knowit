@@ -31,7 +31,7 @@ import '../analytics.dart';
 /// Where the newest bundle is published. The deploy workflow copies
 /// `web/cards/` into the site, so this is a static file behind a CDN: no
 /// server, no key, and a reader who is offline simply keeps what they have.
-const String kBankUrl = 'https://lorenzballe.github.io/knowit/cards/cards.json';
+const String kBankUrl = 'https://astutetheapp.com/cards/cards.json';
 
 /// What a fetch of [kBankUrl] returns: the body on 200, null on anything
 /// else. Replaceable, so tests never touch the network.

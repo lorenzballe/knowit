@@ -1,4 +1,4 @@
-name: Deploy web preview to GitHub Pages
+name: Deploy the site to GitHub Pages
 
 on:
   push:
@@ -47,17 +47,15 @@ jobs:
       # build is not measured at all, rather than measured into nowhere. A
       # variable and not a secret: the key is public, it ships inside the
       # bundle either way, and a secret would only be masked in the log.
+      # The app itself, playable in a browser, under /app/ — the root of
+      # the domain is the site's own page.
       - run: |
           flutter build web --release \
-            --base-href /knowit/ \
+            --base-href /app/ \
             --pwa-strategy=none \
             --dart-define=POSTHOG_KEY=${{ vars.POSTHOG_KEY }} \
             --dart-define=POSTHOG_HOST=${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
 
-      # The question of the day for the next two months, where the iPhone
-      # widget looks when the app has not handed it anything yet.
-      - name: Publish the widget's days
-        run: flutter test tool/widget_days.dart
 
       # Stamp the bundle with the commit. Removing the service worker stopped
       # it serving yesterday's build, but the plain HTTP cache still can:
@@ -73,9 +71,29 @@ jobs:
           grep -o 'flutter_bootstrap.js?v=[0-9a-f]*' build/web/index.html | head -1
           grep -o 'main.dart.js?v=[0-9a-f]*' build/web/flutter_bootstrap.js | head -1
 
+      # astutetheapp.com, put together: the site's pages at the root (site/),
+      # the app under /app/, and at the paths the app itself reads — the
+      # card bank at /cards/cards.json, the widget's days at
+      # /widget/days.json, the privacy policy at /privacy.html — so a phone
+      # already out there finds everything where it always has, through
+      # lorenzballe.github.io/knowit/ as much as through the domain.
+      - name: Put the site together
+        run: |
+          rm -rf _site
+          mkdir -p _site/app _site/widget
+          cp -r build/web/. _site/app/
+          cp -r site/. _site/
+          cp -r web/cards _site/cards
+          ls -la _site
+
+      # The question of the day for the next two months, where the iPhone
+      # widget looks when the app has not handed it anything yet.
+      - name: Publish the widget's days
+        run: WIDGET_DAYS_OUT=_site/widget/days.json flutter test tool/widget_days.dart
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build/web
+          path: _site
 
   deploy:
     needs: build

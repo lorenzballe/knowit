@@ -10,14 +10,26 @@ card filling the screen. Saved and Profile keep the light editorial chrome.
 Type is Fraunces over Figtree, both bundled with the app rather than fetched
 from Google at runtime.
 
-## Live preview
+## The site, and the live preview
 
-Every push to `main` builds and deploys automatically to GitHub Pages:
+Every push to `main` builds and publishes **https://astutetheapp.com** from
+GitHub Pages (`.github/workflows/deploy.yml`):
 
-**https://lorenzballe.github.io/knowit/**
+- `/` and the pages the stores ask for — `/privacy`, `/terms`, `/support` —
+  are the static pages in `site/`, drawn in the app's own materials: night
+  paper, cream ink, the paywall's three lights, Fraunces and Figtree served
+  from the site itself.
+- `/app/` is the app, built for the web: the live preview.
+- `/cards/cards.json` is the card bank the app refreshes from, and
+  `/widget/days.json` the question of the day the iPhone widget falls back
+  on. Both stay at the paths the app reads, and the old
+  `lorenzballe.github.io/knowit/` addresses redirect to the domain.
 
-(First deploy: in the repo, go to **Settings → Pages** and set **Source** to
-**GitHub Actions** if it isn't already — after that every push publishes on its own.)
+The domain is set in the repository's Settings → Pages → Custom domain, and
+at the registrar with four `A` records for `@` — 185.199.108.153,
+185.199.109.153, 185.199.110.153 and 185.199.111.153 — and a `CNAME` for
+`www` to `lorenzballe.github.io`. HTTPS is enforced there once GitHub has
+issued the certificate.
 
 ## The mark
 
@@ -623,7 +635,7 @@ dashboards, and has to agree with three names here.
 - **Beside the price**, Apple wants a way to restore and links to the terms
   of use and the privacy policy, in the app and in the listing (3.1.2). The
   paywall's last line carries all three; the terms are Apple's standard
-  licence and the privacy policy is `web/privacy.html` on this site
+  licence and the privacy policy is `site/privacy.html` on this site
   (`lib/legal.dart`), in English and Italian, naming every service that
   handles a reader's data — a test holds it to that list. The listing's
   description needs the terms link too.

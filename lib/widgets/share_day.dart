@@ -38,7 +38,7 @@ class ShareDay extends StatelessWidget {
       d.squares,
       if (question != null) '${l.todaysQuestion}: $question',
       if (verdict.isNotEmpty) verdict,
-      'lorenzballe.github.io/knowit',
+      'astutetheapp.com',
     ].join('\n');
   }
 

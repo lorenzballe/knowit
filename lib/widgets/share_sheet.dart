@@ -68,7 +68,7 @@ class _ShareSheetState extends State<_ShareSheet> {
     }
 
     return '$buffer\n${pill.barMove}\n\nSource: ${pill.source}\n'
-        '— Astute · lorenzballe.github.io/knowit';
+        '— Astute · astutetheapp.com';
   }
 
   void _toast(String message) {

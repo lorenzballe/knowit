@@ -132,7 +132,7 @@ enum WebDays {
     let ink: String
   }
 
-  static let url = URL(string: "https://lorenzballe.github.io/knowit/widget/days.json")!
+  static let url = URL(string: "https://astutetheapp.com/widget/days.json")!
   private static let cacheKey = "astut.webDays"
 
   static func cached() -> [String: Day] {
