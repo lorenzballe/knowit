@@ -4,11 +4,12 @@ name: Domain check
 # there — the check a phone cannot run and the development sandbox is not
 # allowed to. Run it by hand from the Actions tab, or change this file.
 #
-# It keeps asking until the site answers over HTTPS, for up to the minutes
-# given (170 unless told otherwise; 0 just looks), one step per stage, so
-# whoever watches the run can tell how far it has got: the records at
-# Cloudflare itself, then the world's DNS (which may remember an empty
-# answer for half an hour), then GitHub's certificate.
+# Started by hand, it keeps asking until the site answers over HTTPS, for up
+# to the minutes given (170 unless told otherwise; a push just looks once),
+# one step per stage, so whoever watches the run can tell how far it has
+# got: the records at Cloudflare itself, then the world's DNS (which may
+# remember an empty answer for half an hour), then GitHub's certificate.
+# The last step lists what every page answers and what is left to do.
 
 on:
   workflow_dispatch:
@@ -23,7 +24,7 @@ on:
 
 env:
   DOMAIN: astutetheapp.com
-  WAIT: ${{ inputs.wait || '170' }}
+  WAIT: ${{ github.event_name == 'push' && '0' || inputs.wait }}
   # GitHub Pages' own four addresses.
   PAGES: "185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
 
@@ -96,33 +97,58 @@ jobs:
             sleep 30
           done
 
+      # Two clean rounds over the pages the app and the stores open: a new
+      # certificate reaches GitHub's servers one by one, so a single good
+      # answer can come from the one server that already has it.
       - name: GitHub's certificate
         if: always()
         run: |
           . "$RUNNER_TEMP/lib.sh"
           [ "$WORLD" = ok ] || { echo "Skipped: the DNS is not there."; exit 1; }
           err="$RUNNER_TEMP/curl.err"
-          last=""
+          last=""; clean=0
           while :; do
-            code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN/" 2>"$err") || true
-            said="https: $code $(tail -1 "$err")"
+            good=0; bad=""
+            for path in / /privacy /app/ /cards/cards.json /widget/days.json /terms; do
+              code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>"$err") || true
+              if [ "$code" = 200 ]; then good=$((good + 1)); else bad="$path $code $(tail -1 "$err")"; fi
+            done
+            if [ "$good" = 6 ]; then clean=$((clean + 1)); else clean=0; fi
+            said="https: $good/6 answer${bad:+ · last miss: $bad}"
             [ "$said" = "$last" ] || { echo "$(now)  $said"; last=$said; }
-            if [ "$code" = 200 ]; then echo "HTTPS=ok" >> "$GITHUB_ENV"; exit 0; fi
-            if late; then echo "No certificate for $DOMAIN yet."; exit 1; fi
+            if [ "$clean" -ge 2 ]; then echo "HTTPS=ok" >> "$GITHUB_ENV"; exit 0; fi
+            if late; then echo "The certificate for $DOMAIN is not served everywhere yet."; exit 1; fi
             sleep 30
           done
 
       - name: What answers there
         if: always()
         run: |
+          . "$RUNNER_TEMP/lib.sh"
+          ns=$(dig +short NS "$DOMAIN" @1.1.1.1 | head -1)
+          ns=${ns:-braelyn.ns.cloudflare.com.}
+          a=$(addresses "$DOMAIN" "$ns")
+          www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr '\n' ' ' | sed 's/ $//')
+          echo "== At $ns: A ${a:-none} · www CNAME ${www:-none}"
+          err="$RUNNER_TEMP/curl.err"
           for path in / /privacy /terms /support /app/ /cards/cards.json /widget/days.json; do
-            code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>/dev/null) || true
-            echo "https://$DOMAIN$path  ${code:-none}"
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>"$err") || true
+            echo "https://$DOMAIN$path  $code $(tail -1 "$err")"
           done
-          echo "== http://$DOMAIN/ → $(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://$DOMAIN/" 2>&1 || true)"
+          http=$(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://$DOMAIN/" 2>/dev/null || true)
+          echo "== http://$DOMAIN/ → $http"
           echo "== http://www.$DOMAIN/ → $(curl -sS -o /dev/null -w '%{http_code} %{redirect_url}' -m 20 "http://www.$DOMAIN/" 2>&1 || true)"
-          echo "== The certificate"
-          echo | openssl s_client -connect "$DOMAIN:443" -servername "$DOMAIN" 2>/dev/null \
-            | openssl x509 -noout -subject -issuer -enddate 2>/dev/null || echo "none"
+          echo "== The certificate, three times"
+          for i in 1 2 3; do
+            echo | openssl s_client -connect "$DOMAIN:443" -servername "$DOMAIN" 2>/dev/null \
+              | openssl x509 -noout -subject -ext subjectAltName 2>/dev/null | tr '\n' ' ' || true
+            echo
+          done
+          echo "== What is left"
+          missing=""
+          for ip in $PAGES; do case " $a " in *" $ip "*) ;; *) missing="$missing $ip" ;; esac; done
+          [ -z "$missing" ] || echo "- add A @ →$missing"
+          case "$www" in lorenzballe.github.io.) ;; *) echo "- add CNAME www → lorenzballe.github.io" ;; esac
+          case "$http" in 301\ https://*) ;; *) echo "- tick Enforce HTTPS" ;; esac
           echo "== Verdict: records=${RECORDS:-no} world=${WORLD:-no} https=${HTTPS:-no}"
           [ "$HTTPS" = ok ]
