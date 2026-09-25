@@ -137,7 +137,7 @@ jobs:
           www=$(dig +short CNAME "www.$DOMAIN" @"$ns" | tr 'A-Z' 'a-z' | tr '\n' ' ' | sed 's/ $//')
           echo "== At $ns: A ${a:-none} · www CNAME ${www:-none} · www A $(addresses "www.$DOMAIN" "$ns")"
           err="$RUNNER_TEMP/curl.err"
-          for path in / /privacy /terms /support /app/ /cards/cards.json /widget/days.json; do
+          for path in / /privacy /terms /support /app/ /cards/cards.json /widget/days.json /assets/site.css /assets/og.png /sitemap.xml; do
             code=$(curl -sS -o /dev/null -w '%{http_code}' -m 20 "https://$DOMAIN$path" 2>"$err") || true
             echo "https://$DOMAIN$path  $code $(tail -1 "$err")"
           done

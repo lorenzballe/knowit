@@ -22,6 +22,7 @@ void main() {
       'RevenueCat',
       'PostHog',
       'Apple',
+      'Google Play',
       'GitHub Pages',
     ]) {
       expect(text, contains(processor), reason: processor);
@@ -53,5 +54,35 @@ void main() {
         .readAsStringSync();
     expect(deploy, contains('cp -r web/cards _site/cards'));
     expect(deploy, contains('WIDGET_DAYS_OUT=_site/widget/days.json'));
+  });
+
+  test('the site offers both stores and names the company', () {
+    // The landing page links both listings with the stores' own badges.
+    final String home = File('site/index.html').readAsStringSync();
+    expect(home, contains('https://apps.apple.com/app/id6806852300'));
+    expect(
+      home,
+      contains('https://play.google.com/store/apps/details?id=com.astuto.app'),
+    );
+    for (final String badge in const [
+      'site/assets/badges/app-store.svg',
+      'site/assets/badges/google-play.png',
+    ]) {
+      expect(File(badge).existsSync(), isTrue, reason: badge);
+    }
+    // Every page is signed by TheBaleCompany, and none still waits for a
+    // store.
+    for (final String page in const [
+      'site/index.html',
+      'site/privacy.html',
+      'site/terms.html',
+      'site/support.html',
+      'site/404.html',
+    ]) {
+      final String text = File(page).readAsStringSync();
+      expect(text, contains('© 2026 TheBaleCompany'), reason: page);
+      expect(text.toLowerCase(), isNot(contains('coming soon')), reason: page);
+      expect(text, isNot(contains('Android soon')), reason: page);
+    }
   });
 }

@@ -1,147 +1,738 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Astute — Five cards a day. A little sharper.</title>
-  <meta name="description" content="Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest.">
-  <meta name="theme-color" content="#141416">
-  <meta property="og:title" content="Astute — Five cards a day. A little sharper.">
-  <meta property="og:description" content="Five cards every morning. Answer, say how sure you are, and watch your confidence get honest.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://astutetheapp.com/">
-  <meta property="og:image" content="https://astutetheapp.com/icon.png">
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preload" href="fonts/Fraunces.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .hero {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: center;
-      gap: 40px;
-      min-height: calc(100vh - 170px);
-      padding: 24px 0 56px;
-    }
-
-    .hero h1 {
-      font-size: clamp(36px, 11.5vw, 92px);
-      line-height: 0.98;
-      letter-spacing: -0.035em;
-      margin: 18px 0 22px;
-    }
-
-    .hero .lead {
-      max-width: 520px;
-      font-size: 19px;
-      line-height: 1.55;
-      color: var(--cream-soft);
-      margin: 0 0 34px;
-    }
-
-    .facts {
-      margin-top: 30px;
-      font-size: 13.5px;
-      font-weight: 600;
-      color: var(--cream-faint);
-      letter-spacing: 0.02em;
-    }
-
-    .facts span { white-space: nowrap; }
-    .facts span + span::before { content: "·"; margin: 0 9px 0 3px; }
-
-    /* Four of the day's cards, fanned as a hand is dealt. */
-    .deck { position: relative; height: 470px; }
-
-    .deck .card { left: 50%; top: 50%; animation: settle 1.1s cubic-bezier(.2, .8, .2, 1) both; }
-    .deck .c1 { transform: translate(-72%, -58%) rotate(-12deg); animation-delay: .05s; }
-    .deck .c2 { transform: translate(-56%, -52%) rotate(-5deg); animation-delay: .15s; }
-    .deck .c3 { transform: translate(-40%, -48%) rotate(3deg); animation-delay: .25s; }
-    .deck .c4 { transform: translate(-26%, -44%) rotate(10deg); animation-delay: .35s; }
-
-    @keyframes settle {
-      from { opacity: 0; translate: 0 40px; }
-      to { opacity: 1; translate: 0 0; }
-    }
-
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; min-height: 0; gap: 12px; padding-top: 8px; }
-      .deck { height: 390px; }
-      .card { width: 210px; height: 280px; padding: 18px; }
-      .card p { font-size: 21px; }
-      .nav { display: none; }
-    }
-
-    @media (max-width: 380px) {
-      .deck { height: 330px; }
-      .card { width: 178px; height: 236px; padding: 16px; border-radius: 24px; }
-      .card p { font-size: 18.5px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Astute — Five cards a day. A little sharper.</title>
+<meta name="description" content="Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest. Free on iPhone and Android.">
+<meta name="theme-color" content="#141416">
+<link rel="canonical" href="https://astutetheapp.com/">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>document.documentElement.classList.add('js')</script>
+<script src="/assets/main.js" defer></script>
+<meta name="apple-itunes-app" content="app-id=6806852300">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Astute">
+<meta property="og:url" content="https://astutetheapp.com/">
+<meta property="og:title" content="Astute — Five cards a day. A little sharper.">
+<meta property="og:description" content="Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest.">
+<meta property="og:image" content="https://astutetheapp.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Astute: five cards a day, a little sharper.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MobileApplication", "name": "Astute", "url": "https://astutetheapp.com/", "image": "https://astutetheapp.com/icon.png", "description": "Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest. Free on iPhone and Android.", "operatingSystem": "iOS, Android", "applicationCategory": "EducationalApplication", "installUrl": ["https://apps.apple.com/app/id6806852300", "https://play.google.com/store/apps/details?id=com.astuto.app"], "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "publisher": {"@type": "Organization", "name": "TheBaleCompany", "email": "thebalecompany@gmail.com"}}</script>
 </head>
 <body>
-  <div class="lights" aria-hidden="true"><span></span><span></span><span></span></div>
 
-  <div class="wrap">
-    <header class="top">
-      <a class="brand" href="/">
-        <img src="icon.png" alt="" width="36" height="36">
-        <span class="serif">Astute</span>
-      </a>
-      <nav class="nav" aria-label="Site">
-        <a href="/support">Support</a>
-        <a href="/privacy">Privacy</a>
-      </nav>
-    </header>
-
-    <main class="hero">
-      <section>
-        <p class="eyebrow">Coming soon to iPhone</p>
-        <h1 class="serif">Five cards a day.<br>A little <span class="mark">sharper.</span></h1>
-        <p class="lead">Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest.</p>
-        <span class="chunky soon" role="note">Coming soon to the App Store</span>
-        <span class="quiet">Android soon after</span>
-        <p class="facts"><span>19 subjects</span> <span>13 languages</span> <span>Two minutes a day</span> <span>No ads</span></p>
-      </section>
-
-      <section class="deck" aria-label="Four of the day's cards">
-        <article class="card economics c1">
-          <span class="eyebrow">Economics</span>
-          <p class="serif">Should cities scrap rules requiring parking spaces?</p>
-          <small>Say how sure you are</small>
-        </article>
-        <article class="card language c2">
-          <span class="eyebrow">Language</span>
-          <p class="serif">Is there a word every language shares?</p>
-          <small>Tap to reveal</small>
-        </article>
-        <article class="card psychology c3">
-          <span class="eyebrow">Psychology</span>
-          <p class="serif">Should schools sort pupils into classes by ability?</p>
-          <small>Say how sure you are</small>
-        </article>
-        <article class="card space c4">
-          <span class="eyebrow">Space</span>
-          <p class="serif">What actually limits how far a probe can go?</p>
-          <small>Tap to reveal</small>
-        </article>
-      </section>
-    </main>
-  </div>
-
-  <footer class="foot">
-    <div class="wrap">
-      <nav aria-label="Legal">
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-        <a href="/support">Support</a>
-        <a href="mailto:thebalecompany@gmail.com">thebalecompany@gmail.com</a>
-      </nav>
-      <span>© 2026 Lorenzo Ballestrazzi</span>
+<header class="site-nav">
+  <nav aria-label="Main">
+    <a class="brand" href="#top" aria-label="Astute — home">
+      <img src="/assets/icon.webp" width="32" height="32" alt="">
+      <span>Astute</span>
+    </a>
+    <div class="nav-links" data-hide-mobile>
+      <a href="#how">How it works</a>
+      <a href="#science">The science</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
     </div>
-  </footer>
+    <div class="nav-actions">
+      <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+      <a class="btn-download" href="https://apps.apple.com/app/id6806852300" data-store>Download</a>
+    </div>
+  </nav>
+  <div id="mobile-menu" data-hide-desktop hidden>
+      <a href="#how">How it works</a>
+      <a href="#science">The science</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section style="position:relative; overflow:hidden; background:#141416; margin-top:-64px; padding-top:64px">
+  <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; opacity:1">
+    <div style="position:absolute; width:640px; height:440px; left:-8%; top:-12%; border-radius:50%; background:#FFE14D; opacity:.22; filter:blur(110px); animation:drift1 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:560px; height:420px; right:-6%; top:22%; border-radius:50%; background:#2DE0D2; opacity:.18; filter:blur(110px); animation:drift2 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:680px; height:440px; left:32%; bottom:-16%; border-radius:50%; background:#8B6CFF; opacity:.24; filter:blur(120px); animation:drift3 7s ease-in-out infinite alternate"></div>
+  </div>
+  <div style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(32px,5vw,64px) clamp(20px,5vw,40px) clamp(64px,8vw,104px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:40px; align-items:center">
+    <div style="max-width:560px">
+      <h1 style="font:600 clamp(44px,5.6vw,76px)/.98 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 24px; text-wrap:balance">Five cards a day.<br>A little <span style="background:linear-gradient(95deg,#FFE14D 0%,#2DE0D2 55%,#8B6CFF 100%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent">sharper.</span></h1>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.7); margin:0 0 32px; max-width:520px; text-wrap:pretty">Every morning, five cards: facts worth keeping and questions that test your judgment. Answer, say how sure you are, and watch your confidence get honest.</p>
+      <div class="stores">
+        <a href="https://apps.apple.com/app/id6806852300"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.astuto.app"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>
+      </div>
+      <p style="margin:20px 0 0; font:500 13px/1 Figtree, sans-serif; color:rgba(242,241,236,.55)">Free on iPhone and Android · 13 languages · No ads</p>
+    </div>
+    <div style="position:relative; width:min(100%, 560px); height:680px; margin:0 auto; justify-self:center">
+      <div aria-hidden="true" style="position:absolute; left:50%; top:70px; width:180px; height:236px; margin-left:-90px; z-index:1; transform:translate(-235px,110px) rotate(-18deg); animation:fan1 1.1s cubic-bezier(.2,.7,.1,1) .35s both; border-radius:28px; padding:18px; background:#FFE600; color:#10100C; box-shadow:0 30px 60px -30px rgba(0,0,0,.6); display:flex; flex-direction:column">
+        <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8"><span style="width:10px; height:10px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Economics</p>
+        <p style="margin:auto 0 0; font:600 19px/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should cities scrap rules requiring parking spaces?</p>
+      </div>
+      <div aria-hidden="true" style="position:absolute; left:50%; top:70px; width:180px; height:236px; margin-left:-90px; z-index:1; transform:translate(235px,110px) rotate(18deg); animation:fan4 1.1s cubic-bezier(.2,.7,.1,1) .35s both; border-radius:28px; padding:18px; background:#00D9D9; color:#10100C; box-shadow:0 30px 60px -30px rgba(0,0,0,.6); display:flex; flex-direction:column">
+        <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8"><span style="width:10px; height:10px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Language</p>
+        <p style="margin:auto 0 0; font:600 19px/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Is there a word every language shares?</p>
+      </div>
+      <div aria-hidden="true" style="position:absolute; left:50%; top:70px; width:180px; height:236px; margin-left:-90px; z-index:1; transform:translate(-150px,26px) rotate(-7deg); animation:fan2 1.1s cubic-bezier(.2,.7,.1,1) .2s both; border-radius:28px; padding:18px; background:#9B5CFF; color:#fff; box-shadow:0 30px 60px -30px rgba(0,0,0,.6); display:flex; flex-direction:column">
+        <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8"><span style="width:10px; height:10px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Psychology</p>
+        <p style="margin:auto 0 0; font:600 19px/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should schools sort pupils into classes by ability?</p>
+      </div>
+      <div aria-hidden="true" style="position:absolute; left:50%; top:70px; width:180px; height:236px; margin-left:-90px; z-index:1; transform:translate(150px,26px) rotate(7deg); animation:fan3 1.1s cubic-bezier(.2,.7,.1,1) .2s both; border-radius:28px; padding:18px; background:#00D451; color:#10100C; box-shadow:0 30px 60px -30px rgba(0,0,0,.6); display:flex; flex-direction:column">
+        <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8"><span style="width:10px; height:10px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Nature</p>
+        <p style="margin:auto 0 0; font:600 19px/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What fertilises the Amazon?</p>
+      </div>
+      <div style="position:absolute; left:50%; top:24px; margin-left:-145px; z-index:2; animation:rise 1s cubic-bezier(.2,.7,.2,1) both">
+        <div style="transform:perspective(1400px) rotateY(9deg) rotateX(2deg)">
+          <div style="position:relative; width:290px; height:605px; border-radius:40px; background:linear-gradient(160deg,#dcd9d2 0%,#aaa7a0 38%,#d2cfc8 62%,#8d8a84 100%); box-shadow:0 60px 100px -40px rgba(0,0,0,.75), 0 0 0 1px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.28)">
+            <div style="position:absolute; inset:2px; border-radius:38px; background:#0a0a0b"></div>
+            <img src="/assets/app-today.webp" width="268" height="583" alt="Astute's Today screen on iPhone: a blue Space card asking 'What actually limits how far a probe can go?', with 'Tap to reveal' at the bottom" style="position:absolute; top:11px; left:11px; width:268px; height:583px; border-radius:29px; display:block; object-fit:cover">
+            <div style="position:absolute; top:18px; left:50%; width:84px; height:25px; margin-left:-42px; border-radius:13px; background:#000"></div>
+            <div style="position:absolute; right:-2px; top:172px; width:3px; height:88px; border-radius:2px; background:#b9b6af"></div>
+            <div style="position:absolute; left:-2px; top:118px; width:3px; height:30px; border-radius:2px; background:#b9b6af"></div>
+            <div style="position:absolute; left:-2px; top:170px; width:3px; height:58px; border-radius:2px; background:#b9b6af"></div>
+            <div style="position:absolute; left:-2px; top:240px; width:3px; height:58px; border-radius:2px; background:#b9b6af"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="scroll-margin-top:72px; background:#141416">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px) 0">
+    <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">How a day works</p>
+    <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">Five cards a day, two minutes.</h2>
+    <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0; max-width:560px; text-wrap:pretty">A new edition every morning. This is the shape of one.</p>
+  </div>
+  <div data-scroll-row="true" style="display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:40px max(clamp(20px,5vw,40px), calc((100vw - 1200px) / 2 + 40px)) clamp(72px,9vw,120px); scroll-padding-left:max(clamp(20px,5vw,40px), calc((100vw - 1200px) / 2 + 40px)); scrollbar-width:none">
+    <article style="flex:0 0 min(78vw, 272px); scroll-snap-align:start; display:flex; flex-direction:column; min-height:470px; padding:24px; border-radius:28px; background:rgba(242,241,236,.05); border:1px solid rgba(242,241,236,.08); overflow:hidden; position:relative">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 14px">01</p>
+      <h3 style="font:600 24px/1.1 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 10px">The question of the day</h3>
+      <p style="font:400 15px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.65); margin:0 0 20px">Everyone gets the same one.</p>
+      <div aria-hidden="true" style="margin-top:auto; border-radius:18px; background:#2B5CFF; color:#fff; padding:16px; height:168px; display:flex; flex-direction:column">
+        <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8"><span style="width:10px; height:10px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Space</p>
+        <p style="margin:auto 0 0; font:600 18px/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What actually limits how far a probe can go?</p>
+      </div>
+    </article>
+    <article style="flex:0 0 min(78vw, 272px); scroll-snap-align:start; display:flex; flex-direction:column; min-height:470px; padding:24px; border-radius:28px; background:rgba(242,241,236,.05); border:1px solid rgba(242,241,236,.08); overflow:hidden; position:relative">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 14px">02</p>
+      <h3 style="font:600 24px/1.1 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 10px">Four more, chosen for you</h3>
+      <p style="font:400 15px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.65); margin:0 0 20px">Your subjects, your level, never one you've read.</p>
+      <div aria-hidden="true" style="margin-top:auto; display:grid; grid-template-columns:1fr 1fr; gap:8px; height:168px">
+        <div style="border-radius:14px; background:#FFE600; color:#10100C; padding:12px; display:flex; align-items:flex-end; font:700 10px/1 Figtree, sans-serif; letter-spacing:.12em; text-transform:uppercase">Economics</div>
+        <div style="border-radius:14px; background:#9B5CFF; color:#fff; padding:12px; display:flex; align-items:flex-end; font:700 10px/1 Figtree, sans-serif; letter-spacing:.12em; text-transform:uppercase">Psychology</div>
+        <div style="border-radius:14px; background:#00D451; color:#10100C; padding:12px; display:flex; align-items:flex-end; font:700 10px/1 Figtree, sans-serif; letter-spacing:.12em; text-transform:uppercase">Nature</div>
+        <div style="border-radius:14px; background:#00D9D9; color:#10100C; padding:12px; display:flex; align-items:flex-end; font:700 10px/1 Figtree, sans-serif; letter-spacing:.12em; text-transform:uppercase">Language</div>
+      </div>
+    </article>
+    <article style="flex:0 0 min(78vw, 272px); scroll-snap-align:start; display:flex; flex-direction:column; min-height:470px; padding:24px; border-radius:28px; background:rgba(242,241,236,.05); border:1px solid rgba(242,241,236,.08); overflow:hidden; position:relative">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 14px">03</p>
+      <h3 style="font:600 24px/1.1 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 10px">Say how sure you are</h3>
+      <p style="font:400 15px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.65); margin:0 0 20px">It matters more than being right.</p>
+      <div aria-hidden="true" style="margin-top:auto; height:168px; display:flex; flex-direction:column; justify-content:flex-end; gap:14px">
+        <p style="margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6)">How sure?</p>
+        <div style="display:flex; gap:6px">
+          <span style="flex:1; height:40px; border-radius:20px; display:grid; place-items:center; background:rgba(242,241,236,.08); font:600 13px/1 Figtree, sans-serif">50</span>
+          <span style="flex:1; height:40px; border-radius:20px; display:grid; place-items:center; background:rgba(242,241,236,.08); font:600 13px/1 Figtree, sans-serif">60</span>
+          <span style="flex:1; height:40px; border-radius:20px; display:grid; place-items:center; background:#F2F1EC; color:#141416; font:600 13px/1 Figtree, sans-serif">70</span>
+          <span style="flex:1; height:40px; border-radius:20px; display:grid; place-items:center; background:rgba(242,241,236,.08); font:600 13px/1 Figtree, sans-serif">80</span>
+          <span style="flex:1; height:40px; border-radius:20px; display:grid; place-items:center; background:rgba(242,241,236,.08); font:600 13px/1 Figtree, sans-serif">90</span>
+        </div>
+      </div>
+    </article>
+    <article style="flex:0 0 min(78vw, 272px); scroll-snap-align:start; display:flex; flex-direction:column; min-height:470px; padding:24px; border-radius:28px; background:rgba(242,241,236,.05); border:1px solid rgba(242,241,236,.08); overflow:hidden; position:relative">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 14px">04</p>
+      <h3 style="font:600 24px/1.1 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 10px">Flip it</h3>
+      <p style="font:400 15px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.65); margin:0 0 20px">The answer, one line to repeat tonight, and the source.</p>
+      <div style="margin:auto -24px -24px; height:210px; position:relative; overflow:hidden">
+        <div style="position:absolute; left:50%; top:0; margin-left:-115px; width:230px; height:474px; border-radius:32px; background:linear-gradient(160deg,#dcd9d2 0%,#aaa7a0 38%,#d2cfc8 62%,#8d8a84 100%); box-shadow:0 0 0 1px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.28)">
+          <div style="position:absolute; inset:2px; border-radius:30px; background:#0a0a0b"></div>
+          <img src="/assets/app-flipped.webp" width="208" height="452" alt="The Space card flipped: the answer about plutonium-238, the bar move 'The edge of the solar system is a supply-chain problem', and the source" loading="lazy" decoding="async" style="position:absolute; top:11px; left:11px; width:208px; height:452px; border-radius:21px; display:block; object-fit:cover">
+          <div style="position:absolute; top:17px; left:50%; width:66px; height:20px; margin-left:-33px; border-radius:10px; background:#000"></div>
+          <div style="position:absolute; right:-2px; top:136px; width:3px; height:70px; border-radius:2px; background:#b9b6af"></div>
+          <div style="position:absolute; left:-2px; top:94px; width:3px; height:24px; border-radius:2px; background:#b9b6af"></div>
+          <div style="position:absolute; left:-2px; top:134px; width:3px; height:46px; border-radius:2px; background:#b9b6af"></div>
+        </div>
+      </div>
+    </article>
+    <article style="flex:0 0 min(78vw, 272px); scroll-snap-align:start; display:flex; flex-direction:column; min-height:470px; padding:24px; border-radius:28px; background:rgba(242,241,236,.05); border:1px solid rgba(242,241,236,.08); overflow:hidden; position:relative">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 14px">05</p>
+      <h3 style="font:600 24px/1.1 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 10px">Come back tomorrow</h3>
+      <p style="font:400 15px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.65); margin:0 0 20px">A streak, with freezes for the evening you forget.</p>
+      <div style="margin:auto -24px -24px; height:210px; position:relative; overflow:hidden">
+        <div style="position:absolute; left:50%; top:0; margin-left:-115px; width:230px; height:474px; border-radius:32px; background:linear-gradient(160deg,#dcd9d2 0%,#aaa7a0 38%,#d2cfc8 62%,#8d8a84 100%); box-shadow:0 0 0 1px rgba(0,0,0,.5), inset 0 0 0 1px rgba(255,255,255,.28)">
+          <div style="position:absolute; inset:2px; border-radius:30px; background:#0a0a0b"></div>
+          <img src="/assets/app-day-done.webp" width="208" height="452" alt="Day done: 'Day 1 · five read' above today's five, with a violet Psychology card asking 'Should schools sort pupils into classes by ability?'" loading="lazy" decoding="async" style="position:absolute; top:11px; left:11px; width:208px; height:452px; border-radius:21px; display:block; object-fit:cover">
+          <div style="position:absolute; top:17px; left:50%; width:66px; height:20px; margin-left:-33px; border-radius:10px; background:#000"></div>
+          <div style="position:absolute; right:-2px; top:136px; width:3px; height:70px; border-radius:2px; background:#b9b6af"></div>
+          <div style="position:absolute; left:-2px; top:94px; width:3px; height:24px; border-radius:2px; background:#b9b6af"></div>
+          <div style="position:absolute; left:-2px; top:134px; width:3px; height:46px; border-radius:2px; background:#b9b6af"></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section style="background:#F2F1EC; color:#141416">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap:clamp(40px,6vw,88px); align-items:center">
+    <div>
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); margin:0 0 16px">Calibration</p>
+      <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">Say how sure you are.</h2>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(20,20,22,.78); margin:0 0 14px; max-width:520px; text-wrap:pretty">Astute doesn't reward being right. It rewards knowing how likely you are to be right.</p>
+      <p style="font:400 16px/1.55 Figtree, sans-serif; color:rgba(20,20,22,.62); margin:0; max-width:520px; text-wrap:pretty">Every answer carries a number: 50, 60, 70, 80 or 90 per cent sure. Over the weeks, Astute plots how often you were right at each. Drag to read a typical first month.</p>
+      <div style="margin-top:36px">
+        <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); margin:0 0 6px">How sure are you?</p>
+        <div id="conf-track" style="position:relative; height:48px; margin:0 14px; touch-action:none; cursor:pointer">
+          <div style="position:absolute; left:0; right:0; top:22px; height:4px; border-radius:2px; background:rgba(20,20,22,.12)"></div>
+          <div id="conf-fill" style="position:absolute; left:0; top:22px; height:4px; border-radius:2px; background:#141416; width:50%; transition:width .18s cubic-bezier(.2,.7,.2,1)"></div>
+          <div style="position:absolute; left:0; top:20px; width:8px; height:8px; margin-left:-4px; border-radius:50%; background:rgba(20,20,22,.25)"></div>
+          <div style="position:absolute; left:25%; top:20px; width:8px; height:8px; margin-left:-4px; border-radius:50%; background:rgba(20,20,22,.25)"></div>
+          <div style="position:absolute; left:50%; top:20px; width:8px; height:8px; margin-left:-4px; border-radius:50%; background:rgba(20,20,22,.25)"></div>
+          <div style="position:absolute; left:75%; top:20px; width:8px; height:8px; margin-left:-4px; border-radius:50%; background:rgba(20,20,22,.25)"></div>
+          <div style="position:absolute; left:100%; top:20px; width:8px; height:8px; margin-left:-4px; border-radius:50%; background:rgba(20,20,22,.25)"></div>
+          <div id="conf-thumb" role="slider" tabindex="0" aria-label="How sure you are" aria-valuemin="50" aria-valuemax="90" aria-valuenow="70" aria-valuetext="70 per cent sure" style="position:absolute; top:10px; left:50%; width:28px; height:28px; margin-left:-14px; border-radius:50%; background:#141416; box-shadow:0 0 0 4px #F2F1EC, 0 8px 18px rgba(0,0,0,.25); transition:left .18s cubic-bezier(.2,.7,.2,1); cursor:grab"></div>
+        </div>
+        <div style="display:flex; justify-content:space-between; gap:6px; margin-top:8px">
+          
+            <button type="button" data-conf="50" aria-pressed="false" style="flex:1; height:44px; border-radius:22px; border:0; cursor:pointer; font:600 15px/1 Figtree, sans-serif; background: rgba(20,20,22,.06); color: #141416; transition:background .2s, color .2s">50</button>
+          
+            <button type="button" data-conf="60" aria-pressed="false" style="flex:1; height:44px; border-radius:22px; border:0; cursor:pointer; font:600 15px/1 Figtree, sans-serif; background: rgba(20,20,22,.06); color: #141416; transition:background .2s, color .2s">60</button>
+          
+            <button type="button" data-conf="70" aria-pressed="true" style="flex:1; height:44px; border-radius:22px; border:0; cursor:pointer; font:600 15px/1 Figtree, sans-serif; background: #141416; color: #F2F1EC; transition:background .2s, color .2s">70</button>
+          
+            <button type="button" data-conf="80" aria-pressed="false" style="flex:1; height:44px; border-radius:22px; border:0; cursor:pointer; font:600 15px/1 Figtree, sans-serif; background: rgba(20,20,22,.06); color: #141416; transition:background .2s, color .2s">80</button>
+          
+            <button type="button" data-conf="90" aria-pressed="false" style="flex:1; height:44px; border-radius:22px; border:0; cursor:pointer; font:600 15px/1 Figtree, sans-serif; background: rgba(20,20,22,.06); color: #141416; transition:background .2s, color .2s">90</button>
+          
+        </div>
+      </div>
+      <div style="margin-top:28px; padding-top:24px; border-top:1px solid rgba(20,20,22,.1)">
+        <p id="read-said" style="font:600 clamp(24px,2.4vw,30px)/1.15 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144; margin:0 0 8px">You said 70%.</p>
+        <p id="read-rest" style="font:400 17px/1.5 Figtree, sans-serif; color:rgba(20,20,22,.68); margin:0">You were right 63% of the time. 7 points overconfident.</p>
+      </div>
+    </div>
+    <div id="calibration-chart" style="background:#fff; border-radius:28px; padding:clamp(16px,2.5vw,28px); border:1px solid rgba(20,20,22,.08)">
+      <svg viewBox="0 0 520 410" role="img" aria-label="Calibration chart. Horizontal axis: how sure you said you were, 50 to 90 per cent. Vertical axis: how often you were right. A dashed diagonal marks perfect calibration; a reader's curve sits a little below it." style="width:100%; height:auto; display:block; font-family:Figtree, sans-serif">
+        <text x="64" y="14" fill="rgba(20,20,22,.55)" font-size="12" font-weight="600">How often you were right</text>
+        <line x1="64" y1="350" x2="496" y2="350" stroke="rgba(20,20,22,.1)" stroke-width="1"></line>
+        <line x1="64" y1="243.3" x2="496" y2="243.3" stroke="rgba(20,20,22,.08)" stroke-width="1"></line>
+        <line x1="64" y1="136.7" x2="496" y2="136.7" stroke="rgba(20,20,22,.08)" stroke-width="1"></line>
+        <line x1="64" y1="30" x2="496" y2="30" stroke="rgba(20,20,22,.08)" stroke-width="1"></line>
+        <text x="54" y="354" text-anchor="end" fill="rgba(20,20,22,.5)" font-size="12">40%</text>
+        <text x="54" y="247" text-anchor="end" fill="rgba(20,20,22,.5)" font-size="12">60%</text>
+        <text x="54" y="141" text-anchor="end" fill="rgba(20,20,22,.5)" font-size="12">80%</text>
+        <text x="54" y="34" text-anchor="end" fill="rgba(20,20,22,.5)" font-size="12">100%</text>
+        <line x1="64" y1="296.7" x2="496" y2="83.3" stroke="rgba(20,20,22,.35)" stroke-width="1.5" stroke-dasharray="6 6"></line>
+        <text x="494" y="70" text-anchor="end" fill="rgba(20,20,22,.5)" font-size="12" font-style="italic">Perfectly calibrated</text>
+        <polyline id="curve" points="64,275.3 172,254 280,227.3 388,195.3 496,152.7" fill="none" stroke="#141416" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:470; transition:stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1)"></polyline>
+        <g id="points" fill="#141416" style="transition:opacity .6s ease 1.3s">
+          <circle cx="64" cy="275.3" r="4.5"></circle>
+          <circle cx="172" cy="254" r="4.5"></circle>
+          <circle cx="280" cy="227.3" r="4.5"></circle>
+          <circle cx="388" cy="195.3" r="4.5"></circle>
+          <circle cx="496" cy="152.7" r="4.5"></circle>
+        </g>
+        <line id="sel-line" x1="280" y1="190" x2="280" y2="227.3" stroke="#8B6CFF" stroke-width="2" stroke-dasharray="3 4" style="transition:all .25s ease"></line>
+        <circle id="sel-said" cx="280" cy="190" r="4" fill="#fff" stroke="#8B6CFF" stroke-width="2" style="transition:all .25s ease"></circle>
+        <circle id="sel-right" cx="280" cy="227.3" r="8" fill="#8B6CFF" stroke="#fff" stroke-width="3" style="transition:all .25s ease"></circle>
+        <text id="sel-label" x="280" y="253.3" text-anchor="middle" fill="#8B6CFF" font-size="13" font-weight="700" style="transition:all .25s ease">63%</text>
+        <text x="64" y="378" text-anchor="middle" fill="rgba(20,20,22,.5)" font-size="12">50%</text>
+        <text x="172" y="378" text-anchor="middle" fill="rgba(20,20,22,.5)" font-size="12">60%</text>
+        <text x="280" y="378" text-anchor="middle" fill="rgba(20,20,22,.5)" font-size="12">70%</text>
+        <text x="388" y="378" text-anchor="middle" fill="rgba(20,20,22,.5)" font-size="12">80%</text>
+        <text x="496" y="378" text-anchor="middle" fill="rgba(20,20,22,.5)" font-size="12">90%</text>
+        <text x="280" y="404" text-anchor="middle" fill="rgba(20,20,22,.55)" font-size="12" font-weight="600">How sure you said you were</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section style="background:#141416">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px)">
+    <div style="max-width:720px">
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">Principles, not trivia</p>
+      <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">What you got wrong comes back — somewhere new.</h2>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0 0 12px; max-width:560px; text-wrap:pretty">One card teaches a card. A principle teaches everything it touches.</p>
+      <p style="font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.55); margin:0; max-width:560px; text-wrap:pretty">Miss the base rate in a clinic and, weeks later, it comes back in a crowd. Tap a card to flip it.</p>
+    </div>
+    <div style="display:flex; justify-content:center; margin:40px 0 20px">
+      <span style="display:inline-flex; align-items:center; gap:10px; height:36px; padding:0 16px; border-radius:18px; background:rgba(242,241,236,.06); border:1px solid rgba(242,241,236,.1); font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.7)">One principle <span style="width:4px; height:4px; border-radius:50%; background:currentColor; opacity:.5"></span> Base rates</span>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:20px; max-width:880px; margin:0 auto">
+      <div role="button" tabindex="0" aria-pressed="false" aria-label="Medicine card. Tap to flip." data-flip style="perspective:1400px; cursor:pointer; height:460px; border-radius:28px">
+        <div style="position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.2,.7,.2,1); transform:rotateY(0deg)">
+          <div style="position:absolute; inset:0; border-radius:28px; background:#FF3B30; color:#fff; padding:26px; display:flex; flex-direction:column; -webkit-backface-visibility:hidden; backface-visibility:hidden">
+            <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Medicine</p>
+            <p style="margin:auto 0; font:600 clamp(24px,2.4vw,30px)/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">A test for a rare disease is 99% accurate. You test positive. How likely is it that you're ill?</p>
+            <p style="margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.75">Tap to flip</p>
+          </div>
+          <div style="position:absolute; inset:0; border-radius:28px; background:#FF3B30; color:#fff; padding:26px; display:flex; flex-direction:column; gap:14px; -webkit-backface-visibility:hidden; backface-visibility:hidden; transform:rotateY(180deg)">
+            <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Medicine</p>
+            <p style="margin:0; font:600 19px/1.15 Fraunces, Georgia, serif; letter-spacing:-.01em; font-variation-settings:'opsz' 144">A test for a rare disease is 99% accurate. You test positive. How likely is it that you're ill?</p>
+            <p style="margin:0; font:400 16px/1.5 Figtree, sans-serif">About 9%. If one person in a thousand has the disease, the test finds them — and flags about ten healthy people alongside. Most positives are false ones.</p>
+            <div style="margin-top:auto; border-radius:16px; background:rgba(255,255,255,.16); padding:14px 16px">
+              <p style="margin:0 0 6px; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8">Bar move</p>
+              <p style="margin:0; font:600 15px/1.4 Figtree, sans-serif">Before you trust a positive, ask how rare the thing is.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="button" tabindex="0" aria-pressed="false" aria-label="Technology card. Tap to flip." data-flip style="perspective:1400px; cursor:pointer; height:460px; border-radius:28px">
+        <div style="position:relative; width:100%; height:100%; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.2,.7,.2,1); transform:rotateY(0deg)">
+          <div style="position:absolute; inset:0; border-radius:28px; background:#00A6FF; color:#fff; padding:26px; display:flex; flex-direction:column; -webkit-backface-visibility:hidden; backface-visibility:hidden">
+            <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Technology</p>
+            <p style="margin:auto 0; font:600 clamp(24px,2.4vw,30px)/1.12 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Face recognition is 99% accurate. It flags a face in a crowd of 100,000. How likely is it that they're on the watchlist?</p>
+            <p style="margin:0; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.75">Tap to flip</p>
+          </div>
+          <div style="position:absolute; inset:0; border-radius:28px; background:#00A6FF; color:#fff; padding:26px; display:flex; flex-direction:column; gap:14px; -webkit-backface-visibility:hidden; backface-visibility:hidden; transform:rotateY(180deg)">
+            <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Technology</p>
+            <p style="margin:0; font:600 19px/1.15 Fraunces, Georgia, serif; letter-spacing:-.01em; font-variation-settings:'opsz' 144">Face recognition is 99% accurate. It flags a face in a crowd of 100,000. How likely is it that they're on the watchlist?</p>
+            <p style="margin:0; font:400 16px/1.5 Figtree, sans-serif">About 1%. If ten people in that crowd are on the list, the system finds them — and a thousand who aren't. Same maths, different world.</p>
+            <div style="margin-top:auto; border-radius:16px; background:rgba(255,255,255,.16); padding:14px 16px">
+              <p style="margin:0 0 6px; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.8">Bar move</p>
+              <p style="margin:0; font:600 15px/1.4 Figtree, sans-serif">Ninety-nine per cent accurate can still be wrong almost every time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#141416; overflow:hidden">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px) 40px; text-align:center">
+    <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">Subjects</p>
+    <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">Nineteen subjects.</h2>
+    <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0 auto; max-width:560px; text-wrap:pretty">Every card, chosen for you.</p>
+  </div>
+  <div aria-hidden="true" style="display:flex; width:max-content; animation:marquee 70s linear infinite" class="marquee">
+    <div style="display:flex; gap:16px; padding-right:16px">
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #2B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Space</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What actually limits how far a probe can go?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #FFE600; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Economics</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should cities scrap rules requiring parking spaces?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #9B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Psychology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should schools sort pupils into classes by ability?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00D9D9; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Language</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Is there a word every language shares?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00D451; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Nature</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What fertilises the Amazon?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00A6FF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Technology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should courts use algorithmic risk scores when deciding bail?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00E5A0; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Science</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should some research grants be handed out by lottery?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #2B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Space</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Why does the catalogue of known planets look so strange?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #9B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Psychology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?</p>
+        </article>
+      
+    </div>
+    <div style="display:flex; gap:16px; padding-right:16px">
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #2B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Space</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What actually limits how far a probe can go?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #FFE600; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Economics</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should cities scrap rules requiring parking spaces?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #9B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Psychology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should schools sort pupils into classes by ability?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00D9D9; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Language</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Is there a word every language shares?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00D451; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Nature</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">What fertilises the Amazon?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00A6FF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Technology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should courts use algorithmic risk scores when deciding bail?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #00E5A0; color: #10100C">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Science</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Should some research grants be handed out by lottery?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #2B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Space</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">Why does the catalogue of known planets look so strange?</p>
+        </article>
+      
+        <article style="flex:none; width:250px; height:310px; border-radius:28px; padding:22px; display:flex; flex-direction:column; background: #9B5CFF; color: #FFFFFF">
+          <p style="display:flex; align-items:center; gap:6px; margin:0; font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; opacity:.85"><span style="width:11px; height:11px; border:1.5px solid currentColor; border-radius:50%; flex:none"></span>Psychology</p>
+          <p style="margin:auto 0 0; font:600 22px/1.14 Fraunces, Georgia, serif; letter-spacing:-.015em; font-variation-settings:'opsz' 144">A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?</p>
+        </article>
+      
+    </div>
+  </div>
+  <ul aria-label="All nineteen subjects" style="list-style:none; max-width:900px; margin:0 auto; padding:48px clamp(20px,5vw,40px) clamp(72px,9vw,120px); display:flex; flex-wrap:wrap; justify-content:center; gap:10px">
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FFE600; color: #10100C">Economics</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #A6FF00; color: #10100C">Sport</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #00D451; color: #10100C">Nature</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #00E5A0; color: #10100C">Science</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #00D9D9; color: #10100C">Language</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #00A6FF; color: #FFFFFF">Technology</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #2B5CFF; color: #FFFFFF">Space</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #4C6FFF; color: #FFFFFF">Philosophy</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #6E3AFF; color: #FFFFFF">Cinema</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #9B5CFF; color: #FFFFFF">Psychology</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #C13AFF; color: #FFFFFF">Music</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #E040FB; color: #FFFFFF">Weird facts</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FF00A8; color: #FFFFFF">Art</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FF3D7F; color: #FFFFFF">Pop culture</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FF2D5F; color: #FFFFFF">Human body</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FF3B30; color: #FFFFFF">Medicine</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FF7A1A; color: #FFFFFF">Food</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #FFB000; color: #10100C">History</li>
+    
+      <li style="display:inline-flex; align-items:center; height:40px; padding:0 18px; border-radius:20px; font:600 15px/1 Figtree, sans-serif; background: #F2F1EC; color: #10100C">Thinking</li>
+    
+  </ul>
+</section>
+
+<section style="background:#141416; overflow:hidden">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap:clamp(40px,6vw,88px); align-items:center">
+    <div>
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">Widgets</p>
+      <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">On your home screen.</h2>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0; max-width:520px; text-wrap:pretty">Today's card on your home screen. Your streak on your lock screen. Today's five, and how far you are.</p>
+    </div>
+    <div style="position:relative; width:min(100%, 440px); margin:0 auto; padding-bottom:56px">
+      <div style="border-radius:28px; overflow:hidden; aspect-ratio:900 / 1500; background:#1c1a2b; box-shadow:0 0 0 1px rgba(242,241,236,.08)">
+        <img src="/assets/widgets.webp" width="900" height="2729" alt="Astute home screen widgets: today's Space card with a 12-day streak, a day-streak counter reading 12, an Economics card marked done for today, and Today's five showing 2 of 5 read" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; object-position:50% 0; display:block">
+      </div>
+      <div style="position:absolute; right:-8px; bottom:0; width:64%; aspect-ratio:900 / 560; border-radius:22px; overflow:hidden; box-shadow:0 30px 60px -20px rgba(0,0,0,.75), 0 0 0 1px rgba(242,241,236,.1)">
+        <img src="/assets/widgets.webp" width="900" height="2729" alt="Astute lock screen widget: '12 days · Astute', today's Space card and a ring showing 12" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; object-position:50% 100%; display:block">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="science" style="scroll-margin-top:72px; background:#F2F1EC; color:#141416">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px)">
+    <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); margin:0 0 16px">The science</p>
+    <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 48px; text-wrap:balance">What the evidence says.</h2>
+    <ol style="list-style:none; margin:0; padding:0; max-width:920px">
+      <li style="padding:36px 0; border-top:1px solid rgba(20,20,22,.1); display:grid; grid-template-columns:56px minmax(0,1fr); gap:16px">
+        <span style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); padding-top:12px">01</span>
+        <div>
+          <p style="font:600 clamp(26px,3.4vw,44px)/1.08 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 12px; text-wrap:balance">You can't train general intelligence.</p>
+          <p style="font:400 14px/1.5 Figtree, sans-serif; color:rgba(20,20,22,.55); margin:0">Simons et al., 2016</p>
+        </div>
+      </li>
+      <li style="padding:36px 0; border-top:1px solid rgba(20,20,22,.1); display:grid; grid-template-columns:56px minmax(0,1fr); gap:16px">
+        <span style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); padding-top:12px">02</span>
+        <div>
+          <p style="font:600 clamp(26px,3.4vw,44px)/1.08 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 12px; text-wrap:balance">You can train away specific biases, and it transfers.</p>
+          <p style="font:400 14px/1.5 Figtree, sans-serif; color:rgba(20,20,22,.55); margin:0">Morewedge et al., 2015; Sellier, Scopelliti &amp; Morewedge, 2019</p>
+        </div>
+      </li>
+      <li style="padding:36px 0; border-top:1px solid rgba(20,20,22,.1); border-bottom:1px solid rgba(20,20,22,.1); display:grid; grid-template-columns:56px minmax(0,1fr); gap:16px">
+        <span style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(20,20,22,.6); padding-top:12px">03</span>
+        <div>
+          <p style="font:600 clamp(26px,3.4vw,44px)/1.08 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 12px; text-wrap:balance">You can train calibration.</p>
+          <p style="font:400 14px/1.5 Figtree, sans-serif; color:rgba(20,20,22,.55); margin:0">Mellers et al., Good Judgment Project — about 10% better forecasts</p>
+        </div>
+      </li>
+    </ol>
+    <p style="font:400 clamp(18px,1.8vw,22px)/1.45 Figtree, sans-serif; color:rgba(20,20,22,.8); margin:40px 0 0; max-width:640px; text-wrap:pretty">So Astute doesn't promise a bigger brain. It trains the three things that move.</p>
+  </div>
+</section>
+
+<section style="background:#141416">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px); display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap:clamp(40px,6vw,88px); align-items:center">
+    <div>
+      <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">Friends</p>
+      <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">Compare how honest you are, not how much you read.</h2>
+      <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0 0 32px; max-width:520px; text-wrap:pretty">Add friends with a code. The board sorts by calibration, so the person who knows what they know sits on top, whatever their streak.</p>
+      <div style="display:inline-flex; flex-direction:column; gap:10px; padding:20px 24px; border-radius:20px; border:1px solid rgba(242,241,236,.12); background:rgba(242,241,236,.04)">
+        <span style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6)">Your friend code</span>
+        <span style="font:600 32px/1 Fraunces, Georgia, serif; letter-spacing:.02em; font-variation-settings:'opsz' 144">ASTU-7HD3</span>
+      </div>
+    </div>
+    <div>
+      <div style="border-radius:28px; background:rgba(242,241,236,.04); border:1px solid rgba(242,241,236,.1); padding:8px">
+        <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 1fr 1fr 1.3fr; gap:12px; padding:14px 16px 12px; font:700 10px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.55)">
+          <span>Name</span><span style="text-align:right">Streak</span><span style="text-align:right">Weeks</span><span style="text-align:right">Calibration</span>
+        </div>
+        <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 1fr 1fr 1.3fr; gap:12px; align-items:center; padding:14px 16px; border-top:1px solid rgba(242,241,236,.08); font:500 16px/1 Figtree, sans-serif">
+          <span style="display:flex; align-items:center; gap:12px; min-width:0"><span style="width:32px; height:32px; border-radius:50%; background:#2DE0D2; color:#10100C; display:grid; place-items:center; font:700 13px/1 Figtree, sans-serif; flex:none">L</span>Léa</span>
+          <span style="text-align:right">31</span><span style="text-align:right">14</span>
+          <span style="text-align:right; font-weight:600">+1</span>
+        </div>
+        <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 1fr 1fr 1.3fr; gap:12px; align-items:center; padding:14px 16px; border-top:1px solid rgba(242,241,236,.08); font:500 16px/1 Figtree, sans-serif; background:rgba(242,241,236,.04); border-radius:16px">
+          <span style="display:flex; align-items:center; gap:12px; min-width:0"><span style="width:32px; height:32px; border-radius:50%; background:#F2F1EC; color:#141416; display:grid; place-items:center; font:700 13px/1 Figtree, sans-serif; flex:none">Y</span>You</span>
+          <span style="text-align:right">12</span><span style="text-align:right">6</span>
+          <span style="text-align:right; font-weight:600">−3</span>
+        </div>
+        <div style="display:grid; grid-template-columns:minmax(0,1.6fr) 1fr 1fr 1.3fr; gap:12px; align-items:center; padding:14px 16px; border-top:1px solid rgba(242,241,236,.08); font:500 16px/1 Figtree, sans-serif">
+          <span style="display:flex; align-items:center; gap:12px; min-width:0"><span style="width:32px; height:32px; border-radius:50%; background:#FFE14D; color:#10100C; display:grid; place-items:center; font:700 13px/1 Figtree, sans-serif; flex:none">T</span>Tomás</span>
+          <span style="text-align:right">4</span><span style="text-align:right">2</span>
+          <span style="text-align:right; font-weight:600">−9</span>
+        </div>
+      </div>
+      <p style="font:400 14px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.5); margin:16px 8px 0; text-wrap:pretty">Calibration is the gap between how sure you said you were and how often you were right, in points. Closer to zero is better. An example board.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="scroll-margin-top:72px; position:relative; overflow:hidden; background:#141416">
+  <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; opacity:1">
+    <div style="position:absolute; width:560px; height:400px; left:-10%; top:0; border-radius:50%; background:#FFE14D; opacity:.16; filter:blur(110px); animation:drift2 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:520px; height:400px; right:-8%; top:10%; border-radius:50%; background:#2DE0D2; opacity:.15; filter:blur(110px); animation:drift3 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:640px; height:420px; left:30%; bottom:-20%; border-radius:50%; background:#8B6CFF; opacity:.22; filter:blur(120px); animation:drift1 7s ease-in-out infinite alternate"></div>
+  </div>
+  <div style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px); text-align:center">
+    <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">Pricing</p>
+    <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 20px; text-wrap:balance">Make all five yours.</h2>
+    <p style="font:400 clamp(17px,1.5vw,20px)/1.5 Figtree, sans-serif; color:rgba(242,241,236,.68); margin:0 auto 48px; max-width:560px; text-wrap:pretty">Astute is free every morning. Astute+ chooses every card for you.</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:20px; max-width:880px; margin:0 auto; text-align:left">
+      <div style="border-radius:28px; padding:28px; background:rgba(20,20,22,.6); border:1px solid rgba(242,241,236,.12); display:flex; flex-direction:column; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px)">
+        <p style="font:600 28px/1 Fraunces, Georgia, serif; letter-spacing:-.01em; font-variation-settings:'opsz' 144; margin:0 0 18px">Free</p>
+        <p style="margin:0 0 24px; display:flex; align-items:baseline; gap:6px"><span style="font:600 44px/1 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144">€0</span><span style="font:400 15px/1 Figtree, sans-serif; color:rgba(242,241,236,.6)">every morning</span></p>
+        <ul style="list-style:none; margin:0 0 28px; padding:0; display:flex; flex-direction:column; gap:12px; font:400 16px/1.4 Figtree, sans-serif; color:rgba(242,241,236,.8)">
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>The question of the day</li>
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>The edition's cards</li>
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>One card of your own each day</li>
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>A week of archive</li>
+        </ul>
+        <a href="https://apps.apple.com/app/id6806852300" style="margin-top:auto; display:inline-flex; align-items:center; justify-content:center; height:48px; padding:0 22px; border-radius:22px; background:rgba(242,241,236,.1); color:#F2F1EC; font:600 15px/1 Figtree, sans-serif; text-decoration:none; border:1px solid rgba(242,241,236,.14); transition:background .2s" class="hover-lift" data-store>Download free</a>
+      </div>
+      <div style="border-radius:28px; padding:28px; background:rgba(20,20,22,.6); border:1.5px solid #F2F1EC; display:flex; flex-direction:column; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px)">
+        <p style="font:600 28px/1 Fraunces, Georgia, serif; letter-spacing:-.01em; font-variation-settings:'opsz' 144; margin:0 0 18px">Astute+</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 22px">
+          <button type="button" data-plan="yearly" aria-pressed="true" style="position:relative; text-align:left; padding:16px 14px 14px; border-radius:18px; background:rgba(242,241,236,.05); border:2px solid #F2F1EC; color:#F2F1EC; cursor:pointer; transition:border-color .2s">
+            <span style="position:absolute; top:-11px; left:14px; padding:5px 9px; border-radius:10px; background:#F2F1EC; color:#141416; font:700 10px/1 Figtree, sans-serif; letter-spacing:.1em; text-transform:uppercase">Save 37%</span>
+            <span style="display:flex; align-items:center; gap:8px; margin-bottom:10px"><span data-dot style="width:18px; height:18px; border-radius:50%; flex:none; display:grid; place-items:center; background:#F2F1EC; border:1.5px solid #F2F1EC; color:#141416; font:700 11px/1 Figtree, sans-serif">✓</span><span style="font:600 15px/1 Figtree, sans-serif">Yearly</span></span>
+            <span style="display:flex; align-items:baseline; gap:4px"><span style="font:600 26px/1 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144">€29.99</span><span style="font:400 13px/1 Figtree, sans-serif; color:rgba(242,241,236,.6)">/yr</span></span>
+            <span style="display:block; margin-top:8px; font:400 13px/1.3 Figtree, sans-serif; color:rgba(242,241,236,.6)">€2.49 a month · 7 days free</span>
+          </button>
+          <button type="button" data-plan="monthly" aria-pressed="false" style="text-align:left; padding:16px 14px 14px; border-radius:18px; background:rgba(242,241,236,.05); border:2px solid rgba(242,241,236,.14); color:#F2F1EC; cursor:pointer; transition:border-color .2s">
+            <span style="display:flex; align-items:center; gap:8px; margin-bottom:10px"><span data-dot style="width:18px; height:18px; border-radius:50%; flex:none; display:grid; place-items:center; background:transparent; border:1.5px solid rgba(242,241,236,.35); color:#141416; font:700 11px/1 Figtree, sans-serif"></span><span style="font:600 15px/1 Figtree, sans-serif">Monthly</span></span>
+            <span style="display:flex; align-items:baseline; gap:4px"><span style="font:600 26px/1 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144">€3.99</span><span style="font:400 13px/1 Figtree, sans-serif; color:rgba(242,241,236,.6)">/mo</span></span>
+            <span style="display:block; margin-top:8px; font:400 13px/1.3 Figtree, sans-serif; color:rgba(242,241,236,.6)">billed monthly</span>
+          </button>
+        </div>
+        <ul style="list-style:none; margin:0 0 28px; padding:0; display:flex; flex-direction:column; gap:12px; font:400 16px/1.4 Figtree, sans-serif; color:rgba(242,241,236,.85)">
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>All five cards chosen for you</li>
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>Your journey, subject by subject</li>
+          <li style="display:flex; gap:12px; align-items:flex-start"><span style="width:6px; height:6px; border-radius:50%; background:#F2F1EC; flex:none; margin-top:8px"></span>Your whole archive</li>
+        </ul>
+        <a id="plus-cta" class="press" data-store href="https://apps.apple.com/app/id6806852300" style="margin-top:auto; display:inline-flex; align-items:center; justify-content:center; height:48px; padding:0 22px; margin-bottom:5px; border-radius:22px; background:#F2F1EC; color:#141416; font:600 15px/1 Figtree, sans-serif; text-decoration:none; box-shadow:0 5px 0 0 #A8A59D; transition:transform .08s ease, box-shadow .08s ease">Try 7 days free, then €29.99/yr</a>
+      </div>
+    </div>
+    <p style="font:400 14px/1.5 Figtree, sans-serif; color:rgba(242,241,236,.5); margin:24px 0 0">Prices in euros; the App Store and Google Play show yours.</p>
+  </div>
+</section>
+
+<section id="faq" style="scroll-margin-top:72px; background:#141416">
+  <div style="max-width:800px; margin:0 auto; padding:clamp(72px,9vw,120px) clamp(20px,5vw,40px)">
+    <p style="font:700 11px/1 Figtree, sans-serif; letter-spacing:.14em; text-transform:uppercase; color:rgba(242,241,236,.6); margin:0 0 16px">FAQ</p>
+    <h2 style="font:600 clamp(34px,4.6vw,58px)/1.04 Fraunces, Georgia, serif; letter-spacing:-.02em; font-variation-settings:'opsz' 144; margin:0 0 36px">Questions.</h2>
+    <div style="border-bottom:1px solid rgba(242,241,236,.1)">
+      
+        <div data-faq-item class="open" style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="true" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>Is Astute free?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">Yes. Every morning you get the question of the day, the edition’s cards and one card of your own, with a week of archive. Astute+ makes all five cards yours.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>How does the free week work, and how do I cancel?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">Astute+ yearly starts with seven days free. Nothing is charged until the eighth day. Cancel before then and you pay nothing: on iPhone in Settings → Apple Account → Subscriptions, on Android in Google Play → Payments &amp; subscriptions → Subscriptions. Cancel later and you keep Astute+ until the period ends.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>Which languages?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">Thirteen. You choose yours in the app.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>Do I need an account?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">No. Astute starts anonymous. Sign in with Apple or Google when you want to keep your record on a new phone.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>What happens to my data?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">No ads, nothing sold. The details are in our <a href="/privacy" style="color:#F2F1EC; text-decoration:underline; text-underline-offset:3px">privacy policy</a>.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>How do I delete my account?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">In the app: Profile → Delete account.</p>
+            </div>
+          </div>
+        </div>
+      
+        <div data-faq-item style="border-top:1px solid rgba(242,241,236,.1)">
+          <h3 style="margin:0">
+            <button type="button" data-faq aria-expanded="false" style="width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px; padding:22px 0; background:none; border:0; color:#F2F1EC; text-align:left; cursor:pointer; font:600 18px/1.3 Figtree, sans-serif">
+              <span>Is it on Android?</span>
+              <span data-faq-icon aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; border:1px solid rgba(242,241,236,.25); display:grid; place-items:center; font:400 20px/1 Figtree, sans-serif;">+</span>
+            </button>
+          </h3>
+          <div data-faq-panel>
+            <div style="overflow:hidden; min-height:0">
+              <p style="margin:0 0 24px; font:400 16px/1.55 Figtree, sans-serif; color:rgba(242,241,236,.7); max-width:640px; text-wrap:pretty">Yes. Astute is on Google Play and the App Store, with the same cards every morning.</p>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</section>
+
+<section style="position:relative; overflow:hidden; background:#141416">
+  <div aria-hidden="true" style="position:absolute; inset:0; pointer-events:none; opacity:1">
+    <div style="position:absolute; width:520px; height:380px; left:5%; top:-20%; border-radius:50%; background:#FFE14D; opacity:.18; filter:blur(110px); animation:drift3 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:520px; height:380px; right:5%; top:0; border-radius:50%; background:#2DE0D2; opacity:.16; filter:blur(110px); animation:drift1 7s ease-in-out infinite alternate"></div>
+    <div style="position:absolute; width:600px; height:400px; left:35%; bottom:-30%; border-radius:50%; background:#8B6CFF; opacity:.24; filter:blur(120px); animation:drift2 7s ease-in-out infinite alternate"></div>
+  </div>
+  <div style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(96px,12vw,160px) clamp(20px,5vw,40px); text-align:center; display:flex; flex-direction:column; align-items:center; gap:32px">
+    <h2 style="font:600 clamp(44px,7.5vw,104px)/.98 Fraunces, Georgia, serif; letter-spacing:-.025em; font-variation-settings:'opsz' 144; margin:0; text-wrap:balance">Two minutes.<br>Every morning.</h2>
+    <div class="stores large center">
+        <a href="https://apps.apple.com/app/id6806852300"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.astuto.app"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>
+      </div>
+    <p style="margin:0; font:500 13px/1 Figtree, sans-serif; color:rgba(242,241,236,.55)">Free on iPhone and Android</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div>
+    <a class="brand" href="#top">
+      <img src="/assets/icon.webp" width="28" height="28" alt="" loading="lazy">
+      <span>Astute</span>
+    </a>
+    <nav aria-label="Footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/support">Support</a>
+      <a href="mailto:thebalecompany@gmail.com">thebalecompany@gmail.com</a>
+    </nav>
+    <div class="fine">
+      <span>© 2026 TheBaleCompany</span>
+      <span>Available in 13 languages</span>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

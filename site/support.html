@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Astute · Support</title>
-  <meta name="description" content="Help with Astute: purchases, subscriptions, your account and your data.">
-  <meta name="theme-color" content="#141416">
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="stylesheet" href="/style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Astute · Support</title>
+<meta name="description" content="Help with Astute: purchases, subscriptions, your account and your data.">
+<meta name="theme-color" content="#141416">
+<link rel="canonical" href="https://astutetheapp.com/support">
+<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script>document.documentElement.classList.add('js')</script>
+<script src="/assets/main.js" defer></script>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <a class="brand" href="/">
-      <img src="/icon.png" alt="" width="36" height="36">
-      <span class="serif">Astute</span>
+
+<header class="site-nav">
+  <nav aria-label="Main">
+    <a class="brand" href="/" aria-label="Astute — home">
+      <img src="/assets/icon.webp" width="32" height="32" alt="">
+      <span>Astute</span>
     </a>
-  </header>
-</div>
+    <div class="nav-links" data-hide-mobile>
+      <a href="/#how">How it works</a>
+      <a href="/#science">The science</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#faq">FAQ</a>
+    </div>
+    <div class="nav-actions">
+      <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+      <a class="btn-download" href="https://apps.apple.com/app/id6806852300" data-store>Download</a>
+    </div>
+  </nav>
+  <div id="mobile-menu" data-hide-desktop hidden>
+      <a href="/#how">How it works</a>
+      <a href="/#science">The science</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/#faq">FAQ</a>
+  </div>
+</header>
+
 <main class="doc">
 
 <section id="en" lang="en">
@@ -27,10 +50,10 @@
   <p class="langs"><a href="#it">Leggi in italiano</a></p>
 
   <h2>Restore a purchase</h2>
-  <p>Open Astute, go to the Astute+ screen and tap Restore purchases, signed in to the App Store with the same Apple ID you bought with.</p>
+  <p>Open Astute, go to the Astute+ screen and tap Restore purchases, signed in to the store with the account you bought with: your Apple ID on iPhone, your Google account on Android.</p>
 
   <h2>Cancel a subscription</h2>
-  <p>On your iPhone: Settings → your name → Subscriptions → Astute → Cancel subscription. Or in the app: Profile → Manage subscription. Cancel at least 24 hours before the end of the current period or of the free trial.</p>
+  <p>On iPhone: Settings → your name → Subscriptions → Astute → Cancel subscription. On Android: Google Play → Payments &amp; subscriptions → Subscriptions → Astute → Cancel subscription. Or in the app: Profile → Manage subscription. Cancel at least 24 hours before the end of the current period or of the free trial.</p>
 
   <h2>Delete your account</h2>
   <p>In the app: Profile → Delete account. Your account, its backup and your board for friends are deleted, and the phone starts again from the beginning. Deleting the account does not cancel an Astute+ subscription.</p>
@@ -53,10 +76,10 @@
   <p class="langs"><a href="#en">Read in English</a></p>
 
   <h2>Ripristinare un acquisto</h2>
-  <p>Apri Astute, vai alla schermata di Astute+ e tocca Ripristina acquisti, con l’App Store collegato allo stesso ID Apple con cui hai comprato.</p>
+  <p>Apri Astute, vai alla schermata di Astute+ e tocca Ripristina acquisti, con lo store collegato all’account con cui hai comprato: l’ID Apple su iPhone, l’account Google su Android.</p>
 
   <h2>Disdire un abbonamento</h2>
-  <p>Sull’iPhone: Impostazioni → il tuo nome → Abbonamenti → Astute → Annulla abbonamento. Oppure nell’app: Profilo → Gestisci abbonamento. Disdici almeno 24 ore prima della fine del periodo in corso o della prova gratuita.</p>
+  <p>Su iPhone: Impostazioni → il tuo nome → Abbonamenti → Astute → Annulla abbonamento. Su Android: Google Play → Pagamenti e abbonamenti → Abbonamenti → Astute → Annulla abbonamento. Oppure nell’app: Profilo → Gestisci abbonamento. Disdici almeno 24 ore prima della fine del periodo in corso o della prova gratuita.</p>
 
   <h2>Eliminare l’account</h2>
   <p>Nell’app: Profilo → Elimina account. Vengono eliminati l’account, il suo backup e la scheda per gli amici, e il telefono riparte dall’inizio. Eliminare l’account non disdice l’abbonamento Astute+.</p>
@@ -72,15 +95,23 @@
 </section>
 
 </main>
-<footer class="foot">
-  <div class="wrap">
-    <nav aria-label="Legal">
+
+<footer class="site-foot">
+  <div>
+    <a class="brand" href="/">
+      <img src="/assets/icon.webp" width="28" height="28" alt="" loading="lazy">
+      <span>Astute</span>
+    </a>
+    <nav aria-label="Footer">
       <a href="/privacy">Privacy</a>
       <a href="/terms">Terms</a>
       <a href="/support">Support</a>
       <a href="mailto:thebalecompany@gmail.com">thebalecompany@gmail.com</a>
     </nav>
-    <span>© 2026 Lorenzo Ballestrazzi</span>
+    <div class="fine">
+      <span>© 2026 TheBaleCompany</span>
+      <span>Available in 13 languages</span>
+    </div>
   </div>
 </footer>
 </body>
