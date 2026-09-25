@@ -1,0 +1,38 @@
+name: Domain check
+
+# Asks the world's DNS what astutetheapp.com points at, and what answers
+# there — the check a phone cannot run and the development sandbox is not
+# allowed to. Run it by hand from the Actions tab, or change this file.
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/domain-check.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: What the DNS says
+        run: |
+          sudo apt-get install -y -qq whois dnsutils >/dev/null 2>&1 || true
+          for name in astutetheapp.com www.astutetheapp.com; do
+            echo "== $name"
+            for type in NS SOA A AAAA CNAME; do
+              echo "-- $type via Google: $(dig +short @8.8.8.8 "$name" "$type" | tr '\n' ' ')"
+              echo "-- $type via Cloudflare: $(dig +short @1.1.1.1 "$name" "$type" | tr '\n' ' ')"
+            done
+          done
+          echo "== The registry"
+          whois astutetheapp.com | grep -i -E "registrar:|name server|creation date|domain status" | head -20 || true
+
+      - name: What answers there
+        run: |
+          echo "== http"
+          curl -sSI -m 20 http://astutetheapp.com/ | head -12 || true
+          echo "== https"
+          curl -sSI -m 20 https://astutetheapp.com/ | head -12 || true
+          echo "== www"
+          curl -sSI -m 20 http://www.astutetheapp.com/ | head -12 || true
