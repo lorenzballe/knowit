@@ -1,7 +1,7 @@
 name: Fetch store badges (one-off)
 
-# Downloads the official App Store and Google Play badges and prints them
-# into the log, for the site. Removed again once they are in site/assets.
+# Downloads the official App Store and Google Play badges into
+# site/assets/badges and commits them. Removed once they are in.
 
 on:
   push:
@@ -9,18 +9,44 @@ on:
     paths:
       - ".github/workflows/fetch-badges.yml"
 
+permissions:
+  contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl -sSfL -o apple.svg "https://tools.applemarketingtools.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" || true
-          curl -sSfL -o play.png "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" || true
-          curl -sSfL -A "Mozilla/5.0 (badge fetch for astutetheapp.com)" -o play.svg "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" || true
-          for f in apple.svg play.png play.svg; do
-            [ -s "$f" ] || { echo "== missing $f"; continue; }
-            echo "== begin $f $(wc -c < "$f") $(sha256sum "$f" | cut -c1-16)"
-            base64 -w 0 "$f" | fold -w 3000
-            echo
-            echo "== end $f"
-          done
+      - uses: actions/checkout@v4
+
+      - name: Download the badges
+        run: |
+          mkdir -p site/assets/badges
+          cd site/assets/badges
+          # The first address that answers with the right kind of file wins.
+          get() {
+            out=$1; kind=$2; shift 2
+            for u in "$@"; do
+              if curl -sSfL -A "Mozilla/5.0 (astutetheapp.com badge fetch)" -o "$out" "$u" && grep -qa "$kind" "$out"; then
+                echo "$out ← $u ($(wc -c < "$out") bytes)"; return 0
+              fi
+              echo "  not from $u"; rm -f "$out"
+            done
+          }
+          get app-store.svg "<svg" \
+            "https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?size=250x83" \
+            "https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" \
+            "https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" \
+            "https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg"
+          get google-play.png "PNG" \
+            "https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+          get google-play.svg "<svg" \
+            "https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+          ls -la
+
+      - name: Commit them
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/assets/badges
+          git commit -m "Official App Store and Google Play badges for the site" || exit 0
+          git push
