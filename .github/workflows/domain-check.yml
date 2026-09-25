@@ -162,3 +162,60 @@ jobs:
           case "$http" in 301\ https://*) ;; *) echo "- tick Enforce HTTPS" ;; esac
           echo "== Verdict: records=${RECORDS:-no} world=${WORLD:-no} https=${HTTPS:-no}"
           [ "$HTTPS" = ok ]
+
+      # What a phone in Italy gets: Globalping's volunteer probes there ask
+      # their own provider's DNS, then open the site over HTTPS.
+      - name: From Italy
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.request
+          api = "https://api.globalping.io/v1/measurements"
+          domain = os.environ["DOMAIN"]
+
+          def start(body):
+              req = urllib.request.Request(api, data=json.dumps(body).encode(),
+                                           headers={"Content-Type": "application/json"})
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  return json.load(r)["id"]
+
+          def result(mid):
+              for _ in range(30):
+                  with urllib.request.urlopen(f"{api}/{mid}", timeout=30) as r:
+                      m = json.load(r)
+                  if m["status"] != "in-progress":
+                      break
+                  time.sleep(2)
+              return m["results"]
+
+          where = [{"country": "IT", "limit": 5}]
+          try:
+              dns = result(start({"type": "dns", "target": domain, "locations": where,
+                                  "measurementOptions": {"query": {"type": "A"}}}))
+              web = result(start({"type": "http", "target": domain, "locations": where,
+                                  "measurementOptions": {"protocol": "HTTPS",
+                                                         "request": {"method": "HEAD", "path": "/"}}}))
+          except Exception as e:
+              print("Globalping did not answer:", e)
+              raise SystemExit(0)
+
+          def probe(r):
+              p = r["probe"]
+              return f"{p.get('city')}, {p.get('network')}"
+
+          print("== DNS from Italy, through each probe's own resolver")
+          for r in dns:
+              res = r["result"]
+              said = " ".join(a.get("value", "") for a in res.get("answers") or [])
+              print(f"{probe(r)}: {said or res.get('statusCodeName') or (res.get('rawOutput') or '')[:120]}")
+          print("== HTTPS from Italy")
+          for r in web:
+              res = r["result"]
+              tls = res.get("tls") or {}
+              if res.get("statusCode"):
+                  cert = "good" if tls.get("authorized") else f"refused: {tls.get('error')}"
+                  cn = (tls.get("subject") or {}).get("CN", "")
+                  print(f"{probe(r)}: {res['statusCode']} from {res.get('resolvedAddress')} · certificate {cert} {cn}")
+              else:
+                  print(f"{probe(r)}: {(res.get('rawOutput') or '')[:160]}")
+          PY
