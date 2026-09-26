@@ -655,6 +655,20 @@ dashboards, and has to agree with three names here.
   (`lib/legal.dart`), in English and Italian, naming every service that
   handles a reader's data — a test holds it to that list. The listing's
   description needs the terms link too.
+- **Google Play's reviewers** must see what is sold, may not pay and may
+  not use a free trial, and Astute has no sign-in to lend them. So the
+  Android app takes one code, written only into Play Console → App content
+  → App access: long-press the ASTUTE+ badge on the Astute+ screen, type it,
+  and Astute+ is on for that phone (`lib/sync/review_access.dart`). Only
+  its SHA-256 ships; the code is in Play Console and not in this
+  repository. An iPhone never asks — Apple's reviewers buy in the sandbox,
+  and Apple does not allow codes that open what the app sells.
+- **Nothing to sell is not Astute+ for nothing.** When the store has put no
+  plan on sale, the buy button unlocks locally only on the web preview and
+  in debug builds, so their gated screens can be seen; a store build says
+  the purchase did not go through. And the developer tools at the foot of
+  the profile, which can switch Astute+ on, stay out of any build that goes
+  to review or to readers: build it with `--dart-define=DEBUG_TOOLS=false`.
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the

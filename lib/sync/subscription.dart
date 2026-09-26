@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
+import 'review_access.dart';
 
 /// The one entitlement Astute sells. Everything gated asks this by name.
 ///
@@ -70,13 +72,57 @@ class Subscription extends ChangeNotifier {
 
   bool _ready = false;
   bool _isPlus = false;
+  bool _reviewAccess = false;
   Offering? _offering;
 
   /// True once the store has answered at least once. Until then the app
   /// should not claim the reader has nothing.
   bool get ready => _ready;
 
-  bool get isPlus => _isPlus;
+  /// Astute+ as the store holds it, or as a reviewer's code opened it.
+  bool get isPlus => _isPlus || _reviewAccess;
+
+  /// True on the Android phone a Google Play reviewer unlocked with the code
+  /// Play Console gave them (see review_access.dart). Nobody else has it.
+  bool get reviewAccess => _reviewAccess;
+
+  /// The hash the reviewers' code is checked against; a test brings its own.
+  @visibleForTesting
+  String reviewCodeHash = kReviewCodeSha256;
+
+  /// Turns Astute+ on for this phone when [code] is the reviewers' code.
+  ///
+  /// Kept on the phone, so a reviewer who comes back finds it still open.
+  /// Nothing is bought and the store is not told: this is not a purchase.
+  Future<bool> redeemReviewCode(String code) async {
+    if (!reviewCodeOffered) return false;
+    final bool right = reviewCodeMatches(code, hash: reviewCodeHash);
+    Analytics.capture(right ? 'review access granted' : 'review code refused');
+    if (!right) return false;
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(kReviewAccessPref, true);
+    } catch (_) {
+      // Still open for this session; it is only the relaunch that forgets.
+    }
+    _reviewAccess = true;
+    notifyListeners();
+    return true;
+  }
+
+  /// Picks a reviewer's unlock back up after a relaunch.
+  Future<void> _loadReviewAccess() async {
+    if (!reviewCodeOffered || _reviewAccess) return;
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool(kReviewAccessPref) ?? false) {
+        _reviewAccess = true;
+        notifyListeners();
+      }
+    } catch (_) {
+      // No preferences, no reviewer: the free plan, as for anyone.
+    }
+  }
 
   /// What is on sale, or null when the store has not answered — in which
   /// case the paywall falls back to the prices written into the app.
@@ -113,6 +159,7 @@ class Subscription extends ChangeNotifier {
   /// reader rather than the phone. Never throws: a store that will not answer
   /// leaves a reader on the free plan, not in front of a crash.
   Future<void> start({required String? accountId}) async {
+    await _loadReviewAccess();
     if (_key.isEmpty) return;
     final Stopwatch took = Stopwatch()..start();
     try {

@@ -292,7 +292,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     final Subscription store = Subscription.instance;
     // Until the store has answered, the app should not decide the reader has
     // nothing: a launch with no network would drop them off their own plan.
-    if (store.ready) _app.applyEntitlement(store.isPlus);
+    // A reviewer's code needs no store to answer: it is already on the phone.
+    if (store.ready || store.reviewAccess) _app.applyEntitlement(store.isPlus);
   }
 
   /// A token the system reissued is one the server can no longer reach, so

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../analytics.dart';
@@ -10,6 +11,7 @@ import '../legal.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../state/app_state.dart';
+import '../sync/review_access.dart';
 import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/chunky.dart';
@@ -215,8 +217,17 @@ class _PaywallScreenState extends State<PaywallScreen> {
       'has_package': package != null,
     });
 
-    // No store to buy from: unlock locally so the gated screens can be seen,
-    // and say so rather than letting it look like a purchase.
+    // No store to buy from. On the web preview, and while developing, unlock
+    // locally so the gated screens can be seen, and say so rather than let
+    // it look like a purchase. In a store build it means the store did not
+    // answer, and buying nothing must not open Astute+.
+    if (package == null && !kIsWeb && !kDebugMode) {
+      Analytics.capture('purchase unavailable', {'source': widget.source});
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.thatDidNotGoThrough)));
+      return;
+    }
     if (package == null) {
       await widget.app.startPlusTrial();
       if (!mounted) return;
@@ -251,6 +262,31 @@ class _PaywallScreenState extends State<PaywallScreen> {
           SnackBar(content: Text(context.l10n.thatDidNotGoThrough)),
         );
     }
+  }
+
+  /// Google Play's reviewers cannot pay, so they type the code Play Console
+  /// gave them. In English, as Google asks, and shown to nobody else: the
+  /// badge only listens for a long press on Android.
+  Future<void> _askReviewCode() async {
+    final String? code = await showDialog<String>(
+      context: context,
+      builder: (context) => const _ReviewCodeDialog(),
+    );
+    if (code == null || code.trim().isEmpty || !mounted) return;
+    final bool open = await _store.redeemReviewCode(code);
+    if (!mounted) return;
+    if (!open) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('That code is not right.')));
+      return;
+    }
+    await widget.app.applyEntitlement(true);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Astute+ is on for this device.')),
+    );
+    _leaveBy('review access');
   }
 
   /// Apple requires a way back to something already paid for, and a reader on
@@ -303,31 +339,36 @@ class _PaywallScreenState extends State<PaywallScreen> {
                   // The badge and the way out share a row.
                   Row(
                     children: [
-                      Container(
-                        height: 34,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: p.inverse,
-                          borderRadius: BorderRadius.circular(99),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(
-                                alpha: dark ? 0.4 : 0.12,
+                      GestureDetector(
+                        // Google Play's reviewers get in here with the code
+                        // Play Console gives them; see review_access.dart.
+                        onLongPress: reviewCodeOffered ? _askReviewCode : null,
+                        child: Container(
+                          height: 34,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: p.inverse,
+                            borderRadius: BorderRadius.circular(99),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(
+                                  alpha: dark ? 0.4 : 0.12,
+                                ),
+                                blurRadius: 18,
+                                offset: const Offset(0, 6),
                               ),
-                              blurRadius: 18,
-                              offset: const Offset(0, 6),
+                            ],
+                          ),
+                          child: Text(
+                            l.plusNameCaps,
+                            style: AppText.label(
+                              size: 12,
+                              weight: FontWeight.w700,
+                              spacing: 2.4,
+                              height: 1,
+                              color: p.onInverse,
                             ),
-                          ],
-                        ),
-                        child: Text(
-                          l.plusNameCaps,
-                          style: AppText.label(
-                            size: 12,
-                            weight: FontWeight.w700,
-                            spacing: 2.4,
-                            height: 1,
-                            color: p.onInverse,
                           ),
                         ),
                       ),
@@ -560,6 +601,48 @@ TextStyle _smallPrintStyle(BuildContext context) => AppText.body(
 );
 
 /// A piece of the last line of small print that does something when
+/// Asks a reviewer for their code. Its own widget so the field's controller
+/// lives exactly as long as the dialog does.
+class _ReviewCodeDialog extends StatefulWidget {
+  const _ReviewCodeDialog();
+
+  @override
+  State<_ReviewCodeDialog> createState() => _ReviewCodeDialogState();
+}
+
+class _ReviewCodeDialogState extends State<_ReviewCodeDialog> {
+  final TextEditingController _field = TextEditingController();
+
+  @override
+  void dispose() {
+    _field.dispose();
+    super.dispose();
+  }
+
+  void _unlock() => Navigator.of(context).pop(_field.text);
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('Review access'),
+    content: TextField(
+      controller: _field,
+      autofocus: true,
+      autocorrect: false,
+      enableSuggestions: false,
+      textCapitalization: TextCapitalization.characters,
+      decoration: const InputDecoration(hintText: 'Code from Play Console'),
+      onSubmitted: (_) => _unlock(),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.of(context).pop(),
+        child: const Text('Cancel'),
+      ),
+      TextButton(onPressed: _unlock, child: const Text('Unlock')),
+    ],
+  );
+}
+
 /// tapped — restore, the terms, the privacy policy — and the dot between two
 /// of them.
 class _SmallLink extends StatelessWidget {
