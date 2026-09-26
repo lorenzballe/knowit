@@ -1,0 +1,39 @@
+{
+  "id": "medicine-germ-theory-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in 1840s Vienna, mothers who gave birth in the street died of childbed fever less often than hospital mothers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ignaz Semmelweis noticed that women who delivered on the way to the hospital rarely caught it. In the doctors' ward, 1840 to 1846, about 98 mothers in 1,000 died; in the midwives' ward, 36. Doctors came straight from dissecting corpses. After chlorine handwashing began in 1847, the doctors' ward fell to about 13 in 1,000.",
+  "move": "When the untreated do better, look at what the treatment carries in.",
+  "trap": "Assuming a hospital birth with doctors must be the safer one.",
+  "keywords": [
+    "ignaz semmelweis",
+    "childbed fever",
+    "vienna",
+    "handwashing",
+    "street births"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loudon, James Lind Library, 2013",
+  "source_kind": "paper",
+  "reference": "https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/",
+  "written": "2026-09-26"
+}
