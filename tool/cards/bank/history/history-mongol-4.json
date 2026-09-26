@@ -1,0 +1,42 @@
+{
+  "id": "history-mongol-4",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "About 16 million men share a male-line ancestor who lived in Mongolia about 1,000 years ago. How many doublings turn one man into 16 million?",
+  "value": 24,
+  "unit": "doublings",
+  "answer": "Four more: 1 million x 16 = 16 million, so 24 doublings in all.",
+  "move": "Doubling needs far fewer steps than intuition expects.",
+  "trap": "Guessing hundreds of generations, far more than 1,000 years allow.",
+  "hint": "The lineage is linked to Genghis Khan's family. Count the doublings to a thousand, then to a million.",
+  "steps": [
+    "Ten doublings turn 1 into 1,024, roughly a thousand.",
+    "Ten more turn a thousand into roughly a million.",
+    "Four more: 1 million x 16 = 16 million, so 24 doublings in all."
+  ],
+  "keywords": [
+    "genghis khan",
+    "y chromosome",
+    "descendants",
+    "doubling",
+    "genetics"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Zerjal et al., Am. J. Human Genetics, 2003",
+  "source_kind": "paper",
+  "reference": "Zerjal et al., The Genetic Legacy of the Mongols, American Journal of Human Genetics 72, 2003",
+  "written": "2026-09-26"
+}

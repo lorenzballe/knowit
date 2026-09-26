@@ -1,0 +1,44 @@
+{
+  "id": "history-mongol-5",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "also": [
+    "history.middle_ages.plague"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Which is likelier: plague reached Italy by ship from the Black Sea, or Mongols hurled corpses into Caffa and fleeing ships brought it?",
+  "options": [
+    "They are equally likely",
+    "The Caffa catapult story",
+    "Plague arriving by ship"
+  ],
+  "correct": 2,
+  "answer": "Plague arriving by ship. Every way the Caffa story can be true is also a way plague came by ship from the Black Sea, so it cannot be likelier. The catapult tale rests largely on one writer, the notary Gabriele de' Mussis of Piacenza, who was probably never there; plague had many routes west.",
+  "move": "Each added detail makes a story more vivid and less likely.",
+  "trap": "The Caffa catapult story, because its detail makes it convincing.",
+  "simply": "Picture every ship that sailed west from the Black Sea in 1347. The ones fleeing Caffa after a catapult attack are some of them, never more.",
+  "keywords": [
+    "caffa",
+    "black death",
+    "golden horde",
+    "gabriele de' mussis",
+    "siege warfare"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Wheelis, Emerging Infectious Diseases, 2002",
+  "source_kind": "paper",
+  "reference": "Wheelis, Biological Warfare at the 1346 Siege of Caffa, Emerging Infectious Diseases 8, 2002",
+  "written": "2026-09-26"
+}

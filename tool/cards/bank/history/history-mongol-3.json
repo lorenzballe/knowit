@@ -1,0 +1,33 @@
+{
+  "id": "history-mongol-3",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What else, besides a Great Khan's death, may have pushed the Mongols out of Hungary in 1242?",
+  "answer": "Possibly mud. A 2016 study of tree rings and written records found warm, dry summers from 1238 to 1241, then a cold, wet start to 1242 that likely turned the Hungarian plain into marsh. For an army of horsemen, a flooded plain meant lost pasture and stalled columns. Historians still weigh it against Ögedei's death.",
+  "move": "Before crediting a decision to politics, check what the ground was like.",
+  "keywords": [
+    "mongol invasion of hungary",
+    "tree rings",
+    "climate",
+    "ögedei",
+    "1242"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Büntgen and Di Cosmo, Scientific Reports, 2016",
+  "source_kind": "paper",
+  "reference": "Büntgen and Di Cosmo, Climatic and environmental aspects of the Mongol withdrawal from Hungary in 1242 CE, Scientific Reports 6, 2016",
+  "written": "2026-09-26"
+}

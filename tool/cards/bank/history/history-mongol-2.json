@@ -1,0 +1,33 @@
+{
+  "id": "history-mongol-2",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who carried out the first census of the Russian lands?",
+  "answer": "Their Mongol overlords. In 1257 census-takers sent by the Golden Horde, the Mongol state on the Volga, counted the households of Suzdal, Riazan and Murom to fix tribute and military levies. Novgorod rioted and held out until 1259, when the count went ahead under the eye of Grand Prince Alexander Nevsky.",
+  "move": "Counting people is usually the first step in taxing them.",
+  "keywords": [
+    "census",
+    "golden horde",
+    "novgorod",
+    "alexander nevsky",
+    "tribute"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halperin, Russia and the Golden Horde, 1985",
+  "source_kind": "book",
+  "reference": "Halperin, Russia and the Golden Horde: The Mongol Impact on Medieval Russian History, Indiana University Press, 1985",
+  "written": "2026-09-26"
+}

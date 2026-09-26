@@ -1,0 +1,33 @@
+{
+  "id": "space-moon-dust-3",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a full moon far more than twice as bright as a half moon?",
+  "answer": "Because of the dust. At full moon the Sun is directly behind the observer, so every grain hides its own shadow, and light scattered back along its path reinforces itself. From first quarter to full, the lit area only doubles but the brightness rises about tenfold: a field of dust with every shadow switched off.",
+  "move": "When an effect far outruns its obvious cause, look for a second mechanism.",
+  "keywords": [
+    "opposition surge",
+    "full moon",
+    "shadow hiding",
+    "coherent backscatter",
+    "regolith"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hapke, Nelson & Smythe, Science, 1993",
+  "source_kind": "paper",
+  "reference": "Hapke, Nelson & Smythe, The Opposition Effect of the Moon: The Contribution of Coherent Backscatter, Science, 1993",
+  "written": "2026-09-26"
+}

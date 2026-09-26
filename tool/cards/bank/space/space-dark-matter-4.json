@@ -33,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Sarazin, X-ray Emission from Clusters of Galaxies, 1988",
-  "source_kind": "book",
-  "reference": "Sarazin, X-ray Emission from Clusters of Galaxies, Cambridge University Press, 1988",
+  "source": "Gonzalez et al., Astrophysical Journal, 2013",
+  "source_kind": "paper",
+  "reference": "Gonzalez, Sivanandam, Zabludoff & Zaritsky, Galaxy Cluster Baryon Fractions Revisited, The Astrophysical Journal 778, 14, 2013",
   "written": "2026-09-26"
 }

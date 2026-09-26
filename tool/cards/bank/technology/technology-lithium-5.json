@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. The lithium shuttles as ions between graphite and a metal oxide. Earlier rechargeable cells used lithium metal, which grew needle-like crystals as they recharged, pierced the separator and could catch fire. Akira Yoshino swapped in carbon in 1985; the first lithium-ion cells went on sale in 1991. The ion in the name marks the missing metal.",
+  "answer": "True. The lithium shuttles as ions between graphite and a metal oxide. Earlier rechargeables used lithium metal, which grew needle-like crystals as they recharged, pierced the separator and could catch fire. Akira Yoshino swapped in carbon in 1985; lithium-ion cells went on sale in 1991. The ion in the name marks the missing metal.",
   "move": "Progress sometimes means removing the ingredient everyone assumes is essential.",
   "trap": "Reading the name as a promise of lithium metal inside.",
   "keywords": [
