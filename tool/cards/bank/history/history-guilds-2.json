@@ -1,0 +1,39 @@
+{
+  "id": "history-guilds-2",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: some medieval guilds were run by and for women?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Book of Trades drawn up for Paris around 1268 records trades held as female monopolies, among them two kinds of silk spinning, silk ribbon-making and the making of silk head-coverings. Cologne later had guilds made up mainly of women. Where the thread was silk, the masters were often women.",
+  "move": "Check the exceptions before accepting a rule about who was shut out.",
+  "trap": "False, because guilds were brotherhoods of male masters.",
+  "keywords": [
+    "women's guilds",
+    "livre des métiers",
+    "silk",
+    "paris",
+    "cologne"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farmer, The Silk Industries of Medieval Paris",
+  "source_kind": "book",
+  "reference": "ISBN 9780812248487",
+  "written": "2026-09-26"
+}

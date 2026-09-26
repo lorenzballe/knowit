@@ -1,0 +1,33 @@
+{
+  "id": "history-1848-4",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did slavery end in the Danish West Indies in 1848?",
+  "answer": "In an afternoon, by revolt. On 3 July 1848, with thousands of enslaved people massed at Frederiksted, St Croix, under a leader called General Buddhoe, Governor-General Peter von Scholten proclaimed immediate emancipation, overriding Denmark's plan to phase slavery out by 1859. It followed France's abolition in its Caribbean colonies that spring.",
+  "move": "Gradual timetables are set by those who can afford to wait.",
+  "keywords": [
+    "st croix",
+    "danish west indies",
+    "emancipation",
+    "general buddhoe",
+    "peter von scholten"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, Slave Society in the Danish West Indies",
+  "source_kind": "book",
+  "reference": "Hall, Slave Society in the Danish West Indies: St Thomas, St John and St Croix, ed. Higman, Johns Hopkins University Press, 1992",
+  "written": "2026-09-26"
+}

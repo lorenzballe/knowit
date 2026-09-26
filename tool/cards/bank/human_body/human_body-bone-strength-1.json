@@ -1,0 +1,33 @@
+{
+  "id": "human_body-bone-strength-1",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What inside a bone senses how hard it is being used?",
+  "answer": "Cells buried in it. About 42 billion osteocytes sit walled into the mineral, each linked to its neighbours through hair-thin channels. When a bone bends, fluid is squeezed through those channels; the osteocytes read the flow and signal the cells that add or remove bone. In orbit, with little to bend them, astronauts' bones thin.",
+  "move": "The part that feels the strain is often hidden inside the structure.",
+  "keywords": [
+    "osteocytes",
+    "bone remodelling",
+    "mechanosensing",
+    "canaliculi",
+    "astronauts"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Buenzli & Sims, Bone, 2015",
+  "source_kind": "paper",
+  "reference": "Buenzli & Sims, Quantifying the osteocyte network in the human skeleton, Bone, 2015",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "human_body-bone-strength-3",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Scale a person up to twice the height, keeping every proportion. How many times more stress does each thigh bone bear?",
+  "value": 2,
+  "unit": "times",
+  "answer": "Stress is load per area: 8 / 4 = 2 times.",
+  "move": "When size grows, check whether the load or the support grows faster.",
+  "trap": "Answering 8, the growth in weight, and forgetting the thicker bones.",
+  "hint": "Weight follows volume, but a bone's strength follows the area of its cross-section.",
+  "steps": [
+    "Weight grows with volume: 2 x 2 x 2 = 8 times.",
+    "A bone's cross-section grows with area: 2 x 2 = 4 times.",
+    "Stress is load per area: 8 / 4 = 2 times."
+  ],
+  "keywords": [
+    "square-cube law",
+    "bone stress",
+    "giants",
+    "scaling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haldane, On Being the Right Size, 1927",
+  "source_kind": "book",
+  "reference": "Haldane, On Being the Right Size, in Possible Worlds and Other Essays, Chatto & Windus, 1927",
+  "written": "2026-09-26"
+}

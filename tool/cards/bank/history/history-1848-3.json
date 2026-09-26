@@ -1,0 +1,33 @@
+{
+  "id": "history-1848-3",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the supposedly failed revolutions of 1848 permanently win in the Austrian Empire?",
+  "answer": "The end of serfdom. Over nine in ten people there were peasants, and their revolts drew more people than the national uprisings. In September 1848 the Vienna parliament, on Hans Kudlich's motion, abolished compulsory labour dues, and the restored emperor kept the reform. Freed peasants then had little reason to fight on.",
+  "move": "Grant a group its main demand and it may leave the coalition.",
+  "keywords": [
+    "serfdom",
+    "hans kudlich",
+    "austrian empire",
+    "peasants",
+    "labour dues"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sperber, The European Revolutions, 1848–1851, 2005",
+  "source_kind": "book",
+  "reference": "Sperber, The European Revolutions, 1848–1851, 2nd edition, Cambridge University Press, 2005",
+  "written": "2026-09-26"
+}

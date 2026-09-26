@@ -1,0 +1,33 @@
+{
+  "id": "science-rust-5",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a scratch rust faster on a tinned steel can than on a galvanised steel bucket?",
+  "answer": "Zinc corrodes in the steel's place; tin makes the steel corrode instead. Where zinc and iron touch in wet air, zinc gives up electrons first, protecting even a bare scratch. Tin corrodes less readily than iron, so at a scratch the exposed iron dissolves, faster than on an uncoated can.",
+  "move": "A protective layer can make the damage worse wherever it breaks.",
+  "keywords": [
+    "galvanising",
+    "tin plate",
+    "zinc",
+    "galvanic corrosion",
+    "scratches"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones, Principles and Prevention of Corrosion, 1996",
+  "source_kind": "book",
+  "reference": "Jones, Principles and Prevention of Corrosion, 2nd edition, Prentice Hall, 1996",
+  "written": "2026-09-26"
+}

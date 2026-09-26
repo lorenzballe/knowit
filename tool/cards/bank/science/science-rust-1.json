@@ -1,0 +1,39 @@
+{
+  "id": "science-rust-1",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: iron rusts faster in seawater than in a brine several times saltier?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Salt speeds rust by letting electric current flow through the water between patches of metal, but rust also needs dissolved oxygen, and the saltier the water, the less oxygen it holds. The rate peaks at a few per cent salt, about seawater's strength, and falls in a saturated brine of 26%.",
+  "move": "When more of a cause stops working, something else has run short.",
+  "trap": "Assuming that the saltier the water, the faster the rust.",
+  "keywords": [
+    "rust",
+    "seawater",
+    "brine",
+    "dissolved oxygen",
+    "corrosion rate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Revie and Uhlig, Corrosion and Corrosion Control, 2008",
+  "source_kind": "book",
+  "reference": "Revie and Uhlig, Corrosion and Corrosion Control, 4th edition, Wiley, 2008",
+  "written": "2026-09-26"
+}

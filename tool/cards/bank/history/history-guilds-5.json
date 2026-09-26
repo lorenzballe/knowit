@@ -1,0 +1,40 @@
+{
+  "id": "history-guilds-5",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1378 the wool carders of Florence, the Ciompi, rose in revolt. What was their central demand?",
+  "options": [
+    "A guild of their own",
+    "The abolition of all guilds",
+    "Cheaper bread for the poor"
+  ],
+  "correct": 0,
+  "answer": "A guild of their own. The carders worked under the wool guild, the Arte della Lana, subject to its rules and courts but barred from joining or organising. In July 1378 they seized power, and three new guilds, one of them theirs, joined Florence's 21. By the end of August they were crushed and their guild abolished.",
+  "move": "People shut out of a system usually want a seat in it.",
+  "trap": "The abolition of all guilds, since guilds were the bosses' tool.",
+  "keywords": [
+    "ciompi",
+    "florence",
+    "arte della lana",
+    "wool trade",
+    "revolt"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Britannica, Revolt of the Ciompi",
+  "source_kind": "reference_work",
+  "reference": "https://www.britannica.com/event/Revolt-of-the-Ciompi",
+  "written": "2026-09-26"
+}

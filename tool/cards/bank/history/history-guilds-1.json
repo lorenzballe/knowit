@@ -1,0 +1,38 @@
+{
+  "id": "history-guilds-1",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Were Europe's craft guilds, on balance, good for the economies they governed?",
+  "sides": [
+    "Yes, they built skills",
+    "No, they guarded rents"
+  ],
+  "answer": "Guilds solved problems markets could not. By binding apprentices to masters for years, they made it worth a master's while to teach, and their travelling journeymen carried techniques from town to town. Hallmarks and inspections let buyers trust goods they could not test. An institution that lasted five centuries across Europe was doing something useful.",
+  "move": "Whichever side you took, ask whether the training needed the monopoly.",
+  "counterpoint": "Guilds mainly protected their members' incomes. They kept out almost all women and Jews, most migrants and anyone who could not pay the fees, and lobbied rulers for monopolies that raised prices. They fought labour-saving machines: the ribbon loom, which wove several ribbons at once, was banned in Cologne in 1676 and across the Empire in 1685.",
+  "keywords": [
+    "craft guilds",
+    "apprenticeship",
+    "monopoly",
+    "sheilagh ogilvie",
+    "stephan epstein"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ogilvie, Journal of Economic Perspectives, 2014",
+  "source_kind": "paper",
+  "reference": "https://www.aeaweb.org/articles?id=10.1257%2Fjep.28.4.169",
+  "written": "2026-09-26"
+}

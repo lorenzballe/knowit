@@ -1,0 +1,40 @@
+{
+  "id": "history-1848-2",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In March 1848, France's electorate of about 250,000 men was widened overnight. To roughly how many?",
+  "options": [
+    "About 1 million",
+    "About 3 million",
+    "About 9 million"
+  ],
+  "correct": 2,
+  "answer": "About 9 million. The provisional government gave the vote to every man aged 21 or over, and in April over three-quarters of them voted. In December the new electorate gave Louis-Napoléon Bonaparte about 74% of the presidential vote; in 1851 he overthrew the Republic by coup.",
+  "move": "Estimate from the new rule, not from the old number.",
+  "trap": "Stretching the known 250,000 by a few times, not thirty-fold.",
+  "keywords": [
+    "universal male suffrage",
+    "second republic",
+    "electorate",
+    "louis-napoléon bonaparte",
+    "voting"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Agulhon, The Republican Experiment, 1983",
+  "source_kind": "book",
+  "reference": "Agulhon, The Republican Experiment, 1848–1852, Cambridge University Press, 1983",
+  "written": "2026-09-26"
+}
