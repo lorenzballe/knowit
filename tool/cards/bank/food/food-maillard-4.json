@@ -1,0 +1,40 @@
+{
+  "id": "food-maillard-4",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A steak put in a hot pan straight from its wet packet turns grey before it browns. Why?",
+  "options": [
+    "Water washes off the browning sugars",
+    "Surface water pins it near 100 °C",
+    "Wet meat lacks the proteins that brown"
+  ],
+  "correct": 1,
+  "answer": "Surface water pins it near 100 °C. While water remains, the heat goes into boiling it off and the surface cannot climb higher. The Maillard reaction only becomes fast above about 140 °C, so the meat steams. Patting it dry, or salting it hours ahead, brings the crust minutes sooner.",
+  "move": "Find what is soaking up the energy before adding more of it.",
+  "trap": "Assuming the water removes an ingredient rather than capping the heat.",
+  "keywords": [
+    "maillard reaction",
+    "browning",
+    "boiling point",
+    "steak",
+    "evaporation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "López-Alt, The Food Lab, 2015",
+  "source_kind": "book",
+  "reference": "López-Alt, The Food Lab: Better Home Cooking Through Science, W. W. Norton, 2015",
+  "written": "2026-09-26"
+}

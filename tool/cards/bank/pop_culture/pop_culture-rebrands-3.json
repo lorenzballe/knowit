@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The name changed on 1 January 2001, months before Enron collapsed. An arbitrator had let the consultants split from Arthur Andersen in 2000 but barred them from keeping the Andersen name, at a cost of $1.2 billion paid to the firm. When the auditor fell in 2002, the consultants already had a different name.",
+  "answer": "False. The name changed on 1 January 2001, months before Enron collapsed. An arbitrator had let the consultants split from Arthur Andersen in 2000 but barred them from keeping the Andersen name, at a cost of about $1 billion paid to the firm. When the auditor fell in 2002, the consultants were already Accenture.",
   "move": "Check the dates before letting the famous event explain the change.",
   "trap": "True: Enron is the Andersen story everyone remembers, so it explains everything.",
   "keywords": [

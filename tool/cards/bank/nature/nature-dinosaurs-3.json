@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "counterfactual",
-  "question": "Had the dinosaur-killing asteroid struck a random spot on Earth, how likely was a mass extinction?",
+  "question": "In one 2017 model, how likely was a mass extinction had the dinosaur-killing asteroid struck a random spot on Earth?",
   "options": [
     "Near certain",
     "About one in two",

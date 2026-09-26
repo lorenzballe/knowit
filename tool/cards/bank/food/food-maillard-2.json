@@ -1,0 +1,40 @@
+{
+  "id": "food-maillard-2",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Swedish chemists announced acrylamide, a probable carcinogen, in fried and baked foods in 2002. What first put them on its trail?",
+  "options": [
+    "A cancer cluster among chip-shop cooks",
+    "Blood of people never exposed to it",
+    "Tests on deliberately burnt toast"
+  ],
+  "correct": 1,
+  "answer": "Blood of people never exposed to it. Studying tunnel workers poisoned by an acrylamide sealant in 1997, Margareta Törnqvist's group found its haemoglobin marker in unexposed controls too. Only a common source could explain it, which proved to be asparagine reacting with sugars in hot starchy food. The comparison group was the finding.",
+  "move": "When the people meant to show nothing show something, follow that thread.",
+  "trap": "Picturing hazards found the dramatic way, through a cluster of victims.",
+  "keywords": [
+    "acrylamide",
+    "asparagine",
+    "hallandsås tunnel",
+    "margareta törnqvist",
+    "control group"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tareke et al., J. Agric. Food Chem., 2002",
+  "source_kind": "paper",
+  "reference": "Tareke, Rydberg, Karlsson, Eriksson & Törnqvist, Analysis of acrylamide, a carcinogen formed in heated foodstuffs, Journal of Agricultural and Food Chemistry, 2002",
+  "written": "2026-09-26"
+}

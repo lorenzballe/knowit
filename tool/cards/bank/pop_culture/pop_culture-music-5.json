@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did The Verve earn almost nothing from Bitter Sweet Symphony for over twenty years?",
+  "question": "Why did Richard Ashcroft receive no songwriting royalties from Bitter Sweet Symphony for over twenty years?",
   "answer": "Because of borrowed strings. The 1997 hit looped a sample from an orchestral cover of the Rolling Stones' The Last Time. The rights holder argued the band used more than licensed, and the songwriting credit and royalties went to Mick Jagger and Keith Richards. They handed them back to Richard Ashcroft in 2019.",
   "move": "Read the licence before building a house on borrowed ground.",
   "keywords": [
@@ -14,7 +14,8 @@
     "bitter sweet symphony",
     "sampling",
     "rolling stones",
-    "royalties"
+    "royalties",
+    "richard ashcroft"
   ],
   "era": "twentieth",
   "region": "europe",
@@ -28,6 +29,6 @@
   "figure": "none",
   "source": "BBC News, May 2019",
   "source_kind": "news_archive",
-  "reference": "BBC News, The Verve's Richard Ashcroft regains Bitter Sweet Symphony rights, May 2019",
+  "reference": "BBC News, report on Jagger and Richards returning Bitter Sweet Symphony royalties to Richard Ashcroft, May 2019",
   "written": "2026-09-26"
 }

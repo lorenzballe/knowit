@@ -1,0 +1,33 @@
+{
+  "id": "food-maillard-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the HbA1c blood test for diabetes measure, in chemical terms?",
+  "answer": "The first step of the reaction that browns toast. Blood glucose binds, slowly and without enzymes, to an amino group on haemoglobin: the Maillard reaction's opening move. Red cells live about 120 days, so the share carrying sugar averages two or three months of glucose: a crust forming, very slowly, at 37 °C.",
+  "move": "A slow reaction that never stops makes a record of everything it met.",
+  "keywords": [
+    "hba1c",
+    "haemoglobin",
+    "glycation",
+    "glucose",
+    "diabetes"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bunn et al., J. Clin. Invest., 1976",
+  "source_kind": "paper",
+  "reference": "Bunn, Haney, Kamin, Gabbay & Gallop, The biosynthesis of human hemoglobin A1c: slow glycosylation of hemoglobin in vivo, Journal of Clinical Investigation, 1976",
+  "written": "2026-09-26"
+}

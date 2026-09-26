@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "multipleComparisons",
-  "question": "Each normal range covers the middle 95% of healthy people. Across 20 independent tests, what percentage chance has a healthy person of at least one abnormal result?",
+  "question": "Each normal range spans the middle 95% of healthy people. Across 20 independent tests, what percentage of healthy people get an abnormal flag?",
   "value": 64,
   "unit": "percent",
   "answer": "About 64%.",

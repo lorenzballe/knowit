@@ -6,28 +6,31 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which prank on 4chan came before the rickroll, and what started it?",
-  "answer": "The duckroll, started by a word filter. In 2006 4chan's software silently turned egg into duck, so eggroll came out as duckroll, and users began disguising links to a picture of a duck on wheels. In May 2007 someone swapped in Rick Astley's video for a much-wanted Grand Theft Auto IV trailer.",
-  "move": "Many traditions begin as a workaround for a quirk nobody meant to create.",
+  "question": "Why did Mike Godwin first spread his rule about Nazi comparisons across Usenet groups?",
+  "answer": "As a deliberate experiment in spreading an idea. From 1990 Godwin, a lawyer, posted his rule, that a long online argument will sooner or later compare someone to Hitler, to make careless comparisons look foolish. He called it a counter-meme and described the test in Wired in October 1994. Others soon cited it unprompted.",
+  "move": "An idea spreads furthest when it is short enough to quote.",
   "keywords": [
-    "duckroll",
-    "rickroll",
-    "4chan",
-    "word filter",
-    "rick astley"
+    "godwin's law",
+    "mike godwin",
+    "usenet",
+    "counter-meme",
+    "wired"
   ],
-  "era": "recent",
+  "era": "twentieth",
   "region": "world",
   "hook": "origin",
   "mood": "playful",
-  "numeracy": 0,
-  "abstraction": "concrete",
+  "numeracy": 1,
+  "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Know Your Meme, Duckroll",
-  "source_kind": "institution",
-  "reference": "https://knowyourmeme.com/memes/duckroll",
-  "written": "2026-09-26"
+  "source": "Godwin, Wired, October 1994",
+  "source_kind": "news_archive",
+  "reference": "Mike Godwin, Meme, Counter-meme, Wired, issue 2.10, October 1994",
+  "written": "2026-09-26",
+  "also": [
+    "pop_culture.internet_culture.forums"
+  ]
 }

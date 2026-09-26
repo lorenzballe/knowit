@@ -13,7 +13,7 @@
     "Los Angeles"
   ],
   "correct": 1,
-  "answer": "South Korea. Scripts, voices and storyboards are made in the United States; studios such as AKOM in Seoul turn them into finished animation. A 2004 report put a team of about 120 Korean artists on the work, paid roughly a third of American rates. Springfield is drawn in Seoul.",
+  "answer": "South Korea. Scripts, voices and storyboards are made in the United States; studios such as AKOM in Seoul turn them into finished animation. A 2004 report found Korean artists doing the work for a fraction of American rates. Springfield is drawn in Seoul.",
   "move": "Ask where the labour is done, not where the credits are written.",
   "trap": "Japan comes first because its animation industry is the famous one.",
   "keywords": [
@@ -26,7 +26,7 @@
   "region": "asia",
   "hook": "misconception",
   "mood": "sober",
-  "numeracy": 2,
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "years",
   "mature": false,
