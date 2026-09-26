@@ -1,0 +1,39 @@
+{
+  "id": "history-british-3",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Britain's 99-year lease of 1898 covered Hong Kong Island?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Hong Kong Island was ceded outright in 1842, and the tip of the Kowloon peninsula in 1860, both in perpetuity. The 1898 lease covered only the New Territories, but they held most of the colony's land. Britain saw no way to run the ceded parts alone, so in 1997 all of it went back.",
+  "move": "A famous deadline can apply to only part of what it seems to govern.",
+  "trap": "True, because the famous lease is why Hong Kong was returned.",
+  "keywords": [
+    "hong kong",
+    "new territories",
+    "treaty of nanking",
+    "99-year lease",
+    "handover"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "California Western International Law Journal",
+  "source_kind": "paper",
+  "reference": "https://scholarlycommons.law.cwsl.edu/cgi/viewcontent.cgi?article=1474&context=cwilj",
+  "written": "2026-09-26"
+}

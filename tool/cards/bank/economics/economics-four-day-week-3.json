@@ -1,0 +1,39 @@
+{
+  "id": "economics-four-day-week-3",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In Britain's 2022 trial, 56 of 61 firms kept a four-day week afterwards. What does that show about firms in general?",
+  "options": [
+    "Most firms would gain from it",
+    "Only small firms can manage it",
+    "Little: the firms chose to take part"
+  ],
+  "correct": 2,
+  "answer": "Little: the firms chose to take part. They volunteered, got two months of coaching, designed their own schedules, and there was no comparison group. The report itself says its falls in resignations and sick days are not statistically significant, and revenue figures were self-reported. Fifty-six of sixty-one is a result about volunteers.",
+  "move": "Ask who chose to be measured before generalising from the result.",
+  "trap": "Treating a trial's volunteers as a fair sample of all employers.",
+  "keywords": [
+    "four-day week",
+    "pilot studies",
+    "self-selection",
+    "uk trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Autonomy, The results are in, 2023",
+  "source_kind": "institution",
+  "reference": "https://autonomy.work/wp-content/uploads/2023/02/The-results-are-in-The-UKs-four-day-week-pilot.pdf",
+  "written": "2026-09-26"
+}

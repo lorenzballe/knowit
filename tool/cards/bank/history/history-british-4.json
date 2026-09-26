@@ -1,0 +1,33 @@
+{
+  "id": "history-british-4",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did enslaved people in the British Caribbean get when slavery was abolished in 1834?",
+  "answer": "More unpaid work. Under the 1833 Act, most freed people over six became apprentices, bound to work up to 45 hours a week for their former owners, without wages, for four to six more years. The owners received £20 million, about 40% of the Treasury's yearly income. Protest ended apprenticeship early, in 1838.",
+  "move": "Read the transition clauses before celebrating the date a law took effect.",
+  "keywords": [
+    "slavery abolition act",
+    "apprenticeship",
+    "compensation",
+    "caribbean",
+    "emancipation"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "PortCities Bristol, Apprenticeship: slavery by another name?",
+  "source_kind": "institution",
+  "reference": "https://www.discoveringbristol.org.uk/slavery/against-slavery/freedom-from-slavery/apprenticeship/",
+  "written": "2026-09-26"
+}

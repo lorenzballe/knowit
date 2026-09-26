@@ -1,0 +1,33 @@
+{
+  "id": "space-cosmic-background-1",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was the temperature of the cosmic background measured in 1941, 24 years before its discovery?",
+  "answer": "Through a molecule in space. In 1941 Andrew McKellar in Canada found cyanogen, a carbon-nitrogen molecule seen in starlight, slightly more excited than empty space should allow, as if bathed in radiation about 2 degrees above absolute zero. Nobody knew what was warming it until the cosmic background was found in 1965.",
+  "move": "An unexplained number in an old paper may be tomorrow's discovery.",
+  "keywords": [
+    "andrew mckellar",
+    "cyanogen",
+    "interstellar molecules",
+    "cosmic microwave background",
+    "history of astronomy"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "McKellar, Publications of the Dominion Astrophysical Observatory, 1941",
+  "source_kind": "paper",
+  "reference": "McKellar, Molecular Lines from the Lowest States of Diatomic Molecules Composed of Atoms Probably Present in Interstellar Space, Publications of the Dominion Astrophysical Observatory 7, 251, 1941",
+  "written": "2026-09-26"
+}

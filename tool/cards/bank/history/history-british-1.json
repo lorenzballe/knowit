@@ -1,0 +1,38 @@
+{
+  "id": "history-british-1",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Were the railways Britain built in India, on balance, good for Indians?",
+  "sides": [
+    "Yes, they helped",
+    "No, they extracted"
+  ],
+  "answer": "Railways cut the cost of moving goods across a subcontinent. Studies of district records find that places joined to the network traded more and saw real farm incomes rise. Before the lines, a drought meant local famine; afterwards grain could come in, and droughts killed fewer people. Whoever paid, the tracks outlasted the Raj.",
+  "move": "The hinge is what India would have built, and at what cost, without Britain.",
+  "counterpoint": "The lines were built for British purposes and billed to Indians. Private companies were guaranteed a 5% return, paid from Indian taxes when profits fell short, and routes ran to ports and garrisons, carrying raw cotton out and British goods in. Millions still died in the famines of 1876–78 and 1896–1900, with trains moving grain towards whoever could pay.",
+  "keywords": [
+    "indian railways",
+    "british raj",
+    "famine",
+    "guaranteed returns",
+    "trade costs"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Donaldson, American Economic Review, 2018",
+  "source_kind": "paper",
+  "reference": "Donaldson, Railroads of the Raj: Estimating the Impact of Transportation Infrastructure, American Economic Review 108, 2018",
+  "written": "2026-09-26"
+}

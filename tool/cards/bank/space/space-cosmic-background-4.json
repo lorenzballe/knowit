@@ -1,0 +1,36 @@
+{
+  "id": "space-cosmic-background-4",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did NASA's WMAP team point out Stephen Hawking's initials in their map of the cosmic background?",
+  "answer": "As a warning. The letters S and H stand out clearly in the map; the odds of those exact shapes arising by chance are tiny, but so are the odds of any particular pattern. The team's 2011 review of claimed anomalies argued that oddities spotted after looking cannot be scored as if predicted.",
+  "move": "Decide what counts as strange before you look, not after.",
+  "keywords": [
+    "wmap",
+    "cosmic microwave background",
+    "anomalies",
+    "stephen hawking",
+    "a posteriori statistics"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bennett et al., ApJ Supplement, 2011",
+  "source_kind": "paper",
+  "reference": "Bennett et al., Seven-Year Wilkinson Microwave Anisotropy Probe (WMAP) Observations: Are There Cosmic Microwave Background Anomalies?, The Astrophysical Journal Supplement Series 192, 17, 2011",
+  "written": "2026-09-26"
+}

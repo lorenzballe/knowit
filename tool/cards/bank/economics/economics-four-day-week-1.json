@@ -1,0 +1,33 @@
+{
+  "id": "economics-four-day-week-1",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did British munitions factories of the First World War reveal about long working weeks?",
+  "answer": "That extra hours stop paying. Re-analysing the records of the wartime Health of Munition Workers Committee, John Pencavel found output rose in step with hours up to about 49 a week, then more slowly, peaking near 63. Output at 70 hours differed little from output at 56: fourteen extra hours bought almost nothing.",
+  "move": "Find the point where extra hours stop adding output, then stop.",
+  "keywords": [
+    "working hours",
+    "productivity",
+    "munitions workers",
+    "first world war",
+    "overtime"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pencavel, Economic Journal, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/ecoj.12166",
+  "written": "2026-09-26"
+}

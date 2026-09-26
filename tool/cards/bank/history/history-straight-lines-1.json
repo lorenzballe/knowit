@@ -1,0 +1,39 @@
+{
+  "id": "history-straight-lines-1",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Berlin Conference of 1884–85 drew the borders of Africa's colonies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Its General Act of 1885 set rules for future claims on the coast, notification and effective occupation, and free trade and navigation in the Congo basin; it drew no map of Africa. Most lines came from dozens of bilateral treaties over the next 30 years, many straight because negotiators knew little of the interior.",
+  "move": "The meeting everyone remembers is rarely where the details were decided.",
+  "trap": "School history pictures diplomats in Berlin carving Africa on a map.",
+  "keywords": [
+    "berlin conference",
+    "scramble for africa",
+    "colonial borders",
+    "general act",
+    "effective occupation"
+  ],
+  "era": "nineteenth",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Förster et al., Bismarck, Europe, and Africa, 1988",
+  "source_kind": "book",
+  "reference": "Förster, Mommsen & Robinson (eds), Bismarck, Europe, and Africa: The Berlin Africa Conference 1884–1885 and the Onset of Partition, Oxford University Press, 1988",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "space-cosmic-background-5",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "also": [
+    "space.stars_and_light.colours_of_stars"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What colour was the cosmic background radiation when it was released, 380,000 years after the Big Bang?",
+  "answer": "Orange-white, like a lamp filament: the gas was about 2,700 °C when it turned transparent. Expansion has since stretched that light about 1,100 times, into microwaves. For a few million years the sky kept glowing, dimming through red into infrared; then the universe went dark until the first stars lit.",
+  "move": "Ask what a signal looked like before the journey changed it.",
+  "keywords": [
+    "cosmic microwave background",
+    "recombination",
+    "redshift",
+    "cosmic dark ages",
+    "first stars"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loeb, Princeton University Press, 2010",
+  "source_kind": "book",
+  "reference": "Loeb, How Did the First Stars and Galaxies Form?, Princeton University Press, 2010",
+  "written": "2026-09-26"
+}

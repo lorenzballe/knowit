@@ -1,0 +1,39 @@
+{
+  "id": "history-british-2",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Around 1900, India under British rule held nearly 300 million people. Roughly how many men made up its elite Indian Civil Service?",
+  "options": [
+    "About 1,000",
+    "About 30,000",
+    "About 300,000"
+  ],
+  "correct": 0,
+  "answer": "About 1,000. In 1901 the service had just over a thousand members, and about a fifth were sick or on leave at any moment. It could govern nearly 300 million people only through Indian clerks, police, soldiers and landholders, and through princes who ran their own states.",
+  "move": "Divide the governed by the governors before imagining an empire's machinery.",
+  "trap": "About 300,000, scaling a vast bureaucracy to 300 million people.",
+  "keywords": [
+    "indian civil service",
+    "british raj",
+    "colonial administration",
+    "steel frame"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilmour, The Ruling Caste, 2005",
+  "source_kind": "book",
+  "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, 2005",
+  "written": "2026-09-26"
+}

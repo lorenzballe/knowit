@@ -1,0 +1,33 @@
+{
+  "id": "history-straight-lines-4",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does neither Egypt nor Sudan claim Bir Tawil, a desert patch on their border?",
+  "answer": "Because claiming it would mean giving up something bigger. Two British-drawn lines disagree: the straight 1899 border along the 22nd parallel puts the Hala'ib Triangle in Egypt; a 1902 administrative line puts it in Sudan and Bir Tawil in Egypt. Each insists on the line that gives it Hala'ib, about ten times larger.",
+  "move": "Check what a claim would concede before assuming a thing is unwanted.",
+  "keywords": [
+    "bir tawil",
+    "hala'ib triangle",
+    "egypt",
+    "sudan",
+    "22nd parallel"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Brownlie, African Boundaries, 1979",
+  "source_kind": "reference_work",
+  "reference": "Brownlie, African Boundaries: A Legal and Diplomatic Encyclopaedia, C. Hurst for the Royal Institute of International Affairs, 1979",
+  "written": "2026-09-26"
+}

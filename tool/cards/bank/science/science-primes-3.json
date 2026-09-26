@@ -10,7 +10,7 @@
   "options": [
     "Most numbers of that form are prime",
     "That form has an especially fast test",
-    "Other primes that size are too rare"
+    "Such primes are proved never to run out"
   ],
   "correct": 1,
   "answer": "That form has an especially fast test. The Lucas–Lehmer test settles whether 2^p − 1 is prime in about p squarings. For an ordinary number with millions of digits, no proof anywhere near that fast exists. The record list maps where primes can be proved, not where they lie.",

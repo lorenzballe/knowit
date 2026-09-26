@@ -1,0 +1,42 @@
+{
+  "id": "space-cosmic-background-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: astronomers can measure how fast Earth is moving relative to the universe as a whole?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The cosmic background looks about 0.1% warmer in the direction the Sun is heading and cooler behind. The Planck satellite measured the Sun's speed through it at about 370 km/s, towards the stars of Leo and Crater. Relativity forbids a preferred frame for physics' laws, not a cosmic one for measuring motion.",
+  "move": "Every speed is relative to something; the question is to what.",
+  "trap": "Motion is relative, so there seems to be nothing to measure against.",
+  "keywords": [
+    "cmb dipole",
+    "planck satellite",
+    "doppler effect",
+    "earth's motion",
+    "rest frame"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Planck Collaboration, Astronomy & Astrophysics, 2020",
+  "source_kind": "paper",
+  "reference": "Planck Collaboration, Planck 2018 results. I. Overview and the cosmological legacy of Planck, Astronomy & Astrophysics 641, A1, 2020",
+  "written": "2026-09-26"
+}

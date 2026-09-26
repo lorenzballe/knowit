@@ -1,0 +1,33 @@
+{
+  "id": "history-british-5",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Britain use to replace enslaved labour on its sugar colonies after 1834?",
+  "answer": "Indentured Indians. In 1834 Britain chose Mauritius for what it called the great experiment: workers bound by contract for years instead of owned. Between 1834 and 1920 almost half a million landed at one depot in Port Louis, the Aapravasi Ghat; others were shipped on to the Caribbean and Africa.",
+  "move": "When one system of labour is abolished, look at what replaced it.",
+  "keywords": [
+    "indentured labour",
+    "mauritius",
+    "aapravasi ghat",
+    "sugar plantations",
+    "indian diaspora"
+  ],
+  "era": "nineteenth",
+  "region": "africa",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "UNESCO World Heritage Centre, Aapravasi Ghat",
+  "source_kind": "institution",
+  "reference": "https://whc.unesco.org/en/list/1227/",
+  "written": "2026-09-26"
+}

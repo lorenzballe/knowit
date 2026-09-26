@@ -1,0 +1,32 @@
+{
+  "id": "space-perseverance-5",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Perseverance land in a crater that earlier Mars missions would have ruled too dangerous?",
+  "answer": "It picked its own spot. Hanging under its parachute, the lander photographed the ground, matched the pictures to a map on board, worked out where it was to within tens of metres, then steered for the safest patch in reach. Cliffs, boulder fields and dunes were scattered across the landing zone; it missed them all.",
+  "move": "Knowing exactly where you are turns a hazard map into a route.",
+  "keywords": [
+    "terrain-relative navigation",
+    "jezero crater",
+    "landing",
+    "lander vision system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farley et al., Space Science Reviews, 2020",
+  "source_kind": "paper",
+  "reference": "Farley et al., Mars 2020 Mission Overview, Space Science Reviews, 2020",
+  "written": "2026-09-26"
+}

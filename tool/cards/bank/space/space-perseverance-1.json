@@ -1,0 +1,39 @@
+{
+  "id": "space-perseverance-1",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Five of Perseverance's 43 sample tubes were never meant to hold Martian rock or soil. What are they for?",
+  "options": [
+    "Blanks that record Earthly contamination",
+    "Spares in case others jam",
+    "Copies of the best sample"
+  ],
+  "correct": 0,
+  "answer": "Blanks that record Earthly contamination. They are opened to the rover's surroundings on Mars but never take in Martian material, so labs can later tell which organic traces rode along from Earth. Without them, a hint of life in a real sample could not be told apart from the builders' fingerprints.",
+  "move": "Before trusting a detection, ask what an empty test would have shown.",
+  "trap": "Missions always carry spares, so the extras must be spares.",
+  "keywords": [
+    "witness tubes",
+    "sample tubes",
+    "contamination",
+    "mars sample return"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moeller et al., Space Science Reviews, 2021",
+  "source_kind": "paper",
+  "reference": "Moeller et al., The Sampling and Caching Subsystem (SCS) for the Scientific Exploration of Jezero Crater by the Mars 2020 Perseverance Rover, Space Science Reviews, 2021",
+  "written": "2026-09-26"
+}
