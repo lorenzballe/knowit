@@ -1,0 +1,39 @@
+{
+  "id": "medicine-penicillin-4",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: penicillin kills bacteria just as well after they have stopped growing and dividing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Penicillin blocks the enzymes that stitch cross-links into the bacterial cell wall. A growing cell keeps cutting its wall open to expand, and without fresh stitching it bursts. A dormant cell is not building, so it survives. Joseph Bigger called them persisters in 1944: a few can restart an infection after the course ends.",
+  "move": "A tool that attacks change can do nothing to what stays still.",
+  "trap": "Picturing an antibiotic as a poison that kills whatever it touches.",
+  "keywords": [
+    "penicillin",
+    "cell wall",
+    "persisters",
+    "joseph bigger",
+    "dormancy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bigger, The Lancet, 1944",
+  "source_kind": "paper",
+  "reference": "Bigger, Treatment of staphylococcal infections with penicillin by intermittent sterilisation, The Lancet, 1944",
+  "written": "2026-09-26"
+}

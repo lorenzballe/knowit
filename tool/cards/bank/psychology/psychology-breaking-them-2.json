@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "After six months, 22% of smokers told to quit abruptly were abstinent, against 15.5% told to cut down first. How many must quit abruptly for one extra success?",
+  "question": "Six months on, 22% of smokers told to quit abruptly and 15.5% told to taper were abstinent. How many smokers per extra success?",
   "value": 15,
   "unit": "smokers",
   "answer": "About 15 smokers.",

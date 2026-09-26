@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-ship-of-theseus-4",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Was a Roman court whose judges had all been replaced still the same court, according to the jurist Alfenus?",
+  "answer": "Yes. In a ruling kept in Justinian's Digest, Alfenus Varus compared it to a legion whose fallen soldiers are replaced, a people whose members die and are born, and a ship repaired until no original plank remains: each stays the same while its form continues. A lawsuit could reach its verdict under entirely new judges.",
+  "move": "Ask whether a thing is its parts or the arrangement its parts keep.",
+  "keywords": [
+    "alfenus varus",
+    "roman law",
+    "digest of justinian",
+    "legion",
+    "identity"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Digest of Justinian 5.1.76",
+  "source_kind": "primary_document",
+  "reference": "The Digest of Justinian 5.1.76, ed. Mommsen, Krueger & Watson, University of Pennsylvania Press, 1985",
+  "written": "2026-09-26"
+}

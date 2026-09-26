@@ -1,0 +1,33 @@
+{
+  "id": "medicine-penicillin-2",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made penicillin cheap enough to mass-produce during the Second World War?",
+  "answer": "A farm by-product and a rotten melon. At the US Department of Agriculture's laboratory in Peoria, Illinois, Andrew Moyer found in 1941 that corn steep liquor, a waste from starch milling, raised yields about tenfold. A mould from a cantaloupe bought in a Peoria market outproduced strains gathered worldwide. Both went into deep fermentation tanks.",
+  "move": "The breakthrough that matters is often in the making, not the discovery.",
+  "keywords": [
+    "peoria",
+    "corn steep liquor",
+    "andrew moyer",
+    "cantaloupe",
+    "fermentation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USDA Agricultural Research Service, Peoria",
+  "source_kind": "institution",
+  "reference": "https://www.ars.usda.gov/midwest-area/peoria-il/national-center-for-agricultural-utilization-research/docs/penicillin-opening-the-era-of-antibiotics/",
+  "written": "2026-09-26"
+}

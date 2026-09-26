@@ -1,0 +1,42 @@
+{
+  "id": "art-darkroom-3",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "In the zone system, neighbouring zones differ by one stop. How many times more light does Zone VIII send than Zone V?",
+  "value": 8,
+  "unit": "times",
+  "answer": "2 × 2 × 2 = 8 times the light.",
+  "move": "On a scale where each step doubles, multiply the steps, never add them.",
+  "trap": "Counting three zones and answering three times, as on a ruler.",
+  "hint": "Count the stops between the zones, then ask what one stop does to the light.",
+  "steps": [
+    "One stop is a doubling of light.",
+    "Zone V to Zone VIII is 3 stops.",
+    "2 × 2 × 2 = 8 times the light."
+  ],
+  "keywords": [
+    "zone system",
+    "ansel adams",
+    "stops",
+    "exposure",
+    "negatives"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adams, The Negative, 1981",
+  "source_kind": "book",
+  "reference": "Ansel Adams, The Negative, New York Graphic Society, 1981",
+  "written": "2026-09-26"
+}

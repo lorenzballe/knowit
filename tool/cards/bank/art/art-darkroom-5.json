@@ -1,0 +1,33 @@
+{
+  "id": "art-darkroom-5",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much did Ansel Adams's prints of Moonrise, Hernandez change over his lifetime?",
+  "answer": "Enough to look like different evenings. The 1941 negative was thin and flat, and early prints show a grey sky with streaky clouds. In 1948 Adams chemically intensified the negative up to the horizon, and prints made into the 1970s darken the sky almost to black around a bright moon. Same negative, different nights.",
+  "move": "Ask which print you are looking at before saying what a photograph shows.",
+  "keywords": [
+    "ansel adams",
+    "moonrise hernandez",
+    "printing",
+    "intensification",
+    "negatives"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Museum of Modern Art, Moonrise, Hernandez",
+  "source_kind": "institution",
+  "reference": "https://www.moma.org/collection/works/53904",
+  "written": "2026-09-26"
+}

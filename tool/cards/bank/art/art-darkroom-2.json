@@ -1,0 +1,33 @@
+{
+  "id": "art-darkroom-2",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Gustave Le Gray get both detailed clouds and a lit sea into his 1850s seascapes?",
+  "answer": "By printing two negatives on one sheet. Collodion plates were far more sensitive to blue than to other colours, so a sky exposed long enough for the darker sea burned out white. Le Gray exposed one plate for the sky and one for the water, sometimes on different days, and joined them along the horizon.",
+  "move": "When one setting cannot hold everything, capture the parts separately and join them.",
+  "keywords": [
+    "gustave le gray",
+    "combination printing",
+    "seascapes",
+    "collodion",
+    "negatives"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Metropolitan Museum, Le Gray, The Great Wave",
+  "source_kind": "institution",
+  "reference": "https://www.metmuseum.org/art/collection/search/261941",
+  "written": "2026-09-26"
+}

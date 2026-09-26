@@ -1,0 +1,37 @@
+{
+  "id": "philosophy-ship-of-theseus-5",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a band be allowed to keep its name once none of its founding members remain?",
+  "sides": [
+    "Yes, keep the name",
+    "No, drop the name"
+  ],
+  "answer": "A band name is a brand built by writers, producers, managers and fans as much as by the first faces, and whoever keeps the work going has earned it. Orchestras and football clubs outlive every founder. By late 2009 the Sugababes had no founding member left, and released an album under the name the next year.",
+  "move": "It turns on whether a name promises particular people or a continuing enterprise.",
+  "counterpoint": "Fans buy a band's name as a promise about who is on stage. When the three founding Sugababes re-formed in 2012, they had to perform as Mutya Keisha Siobhan while a line-up with none of them had sold the old hits; only in 2019 did they get the name back. A label that no longer describes anything misleads.",
+  "keywords": [
+    "sugababes",
+    "band names",
+    "line-up changes",
+    "identity"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Billboard, on the original Sugababes",
+  "source_kind": "news_archive",
+  "reference": "https://www.billboard.com/music/music-news/mutya-keisha-siobhan-inside-the-original-sugababes-remarkable-2032480",
+  "written": "2026-09-26"
+}

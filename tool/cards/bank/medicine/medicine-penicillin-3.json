@@ -1,0 +1,39 @@
+{
+  "id": "medicine-penicillin-3",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "About one American in ten reports a penicillin allergy. What share of the whole population is truly allergic?",
+  "options": [
+    "About 9%",
+    "About 5%",
+    "Under 1%"
+  ],
+  "correct": 2,
+  "answer": "Under 1%. Many labels date from a childhood rash blamed on the drug but caused by the infection it was treating. True allergy also fades: about 80% of people who have it lose the sensitivity within ten years. The label steers doctors to broader, costlier antibiotics that breed more resistance.",
+  "move": "Something that happened after a pill was not necessarily caused by it.",
+  "trap": "Taking the reported figure at face value, since the rash followed the drug.",
+  "keywords": [
+    "penicillin allergy",
+    "rash",
+    "allergy labels",
+    "antibiotic prescribing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC, Clinical Features of Penicillin Allergy",
+  "source_kind": "institution",
+  "reference": "https://www.cdc.gov/antibiotic-use/hcp/clinical-signs/index.html",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "medicine-penicillin-5",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Penicillin G leaves the blood with a half-life of about 30 minutes. What percentage of a dose remains after 3 hours?",
+  "value": 1.6,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "1/64 = 0.0156, so about 1.6% remains.",
+  "move": "When something halves on a schedule, count the halvings before guessing what is left.",
+  "trap": "Guessing about half, as if the drug drained away in a straight line.",
+  "hint": "Count how many half-lives fit into three hours.",
+  "steps": [
+    "3 hours is 180 minutes, and 180 / 30 = 6 half-lives.",
+    "After 6 halvings the fraction left is 1 / 2^6 = 1/64.",
+    "1/64 = 0.0156, so about 1.6% remains."
+  ],
+  "keywords": [
+    "penicillin g",
+    "half-life",
+    "dosing",
+    "kidneys"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Goodman & Gilman's Pharmacological Basis of Therapeutics",
+  "source_kind": "reference_work",
+  "reference": "Brunton, Hilal-Dandan & Knollmann (eds), Goodman & Gilman's The Pharmacological Basis of Therapeutics, 13th edition, McGraw-Hill, 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-ship-of-theseus-3",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "also": [
+    "human_body.blood_and_heart.heartbeat"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Over a whole human lifetime, roughly what share of the heart's muscle cells ever gets replaced?",
+  "options": [
+    "Under half",
+    "All of them, several times",
+    "None at all"
+  ],
+  "correct": 0,
+  "answer": "Under half. Carbon-14 from Cold War bomb tests, locked into a cell's DNA when it forms, let Olaf Bergmann's team date human heart cells in 2009. About 1% were renewed each year at age 25, under 0.5% at 75. Most muscle cells beating in an old person's chest are as old as the person.",
+  "move": "Renewal is rarely uniform; ask which parts are replaced and which never are.",
+  "trap": "The body renews itself every seven years, so the heart must too.",
+  "keywords": [
+    "heart muscle cells",
+    "cell renewal",
+    "carbon-14",
+    "olaf bergmann"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Bergmann et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Bergmann et al., Evidence for cardiomyocyte renewal in humans, Science 324 (5923), 2009",
+  "written": "2026-09-26"
+}

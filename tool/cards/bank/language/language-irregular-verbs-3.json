@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: sneaked is a modern regularisation that pushed out the older past tense snuck?",
+  "question": "True or false: snuck is a newer past tense of sneak than sneaked is?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. It ran the other way. Sneaked is the older past tense; snuck first turns up in American writing in the late 19th century, probably modelled on stuck and struck. Verbs drift in both directions, and for decades usage guides marked snuck as an illiterate newcomer while it spread into British speech.",
+  "correct": 0,
+  "answer": "True. Sneaked is the older past tense; snuck first turns up in American writing in the late 19th century, probably modelled on stuck and struck. Verbs drift in both directions, and for decades usage guides marked snuck as an illiterate newcomer while it spread into British speech.",
   "move": "Odd forms are not always old forms; some are fresh inventions.",
-  "trap": "An irregular form sounds archaic, so it must be the original.",
+  "trap": "An irregular form sounds archaic, so snuck feels like the original.",
   "keywords": [
     "snuck",
     "sneaked",
