@@ -29,6 +29,10 @@ env:
   PAGES: "185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153"
   CNAME: lorenzballe.github.io
 
+permissions:
+  contents: read
+  pages: read
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -162,6 +166,22 @@ jobs:
           case "$http" in 301\ https://*) ;; *) echo "- tick Enforce HTTPS" ;; esac
           echo "== Verdict: records=${RECORDS:-no} world=${WORLD:-no} https=${HTTPS:-no}"
           [ "$HTTPS" = ok ]
+
+      # GitHub's own view of the domain: the certificate it holds, for which
+      # names, and in what state (issued, pending, errored), and its DNS
+      # check. Read with the run's own token, which may read Pages.
+      - name: What GitHub says
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          for path in pages pages/health; do
+            echo "== /repos/$REPO/$path"
+            curl -sS -m 20 -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$REPO/$path" | head -c 2500 || true
+            echo
+          done
 
       # What a phone in Italy gets: Globalping's volunteer probes there ask
       # their own provider's DNS, then open the site over HTTPS.
