@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-liar-5",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a liar-style paradox need a sentence that talks about itself?",
+  "answer": "Perhaps not, argued Stephen Yablo in 1993. Take an endless list where each sentence says all later sentences are false. If any is true, all later ones are false, which makes the next one true: contradiction. So all are false, which makes the first true. No sentence mentions itself; Graham Priest argued the circle is hidden.",
+  "move": "When blaming a single loop, check that no longer chain does the same thing.",
+  "keywords": [
+    "stephen yablo",
+    "self-reference",
+    "infinite list",
+    "graham priest"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yablo, Analysis, 1993",
+  "source_kind": "paper",
+  "reference": "Yablo, Paradox without Self-Reference, Analysis 53 (4), 1993; Priest, Yablo's Paradox, Analysis 57 (4), 1997",
+  "written": "2026-09-26"
+}

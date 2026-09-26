@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-tiny-nations-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Who chooses one of the two heads of state of Andorra?",
+  "options": [
+    "Andorra's own voters",
+    "French voters",
+    "The Spanish Crown"
+  ],
+  "correct": 1,
+  "answer": "French voters. Andorra's co-princes are the Bishop of Urgell, in Catalonia, and whoever is President of France, a role inherited from the Counts of Foix through the French kings. Andorrans elect their own parliament, but under the 1993 constitution the co-princes still sign its laws, and Andorrans choose neither of them.",
+  "move": "Check who actually picks an office before assuming whom it answers to.",
+  "trap": "Assuming a modern parliamentary democracy elects its own head of state.",
+  "keywords": [
+    "andorra",
+    "co-princes",
+    "president of france",
+    "bishop of urgell"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Constitution of Andorra, 1993",
+  "source_kind": "primary_document",
+  "reference": "Constitution of the Principality of Andorra, 1993",
+  "written": "2026-09-26"
+}

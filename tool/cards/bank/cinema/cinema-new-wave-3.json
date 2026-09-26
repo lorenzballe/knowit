@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: the label New Wave was coined by the Cahiers du cinéma critics for their own films?",
+  "question": "True or false: the label New Wave began in a magazine survey of young people, not in film criticism?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. The journalist Françoise Giroud used la nouvelle vague in L'Express in 1957, for a survey of young French people, before those critics had made a feature. The press then pinned it on the young directors around Cannes in 1959. A tag for a generation's attitudes became the name of a school of film.",
+  "correct": 0,
+  "answer": "True. The journalist Françoise Giroud used la nouvelle vague in L'Express in 1957, for a survey of young French people, before the Cahiers du cinéma critics had made a feature. The press then pinned it on the young directors around Cannes in 1959. A tag for a generation's attitudes became the name of a school of film.",
   "move": "A label often belongs to whoever needed a headline, not to the people labelled.",
-  "trap": "True, because movements usually seem to name themselves.",
+  "trap": "False, because movements usually seem to name themselves.",
   "keywords": [
     "nouvelle vague",
     "françoise giroud",

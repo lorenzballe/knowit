@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "survivorship",
-  "question": "True or false: some of the original noise machines Luigi Russolo built for Futurist concerts survive in museums?",
+  "question": "True or false: none of the original noise machines Luigi Russolo built for Futurist concerts survives today?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. Russolo's intonarumori, wooden boxes with cranks, levers and horns that howled, crackled and gurgled, were lost by the end of the Second World War, likely in the bombing of Paris. What remains is drawings, photographs, a few recordings and his 1913 manifesto The Art of Noises. Every intonarumore heard today is a reconstruction.",
+  "correct": 0,
+  "answer": "True. Russolo's intonarumori, wooden boxes with cranks, levers and horns that howled, crackled and gurgled, were lost by the end of the Second World War, likely in the bombing of Paris. What remains is drawings, photographs, a few recordings and his 1913 manifesto The Art of Noises. Every intonarumore heard today is a reconstruction.",
   "move": "Seeing a thing today does not mean the original lasted.",
-  "trap": "True, since exhibitions show them, so the originals must be kept somewhere.",
+  "trap": "False, since exhibitions show them, the originals must be kept somewhere.",
   "keywords": [
     "intonarumori",
     "luigi russolo",

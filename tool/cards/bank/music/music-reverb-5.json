@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "True or false: spring reverb was invented to give electric guitar amplifiers a sense of space?",
+  "question": "True or false: spring reverb was first invented for an electric organ, not a guitar amplifier?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. Laurens Hammond filed the first spring reverb patent in 1939, to make his electric organ sound as if it filled a church: coiled springs carried the signal as slow mechanical waves. Guitar amplifiers took up spring tanks built on his design in the early 1960s. Surf guitar's drip came from a church organ's problem.",
+  "correct": 0,
+  "answer": "True. Laurens Hammond filed the first spring reverb patent in 1939, to make his electric organ sound as if it filled a church: coiled springs carried the signal as slow mechanical waves. Guitar amplifiers took up spring tanks built on his design in the early 1960s. Surf guitar's drip came from a church organ's problem.",
   "move": "A tool's most famous user is often not the one it was made for.",
-  "trap": "True, since the sound is most famous from surf and twang guitar.",
+  "trap": "False, since the sound is most famous from surf and twang guitar.",
   "keywords": [
     "spring reverb",
     "laurens hammond",

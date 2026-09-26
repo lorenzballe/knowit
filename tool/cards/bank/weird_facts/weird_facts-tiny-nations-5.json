@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-tiny-nations-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Monaco covered about 2.02 km². Its new Mareterra district, built on the sea, adds about 6 hectares. By what percentage does that enlarge the country?",
+  "value": 2.97,
+  "unit": "%",
+  "tolerance": 0.05,
+  "answer": "About 2.97%.",
+  "move": "For a tiny whole, even a small addition is a large share.",
+  "hint": "Put both areas in square kilometres before dividing.",
+  "steps": [
+    "6 hectares = 0.06 km², since 100 hectares make 1 km².",
+    "0.06 / 2.02 ≈ 0.0297.",
+    "About 2.97%."
+  ],
+  "keywords": [
+    "monaco",
+    "mareterra",
+    "land reclamation",
+    "microstates"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gouvernement Princier de Monaco, Mareterra",
+  "source_kind": "institution",
+  "reference": "Gouvernement Princier, Mareterra: the offshore urban extension of Monaco, 2024",
+  "written": "2026-09-26"
+}

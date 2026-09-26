@@ -34,8 +34,8 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "source": "Geometric series, box-office decay",
-  "source_kind": "arithmetic",
+  "source": "Vogel, Entertainment Industry Economics",
+  "source_kind": "book",
   "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
   "written": "2026-09-26"
 }

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-liar-3",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Kurt Gödel built his 1931 incompleteness proof on a sentence modelled on the liar's. What does his sentence say about itself?",
+  "options": [
+    "That it is false",
+    "That it cannot be proved",
+    "That it is both true and false"
+  ],
+  "correct": 1,
+  "answer": "That it cannot be proved. Swap true for provable and the contradiction goes: if the sentence were provable, the system would prove a falsehood; so in a sound system it is unprovable, and therefore true. Every consistent, rule-based system rich enough for arithmetic has such truths. The paradox became a theorem.",
+  "move": "When an argument collapses into contradiction, change one word and see what survives.",
+  "trap": "Assuming Gödel used the liar itself, a sentence calling itself false.",
+  "keywords": [
+    "kurt gödel",
+    "incompleteness",
+    "provability",
+    "arithmetic"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nagel & Newman, Gödel's Proof, 1958",
+  "source_kind": "book",
+  "reference": "Nagel & Newman, Gödel's Proof, New York University Press, 1958",
+  "written": "2026-09-26"
+}

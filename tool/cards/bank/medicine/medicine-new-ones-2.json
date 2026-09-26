@@ -1,0 +1,36 @@
+{
+  "id": "medicine-new-ones-2",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "also": [
+    "technology.ai.training"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where had halicin, the antibiotic picked out by a neural network in 2020, been before?",
+  "answer": "On the shelf as a failed diabetes candidate. An MIT team trained a model on about 2,300 molecules tested against E. coli, then had it score some 6,000 compounds already studied as drugs. It flagged halicin, which killed many resistant bacteria in lab and mouse tests. The name comes from HAL 9000.",
+  "move": "Old stock read with new eyes can be cheaper than a fresh search.",
+  "keywords": [
+    "halicin",
+    "machine learning",
+    "drug repurposing",
+    "mit",
+    "e. coli"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stokes et al., Cell, 2020",
+  "source_kind": "paper",
+  "reference": "Stokes et al., A Deep Learning Approach to Antibiotic Discovery, Cell, 2020",
+  "written": "2026-09-26"
+}

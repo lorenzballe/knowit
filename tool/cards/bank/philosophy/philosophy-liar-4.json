@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-liar-4",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can two ordinary sentences, each harmless on its own, become a liar paradox by accident?",
+  "answer": "Yes. In Saul Kripke's 1975 example, Jones says most of Nixon's statements about Watergate are false; Nixon says everything Jones says about Watergate is true. If Nixon's other Watergate statements split evenly between true and false, the pair has no consistent truth values. Whether a sentence is a trap can depend on the news.",
+  "move": "A statement can be safe or treacherous depending on facts nobody has checked.",
+  "keywords": [
+    "saul kripke",
+    "watergate",
+    "liar paradox",
+    "truth"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kripke, Journal of Philosophy, 1975",
+  "source_kind": "paper",
+  "reference": "Kripke, Outline of a Theory of Truth, Journal of Philosophy 72 (19), 1975",
+  "written": "2026-09-26"
+}

@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "True or false: Tron, in 1982, was the first feature film to show three-dimensional computer animation?",
+  "question": "True or false: a three-dimensional computer-animated hand appeared in a feature film six years before Tron?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. Futureworld, in 1976, showed a computer-animated hand and face made years earlier at the University of Utah by Ed Catmull, later a Pixar founder, and Fred Parke. Tron was the first to build long sequences this way. A few seconds of shaded polygons came six years before the light cycles.",
+  "correct": 0,
+  "answer": "True. Futureworld, in 1976, showed a computer-animated hand and face made years earlier at the University of Utah by Ed Catmull, later a Pixar founder, and Fred Parke. Tron, in 1982, was the first to build long sequences this way. A few seconds of shaded polygons came before the famous light cycles.",
   "move": "The first famous example is rarely the first example.",
-  "trap": "True, because Tron is the film everyone links with early computer graphics.",
+  "trap": "False, because Tron is the film everyone links with early computer graphics.",
   "keywords": [
     "futureworld",
     "tron",

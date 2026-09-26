@@ -3,29 +3,30 @@
   "topic": "cinema",
   "genre": "cinema.how_films_are_made",
   "strand": "cinema.how_films_are_made.budgets",
-  "kind": "number",
-  "difficulty": "medium",
-  "principle": "computation",
-  "question": "A film cost $100 million to make. Cinemas keep about half of ticket sales. What gross, in millions of dollars, merely recoups the cost?",
-  "value": 200,
-  "unit": "million dollars",
-  "answer": "$100 million / 0.5 = $200 million.",
-  "move": "Before judging a total, find out how much of it reaches the owner.",
-  "trap": "Answering 100, as if every ticket dollar reached the studio.",
-  "hint": "Work out what share of each ticket comes back to the studio.",
-  "steps": [
-    "Cinemas keep about half of ticket sales, so the studio gets about 0.5 of each dollar.",
-    "The studio needs $100 million back.",
-    "$100 million / 0.5 = $200 million."
+  "also": [
+    "science.maths_curios.probability"
   ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "A shoot needs 30 outdoor days, each with a 95% chance of good weather. What is the chance none is lost?",
+  "options": [
+    "About 20%",
+    "About 50%",
+    "About 95%"
+  ],
+  "correct": 0,
+  "answer": "About 20%. The days must all go well, so the chances multiply: 0.95 multiplied by itself 30 times is about 0.21. That is why budgets carry a contingency, often around a tenth of the total, and why outdoor schedules keep cover sets ready for a wet morning. A safe-looking day is a risky month.",
+  "move": "Many small risks in a row add up to a likely failure.",
+  "trap": "About 95%, since every single day is very likely fine.",
   "keywords": [
-    "break-even",
-    "box office split",
-    "production budget",
-    "film rentals"
+    "contingency",
+    "shooting schedule",
+    "weather cover",
+    "probability"
   ],
   "era": "timeless",
-  "region": "world",
+  "region": "none",
   "hook": "puzzle",
   "mood": "practical",
   "numeracy": 3,
@@ -33,9 +34,9 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Epstein, The Big Picture, 2005",
+  "figure": "dots",
+  "source": "Honthaner, The Complete Film Production Handbook",
   "source_kind": "book",
-  "reference": "Epstein, The Big Picture: The New Logic of Money and Power in Hollywood, Random House, 2005",
+  "reference": "Honthaner, The Complete Film Production Handbook, 4th edn, Focal Press, 2010",
   "written": "2026-09-26"
 }

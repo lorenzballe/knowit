@@ -1,0 +1,40 @@
+{
+  "id": "medicine-new-ones-4",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Linezolid reached patients in 2000 and daptomycin in 2003, each the first of a new class. When were their families first found?",
+  "options": [
+    "In the 1980s, then set aside",
+    "In the late 1990s",
+    "In the 1950s golden age"
+  ],
+  "correct": 0,
+  "answer": "In the 1980s, then set aside. DuPont announced the oxazolidinones in 1987 before dropping them; Upjohn chemists later refined the family into linezolid. Eli Lilly found daptomycin in the early 1980s and halted trials in 1991 over muscle toxicity; Cubist licensed it in 1997. The new classes of the 2000s were old shelf stock.",
+  "move": "A launch date says when a thing arrived, not when it began.",
+  "trap": "Assuming a drug was discovered shortly before the year it was approved.",
+  "keywords": [
+    "linezolid",
+    "daptomycin",
+    "oxazolidinones",
+    "eli lilly",
+    "drug development"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Eisenstein, Oleson & Baltz, Clinical Infectious Diseases, 2010",
+  "source_kind": "paper",
+  "reference": "https://academic.oup.com/cid/article/50/Supplement_1/S10/364812",
+  "written": "2026-09-26"
+}
