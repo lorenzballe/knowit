@@ -1,0 +1,39 @@
+{
+  "id": "science-rainbows-1",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The first rainbow sits 42° from the point opposite the Sun, the second at 51°. Where does a third rainbow appear?",
+  "options": [
+    "Around the Sun itself",
+    "Just outside the second bow",
+    "Just inside the first bow"
+  ],
+  "correct": 0,
+  "answer": "Around the Sun itself, roughly 40° from it. Light that bounces three times inside a raindrop is thrown forward, not back, so the third bow circles the Sun, where glare swamps it. It was predicted centuries ago, but the first convincing photographs of a natural one were only published in 2011.",
+  "move": "Do not assume the next step in a series continues the pattern.",
+  "trap": "Extending the pattern outward, one bow stacked beyond the last.",
+  "keywords": [
+    "tertiary rainbow",
+    "raindrops",
+    "internal reflection",
+    "sun glare"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grossmann et al., Applied Optics, 2011",
+  "source_kind": "paper",
+  "reference": "Grossmann, Schmidt and Haussmann, Photographic evidence for the third-order rainbow, Applied Optics 50, F134, 2011",
+  "written": "2026-09-26"
+}

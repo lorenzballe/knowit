@@ -1,0 +1,32 @@
+{
+  "id": "science-rainbows-3",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the sky between the two arcs of a double rainbow darker than the sky around it?",
+  "answer": "Hardly any raindrop sends light there. Drops bouncing light once inside return it within 42° of the point opposite the Sun, brightening the sky inside the first bow; drops bouncing it twice send it only beyond 51°. Between the two, the sky is dim: Alexander's band, named after a Greek writer of about AD 200.",
+  "move": "A dark gap can be evidence as good as a bright line.",
+  "keywords": [
+    "double rainbow",
+    "alexander's band",
+    "raindrops",
+    "secondary bow"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee and Fraser, The Rainbow Bridge, 2001",
+  "source_kind": "book",
+  "reference": "Lee and Fraser, The Rainbow Bridge: Rainbows in Art, Myth, and Science, Penn State University Press, 2001",
+  "written": "2026-09-26"
+}

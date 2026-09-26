@@ -1,0 +1,42 @@
+{
+  "id": "science-rainbows-2",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Midsummer noon, London: the Sun is 62° high. A rainbow rings the opposite point at 42°. How many degrees below the horizon is its top?",
+  "value": 20,
+  "unit": "degrees",
+  "answer": "The top is 20° below the horizon.",
+  "move": "Know the geometry and you know when to stop looking.",
+  "trap": "Measuring the 42° up from the horizon instead of the shadow point.",
+  "hint": "Start by finding how far below the horizon the point opposite the Sun lies.",
+  "steps": [
+    "The point opposite the Sun lies as far below the horizon as the Sun is above it: 62°.",
+    "The bow's top is 42° above that point: 62 − 42 = 20.",
+    "The top is 20° below the horizon."
+  ],
+  "keywords": [
+    "rainbow",
+    "sun altitude",
+    "antisolar point",
+    "midsummer",
+    "london"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Minnaert, Light and Colour in the Outdoors, 1993",
+  "source_kind": "book",
+  "reference": "Minnaert, Light and Colour in the Outdoors, trans. Seymour, Springer, 1993",
+  "written": "2026-09-26"
+}
