@@ -1,0 +1,33 @@
+{
+  "id": "medicine-resistance-5",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a gene found in Chinese pigs in 2015 alarm doctors worldwide?",
+  "answer": "It beat colistin, a last-resort drug, and sat on a plasmid that bacteria swap. Colistin, an old drug sidelined for harming kidneys, had been revived against superbugs, while farms fed it to pigs by the tonne. The gene, mcr-1, soon turned up on several continents; China banned colistin in animal feed in 2017.",
+  "move": "A reserve kept for emergencies is only reserved if every user agrees.",
+  "keywords": [
+    "colistin",
+    "mcr-1",
+    "pigs",
+    "plasmids",
+    "last-resort antibiotics"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Liu et al., Lancet Infectious Diseases, 2016",
+  "source_kind": "paper",
+  "reference": "Liu et al., Emergence of plasmid-mediated colistin resistance mechanism MCR-1 in animals and human beings in China, The Lancet Infectious Diseases, 2016",
+  "written": "2026-09-26"
+}

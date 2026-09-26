@@ -1,0 +1,32 @@
+{
+  "id": "art-pop-2",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who designed the Brillo carton that Warhol reproduced as sculpture in 1964?",
+  "answer": "An abstract painter. James Harvey, a second-generation Abstract Expressionist, earned his living as a commercial designer and drew the Brillo box. When Warhol's painted plywood copies went on show at the Stable Gallery in 1964, Harvey's day job was exhibited in Manhattan as art. He died the following year.",
+  "move": "Behind most anonymous design is a named person with ambitions of their own.",
+  "keywords": [
+    "brillo box",
+    "james harvey",
+    "andy warhol",
+    "commercial design"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frei and Printz, Warhol Catalogue Raisonné, 2004",
+  "source_kind": "reference_work",
+  "reference": "Georg Frei and Neil Printz (eds.), The Andy Warhol Catalogue Raisonné, Volume 2, Phaidon, 2004",
+  "written": "2026-09-26"
+}

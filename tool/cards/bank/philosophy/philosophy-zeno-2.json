@@ -1,0 +1,45 @@
+{
+  "id": "philosophy-zeno-2",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Halve a 100-metre gap again and again. After how many halvings is what remains smaller than an atom, about 0.1 nanometres?",
+  "value": 40,
+  "unit": "halvings",
+  "answer": "39 halvings leave about 0.18 nm, so the answer is 40.",
+  "move": "Repeated halving reaches the tiny in far fewer steps than it feels.",
+  "trap": "Expecting an endless-feeling process to need millions of steps.",
+  "hint": "Count how many factors of a thousand separate metres from tenths of a nanometre.",
+  "steps": [
+    "100 m divided by 0.1 nm is 10 to the power 12.",
+    "Ten halvings divide by 1,024, roughly a thousand.",
+    "Four sets of ten, 40 halvings, divide by just over 10 to the power 12.",
+    "39 halvings leave about 0.18 nm, so the answer is 40."
+  ],
+  "keywords": [
+    "dichotomy paradox",
+    "halving",
+    "powers of two",
+    "atoms"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Salmon (ed.), Zeno's Paradoxes, 1970",
+  "source_kind": "book",
+  "reference": "Salmon (ed.), Zeno's Paradoxes, Bobbs-Merrill, 1970",
+  "written": "2026-09-26"
+}

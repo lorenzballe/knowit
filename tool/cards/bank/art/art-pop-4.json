@@ -1,0 +1,38 @@
+{
+  "id": "art-pop-4",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the term Pop art was first used by an American critic.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It came out of the Independent Group at London's Institute of Contemporary Arts in the mid-1950s and is usually credited to the British critic Lawrence Alloway. Richard Hamilton's 1956 collage for the show This Is Tomorrow already has a bodybuilder holding a giant lollipop marked POP. The label was British before the soup cans.",
+  "move": "The most famous practitioner is rarely the one who named the thing.",
+  "trap": "Warhol and New York dominate the story, so the name seems American.",
+  "keywords": [
+    "lawrence alloway",
+    "independent group",
+    "richard hamilton",
+    "this is tomorrow"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Massey, The Independent Group, 1995",
+  "source_kind": "book",
+  "reference": "Anne Massey, The Independent Group: Modernism and Mass Culture in Britain, 1945-59, Manchester University Press, 1995",
+  "written": "2026-09-26"
+}

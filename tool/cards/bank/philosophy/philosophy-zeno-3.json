@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-zeno-3",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Aristotle answer Zeno's claim that nobody can cross infinitely many half-distances in a finite time?",
+  "answer": "First by dividing the time too: if the track splits endlessly, so do the seconds, so endless shrinking stretches fit into a finite run. Later he called that reply fine for the questioner but not for the truth: the halfway points are only potential. A runner who never stops at them never makes them real.",
+  "move": "When a problem seems impossible, check you divided both sides, not just one.",
+  "keywords": [
+    "aristotle",
+    "physics",
+    "dichotomy paradox",
+    "potential infinity"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Physics VI.2 and VIII.8",
+  "source_kind": "book",
+  "reference": "Aristotle, Physics VI.2 and VIII.8, trans. Waterfield, Oxford World's Classics, Oxford University Press, 1996",
+  "written": "2026-09-26"
+}

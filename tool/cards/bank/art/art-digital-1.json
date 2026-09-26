@@ -1,0 +1,36 @@
+{
+  "id": "art-digital-1",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "also": [
+    "technology.old_machines.mainframes"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the first digital image scanned into a computer only a small head of a baby?",
+  "answer": "Because the machine could hold no more. In 1957 Russell Kirsch at the US National Bureau of Standards fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. It could handle an array of 176 by 176 pixels, so the picture was cropped to the face.",
+  "move": "Early versions of a technology are shaped by what the machine could hold.",
+  "keywords": [
+    "russell kirsch",
+    "seac",
+    "first digital image",
+    "pixels",
+    "drum scanner"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST, First Digital Image",
+  "source_kind": "institution",
+  "reference": "https://www.nist.gov/mathematics-statistics/first-digital-image",
+  "written": "2026-09-26"
+}

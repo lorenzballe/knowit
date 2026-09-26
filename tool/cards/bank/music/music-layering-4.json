@@ -1,0 +1,39 @@
+{
+  "id": "music-layering-4",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A producer layers two punchy kick drum samples, and the combined kick sounds thinner and weaker. Why?",
+  "options": [
+    "The mix bus is clipping",
+    "The ear tires of the attack",
+    "Their low waves partly cancel"
+  ],
+  "correct": 2,
+  "answer": "Their low waves partly cancel. A kick is mostly a low, nearly pure thump; where one sample's wave rises while the other's falls, they subtract. Sliding one by a few milliseconds, or flipping its polarity, brings the weight back. Two heavy blows, badly timed, land like one soft one.",
+  "move": "Two strengths can subtract when their timing is wrong.",
+  "trap": "The mix bus is clipping, since two loud sounds cause an overload.",
+  "keywords": [
+    "kick drum",
+    "phase cancellation",
+    "polarity",
+    "sample layering"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Izhaki, Mixing Audio, 2008",
+  "source_kind": "book",
+  "reference": "Izhaki, Mixing Audio: Concepts, Practices and Tools, Focal Press, 2008",
+  "written": "2026-09-26"
+}

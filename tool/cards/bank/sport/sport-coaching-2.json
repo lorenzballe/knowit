@@ -1,0 +1,39 @@
+{
+  "id": "sport-coaching-2",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: an economist's analysis of NFL games found coaches go for it on fourth down too often?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False: too rarely. David Romer valued each option using thousands of plays and found teams punted or kicked in many situations where going for it would, on average, have won more games. A failed gamble is replayed and blamed; a timid punt is soon forgotten. Teams have grown bolder since.",
+  "move": "Count the cost of playing safe as carefully as the cost of risk.",
+  "trap": "Failed fourth-down gambles are vivid, so coaches seem reckless.",
+  "keywords": [
+    "fourth down",
+    "nfl",
+    "david romer",
+    "risk aversion",
+    "american football"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Romer, Journal of Political Economy, 2006",
+  "source_kind": "paper",
+  "reference": "Romer, Do Firms Maximize? Evidence from Professional Football, Journal of Political Economy, 2006",
+  "written": "2026-09-26"
+}

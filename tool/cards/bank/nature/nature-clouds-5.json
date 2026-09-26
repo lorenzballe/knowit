@@ -10,10 +10,10 @@
   "options": [
     "Its accumulated carbon dioxide",
     "Its nitrogen oxide emissions",
-    "The contrail clouds it makes"
+    "Its contrail clouds"
   ],
   "correct": 2,
-  "answer": "The contrail clouds it makes. Lee and colleagues put contrail cirrus at about 57 milliwatts of warming per square metre, against about 34 for all aviation's carbon dioxide since 1940, though far less certain. Contrails vanish within hours; carbon dioxide stays for centuries. Some flights warm the planet mostly through a white line.",
+  "answer": "Its contrail clouds. Lee and colleagues put contrail cirrus at about 57 milliwatts of warming per square metre, against about 34 for all aviation's carbon dioxide since 1940, though far less certain. Contrails vanish within hours; carbon dioxide stays for centuries. Some flights warm the planet mostly through a white line.",
   "move": "Rank causes by their effect today and by their effect in a century.",
   "trap": "Carbon dioxide is the famous greenhouse gas, so it must dominate.",
   "keywords": [

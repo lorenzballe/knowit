@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-zeno-1",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were Zeno of Elea's paradoxes of motion originally meant to defend?",
+  "answer": "His teacher Parmenides, who held that change and plurality are illusions. In Plato's Parmenides, Zeno says his book repays Parmenides' mockers with interest: assume many things and motion, and worse absurdities follow. Proclus credits him with 40 such arguments. Only a handful survive, mostly in summaries by Aristotle, who set out to refute them.",
+  "move": "Before judging an argument, ask what position it was built to protect.",
+  "keywords": [
+    "zeno of elea",
+    "parmenides",
+    "motion",
+    "plurality",
+    "proclus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Parmenides 127d-128e",
+  "source_kind": "primary_document",
+  "reference": "Plato, Parmenides 127d-128e, trans. Gill & Ryan, in Plato: Complete Works, ed. Cooper, Hackett, 1997",
+  "written": "2026-09-26"
+}

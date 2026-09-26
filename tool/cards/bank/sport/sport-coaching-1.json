@@ -1,0 +1,40 @@
+{
+  "id": "sport-coaching-1",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Dutch clubs that sacked their manager during a slump then improved. How did clubs with a similar slump that kept theirs do?",
+  "options": [
+    "Kept sliding down the table",
+    "Recovered about as much",
+    "Recovered only half as much"
+  ],
+  "correct": 1,
+  "answer": "They recovered about as much. Studying the Dutch top flight from 1986 to 2004, ter Weel compared clubs that sacked their manager with clubs that hit a similar run of results and kept him. Both bounced back. A slump is partly bad luck, and luck evens out whoever sits on the bench.",
+  "move": "Judge a fix made at the lowest point against what would have happened anyway.",
+  "trap": "The new manager arrived just before the recovery, so he gets the credit.",
+  "keywords": [
+    "manager sackings",
+    "dutch football",
+    "regression to the mean",
+    "eredivisie",
+    "performance"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ter Weel, De Economist, 2011",
+  "source_kind": "paper",
+  "reference": "ter Weel, Does Manager Turnover Improve Firm Performance? Evidence from Dutch Soccer, 1986–2004, De Economist, 2011",
+  "written": "2026-09-26"
+}

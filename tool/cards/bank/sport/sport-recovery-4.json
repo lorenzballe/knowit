@@ -3,9 +3,6 @@
   "topic": "sport",
   "genre": "sport.training",
   "strand": "sport.training.recovery",
-  "also": [
-    "psychology.sleep_and_dreams.sleep_stages"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "counterfactual",

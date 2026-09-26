@@ -1,0 +1,43 @@
+{
+  "id": "art-digital-2",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "also": [
+    "technology.where_things_come_from.chips"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A phone camera goes from 12 to 48 megapixels. How much finer can detail along one edge become?",
+  "options": [
+    "Up to twice as fine",
+    "Up to four times finer",
+    "Up to sixteen times finer"
+  ],
+  "correct": 0,
+  "answer": "Up to twice as fine. Pixels fill an area, so four times as many means twice as many along each edge: 4,000 across becomes 8,000. Many 48-megapixel phone sensors also group pixels in fours under one colour filter and, in dim light, merge each group, handing back 12 megapixels anyway.",
+  "move": "When a count covers an area, the gain along a line is its square root.",
+  "trap": "Reading four times the pixels as four times the detail.",
+  "keywords": [
+    "megapixels",
+    "image sensors",
+    "pixel binning",
+    "quad bayer",
+    "resolution"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forbes, pixel binning explained, 2022",
+  "source_kind": "news_archive",
+  "reference": "https://www.forbes.com/sites/paulmonckton/2022/02/28/what-is-pixel-binning-quad-bayer-nonacell/",
+  "written": "2026-09-26"
+}

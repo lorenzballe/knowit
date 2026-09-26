@@ -1,0 +1,39 @@
+{
+  "id": "art-pop-1",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "At Warhol's first solo show, in Los Angeles in 1962, what did one soup-can canvas cost?",
+  "options": [
+    "$100",
+    "$10,000",
+    "$1,000"
+  ],
+  "correct": 0,
+  "answer": "$100. The Ferus Gallery lined up 32 canvases, one per Campbell's variety, on a narrow ledge like a supermarket shelf. Few sold, and the dealer Irving Blum kept the set together by buying all 32 from Warhol for $1,000, paid in instalments. The whole run now belongs to the Museum of Modern Art.",
+  "move": "Price a thing at the moment it was made, not the moment it became famous.",
+  "trap": "Today's huge Warhol prices pull the guess up to $10,000.",
+  "keywords": [
+    "campbell's soup cans",
+    "ferus gallery",
+    "irving blum",
+    "andy warhol"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frei and Printz, Warhol Catalogue Raisonné, 2002",
+  "source_kind": "reference_work",
+  "reference": "Georg Frei and Neil Printz (eds.), The Andy Warhol Catalogue Raisonné, Volume 1, Phaidon, 2002",
+  "written": "2026-09-26"
+}

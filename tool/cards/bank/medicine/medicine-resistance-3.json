@@ -1,0 +1,38 @@
+{
+  "id": "medicine-resistance-3",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most antimicrobials sold worldwide go into farm animals rather than people?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2017 estimate put about 73% of global antimicrobial sales into animals raised for food, often in low daily doses to speed growth or to prevent disease in crowded herds. Low, steady doses favour resistant bacteria. Much of it is mixed into feed or drinking water, dosing a whole barn at once.",
+  "move": "Find the biggest user before blaming the most visible one.",
+  "trap": "Picturing prescriptions for people, the use everyone has seen.",
+  "keywords": [
+    "livestock",
+    "antimicrobial use",
+    "growth promoters",
+    "animal feed"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Boeckel et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aao1495",
+  "written": "2026-09-26"
+}

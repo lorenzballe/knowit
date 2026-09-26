@@ -1,0 +1,39 @@
+{
+  "id": "music-layering-2",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: copying a vocal track onto a second track and playing both makes it sound double-tracked?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Identical copies add in perfect step: the voice gets about 6 decibels louder, same character. A real double works because two takes differ by a few milliseconds and a few cents of pitch, and the ear reads the smear as two singers. Stacking copies of one take just pushes up a fader.",
+  "move": "Copies of one source add volume, not evidence.",
+  "trap": "True, since two tracks of the same voice should sound like two.",
+  "keywords": [
+    "double tracking",
+    "vocal layering",
+    "decibels",
+    "phase",
+    "takes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huber & Runstein, Modern Recording Techniques",
+  "source_kind": "book",
+  "reference": "Huber & Runstein, Modern Recording Techniques, Focal Press, 2010",
+  "written": "2026-09-26"
+}

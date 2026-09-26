@@ -1,0 +1,33 @@
+{
+  "id": "medicine-resistance-1",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When was an enzyme that destroys penicillin first described in print?",
+  "answer": "In 1940, before any patient had been treated. Edward Abraham and Ernst Chain, from the same Oxford group that purified the drug, reported in Nature that extracts of E. coli broke penicillin down. The first injection into a person came weeks later, in February 1941. The counter-move was in print before the first patient.",
+  "move": "Look for the counter-move before celebrating the move.",
+  "keywords": [
+    "penicillinase",
+    "edward abraham",
+    "ernst chain",
+    "beta-lactamase",
+    "oxford"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abraham & Chain, Nature, 1940",
+  "source_kind": "paper",
+  "reference": "Abraham & Chain, An enzyme from bacteria able to destroy penicillin, Nature, 1940",
+  "written": "2026-09-26"
+}

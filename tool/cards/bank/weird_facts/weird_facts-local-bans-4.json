@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-local-bans-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How did London cut the pigeon flocks in Trafalgar Square in the 2000s?",
+  "options": [
+    "Culling with poisoned grain",
+    "Ending seed sales and flying hawks",
+    "Netting birds and moving them"
+  ],
+  "correct": 1,
+  "answer": "Ending seed sales and flying hawks. The licensed seed stall closed in 2001, feeding the birds was banned, and trained Harris hawks were flown to scare them off. Flock size follows food: kill birds where food is plentiful and newcomers fill the gap. Take away the food and the flock leaves on its own.",
+  "move": "To shrink a crowd, remove what drew it rather than its members.",
+  "trap": "Removing birds directly seems the quickest way to have fewer of them.",
+  "keywords": [
+    "trafalgar square",
+    "pigeons",
+    "harris hawks",
+    "feeding ban",
+    "greater london authority"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greater London Authority, square byelaws",
+  "source_kind": "institution",
+  "reference": "Greater London Authority, Trafalgar Square and Parliament Square Garden Byelaws, 2012",
+  "written": "2026-09-26"
+}

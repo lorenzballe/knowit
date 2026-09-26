@@ -5,7 +5,7 @@
   "strand": "language.accents.prestige_accents",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "reflection",
+  "principle": "sampling",
   "question": "Norwich men were recorded, then asked how they pronounced words like tune and ear. Which way did their claims err?",
   "options": [
     "They claimed more standard forms",
@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "They claimed more local forms. Peter Trudgill found many men claimed broad Norwich pronunciations they did not use on tape, while women more often claimed standard forms they did not use. For these men the local accent carried covert prestige, a value held but unspoken: toughness, being one of the lads.",
   "move": "Ask whose approval a person is seeking before predicting how they will exaggerate.",
-  "trap": "Assuming everyone polishes their speech when describing it.",
+  "trap": "Expecting everyone to polish their speech when describing it.",
   "keywords": [
     "norwich",
     "peter trudgill",

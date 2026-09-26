@@ -1,0 +1,33 @@
+{
+  "id": "music-layering-5",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Queen's albums of the 1970s carry a sleeve note saying no synthesisers were used?",
+  "answer": "Because listeners assumed the layered sounds were synthesised. Brian May built orchestral sections by recording his home-made guitar in many harmonised parts, one line at a time; the choirs were three band members overdubbed again and again. Their first album with a synthesiser was The Game, in 1980. The orchestra was one guitar, stacked.",
+  "move": "When a result looks machine-made, ask how many patient passes built it.",
+  "keywords": [
+    "queen",
+    "brian may",
+    "guitar orchestration",
+    "overdubs",
+    "synthesisers"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Queen, A Night at the Opera, 1975",
+  "source_kind": "primary_document",
+  "reference": "Queen, A Night at the Opera, EMI, 1975, sleeve notes",
+  "written": "2026-09-26"
+}

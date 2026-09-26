@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-local-bans-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a Paris police order requiring women to seek permission to wear trousers was formally set aside only in 2013?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The prefecture's order of November 1800 required women to get police permission to dress as men. It was eased in 1892 and 1909 for women holding a bicycle's handlebars or a horse's reins. In January 2013 the minister for women's rights declared it implicitly repealed, after generations of being ignored.",
+  "move": "An unenforced rule still stands until someone formally takes it down.",
+  "trap": "Assuming a rule from 1800 must have lapsed a century or more ago.",
+  "keywords": [
+    "paris",
+    "trousers",
+    "police ordinance",
+    "women's rights"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Journal officiel, Sénat, January 2013",
+  "source_kind": "primary_document",
+  "reference": "Journal officiel de la République française, Sénat, réponse ministérielle sur l'ordonnance du 7 novembre 1800, 31 janvier 2013",
+  "written": "2026-09-26"
+}

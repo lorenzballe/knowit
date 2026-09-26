@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-local-bans-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Carmel-by-the-Sea in California requires a permit to wear very high heels. Why?",
+  "options": [
+    "Uneven pavements and lawsuits",
+    "Noise on the boardwalks at night",
+    "A dress code for tourists"
+  ],
+  "correct": 0,
+  "answer": "Uneven pavements and lawsuits. Tree roots buckle the town's footpaths, and the 1963 rule covers heels over about 5 cm with a tip smaller than about 6.5 cm². A wearer who takes the free permit from city hall accepts the risk of falling. The ordinance is a liability waiver disguised as a fashion rule.",
+  "move": "Behind an odd rule, look for who would otherwise pay.",
+  "trap": "A ban on heels looks like a quirky rule about style.",
+  "keywords": [
+    "carmel-by-the-sea",
+    "high heels",
+    "permits",
+    "liability",
+    "pavements"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carmel-by-the-Sea Municipal Code, 1963",
+  "source_kind": "primary_document",
+  "reference": "Carmel-by-the-Sea Municipal Code, high-heeled shoes permit ordinance, 1963",
+  "written": "2026-09-26"
+}

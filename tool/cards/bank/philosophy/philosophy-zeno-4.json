@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-zeno-4",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: checking often enough on an atom that is poised to change state can stop it from changing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It is the quantum Zeno effect, predicted by Misra and Sudarshan in 1977. In 1990 Wayne Itano's team pushed beryllium ions from one energy level towards another while probing them with laser pulses: the more often they looked, the fewer ions made the jump. A watched pot, at this scale, does not boil.",
+  "move": "Check whether the act of checking is part of what you are measuring.",
+  "trap": "Assuming a measurement only records a change and cannot prevent it.",
+  "keywords": [
+    "quantum zeno effect",
+    "measurement",
+    "beryllium ions",
+    "wayne itano"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Itano et al., Physical Review A, 1990",
+  "source_kind": "paper",
+  "reference": "Itano, Heinzen, Bollinger & Wineland, Quantum Zeno effect, Physical Review A 41, 1990",
+  "written": "2026-09-26"
+}

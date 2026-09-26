@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-ghost-towns-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Whole towns around Fukushima Daiichi were emptied in 2011. What has since caused more deaths among the people moved out?",
+  "options": [
+    "The evacuation and its hardships",
+    "Radiation from the damaged plant",
+    "Both in roughly equal numbers"
+  ],
+  "correct": 0,
+  "answer": "The evacuation and its hardships. Japan counts more than 2,000 disaster-related deaths in Fukushima prefecture, among them frail elderly people moved from hospitals and care homes, and deaths from stress and interrupted treatment. One worker's death has been officially linked to radiation. Futaba, the town beside the plant, had no residents at all until 2022.",
+  "move": "Count the harm done by the escape as carefully as the harm escaped.",
+  "trap": "Picturing radiation as the killer because it is the frightening part.",
+  "keywords": [
+    "fukushima",
+    "evacuation",
+    "radiation",
+    "futaba",
+    "disaster-related deaths"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hasegawa et al., The Lancet, 2015",
+  "source_kind": "reference_work",
+  "reference": "Hasegawa et al., Health effects of radiation and other health problems in the aftermath of nuclear accidents, with an emphasis on Fukushima, The Lancet, 2015",
+  "written": "2026-09-26"
+}
