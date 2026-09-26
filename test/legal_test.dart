@@ -67,6 +67,8 @@ void main() {
     for (final String badge in const [
       'site/assets/badges/app-store.svg',
       'site/assets/badges/google-play.png',
+      // The code a computer's visitor scans, which leads to /get.
+      'site/assets/qr-get.svg',
     ]) {
       expect(File(badge).existsSync(), isTrue, reason: badge);
     }
@@ -78,6 +80,7 @@ void main() {
       'site/terms.html',
       'site/support.html',
       'site/404.html',
+      'site/get.html',
     ]) {
       final String text = File(page).readAsStringSync();
       expect(text, contains('© 2026 TheBaleCompany'), reason: page);

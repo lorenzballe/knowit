@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Astute · Not found</title>
-<meta name="description" content="This page is not in today’s five.">
+<title>Get Astute</title>
+<meta name="description" content="Download Astute on the App Store or Google Play.">
 <meta name="theme-color" content="#141416">
 <meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://astutetheapp.com/">
+<meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -14,7 +16,16 @@
 <link rel="stylesheet" href="/assets/site.css">
 <script>document.documentElement.classList.add('js')</script>
 <script src="/assets/main.js" defer></script>
-<meta name="robots" content="noindex">
+<script>
+  // A phone goes straight to its own store; a computer stays and sees both.
+  (function () {
+    var ua = navigator.userAgent;
+    var ios = /iphone|ipad|ipod/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    var to = /android/i.test(ua) ? 'https://play.google.com/store/apps/details?id=com.astuto.app'
+      : ios ? 'https://apps.apple.com/app/id6806852300' : null;
+    if (to) location.replace(to);
+  })();
+</script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -46,19 +57,13 @@
   </div>
 </header>
 
-<main class="lost" id="top">
-  <div class="lost-card" role="button" tabindex="0" aria-pressed="false" aria-label="Page not found. Tap to turn the card over." data-flip>
-    <div class="lost-inner">
-      <div class="lost-face">
-        <p class="topic"><span></span>404</p>
-        <p class="q">This page isn’t in today’s five.</p>
-        <p class="hint">Tap to reveal</p>
-      </div>
-      <div class="lost-face back">
-        <p class="topic"><span></span>404</p>
-        <p class="a">It may have moved, or it never was. Today’s five are waiting where they always are.</p>
-        <a class="chunky" href="/">Back to Astute</a>
-      </div>
+<main class="getpage" id="top">
+  <div>
+    <h1>Get Astute.</h1>
+    <p>Five cards a day, free on iPhone and Android.</p>
+    <div class="stores large center">
+      <a href="https://apps.apple.com/app/id6806852300"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
+      <a href="https://play.google.com/store/apps/details?id=com.astuto.app"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>
     </div>
   </div>
 </main>

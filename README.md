@@ -20,8 +20,15 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   screenshots in `site/assets/`, and `site/assets/main.js` for the few parts
   that move (the menu, the calibration chart you can drag, the cards that
   flip, the plan picker, the questions). It presents Astute on both stores,
-  with Apple's and Google's own badges, and sends Android visitors to Google
-  Play. It reads fully without JavaScript.
+  with Apple's and Google's own badges: a phone's Download goes straight to
+  its own store, a computer's to a code to scan with the phone, which opens
+  `/get` and from there the right store. Today's question is shown live from
+  `/widget/days.json`, the file the widget reads. On top of the design:
+  words that rise, sections that come into view as they are reached, a
+  phone that turns towards the pointer and turns its card over when tapped,
+  a progress line in the three lights' colours, grain on the paper, and the
+  name large at the foot. It reads fully without JavaScript, and without
+  motion for anyone who has asked their system for less.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself. Astute is published by

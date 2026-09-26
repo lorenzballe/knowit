@@ -273,3 +273,344 @@ img { max-width: 100%; }
   }
   html { scroll-behavior: auto; }
 }
+
+/* ══ Finish ══════════════════════════════════════════════════════════════
+   The details on top of the design: grain, the progress line, words that
+   rise, things that come into view as the page is read, the live question
+   of the day, and the pieces a desktop visitor needs to reach a phone. */
+
+:root { color-scheme: dark; }
+::selection { background: #8B6CFF; color: #fff; }
+
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #F2F1EC;
+  color: #141416;
+  font: 600 14px/1 Figtree, sans-serif;
+  text-decoration: none;
+  transition: top .2s ease;
+}
+.skip:focus { top: 12px; color: #141416; }
+
+/* A little paper under the ink. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* How far down the page, in the three lights' colours. */
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, #FFE14D, #2DE0D2 55%, #8B6CFF);
+  pointer-events: none;
+}
+
+/* The section being read, marked in the nav. */
+.nav-links a { position: relative; }
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: #F2F1EC;
+  opacity: 0;
+  transform: scale(.4);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.nav-links a.active { color: #F2F1EC; }
+.nav-links a.active::after { opacity: 1; transform: none; }
+
+#mobile-menu:not([hidden]) { animation: menu-in .32s cubic-bezier(.2, .7, .2, 1) both; }
+#mobile-menu:not([hidden]) a { animation: menu-link .42s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 45ms + 40ms); }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+@keyframes menu-link { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* The three lights fade out where their section ends. */
+.lights-fade { -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent); mask-image: linear-gradient(180deg, #000 62%, transparent); }
+.lights-soft { -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent); }
+.lights-top { -webkit-mask-image: linear-gradient(180deg, transparent, #000 26%); mask-image: linear-gradient(180deg, transparent, #000 26%); }
+
+@media print {
+  .js [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .grain, .progress, .site-nav { display: none; }
+}
+
+/* ── The headline, word by word ─────────────────────────────────────── */
+
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .02em .14em; margin: 0 -.02em -.14em; }
+.w > span { display: inline-block; }
+.js .w > span { animation: word-in 1s cubic-bezier(.2, .7, .1, 1) both; animation-delay: calc(var(--i, 0) * 70ms + 80ms); }
+@keyframes word-in { from { transform: translateY(110%); } to { transform: none; } }
+
+.shimmer { background-size: 220% 100% !important; animation: shimmer 7s ease-in-out infinite alternate; }
+.js .w > .shimmer { animation: word-in 1s cubic-bezier(.2, .7, .1, 1) both, shimmer 7s ease-in-out 1.2s infinite alternate; animation-delay: calc(var(--i, 0) * 70ms + 80ms), 1.2s; }
+@keyframes shimmer { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+
+.js .rise-in { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; animation-delay: var(--d, 0ms); }
+
+/* ── The phone: afloat, turning to the pointer, and a card to reveal ─ */
+
+.float { animation: float 6.5s ease-in-out 1.2s infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+#hero-phone {
+  transform: perspective(1400px) rotateY(calc(9deg + var(--ry, 0deg))) rotateX(calc(2deg + var(--rx, 0deg)));
+  will-change: transform;
+}
+[data-phone] { cursor: pointer; }
+[data-phone] .phone-back {
+  opacity: 0;
+  transform: scale(.985);
+  transition: opacity .55s cubic-bezier(.2, .7, .2, 1), transform .55s cubic-bezier(.2, .7, .2, 1);
+}
+[data-phone][aria-pressed="true"] .phone-back { opacity: 1; transform: none; }
+.phone-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -50px;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 17px;
+  background: rgba(20, 20, 22, .72);
+  border: 1px solid rgba(242, 241, 236, .14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font: 600 13px/1 Figtree, sans-serif;
+  color: #F2F1EC;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.phone-hint i { width: 7px; height: 7px; border-radius: 50%; background: #2DE0D2; animation: live 2s ease-out infinite; }
+.phone-hint.gone { opacity: 0; }
+
+/* ── Things come into view as they are reached ──────────────────────── */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .9s cubic-bezier(.2, .7, .2, 1), transform .9s cubic-bezier(.2, .7, .2, 1), translate .35s cubic-bezier(.2, .7, .2, 1), border-color .25s ease;
+  transition-delay: var(--d, 0ms), var(--d, 0ms), 0ms, 0ms;
+}
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+.lift { transition: translate .35s cubic-bezier(.2, .7, .2, 1), border-color .25s ease; }
+@media (hover: hover) {
+  .lift:hover { translate: 0 -5px; border-color: rgba(242, 241, 236, .18) !important; }
+  .stores a { transition: translate .25s ease, box-shadow .25s ease; }
+  .stores a:hover { translate: 0 -2px; box-shadow: 0 14px 28px -14px rgba(0, 0, 0, .8); }
+  .chip:hover { translate: 0 -3px; }
+}
+.chip { transition: translate .25s ease; }
+
+/* ── Today's question, live from the widget's own file ──────────────── */
+
+.today { background: #141416; padding: clamp(64px, 8vw, 104px) clamp(20px, 5vw, 40px) 0; }
+.today-wrap { max-width: 860px; margin: 0 auto; }
+.today-when {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 22px;
+  font: 700 11px/1.4 Figtree, sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 236, .6);
+  text-align: center;
+}
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: #2DE0D2; animation: live 2s ease-out infinite; flex: none; }
+@keyframes live { 0% { box-shadow: 0 0 0 0 rgba(45, 224, 210, .55); } 100% { box-shadow: 0 0 0 10px rgba(45, 224, 210, 0); } }
+.today-card {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: clamp(280px, 30vw, 360px);
+  padding: clamp(24px, 3.4vw, 40px);
+  border-radius: 32px;
+  background: var(--bg, #F2F1EC);
+  color: var(--ink, #10100C);
+  text-decoration: none;
+  box-shadow: 0 50px 90px -45px rgba(0, 0, 0, .8), inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+.today-card:hover, .today-card:focus-visible { color: var(--ink, #10100C); }
+.today-topic { display: flex; align-items: center; gap: 8px; margin: 0; font: 700 11px/1 Figtree, sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.today-topic .ring { width: 11px; height: 11px; border: 1.5px solid currentColor; border-radius: 50%; flex: none; }
+.today-q { display: block; margin: auto 0 0; font: 600 clamp(26px, 3.6vw, 46px)/1.1 Fraunces, Georgia, serif; letter-spacing: -.02em; font-variation-settings: 'opsz' 144; text-wrap: balance; }
+.today-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 0; font: 600 15px/1.2 Figtree, sans-serif; }
+.today-foot .go { display: inline-flex; align-items: center; gap: 8px; }
+.today-foot .go b { font-weight: 600; transition: translate .25s ease; }
+.today-card:hover .go b { translate: 4px 0; }
+.today-foot .ed { opacity: .6; font-weight: 500; font-variant-numeric: tabular-nums; }
+.today-note { margin: 18px 0 0; text-align: center; font: 400 15px/1.5 Figtree, sans-serif; color: rgba(242, 241, 236, .55); }
+
+/* ── The day's row: arrows and soft edges on a wide screen ──────────── */
+
+.row-nav { position: absolute; right: clamp(20px, 5vw, 40px); bottom: 0; display: flex; gap: 8px; }
+.row-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: 1px solid rgba(242, 241, 236, .22);
+  color: #F2F1EC;
+  cursor: pointer;
+  transition: background .2s ease, opacity .2s ease, border-color .2s ease;
+}
+.row-btn:hover:not(:disabled) { background: rgba(242, 241, 236, .08); border-color: rgba(242, 241, 236, .4); }
+.row-btn:disabled { opacity: .3; cursor: default; }
+.row-btn svg { width: 18px; height: 18px; }
+#day-row {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl, 0px), #000 calc(100% - var(--fr, 56px)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl, 0px), #000 calc(100% - var(--fr, 56px)), transparent 100%);
+}
+@media (hover: hover) and (pointer: fine) { #day-row { cursor: grab; } #day-row.dragging { cursor: grabbing; scroll-snap-type: none !important; user-select: none; } }
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+
+/* ── Calibration: a nudge to drag, until someone does ───────────────── */
+
+#conf-thumb.hint::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(20, 20, 22, .45);
+  animation: nudge 1.9s ease-out infinite;
+}
+@keyframes nudge { 0% { transform: scale(.9); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+.board, .price { font-variant-numeric: tabular-nums; }
+
+/* ── Astute+: an edge in the three lights, slowly turning ───────────── */
+
+@property --turn { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.plus-card { position: relative; border-color: transparent !important; }
+.plus-card::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 29.5px;
+  padding: 1.5px;
+  background: conic-gradient(from var(--turn), #FFE14D, #2DE0D2, #8B6CFF, #F2F1EC, #FFE14D);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: turn 9s linear infinite;
+  pointer-events: none;
+}
+@keyframes turn { to { --turn: 360deg; } }
+
+/* ── Getting it onto a phone from a desktop ─────────────────────────── */
+
+.get { display: flex; align-items: center; justify-content: center; gap: 28px; flex-wrap: wrap; }
+.qr { display: flex; align-items: center; gap: 16px; text-align: left; padding-left: 28px; border-left: 1px solid rgba(242, 241, 236, .14); }
+.qr-code { position: relative; width: 116px; height: 116px; padding: 10px; border-radius: 18px; background: #F2F1EC; flex: none; box-shadow: 0 20px 40px -20px rgba(0, 0, 0, .8); }
+.qr-code img { display: block; width: 96px; height: 96px; }
+.qr-code .mark { position: absolute; left: 50%; top: 50%; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 7px; border: 3px solid #F2F1EC; box-sizing: content-box; transform: translate(-3px, -3px); }
+.qr p { margin: 0; font: 500 14px/1.45 Figtree, sans-serif; color: rgba(242, 241, 236, .7); }
+.qr p b { display: block; font-weight: 600; color: #F2F1EC; }
+@media (max-width: 767px) { .qr { display: none; } }
+
+/* ── The name, large, where the page ends ───────────────────────────── */
+
+.site-foot > .foot-mark {
+  display: block;
+  max-width: none;
+  margin: 0;
+  padding: 0 0 .04em;
+  overflow: hidden;
+  text-align: center;
+  font: 600 clamp(96px, 21vw, 300px)/.86 Fraunces, Georgia, serif;
+  letter-spacing: -.05em;
+  font-variation-settings: 'opsz' 144;
+  background: linear-gradient(180deg, rgba(242, 241, 236, .22) 12%, rgba(242, 241, 236, 0) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  user-select: none;
+}
+/* The + of Astute+, drawn in the sans so it holds its weight beside the serif. */
+.plus-sign { font-family: Figtree, sans-serif; font-weight: 700; font-size: .78em; margin-left: .04em; vertical-align: .14em; }
+
+/* ── Not found: a card of its own ───────────────────────────────────── */
+
+.lost { min-height: calc(100svh - 260px); display: grid; place-items: center; padding: 48px 20px 72px; }
+.lost-card { width: min(100%, 340px); height: 440px; perspective: 1400px; cursor: pointer; border-radius: 28px; }
+.lost-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.lost-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 26px;
+  border-radius: 28px;
+  background: #2B5CFF;
+  color: #fff;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 50px 90px -45px rgba(0, 0, 0, .8);
+}
+.lost-face.back { transform: rotateY(180deg); }
+.lost-face .topic { display: flex; align-items: center; gap: 6px; margin: 0; font: 700 11px/1 Figtree, sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+.lost-face .topic span { width: 11px; height: 11px; border: 1.5px solid currentColor; border-radius: 50%; }
+.lost-face .q { margin: auto 0; font: 600 32px/1.1 Fraunces, Georgia, serif; letter-spacing: -.02em; font-variation-settings: 'opsz' 144; }
+.lost-face .a { margin: 0; font: 400 18px/1.5 Figtree, sans-serif; }
+.lost-face .hint { margin: 0; font: 700 10px/1 Figtree, sans-serif; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.lost-face .chunky {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 22px;
+  background: #F2F1EC;
+  color: #141416;
+  font: 600 15px/1 Figtree, sans-serif;
+  text-decoration: none;
+  box-shadow: 0 5px 0 0 #A8A59D;
+}
+.lost-face .chunky:hover { color: #141416; }
+
+/* ── The page that sends a phone to its store ───────────────────────── */
+
+.getpage { min-height: calc(100svh - 260px); display: grid; place-items: center; padding: 56px 20px 80px; text-align: center; }
+.getpage h1 { margin: 0 0 14px; font: 600 clamp(40px, 7vw, 72px)/1 Fraunces, Georgia, serif; letter-spacing: -.025em; font-variation-settings: 'opsz' 144; }
+.getpage p { margin: 0 0 32px; font: 400 18px/1.5 Figtree, sans-serif; color: rgba(242, 241, 236, .7); }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .js .w > span, .js .rise-in { animation: none; }
+  .float, .shimmer, .plus-card::before, .grain { animation: none; }
+  #hero-phone { transform: perspective(1400px) rotateY(9deg) rotateX(2deg); }
+}
