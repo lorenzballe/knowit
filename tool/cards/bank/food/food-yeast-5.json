@@ -1,0 +1,32 @@
+{
+  "id": "food-yeast-5",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the yeast species behind bread, beer and wine first come from?",
+  "answer": "Probably China. A 2018 study sequencing 1,011 strains found the most varied wild lineages of the species on trees in Chinese forests, and traced the domesticated ones to a single migration out of that region. The strains in a baker's packet are branches of a family whose roots grow in East Asian woodland.",
+  "move": "Look for where a family is most varied to find where it began.",
+  "keywords": [
+    "saccharomyces cerevisiae",
+    "domestication",
+    "genome sequencing",
+    "china"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Peter et al., Nature, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-018-0030-5",
+  "written": "2026-09-26"
+}

@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "exponential",
-  "question": "If every electric car sold in 2014 were recycled in 2024, what share of 2024's new batteries could they supply?",
+  "question": "If every electric car sold in 2014 were recycled in 2024, what share of 2024's new car batteries could they supply?",
   "options": [
     "About 20%",
-    "About 2%",
+    "Under 2%",
     "About half"
   ],
   "correct": 1,
-  "answer": "About 2%. Roughly 300,000 electric cars were sold worldwide in 2014 and more than 17 million in 2024, over fifty times as many, and 2014's battery packs were smaller. Batteries return only after a decade or more on the road. Recycling feeds on the market of ten years ago.",
+  "answer": "Under 2%. Roughly 300,000 electric cars were sold worldwide in 2014 and more than 17 million in 2024, over fifty times as many, and 2014's battery packs were smaller. Batteries return only after a decade or more on the road. Recycling feeds on the market of ten years ago.",
   "move": "In a fast-growing market, the past is always smaller than it feels.",
   "trap": "About half, as if the market were steady and scrap matched sales.",
   "keywords": [

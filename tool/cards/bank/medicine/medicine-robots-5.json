@@ -1,0 +1,37 @@
+{
+  "id": "medicine-robots-5",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should public hospitals buy surgical robots while trials show little gain over standard keyhole surgery?",
+  "sides": [
+    "Yes, invest in robots",
+    "No, spend it elsewhere"
+  ],
+  "answer": "Trials capture the early part of a learning curve, not the mature technique. Robots give a steady, magnified 3D view and wristed instruments, and spare surgeons' necks and backs over long careers. Hospitals without them lose trainees and staff to those with them, and later designs are refined only by centres using today's.",
+  "move": "The decider is whether surgeon comfort and training count as outcomes worth paying for.",
+  "counterpoint": "A robot costs more than a million pounds, plus instruments and servicing for every operation, and in trials such as ROLARR patients did no better than with ordinary keyhole surgery. In a budget that also pays for nurses and scanners, money spent on appeal is money taken from care with proven benefit. Buy when the evidence arrives.",
+  "keywords": [
+    "surgical robots",
+    "hospital budgets",
+    "keyhole surgery",
+    "surgical training"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sheetz, Claflin & Dimick, JAMA Network Open, 2020",
+  "source_kind": "paper",
+  "reference": "Sheetz, Claflin & Dimick, Trends in the adoption of robotic surgery for common surgical procedures, JAMA Network Open, 2020",
+  "written": "2026-09-26"
+}

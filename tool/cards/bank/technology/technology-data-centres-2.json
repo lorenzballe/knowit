@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How much extra power does a typical data centre spend just on cooling and power conversion?",
-  "answer": "About half as much again. The Uptime Institute's 2024 survey found an average power usage effectiveness, total power divided by the power reaching the IT equipment, of about 1.56, a figure that has barely improved in years. Google reports about 1.10 across its fleet: 10 watts of overhead where a typical site spends about 56.",
+  "answer": "About half as much again. The Uptime Institute's 2024 survey found an average power usage effectiveness, total power divided by the power reaching the IT equipment, of about 1.56, a figure that has barely improved in years. Google reports about 1.10 across its fleet: per 100 watts of computing, 10 watts of overhead against a typical 56.",
   "move": "Ask what share of the energy reaches the task, not just the total.",
   "keywords": [
     "power usage effectiveness",
@@ -27,6 +27,6 @@
   "figure": "bars",
   "source": "Uptime Institute Global Data Center Survey, 2024",
   "source_kind": "institution",
-  "reference": "Uptime Institute, Global Data Center Survey 2024, 2024",
+  "reference": "https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
   "written": "2026-09-26"
 }

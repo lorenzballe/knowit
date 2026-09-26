@@ -1,0 +1,38 @@
+{
+  "id": "medicine-placebo-5",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should doctors prescribe placebos openly, telling patients they are inert pills, for conditions like chronic pain?",
+  "sides": [
+    "Yes, prescribe them openly",
+    "No, keep them in trials"
+  ],
+  "answer": "Honest placebos remove the old objection, deception. Trials in irritable bowel syndrome and chronic back pain found real relief, and the pills carry no drug risks, no addiction and almost no cost. For pain that nothing else touches, withholding a harmless option that helps some patients is harder to defend than offering it.",
+  "move": "Whichever side you took, whether self-reported relief counts as cure decides it.",
+  "counterpoint": "The trials are small, short and unblinded: patients know they got a pill and report on their own symptoms, so expectation inflates exactly the outcome measured. Effects on objective measures are weak. Prescribing sugar pills also spends scarce consultation time and risks signalling that the complaint is imaginary, or delaying a treatment that works.",
+  "keywords": [
+    "open-label placebo",
+    "chronic pain",
+    "deception",
+    "medical ethics",
+    "prescribing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carvalho et al., Pain, 2016",
+  "source_kind": "paper",
+  "reference": "Carvalho et al., Open-label placebo treatment in chronic low back pain: a randomized controlled trial, Pain, 2016",
+  "written": "2026-09-26"
+}

@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What becomes of the Space Shuttle's main engines when they fly on NASA's SLS rocket?",
-  "answer": "They are dropped in the ocean. Built to be reused, and flown on Shuttle missions, the engines now ride the SLS core stage four at a time and sink with it after one flight. The Shuttle-derived solid boosters, once recovered from the sea, are discarded too. A $3.6 billion contract restarts engine production.",
+  "answer": "They are dropped in the ocean. Built to be reused, and flown on Shuttle missions, the engines now ride the SLS core stage four at a time and sink with it after one flight. When the stock runs out, their replacements fly once too: in 2020 NASA ordered 18 for about $1.79 billion.",
   "move": "Reusable is a property of the plan, not of the hardware.",
   "keywords": [
     "space launch system",
@@ -26,8 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "NASA Office of Inspector General, IG-24-003, 2023",
+  "source": "NASA, press release, 1 May 2020",
   "source_kind": "institution",
-  "reference": "NASA Office of Inspector General, NASA's Management of the Artemis Supply Chain, IG-24-003, 2023",
+  "reference": "NASA, NASA Commits to Future Artemis Missions With More SLS Rocket Engines, press release, 1 May 2020",
   "written": "2026-09-26"
 }

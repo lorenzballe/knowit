@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Most of the iron in human blood was made in which kind of stellar death?",
+  "question": "The largest share of the iron in human blood was made in which kind of stellar death?",
   "options": [
     "A massive star's core collapsing",
     "A white dwarf blowing itself apart",
     "A red giant shedding its layers"
   ],
   "correct": 1,
-  "answer": "A white dwarf blowing itself apart. A collapsing giant never releases its iron core; it is crushed into a neutron star or black hole. Exploding white dwarfs, each forging about half a Sun's mass of iron, made about two-thirds of the Solar System's supply. Blood's iron is mostly ash from stars that left no corpse.",
+  "answer": "A white dwarf blowing itself apart. A collapsing giant keeps its iron core, crushed into a neutron star or black hole, and throws out only a little new iron. Each exploding white dwarf forges about half a Sun's mass of it; estimates credit them with half to two-thirds of the Solar System's supply.",
   "move": "Where something is made matters less than whether it gets out.",
   "trap": "Giants end their lives with iron cores, so they seem the obvious source.",
   "keywords": [

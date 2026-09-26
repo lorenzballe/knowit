@@ -1,0 +1,35 @@
+{
+  "id": "food-yeast-2",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "also": [
+    "food.bread_and_baking.crust"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What keeps a loaf rising in a hot oven after its yeast has died?",
+  "answer": "Physics. Yeast speeds up as the dough warms, then dies at around 60 °C, minutes into the bake. The rest of the oven spring comes from dissolved carbon dioxide leaving solution, trapped gas expanding, and water and alcohol turning to vapour. It stops when the crust sets hard enough to fix the loaf's size.",
+  "move": "When the engine stops, look for momentum still doing the work.",
+  "keywords": [
+    "oven spring",
+    "yeast",
+    "carbon dioxide",
+    "baking temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cauvain, Technology of Breadmaking, 2015",
+  "source_kind": "book",
+  "reference": "Cauvain (ed.), Technology of Breadmaking, 3rd edition, Springer, 2015",
+  "written": "2026-09-26"
+}

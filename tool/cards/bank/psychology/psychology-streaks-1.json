@@ -6,25 +6,25 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "anchoring",
-  "question": "Volunteers repeated a new daily habit in the same setting. How long did it typically take to become automatic?",
+  "question": "Volunteers repeated one new daily habit in the same setting. What was the longest estimated time for it to become automatic?",
   "options": [
+    "About 8 months",
     "About 66 days",
-    "About 21 days",
-    "About a year"
+    "About 3 weeks"
   ],
   "correct": 0,
-  "answer": "About 66 days, as a median. Lally and colleagues followed 96 volunteers repeating a chosen eating, drinking or exercise habit each day. The time to get close to full automaticity ranged from 18 to 254 days. The familiar 21 days traces to a plastic surgeon's 1960 self-help book about patients adjusting to new faces.",
-  "move": "A figure repeated everywhere may trace back to one offhand remark.",
-  "trap": "Recalling the 21-day figure repeated in self-help books.",
+  "answer": "About 8 months: 254 days. Lally and colleagues followed 96 volunteers repeating an eating, drinking or exercise habit daily. The median, 66 days, is the figure now quoted everywhere, but estimates ran from 18 to 254 days, and the slowest were projected well past the 84 days the study lasted.",
+  "move": "Ask how far the slowest cases sit from the quoted average.",
+  "trap": "Recalling the widely quoted 66 days, which was only the middle case.",
   "keywords": [
     "habit formation",
     "automaticity",
-    "21 days",
-    "maxwell maltz"
+    "median",
+    "lally"
   ],
   "era": "recent",
   "region": "europe",
-  "hook": "misconception",
+  "hook": "number",
   "mood": "practical",
   "numeracy": 2,
   "abstraction": "concrete",

@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confirmation",
-  "question": "True or false: experiments copying the crystals of DAMA, the one detector reporting a yearly dark matter signal, have confirmed it?",
+  "question": "True or false: experiments copying the crystals of DAMA, the detector behind the best-known yearly dark matter signal, have confirmed it?",
   "options": [
     "True",
     "False"

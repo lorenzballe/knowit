@@ -13,7 +13,7 @@
     "Steadier power from the grid"
   ],
   "correct": 0,
-  "answer": "Nitrogen air and nobody touching it. The capsule was filled with dry nitrogen, which corrodes parts less than oxygen and moisture, and for two years no technician opened a rack or bumped a cable. The sea kept it cool, but the land site was cooled too; what differed was the air and the hands.",
+  "answer": "Nitrogen air and nobody touching it. The capsule was filled with dry nitrogen, which corrodes parts less than oxygen and moisture, and for two years no technician opened a rack or bumped a cable. The sea kept it cool, but the land site was cooled too; Microsoft's leading explanation was the air and the hands.",
   "move": "When setups differ in many ways, the obvious difference may not be the cause.",
   "trap": "The cold seawater, the most visible difference between the two sites.",
   "keywords": [
@@ -35,6 +35,6 @@
   "figure": "none",
   "source": "Microsoft News, Project Natick, 2020",
   "source_kind": "company",
-  "reference": "Microsoft, Microsoft finds underwater datacenters are reliable, practical and use energy sustainably, Microsoft News, September 2020",
+  "reference": "https://news.microsoft.com/source/features/sustainability/project-natick-underwater-datacenter/",
   "written": "2026-09-26"
 }

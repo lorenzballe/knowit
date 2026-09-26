@@ -1,0 +1,33 @@
+{
+  "id": "medicine-robots-1",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the surgical robot now found in thousands of hospitals first designed to do?",
+  "answer": "Let a surgeon operate on a wounded soldier from a safe distance. SRI International developed telepresence surgery in the 1980s and 1990s with US Army and DARPA funding, picturing a surgeon at a field hospital's controls and the robot beside the casualty. A spin-off, Intuitive Surgical, took it commercial in 1995; hospitals, not battlefields, bought it.",
+  "move": "A tool built for one problem often earns its living solving another.",
+  "keywords": [
+    "da vinci",
+    "sri international",
+    "darpa",
+    "telepresence surgery",
+    "military medicine"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SRI International, Telerobotic surgery",
+  "source_kind": "institution",
+  "reference": "https://www.sri.com/hoi/telerobotic-surgery/",
+  "written": "2026-09-26"
+}

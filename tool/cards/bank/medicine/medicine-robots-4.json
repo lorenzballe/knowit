@@ -1,0 +1,40 @@
+{
+  "id": "medicine-robots-4",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In the first large randomised trial of robotic versus standard keyhole surgery for rectal cancer, published in 2017, what did the robot improve?",
+  "options": [
+    "Fewer switches to open surgery",
+    "No outcome significantly",
+    "Shorter hospital stays"
+  ],
+  "correct": 1,
+  "answer": "No outcome significantly. The ROLARR trial randomised 471 patients: conversion to open surgery was 8.1% with the robot and 12.2% without, a gap within chance, and no complication or function measure differed. Robots shine against open surgery, but the fair control is ordinary keyhole surgery. A larger Chinese trial in 2022 did report some gains.",
+  "move": "Compare a new tool with the best old one, not the worst.",
+  "trap": "Crediting the robot with gains that keyhole surgery alone already delivers.",
+  "keywords": [
+    "rolarr trial",
+    "robotic surgery",
+    "rectal cancer",
+    "laparoscopy",
+    "randomised trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jayne et al., JAMA, 2017",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5818805/",
+  "written": "2026-09-26"
+}

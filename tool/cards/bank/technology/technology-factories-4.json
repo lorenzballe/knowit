@@ -3,9 +3,6 @@
   "topic": "technology",
   "genre": "technology.where_things_come_from",
   "strand": "technology.where_things_come_from.factories",
-  "also": [
-    "economics.work_and_wages.minimum_wage"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
@@ -15,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The problem was turnover: in 1913 Ford's Highland Park plant had to hire more than 50,000 people to keep about 14,000 jobs filled, a rate near 370% a year, as workers quit the monotony of the assembly line. Doubling pay made the line bearable to stay on; queues of job-seekers formed at the gates.",
+  "answer": "False. The problem was turnover: in 1913 Ford's Highland Park plant had to hire about 50,000 people to keep some 14,000 jobs filled, a rate near 370% a year, as workers quit the monotony of the assembly line. Doubling pay made the line bearable to stay on; queues of job-seekers formed at the gates.",
   "move": "When a company is generous, look for the cost it was escaping.",
   "trap": "The tidy story that Ford paid workers so they could buy Fords.",
   "keywords": [

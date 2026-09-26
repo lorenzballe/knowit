@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Thomas, Verisign blog, 2020",
+  "source": "Thomas & Wessels, Verisign blog, 2020",
   "source_kind": "company",
-  "reference": "Thomas, Chromium's Impact on Root DNS Traffic, Verisign blog, August 2020",
+  "reference": "https://blog.verisign.com/domain-names/chromiums-impact-on-root-dns-traffic/",
   "written": "2026-09-26"
 }

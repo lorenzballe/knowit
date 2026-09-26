@@ -1,0 +1,33 @@
+{
+  "id": "medicine-robots-2",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did it take for a surgeon in New York to remove a gallbladder in Strasbourg in 2001?",
+  "answer": "A private line under the Atlantic. Delay is the enemy of remote surgery, so France Telecom provided dedicated, duplicated fibre-optic links over some 6,200 km to keep the lag low and steady; ordinary internet delays jump about unpredictably. Jacques Marescaux worked a ZEUS robot's controls, and the 68-year-old patient went home 48 hours later.",
+  "move": "When acting at a distance, the delay matters more than the kilometres.",
+  "keywords": [
+    "operation lindbergh",
+    "telesurgery",
+    "jacques marescaux",
+    "latency",
+    "zeus robot"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marescaux et al., Nature, 2001",
+  "source_kind": "paper",
+  "reference": "Marescaux et al., Transatlantic robot-assisted telesurgery, Nature, 2001",
+  "written": "2026-09-26"
+}

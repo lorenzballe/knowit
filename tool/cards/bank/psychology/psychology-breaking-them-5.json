@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confounding",
-  "question": "True or false: in daily life, people high in self-control resist temptations more often than other people do?",
+  "question": "True or false: in daily life, people high in self-control fight off temptations more often than other people do?",
   "options": [
     "True",
     "False"
   ],
   "correct": 1,
-  "answer": "False. When Hofmann and colleagues beeped adults at random through a week, those high in self-control reported fewer temptations and used willpower less often, yet reached their goals more. They seemed to arrange life so the fight came up less often: no biscuits in the cupboard, the gym bag already packed by the door.",
+  "answer": "False. When Hofmann and colleagues beeped 205 adults at random through a week, those high in self-control reported fewer temptations and fewer bouts of resisting them. Their edge seemed to lie upstream, in lives arranged so the fight came up less often: no biscuits in the cupboard, the gym bag packed by the door.",
   "move": "The easiest temptation to beat is the one arranged out of reach.",
-  "trap": "Crediting their success to resisting, when fewer temptations explain both.",
+  "trap": "Crediting their good record to winning more fights with temptation.",
   "keywords": [
     "self-control",
     "temptation",

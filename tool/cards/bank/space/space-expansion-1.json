@@ -15,7 +15,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Relativity's speed limit governs motion through space, not the stretching of space. In the standard model, any galaxy whose light arrives stretched to over two and a half times its original wavelength is receding faster than light today. Many already were when that light set out; it was dragged backwards before it gained ground.",
+  "answer": "True. Relativity's speed limit governs motion through space, not the stretching of space. In the standard model, any galaxy whose light arrives stretched past two and a half times its original wavelength is receding faster than light today. Many already were when that light set out; it was dragged backwards before it gained ground.",
   "move": "Check which rule a limit belongs to before applying it everywhere.",
   "trap": "Nothing moves faster than light, so no galaxy can recede faster.",
   "keywords": [

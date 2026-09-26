@@ -10,7 +10,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Where had halicin, the antibiotic picked out by a neural network in 2020, been before?",
-  "answer": "On the shelf as a failed diabetes candidate. An MIT team trained a model on about 2,300 molecules tested against E. coli, then had it score some 6,000 compounds already studied as drugs. It flagged halicin, which killed many resistant bacteria in lab and mouse tests. The name comes from HAL 9000.",
+  "answer": "On the shelf as an abandoned diabetes candidate. An MIT team trained a model on about 2,300 molecules tested against E. coli, then had it score some 6,000 compounds already studied as drugs. It flagged halicin, which killed many resistant bacteria in lab and mouse tests. The name comes from HAL 9000.",
   "move": "Old stock read with new eyes can be cheaper than a fresh search.",
   "keywords": [
     "halicin",

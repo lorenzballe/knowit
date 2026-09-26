@@ -1,0 +1,33 @@
+{
+  "id": "medicine-placebo-1",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a placebo still work when the patient is told plainly that it is a sugar pill?",
+  "answer": "In some trials, yes. In a 2010 Harvard study, 80 people with irritable bowel syndrome got nothing, or pills from a bottle labelled placebo. After three weeks, 59% of pill-takers reported adequate relief against 35% of the others. The twice-daily ritual did work once credited to deception.",
+  "move": "Test whether the secret part of a ritual is the part that works.",
+  "keywords": [
+    "open-label placebo",
+    "irritable bowel syndrome",
+    "ted kaptchuk",
+    "deception",
+    "sugar pills"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kaptchuk et al., PLOS ONE, 2010",
+  "source_kind": "paper",
+  "reference": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0015591",
+  "written": "2026-09-26"
+}
