@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Does a liar-style paradox need a sentence that talks about itself?",
-  "answer": "Perhaps not, argued Stephen Yablo in 1993. Take an endless list where each sentence says all later sentences are false. If any is true, all later ones are false, which makes the next one true: contradiction. So all are false, which makes the first true. No sentence mentions itself; Graham Priest argued the circle is hidden.",
+  "answer": "Perhaps not, argued Stephen Yablo in 1993. Take an endless list where each sentence says all later sentences are false. If any is true, all later ones are false, which makes the next one true: contradiction. So all are false, which makes the first true. No sentence mentions itself; Graham Priest replied that a circle hides there.",
   "move": "When blaming a single loop, check that no longer chain does the same thing.",
   "keywords": [
     "stephen yablo",

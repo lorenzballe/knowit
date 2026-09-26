@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-odd-fines-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "When Chicago's public libraries scrapped overdue fines in 2019, what happened to book returns?",
+  "options": [
+    "They fell as borrowers stopped caring",
+    "They rose, including long-lost books",
+    "Nothing measurable changed"
+  ],
+  "correct": 1,
+  "answer": "They rose, including long-lost books. Chicago also wiped existing debts, and returns of overdue items jumped in the following months. Fines had kept many borrowers, often poorer ones, away from the library altogether, the book still on a shelf at home. The penalty meant to bring books back had been keeping them out.",
+  "move": "Before crediting a penalty, ask what people would do without it.",
+  "trap": "Fines seem to be what makes borrowers bring books back at all.",
+  "keywords": [
+    "chicago public library",
+    "overdue fines",
+    "library returns",
+    "amnesty"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chicago Public Library, 2019",
+  "source_kind": "institution",
+  "reference": "Chicago Public Library, announcement on eliminating overdue fines, September 2019",
+  "written": "2026-09-26"
+}

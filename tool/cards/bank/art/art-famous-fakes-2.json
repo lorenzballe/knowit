@@ -1,0 +1,33 @@
+{
+  "id": "art-famous-fakes-2",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a sculptor prove in 1961 that the Metropolitan Museum's Etruscan warriors were modern?",
+  "answer": "He produced a missing thumb. Alfredo Fioravanti, one of the forgers, confessed at the US consulate in Rome and brought out a thumb he had kept for decades. It fitted a cast of the Old Warrior's hand. The Met announced the forgery that February.",
+  "move": "The one who made a thing can often prove it with a single leftover piece.",
+  "keywords": [
+    "etruscan warriors",
+    "metropolitan museum",
+    "alfredo fioravanti",
+    "terracotta",
+    "riccardi"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Archaeology magazine, Tracking the Etruscan Warriors",
+  "source_kind": "news_archive",
+  "reference": "https://archive.archaeology.org/online/features/hoaxes/warriors.html",
+  "written": "2026-09-26"
+}

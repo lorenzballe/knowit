@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. If the sentence were true, the Cretan saying it would be lying, so it cannot be true. But it can simply be false: one Cretan who sometimes tells the truth suffices. No contradiction. The line is credited to the poet Epimenides; the New Testament letter to Titus quotes it and adds: this testimony is true.",
+  "answer": "False. If the sentence were true, the Cretan saying it would be lying, so it cannot be true. But it can simply be false: one Cretan who sometimes tells the truth suffices. The line is credited to the poet Epimenides; the New Testament letter to Titus quotes it and adds: this testimony is true.",
   "move": "The opposite of all is not none; it is merely not all.",
   "trap": "Treating it as false means every Cretan always tells the truth.",
   "keywords": [

@@ -1,0 +1,36 @@
+{
+  "id": "art-famous-fakes-5",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "also": [
+    "art.modern_art.abstraction"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who painted the fake Rothkos and Pollocks that closed Knoedler, a New York gallery founded in 1846?",
+  "answer": "A Chinese immigrant painting at his home in Queens. Pei-Shen Qian made about 40 abstract expressionist canvases for the dealer Glafira Rosales, who spoke of an anonymous collector. From 1994 Knoedler sold them for about $80 million in total. Investigators could trace at least $65,000 to Qian. The gallery closed in 2011.",
+  "move": "Follow the money to see who in a chain was really fooled.",
+  "keywords": [
+    "knoedler",
+    "pei-shen qian",
+    "glafira rosales",
+    "rothko",
+    "pollock"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Art Newspaper, 2017",
+  "source_kind": "news_archive",
+  "reference": "https://www.theartnewspaper.com/2017/01/31/no-further-jail-time-for-glafira-rosales-for-her-role-in-dollar80m-knoedler-forgery-scandal",
+  "written": "2026-09-26"
+}

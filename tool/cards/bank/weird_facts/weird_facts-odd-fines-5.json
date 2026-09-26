@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-odd-fines-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A Finnish day-fine is a sixtieth of monthly net income after a €255 allowance. In euros, what do 10 cost on €6,255 a month?",
+  "value": 1000,
+  "unit": "euros",
+  "answer": "€100 × 10 day-fines = €1,000.",
+  "move": "A fine scaled to income stings the rich and the poor alike.",
+  "trap": "Taking a day-fine as a whole day's pay doubles the answer.",
+  "hint": "Take off the allowance before dividing by 60.",
+  "steps": [
+    "€6,255 − €255 = €6,000 counted income.",
+    "€6,000 / 60 = €100 for each day-fine.",
+    "€100 × 10 day-fines = €1,000."
+  ],
+  "keywords": [
+    "day-fines",
+    "finland",
+    "income-based fines",
+    "criminal code"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Criminal Code of Finland, chapter 2a",
+  "source_kind": "primary_document",
+  "reference": "Criminal Code of Finland (39/1889), chapter 2a, section 2, as amended 1999",
+  "written": "2026-09-26"
+}

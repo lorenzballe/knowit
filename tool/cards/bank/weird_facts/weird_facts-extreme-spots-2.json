@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-extreme-spots-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where on Earth have satellites found surface temperatures near −98°C, and why there?",
+  "answer": "In shallow hollows along the high ridge of the East Antarctic ice sheet. On clear, still winter nights, air chilled against the snow slides downhill into these dips and pools there, cooling further. Scambos and colleagues found the readings in satellite data from 2004 to 2016. Vostok station's −89.2°C of 1983 remains the air-temperature record.",
+  "move": "Cold, like water, runs downhill and collects in the low spots.",
+  "keywords": [
+    "east antarctica",
+    "coldest place",
+    "satellite mapping",
+    "vostok station"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Scambos et al., Geophysical Research Letters, 2018",
+  "source_kind": "primary_document",
+  "reference": "Scambos et al., Ultralow surface temperatures in East Antarctica from satellite thermal infrared mapping: the coldest places on Earth, Geophysical Research Letters, 2018",
+  "written": "2026-09-26"
+}

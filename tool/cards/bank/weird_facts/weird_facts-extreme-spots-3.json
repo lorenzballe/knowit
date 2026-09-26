@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-extreme-spots-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The Kola Superdeep Borehole, the deepest hole ever drilled, reached 12,262 m. What percentage of the way to Earth's centre is that?",
+  "value": 0.19,
+  "unit": "%",
+  "tolerance": 0.01,
+  "answer": "About 0.19%.",
+  "move": "Before calling something deep, divide it by the whole it belongs to.",
+  "trap": "Guessing a few percent because 12 km sounds enormous.",
+  "hint": "Put the depth in kilometres and divide by Earth's radius.",
+  "steps": [
+    "Earth's mean radius is about 6,371 km.",
+    "12,262 m = 12.262 km.",
+    "12.262 / 6,371 ≈ 0.0019.",
+    "About 0.19%."
+  ],
+  "keywords": [
+    "kola superdeep borehole",
+    "drilling",
+    "earth's crust",
+    "russia"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Kozlovsky, The Superdeep Well of the Kola Peninsula, 1987",
+  "source_kind": "reference_work",
+  "reference": "Kozlovsky (ed.), The Superdeep Well of the Kola Peninsula, Springer, 1987",
+  "written": "2026-09-26"
+}

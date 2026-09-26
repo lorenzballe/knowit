@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-extreme-spots-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The shore of the Dead Sea is the lowest dry land on Earth. How fast is its water level falling?",
+  "options": [
+    "About 1 cm a year",
+    "About 1 m a year",
+    "About 10 m a year"
+  ],
+  "correct": 1,
+  "answer": "About 1 m a year. The Jordan River, its main source, is now mostly diverted for farms and cities, and potash works evaporate its brine in vast ponds. As the water retreats, fresh groundwater dissolves buried salt layers, and thousands of sinkholes have opened along the shore, swallowing roads and date groves.",
+  "move": "A lake is a balance sheet; cut the income and it spends itself.",
+  "trap": "Expecting a geological pace, a centimetre or so a year.",
+  "keywords": [
+    "dead sea",
+    "jordan river",
+    "sinkholes",
+    "water diversion"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gavrieli and Oren, Dying and Dead Seas, 2004",
+  "source_kind": "reference_work",
+  "reference": "Gavrieli and Oren, The Dead Sea as a dying lake, in Nihoul et al. (eds), Dying and Dead Seas, Kluwer, 2004",
+  "written": "2026-09-26"
+}

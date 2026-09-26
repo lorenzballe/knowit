@@ -1,0 +1,39 @@
+{
+  "id": "art-famous-fakes-4",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the Louvre's gold tiara of the Scythian king Saitaphernes, bought in 1896, was exposed by laboratory analysis?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Its maker exposed it. Israel Rouchomovsky, a goldsmith in Odessa, had made it in 1894 for dealers who called it a gift for an archaeologist. In 1903 he came to Paris to claim it, and experts believed him only after he remade part of it from memory. The Louvre had paid 200,000 francs.",
+  "move": "Many deceptions end with a confession, not with a clever test.",
+  "trap": "Picturing the laboratory unmasking that modern forgery stories feature.",
+  "keywords": [
+    "tiara of saitaphernes",
+    "louvre",
+    "israel rouchomovsky",
+    "goldsmith",
+    "scythian"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Artnet News, the tiara of Saitaphernes",
+  "source_kind": "news_archive",
+  "reference": "https://news.artnet.com/art-world/the-hunt-the-tiara-of-saitaphernes-2558944",
+  "written": "2026-09-26"
+}

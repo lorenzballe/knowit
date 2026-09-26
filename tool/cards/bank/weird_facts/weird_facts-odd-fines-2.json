@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-odd-fines-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Under an 1847 Act still in force, what is the maximum fine for beating a carpet in an English street?",
+  "options": [
+    "About £2",
+    "£1,000",
+    "An unlimited fine"
+  ],
+  "correct": 1,
+  "answer": "£1,000. Section 28 of the Town Police Clauses Act 1847 covers carpets, rugs and mats beaten or shaken to the annoyance of residents or passers-by, doormats before 8 am excepted. Its penalty is now level 3 on the standard scale, so the old shillings became modern pounds. The rule stayed Victorian; the fine did not.",
+  "move": "An old rule's penalty may have been quietly updated even if the rule was not.",
+  "trap": "An 1847 penalty sounds like a few shillings, so a token sum.",
+  "keywords": [
+    "town police clauses act",
+    "carpet beating",
+    "standard scale",
+    "doormats"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Town Police Clauses Act 1847, section 28",
+  "source_kind": "primary_document",
+  "reference": "Town Police Clauses Act 1847, section 28, penalty as amended by the Criminal Justice Act 1982",
+  "written": "2026-09-26"
+}
