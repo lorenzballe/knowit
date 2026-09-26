@@ -35,6 +35,7 @@ jobs:
           python3 tool/cards/check.py
           python3 tool/cards/bundle.py --check
           python3 -m unittest discover -s tool/cards -p "test_*.py"
+          python3 tool/site/chrome.py --check
 
       - run: flutter test
 
