@@ -365,13 +365,14 @@ void main() {
     await _settle(tester);
 
     // A shelf says what it holds and why it is a shelf. The rows are ranked
-    // by what the cards ask; what readers kept is the top list's, which
-    // only appears once the counts have been read — never, here.
+    // by what the cards ask; what readers kept is the top list's, which is
+    // always there — here, with no counts to read, as its places empty.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('The ones that ask the most'), findsOneWidget);
     expect(find.text('Across everyone, not just your mix'), findsOneWidget);
-    expect(find.text('Top of the week'), findsNothing);
+    expect(find.text('Top of the week'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
 
     // The subject row narrows every shelf at once. A card from another
     // subject is on the top shelf before, and gone after.

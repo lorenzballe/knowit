@@ -257,13 +257,16 @@ Once per card per phone, ever, so a count is a count of readers, and
 liking, unliking and liking again is not a way up the list. Explore reads
 the last 30 days, at most every ten minutes; days older than three are
 settled and read once, then kept on the phone. Until the counts have been
-read the shelf is left out, so a phone that cannot read them — offline, or
-on rules not published yet — never shows a list that can never fill; once
-read, an empty list says what puts a card on it.
+read — or where they cannot be, offline, on the web preview, or before the
+rules are published — nothing is ranked: the shelf shows its first three
+places numbered and empty, the first saying what puts a card there, at the
+list's own height so nothing jumps when the cards arrive. A first version
+hid the shelf until the counts were read, and so on every phone where they
+could not be it was a feature nobody could find.
 
 `firestore.rules` holds every write to one card, plus one, on a day that is
 today on some clock, and lets nothing be taken back. **The rules have to be
-published for the list to appear**: Firebase console → Firestore Database →
+published for the list to fill**: Firebase console → Firestore Database →
 Rules → paste `firestore.rules` → Publish (or `firebase deploy --only
 firestore:rules`). The write is anonymous but not unforgeable — someone with
 a script could add to a card over and over — which at this scale is a risk

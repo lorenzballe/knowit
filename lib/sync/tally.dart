@@ -167,10 +167,8 @@ class Tallies extends ChangeNotifier {
     return FirestoreTallyStore();
   }
 
-  /// True once the counts have been read. Until then Explore leaves the list
-  /// out, rather than show an empty one that may not be empty — and a phone
-  /// that cannot read them, offline or on rules not yet published, never
-  /// shows a list that could never fill.
+  /// True once the counts have been read. Until then Explore ranks nothing:
+  /// it shows the list's places empty rather than guess at what is on them.
   bool get answered => _answered;
 
   /// Counts [pillId] for this phone's reader: once per card, ever.
