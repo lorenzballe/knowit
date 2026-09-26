@@ -1,0 +1,39 @@
+{
+  "id": "medicine-anaesthesia-5",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In malignant hyperthermia, a rare inherited reaction to some anaesthetics, what is usually the earliest warning in theatre?",
+  "options": [
+    "Soaring body temperature",
+    "A sudden fall in blood pressure",
+    "Rising carbon dioxide in exhaled breath"
+  ],
+  "correct": 2,
+  "answer": "Rising carbon dioxide in exhaled breath. A faulty calcium channel, usually from the RYR1 gene, lets calcium flood the muscles, which burn fuel furiously and pour out carbon dioxide. Temperature often climbs later, sometimes by 1 °C every five minutes. Dantrolene, which stops the calcium leak, turned a usually fatal crisis into a rarely fatal one.",
+  "move": "A thing's name describes its most dramatic sign, not its first one.",
+  "trap": "Choosing temperature, because the condition is named after heat.",
+  "keywords": [
+    "malignant hyperthermia",
+    "ryr1",
+    "dantrolene",
+    "carbon dioxide"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenberg et al., Orphanet Journal of Rare Diseases, 2015",
+  "source_kind": "paper",
+  "reference": "Rosenberg, Pollock, Schiemann, Bulger & Stowell, Malignant hyperthermia: a review, Orphanet Journal of Rare Diseases, 2015",
+  "written": "2026-09-26"
+}

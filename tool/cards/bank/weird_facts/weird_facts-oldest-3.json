@@ -11,11 +11,11 @@
   "principle": "survivorship",
   "question": "What has yielded the oldest DNA sequenced so far?",
   "options": [
-    "A dinosaur fossil",
     "Frozen sediment in Greenland",
+    "A dinosaur fossil",
     "A Siberian mammoth tooth"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Frozen sediment in Greenland. Soil from Kap København, about 2 million years old, held DNA fragments from mastodons, reindeer, hares and forest plants. Mammoth teeth from Siberia gave DNA over a million years old. Dinosaur bones, 66 million years and older, have given none: DNA breaks down long before that.",
   "move": "Judge what survives by its chemistry, not by the size of the creature.",
   "trap": "Bones last for millions of years, so their DNA seems to last too.",

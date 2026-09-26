@@ -1,0 +1,32 @@
+{
+  "id": "medicine-anaesthesia-2",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Boston in 1846 remembered as the birth of anaesthesia when ether was used in Georgia in 1842?",
+  "answer": "Because Boston was public and Georgia went unpublished. Crawford Long removed a neck tumour from James Venable under ether in March 1842 but did not report it until 1849. William Morton's demonstration at Massachusetts General Hospital in October 1846 was watched, written up and copied in Europe within months.",
+  "move": "Credit goes to whoever makes a discovery public, not whoever makes it first.",
+  "keywords": [
+    "crawford long",
+    "william morton",
+    "ether",
+    "massachusetts general hospital"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fenster, Ether Day, 2001",
+  "source_kind": "book",
+  "reference": "Fenster, Ether Day: The Strange Tale of America's Greatest Medical Discovery and the Haunted Men Who Made It, HarperCollins, 2001",
+  "written": "2026-09-26"
+}

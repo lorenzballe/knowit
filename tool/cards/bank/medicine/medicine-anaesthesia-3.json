@@ -1,0 +1,38 @@
+{
+  "id": "medicine-anaesthesia-3",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: most reported cases of waking during general anaesthesia involve a drug that paralyses the muscles?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A national UK audit found awareness in about 1 in 19,600 general anaesthetics overall: about 1 in 8,200 when muscle-paralysing drugs were used, and about 1 in 136,000 without them. An unparalysed patient who starts to surface moves, and the anaesthetist deepens the dose. A paralysed one cannot signal anything.",
+  "move": "An alarm that has been switched off cannot warn anyone.",
+  "trap": "Picturing awareness as random bad luck, equally likely in any anaesthetic.",
+  "keywords": [
+    "accidental awareness",
+    "neuromuscular blockade",
+    "nap5",
+    "general anaesthesia"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pandit et al., NAP5, British Journal of Anaesthesia, 2014",
+  "source_kind": "paper",
+  "reference": "https://academic.oup.com/bja/article/113/4/549/2920161",
+  "written": "2026-09-26"
+}

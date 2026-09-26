@@ -9,7 +9,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "conjunction",
-  "question": "A shoot needs 30 outdoor days, each with a 95% chance of good weather. What is the chance none is lost?",
+  "question": "A shoot needs 30 outdoor days, each with an independent 95% chance of good weather. What is the chance none is lost?",
   "options": [
     "About 20%",
     "About 50%",

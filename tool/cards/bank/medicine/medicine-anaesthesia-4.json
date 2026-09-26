@@ -1,0 +1,39 @@
+{
+  "id": "medicine-anaesthesia-4",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a large randomised trial found that an hour of general anaesthesia in infancy lowered IQ at age five?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The GAS trial randomly assigned more than 700 infants having hernia repairs to under an hour of general anaesthesia or to an awake spinal block, and found equivalent IQ at five. Earlier alarm came from observational studies, where children who need surgery differ from those who do not. Longer and repeated exposures remain less studied.",
+  "move": "Before blaming a treatment, ask what sent people to receive it.",
+  "trap": "Trusting studies that linked childhood surgery to later learning problems.",
+  "keywords": [
+    "gas trial",
+    "infants",
+    "general anaesthesia",
+    "neurodevelopment",
+    "spinal anaesthesia"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCann et al., The Lancet, 2019",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6500739/",
+  "written": "2026-09-26"
+}
