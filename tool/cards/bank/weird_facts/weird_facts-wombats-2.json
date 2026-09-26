@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "sampling",
-  "question": "Camera traps watched 34 southern hairy-nosed wombat burrows for eight weeks. What went in most often?",
+  "question": "Camera traps watched 34 southern hairy-nosed wombat burrows on an island for six months. What was recorded using them most?",
   "options": [
     "Black-footed rock-wallabies",
     "The wombats themselves",
     "Little penguins"
   ],
   "correct": 0,
-  "answer": "Black-footed rock-wallabies. They made nearly 2,000 visits, more than the wombats that dug the burrows. Little penguins were logged 27 times, among skinks, bettongs and birds. A warren is a public building: the owner is only one of many tenants coming in from the heat.",
+  "answer": "Black-footed rock-wallabies. On Wedge Island in 2015 they were logged using burrows 1,795 times, against 1,674 for the wombats that dug them. Bettongs, skinks, dragons and little penguins came too. A warren is a public building: the owner is only one of many tenants coming in from the heat.",
   "move": "Ask who else uses a thing before crediting it to its builder.",
   "trap": "People only see wombats at burrows, so wombats seem the main users.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "The Conversation, January 2020",
-  "source_kind": "news_archive",
-  "reference": "https://theconversation.com/tales-of-wombat-heroes-have-gone-viral-unfortunately-theyre-not-true-129891",
+  "source": "Thornett et al., Australian Mammalogy, 2017",
+  "source_kind": "primary_document",
+  "reference": "https://www.publish.csiro.au/am/am15052",
   "written": "2026-09-26"
 }

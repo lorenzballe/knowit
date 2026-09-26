@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does a mantis shrimp's strike hit its prey twice?",
-  "answer": "Because the water tears open. The club swings out at up to about 23 m/s, so fast that pressure behind it drops and a vapour bubble forms. Its collapse against the shell lands a second blow, with a flash of light and heat. A snail is struck by the club, then by the water.",
+  "answer": "Because the water tears open. The club swings out at up to about 23 m/s, so fast that pressure behind it drops and a vapour bubble forms. Its collapse against the shell lands a second blow, with a sharp crack of sound. A snail is struck by the club, then by the water.",
   "move": "Past a certain speed, the medium itself becomes part of the blow.",
   "keywords": [
     "mantis shrimp",
@@ -26,7 +26,7 @@
   "language": "en",
   "figure": "none",
   "source": "Patek, Korff & Caldwell, Nature, 2004",
-  "source_kind": "paper",
+  "source_kind": "primary_document",
   "reference": "Patek, Korff & Caldwell, Deadly strike mechanism of a mantis shrimp, Nature, 2004",
   "written": "2026-09-26"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did researchers learn that a clam dredged off Iceland was the oldest known individual animal?",
-  "answer": "By opening it, which killed it. Scientists counted the yearly growth lines in the shell's hinge of an ocean quahog collected in 2006. The first count said about 405 years; a recount in 2013 said 507. It had been alive since before Henry VIII took the throne.",
+  "question": "How did researchers learn that a clam dredged off Iceland was the oldest individual animal ever precisely aged?",
+  "answer": "By sectioning its shell and counting growth lines, which only works on a dead clam. The ocean quahog, dredged in 2006, had been frozen on board as routine. A first count of the hinge said about 405 years; a recount in 2013 said 507. It hatched before Henry VIII took the throne.",
   "move": "Some measurements can only be taken once, so decide what is worth it.",
   "keywords": [
     "ocean quahog",
@@ -27,7 +27,7 @@
   "language": "en",
   "figure": "none",
   "source": "Butler et al., Bangor University, 2013",
-  "source_kind": "paper",
+  "source_kind": "primary_document",
   "reference": "Butler et al., Variability of marine climate on the North Icelandic Shelf in a 1357-year proxy archive based on growth increments in the bivalve Arctica islandica, Palaeogeography, Palaeoclimatology, Palaeoecology, 2013",
   "written": "2026-09-26"
 }

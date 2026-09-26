@@ -10,10 +10,10 @@
   "options": [
     "Exactly the same as happy",
     "The opposite of happy",
-    "A cautious middle, short of happy"
+    "Something milder than happy"
   ],
   "correct": 2,
-  "answer": "A cautious middle. Happy and unhappy are contraries, not contradictories: a person can be neither. Negating unhappy lands in that gap, which is why the phrase hedges. Orwell mocked the habit in 1946, proposing that writers memorise the sentence about a not unblack dog chasing a not unsmall rabbit across a not ungreen field.",
+  "answer": "Something milder than happy. Happy and unhappy are contraries, not contradictories: a person can be neither. Negating unhappy lands in that gap, which is why the phrase hedges. Orwell mocked the habit in 1946, proposing that writers memorise the sentence about a not unblack dog chasing a not unsmall rabbit across a not ungreen field.",
   "move": "Denying the opposite is not the same as asserting the thing.",
   "trap": "Two negatives cancel in logic, so they should cancel in speech.",
   "keywords": [

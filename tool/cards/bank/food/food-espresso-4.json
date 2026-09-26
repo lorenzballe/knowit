@@ -1,0 +1,39 @@
+{
+  "id": "food-espresso-4",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Italy's certified espresso standard sets how much ground coffee for a single shot?",
+  "options": [
+    "About 7 g",
+    "About 14 g",
+    "About 20 g"
+  ],
+  "correct": 0,
+  "answer": "About 7 g. The Istituto Nazionale Espresso Italiano specifies 7 g, give or take half a gram, brewed at 88 °C and 9 bar for about 25 seconds into roughly 25 ml. Specialty cafés elsewhere often pack 18 to 20 g into a double basket. An Italian bar shot is a small, quick thing.",
+  "move": "The examples closest to hand are rarely the ones that define the norm.",
+  "trap": "Picturing the 18 to 20 g doses used by specialty cafés abroad.",
+  "keywords": [
+    "espresso italiano",
+    "dose",
+    "brewing standard",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Istituto Espresso Italiano",
+  "source_kind": "standard",
+  "reference": "https://iei.coffee/en/espresso-italiano-certificato/",
+  "written": "2026-09-26"
+}

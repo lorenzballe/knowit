@@ -1,0 +1,33 @@
+{
+  "id": "medicine-barbers-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Henry VIII's 1540 Act give London's barber-surgeons each year for teaching anatomy?",
+  "answer": "The bodies of four executed criminals. The Act that created the Company of Barber-Surgeons let it take four hanged felons a year for public dissection. Supply never met demand, and the gallows became a scene of tussles between the company's men and the dead man's friends. Anatomy was taught on whoever the hangman provided.",
+  "move": "When a supply is fixed by law, look at who fights over it.",
+  "keywords": [
+    "dissection",
+    "anatomy",
+    "executed criminals",
+    "henry viii",
+    "barber-surgeons"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tarlow & Battell Lowman, Harnessing the Criminal Corpse, 2018",
+  "source_kind": "book",
+  "reference": "https://www.ncbi.nlm.nih.gov/books/NBK513554/",
+  "written": "2026-09-26"
+}

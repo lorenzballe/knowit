@@ -13,7 +13,7 @@
     "Too green"
   ],
   "correct": 0,
-  "answer": "Too blue. Studio tungsten lamps burn at about 3,200 kelvin and daylight averages about 5,600, so daylight carries far more blue than the film expects. Crews tape orange gel over whole windows, or blue gel on the lamps, to make the sources match. Left alone, the faces come out warm and the windows cold.",
+  "answer": "Too blue. Studio tungsten lamps burn at about 3,200 kelvin and daylight averages about 5,600, so daylight carries far more blue than the film expects. Crews tape orange gel over whole windows, or blue gel on the lamps, to make the sources match. Left alone, the faces look right and the windows glow blue.",
   "move": "A colour looks right or wrong only against what the eye was set for.",
   "trap": "Too orange, because sunlight feels warm on the skin.",
   "keywords": [

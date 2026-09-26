@@ -3,9 +3,6 @@
   "topic": "language",
   "genre": "language.slang",
   "strand": "language.slang.internet_slang",
-  "also": [
-    "language.untranslatable_words.japanese"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "coincidence",

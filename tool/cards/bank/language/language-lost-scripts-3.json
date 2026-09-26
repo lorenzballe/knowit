@@ -3,9 +3,6 @@
   "topic": "language",
   "genre": "language.writing_systems",
   "strand": "language.writing_systems.lost_scripts",
-  "also": [
-    "history.maps_and_borders.lost_countries"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "survivorship",

@@ -1,0 +1,32 @@
+{
+  "id": "food-espresso-1",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did the foam layer on top of an espresso first appear?",
+  "answer": "Around 1948. Earlier bar machines pushed water through with steam at 1.5 to 2 bar, giving a thin, often scorched cup. Achille Gaggia's spring lever raised the pressure to 8 to 10 bar, forcing coffee oils and dissolved carbon dioxide into a fine foam. Wary customers were reassured by signs calling it natural coffee cream.",
+  "move": "A flaw becomes a mark of quality once it is sold as one.",
+  "keywords": [
+    "achille gaggia",
+    "crema",
+    "lever machine",
+    "brewing pressure"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gaggia company history",
+  "source_kind": "company",
+  "reference": "https://www.gaggia.com/85-years-of-heritage-1938-1947/",
+  "written": "2026-09-26"
+}

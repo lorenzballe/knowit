@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What did the first full axolotl genome show was missing from it?",
-  "answer": "A gene called PAX3, which other vertebrates need to build muscle and nerve tissue; a close relative, PAX7, does its job. The genome itself holds about 32 billion base pairs, more than ten times the human count, swollen by repeated sequences. Everything else is there, spread across an enormous library.",
+  "answer": "A gene called PAX3, which other vertebrates need to build muscle and nerve tissue; a close relative, PAX7, does its job. The genome itself holds about 32 billion base pairs, more than ten times the human count, swollen by repeated sequences. The genes it does have sit scattered through an enormous library.",
   "move": "A bigger instruction set can still lack a page others need.",
   "keywords": [
     "axolotl genome",

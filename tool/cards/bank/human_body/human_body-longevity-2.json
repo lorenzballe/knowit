@@ -4,23 +4,23 @@
   "genre": "human_body.ageing",
   "strand": "human_body.ageing.longevity",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "confounding",
-  "question": "True or false: genes explain about a quarter of the differences in how long people live?",
+  "question": "True or false: in large family trees, a person's lifespan correlates with the lifespans of their siblings' spouses?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False; probably well under a tenth. Using family trees covering over 400 million people, a 2018 study found that lifespans of spouses, and even of in-laws, were correlated, though they share no genes: people pair up with partners like themselves in habits, wealth and place. Allowing for that, heritability of lifespan fell below 7%.",
+  "correct": 0,
+  "answer": "True. Mining family trees covering over 400 million people, a 2018 study found lifespans correlated between spouses and between siblings-in-law, who share no genes, because people marry partners like themselves in habits, wealth and place. Allowing for that pushed the heritability of lifespan below 7%, far under older estimates of 20% to 30%.",
   "move": "Resemblance within families is not all in the genes.",
-  "trap": "Recalling older estimates of 20% to 30% built on relatives' shared lives.",
+  "trap": "Assuming only shared genes or a shared home can make lifespans alike.",
   "keywords": [
     "heritability",
     "lifespan",
     "assortative mating",
     "family trees",
-    "genetics"
+    "in-laws"
   ],
   "era": "recent",
   "region": "world",

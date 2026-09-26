@@ -1,0 +1,40 @@
+{
+  "id": "food-emulsions-4",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Mayonnaise is mostly oil, plus vinegar and yolk, all runny liquids. What mainly lets it hold a peak?",
+  "options": [
+    "The egg yolk setting like custard",
+    "The oil droplets crammed against each other",
+    "The mustard's starch thickening the water"
+  ],
+  "correct": 1,
+  "answer": "The oil droplets crammed against each other. Round droplets can fill at most about 74% of a space; beyond that they flatten into many-sided cells, and any flow must deform them. At 75 to 80% oil, mayonnaise is packed oil cells in thin films of water. Whisk in more oil and it stiffens further.",
+  "move": "Crowding alone can turn a crowd of liquids into a solid.",
+  "trap": "Egg is the famous ingredient, so it seems to do the thickening.",
+  "keywords": [
+    "mayonnaise",
+    "emulsion",
+    "droplet packing",
+    "egg yolk",
+    "sphere packing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McClements, Food Emulsions, 2005",
+  "source_kind": "book",
+  "reference": "McClements, Food Emulsions: Principles, Practices, and Techniques, 2nd edition, CRC Press, 2005",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "medicine-symptoms-2",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a 1975 study of new hospital outpatients, what pointed doctors to the correct diagnosis most often?",
+  "answer": "The patient's own account. In a British clinic, the referral letter and history alone gave the diagnosis finally accepted in 66 of 80 patients, about 83%. Physical examination added it in 7 more, laboratory tests in a further 7. The most powerful instrument in the clinic was a doctor asking questions and listening.",
+  "move": "Ask the person who lived it before measuring anything.",
+  "keywords": [
+    "medical history",
+    "diagnosis",
+    "physical examination",
+    "laboratory tests",
+    "outpatients"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hampton et al., BMJ, 1975",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/1148666/",
+  "written": "2026-09-26"
+}

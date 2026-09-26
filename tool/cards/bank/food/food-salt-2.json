@@ -1,0 +1,43 @@
+{
+  "id": "food-salt-2",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "also": [
+    "human_body.senses.taste"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A pinch of salt makes bitter grapefruit taste sweeter. What is the salt doing?",
+  "options": [
+    "Drawing sugar out of the fruit's cells",
+    "Silencing the bitterness that hid the sweetness",
+    "Switching on the tongue's sweet receptors"
+  ],
+  "correct": 1,
+  "answer": "Silencing the bitterness that hid the sweetness. Sodium ions suppress bitterness, and since bitter and sweet mask each other, removing one frees the other. Breslin and Beauchamp showed in 1997 that salt raised the sweetness of a bitter-sweet mixture without any added sugar. A pinch in bitter coffee works the same way.",
+  "move": "An improvement can come from removing a mask, not adding anything.",
+  "trap": "Salt draws out water, so it seems to draw out sugar too.",
+  "keywords": [
+    "salt",
+    "bitterness",
+    "sweetness",
+    "flavour masking",
+    "grapefruit"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Breslin & Beauchamp, Nature, 1997",
+  "source_kind": "paper",
+  "reference": "Breslin & Beauchamp, Salt enhances flavour by suppressing bitterness, Nature, 1997",
+  "written": "2026-09-26"
+}

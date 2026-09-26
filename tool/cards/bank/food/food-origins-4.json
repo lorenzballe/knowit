@@ -1,0 +1,32 @@
+{
+  "id": "food-origins-4",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Ceylon, once one of the world's great coffee exporters, stop growing coffee?",
+  "answer": "A fungus. Coffee leaf rust, Hemileia vastatrix, was recorded on the island in 1869 and stripped plantations of their leaves year after year; within about two decades exports had collapsed. Planters uprooted the bushes and put tea on the same hillsides. The island's famous tea gardens stand on ground first cleared for coffee.",
+  "move": "Behind a famous product, look for the crop it replaced and why.",
+  "keywords": [
+    "ceylon",
+    "coffee leaf rust",
+    "hemileia vastatrix",
+    "tea plantations"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCook, Coffee Is Not Forever, 2019",
+  "source_kind": "book",
+  "reference": "McCook, Coffee Is Not Forever: A Global History of the Coffee Leaf Rust, Ohio University Press, 2019",
+  "written": "2026-09-26"
+}

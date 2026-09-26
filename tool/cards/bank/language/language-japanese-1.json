@@ -3,9 +3,6 @@
   "topic": "language",
   "genre": "language.untranslatable_words",
   "strand": "language.untranslatable_words.japanese",
-  "also": [
-    "psychology.emotions.joy"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",

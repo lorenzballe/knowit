@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Dating the eye lens cores of 28 sharks, whose proteins form before birth and never renew, gave an estimated maturity age of about 150 years and lifespans of at least 272. Carbon from 1950s bomb tests marked the youngest. A shark born during the Napoleonic wars would have been ready to breed around 1950.",
+  "answer": "True. Dating the eye lens cores of 28 sharks, whose proteins form before birth and never renew, gave an estimated maturity age of about 150 years and lifespans of at least 272. Carbon from 1950s bomb tests marked the youngest. A shark born in the Napoleonic wars would have bred first in the 1950s.",
   "move": "Scale every life stage to the lifespan before judging it slow.",
   "trap": "Most sharks mature within a few decades, so 150 sounds absurd.",
   "keywords": [
@@ -33,7 +33,7 @@
   "language": "en",
   "figure": "none",
   "source": "Nielsen et al., Science, 2016",
-  "source_kind": "paper",
+  "source_kind": "primary_document",
   "reference": "Nielsen et al., Eye lens radiocarbon reveals centuries of longevity in the Greenland shark, Science, 2016",
   "written": "2026-09-26"
 }

@@ -5,7 +5,7 @@
   "strand": "language.accents.prestige_accents",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "sampling",
+  "principle": "reflection",
   "question": "Norwich men were recorded, then asked how they pronounced words like tune and ear. Which way did their claims err?",
   "options": [
     "They claimed more standard forms",

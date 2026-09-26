@@ -1,0 +1,41 @@
+{
+  "id": "food-espresso-3",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "An 18 g coffee dose gives a 36 g espresso that is 10% dissolved coffee by weight. What percentage of the dose was extracted?",
+  "value": 20,
+  "unit": "percent",
+  "answer": "That is 20%.",
+  "move": "Check what a percentage is a percentage of before comparing two of them.",
+  "trap": "Answering 10%, which is the drink's strength, not the yield.",
+  "hint": "Find how many grams of coffee ended up dissolved in the cup, then compare with the dose.",
+  "steps": [
+    "Dissolved coffee in the cup: 36 g x 10% = 3.6 g.",
+    "Share of the dose: 3.6 g / 18 g = 0.2.",
+    "That is 20%."
+  ],
+  "keywords": [
+    "extraction yield",
+    "dissolved solids",
+    "espresso ratio",
+    "dose"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Illy & Viani, Espresso Coffee, 2005",
+  "source_kind": "book",
+  "reference": "Illy & Viani (eds.), Espresso Coffee: The Science of Quality, 2nd edition, Elsevier Academic Press, 2005",
+  "written": "2026-09-26"
+}

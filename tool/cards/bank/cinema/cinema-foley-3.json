@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Two actors talk while sitting perfectly still. Which Foley pass will the scene still get?",
+  "question": "Two actors talk, seated, never walking or touching a prop. Which Foley pass will the scene still get?",
   "options": [
     "Footsteps",
     "Clothing movement",

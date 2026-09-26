@@ -1,0 +1,38 @@
+{
+  "id": "food-espresso-2",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: grinding espresso finer always extracts more of the coffee into the cup?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Past a point, very fine grounds pack so tightly that water forces a few fast channels through the puck and bypasses the rest. A 2020 study combining modelling with brewing found finer grinds lowered extraction and made shots erratic; less coffee, ground coarser, gave far more reproducible shots. Water takes the easy road.",
+  "move": "Past a certain point, more of the right thing starts to block itself.",
+  "trap": "Reasoning that smaller particles expose more surface, so they must extract more.",
+  "keywords": [
+    "grind size",
+    "channelling",
+    "extraction",
+    "espresso puck"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cameron et al., Matter, 2020",
+  "source_kind": "paper",
+  "reference": "https://www.cell.com/matter/fulltext/S2590-2385(19)30410-2",
+  "written": "2026-09-26"
+}

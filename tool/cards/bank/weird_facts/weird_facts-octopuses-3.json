@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. In excised skin of the California two-spot octopus, light made the pigment sacs called chromatophores expand, fastest under blue light. The skin carries opsin, the light-detecting protein of eyes, in tiny hair-like cilia. With no eye and no brain attached, the skin still responds to light.",
+  "answer": "True. In excised skin of the California two-spot octopus, light made the pigment sacs called chromatophores expand, fastest under blue light. The skin makes opsin, the light-detecting protein of eyes, in its own sensory cells. With no eye and no brain attached, a cut patch of skin still flushed dark under a lamp.",
   "move": "Before assuming a signal comes from the centre, test the edge alone.",
   "trap": "Colour change seems to need the eyes and brain to direct it.",
   "keywords": [
@@ -31,8 +31,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "UCSB Marine Science Institute, 2015",
-  "source_kind": "institution",
-  "reference": "https://msi.ucsb.edu/news/seeing-without-eyes",
+  "source": "Ramirez & Oakley, J. Exp. Biology, 2015",
+  "source_kind": "primary_document",
+  "reference": "Ramirez & Oakley, Eye-independent, light-activated chromatophore expansion (LACE) and expression of phototransduction genes in the skin of Octopus bimaculoides, Journal of Experimental Biology, 2015",
   "written": "2026-09-26"
 }

@@ -13,7 +13,7 @@
     "Clerks filing couples under one initial"
   ],
   "correct": 0,
-  "answer": "Surnames clustering by ethnicity and region. People tend to marry within their own community, and initials are not spread evenly across communities: one of Dutch descent has many surnames starting with V. Simonsohn replicated the original pattern, then showed such confounds, plus reverse causality, could produce it without any pull of the name.",
+  "answer": "Surnames clustering by ethnicity and region. People tend to marry within their own community, and initials are not spread evenly across communities: Dutch-American surnames, for instance, often start with V. Simonsohn replicated the original pattern, then showed that such confounds could produce it without any pull of the name.",
   "move": "Before crediting attraction, ask what else the matching pairs already share.",
   "trap": "Taking the textbook story of an unconscious pull towards one's own name.",
   "keywords": [

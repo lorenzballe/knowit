@@ -1,0 +1,39 @@
+{
+  "id": "food-emulsions-3",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: butter, like the cream it is churned from, is fat droplets dispersed in water?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cream is fat in water; butter is the reverse, water in fat. Churning tears the membranes round the fat globules, the freed fat runs together into one mass, and the leftover water, about 16% of butter, is trapped in it as droplets. So butter feels greasy on the fingers and cream feels wet.",
+  "move": "The same two ingredients can make opposite things depending on which one surrounds.",
+  "trap": "Butter comes from cream, so it seems to keep cream's structure.",
+  "keywords": [
+    "butter",
+    "cream",
+    "churning",
+    "water in oil",
+    "phase inversion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGee, On Food and Cooking, 2004",
+  "source_kind": "book",
+  "reference": "McGee, On Food and Cooking: The Science and Lore of the Kitchen, Scribner, 2004",
+  "written": "2026-09-26"
+}

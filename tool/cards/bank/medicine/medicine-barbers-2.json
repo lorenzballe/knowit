@@ -1,0 +1,40 @@
+{
+  "id": "medicine-barbers-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In 1537, army surgeon Ambroise Paré ran out of boiling oil and dressed gunshot wounds with a mild salve. Who fared better?",
+  "options": [
+    "The soldiers given the salve",
+    "The soldiers given boiling oil",
+    "Neither group did better"
+  ],
+  "correct": 0,
+  "answer": "The soldiers given the salve. Doctrine held that gunpowder poisoned wounds, so they were scalded with oil. Paré, a barber-surgeon's apprentice turned army surgeon, found the salve group resting next morning while the oil group lay feverish and swollen. Running out of supplies had handed him two groups to compare.",
+  "move": "A shortage can be the first fair comparison anyone gets to see.",
+  "trap": "Trusting the oil, because gunshot wounds were thought to be poisoned.",
+  "keywords": [
+    "ambroise paré",
+    "gunshot wounds",
+    "boiling oil",
+    "barber-surgeons",
+    "siege of turin"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paré, Apologie and Treatise, ed. Keynes",
+  "source_kind": "book",
+  "reference": "Paré, The Apologie and Treatise of Ambroise Paré, ed. Geoffrey Keynes, Falcon Educational Books, 1951",
+  "written": "2026-09-26"
+}

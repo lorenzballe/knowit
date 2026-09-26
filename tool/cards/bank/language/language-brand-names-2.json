@@ -3,9 +3,6 @@
   "topic": "language",
   "genre": "language.word_origins",
   "strand": "language.word_origins.brand_names",
-  "also": [
-    "pop_culture.logos_and_brands.rebrands"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confirmation",

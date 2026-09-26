@@ -1,0 +1,33 @@
+{
+  "id": "food-salt-3",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does soaking meat in salt water make it juicier after cooking, rather than drier?",
+  "answer": "Salt loosens the meat's protein scaffolding. Chloride ions bind to the filaments inside muscle fibres and push them apart, so the lattice swells and holds more water. Offer and Trinick watched single fibrils swell in brine under a microscope in 1983. A brined chicken breast goes into the oven heavier than it came from the butcher.",
+  "move": "Look for what the treatment does to structure, not only to water.",
+  "keywords": [
+    "brining",
+    "myofibrils",
+    "chloride",
+    "water holding",
+    "meat"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Offer & Trinick, Meat Science, 1983",
+  "source_kind": "paper",
+  "reference": "Offer & Trinick, On the mechanism of water holding in meat: the swelling and shrinking of myofibrils, Meat Science, 1983",
+  "written": "2026-09-26"
+}

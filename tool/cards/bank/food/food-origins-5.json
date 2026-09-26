@@ -1,0 +1,38 @@
+{
+  "id": "food-origins-5",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: more than half of the world's known wild coffee species are threatened with extinction?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2019 assessment of all 124 known coffee species found 75 threatened, about 60%, including arabica in the wild. Nearly all coffee drunk comes from arabica and robusta, but the wild relatives hold the genes for resisting disease and heat that breeders will need. Many survive only in shrinking patches of African and Madagascan forest.",
+  "move": "Judge a family by all its members, not the two that everyone meets.",
+  "trap": "Judging all coffee by the two species grown on every continent.",
+  "keywords": [
+    "wild coffee",
+    "extinction risk",
+    "kew",
+    "genetic resources"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Davis et al., Science Advances, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.aav3473",
+  "written": "2026-09-26"
+}

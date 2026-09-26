@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. In the 2011–2012 national health survey, 12.4% of adults aged 40 and over had measurable smell loss, and it climbed steeply with age: about 14% of those 80 and older could barely smell or not at all. The test was eight scratch-and-sniff odours, from chocolate to natural gas.",
+  "answer": "True. In the 2011–2012 national health survey, 12.4% of adults aged 40 and over had measurable smell loss, and it climbed steeply with age, to more than a third of those aged 80 and over. The test was eight scratch-and-sniff odours, from chocolate to natural gas.",
   "move": "A loss that nobody can see is easy to count too low.",
   "trap": "Assuming smell loss is rare because it is so seldom discussed.",
   "keywords": [
@@ -34,6 +34,6 @@
   "figure": "none",
   "source": "Hoffman et al., Rev Endocr Metab Disord, 2016",
   "source_kind": "paper",
-  "reference": "https://pubmed.ncbi.nlm.nih.gov/27287364/",
+  "reference": "Hoffman, Rawal, Li & Duffy, New chemosensory component in the U.S. National Health and Nutrition Examination Survey (NHANES): first-year results for measured olfactory dysfunction, Reviews in Endocrine and Metabolic Disorders, 2016",
   "written": "2026-09-26"
 }

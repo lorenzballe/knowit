@@ -1,0 +1,36 @@
+{
+  "id": "medicine-barbers-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "also": [
+    "history.middle_ages.guilds"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long were London's surgeons legally in the same company as its barbers?",
+  "answer": "Just over two centuries. An Act of 1540 merged the Barbers' Company and the Guild of Surgeons into the Company of Barber-Surgeons, with each trade barred from the other's work. The surgeons broke away only in 1745 as the Company of Surgeons, which became the Royal College of Surgeons in 1800. The barbers kept the hall.",
+  "move": "Old partnerships often outlast the reasons they were formed.",
+  "keywords": [
+    "barber-surgeons",
+    "guilds",
+    "royal college of surgeons",
+    "london",
+    "1745"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cope, History of the Royal College of Surgeons, 1959",
+  "source_kind": "book",
+  "reference": "Cope, The Royal College of Surgeons of England: A History, Anthony Blond, 1959",
+  "written": "2026-09-26"
+}

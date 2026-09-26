@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What was unremarkable about Usain Bolt's 9.58-second 100 m world record in Berlin in 2009?",
-  "answer": "His start. His reaction to the gun, 0.146 seconds, was the third slowest of the eight finalists. The record was built later: laser measurements put his top speed above 12.3 m/s, about 44 km/h, and he held close to it all the way from 50 m to the line.",
+  "answer": "His start. His reaction to the gun, 0.146 seconds, was slower than that of some of the men he beat. The record was built later: laser measurements put his top speed above 12.3 m/s, about 44 km/h, and he held close to it all the way from 50 m to the line.",
   "move": "Find where a winner gained the time before praising the obvious part.",
   "keywords": [
     "usain bolt",
@@ -26,8 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Multicomponent velocity analysis of Bolt's record, 2023",
+  "source": "Graubner & Nixdorf, New Studies in Athletics, 2011",
   "source_kind": "paper",
-  "reference": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10669785/",
+  "reference": "Graubner & Nixdorf, Biomechanical analysis of the sprint and hurdles events at the 2009 IAAF World Championships in Athletics, New Studies in Athletics, 2011",
   "written": "2026-09-26"
 }

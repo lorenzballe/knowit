@@ -3,9 +3,6 @@
   "topic": "language",
   "genre": "language.accents",
   "strand": "language.accents.dialects",
-  "also": [
-    "history.maps_and_borders.straight_lines"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "sampling",

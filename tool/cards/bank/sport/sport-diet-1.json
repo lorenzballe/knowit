@@ -3,9 +3,6 @@
   "topic": "sport",
   "genre": "sport.training",
   "strand": "sport.training.diet",
-  "also": [
-    "sport.records.marathon"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
