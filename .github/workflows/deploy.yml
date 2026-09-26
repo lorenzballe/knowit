@@ -87,6 +87,19 @@ jobs:
           cp -r web/cards _site/cards
           ls -la _site
 
+      # The site's own stylesheets and script are asked for at the same URL
+      # every deploy too, so a browser holding yesterday's site.css would
+      # dress today's page with it — everything in the wrong place until the
+      # cache let go, which is exactly what happened the day the page was
+      # rebuilt. The same stamp as the bundle's takes that away.
+      - name: Version the site's stylesheets and script so a deploy cannot be served from cache
+        run: |
+          v="${GITHUB_SHA::12}"
+          sed -i -E "s#/assets/(site\.css|landing\.css|main\.js)\"#/assets/\1?v=$v\"#g" _site/*.html
+          grep -o 'site.css?v=[0-9a-f]*' _site/index.html | head -1
+          grep -o 'landing.css?v=[0-9a-f]*' _site/index.html | head -1
+          grep -o 'main.js?v=[0-9a-f]*' _site/privacy.html | head -1
+
       # The question of the day for the next two months, where the iPhone
       # widget looks when the app has not handed it anything yet.
       - name: Publish the widget's days
