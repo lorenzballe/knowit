@@ -1,0 +1,38 @@
+{
+  "id": "technology-recycling-5",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should lithium-ion batteries carry a refundable deposit, like the one many US states put on car batteries?",
+  "sides": [
+    "Yes, add a deposit",
+    "No, rely on collection"
+  ],
+  "answer": "Deposits make waste worth collecting. Car batteries come back at about 99% in the US, where retailers add a charge refunded when the old one is returned. Lithium cells have no such pull: thrown into household bins, they are crushed in lorries and start fires. A deposit makes each one worth picking up.",
+  "move": "Whichever side you took, ask whether deposits or scrap value drive returns.",
+  "counterpoint": "Car batteries come back because the lead is worth money: scrap dealers pay for old ones, deposit or not. Most lithium cells are small and sealed inside phones, earbuds and vapes, so a deposit on each is hard to charge and harder to refund. Drop-off points, shop take-back and bans like the UK's on disposable vapes do more for less.",
+  "keywords": [
+    "battery deposits",
+    "lead-acid batteries",
+    "waste fires",
+    "take-back schemes",
+    "recycling rates"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Battery Council International, recycling rate study, 2019",
+  "source_kind": "institution",
+  "reference": "Battery Council International, National Recycling Rate Study, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-blood-types-1",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which rare blood looks like group O on a routine test, yet cannot safely receive O blood?",
+  "answer": "The Bombay type, found in 1952. Carriers lack the H antigen, the base on which A and B are built, so their cells test as O. Their plasma carries anti-H, which destroys ordinary O cells. About 1 in 10,000 Indians carry it, and 1 in a million Europeans; only Bombay blood is safe for them.",
+  "move": "A test that sorts by what is present can miss what is absent.",
+  "keywords": [
+    "bombay phenotype",
+    "h antigen",
+    "blood transfusion",
+    "abo system",
+    "india"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dean, Blood Groups and Red Cell Antigens, 2005",
+  "source_kind": "book",
+  "reference": "Dean, Blood Groups and Red Cell Antigens, National Center for Biotechnology Information, Bethesda, 2005",
+  "written": "2026-09-26"
+}

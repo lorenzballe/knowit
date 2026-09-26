@@ -1,0 +1,39 @@
+{
+  "id": "technology-recycling-3",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "If every electric car sold in 2014 were recycled in 2024, what share of 2024's new batteries could they supply?",
+  "options": [
+    "About 20%",
+    "About 2%",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About 2%. Roughly 300,000 electric cars were sold worldwide in 2014 and more than 17 million in 2024, over fifty times as many, and 2014's battery packs were smaller. Batteries return only after a decade or more on the road. Recycling feeds on the market of ten years ago.",
+  "move": "In a fast-growing market, the past is always smaller than it feels.",
+  "trap": "About half, as if the market were steady and scrap matched sales.",
+  "keywords": [
+    "electric cars",
+    "battery recycling",
+    "sales growth",
+    "scrap supply"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "IEA, Global EV Outlook 2025",
+  "source_kind": "institution",
+  "reference": "International Energy Agency, Global EV Outlook 2025, 2025",
+  "written": "2026-09-26"
+}

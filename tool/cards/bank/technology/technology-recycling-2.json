@@ -1,0 +1,40 @@
+{
+  "id": "technology-recycling-2",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When old lithium-ion batteries are recycled by smelting, which metal usually ends up in the waste slag?",
+  "options": [
+    "Lithium",
+    "Cobalt",
+    "Nickel"
+  ],
+  "correct": 0,
+  "answer": "Lithium. A smelter burns off the graphite, plastic and electrolyte and melts the rest: cobalt, nickel and copper sink into an alloy worth refining, while lithium and aluminium float off in the slag, the glassy waste on top. Recovering it from slag costs extra. The metal on the label is the one left behind.",
+  "move": "Check what a process keeps before assuming it keeps what matters most.",
+  "trap": "Cobalt, because the battery's namesake surely gets recovered first.",
+  "keywords": [
+    "smelting",
+    "slag",
+    "lithium recovery",
+    "battery recycling",
+    "cobalt"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harper et al., Nature, 2019",
+  "source_kind": "paper",
+  "reference": "Harper et al., Recycling lithium-ion batteries from electric vehicles, Nature, 2019",
+  "written": "2026-09-26"
+}

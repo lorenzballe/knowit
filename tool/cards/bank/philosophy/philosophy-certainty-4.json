@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-certainty-4",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What puzzle did Descartes use to show that certainty good enough to live by can fall short of proof?",
+  "answer": "A coded letter. If shifting every letter one place along the alphabet turns a scramble into Latin words, nobody doubts the reading, though a different key could hide a different message. Descartes called this moral certainty, enough for the conduct of life, and claimed it for his physics: too much fitted to be chance.",
+  "move": "The more one reading explains, the less room is left for a rival.",
+  "keywords": [
+    "descartes",
+    "moral certainty",
+    "coded letter",
+    "principles of philosophy"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Descartes, Principles of Philosophy, IV.205",
+  "source_kind": "book",
+  "reference": "Descartes, Principles of Philosophy IV.205, in The Philosophical Writings of Descartes I, trans. Cottingham, Stoothoff & Murdoch, Cambridge University Press, 1985",
+  "written": "2026-09-26"
+}

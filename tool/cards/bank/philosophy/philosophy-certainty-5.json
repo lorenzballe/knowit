@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-certainty-5",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Wittgenstein writing about in the last days before he died?",
+  "answer": "Certainty. The notes published as On Certainty answer G. E. Moore, who in 1939 held up his hands as proof of an external world. Wittgenstein replied that such things are not known but stand fast, hinges on which doubts turn. The last entry is dated two days before his death.",
+  "move": "Some beliefs are not conclusions at all; they are the ground doubt stands on.",
+  "keywords": [
+    "wittgenstein",
+    "on certainty",
+    "g. e. moore",
+    "hinge propositions",
+    "scepticism"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wittgenstein, On Certainty, 1969",
+  "source_kind": "book",
+  "reference": "Wittgenstein, On Certainty, ed. Anscombe and von Wright, Blackwell, 1969, sections 151, 341 and 676",
+  "written": "2026-09-26"
+}

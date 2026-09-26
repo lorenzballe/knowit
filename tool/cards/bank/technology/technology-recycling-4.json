@@ -1,0 +1,36 @@
+{
+  "id": "technology-recycling-4",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "also": [
+    "technology.batteries.lithium"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the cheapest kind of electric-car battery the least rewarding to recycle?",
+  "answer": "Because its positive electrode holds nothing valuable but the lithium. Lithium iron phosphate cells, now in a large share of new electric cars, swap the nickel and cobalt whose resale paid for most recycling for iron and phosphate. Once the lithium is out, what remains of that electrode is the stuff of rust and fertiliser.",
+  "move": "A recycling business runs on what the scrap is worth, not on good intentions.",
+  "keywords": [
+    "lithium iron phosphate",
+    "battery recycling",
+    "nickel",
+    "cobalt",
+    "electric cars"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gaines, Sustainable Materials and Technologies, 2018",
+  "source_kind": "paper",
+  "reference": "Gaines, Lithium-ion battery recycling processes: Research towards a sustainable course, Sustainable Materials and Technologies, 2018",
+  "written": "2026-09-26"
+}

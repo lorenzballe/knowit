@@ -1,0 +1,33 @@
+{
+  "id": "technology-recycling-1",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Car batteries are among the most recycled products there are. Where does that recycling do the most harm?",
+  "answer": "In backyard smelters. Informal recyclers crack batteries open and melt the lead in open pots, spreading dust and fumes that children absorb readily. In 2020 UNICEF and Pure Earth estimated one child in three has blood lead of at least 5 micrograms per decilitre, and named this recycling a leading contributor.",
+  "move": "Ask who does the recycling, and how, before counting it as good.",
+  "keywords": [
+    "lead-acid batteries",
+    "lead poisoning",
+    "informal recycling",
+    "children",
+    "unicef"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "UNICEF & Pure Earth, The Toxic Truth, 2020",
+  "source_kind": "institution",
+  "reference": "UNICEF & Pure Earth, The Toxic Truth: Children's Exposure to Lead Pollution Undermines a Generation of Future Potential, 2020",
+  "written": "2026-09-26"
+}

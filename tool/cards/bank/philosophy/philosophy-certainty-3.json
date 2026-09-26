@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-certainty-3",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Augustine answered the sceptics with 'if I am deceived, I am' twelve centuries before Descartes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In The City of God, answering the sceptics, Augustine wrote: 'If I am deceived, I am.' Shown the passage in 1640, Descartes went to his town's library to read it, then replied that Augustine used the thought to find the Trinity in the mind, and he to prove the mind immaterial.",
+  "move": "Before crediting a first, look for the older version nobody quotes.",
+  "trap": "Crediting the famous version with being the first one.",
+  "keywords": [
+    "augustine",
+    "descartes",
+    "cogito",
+    "city of god",
+    "scepticism"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Augustine, The City of God, XI.26",
+  "source_kind": "book",
+  "reference": "Augustine, The City of God XI.26, trans. Dods, Modern Library, 1950; Descartes to Colvius, 14 November 1640, in The Philosophical Writings of Descartes III, Cambridge University Press, 1991",
+  "written": "2026-09-26"
+}

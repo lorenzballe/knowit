@@ -1,0 +1,32 @@
+{
+  "id": "human_body-blood-types-3",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An Rh-negative mother is injected with anti-D antibodies. Why does that stop her making her own?",
+  "answer": "Nobody is entirely sure. Untreated, an Rh-negative woman can be immunised by her Rh-positive baby's blood and attack the next baby's red cells; since the late 1960s anti-D has prevented most such cases. The usual story: injected antibody clears fetal cells before her immune system notices. It fails to explain all the evidence.",
+  "move": "A treatment can work reliably long before anyone knows why.",
+  "keywords": [
+    "anti-d immunoglobulin",
+    "rhesus disease",
+    "pregnancy",
+    "antibodies"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brinc & Lazarus, ASH Education Program, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1182/asheducation-2009.1.185",
+  "written": "2026-09-26"
+}
