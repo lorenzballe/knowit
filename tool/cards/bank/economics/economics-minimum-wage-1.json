@@ -1,0 +1,40 @@
+{
+  "id": "economics-minimum-wage-1",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Germany brought in its first national minimum wage, €8.50 an hour, in 2015. What happened to the low-paid?",
+  "options": [
+    "Pay rose; many moved to bigger firms",
+    "Jobs vanished; pay barely moved",
+    "Pay barely rose; firms found loopholes"
+  ],
+  "correct": 0,
+  "answer": "Pay rose; many moved to bigger firms. Dustmann and colleagues found the minimum raised low wages without cutting overall employment, as low-paid workers shifted from small firms to larger, more productive ones, behind up to 17% of their wage gain. Other studies found losses in mini-jobs, part-time posts paying a few hundred euros a month.",
+  "move": "Count where people move, not just who loses the old place.",
+  "trap": "Expecting a wage floor to price the low-paid out of work.",
+  "keywords": [
+    "minimum wage",
+    "germany",
+    "reallocation",
+    "productivity",
+    "mini-jobs"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dustmann et al., Quarterly Journal of Economics, 2022",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/qje/qjab028",
+  "written": "2026-09-26"
+}

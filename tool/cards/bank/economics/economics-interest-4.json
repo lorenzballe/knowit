@@ -1,0 +1,40 @@
+{
+  "id": "economics-interest-4",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A car loan charges a 'flat' 5% a year on the full sum for three years, repaid monthly. Roughly what is the true annual rate?",
+  "options": [
+    "About 5%",
+    "Nearly 10%",
+    "About 15%"
+  ],
+  "correct": 1,
+  "answer": "Nearly 10%. A flat rate charges interest on the full sum all term, but repayments shrink the debt; on average only about half is owed. Interest of 15% of the loan over three years is about 9.3% a year on the real balance, 9.7% as an APR. An APR exists to show that gap.",
+  "move": "Ask what balance a rate is charged on, not just the rate.",
+  "trap": "Taking the quoted 5% at face value, as if the debt never shrank.",
+  "keywords": [
+    "flat rate",
+    "apr",
+    "car loans",
+    "consumer credit",
+    "repayments"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Consumer Credit Act 1974, UK",
+  "source_kind": "primary_document",
+  "reference": "Consumer Credit Act 1974, section 20: total charge for credit",
+  "written": "2026-09-26"
+}

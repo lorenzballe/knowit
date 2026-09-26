@@ -1,0 +1,33 @@
+{
+  "id": "science-primes-2",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Has the number 1 always been excluded from the primes?",
+  "answer": "No. Many mathematicians counted it as prime into the twentieth century; D. N. Lehmer's 1914 table of primes up to ten million starts with 1. It was dropped for convenience: with 1 as a prime, factorising stops being unique, since 6 = 2 × 3 = 1 × 2 × 3.",
+  "move": "A definition is a tool; ask what would break if it changed.",
+  "keywords": [
+    "number one",
+    "prime numbers",
+    "lehmer",
+    "unique factorisation",
+    "definitions"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Caldwell & Xiong, Journal of Integer Sequences, 2012",
+  "source_kind": "paper",
+  "reference": "Caldwell & Xiong, What is the Smallest Prime?, Journal of Integer Sequences, 2012",
+  "written": "2026-09-26"
+}

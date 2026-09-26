@@ -1,0 +1,33 @@
+{
+  "id": "economics-minimum-wage-3",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Australia's 1907 Harvester judgment decide what a fair wage for a labourer was?",
+  "answer": "From a household budget, not from what the employer could afford. Justice Higgins asked what an unskilled worker needed to live as a human being in a civilised community, costing rent, food and fuel for a family of about five, and set seven shillings a day. That became Australia's basic wage, which lasted until 1967.",
+  "move": "Ask what a number was built from before arguing about its size.",
+  "keywords": [
+    "harvester judgment",
+    "basic wage",
+    "australia",
+    "living wage",
+    "justice higgins"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ex parte H.V. McKay, Commonwealth Arbitration Court, 1907",
+  "source_kind": "primary_document",
+  "reference": "Ex parte H.V. McKay (1907) 2 CAR 1, the Harvester judgment, Commonwealth Court of Conciliation and Arbitration",
+  "written": "2026-09-26"
+}

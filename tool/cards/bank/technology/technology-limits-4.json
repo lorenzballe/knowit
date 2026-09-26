@@ -1,0 +1,38 @@
+{
+  "id": "technology-limits-4",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: in 2023 tests, GPT-4 named celebrities' parents far more often than it named those parents' famous children?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True: 79% for questions like 'Who is Tom Cruise's mother?', but 33% for 'Who is Mary Lee Pfeiffer's son?'. A model learns to predict words in the order text runs, and pages about stars mention their parents far more often than the reverse. A fact learned one way round is not learned the other.",
+  "move": "Learning that A leads to B is not learning that B leads to A.",
+  "trap": "False, since knowing a relation one way means knowing it both ways.",
+  "keywords": [
+    "reversal curse",
+    "gpt-4",
+    "language models",
+    "celebrities"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berglund et al., ICLR, 2024",
+  "source_kind": "paper",
+  "reference": "Berglund, Tong, Kaufmann, Balesni, Stickland, Korbak & Evans, The Reversal Curse: LLMs trained on 'A is B' fail to learn 'B is A', ICLR, 2024",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-cathedrals-2",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the builders who finished Cologne Cathedral in 1880 know the medieval design?",
+  "answer": "From a drawing found in an attic. Work stopped around 1473, leaving a wooden crane on the half-built south tower until 1868. In 1814 half of the medieval façade plan, a parchment about 4 m tall, turned up in a Darmstadt inn; the other half surfaced in Paris in 1816.",
+  "move": "Unfinished work can wait centuries if the plan survives.",
+  "keywords": [
+    "cologne cathedral",
+    "facade plan",
+    "georg moller",
+    "sulpiz boisserée",
+    "medieval crane"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Freies Deutsches Hochstift, Plan F",
+  "source_kind": "institution",
+  "reference": "https://freies-deutsches-hochstift.de/en/mediaguide/romantik-ausstellung/3-obergeschoss/im-bilde-vollendet/wand-reproduktion/",
+  "written": "2026-09-26"
+}

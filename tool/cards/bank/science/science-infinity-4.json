@@ -1,0 +1,39 @@
+{
+  "id": "science-infinity-4",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: every fraction between 0 and 1 can be covered by intervals whose lengths add up to a millionth?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The fractions can be put in a single list. Cover the first with an interval half a millionth long, the second with a quarter of a millionth, and so on, halving each time: the lengths add up to a millionth, yet every fraction is covered, although there is a fraction between any two numbers.",
+  "move": "Something can be everywhere and still take up no room.",
+  "trap": "Fractions are everywhere on the line, so covering them covers everything.",
+  "keywords": [
+    "rational numbers",
+    "measure zero",
+    "countable sets",
+    "fractions",
+    "number line"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Royden & Fitzpatrick, Real Analysis, 2010",
+  "source_kind": "book",
+  "reference": "Royden & Fitzpatrick, Real Analysis, 4th edition, Pearson, 2010",
+  "written": "2026-09-26"
+}

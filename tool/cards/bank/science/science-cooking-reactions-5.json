@@ -1,0 +1,32 @@
+{
+  "id": "science-cooking-reactions-5",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What draws the grey-green ring round the yolk of an overcooked hard-boiled egg?",
+  "answer": "Iron sulphide. Long heating frees sulphur from the proteins of the white as hydrogen sulphide, which drifts inward to the cooler yolk and meets the iron there. Older eggs, which are more alkaline, make more of it. Plunging eggs into cold water pulls the gas outwards instead and keeps the yolk yellow.",
+  "move": "Moisture and gas drift towards the cold, so choose where the cold is.",
+  "keywords": [
+    "hard-boiled eggs",
+    "iron sulphide",
+    "hydrogen sulphide",
+    "egg yolk"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGee, On Food and Cooking, 2004",
+  "source_kind": "book",
+  "reference": "McGee, On Food and Cooking: The Science and Lore of the Kitchen, Scribner, 2004, ISBN 978-0-684-80001-1",
+  "written": "2026-09-26"
+}

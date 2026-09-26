@@ -1,0 +1,37 @@
+{
+  "id": "psychology-why-we-dream-5",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do dreams themselves do a job, or are they a by-product of what the sleeping brain does?",
+  "sides": [
+    "They do a job",
+    "They are a by-product"
+  ],
+  "answer": "People who dream about a maze they have just learned get better at it than those who sleep without such dreams, a finding repeated overnight in 2019. One theory holds that nightmares rehearse threats, and dream content tracks waking worries. An experience so organised around what matters is unlikely to be mere exhaust.",
+  "move": "Everything turns on whether the experience does the work, or only the brain beneath it.",
+  "counterpoint": "Most dreams are forgotten within minutes, so any job they do cannot depend on the dreamer knowing it. The maze findings rest on the few people who happen to dream of the task, and may only show which memories the brain was already busy with. The work may be sleep's; dreams may be its sparks.",
+  "keywords": [
+    "dream function",
+    "memory consolidation",
+    "threat simulation",
+    "maze learning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wamsley & Stickgold, Journal of Sleep Research, 2019",
+  "source_kind": "paper",
+  "reference": "Wamsley & Stickgold, Dreaming of a learning task is associated with enhanced memory consolidation: replication in an overnight sleep study, Journal of Sleep Research, 2019",
+  "written": "2026-09-26"
+}

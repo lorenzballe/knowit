@@ -1,0 +1,39 @@
+{
+  "id": "technology-mainframes-3",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: IBM's Thomas Watson predicted in 1943 a world market for maybe five computers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False: there is no record he said it. No speech, letter or article from the time contains the line; the biographer Kevin Maney searched and found nothing, and IBM's archive says no. A likely seed is his son's report in 1953 that IBM expected orders for five 701 computers and came home with 18.",
+  "move": "A quotation that flatters the teller's point deserves a source first.",
+  "trap": "True: every talk on bad predictions repeats it, and none checks it.",
+  "keywords": [
+    "thomas watson",
+    "ibm",
+    "misattributed quotes",
+    "ibm 701",
+    "predictions"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maney, The Maverick and His Machine, 2003",
+  "source_kind": "book",
+  "reference": "Maney, The Maverick and His Machine: Thomas Watson, Sr. and the Making of IBM, Wiley, 2003",
+  "written": "2026-09-26"
+}

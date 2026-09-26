@@ -1,0 +1,33 @@
+{
+  "id": "space-supermassive-ones-3",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can happen when two stars orbiting each other wander too close to the Milky Way's central black hole?",
+  "answer": "The pair is split: one star is captured into a tight orbit around the hole, and the other is flung out carrying the energy its partner lost. In 2019 astronomers found a star leaving the galaxy at about 1,700 km/s, traced back to the centre some 5 million years ago.",
+  "move": "Break a partnership, and the energy that bound it goes somewhere.",
+  "keywords": [
+    "hypervelocity stars",
+    "binary stars",
+    "galactic centre",
+    "s5-hvs1",
+    "hills mechanism"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koposov et al., MNRAS, 2020",
+  "source_kind": "paper",
+  "reference": "Koposov et al., Discovery of a nearby 1700 km/s star ejected from the Milky Way by Sgr A*, Monthly Notices of the Royal Astronomical Society, 2020",
+  "written": "2026-09-26"
+}

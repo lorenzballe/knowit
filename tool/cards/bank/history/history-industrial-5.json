@@ -1,0 +1,38 @@
+{
+  "id": "history-industrial-5",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did British workers' living standards rise during the Industrial Revolution, before 1850?",
+  "sides": [
+    "Yes, they rose",
+    "No, they stalled"
+  ],
+  "answer": "They rose, and faster after 1820. Lindert and Williamson's wage series show real earnings of blue-collar workers nearly doubling between 1820 and 1850. Cotton cloth, once a luxury, became cheap enough for everyone. Families who moved from farm to factory did so for higher pay, and kept moving.",
+  "move": "Whichever side you took, the price index used to deflate wages decides it.",
+  "counterpoint": "Output raced ahead of pay. Robert Allen estimates that between 1780 and 1840 output per worker rose about 46% but real wages only about 12%, a lag he calls Engels' pause. Feinstein's cost-of-living index cut the optimists' gains sharply, and in the new industrial towns crowding and dirty water pushed death rates up in the 1830s.",
+  "keywords": [
+    "standard of living debate",
+    "real wages",
+    "engels' pause",
+    "cost of living",
+    "factory workers"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Allen, Explorations in Economic History, 2009",
+  "source_kind": "paper",
+  "reference": "Allen, Engels' Pause: Technical Change, Capital Accumulation, and Inequality in the British Industrial Revolution, Explorations in Economic History, 2009; Lindert & Williamson, English Workers' Living Standards during the Industrial Revolution: A New Look, Economic History Review, 1983",
+  "written": "2026-09-26"
+}

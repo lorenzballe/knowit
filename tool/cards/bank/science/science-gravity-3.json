@@ -1,0 +1,43 @@
+{
+  "id": "science-gravity-3",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A bathroom scale shows 70 kg at the equator, where gravity is 9.780 m/s². How many grams more at a pole, where it is 9.832?",
+  "value": 372.2,
+  "unit": "grams",
+  "tolerance": 2,
+  "answer": "70,000 g x 0.00532 = 372 g more.",
+  "move": "A scale measures a pull, and the pull depends on where you stand.",
+  "trap": "Assuming a scale weighs mass, so the reading cannot change.",
+  "hint": "Work out how much stronger the pull is at the pole, as a percentage.",
+  "steps": [
+    "9.832 / 9.780 = 1.00532: the pull at a pole is 0.532% stronger.",
+    "A scale measures that pull, so it reads 0.532% more.",
+    "70,000 g x 0.00532 = 372 g more."
+  ],
+  "keywords": [
+    "bathroom scale",
+    "equator",
+    "poles",
+    "earth's rotation",
+    "weight"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WGS 84 normal gravity formula",
+  "source_kind": "standard",
+  "reference": "NIMA, Department of Defense World Geodetic System 1984, Technical Report TR8350.2, third edition, 2000",
+  "written": "2026-09-26"
+}

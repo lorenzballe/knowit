@@ -1,0 +1,38 @@
+{
+  "id": "space-supermassive-ones-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the Milky Way's central black hole shines more brightly than the stars crowded around it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It is one of the dimmest things there: its total output is under a ten-millionth of the most a hole of 4 million suns could give. Little gas reaches it, and that hot, thin gas radiates poorly. S2, a star that swings past it every 16 years, outshines the hole it orbits.",
+  "move": "Capacity says nothing about output until you know the supply.",
+  "trap": "Picturing every giant black hole as a blazing quasar.",
+  "keywords": [
+    "galactic centre",
+    "accretion",
+    "s2",
+    "eddington limit"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Genzel et al., Reviews of Modern Physics, 2010",
+  "source_kind": "paper",
+  "reference": "Genzel, Eisenhauer & Gillessen, The Galactic Center Massive Black Hole and Nuclear Star Cluster, Reviews of Modern Physics, 2010",
+  "written": "2026-09-26"
+}

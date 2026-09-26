@@ -1,0 +1,32 @@
+{
+  "id": "human_body-healing-3",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How strong is healed skin compared with the skin it replaced?",
+  "answer": "Weaker, for good. A cut has about a tenth of normal strength after a week, and by three months levels off at roughly 70 to 80% of unwounded skin, rarely improving much after. Scar collagen lies in dense parallel bundles, without the woven pattern, hair follicles or sweat glands of the surrounding skin.",
+  "move": "Something repaired is not the same as something restored.",
+  "keywords": [
+    "scar tissue",
+    "wound strength",
+    "collagen",
+    "skin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robbins and Cotran Pathologic Basis of Disease, 2021",
+  "source_kind": "book",
+  "reference": "Kumar, Abbas & Aster, Robbins and Cotran Pathologic Basis of Disease, 10th edition, Elsevier, 2021",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "space-supermassive-ones-4",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do astronomers know that giant black holes put on most of their weight while shining, not silently?",
+  "answer": "By adding up old light. Count the energy all quasars have ever radiated, assume about a tenth of the mass falling in became light, and the mass implied matches what now sits, dark, in the centres of nearby galaxies. Andrzej Sołtan set out the sum in 1982. The quiet giants are the receipts.",
+  "move": "Total the output, and it tells you what the input must have been.",
+  "keywords": [
+    "sołtan argument",
+    "quasars",
+    "black hole mass",
+    "accretion"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sołtan, MNRAS, 1982",
+  "source_kind": "paper",
+  "reference": "Sołtan, Masses of quasars, Monthly Notices of the Royal Astronomical Society, 1982",
+  "written": "2026-09-26"
+}

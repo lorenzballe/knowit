@@ -1,0 +1,39 @@
+{
+  "id": "technology-oled-4",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Roughly how thick is the stack of light-emitting organic films in an OLED pixel?",
+  "options": [
+    "About a tenth of a millimetre",
+    "Under a thousandth of a millimetre",
+    "About a millimetre"
+  ],
+  "correct": 1,
+  "answer": "Under a thousandth of a millimetre. The organic films in a pixel add up to a few hundred nanometres at most, hundreds of times thinner than a sheet of paper. They have to be: charges must cross the whole stack at a few volts. The glass carrying them is about a thousand times thicker.",
+  "move": "Size a part from its job, not from what it looks like.",
+  "trap": "About a tenth of a millimetre, picturing a coating like a film of paint.",
+  "keywords": [
+    "oled",
+    "organic films",
+    "nanometres",
+    "thin films"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forrest, Organic Electronics, 2020",
+  "source_kind": "book",
+  "reference": "Forrest, Organic Electronics: Foundations to Applications, Oxford University Press, 2020",
+  "written": "2026-09-26"
+}

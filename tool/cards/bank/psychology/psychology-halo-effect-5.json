@@ -1,0 +1,39 @@
+{
+  "id": "psychology-halo-effect-5",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a careful replication of Asch's 1946 warm-cold studies found warmth outweighing competence in first impressions?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Rerunning the Asch studies most cited as proof that warmth dominates impressions, researchers in 2014 found no primacy of warmth: its weight depended on context, and competence mattered at least as much. The textbook lesson does not readily follow even from Asch's own data.",
+  "move": "Reread the original before repeating what everyone says it showed.",
+  "trap": "Recalling the textbook lesson that warm or cold colours everything else.",
+  "keywords": [
+    "solomon asch",
+    "warmth",
+    "competence",
+    "first impressions",
+    "replication"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nauts et al., Social Psychology, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1027/1864-9335/a000179",
+  "written": "2026-09-26"
+}

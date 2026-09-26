@@ -1,0 +1,40 @@
+{
+  "id": "space-colours-of-stars-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Among the stars within 32 light-years of the Sun, what share are small, dim red dwarfs?",
+  "options": [
+    "About one in a hundred",
+    "About one in four",
+    "About three in four"
+  ],
+  "correct": 2,
+  "answer": "About three in four. In the Gaia-era census of stars within 32 light-years, about 250 of 340 are red dwarfs. Yet not one is easy to see without a telescope: the brightest, AX Microscopii, sits at the very limit of perfect skies. The night sky is a catalogue of the rare, bright few.",
+  "move": "The easiest members to see are rarely the typical ones.",
+  "trap": "The naked-eye sky has almost no red dwarfs, so they seem rare.",
+  "keywords": [
+    "red dwarfs",
+    "solar neighbourhood",
+    "gaia",
+    "star census",
+    "ax microscopii"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Reylé et al., Astronomy & Astrophysics, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1051/0004-6361/202140985",
+  "written": "2026-09-26"
+}

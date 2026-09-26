@@ -1,0 +1,42 @@
+{
+  "id": "economics-digital-money-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under America's 2025 stablecoin law, a dollar stablecoin's issuer may pay holders interest on it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The GENIUS Act, signed in July 2025, bars licensed issuers from paying holders any interest or yield merely for holding the coin, largely to stop stablecoins draining deposits from banks. The issuer still earns interest on the Treasury bills in reserve. A dollar parked in a stablecoin works for the issuer, not the holder.",
+  "move": "When your money sits idle somewhere, ask who is earning on it.",
+  "trap": "Assuming a digital dollar must pay interest like a savings account.",
+  "keywords": [
+    "stablecoins",
+    "genius act",
+    "interest",
+    "treasury bills",
+    "bank deposits"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GENIUS Act, section 4(a)(11), 2025",
+  "source_kind": "primary_document",
+  "reference": "Guiding and Establishing National Innovation for U.S. Stablecoins (GENIUS) Act, section 4(a)(11), 2025",
+  "written": "2026-09-26"
+}

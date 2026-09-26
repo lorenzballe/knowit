@@ -1,0 +1,32 @@
+{
+  "id": "science-quantum-4",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Schrödinger's cat originally meant to prove?",
+  "answer": "That something had gone wrong. In 1935 Schrödinger set a cat beside poison triggered by one radioactive atom to show the absurdity of letting quantum indecision spread to everyday objects; he called it a quite ridiculous case. Einstein had written to him of a charge of gunpowder, both exploded and not.",
+  "move": "Check whether a famous example was meant as a model or a mockery.",
+  "keywords": [
+    "schrödinger's cat",
+    "superposition",
+    "einstein",
+    "copenhagen interpretation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schrödinger, 1935, trans. Trimmer, 1980",
+  "source_kind": "paper",
+  "reference": "Trimmer (trans.), The present situation in quantum mechanics: a translation of Schrödinger's cat paradox paper, Proceedings of the American Philosophical Society 124, 323, 1980",
+  "written": "2026-09-26"
+}

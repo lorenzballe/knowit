@@ -1,0 +1,36 @@
+{
+  "id": "space-tides-5",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Earth's tidal bulge tugs the Moon forward along its orbit. Why does the Moon end up moving more slowly?",
+  "answer": "Because a push along an orbit raises it, and a higher orbit is a slower one. The energy taken from Earth's spin lifts the Moon about 3.8 cm farther away each year, a rate measured by timing laser pulses bounced off mirrors the Apollo crews left. The month lengthens as the day does.",
+  "move": "A push can slow a thing down if it also makes it climb.",
+  "keywords": [
+    "lunar recession",
+    "laser ranging",
+    "apollo retroreflectors",
+    "tidal bulge",
+    "orbital speed"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dickey et al., Science, 1994",
+  "source_kind": "paper",
+  "reference": "Dickey et al., Lunar Laser Ranging: A Continuing Legacy of the Apollo Program, Science, 1994",
+  "written": "2026-09-26"
+}

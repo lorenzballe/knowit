@@ -1,0 +1,32 @@
+{
+  "id": "psychology-why-we-dream-2",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when a sleeper is woken every time REM sleep begins, night after night?",
+  "answer": "The brain pushes back. In William Dement's 1960 experiments, sleepers woken at each onset of REM, the stage richest in dreams, tried to re-enter it more and more often, and on free nights afterwards spent extra time there, a rebound. He called it dream deprivation; the psychological harms he reported remain disputed.",
+  "move": "Something the body fights to get back is probably doing a job.",
+  "keywords": [
+    "rem rebound",
+    "dream deprivation",
+    "william dement",
+    "rem sleep"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dement, Science, 1960",
+  "source_kind": "paper",
+  "reference": "Dement, The effect of dream deprivation, Science, 1960",
+  "written": "2026-09-26"
+}

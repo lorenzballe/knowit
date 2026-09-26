@@ -1,0 +1,39 @@
+{
+  "id": "space-reusable-boosters-4",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the first rocket booster to reach space and land upright again was a SpaceX Falcon 9?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Blue Origin's New Shepard crossed 100 km and landed on 23 November 2015; a Falcon 9 first stage landed on 21 December. The gap in difficulty was larger than the gap in dates: New Shepard went straight up and down, while the Falcon stage had to shed thousands of km/h of sideways speed.",
+  "move": "The version everyone saw is not always the one that came first.",
+  "trap": "Falcon 9 landings are the famous footage, so they seem to be first.",
+  "keywords": [
+    "new shepard",
+    "falcon 9",
+    "booster landing",
+    "blue origin",
+    "spacex"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Davenport, The Space Barons, 2018",
+  "source_kind": "book",
+  "reference": "Davenport, The Space Barons: Elon Musk, Jeff Bezos, and the Quest to Colonize the Cosmos, PublicAffairs, 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "science-quantum-3",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most of the mass of the atoms in your body is given to them by the Higgs field?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Higgs gives quarks their own masses, but in a 2018 supercomputer calculation those masses made up about 9% of a proton. The rest is the energy of quarks and gluons held by the strong force, weighed through E = mc². In a 70 kg body, that is over 60 kg.",
+  "move": "When one cause gets all the credit, ask what share it carries.",
+  "trap": "Hearing that the Higgs gives particles mass, and assuming it gives most.",
+  "keywords": [
+    "higgs field",
+    "proton mass",
+    "gluons",
+    "strong force",
+    "mass-energy equivalence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Yang et al., Physical Review Letters, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.121.212001",
+  "written": "2026-09-26"
+}

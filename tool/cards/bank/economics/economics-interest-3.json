@@ -1,0 +1,33 @@
+{
+  "id": "economics-interest-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could a Danish bank offer home loans at a negative interest rate in 2019?",
+  "answer": "Because each Danish mortgage is funded by a matching bond sold to investors, a system running since 1797. In 2019 investors were paying to hold safe Danish bonds, so Jyske Bank could offer a ten-year fixed loan at minus 0.5%. The debt shrank each month by more than the homeowner paid.",
+  "move": "Every loan rate is someone's return; ask who is accepting it.",
+  "keywords": [
+    "negative interest rates",
+    "mortgages",
+    "covered bonds",
+    "denmark",
+    "jyske bank"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Guardian, 13 August 2019",
+  "source_kind": "news_archive",
+  "reference": "The Guardian, Danish bank launches world's first negative interest rate mortgage, 13 August 2019",
+  "written": "2026-09-26"
+}

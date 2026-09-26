@@ -1,0 +1,43 @@
+{
+  "id": "economics-printing-cash-5",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In fiscal 2024 the US Mint made about 3.2 billion one-cent coins at 3.69 cents each. What was the loss, in millions of dollars?",
+  "value": 86.08,
+  "unit": "million dollars",
+  "tolerance": 0.5,
+  "answer": "8.608 billion cents = $86.08 million.",
+  "move": "Multiply the tiny loss by the count before calling it small.",
+  "trap": "Counting the whole 3.69 cents as the loss, not the 2.69.",
+  "hint": "Work out the loss on a single coin first, then multiply by the number made.",
+  "steps": [
+    "Each coin costs 3.69 - 1 = 2.69 cents more than it is worth.",
+    "3.2 billion x 2.69 cents = 8.608 billion cents.",
+    "8.608 billion cents = $86.08 million."
+  ],
+  "keywords": [
+    "pennies",
+    "us mint",
+    "seigniorage",
+    "coin production",
+    "unit cost"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Mint, 2024 Annual Report",
+  "source_kind": "institution",
+  "reference": "United States Mint, Annual Report 2024",
+  "written": "2026-09-26"
+}

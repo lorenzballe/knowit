@@ -1,0 +1,33 @@
+{
+  "id": "science-gravity-4",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can two satellites weigh the water under northern India?",
+  "answer": "By its pull. The GRACE twins flew 220 km apart, and extra mass below tugged the leading one ahead, stretching the gap by microns that their microwave link could measure. Between 2002 and 2008 the pull over Rajasthan, Punjab and Haryana weakened: 109 km³ of groundwater gone, twice India's largest reservoir.",
+  "move": "What you cannot see, you can sometimes still weigh.",
+  "keywords": [
+    "grace satellites",
+    "groundwater",
+    "india",
+    "aquifers",
+    "gravity mapping"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Rodell et al., Nature, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature08238",
+  "written": "2026-09-26"
+}

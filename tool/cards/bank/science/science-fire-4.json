@@ -1,0 +1,43 @@
+{
+  "id": "science-fire-4",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In a fire test, a room with older furniture took about 29 minutes to reach flashover. How long did a modern room take?",
+  "options": [
+    "About 25 minutes",
+    "Under 4 minutes",
+    "About 12 minutes"
+  ],
+  "correct": 1,
+  "answer": "Under 4 minutes. Flashover is when a burning room gets hot enough for everything in it to ignite at once. Foam and synthetic fabrics release heat far faster than natural fibres and solid wood; in Underwriters Laboratories' side-by-side test, that cut the time to flashover from about half an hour to minutes.",
+  "move": "A rule of thumb is only as current as the world it measured.",
+  "trap": "About 25 minutes: adjusting down from the older room's time.",
+  "keywords": [
+    "flashover",
+    "house fires",
+    "upholstered furniture",
+    "polyurethane foam",
+    "fire testing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Kerber, Fire Technology, 2012",
+  "source_kind": "paper",
+  "reference": "Kerber, Analysis of Changing Residential Fire Dynamics and Its Implications on Firefighter Operational Timeframes, Fire Technology, 2012",
+  "written": "2026-09-26"
+}

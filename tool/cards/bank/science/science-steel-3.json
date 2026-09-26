@@ -1,0 +1,33 @@
+{
+  "id": "science-steel-3",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Bessemer's cheap steel useless with much of Europe's iron ore?",
+  "answer": "Phosphorus: much of that ore carries it, Bessemer's converter could not remove it, and it makes steel brittle in the cold. In 1879 Sidney Gilchrist Thomas, a police-court clerk and night-school chemist, and his cousin Percy Gilchrist lined the converter with dolomite, a limestone rock, pulling the phosphorus into a slag later sold as fertiliser.",
+  "move": "A cheap process is only cheap for the inputs it was built around.",
+  "keywords": [
+    "bessemer process",
+    "phosphorus",
+    "sidney gilchrist thomas",
+    "basic slag",
+    "iron ore"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carr & Taplin, British Steel Industry, 1962",
+  "source_kind": "book",
+  "reference": "Carr & Taplin, History of the British Steel Industry, Harvard University Press, 1962",
+  "written": "2026-09-26"
+}

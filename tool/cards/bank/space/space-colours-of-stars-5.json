@@ -1,0 +1,43 @@
+{
+  "id": "space-colours-of-stars-5",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "also": [
+    "space.stars_and_light.star_death"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Stars born in the Milky Way's first billion years that still shine are nearly all less massive than the Sun. Why?",
+  "options": [
+    "Bigger ones burned out long ago",
+    "The first stars were all small",
+    "Old stars shed most of their mass"
+  ],
+  "correct": 0,
+  "answer": "Bigger ones burned out long ago. Blue stars ten times the Sun's mass last a few tens of millions of years; only the small, slow-burning ones outlive 12 billion. The survivors carry the dead giants' ashes: the heavy elements in one ancient star, SMSS J0313-6708, came from a single supernova of a massive first-generation star.",
+  "move": "Judge a generation by who was born, not by who is left.",
+  "trap": "Reading today's survivors as a fair sample of what was born.",
+  "keywords": [
+    "ancient stars",
+    "stellar lifetimes",
+    "first stars",
+    "smss j0313-6708",
+    "blue giants"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keller et al., Nature, 2014",
+  "source_kind": "paper",
+  "reference": "Keller et al., A single low-energy, iron-poor supernova as the source of metals in the star SMSS J031300.36-670839.3, Nature 506, 463, 2014",
+  "written": "2026-09-26"
+}

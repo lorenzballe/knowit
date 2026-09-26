@@ -1,0 +1,33 @@
+{
+  "id": "science-cleaning-5",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were phosphates doing in washing powder before Europe capped them?",
+  "answer": "Softening the water. Phosphates grab the calcium and magnesium in hard water, which would otherwise tie up the detergent. The EU capped laundry doses at 0.5 g of phosphorus from 2013 and dishwasher doses at 0.3 g from 2017, because rinsed into rivers they fed the algae that choke lakes.",
+  "move": "Before banning an ingredient, ask what job it was doing.",
+  "keywords": [
+    "phosphates",
+    "washing powder",
+    "hard water",
+    "algal blooms",
+    "eu regulation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Regulation (EU) No 259/2012",
+  "source_kind": "institution",
+  "reference": "https://eur-lex.europa.eu/eli/reg/2012/259/oj/eng",
+  "written": "2026-09-26"
+}

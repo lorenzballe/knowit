@@ -1,0 +1,40 @@
+{
+  "id": "human_body-fingerprints-3",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where was a murder first solved with the help of a fingerprint?",
+  "options": [
+    "Argentina",
+    "London",
+    "New York"
+  ],
+  "correct": 0,
+  "answer": "Argentina, in 1892. In Necochea, Francisca Rojas blamed a neighbour for the killing of her two sons. Police found a bloody thumbprint on a door; it matched her right thumb, and she confessed. The method came from Juan Vucetich of the La Plata police. London's police opened their fingerprint bureau only in 1901.",
+  "move": "The famous version of a story is rarely the first version.",
+  "trap": "London and its famous detectives come to mind first.",
+  "keywords": [
+    "juan vucetich",
+    "francisca rojas",
+    "argentina",
+    "scotland yard",
+    "forensic history"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cole, Suspect Identities, Harvard, 2001",
+  "source_kind": "book",
+  "reference": "Cole, Suspect Identities: A History of Fingerprinting and Criminal Identification, Harvard University Press, 2001",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "economics-minimum-wage-2",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Sweden has no minimum wage set by law?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Sweden, like Denmark, leaves wage floors to collective agreements between unions and employers, and around nine workers in ten are covered by one. The floors differ by trade and are high by European standards. A Swedish shop assistant's lowest rate of pay is written in a union contract, not in a statute.",
+  "move": "A missing law is not a missing rule; look for who else sets it.",
+  "trap": "Assuming a high-wage welfare state must fix its minimum by law.",
+  "keywords": [
+    "sweden",
+    "minimum wage",
+    "collective bargaining",
+    "trade unions"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eurofound, Minimum wages annual review, 2024",
+  "source_kind": "institution",
+  "reference": "Eurofound, Minimum wages in 2024: Annual review, 2024",
+  "written": "2026-09-26"
+}

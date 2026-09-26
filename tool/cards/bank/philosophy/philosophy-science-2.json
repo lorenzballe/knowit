@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-science-2",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Calculus, oxygen, natural selection, the telephone: each was found independently by several people. What did the sociologist Robert K. Merton conclude?",
+  "options": [
+    "Such doubles are rare flukes",
+    "One party usually copied another",
+    "Such doubles are the normal pattern"
+  ],
+  "correct": 2,
+  "answer": "Such doubles are the normal pattern. Studying hundreds of cases in 1961, Merton argued that discoveries come when a field's tools and questions are ready, so many people reach them at once; apparent one-offs are often races someone else lost by publishing late. Leibniz and Newton were not a fluke but a crowd.",
+  "move": "Ask how many people were trying before calling a match uncanny.",
+  "trap": "Treating each famous double as an uncanny coincidence.",
+  "keywords": [
+    "multiple discovery",
+    "robert k. merton",
+    "calculus",
+    "natural selection",
+    "sociology of science"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Merton, Proceedings of the American Philosophical Society, 1961",
+  "source_kind": "paper",
+  "reference": "Merton, Singletons and Multiples in Scientific Discovery, Proceedings of the American Philosophical Society 105 (5), 1961",
+  "written": "2026-09-26"
+}

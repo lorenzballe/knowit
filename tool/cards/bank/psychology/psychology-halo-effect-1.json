@@ -1,0 +1,33 @@
+{
+  "id": "psychology-halo-effect-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where was the halo effect first measured, and what gave it away?",
+  "answer": "In army officers' ratings of their own soldiers, published in 1920. Edward Thorndike found that marks for physique, intellect, leadership and character moved together far more than such different traits could; the correlations, he wrote, were too high and too even. A soldier who stood well also got judged clever.",
+  "move": "When every score on a sheet agrees, suspect one impression wrote them all.",
+  "keywords": [
+    "edward thorndike",
+    "halo effect",
+    "army ratings",
+    "soldiers",
+    "performance appraisal"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorndike, Journal of Applied Psychology, 1920",
+  "source_kind": "paper",
+  "reference": "Thorndike, A constant error in psychological ratings, Journal of Applied Psychology, 1920",
+  "written": "2026-09-26"
+}

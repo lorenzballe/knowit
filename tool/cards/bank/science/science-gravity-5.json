@@ -1,0 +1,32 @@
+{
+  "id": "science-gravity-5",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Henry Cavendish's famous 1798 experiment with lead balls set out to measure?",
+  "answer": "The density of the Earth. He reported 5.48 times that of water; an arithmetic slip, spotted in 1821, hid the 5.45 his data gave, against 5.51 today. Physicists began quoting a value of G only in the 1870s, and textbooks later recast his experiment as its measurement.",
+  "move": "Ask what the original author thought they were measuring.",
+  "keywords": [
+    "henry cavendish",
+    "density of the earth",
+    "torsion balance",
+    "gravitational constant"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clotfelter, American Journal of Physics, 1987",
+  "source_kind": "paper",
+  "reference": "Clotfelter, The Cavendish experiment as Cavendish knew it, American Journal of Physics 55, 210, 1987",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-printing-cash-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of the money households and firms hold in Britain, roughly what share is notes and coins?",
+  "options": [
+    "About 3%",
+    "About a third",
+    "About two-thirds"
+  ],
+  "correct": 0,
+  "answer": "About 3%. The rest is bank deposits, and most deposits are created when banks lend: a new loan credits the borrower's account with money that did not exist before. The Bank of England set this out plainly in 2014. The notes in a wallet are the small change of a system kept in ledgers.",
+  "move": "The money you can touch is the smallest part of the money there is.",
+  "trap": "A third feels right because cash is the money people can see.",
+  "keywords": [
+    "money creation",
+    "bank deposits",
+    "banknotes",
+    "bank lending",
+    "broad money"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "McLeay, Radia & Thomas, Bank of England, 2014",
+  "source_kind": "paper",
+  "reference": "McLeay, Radia & Thomas, Money in the modern economy: an introduction, Bank of England Quarterly Bulletin, 2014 Q1",
+  "written": "2026-09-26"
+}

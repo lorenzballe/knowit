@@ -1,0 +1,36 @@
+{
+  "id": "history-clothes-3",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "also": [
+    "history.everyday_life.hygiene"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were men's shirt collars once sold separately from the shirt?",
+  "answer": "To save washing. The collar soiled first, so in the 1820s Hannah Montague of Troy, New York, cut her husband's off to wash and starch it alone. Troy built an industry on detachable collars, and in 1864 its collar laundresses formed one of America's first all-women unions, winning a 25% rise.",
+  "move": "Where cleaning is costly, things get designed to be cleaned in parts.",
+  "keywords": [
+    "detachable collars",
+    "troy new york",
+    "laundry",
+    "collar laundry union",
+    "kate mullany"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Turbin, Working Women of Collar City, 1992",
+  "source_kind": "book",
+  "reference": "Turbin, Working Women of Collar City: Gender, Class, and Community in Troy, New York, 1864–86, University of Illinois Press, 1992",
+  "written": "2026-09-26"
+}

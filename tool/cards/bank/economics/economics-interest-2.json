@@ -1,0 +1,33 @@
+{
+  "id": "economics-interest-2",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are so many American credit cards issued by banks based in South Dakota or Delaware?",
+  "answer": "Because of a 1978 Supreme Court ruling. In Marquette v. First of Omaha, the Court let a nationally chartered bank charge customers anywhere the interest its home state allowed. South Dakota scrapped its rate cap in 1980, Citibank moved its card business to Sioux Falls, and Delaware followed. The loosest state's rules became the country's.",
+  "move": "When a rule can be exported, the loosest version wins.",
+  "keywords": [
+    "credit cards",
+    "usury laws",
+    "south dakota",
+    "citibank",
+    "supreme court"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "US Supreme Court, Marquette v. First of Omaha",
+  "source_kind": "primary_document",
+  "reference": "Marquette National Bank of Minneapolis v. First of Omaha Service Corp., 439 U.S. 299 (1978)",
+  "written": "2026-09-26"
+}

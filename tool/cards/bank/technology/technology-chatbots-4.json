@@ -1,0 +1,32 @@
+{
+  "id": "technology-chatbots-4",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What actually changes inside a chatbot as you talk to it?",
+  "answer": "Nothing in the model: its billions of numbers are fixed once training ends. Each reply is computed afresh from the whole conversation, resent by the app every turn; memory features store notes and paste them in. Past a length limit, early text is cut or summarised, which is why long chats lose their beginnings.",
+  "move": "Seeming to remember can just mean rereading the whole file each time.",
+  "keywords": [
+    "chatbots",
+    "context window",
+    "model weights",
+    "memory features"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brown et al., NeurIPS, 2020",
+  "source_kind": "paper",
+  "reference": "Brown et al., Language Models are Few-Shot Learners, Advances in Neural Information Processing Systems, 2020",
+  "written": "2026-09-26"
+}

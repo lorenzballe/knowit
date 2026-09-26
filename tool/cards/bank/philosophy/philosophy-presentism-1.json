@@ -1,0 +1,43 @@
+{
+  "id": "philosophy-presentism-1",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Walking at 5 km/h towards Andromeda, 2.5 million light years away, shifts your 'now' there by how many days, compared with someone standing still?",
+  "value": 4.2,
+  "unit": "days",
+  "tolerance": 0.3,
+  "answer": "0.0116 × 365 ≈ 4.2 days.",
+  "move": "Before asking what is happening now far away, ask: now for whom?",
+  "trap": "Assuming a walking pace cannot move a distant now by anything measurable.",
+  "hint": "The disagreement equals your speed as a fraction of light's, times the distance measured in light-time.",
+  "steps": [
+    "5 km/h is about 1.39 m/s, 1 part in 216 million of light's 300,000,000 m/s.",
+    "The shift is that fraction of Andromeda's distance in light-time: 2,500,000 years ÷ 216,000,000.",
+    "2,500,000 ÷ 216,000,000 ≈ 0.0116 years.",
+    "0.0116 × 365 ≈ 4.2 days."
+  ],
+  "keywords": [
+    "andromeda paradox",
+    "relativity of simultaneity",
+    "special relativity",
+    "roger penrose"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Penrose, The Emperor's New Mind, 1989",
+  "source_kind": "book",
+  "reference": "Penrose, The Emperor's New Mind, Oxford University Press, 1989, chapter 5",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-insomnia-2",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can treating insomnia in older adults prevent depression?",
+  "answer": "In one trial it roughly halved new cases. Of 291 adults over 60 with insomnia but no depression, those given two months of cognitive behavioural therapy for insomnia developed major depression over three years at 12.2%, against 25.9% with sleep education alone. Those whose insomnia stayed in remission fared best.",
+  "move": "A symptom can also be a cause; treat it and watch what follows.",
+  "keywords": [
+    "cbt-i",
+    "depression prevention",
+    "older adults",
+    "randomised trial",
+    "insomnia"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Irwin et al., JAMA Psychiatry, 2022",
+  "source_kind": "paper",
+  "reference": "Irwin, Carrillo, Sadeghi et al., Prevention of incident and recurrent major depression in older adults with insomnia: a randomized clinical trial, JAMA Psychiatry, 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-minimum-wage-4",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Under US federal law, what is the lowest hourly cash wage an employer may pay a waiter?",
+  "answer": "$2.13, as long as tips make up the rest. Congress created this tipped minimum in 1966, and it has not risen since 1991, longer than the $7.25 frozen since 2009. The employer tops up only when tips fall short. In most states, part of a diner's tip pays the legal minimum.",
+  "move": "Ask who actually pays a wage before crediting who signs the cheque.",
+  "keywords": [
+    "tipped minimum wage",
+    "tipping",
+    "fair labor standards act",
+    "restaurants",
+    "tip credit"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fair Labor Standards Act, section 3(m)",
+  "source_kind": "primary_document",
+  "reference": "Fair Labor Standards Act of 1938, section 3(m)(2)(A), as amended in 1966 and 1996",
+  "written": "2026-09-26"
+}

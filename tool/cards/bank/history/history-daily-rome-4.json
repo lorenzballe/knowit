@@ -1,0 +1,39 @@
+{
+  "id": "history-daily-rome-4",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: most people in imperial Rome's epitaphs whose legal status is stated were former slaves?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Lily Ross Taylor's 1961 count of epitaphs from Rome, about three-quarters of those whose status is given were freed slaves. That says more about who paid for stones than about Rome: freed people had reasons to record their citizenship, marriages and children in stone. The freeborn poor mostly left no epitaph at all.",
+  "move": "Ask who paid to be remembered before treating the remembered as typical.",
+  "trap": "False, since former slaves must have been a small minority.",
+  "keywords": [
+    "epitaphs",
+    "freedmen",
+    "epigraphy",
+    "lily ross taylor",
+    "slavery"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, American Journal of Philology, 1961",
+  "source_kind": "paper",
+  "reference": "Taylor, Freedmen and Freeborn in the Epitaphs of Imperial Rome, American Journal of Philology 82, 1961, 113-132",
+  "written": "2026-09-26"
+}

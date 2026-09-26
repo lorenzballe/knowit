@@ -1,0 +1,40 @@
+{
+  "id": "nature-rainforests-1",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The Amazon has about 16,000 tree species. How many of them make up half of all its trees?",
+  "options": [
+    "About 230",
+    "About 2,300",
+    "About 8,000"
+  ],
+  "correct": 0,
+  "answer": "About 230. From plots across the basin, ter Steege's team found that 227 species, dubbed hyperdominant, account for half of an estimated 390 billion trees, while thousands of the rarest species together make up a sliver of a per cent. A forest of 16,000 species is mostly a few common trees, sprinkled with rarities.",
+  "move": "In most big collections, a handful of members make up the bulk.",
+  "trap": "Halving the 16,000 to match half the trees.",
+  "keywords": [
+    "amazon",
+    "hyperdominance",
+    "tree species",
+    "biodiversity",
+    "tree census"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "ter Steege et al., Science, 2013",
+  "source_kind": "paper",
+  "reference": "ter Steege et al., Hyperdominance in the Amazonian tree flora, Science, 2013",
+  "written": "2026-09-26"
+}

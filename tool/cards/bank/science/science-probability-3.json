@@ -1,0 +1,41 @@
+{
+  "id": "science-probability-3",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Two players stake 32 coins each on first to three wins. Play stops at 2–1. What is the leader's fair share, in coins?",
+  "value": 48,
+  "unit": "coins",
+  "answer": "3/4 of 64 = 48 coins.",
+  "move": "Divide by what could still happen, not by what already has.",
+  "trap": "Splitting 2 to 1 by rounds won, as a 1494 textbook did.",
+  "hint": "Ask how the unfinished game could end, not how it stood.",
+  "steps": [
+    "The trailing player takes the pot only by winning the next two rounds.",
+    "Chance of that: 1/2 × 1/2 = 1/4, so the leader's chance is 3/4.",
+    "3/4 of 64 = 48 coins."
+  ],
+  "keywords": [
+    "problem of points",
+    "fair division",
+    "expected value",
+    "gambling"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Devlin, The Unfinished Game, 2008",
+  "source_kind": "book",
+  "reference": "Devlin, The Unfinished Game: Pascal, Fermat, and the Seventeenth-Century Letter That Made the World Modern, Basic Books, 2008",
+  "written": "2026-09-26"
+}

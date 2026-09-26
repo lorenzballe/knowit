@@ -1,0 +1,38 @@
+{
+  "id": "technology-refresh-rates-3",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: people can see flicker artefacts on a display refreshing 500 times a second?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a 2015 study, viewers spotted artefacts at 500 Hz when their eyes swept across a high-contrast edge: each flash landed on a different spot of the retina, leaving a trail of copies. With a steady gaze, flicker fuses near 50 to 90 Hz. A sweeping eye turns flashes into a dotted line.",
+  "move": "A threshold found in one condition is not a threshold in all of them.",
+  "trap": "False, anchored on the idea that eyes top out near 60 Hz.",
+  "keywords": [
+    "flicker fusion",
+    "saccades",
+    "refresh rate",
+    "visual perception"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Hsieh & Lee, Scientific Reports, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/srep07861",
+  "written": "2026-09-26"
+}

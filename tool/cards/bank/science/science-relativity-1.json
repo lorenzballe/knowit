@@ -1,0 +1,43 @@
+{
+  "id": "science-relativity-1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Heating a mug of water from 20 °C to boiling adds energy, and energy has mass. How many nanograms heavier does it get?",
+  "value": 0.9,
+  "unit": "nanograms",
+  "withinFactor": 3,
+  "answer": "9 × 10⁻¹³ kg ≈ 0.9 nanograms.",
+  "move": "Every change in energy is a change in weight, however small.",
+  "trap": "Assuming E = mc² only matters inside reactors and bombs.",
+  "hint": "Work out the heat in joules first, then divide by the speed of light squared.",
+  "steps": [
+    "A mug holds about 250 g of water, heated by 80 °C.",
+    "Water takes 4.2 J per gram per degree: 250 x 4.2 x 80 = 84,000 J.",
+    "Mass = energy / c² = 84,000 / (9 × 10¹⁶) ≈ 9 × 10⁻¹³ kg.",
+    "9 × 10⁻¹³ kg ≈ 0.9 nanograms."
+  ],
+  "keywords": [
+    "mass-energy equivalence",
+    "einstein",
+    "tea",
+    "specific heat"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Einstein, Annalen der Physik, 1905",
+  "source_kind": "paper",
+  "reference": "Einstein, Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?, Annalen der Physik 18, 639, 1905",
+  "written": "2026-09-26"
+}

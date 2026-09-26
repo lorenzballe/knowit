@@ -1,0 +1,37 @@
+{
+  "id": "space-landing-sites-5",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the six Apollo landing sites be protected by international law as heritage that no one may disturb?",
+  "sides": [
+    "Yes, protect them",
+    "No, keep the Moon open"
+  ],
+  "answer": "They hold the first footprints on another world, and hardware that shows how materials age in space. One careless landing nearby could sandblast it all. NASA already asks its partners to stay 75 m from the Apollo 11 and 17 descent stages; a treaty would bind everyone, not just NASA's contractors.",
+  "move": "Whichever side you took, it turns on whether protecting a place means owning it.",
+  "counterpoint": "A protected zone on the Moon is territory in all but name, and the 1967 Outer Space Treaty forbids any nation to claim territory there. If America may fence its sites, others may fence theirs, and heritage becomes a way to stake the best ground. Map and photograph the sites in detail, and keep access open.",
+  "keywords": [
+    "apollo landing sites",
+    "space heritage",
+    "outer space treaty",
+    "keep-out zones"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA, lunar heritage recommendations, 2011",
+  "source_kind": "institution",
+  "reference": "NASA, NASA's Recommendations to Space-Faring Entities: How to Protect and Preserve the Historic and Scientific Value of U.S. Government Lunar Artifacts, 2011",
+  "written": "2026-09-26"
+}

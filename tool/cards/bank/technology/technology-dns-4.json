@@ -1,0 +1,39 @@
+{
+  "id": "technology-dns-4",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 2020, what made up about half of all queries reaching the DNS root servers?",
+  "options": [
+    "Ordinary website lookups",
+    "A browser's random test names",
+    "Botnet and malware traffic"
+  ],
+  "correct": 1,
+  "answer": "A browser's random test names. Chromium-based browsers looked up strings like 'wjqfpmyh' at start-up, to detect networks that fake answers for missing names. Real lookups rarely reach the root, because resolvers remember the answers for .com and other endings for days; what gets through is mostly names that do not exist.",
+  "move": "A checkpoint sees only what got past the ones before it.",
+  "trap": "Ordinary lookups, because every lookup is pictured starting at the root.",
+  "keywords": [
+    "root servers",
+    "chromium",
+    "dns queries",
+    "caching"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thomas, Verisign blog, 2020",
+  "source_kind": "company",
+  "reference": "Thomas, Chromium's Impact on Root DNS Traffic, Verisign blog, August 2020",
+  "written": "2026-09-26"
+}

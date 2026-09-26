@@ -1,0 +1,33 @@
+{
+  "id": "space-launch-windows-5",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do Mars probes leave Earth months before Mars makes its closest approach?",
+  "answer": "Because they aim where Mars will be. The cheapest route is half an orbit around the Sun, seven to nine months, so probes leave with Mars some 44 degrees ahead and meet it after the close pass. The trip runs to about half a billion km, to a planet that can pass within 56 million.",
+  "move": "Aim at where the target will be, not where it is.",
+  "keywords": [
+    "mars",
+    "hohmann transfer",
+    "launch window",
+    "opposition",
+    "interplanetary trajectory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bate, Mueller & White, Fundamentals of Astrodynamics, 1971",
+  "source_kind": "book",
+  "reference": "Bate, Mueller & White, Fundamentals of Astrodynamics, Dover, 1971",
+  "written": "2026-09-26"
+}

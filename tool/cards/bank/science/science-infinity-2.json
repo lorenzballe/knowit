@@ -1,0 +1,33 @@
+{
+  "id": "science-infinity-2",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How common are numbers that, like π, solve no polynomial equation with whole-number coefficients?",
+  "answer": "Almost every number is one. In 1874 Cantor showed that the numbers which do solve such equations can be listed one by one, while the real numbers cannot, so a number picked at random solves none. Yet proofs are hard: e was settled in 1873, π in 1882, and π + e remains open.",
+  "move": "What is almost everywhere can still be almost impossible to point at.",
+  "keywords": [
+    "transcendental numbers",
+    "georg cantor",
+    "pi",
+    "algebraic numbers",
+    "countable sets"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dauben, Georg Cantor, 1979",
+  "source_kind": "book",
+  "reference": "Dauben, Georg Cantor: His Mathematics and Philosophy of the Infinite, Harvard University Press, 1979",
+  "written": "2026-09-26"
+}

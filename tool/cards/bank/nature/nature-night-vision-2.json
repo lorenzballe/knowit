@@ -1,0 +1,33 @@
+{
+  "id": "nature-night-vision-2",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the DNA in a mouse's rod cells packed inside out?",
+  "answer": "To make each nucleus a lens. In nocturnal mammals, the densest DNA sits at the centre of each rod's nucleus instead of its rim, so it acts like a tiny lens. Stacked in columns, these nuclei channel light down through the retina with less scattering. Day-active mammals, humans included, keep the usual layout.",
+  "move": "Look for a second job in structures that seem to be mere housekeeping.",
+  "keywords": [
+    "rod cells",
+    "chromatin",
+    "nocturnal mammals",
+    "retina",
+    "cell nucleus"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Solovei et al., Cell, 2009",
+  "source_kind": "paper",
+  "reference": "Solovei et al., Nuclear architecture of rod photoreceptor cells adapts to vision in mammalian evolution, Cell, 2009",
+  "written": "2026-09-26"
+}

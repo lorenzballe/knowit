@@ -1,0 +1,33 @@
+{
+  "id": "technology-data-centres-1",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many machine failures did Google expect in a new server cluster's first year?",
+  "answer": "About a thousand, plus thousands of failed hard drives. Jeff Dean's 2009 list for a typical new cluster also counted about 20 whole racks failing, a power unit dropping hundreds of machines at once, and a chance of overheating. At that scale something breaks every few hours, and the software simply routes around the gap.",
+  "move": "At large enough scale, rare failures become a schedule to plan for.",
+  "keywords": [
+    "google",
+    "server failures",
+    "clusters",
+    "hard drives",
+    "jeff dean"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dean, LADIS keynote, 2009",
+  "source_kind": "company",
+  "reference": "Dean, Designs, Lessons and Advice from Building Large Distributed Systems, LADIS keynote, 2009",
+  "written": "2026-09-26"
+}

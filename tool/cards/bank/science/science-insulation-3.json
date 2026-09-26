@@ -1,0 +1,43 @@
+{
+  "id": "science-insulation-3",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "also": [
+    "science.materials.glass"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What share of a single-glazed window's resistance to heat loss comes from its 4 mm of glass?",
+  "options": [
+    "About 2%",
+    "About half",
+    "About 90%"
+  ],
+  "correct": 0,
+  "answer": "About 2%. Glass conducts heat well. What slows the heat is the thin layer of still air clinging to each face: by the standard glazing calculation, the two films resist heat flow about 40 times more than 4 mm of glass does. Double the glass and the window loses barely less heat.",
+  "move": "Before crediting the visible barrier, look for the invisible one.",
+  "trap": "About 90%: the glass is the only solid thing in the way.",
+  "keywords": [
+    "single glazing",
+    "surface resistance",
+    "u-value",
+    "window glass",
+    "air films"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "EN 673, glazing thermal transmittance calculation",
+  "source_kind": "standard",
+  "reference": "EN 673:2011, Glass in building — Determination of thermal transmittance (U value) — Calculation method",
+  "written": "2026-09-26"
+}

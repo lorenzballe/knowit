@@ -1,0 +1,33 @@
+{
+  "id": "science-cooking-reactions-4",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do green beans turn khaki when dressed in lemon juice or vinegar?",
+  "answer": "Acid evicts a metal. Chlorophyll holds a magnesium atom at its centre; hydrogen ions from the acid knock it out, leaving olive-brown pheophytin. Heat speeds the swap, which is why cooks dress greens at the last moment. A pinch of bicarbonate keeps them bright, but alkali also dissolves their cell walls into mush.",
+  "move": "Every fix has a side effect; ask what the improvement costs.",
+  "keywords": [
+    "chlorophyll",
+    "magnesium",
+    "green vegetables",
+    "vinegar",
+    "pheophytin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Belitz, Grosch and Schieberle, Food Chemistry, 2009",
+  "source_kind": "book",
+  "reference": "Belitz, Grosch and Schieberle, Food Chemistry, 4th edition, Springer, 2009",
+  "written": "2026-09-26"
+}

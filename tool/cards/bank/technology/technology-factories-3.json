@@ -1,0 +1,40 @@
+{
+  "id": "technology-factories-3",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "GM's Fremont plant was among its worst when it closed in 1982. Reopened under Toyota management, largely with the same workers, how did it fare?",
+  "options": [
+    "Still among GM's worst",
+    "Among GM's best within two years",
+    "Better only after new hires"
+  ],
+  "correct": 1,
+  "answer": "Among GM's best within two years. NUMMI, the joint venture, rehired mostly the union workforce from the old plant, where absenteeism had run near 20%. Under Toyota's system, with small teams and a cord any worker could pull to stop the line, its quality came close to Toyota's plants in Japan.",
+  "move": "Before blaming the people, ask what the setup made them do.",
+  "trap": "Still among the worst, blaming the workers for what the system produced.",
+  "keywords": [
+    "nummi",
+    "general motors",
+    "toyota production system",
+    "fremont",
+    "andon cord"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adler, Harvard Business Review, 1993",
+  "source_kind": "paper",
+  "reference": "Adler, Time-and-Motion Regained, Harvard Business Review, January-February 1993",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "nature-currents-3",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By weight, what makes up the largest share of the plastic in the Great Pacific Garbage Patch?",
+  "options": [
+    "Discarded fishing nets",
+    "Bags and food packaging",
+    "Tiny fragments and microbeads"
+  ],
+  "correct": 0,
+  "answer": "Discarded fishing nets. From ships and aircraft, Lebreton's team estimated about 79,000 tonnes of plastic circling in the North Pacific gyre, with nets making up at least 46% of the mass. Tiny fragments were 94% of the 1.8 trillion pieces but only 8% of the weight. Less an island than a soup, with nets.",
+  "move": "Count by weight and by number before deciding what a pile is made of.",
+  "trap": "Bags and food packaging, the plastic in every news photograph.",
+  "keywords": [
+    "great pacific garbage patch",
+    "plastic pollution",
+    "fishing nets",
+    "north pacific gyre",
+    "microplastics"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Lebreton et al., Scientific Reports, 2018",
+  "source_kind": "paper",
+  "reference": "Lebreton et al., Evidence that the Great Pacific Garbage Patch is rapidly accumulating plastic, Scientific Reports, 2018",
+  "written": "2026-09-26"
+}

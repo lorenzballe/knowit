@@ -1,0 +1,33 @@
+{
+  "id": "nature-rainforests-4",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does hunting large monkeys do to a rainforest's carbon store?",
+  "answer": "It shrinks it, slowly. Spider monkeys, tapirs and big fruit-eating birds are the main carriers of the largest seeds, which mostly belong to dense-wooded trees. Hunt them out and those trees stop replacing themselves; lighter-wooded ones fill the gaps. In heavily hunted forests, Peres's team estimated a loss of a few per cent of biomass.",
+  "move": "When a carrier disappears, look for what stops arriving decades later.",
+  "keywords": [
+    "hunting",
+    "seed dispersal",
+    "carbon storage",
+    "amazon",
+    "spider monkeys"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peres et al., PNAS, 2016",
+  "source_kind": "paper",
+  "reference": "Peres et al., Dispersal limitation induces long-term biomass collapse in overhunted Amazonian forests, PNAS, 2016",
+  "written": "2026-09-26"
+}

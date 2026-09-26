@@ -1,0 +1,40 @@
+{
+  "id": "technology-data-centres-3",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Microsoft's sealed data centre on the seabed off Orkney had one-eighth the server failures of a land copy. Why, most likely?",
+  "options": [
+    "Nitrogen air and nobody touching it",
+    "The cold seawater around it",
+    "Steadier power from the grid"
+  ],
+  "correct": 0,
+  "answer": "Nitrogen air and nobody touching it. The capsule was filled with dry nitrogen, which corrodes parts less than oxygen and moisture, and for two years no technician opened a rack or bumped a cable. The sea kept it cool, but the land site was cooled too; what differed was the air and the hands.",
+  "move": "When setups differ in many ways, the obvious difference may not be the cause.",
+  "trap": "The cold seawater, the most visible difference between the two sites.",
+  "keywords": [
+    "project natick",
+    "microsoft",
+    "underwater data centre",
+    "nitrogen",
+    "server failures"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Microsoft News, Project Natick, 2020",
+  "source_kind": "company",
+  "reference": "Microsoft, Microsoft finds underwater datacenters are reliable, practical and use energy sustainably, Microsoft News, September 2020",
+  "written": "2026-09-26"
+}

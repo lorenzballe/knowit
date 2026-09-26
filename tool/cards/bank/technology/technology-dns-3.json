@@ -1,0 +1,39 @@
+{
+  "id": "technology-dns-3",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Before 2008, a forged DNS reply had to guess a 1-in-65,536 number. How long could planting a false address in a server take?",
+  "options": [
+    "Years of guessing",
+    "Several weeks",
+    "About ten seconds"
+  ],
+  "correct": 2,
+  "answer": "About ten seconds. Dan Kaminsky showed that an attacker could ask a server about endless made-up names, like 1.example.com and 2.example.com, each opening a fresh race to guess the number. At thousands of tries a second, a 1-in-65,536 chance comes up fast. The 2008 fix added a second random number the reply must match.",
+  "move": "Long odds shrink fast when someone can take as many tries as they like.",
+  "trap": "Years, because each forged reply has only a 1-in-65,536 chance.",
+  "keywords": [
+    "dns cache poisoning",
+    "dan kaminsky",
+    "transaction id",
+    "source port randomisation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CERT/CC Vulnerability Note VU#800113, 2008",
+  "source_kind": "institution",
+  "reference": "CERT Coordination Center, Vulnerability Note VU#800113: Multiple DNS implementations vulnerable to cache poisoning, 2008",
+  "written": "2026-09-26"
+}

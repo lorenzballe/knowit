@@ -1,0 +1,42 @@
+{
+  "id": "science-primes-4",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Roughly one in how many 100-digit numbers is prime?",
+  "value": 230,
+  "unit": "numbers",
+  "withinFactor": 3,
+  "answer": "100 × 2.3 = about 230.",
+  "move": "Thinning out slowly is not the same as running out.",
+  "trap": "Assuming primes that large must be vanishingly rare, one in billions.",
+  "hint": "The prime number theorem links how far apart primes are to the natural logarithm.",
+  "steps": [
+    "Near a large number N, roughly one number in every ln N is prime, ln being the natural logarithm.",
+    "For 100-digit numbers, N is about 10^100, and ln(10^100) = 100 × ln 10.",
+    "100 × 2.3 = about 230."
+  ],
+  "keywords": [
+    "prime number theorem",
+    "prime density",
+    "logarithm",
+    "cryptography"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hardy & Wright, Theory of Numbers, 2008",
+  "source_kind": "book",
+  "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, 6th edition, Oxford University Press, 2008",
+  "written": "2026-09-26"
+}

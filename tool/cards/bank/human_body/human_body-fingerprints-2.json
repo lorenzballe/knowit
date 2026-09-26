@@ -1,0 +1,33 @@
+{
+  "id": "human_body-fingerprints-2",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can burning off the skin of the fingertips erase a person's fingerprints?",
+  "answer": "Only if the damage goes deep. The ridge pattern is anchored where the outer skin meets the dermis beneath, so shallow burns or scrapes regrow the same pattern. The gangster John Dillinger had acid put on his fingertips in 1934; when he was shot that summer, his scarred prints still matched FBI records.",
+  "move": "Damage to the surface rarely erases what is written underneath.",
+  "keywords": [
+    "fingerprints",
+    "john dillinger",
+    "dermis",
+    "scars",
+    "identification"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burrough, Public Enemies, Penguin Press, 2004",
+  "source_kind": "book",
+  "reference": "Burrough, Public Enemies: America's Greatest Crime Wave and the Birth of the FBI, 1933-34, Penguin Press, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-presentism-3",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How wide is the present moment, as people actually experience it?",
+  "answer": "A few seconds, not an instant. William James wrote in 1890 that the present we know is no knife-edge but a saddle-back, with a breadth of its own on which we sit perched, looking both ways into time. A tune is heard as a tune because its last notes linger as the next arrive.",
+  "move": "Ask how wide a now your question actually needs.",
+  "keywords": [
+    "william james",
+    "specious present",
+    "experienced present",
+    "time perception"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "James, The Principles of Psychology, 1890",
+  "source_kind": "book",
+  "reference": "James, The Principles of Psychology, vol. 1, chapter 15, Henry Holt, 1890; Dover reprint, 1950",
+  "written": "2026-09-26"
+}

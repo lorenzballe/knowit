@@ -1,0 +1,33 @@
+{
+  "id": "technology-dns-2",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before DNS, how did a computer on the early internet find another one by name?",
+  "answer": "From a single text file. Staff at SRI in California kept HOSTS.TXT, listing every host and its address, and sites downloaded fresh copies. By the early 1980s the file changed faster than copies could spread, so in 1983 Paul Mockapetris proposed the Domain Name System: a directory split among its owners.",
+  "move": "A central list works until it changes faster than it can be copied.",
+  "keywords": [
+    "hosts.txt",
+    "sri",
+    "paul mockapetris",
+    "arpanet",
+    "domain name system"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mockapetris, RFC 882, 1983",
+  "source_kind": "standard",
+  "reference": "Mockapetris, RFC 882: Domain Names, Concepts and Facilities, IETF, 1983",
+  "written": "2026-09-26"
+}

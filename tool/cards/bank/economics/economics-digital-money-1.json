@@ -1,0 +1,33 @@
+{
+  "id": "economics-digital-money-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What problem was Kenya's M-Pesa originally built to solve?",
+  "answer": "Repaying microloans. A Vodafone project begun in 2003 let borrowers of Faulu, a Kenyan microfinance lender, repay loans through Safaricom's airtime sellers. In the 2005 pilot, users found other uses, from settling each other's loans to sending money to relatives. Safaricom relaunched it in 2007 for person-to-person transfers: the side use became the product.",
+  "move": "Watch what people do with a tool before deciding what it is for.",
+  "keywords": [
+    "m-pesa",
+    "mobile money",
+    "microfinance",
+    "safaricom",
+    "kenya"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hughes and Lonie, Innovations, 2007",
+  "source_kind": "paper",
+  "reference": "Hughes & Lonie, M-PESA: Mobile Money for the Unbanked: Turning Cellphones into 24-Hour Tellers in Kenya, Innovations: Technology, Governance, Globalization, 2007",
+  "written": "2026-09-26"
+}

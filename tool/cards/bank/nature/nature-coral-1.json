@@ -1,0 +1,40 @@
+{
+  "id": "nature-coral-1",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On average, how much of the energy of incoming waves does a coral reef remove before they reach shore?",
+  "options": [
+    "About 30%",
+    "About 97%",
+    "About 60%"
+  ],
+  "correct": 1,
+  "answer": "About 97%, on average. Pooling measurements from reefs worldwide, Ferrario and colleagues found the reef crest alone, the shallow ridge where waves break, removes 86%; the flats behind it take most of the rest. A healthy crest is a breakwater that repairs itself; a dead one erodes and lets the sea through.",
+  "move": "Before removing a natural barrier, price the wall you would need instead.",
+  "trap": "About 30%, since a low, half-drowned reef looks too flimsy to matter.",
+  "keywords": [
+    "coral reefs",
+    "wave energy",
+    "coastal protection",
+    "reef crest",
+    "breakwaters"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ferrario et al., Nature Communications, 2014",
+  "source_kind": "paper",
+  "reference": "Ferrario et al., The effectiveness of coral reefs for coastal hazard risk reduction and adaptation, Nature Communications, 2014",
+  "written": "2026-09-26"
+}

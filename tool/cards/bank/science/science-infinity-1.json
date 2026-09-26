@@ -1,0 +1,33 @@
+{
+  "id": "science-infinity-1",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is there a size of infinity between the whole numbers and the real numbers?",
+  "answer": "The standard axioms, the starting rules of mathematics, cannot say. Cantor guessed there is none, and the question headed Hilbert's list of great problems in 1900. Kurt Gödel showed in 1940 that the axioms cannot refute the guess; Paul Cohen showed in 1963 that they cannot prove it. Mathematicians may assume either answer without contradiction.",
+  "move": "Before hunting for an answer, check the rules can deliver one.",
+  "keywords": [
+    "continuum hypothesis",
+    "georg cantor",
+    "kurt gödel",
+    "paul cohen",
+    "axioms"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cohen, PNAS, 1963",
+  "source_kind": "paper",
+  "reference": "Cohen, The Independence of the Continuum Hypothesis, Proceedings of the National Academy of Sciences of the USA, 1963",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-insulation-2",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the vacuum flask invented to hold?",
+  "answer": "Liquefied gases. James Dewar built it at the Royal Institution in 1892 to stop liquid air and oxygen boiling away: two glass walls with a vacuum between them block conduction and convection, and silvering the walls reflects radiant heat. A Berlin firm founded in 1904, Thermos, turned the laboratory vessel into a picnic flask.",
+  "move": "Ask what problem an everyday object was first built to solve.",
+  "keywords": [
+    "vacuum flask",
+    "james dewar",
+    "royal institution",
+    "liquid air",
+    "thermos"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mendelssohn, The Quest for Absolute Zero, 1966",
+  "source_kind": "book",
+  "reference": "Mendelssohn, The Quest for Absolute Zero: The Meaning of Low Temperature Physics, Weidenfeld & Nicolson, 1966",
+  "written": "2026-09-26"
+}

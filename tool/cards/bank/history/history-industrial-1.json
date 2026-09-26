@@ -1,0 +1,33 @@
+{
+  "id": "history-industrial-1",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can historians measure how long English people worked before anyone kept time sheets?",
+  "answer": "From criminal trials. Witnesses at the Old Bailey often said what they had been doing, and when, as a crime happened. Hans-Joachim Voth pooled such remarks to rebuild the working year: by 1800 Londoners worked about 3,300 hours, as holy days and the habit of skipping Monday faded away.",
+  "move": "When no one recorded something, look for records made for another purpose.",
+  "keywords": [
+    "working hours",
+    "old bailey",
+    "hans-joachim voth",
+    "saint monday",
+    "court records"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Voth, Time and Work in England, 2000",
+  "source_kind": "book",
+  "reference": "Voth, Time and Work in England 1750–1830, Clarendon Press, 2000",
+  "written": "2026-09-26"
+}

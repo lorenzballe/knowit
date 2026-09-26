@@ -1,0 +1,39 @@
+{
+  "id": "economics-printing-cash-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: more $100 notes than $1 notes are in circulation in the United States?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. By Federal Reserve counts, $100 notes overtook $1 notes around 2017, about 12.5 billion to 12.1 billion, and the lead has widened since. Small notes change hands; hundreds sit still, as savings at home and as dollars held abroad. The $1 is the note people see; the $100 is the note people keep.",
+  "move": "What passes through your hands is a sample of what moves, not what exists.",
+  "trap": "Judging the stock of notes by the ones that pass through hands.",
+  "keywords": [
+    "hundred-dollar notes",
+    "banknotes",
+    "currency in circulation",
+    "federal reserve",
+    "cash hoarding"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Federal Reserve Board, currency in circulation data",
+  "source_kind": "statistics",
+  "reference": "Board of Governors of the Federal Reserve System, Currency in Circulation: Volume, 2024",
+  "written": "2026-09-26"
+}

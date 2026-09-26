@@ -1,0 +1,33 @@
+{
+  "id": "technology-telephones-3",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did an old landline phone keep working when a power cut blacked out the house?",
+  "answer": "Its power came down the line. Exchanges fed every line from their own battery rooms at about 48 volts, kept negative to slow corrosion of the copper. Digital lines run on household electricity, so as Britain retires its copper network, providers must offer vulnerable customers at least an hour of backup for emergency calls.",
+  "move": "When a service moves to new wiring, check what the old wiring quietly supplied.",
+  "keywords": [
+    "landlines",
+    "telephone exchange",
+    "power cuts",
+    "digital switchover",
+    "ofcom"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ofcom, emergency calls during power cuts, 2018",
+  "source_kind": "institution",
+  "reference": "Ofcom, Protecting access to emergency organisations when there is a power cut at the customer's premises, 2018",
+  "written": "2026-09-26"
+}

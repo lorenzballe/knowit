@@ -1,0 +1,43 @@
+{
+  "id": "human_body-circulation-5",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "In its roughly 120-day life, about how many laps of the body does a red blood cell make, in thousands?",
+  "value": 170,
+  "unit": "thousand laps",
+  "withinFactor": 3,
+  "answer": "About 170 thousand laps.",
+  "move": "Divide the stock by the flow and you get the time for one turn.",
+  "trap": "Picturing a slow journey, when a lap takes about a minute.",
+  "hint": "Compare the body's blood volume with what the heart pumps each minute.",
+  "steps": [
+    "About 5 litres of blood; the resting heart pumps about 5 litres a minute.",
+    "So a typical cell completes about one lap a minute.",
+    "120 days x 1,440 minutes a day = 172,800 minutes.",
+    "About 170 thousand laps."
+  ],
+  "keywords": [
+    "red blood cells",
+    "cardiac output",
+    "blood volume",
+    "circulation time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Franco, Transfusion Medicine and Hemotherapy, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1159/000342232",
+  "written": "2026-09-26"
+}

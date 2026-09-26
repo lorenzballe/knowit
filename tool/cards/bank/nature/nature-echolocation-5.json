@@ -1,0 +1,39 @@
+{
+  "id": "nature-echolocation-5",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: at least one moth species defends itself by jamming bat sonar?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The tiger moth Bertholdia trigona answers an attacking bat with bursts of ultrasonic clicks from drum-like organs on its sides. In Corcoran and colleagues' flight-room trials, big brown bats easily caught silenced moths but mostly failed against clicking ones, whose sound scrambled the bats' reading of their echoes in the final approach.",
+  "move": "Every sense invites a countermeasure; an arms race runs both ways.",
+  "trap": "Sonar jamming sounds like military kit, not insect defence.",
+  "keywords": [
+    "tiger moth",
+    "sonar jamming",
+    "bats",
+    "ultrasound",
+    "arms race"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corcoran, Barber & Conner, Science, 2009",
+  "source_kind": "paper",
+  "reference": "Corcoran, Barber & Conner, Tiger moth jams bat sonar, Science, 2009",
+  "written": "2026-09-26"
+}

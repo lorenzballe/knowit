@@ -1,0 +1,32 @@
+{
+  "id": "human_body-heartbeat-3",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a ball striking the chest stop a healthy heart without damaging it?",
+  "answer": "Timing. In animal experiments a blow set off fibrillation only if it landed in a 15-to-20-millisecond window on the upstroke of the T wave, while heart muscle recovers unevenly from the last beat. The same blow a moment earlier or later did nothing. Victims are mostly young, with springy chests; the heart is sound.",
+  "move": "The same push can do nothing or everything, depending on when it lands.",
+  "keywords": [
+    "commotio cordis",
+    "ventricular fibrillation",
+    "t wave",
+    "chest impact"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Link et al., NEJM, 1998",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJM199806183382504",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "technology-touch-1",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where, and for what job, was the first finger-operated capacitive touchscreen built?",
+  "answer": "At the Royal Radar Establishment in Malvern, England, for air traffic control. In 1965 E. A. Johnson described a screen that sensed the electrical effect of a fingertip, letting controllers pick flights by touching them instead of typing. Versions of it served British air traffic control into the 1990s, decades before smartphones.",
+  "move": "Ask who needed a technology first; it is rarely who uses it now.",
+  "keywords": [
+    "capacitive touchscreen",
+    "e. a. johnson",
+    "royal radar establishment",
+    "air traffic control"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson, Electronics Letters, 1965",
+  "source_kind": "paper",
+  "reference": "Johnson, Touch display: a novel input/output device for computers, Electronics Letters 1(8), 1965",
+  "written": "2026-09-26"
+}

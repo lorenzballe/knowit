@@ -1,0 +1,33 @@
+{
+  "id": "science-insulation-1",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a solid insulate better than the still air it is mostly made of?",
+  "answer": "By making its pores smaller than the distance an air molecule travels before hitting another, about 70 nanometres. Inside silica aerogel, molecules mostly strike pore walls instead of passing energy to each other, so the gas carries less heat. The best aerogels, over 90% air, conduct about half as much heat as still air.",
+  "move": "Make a space small enough and different rules take over inside it.",
+  "keywords": [
+    "aerogel",
+    "mean free path",
+    "thermal conductivity",
+    "silica",
+    "still air"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hüsing & Schubert, Angewandte Chemie, 1998",
+  "source_kind": "paper",
+  "reference": "Hüsing & Schubert, Aerogels—Airy Materials: Chemistry, Structure, and Properties, Angewandte Chemie International Edition, 1998",
+  "written": "2026-09-26"
+}

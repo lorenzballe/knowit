@@ -1,0 +1,32 @@
+{
+  "id": "technology-training-2",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when AI models learn only from text written by earlier AI models, generation after generation?",
+  "answer": "They collapse. Each generation slightly over-represents what is common and drops what is rare, so unusual cases vanish first, then variety itself. In a 2024 Nature study, text that began on medieval church towers had turned, nine generations later, into a list of jackrabbits with different-coloured tails.",
+  "move": "A copy of a copy keeps the average and loses the edges.",
+  "keywords": [
+    "model collapse",
+    "synthetic data",
+    "training data",
+    "language models"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shumailov et al., Nature, 2024",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-024-07566-y",
+  "written": "2026-09-26"
+}

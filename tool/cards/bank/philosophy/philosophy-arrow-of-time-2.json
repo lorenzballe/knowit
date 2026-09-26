@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-arrow-of-time-2",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: every fundamental law of physics works the same whether time runs forwards or backwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Some weak-force processes tell past from future: the BaBar experiment reported in 2012 that B mesons change one way at a different rate than in reverse, and kaons had shown it before. Yet this plays no known part in why eggs break but never unbreak, which is about disorder, not these particles.",
+  "move": "A rule can have exceptions that explain nothing about the pattern you care about.",
+  "trap": "Repeating the textbook line that the basic laws ignore time's direction.",
+  "keywords": [
+    "time reversal",
+    "babar",
+    "b mesons",
+    "kaons",
+    "weak force"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BaBar Collaboration, Physical Review Letters, 2012",
+  "source_kind": "paper",
+  "reference": "Lees et al. (BaBar Collaboration), Observation of Time-Reversal Violation in the B0 Meson System, Physical Review Letters 109, 211801, 2012",
+  "written": "2026-09-26"
+}

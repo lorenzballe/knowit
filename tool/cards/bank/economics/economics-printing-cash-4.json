@@ -1,0 +1,36 @@
+{
+  "id": "economics-printing-cash-4",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the Bank of England's quantitative easing loses money, who pays?",
+  "answer": "The Treasury, meaning taxpayers. QE paid for £875 billion of gilts with newly created reserves, on which the Bank pays Bank Rate. A 2009 indemnity gives the Treasury both profits and losses. Near-zero rates made QE a money-spinner for years; in 2022 Bank Rate overtook the gilts' interest and the payments reversed.",
+  "move": "Borrowing that floats with rates is cheap only until rates move.",
+  "keywords": [
+    "quantitative easing",
+    "bank of england",
+    "hm treasury",
+    "central bank reserves",
+    "gilts"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OBR, Economic and fiscal outlook, November 2022",
+  "source_kind": "institution",
+  "reference": "Office for Budget Responsibility, Economic and fiscal outlook, November 2022",
+  "written": "2026-09-26"
+}

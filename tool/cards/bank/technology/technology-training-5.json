@@ -1,0 +1,38 @@
+{
+  "id": "technology-training-5",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should AI companies need permission, and pay, to train on copyrighted books and articles?",
+  "sides": [
+    "Yes, require licences",
+    "No, let models learn"
+  ],
+  "answer": "A model that has absorbed a million books competes with their authors for the same readers, and its makers pay for chips, power and staff but not for the text that gives it value. Licensing markets already exist, with news agencies and publishers selling training data, so asking permission is possible; it is only dearer.",
+  "move": "Whichever side you took, whether the model's output replaces the books decides it.",
+  "counterpoint": "Reading to learn has never needed permission, and a model mostly keeps patterns, not copies. In 2025 a US judge ruled that training on lawfully bought books was fair use, while pirated copies led to a $1.5 billion settlement. Require a licence for every text ever written and only the richest firms could afford to train at all.",
+  "keywords": [
+    "copyright",
+    "training data",
+    "fair use",
+    "licensing",
+    "authors"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Copyright Office, AI report part 3, 2025",
+  "source_kind": "institution",
+  "reference": "US Copyright Office, Copyright and Artificial Intelligence, Part 3: Generative AI Training, pre-publication version, 2025",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "science-insulation-5",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in the Antarctic winter, most of an emperor penguin's outer plumage is colder than the surrounding air?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The feathers insulate so well that little body heat reaches their outer surface, while that surface keeps radiating heat to the sky. Thermal cameras at an Antarctic colony found most of the plumage below air temperature, so the birds were gaining a little heat from the air around them, not losing it.",
+  "move": "A cold surface can mean the insulation is working, not failing.",
+  "trap": "A warm-blooded body should warm the surface that wraps it.",
+  "keywords": [
+    "emperor penguins",
+    "plumage",
+    "thermal imaging",
+    "radiative cooling",
+    "antarctica"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCafferty et al., Biology Letters, 2013",
+  "source_kind": "paper",
+  "reference": "McCafferty, Gilbert, Thierry, Currie, Le Maho & Ancel, Emperor penguin body surfaces cool below air temperature, Biology Letters, 2013",
+  "written": "2026-09-26"
+}

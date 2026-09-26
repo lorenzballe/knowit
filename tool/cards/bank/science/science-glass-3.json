@@ -1,0 +1,32 @@
+{
+  "id": "science-glass-3",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do physicists have an agreed theory of how a cooling liquid turns into glass?",
+  "answer": "No. In 1995 the Nobel laureate Philip Anderson called it probably the deepest unsolved problem in solid-state theory, and it is still argued over. As molten glass cools, it stiffens more than a billionfold, yet its atoms stay as jumbled as in the liquid: a solid that looks like a snapshot of a liquid.",
+  "move": "A thing can be useful for millennia before anyone can explain it.",
+  "keywords": [
+    "glass transition",
+    "philip anderson",
+    "viscosity",
+    "amorphous solids"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anderson, Science, 1995",
+  "source_kind": "paper",
+  "reference": "Anderson, Through the Glass Lightly, Science, 1995",
+  "written": "2026-09-26"
+}

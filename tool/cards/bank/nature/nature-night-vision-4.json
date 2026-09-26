@@ -1,0 +1,36 @@
+{
+  "id": "nature-night-vision-4",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "also": [
+    "nature.oceans.deep_sea"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does one deep-sea dragonfish see its prey without being seen?",
+  "answer": "With a red searchlight. Most deep-sea animals see only blue, the colour that travels furthest through seawater. Malacosteus shines far-red light from organs beneath its eyes and detects it with a pigment built from chlorophyll, probably taken from its food. To its prey, the beam is darkness.",
+  "move": "The safest signal is one only you can read.",
+  "keywords": [
+    "dragonfish",
+    "malacosteus",
+    "red light",
+    "chlorophyll",
+    "bioluminescence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Douglas et al., Nature, 1998",
+  "source_kind": "paper",
+  "reference": "Douglas et al., Dragon fish see using chlorophyll, Nature, 1998",
+  "written": "2026-09-26"
+}

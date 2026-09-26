@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-presentism-2",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Arthur Prior think the words 'thank goodness that's over' show about time?",
+  "answer": "That the present is real. When a headache ends, Prior wrote in 1959, the relief cannot be about a date: nobody thanks goodness that the headache's end is dated Friday, 15 June 1954. Nor is it relief at a timeless ordering of events. What you are glad of is that it is over now.",
+  "move": "Some facts only show up in the present tense.",
+  "keywords": [
+    "arthur prior",
+    "a-theory of time",
+    "tense",
+    "presentism",
+    "headache"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prior, Philosophy, 1959",
+  "source_kind": "paper",
+  "reference": "Prior, Thank Goodness That's Over, Philosophy 34 (128), 1959, pp. 12-17",
+  "written": "2026-09-26"
+}

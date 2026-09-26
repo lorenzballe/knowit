@@ -1,0 +1,38 @@
+{
+  "id": "nature-rainforests-5",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should companies be allowed to offset their emissions by paying to protect tropical forests?",
+  "sides": [
+    "Yes, allow the offsets",
+    "No, stop the offsets"
+  ],
+  "answer": "Forests fall because cleared land earns money and standing trees earn little. Offsets are one of the few private flows that pay people to keep forest standing. Brazil cut Amazon clearing by about four-fifths between 2004 and 2012 when enforcement and money lined up. Weak projects need stricter baselines, not the end of the market.",
+  "move": "Whichever side you took, it turns on measuring what would have happened anyway.",
+  "counterpoint": "An offset only counts if the forest would otherwise have been cut, and that cannot be observed. When West's team compared project areas with similar unprotected forest, most projects showed little or no extra protection, yet sold credits as if they had. Each empty credit licenses a real tonne of emissions, so a bad offset is worse than none.",
+  "keywords": [
+    "carbon offsets",
+    "deforestation",
+    "tropical forests",
+    "carbon credits",
+    "baselines"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West et al., Science, 2023",
+  "source_kind": "paper",
+  "reference": "West et al., Action needed to make carbon offsets from forest conservation work for climate change mitigation, Science, 2023",
+  "written": "2026-09-26"
+}

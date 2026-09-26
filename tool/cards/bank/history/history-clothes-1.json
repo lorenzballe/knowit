@@ -1,0 +1,40 @@
+{
+  "id": "history-clothes-1",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Few clothes worn by 18th-century English labouring women survive in museums. What is the likeliest reason?",
+  "options": [
+    "They owned almost no clothes",
+    "Their clothes were worn to rags",
+    "Laws kept them in flimsy cloth"
+  ],
+  "correct": 1,
+  "answer": "Their clothes were worn to rags. A gown was a poor family's capital: altered, handed down, pawned, then sold to the rag trade for paper. What survives was too fine to wear out. Ordinary dress lives on in some 5,000 fabric scraps pinned to the admission papers of babies left at London's Foundling Hospital.",
+  "move": "What was used up leaves no trace; absence is not proof of lack.",
+  "trap": "Reading the empty museum shelf as proof the poor had nothing.",
+  "keywords": [
+    "foundling hospital",
+    "textile tokens",
+    "second-hand clothes",
+    "rag trade",
+    "museum collections"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Styles, Threads of Feeling, 2010",
+  "source_kind": "book",
+  "reference": "Styles, Threads of Feeling: The London Foundling Hospital's Textile Tokens, 1740–1770, Foundling Museum, 2010",
+  "written": "2026-09-26"
+}

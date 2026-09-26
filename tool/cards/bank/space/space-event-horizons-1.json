@@ -1,0 +1,42 @@
+{
+  "id": "space-event-horizons-1",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "An astronaut falls straight into a black hole. Which one lets her cross the event horizon in one piece?",
+  "options": [
+    "One of 10 solar masses",
+    "One of 4 million solar masses",
+    "Neither would let her through intact"
+  ],
+  "correct": 1,
+  "answer": "The one of 4 million solar masses. The stretch from head to toe at the horizon falls with the square of the mass. At 10 solar masses it passes 100 g some 1,700 km outside the horizon and reaches 20 million g at it; at 4 million, it is about a ten-thousandth of a g.",
+  "move": "Find where a danger peaks before assuming it peaks at the famous line.",
+  "trap": "Picturing the famous stretching into spaghetti as the fate at every horizon.",
+  "keywords": [
+    "tidal forces",
+    "spaghettification",
+    "event horizon",
+    "supermassive black holes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorne, The Science of Interstellar, 2014",
+  "source_kind": "book",
+  "reference": "Thorne, The Science of Interstellar, W. W. Norton, 2014",
+  "written": "2026-09-26"
+}

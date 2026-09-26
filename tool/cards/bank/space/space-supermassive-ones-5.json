@@ -1,0 +1,32 @@
+{
+  "id": "space-supermassive-ones-5",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a galaxy's central black hole grow in step with stars far beyond the reach of its gravity?",
+  "answer": "Nobody is sure. The hole weighs a few tenths of a percent of the galaxy's central bulge and its pull dominates only a small core, yet its mass tracks how fast stars move across the whole bulge, thousands of light years wide. The favoured idea: a feeding hole's winds blow away the gas both need.",
+  "move": "When two things keep pace across a distance, look for the go-between.",
+  "keywords": [
+    "m-sigma relation",
+    "galaxy bulges",
+    "feedback",
+    "black hole mass"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kormendy & Ho, Annual Reviews, 2013",
+  "source_kind": "paper",
+  "reference": "Kormendy & Ho, Coevolution (Or Not) of Supermassive Black Holes and Host Galaxies, Annual Review of Astronomy and Astrophysics, 2013",
+  "written": "2026-09-26"
+}

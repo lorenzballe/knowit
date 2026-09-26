@@ -1,0 +1,40 @@
+{
+  "id": "history-plague-3",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Pollen from 261 lake and bog cores tracks European farming across the Black Death. What does it show?",
+  "options": [
+    "Hardly any change in any region",
+    "Half of farming lost everywhere",
+    "Losses in some regions, growth elsewhere"
+  ],
+  "correct": 2,
+  "answer": "Losses in some regions, growth elsewhere. Cereal pollen fell sharply in Scandinavia, France, south-west Germany, Greece and central Italy, but farming held up or grew in much of central and eastern Europe, Ireland and Iberia. The reading is contested, but the famous toll of about half fits only part of the map.",
+  "move": "A figure from the best-recorded places may not describe the rest.",
+  "trap": "Half of farming lost everywhere, like the famous death toll.",
+  "keywords": [
+    "black death",
+    "pollen",
+    "palaeoecology",
+    "mortality",
+    "agriculture"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Izdebski et al., Nature Ecology & Evolution, 2022",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41559-021-01652-4",
+  "written": "2026-09-26"
+}

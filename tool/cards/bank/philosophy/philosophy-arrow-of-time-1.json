@@ -1,0 +1,43 @@
+{
+  "id": "philosophy-arrow-of-time-1",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Molecules drift randomly between a box's two halves. At how many molecules does 'all on the left' first become rarer than one in a million?",
+  "value": 20,
+  "unit": "molecules",
+  "answer": "So 20 molecules: 2 to the power 20 is the first to pass a million.",
+  "move": "Irreversible is mostly a matter of how many pieces are involved.",
+  "trap": "Guessing thousands, because a million sounds like it needs a crowd.",
+  "hint": "Each extra molecule halves the chance; count the halvings it takes to pass a million.",
+  "steps": [
+    "Each molecule sits on the left with chance 1/2, independently of the rest.",
+    "All n on the left at once: a chance of 1 in 2 × 2 × … × 2, n times.",
+    "2 to the power 19 is 524,288; 2 to the power 20 is 1,048,576.",
+    "So 20 molecules: 2 to the power 20 is the first to pass a million."
+  ],
+  "keywords": [
+    "entropy",
+    "second law",
+    "gas molecules",
+    "probability",
+    "irreversibility"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Feynman, The Character of Physical Law, 1965",
+  "source_kind": "book",
+  "reference": "Feynman, The Character of Physical Law, MIT Press, 1965, chapter 5",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-halo-effect-2",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can people tell when a halo is shaping their own judgement?",
+  "answer": "Rarely. Students watched one of two videos of a lecturer with a European accent, acting warm or cold. Those who saw him warm found his looks, mannerisms and accent appealing; those who saw him cold found them irritating. Both groups denied that liking him coloured those ratings; some insisted it ran the other way.",
+  "move": "Ask whether the reasons came before the liking or after it.",
+  "keywords": [
+    "halo effect",
+    "introspection",
+    "likeability",
+    "accents",
+    "lecturers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nisbett & Wilson, JPSP, 1977",
+  "source_kind": "paper",
+  "reference": "doi:10.1037/0022-3514.35.4.250",
+  "written": "2026-09-26"
+}

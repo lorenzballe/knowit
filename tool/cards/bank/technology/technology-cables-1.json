@@ -1,0 +1,36 @@
+{
+  "id": "technology-cables-1",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "also": [
+    "nature.extinction.recent_losses"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did laying the first undersea telegraph cables strip forests in Southeast Asia?",
+  "answer": "For gutta-percha, the one insulation that held up under the sea. This latex from Palaquium trees of the Malay peninsula and Borneo stayed stable in cold salt water, and collectors usually felled a whole tree to drain it. As cable routes multiplied after 1850, the best-yielding species all but vanished from the wild.",
+  "move": "Ask what a new technology eats before counting what it connects.",
+  "keywords": [
+    "gutta-percha",
+    "telegraph cables",
+    "palaquium",
+    "insulation",
+    "deforestation"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tully, Journal of World History, 2009",
+  "source_kind": "paper",
+  "reference": "Tully, A Victorian Ecological Disaster: Imperialism, the Telegraph, and Gutta-Percha, Journal of World History 20(4), 2009",
+  "written": "2026-09-26"
+}

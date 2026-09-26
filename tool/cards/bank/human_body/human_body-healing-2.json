@@ -1,0 +1,33 @@
+{
+  "id": "human_body-healing-2",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a skeleton full of healed lesions belong to the healthier of two people?",
+  "answer": "Because a lesion needs time to form. Bone reacts to infection, hunger or injury only over weeks, so marks appear only on people who survived the insult. Someone killed quickly by the same illness leaves a clean skeleton. Anthropologists call this the osteological paradox: the unmarked dead of a cemetery may be its frailest.",
+  "move": "A scar is evidence of survival before it is evidence of harm.",
+  "keywords": [
+    "osteological paradox",
+    "skeletons",
+    "archaeology",
+    "bone lesions",
+    "selective mortality"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood et al., Current Anthropology, 1992",
+  "source_kind": "paper",
+  "reference": "Wood, Milner, Harpending & Weiss, The osteological paradox: problems of inferring prehistoric health from skeletal samples, Current Anthropology, 1992",
+  "written": "2026-09-26"
+}

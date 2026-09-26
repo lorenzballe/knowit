@@ -1,0 +1,40 @@
+{
+  "id": "psychology-halo-effect-4",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "The business press calls a thriving firm's culture strong and its boss decisive. After profits fall, how are those same traits described?",
+  "options": [
+    "As rigid and reckless",
+    "As still strong, but unlucky",
+    "As irrelevant to the results"
+  ],
+  "correct": 0,
+  "answer": "As rigid and reckless. Phil Rosenzweig showed business writers re-describing firms whose cultures and leaders had not changed, only their results: a strong culture became rigid, decisiveness became recklessness. Studies that rate culture once the results are known inherit the same tint. The results paint the traits said to explain them.",
+  "move": "Rate the process before learning the result, or the result will rate it.",
+  "trap": "Culture changes slowly, so the praise should survive a bad year.",
+  "keywords": [
+    "business press",
+    "company culture",
+    "leadership",
+    "phil rosenzweig",
+    "corporate performance"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenzweig, The Halo Effect, 2007",
+  "source_kind": "book",
+  "reference": "Rosenzweig, The Halo Effect... and the Eight Other Business Delusions That Deceive Managers, Free Press, 2007",
+  "written": "2026-09-26"
+}

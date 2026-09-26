@@ -1,0 +1,43 @@
+{
+  "id": "space-hawking-radiation-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "space.edge_of_the_universe.cosmic_background"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "In 2020 Roger Penrose's team reported unusual spots in the cosmic background, left by black holes of a previous universe. What did re-analysis find?",
+  "options": [
+    "Confirmation at even higher confidence",
+    "Similar spots in ordinary simulated skies",
+    "A fault in the satellite's detectors"
+  ],
+  "correct": 1,
+  "answer": "Similar spots in ordinary simulated skies. Scan a whole sky at many sizes and positions and some patches will look special by chance. When independent researchers ran the test on simulated skies with no earlier universe in them, the real sky did not stand out. The spots are real; the signal was not.",
+  "move": "Search enough places and something will look like a signal.",
+  "trap": "Reading one striking pattern, found by searching a whole sky, as a discovery.",
+  "keywords": [
+    "hawking points",
+    "conformal cyclic cosmology",
+    "roger penrose",
+    "cosmic microwave background",
+    "look-elsewhere effect"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jow & Scott, JCAP, 2020",
+  "source_kind": "paper",
+  "reference": "Jow & Scott, Re-evaluating evidence for Hawking points in the CMB, Journal of Cosmology and Astroparticle Physics, 2020",
+  "written": "2026-09-26"
+}

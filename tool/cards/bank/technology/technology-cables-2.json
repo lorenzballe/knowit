@@ -1,0 +1,32 @@
+{
+  "id": "technology-cables-2",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do the amplifiers strung along a cable on the ocean floor get their electricity?",
+  "answer": "Down the cable itself. Stations on shore push a direct current of about one amp through a copper layer around the fibres, at up to about 15,000 volts, to amplifiers placed every 50 to 100 km. There is no return wire: the current goes back through the seawater, and the ocean completes the circuit.",
+  "move": "Ask how a remote machine is powered; that is usually its real limit.",
+  "keywords": [
+    "submarine cables",
+    "optical amplifiers",
+    "power feed",
+    "sea return"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chesnoy, Undersea Fiber Communication Systems, 2016",
+  "source_kind": "book",
+  "reference": "Chesnoy (ed.), Undersea Fiber Communication Systems, 2nd edition, Academic Press, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "technology-cables-5",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a fishing boat that cuts away its own net to spare a submarine cable can claim compensation from the cable's owner?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Article 115 of the Law of the Sea convention has states make cable owners repay a ship that sacrifices an anchor, net or other gear to avoid damaging a cable, provided it took reasonable care beforehand. The rule dates from an 1884 treaty: a net costs less than a cable repair.",
+  "move": "If you want people to protect something, pay them for what it costs.",
+  "trap": "False, because the law surely punishes whoever threatens the cable.",
+  "keywords": [
+    "unclos",
+    "submarine cables",
+    "fishing nets",
+    "indemnity",
+    "law of the sea"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UN Law of the Sea Convention, 1982",
+  "source_kind": "primary_document",
+  "reference": "United Nations Convention on the Law of the Sea, Article 115, 1982",
+  "written": "2026-09-26"
+}

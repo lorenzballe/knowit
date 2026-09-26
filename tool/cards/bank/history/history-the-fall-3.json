@@ -1,0 +1,38 @@
+{
+  "id": "history-the-fall-3",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did the Western Roman Empire truly fall, rather than slowly transform into medieval Europe?",
+  "sides": [
+    "Yes, it fell",
+    "No, it transformed"
+  ],
+  "answer": "It fell, and people paid for it. In Britain, coins, wheel-thrown pottery and tiled roofs vanished within a few generations; across the West, trade goods thinned out and buildings shrank. By the comfort archaeology can measure, living standards fell for centuries. Calling that a transformation turns a catastrophe into a change of costume.",
+  "move": "The verdict turns on whether you count institutions or living standards.",
+  "counterpoint": "Much of Rome carried on under new management. Gothic and Burgundian kings issued codes of Roman law, kept Latin in government and relied on bishops who ran the cities; Theoderic's Italy still had a Senate and consuls. The eastern half, with most of the empire's people and wealth, lasted another thousand years. Britain's collapse was the extreme, not the rule.",
+  "keywords": [
+    "fall of rome",
+    "late antiquity",
+    "ward-perkins",
+    "peter brown",
+    "archaeology"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bryn Mawr Classical Review 2005.07.69",
+  "source_kind": "paper",
+  "reference": "https://bmcr.brynmawr.edu/2005/2005.07.69/",
+  "written": "2026-09-26"
+}

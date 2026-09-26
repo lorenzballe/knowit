@@ -1,0 +1,40 @@
+{
+  "id": "history-roads-3",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Diocletian's price edict of 301, how much dearer was moving cargo a given distance by wagon than by sea?",
+  "options": [
+    "About twice as dear",
+    "About fifty times as dear",
+    "About five times as dear"
+  ],
+  "correct": 1,
+  "answer": "About fifty times. Estimates from the edict's maximum prices vary, but land haulage always comes out dozens of times dearer than sea; Stanford's model of Roman travel costs uses 52, with river barges at 5 to 10. Rome's grain came by ship from Egypt and Africa; roads carried soldiers, officials and letters.",
+  "move": "Follow the bulk freight, not the monuments, to see how an economy moved.",
+  "trap": "About twice as dear, since paved roads suggest easy haulage.",
+  "keywords": [
+    "diocletian's price edict",
+    "transport costs",
+    "roman roads",
+    "shipping",
+    "orbis"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scheidel, ORBIS working paper, Stanford",
+  "source_kind": "paper",
+  "reference": "https://orbis.stanford.edu/assets/Scheidel_59.pdf",
+  "written": "2026-09-26"
+}

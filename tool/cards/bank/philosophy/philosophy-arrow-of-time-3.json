@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-arrow-of-time-3",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "In a universe at eternal equilibrium, which random fluctuation is far likelier: our whole ordered galaxy, or one brain with false memories?",
+  "options": [
+    "Our whole ordered galaxy",
+    "One brain with false memories",
+    "Both about equally likely"
+  ],
+  "correct": 1,
+  "answer": "One brain with false memories. Order that must appear all at once gets exponentially rarer with every extra piece, so a lone mind dreaming a past vastly outnumbers real galaxies. Boltzmann floated the fluctuation idea in 1895; today the lonely brain is the standard objection to it, since our memories would almost surely be false.",
+  "move": "Demand more order from chance and chance delivers it far less often.",
+  "trap": "Picking the galaxy, because it is the world we find around us.",
+  "keywords": [
+    "boltzmann brain",
+    "ludwig boltzmann",
+    "fluctuation",
+    "entropy",
+    "cosmology"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Albrecht and Sorbo, Physical Review D, 2004",
+  "source_kind": "paper",
+  "reference": "Boltzmann, On Certain Questions of the Theory of Gases, Nature 51, 1895; Albrecht & Sorbo, Can the universe afford inflation?, Physical Review D 70, 063528, 2004",
+  "written": "2026-09-26"
+}

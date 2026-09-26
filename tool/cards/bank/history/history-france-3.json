@@ -1,0 +1,39 @@
+{
+  "id": "history-france-3",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the French Revolution gave workers the right to form trade unions?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Le Chapelier law of June 1791 banned associations of workers or employers, and strikes, as threats to individual liberty, three months after the guilds were abolished. Strikes stayed a crime in France until 1864 and trade unions until 1884, nearly a century after the Bastille fell.",
+  "move": "Ask whose freedom a liberty law was written to protect.",
+  "trap": "Assuming a revolution made in the people's name gave workers that right.",
+  "keywords": [
+    "le chapelier law",
+    "trade unions",
+    "strikes",
+    "guilds",
+    "labour law"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Sewell, Work and Revolution in France, 1980",
+  "source_kind": "book",
+  "reference": "Sewell, Work and Revolution in France: The Language of Labor from the Old Regime to 1848, Cambridge University Press, 1980",
+  "written": "2026-09-26"
+}

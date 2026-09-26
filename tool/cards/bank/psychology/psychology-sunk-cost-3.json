@@ -1,0 +1,43 @@
+{
+  "id": "psychology-sunk-cost-3",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "also": [
+    "economics.everyday_costs.subscriptions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A health club bills its members twice a year. In which month does attendance peak?",
+  "options": [
+    "Spread evenly through the year",
+    "The month before each bill",
+    "The month dues are paid"
+  ],
+  "correct": 2,
+  "answer": "The month dues are paid. At a club billing twice a year, attendance was highest in the month dues were paid, declined over the next five, then rose again with the next bill. A payment feels like a debt to be used up, and the feeling fades as the payment recedes.",
+  "move": "Spread payments out if the point is to keep people coming.",
+  "trap": "Expecting visits to follow motivation, since the money is gone either way.",
+  "keywords": [
+    "gym attendance",
+    "payment depreciation",
+    "mental accounting",
+    "health clubs",
+    "sunk costs"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Gourville & Soman, Journal of Consumer Research, 1998",
+  "source_kind": "paper",
+  "reference": "Gourville & Soman, Payment depreciation: the behavioral effects of temporally separating payments from consumption, Journal of Consumer Research, 1998",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-oled-2",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do most OLED televisions use white light behind colour filters, unlike OLED phones?",
+  "answer": "Because the phone method does not scale. Phone makers evaporate red, green and blue materials through a fine metal mask, a sheet of alloy pierced with millions of holes, one per subpixel. Across a television-sized glass the mask sags and shifts with heat, so LG lays down one white-emitting stack everywhere and filters it.",
+  "move": "A process that works at one size can fail purely because of size.",
+  "keywords": [
+    "fine metal mask",
+    "white oled",
+    "colour filters",
+    "lg display",
+    "oled televisions"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tsujimura, OLED Display Fundamentals and Applications, 2017",
+  "source_kind": "book",
+  "reference": "Tsujimura, OLED Display Fundamentals and Applications, 2nd edition, Wiley, 2017",
+  "written": "2026-09-26"
+}

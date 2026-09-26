@@ -1,0 +1,38 @@
+{
+  "id": "human_body-fingerprints-5",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should courts accept a fingerprint examiner's match without being told an error rate?",
+  "sides": [
+    "Yes, accept it",
+    "No, require one"
+  ],
+  "answer": "Fingerprint comparison has been tested at scale: in the FBI's 2011 black-box study, 169 examiners wrongly matched prints from different people in about 0.1% of comparisons, and a second examiner working blind caught those errors. Error rates vary with print quality, so a single quoted number would mislead jurors more than it informs them.",
+  "move": "Whichever side you took, it turns on whether a match means certainty or probability.",
+  "counterpoint": "Jurors hear certainty, not probability. When five experts were shown prints they had matched years earlier, with a hint that they did not match, four changed their verdicts. A 2016 White House science review found false-match rates in one study could be as high as 1 in 306, in another 1 in 18, and said juries should hear them.",
+  "keywords": [
+    "fingerprint evidence",
+    "error rates",
+    "forensic science",
+    "juries",
+    "pcast report"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ulery et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1018707108",
+  "written": "2026-09-26"
+}

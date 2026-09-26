@@ -1,0 +1,36 @@
+{
+  "id": "nature-rainforests-3",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "also": [
+    "nature.weather.clouds"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What sets off the rainy season over the southern Amazon?",
+  "answer": "The forest itself. Late in the dry season, trees still pull water from deep soil and breathe it out; satellites tracking a heavy form of water vapour show this moisture feeding shallow clouds that prime the air for storms. The rains start two to three months before winds bring in moisture from the ocean.",
+  "move": "Some systems start the conditions they need instead of waiting for them.",
+  "keywords": [
+    "amazon",
+    "wet season",
+    "transpiration",
+    "rainfall",
+    "water vapour"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright et al., PNAS, 2017",
+  "source_kind": "paper",
+  "reference": "Wright et al., Rainforest-initiated wet season onset over the southern Amazon, PNAS, 2017",
+  "written": "2026-09-26"
+}

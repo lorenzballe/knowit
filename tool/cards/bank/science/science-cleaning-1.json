@@ -1,0 +1,38 @@
+{
+  "id": "science-cleaning-1",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: US regulators found that antibacterial hand soaps prevent more illness than plain soap and water?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2016 the US Food and Drug Administration asked makers for proof, got none it accepted, and ruled 19 antibacterial ingredients, triclosan among them, out of consumer hand washes. Plain soap works mostly by lifting germs off the skin so that water can carry them away.",
+  "move": "Before praising the new version, ask how the plain one did.",
+  "trap": "Assuming a product that kills more germs must prevent more illness.",
+  "keywords": [
+    "antibacterial soap",
+    "triclosan",
+    "fda",
+    "hand washing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA, consumer antiseptic wash rule, 2016",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/consumer-antiseptic-wash-final-rule-questions-and-answers",
+  "written": "2026-09-26"
+}

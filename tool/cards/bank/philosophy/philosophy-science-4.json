@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-science-4",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When two planets strayed from Newton's predictions, how did the same explanation end so differently?",
+  "answer": "One found a planet, the other invented one. Blaming an unseen world for Uranus's wanderings led Le Verrier to Neptune in 1846. Blaming another for an unexplained turn of Mercury's orbit gave Vulcan, which does not exist; relativity explained the turn, about a hundredth of a degree a century, in 1915.",
+  "move": "When a prediction fails, the evidence rarely says which assumption broke.",
+  "keywords": [
+    "neptune",
+    "vulcan",
+    "le verrier",
+    "mercury's orbit",
+    "underdetermination"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baum & Sheehan, In Search of Planet Vulcan",
+  "source_kind": "book",
+  "reference": "Baum & Sheehan, In Search of Planet Vulcan: The Ghost in Newton's Clockwork Universe, Plenum Press, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sleep-stages-4",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Adults spend about a fifth of their sleep in REM, the dreaming stage. What share does a newborn baby spend?",
+  "options": [
+    "About half",
+    "About a fifth",
+    "About a tenth"
+  ],
+  "correct": 0,
+  "answer": "About half. Charting sleep across the lifespan, Roffwarg's team found REM, called active sleep in infants, filling roughly half of a newborn's 16 or so hours, then falling to a fifth to a quarter in adults. One proposal is that it helps wire the growing brain. A newborn spends about eight hours a day there.",
+  "move": "Before reusing a familiar figure, check it was measured on the same kind of case.",
+  "trap": "Staying near the adult fifth, as if sleep were the same at every age.",
+  "keywords": [
+    "rem sleep",
+    "newborns",
+    "infant sleep",
+    "brain development",
+    "sleep cycle"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Roffwarg, Muzio & Dement, Science, 1966",
+  "source_kind": "paper",
+  "reference": "Roffwarg, Muzio & Dement, Ontogenetic development of the human sleep-dream cycle, Science, 1966",
+  "written": "2026-09-26"
+}

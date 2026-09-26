@@ -1,0 +1,33 @@
+{
+  "id": "science-primes-1",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How close together have primes been proved to keep turning up, forever?",
+  "answer": "Within 246 of each other. The twin prime conjecture says pairs 2 apart, like 11 and 13, never run out, but until 2013 nobody could prove any bound. Then Yitang Zhang, a little-known lecturer, proved one: 70 million. Within a year, an online collaboration using James Maynard's new method had cut it to 246.",
+  "move": "A first finite bound, however huge, is often the hard part.",
+  "keywords": [
+    "twin primes",
+    "yitang zhang",
+    "prime gaps",
+    "polymath project",
+    "james maynard"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Polymath, Research in the Mathematical Sciences, 2014",
+  "source_kind": "paper",
+  "reference": "D. H. J. Polymath, Variants of the Selberg sieve, and bounded intervals with many primes, Research in the Mathematical Sciences, 2014",
+  "written": "2026-09-26"
+}

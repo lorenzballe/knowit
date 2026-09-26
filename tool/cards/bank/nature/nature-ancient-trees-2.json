@@ -1,0 +1,38 @@
+{
+  "id": "nature-ancient-trees-2",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in most tree species, the biggest trees add less wood each year than mid-sized ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Across 403 tropical and temperate species, Stephenson's team found yearly gain in mass kept rising with size in most. Rings get thinner as a tree ages, but each is laid round a far larger trunk. At the extreme, one big tree adds in a year as much carbon as a whole mid-sized tree holds.",
+  "move": "Slow growth on a big base can beat fast growth on a small one.",
+  "trap": "Reading thinner rings in old trees as slower growth.",
+  "keywords": [
+    "tree growth",
+    "large old trees",
+    "tree rings",
+    "carbon storage"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stephenson et al., Nature, 2014",
+  "source_kind": "paper",
+  "reference": "Stephenson et al., Rate of tree carbon accumulation increases continuously with tree size, Nature, 2014",
+  "written": "2026-09-26"
+}

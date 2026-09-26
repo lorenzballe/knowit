@@ -1,0 +1,33 @@
+{
+  "id": "space-fuel-chemistry-5",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What kept every Space Shuttle on the ground for months in 1990?",
+  "answer": "Hydrogen leaks. Liquid hydrogen is kept at −253 °C and is the smallest molecule; fittings that seal at room temperature shrink in that cold and let it seep out. Columbia's countdown was halted in May, Atlantis leaked in June, and no shuttle flew until October. Artemis I scrubbed for the same reason in 2022.",
+  "move": "The smallest thing in a system is usually the one that escapes.",
+  "keywords": [
+    "liquid hydrogen",
+    "hydrogen leaks",
+    "space shuttle",
+    "cryogenic propellant",
+    "launch delays"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Recer, Associated Press, 9 July 1990",
+  "source_kind": "news_archive",
+  "reference": "Recer, Engineers Find Hydrogen Leak During California Test, Associated Press, 9 July 1990",
+  "written": "2026-09-26"
+}

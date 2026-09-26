@@ -1,0 +1,33 @@
+{
+  "id": "science-fire-3",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a heap of rags used to apply linseed oil catch fire on its own?",
+  "answer": "Because the oil dries by reacting with oxygen, not by evaporating, and the reaction gives off heat. On a thin coat the heat escapes; in a heap of rags it builds up, and warmth speeds the reaction, which makes more warmth, until the pile ignites, often hours after the work is finished.",
+  "move": "Heat that cannot escape becomes the fuel for more heat.",
+  "keywords": [
+    "linseed oil",
+    "spontaneous combustion",
+    "self-heating",
+    "oxidation",
+    "oily rags"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bowes, Self-Heating: Evaluating and Controlling the Hazards, 1984",
+  "source_kind": "book",
+  "reference": "Bowes, Self-Heating: Evaluating and Controlling the Hazards, HMSO, 1984",
+  "written": "2026-09-26"
+}

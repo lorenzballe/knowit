@@ -1,0 +1,39 @@
+{
+  "id": "space-fuel-chemistry-1",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a kerosene-burning rocket, most of the propellant by mass is kerosene?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. About 70% of it is liquid oxygen. A car or a jet takes its oxygen from the air; a rocket must carry all of it, and kerosene engines burn about 2.3 to 2.7 kg of oxygen for every kilogram of fuel. The tank of kerosene is the smaller one.",
+  "move": "Count what a machine must carry that others get for free.",
+  "trap": "A car carries only fuel, so a rocket's tanks seem mostly fuel too.",
+  "keywords": [
+    "kerosene",
+    "liquid oxygen",
+    "mixture ratio",
+    "propellant",
+    "oxidiser"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Huzel & Huang, Liquid-Propellant Rocket Engines, 1992",
+  "source_kind": "book",
+  "reference": "Huzel & Huang, Modern Engineering for Design of Liquid-Propellant Rocket Engines, AIAA, 1992",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "history-hygiene-4",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did clean water and sewers do more than better food to cut deaths in industrial cities?",
+  "sides": [
+    "Yes, water and sewers",
+    "No, better food"
+  ],
+  "answer": "Clean water was the sharpest single blow to death. In major US cities from 1900 to 1936, filtration and chlorination explain nearly half the fall in total mortality, three-quarters of the fall in infant deaths and nearly two-thirds of the fall in child deaths. Cities that cleaned their water saw typhoid collapse within years.",
+  "move": "Whichever side you took, the order in which deaths fell is what decides it.",
+  "counterpoint": "Deaths were falling before the pipes arrived. In England and Wales, tuberculosis, spread through the air, killed fewer people decade after decade from the mid-1800s, long before any drug or sewer could touch it; better-fed bodies resisted it. And a re-analysis of the same US cities found filtration explained much less of the decline.",
+  "keywords": [
+    "public health",
+    "clean water",
+    "sewers",
+    "nutrition",
+    "mortality decline"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cutler & Miller, Demography, 2005",
+  "source_kind": "paper",
+  "reference": "Cutler & Miller, The Role of Public Health Improvements in Health Advances: The Twentieth-Century United States, Demography, 2005",
+  "written": "2026-09-26"
+}

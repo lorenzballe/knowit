@@ -1,0 +1,40 @@
+{
+  "id": "nature-deep-sea-4",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Net hauls suggested fish and shrimp dominated the deep midwater. What did cameras on submersibles find there instead?",
+  "options": [
+    "Crowds of jelly-like animals",
+    "Even more fish than nets showed",
+    "Mostly squid, too quick for nets"
+  ],
+  "correct": 0,
+  "answer": "Crowds of jelly-like animals. Jellyfish, comb jellies and their long colonial cousins turned out to be among the most abundant predators of the deep midwater. Nets had shredded their soft bodies into unrecognisable slime, so the catch held mostly sturdy fish and crustaceans. Only cameras could see who had been there.",
+  "move": "Ask what your sampling method destroys before counting what it keeps.",
+  "trap": "Even more fish, as if the nets had simply been too small.",
+  "keywords": [
+    "gelatinous animals",
+    "siphonophores",
+    "submersibles",
+    "net sampling",
+    "midwater"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robison, J. Exp. Mar. Biol. Ecol., 2004",
+  "source_kind": "paper",
+  "reference": "Robison, Deep pelagic biology, Journal of Experimental Marine Biology and Ecology, 2004",
+  "written": "2026-09-26"
+}

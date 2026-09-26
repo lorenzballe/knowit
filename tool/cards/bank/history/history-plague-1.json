@@ -1,0 +1,33 @@
+{
+  "id": "history-plague-1",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was the starting point of the Black Death finally pinned down?",
+  "answer": "By gravestones in Kyrgyzstan. Headstones near Lake Issyk-Kul, dated 1338 and 1339, give 'pestilence' as the cause of death. In 2022, DNA from seven people buried there yielded a plague strain sitting at the root of the pandemic's family tree, some eight years before plague reached the Black Sea.",
+  "move": "Trust a finding more when two unrelated kinds of evidence point to it.",
+  "keywords": [
+    "black death",
+    "yersinia pestis",
+    "ancient dna",
+    "kyrgyzstan",
+    "issyk-kul"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Spyrou et al., Nature, 2022",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-022-04800-3",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-magnetic-sense-3",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the iron-rich cells found in pigeons' upper beaks turned out to be immune cells?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Iron-rich nerve endings in the beak had been published as the pigeon's magnetic sensor. In 2012 Treiber and colleagues mapped iron-rich cells across whole beaks and found they were macrophages, immune cells that recycle iron, and that their numbers varied hugely from bird to bird: nothing like the fixed layout of a sense organ.",
+  "move": "Finding what you expected where you expected it is not yet proof.",
+  "trap": "False: they were widely reported as the pigeon's magnetic compass.",
+  "keywords": [
+    "homing pigeons",
+    "magnetoreception",
+    "macrophages",
+    "iron",
+    "beak"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Treiber et al., Nature, 2012",
+  "source_kind": "paper",
+  "reference": "Treiber et al., Clusters of iron-rich cells in the upper beak of pigeons are macrophages not magnetosensitive neurons, Nature, 2012",
+  "written": "2026-09-26"
+}

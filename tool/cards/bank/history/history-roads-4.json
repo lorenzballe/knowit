@@ -1,0 +1,33 @@
+{
+  "id": "history-roads-4",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do Roman roads still predict prosperity in Europe but not in North Africa?",
+  "answer": "Because the wheel left North Africa and the Middle East. Between the fourth and sixth centuries, camel caravans replaced carts there, so the roads fell out of use and were not rebuilt. In Europe carts kept them busy, and denser Roman roads still line up with brighter night-time lights seen from satellites.",
+  "move": "Infrastructure lasts only as long as something keeps using it.",
+  "keywords": [
+    "roman roads",
+    "camel",
+    "wheeled transport",
+    "night lights",
+    "persistence"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Dalgaard et al., Journal of Comparative Economics, 2022",
+  "source_kind": "paper",
+  "reference": "https://cepr.org/voxeu/columns/roman-roads-and-sources-persistence-and-non-persistence-development",
+  "written": "2026-09-26"
+}

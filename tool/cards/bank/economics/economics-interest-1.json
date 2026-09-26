@@ -1,0 +1,33 @@
+{
+  "id": "economics-interest-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the customary interest on Babylonian silver loans exactly 20% a year?",
+  "answer": "Because of the arithmetic of their units. The standard charge was one shekel per mina per month, and a mina held 60 shekels: 1/60 a month, 12/60 a year. Barley loans ran at a third. The same 20% recurs in law codes and contracts across a thousand years: money priced by a counting system.",
+  "move": "Before explaining a number, check whether the counting system chose it.",
+  "keywords": [
+    "babylon",
+    "interest rates",
+    "shekel",
+    "mina",
+    "base sixty"
+  ],
+  "era": "ancient",
+  "region": "middle_east",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Homer and Sylla, A History of Interest Rates",
+  "source_kind": "book",
+  "reference": "Homer & Sylla, A History of Interest Rates, 4th edition, Wiley, 2005",
+  "written": "2026-09-26"
+}

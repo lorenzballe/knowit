@@ -1,0 +1,32 @@
+{
+  "id": "technology-oled-3",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the blue subpixel usually the largest on an OLED screen?",
+  "answer": "Because blue emitters age fastest. Red and green use phosphorescent molecules that turn nearly every injected charge into light, but a long-lived phosphorescent blue has long proved elusive, so blue uses less efficient ones. A bigger blue area runs at lower current density, which slows its ageing and stops whites drifting yellow.",
+  "move": "The weakest part sets the design; everything else is sized around it.",
+  "keywords": [
+    "blue subpixels",
+    "phosphorescent emitters",
+    "oled lifetime",
+    "current density"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Universal Display Corporation, Form 10-K, 2024",
+  "source_kind": "company",
+  "reference": "Universal Display Corporation, Annual Report on Form 10-K for fiscal year 2023, 2024",
+  "written": "2026-09-26"
+}

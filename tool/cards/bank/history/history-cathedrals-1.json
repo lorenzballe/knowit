@@ -1,0 +1,42 @@
+{
+  "id": "history-cathedrals-1",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Building sandstone crushes under 40,000 kilonewtons per square metre and weighs 20 per cubic metre. How tall, in km, could a column rise?",
+  "value": 2,
+  "unit": "km",
+  "answer": "40,000 / 20 = 2,000 metres, which is 2 km.",
+  "move": "When a strong structure fails, suspect its shape before its material.",
+  "trap": "Guessing a few hundred metres, as if cathedrals strained their stone.",
+  "hint": "Each metre of height adds 20 kilonewtons on every square metre of the base.",
+  "steps": [
+    "Each metre of column adds 20 kN on each square metre of its base.",
+    "40,000 / 20 = 2,000 metres, which is 2 km."
+  ],
+  "simply": "Stack 2,000 one-metre cubes of sandstone: only then does the bottom cube begin to crush. The highest Gothic vault, at Beauvais, is 48 m.",
+  "keywords": [
+    "masonry",
+    "sandstone",
+    "crushing strength",
+    "jacques heyman",
+    "gothic cathedrals"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heyman, Ingenia, Royal Academy of Engineering",
+  "source_kind": "institution",
+  "reference": "https://www.ingenia.org.uk/articles/why-ancient-cathedrals-stand-up-the-structural-design-of-masonry/",
+  "written": "2026-09-26"
+}

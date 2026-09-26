@@ -1,0 +1,32 @@
+{
+  "id": "space-landing-sites-1",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was every Apollo landing timed for early morning, by the Moon's own clock?",
+  "answer": "For shadows. With the Sun roughly 5° to 15° above the horizon, every boulder and crater cast a long shadow; under a high Sun the grey ground looks flat and slopes cannot be judged. A lunar day lasts about 29.5 Earth days, so each site offered one good morning a month.",
+  "move": "The best time to look at rough ground is when the light is low.",
+  "keywords": [
+    "apollo landings",
+    "sun angle",
+    "shadows",
+    "landing site selection"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilhelms, To a Rocky Moon, 1993",
+  "source_kind": "book",
+  "reference": "Wilhelms, To a Rocky Moon: A Geologist's History of Lunar Exploration, University of Arizona Press, 1993",
+  "written": "2026-09-26"
+}

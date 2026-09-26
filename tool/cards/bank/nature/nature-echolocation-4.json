@@ -1,0 +1,43 @@
+{
+  "id": "nature-echolocation-4",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A bat's final buzz reaches about 200 calls a second. How close must prey be for each echo to beat the next call, in metres?",
+  "value": 0.85,
+  "unit": "metres",
+  "tolerance": 0.1,
+  "answer": "The sound must go out and back, so halve it: 1.7 / 2 ≈ 0.85 m.",
+  "move": "A signal that must return reaches only half as far as it travels.",
+  "trap": "Forgetting the round trip and answering 1.7 metres.",
+  "hint": "Find the time between two calls, then use the speed of sound, about 340 m/s.",
+  "steps": [
+    "At 200 calls a second, calls are 1/200 s = 5 milliseconds apart.",
+    "Sound in air covers about 340 m/s × 0.005 s = 1.7 m in that time.",
+    "The sound must go out and back, so halve it: 1.7 / 2 ≈ 0.85 m."
+  ],
+  "keywords": [
+    "terminal buzz",
+    "bats",
+    "echolocation",
+    "speed of sound",
+    "superfast muscles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elemans et al., Science, 2011",
+  "source_kind": "paper",
+  "reference": "Elemans, Mead, Jakobsen & Ratcliffe, Superfast muscles set maximum call rate in echolocating bats, Science, 2011",
+  "written": "2026-09-26"
+}

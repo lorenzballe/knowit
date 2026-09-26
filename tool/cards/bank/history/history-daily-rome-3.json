@@ -1,0 +1,43 @@
+{
+  "id": "history-daily-rome-3",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "In 2 BC just over 200,000 men drew Rome's public grain. Estimate the city's whole population, in millions.",
+  "value": 1,
+  "unit": "million people",
+  "withinFactor": 3,
+  "answer": "Add perhaps 400,000 slaves, foreigners and soldiers: about 1 million.",
+  "move": "A partial list becomes a census once you know who it leaves out.",
+  "trap": "Stopping at 200,000, as if the grain list counted everyone.",
+  "hint": "Start from the men on the grain list, then add their households and everyone left off it.",
+  "steps": [
+    "About 200,000 citizen men were on the grain list in 2 BC.",
+    "With wives and children, about 3 people per man: 600,000 citizens.",
+    "Add perhaps 400,000 slaves, foreigners and soldiers: about 1 million."
+  ],
+  "keywords": [
+    "grain dole",
+    "population",
+    "augustus",
+    "res gestae",
+    "fermi estimate"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Res Gestae 15; Morley, Metropolis and Hinterland",
+  "source_kind": "book",
+  "reference": "Morley, Metropolis and Hinterland: The City of Rome and the Italian Economy, 200 B.C.-A.D. 200, Cambridge University Press, 1996",
+  "written": "2026-09-26"
+}

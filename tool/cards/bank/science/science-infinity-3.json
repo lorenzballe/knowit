@@ -1,0 +1,33 @@
+{
+  "id": "science-infinity-3",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a shape be infinitely long yet hold only a finite amount of paint?",
+  "answer": "Yes. In 1641 Evangelista Torricelli showed that spinning the curve y = 1/x around its axis, from x = 1 outwards, makes an endless horn whose volume is exactly π cubic units. Its surface area, though, is infinite. The horn could be filled with paint, yet never given an even coat of it.",
+  "move": "Endless is a statement about length, not about amount.",
+  "keywords": [
+    "torricelli's trumpet",
+    "gabriel's horn",
+    "evangelista torricelli",
+    "volume",
+    "infinite length"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mancosu & Vailati, Isis, 1991",
+  "source_kind": "paper",
+  "reference": "Mancosu & Vailati, Torricelli's Infinitely Long Solid and Its Philosophical Reception in the Seventeenth Century, Isis, 1991",
+  "written": "2026-09-26"
+}

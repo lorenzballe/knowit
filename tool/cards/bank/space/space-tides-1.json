@@ -1,0 +1,42 @@
+{
+  "id": "space-tides-1",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The Sun pulls on Earth about 180 times harder than the Moon does. How big is the Sun's tide next to the Moon's?",
+  "options": [
+    "About half as big",
+    "About 180 times bigger",
+    "About the same size"
+  ],
+  "correct": 0,
+  "answer": "About half as big. A tide is the difference in pull between Earth's near and far sides, and that difference falls with the cube of distance. The Sun is 390 times farther off than the Moon, so its tide is only 46% of the Moon's: enough to swell the tides at new and full moon.",
+  "move": "Ask whether an effect follows the force or the difference across it.",
+  "trap": "Letting the 180-times figure set the size of the tide.",
+  "keywords": [
+    "tides",
+    "tidal force",
+    "sun",
+    "spring tides"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cartwright, Tides: A Scientific History, 1999",
+  "source_kind": "book",
+  "reference": "Cartwright, Tides: A Scientific History, Cambridge University Press, 1999",
+  "written": "2026-09-26"
+}

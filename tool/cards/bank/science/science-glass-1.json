@@ -1,0 +1,36 @@
+{
+  "id": "science-glass-1",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "also": [
+    "technology.the_internet.cables"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What stood in the way of sending telephone calls down glass fibres in the 1960s?",
+  "answer": "Dirt, mostly. In 1966 Charles Kao argued that glass itself was not the problem: traces of iron and other metals absorbed the light. Purified glass, he said, could lose under 20 decibels per kilometre, leaving 1% of the light after a kilometre. Corning managed it in 1970. Today's fibre still keeps 1% after 100 km.",
+  "move": "Before blaming the material, check what else is in it.",
+  "keywords": [
+    "optical fibre",
+    "charles kao",
+    "attenuation",
+    "impurities",
+    "corning"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Royal Swedish Academy of Sciences, Nobel background, 2009",
+  "source_kind": "institution",
+  "reference": "Royal Swedish Academy of Sciences, Scientific Background on the Nobel Prize in Physics 2009: Two Revolutionary Optical Technologies, 2009",
+  "written": "2026-09-26"
+}

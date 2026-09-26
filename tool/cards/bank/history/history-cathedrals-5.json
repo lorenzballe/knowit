@@ -1,0 +1,39 @@
+{
+  "id": "history-cathedrals-5",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Fire destroyed most of Chartres Cathedral in 1194. Roughly how long did rebuilding its main body take?",
+  "options": [
+    "About 300 years",
+    "About 25 years",
+    "About 100 years"
+  ],
+  "correct": 1,
+  "answer": "About 25 years. The fire of 1194 left the west towers, the façade between them and the crypt; the new cathedral was largely complete by about 1220, a 26-year campaign. Money poured in from across France, and the builders kept one design throughout, which is why Chartres looks all of a piece.",
+  "move": "The famous slow cases are remembered because they were slow.",
+  "trap": "About 300 years, since famous cathedrals took centuries to finish.",
+  "keywords": [
+    "chartres cathedral",
+    "gothic architecture",
+    "construction",
+    "fire of 1194"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "UNESCO World Heritage Centre, Chartres Cathedral",
+  "source_kind": "institution",
+  "reference": "https://whc.unesco.org/en/list/81/",
+  "written": "2026-09-26"
+}

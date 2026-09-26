@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sunk-cost-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who first called honouring sunk costs the Concorde fallacy, and about what?",
+  "answer": "Two biologists, writing about animal parents. In 1976 Richard Dawkins and Tamsin Carlisle argued that a parent favouring its older young does so not for what they have cost, but because they need less to finish raising. Steering by past investment was the error; they named it after the jet Britain and France kept funding.",
+  "move": "Behind a choice that seems to honour the past, look for a future reason.",
+  "keywords": [
+    "concorde fallacy",
+    "parental investment",
+    "richard dawkins",
+    "evolutionary biology",
+    "sunk costs"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dawkins & Carlisle, Nature, 1976",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/262131a0",
+  "written": "2026-09-26"
+}

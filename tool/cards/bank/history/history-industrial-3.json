@@ -1,0 +1,43 @@
+{
+  "id": "history-industrial-3",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Income per head in Britain grew about 0.5% a year in the early 1800s. At that rate, how many years to double?",
+  "options": [
+    "About 35 years",
+    "About 140 years",
+    "About 200 years"
+  ],
+  "correct": 1,
+  "answer": "About 140 years. A doubling takes roughly 70 divided by the growth rate in per cent: 70 / 0.5 = 140, five generations. Total output grew nearer 2% a year and doubled in about 35 years, but most of it fed a growing population, not richer lives.",
+  "move": "Divide 70 by any growth rate before calling it a revolution.",
+  "trap": "Dividing 100% by 0.5% gives 200, forgetting that growth compounds.",
+  "keywords": [
+    "industrial revolution",
+    "economic growth",
+    "rule of 70",
+    "income per head",
+    "compounding"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Crafts & Harley, Economic History Review, 1992",
+  "source_kind": "paper",
+  "reference": "Crafts & Harley, Output Growth and the British Industrial Revolution: A Restatement of the Crafts-Harley View, Economic History Review, 1992",
+  "written": "2026-09-26"
+}

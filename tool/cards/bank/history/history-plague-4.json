@@ -1,0 +1,33 @@
+{
+  "id": "history-plague-4",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In Strasbourg in February 1349, what drove the killing of the city's Jews?",
+  "answer": "Fear and debt, not plague deaths. Plague had not yet reached Strasbourg when a coup removed the council that protected the Jews. On 14 February they were killed, about 2,000 by one count; debts owed to them were cancelled and their cash shared out. The chronicler Königshofen wrote that money killed them.",
+  "move": "When blame lands on a creditor, ask who gains if the debts vanish.",
+  "keywords": [
+    "strasbourg",
+    "black death",
+    "persecution of jews",
+    "königshofen",
+    "debt"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Königshofen, via Fordham Internet History Sourcebook",
+  "source_kind": "primary_document",
+  "reference": "https://sourcebooks.fordham.edu/jewish/1348-jewsblackdeath.asp",
+  "written": "2026-09-26"
+}

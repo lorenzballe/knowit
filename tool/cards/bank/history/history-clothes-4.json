@@ -1,0 +1,33 @@
+{
+  "id": "history-clothes-4",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Edo Japan's rich merchants do when the law barred them from showy silks?",
+  "answer": "They made restraint the luxury. Sumptuary edicts barred townsmen from the most splendid fabrics, so merchants and kabuki actors set a new taste, iki, prizing subtlety. The display moved inward: sober colours and fine stripes outside, lavish silk linings within.",
+  "move": "Ban a display and the display moves somewhere the ban cannot reach.",
+  "keywords": [
+    "edo japan",
+    "sumptuary laws",
+    "iki",
+    "kimono",
+    "merchants"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Postrel, The Fabric of Civilization, 2020",
+  "source_kind": "book",
+  "reference": "Postrel, The Fabric of Civilization: How Textiles Made the World, Basic Books, 2020",
+  "written": "2026-09-26"
+}

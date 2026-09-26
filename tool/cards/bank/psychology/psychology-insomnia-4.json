@@ -1,0 +1,40 @@
+{
+  "id": "psychology-insomnia-4",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which instruction is a core part of the leading non-drug treatment for chronic insomnia?",
+  "options": [
+    "Spend less time in bed",
+    "Go to bed earlier to catch up",
+    "Nap to repay lost sleep"
+  ],
+  "correct": 0,
+  "answer": "Spend less time in bed. Sleep restriction, introduced by Arthur Spielman in 1987, first limits time in bed to roughly the time spent asleep, then extends it as sleep becomes efficient. Hours lying awake teach the brain that bed is a place for waking; a shorter window builds sleep pressure and knits sleep together.",
+  "move": "Sometimes the cure is less of what seems to be missing.",
+  "trap": "Going to bed earlier seems the obvious way to recover lost sleep.",
+  "keywords": [
+    "sleep restriction",
+    "cbt-i",
+    "insomnia treatment",
+    "time in bed",
+    "sleep pressure"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spielman, Saskin & Thorpy, Sleep, 1987",
+  "source_kind": "paper",
+  "reference": "Spielman, Saskin & Thorpy, Treatment of chronic insomnia by restriction of time in bed, Sleep, 1987",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "human_body-fingerprints-1",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What decides whether a fingertip grows a whorl, a loop or an arch?",
+  "answer": "Timing, largely. In the fourth month of pregnancy, ridges start at three spots on each fingertip, the pad's centre, near the nail and at the crease, and spread as waves, a Turing-type chemical pattern. Where the waves meet, and which set off first, fixes the type; chance fills in the details, even for identical twins.",
+  "move": "Where two spreading fronts meet can decide the whole shape.",
+  "keywords": [
+    "fingerprint formation",
+    "turing patterns",
+    "embryo development",
+    "skin ridges"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Glover et al., Cell, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/j.cell.2023.01.015",
+  "written": "2026-09-26"
+}

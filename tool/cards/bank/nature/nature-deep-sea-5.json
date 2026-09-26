@@ -1,0 +1,41 @@
+{
+  "id": "nature-deep-sea-5",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "also": [
+    "technology.where_things_come_from.rare_metals"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should mining of metal-rich nodules from the deep Pacific seabed go ahead?",
+  "sides": [
+    "Yes, let it start",
+    "No, hold it back"
+  ],
+  "answer": "Batteries need nickel, cobalt and manganese. On land they come from cleared forest, tailings dams and, for most cobalt, troubled mines in DR Congo. Nodules lie loose on the deep ocean floor, several of those metals in one rock. Refusing them does not stop mining; it keeps it where the harm is already proven.",
+  "move": "Whichever side you took, weigh known harms on land against unknown harms at sea.",
+  "counterpoint": "The abyss recovers on geological time. Nodules take millions of years to grow a few centimetres, and plough tracks from a 1989 mining test off Peru were still stark, with fewer animals, 26 years later. Most species collected in the Pacific's main nodule field have no name yet. Mining first means destroying what has not been described.",
+  "keywords": [
+    "deep-sea mining",
+    "polymetallic nodules",
+    "cobalt",
+    "clarion-clipperton zone",
+    "abyssal plain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simon-Lledó et al., Scientific Reports, 2019",
+  "source_kind": "paper",
+  "reference": "Simon-Lledó et al., Biological effects 26 years after simulated deep-sea mining, Scientific Reports, 2019",
+  "written": "2026-09-26"
+}

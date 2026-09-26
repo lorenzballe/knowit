@@ -1,0 +1,39 @@
+{
+  "id": "nature-currents-5",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: parts of the deep Pacific are still cooling from the Little Ice Age?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Water that sank from the surface centuries ago is only now reaching the deep Pacific. Comparing temperatures measured by HMS Challenger in the 1870s with modern ones, Gebbie and Huybers found cooling around 2 km down, a delayed echo of the cold centuries that ended around 1850, even as the surface warms.",
+  "move": "A slow system can still be answering a question asked centuries ago.",
+  "trap": "False, assuming the whole ocean warms in step with the air.",
+  "keywords": [
+    "little ice age",
+    "deep pacific",
+    "hms challenger",
+    "ocean circulation",
+    "ocean temperature"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Gebbie & Huybers, Science, 2019",
+  "source_kind": "paper",
+  "reference": "Gebbie & Huybers, The Little Ice Age and 20th-century deep Pacific cooling, Science, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-eternity-4",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1979 Freeman Dyson argued life could think forever on finite energy by slowing down. What, on current evidence, rules it out?",
+  "options": [
+    "The heat death of the universe",
+    "Proof that protons decay",
+    "Evidence that expansion is accelerating"
+  ],
+  "correct": 2,
+  "answer": "Evidence that expansion is accelerating. Dyson's thinkers would cool, slow and hibernate, spending ever less energy per thought, so the cold end was already allowed for. But since 1998 the expansion has been found to speed up, and Lawrence Krauss and Glenn Starkman argued in 2000 that this caps what any thinker can ever gather.",
+  "move": "Check whether the famous objection was already answered before repeating it.",
+  "trap": "Blaming the famous heat death, which his plan already allowed for.",
+  "keywords": [
+    "freeman dyson",
+    "eternal intelligence",
+    "accelerating universe",
+    "heat death",
+    "cosmology"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krauss and Starkman, Astrophysical Journal, 2000",
+  "source_kind": "paper",
+  "reference": "Dyson, Time without end, Reviews of Modern Physics 51, 1979; Krauss & Starkman, Life, the Universe, and Nothing, Astrophysical Journal 531, 2000",
+  "written": "2026-09-26"
+}

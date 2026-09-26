@@ -1,0 +1,33 @@
+{
+  "id": "nature-magnetic-sense-5",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did 56 years of salmon catch records reveal about how the fish find home?",
+  "answer": "That they carry a magnetic address. Sockeye returning to British Columbia's Fraser River must pass Vancouver Island by its north or south end. As the Earth's field slowly drifted, the share taking each route shifted towards the entrance whose magnetic signature best matched the river mouth's when the fish had left it as juveniles.",
+  "move": "A slow drift in the background can expose a hidden mechanism.",
+  "keywords": [
+    "sockeye salmon",
+    "fraser river",
+    "geomagnetic imprinting",
+    "vancouver island",
+    "homing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Putman et al., Current Biology, 2013",
+  "source_kind": "paper",
+  "reference": "Putman et al., Evidence for geomagnetic imprinting as a homing mechanism in Pacific salmon, Current Biology, 2013",
+  "written": "2026-09-26"
+}

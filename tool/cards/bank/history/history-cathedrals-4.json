@@ -1,0 +1,39 @@
+{
+  "id": "history-cathedrals-4",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the iron staples inside Notre-Dame de Paris can be dated by radiocarbon?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Medieval iron was smelted with charcoal, and a little of the charcoal's carbon stays in the metal, carrying its radiocarbon age. After the 2019 fire, six of twelve sampled staples were dated this way; the oldest were set in the 1160s, in the first building phase. Several thousand bind Notre-Dame's stones.",
+  "move": "Ask where a material's ingredients came from before ruling out a test.",
+  "trap": "False, since radiocarbon only dates things that were once alive.",
+  "keywords": [
+    "notre-dame de paris",
+    "iron staples",
+    "radiocarbon dating",
+    "charcoal",
+    "2019 fire"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "L'Héritier et al., PLOS ONE, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0280945",
+  "written": "2026-09-26"
+}

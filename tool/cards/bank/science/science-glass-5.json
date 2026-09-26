@@ -1,0 +1,40 @@
+{
+  "id": "science-glass-5",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "White sand and window glass are both mostly silica. Why is sand opaque?",
+  "options": [
+    "Light scatters off countless grain surfaces",
+    "Dark impurities absorb the light",
+    "Its atoms are arranged in crystals"
+  ],
+  "correct": 0,
+  "answer": "Light scatters off countless grain surfaces. Each boundary between silica and air bends and reflects a little light, and after thousands of them nothing passes straight through. Crystals are not the reason: a single quartz crystal is clear. Crush a clear pane and the heap turns white too, as clear ice turns into white snow.",
+  "move": "When two things differ in several ways, test each difference separately.",
+  "trap": "Crystal versus glass is the famous difference, so it must be the cause.",
+  "keywords": [
+    "light scattering",
+    "sand",
+    "silica",
+    "quartz",
+    "transparency"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bohren & Huffman, Scattering of Light, 1983",
+  "source_kind": "book",
+  "reference": "Bohren & Huffman, Absorption and Scattering of Light by Small Particles, Wiley, 1983",
+  "written": "2026-09-26"
+}

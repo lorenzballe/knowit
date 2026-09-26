@@ -1,0 +1,39 @@
+{
+  "id": "science-gravity-2",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Descend 2,900 km from the surface to the top of Earth's core. What does gravity do on the way down?",
+  "options": [
+    "It rises by about a tenth",
+    "It falls to about half",
+    "It falls by about a tenth"
+  ],
+  "correct": 0,
+  "answer": "It rises by about a tenth, to roughly 10.7 m/s². The rock above cancels itself out, and so much of Earth's mass is packed into its iron core that nearing it outweighs the rock left behind. George Airy found the pull already stronger at the bottom of a 383 m coal pit in 1854.",
+  "move": "Ask where the weight is concentrated before assuming things thin out evenly.",
+  "trap": "Picturing a uniform Earth, where gravity falls steadily with depth.",
+  "keywords": [
+    "earth's core",
+    "gravity with depth",
+    "george airy",
+    "harton pit"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dziewonski & Anderson, PREM, 1981",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/0031-9201(81)90046-7",
+  "written": "2026-09-26"
+}

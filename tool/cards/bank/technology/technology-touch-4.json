@@ -1,0 +1,38 @@
+{
+  "id": "technology-touch-4",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: people can notice a 10-millisecond lag when dragging an object across a touchscreen?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Microsoft Research tests, people told a 1 ms prototype apart from versions lagging only a few milliseconds more while dragging, and typical devices of 2012 lagged 50 to 200 ms. Under a moving finger, lag shows up as distance: the object trails behind the fingertip like a leash.",
+  "move": "Delay is invisible in a reply and obvious in anything that follows you.",
+  "trap": "False, anchored on the tenth of a second usually called instant.",
+  "keywords": [
+    "touch latency",
+    "microsoft research",
+    "dragging",
+    "perception"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ng et al., ACM UIST, 2012",
+  "source_kind": "paper",
+  "reference": "Ng, Lepinski, Wigdor, Sanders & Dietz, Designing for Low-Latency Direct-Touch Input, ACM UIST, 2012",
+  "written": "2026-09-26"
+}

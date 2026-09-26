@@ -1,0 +1,33 @@
+{
+  "id": "space-landing-sites-2",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Moon's south pole both the most prized and the most awkward place to land?",
+  "answer": "Because the Moon's axis is tilted only about 1.5°, so at the pole the Sun never climbs higher than that. Some crater floors nearby have not been sunlit for perhaps billions of years and sit below −230 °C, cold enough to trap water ice, while the Sun skims the rims and throws shadows kilometres long.",
+  "move": "A place's prize and its hazard often have the same cause.",
+  "keywords": [
+    "lunar south pole",
+    "permanently shadowed craters",
+    "water ice",
+    "axial tilt",
+    "artemis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paige et al., Science, 2010",
+  "source_kind": "paper",
+  "reference": "Paige et al., Diviner Lunar Radiometer Observations of Cold Traps in the Moon's South Polar Region, Science, 2010",
+  "written": "2026-09-26"
+}

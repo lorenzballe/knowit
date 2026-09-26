@@ -1,0 +1,42 @@
+{
+  "id": "space-event-horizons-3",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when two black holes merge and radiate away energy, their total horizon area can shrink?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The first merger ever detected, in 2015, turned holes of 36 and 29 solar masses into one of 62, shedding 3 as gravitational waves. But horizon area grows with the square of the mass, so the single hole has far more surface than the pair. Hawking's 1971 theorem forbids any fall, quantum effects aside.",
+  "move": "Squares of the parts never add up to the square of the whole.",
+  "trap": "Assuming a hole that loses mass must lose surface too.",
+  "keywords": [
+    "area theorem",
+    "black hole mergers",
+    "gravitational waves",
+    "gw150914",
+    "stephen hawking"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Isi et al., Physical Review Letters, 2021",
+  "source_kind": "paper",
+  "reference": "Isi, Farr, Giesler, Scheel & Teukolsky, Testing the Black-Hole Area Law with GW150914, Physical Review Letters, 2021",
+  "written": "2026-09-26"
+}

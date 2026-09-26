@@ -1,0 +1,33 @@
+{
+  "id": "technology-factories-2",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when fire gutted the plant making 99% of one brake valve Toyota needed, in 1997?",
+  "answer": "Toyota's lines were rolling again within about a week. Aisin handed out its drawings, and dozens of firms in Toyota's network, most of which had never made the part, improvised valves on whatever machines they had, with no contracts or prices agreed first. One of the stand-in valve makers built sewing machines.",
+  "move": "Judge a supply chain by who will help when it breaks.",
+  "keywords": [
+    "toyota",
+    "aisin fire",
+    "single sourcing",
+    "keiretsu",
+    "supply chains"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nishiguchi & Beaudet, Sloan Management Review, 1998",
+  "source_kind": "paper",
+  "reference": "Nishiguchi & Beaudet, The Toyota Group and the Aisin Fire, Sloan Management Review 40(1), 1998",
+  "written": "2026-09-26"
+}

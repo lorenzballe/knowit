@@ -1,0 +1,32 @@
+{
+  "id": "technology-typewriters-4",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On many typewriters, which key typed the number 1?",
+  "answer": "The lowercase l. Many machines had no key for 1, because every key needed its own metal arm and a small l looked close enough. An exclamation mark was an apostrophe, a backspace and a full stop. The same thrift left one straight quotation mark for opening and closing, and computer keyboards kept it.",
+  "move": "Where users can improvise a missing part, makers will leave it out.",
+  "keywords": [
+    "typewriter keys",
+    "number one",
+    "quotation marks",
+    "keyboards"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Houston, Shady Characters, 2013",
+  "source_kind": "book",
+  "reference": "Houston, Shady Characters: The Secret Life of Punctuation, Symbols, and Other Typographical Marks, W. W. Norton, 2013",
+  "written": "2026-09-26"
+}

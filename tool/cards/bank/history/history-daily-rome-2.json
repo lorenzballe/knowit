@@ -1,0 +1,33 @@
+{
+  "id": "history-daily-rome-2",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was wrong with Rome's first public sundial?",
+  "answer": "It was made for another city. Taken from Catania, Sicily, in 263 BC and set in the Forum, it was drawn for a latitude four degrees further south, so its lines disagreed with Rome's hours. Romans followed it anyway for 99 years, until the censor Quintus Marcius Philippus put a corrected dial beside it.",
+  "move": "Borrowed tools carry the assumptions of the place they were made.",
+  "keywords": [
+    "sundial",
+    "catania",
+    "timekeeping",
+    "pliny the elder",
+    "latitude"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pliny the Elder, Natural History 7.214",
+  "source_kind": "primary_document",
+  "reference": "https://www.attalus.org/translate/pliny_hn7c.html",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-night-vision-1",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: an elephant hawkmoth can tell blue from yellow by starlight alone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Kelber, Balkenius and Warrant trained elephant hawkmoths to find sugar at blue or yellow targets, then dimmed the light: the moths still picked the right colour at starlight levels, where human eyes see only grey. Their eyes pool light from many facets onto each receptor, buying the sensitivity that colour vision needs.",
+  "move": "Your own limits are a sample of one, not a law.",
+  "trap": "False, assuming every eye goes grey in the dark, as ours do.",
+  "keywords": [
+    "elephant hawkmoth",
+    "colour vision",
+    "starlight",
+    "compound eyes",
+    "night vision"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kelber, Balkenius & Warrant, Nature, 2002",
+  "source_kind": "paper",
+  "reference": "Kelber, Balkenius & Warrant, Scotopic colour vision in nocturnal hawkmoths, Nature, 2002",
+  "written": "2026-09-26"
+}

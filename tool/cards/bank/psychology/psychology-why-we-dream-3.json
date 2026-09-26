@@ -1,0 +1,39 @@
+{
+  "id": "psychology-why-we-dream-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Matched against diaries of the dreamers' days, how often did a dream replay an event just as it happened?",
+  "options": [
+    "In about half of dreams",
+    "In most dreams",
+    "Almost never"
+  ],
+  "correct": 2,
+  "answer": "Almost never. People logged their days and reported their dreams, and the two were matched. Fragments of waking life, a person, a place, a worry, turned up often, but a waking episode replayed as it happened was vanishingly rare. Dreams borrow the day's props, not its script.",
+  "move": "A story built from real fragments can still be a story nobody lived.",
+  "trap": "Recalling a few vivid dreams that seemed to replay the day.",
+  "keywords": [
+    "dream content",
+    "episodic memory",
+    "dream diaries",
+    "day residue"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fosse et al., Journal of Cognitive Neuroscience, 2003",
+  "source_kind": "paper",
+  "reference": "Fosse, Fosse, Hobson & Stickgold, Dreaming and episodic memory: a functional dissociation?, Journal of Cognitive Neuroscience, 2003",
+  "written": "2026-09-26"
+}

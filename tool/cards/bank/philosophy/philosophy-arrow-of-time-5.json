@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-arrow-of-time-5",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Karl Popper say a stone dropped into a pond shows about the direction of time?",
+  "answer": "An arrow that owes nothing to entropy, he claimed. Rings spread out from the splash; run the film backwards and rings would have to converge from the whole shore at once, fed by countless distant sources in perfect step. Popper argued so in Nature in 1956. Whether this arrow is truly separate is still debated.",
+  "move": "Ask what coordination the reverse of a process would require.",
+  "keywords": [
+    "karl popper",
+    "radiation arrow",
+    "waves",
+    "irreversibility",
+    "pond"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Popper, Nature, 1956",
+  "source_kind": "paper",
+  "reference": "Popper, The Arrow of Time, Nature 177, 1956, p. 538",
+  "written": "2026-09-26"
+}

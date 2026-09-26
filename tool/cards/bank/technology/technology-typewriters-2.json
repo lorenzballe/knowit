@@ -1,0 +1,40 @@
+{
+  "id": "technology-typewriters-2",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1984, NSA engineers found Soviet bugs in 16 IBM typewriters at the US embassy in Moscow. What did they capture?",
+  "options": [
+    "Conversations in the room",
+    "Images of each finished page",
+    "Every key the typist pressed"
+  ],
+  "correct": 2,
+  "answer": "Every keystroke. Hidden in a metal bar running across each machine, sensors read the movements that selected each character and radioed the text out in short bursts. Some had been in place since 1976, capturing words before they could be encrypted. It was the first known electronic keylogger.",
+  "move": "Guard the place where a secret is written, not only where it travels.",
+  "trap": "Room conversations, the job of a classic hidden microphone.",
+  "keywords": [
+    "gunman project",
+    "ibm selectric",
+    "keylogger",
+    "us embassy moscow",
+    "espionage"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maneki, NSA Center for Cryptologic History, 2007",
+  "source_kind": "institution",
+  "reference": "Maneki, Learning from the Enemy: The GUNMAN Project, NSA Center for Cryptologic History, 2007",
+  "written": "2026-09-26"
+}

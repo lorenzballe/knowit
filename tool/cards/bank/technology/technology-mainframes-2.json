@@ -1,0 +1,33 @@
+{
+  "id": "technology-mainframes-2",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Until 1969, what did an IBM mainframe customer pay for the software?",
+  "answer": "Nothing separately: programs, training and engineers' help were bundled into the machine's price or rent. In June 1969, facing a US antitrust suit, IBM announced it would charge for many programs and services on their own, opening its customers to independent software firms. Many historians date the software industry from that day.",
+  "move": "Something given away free is hard for anyone else to sell.",
+  "keywords": [
+    "unbundling",
+    "ibm",
+    "software industry",
+    "antitrust",
+    "mainframes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grad, IEEE Annals, 2002",
+  "source_kind": "paper",
+  "reference": "Grad, A Personal Recollection: IBM's Unbundling of Software and Services, IEEE Annals of the History of Computing, 2002",
+  "written": "2026-09-26"
+}

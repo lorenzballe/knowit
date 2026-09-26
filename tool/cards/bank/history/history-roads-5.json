@@ -1,0 +1,33 @@
+{
+  "id": "history-roads-5",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who supplied the carts and mules for Roman officials travelling on state business?",
+  "answer": "The towns along the road. Under Tiberius, an edict at Sagalassos, in modern Turkey, made the town keep up to ten carts and ten mules for officials, at fixed fees in bronze coin: 10 asses a cart and 4 a mule per schoenus, a local measure of distance. Many had simply taken them unpaid.",
+  "move": "When a service looks free, find out who was made to provide it.",
+  "keywords": [
+    "sagalassos",
+    "requisition",
+    "cursus publicus",
+    "tiberius",
+    "inscription"
+  ],
+  "era": "ancient",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edict of Sotidius Strabo, Sagalassos",
+  "source_kind": "primary_document",
+  "reference": "https://www.judaism-and-rome.org/edict-governor-galatia-requisitioning-transport-and-accommodation",
+  "written": "2026-09-26"
+}

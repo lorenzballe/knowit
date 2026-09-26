@@ -1,0 +1,40 @@
+{
+  "id": "technology-mainframes-4",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The first computer to run a business's routine office work, in 1951, was built by what kind of company?",
+  "options": [
+    "A national bank",
+    "A tea-shop chain",
+    "An electronics maker"
+  ],
+  "correct": 1,
+  "answer": "A tea-shop chain. J. Lyons & Co., which ran hundreds of teashops and bakeries on thin margins, built LEO I itself after studying early computers in America and Cambridge. From late 1951 it valued the bakeries' weekly output. Lyons went on to sell LEO computers to other firms.",
+  "move": "The first users of a tool are those with the most tedious volume.",
+  "trap": "A bank, since banks had the most sums to do.",
+  "keywords": [
+    "leo i",
+    "j. lyons",
+    "business computing",
+    "teashops",
+    "payroll"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ferry, A Computer Called LEO, 2003",
+  "source_kind": "book",
+  "reference": "Ferry, A Computer Called LEO: Lyons Tea Shops and the World's First Office Computer, Fourth Estate, 2003",
+  "written": "2026-09-26"
+}

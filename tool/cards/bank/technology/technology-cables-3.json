@@ -1,0 +1,42 @@
+{
+  "id": "technology-cables-3",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "also": [
+    "nature.oceans.deep_sea"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1929 an earthquake off Newfoundland was followed by 12 transatlantic cables snapping one after another over 13 hours. What broke them?",
+  "options": [
+    "A mud avalanche racing downslope",
+    "The earthquake's shaking",
+    "Aftershocks spreading along the seabed"
+  ],
+  "correct": 0,
+  "answer": "A mud avalanche racing downslope. The quake shook loose sediment on the continental slope, which poured down as a dense underwater current. Cables nearest the epicentre broke at once; those farther downslope failed hours later. The timed breaks let geologists clock the flow at tens of kilometres an hour, the first clocking of one.",
+  "move": "When failures arrive in sequence, the timing is a clue to the cause.",
+  "trap": "The earthquake's shaking, because the breaks followed the quake.",
+  "keywords": [
+    "grand banks earthquake",
+    "turbidity currents",
+    "telegraph cables",
+    "heezen and ewing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heezen & Ewing, American Journal of Science, 1952",
+  "source_kind": "paper",
+  "reference": "Heezen & Ewing, Turbidity currents and submarine slumps, and the 1929 Grand Banks earthquake, American Journal of Science 250, 1952",
+  "written": "2026-09-26"
+}

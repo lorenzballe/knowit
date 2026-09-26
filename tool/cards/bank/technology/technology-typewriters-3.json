@@ -1,0 +1,39 @@
+{
+  "id": "technology-typewriters-3",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: on the first typewriters sold, the typist could not see the words being typed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The 1874 Sholes and Glidden, sold by Remington, struck upwards against the underside of the paper roll, so each line stayed hidden until the typist lifted the carriage to check. It typed only capitals, too. Machines that showed the text as it was typed took over only around 1900, led by the Underwood.",
+  "move": "What seems essential in a tool was often added a generation later.",
+  "trap": "Assuming a writing machine would, of course, show its writing.",
+  "keywords": [
+    "sholes and glidden",
+    "remington",
+    "upstrike",
+    "visible typing",
+    "underwood"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Current, The Typewriter, 1954",
+  "source_kind": "book",
+  "reference": "Current, The Typewriter and the Men Who Made It, University of Illinois Press, 1954",
+  "written": "2026-09-26"
+}

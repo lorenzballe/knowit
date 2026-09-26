@@ -1,0 +1,39 @@
+{
+  "id": "space-landing-sites-3",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What set the farthest the Apollo astronauts could drive their lunar rover from the lander?",
+  "options": [
+    "The charge in the rover's batteries",
+    "The radio range to the lander",
+    "The distance the crew could walk"
+  ],
+  "correct": 2,
+  "answer": "The distance the crew could walk. Planners assumed the rover might break down at the worst moment, so each drive stayed within the distance two astronauts could cover walking back, on the oxygen and cooling water left in their backpacks. Apollo 17's longest trip reached about 7.6 km from the lander.",
+  "move": "Plan the trip around the breakdown, not around the working machine.",
+  "trap": "Assuming the machine's own range, its battery, was the limit.",
+  "keywords": [
+    "lunar roving vehicle",
+    "walkback limit",
+    "apollo 17",
+    "life support"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA, Apollo 17 Mission Report, 1973",
+  "source_kind": "institution",
+  "reference": "NASA Manned Spacecraft Center, Apollo 17 Mission Report, 1973",
+  "written": "2026-09-26"
+}

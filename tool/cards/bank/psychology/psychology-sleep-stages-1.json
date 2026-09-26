@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sleep-stages-1",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Every sleeper cycles into rapid eye movement sleep. Why did science notice it only in 1953?",
+  "answer": "Because sleep was thought a steady shutdown, and all-night recordings rarely tracked the eyes. Eugene Aserinsky, a graduate student in Nathaniel Kleitman's Chicago laboratory, did, recording sleepers including his 8-year-old son, Armond. Bursts of darting eye movements came at regular intervals, and sleepers woken during them usually reported dreams.",
+  "move": "What nobody measures, nobody discovers, however often it happens.",
+  "keywords": [
+    "rem sleep",
+    "eugene aserinsky",
+    "eye movements",
+    "sleep research",
+    "dreams"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aserinsky & Kleitman, Science, 1953",
+  "source_kind": "paper",
+  "reference": "Aserinsky & Kleitman, Regularly occurring periods of eye motility, and concomitant phenomena, during sleep, Science, 1953",
+  "written": "2026-09-26"
+}

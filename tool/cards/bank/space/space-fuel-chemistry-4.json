@@ -1,0 +1,33 @@
+{
+  "id": "space-fuel-chemistry-4",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the engine that lifted Apollo astronauts off the Moon have no igniter?",
+  "answer": "Because its propellants ignite on contact. A hydrazine blend and nitrogen tetroxide burst into flame the moment they meet, so the engine needed only valves to open; pressurised helium pushed them in, so it had no pumps either. With no backup, every part left out was one that could not fail. Both are toxic.",
+  "move": "The most reliable part is the one that is not there.",
+  "keywords": [
+    "hypergolic propellants",
+    "apollo lunar module",
+    "hydrazine",
+    "nitrogen tetroxide",
+    "ascent engine"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kelly, Moon Lander, 2001",
+  "source_kind": "book",
+  "reference": "Kelly, Moon Lander: How We Developed the Apollo Lunar Module, Smithsonian Institution Press, 2001",
+  "written": "2026-09-26"
+}

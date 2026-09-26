@@ -1,0 +1,38 @@
+{
+  "id": "technology-data-centres-4",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in a 2007 study of 100,000 data-centre disks, drives were replaced several times more often than their ratings implied?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Datasheets promised mean times to failure of up to 1.5 million hours, implying under 1% of drives failing a year; the sites replaced typically 2 to 4%, and up to 13%. The ratings came from short tests on new drives in clean conditions. A warehouse of five-year-old disks is a different population.",
+  "move": "Ask which units were tested before trusting a figure about yours.",
+  "trap": "False, trusting a rating as if it measured drives like yours.",
+  "keywords": [
+    "hard drives",
+    "failure rates",
+    "mttf",
+    "field data"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schroeder & Gibson, USENIX FAST, 2007",
+  "source_kind": "paper",
+  "reference": "Schroeder & Gibson, Disk failures in the real world: What does an MTTF of 1,000,000 hours mean to you?, USENIX FAST, 2007",
+  "written": "2026-09-26"
+}

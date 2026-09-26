@@ -1,0 +1,40 @@
+{
+  "id": "history-roads-1",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "A 2025 atlas traced 299,171 km of Roman roads. For what share of that length is the exact route known for certain?",
+  "options": [
+    "About 90%",
+    "About 40%",
+    "About 3%"
+  ],
+  "correct": 2,
+  "answer": "About 3%. The Itiner-e dataset, published in 2025, nearly doubled the previous count of 188,555 km, but only 2.7% of its length follows a precisely known course. Almost 90% is placed from texts, old maps and remote sensing, and 7.4% is hypothetical. Most of the network is an informed line on a modern map.",
+  "move": "What survives in plain sight is rarely a fair sample of what existed.",
+  "trap": "About 90%, because the famous stretches still show on the ground.",
+  "keywords": [
+    "roman roads",
+    "itiner-e",
+    "archaeology",
+    "mapping",
+    "remote sensing"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "de Soto et al., Scientific Data, 2025",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/s41597-025-06140-z",
+  "written": "2026-09-26"
+}

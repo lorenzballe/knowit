@@ -1,0 +1,43 @@
+{
+  "id": "technology-limits-3",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "also": [
+    "medicine.diagnosis.scans"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "A pneumonia-spotting AI could tell which hospital an X-ray came from. Why did that help its scores?",
+  "options": [
+    "Sharper scanners at one hospital",
+    "Much more pneumonia at one hospital",
+    "Stricter labelling at one hospital"
+  ],
+  "correct": 1,
+  "answer": "Much more pneumonia at one hospital: about 34% of its X-rays, against about 1% at the other two sites. The model could recognise each hospital from details of its scanners and image processing almost perfectly, so 'came from the busy hospital' predicted pneumonia. Tested elsewhere, where that clue meant nothing, it often scored worse.",
+  "move": "Before crediting a signal, ask what else travels with it.",
+  "trap": "Sharper scanners, as if the model were reading the lungs better.",
+  "keywords": [
+    "medical imaging",
+    "pneumonia",
+    "shortcut learning",
+    "hospitals",
+    "deep learning"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zech et al., PLOS Medicine, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pmed.1002683",
+  "written": "2026-09-26"
+}

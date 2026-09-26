@@ -1,0 +1,39 @@
+{
+  "id": "science-infinity-5",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "The sum 1 + 1/2 + 1/3 + 1/4 + … grows without limit. How many terms does it take to pass 100?",
+  "options": [
+    "About ten thousand",
+    "About a trillion",
+    "A 44-digit number"
+  ],
+  "correct": 2,
+  "answer": "A 44-digit number: roughly 15 followed by 42 zeros. The total grows like a logarithm: each extra 1 needs about 2.7 times as many terms as the one before. A billion terms reach only about 21; a computer adding a billion terms a second since the Big Bang would be near 62.",
+  "move": "Growing forever is not the same as growing large.",
+  "trap": "About a trillion: a number that big feels like it must be enough.",
+  "keywords": [
+    "harmonic series",
+    "logarithm",
+    "divergent series",
+    "big numbers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Havil, Gamma: Exploring Euler's Constant, 2003",
+  "source_kind": "book",
+  "reference": "Havil, Gamma: Exploring Euler's Constant, Princeton University Press, 2003",
+  "written": "2026-09-26"
+}

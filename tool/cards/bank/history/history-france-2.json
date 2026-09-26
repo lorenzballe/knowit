@@ -1,0 +1,40 @@
+{
+  "id": "history-france-2",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Nobles were about 8% of the 16,594 people sentenced to death in the Terror. Roughly what share of France's nobles died this way?",
+  "options": [
+    "About 1%",
+    "About 8%",
+    "About 40%"
+  ],
+  "correct": 0,
+  "answer": "About 1%, at most. 8% of 16,594 is about 1,300 people, and France had well over 100,000 nobles, though estimates range. The typical victim was a peasant or worker: 72% of the condemned, often for hoarding, dodging the draft, desertion or revolt.",
+  "move": "Always ask which total a percentage is taken from.",
+  "trap": "Reading the nobles' share of the victims as the victims' share of nobles.",
+  "keywords": [
+    "reign of terror",
+    "nobility",
+    "death sentences",
+    "revolutionary tribunals",
+    "donald greer"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Greer, The Incidence of the Terror, 1935",
+  "source_kind": "book",
+  "reference": "Greer, The Incidence of the Terror during the French Revolution: A Statistical Interpretation, Harvard University Press, 1935",
+  "written": "2026-09-26"
+}

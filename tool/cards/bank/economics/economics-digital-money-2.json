@@ -1,0 +1,33 @@
+{
+  "id": "economics-digital-money-2",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long before Bitcoin could customers of a real bank spend anonymous digital cash?",
+  "answer": "More than a decade. From 1995, Mark Twain Bank in Missouri issued eCash built on David Chaum's 1982 idea of blind signatures: a bank signs a digital coin without seeing its serial number, so spending leaves no trail to the customer. Too few shops joined, and Chaum's company DigiCash filed for bankruptcy in November 1998.",
+  "move": "A payment method works only when both sides already use it.",
+  "keywords": [
+    "digicash",
+    "ecash",
+    "david chaum",
+    "blind signatures",
+    "digital cash"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Brunton, Digital Cash, Princeton University Press, 2019",
+  "source_kind": "book",
+  "reference": "Brunton, Digital Cash: The Unknown History of the Anarchists, Utopians, and Technologists Who Created Cryptocurrency, Princeton University Press, 2019",
+  "written": "2026-09-26"
+}

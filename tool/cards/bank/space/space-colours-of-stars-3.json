@@ -1,0 +1,33 @@
+{
+  "id": "space-colours-of-stars-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where in the rainbow is sunlight at its brightest?",
+  "answer": "It depends on how the spectrum is sliced. Measured per nanometre of wavelength, the Sun's output peaks near 500 nm, blue-green. Measured per unit of frequency, the same light peaks near 880 nm, in the infrared. Neither is the true peak; the claim that eyes evolved to match it assumes one.",
+  "move": "Before trusting where a curve peaks, ask how its axis was cut.",
+  "keywords": [
+    "sunlight",
+    "wien's law",
+    "solar spectrum",
+    "human vision",
+    "infrared"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Soffer & Lynch, American Journal of Physics, 1999",
+  "source_kind": "paper",
+  "reference": "doi:10.1119/1.19170",
+  "written": "2026-09-26"
+}

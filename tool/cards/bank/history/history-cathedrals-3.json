@@ -1,0 +1,33 @@
+{
+  "id": "history-cathedrals-3",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Beauvais Cathedral, with the highest Gothic vault ever built, have no nave?",
+  "answer": "Its builders kept overreaching. The 48 m choir vault fell in 1284 and was rebuilt with extra piers. Then, instead of a nave, they raised a 153 m crossing tower, finished in 1569; it fell in 1573. The money never recovered, and a 10th-century church still stands where the nave should be.",
+  "move": "Look at what was never built to see what the ambition cost.",
+  "keywords": [
+    "beauvais cathedral",
+    "gothic vault",
+    "collapse",
+    "basse-oeuvre",
+    "crossing tower"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Cathédrale de Beauvais, historical overview",
+  "source_kind": "institution",
+  "reference": "https://cathedrale-beauvais.fr/en/historical-overview-of-beauvais-cathedral/",
+  "written": "2026-09-26"
+}

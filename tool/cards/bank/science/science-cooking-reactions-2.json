@@ -1,0 +1,38 @@
+{
+  "id": "science-cooking-reactions-2",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the temperature at which table sugar turns liquid depends on how fast it is heated?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Sugar crystals do not melt at a fixed point as ice does: they break down chemically, and the crystal falls apart as they do. Illinois food chemists showed in 2011 that the faster sucrose is heated, the hotter it gets before it liquefies. Runny sugar in a pan is already decomposing.",
+  "move": "A number printed in a table may depend on how it was measured.",
+  "trap": "Assuming every solid has one fixed melting point, like ice.",
+  "keywords": [
+    "sucrose",
+    "melting point",
+    "thermal decomposition",
+    "table sugar"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee et al., J. Agric. Food Chem., 2011",
+  "source_kind": "paper",
+  "reference": "https://pubs.acs.org/jafcau/article/59/2/684/1354342/Investigation-of-the-Heating-Rate-Dependency",
+  "written": "2026-09-26"
+}

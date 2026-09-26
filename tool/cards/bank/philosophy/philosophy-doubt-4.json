@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-doubt-4",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Pyrrho, founder of Pyrrhonian scepticism, wrote nothing. Whose surviving books tell us most of what Pyrrhonists argued?",
+  "options": [
+    "A doctor's, some five centuries later",
+    "His pupils', written in his lifetime",
+    "Cicero's, in his dialogues"
+  ],
+  "correct": 0,
+  "answer": "A doctor's, some five centuries later. Sextus Empiricus, a physician writing around 200 AD, is the only Pyrrhonist whose books survive whole; Pyrrho's pupil Timon survives in fragments. So ancient scepticism reaches us as one late author systematised it — the version printed in Latin in 1562 that fed Montaigne and provoked Descartes.",
+  "move": "Ask who wrote the only surviving account before trusting it as the whole story.",
+  "trap": "Assuming the records closest to the founder are the ones that survived.",
+  "keywords": [
+    "pyrrho",
+    "sextus empiricus",
+    "pyrrhonism",
+    "timon",
+    "lost texts"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Popkin, The History of Scepticism, 2003",
+  "source_kind": "book",
+  "reference": "Popkin, The History of Scepticism: From Savonarola to Bayle, Oxford University Press, 2003",
+  "written": "2026-09-26"
+}

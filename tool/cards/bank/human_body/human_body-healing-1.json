@@ -1,0 +1,33 @@
+{
+  "id": "human_body-healing-1",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a child regrow a fingertip that has been cut off?",
+  "answer": "Often, yes, if the cut lies beyond the last joint and the wound heals under a dressing rather than being stitched shut. In 1974 Illingworth reported children in Sheffield regrowing tips, nail included, within about three months. Regrowth seems to depend on the surviving nail bed, and the ability fades after about age 11.",
+  "move": "Closing a wound neatly can stop it rebuilding what was lost.",
+  "keywords": [
+    "fingertip regeneration",
+    "children",
+    "nail bed",
+    "amputation",
+    "wound dressing"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Illingworth, Journal of Pediatric Surgery, 1974",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/S0022-3468(74)80220-4",
+  "written": "2026-09-26"
+}

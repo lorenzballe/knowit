@@ -1,0 +1,40 @@
+{
+  "id": "space-expansion-3",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Edwin Hubble's 1929 measurement of the expansion rate implied a universe of what age?",
+  "options": [
+    "About 2 billion years",
+    "About 14 billion years",
+    "About 200 billion years"
+  ],
+  "correct": 0,
+  "answer": "About 2 billion years. Hubble's rate was about seven times today's value, because his distances were far too small. Run backwards, that made the universe younger than the Earth's rocks as geologists were dating them. The clash eased only in the 1950s, when Walter Baade recalibrated the distance scale.",
+  "move": "A measurement is only as good as the ruler behind it.",
+  "trap": "The well-known modern age of 13.8 billion years comes to mind first.",
+  "keywords": [
+    "edwin hubble",
+    "hubble constant",
+    "age of the universe",
+    "walter baade",
+    "distance scale"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Kragh, Cosmology and Controversy, 1996",
+  "source_kind": "book",
+  "reference": "Kragh, Cosmology and Controversy: The Historical Development of Two Theories of the Universe, Princeton University Press, 1996",
+  "written": "2026-09-26"
+}

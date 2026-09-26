@@ -1,0 +1,38 @@
+{
+  "id": "technology-telephones-4",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in 2002 the US Congress declared Antonio Meucci the inventor of the telephone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Only the House of Representatives acted, with a resolution that has no force of law: it honoured Meucci and said his work in the invention of the telephone should be acknowledged. It noted that had he paid $10 to keep his 1871 notice of invention alive, Bell's patent could not have been issued.",
+  "move": "Before repeating what a body declared, read what the document says.",
+  "trap": "Mistaking a one-chamber resolution, retold in headlines, for a legal ruling.",
+  "keywords": [
+    "antonio meucci",
+    "alexander graham bell",
+    "house resolution 269",
+    "telephone patent"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US House Resolution 269, 107th Congress, 2002",
+  "source_kind": "primary_document",
+  "reference": "US House of Representatives, H.Res. 269, 107th Congress, 2002",
+  "written": "2026-09-26"
+}

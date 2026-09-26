@@ -1,0 +1,38 @@
+{
+  "id": "technology-chips-5",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: on a '3 nm' chip, neighbouring transistor gates sit about 3 nm apart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. On TSMC's 3 nm process the gates sit roughly 50 nm apart, and no feature of the transistor layout measures 3 nm. Since the late 1990s the node name has been a generation label, shrunk by about 0.7 each step to signal twice the density, not a ruler.",
+  "move": "A number in a product's name is marketing until a spec sheet confirms it.",
+  "trap": "Taking the number in the name as a measurement.",
+  "keywords": [
+    "process nodes",
+    "transistors",
+    "tsmc",
+    "gate pitch"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Samuel K. Moore, IEEE Spectrum, 2020",
+  "source_kind": "news_archive",
+  "reference": "Samuel K. Moore, A Better Way to Measure Progress in Semiconductors, IEEE Spectrum, 2020",
+  "written": "2026-09-26"
+}

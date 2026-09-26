@@ -1,0 +1,40 @@
+{
+  "id": "space-supermassive-ones-1",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "At its top feeding rate, a black hole doubles in mass every 35 million years. How long from 100 suns to a billion?",
+  "options": [
+    "About 80 million years",
+    "About 8 billion years",
+    "About 800 million years"
+  ],
+  "correct": 2,
+  "answer": "About 800 million years. The limit is set by the glare of infalling gas pushing the rest away. From 100 suns to a billion is a factor of 10 million, only 23 doublings: 23 × 35 million years. Yet a quasar seen 690 million years after the Big Bang already held 800 million suns.",
+  "move": "Count the doublings before judging how long a huge multiple takes.",
+  "trap": "A ten-millionfold gain sounds as if it needs most of cosmic history.",
+  "keywords": [
+    "quasars",
+    "black hole growth",
+    "eddington limit",
+    "early universe",
+    "doubling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Bañados et al., Nature, 2018",
+  "source_kind": "paper",
+  "reference": "Bañados et al., An 800-million-solar-mass black hole in a significantly neutral Universe at a redshift of 7.5, Nature, 2018",
+  "written": "2026-09-26"
+}

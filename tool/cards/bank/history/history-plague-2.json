@@ -1,0 +1,39 @@
+{
+  "id": "history-plague-2",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: the first known quarantine law, passed by Ragusa in 1377, imposed forty days of isolation?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It imposed thirty days. On 27 July 1377, 34 of the 47 councillors of Ragusa, now Dubrovnik, voted that anyone arriving from a plague-struck place must first spend a month on the islet of Mrkan or in the town of Cavtat. The forty days, and the word quarantine, came later.",
+  "move": "A word's origin records the version that stuck, not the first one.",
+  "trap": "True, because quarantine means forty days in Venetian.",
+  "keywords": [
+    "quarantine",
+    "ragusa",
+    "dubrovnik",
+    "black death",
+    "mrkan"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blažina Tomić and Blažina, Expelling the Plague",
+  "source_kind": "book",
+  "reference": "Blažina Tomić and Blažina, Expelling the Plague: The Health Office and the Implementation of Quarantine in Dubrovnik, 1377-1533, McGill-Queen's University Press, 2015",
+  "written": "2026-09-26"
+}

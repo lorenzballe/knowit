@@ -1,0 +1,33 @@
+{
+  "id": "space-reusable-boosters-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What becomes of the Space Shuttle's main engines when they fly on NASA's SLS rocket?",
+  "answer": "They are dropped in the ocean. Built to be reused, and flown on Shuttle missions, the engines now ride the SLS core stage four at a time and sink with it after one flight. The Shuttle-derived solid boosters, once recovered from the sea, are discarded too. A $3.6 billion contract restarts engine production.",
+  "move": "Reusable is a property of the plan, not of the hardware.",
+  "keywords": [
+    "space launch system",
+    "rs-25",
+    "space shuttle",
+    "solid rocket boosters",
+    "expendable rockets"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Office of Inspector General, IG-24-003, 2023",
+  "source_kind": "institution",
+  "reference": "NASA Office of Inspector General, NASA's Management of the Artemis Supply Chain, IG-24-003, 2023",
+  "written": "2026-09-26"
+}

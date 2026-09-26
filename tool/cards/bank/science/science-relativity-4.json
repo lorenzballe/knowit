@@ -1,0 +1,36 @@
+{
+  "id": "science-relativity-4",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How small a difference in height has been shown to make two clocks tick at different rates?",
+  "answer": "About a millimetre. In 2022 JILA physicists compared the top and bottom of a single millimetre-tall cloud of about 100,000 strontium atoms and found the upper part ticking faster, as general relativity predicts: time runs slower deeper in gravity. The gap was about one part in 10¹⁹, across the width of a sharp pencil tip.",
+  "move": "An effect called negligible is often just below the current ruler.",
+  "keywords": [
+    "atomic clocks",
+    "time dilation",
+    "jila",
+    "strontium",
+    "gravitational redshift"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST news, JILA atomic clocks, 2022",
+  "source_kind": "institution",
+  "reference": "https://www.nist.gov/news-events/news/2022/02/jila-atomic-clocks-measure-einsteins-general-relativity-millimeter-scale",
+  "written": "2026-09-26"
+}

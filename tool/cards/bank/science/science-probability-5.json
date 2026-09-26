@@ -1,0 +1,38 @@
+{
+  "id": "science-probability-5",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: four riffle shuffles can leave a 52-card deck in any of its possible orders?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A riffle cuts the deck and interleaves the halves, so four of them leave at most 16 strands of the original order woven together. Orders needing more strands are impossible, and they are almost all orders: under one in two million is reachable. It takes about seven to get close to random.",
+  "move": "A pattern you cannot see is not a pattern that is gone.",
+  "trap": "Four shuffles look thoroughly mixed, so any order seems possible.",
+  "keywords": [
+    "riffle shuffle",
+    "playing cards",
+    "rising sequences",
+    "randomness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bayer & Diaconis, Annals of Applied Probability, 1992",
+  "source_kind": "paper",
+  "reference": "Bayer & Diaconis, Trailing the Dovetail Shuffle to Its Lair, Annals of Applied Probability, 1992",
+  "written": "2026-09-26"
+}

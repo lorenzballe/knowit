@@ -1,0 +1,40 @@
+{
+  "id": "nature-magnetic-sense-2",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Robins kept in huts on a German city campus lost their magnetic compass. Which test could isolate the cause?",
+  "options": [
+    "Testing them at a rural site",
+    "Screening their huts with earthed metal",
+    "Comparing young and adult robins"
+  ],
+  "correct": 1,
+  "answer": "Screening their huts with earthed metal. Grounded aluminium sheets blocked the broadband radio-frequency noise of the city, and the robins oriented; unearthed, or with noise fed back in, they lost their way again. Engels and colleagues ran the tests double-blind over several years. The disruptive noise was far below human safety limits.",
+  "move": "Change one thing at a time, then change it back.",
+  "trap": "Testing them at a rural site, which changes everything at once.",
+  "keywords": [
+    "european robin",
+    "magnetic compass",
+    "electromagnetic noise",
+    "faraday cage",
+    "oldenburg"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Engels et al., Nature, 2014",
+  "source_kind": "paper",
+  "reference": "Engels et al., Anthropogenic electromagnetic noise disrupts magnetic compass orientation in a migratory bird, Nature, 2014",
+  "written": "2026-09-26"
+}

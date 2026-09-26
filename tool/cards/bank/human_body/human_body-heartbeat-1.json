@@ -1,0 +1,39 @@
+{
+  "id": "human_body-heartbeat-1",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A resting heart typically beats about 70 times a minute. A transplanted heart, cut off from its nerves, beats at rest how often?",
+  "options": [
+    "About 40 a minute",
+    "About 70 a minute",
+    "About 100 a minute"
+  ],
+  "correct": 2,
+  "answer": "About 100 a minute. The heart's own pacemaker runs faster than a normal resting pulse: roughly 118 minus 0.57 times age, about 95 at 40. At rest the vagus nerve holds it back. Transplant recipients typically live with a quick resting pulse that rises only slowly in exercise, waiting for adrenaline in the blood.",
+  "move": "Take away a brake and the true speed shows.",
+  "trap": "Assuming the heart's own pacemaker simply keeps the usual 70.",
+  "keywords": [
+    "heart transplant",
+    "intrinsic heart rate",
+    "vagus nerve",
+    "sinoatrial node"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jose & Collison, Cardiovascular Research, 1970",
+  "source_kind": "paper",
+  "reference": "Jose & Collison, The normal range and determinants of the intrinsic heart rate in man, Cardiovascular Research, 1970",
+  "written": "2026-09-26"
+}

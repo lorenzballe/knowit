@@ -1,0 +1,40 @@
+{
+  "id": "space-launch-windows-1",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Launch windows open when Earth and a target planet line up right. For which planet do they come round least often?",
+  "options": [
+    "Neptune",
+    "Mars",
+    "Venus"
+  ],
+  "correct": 1,
+  "answer": "Mars. A window returns each time one planet laps the other, and Earth gains on Mars slowest of all: every 780 days, 26 months. Neptune barely moves, so Earth realigns with it every 367 days; Venus returns every 19 months. Mars, the neighbour, is the one that makes missions wait longest.",
+  "move": "How often two things meet depends on their difference, not their distance.",
+  "trap": "Neptune, the farthest planet, seems the hardest to line up with.",
+  "keywords": [
+    "launch windows",
+    "synodic period",
+    "mars",
+    "neptune",
+    "venus"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Curtis, Orbital Mechanics for Engineering Students, 2020",
+  "source_kind": "book",
+  "reference": "Curtis, Orbital Mechanics for Engineering Students, 4th ed., Butterworth-Heinemann, 2020",
+  "written": "2026-09-26"
+}

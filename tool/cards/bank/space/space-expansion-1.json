@@ -1,0 +1,42 @@
+{
+  "id": "space-expansion-1",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: telescopes can see galaxies that are receding from Earth faster than light?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Relativity's speed limit governs motion through space, not the stretching of space. In the standard model, any galaxy whose light arrives stretched to over two and a half times its original wavelength is receding faster than light today. Many already were when that light set out; it was dragged backwards before it gained ground.",
+  "move": "Check which rule a limit belongs to before applying it everywhere.",
+  "trap": "Nothing moves faster than light, so no galaxy can recede faster.",
+  "keywords": [
+    "superluminal recession",
+    "cosmic expansion",
+    "hubble sphere",
+    "redshift",
+    "special relativity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis & Lineweaver, PASA, 2004",
+  "source_kind": "paper",
+  "reference": "doi:10.1071/AS03040",
+  "written": "2026-09-26"
+}

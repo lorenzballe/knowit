@@ -1,0 +1,40 @@
+{
+  "id": "science-relativity-2",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 1919, one of three sets of eclipse photographs measured starlight bending by Newton's amount, not Einstein's. What was done with it?",
+  "options": [
+    "Set aside as blurred",
+    "Averaged with the other two",
+    "Published as a disproof"
+  ],
+  "correct": 0,
+  "answer": "It was set aside. Heat had blurred that telescope's images, the team judged, and the other two sets gave 1.98 and 1.61 seconds of arc, against Einstein's 1.75 and Newton's 0.87. Critics later called that bias, but the rejected plates, remeasured in 1979, gave 1.55: Einstein's side.",
+  "move": "Before trusting a verdict, ask what happened to the data that disagreed.",
+  "trap": "Assuming a famous confirmation must have counted every plate.",
+  "keywords": [
+    "1919 eclipse",
+    "eddington",
+    "light bending",
+    "general relativity",
+    "sobral"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kennefick, Physics Today, 2009",
+  "source_kind": "paper",
+  "reference": "https://physicstoday.aip.org/features/testing-relativity-from-the-1919-eclipse-a-question-of-bias",
+  "written": "2026-09-26"
+}

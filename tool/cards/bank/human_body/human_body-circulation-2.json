@@ -1,0 +1,32 @@
+{
+  "id": "human_body-circulation-2",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where along its circuit does blood move most slowly?",
+  "answer": "In the capillaries, the narrowest vessels. There are billions side by side, so their combined cross-section is roughly a thousand times the aorta's. The same flow, spread that wide, slows from about 30 cm a second in the aorta to under 1 mm a second: just long enough to trade oxygen for waste.",
+  "move": "Split one stream into many channels and each one slows down.",
+  "keywords": [
+    "capillaries",
+    "blood flow",
+    "aorta",
+    "cross-sectional area"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Levick, Introduction to Cardiovascular Physiology, 2010",
+  "source_kind": "book",
+  "reference": "Levick, An Introduction to Cardiovascular Physiology, 5th edition, Hodder Arnold, 2010",
+  "written": "2026-09-26"
+}

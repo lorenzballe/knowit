@@ -1,0 +1,39 @@
+{
+  "id": "science-primes-3",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Nearly every record-holding prime is a power of two minus one. Why?",
+  "options": [
+    "Most numbers of that form are prime",
+    "That form has an especially fast test",
+    "Other primes that size are too rare"
+  ],
+  "correct": 1,
+  "answer": "That form has an especially fast test. The Lucas–Lehmer test settles whether 2^p − 1 is prime in about p squarings. For an ordinary number with millions of digits, no proof anywhere near that fast exists. The record list maps where primes can be proved, not where they lie.",
+  "move": "A list of discoveries maps where people could look, not what exists.",
+  "trap": "Most numbers of that form are prime: the record list seems to say so.",
+  "keywords": [
+    "mersenne primes",
+    "lucas-lehmer test",
+    "largest known prime",
+    "primality testing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crandall & Pomerance, Prime Numbers, 2005",
+  "source_kind": "book",
+  "reference": "Crandall & Pomerance, Prime Numbers: A Computational Perspective, 2nd edition, Springer, 2005",
+  "written": "2026-09-26"
+}

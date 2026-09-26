@@ -1,0 +1,43 @@
+{
+  "id": "economics-digital-money-5",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Bitcoin halves its new-coin reward every 210,000 blocks, and its code targets one block every ten minutes. How many years between halvings?",
+  "value": 4,
+  "unit": "years",
+  "tolerance": 0.1,
+  "answer": "1,458 / 365 = about 4.0 years.",
+  "move": "When a rhythm looks scheduled, check which quantity was actually fixed.",
+  "trap": "Thinking the code sets a date rather than a block count.",
+  "hint": "Turn the blocks into minutes first, then the minutes into days.",
+  "steps": [
+    "210,000 blocks x 10 minutes = 2,100,000 minutes.",
+    "2,100,000 / 1,440 minutes a day = about 1,458 days.",
+    "1,458 / 365 = about 4.0 years."
+  ],
+  "keywords": [
+    "bitcoin",
+    "halving",
+    "block reward",
+    "money supply",
+    "mining"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bitcoin Core source code, chainparams.cpp",
+  "source_kind": "primary_document",
+  "reference": "https://github.com/bitcoin/bitcoin/blob/master/src/kernel/chainparams.cpp",
+  "written": "2026-09-26"
+}

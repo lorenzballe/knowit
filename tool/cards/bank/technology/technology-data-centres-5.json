@@ -1,0 +1,38 @@
+{
+  "id": "technology-data-centres-5",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should grid operators turn away new data centres where power is tight, as Dublin's did?",
+  "sides": [
+    "Yes, turn them away",
+    "No, connect them"
+  ],
+  "answer": "A data centre is a round-the-clock load that employs few people once built. In Ireland they drew 21% of metered electricity in 2023, more than all urban homes, while the grid warned of shortfalls. Connecting more forces new generation that households pay for through their bills. Scarce capacity should go to homes and industry first.",
+  "move": "Whichever side you took, it turns on where the computing goes if refused.",
+  "counterpoint": "Refusing a connection does not stop the computing; it moves it to another country's grid, often a dirtier one, along with the tax and construction jobs. Data centres are also flexible customers: they can sign long contracts that fund new wind farms, run their own generators in emergencies, and sell their waste heat to district networks.",
+  "keywords": [
+    "data centres",
+    "electricity grid",
+    "ireland",
+    "eirgrid",
+    "grid connections"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CSO, Data Centres Metered Electricity Consumption 2023",
+  "source_kind": "institution",
+  "reference": "Central Statistics Office (Ireland), Data Centres Metered Electricity Consumption 2023, 2024",
+  "written": "2026-09-26"
+}

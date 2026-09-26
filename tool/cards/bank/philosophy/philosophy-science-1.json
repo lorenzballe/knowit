@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-science-1",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 1919 Karl Popper watched Alfred Adler's theory handle a case. What made him distrust it?",
+  "options": [
+    "It fitted a child Adler never saw",
+    "Its prediction about the child failed",
+    "It had no laboratory experiments"
+  ],
+  "correct": 0,
+  "answer": "It fitted a child Adler never saw. Popper described a case that seemed a poor fit; Adler analysed it at once in terms of inferiority feelings, without meeting the child. Asked how he could be so sure, he cited his thousandfold experience. Popper replied that it had now become thousand-and-one-fold.",
+  "move": "Ask what would count against a theory before counting what fits it.",
+  "trap": "Assuming a bad theory is one whose predictions failed.",
+  "keywords": [
+    "karl popper",
+    "alfred adler",
+    "falsifiability",
+    "individual psychology",
+    "vienna"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Popper, Conjectures and Refutations, 1963",
+  "source_kind": "book",
+  "reference": "Popper, Conjectures and Refutations, Routledge & Kegan Paul, 1963, chapter 1",
+  "written": "2026-09-26"
+}

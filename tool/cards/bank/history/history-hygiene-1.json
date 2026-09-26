@@ -1,0 +1,33 @@
+{
+  "id": "history-hygiene-1",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did fashionable Parisians of the 1600s keep clean while avoiding baths?",
+  "answer": "By changing their linen. Doctors taught that hot water opened the pores and let disease, plague above all, into the body, and the public bathhouses of medieval Paris had closed. A clean white shirt was thought to draw off sweat and dirt, so the visible collar and cuffs stood for a clean body.",
+  "move": "What counts as clean depends on what people believe dirt does.",
+  "keywords": [
+    "clean linen",
+    "bathing",
+    "plague",
+    "pores",
+    "bathhouses"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vigarello, Concepts of Cleanliness, 1988",
+  "source_kind": "book",
+  "reference": "Vigarello, Concepts of Cleanliness: Changing Attitudes in France since the Middle Ages, Cambridge University Press, 1988",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "science-steel-4",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "also": [
+    "science.cold_and_heat.fire"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a fire, structural steel has lost about half its strength by the time it reaches 600 °C?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Steel melts near 1,500 °C but only has to soften to fail. By the European design code it keeps full strength to 400 °C, 47% at 600 °C and 23% at 700 °C; a standard test fire passes 840 °C in half an hour. Hence the fireproofing sprayed on steel beams.",
+  "move": "Ask when a thing stops doing its job, not when it disappears.",
+  "trap": "Steel stays strong until it melts, far above any room fire.",
+  "keywords": [
+    "structural steel",
+    "fire resistance",
+    "eurocode",
+    "yield strength",
+    "fireproofing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "EN 1993-1-2, Eurocode 3 fire design",
+  "source_kind": "standard",
+  "reference": "EN 1993-1-2:2005, Eurocode 3: Design of steel structures — Part 1-2: General rules — Structural fire design",
+  "written": "2026-09-26"
+}

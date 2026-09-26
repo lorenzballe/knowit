@@ -1,0 +1,41 @@
+{
+  "id": "space-tides-2",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Moon drives the tides mainly by pulling water sideways, not by lifting it upwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Straight up, the Moon's tidal pull is about a ten-millionth of Earth's gravity: it lightens the water by a hair and lifts almost nothing. The sideways part of that pull is just as small, but nothing resists it. Over thousands of kilometres it herds water towards the points under and opposite the Moon.",
+  "move": "A tiny force nobody resists can do more than a large one resisted.",
+  "trap": "Picturing the Moon hoisting the sea straight up beneath it.",
+  "keywords": [
+    "tides",
+    "tractive force",
+    "tidal bulges",
+    "ocean"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pugh & Woodworth, Sea-Level Science, 2014",
+  "source_kind": "book",
+  "reference": "Pugh & Woodworth, Sea-Level Science: Understanding Tides, Surges, Tsunamis and Mean Sea-Level Changes, Cambridge University Press, 2014",
+  "written": "2026-09-26"
+}

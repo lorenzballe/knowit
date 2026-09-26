@@ -1,0 +1,39 @@
+{
+  "id": "economics-digital-money-4",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: El Salvador still requires its shops to accept bitcoin as payment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The 2021 law that obliged every business to accept bitcoin was amended in January 2025, as a condition of a $1.4 billion IMF loan: accepting it became voluntary, and taxes can no longer be paid in it. The US dollar, El Salvador's official currency since 2001, stayed the money people actually spend.",
+  "move": "Check that a famous policy is still in force before citing it.",
+  "trap": "Remembering the 2021 headline and missing the quieter 2025 amendment.",
+  "keywords": [
+    "el salvador",
+    "bitcoin",
+    "legal tender",
+    "imf",
+    "dollarisation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IMF, El Salvador Extended Fund Facility, 2025",
+  "source_kind": "institution",
+  "reference": "International Monetary Fund, El Salvador: Request for an Extended Arrangement under the Extended Fund Facility, Country Report, 2025",
+  "written": "2026-09-26"
+}

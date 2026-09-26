@@ -1,0 +1,33 @@
+{
+  "id": "science-steel-2",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What stops old steel from being recycled into the best new steel?",
+  "answer": "Copper. Shredded cars bring wiring and motors into the scrap, and steelmaking cannot remove copper: being less reactive than iron, it stays in the melt instead of passing into the slag. A fraction of a per cent makes steel crack when rolled hot, so contaminated scrap ends up in reinforcing bar, not in car doors.",
+  "move": "A material recycles only as well as its worst passenger can be removed.",
+  "keywords": [
+    "steel recycling",
+    "copper contamination",
+    "scrap",
+    "hot shortness",
+    "reinforcing bar"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Daehn et al., Environmental Science & Technology, 2017",
+  "source_kind": "paper",
+  "reference": "Daehn, Cabrera Serrenho & Allwood, How Will Copper Contamination Constrain Future Global Steel Recycling?, Environmental Science & Technology, 2017",
+  "written": "2026-09-26"
+}

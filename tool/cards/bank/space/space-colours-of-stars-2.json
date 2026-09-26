@@ -1,0 +1,33 @@
+{
+  "id": "space-colours-of-stars-2",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do most stars look white to the eye, though photographs show them orange, yellow and blue?",
+  "answer": "Because their light is too faint for colour vision. The eye's colour sensors, the cones, need much more light than the rods, which see in grey. Most stars are too dim to stir the cones enough to judge colour, so they look white; only the brightest, like orange Arcturus or red Antares, show a tint.",
+  "move": "A sensor below its threshold reports the default, not the truth.",
+  "keywords": [
+    "star colours",
+    "cones",
+    "rods",
+    "night vision",
+    "arcturus"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clark, Visual Astronomy of the Deep Sky, 1990",
+  "source_kind": "book",
+  "reference": "Clark, Visual Astronomy of the Deep Sky, Cambridge University Press and Sky Publishing, 1990",
+  "written": "2026-09-26"
+}

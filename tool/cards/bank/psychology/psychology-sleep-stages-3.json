@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sleep-stages-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A 2011 review of 35 studies estimated how many people have had sleep paralysis, waking unable to move, at least once?",
+  "options": [
+    "About 1 in 1,000",
+    "About 1 in 13",
+    "About 1 in 2"
+  ],
+  "correct": 1,
+  "answer": "About 1 in 13: 7.6% of the general population, and 28% of students. The mind wakes while the body is still held in the paralysis of REM, the dreaming stage, and dream imagery can spill in as a presence in the room. A 2024 pooling put it nearer 30%, with wide disagreement.",
+  "move": "Silence about an experience is not evidence that it is rare.",
+  "trap": "Never having heard it discussed, assuming it must be very rare.",
+  "keywords": [
+    "sleep paralysis",
+    "rem sleep",
+    "hallucinations",
+    "prevalence",
+    "students"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Sharpless & Barber, Sleep Medicine Reviews, 2011",
+  "source_kind": "paper",
+  "reference": "Sharpless & Barber, Lifetime prevalence rates of sleep paralysis: a systematic review, Sleep Medicine Reviews, 2011",
+  "written": "2026-09-26"
+}

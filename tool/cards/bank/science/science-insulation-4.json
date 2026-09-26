@@ -1,0 +1,39 @@
+{
+  "id": "science-insulation-4",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a metre-thick sandstone wall keeps heat in better than 10 cm of mineral wool?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Sandstone conducts heat about 60 times more readily than mineral wool, so a metre of it resists heat flow roughly six times less than 10 cm of wool. What thick walls do well is store heat, evening out day and night, which is why a stone church feels cool on a summer afternoon.",
+  "move": "Slowing a swing is not the same as stopping a flow.",
+  "trap": "Cool stone churches in summer make thick walls seem good insulators.",
+  "keywords": [
+    "stone walls",
+    "mineral wool",
+    "thermal mass",
+    "thermal conductivity",
+    "sandstone"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "ISO 10456, tabulated thermal values of materials",
+  "source_kind": "standard",
+  "reference": "ISO 10456:2007, Building materials and products — Hygrothermal properties — Tabulated design values and procedures for determining declared and design thermal values",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "nature-currents-1",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of Western Europe's mild winter is the Gulf Stream's doing?",
+  "answer": "Less than the textbook says, though this is contested. Seager's team found winds do most of the work: westerlies off an ocean that stores summer heat, and a jet stream bent by the Rockies that chills eastern North America. Vancouver, beside a Pacific carrying less heat north, is nearly as mild in January as Paris.",
+  "move": "Before crediting the famous cause, check a case where it is absent.",
+  "keywords": [
+    "gulf stream",
+    "european winters",
+    "westerlies",
+    "jet stream",
+    "ocean heat transport"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Seager et al., QJRMS, 2002",
+  "source_kind": "paper",
+  "reference": "Seager et al., Is the Gulf Stream responsible for Europe's mild winters?, Quarterly Journal of the Royal Meteorological Society, 2002",
+  "written": "2026-09-26"
+}

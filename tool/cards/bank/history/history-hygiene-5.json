@@ -1,0 +1,33 @@
+{
+  "id": "history-hygiene-5",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the scholar who wrote the first known mention of toilet paper, in 589, worried about?",
+  "answer": "Sacrilege. Yan Zhitui wrote that paper bearing quotations from the Five Classics or the names of sages he dared not use 'for toilet purposes', so plain paper already was. By 1393 the Ming court at Nanjing was supplied with 720,000 sheets a year, each about 60 by 90 cm.",
+  "move": "A habit often enters the written record as a rule about its exceptions.",
+  "keywords": [
+    "toilet paper",
+    "yan zhitui",
+    "five classics",
+    "ming court",
+    "paper"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tsien, Paper and Printing, 1985",
+  "source_kind": "book",
+  "reference": "Tsien Tsuen-Hsuin, Paper and Printing, in Needham, Science and Civilisation in China, vol. 5 part 1, Cambridge University Press, 1985",
+  "written": "2026-09-26"
+}

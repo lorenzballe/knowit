@@ -1,0 +1,42 @@
+{
+  "id": "technology-factories-4",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "also": [
+    "economics.work_and_wages.minimum_wage"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Ford's 1914 five-dollar day was mainly meant to let workers afford the cars they built?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The problem was turnover: in 1913 Ford's Highland Park plant had to hire more than 50,000 people to keep about 14,000 jobs filled, a rate near 370% a year, as workers quit the monotony of the assembly line. Doubling pay made the line bearable to stay on; queues of job-seekers formed at the gates.",
+  "move": "When a company is generous, look for the cost it was escaping.",
+  "trap": "The tidy story that Ford paid workers so they could buy Fords.",
+  "keywords": [
+    "henry ford",
+    "five-dollar day",
+    "labour turnover",
+    "assembly line",
+    "highland park"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raff & Summers, Journal of Labor Economics, 1987",
+  "source_kind": "paper",
+  "reference": "Raff & Summers, Did Henry Ford Pay Efficiency Wages?, Journal of Labor Economics 5(4), 1987",
+  "written": "2026-09-26"
+}

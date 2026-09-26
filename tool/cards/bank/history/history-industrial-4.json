@@ -1,0 +1,33 @@
+{
+  "id": "history-industrial-4",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were the Luddites of 1811–12 trying to achieve by smashing machines?",
+  "answer": "Better terms, not a world without machines. Hobsbawm called it collective bargaining by riot: knitters broke the frames of hosiers who cut what they paid per stocking or made shoddy goods, and spared those who paid the agreed rate. Parliament made frame-breaking a capital crime in 1812 and sent 12,000 troops.",
+  "move": "Before calling a protest irrational, ask what the protesters were bargaining for.",
+  "keywords": [
+    "luddites",
+    "machine breaking",
+    "frame breaking act",
+    "stocking knitters",
+    "eric hobsbawm"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hobsbawm, The Machine Breakers, 1952",
+  "source_kind": "paper",
+  "reference": "Hobsbawm, The Machine Breakers, Past & Present, 1952",
+  "written": "2026-09-26"
+}

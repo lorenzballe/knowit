@@ -1,0 +1,33 @@
+{
+  "id": "space-reusable-boosters-1",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a Falcon 9 booster not simply hover while it lines up its landing?",
+  "answer": "Because even one engine at its lowest setting pushes harder than the nearly empty booster weighs. The Merlin engine cannot throttle much below about 40%, and at landing the stage is mostly empty tank. So the final burn is timed to reach zero speed exactly at the pad, with no second try.",
+  "move": "A system that cannot pause must get its timing right the first time.",
+  "keywords": [
+    "falcon 9",
+    "booster landing",
+    "throttle",
+    "merlin engine",
+    "landing burn"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blackmore, The Bridge, 2016",
+  "source_kind": "institution",
+  "reference": "Blackmore, Autonomous Precision Landing of Space Rockets, The Bridge 46(4), National Academy of Engineering, 2016",
+  "written": "2026-09-26"
+}

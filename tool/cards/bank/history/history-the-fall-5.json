@@ -1,0 +1,33 @@
+{
+  "id": "history-the-fall-5",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the last western emperor after he was deposed in 476?",
+  "answer": "He was pensioned off. Odoacer, who had just killed his father Orestes, spared the teenage Romulus Augustulus for his youth and, a chronicler adds, his good looks, gave him 6,000 gold solidi a year and sent him to live freely with relatives in Campania. The western empire ended in a retirement settlement.",
+  "move": "Grand endings often look, up close, like paperwork.",
+  "keywords": [
+    "romulus augustulus",
+    "odoacer",
+    "476",
+    "campania",
+    "solidi"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "De Imperatoribus Romanis, Romulus Augustulus",
+  "source_kind": "reference_work",
+  "reference": "https://roman-emperors.sites.luc.edu/auggiero.htm",
+  "written": "2026-09-26"
+}

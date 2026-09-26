@@ -1,0 +1,42 @@
+{
+  "id": "history-hygiene-2",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Estimate how many tonnes of water a rural North Carolina housewife carried by hand in a year around 1885.",
+  "value": 33,
+  "unit": "tonnes",
+  "withinFactor": 3,
+  "answer": "90 kg x 365 days = ~33,000 kg, about 33 tonnes.",
+  "move": "Before judging how often people washed, weigh the water they had to carry.",
+  "trap": "Guessing a few tonnes because one bucket feels light.",
+  "hint": "Count her trips to the well each day, then the weight of a full bucket.",
+  "steps": [
+    "About 9 trips a day x a 10-litre bucket weighing 10 kg = 90 kg a day.",
+    "90 kg x 365 days = ~33,000 kg, about 33 tonnes."
+  ],
+  "keywords": [
+    "water carrying",
+    "housework",
+    "north carolina",
+    "running water",
+    "laundry"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gordon, Rise and Fall of American Growth, 2016",
+  "source_kind": "book",
+  "reference": "Gordon, The Rise and Fall of American Growth, Princeton University Press, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-daily-rome-1",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When were the streets of ancient Rome at their noisiest?",
+  "answer": "At night. A law of Julius Caesar's time barred wagons from the city's streets from sunrise until the tenth hour of daylight, except for temple building, public works and hauling away rubble. So carts rolled in after dark, and Juvenal complained that their rumble in the narrow streets made sleep in Rome impossible.",
+  "move": "Push a nuisance out of one hour and it lands in another.",
+  "keywords": [
+    "tabula heracleensis",
+    "julius caesar",
+    "traffic",
+    "juvenal",
+    "noise"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Law of Caesar on Municipalities, 44 BC",
+  "source_kind": "primary_document",
+  "reference": "https://avalon.law.yale.edu/ancient/law_of_caesar.asp",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "science-gravity-1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Satellite orbits measure Earth's pull, Newton's constant G times its mass, to about nine significant figures. To how many is its mass known?",
+  "options": [
+    "About nine",
+    "About five",
+    "About three"
+  ],
+  "correct": 1,
+  "answer": "About five. An orbit reveals only the product; separating the mass needs G itself, measured in laboratories with masses small enough to lift, where gravity is feeble and hard to isolate. G is pinned to barely five figures, so Earth's mass stops at 5.9722 × 10²⁴ kg.",
+  "move": "A result is only as sharp as the bluntest number it depends on.",
+  "trap": "Assuming the mass is known as precisely as its pull.",
+  "keywords": [
+    "gravitational constant",
+    "earth's mass",
+    "satellite orbits",
+    "measurement precision"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IERS Conventions 2010, numerical standards",
+  "source_kind": "standard",
+  "reference": "Petit and Luzum (eds.), IERS Conventions (2010), IERS Technical Note 36, 2010",
+  "written": "2026-09-26"
+}

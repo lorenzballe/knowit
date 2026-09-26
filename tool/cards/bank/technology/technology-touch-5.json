@@ -1,0 +1,38 @@
+{
+  "id": "technology-touch-5",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most of the error when tapping small targets comes from fingertips simply being too wide?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Holz and Baudisch found most of the error is systematic: each person, at each finger angle, lands a consistent distance off target, because the screen reads the centre of the contact patch, not the point being aimed at. Correcting for finger posture roughly doubled accuracy. The finger was steady; the screen's guess was off.",
+  "move": "Errors that repeat the same way are a bias you can correct.",
+  "trap": "True, blaming fat fingers, the explanation everyone repeats.",
+  "keywords": [
+    "touch accuracy",
+    "fat finger problem",
+    "finger posture",
+    "contact area"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holz & Baudisch, ACM CHI, 2010",
+  "source_kind": "paper",
+  "reference": "Holz & Baudisch, The Generalized Perceived Input Point Model and How to Double Touch Accuracy by Extracting Fingerprints, ACM CHI, 2010",
+  "written": "2026-09-26"
+}

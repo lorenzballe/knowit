@@ -1,0 +1,35 @@
+{
+  "id": "space-hawking-radiation-4",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does Hawking radiation really come from particle pairs splitting right at the edge of a black hole?",
+  "answer": "Not in any literal sense. Its typical wavelength is roughly 16 times the horizon's radius, so it cannot be pinned to the horizon, still less to a pair split on it; Hawking himself called that picture heuristic. For a hole of one solar mass, the particles are mostly radio waves some 50 km long.",
+  "move": "A picture that helps you remember a result may not be how it happens.",
+  "keywords": [
+    "hawking radiation",
+    "virtual particles",
+    "quantum atmosphere",
+    "wavelength"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Giddings, Physics Letters B, 2016",
+  "source_kind": "paper",
+  "reference": "Giddings, Hawking radiation, the Stefan-Boltzmann law, and unitarization, Physics Letters B, 2016",
+  "written": "2026-09-26"
+}

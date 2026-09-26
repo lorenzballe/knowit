@@ -1,0 +1,42 @@
+{
+  "id": "space-fuel-chemistry-3",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A kerosene engine's exhaust leaves at 3 km/s, and reaching orbit takes 9 km/s. What percentage of a single-stage rocket must be propellant?",
+  "value": 95,
+  "unit": "per cent",
+  "answer": "19 ÷ 20 = 95% propellant.",
+  "move": "Anything that must carry its own fuel pays compound interest on it.",
+  "trap": "Guessing about 75%, as if three times the speed needed three times the fuel.",
+  "hint": "Each 3 km/s of speed multiplies the starting mass by e, about 2.7.",
+  "steps": [
+    "The rocket equation: liftoff mass ÷ burnout mass = e^(9 ÷ 3) = e^3.",
+    "e^3 ≈ 20, so 20 kg at liftoff leaves 1 kg at burnout.",
+    "19 ÷ 20 = 95% propellant."
+  ],
+  "keywords": [
+    "rocket equation",
+    "tsiolkovsky",
+    "propellant fraction",
+    "kerosene",
+    "orbit"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Tsiolkovsky, Nauchnoye Obozreniye, 1903",
+  "source_kind": "paper",
+  "reference": "Tsiolkovsky, Exploration of Outer Space by Means of Reaction Devices, Nauchnoye Obozreniye, 1903",
+  "written": "2026-09-26"
+}

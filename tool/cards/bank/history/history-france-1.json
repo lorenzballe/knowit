@@ -1,0 +1,33 @@
+{
+  "id": "history-france-1",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did revolutionary France keep the metre but give up the ten-hour day?",
+  "answer": "Because the metre solved a problem and decimal time created one. Towns across France had their own pounds and grain measures, so trade gained from one standard; a ten-hour day solved nothing and needed new clocks. Compulsory from September 1794, it was suspended in April 1795 by the law that named the metre and gram.",
+  "move": "A reform survives when it removes a cost people already feel.",
+  "keywords": [
+    "decimal time",
+    "metric system",
+    "republican calendar",
+    "metre",
+    "weights and measures"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alder, The Measure of All Things, 2002",
+  "source_kind": "book",
+  "reference": "Alder, The Measure of All Things: The Seven-Year Odyssey and Hidden Error That Transformed the World, Free Press, 2002",
+  "written": "2026-09-26"
+}

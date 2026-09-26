@@ -1,0 +1,39 @@
+{
+  "id": "history-clothes-2",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: from 1722 it was illegal in Britain to wear clothes of printed cotton calico?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. To protect wool and silk weavers, who had torn calico gowns off women in the streets, the Calico Act banned wearing any printed, painted, stained or dyed calico from Christmas 1722. It stood until 1774. Behind it, Manchester learned to print its own cotton-and-linen cloth, which was exempted in 1736.",
+  "move": "Protection for an old trade can become the nursery of its rival.",
+  "trap": "Britain's cotton fame makes a ban on wearing cotton seem absurd.",
+  "keywords": [
+    "calico act",
+    "printed cotton",
+    "silk weavers",
+    "protectionism",
+    "fustian"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lemire, Fashion's Favourite, 1991",
+  "source_kind": "book",
+  "reference": "Lemire, Fashion's Favourite: The Cotton Trade and the Consumer in Britain, 1660–1800, Oxford University Press, 1991",
+  "written": "2026-09-26"
+}

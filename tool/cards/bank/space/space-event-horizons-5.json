@@ -1,0 +1,35 @@
+{
+  "id": "space-event-horizons-5",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Would a distant observer really see someone falling into a black hole hang frozen at its edge forever?",
+  "answer": "Only in principle. Her light is stretched and dimmed faster and faster as she nears the horizon: at a black hole of 10 solar masses, its wavelength more than doubles every fifth of a millisecond. Light arrives in photons, so one of them is the last. The frozen figure goes black in a blink.",
+  "move": "A process that never quite ends can still be over in practice.",
+  "keywords": [
+    "event horizon",
+    "redshift",
+    "infall",
+    "photons"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Misner, Thorne & Wheeler, Gravitation, 1973",
+  "source_kind": "book",
+  "reference": "Misner, Thorne & Wheeler, Gravitation, W. H. Freeman, 1973",
+  "written": "2026-09-26"
+}

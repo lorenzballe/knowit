@@ -1,0 +1,36 @@
+{
+  "id": "science-relativity-3",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is mercury liquid at room temperature when its neighbours in the periodic table are solid?",
+  "answer": "Largely because of relativity. Mercury's 80 protons pull its innermost electrons to over half the speed of light, which makes them heavier and draws the outer electrons in tight, so the atoms bond only weakly. Switching relativity off in a 2013 simulation raised the melting point by 105 °C, to about 82 °C.",
+  "move": "The ordinary behaviour of a thing can rest on extreme conditions inside it.",
+  "keywords": [
+    "mercury",
+    "melting point",
+    "relativistic effects",
+    "electrons",
+    "periodic table"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Calvo et al., Angewandte Chemie, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1002/anie.201302742",
+  "written": "2026-09-26"
+}

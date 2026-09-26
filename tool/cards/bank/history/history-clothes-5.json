@@ -1,0 +1,33 @@
+{
+  "id": "history-clothes-5",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made the British textile firm Courtaulds rich before it turned to artificial silk?",
+  "answer": "Grief. Its fortune was black silk crape, the dull crinkled cloth of Victorian mourning, which etiquette kept widows in for a year or more. By 1850 its Essex mills employed over 2,000 people. As mourning dress went out of fashion, the firm needed a new product, and in 1904 bought the viscose patents.",
+  "move": "Every social rule is also somebody's order book.",
+  "keywords": [
+    "courtaulds",
+    "mourning crape",
+    "victorian mourning",
+    "silk",
+    "viscose"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coleman, Courtaulds, vol. 1, 1969",
+  "source_kind": "book",
+  "reference": "Coleman, Courtaulds: An Economic and Social History, vol. 1: The Nineteenth Century: Silk and Crape, Clarendon Press, 1969",
+  "written": "2026-09-26"
+}

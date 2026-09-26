@@ -1,0 +1,32 @@
+{
+  "id": "human_body-circulation-3",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When does heart muscle receive most of its own blood supply?",
+  "answer": "Between beats. When the left ventricle contracts, its wall squeezes its own coronary vessels almost shut, so most of its blood arrives as it relaxes. As the heart speeds up, relaxation shortens more than contraction, so a racing heart has less time to feed itself when it needs more: hence chest pain on exertion.",
+  "move": "Check when a supply can flow, not just how much is sent.",
+  "keywords": [
+    "coronary arteries",
+    "diastole",
+    "left ventricle",
+    "angina"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall & Hall, Guyton and Hall Physiology, 2021",
+  "source_kind": "book",
+  "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
+  "written": "2026-09-26"
+}

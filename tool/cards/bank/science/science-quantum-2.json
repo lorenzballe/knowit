@@ -1,0 +1,40 @@
+{
+  "id": "science-quantum-2",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "In 2015 the ATLAS detector saw an excess of photon pairs at 750 GeV, a one-in-10,000 fluke at that mass. What became of it?",
+  "options": [
+    "It became a new particle",
+    "It was traced to a faulty cable",
+    "It vanished in the 2016 data"
+  ],
+  "correct": 2,
+  "answer": "It vanished. One in 10,000 was the chance of a fluke at 750 GeV alone; the search had scanned many masses and widths, and a bump that size somewhere was about a 1-in-50 event. Data from 2016, nearly four times as much, showed nothing there, after months of theorists racing to explain it.",
+  "move": "A fluke somewhere is far likelier than a fluke right here.",
+  "trap": "Treating one-in-10,000 odds as too rare to be chance.",
+  "keywords": [
+    "large hadron collider",
+    "atlas",
+    "750 gev",
+    "look-elsewhere effect",
+    "statistical significance"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ATLAS Experiment, CERN, 2016 briefing",
+  "source_kind": "institution",
+  "reference": "https://atlas.cern/updates/briefing/high-mass-di-photon-resonances-first-2016-atlas-results",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-typewriters-5",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the 1880s, what could it mean to hire a typewriter?",
+  "answer": "To hire a person, often a young woman: the word meant the machine and its operator into the 1890s. Typing was a new job that no male trade had claimed, and women cost less than male clerks, so offices filled with them. By 1930 over nine in ten US typists and stenographers were women.",
+  "move": "New jobs with no tradition are where outsiders get in first.",
+  "keywords": [
+    "typists",
+    "office work",
+    "women",
+    "stenographers",
+    "census"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davies, Woman's Place Is at the Typewriter, 1982",
+  "source_kind": "book",
+  "reference": "Davies, Woman's Place Is at the Typewriter: Office Work and Office Workers, 1870–1930, Temple University Press, 1982",
+  "written": "2026-09-26"
+}

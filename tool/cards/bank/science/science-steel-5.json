@@ -1,0 +1,41 @@
+{
+  "id": "science-steel-5",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A free 1 km steel rail warms 40 °C. Steel grows by 12 millionths of its length per degree. How many cm longer?",
+  "value": 48,
+  "unit": "cm",
+  "answer": "Over 40 °C: 1.2 × 40 = 48 cm.",
+  "move": "Anything that cannot grow will push; plan for where the push goes.",
+  "trap": "Assuming stiff steel could only grow by a few millimetres.",
+  "hint": "Work out the growth for one degree first, then scale up.",
+  "steps": [
+    "1 km is 100,000 cm.",
+    "Growth per degree: 100,000 × 12 / 1,000,000 = 1.2 cm.",
+    "Over 40 °C: 1.2 × 40 = 48 cm."
+  ],
+  "keywords": [
+    "thermal expansion",
+    "railway track",
+    "welded rail",
+    "rail buckling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Esveld, Modern Railway Track, 2001",
+  "source_kind": "book",
+  "reference": "Esveld, Modern Railway Track, 2nd edition, MRT-Productions, 2001",
+  "written": "2026-09-26"
+}

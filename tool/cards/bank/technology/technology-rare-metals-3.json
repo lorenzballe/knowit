@@ -1,0 +1,39 @@
+{
+  "id": "technology-rare-metals-3",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Mines produce roughly 180 tonnes of platinum a year. Iridium, recovered from the same ores, comes to about how much?",
+  "options": [
+    "About 7 tonnes",
+    "About 150 tonnes",
+    "About 1,500 tonnes"
+  ],
+  "correct": 0,
+  "answer": "About 7 tonnes. Iridium is one of the scarcest metals in the crust and comes out of platinum ores in tiny proportion, mostly in South Africa, as a by-product. Electrolysers for green hydrogen now compete for it. A year's output would fit in a cube about 70 cm on each side.",
+  "move": "Set aside the first number you heard before estimating the next one.",
+  "trap": "About 150 tonnes, dragged towards the platinum figure just given.",
+  "keywords": [
+    "iridium",
+    "platinum group metals",
+    "south africa",
+    "electrolysers"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Johnson Matthey, PGM Market Report, 2024",
+  "source_kind": "company",
+  "reference": "Johnson Matthey, PGM Market Report, May 2024",
+  "written": "2026-09-26"
+}

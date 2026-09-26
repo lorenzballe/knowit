@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-science-5",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a theory of light built on a substance that does not exist predict correctly in 1818?",
+  "answer": "A bright spot in the middle of a round shadow. Judging Augustin Fresnel's wave theory for a Paris prize, Siméon Poisson showed it implied this absurd-seeming spot; François Arago looked and found it. Fresnel's waves rippled through an elastic ether that was later abandoned. The spot is still there; the ether is gone.",
+  "move": "A theory can pass a bold test and still be wrong about what exists.",
+  "keywords": [
+    "poisson spot",
+    "fresnel",
+    "arago",
+    "ether",
+    "wave theory of light"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Worrall, The Uses of Experiment, 1989",
+  "source_kind": "book",
+  "reference": "Worrall, Fresnel, Poisson and the white spot, in Gooding, Pinch & Schaffer (eds), The Uses of Experiment, Cambridge University Press, 1989",
+  "written": "2026-09-26"
+}
