@@ -1,0 +1,36 @@
+{
+  "id": "psychology-joy-2",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is dopamine the brain's pleasure chemical?",
+  "answer": "Not quite: it drives wanting more than liking. Rats stripped of nearly all their dopamine will not seek out or eat food on their own, yet sugar on the tongue still brings the lip-licking face of pleasure, and bitter still brings the face of disgust. Craving a thing and enjoying it run on different wiring.",
+  "move": "Wanting something and enjoying it are separate dials; check which one moved.",
+  "keywords": [
+    "dopamine",
+    "wanting and liking",
+    "pleasure",
+    "rats",
+    "incentive salience"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berridge & Robinson, Brain Research Reviews, 1998",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/s0165-0173(98)00019-8",
+  "written": "2026-09-26"
+}

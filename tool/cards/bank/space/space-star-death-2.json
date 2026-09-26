@@ -1,0 +1,40 @@
+{
+  "id": "space-star-death-2",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The last supernova clearly seen in the Milky Way was Kepler's, in 1604. Roughly how often does one go off?",
+  "options": [
+    "About once every 50 years",
+    "About once every 400 years",
+    "About once every 5,000 years"
+  ],
+  "correct": 0,
+  "answer": "About once every 50 years. Estimates put collapsing-star explosions alone at about 1.6 a century, with white dwarf explosions on top. Most go unseen because dust in the galaxy's disc hides them from the eye. The youngest known remnant, G1.9+0.3, exploded around 1900 near the galactic centre, and nobody noticed.",
+  "move": "Before judging how rare something is, ask how much of it you could see.",
+  "trap": "Four centuries without a sighting make them seem that rare.",
+  "keywords": [
+    "supernova rate",
+    "milky way",
+    "interstellar dust",
+    "kepler's supernova",
+    "supernova remnants"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Rozwadowska, Vissani & Cappellaro, New Astronomy, 2021",
+  "source_kind": "paper",
+  "reference": "Rozwadowska, Vissani & Cappellaro, On the rate of core collapse supernovae in the Milky Way, New Astronomy 83, 101498, 2021",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-light-years-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a good share of the stars seen with the naked eye have already died?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Half the naked-eye stars lie within about 350 light-years and nine in ten within 1,000, so most of that light set out within the last few centuries. Stars live millions to billions of years. Only a rare giant near its end, such as Betelgeuse, has even a small chance of being gone.",
+  "move": "A line repeated often enough starts to sound like a measurement.",
+  "trap": "The dead-stars line is repeated so often it sounds like a fact.",
+  "keywords": [
+    "naked-eye stars",
+    "light travel time",
+    "betelgeuse",
+    "hipparcos",
+    "stellar lifetimes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ESA Hipparcos Catalogue, 1997",
+  "source_kind": "reference_work",
+  "reference": "ESA, The Hipparcos and Tycho Catalogues, ESA SP-1200, 1997",
+  "written": "2026-09-26"
+}

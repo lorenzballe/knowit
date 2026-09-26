@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-trolley-problems-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: professional philosophers' trolley verdicts shift less than non-philosophers' when the cases come in a different order?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Eric Schwitzgebel and Fiery Cushman gave philosophers and other academics the footbridge and switch cases in varying orders. Which came first moved philosophers' verdicts no less than the others', including those claiming expertise on the very question. A forced pause to consider other versions of the case did not shrink the effect.",
+  "move": "Knowing a bias by name does not switch it off.",
+  "trap": "Trusting training to shield a verdict from the case seen just before.",
+  "keywords": [
+    "order effects",
+    "professional philosophers",
+    "moral intuitions",
+    "footbridge case",
+    "expertise"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwitzgebel and Cushman, Cognition, 2015",
+  "source_kind": "paper",
+  "reference": "Schwitzgebel & Cushman, Philosophers' biased judgments persist despite training, expertise and reflection, Cognition 141, 2015",
+  "written": "2026-09-26"
+}

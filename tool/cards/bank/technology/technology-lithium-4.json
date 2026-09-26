@@ -1,0 +1,40 @@
+{
+  "id": "technology-lithium-4",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Of lithium, cobalt and graphite, which makes up the most weight in an electric car's battery?",
+  "options": [
+    "Lithium",
+    "Graphite",
+    "Cobalt"
+  ],
+  "correct": 1,
+  "answer": "Graphite. The negative electrode stores lithium between layers of carbon, one lithium atom per six carbon atoms at most, so holding 1 gram of lithium takes about 10 grams of graphite. Cobalt is a minor part of the other electrode, and many new cells have none. Lithium is a few per cent of the weight.",
+  "move": "A product is named for what it does, not for what it weighs.",
+  "trap": "Lithium, because the battery is named after it.",
+  "keywords": [
+    "graphite",
+    "lithium",
+    "cobalt",
+    "anode",
+    "electric cars"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "IEA, critical minerals report, 2021",
+  "source_kind": "institution",
+  "reference": "International Energy Agency, The Role of Critical Minerals in Clean Energy Transitions, 2021",
+  "written": "2026-09-26"
+}

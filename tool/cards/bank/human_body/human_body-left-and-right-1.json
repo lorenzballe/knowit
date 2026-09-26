@@ -1,0 +1,33 @@
+{
+  "id": "human_body-left-and-right-1",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before brain scans, how could surgeons tell which half of a patient's brain controlled speech?",
+  "answer": "By putting one half to sleep. In the test Juhn Wada devised in 1949, a barbiturate injected into one carotid artery anaesthetises one hemisphere for minutes. The patient counts aloud, arms raised; the opposite arm drops, and if the counting stops too, speech lives on that side. Then the count resumes.",
+  "move": "To learn what a part does, switch it off for a moment.",
+  "keywords": [
+    "wada test",
+    "language dominance",
+    "carotid artery",
+    "epilepsy surgery",
+    "hemispheres"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wada & Rasmussen, Journal of Neurosurgery, 1960",
+  "source_kind": "paper",
+  "reference": "doi:10.3171/jns.1960.17.2.0266",
+  "written": "2026-09-26"
+}

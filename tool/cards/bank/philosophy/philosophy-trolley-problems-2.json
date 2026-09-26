@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-trolley-problems-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Judith Jarvis Thomson, who named the trolley problem, finally concluded what about the bystander at the switch?",
+  "options": [
+    "He must turn the trolley",
+    "He may turn it, but need not",
+    "He may not turn it"
+  ],
+  "correct": 2,
+  "answer": "He may not turn it. In 2008 Thomson reversed her earlier verdict. Suppose the bystander could also send the trolley onto himself: if he would not pay that price to save the five, he cannot make the lone worker pay it for him. The famous puzzle, she decided, was a non-problem.",
+  "move": "Before making a stranger pay a price, ask whether you would pay it.",
+  "trap": "Assuming the case's champion kept the verdict almost everyone gives.",
+  "keywords": [
+    "judith jarvis thomson",
+    "trolley problem",
+    "bystander",
+    "self-sacrifice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thomson, Philosophy & Public Affairs, 2008",
+  "source_kind": "paper",
+  "reference": "https://wmit-pages-prod.s3.amazonaws.com/wp-content/uploads/sites/283/2022/06/12154735/thomson2.pdf",
+  "written": "2026-09-26"
+}

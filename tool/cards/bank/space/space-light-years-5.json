@@ -1,0 +1,39 @@
+{
+  "id": "space-light-years-5",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "In 2022 James Webb images suggested a galaxy, CEERS-93316, was the most distant ever seen. What did its spectrum show in 2023?",
+  "options": [
+    "It really was the record",
+    "It was an ordinary nearer galaxy",
+    "It was a star in our galaxy"
+  ],
+  "correct": 1,
+  "answer": "An ordinary, nearer galaxy. Its spectrum showed it as it was 1.2 billion years after the Big Bang, not the 240 million claimed. Dust and bright oxygen emission had mimicked the colours of a far younger, more distant galaxy. It had been picked out of thousands of candidates precisely for looking extreme.",
+  "move": "The most extreme result in a big pile is the one to recheck first.",
+  "trap": "Expecting a record-breaking first measurement to hold up on a second look.",
+  "keywords": [
+    "ceers-93316",
+    "james webb space telescope",
+    "distant galaxies",
+    "spectroscopy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arrabal Haro et al., Nature, 2023",
+  "source_kind": "paper",
+  "reference": "Arrabal Haro et al., Confirmation and refutation of very luminous galaxies in the early universe, Nature 622, 707, 2023",
+  "written": "2026-09-26"
+}

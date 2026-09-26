@@ -1,0 +1,32 @@
+{
+  "id": "space-star-death-4",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why have some white dwarfs, the cooling cores left by dead stars, stopped cooling?",
+  "answer": "Their cores are freezing, and the crystals float. In some white dwarfs the solid that forms is lighter than the surrounding liquid, so it rises and pushes heavier liquid down, releasing gravitational energy. Bédard and colleagues showed in 2024 that this holds some steady for billions of years, outshining small living stars.",
+  "move": "When something refuses to cool, look for a hidden source of heat.",
+  "keywords": [
+    "white dwarfs",
+    "crystallisation",
+    "distillation",
+    "stellar cooling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bédard, Blouin & Cheng, Nature, 2024",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-024-07102-y",
+  "written": "2026-09-26"
+}

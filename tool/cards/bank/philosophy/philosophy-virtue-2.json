@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-virtue-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: the saying 'We are what we repeatedly do' comes from Aristotle's own writings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The sentence is Will Durant's, from The Story of Philosophy (1926), summing up Aristotle in modern words and then quoted as his ever since. Aristotle's point was that habit shapes only what nature leaves open: a stone thrown upwards ten thousand times never learns to rise.",
+  "move": "A thousand copies of one mistake are still one source.",
+  "trap": "Trusting a line because it is attributed to him everywhere.",
+  "keywords": [
+    "will durant",
+    "aristotle",
+    "misattributed quotations",
+    "habit",
+    "virtue"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Durant, The Story of Philosophy, 1926",
+  "source_kind": "book",
+  "reference": "Durant, The Story of Philosophy, Simon & Schuster, 1926, chapter 2; Aristotle, Nicomachean Ethics II.1, trans. D. P. Chase, Everyman's Library, 1911",
+  "written": "2026-09-26"
+}

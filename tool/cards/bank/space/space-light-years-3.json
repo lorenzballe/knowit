@@ -1,0 +1,42 @@
+{
+  "id": "space-light-years-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Voyager 1 travels at about 17 km/s. How long would it take to cover the 4.2 light-years to the nearest star, in thousands of years?",
+  "value": 74,
+  "unit": "thousand years",
+  "withinFactor": 3,
+  "answer": "40 trillion ÷ 540 million ≈ 74,000 years.",
+  "move": "Put the distance in the traveller's units before calling it near.",
+  "trap": "Assuming the fastest craft leaving the Solar System would get there in centuries.",
+  "hint": "Turn light-years into km, and the speed into km per year.",
+  "steps": [
+    "A light-year is about 9.5 trillion km, so 4.2 light-years is about 40 trillion km.",
+    "A year has about 31.6 million seconds, so 17 km/s is about 540 million km a year.",
+    "40 trillion ÷ 540 million ≈ 74,000 years."
+  ],
+  "keywords": [
+    "voyager 1",
+    "proxima centauri",
+    "light-year",
+    "interstellar travel"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bell, The Interstellar Age, 2015",
+  "source_kind": "book",
+  "reference": "Bell, The Interstellar Age: Inside the Forty-Year Voyager Mission, Dutton, 2015",
+  "written": "2026-09-26"
+}

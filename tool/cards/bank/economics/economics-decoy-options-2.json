@@ -1,0 +1,39 @@
+{
+  "id": "economics-decoy-options-2",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Shoppers split evenly between a $170 and a $240 camera. When a $470 model was added, what happened to the $170 camera's share?",
+  "options": [
+    "It held at about half",
+    "It fell to about a fifth",
+    "It rose above half"
+  ],
+  "correct": 1,
+  "answer": "It fell to about a fifth. In Simonson and Tversky's study the cheap Minolta dropped from 50% to 22% once a pricier model appeared; the middle camera rose from 50% to 57% and the newcomer took 21%. Once $170 became the extreme, it lost more than half its buyers.",
+  "move": "Extremes make the middle look safe; ask who added the extreme.",
+  "trap": "Judging the cheap camera on its own, not against the new top price.",
+  "keywords": [
+    "compromise effect",
+    "cameras",
+    "extremeness aversion",
+    "price tiers"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Simonson & Tversky, J. Marketing Research, 1992",
+  "source_kind": "paper",
+  "reference": "Simonson & Tversky, Choice in Context: Tradeoff Contrast and Extremeness Aversion, Journal of Marketing Research, 1992",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-food-4",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the poorest English farm labourers of the 1790s drink tea?",
+  "answer": "Because it was the cheapest warm drink left. David Davies, a Berkshire rector who published labourers' budgets in 1795, called tea-drinking 'not the cause, but the consequence' of their poverty: malt was too dear to brew beer, and milk hard to get. Without weak tea and the brownest sugar, they had bread and water.",
+  "move": "Before blaming a habit for hardship, ask whether the hardship made the habit.",
+  "keywords": [
+    "david davies",
+    "tea",
+    "farm labourers",
+    "household budgets",
+    "rural poverty"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davies, The Case of Labourers in Husbandry, 1795",
+  "source_kind": "primary_document",
+  "reference": "Davies, The Case of Labourers in Husbandry Stated and Considered, 1795; discussed in Burnett, Liquid Pleasures: A Social History of Drinks in Modern Britain, Routledge, 1999",
+  "written": "2026-09-26"
+}

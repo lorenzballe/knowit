@@ -1,0 +1,40 @@
+{
+  "id": "economics-charm-prices-5",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Scanner data from 25 US chains: a one-cent rise from a price ending in 99 hits sales like a rise of how much?",
+  "options": [
+    "About one cent",
+    "About five cents",
+    "Over twenty cents"
+  ],
+  "correct": 2,
+  "answer": "Over twenty cents. Studying 3,500 products sold by 25 US chains, Strulov-Shlain estimated that shoppers treat the step from $4.99 to $5.00 as if it were more than twenty times bigger. Retailers do use 99 endings, yet price as if the effect were far smaller, forgoing an estimated 1–4% of gross profits.",
+  "move": "The first digit you read sets the size you feel.",
+  "trap": "Assuming shoppers weigh a cent as a cent.",
+  "keywords": [
+    "left-digit bias",
+    "99 endings",
+    "supermarkets",
+    "scanner data",
+    "retail pricing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strulov-Shlain, Review of Economic Studies, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/restud/rdac082",
+  "written": "2026-09-26"
+}

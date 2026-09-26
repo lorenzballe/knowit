@@ -1,0 +1,33 @@
+{
+  "id": "human_body-plasticity-1",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a stroke in the visual cortex take from a woman blind since birth?",
+  "answer": "Her Braille. A fluent reader before, she found the dots no longer made words, though her sense of touch seemed otherwise unchanged. In people blind from early life, the occipital cortex, the sighted brain's visual area, is taken over for reading by touch. Magnetic pulses aimed there scramble Braille for other blind readers too.",
+  "move": "What a part was built for is no guide to what it now does.",
+  "keywords": [
+    "braille",
+    "visual cortex",
+    "blindness",
+    "stroke",
+    "cross-modal plasticity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamilton et al., NeuroReport, 2000",
+  "source_kind": "paper",
+  "reference": "doi:10.1097/00001756-200002070-00003",
+  "written": "2026-09-26"
+}

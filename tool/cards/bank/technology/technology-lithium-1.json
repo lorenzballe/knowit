@@ -1,0 +1,36 @@
+{
+  "id": "technology-lithium-1",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "also": [
+    "science.cold_and_heat.fire"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a lithium-ion battery need a flammable liquid inside when older batteries manage with water?",
+  "answer": "Because water cannot survive its voltage. Water starts splitting into hydrogen and oxygen at 1.23 volts, and lead–acid cells stretch that to about 2. A lithium-ion cell works at 3 to 4.2 volts, so its lithium salt is dissolved in carbon-based solvents, and those burn. A crushed cell can vent a jet of flaming solvent.",
+  "move": "Ask what a hazard buys before asking why nobody removed it.",
+  "keywords": [
+    "lithium-ion cells",
+    "electrolyte",
+    "water splitting",
+    "cell voltage",
+    "flammable solvents"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goodenough & Kim, Chemistry of Materials, 2010",
+  "source_kind": "paper",
+  "reference": "Goodenough & Kim, Challenges for Rechargeable Li Batteries, Chemistry of Materials, 2010",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "history-food-2",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Around 1500, roughly how many calories did a monk of Westminster Abbey take in on an ordinary day?",
+  "options": [
+    "About 1,500",
+    "About 2,500",
+    "About 6,000"
+  ],
+  "correct": 2,
+  "answer": "About 6,000 on an ordinary day, about 4,500 when fasting. Westminster was one of England's richest monasteries, and Barbara Harvey's reconstruction of its allowances gives each monk roughly a kilo of bread a day, 900 g of meat or fish, five eggs and 4.5 litres of ale.",
+  "move": "Drop the numbers from your own life before guessing at someone else's.",
+  "trap": "Reaching for today's 2,500-calorie guideline as if it were a medieval norm.",
+  "keywords": [
+    "westminster abbey",
+    "monks",
+    "calories",
+    "ale",
+    "medieval diet"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Harvey, Living and Dying in England, 1993",
+  "source_kind": "book",
+  "reference": "Harvey, Living and Dying in England 1100–1540: The Monastic Experience, Clarendon Press, 1993",
+  "written": "2026-09-26"
+}

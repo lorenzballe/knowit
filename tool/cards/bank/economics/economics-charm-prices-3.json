@@ -1,0 +1,40 @@
+{
+  "id": "economics-charm-prices-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On eBay, what happens to items listed at a round $100 rather than at nearby precise prices?",
+  "options": [
+    "Lower offers, which arrive sooner",
+    "Higher offers, which arrive later",
+    "No difference in offers or speed"
+  ],
+  "correct": 0,
+  "answer": "Lower offers, which arrive sooner. In millions of eBay bargaining exchanges, Backus, Blake and Tadelis found that items listed at multiples of $100 drew offers 5–8% lower but 6–11 days sooner, and were 3–5% likelier to sell. A round number reads as a seller in a hurry; house sales show the same pattern.",
+  "move": "A round number invites haggling; a precise one says the sums are done.",
+  "trap": "Assuming a few dollars either way cannot change how buyers bid.",
+  "keywords": [
+    "round numbers",
+    "ebay",
+    "bargaining",
+    "listing prices",
+    "signalling"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Backus, Blake & Tadelis, J. Political Economy, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1086/701699",
+  "written": "2026-09-26"
+}

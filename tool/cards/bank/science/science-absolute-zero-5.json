@@ -1,0 +1,42 @@
+{
+  "id": "science-absolute-zero-5",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Near absolute zero, how much pressure does it take to freeze helium solid?",
+  "options": [
+    "About 25,000 times air pressure",
+    "No extra pressure at all",
+    "About 25 times air pressure"
+  ],
+  "correct": 2,
+  "answer": "About 25 times air pressure. Helium atoms are so light, and attract each other so weakly, that their quantum jiggle, a motion that persists even at absolute zero, shakes any crystal apart. At ordinary pressure helium would stay liquid at absolute zero itself: the one element that cold alone cannot freeze.",
+  "move": "Rules learned from ordinary cases can fail at the extremes.",
+  "trap": "Assuming cold alone freezes everything, as it does every familiar liquid.",
+  "keywords": [
+    "liquid helium",
+    "zero-point motion",
+    "freezing",
+    "pressure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilks & Betts, Introduction to Liquid Helium, 1987",
+  "source_kind": "book",
+  "reference": "Wilks & Betts, An Introduction to Liquid Helium, 2nd edition, Clarendon Press, Oxford, 1987",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-trolley-problems-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When shipwrecked sailors killed one of their crew so three could live, what did an English court rule?",
+  "answer": "Murder: necessity is no defence. In 1884 Dudley and Stephens killed Richard Parker, the 17-year-old cabin boy, to feed themselves and a third man. Lord Coleridge asked who is to judge such necessity, and by what measure lives are compared — here the weakest had been chosen. The death sentences were commuted to six months.",
+  "move": "Never let the person who profits from an exception decide it applies.",
+  "keywords": [
+    "dudley and stephens",
+    "necessity defence",
+    "mignonette",
+    "lifeboat",
+    "murder"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "R v Dudley and Stephens, 1884",
+  "source_kind": "primary_document",
+  "reference": "R v Dudley and Stephens (1884) 14 QBD 273; Simpson, Cannibalism and the Common Law, University of Chicago Press, 1984",
+  "written": "2026-09-26"
+}

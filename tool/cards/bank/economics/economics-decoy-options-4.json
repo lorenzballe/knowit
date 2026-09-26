@@ -1,0 +1,33 @@
+{
+  "id": "economics-decoy-options-4",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do decoys only work on creatures that can explain their choices?",
+  "answer": "No. Female túngara frogs offered two recorded male calls preferred caller B over caller A; when Lea and Ryan added a third, inferior call, the females switched to A. Mate-choice theory had assumed stable rankings, just as rational-choice economics does. The decoy works on a brain that has never heard of a price.",
+  "move": "When a frog shares your mistake, look for wiring, not motives.",
+  "keywords": [
+    "túngara frogs",
+    "mate choice",
+    "decoy effect",
+    "animal behaviour",
+    "sexual selection"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lea and Ryan, Science, 2015",
+  "source_kind": "paper",
+  "reference": "Lea & Ryan, Irrationality in mate choice revealed by túngara frogs, Science, 2015",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "space-light-years-2",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "also": [
+    "space.stars_and_light.star_death"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did astronomers take a spectrum of Tycho Brahe's 1572 supernova in 2008?",
+  "answer": "By catching light that took a detour. Some of the 1572 flash struck dust clouds and bounced towards Earth by a longer route, arriving more than four centuries after the direct light. Spread into its colours, that echo showed a normal white dwarf explosion. Tycho saw the first copy; the second was still travelling.",
+  "move": "Look for the echo when the original is gone.",
+  "keywords": [
+    "tycho's supernova",
+    "light echo",
+    "spectroscopy",
+    "sn 1572",
+    "white dwarfs"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krause et al., Nature, 2008",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature07608",
+  "written": "2026-09-26"
+}

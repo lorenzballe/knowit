@@ -1,0 +1,33 @@
+{
+  "id": "space-star-death-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did underground detectors register supernova 1987A hours before any telescope saw it?",
+  "answer": "Because its light was trapped inside the star. The collapsing core released neutrinos, particles that cross matter almost unhindered; light had to wait for the shock wave to reach the surface. On 23 February 1987 three detectors caught 25 neutrinos in 13 seconds, two to three hours before the light.",
+  "move": "The signal that arrives first is often the one nobody is watching for.",
+  "keywords": [
+    "sn 1987a",
+    "neutrinos",
+    "kamiokande",
+    "shock wave",
+    "supernova"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Hirata et al., Physical Review Letters, 1987",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.58.1490",
+  "written": "2026-09-26"
+}

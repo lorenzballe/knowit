@@ -1,0 +1,33 @@
+{
+  "id": "economics-anchoring-2",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when J.C. Penney swapped its endless sales for steady everyday prices in 2012?",
+  "answer": "Its shoppers walked away. The plan scrapped most coupons and sale events in favour of steady everyday prices; sales fell by about a quarter within the year and the company lost $985 million. The chief executive was out by April 2013, and the old sale tags came back.",
+  "move": "People buy the saving they can see, not the price they pay.",
+  "keywords": [
+    "j.c. penney",
+    "reference prices",
+    "everyday low pricing",
+    "discounts",
+    "department stores"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "J.C. Penney, Form 10-K, fiscal 2012",
+  "source_kind": "company",
+  "reference": "J.C. Penney Company, Inc., Annual Report on Form 10-K for the fiscal year ended 2 February 2013, 2013",
+  "written": "2026-09-26"
+}

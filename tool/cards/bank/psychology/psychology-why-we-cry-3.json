@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-cry-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a Dutch survey, what share of parents of six-month-olds admitted shaking, slapping or smothering their crying baby?",
+  "answer": "About one in twenty. Between 4.2% and 7.0% said they had done at least one of these at least once because of the crying, and the risk rose when the crying seemed excessive. A cry is built to summon care and usually does; past a limit, it can summon harm.",
+  "move": "Any alarm loud enough to compel help can also wear out the helper.",
+  "keywords": [
+    "infant crying",
+    "shaken babies",
+    "child abuse",
+    "parents",
+    "netherlands"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "dots",
+  "source": "Vingerhoets, Why Only Humans Weep, 2013",
+  "source_kind": "book",
+  "reference": "Vingerhoets, Why Only Humans Weep: Unravelling the Mysteries of Tears, Oxford University Press, 2013",
+  "written": "2026-09-26"
+}

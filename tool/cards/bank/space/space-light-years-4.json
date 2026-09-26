@@ -1,0 +1,35 @@
+{
+  "id": "space-light-years-4",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "also": [
+    "space.edge_of_the_universe.expansion"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a galaxy is reported as 13.4 billion light-years away, what does that number measure?",
+  "answer": "How long its light travelled, not where the galaxy is. Space stretched while the light was in transit. GN-z11's light set out about 13.4 billion years ago, when the galaxy was some 2.7 billion light-years from here; today it is about 32 billion. The headline number is neither.",
+  "move": "Ask what a number measures before asking how big it is.",
+  "keywords": [
+    "gn-z11",
+    "light-travel distance",
+    "cosmic expansion",
+    "light-year"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bunker et al., Astronomy & Astrophysics, 2023",
+  "source_kind": "paper",
+  "reference": "Bunker et al., JADES NIRSpec Spectroscopy of GN-z11, Astronomy & Astrophysics 677, A88, 2023",
+  "written": "2026-09-26"
+}

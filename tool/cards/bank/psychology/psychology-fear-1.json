@@ -1,0 +1,33 @@
+{
+  "id": "psychology-fear-1",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What could still terrify a patient who, with both amygdalae damaged, felt no fear of snakes or spiders?",
+  "answer": "Air laced with carbon dioxide. Asked to breathe 35% CO2, she and two other patients with the same damage all had panic attacks; only 3 of 12 healthy volunteers did. The amygdala seems to handle threats from outside the body. A threat sensed inside, like suffocation, reaches terror by another road.",
+  "move": "The part that handles most cases is not always the part that handles all.",
+  "keywords": [
+    "amygdala",
+    "panic attacks",
+    "carbon dioxide",
+    "patient sm",
+    "suffocation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feinstein et al., Nature Neuroscience, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nn.3323",
+  "written": "2026-09-26"
+}

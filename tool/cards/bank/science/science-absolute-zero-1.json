@@ -1,0 +1,33 @@
+{
+  "id": "science-absolute-zero-1",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does ordinary ice lose all its disorder as it is cooled towards absolute zero?",
+  "answer": "No. The oxygen atoms line up in a neat lattice, but each hydrogen can sit nearer either end of its bond, and those choices freeze in at random. In 1935 Linus Pauling counted the arrangements and predicted the leftover disorder, or entropy: 3.4 joules per kelvin per mole, close to what heat measurements showed.",
+  "move": "A neat frame can still hold choices that were never settled.",
+  "keywords": [
+    "ice",
+    "residual entropy",
+    "linus pauling",
+    "third law",
+    "hydrogen bonds"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pauling, Journal of the American Chemical Society, 1935",
+  "source_kind": "paper",
+  "reference": "Pauling, The Structure and Entropy of Ice and of Other Crystals with Some Randomness of Atomic Arrangement, Journal of the American Chemical Society, 1935",
+  "written": "2026-09-26"
+}

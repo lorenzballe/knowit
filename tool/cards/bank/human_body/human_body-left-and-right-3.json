@@ -1,0 +1,39 @@
+{
+  "id": "human_body-left-and-right-3",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where do most left-handed people have their main language areas?",
+  "options": [
+    "In the right hemisphere",
+    "In the left hemisphere",
+    "Split equally between both"
+  ],
+  "correct": 1,
+  "answer": "In the left hemisphere, as in almost all right-handers. Handedness shifts the odds only modestly: among 326 healthy adults tested by Knecht and colleagues, right-hemisphere language rose from 4% of strong right-handers to 27% of strong left-handers. About three strong left-handers in four still speak from the hemisphere that runs their weaker hand.",
+  "move": "A visible trait is a weak guide to the hidden one it seems to mirror.",
+  "trap": "Mirroring the hand: left hand, so language on the right.",
+  "keywords": [
+    "handedness",
+    "language lateralisation",
+    "left-handers",
+    "hemispheres"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Knecht et al., Brain, 2000",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/brain/123.12.2512",
+  "written": "2026-09-26"
+}

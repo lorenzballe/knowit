@@ -1,0 +1,40 @@
+{
+  "id": "human_body-neurons-2",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The cerebral cortex makes up about 82% of the brain's mass. What share of the brain's neurons does it hold?",
+  "options": [
+    "About 80%",
+    "About half",
+    "About 20%"
+  ],
+  "correct": 2,
+  "answer": "About 20%. Of the brain's 86 billion or so neurons, only about 16 billion are in the cerebral cortex. Some 69 billion, four in five, are packed into the cerebellum, which weighs about 150 g, most of them tiny granule cells. The cortex's bulk is long wiring and support cells; the cerebellum's is sheer headcount.",
+  "move": "Where the weight is and where the numbers are can be different places.",
+  "trap": "Carrying the cortex's 82% share of weight over to its neurons.",
+  "keywords": [
+    "cerebral cortex",
+    "cerebellum",
+    "neuron count",
+    "granule cells",
+    "isotropic fractionator"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Azevedo et al., Journal of Comparative Neurology, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1002/cne.21974",
+  "written": "2026-09-26"
+}

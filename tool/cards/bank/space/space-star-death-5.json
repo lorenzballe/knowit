@@ -1,0 +1,38 @@
+{
+  "id": "space-star-death-5",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: no red dwarf, the smallest kind of hydrogen-burning star, has yet died of old age?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A red dwarf burns its hydrogen so slowly that it lasts from tens of billions of years to trillions, the smallest longest. The universe is 13.8 billion years old, and only stars above about 80% of the Sun's mass have had time to run out. Almost every red dwarf ever formed is still shining.",
+  "move": "Judge a lifetime against its own clock, not against ours.",
+  "trap": "Assuming 13.8 billion years is long enough for any star to burn out.",
+  "keywords": [
+    "red dwarfs",
+    "stellar lifetimes",
+    "main sequence",
+    "age of the universe"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Adams & Laughlin, Five Ages of the Universe",
+  "source_kind": "book",
+  "reference": "Adams & Laughlin, The Five Ages of the Universe: Inside the Physics of Eternity, Free Press, 1999",
+  "written": "2026-09-26"
+}

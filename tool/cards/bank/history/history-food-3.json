@@ -1,0 +1,39 @@
+{
+  "id": "history-food-3",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a 1936 survey found that half of Britain could not afford a diet adequate for health?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. John Boyd Orr's Food, Health and Income found that a diet fully adequate for health was reached only at incomes above those of half the population. The poorest tenth, about 4.5 million people, fell short on every count he measured. What they lacked was less bread than milk, eggs, fruit and vegetables.",
+  "move": "Before arguing over how many went without, agree on what enough means.",
+  "trap": "Picturing 1930s hunger as a small unemployed minority, not half the country.",
+  "keywords": [
+    "john boyd orr",
+    "malnutrition",
+    "diet surveys",
+    "protective foods",
+    "interwar britain"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Boyd Orr, Food, Health and Income, 1936",
+  "source_kind": "primary_document",
+  "reference": "Boyd Orr, Food, Health and Income: Report on a Survey of Adequacy of Diet in Relation to Income, Macmillan, 1936",
+  "written": "2026-09-26"
+}

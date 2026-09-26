@@ -1,0 +1,33 @@
+{
+  "id": "psychology-confirmation-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Four fingerprint experts matched a Madrid bombing print to an Oregon lawyer. What did the official review blame?",
+  "answer": "Confirmation bias and circular reasoning, starting from an unusually similar print. After the first FBI examiner declared a match, ambiguous details in the smudged print were read in the light of Brandon Mayfield's prints, and two colleagues and a court-appointed expert agreed. Spanish police identified an Algerian man; Mayfield had been held for two weeks.",
+  "move": "Describe the evidence fully before seeing what it is meant to match.",
+  "keywords": [
+    "brandon mayfield",
+    "fingerprints",
+    "fbi",
+    "madrid bombings",
+    "forensic science"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Justice Department Inspector General, 2006",
+  "source_kind": "institution",
+  "reference": "US Department of Justice, Office of the Inspector General, A Review of the FBI's Handling of the Brandon Mayfield Case, 2006",
+  "written": "2026-09-26"
+}

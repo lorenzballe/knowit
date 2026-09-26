@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-duty-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a stronger duty overrides a promise, what did W. D. Ross say is left of the promise?",
+  "answer": "A debt. W. D. Ross, in The Right and the Good (1930), let a stronger duty override a promise: breaking an appointment with a friend to help at an accident is right. Yet the promise does not vanish. Compunction is fitting, and a duty remains to make it up to the friend left waiting.",
+  "move": "A duty that loses the argument still leaves a bill to pay.",
+  "keywords": [
+    "w. d. ross",
+    "prima facie duties",
+    "promises",
+    "moral residue"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ross, The Right and the Good, 1930",
+  "source_kind": "book",
+  "reference": "Ross, The Right and the Good, Clarendon Press, 1930, chapter 2",
+  "written": "2026-09-26"
+}

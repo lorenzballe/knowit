@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-duty-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Kant held that a person must never be used as a means to someone else's ends?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The formula says never merely as a means. A lying promise to repay a loan uses the lender in a way he could not possibly agree to, since he would refuse if he knew. Buying bread uses the baker too, but on terms he accepts: he is a means to breakfast, and rightly so.",
+  "move": "Before quoting a rule, find the word that limits it.",
+  "trap": "Remembering the slogan without its one qualifying word.",
+  "keywords": [
+    "kant",
+    "formula of humanity",
+    "means and ends",
+    "false promise",
+    "consent"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kant, Groundwork of the Metaphysics of Morals, 1785",
+  "source_kind": "book",
+  "reference": "Kant, Groundwork of the Metaphysics of Morals, trans. Gregor, Cambridge University Press, 1998, 4:429-430",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "economics-charm-prices-1",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a mail-order catalogue test, raising an item's price from $34 to $39 sold more of it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Anderson and Simester mailed versions of a clothing catalogue in which the same items cost $34, $39 or $44. The $39 versions sold more than the cheaper $34 ones. A price ending in 9 reads as a keen price, and here that signal outweighed a real saving. Five dollars lost to a single digit.",
+  "move": "A price is read as a message before it is paid as a cost.",
+  "trap": "Assuming a higher price can only mean fewer buyers.",
+  "keywords": [
+    "charm prices",
+    "price endings",
+    "mail-order catalogues",
+    "field experiments"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anderson and Simester, Quantitative Marketing and Economics, 2003",
+  "source_kind": "paper",
+  "reference": "Anderson & Simester, Effects of $9 Price Endings on Retail Sales: Evidence from Field Experiments, Quantitative Marketing and Economics, 2003",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-anchoring-1",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which single price do takeover bids for a listed company most often land on exactly?",
+  "answer": "The target's highest share price of the previous 52 weeks. Baker, Pan and Wurgler found that the most common offer is precisely that peak, and that targets become sharply likelier to accept once a bid clears it. A window drawn by the calendar helps price deals worth billions.",
+  "move": "A price someone once paid is a memory, not a valuation.",
+  "keywords": [
+    "takeovers",
+    "52-week high",
+    "reference prices",
+    "mergers",
+    "offer prices"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, Pan and Wurgler, J. Financial Economics, 2012",
+  "source_kind": "paper",
+  "reference": "Baker, Pan & Wurgler, The effect of reference point prices on mergers and acquisitions, Journal of Financial Economics, 2012",
+  "written": "2026-09-26"
+}

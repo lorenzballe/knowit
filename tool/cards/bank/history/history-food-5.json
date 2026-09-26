@@ -1,0 +1,40 @@
+{
+  "id": "history-food-5",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1858, peppermint humbugs from Bradford market killed about 20 people with arsenic. What was meant to be in them instead?",
+  "options": [
+    "A cheap filler to replace sugar",
+    "A green dye to brighten them",
+    "A preservative against the damp"
+  ],
+  "correct": 0,
+  "answer": "A cheap filler to replace sugar. Sugar was dear, so confectioners bulked sweets with 'daff', a white powder such as plaster of Paris. A chemist's assistant sold arsenic trioxide in its place by mistake; about 200 people fell ill. Even a safe humbug was meant to be part chalk or plaster.",
+  "move": "Behind a one-off disaster, look for the routine that made it possible.",
+  "trap": "Arsenic and Victorian sweets call up the famous poisonous green colourings.",
+  "keywords": [
+    "bradford sweets poisoning",
+    "food adulteration",
+    "arsenic",
+    "humbugs",
+    "confectionery"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whorton, The Arsenic Century, 2010",
+  "source_kind": "book",
+  "reference": "Whorton, The Arsenic Century: How Victorian Britain Was Poisoned at Home, Work, and Play, Oxford University Press, 2010",
+  "written": "2026-09-26"
+}

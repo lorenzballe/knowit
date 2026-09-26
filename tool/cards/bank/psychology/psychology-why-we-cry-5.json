@@ -1,0 +1,39 @@
+{
+  "id": "psychology-why-we-cry-5",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in diary studies, babies cry about as much at two weeks old as at six weeks?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The famous six-week peak turns up in some samples, but pooling 28 diary studies of 8,690 infants found no statistical evidence of it: fussing and crying held at about two hours a day for six weeks, then fell to about 68 minutes by 10 to 12 weeks. Denmark and Japan had the least colic.",
+  "move": "A pattern seen in one group needs pooling before it is called universal.",
+  "trap": "Recalling the well-known curve that peaks sharply at about six weeks.",
+  "keywords": [
+    "infant crying",
+    "colic",
+    "crying curve",
+    "meta-analysis",
+    "diary studies"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Wolke, Bilgin & Samara, Journal of Pediatrics, 2017",
+  "source_kind": "paper",
+  "reference": "Wolke, Bilgin & Samara, Systematic review and meta-analysis: fussing and crying durations and prevalence of colic in infants, Journal of Pediatrics, 2017",
+  "written": "2026-09-26"
+}

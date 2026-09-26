@@ -1,0 +1,39 @@
+{
+  "id": "psychology-why-we-cry-4",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the gap between how often women and men cry is larger in richer, more democratic countries?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Surveys of students across dozens of countries found women crying more than men almost everywhere, but the gap was larger in wealthier, more democratic countries. One reading: where feelings may be shown freely, differences between the sexes have room to appear, and in stricter places they stay hidden.",
+  "move": "Freedom to express a difference can make the difference look bigger.",
+  "trap": "Strict gender roles in poorer countries should silence men's tears most.",
+  "keywords": [
+    "crying",
+    "gender differences",
+    "culture",
+    "countries",
+    "emotional expression"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Hemert et al., Cross-Cultural Research, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/1069397111404519",
+  "written": "2026-09-26"
+}

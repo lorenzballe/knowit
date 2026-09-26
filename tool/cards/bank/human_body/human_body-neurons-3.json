@@ -1,0 +1,33 @@
+{
+  "id": "human_body-neurons-3",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What limits how many neurons in the cortex can fire at the same moment?",
+  "answer": "Energy. Each spike is paid for by pumping back the ions that crossed the membrane. Dividing the cortex's power supply by the cost of a spike, Lennie estimated that possibly fewer than 1% of cortical neurons can be strongly active at once. Blood is steered to the busiest areas, and brain scanners watch that surge.",
+  "move": "Before asking why a system does so little, ask what it can afford.",
+  "keywords": [
+    "action potentials",
+    "energy budget",
+    "sparse coding",
+    "cerebral cortex",
+    "brain imaging"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Lennie, Current Biology, 2003",
+  "source_kind": "paper",
+  "reference": "Lennie, The cost of cortical computation, Current Biology, 2003",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "human_body-plasticity-5",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should brain-training apps be allowed to advertise that they keep the mind sharp?",
+  "sides": [
+    "Yes, allow the claims",
+    "No, ban the claims"
+  ],
+  "answer": "Practice changes brains, and one large trial found a lasting signal: in ACTIVE, 2,802 older Americans were randomised, and those given speed-of-processing training had about 29% lower dementia risk ten years later than controls. The games are cheap and harmless. Adults weigh modest evidence for crosswords, diets and exercise; they can weigh it here too.",
+  "move": "Whichever side you took, it turns on whether gains travel beyond the game.",
+  "counterpoint": "Players get better at the games and little else. In a six-week study of 11,430 people, gains on every trained task failed to transfer to untrained ones, even closely related tasks. The dementia signal came from a secondary analysis whose confidence interval brushed 1.0. In 2016 Lumosity's maker paid US regulators $2 million over such claims.",
+  "keywords": [
+    "brain training",
+    "cognitive transfer",
+    "dementia",
+    "advertising claims",
+    "active trial"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edwards et al., Alzheimer's & Dementia, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/j.trci.2017.09.002",
+  "written": "2026-09-26"
+}

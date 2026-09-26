@@ -1,0 +1,33 @@
+{
+  "id": "science-absolute-zero-2",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the helium-3 that the coldest refrigerators depend on come from?",
+  "answer": "Mostly from nuclear weapons. Tritium, the radioactive hydrogen in warheads, decays into helium-3 with a half-life of about 12 years, and the gas is skimmed off when the tritium is purified. Dilution refrigerators, which hold quantum-computer chips near a hundredth of a kelvin, need it. After 2001, radiation detectors at ports ran the stockpile down.",
+  "move": "Trace a scarce material back to whatever it is a by-product of.",
+  "keywords": [
+    "helium-3",
+    "tritium",
+    "dilution refrigerators",
+    "nuclear weapons",
+    "quantum computers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Congressional Research Service, The Helium-3 Shortage, 2010",
+  "source_kind": "institution",
+  "reference": "Shea & Morgan, The Helium-3 Shortage: Supply, Demand, and Options for Congress, Congressional Research Service, 2010",
+  "written": "2026-09-26"
+}

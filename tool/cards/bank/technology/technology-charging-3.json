@@ -1,0 +1,42 @@
+{
+  "id": "technology-charging-3",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "also": [
+    "technology.batteries.lithium"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Charging a cobalt-oxide phone battery to 4.2 volts draws lithium out of the positive electrode. How much of it?",
+  "options": [
+    "Nearly all of it",
+    "About a tenth",
+    "About half"
+  ],
+  "correct": 2,
+  "answer": "About half. Pull out more and the layered crystal of cobalt oxide becomes unstable: it distorts and can release oxygen, which feeds fires. So a full cell leaves half its lithium where it is. Newer phone cells, charged to about 4.4 volts, reach nearer two-thirds, at some cost in lifespan.",
+  "move": "Full usually means as far as is safe, not as far as possible.",
+  "trap": "Nearly all of it, since the battery reads 100%.",
+  "keywords": [
+    "lithium cobalt oxide",
+    "positive electrode",
+    "charge voltage",
+    "phone batteries"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Manthiram, Nature Communications, 2020",
+  "source_kind": "paper",
+  "reference": "Manthiram, A reflection on lithium-ion battery cathode chemistry, Nature Communications, 2020",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "space-star-death-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Most of the iron in human blood was made in which kind of stellar death?",
+  "options": [
+    "A massive star's core collapsing",
+    "A white dwarf blowing itself apart",
+    "A red giant shedding its layers"
+  ],
+  "correct": 1,
+  "answer": "A white dwarf blowing itself apart. A collapsing giant never releases its iron core; it is crushed into a neutron star or black hole. Exploding white dwarfs, each forging about half a Sun's mass of iron, made about two-thirds of the Solar System's supply. Blood's iron is mostly ash from stars that left no corpse.",
+  "move": "Where something is made matters less than whether it gets out.",
+  "trap": "Giants end their lives with iron cores, so they seem the obvious source.",
+  "keywords": [
+    "iron",
+    "white dwarfs",
+    "type ia supernovae",
+    "neutron stars",
+    "nucleosynthesis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Johnson, Science, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aau9540",
+  "written": "2026-09-26"
+}

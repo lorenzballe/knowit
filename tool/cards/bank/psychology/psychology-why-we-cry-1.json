@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-cry-1",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to a crying face in a photograph when the tears are digitally removed?",
+  "answer": "It stops reading as sad. With the tears erased, viewers rated the same faces as less sad and often saw puzzlement, concern or awe instead. The reverse works too: tears added to neutral faces flashed for 50 milliseconds made them look sad and made viewers keener to offer support. The tears carry the message.",
+  "move": "Before calling a reaction useless, ask who it is aimed at.",
+  "keywords": [
+    "tears",
+    "facial expression",
+    "sadness",
+    "emotional signals",
+    "photographs"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Provine, Krosnowski & Brocato, Evolutionary Psychology, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/147470490900700107",
+  "written": "2026-09-26"
+}

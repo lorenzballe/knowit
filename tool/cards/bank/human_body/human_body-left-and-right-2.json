@@ -1,0 +1,33 @@
+{
+  "id": "human_body-left-and-right-2",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does each half of the brain control the opposite side of the body?",
+  "answer": "Nobody knows for certain. In 1898 Cajal argued that crossing the optic nerves joined the two eyes' inverted images into one continuous map, and that touch and movement crossed to match. A newer idea: an early ancestor's head rotated half a turn against its body. Every vertebrate, down to the lamprey, is wired crossed.",
+  "move": "Ask whether a design solves a problem or inherits one.",
+  "keywords": [
+    "decussation",
+    "optic chiasm",
+    "contralateral control",
+    "ramón y cajal",
+    "axial twist"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "de Lussanet & Osse, Animal Biology, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1163/157075611X617102",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-virtue-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Ten measures of food are too much for an athlete and two too little. What does Aristotle's trainer order?",
+  "options": [
+    "Six, the midpoint of the two",
+    "An amount fitted to that athlete",
+    "The ration an average athlete needs"
+  ],
+  "correct": 1,
+  "answer": "An amount fitted to that athlete. Aristotle's mean is relative to the person, not the midpoint of two numbers, and it holds for courage or generosity as much as for food. His own example: six measures would be too little for Milo, the legendary wrestler, and too much for a beginner.",
+  "move": "Before splitting the difference, ask whose difference it is.",
+  "trap": "Taking the two numbers given and splitting the difference.",
+  "keywords": [
+    "doctrine of the mean",
+    "aristotle",
+    "milo of croton",
+    "nicomachean ethics"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Nicomachean Ethics, II.6",
+  "source_kind": "book",
+  "reference": "Aristotle, Nicomachean Ethics, trans. Ross, rev. Brown, Oxford University Press, 2009, 1106a36-b7",
+  "written": "2026-09-26"
+}

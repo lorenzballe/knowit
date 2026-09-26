@@ -1,0 +1,33 @@
+{
+  "id": "economics-charm-prices-2",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to a used car's auction price as its odometer rolls past a round ten thousand?",
+  "answer": "It drops in a step, not a slope. In over 22 million wholesale used-car sales, Lacetera, Pope and Sydnor found prices fall abruptly at each 10,000 mark on the clock, with smaller steps at each 1,000. The pattern traces to final buyers, who read the first digit and skim the rest: charm pricing in reverse.",
+  "move": "When a number matters, read all of it, not just the front.",
+  "keywords": [
+    "used cars",
+    "odometers",
+    "left-digit bias",
+    "car auctions",
+    "mileage"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lacetera, Pope and Sydnor, American Economic Review, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1257/aer.102.5.2206",
+  "written": "2026-09-26"
+}

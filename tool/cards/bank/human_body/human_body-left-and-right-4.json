@@ -1,0 +1,40 @@
+{
+  "id": "human_body-left-and-right-4",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "A 1991 study of death certificates found left-handers died nine years younger. What mostly explains the gap?",
+  "options": [
+    "Fewer left-handers among the old",
+    "Accidents in a right-handed world",
+    "Birth stress that also shortens life"
+  ],
+  "correct": 0,
+  "answer": "Fewer left-handers among the old. Children born early in the century were often made to write with the right hand, so few elderly people called themselves left-handed, and the left-handers who died were mostly younger. Mean age at death compared generations, not risks; studies following living people forward found little or no gap.",
+  "move": "Compare the dead only after asking when each group was born.",
+  "trap": "Right-handed tools and cars make an accident story feel obvious.",
+  "keywords": [
+    "left-handedness",
+    "life expectancy",
+    "death certificates",
+    "birth cohorts",
+    "forced switching"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galobardes et al., Am J Public Health, 1999",
+  "source_kind": "paper",
+  "reference": "doi:10.2105/AJPH.89.12.1873",
+  "written": "2026-09-26"
+}

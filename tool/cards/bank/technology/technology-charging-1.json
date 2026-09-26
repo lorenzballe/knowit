@@ -1,0 +1,33 @@
+{
+  "id": "technology-charging-1",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do fast-charging claims for phones and cars usually stop at 80%?",
+  "answer": "Because the last fifth is slow by design. A charger pushes constant current until the cell hits its voltage limit at roughly 80% full. Then it holds that voltage and lets the current dwindle, or the cell would overshoot its safe limit. The last 20% can take as long as the first 80%.",
+  "move": "When a figure stops at a round number, ask what happens after it.",
+  "keywords": [
+    "fast charging",
+    "constant voltage",
+    "charge curve",
+    "lithium-ion",
+    "electric cars"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Linden's Handbook of Batteries, 2011",
+  "source_kind": "book",
+  "reference": "Reddy (ed.), Linden's Handbook of Batteries, 4th edition, McGraw-Hill, 2011",
+  "written": "2026-09-26"
+}

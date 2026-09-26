@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-virtue-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "For Aristotle, who is more virtuous: the person who resists a craving, or the one who never feels it?",
+  "answer": "The one who does not feel it. Aristotle's test of virtue is pleasure or pain: whoever abstains gladly is temperate, whoever abstains and minds it is not. Resisting a bad desire is self-control, which he called not properly a virtue but a mixed state. The virtuous person does not want the third drink.",
+  "move": "Judge character by what someone wants, not only by what they resist.",
+  "keywords": [
+    "aristotle",
+    "temperance",
+    "self-control",
+    "continence",
+    "pleasure"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Nicomachean Ethics, II.3 and VII.9",
+  "source_kind": "book",
+  "reference": "Aristotle, Nicomachean Ethics, trans. Crisp, Cambridge University Press, 2000, 1104b3-8 and 1151b34-1152a3",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-duty-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Kant say could happen if you lie to a murderer about where your friend is?",
+  "answer": "The lie could get him killed. You say your friend is out; unknown to you, he has slipped away, and the murderer, leaving, meets him in the street. Kant argued in 1797 that the death is then yours to answer for, while the truth might have kept the killer searching until neighbours seized him.",
+  "move": "When one option's dangers are spelt out, ask about the other option's dangers.",
+  "keywords": [
+    "kant",
+    "lying",
+    "murderer at the door",
+    "benjamin constant",
+    "truthfulness"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kant, On a Supposed Right to Lie, 1797",
+  "source_kind": "book",
+  "reference": "Kant, On a Supposed Right to Lie from Philanthropy, in Practical Philosophy, trans. Gregor, Cambridge University Press, 1996, 8:425-430",
+  "written": "2026-09-26"
+}

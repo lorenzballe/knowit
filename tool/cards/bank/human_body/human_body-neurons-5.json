@@ -1,0 +1,32 @@
+{
+  "id": "human_body-neurons-5",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long do supplies take to travel down a nerve cell that runs from spine to toe?",
+  "answer": "Years, for some cargo. Its fibre, the axon, is about a metre long, and most of its supplies are made in the cell body by the spine. Vesicles ride fast transport, up to 400 mm a day: under three days. Scaffold proteins creep at 0.2 to 1 mm a day: about three to fourteen years.",
+  "move": "The far end of a long supply line lives on old stock.",
+  "keywords": [
+    "axonal transport",
+    "axons",
+    "neurofilaments",
+    "motor neurons"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roy, The Neuroscientist, 2014",
+  "source_kind": "paper",
+  "reference": "Roy, Seeing the unseen: the hidden world of slow axonal transport, The Neuroscientist, 2014",
+  "written": "2026-09-26"
+}

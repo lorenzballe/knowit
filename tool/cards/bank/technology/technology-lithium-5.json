@@ -1,0 +1,39 @@
+{
+  "id": "technology-lithium-5",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a lithium-ion battery is designed to contain no lithium metal at all?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The lithium shuttles as ions between graphite and a metal oxide. Earlier rechargeable cells used lithium metal, which grew needle-like crystals as they recharged, pierced the separator and could catch fire. Akira Yoshino swapped in carbon in 1985; Sony sold the result from 1991. The ion in the name marks the missing metal.",
+  "move": "Progress sometimes means removing the ingredient everyone assumes is essential.",
+  "trap": "Reading the name as a promise of lithium metal inside.",
+  "keywords": [
+    "lithium-ion",
+    "lithium metal",
+    "dendrites",
+    "akira yoshino",
+    "sony"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nobel Prize in Chemistry 2019, scientific background",
+  "source_kind": "institution",
+  "reference": "Royal Swedish Academy of Sciences, Scientific Background on the Nobel Prize in Chemistry 2019: Lithium-ion Batteries, 2019",
+  "written": "2026-09-26"
+}

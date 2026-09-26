@@ -1,0 +1,33 @@
+{
+  "id": "psychology-fear-2",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What switches on a baby's fear of heights?",
+  "answer": "Getting about on their own, not age. Lowered towards the deep side of a visual cliff, a glass sheet over a drop, infants of the same age reacted according to how long they had been crawling. Babies given practice in walkers grew wary early; one boy who could not move himself showed no wariness.",
+  "move": "Before calling something instinct, ask what experience arrived just before it.",
+  "keywords": [
+    "visual cliff",
+    "fear of heights",
+    "crawling",
+    "infants",
+    "baby walkers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Campos, Bertenthal & Kermoian, Psychological Science, 1992",
+  "source_kind": "paper",
+  "reference": "Campos, Bertenthal & Kermoian, Early experience and emotional development: the emergence of wariness of heights, Psychological Science, 1992",
+  "written": "2026-09-26"
+}

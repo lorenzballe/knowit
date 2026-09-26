@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-duty-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should it be a crime not to help a stranger in danger when helping carries no risk?",
+  "sides": [
+    "Yes, make it a crime",
+    "No, leave it to conscience"
+  ],
+  "answer": "France punishes a bystander who could safely help, or call for help, and does neither: up to five years in prison and a €75,000 fine. The law asks only what any decent person would do anyway, and a floor matters most on the day when everyone present assumes someone else will act.",
+  "move": "Whichever side you took, the question is whether a law can draw the line.",
+  "counterpoint": "Thomas Macaulay, drafting India's penal code in 1837, asked where such a law stops: is the rich man who lets a beggar starve a criminal, or the only surgeon able to operate who will not make the journey? Law can forbid harm cleanly. Commanding help makes every bystander a suspect, and punishes the frightened along with the callous.",
+  "keywords": [
+    "duty to rescue",
+    "bystanders",
+    "french penal code",
+    "macaulay",
+    "omissions"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "French Penal Code, article 223-6",
+  "source_kind": "primary_document",
+  "reference": "Code pénal (France), article 223-6, in force since 1994; Macaulay, Notes on the Indian Penal Code, Note M, 1837",
+  "written": "2026-09-26"
+}

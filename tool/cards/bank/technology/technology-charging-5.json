@@ -1,0 +1,40 @@
+{
+  "id": "technology-charging-5",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "EU rules let a phone charger left plugged in with nothing attached draw at most 0.1 watts. How many watt-hours is that per year?",
+  "value": 876,
+  "unit": "watt-hours",
+  "answer": "0.1 watts × 8,760 hours = 876 watt-hours.",
+  "move": "Multiply any constant draw by the 8,760 hours in a year.",
+  "hint": "Start from the number of hours in a year.",
+  "steps": [
+    "Hours in a year: 24 × 365 = 8,760.",
+    "0.1 watts × 8,760 hours = 876 watt-hours."
+  ],
+  "simply": "A whole year of an idle charger uses about as much energy as boiling a full kettle five times.",
+  "keywords": [
+    "standby power",
+    "phone chargers",
+    "ecodesign rules",
+    "watt-hours"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Regulation 2019/1782, external power supplies",
+  "source_kind": "primary_document",
+  "reference": "Commission Regulation (EU) 2019/1782 laying down ecodesign requirements for external power supplies, 2019",
+  "written": "2026-09-26"
+}

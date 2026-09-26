@@ -1,0 +1,33 @@
+{
+  "id": "technology-lithium-3",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did ageing iPhones switch off with charge still showing, until Apple quietly slowed them down?",
+  "answer": "Worn batteries could no longer deliver bursts of current. Age raises a cell's internal resistance, so a sudden load, like an app opening on a cold day, drags the voltage below the phone's cut-off. From early 2017 Apple capped peak speed to prevent the shutdowns, without telling users. A new battery restored full speed.",
+  "move": "Before suspecting a plot, find the part that wears out.",
+  "keywords": [
+    "iphone",
+    "internal resistance",
+    "battery ageing",
+    "throttling",
+    "apple"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Apple, message to customers, December 2017",
+  "source_kind": "company",
+  "reference": "Apple, A Message to Our Customers about iPhone Batteries and Performance, 2017",
+  "written": "2026-09-26"
+}

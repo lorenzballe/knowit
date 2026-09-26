@@ -1,0 +1,38 @@
+{
+  "id": "human_body-neurons-4",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the brain has about ten glial cells, its support cells, for every neuron?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The two are roughly equal, with fewer than 100 billion of each. The ten-to-one ratio circulated in textbooks for half a century, but a 2016 review of 150 years of cell counting found that the original tissue studies had always pointed to about 1:1. No count ever found the trillion glia so often quoted.",
+  "move": "Ask who counted before repeating a number everyone knows.",
+  "trap": "Trusting a ratio that textbooks repeated for fifty years.",
+  "keywords": [
+    "glial cells",
+    "neurons",
+    "cell counting",
+    "glia-neuron ratio"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "von Bartheld et al., J Comp Neurol, 2016",
+  "source_kind": "paper",
+  "reference": "doi:10.1002/cne.24040",
+  "written": "2026-09-26"
+}

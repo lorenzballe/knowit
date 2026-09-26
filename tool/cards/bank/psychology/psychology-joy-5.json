@@ -1,0 +1,39 @@
+{
+  "id": "psychology-joy-5",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a smile that crinkles the eyes is a reliable sign of real enjoyment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The crinkle, made by the muscle ringing the eye, grows with how broad a smile is, whatever the feeling. Filming 136 people while amused, embarrassed, frightened or in pain, researchers found that once smile size was allowed for, the crinkle's link to amusement shrank sharply. The eyes track the size of a smile.",
+  "move": "A sign that grows with intensity may say nothing about sincerity.",
+  "trap": "Relying on the famous rule that eye crinkles mark a genuine smile.",
+  "keywords": [
+    "duchenne smile",
+    "facial expression",
+    "smile intensity",
+    "enjoyment",
+    "eye muscles"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Girard et al., IEEE ACII, 2019",
+  "source_kind": "paper",
+  "reference": "Girard, Shandar, Liu, Cohn, Yin & Morency, Reconsidering the Duchenne smile: indicator of positive emotion or artifact of smile intensity?, IEEE ACII proceedings, 2019",
+  "written": "2026-09-26"
+}

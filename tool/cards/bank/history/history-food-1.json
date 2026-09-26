@@ -1,0 +1,33 @@
+{
+  "id": "history-food-1",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Britain's 1800 law banning white flour repealed in less than two months?",
+  "answer": "Because the poor would not eat what it made. After the failed harvest of 1799, it forbade millers to produce anything but wholemeal flour, to stretch the wheat. Labourers, who could spend over half their wages on bread, held white wheaten bread as their standard and called the law the Poison Act.",
+  "move": "A sensible downgrade to the planner is a demotion to the person living it.",
+  "keywords": [
+    "brown bread act",
+    "white bread",
+    "wholemeal flour",
+    "food shortage",
+    "labourers"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells, Wretched Faces, 1988",
+  "source_kind": "book",
+  "reference": "Wells, Wretched Faces: Famine in Wartime England 1793–1801, Alan Sutton, 1988",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-charm-prices-4",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Lyft find when economists tested fares set just under a whole dollar on its riders?",
+  "answer": "That the last cent matters enormously. Lyft had not used 99-cent endings; across 600 million sessions and a test on 21 million riders, about half of the fall in demand as fares rise came at the dollar marks, as from $13.99 to $14.00. If that held, it was worth roughly $160 million a year.",
+  "move": "Never assume a clever firm has already tried the obvious trick.",
+  "keywords": [
+    "lyft",
+    "ride-hailing",
+    "99-cent pricing",
+    "left-digit bias",
+    "field experiments"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "List et al., Review of Economic Studies, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/restud/rdad014",
+  "written": "2026-09-26"
+}

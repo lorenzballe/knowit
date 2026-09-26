@@ -1,0 +1,36 @@
+{
+  "id": "technology-lithium-2",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which part of a lithium-ion cell is meant to melt on purpose when it overheats?",
+  "answer": "The separator's middle layer. The film between the electrodes, thinner than a hair, is often polypropylene outside and polyethylene inside. At about 130 °C the polyethylene softens and seals the pores ions travel through, cutting the current, while the polypropylene, melting near 165 °C, holds the film together. The fuse is carrier-bag plastic.",
+  "move": "Good safety parts are designed to fail in one chosen way.",
+  "keywords": [
+    "separator",
+    "thermal runaway",
+    "polyethylene",
+    "shutdown",
+    "lithium-ion cells"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arora & Zhang, Chemical Reviews, 2004",
+  "source_kind": "paper",
+  "reference": "Arora & Zhang, Battery Separators, Chemical Reviews, 2004",
+  "written": "2026-09-26"
+}

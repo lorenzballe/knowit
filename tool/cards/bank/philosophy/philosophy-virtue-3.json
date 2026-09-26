@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-virtue-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How, according to Aristotle, does the great-souled man walk and speak?",
+  "answer": "Slowly, in a deep voice, with level speech: someone earnest about few things is in no hurry. Greatness of soul meant claiming great honour and deserving it. Its owner is ashamed to receive kindnesses and repays them with interest, and remembers the favours he has done, not those done for him.",
+  "move": "Every list of virtues is also a portrait of the people who wrote it.",
+  "keywords": [
+    "aristotle",
+    "greatness of soul",
+    "magnanimity",
+    "honour",
+    "nicomachean ethics"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Nicomachean Ethics, IV.3",
+  "source_kind": "book",
+  "reference": "Aristotle, Nicomachean Ethics, trans. D. P. Chase, Everyman's Library, 1911, IV.3, 1124b-1125a",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-decoy-options-5",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Does having to explain a choice to others make people more or less swayed by a decoy?",
+  "options": [
+    "Less swayed, since they think harder",
+    "No change, since the options are the same",
+    "More swayed, since the decoy supplies a reason"
+  ],
+  "correct": 2,
+  "answer": "More swayed, since the decoy supplies a reason. In Simonson's experiments, decoy and compromise effects were stronger among people who expected to justify their decision to others. A clearly dominated option hands the chooser an easy argument: this one beats that one. Picking the decoy's target went with more elaborate, harder deliberation, not less.",
+  "move": "A choice you can defend is not always the choice you should make.",
+  "trap": "Expecting accountability to make people more careful and less biased.",
+  "keywords": [
+    "decoy effect",
+    "accountability",
+    "compromise effect",
+    "reasons",
+    "consumer choice"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simonson, Journal of Consumer Research, 1989",
+  "source_kind": "paper",
+  "reference": "doi:10.1086/209205",
+  "written": "2026-09-26"
+}
