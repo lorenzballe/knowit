@@ -1,0 +1,32 @@
+{
+  "id": "cinema-miniatures-3",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did James Cameron's Titanic build most of a ship at nearly full size instead of filming models at sea?",
+  "answer": "Water does not scale. Drops and spray keep their real size whatever the model's, so a model liner throws splashes as big as its lifeboats. For the 1997 film, the ship's starboard side was built at about 90% scale beside a seawater tank in Rosarito, Mexico. Models were still used, shot slowed down.",
+  "move": "Find the one ingredient that refuses to shrink with everything else.",
+  "keywords": [
+    "titanic",
+    "james cameron",
+    "water tanks",
+    "scale models"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marsh, James Cameron's Titanic, 1997",
+  "source_kind": "book",
+  "reference": "Marsh, James Cameron's Titanic, HarperPerennial, 1997",
+  "written": "2026-09-26"
+}

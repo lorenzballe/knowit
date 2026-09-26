@@ -1,0 +1,39 @@
+{
+  "id": "music-autotune-3",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the producers of Cher's Believe first said its robotic vocal effect came from Auto-Tune?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 1999 Sound On Sound interview, producer Mark Taylor credited a DigiTech Talker vocoder pedal, apparently to guard a trade secret. The truth, admitted later, was Auto-Tune set to its fastest correction, so the voice jumped between notes instead of gliding. A tool built to hide tuning had been set to flaunt it.",
+  "move": "A secret method is often described as a better-known one.",
+  "trap": "True, since the effect is now simply called the Auto-Tune sound.",
+  "keywords": [
+    "cher",
+    "believe",
+    "auto-tune",
+    "vocoder",
+    "mark taylor"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sound On Sound, Recording Cher's Believe",
+  "source_kind": "news_archive",
+  "reference": "https://www.soundonsound.com/techniques/recording-cher-believe",
+  "written": "2026-09-26"
+}

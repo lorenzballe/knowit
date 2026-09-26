@@ -1,0 +1,38 @@
+{
+  "id": "language-prestige-accents-5",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should accent be a protected characteristic under British equality law?",
+  "sides": [
+    "Yes, protect accents",
+    "No, leave it out"
+  ],
+  "answer": "Accent bias is measurable and it bites. In a survey of more than 5,000 Britons analysed by Coupland and Bishop, Birmingham and other urban accents ranked lowest for prestige, and later experiments found identical interview answers judged less competent in some regional voices. Accent tracks class and region, which the law leaves exposed.",
+  "move": "Whichever side you took, whether bias can be proved case by case decides it.",
+  "counterpoint": "Where accent stands in for race or national origin, discrimination is already unlawful. A new category would be hard to prove, since an employer can always cite clarity, and it would bring ordinary judgements about communication into court in jobs where being understood is the work. Training and anonymised early hiring stages reduce bias without new law.",
+  "keywords": [
+    "accent bias",
+    "equality act",
+    "birmingham accent",
+    "employment",
+    "discrimination"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coupland & Bishop, Journal of Sociolinguistics, 2007",
+  "source_kind": "paper",
+  "reference": "Coupland & Bishop, Ideologised values for British accents, Journal of Sociolinguistics 11, 2007",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-prestige-accents-4",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Norwich men were recorded, then asked how they pronounced words like tune and ear. Which way did their claims err?",
+  "options": [
+    "They claimed more standard forms",
+    "They claimed more local forms",
+    "Their claims matched the tapes"
+  ],
+  "correct": 1,
+  "answer": "They claimed more local forms. Peter Trudgill found many of the men said they used broad Norwich pronunciations they did not use on tape, while women more often claimed standard forms they did not use. For these men the local accent carried covert prestige, a value held without being said: toughness, loyalty, being one of the lads.",
+  "move": "Ask whose approval a person is seeking before predicting how they will exaggerate.",
+  "trap": "Assuming everyone polishes their speech when describing it.",
+  "keywords": [
+    "norwich",
+    "peter trudgill",
+    "covert prestige",
+    "self-report",
+    "gender"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trudgill, Language in Society, 1972",
+  "source_kind": "paper",
+  "reference": "Trudgill, Sex, covert prestige and linguistic change in the urban British English of Norwich, Language in Society 1, 1972",
+  "written": "2026-09-26"
+}

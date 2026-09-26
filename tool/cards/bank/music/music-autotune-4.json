@@ -1,0 +1,40 @@
+{
+  "id": "music-autotune-4",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What could Celemony's Melodyne do from 2009 that earlier pitch-correction software could not?",
+  "options": [
+    "Correct a singer live, in real time",
+    "Retune one note inside a recorded chord",
+    "Change pitch without changing tempo"
+  ],
+  "correct": 1,
+  "answer": "Retune one note inside a recorded chord. Earlier tools, Auto-Tune included, followed a single melodic line. Peter Neubäcker's Direct Note Access, shown in 2008 and released in 2009, separates overlapping notes in polyphonic audio, so an engineer can fix the one sour string of a strummed guitar chord long after the take.",
+  "move": "The most famous feature of a field is rarely its newest one.",
+  "trap": "Correcting live, because real-time sounds like the hardest trick.",
+  "keywords": [
+    "melodyne",
+    "direct note access",
+    "peter neubäcker",
+    "polyphonic audio",
+    "pitch correction"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Celemony, Melodyne DNA release, 2009",
+  "source_kind": "company",
+  "reference": "Celemony, Melodyne editor with Direct Note Access, product release, 2009",
+  "written": "2026-09-26"
+}

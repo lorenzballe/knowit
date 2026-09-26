@@ -3,36 +3,39 @@
   "topic": "music",
   "genre": "music.sound_itself",
   "strand": "music.sound_itself.silence",
+  "also": [
+    "music.composers.mozart"
+  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
-  "question": "Can a recorded track of pure silence infringe the copyright of another silent piece?",
+  "question": "Should concert audiences hold their applause in the silences between a symphony's movements?",
   "sides": [
-    "Yes, it can",
-    "No, it cannot"
+    "Yes, keep the silence",
+    "No, let them clap"
   ],
-  "answer": "What 4′33″ owns is not silence but the act of framing it as a work, with a title and a composer's name. In 2002 Mike Batt put a silent track on an album and credited it Batt and Cage; Cage's publisher claimed, and Batt paid a settlement. Borrowing a famous idea is still borrowing.",
-  "move": "Whichever side you took, the hinge is whether a framing idea can be property.",
-  "counterpoint": "Copyright protects expression, and silence has nothing to copy: no notes, no rhythm, no words. If a minute of nothing can infringe, so can every pause and blank track on every record, and an idea becomes property. The Batt case was settled out of court, so no judge ever ruled that silence can be owned.",
+  "answer": "The gap between movements belongs to the piece. A symphony is built as an arc, and the pause lets a last chord fade and the next movement begin from quiet. Mahler wrote into his Second Symphony a pause of at least five minutes after the first movement. A shared hush is what turns two thousand strangers into one audience.",
+  "move": "Whichever side you took, the hinge is whether the pause belongs to the work.",
+  "counterpoint": "The hush is a recent rule. In 1778 Mozart wrote to his father that the Paris audience broke into applause in the middle of his new symphony's first movement, at a passage written to win it, and he was delighted. Many movements end in a blaze built to draw a response, and enforced silence makes newcomers feel like trespassers.",
   "keywords": [
-    "mike batt",
-    "john cage",
-    "copyright",
-    "silence",
-    "settlement"
+    "applause",
+    "symphony",
+    "concert etiquette",
+    "mahler",
+    "paris symphony"
   ],
-  "era": "recent",
+  "era": "timeless",
   "region": "europe",
-  "hook": "paradox",
-  "mood": "playful",
+  "hook": "practical",
+  "mood": "sober",
   "numeracy": 1,
-  "abstraction": "abstract",
+  "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "BBC News, 2002",
-  "source_kind": "news_archive",
-  "reference": "BBC News, Composer pays for piece of silence, 23 September 2002",
+  "source": "Letters of Mozart and His Family",
+  "source_kind": "primary_document",
+  "reference": "Anderson (ed.), The Letters of Mozart and His Family, 3rd edition, Macmillan, 1985",
   "written": "2026-09-26"
 }

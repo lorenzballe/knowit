@@ -1,0 +1,33 @@
+{
+  "id": "language-prestige-accents-1",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did Received Pronunciation, the accent of the early BBC, really come from?",
+  "answer": "Not from the court or any region, but from the Victorian public schools. Boarders from across the country shed their local accents together, so the result marked a class rather than a place. The phonetician Daniel Jones called it Public School Pronunciation in his 1917 pronouncing dictionary. Its native speakers are usually put at a few per cent of Britons.",
+  "move": "An accent from nowhere in particular is usually from somewhere exclusive.",
+  "keywords": [
+    "received pronunciation",
+    "public schools",
+    "daniel jones",
+    "bbc",
+    "social class"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mugglestone, Talking Proper, 2003",
+  "source_kind": "book",
+  "reference": "Mugglestone, Talking Proper: The Rise and Fall of the English Accent as a Social Symbol, 2nd ed., Oxford University Press, 2003",
+  "written": "2026-09-26"
+}
