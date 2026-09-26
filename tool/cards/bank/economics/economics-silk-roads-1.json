@@ -3,9 +3,6 @@
   "topic": "economics",
   "genre": "economics.trade_routes",
   "strand": "economics.trade_routes.silk_roads",
-  "also": [
-    "history.maps_and_borders.old_maps"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",

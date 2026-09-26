@@ -1,0 +1,33 @@
+{
+  "id": "art-detection-5",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If the last tree ring in an oak panel dates to 1500, when was the picture painted?",
+  "answer": "Not before about 1511, and probably after 1517. Panel makers cut away the sapwood, the pale outer rings, so the last ring left is years short of felling: for Baltic oak, add at least 9 sapwood rings, typically about 15. Then add at least two years of seasoning.",
+  "move": "Some evidence can only tell you the earliest a thing could be.",
+  "keywords": [
+    "dendrochronology",
+    "oak panels",
+    "sapwood",
+    "baltic oak",
+    "panel paintings"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klein, Structural Conservation of Panel Paintings, 1998",
+  "source_kind": "book",
+  "reference": "Peter Klein, Dendrochronological Analyses of Panel Paintings, in Dardes & Rothe (eds), The Structural Conservation of Panel Paintings, Getty Conservation Institute, 1998",
+  "written": "2026-09-26"
+}

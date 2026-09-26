@@ -1,0 +1,42 @@
+{
+  "id": "art-detection-4",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "also": [
+    "art.forgeries.famous_fakes"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: a painting whose canvas, ground and pigments all test as seventeenth-century can still be modern?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Materials can prove a painting too young, never old enough. Old canvases, old panels and period pigments can all be bought: Han van Meegeren acquired minor seventeenth-century paintings, scraped them down and painted his Vermeers on the genuine canvas. A clean result from a materials test only means the forger made no mistake there.",
+  "move": "A test that can only say no cannot say yes.",
+  "trap": "Treating a passed test as proof, not as the absence of disproof.",
+  "keywords": [
+    "materials analysis",
+    "authentication",
+    "han van meegeren",
+    "canvas",
+    "pigments"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lopez, The Man Who Made Vermeers, 2008",
+  "source_kind": "book",
+  "reference": "Jonathan Lopez, The Man Who Made Vermeers: Unvarnishing the Legend of Master Forger Han van Meegeren, Harcourt, 2008",
+  "written": "2026-09-26"
+}

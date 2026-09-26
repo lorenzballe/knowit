@@ -1,0 +1,40 @@
+{
+  "id": "medicine-transplants-5",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A donated heart must be transplanted within about four to six hours. How long can a donated kidney wait on ice?",
+  "options": [
+    "A day or more",
+    "About 4 hours",
+    "About two weeks"
+  ],
+  "correct": 0,
+  "answer": "A day or more. Kidneys tolerate cold storage far better than hearts, though results fall off after about 36 to 48 hours. A patient whose new kidney starts slowly can stay on dialysis meanwhile, a safety net no heart recipient has. The spare hours let kidneys be matched carefully and flown far.",
+  "move": "Before applying one deadline to everything, ask what each item can tolerate.",
+  "trap": "Carrying the heart's few hours over to every organ.",
+  "keywords": [
+    "organ preservation",
+    "cold ischaemia",
+    "kidney",
+    "heart",
+    "dialysis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jing et al., Acta Pharmacologica Sinica, 2018",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/aps2017182",
+  "written": "2026-09-26"
+}

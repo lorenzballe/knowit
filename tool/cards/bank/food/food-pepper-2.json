@@ -1,0 +1,38 @@
+{
+  "id": "food-pepper-2",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: medieval cooks used pepper chiefly to hide the taste of meat going off?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Pepper was dearer than meat, so anyone who could buy it could buy fresh meat, and bad meat was a hazard that town authorities policed. Recipes spiced fresh fish and game alike. Pepper was prized as flavour, medicine and display, and rents were sometimes paid in it.",
+  "move": "Price out a story before accepting the thrifty motive it assumes.",
+  "trap": "No fridges, strong spice: the explanation seems to fit itself.",
+  "keywords": [
+    "pepper",
+    "medieval cooking",
+    "spoiled meat",
+    "spice trade"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freedman, Out of the East, 2008",
+  "source_kind": "book",
+  "reference": "Freedman, Out of the East: Spices and the Medieval Imagination, Yale University Press, 2008",
+  "written": "2026-09-26"
+}

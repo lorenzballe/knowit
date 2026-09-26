@@ -1,0 +1,36 @@
+{
+  "id": "art-motives-5",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "also": [
+    "art.modern_art.pop"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Andy Warhol Foundation stop ruling on which Warhols are genuine in 2012?",
+  "answer": "Because saying no had become too costly. Collectors whose pictures the foundation's authentication board rejected took it to court, one alleging a conspiracy to control the Warhol market. The foundation won, but legal costs reportedly reached about $10 million. The board had run since 1995; after it closed, owners had one fewer place to ask.",
+  "move": "When judging costs more than staying silent, expect the judges to go quiet.",
+  "keywords": [
+    "andy warhol foundation",
+    "authentication board",
+    "lawsuits",
+    "art market",
+    "experts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ARTnews, Warhol board quits authentication",
+  "source_kind": "news_archive",
+  "reference": "https://www.artnews.com/art-in-america/features/warhol-board-quits-the-authentication-game-58514/",
+  "written": "2026-09-26"
+}

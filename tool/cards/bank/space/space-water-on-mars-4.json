@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "NASA Jet Propulsion Laboratory, 2008",
-  "source_kind": "institution",
-  "reference": "https://www.jpl.nasa.gov/news/bright-chunks-at-phoenix-landers-mars-site-must-have-been-ice/",
+  "source": "Smith et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Smith et al., H2O at the Phoenix Landing Site, Science 325, 2009",
   "written": "2026-09-26"
 }

@@ -8,7 +8,7 @@
   ],
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "sunkCost",
   "question": "A health club bills its members twice a year. In which month does attendance peak?",
   "options": [
     "Spread evenly through the year",

@@ -1,0 +1,33 @@
+{
+  "id": "medicine-chronic-1",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the WHO's ICD-11 change in 2019 about how chronic pain is classified?",
+  "answer": "It made some chronic pain a disease in its own right. Before, pain was coded only as a symptom of something else. ICD-11 added chronic primary pain: pain lasting over three months with distress or disability that no other condition explains, such as fibromyalgia. A patient with no lesion now leaves with a diagnosis.",
+  "move": "A problem without a name gets counted as nothing.",
+  "keywords": [
+    "icd-11",
+    "chronic primary pain",
+    "fibromyalgia",
+    "classification",
+    "world health organization"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Treede et al., Pain, 2019",
+  "source_kind": "paper",
+  "reference": "Treede et al., Chronic pain as a symptom or a disease: the IASP Classification of Chronic Pain for the International Classification of Diseases (ICD-11), Pain, 2019",
+  "written": "2026-09-26"
+}

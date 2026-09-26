@@ -1,0 +1,33 @@
+{
+  "id": "medicine-chronic-4",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What third kind of pain did pain scientists add in 2017, alongside tissue damage and nerve damage?",
+  "answer": "Nociplastic pain. The International Association for the Study of Pain adopted the term for pain that arises from altered processing in the nervous system, with no clear tissue injury and no nerve lesion. Fibromyalgia is the usual example. The label names the alarm system itself as the fault, not the site that hurts.",
+  "move": "When the parts all test healthy, suspect how they are wired together.",
+  "keywords": [
+    "nociplastic pain",
+    "fibromyalgia",
+    "central sensitisation",
+    "iasp",
+    "nervous system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kosek et al., Pain, 2016",
+  "source_kind": "paper",
+  "reference": "Kosek et al., Do we need a third mechanistic descriptor for chronic pain states?, Pain, 2016",
+  "written": "2026-09-26"
+}

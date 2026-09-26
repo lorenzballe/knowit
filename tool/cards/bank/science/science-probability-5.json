@@ -5,7 +5,7 @@
   "strand": "science.maths_curios.probability",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "confirmation",
+  "principle": "reflection",
   "question": "True or false: four riffle shuffles can leave a 52-card deck in any of its possible orders?",
   "options": [
     "True",

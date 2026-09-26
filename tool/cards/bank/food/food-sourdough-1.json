@@ -1,0 +1,32 @@
+{
+  "id": "food-sourdough-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What best predicts which microbes end up living in a sourdough starter?",
+  "answer": "Not the city it lives in. A 2021 study of 500 starters, most from the United States, found little geographic pattern in their bacteria and yeasts: starters from one town differed as much as starters from different continents. Rise speed and aroma tracked instead with acetic acid bacteria, a group bakers had largely overlooked.",
+  "move": "Test a local legend by sampling widely before crediting the place.",
+  "keywords": [
+    "sourdough starter",
+    "microbiome",
+    "acetic acid bacteria",
+    "biogeography"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Landis et al., eLife, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.7554/eLife.61644",
+  "written": "2026-09-26"
+}

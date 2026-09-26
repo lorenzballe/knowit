@@ -1,0 +1,33 @@
+{
+  "id": "medicine-transplants-4",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the pig that gave the first pig heart transplanted into a living person, in 2022, need ten gene edits?",
+  "answer": "Because human blood attacks pig tissue within minutes. Three pig genes for surface sugars, alpha-gal chief among them, were knocked out, since humans carry antibodies to them. Six human genes were added to calm clotting and inflammation, and a growth gene was disabled so the heart would not keep growing. David Bennett lived two months.",
+  "move": "To move something into hostile ground, first strip off what gets it noticed.",
+  "keywords": [
+    "xenotransplantation",
+    "pig heart",
+    "alpha-gal",
+    "gene editing",
+    "david bennett"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffith et al., NEJM, 2022",
+  "source_kind": "paper",
+  "reference": "https://www.nejm.org/doi/full/10.1056/NEJMoa2201422",
+  "written": "2026-09-26"
+}

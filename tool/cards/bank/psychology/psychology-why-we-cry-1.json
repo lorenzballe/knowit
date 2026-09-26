@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What happens to a crying face in a photograph when the tears are digitally removed?",
-  "answer": "It stops reading as sad. With the tears erased, viewers rated the same faces as less sad and often saw puzzlement, concern or awe instead. The reverse works too: tears added to neutral faces flashed for 50 milliseconds made them look sad and made viewers keener to offer support. The tears carry the message.",
+  "answer": "It stops reading as sad. With the tears erased, viewers rated the same faces as less sad, and many saw puzzlement, concern or even awe in them instead. Without tears the face is ambiguous; with them the sadness is plain. A few drops of salt water carry much of the message.",
   "move": "Before calling a reaction useless, ask who it is aimed at.",
   "keywords": [
     "tears",
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 0,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,

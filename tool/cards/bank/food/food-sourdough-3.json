@@ -1,0 +1,39 @@
+{
+  "id": "food-sourdough-3",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: French law lets a loaf sold as pain au levain contain some baker's yeast?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 1993 decree allows baker's yeast up to 0.2% of the flour's weight, added only at the final mixing. The bread must instead prove its sourness chemically: a pH no higher than 4.3 and at least 900 parts per million of acetic acid in the crumb. The label is a laboratory test.",
+  "move": "Read how a label is defined in law before assuming what it excludes.",
+  "trap": "Assuming a protected sourdough label must forbid added yeast entirely.",
+  "keywords": [
+    "pain au levain",
+    "baker's yeast",
+    "french bread law",
+    "acetic acid",
+    "ph"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Décret n° 93-1074, Légifrance, 1993",
+  "source_kind": "primary_document",
+  "reference": "https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000727617/",
+  "written": "2026-09-26"
+}

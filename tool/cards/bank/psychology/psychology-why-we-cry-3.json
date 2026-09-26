@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "In a Dutch survey, what share of parents of six-month-olds admitted shaking, slapping or smothering their crying baby?",
-  "answer": "About one in twenty. Between 4.2% and 7.0% said they had done at least one of these at least once because of the crying, and the risk rose when the crying seemed excessive. A cry is built to summon care and usually does; past a limit, it can summon harm.",
+  "answer": "About one in twenty. That share said they had smothered, slapped or shaken their baby at least once because of its crying, and it was higher where the crying seemed excessive to the parents. A cry is built to summon care and usually does; past a limit, it can summon harm.",
   "move": "Any alarm loud enough to compel help can also wear out the helper.",
   "keywords": [
     "infant crying",
@@ -26,8 +26,8 @@
   "mature": true,
   "language": "en",
   "figure": "dots",
-  "source": "Vingerhoets, Why Only Humans Weep, 2013",
-  "source_kind": "book",
-  "reference": "Vingerhoets, Why Only Humans Weep: Unravelling the Mysteries of Tears, Oxford University Press, 2013",
+  "source": "Reijneveld et al., The Lancet, 2004",
+  "source_kind": "paper",
+  "reference": "Reijneveld, van der Wal, Brugman, Hira Sing & Verloove-Vanhorick, Infant crying and abuse, The Lancet, 2004",
   "written": "2026-09-26"
 }

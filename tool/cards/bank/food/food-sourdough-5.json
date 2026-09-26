@@ -1,0 +1,43 @@
+{
+  "id": "food-sourdough-5",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A 100 g starter is fed its own weight in flour and water daily, never discarded. After 10 days, how many tonnes?",
+  "value": 5.9,
+  "unit": "tonnes",
+  "tolerance": 0.1,
+  "answer": "That is about 5.9 tonnes.",
+  "move": "When something is multiplied each round, count the rounds before trusting a guess.",
+  "trap": "Adding 200 g a day and getting 2.1 kg instead of multiplying.",
+  "hint": "Each feed adds twice the starter's weight, so work out what it is multiplied by each day.",
+  "steps": [
+    "Each day the starter triples: 100 g becomes 300 g.",
+    "Ten days: 3 to the power 10 = 59,049.",
+    "100 g x 59,049 = 5,904,900 g.",
+    "That is about 5.9 tonnes."
+  ],
+  "keywords": [
+    "sourdough starter",
+    "feeding",
+    "discard",
+    "tripling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Powers of three, 3^10",
+  "source_kind": "arithmetic",
+  "reference": "Hamelman, Bread: A Baker's Book of Techniques and Recipes, Wiley, 2004",
+  "written": "2026-09-26"
+}

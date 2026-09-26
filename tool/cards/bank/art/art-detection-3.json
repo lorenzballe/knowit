@@ -1,0 +1,40 @@
+{
+  "id": "art-detection-3",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Infrared shows that beneath the paint, the artist moved a figure's arm. What does that usually suggest?",
+  "options": [
+    "The painting is the first version",
+    "The painting is a later copy",
+    "The painting was clumsily restored"
+  ],
+  "correct": 0,
+  "answer": "The painting is the first version. A copyist sees the finished picture and reproduces it; only an artist still working out the composition changes course midway. Infrared reflectography sees through many paints to the carbon underdrawing, and such changes, called pentimenti, turn up far more often in first versions than in replicas.",
+  "move": "Weigh a clue by how much likelier it is under one story than another.",
+  "trap": "Reading a correction as a mistake, and a mistake as a lesser hand.",
+  "keywords": [
+    "pentimenti",
+    "infrared reflectography",
+    "underdrawing",
+    "copies",
+    "attribution"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Asperen de Boer, Applied Optics, 1968",
+  "source_kind": "paper",
+  "reference": "J. R. J. van Asperen de Boer, Infrared Reflectography: A Method for the Examination of Paintings, Applied Optics, 1968",
+  "written": "2026-09-26"
+}

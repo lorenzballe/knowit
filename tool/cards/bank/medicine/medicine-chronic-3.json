@@ -1,0 +1,42 @@
+{
+  "id": "medicine-chronic-3",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "also": [
+    "medicine.surgery.anaesthesia"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: about one person in ten still has pain months after a routine groin hernia repair?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Persistent pain follows roughly 10% of groin hernia repairs, and 30% to 50% of leg amputations. The cut nerve, not a failed repair, is usually blamed. Severe pain affects a smaller share, about 2% to 10%. Of millions of hernia operations a year, that leaves a large quiet population.",
+  "move": "Count what a routine fix leaves behind, not only what it removes.",
+  "trap": "Assuming a successful, routine operation ends the pain it causes.",
+  "keywords": [
+    "postsurgical pain",
+    "hernia repair",
+    "nerve injury",
+    "amputation",
+    "surgery"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kehlet, Jensen & Woolf, The Lancet, 2006",
+  "source_kind": "paper",
+  "reference": "Kehlet, Jensen & Woolf, Persistent postsurgical pain: risk factors and prevention, The Lancet, 2006",
+  "written": "2026-09-26"
+}

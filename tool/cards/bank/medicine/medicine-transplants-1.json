@@ -1,0 +1,33 @@
+{
+  "id": "medicine-transplants-1",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the drug that made organ transplants routine in the 1980s come from?",
+  "answer": "A bag of Norwegian soil. In 1969 a Sandoz biologist, Hans Peter Frey, collected soil samples on holiday on the Hardangervidda plateau. A fungus from one, Tolypocladium inflatum, made a compound that disappointed as an antifungal; in 1972 Jean-François Borel found it damped the immune system. It became ciclosporin.",
+  "move": "A compound that fails one test deserves to meet a different one.",
+  "keywords": [
+    "ciclosporin",
+    "sandoz",
+    "tolypocladium inflatum",
+    "immunosuppression",
+    "norway"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Svarstad et al., Biodiversity and Conservation, 2000",
+  "source_kind": "paper",
+  "reference": "https://link.springer.com/article/10.1023/A:1008990919682",
+  "written": "2026-09-26"
+}
