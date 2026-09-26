@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-octopuses-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to a brooding mother octopus if her optic glands are removed?",
+  "answer": "She abandons her eggs, starts eating again and lives for months longer. Jerome Wodinsky showed this in 1977 with two-spot octopuses. In 2022 a team found the gland shifts its cholesterol chemistry in mothers, producing steroids that drive the fatal decline. The mother's death is switched on by a gland, not by exhaustion.",
+  "move": "When an ending looks like wear, look for a switch that triggers it.",
+  "keywords": [
+    "optic gland",
+    "octopus mothers",
+    "steroid hormones",
+    "cholesterol",
+    "senescence"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Chicago Biological Sciences, 2022",
+  "source_kind": "institution",
+  "reference": "https://biologicalsciences.uchicago.edu/news/octopus-cholesterol-death-spiral",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-octopuses-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "also": [
+    "nature.oceans.deep_sea"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A deep-sea octopus in Monterey Canyon guarded one clutch of eggs. For how long?",
+  "options": [
+    "About 4 months",
+    "About 18 months",
+    "About 4.5 years"
+  ],
+  "correct": 2,
+  "answer": "About 4.5 years. Researchers recognised the same Graneledone boreopacifica female by her scars on 18 dives between May 2007 and September 2011, about 1,400 m down; she was never seen eating. Cold water slows development, so her roughly 160 eggs took 53 months to hatch, the longest brooding known for any animal.",
+  "move": "A figure learned in one setting can mislead badly in a colder one.",
+  "trap": "Shallow-water octopuses brood for weeks or months, so months sounds right.",
+  "keywords": [
+    "graneledone boreopacifica",
+    "egg brooding",
+    "monterey canyon",
+    "deep sea"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "MBARI release via EurekAlert, 2014",
+  "source_kind": "news_archive",
+  "reference": "https://www.eurekalert.org/news-releases/727610",
+  "written": "2026-09-26"
+}

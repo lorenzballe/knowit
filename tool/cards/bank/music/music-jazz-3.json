@@ -1,0 +1,32 @@
+{
+  "id": "music-jazz-3",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do most jazz recordings made before 1950 last about three minutes?",
+  "answer": "Because a 25 cm, 78 rpm disc held only about three minutes a side. Bands cut solos and choruses to fit, though the same tunes could run far longer in a club. Duke Ellington's Reminiscing in Tempo, recorded in 1935, was spread over four sides, and listeners turned the discs over mid-piece.",
+  "move": "Ask what the container allowed before judging the length of what it holds.",
+  "keywords": [
+    "78 rpm records",
+    "duke ellington",
+    "recording length",
+    "reminiscing in tempo"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Katz, Capturing Sound, 2004",
+  "source_kind": "book",
+  "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004",
+  "written": "2026-09-26"
+}

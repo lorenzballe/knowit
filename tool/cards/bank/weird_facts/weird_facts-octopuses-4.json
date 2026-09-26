@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-octopuses-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does an octopus retune its nerve proteins when its water turns cold?",
+  "answer": "By editing its RNA, the working copies of genes, while the DNA stays unchanged. When tanks of California two-spot octopuses were cooled by 10 °C, protein-altering edits rose at more than 13,000 sites in the nervous system. The same gene then yields slightly different proteins: a winter wardrobe from the same pattern.",
+  "move": "A fixed blueprint can still yield different products if the copies change.",
+  "keywords": [
+    "rna editing",
+    "temperature",
+    "octopus nervous system",
+    "proteins"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marine Biological Laboratory, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.mbl.edu/news/masters-acclimation-octopuses-adjust-cold-editing-their-rna",
+  "written": "2026-09-26"
+}

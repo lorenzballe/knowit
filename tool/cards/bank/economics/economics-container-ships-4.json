@@ -1,0 +1,40 @@
+{
+  "id": "economics-container-ships-4",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Between 1962 and 1990, which did most to raise trade between rich countries?",
+  "options": [
+    "Tariff cuts under the GATT",
+    "The shipping container",
+    "Regional free trade agreements"
+  ],
+  "correct": 1,
+  "answer": "The container. Bernhofen, El-Sahli and Kneller dated when each country got container ports or rail terminals and tracked trade before and after. Among industrial countries, containerisation raised trade by about 700% over 20 years, far more than GATT membership or free trade deals. The tariff rounds and the boxes arrived in the same decades.",
+  "move": "When two causes arrive together, ask which one you can date separately.",
+  "trap": "Crediting the treaties, because trade policy is what gets reported.",
+  "keywords": [
+    "containerisation",
+    "gatt",
+    "free trade agreements",
+    "globalisation",
+    "trade growth"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bernhofen et al., J. International Economics, 2016",
+  "source_kind": "paper",
+  "reference": "Bernhofen, El-Sahli & Kneller, Estimating the effects of the container revolution on world trade, Journal of International Economics, 2016",
+  "written": "2026-09-26"
+}

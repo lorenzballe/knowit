@@ -1,0 +1,42 @@
+{
+  "id": "sport-fouls-4",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "also": [
+    "sport.rules_and_why.scoring"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in rugby union, foul play that stops a probable try now earns seven points without a kick?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Since 2017 a penalty try counts seven points automatically, with no conversion taken. Before, it was five points plus a kick from in front of the posts that was almost never missed. Making it automatic saved the time and removed any hope that the kick might fail.",
+  "move": "A rule is only as strong as the cheapest way round it.",
+  "trap": "Picturing the usual five-plus-two sequence and expecting a conversion to follow.",
+  "keywords": [
+    "penalty try",
+    "rugby union",
+    "conversion",
+    "foul play",
+    "world rugby"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rugby365, law trials become law",
+  "source_kind": "news_archive",
+  "reference": "https://rugby365.com/laws-referees/news/laws-on-trial-become-law/",
+  "written": "2026-09-26"
+}

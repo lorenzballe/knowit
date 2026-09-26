@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-reality-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did British broadcasting rules first protect the wellbeing of adults taking part in reality shows?",
+  "answer": "Only in 2021. After two former Love Island contestants and a Jeremy Kyle Show guest died by suicide in 2018 and 2019, Ofcom added rules for programmes entering production from 5 April 2021. Broadcasters must warn contributors of risks and take due care of anyone at risk of significant harm.",
+  "move": "Rules usually arrive after the harm they were written to prevent.",
+  "keywords": [
+    "ofcom",
+    "duty of care",
+    "love island",
+    "broadcasting code",
+    "participants"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Ofcom, participant protection rules",
+  "source_kind": "institution",
+  "reference": "https://www.ofcom.org.uk/tv-radio-and-on-demand/broadcast-standards/new-protections-for-people-taking-part-in-tv-and-radio-shows",
+  "written": "2026-09-26"
+}

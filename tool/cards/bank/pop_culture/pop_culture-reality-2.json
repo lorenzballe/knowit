@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-reality-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Survivor was first devised and broadcast as an American programme?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The format was devised by the British producer Charlie Parsons and first made in Sweden, as Expedition Robinson, in 1997. CBS licensed it for 2000. Reality hits are usually sold as formats: a rulebook, a set design and a production manual, rebuilt country by country with local contestants.",
+  "move": "The famous version of a thing is rarely the first one.",
+  "trap": "The American series is the one everyone saw, so it seems original.",
+  "keywords": [
+    "survivor",
+    "expedition robinson",
+    "charlie parsons",
+    "tv formats"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chalaby, The Format Age, 2016",
+  "source_kind": "book",
+  "reference": "Jean K. Chalaby, The Format Age: Television's Entertainment Revolution, Polity, 2016",
+  "written": "2026-09-26"
+}

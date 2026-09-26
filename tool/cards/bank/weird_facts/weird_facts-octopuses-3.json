@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-octopuses-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a patch of octopus skin, cut away from the body, still reacts to light?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In excised skin of the California two-spot octopus, light made the pigment sacs called chromatophores expand, fastest under blue light. The skin carries opsin, the light-detecting protein of eyes, in tiny hair-like cilia. With no eye and no brain attached, the skin still responds to light.",
+  "move": "Before assuming a signal comes from the centre, test the edge alone.",
+  "trap": "Colour change seems to need the eyes and brain to direct it.",
+  "keywords": [
+    "octopus skin",
+    "opsin",
+    "chromatophores",
+    "light sensing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UCSB Marine Science Institute, 2015",
+  "source_kind": "institution",
+  "reference": "https://msi.ucsb.edu/news/seeing-without-eyes",
+  "written": "2026-09-26"
+}

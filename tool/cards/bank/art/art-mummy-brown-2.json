@@ -1,0 +1,38 @@
+{
+  "id": "art-mummy-brown-2",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Europeans swallowed ground Egyptian mummies as medicine before painters ever used them.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From the Middle Ages apothecaries sold mumia, powdered embalmed remains, taken for bruises, wounds and bleeding; demand peaked in the 16th and 17th centuries. The paint came out of that drug trade, from the same merchants and often the same jars. The pigment was a side line of a pharmacy shelf.",
+  "move": "The famous use of a thing is rarely its first use.",
+  "trap": "The paint is the story everyone tells, so it seems to come first.",
+  "keywords": [
+    "mumia",
+    "corpse medicine",
+    "apothecaries",
+    "mummy brown"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sugg, Mummies, Cannibals and Vampires, 2011",
+  "source_kind": "book",
+  "reference": "Richard Sugg, Mummies, Cannibals and Vampires: The History of Corpse Medicine from the Renaissance to the Victorians, Routledge, 2011",
+  "written": "2026-09-26"
+}

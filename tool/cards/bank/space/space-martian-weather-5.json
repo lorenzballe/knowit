@@ -1,0 +1,43 @@
+{
+  "id": "space-martian-weather-5",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A 100 km/h gust on Mars pushes like what wind speed on Earth, in km/h?",
+  "value": 13,
+  "unit": "km/h",
+  "withinFactor": 3,
+  "answer": "100 / 7.7 ≈ 13 km/h.",
+  "move": "When force goes with the square, compare square roots.",
+  "trap": "Dividing by the density ratio and getting a near-still 2 km/h.",
+  "hint": "The push of wind grows with air density and with the square of speed.",
+  "steps": [
+    "Air at the Martian surface is about 0.020 kg per cubic metre; Earth's is about 1.2.",
+    "Density ratio: 1.2 / 0.020 = 60.",
+    "Push goes with density times speed squared, so divide speed by √60 ≈ 7.7.",
+    "100 / 7.7 ≈ 13 km/h."
+  ],
+  "keywords": [
+    "wind",
+    "air density",
+    "dynamic pressure",
+    "dust storms"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haberle et al., Cambridge University Press, 2017",
+  "source_kind": "book",
+  "reference": "Haberle, Clancy, Forget, Smith and Zurek (eds), The Atmosphere and Climate of Mars, Cambridge University Press, 2017",
+  "written": "2026-09-26"
+}

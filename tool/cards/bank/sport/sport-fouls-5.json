@@ -1,0 +1,38 @@
+{
+  "id": "sport-fouls-5",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should elite football send players to a sin bin for ten minutes for tactical fouls?",
+  "sides": [
+    "Yes, bring in sin bins",
+    "No, keep cards as they are"
+  ],
+  "answer": "A yellow card for a cynical foul that kills a counter-attack costs almost nothing, so the foul pays. Ten minutes a player down costs something now, in the match where the foul was committed. The FA's grassroots trials reported dissent falling by about 38%, and rugby union has used sin bins for over twenty years.",
+  "move": "Whichever side you took, how reliably referees can tell a tactical foul decides it.",
+  "counterpoint": "Football is low-scoring, so ten minutes a player down can decide a match, and whether a foul was tactical is a judgement referees already find hard. More discretion means more controversy and more delay. Grassroots dissent is not elite tactical fouling, and the planned professional trial was postponed in 2024 amid opposition.",
+  "keywords": [
+    "sin bins",
+    "temporary dismissal",
+    "tactical fouls",
+    "dissent",
+    "yellow card"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NBC News, IFAB sin bin trial, 2023",
+  "source_kind": "news_archive",
+  "reference": "https://www.nbcnews.com/news/world/soccer-sin-bin-trial-okd-opening-door-major-rule-change-rcna127051",
+  "written": "2026-09-26"
+}

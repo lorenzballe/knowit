@@ -1,0 +1,39 @@
+{
+  "id": "art-mummy-brown-4",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a 19th-century oil painting, how was mummy brown usually applied?",
+  "options": [
+    "As a thick opaque underlayer",
+    "Mixed with white for flesh highlights",
+    "As thin see-through glazes over shadows"
+  ],
+  "correct": 2,
+  "answer": "As thin see-through glazes. Much of its colour came from the resins and bitumen of embalming, which in oil behave like a dark varnish rather than a powdered earth. Laid thinly over shadows and hair it gave warm depth; laid thickly, such bituminous browns dried badly and could crack.",
+  "move": "Ask what a material behaves like, not what it is called.",
+  "trap": "Picturing a brown earth, which painters often use as solid body colour.",
+  "keywords": [
+    "glazing",
+    "bitumen",
+    "oil painting",
+    "mummy brown"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scientific American, Symbiartic blog",
+  "source_kind": "news_archive",
+  "reference": "https://www.scientificamerican.com/blog/symbiartic/pinch-of-pigment-mummy-brown/",
+  "written": "2026-09-26"
+}

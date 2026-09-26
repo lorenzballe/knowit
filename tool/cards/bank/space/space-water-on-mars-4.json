@@ -1,0 +1,39 @@
+{
+  "id": "space-water-on-mars-4",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.water_on_mars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2008, bright crumbs the Phoenix lander had dug up vanished from its trench within four days. What were they?",
+  "options": [
+    "Salt crystals",
+    "Dry ice",
+    "Water ice"
+  ],
+  "correct": 2,
+  "answer": "Water ice. Salt cannot vanish, and dry ice could not survive in summer soil tens of degrees too warm for it. Water ice, once exposed to the dry air, turns straight to vapour over days. The team took the disappearance as the proof: a vanishing act served as the chemistry test.",
+  "move": "How a thing disappears can tell you what it was.",
+  "trap": "Bright white crumbs in dry soil look like desert salt.",
+  "keywords": [
+    "phoenix lander",
+    "ground ice",
+    "sublimation",
+    "dodo-goldilocks trench"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Jet Propulsion Laboratory, 2008",
+  "source_kind": "institution",
+  "reference": "https://www.jpl.nasa.gov/news/bright-chunks-at-phoenix-landers-mars-site-must-have-been-ice/",
+  "written": "2026-09-26"
+}

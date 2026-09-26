@@ -1,0 +1,32 @@
+{
+  "id": "economics-container-ships-3",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Roughly what share of the containers handled at the world's ports have nothing in them?",
+  "answer": "About one in five. Trade is lopsided: East Asia ships out far more boxes of goods than it takes back, so lines must haul empties home to be filled again. Since the 1990s empties have made up around 20% of port handling. A box of shoes to Europe often returns carrying air.",
+  "move": "Every one-way flow hides a return trip somebody pays for.",
+  "keywords": [
+    "empty containers",
+    "trade imbalance",
+    "repositioning",
+    "port throughput"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Rodrigue and Notteboom, Port Economics, Management and Policy",
+  "source_kind": "book",
+  "reference": "https://porteconomicsmanagement.org/pemp/contents/part1/maritime-shipping-and-international-trade/world-container-throughput/",
+  "written": "2026-09-26"
+}

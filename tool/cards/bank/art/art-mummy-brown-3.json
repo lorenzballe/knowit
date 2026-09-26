@@ -1,0 +1,32 @@
+{
+  "id": "art-mummy-brown-3",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is an embalmed Egyptian body called a mummy in the first place?",
+  "answer": "Because of a drug that was not in it. The Persian mum meant wax, and mumiya was a natural bitumen prized as medicine. Seeing black resin on embalmed bodies, medieval writers took them for a source of that drug, and the name slid from the tar to the corpse. The paint called mummy inherited both.",
+  "move": "A name can record a mistake long after the mistake is forgotten.",
+  "keywords": [
+    "mumiya",
+    "bitumen",
+    "etymology",
+    "embalming"
+  ],
+  "era": "medieval",
+  "region": "middle_east",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dannenfeldt, Sixteenth Century Journal, 1985",
+  "source_kind": "paper",
+  "reference": "Karl H. Dannenfeldt, Egyptian Mumia: The Sixteenth Century Experience and Debate, The Sixteenth Century Journal, 1985",
+  "written": "2026-09-26"
+}
