@@ -26,8 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "De Imperatoribus Romanis, Romulus Augustulus",
-  "source_kind": "reference_work",
-  "reference": "https://roman-emperors.sites.luc.edu/auggiero.htm",
+  "source": "Anonymus Valesianus 8.38",
+  "source_kind": "primary_document",
+  "reference": "Excerpta Valesiana, in Ammianus Marcellinus, vol. 3, trans. J. C. Rolfe, Loeb Classical Library, Harvard University Press, 1939",
   "written": "2026-09-26"
 }

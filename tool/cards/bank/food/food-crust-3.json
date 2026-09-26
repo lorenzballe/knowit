@@ -1,0 +1,32 @@
+{
+  "id": "food-crust-3",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a crackling crust turn leathery within hours, even when the kitchen air is dry?",
+  "answer": "Water moves out from the crumb. Fresh from the oven, the crust is nearly dry while the crumb is around 40% water, and moisture diffuses outward. Damp crust starch turns rubbery instead of glassy. A few minutes in a hot oven drive the water back out, and the crunch returns for a while.",
+  "move": "When something spoils on its own, look for the source inside it.",
+  "keywords": [
+    "crust",
+    "crumb moisture",
+    "staleness",
+    "crispness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Figoni, How Baking Works, 2011",
+  "source_kind": "book",
+  "reference": "Figoni, How Baking Works: Exploring the Fundamentals of Baking Science, 3rd edition, Wiley, 2011",
+  "written": "2026-09-26"
+}

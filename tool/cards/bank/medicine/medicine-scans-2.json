@@ -1,0 +1,33 @@
+{
+  "id": "medicine-scans-2",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is an MRI scanner's magnet left on even when nobody is being scanned?",
+  "answer": "Because switching it off is a costly emergency. Its superconducting coils sit in liquid helium, where current circulates for years unpowered. Switching off means a quench: the helium boils away through a vent, and restarting takes days. In 2001 a steel oxygen cylinder, pulled into a live scanner in New York, killed a 6-year-old boy.",
+  "move": "A machine that is always on needs rules for when it looks off.",
+  "keywords": [
+    "mri",
+    "superconducting magnet",
+    "liquid helium",
+    "quench",
+    "michael colombini"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CBS News, 2001",
+  "source_kind": "news_archive",
+  "reference": "https://www.cbsnews.com/news/boy-killed-in-freak-mri-accident/",
+  "written": "2026-09-26"
+}

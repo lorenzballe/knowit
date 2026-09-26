@@ -1,0 +1,42 @@
+{
+  "id": "medicine-scans-3",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "also": [
+    "psychology.attention.focus"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most radiologists hunting for lung nodules noticed a gorilla, 48 times a nodule's size, drawn into the scan?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2013 Harvard experiment, 20 of 24 radiologists, 83%, missed it. Eye-tracking showed most of those who missed it had looked straight at where it was. Attention tuned for small round nodules filtered out a large shape nobody expected. Years of training did not help: the silhouette sat in plain view.",
+  "move": "A search for one thing is a filter against everything else.",
+  "trap": "Assuming trained experts see whatever is plainly on the screen.",
+  "keywords": [
+    "inattentional blindness",
+    "radiologists",
+    "lung ct",
+    "eye tracking",
+    "gorilla"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Drew, Võ & Wolfe, Psychological Science, 2013",
+  "source_kind": "paper",
+  "reference": "https://journals.sagepub.com/doi/abs/10.1177/0956797613479386",
+  "written": "2026-09-26"
+}

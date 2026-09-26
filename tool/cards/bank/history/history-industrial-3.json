@@ -3,9 +3,6 @@
   "topic": "history",
   "genre": "history.revolutions",
   "strand": "history.revolutions.industrial",
-  "also": [
-    "economics.money_and_banks.interest"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "exponential",

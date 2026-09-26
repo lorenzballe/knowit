@@ -1,0 +1,43 @@
+{
+  "id": "medicine-scans-1",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "also": [
+    "medicine.pain.chronic"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Among 20-year-olds with no back pain at all, what share show disc degeneration on a spine scan?",
+  "options": [
+    "About 1 in 3",
+    "About 1 in 50",
+    "About 9 in 10"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 3. A 2015 review of over 3,000 pain-free people put disc degeneration at 37% at age 20, rising to 96% at 80; disc bulges ran from 30% to 84%. Such findings are often normal ageing. A report listing them can describe almost any spine, sore or not.",
+  "move": "Before blaming a finding, ask how often it turns up in the healthy.",
+  "trap": "Assuming anything a scan reports as abnormal must be rare in healthy people.",
+  "keywords": [
+    "mri",
+    "disc degeneration",
+    "back pain",
+    "asymptomatic findings",
+    "ageing spine"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Brinjikji et al., AJNR, 2015",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/25430861/",
+  "written": "2026-09-26"
+}

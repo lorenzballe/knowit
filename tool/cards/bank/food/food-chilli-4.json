@@ -1,0 +1,42 @@
+{
+  "id": "food-chilli-4",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Scoville units count dilutions until no heat is tasted. Pure capsaicin rates 16 million: how many litres of water would 1 mg need?",
+  "value": 16,
+  "unit": "litres",
+  "answer": "16 kg of water = 16 litres.",
+  "move": "Turn a rating into a volume and the scale becomes something you can picture.",
+  "trap": "Treating the rating as an abstract score rather than a dilution.",
+  "hint": "Multiply the milligram by the rating, then turn milligrams into kilograms.",
+  "steps": [
+    "1 mg must be diluted 16,000,000 times its own weight.",
+    "1 mg x 16,000,000 = 16,000,000 mg of water.",
+    "16,000,000 mg = 16 kg of water.",
+    "16 kg of water = 16 litres."
+  ],
+  "keywords": [
+    "scoville scale",
+    "capsaicin",
+    "dilution",
+    "wilbur scoville"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scoville, J. Am. Pharm. Assoc., 1912",
+  "source_kind": "paper",
+  "reference": "Scoville, Note on Capsicums, Journal of the American Pharmaceutical Association, 1912",
+  "written": "2026-09-26"
+}

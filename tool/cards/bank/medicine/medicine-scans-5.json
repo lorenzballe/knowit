@@ -1,0 +1,40 @@
+{
+  "id": "medicine-scans-5",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Years after MRI scans with gadolinium contrast dye, where has some of the metal been found?",
+  "options": [
+    "In the kidneys only",
+    "In the brain",
+    "Nowhere, it is all excreted"
+  ],
+  "correct": 1,
+  "answer": "In the brain. In 2014 Japanese radiologists saw deep brain regions brighten on plain scans in step with the number of past contrast doses; autopsies later confirmed gadolinium there. No harm has been shown, but the FDA added warnings in 2017, and Europe suspended several linear agents, the kind that release it more easily.",
+  "move": "Cleared from the blood is not the same as gone from the body.",
+  "trap": "Trusting the textbook line that the kidneys flush it out within hours.",
+  "keywords": [
+    "gadolinium",
+    "contrast agents",
+    "mri",
+    "dentate nucleus",
+    "drug safety"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FDA Drug Safety Communication, 2017",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/Drugs/DrugSafety/ucm589213.htm",
+  "written": "2026-09-26"
+}

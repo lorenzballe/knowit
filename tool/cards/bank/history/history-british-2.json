@@ -13,7 +13,7 @@
     "About 300,000"
   ],
   "correct": 0,
-  "answer": "About 1,000. In 1901 the service had just over a thousand members, and about a fifth were sick or on leave at any moment. It could govern nearly 300 million people only through Indian clerks, police, soldiers and landholders, and through princes who ran their own states.",
+  "answer": "About 1,000. In 1901 the service had only about a thousand members, some of them always on leave. It could govern nearly 300 million people only through Indian clerks, police, soldiers and landholders, and through princes who ran their own states: roughly one covenanted officer for every 300,000 subjects.",
   "move": "Divide the governed by the governors before imagining an empire's machinery.",
   "trap": "About 300,000, scaling a vast bureaucracy to 300 million people.",
   "keywords": [
@@ -34,6 +34,6 @@
   "figure": "none",
   "source": "Gilmour, The Ruling Caste, 2005",
   "source_kind": "book",
-  "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, 2005",
+  "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, John Murray, 2005",
   "written": "2026-09-26"
 }

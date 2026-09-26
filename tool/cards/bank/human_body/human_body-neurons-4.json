@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The two are roughly equal, with fewer than 100 billion of each. The ten-to-one ratio circulated in textbooks for half a century, but a 2016 review of 150 years of cell counting found that the original tissue studies had always pointed to about 1:1. No count ever found the trillion glia so often quoted.",
+  "answer": "False. The two are roughly equal, with fewer than 100 billion of each. The ten-to-one ratio filled textbooks for decades, but a 2016 review of 150 years of cell counting found that no count had ever supported it; direct counts pointed to about 1:1. The trillion glia so often quoted were never counted.",
   "move": "Ask who counted before repeating a number everyone knows.",
   "trap": "Trusting a ratio that textbooks repeated for fifty years.",
   "keywords": [
