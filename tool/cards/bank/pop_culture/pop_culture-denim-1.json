@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-denim-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Levi Strauss's name sit on the riveted trousers a Reno tailor invented?",
+  "answer": "Because the tailor needed a backer. Jacob Davis, in Reno, Nevada, was riveting the pocket corners of work trousers so they would not tear, but could not afford the patent fee, so he wrote to his cloth supplier in San Francisco, Levi Strauss. The patent was granted to both men on 20 May 1873.",
+  "move": "Ask who paid for an invention before asking whose name it carries.",
+  "keywords": [
+    "jacob davis",
+    "levi strauss",
+    "rivets",
+    "patent",
+    "work trousers"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Downey, Levi Strauss, 2016",
+  "source_kind": "book",
+  "reference": "Lynn Downey, Levi Strauss: The Man Who Gave Blue Jeans to the World, University of Massachusetts Press, 2016",
+  "written": "2026-09-26"
+}

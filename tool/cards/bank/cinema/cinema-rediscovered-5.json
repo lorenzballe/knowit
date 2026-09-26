@@ -1,0 +1,39 @@
+{
+  "id": "cinema-rediscovered-5",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Many lost American silent films have been found abroad rather than in the United States. What mainly explains that?",
+  "options": [
+    "Distant prints cost more to return than keep",
+    "Foreign archives cared more about film",
+    "Foreign censors filed a copy of everything"
+  ],
+  "correct": 0,
+  "answer": "Distant prints cost more to return than keep. Studios recalled and junked prints at home, but copies sent to the far end of distribution often stayed. In 2010 the New Zealand Film Archive sent back 75 American films, among them John Ford's Upstream, from 1927, found nowhere else.",
+  "move": "Survivors gather where the destroyer never bothered to reach.",
+  "trap": "Foreign archives seem to have simply valued cinema more.",
+  "keywords": [
+    "new zealand film archive",
+    "john ford",
+    "upstream",
+    "film repatriation"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "National Film Preservation Foundation, 2010",
+  "source_kind": "institution",
+  "reference": "National Film Preservation Foundation, New Zealand Project: repatriated American films, 2010",
+  "written": "2026-09-26"
+}

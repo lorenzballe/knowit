@@ -1,0 +1,38 @@
+{
+  "id": "art-lost-colour-5",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do the brightly painted modern reconstructions of Greek statues show roughly what ancient viewers saw?",
+  "sides": [
+    "Yes, near enough",
+    "No, too crude"
+  ],
+  "answer": "Near enough. Each colour is placed where analysis found pigment, and the pigments themselves, from Egyptian blue to cinnabar, are identified. Pliny records that Praxiteles valued most the marbles the painter Nikias had finished. Showing the colour that survives is more honest than showing a white marble no Greek ever saw.",
+  "move": "Whichever side you took, it turns on how much of the top layer is lost.",
+  "counterpoint": "Too crude. What survives is mostly the base layer; the shading, glazes, gilding and wax that finished a surface are the first to go. Reconstructions therefore show something like underpaint, and they resemble each other more than originals by different workshops would have. The evidence says colour, but not these flat colours.",
+  "keywords": [
+    "polychromy",
+    "reconstructions",
+    "gods in color",
+    "praxiteles",
+    "pigments"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brinkmann & Wünsche, Gods in Color, 2007",
+  "source_kind": "book",
+  "reference": "Vinzenz Brinkmann & Raimund Wünsche (eds), Gods in Color: Painted Sculpture of Classical Antiquity, Arthur M. Sackler Museum, Harvard, 2007",
+  "written": "2026-09-26"
+}

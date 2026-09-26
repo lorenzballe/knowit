@@ -1,0 +1,39 @@
+{
+  "id": "language-chinese-characters-3",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Roughly how many characters does the Kangxi Dictionary, compiled for the Qing emperor in 1716, contain?",
+  "options": [
+    "About 4,700",
+    "About 47,000",
+    "About 470,000"
+  ],
+  "correct": 1,
+  "answer": "About 47,000: 47,035 by the usual count. Most are rare variants, obsolete forms or characters found in a single old text. A newspaper reader needs roughly 3,000, and China's 2013 standard list for general use holds 8,105. The 214 radicals used to look characters up are still called the Kangxi radicals.",
+  "move": "What an archive holds and what anyone uses can differ tenfold.",
+  "trap": "Starting from the few thousand characters an educated reader actually knows.",
+  "keywords": [
+    "kangxi dictionary",
+    "qing dynasty",
+    "radicals",
+    "character count"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Norman, Chinese, 1988",
+  "source_kind": "book",
+  "reference": "Norman, Chinese, Cambridge Language Surveys, Cambridge University Press, 1988",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "sport-shoes-5",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should road-running records set in carbon-plated super shoes be listed apart from older ones?",
+  "sides": [
+    "Yes, list them apart",
+    "No, keep one list"
+  ],
+  "answer": "Yes. These shoes change the event itself: lab tests found the first model cut running's energy cost by about 4%, worth minutes over a marathon. Marathon records that had stood for years fell within a few seasons of their arrival. A 2023 time beside a 1998 one compares equipment, not athletes.",
+  "move": "Whichever side you took, the hinge is whether this change differs in kind.",
+  "counterpoint": "No. Running has always changed with its kit: cinder tracks gave way to synthetic ones, spikes improved, pacing lights arrived, and nobody split the lists. World Athletics already caps sole thickness and approves every racing model, so rivals race on the same terms. A separate list needs an arbitrary line, and the next invention would need another.",
+  "keywords": [
+    "world records",
+    "super shoes",
+    "marathon",
+    "record books"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoogkamer et al., Sports Medicine, 2018",
+  "source_kind": "paper",
+  "reference": "Hoogkamer, Kipp, Frank, Farina, Luo & Kram, A Comparison of the Energetic Cost of Running in Marathon Racing Shoes, Sports Medicine, 2018",
+  "written": "2026-09-26"
+}

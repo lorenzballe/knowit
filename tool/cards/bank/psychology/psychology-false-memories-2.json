@@ -1,0 +1,32 @@
+{
+  "id": "psychology-false-memories-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did a 2015 study really lead 70% of students to remember committing a crime?",
+  "answer": "Not by a stricter test. Shaw and Porter counted 70% after three suggestive interviews. Recoding the same transcripts, Wade, Garry and Pezdek separated believing the story from recalling it, and only 26 to 30% met the bar for a false memory. The larger figure included people who believed but pictured little.",
+  "move": "Before quoting a rate, ask exactly what was counted as a case.",
+  "keywords": [
+    "false confession",
+    "shaw and porter",
+    "coding",
+    "false belief"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wade, Garry & Pezdek, Psychological Science, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0956797617703667",
+  "written": "2026-09-26"
+}

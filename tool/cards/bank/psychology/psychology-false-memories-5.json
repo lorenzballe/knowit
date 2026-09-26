@@ -1,0 +1,38 @@
+{
+  "id": "psychology-false-memories-5",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: memories of hearing the 9/11 news stayed more accurate than everyday memories from the same days?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. On 12 September 2001, 54 Duke students wrote down how they heard the news and an ordinary recent event. Retested up to 32 weeks later, both accounts drifted by the same amount. What differed was confidence: vividness and belief in accuracy fell only for the ordinary memory.",
+  "move": "How clear a memory feels says little about whether it is right.",
+  "trap": "Taking a vivid, emotional memory for a well-recorded one.",
+  "keywords": [
+    "flashbulb memory",
+    "september 11",
+    "confidence",
+    "consistency"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Talarico & Rubin, Psychological Science, 2003",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/1467-9280.02453",
+  "written": "2026-09-26"
+}

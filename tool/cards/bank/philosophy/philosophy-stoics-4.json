@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-stoics-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the ancient logic of whole statements joined by if, and, or was Stoic, not Aristotelian?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Aristotle's syllogisms link terms, such as men and mortal. Chrysippus and the Stoics built a logic of whole propositions on five basic forms, one being: if the first, then the second; the first; therefore the second. Long dismissed as trivial, it was recognised in the 1930s as an ancestor of modern propositional logic.",
+  "move": "The famous name in a field is rarely the only one who built it.",
+  "trap": "Crediting all ancient logic to Aristotle, the name everyone knows.",
+  "keywords": [
+    "stoic logic",
+    "chrysippus",
+    "aristotle",
+    "propositional logic",
+    "syllogisms"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mates, Stoic Logic, 1953",
+  "source_kind": "book",
+  "reference": "Mates, Stoic Logic, University of California Press, 1953",
+  "written": "2026-09-26"
+}

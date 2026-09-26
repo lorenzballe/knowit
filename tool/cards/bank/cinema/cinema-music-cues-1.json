@@ -1,0 +1,35 @@
+{
+  "id": "cinema-music-cues-1",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "also": [
+    "music.composers.film_scores"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many new film scores sound like older film scores?",
+  "answer": "Because of the temp track. Editors cut scenes to music borrowed from other films, and directors then spend months watching their film with it. By the time the composer arrives, the borrowed cue feels like part of the film, and the brief becomes: this, but different enough to stay clear of the copyright.",
+  "move": "Whatever sits in the draft longest becomes the standard it is judged by.",
+  "keywords": [
+    "temp track",
+    "film editing",
+    "film composers",
+    "music editors"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sadoff, Popular Music, 2006",
+  "source_kind": "paper",
+  "reference": "Sadoff, The role of the music editor and the temp track as blueprint for the score, source music, and scource music of films, Popular Music, 2006",
+  "written": "2026-09-26"
+}

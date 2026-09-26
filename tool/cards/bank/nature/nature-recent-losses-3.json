@@ -1,0 +1,40 @@
+{
+  "id": "nature-recent-losses-3",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Since 1900, about 477 vertebrate species have been lost. At the normal rate of 2 per 10,000 species per century, how many among 40,000?",
+  "value": 8,
+  "unit": "species",
+  "answer": "40,000 x 0.0002 = 8 species.",
+  "move": "A count means little until you know what normal would produce.",
+  "trap": "Assuming a few hundred losses is roughly what nature always does.",
+  "hint": "Turn the background rate into a fraction lost per century first.",
+  "steps": [
+    "2 per 10,000 species per century = 0.0002 of species per century.",
+    "40,000 x 0.0002 = 8 species."
+  ],
+  "keywords": [
+    "background extinction rate",
+    "vertebrates",
+    "sixth mass extinction",
+    "ceballos"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Ceballos et al., Science Advances, 2015",
+  "source_kind": "paper",
+  "reference": "Ceballos et al., Accelerated modern human-induced species losses: Entering the sixth mass extinction, Science Advances, 2015",
+  "written": "2026-09-26"
+}

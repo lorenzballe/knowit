@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-dates-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are people more likely to die on their birthday than on an ordinary day?",
+  "answer": "Yes, a little. Among about 2.4 million Swiss deaths from 1969 to 2008, 13.8% more fell on the birthday than chance predicts, and 18% more among people over 60. The rise was sharpest for heart disease and strokes. Nobody knows why; the excess sits on one square of each person's calendar.",
+  "move": "An anniversary can change what people do, and that can show up in the records.",
+  "keywords": [
+    "birthdays",
+    "mortality",
+    "switzerland",
+    "strokes",
+    "heart attacks"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ajdacic-Gross et al., Annals of Epidemiology, 2012",
+  "source_kind": "statistics",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/22658822/",
+  "written": "2026-09-26"
+}

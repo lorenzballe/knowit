@@ -1,0 +1,38 @@
+{
+  "id": "cinema-destroyed-4",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a burning roll of nitrate film can keep burning under water?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Cellulose nitrate releases oxygen as it decomposes, so smothering does not stop it; once alight, a roll can burn even submerged, giving off toxic nitrous gases. That is why archives keep nitrate in small, fire-rated vault cells, so a fire in one cannot reach the others.",
+  "move": "Before choosing how to put out a fire, ask what it is feeding on.",
+  "trap": "Fire needs air, so water should always put it out.",
+  "keywords": [
+    "nitrate film",
+    "film vaults",
+    "archive fires",
+    "cellulose nitrate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Film Preservation Foundation guide",
+  "source_kind": "institution",
+  "reference": "National Film Preservation Foundation, The Film Preservation Guide: The Basics for Archives, Libraries, and Museums, 2004",
+  "written": "2026-09-26"
+}

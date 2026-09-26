@@ -1,0 +1,33 @@
+{
+  "id": "sport-ancient-2",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did ancient Olympic long jumpers take off holding stone or lead weights in their hands?",
+  "answer": "To jump farther. Swung forward at take-off, hand weights of 2 to 9 kg add distance to a standing jump. Minetti and Ardigò's simulations and tests put the gain at no less than 17 cm on a 3 m jump, and the best mass they found matched weights excavated from ancient sites.",
+  "move": "Before calling an old practice a ritual, test whether it simply worked.",
+  "keywords": [
+    "halteres",
+    "long jump",
+    "pentathlon",
+    "ancient olympics",
+    "biomechanics"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Minetti & Ardigò, Nature, 2002",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/420141a",
+  "written": "2026-09-26"
+}

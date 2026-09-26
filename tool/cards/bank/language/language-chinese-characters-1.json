@@ -1,0 +1,38 @@
+{
+  "id": "language-chinese-characters-1",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most Chinese characters are pictures or symbols of what they mean?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Most are compounds of two parts: one hints at the meaning, the other at the sound. 河, river, joins the water sign to 可, which once sounded close to it; dozens more pair water with other sound parts. Pictographs such as 日, sun, are a small minority.",
+  "move": "The examples chosen to teach a system are rarely typical of it.",
+  "trap": "Textbook pictographs like sun, tree and mountain are the ones everyone sees.",
+  "keywords": [
+    "chinese characters",
+    "pictographs",
+    "phonetic compounds",
+    "radicals"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "DeFrancis, The Chinese Language, 1984",
+  "source_kind": "book",
+  "reference": "DeFrancis, The Chinese Language: Fact and Fantasy, University of Hawaii Press, 1984",
+  "written": "2026-09-26"
+}

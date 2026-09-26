@@ -1,0 +1,32 @@
+{
+  "id": "psychology-forgetting-curve-4",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens over the next fifty years to Spanish learned at school and never used again?",
+  "answer": "It falls for three to six years, then stops falling. Harry Bahrick tested 733 former students: what survived the first years stayed roughly level for up to 30 years before a last decline in old age. How much survived depended on how well it was first learned, since most had barely practised since.",
+  "move": "The first years of loss say little about what the next thirty hold.",
+  "keywords": [
+    "permastore",
+    "language learning",
+    "bahrick",
+    "long-term retention"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bahrick, J Exp Psychol General, 1984",
+  "source_kind": "paper",
+  "reference": "Bahrick, Semantic memory content in permastore: fifty years of memory for Spanish learned in school, Journal of Experimental Psychology: General, 1984",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-forums-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: most of Reddit's earliest posts came from its two founders under invented usernames?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2005 Steve Huffman and Alexis Ohanian built a submission form that created a new account with each post, so an empty site looked busy. Huffman has said nearly all submissions in the first weeks were theirs. The links they chose set the tone that the first real users copied.",
+  "move": "A crowd you can count by name is not yet a crowd of people.",
+  "trap": "False: a front page full of different names reads as independent agreement.",
+  "keywords": [
+    "reddit",
+    "steve huffman",
+    "alexis ohanian",
+    "fake accounts",
+    "online communities"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adweek, Reddit co-founder on fake users",
+  "source_kind": "news_archive",
+  "reference": "https://www.adweek.com/performance-marketing/reddit-fake-users/",
+  "written": "2026-09-26"
+}

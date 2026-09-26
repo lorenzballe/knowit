@@ -1,0 +1,40 @@
+{
+  "id": "human_body-smell-4",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Colour vision relies on three kinds of cone. How many kinds of odour receptor does the human nose use?",
+  "options": [
+    "About 4",
+    "About 400",
+    "About 40,000"
+  ],
+  "correct": 1,
+  "answer": "About 400: counts of working genes run from roughly 340 to 400, each coding one receptor, and hundreds more have decayed into broken copies. A smell is a pattern across many receptors at once, so a few hundred sensors can encode vastly more than a few hundred smells.",
+  "move": "A count you know from one system says little about the next one.",
+  "trap": "Carrying over the handful of channels that vision and taste use.",
+  "keywords": [
+    "odour receptors",
+    "gene family",
+    "pseudogenes",
+    "linda buck",
+    "cones"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malnic, Godfrey & Buck, PNAS, 2004",
+  "source_kind": "paper",
+  "reference": "Malnic, Godfrey & Buck, The human olfactory receptor gene family, PNAS, 2004",
+  "written": "2026-09-26"
+}

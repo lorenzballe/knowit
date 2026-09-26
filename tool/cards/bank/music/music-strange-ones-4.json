@@ -1,0 +1,40 @@
+{
+  "id": "music-strange-ones-4",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The serpent is a snaking bass instrument of carved wood wrapped in leather. How is its sound made?",
+  "options": [
+    "Reed-blown, like a bassoon",
+    "Edge-blown, like a recorder",
+    "Lip-buzzed, like a tuba"
+  ],
+  "correct": 2,
+  "answer": "Lip-buzzed, like a tuba. It has a cup mouthpiece and finger holes; the player's lips do the vibrating, so it belongs with brass despite its wood. Said to have been devised in France around 1590 to support church chant, it later marched in military bands. The saxophone is the mirror case: brass body, cane reed.",
+  "move": "Classify a thing by how it works, not by what it is made of.",
+  "trap": "Reed-blown, because it is made of wood like a bassoon.",
+  "keywords": [
+    "serpent",
+    "brass instruments",
+    "cup mouthpiece",
+    "plainchant",
+    "saxophone"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baines, Brass Instruments, 1976",
+  "source_kind": "book",
+  "reference": "Baines, Brass Instruments: Their History and Development, Faber & Faber, 1976",
+  "written": "2026-09-26"
+}

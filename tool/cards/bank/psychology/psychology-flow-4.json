@@ -1,0 +1,39 @@
+{
+  "id": "psychology-flow-4",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a lab study that stressed people before a task, at what level of bodily arousal was flow highest?",
+  "options": [
+    "At moderate arousal",
+    "At the lowest arousal",
+    "At the highest arousal"
+  ],
+  "correct": 0,
+  "answer": "At moderate arousal. Peifer and colleagues put people through a stress test, then tracked cortisol and heart activity during a demanding task. Flow rose with arousal up to a point, then fell away, tracing an inverted U. The mind may feel effortless in flow while the body is working hard.",
+  "move": "How easy something feels says little about how hard the body is working.",
+  "trap": "Reading flow's calm, effortless feel as a body at rest.",
+  "keywords": [
+    "flow",
+    "stress",
+    "cortisol",
+    "arousal"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peifer et al., J Experimental Social Psychology, 2014",
+  "source_kind": "paper",
+  "reference": "Peifer, Schulz, Schächinger, Baumann & Antoni, The relation of flow-experience and physiological arousal under stress: can u shape it?, Journal of Experimental Social Psychology, 2014",
+  "written": "2026-09-26"
+}

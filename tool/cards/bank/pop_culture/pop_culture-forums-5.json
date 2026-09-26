@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-forums-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Usenet veterans date everything since AOL's 1993 influx as days of September 1993. Taking 1 September as day 1, which day was 1 January 2000?",
+  "value": 2314,
+  "unit": "day of September 1993",
+  "answer": "So 1 January 2000 is day 2,314.",
+  "move": "Counting days across years, write down each leap day before adding.",
+  "trap": "Forgetting 1996's leap day, or starting the count at zero.",
+  "hint": "Count the rest of 1993 month by month, then whole years, minding leap years.",
+  "steps": [
+    "September to December 1993: 30 + 31 + 30 + 31 = 122 days.",
+    "1994 to 1999: 6 x 365 + 1 leap day for 1996 = 2,191 days.",
+    "122 + 2,191 = 2,313 days, ending on 31 December 1999.",
+    "So 1 January 2000 is day 2,314."
+  ],
+  "keywords": [
+    "eternal september",
+    "usenet",
+    "aol",
+    "newcomers",
+    "calendar arithmetic"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fischer, alt.folklore.computers, 1994",
+  "source_kind": "primary_document",
+  "reference": "Dave Fischer, post to the Usenet group alt.folklore.computers, 26 January 1994",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "cinema-budgets-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A film cost $100 million to make. Cinemas keep about half of ticket sales. What gross, in millions of dollars, merely recoups the cost?",
+  "value": 200,
+  "unit": "million dollars",
+  "answer": "$100 million / 0.5 = $200 million.",
+  "move": "Before judging a total, find out how much of it reaches the owner.",
+  "trap": "Answering 100, as if every ticket dollar reached the studio.",
+  "hint": "Work out what share of each ticket comes back to the studio.",
+  "steps": [
+    "Cinemas keep about half of ticket sales, so the studio gets about 0.5 of each dollar.",
+    "The studio needs $100 million back.",
+    "$100 million / 0.5 = $200 million."
+  ],
+  "keywords": [
+    "break-even",
+    "box office split",
+    "production budget",
+    "film rentals"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, The Big Picture, 2005",
+  "source_kind": "book",
+  "reference": "Epstein, The Big Picture: The New Logic of Money and Power in Hollywood, Random House, 2005",
+  "written": "2026-09-26"
+}

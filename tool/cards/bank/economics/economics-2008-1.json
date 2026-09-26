@@ -1,0 +1,33 @@
+{
+  "id": "economics-2008-1",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Northern Rock's savers queue for their money in 2007 when their deposits were insured?",
+  "answer": "Because the insurance left them holding part of the loss. Britain's scheme then covered all of the first £2,000 but only 90% of the next £33,000, and payouts could take months. For anyone with savings, running was rational. The queues stopped only when the Chancellor promised to guarantee every deposit, whole.",
+  "move": "A guarantee with a gap in it invites people to race for the gap.",
+  "keywords": [
+    "northern rock",
+    "bank run",
+    "deposit insurance",
+    "savers",
+    "financial crisis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "House of Commons Treasury Committee, 2008",
+  "source_kind": "primary_document",
+  "reference": "House of Commons Treasury Committee, The Run on the Rock, Fifth Report of Session 2007-08, HC 56, 2008",
+  "written": "2026-09-26"
+}

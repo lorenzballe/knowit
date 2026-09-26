@@ -1,0 +1,36 @@
+{
+  "id": "language-alphabets-3",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "also": [
+    "language.writing_systems.lost_scripts"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who were the first people known to write with an alphabet, and could they read hieroglyphs?",
+  "answer": "Probably Semitic-speaking workers at Egyptian turquoise mines in Sinai, early in the second millennium BC, though dates are disputed. They took hieroglyph pictures, using each for the first sound of its word in their own language, so an ox head, alp, wrote its opening sound. Orly Goldwasser argues they could not read hieroglyphs.",
+  "move": "A tool used by outsiders can be simpler than any expert would design.",
+  "keywords": [
+    "proto-sinaitic",
+    "serabit el-khadim",
+    "sinai",
+    "hieroglyphs",
+    "alphabet origin"
+  ],
+  "era": "ancient",
+  "region": "middle_east",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldwasser, Biblical Archaeology Review, 2010",
+  "source_kind": "paper",
+  "reference": "Goldwasser, How the Alphabet Was Born from Hieroglyphs, Biblical Archaeology Review 36(2), 2010",
+  "written": "2026-09-26"
+}

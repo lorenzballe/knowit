@@ -1,0 +1,33 @@
+{
+  "id": "language-how-they-form-1",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On Martha's Vineyard in the early 1960s, which islanders were pulling their vowels furthest from mainland speech?",
+  "answer": "The ones who most wanted to stay. William Labov found that a centralised start to the vowels in words like right and house was strongest among Chilmark fishermen and young people who sided with the island against summer visitors. Those planning to leave used it least. A vowel was working as a badge.",
+  "move": "People tend to sound like the group they intend to belong to.",
+  "keywords": [
+    "martha's vineyard",
+    "william labov",
+    "vowels",
+    "sound change",
+    "identity"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Labov, Word, 1963",
+  "source_kind": "paper",
+  "reference": "Labov, The Social Motivation of a Sound Change, Word 19, 1963",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "pop_culture-tabloids-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "also": [
+    "technology.old_machines.telephones"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did tabloid investigators get into famous people's voicemail in the early 2000s without any hacking skill?",
+  "answer": "With the factory PIN. Mobile voicemail could be dialled from any phone, and many owners never changed the default four-digit code their network set. A private investigator working for the News of the World needed only a number and that code. The Leveson Inquiry laid out the method in 2012.",
+  "move": "Most locks are opened by the key that came in the box.",
+  "keywords": [
+    "phone hacking",
+    "voicemail",
+    "news of the world",
+    "leveson inquiry",
+    "default pin"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leveson Inquiry report, 2012",
+  "source_kind": "primary_document",
+  "reference": "Lord Justice Leveson, An Inquiry into the Culture, Practices and Ethics of the Press, The Stationery Office, 2012",
+  "written": "2026-09-26"
+}

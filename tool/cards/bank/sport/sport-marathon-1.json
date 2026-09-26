@@ -1,0 +1,39 @@
+{
+  "id": "sport-marathon-1",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: the fastest marathon ever run as of April 2011, at Boston, could not count as a world record?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Geoffrey Mutai ran 2:03:02, under the record, but the course was ineligible. Record courses may drop no more than 1 m per km overall, and start and finish may be no further apart than half the distance. Boston runs point to point and loses about 140 m, and that day the wind was behind.",
+  "move": "Before crediting the performer, check what the setting added.",
+  "trap": "Assuming the fastest time ever run must be the record.",
+  "keywords": [
+    "boston marathon",
+    "geoffrey mutai",
+    "record-eligible course",
+    "elevation drop",
+    "tailwind"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Athletics, Competition and Technical Rules",
+  "source_kind": "primary_document",
+  "reference": "World Athletics, Competition and Technical Rules, Book C, 2023 edition",
+  "written": "2026-09-26"
+}

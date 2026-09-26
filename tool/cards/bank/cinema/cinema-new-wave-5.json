@@ -1,0 +1,37 @@
+{
+  "id": "cinema-new-wave-5",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the director be treated as the author of a film?",
+  "sides": [
+    "Yes, the director",
+    "No, the whole team"
+  ],
+  "answer": "The Cahiers critics showed that studio directors such as Hitchcock and Hawks carried the same obsessions and style across films written by different people. Someone decides where the camera stands, what the actors do and which take survives. The film carries that person's way of seeing, whoever typed the script.",
+  "move": "Whichever side you took, ask who could have been replaced without changing the film.",
+  "counterpoint": "Films are made by writers, cinematographers, editors and producers whose work the theory erased. Pauline Kael argued in 1971 that Herman Mankiewicz wrote much of Citizen Kane, and its look owes a great deal to Gregg Toland's camera. End credits run to hundreds of names because hundreds of people made the film.",
+  "keywords": [
+    "auteur theory",
+    "cahiers du cinéma",
+    "pauline kael",
+    "citizen kane"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Truffaut, Cahiers du cinéma, 1954",
+  "source_kind": "primary_document",
+  "reference": "Truffaut, Une certaine tendance du cinéma français, Cahiers du cinéma 31, January 1954",
+  "written": "2026-09-26"
+}

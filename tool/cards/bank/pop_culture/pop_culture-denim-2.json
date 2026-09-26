@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-denim-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do worn jeans fade towards white instead of a paler, even blue?",
+  "answer": "Because the dye never reached the middle of the thread. Indigo is built up in repeated dips and clings to the outside of the cotton yarn, leaving a white core, and only the lengthwise warp threads are dyed; the crosswise weft stays undyed. Rubbing at knees and pockets strips the blue skin off each thread.",
+  "move": "How a thing wears out tells you how it was built.",
+  "keywords": [
+    "indigo",
+    "ring dyeing",
+    "warp",
+    "twill",
+    "cotton yarn"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sullivan, Jeans, Gotham Books, 2006",
+  "source_kind": "book",
+  "reference": "James Sullivan, Jeans: A Cultural History of an American Icon, Gotham Books, 2006",
+  "written": "2026-09-26"
+}

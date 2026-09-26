@@ -1,0 +1,33 @@
+{
+  "id": "economics-silk-roads-2",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Under the Tang dynasty, what kept the oasis towns of the Silk Road busy?",
+  "answer": "The army's payroll. The Tang state shipped huge quantities of silk bolts to its garrisons in the northwest, because cloth was lighter than coin, and soldiers spent it locally. When rebellion in 755 pulled the troops back east, the money stopped and the oasis economies shrank. The trade followed the paymaster.",
+  "move": "Before crediting the merchants, find out who was paying the customers.",
+  "keywords": [
+    "tang dynasty",
+    "bolts of silk",
+    "garrisons",
+    "an lushan rebellion",
+    "oasis towns"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hansen, interview, World History Foundation",
+  "source_kind": "institution",
+  "reference": "https://etc.worldhistory.org/interviews/trading-cultures-along-the-ancient-silk-road-an-interview-with-professor-valerie-hansen/",
+  "written": "2026-09-26"
+}

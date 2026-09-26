@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-swooshes-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long did Nike keep its own name printed inside its main logo?",
+  "answer": "About 24 years. From 1971 the curve travelled with the word Nike beside or across it; in 1995 the company judged the mark recognisable alone and dropped the wordmark from its primary logo. The shape itself was never redrawn: the single stroke a student sketched in 1971 now carries the name by itself.",
+  "move": "A name can be dropped only after years of paying to attach it.",
+  "keywords": [
+    "nike",
+    "swoosh",
+    "wordmark",
+    "carolyn davidson",
+    "logo design"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nike, company history of the Swoosh",
+  "source_kind": "company",
+  "reference": "https://about.nike.com/en/magazine/nike-swoosh-logo-history",
+  "written": "2026-09-26"
+}

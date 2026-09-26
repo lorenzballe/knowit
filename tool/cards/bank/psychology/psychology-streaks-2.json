@@ -1,0 +1,38 @@
+{
+  "id": "psychology-streaks-2",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: while a daily habit is forming, skipping a single day barely dents progress towards automaticity?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Lally and colleagues' 12-week study, a single missed opportunity had no measurable effect on the rise in automaticity: the curve picked up where it left off. What undid habits was drifting away over many days, not one gap. An app that resets the counter to zero is stricter than the brain.",
+  "move": "Judge a routine by its run over weeks, not by its worst day.",
+  "trap": "Believing one missed day resets a habit, as a streak counter does.",
+  "keywords": [
+    "missed days",
+    "habit formation",
+    "automaticity",
+    "streak counters"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lally & Gardner, Health Psychology Review, 2013",
+  "source_kind": "paper",
+  "reference": "Lally & Gardner, Promoting habit formation, Health Psychology Review, 2013",
+  "written": "2026-09-26"
+}

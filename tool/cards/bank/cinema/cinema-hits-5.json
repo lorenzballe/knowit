@@ -1,0 +1,33 @@
+{
+  "id": "cinema-hits-5",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can one of the biggest hits of its year show no profit at all?",
+  "answer": "On paper, easily. When a columnist sued Paramount over the 1988 hit Coming to America, the studio's accounts showed no net profit, because distribution fees, overhead charges and interest came off first. A Los Angeles court found parts of that formula unconscionable in 1990. Writers learned to ask for a share of the gross instead.",
+  "move": "A share of profit is worth only what the one counting defines as profit.",
+  "keywords": [
+    "hollywood accounting",
+    "net profit",
+    "paramount",
+    "coming to america",
+    "profit participation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "O'Donnell and McDougal, Fatal Subtraction",
+  "source_kind": "book",
+  "reference": "O'Donnell and McDougal, Fatal Subtraction, Doubleday, 1992",
+  "written": "2026-09-26"
+}

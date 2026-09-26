@@ -1,0 +1,32 @@
+{
+  "id": "language-irregular-verbs-5",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do children who used to say went correctly start saying goed?",
+  "answer": "Because they have learned a rule. At first went is stored whole; once a child extracts add -ed for the past, the rule sometimes overrides the memory. Such errors are rare, a few per cent of irregular past tenses in recorded speech. Goed is a mistake only a rule-learner can make.",
+  "move": "A new kind of error can be the sign of a new skill.",
+  "keywords": [
+    "overregularisation",
+    "child language",
+    "past tense",
+    "language acquisition"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marcus et al., SRCD Monographs, 1992",
+  "source_kind": "paper",
+  "reference": "Marcus, Pinker, Ullman, Hollander, Rosen & Xu, Overregularization in Language Acquisition, Monographs of the Society for Research in Child Development, 1992",
+  "written": "2026-09-26"
+}

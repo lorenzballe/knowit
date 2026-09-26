@@ -1,0 +1,42 @@
+{
+  "id": "psychology-distraction-3",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In a 16-hour waking day, roughly how many hours is the mind on something other than the task at hand?",
+  "value": 7.5,
+  "unit": "hours",
+  "withinFactor": 3,
+  "answer": "16 × 0.469 ≈ 7.5 hours.",
+  "move": "What happens a few seconds at a time can add up to a working day.",
+  "trap": "Picturing mind-wandering as rare lapses rather than a default state.",
+  "hint": "Imagine a phone pinging at random: how often would it catch you elsewhere?",
+  "steps": [
+    "Phone check-ins with 2,250 adults found minds wandering in 46.9% of samples.",
+    "A waking day is about 16 hours.",
+    "16 × 0.469 ≈ 7.5 hours."
+  ],
+  "keywords": [
+    "mind wandering",
+    "experience sampling",
+    "smartphone survey",
+    "happiness"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Killingsworth & Gilbert, Science, 2010",
+  "source_kind": "paper",
+  "reference": "Killingsworth & Gilbert, A wandering mind is an unhappy mind, Science, 2010",
+  "written": "2026-09-26"
+}

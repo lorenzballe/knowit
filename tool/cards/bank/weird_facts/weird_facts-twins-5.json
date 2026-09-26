@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-twins-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "About 12 in every 1,000 deliveries worldwide are twin deliveries. Roughly what share of babies born is a twin?",
+  "options": [
+    "About 1 in 42",
+    "About 1 in 83",
+    "About 1 in 250"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 42. Each twin delivery produces two babies, so 1,000 deliveries give 988 single babies and 24 twins: 24 out of 1,012. The global rate has risen by a third since the 1980s, with fertility treatment and later motherhood, to about 1.6 million twin pairs a year.",
+  "move": "Check whether the count is of events or of the people in them.",
+  "trap": "Dividing 1,000 by 12 and forgetting each delivery brings two babies.",
+  "keywords": [
+    "twinning rate",
+    "twin deliveries",
+    "fertility treatment",
+    "births"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Monden, Pison and Smits, Human Reproduction, 2021",
+  "source_kind": "institution",
+  "reference": "https://www.ox.ac.uk/news/2021-03-12-twin-peaks-record-international-number-twin-births",
+  "written": "2026-09-26"
+}

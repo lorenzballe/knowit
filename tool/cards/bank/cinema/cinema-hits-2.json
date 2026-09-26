@@ -1,0 +1,39 @@
+{
+  "id": "cinema-hits-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Big releases now usually take about three times their opening weekend. What multiple did Titanic reach in its first North American run?",
+  "options": [
+    "About 3 times",
+    "About 8 times",
+    "About 21 times"
+  ],
+  "correct": 2,
+  "answer": "About 21 times. It opened to $28.6 million in December 1997 and then barely fell, holding first place for 15 weekends in a row and taking about $600 million by the end of its run. Repeat viewing and word of mouth turned a normal opening into a months-long climb.",
+  "move": "A typical ratio describes the usual case, not the one you are asked about.",
+  "trap": "About 3 times: the ratio just given pulls every guess towards it.",
+  "keywords": [
+    "titanic",
+    "opening weekend",
+    "box-office legs",
+    "word of mouth"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "The Numbers, Titanic box office",
+  "source_kind": "statistics",
+  "reference": "https://www.the-numbers.com/movie/Titanic-(1997)",
+  "written": "2026-09-26"
+}

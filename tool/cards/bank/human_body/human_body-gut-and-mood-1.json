@@ -1,0 +1,39 @@
+{
+  "id": "human_body-gut-and-mood-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: serotonin made in the gut travels to the brain and helps set mood?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. About 90% of the body's serotonin is made in the gut lining, but it cannot cross the barrier that screens the brain from the blood. Much of it is stored in platelets, which release it at wounds to help vessels narrow. The brain makes its own serotonin from tryptophan, behind that barrier.",
+  "move": "The same molecule in two places can be two separate stories.",
+  "trap": "Linking the gut's huge store of serotonin directly to mood.",
+  "keywords": [
+    "serotonin",
+    "blood-brain barrier",
+    "platelets",
+    "tryptophan",
+    "gut lining"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gershon & Tack, Gastroenterology, 2007",
+  "source_kind": "paper",
+  "reference": "Gershon & Tack, The serotonin signaling system: from basic understanding to drug development for functional GI disorders, Gastroenterology, 2007",
+  "written": "2026-09-26"
+}

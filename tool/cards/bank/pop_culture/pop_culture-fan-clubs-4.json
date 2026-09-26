@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fan-clubs-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: the Grateful Dead set aside a section at their concerts for fans to record the show?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From 1984 the band set aside a zone behind the mixing desk where fans could raise microphones on stands. The tapes were copied and traded free and spread the band to people who then bought tickets. Touring, not records, paid the Dead.",
+  "move": "Before blocking a free copy, ask what it would have sold for you.",
+  "trap": "Bands guard recordings, because every free copy looks like a lost sale.",
+  "keywords": [
+    "grateful dead",
+    "tapers",
+    "bootlegs",
+    "deadheads",
+    "live recording"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McNally, A Long Strange Trip, 2002",
+  "source_kind": "book",
+  "reference": "Dennis McNally, A Long Strange Trip: The Inside History of the Grateful Dead, Broadway Books, 2002",
+  "written": "2026-09-26"
+}

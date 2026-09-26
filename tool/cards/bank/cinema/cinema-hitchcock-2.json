@@ -1,0 +1,45 @@
+{
+  "id": "cinema-hitchcock-2",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "also": [
+    "cinema.how_films_are_made.editing"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Hitchcock's Rope was shot in takes capped by a 1,000-foot film magazine. At 24 frames a second and 16 frames per foot, how many minutes?",
+  "value": 11.1,
+  "unit": "minutes",
+  "tolerance": 0.1,
+  "answer": "1,000 / 90 = 11.1 minutes.",
+  "move": "Before blaming the artist's choice, find the length of the roll.",
+  "trap": "Dividing 1,000 by 24 and mixing feet with frames.",
+  "hint": "First find how many feet of film pass the lens each second.",
+  "steps": [
+    "24 frames a second / 16 frames per foot = 1.5 feet a second.",
+    "1.5 x 60 = 90 feet a minute.",
+    "1,000 / 90 = 11.1 minutes."
+  ],
+  "keywords": [
+    "rope",
+    "long take",
+    "film magazine",
+    "35 mm film"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spoto, The Dark Side of Genius",
+  "source_kind": "book",
+  "reference": "Spoto, The Dark Side of Genius: The Life of Alfred Hitchcock, Little, Brown, 1983",
+  "written": "2026-09-26"
+}

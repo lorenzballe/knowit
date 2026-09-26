@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-rebrands-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Andersen Consulting renamed itself Accenture to escape the Enron scandal?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The name changed on 1 January 2001, months before Enron collapsed. An arbitrator had let the consultants split from Arthur Andersen in 2000 but barred them from keeping the Andersen name, at a cost of $1.2 billion paid to the firm. When the auditor fell in 2002, the consultants already had a different name.",
+  "move": "Check the dates before letting the famous event explain the change.",
+  "trap": "True: Enron is the Andersen story everyone remembers, so it explains everything.",
+  "keywords": [
+    "accenture",
+    "arthur andersen",
+    "enron",
+    "arbitration",
+    "consulting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Accenture announcement, 2000",
+  "source_kind": "primary_document",
+  "reference": "https://www.scoop.co.nz/stories/BU0010/S00185/andersen-consulting-announces-new-name-accenture.htm",
+  "written": "2026-09-26"
+}

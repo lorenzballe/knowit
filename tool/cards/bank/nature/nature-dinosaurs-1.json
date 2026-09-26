@@ -1,0 +1,33 @@
+{
+  "id": "nature-dinosaurs-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were Luis and Walter Alvarez trying to measure when they found the iridium spike?",
+  "answer": "How long a thin clay layer at Gubbio, Italy, took to settle. Iridium is scarce in Earth's crust but arrives steadily in space dust, so they hoped to use it as a clock. The clay held about 30 times the usual level: one huge delivery, not a drizzle. The clock became the crime scene.",
+  "move": "An instrument built to answer one question can overturn a bigger one.",
+  "keywords": [
+    "iridium",
+    "alvarez",
+    "gubbio",
+    "cretaceous-paleogene boundary",
+    "asteroid impact"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alvarez et al., Science, 1980",
+  "source_kind": "paper",
+  "reference": "Alvarez, Alvarez, Asaro & Michel, Extraterrestrial cause for the Cretaceous-Tertiary extinction, Science, 1980",
+  "written": "2026-09-26"
+}

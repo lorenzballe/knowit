@@ -1,0 +1,43 @@
+{
+  "id": "economics-hyperinflation-5",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Economists call it hyperinflation when prices rise 50% a month. How many times over do prices multiply in a year?",
+  "value": 129.7,
+  "unit": "times",
+  "tolerance": 1.5,
+  "answer": "25.63 x 5.06 = about 129.7 times.",
+  "move": "Growth rates multiply; adding them is the mistake that comes first.",
+  "trap": "Adding twelve 50% rises to get 600%, about seven times.",
+  "hint": "Each month multiplies prices by 1.5; square your way up.",
+  "steps": [
+    "Two months: 1.5 x 1.5 = 2.25.",
+    "Four months: 2.25 x 2.25 = 5.06.",
+    "Eight months: 5.06 x 5.06 = 25.63.",
+    "25.63 x 5.06 = about 129.7 times."
+  ],
+  "keywords": [
+    "phillip cagan",
+    "compounding",
+    "monthly inflation",
+    "hyperinflation definition"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Cagan, Monetary Dynamics of Hyperinflation, 1956",
+  "source_kind": "paper",
+  "reference": "Cagan, The Monetary Dynamics of Hyperinflation, in Friedman (ed.), Studies in the Quantity Theory of Money, University of Chicago Press, 1956",
+  "written": "2026-09-26"
+}

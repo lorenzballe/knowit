@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-eastern-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was missing from the oldest known copy of the Daodejing, found in a Chinese tomb in 1993?",
+  "answer": "Most of the text, and its attack on Confucian virtue. The bamboo slips from Guodian, buried around 300 BC, hold only about two-fifths of the received chapters. Where later versions tell rulers to discard humaneness and righteousness, the slips say discard artifice and deceit. The quarrel with Confucius may have been written in afterwards.",
+  "move": "Before reading a quarrel into a text, check the oldest copy.",
+  "keywords": [
+    "daodejing",
+    "guodian",
+    "bamboo slips",
+    "laozi",
+    "confucianism"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Henricks, Lao Tzu's Tao Te Ching, 2000",
+  "source_kind": "book",
+  "reference": "Henricks, Lao Tzu's Tao Te Ching: A Translation of the Startling New Documents Found at Guodian, Columbia University Press, 2000",
+  "written": "2026-09-26"
+}

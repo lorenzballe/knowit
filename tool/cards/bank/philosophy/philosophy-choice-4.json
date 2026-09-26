@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-choice-4",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A man is carried asleep into a locked room and, on waking, gladly stays. Did Locke think he stayed freely?",
+  "answer": "Willingly, but not freely. Locke's sleeper wakes beside someone he longs to talk to and is glad to stay, never knowing the door is locked. His staying is voluntary, because he prefers it; it is not free, because leaving was never in his power. He is choosing against a bolt he cannot see.",
+  "move": "Wanting what you got does not show you could have had anything else.",
+  "keywords": [
+    "john locke",
+    "locked room",
+    "voluntary action",
+    "liberty"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Locke, Essay Concerning Human Understanding, 1690",
+  "source_kind": "book",
+  "reference": "Locke, An Essay Concerning Human Understanding II.21.10, ed. Nidditch, Clarendon Press, 1975",
+  "written": "2026-09-26"
+}

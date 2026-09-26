@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-hiccups-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In a 2021 survey of people who bought a hiccup-stopping straw, over 90% said it worked. What does that show?",
+  "options": [
+    "That it works for most people",
+    "That it works only as a placebo",
+    "Little, without a comparison group"
+  ],
+  "correct": 2,
+  "answer": "Little, without a comparison group. Most bouts of hiccups stop within minutes on their own, so almost any remedy tried during one is followed by silence. Respondents had bought the device and answered an online questionnaire; nobody got a dummy straw. Sips of water, sugar and sudden frights earned their reputations the same way.",
+  "move": "Anything tried just before a problem ends on its own gets the credit.",
+  "trap": "Reading a 90% success rate as proof the straw works.",
+  "keywords": [
+    "hiccup remedies",
+    "surveys",
+    "control groups",
+    "placebo"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alvarez et al., JAMA Network Open, 2021",
+  "source_kind": "statistics",
+  "reference": "Alvarez et al., Evaluation of the forced inspiratory suction and swallow tool to stop hiccups, JAMA Network Open, 2021",
+  "written": "2026-09-26"
+}

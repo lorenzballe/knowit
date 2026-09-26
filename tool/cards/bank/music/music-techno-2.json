@@ -1,0 +1,33 @@
+{
+  "id": "music-techno-2",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Berlin's first great techno clubs open in bank vaults and empty basements after 1990?",
+  "answer": "Because reunification left East Berlin full of buildings nobody clearly owned. Tresor opened in March 1991 in the strongroom of the Wertheim department store, close to where the Wall had stood, and its label was soon releasing Detroit artists such as Jeff Mills. Ownership claims took years to settle, and the clubs moved in meanwhile.",
+  "move": "Watch what grows in the gap before ownership is settled.",
+  "keywords": [
+    "tresor",
+    "berlin",
+    "reunification",
+    "jeff mills",
+    "nightclubs"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Denk & von Thülen, Klang der Familie, 2014",
+  "source_kind": "book",
+  "reference": "Denk and von Thülen, Der Klang der Familie: Berlin, Techno and the Fall of the Wall, Books on Demand, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "music-folk-3",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: Lead Belly won his 1934 release from Louisiana's Angola prison by singing a plea to the governor?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. He did record a sung plea to Governor O. K. Allen for the Lomaxes in 1934, and the legend grew from it. He was freed that August under a law cutting sentences for good behaviour. The story had been true once before: in 1925 Texas governor Pat Neff pardoned him after he sang.",
+  "move": "Before crediting the plea, ask whether the door was opening anyway.",
+  "trap": "The plea came first and the release followed, so it looks causal.",
+  "keywords": [
+    "lead belly",
+    "angola prison",
+    "john lomax",
+    "alan lomax",
+    "pardon"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolfe & Lornell, Life and Legend of Leadbelly",
+  "source_kind": "book",
+  "reference": "Wolfe and Lornell, The Life and Legend of Leadbelly, HarperCollins, 1992",
+  "written": "2026-09-26"
+}

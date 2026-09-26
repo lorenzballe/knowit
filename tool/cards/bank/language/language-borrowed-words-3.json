@@ -1,0 +1,40 @@
+{
+  "id": "language-borrowed-words-3",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Japanese calls bread pan. Which language did the word come from?",
+  "options": [
+    "French",
+    "English",
+    "Portuguese"
+  ],
+  "correct": 2,
+  "answer": "Portuguese. Portuguese traders and Jesuit missionaries reached Japan in the 1540s and brought pão, bread; the word settled as pan centuries before French bakeries arrived. The same contact left kasutera, a sponge cake named after Castile. A Tokyo shop selling baguettes labels them with a word older than any French influence in Japan.",
+  "move": "The best-known neighbour is not always the one who arrived first.",
+  "trap": "Pan sounds like French pain, and French bakeries are famous there.",
+  "keywords": [
+    "japanese loanwords",
+    "portuguese traders",
+    "bread",
+    "kasutera",
+    "jesuits"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frellesvig, A History of the Japanese Language, 2010",
+  "source_kind": "book",
+  "reference": "Frellesvig, A History of the Japanese Language, Cambridge University Press, 2010",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-formations-1",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did England line up for the first official international football match, against Scotland in 1872?",
+  "answer": "With seven or eight forwards. England played roughly one back, one or two half-backs and the rest in attack, dribbling in packs; Scotland used two backs, two half-backs and six forwards, and passed more. The match, at Partick in Glasgow, ended 0–0. Defending was a job for a few stragglers.",
+  "move": "Before judging an old method, ask what problem its users thought they had.",
+  "keywords": [
+    "first international",
+    "england",
+    "scotland",
+    "dribbling game",
+    "passing game"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldblatt, The Ball Is Round, 2006",
+  "source_kind": "book",
+  "reference": "Goldblatt, The Ball Is Round: A Global History of Football, Viking, 2006",
+  "written": "2026-09-26"
+}

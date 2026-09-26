@@ -1,0 +1,39 @@
+{
+  "id": "economics-subscriptions-5",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Germany, consumer contracts signed since 2022 cannot roll over automatically for another full year?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Under the Fair Consumer Contracts Act, contracts made from March 2022 may still bind for up to two years at first, but afterwards they can renew only open-ended, cancellable at a month's notice. Since July 2022, contracts sold online must also carry a cancellation button. A forgotten gym contract now costs one month, not twelve.",
+  "move": "When a cost comes from forgetting, the default decides who pays.",
+  "trap": "Assuming yearly rollovers are standard everywhere, as in many other countries.",
+  "keywords": [
+    "germany",
+    "auto-renewal",
+    "consumer law",
+    "cancellation button",
+    "contracts"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gesetz für faire Verbraucherverträge, 2021",
+  "source_kind": "primary_document",
+  "reference": "Gesetz für faire Verbraucherverträge, Bundesgesetzblatt, 2021",
+  "written": "2026-09-26"
+}

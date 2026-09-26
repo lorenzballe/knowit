@@ -1,0 +1,36 @@
+{
+  "id": "philosophy-determinism-5",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did Isaac Newton think his law of gravity would keep the planets in stable orbits forever?",
+  "answer": "No. In the Opticks, Newton wrote that the planets' small pulls on one another would build up until the system needed a reformation, which he left to God. Leibniz sneered in 1715 at a God who must wind up his watch from time to time. The self-running clockwork universe came later, with Laplace.",
+  "move": "A gap in a theory is not proof that someone must keep stepping in.",
+  "keywords": [
+    "isaac newton",
+    "leibniz",
+    "solar system",
+    "clockwork universe",
+    "opticks"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Leibniz-Clarke Correspondence, 1715-1716",
+  "source_kind": "primary_document",
+  "reference": "Alexander (ed.), The Leibniz-Clarke Correspondence, Manchester University Press, 1956; Newton, Opticks, Query 31, Dover, 1952",
+  "written": "2026-09-26"
+}

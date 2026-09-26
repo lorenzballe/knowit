@@ -1,0 +1,40 @@
+{
+  "id": "music-folk-4",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Why does Cecil Sharp's 1916 to 1918 Appalachian collection make mountain music look almost purely English?",
+  "options": [
+    "He noted down what fitted his idea",
+    "Isolation had kept other music out",
+    "Other musicians refused to sing for him"
+  ],
+  "correct": 0,
+  "answer": "He noted down what fitted his idea. Sharp came looking for survivals of old English ballads and wrote those down, largely passing over Black musicians, instrumental dance tunes and newer songs learned from records and hymnbooks. The mountains he printed were the ones his notebook had room for.",
+  "move": "A collection shows the collector's question before it shows the place.",
+  "trap": "Believing the old story of mountain people sealed off from the world.",
+  "keywords": [
+    "cecil sharp",
+    "appalachia",
+    "ballads",
+    "folk song collecting",
+    "maud karpeles"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whisnant, All That Is Native and Fine, 1983",
+  "source_kind": "book",
+  "reference": "Whisnant, All That Is Native and Fine: The Politics of Culture in an American Region, University of North Carolina Press, 1983",
+  "written": "2026-09-26"
+}

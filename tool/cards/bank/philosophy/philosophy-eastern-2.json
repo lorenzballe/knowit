@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-eastern-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which ancient Chinese school condemned wars of conquest and trained experts to defend besieged cities?",
+  "options": [
+    "The Mohists",
+    "The Daoists",
+    "The Legalists"
+  ],
+  "correct": 0,
+  "answer": "The Mohists. Mozi preached impartial care for all and called aggression theft on the largest scale; his followers wrote manuals on walls, ladders and siege tunnels. The Mozi tells how he walked ten days and nights to Chu, then beat its engineer's every attack in a war game, his belt laid out as the wall.",
+  "move": "Before choosing the best-known answer, ask who else was in the room.",
+  "trap": "Daoism, remembered for gentleness, feels like the natural home of pacifists.",
+  "keywords": [
+    "mozi",
+    "mohism",
+    "siege warfare",
+    "impartial care",
+    "warring states"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnston, The Mozi, 2010",
+  "source_kind": "book",
+  "reference": "Johnston, The Mozi: A Complete Translation, Columbia University Press, 2010",
+  "written": "2026-09-26"
+}

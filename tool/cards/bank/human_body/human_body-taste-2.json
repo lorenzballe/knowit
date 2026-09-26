@@ -1,0 +1,33 @@
+{
+  "id": "human_body-taste-2",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a bitter-taste receptor do in the lining of the nose and sinuses?",
+  "answer": "It guards against bacteria. The receptor T2R38 sits on the hair-like cilia of the sinuses and detects signalling molecules that bacteria such as Pseudomonas release to coordinate. It triggers nitric oxide and faster sweeping of mucus. People carrying the gene version that cannot taste the bitter chemical PTC had more sinus infections.",
+  "move": "A sensor named for one job may have been built for another.",
+  "keywords": [
+    "bitter receptors",
+    "t2r38",
+    "sinuses",
+    "bacteria",
+    "nitric oxide"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee et al., Journal of Clinical Investigation, 2012",
+  "source_kind": "paper",
+  "reference": "Lee, Xiong, Kofonow et al., T2R38 taste receptor polymorphisms underlie susceptibility to upper respiratory infection, Journal of Clinical Investigation, 2012",
+  "written": "2026-09-26"
+}

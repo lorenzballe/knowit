@@ -1,0 +1,39 @@
+{
+  "id": "art-cubism-5",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which earlier trade taught Braque the wood-grain effects he brought into Cubist pictures?",
+  "options": [
+    "Cabinet making",
+    "Printing and typesetting",
+    "House painting and decorating"
+  ],
+  "correct": 2,
+  "answer": "House painting and decorating. Braque trained in his father's decorating firm in Le Havre, where craftsmen faked wood and marble with combs and glazes. In 1912 he dragged a decorator's comb through paint and glued printed wood-grain wallpaper into his first papier collé. Cubism borrowed textures from the trade of making cheap rooms look costly.",
+  "move": "Look at someone's first trade to understand their later tricks.",
+  "trap": "Wood grain suggests a woodworker rather than a painter of imitations.",
+  "keywords": [
+    "georges braque",
+    "faux bois",
+    "papier collé",
+    "decorating"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Golding, Cubism, 1959",
+  "source_kind": "book",
+  "reference": "John Golding, Cubism: A History and an Analysis 1907-1914, Faber and Faber, 1959",
+  "written": "2026-09-26"
+}

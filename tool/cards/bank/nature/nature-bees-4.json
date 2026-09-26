@@ -1,0 +1,39 @@
+{
+  "id": "nature-bees-4",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the varroa mite that wrecks honeybee colonies lives mainly by drinking the bees' blood?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. For decades it was assumed to drink haemolymph, the insect's blood. By dyeing bee tissues and seeing which colour turned up in the mites, Samuel Ramsey showed in 2019 that they feed mostly on the fat body, an organ that stores food and breaks down pesticides. The mite is eating the bee's liver.",
+  "move": "An assumption nobody tested can survive for decades on agreeable glimpses.",
+  "trap": "Mites sit on wounds that leak blood, which seemed to settle it.",
+  "keywords": [
+    "varroa mite",
+    "honeybees",
+    "fat body",
+    "haemolymph",
+    "samuel ramsey"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ramsey et al., PNAS, 2019",
+  "source_kind": "paper",
+  "reference": "Ramsey et al., Varroa destructor feeds primarily on honey bee fat body tissue and not hemolymph, Proceedings of the National Academy of Sciences, 2019",
+  "written": "2026-09-26"
+}

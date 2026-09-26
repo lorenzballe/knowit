@@ -1,0 +1,40 @@
+{
+  "id": "nature-storms-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Project Stormfury seeded hurricanes from aircraft, and some weakened afterwards. Why was it wound down in 1983?",
+  "options": [
+    "Unseeded storms weakened the same way",
+    "It worked, but cost too much",
+    "Seeded storms veered towards the coast"
+  ],
+  "correct": 0,
+  "answer": "Unseeded storms weakened the same way. Silver iodide was meant to freeze supercooled water around the eyewall and widen the eye. Flights showed hurricanes hold little supercooled water, and that eyewalls collapse and re-form on their own, easing the wind for a while. Debbie's 31% drop in 1969 looked like ordinary weather.",
+  "move": "Before crediting the treatment, watch what the untreated cases do on their own.",
+  "trap": "Seeded storms did weaken, so the method seemed to have worked.",
+  "keywords": [
+    "project stormfury",
+    "cloud seeding",
+    "silver iodide",
+    "eyewall",
+    "hurricane debbie"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Willoughby et al., Bulletin of the AMS, 1985",
+  "source_kind": "paper",
+  "reference": "Willoughby, Jorgensen, Black & Rosenthal, Project STORMFURY: A Scientific Chronicle 1962–1983, Bulletin of the American Meteorological Society, 1985",
+  "written": "2026-09-26"
+}

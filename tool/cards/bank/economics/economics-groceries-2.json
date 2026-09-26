@@ -1,0 +1,33 @@
+{
+  "id": "economics-groceries-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Of each dollar Americans spend on food, roughly how much reaches the farm?",
+  "answer": "About 15 cents. The US Department of Agriculture's food dollar series finds that the biggest slice goes to restaurants and food service, and most of the rest to processing, packaging, transport and retailing. So farm prices move shop prices less than expected: the wheat in a supermarket loaf is a small part of its price.",
+  "move": "Before blaming the raw material, price everything done to it afterwards.",
+  "keywords": [
+    "food dollar",
+    "farm share",
+    "food supply chain",
+    "food prices",
+    "usda"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "USDA ERS, Food Dollar Series",
+  "source_kind": "statistics",
+  "reference": "Canning, A Revised and Expanded Food Dollar Series, USDA Economic Research Service, ERR-114, 2011",
+  "written": "2026-09-26"
+}

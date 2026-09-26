@@ -1,0 +1,35 @@
+{
+  "id": "cinema-hitchcock-3",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "also": [
+    "cinema.special_effects.miniatures"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was the dizzying shot down the bell-tower stairwell in Vertigo filmed?",
+  "answer": "On a model lying on its side. The camera pulled back from a miniature stairwell while zooming in, so the frame held its size as the perspective stretched. Laid flat, the shaft let the camera run on a dolly instead of hanging from a crane. The famous drop ran along the studio floor.",
+  "move": "Turn an impossible direction into an easy one, then rotate the result.",
+  "keywords": [
+    "vertigo",
+    "dolly zoom",
+    "miniature",
+    "stairwell"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Auiler, Vertigo: The Making of a Hitchcock Classic",
+  "source_kind": "book",
+  "reference": "Auiler, Vertigo: The Making of a Hitchcock Classic, St. Martin's Press, 1998",
+  "written": "2026-09-26"
+}

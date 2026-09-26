@@ -1,0 +1,40 @@
+{
+  "id": "music-rhythm-3",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Which animal was first shown, in a controlled test, to keep dancing in time as a song's tempo changed?",
+  "options": [
+    "A sulphur-crested cockatoo",
+    "A chimpanzee",
+    "A border collie"
+  ],
+  "correct": 0,
+  "answer": "A sulphur-crested cockatoo named Snowball. In 2009 Aniruddh Patel's team played him a Backstreet Boys song at a range of speeds, and his head-bobs locked onto the beat for stretches at many of them. A leading explanation: beat-keeping rides on vocal learning, which parrots have and apes lack. The zoo's best dancer is its mimic.",
+  "move": "A skill often follows a shared ability rather than the family tree.",
+  "trap": "A chimpanzee, since the closest relative should share the skill.",
+  "keywords": [
+    "snowball",
+    "cockatoo",
+    "beat synchronisation",
+    "vocal learning",
+    "aniruddh patel"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Patel et al., Current Biology, 2009",
+  "source_kind": "paper",
+  "reference": "Patel, Iversen, Bregman & Schulz, Experimental evidence for synchronization to a musical beat in a nonhuman animal, Current Biology, 2009",
+  "written": "2026-09-26"
+}

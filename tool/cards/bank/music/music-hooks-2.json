@@ -1,0 +1,39 @@
+{
+  "id": "music-hooks-2",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The average intro on Billboard's year-end hits lasted over 20 seconds in 1986. How long by 2015?",
+  "options": [
+    "About 25 seconds",
+    "About 12 seconds",
+    "About 5 seconds"
+  ],
+  "correct": 2,
+  "answer": "About 5 seconds. Hubert Léveillé Gauvin timed the intros of thirty years of top hits: about 23 seconds in 1986, about 5 in 2015, a fall of roughly 78%. Song titles were also sung earlier and tempos rose. The voice now arrives before a listener's thumb reaches the skip button.",
+  "move": "When a starting figure is handed over, push the guess further than feels comfortable.",
+  "trap": "Halving the 1980s figure feels like a bold enough guess.",
+  "keywords": [
+    "song intros",
+    "billboard charts",
+    "streaming",
+    "attention economy"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Léveillé Gauvin, Musicae Scientiae, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/1029864917698010",
+  "written": "2026-09-26"
+}

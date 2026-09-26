@@ -1,0 +1,43 @@
+{
+  "id": "music-strange-ones-3",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "also": [
+    "cinema.directors.hitchcock"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Hitchcock's The Birds (1963) has no conventional score. What mainly produced its bird cries?",
+  "options": [
+    "Recorded gulls and crows",
+    "An electronic Mixtur-Trautonium",
+    "Slowed-down human voices"
+  ],
+  "correct": 1,
+  "answer": "An electronic Mixtur-Trautonium. Oskar Sala played the cries and wingbeats on this German instrument, a descendant of the 1930 trautonium that can add subharmonics, tones at whole-number fractions of the note played. The credits name Sala and Remi Gassmann for electronic sound. Hitchcock's most frightening flock was played by pressing a wire onto a rail.",
+  "move": "The most convincing version of a thing is often built, not captured.",
+  "trap": "Recorded gulls and crows, since real birds should sound most real.",
+  "keywords": [
+    "mixtur-trautonium",
+    "oskar sala",
+    "the birds",
+    "electronic sound",
+    "subharmonics"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Birds, screen credits, 1963",
+  "source_kind": "primary_document",
+  "reference": "Hitchcock (dir.), The Birds, Universal Pictures, 1963, opening credits",
+  "written": "2026-09-26"
+}

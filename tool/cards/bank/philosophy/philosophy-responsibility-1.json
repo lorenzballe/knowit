@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-responsibility-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.responsibility",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can someone deserve blame for an act they could not possibly have avoided?",
+  "answer": "Yes, argued Harry Frankfurt in 1969. Suppose Black is ready to tamper with Jones's brain and force a decision, but only if Jones seems about to choose differently. Jones chooses that way on his own, and Black never moves. Jones could not have done otherwise, yet the decision was entirely his own work.",
+  "move": "Ask what actually did the work, not what else could have happened.",
+  "keywords": [
+    "harry frankfurt",
+    "alternate possibilities",
+    "moral responsibility",
+    "blame"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frankfurt, Journal of Philosophy, 1969",
+  "source_kind": "paper",
+  "reference": "Frankfurt, Alternate Possibilities and Moral Responsibility, Journal of Philosophy 66 (23), 1969",
+  "written": "2026-09-26"
+}

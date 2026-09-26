@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-music-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did file-sharing cause the collapse in recorded music sales that began around 1999?",
+  "sides": [
+    "Yes, sharing caused it",
+    "No, other forces did"
+  ],
+  "answer": "The timing is hard to ignore. US recorded-music revenue peaked in 1999, the year Napster launched, and more than halved over the next fifteen years. Tens of millions of people were suddenly getting for nothing what they had bought on CD. Most studies of the period found downloads displaced at least some sales.",
+  "move": "Whichever side you took, it turns on what would have sold anyway.",
+  "counterpoint": "The best-known study, by Oberholzer-Gee and Strumpf, matched actual downloads to album sales and found an effect indistinguishable from zero. Other forces were at work: fans could now buy single tracks rather than whole albums, DVDs and games competed for the same money, and the CD replacement boom was ending.",
+  "keywords": [
+    "napster",
+    "file sharing",
+    "record sales",
+    "cd",
+    "piracy"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oberholzer-Gee & Strumpf, JPE, 2007",
+  "source_kind": "primary_document",
+  "reference": "Oberholzer-Gee and Strumpf, The Effect of File Sharing on Record Sales: An Empirical Analysis, Journal of Political Economy, 2007",
+  "written": "2026-09-26"
+}

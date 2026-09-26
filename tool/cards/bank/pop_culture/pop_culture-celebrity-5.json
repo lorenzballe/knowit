@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-celebrity-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did one of America's best-known film actresses of 1909 appear on no poster by name?",
+  "answer": "Her studio did not name its players. Florence Lawrence was billed as the Biograph Girl until Carl Laemmle's IMP company hired her; in March 1910 it advertised, under the headline We Nail a Lie, that rumours of her death were false. Whether Laemmle began the rumour is disputed. The denial made her a name.",
+  "move": "A denial can spread a story further than the story ever went.",
+  "keywords": [
+    "florence lawrence",
+    "biograph girl",
+    "carl laemmle",
+    "star system"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "deCordova, Picture Personalities, 1990",
+  "source_kind": "book",
+  "reference": "Richard deCordova, Picture Personalities: The Emergence of the Star System in America, University of Illinois Press, 1990",
+  "written": "2026-09-26"
+}

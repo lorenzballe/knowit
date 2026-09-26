@@ -1,0 +1,42 @@
+{
+  "id": "language-irregular-verbs-1",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Irregular verbs regularise at a rate proportional to one over the square root of frequency. How many times faster does a 100-times-rarer verb regularise?",
+  "value": 10,
+  "unit": "times faster",
+  "answer": "It regularises 10 times faster.",
+  "move": "When a rule has a square root in it, big gaps shrink fast.",
+  "trap": "A hundred times, reading the rule as simply proportional.",
+  "hint": "Only the square root of the frequency gap matters.",
+  "steps": [
+    "Speed of regularising goes as 1 / square root of frequency.",
+    "The rarer verb's frequency is 100 times lower.",
+    "Square root of 100 = 10.",
+    "It regularises 10 times faster."
+  ],
+  "keywords": [
+    "irregular verbs",
+    "regularisation",
+    "word frequency",
+    "square root"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lieberman et al., Nature, 2007",
+  "source_kind": "paper",
+  "reference": "Lieberman, Michel, Jackson, Tang & Nowak, Quantifying the evolutionary dynamics of language, Nature, 2007",
+  "written": "2026-09-26"
+}

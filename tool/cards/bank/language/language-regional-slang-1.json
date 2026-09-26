@@ -1,0 +1,39 @@
+{
+  "id": "language-regional-slang-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Strine, the jokey name for broad Australian speech, was popularised by what?",
+  "options": [
+    "Convict slang of the 1800s",
+    "A 1965 humorous phrasebook",
+    "An Aboriginal word for talk"
+  ],
+  "correct": 1,
+  "answer": "A 1965 humorous phrasebook. Let Stalk Strine, by Afferbeck Lauder, alphabetical order said the Australian way, was written by Alastair Morrison. It spelled local speech as heard: Strine for Australian, Emma Chisit for how much is it. A joke about the accent became the accent's everyday name.",
+  "move": "The famous story about a place need not explain each of its words.",
+  "trap": "Convict roots are the best-known story about Australian speech.",
+  "keywords": [
+    "strine",
+    "australian english",
+    "alastair morrison",
+    "let stalk strine"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lauder, Let Stalk Strine, 1965",
+  "source_kind": "book",
+  "reference": "Lauder (Alastair Morrison), Let Stalk Strine, Ure Smith, Sydney, 1965",
+  "written": "2026-09-26"
+}

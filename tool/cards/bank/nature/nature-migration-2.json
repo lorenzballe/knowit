@@ -1,0 +1,42 @@
+{
+  "id": "nature-migration-2",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "About 3.5 trillion insects migrate high over southern Britain each year. Roughly how many tonnes is that?",
+  "value": 3200,
+  "unit": "tonnes",
+  "withinFactor": 3,
+  "answer": "3.5 trillion mg / 1 billion mg per tonne = ~3,500 tonnes.",
+  "move": "The biggest migrations are often the ones nobody can see.",
+  "trap": "Picturing butterflies and moths rather than tiny flies and aphids.",
+  "hint": "Most are small flies, aphids and beetles; guess what a typical one weighs.",
+  "steps": [
+    "Most migrants are small; take an average of about 1 mg each.",
+    "3.5 trillion insects x 1 mg = 3.5 trillion mg.",
+    "3.5 trillion mg / 1 billion mg per tonne = ~3,500 tonnes."
+  ],
+  "keywords": [
+    "insect migration",
+    "entomological radar",
+    "biomass",
+    "britain"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hu et al., Science, 2016",
+  "source_kind": "paper",
+  "reference": "Hu et al., Mass seasonal bioflows of high-flying insect migrants, Science, 2016",
+  "written": "2026-09-26"
+}

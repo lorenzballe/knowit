@@ -1,0 +1,36 @@
+{
+  "id": "cinema-lighting-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "also": [
+    "technology.screens.refresh_rates"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the same film lamps flicker on a 24-frame shoot in Europe but not in America?",
+  "answer": "Mains frequency. Discharge lamps such as HMIs pulse twice per cycle of alternating current: 120 times a second on America's 60 Hz supply, 100 on Europe's 50 Hz. At 24 frames a second, 120 gives exactly 5 pulses a frame; 100 gives 4.17, so frames alternate light and dark. Crews shot at 25 instead.",
+  "move": "When two rhythms meet, check whether one divides the other.",
+  "keywords": [
+    "hmi lamps",
+    "flicker",
+    "mains frequency",
+    "frame rate",
+    "ballasts"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Box, Set Lighting Technician's Handbook",
+  "source_kind": "book",
+  "reference": "Box, Set Lighting Technician's Handbook, 4th edn, Focal Press, 2010",
+  "written": "2026-09-26"
+}

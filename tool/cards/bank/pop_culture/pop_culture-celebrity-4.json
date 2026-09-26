@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-celebrity-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "A 2001 study found Oscar-winning actors outlived other nominees by almost four years. What did a 2006 reanalysis find?",
+  "options": [
+    "Mostly an artefact of the counting",
+    "Mostly explained by wealth and status",
+    "Larger than first reported"
+  ],
+  "correct": 0,
+  "answer": "Mostly an artefact of the counting. The first study credited winners with the years they lived before winning, and nobody wins an Oscar after dying. Counting each actor as a winner only from the night of the win shrank the advantage to about 1 year, too small to tell from chance.",
+  "move": "Ask what someone had to survive before they could be counted.",
+  "trap": "Crediting fame's perks, and missing that winners had to live to win.",
+  "keywords": [
+    "oscars",
+    "life expectancy",
+    "immortal time",
+    "reanalysis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Sylvestre, Huszti & Hanley, Annals, 2006",
+  "source_kind": "primary_document",
+  "reference": "doi:10.7326/0003-4819-145-5-200609050-00009",
+  "written": "2026-09-26"
+}

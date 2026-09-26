@@ -1,0 +1,39 @@
+{
+  "id": "language-old-slang-4",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "When OK first appeared in a Boston newspaper in 1839, what was it?",
+  "options": [
+    "A jokey misspelt abbreviation",
+    "A borrowing from Choctaw",
+    "A telegraph operators' code"
+  ],
+  "correct": 0,
+  "answer": "A jokey misspelt abbreviation, for oll korrect. It surfaced in the Boston Morning Post amid a fad for comic initials such as O.W., oll wright. The 1840 campaign of President Martin Van Buren, nicknamed Old Kinderhook, gave OK a second meaning and a national stage, and it outlived every other joke in the fad.",
+  "move": "A close match between two sources can still be chance.",
+  "trap": "Choctaw okeh, it is so, matches OK too well to be chance.",
+  "keywords": [
+    "ok",
+    "martin van buren",
+    "boston",
+    "abbreviations"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Metcalf, OK, Oxford University Press, 2010",
+  "source_kind": "book",
+  "reference": "Metcalf, OK: The Improbable Story of America's Greatest Word, Oxford University Press, 2010",
+  "written": "2026-09-26"
+}

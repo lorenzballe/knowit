@@ -1,0 +1,42 @@
+{
+  "id": "language-dialects-5",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "also": [
+    "history.maps_and_borders.straight_lines"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: dialects on either side of the Dutch–German border can be closer to each other than to Standard German?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Before national standards spread, rural speech from Flanders to Bavaria shaded from village to village, a dialect continuum. The dialects around Kleve on the German Lower Rhine and those across the border in Dutch Gelderland are close kin. The sharp edge belongs to the two standard languages, taught in different schools either side.",
+  "move": "The sharpest borders are often in the official version, not the ground.",
+  "trap": "Judging the border by the two standard languages heard on broadcasts.",
+  "keywords": [
+    "dialect continuum",
+    "dutch",
+    "low german",
+    "kleve",
+    "lower rhine"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Chambers & Trudgill, Dialectology, 1998",
+  "source_kind": "book",
+  "reference": "Chambers & Trudgill, Dialectology, 2nd ed., Cambridge University Press, 1998",
+  "written": "2026-09-26"
+}

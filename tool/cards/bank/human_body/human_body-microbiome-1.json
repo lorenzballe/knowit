@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "For every human cell in a typical adult body, roughly how many bacterial cells are there?",
+  "options": [
+    "About 1",
+    "About 10",
+    "About one-tenth"
+  ],
+  "correct": 0,
+  "answer": "About 1. A 2016 recount put a 70 kg man at roughly 38 trillion bacteria and 30 trillion human cells, most of those red blood cells. The famous ten-to-one came from a 1972 back-of-envelope estimate. The two are so close that a single bowel movement can tip the balance towards human.",
+  "move": "A figure repeated everywhere may trace back to one rough guess.",
+  "trap": "Recalling the widely quoted ten bacteria for every human cell.",
+  "keywords": [
+    "gut bacteria",
+    "cell counts",
+    "red blood cells",
+    "bacteria ratio"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Sender, Fuchs & Milo, PLoS Biology, 2016",
+  "source_kind": "paper",
+  "reference": "Sender, Fuchs & Milo, Revised estimates for the number of human and bacteria cells in the body, PLoS Biology, 2016",
+  "written": "2026-09-26"
+}

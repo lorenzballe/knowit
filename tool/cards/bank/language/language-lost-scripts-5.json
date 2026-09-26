@@ -1,0 +1,37 @@
+{
+  "id": "language-lost-scripts-5",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the Indus script a writing system that recorded a spoken language?",
+  "sides": [
+    "Yes, it encodes language",
+    "No, it is a symbol system"
+  ],
+  "answer": "The signs behave like writing: they run in one direction, recur in fixed positions and combine by rules. A 2009 statistical study by Rao and colleagues found their sequences more ordered than random symbols and within the range of known scripts. One standard sign set across a vast area implies something taught and read.",
+  "move": "Whichever side you took, what you count as writing decides it.",
+  "counterpoint": "The texts are too short to be writing: the average inscription has about five signs, and no long text has turned up in several thousand finds. Farmer, Sproat and Witzel noted how many signs occur only once. Heraldic and religious emblem systems show the same statistical order, so the Rao measure cannot tell writing from symbols.",
+  "keywords": [
+    "indus script",
+    "harappan seals",
+    "decipherment",
+    "conditional entropy"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rao et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Rao, Yadav, Vahia et al., Entropic Evidence for Linguistic Structure in the Indus Script, Science 324, 2009",
+  "written": "2026-09-26"
+}

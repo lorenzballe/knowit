@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-hiccups-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which remedy for stubborn hiccups earned its discoverers an Ig Nobel Prize in medicine?",
+  "answer": "Digital rectal massage. Francis Fesmire reported in 1988 that it ended a patient's intractable hiccups, and Majed Odeh's team in Israel reported another in 1990; both shared the 2006 prize. The logic runs through the vagus nerve, part of the hiccup reflex, which the rectum can stimulate strongly. The evidence remains a few case reports.",
+  "move": "A remedy that works once in a case report has been tried once.",
+  "keywords": [
+    "ig nobel prize",
+    "hiccups",
+    "vagus nerve",
+    "case reports"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fesmire, Annals of Emergency Medicine, 1988",
+  "source_kind": "primary_document",
+  "reference": "Fesmire, Termination of intractable hiccups with digital rectal massage, Annals of Emergency Medicine, 1988",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-regional-slang-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Australian fair dinkum, meaning genuine or honest, most likely came from where?",
+  "options": [
+    "Chinese miners on the goldfields",
+    "An Aboriginal word for truth",
+    "An English dialect word for work"
+  ],
+  "correct": 2,
+  "answer": "An English dialect word for work. Dinkum meant work, or a fair share of it, in the dialects of the English Midlands, and fair dinkum first meant fair play in a day's labour. Dictionary editors find no evidence for the goldfields story; a Cantonese phrase sounding a little like it is chance.",
+  "move": "Two words that sound alike across languages usually met by accident.",
+  "trap": "A Cantonese phrase said to mean true gold sounds close enough.",
+  "keywords": [
+    "fair dinkum",
+    "australian english",
+    "goldfields",
+    "english dialects"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Australian National Dictionary, 1988",
+  "source_kind": "reference_work",
+  "reference": "Ramson (ed.), The Australian National Dictionary, Oxford University Press, 1988",
+  "written": "2026-09-26"
+}

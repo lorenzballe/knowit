@@ -1,0 +1,32 @@
+{
+  "id": "language-chinese-characters-4",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Were the simplified Chinese characters of the 1950s invented by the reformers who introduced them?",
+  "answer": "Mostly not. Many were shorthand that scribes, merchants and calligraphers had written by hand for centuries, in cursive script and in cheap woodblock printing. 万 for ten thousand was in use long before the reform replaced 萬. What the 1956 scheme did was make popular handwriting official in print and in schools.",
+  "move": "Before crediting a reform, look for what people were already doing.",
+  "keywords": [
+    "simplified characters",
+    "1956 reform",
+    "cursive script",
+    "woodblock printing"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chen, Modern Chinese, 1999",
+  "source_kind": "book",
+  "reference": "Chen Ping, Modern Chinese: History and Sociolinguistics, Cambridge University Press, 1999",
+  "written": "2026-09-26"
+}

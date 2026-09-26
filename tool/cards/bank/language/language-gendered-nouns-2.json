@@ -1,0 +1,32 @@
+{
+  "id": "language-gendered-nouns-2",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What became of the three grammatical genders English had a thousand years ago?",
+  "answer": "They wore away in Middle English. As word endings eroded, the forms that marked gender vanished, and by the 14th century most dialects chose he, she or it by sex, not by noun. The causes, including contact with Norse speakers, are still debated. In Old English wif, woman, was neuter and stan, stone, masculine.",
+  "move": "A grammar rule can vanish because the sounds carrying it did.",
+  "keywords": [
+    "old english",
+    "grammatical gender",
+    "middle english",
+    "pronouns"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Curzan, Gender Shifts in English, 2003",
+  "source_kind": "book",
+  "reference": "Curzan, Gender Shifts in the History of English, Cambridge University Press, 2003",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-goosebumps-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When can a wave of gooseflesh be the sign of a seizure?",
+  "answer": "When it arrives in brief waves with no cold or emotion behind it, often on one side. These pilomotor seizures usually start in the temporal lobe, and many have been tied to limbic encephalitis, in which the immune system attacks the brain. A patient may notice nothing but a creeping shiver lasting seconds.",
+  "move": "A familiar sensation in the wrong context is a symptom, not a mood.",
+  "keywords": [
+    "pilomotor seizures",
+    "epilepsy",
+    "temporal lobe",
+    "limbic encephalitis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rocamora et al., Seizure, 2014",
+  "source_kind": "primary_document",
+  "reference": "Rocamora et al., Pilomotor seizures: an autonomic semiology of limbic encephalitis?, Seizure, 2014",
+  "written": "2026-09-26"
+}

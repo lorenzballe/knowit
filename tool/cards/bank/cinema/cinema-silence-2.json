@@ -1,0 +1,39 @@
+{
+  "id": "cinema-silence-2",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a cinema, what sets how quiet the quietest moment of a film can be?",
+  "options": [
+    "The auditorium's own background noise",
+    "The bit depth of the file",
+    "The loudspeakers' minimum volume"
+  ],
+  "correct": 0,
+  "answer": "The auditorium's own background noise. A 24-bit file can span about 144 decibels, far more than a cinema can use. The limit is the room: air handling, projector fans, the audience breathing and rustling. Mixers keep quiet passages above that floor, which is why a whisper on screen is louder than a real one.",
+  "move": "The weakest link is often the room, not the machine.",
+  "trap": "Digital sound seems limited by its format, as tape once was.",
+  "keywords": [
+    "dynamic range",
+    "noise floor",
+    "cinema auditoriums",
+    "digital audio"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kerins, Beyond Dolby (Stereo), 2011",
+  "source_kind": "book",
+  "reference": "Kerins, Beyond Dolby (Stereo): Cinema in the Digital Sound Age, Indiana University Press, 2011",
+  "written": "2026-09-26"
+}

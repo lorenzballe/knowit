@@ -1,0 +1,40 @@
+{
+  "id": "economics-rent-4",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In 1994 San Francisco extended rent control to small older blocks. What happened to the rental housing in them?",
+  "options": [
+    "It stayed about the same",
+    "It grew by about a tenth",
+    "It shrank by about 15%"
+  ],
+  "correct": 2,
+  "answer": "It shrank by about 15%. Comparing covered buildings with similar ones built just after the 1980 cut-off, Diamond, McQuade and Qian found landlords sold flats off as condominiums or rebuilt. Covered tenants stayed longer, but the lost supply raised rents citywide by about 5%, paid by the next arrivals.",
+  "move": "Judge a protection by the people who arrive after it, too.",
+  "trap": "Assuming buildings cannot leave the rental market, so supply stays put.",
+  "keywords": [
+    "rent control",
+    "san francisco",
+    "condo conversions",
+    "housing supply",
+    "tenants"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diamond, McQuade and Qian, AER, 2019",
+  "source_kind": "paper",
+  "reference": "Diamond, McQuade & Qian, The Effects of Rent Control Expansion on Tenants, Landlords, and Inequality: Evidence from San Francisco, American Economic Review, 2019",
+  "written": "2026-09-26"
+}

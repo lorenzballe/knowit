@@ -1,0 +1,40 @@
+{
+  "id": "nature-clouds-5",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "By the best estimate for 2018, which of aviation's effects was warming the climate most?",
+  "options": [
+    "Its accumulated carbon dioxide",
+    "Its nitrogen oxide emissions",
+    "The contrail clouds it makes"
+  ],
+  "correct": 2,
+  "answer": "The contrail clouds it makes. Lee and colleagues put contrail cirrus at about 57 milliwatts of warming per square metre, against about 34 for all aviation's carbon dioxide since 1940, though far less certain. Contrails vanish within hours; carbon dioxide stays for centuries. Some flights warm the planet mostly through a white line.",
+  "move": "Rank causes by their effect today and by their effect in a century.",
+  "trap": "Carbon dioxide is the famous greenhouse gas, so it must dominate.",
+  "keywords": [
+    "contrails",
+    "aviation",
+    "radiative forcing",
+    "carbon dioxide",
+    "cirrus"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Lee et al., Atmospheric Environment, 2021",
+  "source_kind": "paper",
+  "reference": "Lee et al., The contribution of global aviation to anthropogenic climate forcing for 2000 to 2018, Atmospheric Environment, 2021",
+  "written": "2026-09-26"
+}

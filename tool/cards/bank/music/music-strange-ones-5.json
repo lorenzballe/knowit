@@ -1,0 +1,39 @@
+{
+  "id": "music-strange-ones-5",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: some of the original noise machines Luigi Russolo built for Futurist concerts survive in museums?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Russolo's intonarumori, wooden boxes with cranks, levers and horns that howled, crackled and gurgled, were lost by the end of the Second World War, likely in the bombing of Paris. What remains is drawings, photographs, a few recordings and his 1913 manifesto The Art of Noises. Every intonarumore heard today is a reconstruction.",
+  "move": "Seeing a thing today does not mean the original lasted.",
+  "trap": "True, since exhibitions show them, so the originals must be kept somewhere.",
+  "keywords": [
+    "intonarumori",
+    "luigi russolo",
+    "futurism",
+    "the art of noises",
+    "reconstruction"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Journal of New Music Research, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1080/09298210903161013",
+  "written": "2026-09-26"
+}

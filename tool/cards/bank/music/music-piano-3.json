@@ -1,0 +1,40 @@
+{
+  "id": "music-piano-3",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "While a pianist keeps a key held down after playing a note, where is its hammer?",
+  "options": [
+    "Pressed against the string",
+    "Fallen back, caught clear of the string",
+    "Swinging freely until the key rises"
+  ],
+  "correct": 1,
+  "answer": "Fallen back, caught clear of the string. Bartolomeo Cristofori's escapement, built in Florence around 1700, releases the hammer so it flies the last stretch alone, strikes, and rebounds onto a felt catch. A hammer left touching would choke the note at once. The finger never hits the string; it throws something that does.",
+  "move": "What starts an action is not always what finishes it.",
+  "trap": "Pressed against the string, since the key is still held down.",
+  "keywords": [
+    "escapement",
+    "piano action",
+    "cristofori",
+    "hammer",
+    "florence"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pollens, The Early Pianoforte, 1995",
+  "source_kind": "book",
+  "reference": "Pollens, The Early Pianoforte, Cambridge University Press, 1995",
+  "written": "2026-09-26"
+}

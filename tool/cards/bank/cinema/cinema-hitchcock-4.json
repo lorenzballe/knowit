@@ -1,0 +1,38 @@
+{
+  "id": "cinema-hitchcock-4",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Hitchcock shot his films strictly to storyboard, leaving nothing to decide in the cutting room?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Bill Krohn's study of the studio production files found Hitchcock changing plans on set, shooting extra coverage to choose from later, and reshaping scenes in the edit. The legend of a film finished on paper came mostly from Hitchcock's own interviews, where it made him sound in total command.",
+  "move": "When the only witness is the hero, look for the paperwork.",
+  "trap": "True, because Hitchcock said so himself, often and persuasively.",
+  "keywords": [
+    "storyboards",
+    "bill krohn",
+    "production files",
+    "alfred hitchcock"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krohn, Hitchcock at Work, 2000",
+  "source_kind": "book",
+  "reference": "Krohn, Hitchcock at Work, Phaidon, 2000",
+  "written": "2026-09-26"
+}

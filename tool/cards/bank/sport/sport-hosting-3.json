@@ -1,0 +1,39 @@
+{
+  "id": "sport-hosting-3",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: by the time the IOC voted on the 2022 Winter Games, only two cities were left in the race?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Stockholm, Kraków, Lviv and Oslo withdrew, some after public votes or lost government backing, leaving Beijing and Almaty; Beijing won by 44 votes to 40 in 2015. The IOC later changed method, picking hosts through private talks rather than open races, as it did with Brisbane for 2032.",
+  "move": "When the bidders thin out, the seller has to change its terms.",
+  "trap": "The Games look like a prize that cities queue up to win.",
+  "keywords": [
+    "olympic bids",
+    "beijing 2022",
+    "almaty",
+    "oslo",
+    "brisbane 2032"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IOC, 2022 Evaluation Commission report",
+  "source_kind": "primary_document",
+  "reference": "International Olympic Committee, Report of the 2022 Evaluation Commission, 2015",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-tabloids-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "After Merseyside boycotted The Sun over its 1989 Hillsborough coverage, how did local Euroscepticism move compared with similar areas?",
+  "options": [
+    "It rose faster",
+    "It barely differed",
+    "It fell"
+  ],
+  "correct": 2,
+  "answer": "It fell. The political scientists Florian Foos and Daniel Bischof compared Merseyside with similar areas where the paper kept selling; where far fewer people read The Sun's anti-EU campaigning, attitudes to the EU turned more favourable. A boycott gave what a survey cannot: readers who stopped for reasons unrelated to politics.",
+  "move": "To see what a message does, find people who stopped hearing it by accident.",
+  "trap": "Readers choose papers that agree with them, so papers change nobody.",
+  "keywords": [
+    "the sun",
+    "hillsborough",
+    "boycott",
+    "euroscepticism",
+    "liverpool"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Foos & Bischof, APSR, 2022",
+  "source_kind": "primary_document",
+  "reference": "Foos and Bischof, Tabloid Media Campaigns and Public Opinion: Quasi-Experimental Evidence on Euroscepticism in England, American Political Science Review, 2022",
+  "written": "2026-09-26"
+}

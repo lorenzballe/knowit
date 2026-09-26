@@ -1,0 +1,33 @@
+{
+  "id": "nature-recent-losses-5",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long before the last known thylacine died did Tasmania make the species legally protected?",
+  "answer": "59 days. Protection came on 10 July 1936; the last known thylacine died in a Hobart zoo on 7 September. Until 1909 a government bounty had paid for 2,184 dead ones, and farmers and hunters killed many more. The law arrived when there was almost nothing left for it to protect.",
+  "move": "Protection that waits for certainty often arrives after the last case.",
+  "keywords": [
+    "thylacine",
+    "tasmania",
+    "bounty",
+    "hobart zoo",
+    "protection"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Paddle, The Last Tasmanian Tiger, 2000",
+  "source_kind": "book",
+  "reference": "Paddle, The Last Tasmanian Tiger: The History and Extinction of the Thylacine, Cambridge University Press, 2000",
+  "written": "2026-09-26"
+}

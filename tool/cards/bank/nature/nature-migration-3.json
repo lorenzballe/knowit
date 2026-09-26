@@ -1,0 +1,41 @@
+{
+  "id": "nature-migration-3",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "also": [
+    "nature.animal_senses.night_vision"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: an insect has been shown to hold its migration course by the stars?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Bogong moths fly up to 1,000 km each spring to cool caves in the Australian Alps. Tethered in a flight simulator under a projected night sky, with the magnetic field cancelled, they held their seasonal heading; rotate the stars and the heading turned with them, scramble the stars and it was lost.",
+  "move": "Before ruling out an ability, test the animal under the conditions it uses.",
+  "trap": "Insect navigation is known for the sun and landmarks, not stars.",
+  "keywords": [
+    "bogong moth",
+    "star compass",
+    "navigation",
+    "australian alps"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dreyer et al., Nature, 2025",
+  "source_kind": "paper",
+  "reference": "Dreyer et al., Bogong moths use a stellar compass for long-distance navigation at night, Nature, 2025",
+  "written": "2026-09-26"
+}

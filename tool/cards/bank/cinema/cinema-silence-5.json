@@ -1,0 +1,32 @@
+{
+  "id": "cinema-silence-5",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a sound mix make an audience hear a soldier's hearing fail?",
+  "answer": "By taking the world away. In Saving Private Ryan's Omaha Beach landing, after a blast near Captain Miller, the battle sinks to a muffled, underwater bed with a thin ringing, while the picture stays chaotic. The audience hears through his stunned ears. The gunfire rushes back only when his hearing does.",
+  "move": "Taking a sense away can say more than turning another one up.",
+  "keywords": [
+    "saving private ryan",
+    "subjective sound",
+    "omaha beach",
+    "hearing loss"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spielberg, Saving Private Ryan, 1998",
+  "source_kind": "primary_document",
+  "reference": "Spielberg (director), Rydstrom (sound design), Saving Private Ryan, DreamWorks and Paramount, 1998",
+  "written": "2026-09-26"
+}

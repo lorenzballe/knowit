@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-sneakers-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In lab tests, how much less energy did runners use in Nike's Vaporfly prototype than in top racing flats?",
+  "options": [
+    "About 4%",
+    "About 0.4%",
+    "About 14%"
+  ],
+  "correct": 0,
+  "answer": "About 4%. Hoogkamer and colleagues measured 18 high-calibre runners on a treadmill; the thick foam and carbon plate cut the oxygen cost of running by about 4% on average against established racing shoes. Records fell soon after, and in 2020 World Athletics capped road-racing soles at 40 mm.",
+  "move": "Small percentages decide contests that are won by small margins.",
+  "trap": "About 0.4%: a shoe seems too small a thing to change elite physiology.",
+  "keywords": [
+    "vaporfly",
+    "running economy",
+    "carbon plate",
+    "world athletics",
+    "marathon shoes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoogkamer et al., Sports Medicine, 2018",
+  "source_kind": "primary_document",
+  "reference": "Hoogkamer et al., A Comparison of the Energetic Cost of Running in Marathon Racing Shoes, Sports Medicine, 2018",
+  "written": "2026-09-26"
+}

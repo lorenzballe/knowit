@@ -1,0 +1,42 @@
+{
+  "id": "language-how-they-form-3",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "also": [
+    "language.accents.prestige_accents"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: educated London speech once pronounced the r in words like car and hard?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Spelling keeps the r because it was said. Dropping r after a vowel spread through southern England in the eighteenth century and became the standard there in the nineteenth; most of North America, Scotland and Ireland kept it. On this sound, an Ohioan is nearer Shakespeare's London than a London newsreader is.",
+  "move": "The older form of a thing may survive best far from home.",
+  "trap": "Assuming the mother country kept the older pronunciation.",
+  "keywords": [
+    "rhoticity",
+    "r-dropping",
+    "received pronunciation",
+    "american english",
+    "shakespeare"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells, Accents of English, 1982",
+  "source_kind": "book",
+  "reference": "Wells, Accents of English, Cambridge University Press, 1982",
+  "written": "2026-09-26"
+}

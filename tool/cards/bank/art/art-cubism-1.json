@@ -1,0 +1,33 @@
+{
+  "id": "art-cubism-1",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the Paris dealer who held much of Picasso's and Braque's Cubist work when war broke out in 1914?",
+  "answer": "He lost the lot. Daniel-Henry Kahnweiler was German, so France seized his stock as enemy property. After the war the state sold it in four auctions from 1921 to 1923, hundreds of Cubist works dumped at once onto a small market. The movement's core archive was scattered by a wartime property law.",
+  "move": "A market can be flooded by a rule that has nothing to do with it.",
+  "keywords": [
+    "daniel-henry kahnweiler",
+    "enemy property",
+    "cubism",
+    "art market",
+    "auctions"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Assouline, An Artful Life, 1990",
+  "source_kind": "book",
+  "reference": "Pierre Assouline, An Artful Life: A Biography of D. H. Kahnweiler, Grove Weidenfeld, 1990",
+  "written": "2026-09-26"
+}

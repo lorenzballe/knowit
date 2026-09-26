@@ -1,0 +1,43 @@
+{
+  "id": "music-acoustics-2",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Sabine: seconds = 0.161 × volume ÷ absorption. A 20,000 m³ hall has 1,610 m² of absorption; an audience adds 690 more. Seconds when full?",
+  "value": 1.4,
+  "unit": "seconds",
+  "tolerance": 0.1,
+  "answer": "3,220 / 2,300 = 1.4 seconds.",
+  "move": "Count the people as part of the room they fill.",
+  "trap": "Working out the empty hall and forgetting the audience soaks up sound.",
+  "hint": "Add the audience to the absorption before dividing.",
+  "steps": [
+    "Full absorption: 1,610 + 690 = 2,300 m².",
+    "0.161 x 20,000 = 3,220.",
+    "3,220 / 2,300 = 1.4 seconds."
+  ],
+  "keywords": [
+    "sabine formula",
+    "reverberation time",
+    "absorption",
+    "audience",
+    "concert halls"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beranek, Concert Halls and Opera Houses, 2004",
+  "source_kind": "book",
+  "reference": "Beranek, Concert Halls and Opera Houses: Music, Acoustics, and Architecture, 2nd edition, Springer, 2004",
+  "written": "2026-09-26"
+}

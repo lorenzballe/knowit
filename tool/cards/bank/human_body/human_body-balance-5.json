@@ -1,0 +1,38 @@
+{
+  "id": "human_body-balance-5",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people whose inner-ear balance organs no longer work cannot get motion sick?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Motion sickness needs the inner ear: it arises when balance signals disagree with what the eyes and body expect. At sea in storms and in rotating rooms, people without working labyrinths stayed well while others vomited. Blind people, by contrast, still get seasick, so the eyes are not required.",
+  "move": "To find what a symptom needs, study the people who never get it.",
+  "trap": "Blaming motion sickness on the stomach or on what the eyes see.",
+  "keywords": [
+    "motion sickness",
+    "labyrinth",
+    "seasickness",
+    "sensory conflict"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Money, Physiological Reviews, 1970",
+  "source_kind": "paper",
+  "reference": "Money, Motion sickness, Physiological Reviews, 1970",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "art-florence-4",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "also": [
+    "history.middle_ages.plague"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did the Black Death help bring about the art of Renaissance Florence?",
+  "sides": [
+    "Yes, it helped cause it",
+    "No, it came despite it"
+  ],
+  "answer": "The plague of 1348 killed perhaps half the city. Survivors inherited concentrated wealth, and scarce labour pushed up wages. Fear of death drove bequests for chapels, altarpieces and confraternities, the very commissions that fed painters. Millard Meiss argued in 1951 that the shock even changed how Florentine and Sienese painters pictured the sacred.",
+  "move": "Whichever side you took, the fifty-year gap between cause and effect decides it.",
+  "counterpoint": "The great burst came two generations later, after 1400, and cities hit just as hard produced nothing comparable. What Florence had was banking money, rival guilds and public competitions for civic works. Later historians also challenged Meiss's stylistic shift, finding the changes he described already under way before the plague.",
+  "keywords": [
+    "black death",
+    "millard meiss",
+    "florentine painting",
+    "patronage"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meiss, Painting in Florence and Siena, 1951",
+  "source_kind": "book",
+  "reference": "Millard Meiss, Painting in Florence and Siena after the Black Death, Princeton University Press, 1951",
+  "written": "2026-09-26"
+}

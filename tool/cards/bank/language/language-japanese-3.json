@@ -1,0 +1,32 @@
+{
+  "id": "language-japanese-3",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who turned mono no aware, the pathos of passing things, into the key to Japanese literature?",
+  "answer": "Motoori Norinaga, an 18th-century scholar who worked as a doctor. In his commentaries on The Tale of Genji, completed in the 1790s, he argued the novel meant not to teach morals but to make readers feel the sadness of transient things. A phrase from Heian poetry became a national aesthetic on one reader's desk.",
+  "move": "A tradition's defining idea often turns out to have one later editor.",
+  "keywords": [
+    "mono no aware",
+    "motoori norinaga",
+    "tale of genji",
+    "aesthetics"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keene, World Within Walls, 1976",
+  "source_kind": "book",
+  "reference": "Keene, World Within Walls: Japanese Literature of the Pre-Modern Era 1600-1867, Holt, Rinehart and Winston, 1976",
+  "written": "2026-09-26"
+}

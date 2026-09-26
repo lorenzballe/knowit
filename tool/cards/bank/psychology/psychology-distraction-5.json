@@ -1,0 +1,37 @@
+{
+  "id": "psychology-distraction-5",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should secondary schools ban pupils' phones for the whole school day?",
+  "sides": [
+    "Yes, ban them all day",
+    "No, regulate their use"
+  ],
+  "answer": "A phone within reach competes with every lesson, and the pupils least able to afford distraction pay most. After English schools banned phones, Beland and Murphy found test scores rose about 6% of a standard deviation, over twice that for the lowest achievers. A whole-day rule is also easier to enforce.",
+  "move": "Whichever side you took, it turns on whether the harm happens in school hours.",
+  "counterpoint": "The English gains come from schools that chose to ban, often alongside other changes, so the cause is uncertain. A 2025 comparison of 30 English secondary schools found pupils under restrictive rules no better on wellbeing, sleep or grades than those under permissive ones; what tracked harm was total phone time, most of it spent outside school.",
+  "keywords": [
+    "phone bans",
+    "schools",
+    "test scores",
+    "adolescents"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beland & Murphy, Labour Economics, 2016",
+  "source_kind": "paper",
+  "reference": "Beland & Murphy, Ill communication: technology, distraction and student performance, Labour Economics, 2016",
+  "written": "2026-09-26"
+}

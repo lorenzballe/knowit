@@ -1,0 +1,36 @@
+{
+  "id": "art-bronze-5",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "also": [
+    "history.revolutions.france"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the Vichy regime do to France's bronze public statues from 1941?",
+  "answer": "It melted them down for their metal. A law of 11 October 1941 ordered public bronzes removed so their copper and tin could be recovered, much of it for the German war economy. Estimates run from 1,500 to about 1,700 statues, over a hundred in Paris alone. Many plinths stood empty for decades.",
+  "move": "In a shortage, anything made of a scarce material becomes a reserve.",
+  "keywords": [
+    "vichy",
+    "statues",
+    "melting",
+    "non-ferrous metals",
+    "world war two"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freeman, Bronzes to Bullets, 2009",
+  "source_kind": "book",
+  "reference": "Kirrily Freeman, Bronzes to Bullets: Vichy and the Destruction of French Public Statuary, 1941–1944, Stanford University Press, 2009",
+  "written": "2026-09-26"
+}

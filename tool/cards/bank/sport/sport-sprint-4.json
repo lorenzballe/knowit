@@ -1,0 +1,32 @@
+{
+  "id": "sport-sprint-4",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are sprint records from before 1977 not comparable with later ones, even to a tenth of a second?",
+  "answer": "Because they were timed by hand. Timekeepers started their watches on seeing the gun's smoke, after a human reaction delay, and stopped them as runners reached the line. Hand times for the men's 100 m averaged about 0.24 seconds faster than electronic ones. From 1977, records needed fully automatic timing to the hundredth.",
+  "move": "Before comparing two figures, ask whether the same instrument produced both.",
+  "keywords": [
+    "hand timing",
+    "fully automatic timing",
+    "stopwatch",
+    "sprint records"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Speed Endurance, hand-timing conversion",
+  "source_kind": "reference_work",
+  "reference": "https://speedendurance.com/2014/08/20/why-0-24-seconds-is-added-to-hand-times/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "cinema-editing-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In Walter Murch's weighting of what a cut must serve, how much does continuity of space count?",
+  "answer": "Four per cent. Murch's Rule of Six ranks emotion at 51%, story 23%, rhythm 10%, where the eye is looking 7%, the flat screen 5%, and three-dimensional space 4%. Emotion outweighs the other five combined, so an editor sacrifices from the bottom: a glass that jumps hands is forgiven when the moment lands.",
+  "move": "When something must give, decide in advance which things are allowed to break.",
+  "keywords": [
+    "walter murch",
+    "rule of six",
+    "continuity",
+    "film editing"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Murch, In the Blink of an Eye",
+  "source_kind": "book",
+  "reference": "Murch, In the Blink of an Eye: A Perspective on Film Editing, 2nd edn, Silman-James Press, 2001",
+  "written": "2026-09-26"
+}

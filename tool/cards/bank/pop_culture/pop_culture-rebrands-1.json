@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-rebrands-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "PepsiCo had spent heavily on Tropicana's 2009 carton redesign. What did it do when sales slumped?",
+  "options": [
+    "Brought back the old carton within weeks",
+    "Kept the new carton for a year",
+    "Cut prices to support the new look"
+  ],
+  "correct": 0,
+  "answer": "Brought back the old carton within weeks. The minimalist design reached shelves in January 2009; by late February unit sales were down about 20%, as regular buyers failed to spot their juice, and PepsiCo announced the orange pierced by a straw would return. The design budget was gone whichever carton sat on the shelf.",
+  "move": "Money already spent is the same whichever way you now decide.",
+  "trap": "Keeping it a year so the redesign budget is not wasted.",
+  "keywords": [
+    "tropicana",
+    "pepsico",
+    "packaging",
+    "redesign",
+    "orange juice"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Advertising Age, 2009",
+  "source_kind": "news_archive",
+  "reference": "Zmuda, Tropicana Line's Sales Plunge 20% Post-Rebranding, Advertising Age, 2 April 2009",
+  "written": "2026-09-26"
+}

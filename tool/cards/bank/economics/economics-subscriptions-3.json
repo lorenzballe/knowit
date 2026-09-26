@@ -1,0 +1,43 @@
+{
+  "id": "economics-subscriptions-3",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A subscription service loses 5% of its remaining subscribers every month. What percentage of a January cohort is left after twelve months?",
+  "value": 54,
+  "unit": "% of subscribers",
+  "answer": "0.664 x 0.815 = 0.54, so 54%.",
+  "move": "Losses taken from what remains shrink as it shrinks, so never add them.",
+  "trap": "Subtracting twelve 5% losses from the start to get 40%.",
+  "hint": "Each month keeps 0.95 of the month before; square your way up.",
+  "steps": [
+    "Two months: 0.95 x 0.95 = 0.9025.",
+    "Four months: 0.9025 x 0.9025 = 0.815.",
+    "Eight months: 0.815 x 0.815 = 0.664.",
+    "0.664 x 0.815 = 0.54, so 54%."
+  ],
+  "keywords": [
+    "churn",
+    "customer retention",
+    "cohorts",
+    "compounding",
+    "subscriptions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Fader and Hardie, J. Interactive Marketing, 2007",
+  "source_kind": "paper",
+  "reference": "Fader & Hardie, How to Project Customer Retention, Journal of Interactive Marketing, 2007",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-denim-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across the whole life of a pair of jeans, which stage uses the most water?",
+  "options": [
+    "Dyeing and finishing at the mill",
+    "Growing the cotton",
+    "Washing at home"
+  ],
+  "correct": 1,
+  "answer": "Growing the cotton. Levi Strauss & Co.'s 2015 life-cycle study of its 501 jeans put the total at about 3,781 litres per pair, with cotton farming around two-thirds of it and home washing most of the rest. Mills pollute visibly, with blue effluent, but their share of the water drunk is small.",
+  "move": "The most visible damage is not always the largest.",
+  "trap": "Dyeing: pictures of blue rivers near denim mills are what sticks.",
+  "keywords": [
+    "levi's 501",
+    "water footprint",
+    "cotton farming",
+    "life-cycle assessment",
+    "denim"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Levi Strauss & Co., life-cycle assessment, 2015",
+  "source_kind": "company",
+  "reference": "Levi Strauss & Co., The Life Cycle of a Jean: Understanding the Environmental Impact of a Pair of Levi's 501 Jeans, 2015",
+  "written": "2026-09-26"
+}

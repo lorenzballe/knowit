@@ -1,0 +1,41 @@
+{
+  "id": "pop_culture-swooshes-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "also": [
+    "pop_culture.fashion.sneakers"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a sportswear brand be able to own simple parallel stripes on clothing?",
+  "sides": [
+    "Yes, protect them",
+    "No, keep shapes free"
+  ],
+  "answer": "Decades of spending taught buyers that three stripes mean one maker. When a rival copies them, shoppers are misled and the owner loses sales it earned. Trademark law already demands proof that the public links the sign to one firm; where that proof exists, protecting the mark protects buyers, not just the firm.",
+  "move": "Whichever side you took, the hinge is what buyers actually believe a shape means.",
+  "counterpoint": "Stripes are among the most basic marks in design, used on tracksuits, uniforms and trim long before any brand claimed them. Letting one firm own them taxes every competitor's collection. In 2023 a New York jury found Thom Browne's four stripes did not infringe Adidas's marks, and an EU court had already voided one stripe registration.",
+  "keywords": [
+    "adidas",
+    "thom browne",
+    "stripes",
+    "trademark",
+    "fashion design"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "adidas v Thom Browne, SDNY, 2023",
+  "source_kind": "primary_document",
+  "reference": "adidas America, Inc. v. Thom Browne, Inc., US District Court for the Southern District of New York, jury verdict, January 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "sport-diet-4",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: nitrate-rich beetroot juice boosts elite endurance athletes more than it boosts recreational ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The benefit is clearest in moderately fit people, and it shrinks or disappears in the highly trained, whose muscles already use oxygen efficiently. Many of the trials behind the headlines tested recreationally active volunteers. A shot of juice that trims a club runner's time may do nothing on an Olympic start line.",
+  "move": "Ask who was tested before assuming a result applies to you.",
+  "trap": "Assuming whatever elite athletes drink must work best for elite athletes.",
+  "keywords": [
+    "beetroot juice",
+    "dietary nitrate",
+    "endurance athletes",
+    "supplements"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Porcelli et al., Med Sci Sports Exerc, 2015",
+  "source_kind": "paper",
+  "reference": "Porcelli et al., Aerobic fitness affects the exercise performance responses to nitrate supplementation, Medicine & Science in Sports & Exercise, 2015",
+  "written": "2026-09-26"
+}

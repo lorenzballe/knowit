@@ -1,0 +1,39 @@
+{
+  "id": "cinema-lighting-4",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On film balanced for tungsten studio lamps, how does daylight through a window come out?",
+  "options": [
+    "Too blue",
+    "Too orange",
+    "Too green"
+  ],
+  "correct": 0,
+  "answer": "Too blue. Studio tungsten lamps burn at about 3,200 kelvin and daylight averages about 5,600, so daylight carries far more blue than the film expects. Crews tape orange gel over whole windows, or blue gel on the lamps, to make the sources match. Left alone, the faces come out warm and the windows cold.",
+  "move": "A colour looks right or wrong only against what the eye was set for.",
+  "trap": "Too orange, because sunlight feels warm on the skin.",
+  "keywords": [
+    "colour temperature",
+    "tungsten",
+    "daylight",
+    "lighting gels"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malkiewicz, Film Lighting, 1986",
+  "source_kind": "book",
+  "reference": "Malkiewicz, Film Lighting: Talks with Hollywood's Cinematographers and Gaffers, Prentice Hall, 1986",
+  "written": "2026-09-26"
+}

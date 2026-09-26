@@ -1,0 +1,33 @@
+{
+  "id": "human_body-balance-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes the room spin when someone with the commonest kind of vertigo rolls over in bed?",
+  "answer": "Loose crystals. Grains of calcium carbonate, the otoconia, normally rest on the inner ear's gravity sensors. When some break free and drift into a semicircular canal, the part that senses rotation, they slosh with each tilt and fake a spin. A sequence of head turns from John Epley, 1992, rolls them back out.",
+  "move": "A sensor fed the wrong input will report it faithfully.",
+  "keywords": [
+    "vertigo",
+    "otoconia",
+    "semicircular canals",
+    "epley manoeuvre",
+    "inner ear"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epley, Otolaryngology–Head and Neck Surgery, 1992",
+  "source_kind": "paper",
+  "reference": "Epley, The canalith repositioning procedure: for treatment of benign paroxysmal positional vertigo, Otolaryngology–Head and Neck Surgery, 1992",
+  "written": "2026-09-26"
+}

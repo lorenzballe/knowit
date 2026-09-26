@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-swooshes-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Why did an EU court in 2019 uphold cancelling one of Adidas's three-stripe trademarks?",
+  "options": [
+    "Plain stripes can never be trademarks",
+    "Its recognition was proven in too few countries",
+    "Karhu had registered the stripes first"
+  ],
+  "correct": 1,
+  "answer": "Its recognition was proven in too few countries. A sign that is not distinctive on its face must show it became known through use across the whole EU, and the evidence Adidas filed covered only five member states. The judgment, case T-307/17, concerned one registration; the brand's other stripe marks were not before the court.",
+  "move": "Evidence from a few places proves little about everywhere else.",
+  "trap": "Assuming a shape this simple is plainly beyond the reach of law.",
+  "keywords": [
+    "adidas",
+    "general court",
+    "trademark law",
+    "distinctiveness",
+    "european union"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "General Court, adidas v EUIPO, 2019",
+  "source_kind": "primary_document",
+  "reference": "General Court of the European Union, Case T-307/17, adidas AG v EUIPO, judgment of 19 June 2019",
+  "written": "2026-09-26"
+}

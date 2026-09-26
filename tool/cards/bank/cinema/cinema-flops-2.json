@@ -1,0 +1,41 @@
+{
+  "id": "cinema-flops-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Making costs $120m, marketing $60m. The studio keeps 50% of home ticket sales and 40% abroad, split evenly. Break-even gross, in $ millions?",
+  "value": 400,
+  "unit": "million dollars",
+  "answer": "180 / 0.45 = 400 million dollars.",
+  "move": "Count only the share that comes back to you, never the headline total.",
+  "trap": "Doubling the cost to 360, forgetting the cinemas' bigger cut abroad.",
+  "hint": "Work out what share of each ticket dollar reaches the studio, averaged over both markets.",
+  "steps": [
+    "Total cost: 120 + 60 = 180 million dollars.",
+    "Studio share: half the gross at 50% plus half at 40% = 0.25 + 0.20 = 0.45.",
+    "180 / 0.45 = 400 million dollars."
+  ],
+  "keywords": [
+    "break-even",
+    "distribution rentals",
+    "marketing costs",
+    "box office gross"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vogel, Entertainment Industry Economics",
+  "source_kind": "book",
+  "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
+  "written": "2026-09-26"
+}

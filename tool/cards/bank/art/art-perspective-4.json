@@ -1,0 +1,32 @@
+{
+  "id": "art-perspective-4",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Piero della Francesca get a human head into exact perspective?",
+  "answer": "Point by point. In his treatise on perspective for painters, from the 1470s, he draws a head in plan and in side view, marks numbered points on horizontal slices through it, and projects each point onto the picture separately. A painter of altarpieces was plotting a face the way software renders one.",
+  "move": "Anything can be drawn exactly if you are willing to go point by point.",
+  "keywords": [
+    "piero della francesca",
+    "de prospectiva pingendi",
+    "projection",
+    "geometry"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Field, Piero della Francesca, 2005",
+  "source_kind": "book",
+  "reference": "J. V. Field, Piero della Francesca: A Mathematician's Art, Yale University Press, 2005",
+  "written": "2026-09-26"
+}

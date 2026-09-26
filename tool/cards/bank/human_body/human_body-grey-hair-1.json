@@ -1,0 +1,33 @@
+{
+  "id": "human_body-grey-hair-1",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What turns a stressed mouse's fur grey within days, and why does it stay grey?",
+  "answer": "Its own nerves. Pain or stress fires the sympathetic nerves, which release noradrenaline beside the pigment stem cells in each follicle. The stem cells all switch on at once, turn into pigment cells and leave, so nothing remains to colour future hairs. Blocking those nerves prevented the greying; removing stress hormones did not.",
+  "move": "A sudden alarm can burn through a store that never refills.",
+  "keywords": [
+    "grey hair",
+    "noradrenaline",
+    "sympathetic nerves",
+    "melanocyte stem cells",
+    "stress"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zhang et al., Nature, 2020",
+  "source_kind": "paper",
+  "reference": "Zhang et al., Hyperactivation of sympathetic nerves drives depletion of melanocyte stem cells, Nature, 2020",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "language-lost-scripts-3",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "also": [
+    "history.maps_and_borders.lost_countries"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Why have thousands of Linear B clay tablets from Mycenaean palaces lasted more than 3,000 years?",
+  "options": [
+    "Palace fires baked them hard",
+    "Scribes kiln-fired them as archives",
+    "Dry tombs sealed them from damp"
+  ],
+  "correct": 0,
+  "answer": "Palace fires baked them hard. The tablets were unfired clay, working records meant to last a season before being softened and reused. When the palaces at Knossos and Pylos burned, the heat turned that year's paperwork into pottery. What survives is the administration of a palace's final months, not an archive anyone chose to keep.",
+  "move": "Ask what preserved your evidence before asking what it represents.",
+  "trap": "Assuming that what lasted was made to last.",
+  "keywords": [
+    "linear b",
+    "clay tablets",
+    "knossos",
+    "pylos",
+    "mycenaean palaces"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chadwick, The Decipherment of Linear B, 1958",
+  "source_kind": "book",
+  "reference": "Chadwick, The Decipherment of Linear B, Cambridge University Press, 1958",
+  "written": "2026-09-26"
+}

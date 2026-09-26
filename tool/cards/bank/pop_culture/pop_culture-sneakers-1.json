@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-sneakers-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the shoe the NBA barred Michael Jordan from wearing in 1984 was the Air Jordan 1?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The league's 1984 letter objected to a black-and-red Nike Air Ship, worn before his own shoe was ready, for breaking its uniform rules. Nike's 1985 television advert for the Air Jordan 1 told the story as if the new shoe were the one banned, and that version stuck to the product on sale.",
+  "move": "The version of a story that sells is the version that gets retold.",
+  "trap": "True: the Air Jordan 1 is the shoe the famous advert showed.",
+  "keywords": [
+    "air jordan 1",
+    "air ship",
+    "nba",
+    "michael jordan",
+    "nike advertising"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NBA letter to Nike, 1984",
+  "source_kind": "primary_document",
+  "reference": "National Basketball Association, letter to Nike on the black-and-red Air Ship, October 1984",
+  "written": "2026-09-26"
+}

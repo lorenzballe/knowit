@@ -1,0 +1,36 @@
+{
+  "id": "economics-subscriptions-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "also": [
+    "pop_culture.tv.streaming"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can one subscription to thousands of titles earn more than selling each title separately?",
+  "answer": "Because tastes average out. Any one buyer values single songs or articles very unevenly, so a price per item either loses buyers or leaves money on the table. Summed over thousands of items, what each buyer will pay becomes predictable, and one price captures most of it. Bakos and Brynjolfsson showed this in 1999, for goods that cost nothing to copy.",
+  "move": "Sell the average when individual tastes are too scattered to price.",
+  "keywords": [
+    "bundling",
+    "information goods",
+    "pricing",
+    "bakos and brynjolfsson",
+    "subscriptions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bakos and Brynjolfsson, Management Science, 1999",
+  "source_kind": "paper",
+  "reference": "Bakos & Brynjolfsson, Bundling Information Goods: Pricing, Profits, and Efficiency, Management Science, 1999",
+  "written": "2026-09-26"
+}

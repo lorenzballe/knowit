@@ -1,0 +1,39 @@
+{
+  "id": "economics-silk-roads-3",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most Silk Road goods were carried by merchants travelling the whole way between China and the Mediterranean?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Goods moved in relays: most traders worked a stretch of a few hundred kilometres between neighbouring oases, and wares changed hands many times. Documents from sites such as Niya and Turfan show mostly small, local exchanges, often by barter. A bolt of silk reaching Syria had crossed Asia without anyone who crossed with it.",
+  "move": "A route on a map says nothing about who walked all of it.",
+  "trap": "Picturing a single caravan, the image every map and travel tale gives.",
+  "keywords": [
+    "relay trade",
+    "caravans",
+    "niya",
+    "turfan",
+    "merchants"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Hansen, The Silk Road, 2012",
+  "source_kind": "book",
+  "reference": "Hansen, The Silk Road: A New History, Oxford University Press, 2012",
+  "written": "2026-09-26"
+}

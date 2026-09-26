@@ -1,0 +1,33 @@
+{
+  "id": "art-florence-1",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did restorers choose to handle the paint Cimabue's Santa Croce crucifix lost in the 1966 flood?",
+  "answer": "They left the losses visible. Soaked for hours in muddy, oily water, the panel swelled and shrank, and roughly 60% of its paint flaked away. Umberto Baldini's team filled the gaps with fine hatched strokes of colour that read as tone from a distance and as repair up close. The Christ is honestly part erased.",
+  "move": "A good repair lets you see where the original stops.",
+  "keywords": [
+    "cimabue",
+    "1966 flood",
+    "santa croce",
+    "chromatic abstraction",
+    "restoration"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baldini, Teoria del restauro, 1978",
+  "source_kind": "book",
+  "reference": "Umberto Baldini, Teoria del restauro e unità di metodologia, Nardini Editore, 1978",
+  "written": "2026-09-26"
+}

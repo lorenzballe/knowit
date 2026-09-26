@@ -1,0 +1,40 @@
+{
+  "id": "human_body-taste-4",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Add a little inosinate, from dried bonito, to a glutamate broth. What happens to the savoury taste?",
+  "options": [
+    "It grows far beyond the two added",
+    "It grows by about the two added",
+    "It shrinks as they compete for receptors"
+  ],
+  "correct": 0,
+  "answer": "It grows far beyond the two added. Glutamate binds a pocket in the umami receptor, T1R1–T1R3; inosinate binds beside it and holds the pocket closed around the glutamate, so the receptor stays switched on. That is why Japanese dashi pairs kombu, rich in glutamate, with shavings of dried bonito.",
+  "move": "Two causes acting on one mechanism rarely just add up.",
+  "trap": "Assuming two savoury ingredients simply add their strengths together.",
+  "keywords": [
+    "umami",
+    "glutamate",
+    "inosinate",
+    "dashi",
+    "taste receptor"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zhang et al., PNAS, 2008",
+  "source_kind": "paper",
+  "reference": "Zhang, Klebansky, Fine et al., Molecular mechanism for the umami taste synergism, PNAS, 2008",
+  "written": "2026-09-26"
+}

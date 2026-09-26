@@ -1,0 +1,39 @@
+{
+  "id": "cinema-rediscovered-3",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1981 a print of Dreyer's own cut of The Passion of Joan of Arc turned up. Where?",
+  "options": [
+    "In a Paris film archive",
+    "In the director's Copenhagen home",
+    "In a Norwegian psychiatric hospital"
+  ],
+  "correct": 2,
+  "answer": "In a Norwegian psychiatric hospital. Dreyer's cut was thought lost to fire soon after its 1928 release, and the versions shown for decades were patched together from alternate takes. Then a cupboard at Dikemark Hospital, near Oslo, yielded a print with Danish intertitles, shipped there around 1928 and never returned.",
+  "move": "Look for the lost thing where it was last sent, not where it belongs.",
+  "trap": "A film archive is where a missing film ought to be.",
+  "keywords": [
+    "carl theodor dreyer",
+    "joan of arc film",
+    "dikemark hospital",
+    "film restoration"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Criterion Collection restoration notes",
+  "source_kind": "company",
+  "reference": "Criterion Collection, The Passion of Joan of Arc, restoration notes to the 2017 edition",
+  "written": "2026-09-26"
+}

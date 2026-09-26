@@ -1,0 +1,43 @@
+{
+  "id": "sport-altitude-3",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "also": [
+    "sport.olympics.modern"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "At the 1968 Olympics in Mexico City, 2,240 m up, which track and field events produced world records?",
+  "options": [
+    "Distance races, won by highland runners",
+    "None, since thin air slowed everyone",
+    "Sprints and jumps"
+  ],
+  "correct": 2,
+  "answer": "Sprints and jumps. Thinner air means less drag, and short events barely depend on oxygen: records fell in the 100 m, 200 m, 400 m, long jump and triple jump, where Bob Beamon reached 8.90 m. Distance times were slow. Runners raised at altitude won most of them by coping better, not by running faster.",
+  "move": "Who won and how fast they went are two different questions.",
+  "trap": "Recalling highland-born champions and assuming altitude speeded their races.",
+  "keywords": [
+    "mexico city 1968",
+    "bob beamon",
+    "air resistance",
+    "distance running",
+    "altitude"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ward-Smith, Journal of Biomechanics, 1984",
+  "source_kind": "paper",
+  "reference": "Ward-Smith, Air resistance and its influence on the biomechanics and energetics of sprinting at sea level and at altitude, Journal of Biomechanics, 1984",
+  "written": "2026-09-26"
+}

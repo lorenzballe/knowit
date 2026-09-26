@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-responsibility-4",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.responsibility",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a large study of American felony cases found the insanity defence raised in more than one in twenty?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. An eight-state study published in 1991 found it raised in under 1% of felony cases, and it succeeded in only about a quarter of those. The public knows it from a few trials, such as John Hinckley's acquittal in 1982 for shooting President Reagan. Of a hundred felony defendants, fewer than one pleads insanity.",
+  "move": "The cases you have heard of were picked by the news, not by chance.",
+  "trap": "Judging its frequency by the famous trials that made the news.",
+  "keywords": [
+    "insanity defence",
+    "john hinckley",
+    "felony trials",
+    "criminal responsibility"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Callahan et al., Bulletin of AAPL, 1991",
+  "source_kind": "paper",
+  "reference": "https://jaapl.org/content/19/4/331.short",
+  "written": "2026-09-26"
+}

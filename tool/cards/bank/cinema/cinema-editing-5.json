@@ -1,0 +1,37 @@
+{
+  "id": "cinema-editing-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is a director's cut the truer version of a film than the one first released?",
+  "sides": [
+    "Yes, the director's cut",
+    "No, the release version"
+  ],
+  "answer": "Release versions are often shaped by committee: cut to a running time, bent by test screenings, patched with scenes the director never wanted. Blade Runner opened in 1982 with a studio-imposed voice-over and a happy ending assembled from aerial footage left over from The Shining. The 2007 Final Cut is the version critics now screen.",
+  "move": "Whichever side you took, ask whether limits damaged the work or formed it.",
+  "counterpoint": "A deadline and a running time are part of how films get made well, not just obstacles. Coppola's Apocalypse Now Redux put back almost fifty minutes in 2001; in 2019 he released a Final Cut about twenty minutes shorter than Redux. When the director himself trims his own restoration, the first cut was not simply mutilation.",
+  "keywords": [
+    "director's cut",
+    "blade runner",
+    "apocalypse now",
+    "final cut"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sammon, Future Noir, 1996",
+  "source_kind": "book",
+  "reference": "Sammon, Future Noir: The Making of Blade Runner, HarperPrism, 1996",
+  "written": "2026-09-26"
+}

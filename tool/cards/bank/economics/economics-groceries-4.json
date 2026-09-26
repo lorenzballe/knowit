@@ -1,0 +1,40 @@
+{
+  "id": "economics-groceries-4",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Priced per portion rather than per calorie, how do vegetables compare with sweets and salty snacks?",
+  "options": [
+    "Usually dearer",
+    "Usually cheaper",
+    "About the same"
+  ],
+  "correct": 1,
+  "answer": "Usually cheaper. Carlson and Frazão of the US Department of Agriculture priced foods three ways. Per calorie, vegetables and fruit look expensive, since they carry few calories. Per gram or per portion, they cost less than most meats and foods high in fat, sugar or salt. A carrot is cheap filling, dear fuel.",
+  "move": "Ask what a price is divided by before comparing two of them.",
+  "trap": "Recalling studies that ranked foods by price per calorie.",
+  "keywords": [
+    "healthy food",
+    "food prices",
+    "price per calorie",
+    "vegetables",
+    "usda"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carlson and Frazão, USDA ERS, 2012",
+  "source_kind": "institution",
+  "reference": "Carlson & Frazão, Are Healthy Foods Really More Expensive? It Depends on How You Measure the Price, USDA Economic Research Service, EIB-96, 2012",
+  "written": "2026-09-26"
+}

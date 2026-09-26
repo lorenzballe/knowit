@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-memes-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the distracted boyfriend photograph come from before it became a meme?",
+  "answer": "A stock-photo catalogue. Antonio Guillem shot it in Girona in 2015 as part of a staged series on infidelity, captioned for buyers as a disloyal man looking at another woman. It sold as an ordinary licence for two years before spreading in 2017; the models, not the photographer, noticed the meme first.",
+  "move": "Images built to be generic travel furthest, because anyone can fill them.",
+  "keywords": [
+    "distracted boyfriend",
+    "stock photography",
+    "antonio guillem",
+    "girona",
+    "image macros"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Guardian, 30 August 2017",
+  "source_kind": "news_archive",
+  "reference": "Antonio Guillem interviewed on the distracted boyfriend meme, The Guardian, 30 August 2017",
+  "written": "2026-09-26"
+}

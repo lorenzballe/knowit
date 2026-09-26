@@ -1,0 +1,37 @@
+{
+  "id": "sport-diet-5",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should sports scrap lightweight categories because of what athletes do to their diets to make weight?",
+  "sides": [
+    "Yes, scrap them",
+    "No, keep them"
+  ],
+  "answer": "Weight limits reward starving and dehydrating the body before each weigh-in, and years of low energy intake bring hormone disruption and weak bones. Sports medicine now names this relative energy deficiency. Lightweight rowing has been dropped from the Olympic programme after Paris 2024, and rapid weight cutting persists wherever categories remain.",
+  "move": "Whichever side you took, whether weigh-in rules can stop the dieting decides it.",
+  "counterpoint": "Without categories, sports like rowing and boxing belong to the tall and heavy, and smaller athletes lose their place. The harm comes from how weight is policed, not from the categories themselves: weigh-ins closer to competition, hydration tests and minimum body-fat checks can curb crash dieting while keeping the sport open.",
+  "keywords": [
+    "lightweight rowing",
+    "making weight",
+    "energy deficiency",
+    "weight categories"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mountjoy et al., IOC consensus on RED-S, 2018",
+  "source_kind": "paper",
+  "reference": "Mountjoy et al., IOC consensus statement on relative energy deficiency in sport (RED-S): 2018 update, British Journal of Sports Medicine, 2018",
+  "written": "2026-09-26"
+}

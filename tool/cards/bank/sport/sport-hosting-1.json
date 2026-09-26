@@ -1,0 +1,40 @@
+{
+  "id": "sport-hosting-1",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Measured against the budget promised when they won the bid, by how much have Olympic Games overrun on average?",
+  "options": [
+    "About 20%",
+    "About 170%",
+    "About 50%"
+  ],
+  "correct": 1,
+  "answer": "About 170%, in real terms. Flyvbjerg, Budzier and Lunn found that every Games since 1960 with usable data overran, by 172% on average, the worst record of any kind of megaproject they studied. A fixed opening date and no way to shrink the event leave cost as the only thing that can give.",
+  "move": "A deadline that cannot move turns every problem into a cost.",
+  "trap": "Starting from the bid budget, a fifth over already sounds like a scandal.",
+  "keywords": [
+    "cost overruns",
+    "megaprojects",
+    "olympic budgets",
+    "bent flyvbjerg",
+    "host cities"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Flyvbjerg, Budzier & Lunn, 2021",
+  "source_kind": "paper",
+  "reference": "Flyvbjerg, Budzier & Lunn, Regression to the Tail: Why the Olympics Blow Up, Environment and Planning A: Economy and Space, 2021",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-names-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "US couples share a surname initial more often than chance predicts. What did a 2011 reanalysis find behind it?",
+  "options": [
+    "Surnames clustering by ethnicity and region",
+    "An unconscious liking for one's own letters",
+    "Clerks filing couples under one initial"
+  ],
+  "correct": 0,
+  "answer": "Surnames clustering by ethnicity and region. People tend to marry within their own community, and initials are not spread evenly across communities: one of Dutch descent has many surnames starting with V. Simonsohn replicated the original pattern, then showed such confounds, plus reverse causality, could produce it without any pull of the name.",
+  "move": "Before crediting attraction, ask what else the matching pairs already share.",
+  "trap": "Taking the textbook story of an unconscious pull towards one's own name.",
+  "keywords": [
+    "implicit egotism",
+    "surnames",
+    "marriage",
+    "uri simonsohn",
+    "ethnicity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simonsohn, JPSP, 2011",
+  "source_kind": "statistics",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/21299311/",
+  "written": "2026-09-26"
+}

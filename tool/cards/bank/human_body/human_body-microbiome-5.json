@@ -1,0 +1,37 @@
+{
+  "id": "human_body-microbiome-5",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a healthy adult take probiotics after a course of antibiotics?",
+  "sides": [
+    "Yes, take them",
+    "No, let it recover"
+  ],
+  "answer": "Antibiotics strip the gut and open the door to diarrhoea and to Clostridioides difficile. Pooled trials find probiotics taken alongside antibiotics cut antibiotic-associated diarrhoea by roughly 40%, and a Cochrane review found fewer C. difficile infections. The capsules are cheap and serious harm in healthy adults is rare, so the odds favour taking them.",
+  "move": "Whichever side you took, the person's baseline risk is what decides it.",
+  "counterpoint": "In a small 2018 study, people given a probiotic mix after antibiotics took months to rebuild their native gut microbes, while those given back their own stored stool recovered within days. Most of the benefit in trials comes from hospital patients at high risk, not healthy adults, and products differ strain by strain.",
+  "keywords": [
+    "probiotics",
+    "antibiotics",
+    "diarrhoea",
+    "microbiome recovery"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Suez et al., Cell, 2018",
+  "source_kind": "paper",
+  "reference": "Suez, Zmora, Zilberman-Schapira et al., Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT, Cell, 2018",
+  "written": "2026-09-26"
+}

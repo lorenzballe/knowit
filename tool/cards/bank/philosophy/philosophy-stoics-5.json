@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-stoics-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In which language did the Roman emperor Marcus Aurelius write the private notebook now called the Meditations?",
+  "options": [
+    "Latin",
+    "Greek",
+    "Aramaic"
+  ],
+  "correct": 1,
+  "answer": "Greek. Educated Romans did philosophy in the language of Zeno and Chrysippus, and Marcus wrote his notes to himself in it, some on campaign along the Danube. The title Meditations is a later label; the manuscripts call the work To Himself. The ruler of the Latin-speaking empire addressed himself in Greek.",
+  "move": "Ask what language a field thought in, not only where its thinkers lived.",
+  "trap": "A Roman emperor, so Latin, the language of Roman law and army.",
+  "keywords": [
+    "marcus aurelius",
+    "meditations",
+    "greek language",
+    "roman empire"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marcus Aurelius, Meditations, trans. Hard, 2011",
+  "source_kind": "book",
+  "reference": "Marcus Aurelius, Meditations, trans. Hard, ed. Gill, Oxford World's Classics, Oxford University Press, 2011",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "cinema-music-cues-5",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A film uses a 1970s hit record in one scene. Whose permission must it get?",
+  "options": [
+    "Only the record label's",
+    "The publisher's and the label's",
+    "Only the songwriters' publisher's"
+  ],
+  "correct": 1,
+  "answer": "The publisher's and the label's. The song and the recording are separate copyrights: a synchronisation licence from the publisher covers the composition, a master-use licence from the label covers that particular recording. A new soundalike recording avoids the label but never the publisher, which is one reason films use cover versions.",
+  "move": "A single object can carry two owners; ask who owns each layer.",
+  "trap": "The record seems to be the thing used, so the label alone.",
+  "keywords": [
+    "synchronisation licence",
+    "master use licence",
+    "music publishers",
+    "record labels",
+    "cover versions"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Passman, All You Need to Know",
+  "source_kind": "book",
+  "reference": "Passman, All You Need to Know About the Music Business, 10th edition, Simon & Schuster, 2019",
+  "written": "2026-09-26"
+}

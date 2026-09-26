@@ -1,0 +1,40 @@
+{
+  "id": "sport-formations-4",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where was the sweeper-based defensive system later called catenaccio first developed?",
+  "options": [
+    "Italy",
+    "England",
+    "Switzerland"
+  ],
+  "correct": 2,
+  "answer": "In Switzerland. In the 1930s the Austrian coach Karl Rappan, working with Swiss clubs and the national team, built the verrou, the bolt: an extra defender behind the back line. Italian clubs such as Nereo Rocco's Triestina and Helenio Herrera's Inter later made it famous and gave it an Italian name meaning door-bolt.",
+  "move": "A method is usually named after whoever made it famous, not whoever made it.",
+  "trap": "The name is Italian, and Italy's famous defences come to mind first.",
+  "keywords": [
+    "catenaccio",
+    "karl rappan",
+    "verrou",
+    "sweeper",
+    "helenio herrera"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson, Inverting the Pyramid, 2008",
+  "source_kind": "book",
+  "reference": "Wilson, Inverting the Pyramid: The History of Football Tactics, Orion, 2008",
+  "written": "2026-09-26"
+}

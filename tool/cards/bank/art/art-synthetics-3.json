@@ -1,0 +1,38 @@
+{
+  "id": "art-synthetics-3",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: 18th-century makers of Prussian blue, an early synthetic pigment, needed dried animal blood?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The published recipe of 1724 heated dried ox blood with potash, then added iron salts and alum. The blood supplied the nitrogen and carbon that become the cyanide groups binding the iron. Later makers used horn, hoof and leather scraps. The first modern synthetic blue came out of the slaughterhouse.",
+  "move": "Synthetic describes the process, not where the raw materials came from.",
+  "trap": "A synthetic pigment sounds like pure laboratory chemistry, not animal waste.",
+  "keywords": [
+    "prussian blue",
+    "synthetic pigment",
+    "animal blood",
+    "iron cyanide"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kraft, Bulletin for the History of Chemistry, 2008",
+  "source_kind": "paper",
+  "reference": "Alexander Kraft, On the Discovery and History of Prussian Blue, Bulletin for the History of Chemistry, 2008",
+  "written": "2026-09-26"
+}

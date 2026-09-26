@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-fan-clubs-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did two fans keep Star Trek on the air for a third season in 1968?",
+  "answer": "With a mailing list. Bjo and John Trimble wrote to people whose addresses they had from science-fiction conventions, asking each to write to NBC and to recruit others. The network received a flood of letters, counts disputed, and renewed the show, then moved it to a late Friday slot, where it was cancelled.",
+  "move": "An organised few with addresses beat a scattered many with opinions.",
+  "keywords": [
+    "star trek",
+    "bjo trimble",
+    "letter-writing campaign",
+    "nbc",
+    "science fiction conventions"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trimble, On the Good Ship Enterprise, 1983",
+  "source_kind": "book",
+  "reference": "Bjo Trimble, On the Good Ship Enterprise: My 15 Years with Star Trek, Donning, 1983",
+  "written": "2026-09-26"
+}

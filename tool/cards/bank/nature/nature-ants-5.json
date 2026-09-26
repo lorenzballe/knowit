@@ -1,0 +1,40 @@
+{
+  "id": "nature-ants-5",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Roughly how many flowering plant species rely on ants to carry off and plant their seeds?",
+  "options": [
+    "About 110",
+    "About 1,100",
+    "About 11,000"
+  ],
+  "correct": 2,
+  "answer": "About 11,000. Such seeds carry an elaiosome, a fatty snack; ants haul the seed home, eat the snack and dump the seed on their refuse heap, a fertile, sheltered spot. The habit evolved independently over 100 times, by Lengyel's survey. Violets, trilliums and many Australian and South African shrubs are sown this way.",
+  "move": "Never having heard of something is weak evidence that it is rare.",
+  "trap": "Never having met the habit, it seems a botanical curiosity.",
+  "keywords": [
+    "seed dispersal",
+    "elaiosome",
+    "myrmecochory",
+    "violets",
+    "ants"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lengyel et al., Perspectives in Plant Ecology, 2010",
+  "source_kind": "paper",
+  "reference": "Lengyel, Gove, Latimer, Majer & Dunn, Convergent evolution of seed dispersal by ants, and phylogeny and biogeography in flowering plants: a global survey, Perspectives in Plant Ecology, Evolution and Systematics, 2010",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-forecasting-4",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Since the 1980s, how fast has the range of useful weather forecasts grown?",
+  "options": [
+    "About one day per decade",
+    "About one day per year",
+    "Barely, because chaos caps it"
+  ],
+  "correct": 0,
+  "answer": "About one day per decade. Bauer, Thorpe and Brunet found skill 3 to 10 days ahead improving at that pace: a six-day forecast is about as good as a five-day one was ten years earlier. Satellites and computing did it. Chaos sets a ceiling near two weeks, and forecasts are still climbing towards it.",
+  "move": "Memorable failures hide slow, steady progress; check the long record.",
+  "trap": "Busted forecasts stick in the mind, so progress seems to have stalled.",
+  "keywords": [
+    "forecast skill",
+    "numerical weather prediction",
+    "satellites",
+    "chaos"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bauer, Thorpe & Brunet, Nature, 2015",
+  "source_kind": "paper",
+  "reference": "Bauer, Thorpe & Brunet, The quiet revolution of numerical weather prediction, Nature, 2015",
+  "written": "2026-09-26"
+}

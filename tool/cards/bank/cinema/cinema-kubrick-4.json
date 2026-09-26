@@ -1,0 +1,41 @@
+{
+  "id": "cinema-kubrick-4",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: Arthur C. Clarke said HAL's name was a deliberate one-letter shift from IBM?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Clarke repeatedly called it a coincidence: HAL stood for Heuristically programmed ALgorithmic computer, and he was irritated that readers kept finding the shift. There are only 17,576 three-letter strings and a great many acronyms in the world, so some name was bound to sit one letter from a famous one.",
+  "move": "Before calling a match designed, count how many matches were possible.",
+  "trap": "True, because a pattern that neat looks deliberate.",
+  "keywords": [
+    "hal 9000",
+    "arthur c. clarke",
+    "ibm",
+    "acronyms"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clarke, The Lost Worlds of 2001",
+  "source_kind": "book",
+  "reference": "Clarke, The Lost Worlds of 2001, Signet, 1972",
+  "written": "2026-09-26"
+}

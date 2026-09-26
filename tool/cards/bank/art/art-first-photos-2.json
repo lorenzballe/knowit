@@ -1,0 +1,42 @@
+{
+  "id": "art-first-photos-2",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "also": [
+    "history.empires.british"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when France gave the daguerreotype free to the world in August 1839, Britain shared the gift?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. On 14 August 1839, days before the French announcement, Daguerre's agent Miles Berry took out an English patent on the process. Anyone making daguerreotypes in England and Wales needed a licence, and the Treasury declined to buy the rights out. England and Wales were the one place where the free invention cost money.",
+  "move": "Read the date on the fine print before trusting the headline.",
+  "trap": "Taking free to the world, the famous phrase, at its word.",
+  "keywords": [
+    "daguerreotype",
+    "patent",
+    "miles berry",
+    "1839",
+    "licensing"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gernsheim, L.J.M. Daguerre, 1956",
+  "source_kind": "book",
+  "reference": "Helmut & Alison Gernsheim, L.J.M. Daguerre: The History of the Diorama and the Daguerreotype, Secker & Warburg, 1956",
+  "written": "2026-09-26"
+}

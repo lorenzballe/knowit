@@ -1,0 +1,38 @@
+{
+  "id": "cinema-practical-3",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the snow that fell on Dorothy in The Wizard of Oz's poppy field was asbestos?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Chrysotile asbestos was sold as artificial snow in the 1930s: white, cheap and fireproof, it was prized on sets packed with hot lamps where cotton wool could catch fire. It showered Judy Garland in 1939. The fibres that made it safe under the lights made it dangerous to breathe.",
+  "move": "Judge an old choice by the danger people were guarding against then.",
+  "trap": "False, since nobody would shower a star with a known poison.",
+  "keywords": [
+    "asbestos",
+    "artificial snow",
+    "the wizard of oz",
+    "fire safety"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harmetz, The Making of The Wizard of Oz",
+  "source_kind": "book",
+  "reference": "Harmetz, The Making of The Wizard of Oz, Knopf, 1977",
+  "written": "2026-09-26"
+}

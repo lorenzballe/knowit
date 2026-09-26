@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-determinism-2",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Newton's laws allow a ball resting on a certain dome to start rolling at no particular moment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. John Norton described a dome shaped so that Newton's second law admits many solutions: the ball stays on the peak forever, or starts to roll off at any moment, with no force to trigger it. Laws and starting state are the same in every case. One ball, one past, endlessly many futures.",
+  "move": "Before calling a system predictable, check that its rules allow only one future.",
+  "trap": "Treating classical mechanics as the textbook model of perfect determinism.",
+  "keywords": [
+    "norton's dome",
+    "newtonian mechanics",
+    "determinism",
+    "initial conditions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Norton, Philosophy of Science, 2008",
+  "source_kind": "paper",
+  "reference": "Norton, The Dome: An Unexpectedly Simple Failure of Determinism, Philosophy of Science 75 (5), 2008",
+  "written": "2026-09-26"
+}

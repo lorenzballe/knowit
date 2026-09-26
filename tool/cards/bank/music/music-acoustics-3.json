@@ -1,0 +1,40 @@
+{
+  "id": "music-acoustics-3",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Why do narrow shoebox halls like Vienna's Musikverein, opened in 1870, still outshine most wider modern halls?",
+  "options": [
+    "Their old wooden panelling resonates",
+    "Their curved ceilings focus the sound",
+    "Near side walls send sound in sideways"
+  ],
+  "correct": 2,
+  "answer": "Near side walls send sound in sideways. Research from the late 1960s, by Harold Marshall and later Michael Barron, found that early reflections reaching the ears from the sides make listeners feel wrapped in sound. A narrow hall does it by shape. Thin wood panelling tends to soak up bass rather than sing along.",
+  "move": "When the best examples share two features, test each one alone.",
+  "trap": "Great old halls are full of wood, so the wood gets the credit.",
+  "keywords": [
+    "musikverein",
+    "shoebox halls",
+    "lateral reflections",
+    "concert hall design",
+    "vienna"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barron, Auditorium Acoustics and Architectural Design",
+  "source_kind": "book",
+  "reference": "Barron, Auditorium Acoustics and Architectural Design, E & FN Spon, 1993",
+  "written": "2026-09-26"
+}

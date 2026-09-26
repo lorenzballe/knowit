@@ -1,0 +1,42 @@
+{
+  "id": "art-bronze-4",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "also": [
+    "art.forgeries.motives"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a bronze cast from Rodin's plaster long after his death can legally be an original Rodin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Rodin gave his works and his reproduction rights to the French state in 1916, and French law counts the first twelve casts of a sculpture, eight numbered and four artist's proofs, as originals. The Musée Rodin kept casting from his plasters for decades after he died in 1917, and sold them as originals.",
+  "move": "Check who defines original before arguing about whether something is one.",
+  "trap": "Assuming an original must be made in the artist's lifetime.",
+  "keywords": [
+    "rodin",
+    "posthumous casts",
+    "musée rodin",
+    "editions",
+    "originals"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Musée Rodin, Original bronze casts",
+  "source_kind": "institution",
+  "reference": "https://www.musee-rodin.fr/en/museum/institution/original-bronze-casts",
+  "written": "2026-09-26"
+}

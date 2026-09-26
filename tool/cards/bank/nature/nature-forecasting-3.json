@@ -1,0 +1,39 @@
+{
+  "id": "nature-forecasting-3",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A forecast for your town gives a 30% chance of rain tomorrow. What exactly is 30% likely?",
+  "options": [
+    "Rain for about 30% of the day",
+    "Rain over 30% of the area",
+    "Some rain at any given spot"
+  ],
+  "correct": 2,
+  "answer": "Some rain at any given spot. The US National Weather Service defines it as the chance that at least 0.25 mm falls at a point in the area during the period. Surveying five cities from New York to Athens, Gigerenzer and colleagues found the same number read as hours, area or days.",
+  "move": "Before trusting a percentage, ask what it is a percentage of.",
+  "trap": "Reading the figure as a share of the day's hours.",
+  "keywords": [
+    "probability of precipitation",
+    "weather forecasts",
+    "risk communication",
+    "reference class"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gigerenzer et al., Risk Analysis, 2005",
+  "source_kind": "paper",
+  "reference": "Gigerenzer, Hertwig, van den Broek, Fasolo & Katsikopoulos, A 30% chance of rain tomorrow: How does the public understand probabilistic weather forecasts?, Risk Analysis, 2005",
+  "written": "2026-09-26"
+}

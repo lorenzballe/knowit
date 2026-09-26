@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-colours-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't a printer find Tiffany's blue in a Pantone swatch book?",
+  "answer": "Because it was mixed for Tiffany alone. In 2001 Pantone standardised the shade as a private custom colour, numbered 1837 after the firm's founding year, and left it out of the public books. The colour is far older than the number: it had covered Tiffany's Blue Book catalogue since the nineteenth century.",
+  "move": "A standard can be built to keep others out, not only let them in.",
+  "keywords": [
+    "tiffany",
+    "pantone",
+    "custom colour",
+    "brand identity",
+    "blue book"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tiffany & Co., Tiffany Blue",
+  "source_kind": "company",
+  "reference": "https://press.tiffany.com/our-story/tiffany-blue/",
+  "written": "2026-09-26"
+}

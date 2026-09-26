@@ -1,0 +1,38 @@
+{
+  "id": "economics-groceries-5",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did company profits, more than rising costs, drive the food price surge of 2022 and 2023?",
+  "sides": [
+    "Yes, profits drove it",
+    "No, costs drove it"
+  ],
+  "answer": "When every customer expects prices to rise, firms can raise theirs beyond their costs and blame the war. The European Central Bank found profits contributed more than wages to euro-area price growth in 2022, and grain traders, fertiliser makers and some manufacturers posted record earnings. The margin moved upstream, away from the checkout.",
+  "move": "Whichever side you took, the answer depends on which link in the chain is measured.",
+  "counterpoint": "Britain's competition authority examined grocers in 2023 and found their margins had fallen, not risen, as energy, wages and wholesale prices climbed. UK food inflation peaked above 19% in March 2023 and eased as those costs fell back. Retail grocery margins are a few pence in the pound; there was little room to gouge.",
+  "keywords": [
+    "greedflation",
+    "food inflation",
+    "profit margins",
+    "supermarkets",
+    "competition and markets authority"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Competition and Markets Authority, 2023",
+  "source_kind": "institution",
+  "reference": "Competition and Markets Authority, Competition and cost of living: the UK grocery sector, 2023",
+  "written": "2026-09-26"
+}

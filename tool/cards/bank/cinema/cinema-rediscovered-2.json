@@ -1,0 +1,33 @@
+{
+  "id": "cinema-rediscovered-2",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did thousands of the earliest American films survive on paper instead of film?",
+  "answer": "Through a gap in copyright law. Until 1912 US law did not protect motion pictures, so producers registered them as photographs, depositing rolls of paper contact prints of every frame at the Library of Congress. Paper outlasted the nitrate. In the 1950s and 1960s Kemp Niver copied about 3,000 of them back onto film.",
+  "move": "Paperwork filed for one purpose often preserves what nothing else kept.",
+  "keywords": [
+    "paper print collection",
+    "library of congress",
+    "copyright registration",
+    "kemp niver",
+    "early cinema"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Niver, Paper Print Collection catalogue, 1967",
+  "source_kind": "reference_work",
+  "reference": "Niver, Motion Pictures from the Library of Congress Paper Print Collection 1894–1912, University of California Press, 1967",
+  "written": "2026-09-26"
+}

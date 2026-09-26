@@ -1,0 +1,38 @@
+{
+  "id": "human_body-gut-and-mood-5",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do gut microbes help cause depression, rather than merely reflect it?",
+  "sides": [
+    "Yes, they help cause it",
+    "No, they mostly reflect it"
+  ],
+  "answer": "Faeces from depressed patients, transplanted into germ-free rodents, have produced depression-like behaviour. In a Belgian population study of about a thousand people, two bacterial groups, Coprococcus and Dialister, were depleted in depression even after allowing for antidepressants, and the pattern recurred in a Dutch cohort. Microbes make compounds that reach nerves and immune cells.",
+  "move": "Whichever side you took, a trial that changes the microbes is what decides it.",
+  "counterpoint": "Depression changes almost everything that shapes gut microbes: diet, sleep, exercise, bowel transit, alcohol and medication. Snapshot studies cannot tell which came first, and rodent tests of despair, such as how long a mouse keeps swimming, are weak stand-ins for human illness. No trial has yet shown that changing the microbes reliably treats depression in people.",
+  "keywords": [
+    "depression",
+    "gut microbes",
+    "coprococcus",
+    "faecal transplant",
+    "causation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Valles-Colomer et al., Nature Microbiology, 2019",
+  "source_kind": "paper",
+  "reference": "Valles-Colomer, Falony, Darzi et al., The neuroactive potential of the human gut microbiota in quality of life and depression, Nature Microbiology, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-false-memories-3",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A week after a crash film without broken glass, 32% asked about cars smashing recalled glass. What share of those asked nothing about speed did?",
+  "options": [
+    "About one in eight",
+    "Almost none",
+    "About one in three"
+  ],
+  "correct": 0,
+  "answer": "About one in eight. In Loftus and Palmer's 1974 study, 16 of 50 people in the smashed group reported glass, against 7 of 50 asked about cars hitting and 6 of 50 asked nothing. The loaded verb doubled false reports, but the crash alone already led some viewers to supply the glass.",
+  "move": "Before crediting the push, count what happens with no push at all.",
+  "trap": "Assuming false details appear only when someone plants them.",
+  "keywords": [
+    "loftus and palmer",
+    "leading questions",
+    "eyewitness",
+    "control group"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loftus & Palmer, 1974",
+  "source_kind": "paper",
+  "reference": "Loftus & Palmer, Reconstruction of automobile destruction: an example of the interaction between language and memory, Journal of Verbal Learning and Verbal Behavior, 1974",
+  "written": "2026-09-26"
+}

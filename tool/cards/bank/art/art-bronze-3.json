@@ -1,0 +1,43 @@
+{
+  "id": "art-bronze-3",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "also": [
+    "history.empires.british"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What metal did Benin's royal casters mostly use for the works called the Benin Bronzes?",
+  "options": [
+    "Bronze alloyed from local copper and tin",
+    "Brass from European trade bracelets",
+    "Copper traded from central African mines"
+  ],
+  "correct": 1,
+  "answer": "Brass from European trade bracelets. Portuguese and later traders paid for goods with manillas, horseshoe-shaped brass rings, and Benin's casters melted them down. A 2023 study matched the lead isotopes of manillas from shipwrecks to the metal of the plaques and heads: the brass came from ores in Germany's Rhineland, more than 6,000 km away.",
+  "move": "A name given by collectors describes the collectors, not the thing.",
+  "trap": "Trusting the name bronze, which collectors used for any cast copper alloy.",
+  "keywords": [
+    "benin bronzes",
+    "brass",
+    "manillas",
+    "rhineland",
+    "lead isotopes"
+  ],
+  "era": "early_modern",
+  "region": "africa",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Skowronek et al., PLOS ONE, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0283415",
+  "written": "2026-09-26"
+}

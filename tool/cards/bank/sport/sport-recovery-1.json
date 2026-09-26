@@ -1,0 +1,33 @@
+{
+  "id": "sport-recovery-1",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If lactic acid is not to blame, what makes muscles ache a day or two after unusual exercise?",
+  "answer": "Small-scale damage from lengthening contractions, and the inflammation that repairs it. Lactate returns to resting levels within about an hour of stopping, long before the ache begins. The worst soreness follows work where muscles brake under load, such as running downhill, which produces little lactate at all.",
+  "move": "If the pain arrives after the suspect has left, look for another cause.",
+  "keywords": [
+    "muscle soreness",
+    "lactate",
+    "eccentric contractions",
+    "downhill running",
+    "inflammation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cheung, Hume & Maxwell, Sports Medicine, 2003",
+  "source_kind": "paper",
+  "reference": "Cheung, Hume & Maxwell, Delayed onset muscle soreness: treatment strategies and performance factors, Sports Medicine, 2003",
+  "written": "2026-09-26"
+}

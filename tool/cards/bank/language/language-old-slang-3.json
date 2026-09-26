@@ -1,0 +1,38 @@
+{
+  "id": "language-old-slang-3",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the British word yob began as boy spelled backwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Yob comes from back slang, a code of London costermongers, the street traders who reversed words so customers could not follow: yob for boy, esclop for police. John Camden Hotten recorded it in his slang dictionary of 1859. The code faded, and a word for a boy became a word for a lout.",
+  "move": "Not every neat origin story is a myth; check before scoffing.",
+  "trap": "A reversal that neat sounds like a later joke about the word.",
+  "keywords": [
+    "yob",
+    "back slang",
+    "costermongers",
+    "john camden hotten"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Green's Dictionary of Slang, 2010",
+  "source_kind": "reference_work",
+  "reference": "Green, Green's Dictionary of Slang, Chambers, 2010",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-scoring-5",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A tennis server wins 55% of points, each independently. About what share of service games does he win?",
+  "options": [
+    "About 55%",
+    "About 80%",
+    "About 62%"
+  ],
+  "correct": 2,
+  "answer": "About 62%. A game needs four points and a two-point margin, so a small edge on each point compounds: all the paths through 40-15 and deuce are tilted the same way. At 60% of points the figure is about 74%. Sets and matches magnify it again, which is how small edges become lopsided scorelines.",
+  "move": "A small edge repeated through a winner-takes-all format becomes a large one.",
+  "trap": "Expecting the share of games to mirror the share of points.",
+  "keywords": [
+    "tennis scoring",
+    "service games",
+    "probability",
+    "deuce"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newton & Keller, Studies in Applied Mathematics, 2005",
+  "source_kind": "paper",
+  "reference": "Newton & Keller, Probability of winning at tennis I. Theory and data, Studies in Applied Mathematics, 2005",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "cinema-foley-1",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the first Foley track made for a film that had already been shot?",
+  "answer": "Because the film was shot silent. Universal made Show Boat in 1928 as a silent, then had to give it sound once talkies took over. Jack Foley's small crew projected it on a wall and performed the footsteps, doors and rustles live, into one microphone, in one continuous take.",
+  "move": "Many lasting methods began as a patch for someone else's deadline.",
+  "keywords": [
+    "jack foley",
+    "show boat",
+    "universal pictures",
+    "conversion to sound"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CineMontage, Motion Picture Editors Guild",
+  "source_kind": "news_archive",
+  "reference": "https://cinemontage.org/foley-noises-for-talkies/",
+  "written": "2026-09-26"
+}

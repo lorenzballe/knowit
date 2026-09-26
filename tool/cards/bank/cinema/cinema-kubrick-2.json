@@ -1,0 +1,35 @@
+{
+  "id": "cinema-kubrick-2",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "also": [
+    "technology.old_machines.mainframes"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did 2001: A Space Odyssey fill its spaceship screens with moving computer readouts in 1968?",
+  "answer": "Without computers. The readouts were drawings, animated and shot on film, then back-projected onto the screens from projectors hidden behind the set, each loop timed to the action. No machine of the day could draw such images live. The film's vision of computing was painted by hand, one frame at a time.",
+  "move": "Check whether a picture of the future was made with the tools of the past.",
+  "keywords": [
+    "rear projection",
+    "computer displays",
+    "hal 9000",
+    "animation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Agel, The Making of Kubrick's 2001",
+  "source_kind": "book",
+  "reference": "Agel (ed.), The Making of Kubrick's 2001, Signet, 1970",
+  "written": "2026-09-26"
+}

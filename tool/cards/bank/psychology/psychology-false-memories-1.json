@@ -1,0 +1,32 @@
+{
+  "id": "psychology-false-memories-1",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Pooling eight studies that planted invented childhood events, how often did people come to remember the event?",
+  "answer": "About three times in ten. Scoboria and colleagues recoded 423 cases from eight studies with one scheme: 30.4% counted as false memories, and another 23% accepted the event without recalling it. Where the suggestion carried personal details and an instruction to imagine, with no photograph, the rate reached 46%.",
+  "move": "Ask whether a memory could have been assembled from what others told you.",
+  "keywords": [
+    "implanted memories",
+    "childhood events",
+    "mega-analysis",
+    "suggestion"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Scoboria et al., Memory, 2017",
+  "source_kind": "paper",
+  "reference": "Scoboria, Wade, Lindsay, Azad, Strange, Ost & Hyman, A mega-analysis of memory reports from eight peer-reviewed false memory implantation studies, Memory, 2017",
+  "written": "2026-09-26"
+}

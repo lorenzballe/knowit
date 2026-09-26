@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-sneezes-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which part of the brain coordinates the sequence of a sneeze?",
+  "options": [
+    "The cerebral cortex",
+    "The brainstem",
+    "The hypothalamus"
+  ],
+  "correct": 1,
+  "answer": "The brainstem. A sneezing centre in the lateral medulla runs the sequence: a deep breath, a closed throat, then a blast through nose and mouth. A patient whose stroke damaged that area still felt the tickle in the nose but could no longer sneeze. The nose only raises the alarm.",
+  "move": "Feeling an urge and carrying it out can live in different places.",
+  "trap": "Assuming a blast this forceful needs the thinking brain in charge.",
+  "keywords": [
+    "sneezing centre",
+    "brainstem",
+    "medulla",
+    "stroke"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seijo-Martínez et al., JNNP, 2006",
+  "source_kind": "primary_document",
+  "reference": "Seijo-Martínez et al., Sneeze related area in the medulla: localisation of the human sneezing centre?, Journal of Neurology, Neurosurgery & Psychiatry, 2006",
+  "written": "2026-09-26"
+}

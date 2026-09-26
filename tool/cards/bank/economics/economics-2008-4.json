@@ -1,0 +1,39 @@
+{
+  "id": "economics-2008-4",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: the US Treasury lost money on the capital it put into banks during the 2008 crisis?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Under the Capital Purchase Programme the Treasury bought about $205 billion of shares in over 700 banks, and repayments, dividends and the sale of warrants brought back more than that. The losses in the bailouts fell elsewhere, on the car makers and on some small banks that never repaid.",
+  "move": "A headline sum authorised is not a sum spent, still less one lost.",
+  "trap": "Recalling the $700 billion bailout headline as money spent and gone.",
+  "keywords": [
+    "tarp",
+    "capital purchase program",
+    "bank bailouts",
+    "us treasury",
+    "warrants"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Treasury, TARP reports to Congress",
+  "source_kind": "institution",
+  "reference": "US Department of the Treasury, Troubled Asset Relief Program: Monthly Report to Congress, 2023",
+  "written": "2026-09-26"
+}

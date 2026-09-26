@@ -1,0 +1,36 @@
+{
+  "id": "language-dialects-3",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "also": [
+    "language.writing_systems.chinese_characters"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Cantonese called a Chinese dialect when Mandarin speakers cannot understand it?",
+  "answer": "Because the Chinese term, fāngyán, means regional speech and says nothing about mutual understanding. Cantonese and Mandarin differ in sounds, tones, much vocabulary and some grammar, and neither is understood by the other's speakers untaught. What unites them is one written standard and one state. Victor Mair proposed topolect as a truer translation.",
+  "move": "A translated label can smuggle in a claim the original never made.",
+  "keywords": [
+    "cantonese",
+    "mandarin",
+    "fangyan",
+    "topolect",
+    "victor mair"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mair, Sino-Platonic Papers, 1991",
+  "source_kind": "paper",
+  "reference": "Mair, What Is a Chinese Dialect/Topolect?, Sino-Platonic Papers 29, 1991",
+  "written": "2026-09-26"
+}

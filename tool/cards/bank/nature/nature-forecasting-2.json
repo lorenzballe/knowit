@@ -1,0 +1,33 @@
+{
+  "id": "nature-forecasting-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to Britain's first public weather forecasts after the man who began them died?",
+  "answer": "They were stopped. Robert FitzRoy, head of a small government weather office, began printing daily forecasts in The Times in 1861. After his death in 1865, a Royal Society review judged them to lack a scientific basis, and they ended in 1866. Protests from ports and shipping soon brought the storm warnings back.",
+  "move": "Judge a practice by what goes wrong when it stops.",
+  "keywords": [
+    "robert fitzroy",
+    "the times",
+    "storm warnings",
+    "royal society",
+    "met office"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moore, The Weather Experiment, 2015",
+  "source_kind": "book",
+  "reference": "Moore, The Weather Experiment: The Pioneers Who Sought to See the Future, Chatto & Windus, 2015",
+  "written": "2026-09-26"
+}

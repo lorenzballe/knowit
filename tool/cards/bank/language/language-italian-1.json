@@ -1,0 +1,32 @@
+{
+  "id": "language-italian-1",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Castiglione have to invent the Italian word sprezzatura?",
+  "answer": "Because no word named what he meant: a studied carelessness that hides all effort. In The Book of the Courtier, 1528, he offers it as perhaps a new word. The paradox was the point: the courtier rehearses so that his grace looks unrehearsed, like a dancer whose practice nobody is allowed to see.",
+  "move": "When something looks effortless, ask how much effort went into the look.",
+  "keywords": [
+    "sprezzatura",
+    "baldassare castiglione",
+    "book of the courtier",
+    "renaissance"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Castiglione, The Book of the Courtier, 1528",
+  "source_kind": "primary_document",
+  "reference": "Castiglione, The Book of the Courtier, trans. George Bull, Penguin Classics, 1967",
+  "written": "2026-09-26"
+}

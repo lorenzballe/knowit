@@ -1,0 +1,32 @@
+{
+  "id": "cinema-marketing-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes a film four-quadrant, and why do studios chase that label?",
+  "answer": "It sells to all four quarters of the audience, split by sex and by age under or over 25. Most films reach one or two. Only a film that reaches all four justifies the largest release and advertising budget, which is why blockbusters pack in action, romance, adult jokes and a family rating.",
+  "move": "When one product must please everyone, look for the parts added for each group.",
+  "keywords": [
+    "four-quadrant film",
+    "audience segments",
+    "film marketing",
+    "blockbusters"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, The Big Picture, 2005",
+  "source_kind": "book",
+  "reference": "Epstein, The Big Picture: The New Logic of Money and Power in Hollywood, Random House, 2005",
+  "written": "2026-09-26"
+}

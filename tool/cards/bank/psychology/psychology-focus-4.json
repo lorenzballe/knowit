@@ -1,0 +1,32 @@
+{
+  "id": "psychology-focus-4",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How soon does attention start to fail during a long watch for rare signals?",
+  "answer": "Within the first half hour. Working for the RAF, Norman Mackworth had people watch a clock hand that jumped every second and report its rare double jumps. Misses rose within 30 minutes and kept rising over a two-hour watch. Nothing on the dial had changed except the time spent staring at it.",
+  "move": "Schedule the relief before the watcher feels tired, not after.",
+  "keywords": [
+    "vigilance",
+    "mackworth clock",
+    "radar",
+    "royal air force"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mackworth, Quarterly J Experimental Psychology, 1948",
+  "source_kind": "paper",
+  "reference": "Mackworth, The breakdown of vigilance during prolonged visual search, Quarterly Journal of Experimental Psychology, 1948",
+  "written": "2026-09-26"
+}

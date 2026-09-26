@@ -1,0 +1,33 @@
+{
+  "id": "music-piano-2",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do the three strings on most piano notes give besides extra volume?",
+  "answer": "A long tail to the sound. Gabriel Weinreich showed in 1977 that a note's strings, never tuned perfectly alike, trade energy through the bridge. The loud first part dies fast; a quieter aftersound then lingers for seconds. A tuner's last nudge on a unison decides how long a chord hangs in the air.",
+  "move": "Two slightly different parts can outlast two identical ones.",
+  "keywords": [
+    "piano strings",
+    "unisons",
+    "aftersound",
+    "gabriel weinreich",
+    "coupled vibration"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinreich, JASA, 1977",
+  "source_kind": "paper",
+  "reference": "Weinreich, Coupled piano strings, Journal of the Acoustical Society of America, 1977",
+  "written": "2026-09-26"
+}

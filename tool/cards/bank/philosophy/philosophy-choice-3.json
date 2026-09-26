@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-choice-3",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the donkey starving between two equal haystacks is an example Jean Buridan used in his writings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. No such donkey appears in Buridan's surviving works; critics probably pinned it on him to mock his view that the will must wait until reason judges one option better. The puzzle is older: Aristotle describes a man equally hungry and thirsty, as far from food as from drink, stuck where he stands.",
+  "move": "A name attached to an idea may record who was mocked, not who wrote it.",
+  "trap": "Assuming a puzzle named after a philosopher comes from his books.",
+  "keywords": [
+    "buridan's ass",
+    "jean buridan",
+    "aristotle",
+    "indecision"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rescher, Kant-Studien, 1959",
+  "source_kind": "paper",
+  "reference": "Rescher, Choice Without Preference: A Study of the History and of the Logic of the Problem of Buridan's Ass, Kant-Studien 51, 1959",
+  "written": "2026-09-26"
+}

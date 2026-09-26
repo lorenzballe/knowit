@@ -1,0 +1,38 @@
+{
+  "id": "cinema-budgets-4",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Coming to America, a 1988 hit, showed a loss in Paramount's net-profit accounts?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Before any net profit existed, the studio's formula deducted distribution fees, overhead charged as a fixed percentage, and interest on the cost, so the hit stayed in deficit for anyone paid a share of the net. In 1990 a Los Angeles judge found parts of the formula unconscionable, in a suit over the story.",
+  "move": "Ask who wrote the definition of profit before asking whether there was any.",
+  "trap": "False, because a hit that size must be in profit on any books.",
+  "keywords": [
+    "hollywood accounting",
+    "net profit",
+    "profit participation",
+    "paramount"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "O'Donnell & McDougal, 1992",
+  "source_kind": "book",
+  "reference": "O'Donnell & McDougal, Fatal Subtraction, Doubleday, 1992",
+  "written": "2026-09-26"
+}

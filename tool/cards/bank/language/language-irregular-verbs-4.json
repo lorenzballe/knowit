@@ -1,0 +1,32 @@
+{
+  "id": "language-irregular-verbs-4",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the past tense of go the unrelated-looking word went?",
+  "answer": "It was taken from another verb. Went was the past of wend, to turn or travel. Go's own old past, eode, fell out of use in late Middle English, and went moved into the gap; wend then had to grow a new past, wended. Linguists call this patching of one verb with another suppletion.",
+  "move": "An irregular form can be a borrowed part, not a broken one.",
+  "keywords": [
+    "went",
+    "wend",
+    "suppletion",
+    "middle english"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crystal, Cambridge Encyclopedia of the English Language, 1995",
+  "source_kind": "reference_work",
+  "reference": "Crystal, The Cambridge Encyclopedia of the English Language, Cambridge University Press, 1995",
+  "written": "2026-09-26"
+}

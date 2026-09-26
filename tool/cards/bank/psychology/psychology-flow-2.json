@@ -1,0 +1,32 @@
+{
+  "id": "psychology-flow-2",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What habit of painters at work first pointed Csikszentmihalyi towards the idea of flow?",
+  "answer": "They lost interest in the finished canvas. Watching art students in the 1960s, he saw them work for hours, ignoring hunger and fatigue, then set the completed picture aside and begin another. If the finished work were the reward, it should have held their attention most. The reward seemed to lie in the painting itself.",
+  "move": "When people ignore the prize they worked for, look at the work itself.",
+  "keywords": [
+    "csikszentmihalyi",
+    "painters",
+    "intrinsic motivation",
+    "absorption"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Csikszentmihalyi, Beyond Boredom and Anxiety, 1975",
+  "source_kind": "book",
+  "reference": "Csikszentmihalyi, Beyond Boredom and Anxiety, Jossey-Bass, 1975",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-japanese-5",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where does the Japanese term shinrin-yoku, forest bathing, come from?",
+  "options": [
+    "Zen monks of medieval Kyoto",
+    "Japan's Forestry Agency in 1982",
+    "A Shinto purification rite"
+  ],
+  "correct": 1,
+  "answer": "Japan's Forestry Agency in 1982. Its director, Tomohide Akiyama, coined the phrase for a campaign to get city workers into the woods, partly to give forests a public reason to be protected. The studies of stress hormones and heart rate came later: the slogan first, the laboratory second.",
+  "move": "A word's age cannot be read from how old it sounds.",
+  "trap": "Picturing robed monks among cedars makes an ancient origin feel certain.",
+  "keywords": [
+    "shinrin-yoku",
+    "forest bathing",
+    "forestry agency",
+    "tomohide akiyama"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forest History Society, 2019",
+  "source_kind": "institution",
+  "reference": "https://foresthistory.org/wp-content/uploads/2019/06/3-Plevin_Forest_Bathing.pdf",
+  "written": "2026-09-26"
+}

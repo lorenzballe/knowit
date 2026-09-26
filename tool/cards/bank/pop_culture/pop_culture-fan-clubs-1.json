@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-fan-clubs-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who was turned away at the door of the very first World Science Fiction Convention in 1939?",
+  "answer": "Fans who would become the genre's professionals. The New York organisers, feuding with a rival club called the Futurians, barred several of its members, among them Frederik Pohl and Donald Wollheim. Pohl became a leading editor and novelist; Wollheim founded DAW Books. About 200 people attended the convention they were kept out of.",
+  "move": "Today's gatekeepers often lock out tomorrow's owners of the gate.",
+  "keywords": [
+    "worldcon",
+    "futurians",
+    "frederik pohl",
+    "donald wollheim",
+    "science fiction fandom"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Warner, All Our Yesterdays, 1969",
+  "source_kind": "book",
+  "reference": "Harry Warner Jr., All Our Yesterdays: An Informal History of Science Fiction Fandom in the Forties, Advent Publishers, 1969",
+  "written": "2026-09-26"
+}

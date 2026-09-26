@@ -1,0 +1,40 @@
+{
+  "id": "sport-balls-1",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The 2014 World Cup ball had six panels, two fewer than the 2010 ball. How did its total seam length compare?",
+  "options": [
+    "About a quarter shorter",
+    "Almost exactly the same",
+    "About two-thirds longer"
+  ],
+  "correct": 2,
+  "answer": "About two-thirds longer: 327 cm of seam against 203 cm. Its panels were shaped like pinwheel arms, so fewer pieces still meant more edge. Seams roughen a ball and shift the speed at which its drag suddenly drops; the smoother 2010 ball met that change near free-kick speeds and was notorious for wobbling.",
+  "move": "When shapes change, count the edges, not the number of pieces.",
+  "trap": "Fewer panels sounds like fewer seams, so a shorter total.",
+  "keywords": [
+    "brazuca",
+    "jabulani",
+    "seams",
+    "aerodynamic drag",
+    "world cup ball"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goff, Asai & Hong, Proc IMechE, 2014",
+  "source_kind": "paper",
+  "reference": "Goff, Asai & Hong, A comparison of Jabulani and Brazuca non-spin aerodynamics, Proceedings of the Institution of Mechanical Engineers Part P, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sport-shoes-3",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A shoe cuts an elite marathoner's energy cost at race pace by 4%. Roughly how much faster can they run?",
+  "options": [
+    "About 8% faster",
+    "About 2.5% faster",
+    "About 4% faster"
+  ],
+  "correct": 1,
+  "answer": "About 2.5% faster. The energy needed rises faster than speed, partly because air resistance climbs steeply as a runner speeds up, so a 4% saving buys only about two-thirds as much pace. Kipp, Kram and Hoogkamer put it at 2 to 3%. For a 2:04 marathoner, that is still about three minutes.",
+  "move": "Before turning a saving into a result, ask whether costs rise in a straight line.",
+  "trap": "Assuming a saving in effort converts one for one into speed.",
+  "keywords": [
+    "running economy",
+    "marathon",
+    "air resistance",
+    "super shoes",
+    "pace"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kipp, Kram & Hoogkamer, Frontiers in Physiology, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.3389/fphys.2019.00079",
+  "written": "2026-09-26"
+}

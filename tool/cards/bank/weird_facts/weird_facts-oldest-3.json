@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-oldest-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "also": [
+    "nature.extinction.bringing_back"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What has yielded the oldest DNA sequenced so far?",
+  "options": [
+    "A dinosaur fossil",
+    "Frozen sediment in Greenland",
+    "A Siberian mammoth tooth"
+  ],
+  "correct": 1,
+  "answer": "Frozen sediment in Greenland. Soil from Kap København, about 2 million years old, held DNA fragments from mastodons, reindeer, hares and forest plants. Mammoth teeth from Siberia gave DNA over a million years old. Dinosaur bones, 66 million years and older, have given none: DNA breaks down long before that.",
+  "move": "Judge what survives by its chemistry, not by the size of the creature.",
+  "trap": "Bones last for millions of years, so their DNA seems to last too.",
+  "keywords": [
+    "ancient dna",
+    "kap københavn",
+    "greenland",
+    "mastodon",
+    "mammoth"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Kjær et al., Nature, 2022",
+  "source_kind": "paper",
+  "reference": "Kjær et al., A 2-million-year-old ecosystem in Greenland uncovered by environmental DNA, Nature, 2022",
+  "written": "2026-09-26"
+}

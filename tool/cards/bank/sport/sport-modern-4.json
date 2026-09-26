@@ -1,0 +1,42 @@
+{
+  "id": "sport-modern-4",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A Paris 2024 gold medal weighs 529 g and holds about 6 g of gold. What percentage of it is gold?",
+  "value": 1.1,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "0.011 × 100 ≈ 1.1 percent.",
+  "move": "Check whether a name describes the surface or the substance.",
+  "trap": "Assuming an Olympic gold medal is mostly made of gold.",
+  "hint": "Divide the mass of gold by the mass of the whole medal.",
+  "steps": [
+    "6 ÷ 529 ≈ 0.011.",
+    "0.011 × 100 ≈ 1.1 percent."
+  ],
+  "keywords": [
+    "gold medal",
+    "paris 2024",
+    "silver",
+    "gold plating",
+    "medals"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oxford Economics, Paris gold medal, 2024",
+  "source_kind": "institution",
+  "reference": "https://www.oxfordeconomics.com/resource/economists-notebook-how-much-is-a-paris-olympic-gold-medal-worth/",
+  "written": "2026-09-26"
+}

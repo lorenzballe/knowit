@@ -1,0 +1,33 @@
+{
+  "id": "sport-scoring-2",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did international volleyball stop letting only the serving team score?",
+  "answer": "To make matches fit a schedule. Under side-out scoring a long run of rallies could pass with no point at all, so nobody could say how long a match would last. In 1999 the international federation switched to rally scoring, a point on every rally, and match lengths became predictable enough to sell to television.",
+  "move": "When something must fit a schedule, expect its rules to bend to the clock.",
+  "keywords": [
+    "volleyball",
+    "rally scoring",
+    "side-out scoring",
+    "television",
+    "fivb"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LSU Athletics, a point on every play",
+  "source_kind": "institution",
+  "reference": "https://lsusports.net/news/2006/08/21/549142/",
+  "written": "2026-09-26"
+}

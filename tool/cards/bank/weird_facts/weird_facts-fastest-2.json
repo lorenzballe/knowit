@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-fastest-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A Californian mite runs 322 body lengths per second. At that rate, how fast would a 1.8 m person run, in km/h?",
+  "value": 2087,
+  "unit": "km/h",
+  "tolerance": 5,
+  "answer": "About 2,087 km/h, faster than sound in air.",
+  "move": "Scale a record to size before comparing it with another.",
+  "trap": "Picturing a tiny mite as slow because its absolute speed is low.",
+  "hint": "Turn body lengths per second into metres per second first.",
+  "steps": [
+    "322 body lengths × 1.8 m = 579.6 m per second.",
+    "579.6 m/s × 3.6 = 2,086.6 km/h.",
+    "About 2,087 km/h, faster than sound in air."
+  ],
+  "keywords": [
+    "paratarsotomus macropalpis",
+    "mite",
+    "body lengths per second",
+    "relative speed"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubin, Wright et al., Experimental Biology, 2014",
+  "source_kind": "arithmetic",
+  "reference": "Rubin, Wright et al., Paratarsotomus macropalpis running speed, FASEB Journal abstract, Experimental Biology 2014",
+  "written": "2026-09-26"
+}

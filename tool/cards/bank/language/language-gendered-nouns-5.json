@@ -1,0 +1,38 @@
+{
+  "id": "language-gendered-nouns-5",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in the Spanish phrase el agua fría, agua is a feminine noun?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The adjective gives it away: fría, not frío. Before a feminine noun beginning with a stressed a sound, Spanish uses el, a survival of the old article ela that lost its final vowel. The same happens in el águila, the eagle, and el hacha, the axe; in the plural, las aguas returns.",
+  "move": "Judge a word by everything that agrees with it, not by one neighbour.",
+  "trap": "El is the masculine article, so the noun after it looks masculine.",
+  "keywords": [
+    "spanish",
+    "articles",
+    "grammatical gender",
+    "agua"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Real Academia Española, Nueva gramática, 2009",
+  "source_kind": "reference_work",
+  "reference": "Real Academia Española, Nueva gramática de la lengua española, Espasa, 2009",
+  "written": "2026-09-26"
+}

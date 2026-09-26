@@ -1,0 +1,32 @@
+{
+  "id": "language-old-slang-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which ordinary English word did Jonathan Swift attack in 1710 as a vulgar new clipping?",
+  "answer": "Mob. Short for mobile vulgus, the fickle crowd, it was about thirty years old when Swift, writing in The Tatler, listed it with rep, pozz and phizz among the abbreviations spoiling the language. Mob became plain English; pozz, for positive, vanished. The complaint is remembered mostly because one of its targets survived.",
+  "move": "Today's sloppy shortcut is often tomorrow's dictionary word.",
+  "keywords": [
+    "jonathan swift",
+    "mob",
+    "the tatler",
+    "clipping"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swift, The Tatler, No. 230, 1710",
+  "source_kind": "primary_document",
+  "reference": "Swift, The Tatler No. 230 (1710), in Davis (ed.), The Prose Works of Jonathan Swift, vol. 2, Blackwell, 1939",
+  "written": "2026-09-26"
+}

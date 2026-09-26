@@ -1,0 +1,32 @@
+{
+  "id": "music-reverb-1",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the lush reverb on records cut in Capitol's Hollywood tower come from?",
+  "answer": "From concrete rooms under a car park. Les Paul helped design echo chambers about 9 metres below the Capitol Tower: four built with it in 1956, four more added in 1969. A loudspeaker played the mix into a trapezoid of lacquered concrete, and a microphone caught what came back, up to five seconds of it.",
+  "move": "Behind a famous sound, look for the room nobody photographs.",
+  "keywords": [
+    "echo chambers",
+    "capitol studios",
+    "les paul",
+    "hollywood"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Universal Audio, Capitol Chambers",
+  "source_kind": "company",
+  "reference": "https://www.uaudio.com/products/capitol-chambers",
+  "written": "2026-09-26"
+}

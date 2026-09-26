@@ -1,0 +1,33 @@
+{
+  "id": "music-bach-3",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much evidence is there that Bach wrote the Goldberg Variations for a count who could not sleep?",
+  "answer": "Very little. The story comes from Forkel's biography of 1802, sixty years later. The 1741 print carries no dedication to Count Keyserlingk, and Johann Gottlieb Goldberg, the harpsichordist said to have played them at night, was about 14. Bach issued them as the fourth part of his Clavier-Übung, a published keyboard series.",
+  "move": "Date the anecdote, then date the thing it explains.",
+  "keywords": [
+    "goldberg variations",
+    "forkel",
+    "keyserlingk",
+    "clavier-übung",
+    "harpsichord"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williams, Bach: The Goldberg Variations, 2001",
+  "source_kind": "book",
+  "reference": "Williams, Bach: The Goldberg Variations, Cambridge Music Handbooks, Cambridge University Press, 2001",
+  "written": "2026-09-26"
+}

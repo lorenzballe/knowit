@@ -1,0 +1,39 @@
+{
+  "id": "human_body-balance-4",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A doctor loses both inner-ear balance organs to an antibiotic. What troubles him most in daylight?",
+  "options": [
+    "Constant spinning vertigo",
+    "Falling whenever he stands still",
+    "The world jiggling as he walks"
+  ],
+  "correct": 2,
+  "answer": "The world jiggling as he walks. Without the reflex that turns the eyes against each head movement, every footstep shakes the image. A physician who lost both organs to streptomycin wrote in 1952 that he could read in bed only with his head held still between the bars of the bedstead.",
+  "move": "A failure spread evenly is harder to feel than a lopsided one.",
+  "trap": "Equating a lost balance organ with spinning dizziness.",
+  "keywords": [
+    "vestibular loss",
+    "oscillopsia",
+    "streptomycin",
+    "vestibulo-ocular reflex"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "J.C., New England Journal of Medicine, 1952",
+  "source_kind": "paper",
+  "reference": "J.C., Living without a balancing mechanism, New England Journal of Medicine, 1952",
+  "written": "2026-09-26"
+}

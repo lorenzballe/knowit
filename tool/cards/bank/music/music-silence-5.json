@@ -1,0 +1,38 @@
+{
+  "id": "music-silence-5",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can a recorded track of pure silence infringe the copyright of another silent piece?",
+  "sides": [
+    "Yes, it can",
+    "No, it cannot"
+  ],
+  "answer": "What 4′33″ owns is not silence but the act of framing it as a work, with a title and a composer's name. In 2002 Mike Batt put a silent track on an album and credited it Batt and Cage; Cage's publisher claimed, and Batt paid a settlement. Borrowing a famous idea is still borrowing.",
+  "move": "Whichever side you took, the hinge is whether a framing idea can be property.",
+  "counterpoint": "Copyright protects expression, and silence has nothing to copy: no notes, no rhythm, no words. If a minute of nothing can infringe, so can every pause and blank track on every record, and an idea becomes property. The Batt case was settled out of court, so no judge ever ruled that silence can be owned.",
+  "keywords": [
+    "mike batt",
+    "john cage",
+    "copyright",
+    "silence",
+    "settlement"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BBC News, 2002",
+  "source_kind": "news_archive",
+  "reference": "BBC News, Composer pays for piece of silence, 23 September 2002",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-tallest-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens now to a hiker caught visiting Hyperion, the tallest known living tree?",
+  "answer": "They risk up to six months in jail and a $5,000 fine. In 2022 Redwood National Park closed the area around the tree, about 116 m tall, after visitors trampled its base and left rubbish and human waste. Its fame, from a location posted online, had become the threat.",
+  "move": "Publishing where a rare thing is can be the thing that harms it.",
+  "keywords": [
+    "hyperion",
+    "redwood national park",
+    "coast redwood",
+    "trail closure"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Park Service, Redwood National Park, 2022",
+  "source_kind": "institution",
+  "reference": "National Park Service, Redwood National and State Parks, Hyperion area closure notice, July 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-style-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who publicly condemned fashion photography's heroin chic look in 1997, and what prompted it?",
+  "answer": "The President of the United States. In May 1997 Bill Clinton accused the fashion industry of glamorising addiction, after the 20-year-old fashion photographer Davide Sorrenti died that February; heroin use was reported as a factor. The gaunt, hollow-eyed look had sold clothes and fragrance in magazines for several years before it was named in the White House.",
+  "move": "A style is judged by its effects only once someone is harmed.",
+  "keywords": [
+    "heroin chic",
+    "bill clinton",
+    "davide sorrenti",
+    "fashion photography"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Public Papers of the Presidents, 1997",
+  "source_kind": "primary_document",
+  "reference": "Public Papers of the Presidents of the United States: William J. Clinton, 1997, Book I, US Government Printing Office, 1998",
+  "written": "2026-09-26"
+}

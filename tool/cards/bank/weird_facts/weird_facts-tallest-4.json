@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-tallest-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: an antenna fixed on a skyscraper's roof counts towards its official height?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Council on Tall Buildings and Urban Habitat counts spires, built as part of the design, but not antennas, flagpoles or signs. The line is a judgement: in 2013 it ruled One World Trade Center's 124 m mast a spire, which made the tower 541 m, a height chosen to echo 1776.",
+  "move": "When a ranking settles a contest, read the rule before the result.",
+  "trap": "Height seems to be simply the highest point anything reaches.",
+  "keywords": [
+    "one world trade center",
+    "ctbuh",
+    "antenna",
+    "spire",
+    "height criteria"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, November 2013",
+  "source_kind": "news_archive",
+  "reference": "The New York Times, One World Trade Center height ruling, 12 November 2013",
+  "written": "2026-09-26"
+}

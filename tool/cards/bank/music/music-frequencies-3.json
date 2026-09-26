@@ -1,0 +1,41 @@
+{
+  "id": "music-frequencies-3",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A piano's lowest A vibrates at 27.5 Hz and its highest A at 3,520 Hz. How many octaves apart are they?",
+  "value": 7,
+  "unit": "octaves",
+  "answer": "128 = 2 x 2 x 2 x 2 x 2 x 2 x 2, so 7 octaves.",
+  "move": "When each step multiplies, count the doublings, not the differences.",
+  "trap": "Treating octaves as equal gaps in hertz rather than equal ratios.",
+  "hint": "Ask how many times 27.5 must be doubled to reach 3,520.",
+  "steps": [
+    "Each octave up doubles the frequency.",
+    "3,520 / 27.5 = 128.",
+    "128 = 2 x 2 x 2 x 2 x 2 x 2 x 2, so 7 octaves."
+  ],
+  "keywords": [
+    "octaves",
+    "piano range",
+    "hertz",
+    "doubling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Standard piano tuning, A4 = 440 Hz",
+  "source_kind": "standard",
+  "reference": "ISO 16:1975, Acoustics: Standard tuning frequency (standard musical pitch)",
+  "written": "2026-09-26"
+}

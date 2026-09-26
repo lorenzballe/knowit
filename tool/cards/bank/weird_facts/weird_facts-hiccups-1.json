@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-hiccups-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a human hiccup have in common with the breathing of a tadpole?",
+  "answer": "Possibly its wiring. A tadpole pumps water over its gills while its glottis shuts to keep water out of its lungs; a hiccup is a sudden intake cut off by the glottis slamming shut. Straus and colleagues noted that carbon dioxide damps both. The hic may be a gill-breathing circuit the brainstem never deleted.",
+  "move": "An odd habit of the body can be a leftover from an older job.",
+  "keywords": [
+    "hiccups",
+    "tadpoles",
+    "glottis",
+    "brainstem",
+    "evolution"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Straus et al., BioEssays, 2003",
+  "source_kind": "reference_work",
+  "reference": "Straus et al., A phylogenetic hypothesis for the origin of hiccough, BioEssays, 2003",
+  "written": "2026-09-26"
+}

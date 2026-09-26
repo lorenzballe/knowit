@@ -1,0 +1,41 @@
+{
+  "id": "music-film-scores-4",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A cue must hit 45 feet into a 35 mm reel; film runs 16 frames a foot, 24 a second. How many seconds in?",
+  "value": 30,
+  "unit": "seconds",
+  "answer": "720 / 24 = 30 seconds.",
+  "move": "Convert to the unit the machine counts in, then convert back.",
+  "trap": "Treating feet of film as if they mapped to seconds one to one.",
+  "hint": "Turn the length of film into frames first.",
+  "steps": [
+    "45 feet x 16 frames = 720 frames.",
+    "720 / 24 = 30 seconds."
+  ],
+  "keywords": [
+    "35 mm film",
+    "frames",
+    "cue sheets",
+    "film composers",
+    "timing"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karlin & Wright, On the Track, 2004",
+  "source_kind": "book",
+  "reference": "Karlin and Wright, On the Track: A Guide to Contemporary Film Scoring, 2nd edition, Routledge, 2004",
+  "written": "2026-09-26"
+}

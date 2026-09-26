@@ -1,0 +1,32 @@
+{
+  "id": "psychology-forgetting-curve-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Ebbinghaus's forgetting experiment was repeated in 2015, what bump appeared in the curve, and at what delay?",
+  "answer": "A rise at 24 hours. One of the authors spent 70 hours learning and relearning syllable lists, and retention after a day was higher than the smooth curve from shorter delays predicted. The authors point to sleep. The 1880s data flatten at the same spot: 36% saved after nine hours, 34% after a day.",
+  "move": "Before smoothing a curve, check whether its lumps sit where something happens.",
+  "keywords": [
+    "forgetting curve",
+    "replication",
+    "sleep",
+    "murre and dros"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Murre & Dros, PLOS ONE, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0120644",
+  "written": "2026-09-26"
+}

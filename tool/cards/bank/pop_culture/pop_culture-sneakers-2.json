@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sneakers-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some imported canvas trainers have a thin layer of fabric glued to the sole?",
+  "answer": "To be taxed as a lower-duty kind of shoe. US tariffs classify footwear by the material of the outer sole that touches the ground, and rubber-soled canvas shoes pay far more than ones soled in textile. A felt skin over most of the tread wears off within days, but it counts at the border.",
+  "move": "When a product has a strange detail, check the rulebook it was designed around.",
+  "keywords": [
+    "tariffs",
+    "canvas shoes",
+    "outer sole",
+    "customs classification",
+    "footwear imports"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harmonized Tariff Schedule, chapter 64",
+  "source_kind": "primary_document",
+  "reference": "US International Trade Commission, Harmonized Tariff Schedule of the United States, Chapter 64: Footwear, 2024",
+  "written": "2026-09-26"
+}

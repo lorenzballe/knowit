@@ -1,0 +1,38 @@
+{
+  "id": "cinema-hits-3",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: My Big Fat Greek Wedding, 2002, never topped the North American weekend chart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Made for about $5 million, it opened in a small number of cinemas and climbed for months on word of mouth, peaking at number two. It finished with about $240 million in North America, one of the largest totals ever for a film that never led a single weekend.",
+  "move": "The loudest week and the biggest total are different contests.",
+  "trap": "A hit that big seems bound to have had a week on top.",
+  "keywords": [
+    "greek wedding film",
+    "sleeper hits",
+    "weekend chart",
+    "word of mouth"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Box Office Mojo, weekend charts 2002",
+  "source_kind": "statistics",
+  "reference": "https://www.boxofficemojo.com/title/tt0259446/",
+  "written": "2026-09-26"
+}

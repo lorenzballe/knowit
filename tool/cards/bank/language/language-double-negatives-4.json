@@ -1,0 +1,39 @@
+{
+  "id": "language-double-negatives-4",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "By logic, not unhappy should equal happy. What does it convey in ordinary English?",
+  "options": [
+    "Exactly the same as happy",
+    "The opposite of happy",
+    "A cautious middle, short of happy"
+  ],
+  "correct": 2,
+  "answer": "A cautious middle. Happy and unhappy are contraries, not contradictories: a person can be neither. Negating unhappy lands in that gap, which is why the phrase hedges. Orwell mocked the habit in 1946, proposing that writers memorise the sentence about a not unblack dog chasing a not unsmall rabbit across a not ungreen field.",
+  "move": "Denying the opposite is not the same as asserting the thing.",
+  "trap": "Two negatives cancel in logic, so they should cancel in speech.",
+  "keywords": [
+    "litotes",
+    "george orwell",
+    "contraries",
+    "negation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horn, A Natural History of Negation, 1989",
+  "source_kind": "book",
+  "reference": "Horn, A Natural History of Negation, University of Chicago Press, 1989",
+  "written": "2026-09-26"
+}

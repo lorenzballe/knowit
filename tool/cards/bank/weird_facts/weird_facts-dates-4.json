@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-dates-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many leap days has a single Norwegian mother given birth on?",
+  "answer": "Three. Karin Henriksen had Heidi on 29 February 1960, Olav on 29 February 1964 and Leif-Martin on 29 February 1968, none of them induced or by caesarean. Any one birth has about a 1-in-1,461 chance of landing on a leap day. The family has held a Guinness record since 1980.",
+  "move": "Among billions of families, one-in-a-billion events have names and addresses.",
+  "keywords": [
+    "leap day",
+    "henriksen family",
+    "norway",
+    "guinness world records"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guinness World Records",
+  "source_kind": "reference_work",
+  "reference": "https://www.guinnessworldrecords.com/world-records/209723-most-siblings-born-on-leap-day",
+  "written": "2026-09-26"
+}

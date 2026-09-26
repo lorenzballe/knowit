@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-determinism-4",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Epicurus add to Democritus's atoms so that fate would not govern everything?",
+  "answer": "A swerve. Democritus's atoms moved only as earlier collisions drove them, so every future was fixed. Epicurus let atoms veer by the smallest amount, at no set time or place, and Lucretius says this breaks the bonds of fate. Cicero mocked it as an effect with no cause: a tremor in the rain of atoms.",
+  "move": "An event with no cause is not yet an event anyone chose.",
+  "keywords": [
+    "epicurus",
+    "democritus",
+    "atoms",
+    "swerve",
+    "lucretius"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lucretius, On the Nature of Things, book 2",
+  "source_kind": "book",
+  "reference": "Lucretius, On the Nature of Things II.216-293, trans. Rouse, rev. Smith, Loeb Classical Library, Harvard University Press, 1992",
+  "written": "2026-09-26"
+}

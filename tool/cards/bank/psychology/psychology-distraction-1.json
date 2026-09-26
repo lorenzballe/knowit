@@ -1,0 +1,32 @@
+{
+  "id": "psychology-distraction-1",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the popular claim that refocusing after an interruption takes about 23 minutes come from?",
+  "answer": "From timing something else. Gloria Mark's team shadowed office workers and found that an interrupted project was picked up again, on average, roughly 25 minutes later, usually after two other tasks in between. That is how long the work sat waiting, not how long a mind takes to settle after a ping.",
+  "move": "A duration means little until you know when the clock started and stopped.",
+  "keywords": [
+    "interruptions",
+    "gloria mark",
+    "office work",
+    "task switching"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mark, González & Harris, CHI, 2005",
+  "source_kind": "paper",
+  "reference": "Mark, González & Harris, No task left behind? Examining the nature of fragmented work, Proceedings of the SIGCHI Conference on Human Factors in Computing Systems, 2005",
+  "written": "2026-09-26"
+}

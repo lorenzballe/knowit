@@ -1,0 +1,41 @@
+{
+  "id": "pop_culture-streaming-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Squid Game's first season logged 1.65 billion viewing hours in 28 days. Roughly how many complete viewings is that, in millions?",
+  "value": 200,
+  "unit": "million viewings",
+  "withinFactor": 3,
+  "answer": "1,650 / 8 = about 200 million complete viewings.",
+  "move": "Convert a total into units of the thing itself before being impressed.",
+  "hint": "Find how long one full run of the season takes.",
+  "steps": [
+    "The season has 9 episodes of roughly 55 minutes each.",
+    "9 x 55 = about 495 minutes, roughly 8 hours per full viewing.",
+    "1,650 / 8 = about 200 million complete viewings."
+  ],
+  "keywords": [
+    "squid game",
+    "viewing hours",
+    "netflix",
+    "runtime"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Variety, November 2021",
+  "source_kind": "news_archive",
+  "reference": "https://variety.com/2021/digital/news/squid-game-all-time-most-popular-show-netflix-1235113196/",
+  "written": "2026-09-26"
+}

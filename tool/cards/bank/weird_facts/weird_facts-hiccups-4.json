@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-hiccups-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the one drug the US regulator has approved for hiccups is an antipsychotic?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Chlorpromazine, the first antipsychotic, from the 1950s, still carries a US licence for intractable hiccups. Doctors often try other drugs first, off licence, such as baclofen or metoclopramide, because chlorpromazine sedates and can drop blood pressure. Nothing newer is approved: a hiccup that lasts for months still meets a drug designed for psychosis.",
+  "move": "Where a problem is small, old approvals linger because nobody pays for new ones.",
+  "trap": "Expecting a minor complaint to have a mild, purpose-made remedy.",
+  "keywords": [
+    "chlorpromazine",
+    "hiccups",
+    "antipsychotics",
+    "drug approval",
+    "baclofen"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steger, Schneemann and Fox, Aliment Pharmacol Ther, 2015",
+  "source_kind": "reference_work",
+  "reference": "Steger, Schneemann and Fox, Systemic review: the pathogenesis and pharmacological treatment of hiccups, Alimentary Pharmacology & Therapeutics, 2015",
+  "written": "2026-09-26"
+}

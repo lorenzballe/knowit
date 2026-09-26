@@ -1,0 +1,43 @@
+{
+  "id": "art-first-photos-3",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Daguerre's 1839 camera lens worked at about f/14, Petzval's 1840 portrait lens at f/3.6. How many times more light did Petzval's admit?",
+  "value": 15,
+  "unit": "times",
+  "tolerance": 1,
+  "answer": "3.9 × 3.9 ≈ 15 times the light.",
+  "move": "When a width changes, ask whether what matters is an area.",
+  "trap": "Dividing the f-numbers and answering four, forgetting the opening is an area.",
+  "hint": "The f-number measures the width of the opening; light passes through an area.",
+  "steps": [
+    "Light admitted goes with the square of the ratio of f-numbers.",
+    "14 ÷ 3.6 ≈ 3.9.",
+    "3.9 × 3.9 ≈ 15 times the light."
+  ],
+  "keywords": [
+    "petzval lens",
+    "f-number",
+    "daguerreotype",
+    "portraits",
+    "exposure"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kingslake, A History of the Photographic Lens, 1989",
+  "source_kind": "book",
+  "reference": "Rudolf Kingslake, A History of the Photographic Lens, Academic Press, 1989",
+  "written": "2026-09-26"
+}

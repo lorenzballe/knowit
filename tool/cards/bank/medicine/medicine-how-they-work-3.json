@@ -1,0 +1,39 @@
+{
+  "id": "medicine-how-they-work-3",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the mRNA in the Pfizer and Moderna Covid vaccines uses the same four letters as a cell's own mRNA?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Every uridine, one of the four letters, is replaced by N1-methylpseudouridine, a close chemical cousin. Unmodified mRNA trips the cell's virus alarms and is shut down before much protein is made. Karikó and Weissman's 2005 work on the swap won a Nobel Prize in 2023. Ribosomes still read the altered letter as the original.",
+  "move": "A copy that works often had to differ from the original to get through.",
+  "trap": "Assuming a vaccine copies the virus's message letter for letter.",
+  "keywords": [
+    "mrna vaccines",
+    "pseudouridine",
+    "katalin karikó",
+    "drew weissman",
+    "nucleoside modification"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karikó et al., Immunity, 2005",
+  "source_kind": "paper",
+  "reference": "Karikó, Buckstein, Ni & Weissman, Suppression of RNA recognition by Toll-like receptors: the impact of nucleoside modification, Immunity, 2005",
+  "written": "2026-09-26"
+}

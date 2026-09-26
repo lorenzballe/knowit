@@ -1,0 +1,32 @@
+{
+  "id": "psychology-cues-3",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can an experimenter tell whether a rat pressing a lever is acting from habit or for a goal?",
+  "answer": "Spoil the reward and watch. In Adams's experiments, rats learned to press a lever for sugar, which was then made sickening by pairing it with nausea. Briefly trained rats stopped pressing; heavily trained ones went on pressing for a reward they no longer wanted. A habit is the act that outlives its reason.",
+  "move": "To learn why something is done, remove the reason and see what continues.",
+  "keywords": [
+    "outcome devaluation",
+    "rats",
+    "lever pressing",
+    "overtraining"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adams, Quarterly J Experimental Psychology, 1982",
+  "source_kind": "paper",
+  "reference": "Adams, Variations in the sensitivity of instrumental responding to reinforcer devaluation, Quarterly Journal of Experimental Psychology, 1982",
+  "written": "2026-09-26"
+}

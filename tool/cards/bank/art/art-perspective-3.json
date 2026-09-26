@@ -1,0 +1,38 @@
+{
+  "id": "art-perspective-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the perspective of Leonardo's Last Supper is built for a monk standing on the refectory floor.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The vanishing point sits at Christ's right temple, where a nail hole left by the construction lines still shows, well above any standing monk's eye. The ideal viewpoint lies high up and several metres back. Diners on the floor saw a room they could never stand in, and accepted it.",
+  "move": "A rule's inventors often bent it the moment it got in the way.",
+  "trap": "Assuming perspective always matches a real viewer's position in the room.",
+  "keywords": [
+    "leonardo da vinci",
+    "last supper",
+    "vanishing point",
+    "viewpoint"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kemp, Leonardo da Vinci, 1981",
+  "source_kind": "book",
+  "reference": "Martin Kemp, Leonardo da Vinci: The Marvellous Works of Nature and Man, J. M. Dent, 1981",
+  "written": "2026-09-26"
+}

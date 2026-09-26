@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-oldest-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: female Greenland sharks are estimated to reach breeding age at around 150 years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Dating the eye lens cores of 28 sharks, whose proteins form before birth and never renew, gave an estimated maturity age of about 150 years and lifespans of at least 272. Carbon from 1950s bomb tests marked the youngest. A shark born during the Napoleonic wars would have been ready to breed around 1950.",
+  "move": "Scale every life stage to the lifespan before judging it slow.",
+  "trap": "Most sharks mature within a few decades, so 150 sounds absurd.",
+  "keywords": [
+    "greenland shark",
+    "eye lens",
+    "radiocarbon dating",
+    "bomb pulse",
+    "maturity"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nielsen et al., Science, 2016",
+  "source_kind": "paper",
+  "reference": "Nielsen et al., Eye lens radiocarbon reveals centuries of longevity in the Greenland shark, Science, 2016",
+  "written": "2026-09-26"
+}

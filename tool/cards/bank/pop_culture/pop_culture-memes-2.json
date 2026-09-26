@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-memes-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which prank on 4chan came before the rickroll, and what started it?",
+  "answer": "The duckroll, started by a word filter. In 2006 4chan's software silently turned egg into duck, so eggroll came out as duckroll, and users began disguising links to a picture of a duck on wheels. In May 2007 someone swapped in Rick Astley's video for a much-wanted Grand Theft Auto IV trailer.",
+  "move": "Many traditions begin as a workaround for a quirk nobody meant to create.",
+  "keywords": [
+    "duckroll",
+    "rickroll",
+    "4chan",
+    "word filter",
+    "rick astley"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Know Your Meme, Duckroll",
+  "source_kind": "institution",
+  "reference": "https://knowyourmeme.com/memes/duckroll",
+  "written": "2026-09-26"
+}

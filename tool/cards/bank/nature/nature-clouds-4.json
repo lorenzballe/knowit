@@ -1,0 +1,41 @@
+{
+  "id": "nature-clouds-4",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A cloud droplet is 0.02 mm across; a small raindrop is 1 mm. How many droplets make one raindrop, in thousands?",
+  "value": 125,
+  "unit": "thousand droplets",
+  "answer": "125,000 droplets, or 125 thousand.",
+  "move": "When size grows in every direction at once, multiply the growth three times.",
+  "trap": "Answering 50, as if droplets lined up end to end.",
+  "hint": "Droplets merge by volume; compare the widths first.",
+  "steps": [
+    "1 mm / 0.02 mm = 50 times wider.",
+    "Volume goes with the cube of width: 50 x 50 x 50.",
+    "125,000 droplets, or 125 thousand."
+  ],
+  "keywords": [
+    "raindrops",
+    "cloud droplets",
+    "coalescence",
+    "volume"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pruppacher & Klett, cloud microphysics, 1997",
+  "source_kind": "book",
+  "reference": "Pruppacher & Klett, Microphysics of Clouds and Precipitation, Kluwer, 1997",
+  "written": "2026-09-26"
+}

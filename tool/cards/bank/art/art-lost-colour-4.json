@@ -1,0 +1,36 @@
+{
+  "id": "art-lost-colour-4",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "also": [
+    "history.middle_ages.cathedrals"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the first laser cleaning of a French cathedral portal reveal at Amiens?",
+  "answer": "That the stone saints had been painted. Laser cleaning of Amiens's west front from 1993 exposed traces of thirteenth-century colour under the soot. Analysis identified the pigments and where each had been, and since 1999 summer evenings have projected those colours back onto the portal with light. The grey Gothic façade is a weathered one.",
+  "move": "The plain version of an old thing is often just the worn version.",
+  "keywords": [
+    "amiens cathedral",
+    "laser cleaning",
+    "gothic portal",
+    "polychromy",
+    "light projection"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Journal of Cultural Heritage, portal cleaning",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/abs/pii/S1296207402012220",
+  "written": "2026-09-26"
+}

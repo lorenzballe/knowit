@@ -1,0 +1,33 @@
+{
+  "id": "sport-balls-5",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are tennis balls sold in sealed, pressurised tins rather than in open boxes?",
+  "answer": "Because a pressurised ball starts losing its inner gas the moment it meets ordinary air. The rules require a ball dropped from 254 cm onto concrete to rebound between 135 and 147 cm, and a leaking ball soon falls short. Sealed at matching pressure, the air in the tin keeps the air in the ball.",
+  "move": "A product that decays on contact is sold inside its own protective conditions.",
+  "keywords": [
+    "tennis ball",
+    "rebound test",
+    "pressurised tin",
+    "itf",
+    "bounce"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITF, Rules of Tennis, Appendix I",
+  "source_kind": "standard",
+  "reference": "International Tennis Federation, Rules of Tennis, Appendix I: The Ball, 2024",
+  "written": "2026-09-26"
+}

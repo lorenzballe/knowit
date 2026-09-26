@@ -1,0 +1,33 @@
+{
+  "id": "music-hooks-1",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a spoken phrase, looped enough times, start to sound like singing?",
+  "answer": "Because repetition shifts attention from meaning to pitch. Diana Deutsch looped a phrase from her own lecture, \"sometimes behave so strangely\": after a few repeats listeners hear a melody, and sing it back in tune. Nothing in the recording changes. Played once more inside the original sentence, the phrase still sounds sung.",
+  "move": "What is repeated stops being read for meaning and starts being heard as shape.",
+  "keywords": [
+    "speech-to-song illusion",
+    "diana deutsch",
+    "repetition",
+    "melody",
+    "pitch"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deutsch, Henthorn & Lapidis, JASA, 2011",
+  "source_kind": "paper",
+  "reference": "Deutsch, Henthorn & Lapidis, Illusory transformation from speech to song, Journal of the Acoustical Society of America, 2011",
+  "written": "2026-09-26"
+}

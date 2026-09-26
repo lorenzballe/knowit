@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eastern-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the parable of blind men each describing an elephant by one part appears in early Buddhist scripture?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the Udana, part of the Pali canon, the Buddha tells of a king who has blind men touch an elephant: the one at the head says a pot, the ear a winnowing basket, the tusk a ploughshare, until they come to blows. It is his picture of rival teachers clinging to partial views.",
+  "move": "Each person holding a different part can be right and still wrong.",
+  "trap": "Knowing it only from later Jain, Sufi or Victorian retellings.",
+  "keywords": [
+    "blind men and elephant",
+    "udana",
+    "pali canon",
+    "buddha",
+    "parable"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Udana 6.4, trans. Ireland, 1990",
+  "source_kind": "primary_document",
+  "reference": "Ireland, The Udana: Inspired Utterances of the Buddha, Buddhist Publication Society, 1990",
+  "written": "2026-09-26"
+}

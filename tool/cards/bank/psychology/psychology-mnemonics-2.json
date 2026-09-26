@@ -1,0 +1,32 @@
+{
+  "id": "psychology-mnemonics-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when people with ordinary memories practised the memory-palace technique for six weeks?",
+  "answer": "Their recall more than doubled, and their brains began to resemble the champions'. After 30 minutes a day of placing items along imagined routes, they recalled more than twice as many words from 72-word lists, and resting brain scans shifted towards the connectivity of top memory athletes. Most of the gain held four months later.",
+  "move": "A rare ability may be an ordinary one trained for longer.",
+  "keywords": [
+    "memory palace",
+    "memory athletes",
+    "brain connectivity",
+    "training"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dresler et al., Neuron, 2017",
+  "source_kind": "paper",
+  "reference": "Dresler, Shirer, Konrad, Müller, Wagner, Fernández, Czisch & Greicius, Mnemonic training reshapes brain networks to support superior memory, Neuron, 2017",
+  "written": "2026-09-26"
+}

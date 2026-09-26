@@ -1,0 +1,38 @@
+{
+  "id": "psychology-focus-1",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most radiologists searching lung scans for nodules missed a gorilla drawn into the images?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Drew, Võ and Wolfe inserted a gorilla 48 times the size of a typical nodule into a chest CT, and 20 of 24 radiologists missed it. Eye tracking showed that most of those who missed it had looked straight at it. Hunting for small round nodules, they did not register an ape.",
+  "move": "Expertise sharpens what you look for and blinds you to the rest.",
+  "trap": "Expecting trained experts, looking carefully, to see anything that large.",
+  "keywords": [
+    "radiologists",
+    "inattentional blindness",
+    "eye tracking",
+    "ct scans"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Drew, Võ & Wolfe, Psychological Science, 2013",
+  "source_kind": "paper",
+  "reference": "Drew, Võ & Wolfe, The invisible gorilla strikes again: sustained inattentional blindness in expert observers, Psychological Science, 2013",
+  "written": "2026-09-26"
+}

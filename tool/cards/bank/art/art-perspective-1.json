@@ -1,0 +1,41 @@
+{
+  "id": "art-perspective-1",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 3 m column 10 m from the viewer is drawn 15 cm tall. In cm, how tall is an identical column 25 m away?",
+  "value": 6,
+  "unit": "cm",
+  "answer": "15 cm / 2.5 = 6 cm.",
+  "move": "Check which numbers in a problem matter before using all of them.",
+  "trap": "Taking off a fixed amount for each extra metre of distance.",
+  "hint": "Twice as far away means half as tall on the picture.",
+  "steps": [
+    "In perspective, drawn size falls as 1 / distance.",
+    "25 m is 2.5 times as far as 10 m.",
+    "15 cm / 2.5 = 6 cm."
+  ],
+  "keywords": [
+    "linear perspective",
+    "foreshortening",
+    "leon battista alberti",
+    "proportion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alberti, On Painting, 1435",
+  "source_kind": "book",
+  "reference": "Leon Battista Alberti, On Painting, trans. John R. Spencer, Yale University Press, 1956",
+  "written": "2026-09-26"
+}

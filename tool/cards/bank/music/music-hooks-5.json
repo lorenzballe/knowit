@@ -1,0 +1,33 @@
+{
+  "id": "music-hooks-5",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes one melody far likelier than another to get stuck in the head?",
+  "answer": "A familiar shape with an odd detail. Kelly Jakubowski's team compared tunes that 3,000 people reported as earworms with matched songs that were not. The sticky ones were faster, followed a common rise-and-fall contour, and had unusual intervals: unexpected leaps, or more repeated notes than usual. A well-worn path with one strange step in it.",
+  "move": "People remember the familiar best when one thing in it is slightly wrong.",
+  "keywords": [
+    "earworms",
+    "involuntary musical imagery",
+    "melodic contour",
+    "tempo",
+    "intervals"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jakubowski et al., Psychology of Aesthetics, 2017",
+  "source_kind": "paper",
+  "reference": "Jakubowski, Finkel, Stewart & Müllensiefen, Dissecting an earworm: Melodic features and song popularity predict involuntary musical imagery, Psychology of Aesthetics, Creativity, and the Arts, 2017",
+  "written": "2026-09-26"
+}

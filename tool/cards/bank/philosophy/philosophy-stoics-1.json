@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-stoics-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "According to his ancient biographer, what turned the merchant Zeno of Citium, founder of Stoicism, to philosophy?",
+  "answer": "A shipwreck. Diogenes Laertius says Zeno lost a cargo of purple dye near Piraeus, walked up to Athens and sat reading Xenophon's memoir of Socrates in a bookshop. He asked where such men could be found; the bookseller pointed to the Cynic Crates, passing by. Zeno later said his voyage prospered when he was wrecked.",
+  "move": "Judge a disaster only after you have seen which door it opened.",
+  "keywords": [
+    "zeno of citium",
+    "shipwreck",
+    "crates",
+    "diogenes laertius",
+    "purple dye"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diogenes Laertius, Lives VII.2-5",
+  "source_kind": "primary_document",
+  "reference": "Diogenes Laertius, Lives of Eminent Philosophers VII.2-5, trans. Hicks, Loeb Classical Library, Harvard University Press, 1925",
+  "written": "2026-09-26"
+}

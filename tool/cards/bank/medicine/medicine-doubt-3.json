@@ -1,0 +1,38 @@
+{
+  "id": "medicine-doubt-3",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: a US infant vaccine was withdrawn about a year after licensing over a rare complication spotted only after launch?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. RotaShield, a rotavirus vaccine licensed in 1998, was pulled in 1999 after reports of intussusception, a telescoping of the bowel, reached a national reporting system. The excess risk was on the order of 1 in 10,000 infants. Trials of about 10,000 children could not reliably see so rare an event; mass use could.",
+  "move": "A study cannot see an event much rarer than one in its sample size.",
+  "trap": "Assuming a licensed vaccine's trials would have caught any serious harm.",
+  "keywords": [
+    "rotashield",
+    "rotavirus vaccine",
+    "intussusception",
+    "vaccine safety monitoring"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murphy et al., NEJM, 2001",
+  "source_kind": "paper",
+  "reference": "Murphy et al., Intussusception among infants given an oral rotavirus vaccine, New England Journal of Medicine, 2001",
+  "written": "2026-09-26"
+}

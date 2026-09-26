@@ -1,0 +1,38 @@
+{
+  "id": "psychology-false-memories-4",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after hearing a list of related words, people recall an unheard theme word nearly as often as heard ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Hear bed, rest, awake, tired, dream and ten more, and sleep, never spoken, comes back. In Roediger and McDermott's second experiment it was recalled 55% of the time, against 62% for words actually on the lists, and people often said they remembered hearing it.",
+  "move": "The more neatly a detail fits the story, the less its presence proves.",
+  "trap": "Trusting memory to keep what was heard apart from what was inferred.",
+  "keywords": [
+    "word lists",
+    "critical lure",
+    "false recall",
+    "gist"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roediger & McDermott, 1995",
+  "source_kind": "paper",
+  "reference": "Roediger & McDermott, Creating false memories: remembering words not presented in lists, Journal of Experimental Psychology: Learning, Memory, and Cognition, 1995",
+  "written": "2026-09-26"
+}

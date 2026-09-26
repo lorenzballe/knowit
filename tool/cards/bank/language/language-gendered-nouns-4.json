@@ -1,0 +1,41 @@
+{
+  "id": "language-gendered-nouns-4",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "also": [
+    "psychology.bias.confirmation"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: German speakers calling bridges elegant, because Brücke is feminine, is a well-replicated finding?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The bridge example comes from a 2003 book chapter whose experiments were never published in full. When Mickan, Schiefke and Stefanowitsch repeated the adjective task with German and Spanish speakers in 2014, grammatical gender had no detectable effect on the adjectives chosen. The example kept travelling through talks and articles regardless.",
+  "move": "A claim retold a hundred times has still been tested only once.",
+  "trap": "Many retellings of one study feel like many confirmations of it.",
+  "keywords": [
+    "linguistic relativity",
+    "grammatical gender",
+    "replication",
+    "bridges"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mickan et al., German Cognitive Linguistics Yearbook, 2014",
+  "source_kind": "paper",
+  "reference": "Mickan, Schiefke & Stefanowitsch, Key is a llave is a Schlüssel: A failure to replicate an experiment from Boroditsky et al. 2003, Yearbook of the German Cognitive Linguistics Association, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-cold-chain-5",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: many solar vaccine fridges in off-grid clinics stay cold through the night with no battery at all?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Solar direct-drive fridges, prequalified by the WHO from 2010, run their compressor only while the sun shines and freeze a bank of ice. That frozen store keeps the vaccine cold overnight and through cloudy days. Batteries were dropped because in hot clinics they wore out quickly and were costly to replace.",
+  "move": "Store the thing you need, not the energy to make it later.",
+  "trap": "Assuming solar power must be kept as electricity for the night.",
+  "keywords": [
+    "solar direct drive",
+    "vaccine refrigerators",
+    "batteries",
+    "ice storage",
+    "off-grid clinics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCarney et al., Vaccine, 2013",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/pii/S0264410X13010670",
+  "written": "2026-09-26"
+}

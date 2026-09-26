@@ -1,0 +1,39 @@
+{
+  "id": "language-lost-scripts-4",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Etruscan inscriptions can be read aloud with confidence, yet the language is still largely not understood?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Etruscan was written in an alphabet adapted from Greek, so its sounds are known. But the language is unrelated to Latin, Greek or any living tongue, and most of its roughly 13,000 inscriptions are short epitaphs and dedications. The longest text survived as linen strips wrapped round an Egyptian mummy, now in Zagreb.",
+  "move": "Sounding out a message and understanding it are separate problems.",
+  "trap": "Being able to read a script feels like understanding it.",
+  "keywords": [
+    "etruscan",
+    "inscriptions",
+    "liber linteus",
+    "zagreb mummy",
+    "greek alphabet"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bonfante & Bonfante, The Etruscan Language, 2002",
+  "source_kind": "book",
+  "reference": "Bonfante & Bonfante, The Etruscan Language: An Introduction, 2nd ed., Manchester University Press, 2002",
+  "written": "2026-09-26"
+}

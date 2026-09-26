@@ -1,0 +1,41 @@
+{
+  "id": "psychology-breaking-them-2",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "After six months, 22% of smokers told to quit abruptly were abstinent, against 15.5% told to cut down first. How many must quit abruptly for one extra success?",
+  "value": 15,
+  "unit": "smokers",
+  "answer": "About 15 smokers.",
+  "move": "Turn two rates into extra successes per hundred before judging a difference.",
+  "trap": "Comparing the two rates as a ratio instead of a difference.",
+  "hint": "Work out how many extra quitters per 100 smokers the abrupt route gives.",
+  "steps": [
+    "22 − 15.5 = 6.5 extra abstainers per 100 smokers.",
+    "100 ÷ 6.5 ≈ 15.4.",
+    "About 15 smokers."
+  ],
+  "keywords": [
+    "smoking cessation",
+    "cold turkey",
+    "randomised trial",
+    "number needed to treat"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lindson-Hawley et al., Annals of Internal Medicine, 2016",
+  "source_kind": "paper",
+  "reference": "Lindson-Hawley, Banting, West, Michie, Shinkins & Aveyard, Gradual versus abrupt smoking cessation: a randomized, controlled noninferiority trial, Annals of Internal Medicine, 2016",
+  "written": "2026-09-26"
+}

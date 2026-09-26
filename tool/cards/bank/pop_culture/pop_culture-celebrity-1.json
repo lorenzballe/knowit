@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-celebrity-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who first described the celebrity as someone famous simply for being famous, and in what decade?",
+  "answer": "The historian Daniel Boorstin, in 1961. In The Image he called the celebrity \"a person who is known for his well-knownness\", a human version of the pseudo-event: something staged in order to be reported. He was writing about press agents and early television, decades before reality shows or influencers.",
+  "move": "Much of what gets reported happened only so that it would be reported.",
+  "keywords": [
+    "daniel boorstin",
+    "the image",
+    "pseudo-event",
+    "well-knownness"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boorstin, The Image, 1961",
+  "source_kind": "book",
+  "reference": "Daniel J. Boorstin, The Image: A Guide to Pseudo-Events in America, Atheneum, 1961",
+  "written": "2026-09-26"
+}

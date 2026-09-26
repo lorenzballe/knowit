@@ -1,0 +1,46 @@
+{
+  "id": "human_body-balance-3",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In the dark, a jet accelerates forward at 1 g. By how many degrees nose-up does the pilot feel tilted?",
+  "value": 45,
+  "unit": "degrees",
+  "answer": "The sensors read that as leaning back: 45 degrees nose-up.",
+  "move": "A sensor that measures force cannot tell a push from a lean.",
+  "trap": "Assuming the body can feel acceleration as something separate from tilt.",
+  "hint": "The inner ear's gravity sensors feel only the total pull; add the two pulls as arrows.",
+  "steps": [
+    "Gravity pulls down on the inner ear's gravity sensors at 1 g.",
+    "Accelerating forward at 1 g presses them backward with another 1 g.",
+    "Two equal pulls at right angles combine along the diagonal between them.",
+    "The sensors read that as leaning back: 45 degrees nose-up."
+  ],
+  "keywords": [
+    "somatogravic illusion",
+    "otoliths",
+    "pilots",
+    "acceleration",
+    "spatial disorientation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Previc & Ercoline, Spatial Disorientation in Aviation",
+  "source_kind": "book",
+  "reference": "Previc & Ercoline (eds), Spatial Disorientation in Aviation, AIAA, 2004",
+  "written": "2026-09-26"
+}

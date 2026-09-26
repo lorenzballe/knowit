@@ -1,0 +1,40 @@
+{
+  "id": "nature-ants-3",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Desert ants reached a feeder, then researchers glued stilts to their legs. On the walk home, what happened?",
+  "options": [
+    "They walked straight to the nest",
+    "They overshot the nest",
+    "They stopped short of it"
+  ],
+  "correct": 1,
+  "answer": "They overshot the nest. Saharan Cataglyphis ants gauge distance by counting steps: longer legs meant longer strides for the same count, so they walked past home. Ants with trimmed legs stopped short. Wittlinger, Wehner and Wolf showed in 2006 that the ant carries a pedometer, crossing sand where no scent trail would last.",
+  "move": "To learn what a system relies on, change one input and watch it err.",
+  "trap": "Ants follow scent, so the length of their legs should not matter.",
+  "keywords": [
+    "desert ants",
+    "cataglyphis",
+    "navigation",
+    "pedometer",
+    "path integration"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wittlinger, Wehner & Wolf, Science, 2006",
+  "source_kind": "paper",
+  "reference": "Wittlinger, Wehner & Wolf, The ant odometer: stepping on stilts and stumps, Science, 2006",
+  "written": "2026-09-26"
+}

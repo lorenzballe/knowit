@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-choice-5",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "also": [
+    "philosophy.free_will.determinism"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can a choice be free if, given exactly the same past, it could not have gone otherwise?",
+  "sides": [
+    "Yes, it can",
+    "No, it cannot"
+  ],
+  "answer": "Freedom means acting on your own reasons, without coercion or manipulation. A choice that flows from your character is yours even if a full history predicted it; one that could go either way from the same past would be luck, not control. About three in five philosophers surveyed in 2009 held this compatibilist view.",
+  "move": "It turns on whether freedom means acting from yourself or having real alternatives.",
+  "counterpoint": "If the laws of nature and the past fix every act, and neither the laws nor the world before your birth are up to you, then nothing you do is up to you. That is Peter van Inwagen's consequence argument. Calling a determined act free changes the word, not the fact: a thermostat also acts on its own readings.",
+  "keywords": [
+    "compatibilism",
+    "consequence argument",
+    "alternative possibilities",
+    "peter van inwagen"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bourget & Chalmers, Philosophical Studies, 2014",
+  "source_kind": "paper",
+  "reference": "Bourget & Chalmers, What do philosophers believe?, Philosophical Studies 170, 2014; van Inwagen, An Essay on Free Will, Clarendon Press, 1983",
+  "written": "2026-09-26"
+}

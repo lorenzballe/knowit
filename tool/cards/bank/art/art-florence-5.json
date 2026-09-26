@@ -1,0 +1,32 @@
+{
+  "id": "art-florence-5",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the oxen lifting stone for Florence's cathedral dome never need turning round?",
+  "answer": "Because the hoist could reverse. Brunelleschi's hoist of about 1420 had gearing that could be shifted to wind the rope the other way, so animals walking the same circle could raise or lower a load. Turning a team between lifts would have wasted much of each day. The dome rose at a steady walk.",
+  "move": "Before speeding up the work, look at the time lost between jobs.",
+  "keywords": [
+    "filippo brunelleschi",
+    "florence cathedral dome",
+    "hoist",
+    "reverse gear"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "King, Brunelleschi's Dome, 2000",
+  "source_kind": "book",
+  "reference": "Ross King, Brunelleschi's Dome: The Story of the Great Cathedral in Florence, Chatto & Windus, 2000",
+  "written": "2026-09-26"
+}

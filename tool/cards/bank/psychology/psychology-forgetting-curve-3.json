@@ -1,0 +1,38 @@
+{
+  "id": "psychology-forgetting-curve-3",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: of two memories equally strong today, the more recent one will fade more slowly?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The older one fades more slowly. Forgetting is fastest just after learning and slows with time, so a memory that has already lasted sits on the flat part of its curve. Adolf Jost stated this in 1897. A fact from years ago that is as clear as last week's is the safer bet.",
+  "move": "What has lasted a long time has already passed the tests that remove most things.",
+  "trap": "Assuming fresh means firm, because new memories feel vivid.",
+  "keywords": [
+    "jost's law",
+    "forgetting rate",
+    "memory age",
+    "consolidation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wixted, Annual Review of Psychology, 2004",
+  "source_kind": "paper",
+  "reference": "Wixted, The psychology and neuroscience of forgetting, Annual Review of Psychology, 2004",
+  "written": "2026-09-26"
+}

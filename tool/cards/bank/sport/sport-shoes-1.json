@@ -1,0 +1,33 @@
+{
+  "id": "sport-shoes-1",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people raised running barefoot mostly land on the front of the foot?",
+  "answer": "Because landing on a bare heel hurts. Filming Kenyan and American runners, Lieberman's team found habitual barefoot runners mostly touch down forefoot first, which avoids the sharp force spike a heel strike sends up the leg. Most runners in cushioned shoes land heel first and let the foam absorb that spike.",
+  "move": "Padding a problem can remove the signal that taught people to avoid it.",
+  "keywords": [
+    "barefoot running",
+    "foot strike",
+    "heel strike",
+    "running shoes",
+    "impact force"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lieberman et al., Nature, 2010",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature08723",
+  "written": "2026-09-26"
+}

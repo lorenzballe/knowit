@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-fastest-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "GPS collars tracked wild cheetahs hunting in Botswana. What mattered most in their hunts?",
+  "options": [
+    "Reaching top speed",
+    "Stamina over long chases",
+    "Acceleration, braking and turning"
+  ],
+  "correct": 2,
+  "answer": "Acceleration, braking and turning. The fastest run recorded was about 93 km/h, but most hunts were run well below that. Cheetahs won by gaining speed in a few strides, slowing hard and cutting sideways as the prey jinked. The world's fastest land animal hunts like a rally driver, not a drag racer.",
+  "move": "A headline maximum rarely describes how a thing is actually used.",
+  "trap": "The cheetah is famous for top speed, so speed must decide.",
+  "keywords": [
+    "cheetah",
+    "gps collars",
+    "acceleration",
+    "botswana",
+    "hunting"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson et al., Nature, 2013",
+  "source_kind": "paper",
+  "reference": "Wilson et al., Locomotion dynamics of hunting in wild cheetahs, Nature, 2013",
+  "written": "2026-09-26"
+}

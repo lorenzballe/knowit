@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-stoics-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Stoic teaching held that a true sage would not turn pale in a storm at sea?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Aulus Gellius watched a Stoic go white in a storm on a crossing to Brundisium and asked why. The philosopher produced a book of Epictetus: sudden terrors jolt even the wise before reason acts; the sage differs only in refusing to assent to them. The pallor was allowed; believing disaster had come was not.",
+  "move": "Judge people by what they do after the first jolt, not by the jolt.",
+  "trap": "Picturing the Stoic ideal as a man who feels nothing at all.",
+  "keywords": [
+    "aulus gellius",
+    "epictetus",
+    "fear",
+    "assent",
+    "storm"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aulus Gellius, Attic Nights 19.1",
+  "source_kind": "primary_document",
+  "reference": "Aulus Gellius, Attic Nights 19.1, trans. Rolfe, Loeb Classical Library, Harvard University Press, 1927",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-sprint-3",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A 100 m is run with a 2 m/s tailwind, the legal limit for records. How much faster than in still air?",
+  "options": [
+    "About 0.01 seconds",
+    "About 0.1 seconds",
+    "About 0.5 seconds"
+  ],
+  "correct": 1,
+  "answer": "About 0.1 seconds. Linthorne's analysis of championship races put the gain from a legal-limit tailwind at 0.10 seconds for men and 0.12 for women. That is roughly a metre at the line, more than the margin in many finals. A headwind of the same strength costs more than the tailwind gives.",
+  "move": "Measure a small push against the margins that decide the contest.",
+  "trap": "Hearing 2 m/s as a gentle breeze and pricing it near nothing.",
+  "keywords": [
+    "wind assistance",
+    "tailwind",
+    "100 metres",
+    "world records"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Linthorne, Journal of Applied Biomechanics, 1994",
+  "source_kind": "paper",
+  "reference": "https://journals.humankinetics.com/view/journals/jab/10/2/article-p110.xml",
+  "written": "2026-09-26"
+}

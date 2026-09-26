@@ -1,0 +1,40 @@
+{
+  "id": "sport-suits-4",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Midway through Sochi 2014, US long-track speed skaters swapped their new high-tech suits for older ones. What followed?",
+  "options": [
+    "Still no medals",
+    "Two medals within a week",
+    "A world record at 1,500 m"
+  ],
+  "correct": 0,
+  "answer": "Still no medals. A team that had won four long-track medals in 2010 left Sochi with none, its first shut-out since 1984, in either suit. A review months later blamed a punishing pre-Games travel schedule and new kit introduced too late, not the suit's design itself.",
+  "move": "When removing the suspect changes nothing, it probably was not the cause.",
+  "trap": "If the suits were to blame, dropping them should have fixed it.",
+  "keywords": [
+    "speed skating",
+    "sochi 2014",
+    "skinsuits",
+    "under armour",
+    "team usa"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baltimore Sun, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.baltimoresun.com/sports/olympics/bs-bz-under-armour-speedskating-20180130-story.html",
+  "written": "2026-09-26"
+}

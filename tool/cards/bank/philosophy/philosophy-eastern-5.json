@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-eastern-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is goodness born in people, as Mencius held, or made by training, as Xunzi held?",
+  "sides": [
+    "Born in them",
+    "Made by training"
+  ],
+  "answer": "Anyone who sees a toddler about to fall into a well feels alarm and pity, Mencius argued, before any thought of reward or reputation: goodness has sprouts that need only tending. Modern studies partly agree. In 2006, 18-month-olds picked up objects an adult had dropped and could not reach, unasked and unrewarded, again and again.",
+  "move": "It turns on whether early kindness or early violence better reveals human nature.",
+  "counterpoint": "Human nature is bad, Xunzi wrote; goodness comes from deliberate effort, as warped wood is straightened by steaming and pressing. Children bear him out too: Richard Tremblay's studies of Quebec children found hitting, biting and kicking peak at around age two, then decline as they are taught. Nobody has to teach a toddler to hit.",
+  "keywords": [
+    "mencius",
+    "xunzi",
+    "human nature",
+    "altruism",
+    "aggression"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hutton, Xunzi, 2014; Warneken & Tomasello, 2006",
+  "source_kind": "book",
+  "reference": "Hutton (trans.), Xunzi: The Complete Text, Princeton University Press, 2014; Warneken & Tomasello, Altruistic helping in human infants and young chimpanzees, Science 311, 2006",
+  "written": "2026-09-26"
+}

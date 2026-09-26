@@ -1,0 +1,38 @@
+{
+  "id": "art-patrons-5",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Piero de' Medici had angels altered in his palace chapel frescoes while they were being painted.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a letter of 1459, Benozzo Gozzoli answers Piero's objections to some seraphim in the Magi chapel of the Medici palace and offers to hide them behind small clouds. The patron checked the work on the wall, and the painter offered to rearrange heaven to suit him.",
+  "move": "A finished work often hides the arguments that shaped it.",
+  "trap": "Picturing frescoes as fixed at the design stage, then painted untouched.",
+  "keywords": [
+    "benozzo gozzoli",
+    "piero de' medici",
+    "medici palace",
+    "magi chapel"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chambers, Patrons and Artists, 1970",
+  "source_kind": "book",
+  "reference": "D. S. Chambers, Patrons and Artists in the Italian Renaissance, Macmillan, 1970",
+  "written": "2026-09-26"
+}

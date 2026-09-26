@@ -1,0 +1,32 @@
+{
+  "id": "language-italian-5",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What habit of Italian politics is gattopardismo named after, and what does it describe?",
+  "answer": "The Leopard, Lampedusa's novel published in 1958. A young Sicilian aristocrat joins Garibaldi's revolution, reasoning that if everything is to stay as it is, everything must change. Gattopardismo names reform staged so that the same people stay in charge: new flags hung on the old palace.",
+  "move": "When a reform is announced, check who holds the keys afterwards.",
+  "keywords": [
+    "gattopardismo",
+    "the leopard",
+    "lampedusa",
+    "reform"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tomasi di Lampedusa, Il Gattopardo, 1958",
+  "source_kind": "book",
+  "reference": "Tomasi di Lampedusa, Il Gattopardo, Feltrinelli, 1958",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "music-techno-5",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What was the Roland TB-303, the box behind acid's squelching basslines, originally built to do?",
+  "options": [
+    "Make squelching effects for dance clubs",
+    "Test loudspeakers in hi-fi shops",
+    "Stand in for a bassist at practice"
+  ],
+  "correct": 2,
+  "answer": "To stand in for a bassist. Roland sold it from about 1981 as bass accompaniment for guitarists, and it flopped: about 10,000 were made before production stopped in 1984. Cheap second-hand units reached Chicago producers, who twisted its filter knobs while patterns played and found the squelch.",
+  "move": "A failed product may be waiting for users it was never designed for.",
+  "trap": "Judging the machine by the only use of it still remembered.",
+  "keywords": [
+    "roland tb-303",
+    "acid house",
+    "synthesisers",
+    "basslines",
+    "chicago"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Attack Magazine, Roland TB-303 feature",
+  "source_kind": "news_archive",
+  "reference": "https://www.attackmagazine.com/technique/hardware-focus/roland-tb-303/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-diet-2",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Up to what dose does caffeine keep improving endurance performance?",
+  "answer": "About 3 to 6 mg per kg of body weight, taken roughly an hour before: for a 70 kg athlete, 210 to 420 mg, two to four strong coffees. Higher doses add side effects, such as jitters and poor sleep, rather than speed. Caffeine has not been a banned substance since 2004.",
+  "move": "Find the dose where the benefit stops before buying the bigger one.",
+  "keywords": [
+    "caffeine",
+    "dose",
+    "endurance",
+    "coffee",
+    "anti-doping"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guest et al., JISSN, 2021",
+  "source_kind": "paper",
+  "reference": "Guest et al., International society of sports nutrition position stand: caffeine and exercise performance, Journal of the International Society of Sports Nutrition, 2021",
+  "written": "2026-09-26"
+}

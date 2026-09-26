@@ -1,0 +1,41 @@
+{
+  "id": "nature-forecasting-5",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "also": [
+    "technology.ai.limits"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should national weather services replace physics-based forecast models with machine-learning ones?",
+  "sides": [
+    "Yes, switch to learned models",
+    "No, keep physics at the core"
+  ],
+  "answer": "The results are already in. Google DeepMind's GraphCast beat Europe's flagship physics model on 90% of 1,380 test measures, producing a ten-day forecast in under a minute on one chip instead of hours on a supercomputer. That speed buys bigger ensembles, more runs a day, and good forecasts for countries that cannot afford supercomputers.",
+  "move": "Whichever side you took, it turns on weather nobody has seen before.",
+  "counterpoint": "The learned models were trained on decades of reanalysis, the past weather reconstructed by physics models, and they still start each forecast from an analysis those models produce. They lean on what they would replace. They are also weakest at unprecedented extremes, outside anything in their training, where they tend to smooth the peaks that matter most.",
+  "keywords": [
+    "graphcast",
+    "machine learning",
+    "weather models",
+    "ecmwf",
+    "reanalysis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lam et al., Science, 2023",
+  "source_kind": "paper",
+  "reference": "Lam et al., Learning skillful medium-range global weather forecasting, Science, 2023",
+  "written": "2026-09-26"
+}

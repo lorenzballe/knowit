@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-fast-fashion-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Zara make much of its clothing near Spain when Asia is cheaper per garment?",
+  "answer": "Because speed cuts the cost of guessing wrong. Making a large share of its fashion lines in Spain, Portugal, Morocco and Turkey lets Inditex produce small first runs, watch what sells, and restock within weeks. Paying more per piece is offset by fewer unsold clothes marked down at the end of a season.",
+  "move": "The cheapest unit is not cheap if too many units go unsold.",
+  "keywords": [
+    "zara",
+    "inditex",
+    "proximity sourcing",
+    "markdowns",
+    "supply chain"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghemawat & Nueno, Harvard Business School, 2003",
+  "source_kind": "institution",
+  "reference": "Ghemawat & Nueno, ZARA: Fast Fashion, Harvard Business School case 9-703-497, 2003",
+  "written": "2026-09-26"
+}

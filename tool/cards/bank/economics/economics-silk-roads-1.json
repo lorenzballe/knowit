@@ -1,0 +1,36 @@
+{
+  "id": "economics-silk-roads-1",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "also": [
+    "history.maps_and_borders.old_maps"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who named the Silk Road, and what was that person looking for in China?",
+  "answer": "A German geologist, Ferdinand von Richthofen, in 1877, and he was looking for coal. His travels from 1868 began as a survey of coal reserves for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The romantic name came wrapped in a mining report.",
+  "move": "Ask what the person who named a thing wanted from it.",
+  "keywords": [
+    "ferdinand von richthofen",
+    "silk road",
+    "coal",
+    "qingdao",
+    "geology"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wu, Empires of Coal, 2015",
+  "source_kind": "book",
+  "reference": "Wu, Empires of Coal: Fueling China's Entry into the Modern World Order, 1860-1920, Stanford University Press, 2015",
+  "written": "2026-09-26"
+}

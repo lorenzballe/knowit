@@ -1,0 +1,32 @@
+{
+  "id": "cinema-budgets-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Fox owe Shirley MacLaine her full fee for a musical it never made?",
+  "answer": "Her contract guaranteed $750,000 whether or not the film was shot. Fox cancelled Bloomer Girl and offered her a western in Australia; she refused. In 1970 the California Supreme Court held she need not take a different, lesser job to cut the studio's loss. Pay-or-play clauses still pay stars for films that never roll.",
+  "move": "A guarantee is worth what it costs the other side to cancel it.",
+  "keywords": [
+    "pay or play",
+    "shirley maclaine",
+    "twentieth century-fox",
+    "contracts"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parker v. Twentieth Century-Fox, 1970",
+  "source_kind": "primary_document",
+  "reference": "Parker v. Twentieth Century-Fox Film Corp., 3 Cal.3d 176, Supreme Court of California, 1970",
+  "written": "2026-09-26"
+}

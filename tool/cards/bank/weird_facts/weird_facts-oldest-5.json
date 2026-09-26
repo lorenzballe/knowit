@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-oldest-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could the man who made the oldest known recording of a human voice never hear it?",
+  "answer": "His machine only drew sound. Édouard-Léon Scott de Martinville's phonautograph traced vibrations as wavy lines on soot-blackened paper, to be read by eye. His 1860 tracing of a voice singing Au clair de la lune was first played back in 2008, when researchers scanned the lines and converted them to sound.",
+  "move": "An old record may hold more than its makers could read.",
+  "keywords": [
+    "phonautograph",
+    "scott de martinville",
+    "folk song",
+    "sound recording"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosen, The New York Times, 2008",
+  "source_kind": "news_archive",
+  "reference": "Rosen, Researchers Play Tune Recorded Before Edison, The New York Times, 27 March 2008",
+  "written": "2026-09-26"
+}

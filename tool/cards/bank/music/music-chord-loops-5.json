@@ -1,0 +1,40 @@
+{
+  "id": "music-chord-loops-5",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a sample of 100 classic rock songs, which chord most often moves straight to the home chord?",
+  "options": [
+    "The chord on the scale's fifth note",
+    "The chord on the scale's fourth note",
+    "The chord on the scale's sixth note"
+  ],
+  "correct": 1,
+  "answer": "The chord on the fourth note, IV. Trevor de Clercq and David Temperley analysed 20 songs per decade, 1950s to 1990s, from Rolling Stone's greatest list: IV appeared more often than V, and IV to I outnumbered the textbook V to I. Rock goes home through the hymnbook's amen, not the classroom's cadence.",
+  "move": "A rule taught from one repertoire may not describe another.",
+  "trap": "The fifth, because every harmony textbook ends its cadences there.",
+  "keywords": [
+    "plagal cadence",
+    "rock harmony",
+    "subdominant",
+    "dominant",
+    "corpus analysis"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "de Clercq & Temperley, Popular Music, 2011",
+  "source_kind": "paper",
+  "reference": "de Clercq & Temperley, A corpus analysis of rock harmony, Popular Music, 2011",
+  "written": "2026-09-26"
+}

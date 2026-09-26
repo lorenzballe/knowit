@@ -1,0 +1,33 @@
+{
+  "id": "human_body-smell-2",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which cells did the COVID-19 virus attack to take away people's sense of smell?",
+  "answer": "The neurons' neighbours. Smell neurons lack ACE2, the protein the virus uses to enter cells, but the support cells wrapped around them in the nasal lining carry it. When those sustentacular cells die, the neurons lose their upkeep and fall silent. Because that layer regrows, most people's smell came back within weeks or months.",
+  "move": "When something fails, check what keeps it running, not only the part itself.",
+  "keywords": [
+    "covid-19",
+    "anosmia",
+    "ace2",
+    "sustentacular cells",
+    "olfactory epithelium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brann et al., Science Advances, 2020",
+  "source_kind": "paper",
+  "reference": "Brann, Tsukahara, Weinreb et al., Non-neuronal expression of SARS-CoV-2 entry genes in the olfactory system suggests mechanisms underlying COVID-19-associated anosmia, Science Advances, 2020",
+  "written": "2026-09-26"
+}

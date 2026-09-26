@@ -1,0 +1,39 @@
+{
+  "id": "sport-modern-3",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the US-led boycott of Moscow in 1980 was the first time several nations boycotted an Olympics?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 1956 several nations stayed away from Melbourne over the Suez crisis and the Soviet invasion of Hungary. In 1976 more than 20 countries, most of them African, left Montreal because the IOC would not ban New Zealand, whose rugby team had just toured apartheid South Africa.",
+  "move": "The best-remembered case of something is rarely the first one.",
+  "trap": "Moscow 1980 is the boycott everyone remembers, so it feels like the first.",
+  "keywords": [
+    "olympic boycott",
+    "montreal 1976",
+    "melbourne 1956",
+    "apartheid",
+    "moscow 1980"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Guttmann, The Olympics, 2002",
+  "source_kind": "book",
+  "reference": "Guttmann, The Olympics: A History of the Modern Games, University of Illinois Press, 2002",
+  "written": "2026-09-26"
+}

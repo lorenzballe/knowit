@@ -1,0 +1,39 @@
+{
+  "id": "language-italian-4",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The Italian greeting ciao began as a Venetian phrase meaning what?",
+  "options": [
+    "I am your slave",
+    "Go with God",
+    "Be well"
+  ],
+  "correct": 0,
+  "answer": "I am your slave. Venetian s'ciavo, from medieval Latin sclavus, a Slav and so a slave, was a courteous your servant, a bow put into words. Northern Italians clipped it to ciao among friends, and it spread through Italian and beyond: chau in Buenos Aires, čau in Prague.",
+  "move": "Casual words often began as formal ones worn smooth by use.",
+  "trap": "Most old greetings wish health, as Latin salve did, so be well fits.",
+  "keywords": [
+    "ciao",
+    "venetian",
+    "greetings",
+    "slave"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cortelazzo & Zolli, DELI, 1979",
+  "source_kind": "reference_work",
+  "reference": "Cortelazzo & Zolli, Dizionario etimologico della lingua italiana, Zanichelli, 1979",
+  "written": "2026-09-26"
+}

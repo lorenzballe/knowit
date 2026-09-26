@@ -1,0 +1,40 @@
+{
+  "id": "economics-silk-roads-4",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Why have so many ordinary Tang-era contracts and official papers from the Turfan oasis survived?",
+  "options": [
+    "They were archived in Buddhist monasteries",
+    "They were copied onto stone tablets",
+    "They were cut into clothes for the dead"
+  ],
+  "correct": 2,
+  "answer": "Scrap paper was cut into clothes for the dead. Discarded government documents and contracts were sold on and made into paper shoes, belts and hats for burials, and the dry desert kept them. Archaeologists piece the texts back together from the garments. A seventh-century town's paperwork survives because someone needed cheap funeral clothes.",
+  "move": "Ask why a record survived before trusting what it seems to show.",
+  "trap": "Assuming what survives was kept on purpose because it mattered.",
+  "keywords": [
+    "turfan",
+    "tang documents",
+    "paper clothing",
+    "burials",
+    "archaeology"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hansen, The Silk Road: A New History",
+  "source_kind": "book",
+  "reference": "Hansen, The Silk Road: A New History, Oxford University Press, 2012",
+  "written": "2026-09-26"
+}

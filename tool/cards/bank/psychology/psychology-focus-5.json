@@ -1,0 +1,39 @@
+{
+  "id": "psychology-focus-5",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Volunteers searched bag images for tools. How did their misses change when tools appeared in 1% of bags rather than half?",
+  "options": [
+    "They fell by about half",
+    "They stayed about the same",
+    "They rose about fourfold"
+  ],
+  "correct": 2,
+  "answer": "They rose about fourfold. Wolfe, Horowitz and Kenner found observers missed about 7% of targets when half the bags held one, and about 30% when targets were rare. Searchers learned to answer no quickly and quit each bag sooner, so the rare knife was the one most likely to slip through.",
+  "move": "The rarer the thing you search for, the sooner you stop looking.",
+  "trap": "Expecting a rare target to stand out, so vigilance sharpens.",
+  "keywords": [
+    "prevalence effect",
+    "visual search",
+    "airport security",
+    "miss rate"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolfe, Horowitz & Kenner, Nature, 2005",
+  "source_kind": "paper",
+  "reference": "Wolfe, Horowitz & Kenner, Rare items often missed in visual searches, Nature, 2005",
+  "written": "2026-09-26"
+}

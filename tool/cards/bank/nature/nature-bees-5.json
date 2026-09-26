@@ -1,0 +1,38 @@
+{
+  "id": "nature-bees-5",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should cities encourage people and businesses to keep more honeybee hives to help pollinators?",
+  "sides": [
+    "Yes, add more hives",
+    "No, cap the hives"
+  ],
+  "answer": "Hives make people care. A beekeeper learns which flowers bloom when, pushes for planting, and notices poisoning and disease before anyone else. Honeybees still pollinate many crops, and city gardens and parks give them a varied diet with fewer pesticides than farmland. A hive on an office roof keeps pollinators in public view.",
+  "move": "Whichever side you took, it turns on how many flowers each hive must share.",
+  "counterpoint": "Honeybees are one farmed species; the pollinators in trouble are wild bees, and hives compete with them for the same pollen and nectar and can pass diseases to bumblebees. Geldmann and González-Varo argued in Science that keeping honeybees is agriculture, not conservation. Where hives outgrow the flowers, wild bees lose.",
+  "keywords": [
+    "urban beekeeping",
+    "wild bees",
+    "competition",
+    "pollinators",
+    "cities"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Geldmann & González-Varo, Science, 2018",
+  "source_kind": "paper",
+  "reference": "Geldmann & González-Varo, Conserving honey bees does not help wildlife, Science, 2018",
+  "written": "2026-09-26"
+}

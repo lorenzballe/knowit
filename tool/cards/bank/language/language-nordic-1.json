@@ -1,0 +1,38 @@
+{
+  "id": "language-nordic-1",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: Swedish lagom comes from Vikings passing a mead horn laget om, around the team?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The drinking-horn tale is modern folklore. Lagom comes from lag, law or custom, in an old dative plural: roughly by the rules, as is fitting. Etymologists trace it through ordinary legal and everyday usage, with no feast in sight. The horn was added to the word later, not found underneath it.",
+  "move": "A story that explains every detail still needs a document behind it.",
+  "trap": "The Viking scene accounts for every syllable, so it feels documented.",
+  "keywords": [
+    "lagom",
+    "swedish",
+    "folk etymology",
+    "vikings"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hellquist, Svensk etymologisk ordbok, 1922",
+  "source_kind": "reference_work",
+  "reference": "Hellquist, Svensk etymologisk ordbok, Gleerup, Lund, 1922",
+  "written": "2026-09-26"
+}

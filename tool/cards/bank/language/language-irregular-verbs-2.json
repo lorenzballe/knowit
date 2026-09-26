@@ -1,0 +1,39 @@
+{
+  "id": "language-irregular-verbs-2",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Why are nearly all of English's irregular verbs among its most frequently used ones?",
+  "options": [
+    "Old English made only common verbs irregular",
+    "Frequent use shields them from regularising",
+    "Common verbs were borrowed from Norse"
+  ],
+  "correct": 1,
+  "answer": "Frequent use shields them. Old English had irregular verbs of every frequency; the rarer ones were heard too seldom for children to memorise their odd forms, and slid into the regular -ed pattern. Help once had holp and climb had clomb. What remains irregular is what everyone says every day: be, have, go.",
+  "move": "Before explaining why survivors share a trait, count the ones that vanished.",
+  "trap": "Seeing only today's survivors suggests irregularity was always kept for common verbs.",
+  "keywords": [
+    "irregular verbs",
+    "old english",
+    "word frequency",
+    "strong verbs"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pinker, Words and Rules, 1999",
+  "source_kind": "book",
+  "reference": "Pinker, Words and Rules: The Ingredients of Language, Basic Books, 1999",
+  "written": "2026-09-26"
+}

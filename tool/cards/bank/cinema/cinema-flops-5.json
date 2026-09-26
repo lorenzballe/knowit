@@ -1,0 +1,32 @@
+{
+  "id": "cinema-flops-5",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How soon after its opening can a studio book a film as a flop?",
+  "answer": "Within days. A wide release's weekly takings fall in a fairly predictable pattern, so the opening weekend lets studios project the whole run. John Carter opened on 9 March 2012; about ten days later Disney told investors to expect an operating loss of roughly $200 million on it, while it was still in cinemas.",
+  "move": "When the pattern is known, the first data point settles the ending.",
+  "keywords": [
+    "john carter",
+    "disney",
+    "write-down",
+    "opening weekend"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walt Disney Company, quarterly report, 2012",
+  "source_kind": "company",
+  "reference": "The Walt Disney Company, Form 10-Q for the quarter ended 31 March 2012, US Securities and Exchange Commission, 2012",
+  "written": "2026-09-26"
+}

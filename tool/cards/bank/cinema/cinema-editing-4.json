@@ -1,0 +1,35 @@
+{
+  "id": "cinema-editing-4",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "also": [
+    "psychology.attention.focus"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which kind of cut do viewers fail to notice most often, even when told to look for cuts?",
+  "answer": "A cut on movement. Eye-tracking studies by Tim Smith and John Henderson found viewers miss a large share of edits, and miss most those that match an action across the join: a hand reaching in one shot, closing in the next. Attention rides the motion, and the camera change slips past like a blink.",
+  "move": "Hide a change inside something that is already moving.",
+  "keywords": [
+    "edit blindness",
+    "match on action",
+    "eye tracking",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith & Henderson, Eye Movement Research, 2008",
+  "source_kind": "paper",
+  "reference": "Smith & Henderson, Edit Blindness: The Relationship Between Attention and Global Change Blindness in Dynamic Scenes, Journal of Eye Movement Research 2(2), 2008",
+  "written": "2026-09-26"
+}

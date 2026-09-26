@@ -1,0 +1,39 @@
+{
+  "id": "music-acoustics-5",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in St Paul's whispering gallery, the dome focuses a whisper across to the opposite side?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Lord Rayleigh showed that the sound creeps round the curved wall, reflected again and again at a grazing angle so it hugs the surface and spreads little. A whisper aimed along the wall carries about 30 metres across the gallery; one aimed at the middle of the dome is lost.",
+  "move": "Before crediting the obvious shape, check which surface the signal travels along.",
+  "trap": "Picturing the dome as a mirror focusing sound onto one point.",
+  "keywords": [
+    "whispering gallery",
+    "st paul's cathedral",
+    "lord rayleigh",
+    "curved walls",
+    "reflection"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rayleigh, Philosophical Magazine, 1910",
+  "source_kind": "paper",
+  "reference": "Rayleigh, The problem of the whispering gallery, Philosophical Magazine, 1910",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-socrates-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Socrates' jury had 500 members, and he said 30 votes going the other way would have acquitted him. How many voted guilty?",
+  "value": 280,
+  "unit": "jurors",
+  "answer": "250 + 30 = 280.",
+  "move": "A vote that changes sides counts twice: once lost, once gained.",
+  "trap": "Reading 30 switched votes as a 30-vote margin, not a 60-vote one.",
+  "hint": "A switched vote leaves one pile and joins the other; in Athens a tie meant acquittal.",
+  "steps": [
+    "Switching 30 votes takes 30 from guilty and adds 30 to not guilty.",
+    "A tie acquitted, so after the switch guilty would stand at exactly 250 of 500.",
+    "250 + 30 = 280."
+  ],
+  "keywords": [
+    "trial of socrates",
+    "athenian jury",
+    "votes",
+    "acquittal"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Plato, Apology 36a",
+  "source_kind": "primary_document",
+  "reference": "Plato, Apology 36a, trans. Grube, in Plato: Complete Works, ed. Cooper, Hackett, 1997",
+  "written": "2026-09-26"
+}

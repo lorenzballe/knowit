@@ -1,0 +1,35 @@
+{
+  "id": "cinema-new-wave-1",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "also": [
+    "cinema.how_films_are_made.budgets"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Whose money helped pay for The 400 Blows, the debut of French cinema's fiercest young critic?",
+  "answer": "His father-in-law's. Truffaut had married Madeleine Morgenstern, whose father Ignace ran the distribution company Cocinor, and his backing helped finance the film. The critic who had savaged the French film establishment made his debut with money from inside it. The film won Truffaut the directing prize at Cannes in 1959.",
+  "move": "Ask who paid for a rebellion before judging how rebellious it was.",
+  "keywords": [
+    "françois truffaut",
+    "the 400 blows",
+    "film finance",
+    "cannes 1959"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "de Baecque & Toubiana, Truffaut",
+  "source_kind": "book",
+  "reference": "de Baecque & Toubiana, Truffaut: A Biography, Knopf, 1999",
+  "written": "2026-09-26"
+}

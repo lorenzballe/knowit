@@ -1,0 +1,39 @@
+{
+  "id": "cinema-flops-4",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Waterworld cost about $175 million in 1995. Roughly what did it gross in cinemas worldwide?",
+  "options": [
+    "About $50 million",
+    "About $260 million",
+    "About $1 billion"
+  ],
+  "correct": 1,
+  "answer": "About $260 million, most of it outside North America, where it took under $90 million. After the cinemas' cut that still left a loss on its theatrical run, but not the wipeout of legend. The verdict had been set by a year of stories about its runaway budget, written before anyone had seen it.",
+  "move": "A reputation formed before the results came in may never check them.",
+  "trap": "About $50 million: the word flop suggests nobody went at all.",
+  "keywords": [
+    "waterworld",
+    "kevin costner",
+    "production budget",
+    "worldwide gross"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Box Office Mojo, Waterworld",
+  "source_kind": "statistics",
+  "reference": "https://www.boxofficemojo.com/title/tt0114898/",
+  "written": "2026-09-26"
+}

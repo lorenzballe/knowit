@@ -1,0 +1,39 @@
+{
+  "id": "art-patrons-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Where was Botticelli's Primavera hanging when a Medici inventory recorded it in 1499?",
+  "options": [
+    "Over the altar of a family chapel",
+    "Above a daybed in a town house",
+    "In the city's council hall"
+  ],
+  "correct": 1,
+  "answer": "Above a daybed in a town house. The inventory of Lorenzo di Pierfrancesco de' Medici's house on Via Larga places it over a lettuccio, a built-in bench bed. Much Florentine painting was domestic: chests, bed-heads, birth trays. Most of it was used, worn out and thrown away, which is why museum walls look so churchy.",
+  "move": "Where things ended up tells you little about where they began.",
+  "trap": "Surviving Renaissance painting is mostly religious, so a chapel seems likely.",
+  "keywords": [
+    "botticelli",
+    "primavera",
+    "medici inventory",
+    "domestic art"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shearman, Burlington Magazine, 1975",
+  "source_kind": "paper",
+  "reference": "John Shearman, The Collections of the Younger Branch of the Medici, The Burlington Magazine, 1975",
+  "written": "2026-09-26"
+}

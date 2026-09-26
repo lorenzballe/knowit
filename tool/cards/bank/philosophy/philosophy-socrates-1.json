@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-socrates-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the only complete surviving work about Socrates written while he was still alive?",
+  "answer": "A comedy. In Aristophanes' Clouds, staged in 423 BC, Socrates runs a thinking-shop, teaches students to make the weaker argument beat the stronger, and first appears hanging in a basket to study the sky. Plato and Xenophon wrote after his death in 399. In Plato's Apology, Socrates blames the play for the jury's prejudice.",
+  "move": "Check when a portrait was drawn, and by whom, before trusting it.",
+  "keywords": [
+    "aristophanes",
+    "clouds",
+    "comedy",
+    "athens",
+    "apology"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristophanes, Clouds, ed. Dover, 1968",
+  "source_kind": "book",
+  "reference": "Aristophanes, Clouds, ed. K. J. Dover, Clarendon Press, 1968",
+  "written": "2026-09-26"
+}

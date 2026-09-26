@@ -1,0 +1,39 @@
+{
+  "id": "sport-sprint-2",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a sprinter who leaves the blocks after the gun has fired can still be disqualified for a false start?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Sensors in the blocks disqualify anyone who pushes within 0.100 seconds of the gun, on the view that nobody reacts that fast. Devon Allen was thrown out of the 2022 world championship hurdles final for a reaction of 0.099. Research the sport commissioned found some sprinters react in about 80 milliseconds.",
+  "move": "A fixed threshold catches the cheats and the unusually fast alike.",
+  "trap": "Assuming a false start means moving before the gun fires.",
+  "keywords": [
+    "false start",
+    "reaction time",
+    "starting blocks",
+    "devon allen",
+    "world athletics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Athletics, sprint start research project",
+  "source_kind": "institution",
+  "reference": "https://worldathletics.org/news/news/iaaf-sprint-start-research-project-is-the-100",
+  "written": "2026-09-26"
+}

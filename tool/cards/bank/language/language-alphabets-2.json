@@ -1,0 +1,39 @@
+{
+  "id": "language-alphabets-2",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Saint Cyril created the alphabet now called Cyrillic?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cyril and his brother Methodius devised Glagolitic, a script of new, looped letters, for their mission to the Slavs in the 860s. Cyrillic was assembled later, probably by their disciples in Bulgaria around 900, largely from Greek capitals, and named in Cyril's honour. Croatian priests went on writing Glagolitic for centuries.",
+  "move": "A name on a thing honours someone; it does not prove who made it.",
+  "trap": "The alphabet carries his name, so he must have made it.",
+  "keywords": [
+    "cyrillic",
+    "glagolitic",
+    "saint cyril",
+    "methodius",
+    "bulgaria"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Daniels & Bright, The World's Writing Systems, 1996",
+  "source_kind": "reference_work",
+  "reference": "Daniels & Bright (eds), The World's Writing Systems, Oxford University Press, 1996",
+  "written": "2026-09-26"
+}

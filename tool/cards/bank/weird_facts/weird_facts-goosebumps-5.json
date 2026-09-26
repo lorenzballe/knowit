@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-goosebumps-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Darwin think bristling hair was for in frightened or angry animals?",
+  "answer": "Looking bigger. In The Expression of the Emotions, 1872, Darwin argued that raised hair, feathers and spines make an animal seem larger and more fearsome to a rival or predator, and he gathered observations from keepers at London Zoo. Humans kept the reflex after losing the fur: a display with almost nothing left to display.",
+  "move": "A reflex can outlive the body it was built for.",
+  "keywords": [
+    "charles darwin",
+    "piloerection",
+    "threat display",
+    "evolution"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Darwin, The Expression of the Emotions",
+  "source_kind": "reference_work",
+  "reference": "Darwin, The Expression of the Emotions in Man and Animals, 3rd edition, ed. Ekman, Oxford University Press, 1998",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "psychology-breaking-them-4",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the best-tested behavioural treatment for nail-biting and hair-pulling ask people to do?",
+  "answer": "Catch the urge early and do something incompatible with it. Habit reversal, devised by Azrin and Nunn in 1973, first trains awareness of the earliest movements of the habit, then a competing response, such as clenching the fists or gripping an object, held until the urge passes. A hand busy gripping cannot also bite.",
+  "move": "Rather than resist an urge, give the same hands a different job.",
+  "keywords": [
+    "habit reversal",
+    "nail-biting",
+    "competing response",
+    "tics"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Azrin & Nunn, Behaviour Research and Therapy, 1973",
+  "source_kind": "paper",
+  "reference": "Azrin & Nunn, Habit-reversal: a method of eliminating nervous habits and tics, Behaviour Research and Therapy, 1973",
+  "written": "2026-09-26"
+}

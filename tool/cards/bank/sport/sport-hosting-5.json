@@ -1,0 +1,37 @@
+{
+  "id": "sport-hosting-5",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the Summer Olympics move to one permanent host site instead of rotating between cities?",
+  "sides": [
+    "Yes, a permanent home",
+    "No, keep rotating"
+  ],
+  "answer": "Yes. Venues built once would be used every four years instead of left to decay, as many from Athens 2004 were. The overruns that come with each new host would end, and so would bidding contests that invited bribery. A site under long-term international management could run the Games as routine rather than emergency.",
+  "move": "Whichever side you took, the hinge is who would govern a permanent site.",
+  "counterpoint": "No. Rotation spreads the Games' attention and benefits across continents; a single host would hand one government a permanent political prize and a say over who may come. Its climate, time zone and travel costs would favour some nations forever. Paris and Los Angeles show rotating Games can lean on venues that already exist.",
+  "keywords": [
+    "olympic hosting",
+    "permanent host",
+    "white elephants",
+    "athens 2004"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zimbalist, Circus Maximus, 2015",
+  "source_kind": "book",
+  "reference": "Zimbalist, Circus Maximus: The Economic Gamble Behind Hosting the Olympics and the World Cup, Brookings Institution Press, 2015",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-rent-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to Berlin tenants who paid less under the city's 2020 rent freeze?",
+  "answer": "Many had to pay the difference back. Berlin froze most rents at their 2019 level and ordered cuts to the highest. In 2021 the Federal Constitutional Court struck the law down: rent was already regulated by federal law, so a state could not legislate on it. The savings became debts, owed to the landlords.",
+  "move": "A rule that may not survive court is a loan, not a gift.",
+  "keywords": [
+    "berlin",
+    "mietendeckel",
+    "rent freeze",
+    "constitutional court",
+    "tenants"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Constitutional Court, 2 BvF 1/20, 2021",
+  "source_kind": "primary_document",
+  "reference": "Bundesverfassungsgericht, Beschluss des Zweiten Senats, 2 BvF 1/20, 25 March 2021",
+  "written": "2026-09-26"
+}

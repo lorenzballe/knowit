@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-determinism-3",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "also": [
+    "nature.weather.forecasting"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Weather obeys deterministic physical laws. With near-perfect observations and models, how far ahead could daily weather ever be forecast?",
+  "options": [
+    "About a year",
+    "Without any limit",
+    "About two weeks"
+  ],
+  "correct": 2,
+  "answer": "About two weeks. The atmosphere is chaotic: errors in the starting state far too small to measure grow exponentially, spreading from small scales to large until they swamp the forecast. Simulations by Fuqing Zhang's team in 2019 put the ceiling for mid-latitude weather near two weeks. Today's forecasts reach about ten days.",
+  "move": "Exact rules give no forecast when small errors grow faster than knowledge.",
+  "trap": "Assuming exact laws mean better data buys an endless forecast.",
+  "keywords": [
+    "chaos",
+    "weather forecasts",
+    "predictability",
+    "initial conditions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Zhang et al., J. Atmospheric Sciences, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1175/JAS-D-18-0269.1",
+  "written": "2026-09-26"
+}

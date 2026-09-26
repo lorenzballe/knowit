@@ -1,0 +1,39 @@
+{
+  "id": "art-lost-colour-3",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: paint on ancient Greek marble statues was already documented in the nineteenth century?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1834 the architect Gottfried Semper argued that Greek buildings and statues had been painted, and in 1886 excavators on the Athenian Acropolis dug up the Peplos Kore with colour on her dress. She and other korai had been dumped in pits after the Persian sack of 480 BC, which sheltered the paint.",
+  "move": "When a finding sounds new, look up when it was first reported.",
+  "trap": "Taking today's exhibitions of painted statues as a recent discovery.",
+  "keywords": [
+    "peplos kore",
+    "acropolis",
+    "gottfried semper",
+    "polychromy",
+    "korai"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Acropolis Museum, the Peplos Kore",
+  "source_kind": "institution",
+  "reference": "https://www.theacropolismuseum.gr/en/statue-kore-peplos-kore",
+  "written": "2026-09-26"
+}

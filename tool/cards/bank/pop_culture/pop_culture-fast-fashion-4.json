@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fast-fashion-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "True or false: world clothing production roughly doubled between 2000 and 2014?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. McKinsey estimated that production doubled over those years, passing 100 billion garments in 2014, while each item was kept about half as long. Doubling needs less than it sounds: growth of about 5% a year compounds to twice as much in 14 years, since 1.05 multiplied by itself 14 times is about 2.",
+  "move": "Steady modest growth doubles faster than anyone expects.",
+  "trap": "False: a doubling in 14 years sounds too steep for a mature industry.",
+  "keywords": [
+    "clothing production",
+    "mckinsey",
+    "compound growth",
+    "garments",
+    "consumption"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "McKinsey & Company, 2016",
+  "source_kind": "company",
+  "reference": "Remy, Speelman & Swartz, Style that's sustainable: A new fast-fashion formula, McKinsey & Company, 2016",
+  "written": "2026-09-26"
+}

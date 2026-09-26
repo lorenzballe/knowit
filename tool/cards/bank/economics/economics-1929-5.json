@@ -1,0 +1,40 @@
+{
+  "id": "economics-1929-5",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "US duties on taxed imports averaged about 59% in 1932. Besides the 1930 Smoot–Hawley Act, what pushed that rate up?",
+  "options": [
+    "Foreign retaliation against American goods",
+    "Falling prices, as many duties were fixed",
+    "Further tariff acts passed in 1931"
+  ],
+  "correct": 1,
+  "answer": "Falling prices. Many duties were set in cents per pound or per item; as import prices collapsed, the same cents became a bigger share of the price. Douglas Irwin estimates deflation explains a large part of the rise. A duty of 5 cents on a 20-cent item is 25%; at 10 cents it is 50%.",
+  "move": "Before crediting a law, ask what would have happened without it.",
+  "trap": "Crediting the whole rise to the famous act, since it made headlines.",
+  "keywords": [
+    "smoot-hawley",
+    "tariffs",
+    "specific duties",
+    "deflation",
+    "douglas irwin"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Irwin, Peddling Protectionism, 2011",
+  "source_kind": "book",
+  "reference": "Irwin, Peddling Protectionism: Smoot-Hawley and the Great Depression, Princeton University Press, 2011",
+  "written": "2026-09-26"
+}

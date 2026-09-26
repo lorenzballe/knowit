@@ -1,0 +1,39 @@
+{
+  "id": "nature-clouds-3",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: cloud droplets can stay liquid at −30°C?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Tiny pure droplets freeze only near −38°C unless a speck of the right dust, pollen or bacterium starts the ice, and such specks are scarce. Once some ice appears, it grows by stealing vapour from the droplets around it. That is why rain in cool climates usually begins high up as snow.",
+  "move": "A threshold measured in bulk can shift when the pieces get small.",
+  "trap": "Water freezes at 0°C, so anything colder in the sky is ice.",
+  "keywords": [
+    "supercooled water",
+    "ice nuclei",
+    "freezing",
+    "bergeron process",
+    "snow"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers & Yau, Cloud Physics, 1989",
+  "source_kind": "book",
+  "reference": "Rogers & Yau, A Short Course in Cloud Physics, 3rd edition, Pergamon Press, 1989",
+  "written": "2026-09-26"
+}

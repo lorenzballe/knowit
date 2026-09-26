@@ -1,0 +1,42 @@
+{
+  "id": "sport-swimming-2",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 50 m pool lane may be built up to 3 cm long. At 2 m/s, how many hundredths of a second is that?",
+  "value": 1.5,
+  "unit": "hundredths of a second",
+  "tolerance": 0.1,
+  "answer": "0.015 seconds = 1.5 hundredths of a second.",
+  "move": "Before trusting a tiny margin, ask how precisely the course was built.",
+  "trap": "Treating a few centimetres of concrete as too small to matter.",
+  "hint": "Divide the extra distance by the swimmer's speed.",
+  "steps": [
+    "3 cm is 0.03 m.",
+    "0.03 m / 2 m/s = 0.015 seconds.",
+    "0.015 seconds = 1.5 hundredths of a second."
+  ],
+  "keywords": [
+    "pool length",
+    "construction tolerance",
+    "timing",
+    "world aquatics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Aquatics, Facilities Rules",
+  "source_kind": "standard",
+  "reference": "FINA, Facilities Rules 2017-2021, FR 2.2 pool dimensions and tolerances, 2017",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "cinema-silence-3",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did film cameras stop moving freely for a few years around 1929?",
+  "answer": "Because they were too loud. Early sound microphones picked up the camera's mechanical whirr, so cameras and their operators were shut inside soundproofed booths with a glass front. Shots turned static until padded covers, called blimps, let cameras out again. Actors, meanwhile, had to play to microphones hidden in flower vases.",
+  "move": "Every new tool quietly imposes a cost on the tools around it.",
+  "keywords": [
+    "early talkies",
+    "camera booths",
+    "blimps",
+    "microphones",
+    "transition to sound"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crafton, The Talkies, 1997",
+  "source_kind": "book",
+  "reference": "Crafton, The Talkies: American Cinema's Transition to Sound, 1926–1931, Scribner, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "language-latin-roots-2",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "also": [
+    "language.word_origins.borrowed_words"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does English have both frail and fragile, from the same Latin word?",
+  "answer": "Because Latin fragilis arrived twice. First by mouth, through Old French, where speech had worn it down to frail; English had it by the fourteenth century. Later, scholars borrowed it again straight from written Latin as fragile. Royal and regal, sure and secure match: one route through the street, one through the library.",
+  "move": "When two words look like cousins, ask which door each came in by.",
+  "keywords": [
+    "doublets",
+    "fragilis",
+    "old french",
+    "borrowing routes"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Durkin, Borrowed Words, 2014",
+  "source_kind": "book",
+  "reference": "Durkin, Borrowed Words: A History of Loanwords in English, Oxford University Press, 2014",
+  "written": "2026-09-26"
+}

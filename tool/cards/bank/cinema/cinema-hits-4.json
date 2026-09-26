@@ -1,0 +1,38 @@
+{
+  "id": "cinema-hits-4",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the biggest box-office total ever recorded in a single market belongs to a Hollywood film in North America?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2025 the Chinese animated film Ne Zha 2 took over 15 billion yuan in China alone, about $2 billion. The best North American total, Star Wars: The Force Awakens, is under $950 million. The largest single audience for a film is no longer where most English-language box-office news is written.",
+  "move": "Check where the reporting comes from before trusting what it calls the biggest.",
+  "trap": "Box-office records in the news are mostly North American ones.",
+  "keywords": [
+    "ne zha 2",
+    "chinese box office",
+    "star wars",
+    "box-office records"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "China Film Administration box-office data",
+  "source_kind": "statistics",
+  "reference": "China Film Administration, national box-office statistics for Ne Zha 2, 2025",
+  "written": "2026-09-26"
+}

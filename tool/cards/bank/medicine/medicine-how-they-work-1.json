@@ -1,0 +1,33 @@
+{
+  "id": "medicine-how-they-work-1",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long were aluminium salts used to boost vaccines before anyone could say how they worked?",
+  "answer": "About eight decades, and it is still argued over. In 1926 Alexander Glenny found that diphtheria toxoid precipitated with alum raised far more antibody in guinea pigs. A 2008 paper tied it to an inflammation sensor in immune cells; other labs found alum worked without it. Billions of doses rested on an empirical result.",
+  "move": "A remedy can be trusted for decades before anyone can explain it.",
+  "keywords": [
+    "alum",
+    "adjuvants",
+    "alexander glenny",
+    "diphtheria toxoid",
+    "inflammasome"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marrack, McKee & Munks, Nature Reviews Immunology, 2009",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/nri2510",
+  "written": "2026-09-26"
+}

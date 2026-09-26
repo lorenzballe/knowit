@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-denim-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: selvedge denim comes off narrower looms than most modern denim does?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Selvedge cloth is woven on old shuttle looms, whose shuttle carries one continuous weft thread back and forth, giving a fabric roughly 75 cm wide with self-finished edges. Modern projectile and air-jet looms weave cloth about twice as wide and cut the edges. The coloured line inside the hem marks the slower, narrower machine.",
+  "move": "A premium label often marks an older method, not a bigger one.",
+  "trap": "False: premium cloth sounds as if it needs the larger machine.",
+  "keywords": [
+    "selvedge",
+    "shuttle loom",
+    "weaving",
+    "denim",
+    "air-jet loom"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marsh & Trynka, Denim, 2002",
+  "source_kind": "book",
+  "reference": "Graham Marsh & Paul Trynka, Denim: From Cowboys to Catwalks, Aurum Press, 2002",
+  "written": "2026-09-26"
+}

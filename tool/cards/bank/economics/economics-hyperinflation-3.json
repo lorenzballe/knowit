@@ -1,0 +1,39 @@
+{
+  "id": "economics-hyperinflation-3",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: prices rose faster in Hungary in 1946 than in Zimbabwe in 2008?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. At its peak in July 1946, Hungarian prices doubled about every 15 hours; Zimbabwe's worst month, November 2008, doubled them about every 25 hours. Hungary's pengő needed notes of 100 quintillion, the largest face value ever issued. It was replaced by the forint in August 1946 and is little remembered outside Hungary.",
+  "move": "The disaster you remember best is rarely the worst of its kind.",
+  "trap": "Picking Zimbabwe, whose trillion-dollar notes are recent and widely shown.",
+  "keywords": [
+    "hungary",
+    "pengo",
+    "zimbabwe",
+    "doubling time",
+    "hyperinflation records"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Hanke and Krus, World Hyperinflations, 2013",
+  "source_kind": "paper",
+  "reference": "Hanke & Krus, World Hyperinflations, in Routledge Handbook of Major Events in Economic History, Routledge, 2013",
+  "written": "2026-09-26"
+}

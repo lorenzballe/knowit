@@ -1,0 +1,40 @@
+{
+  "id": "economics-2008-3",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Of the mortgage securities Moody's rated AAA in 2006, how many were later downgraded?",
+  "options": [
+    "About one in twelve",
+    "About one in three",
+    "More than four in five"
+  ],
+  "correct": 2,
+  "answer": "More than four in five. The Financial Crisis Inquiry Commission found 83% were downgraded. The models treated mortgage defaults in different places as largely unconnected, so a pool of shaky loans looked safe. When house prices fell across the country at once, the loans failed together, and the top slices failed with them.",
+  "move": "Spreading risk works only if the pieces cannot all fall at once.",
+  "trap": "Taking AAA's long record on company bonds as the base for these.",
+  "keywords": [
+    "credit ratings",
+    "moody's",
+    "mortgage-backed securities",
+    "aaa",
+    "correlation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Financial Crisis Inquiry Commission, 2011",
+  "source_kind": "primary_document",
+  "reference": "Financial Crisis Inquiry Commission, The Financial Crisis Inquiry Report, US Government Printing Office, 2011",
+  "written": "2026-09-26"
+}

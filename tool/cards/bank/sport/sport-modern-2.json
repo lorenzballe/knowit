@@ -1,0 +1,40 @@
+{
+  "id": "sport-modern-2",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After a horse-riding scandal at Tokyo 2021, what replaces riding in modern pentathlon from Los Angeles 2028?",
+  "options": [
+    "An obstacle course",
+    "A cycling time trial",
+    "A second swim"
+  ],
+  "correct": 0,
+  "answer": "An obstacle course. Pentathletes rode horses they had never met, drawn by lot, and at Tokyo a horse refused to jump for the leader, Annika Schleu, while her coach was filmed punching it. The event, built in 1912 on a cavalry officer's skills, dropped the horse for walls, rings and ropes.",
+  "move": "When a tradition's defining piece becomes indefensible, the name survives the piece.",
+  "trap": "Cycling fits a multi-sport event, so it seems the natural swap.",
+  "keywords": [
+    "modern pentathlon",
+    "obstacle course",
+    "tokyo 2021",
+    "show jumping",
+    "la 2028"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UIPM, obstacle discipline decision, 2023",
+  "source_kind": "institution",
+  "reference": "Union Internationale de Pentathlon Moderne, Obstacle discipline confirmed for the Olympic Games Los Angeles 2028, 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-mnemonics-4",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Brain scans of ten world-class memory competitors were compared with those of controls. What set the competitors apart?",
+  "options": [
+    "Larger memory structures in the brain",
+    "Higher scores on intelligence tests",
+    "More activity in spatial brain regions"
+  ],
+  "correct": 2,
+  "answer": "More activity in spatial brain regions. Maguire and colleagues found no difference in brain structure or in general cognitive ability. While memorising, the champions used areas involved in navigation, and nine of the ten said they placed items along an imagined route. The method, not the organ, made them exceptional.",
+  "move": "Look for the technique before crediting the hardware.",
+  "trap": "Recalling the enlarged hippocampi of London taxi drivers and expecting the same.",
+  "keywords": [
+    "memory champions",
+    "hippocampus",
+    "brain imaging",
+    "method of loci"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maguire et al., Nature Neuroscience, 2003",
+  "source_kind": "paper",
+  "reference": "Maguire, Valentine, Wilding & Kapur, Routes to remembering: the brains behind superior memory, Nature Neuroscience, 2003",
+  "written": "2026-09-26"
+}

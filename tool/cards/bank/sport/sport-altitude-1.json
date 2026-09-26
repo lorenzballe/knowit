@@ -1,0 +1,33 @@
+{
+  "id": "sport-altitude-1",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the best-known altitude-training trial, which arrangement made runners faster over 5,000 m?",
+  "answer": "Living high and training low. In Levine and Stray-Gundersen's 1997 study, runners who slept at 2,500 m but did hard sessions at 1,250 m improved by about 13 seconds. Those who also trained high made more red blood cells too, but thin air forced slower sessions, and their race times did not improve.",
+  "move": "A gain in one place can be spent in another; measure the finished result.",
+  "keywords": [
+    "live high train low",
+    "benjamin levine",
+    "distance runners",
+    "red blood cells",
+    "hypoxia"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levine & Stray-Gundersen, Journal of Applied Physiology, 1997",
+  "source_kind": "paper",
+  "reference": "Levine & Stray-Gundersen, Living high-training low: effect of moderate-altitude acclimatization with low-altitude training on performance, Journal of Applied Physiology, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cinema-flops-3",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: Citizen Kane made money for RKO on its first release in 1941?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. RKO booked a loss. William Randolph Hearst, the press baron the film was taken to portray, had his newspapers refuse to review or advertise it, and many cinema chains stayed away. Its reputation was built later, through revival screenings, television and critics, until it topped the Sight and Sound critics' poll for forty years.",
+  "move": "Today's canon tells you what lasted, not what sold.",
+  "trap": "A film now ranked the greatest seems bound to have succeeded.",
+  "keywords": [
+    "citizen kane",
+    "rko",
+    "william randolph hearst",
+    "critics' polls"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carringer, The Making of Citizen Kane",
+  "source_kind": "book",
+  "reference": "Carringer, The Making of Citizen Kane, University of California Press, 1985",
+  "written": "2026-09-26"
+}

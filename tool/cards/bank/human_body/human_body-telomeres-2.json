@@ -1,0 +1,33 @@
+{
+  "id": "human_body-telomeres-2",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the enzyme that rebuilds chromosome tips first found in a pond-dwelling single cell?",
+  "answer": "Because that cell is mostly tips. Tetrahymena keeps its working genes in thousands of tiny chromosomes, giving it tens of thousands of ends, so its extracts are rich in the enzyme that caps them. Carol Greider and Elizabeth Blackburn detected that enzyme, telomerase, on Christmas Day 1984; the work shared a Nobel prize in 2009.",
+  "move": "To find something rare, look where nature has made it common.",
+  "keywords": [
+    "telomerase",
+    "tetrahymena",
+    "carol greider",
+    "elizabeth blackburn",
+    "nobel prize"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greider & Blackburn, Cell, 1985",
+  "source_kind": "paper",
+  "reference": "Greider & Blackburn, Identification of a specific telomere terminal transferase activity in Tetrahymena extracts, Cell, 1985",
+  "written": "2026-09-26"
+}

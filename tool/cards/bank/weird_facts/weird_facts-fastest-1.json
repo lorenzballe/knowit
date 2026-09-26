@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-fastest-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must a land speed record car cover its measured distance twice within an hour?",
+  "answer": "To cancel the wind and the slope. Under the FIA rules the car runs the measured distance in opposite directions, the second run starting within one hour of the first, and the record is the average of the two. Thrust SSC set the standing record this way in 1997, at about 1,228 km/h in Nevada.",
+  "move": "A result that could be helped by conditions needs a run against them.",
+  "keywords": [
+    "land speed record",
+    "thrust ssc",
+    "fia",
+    "measured mile"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FIA International Sporting Code, Appendix D",
+  "source_kind": "primary_document",
+  "reference": "FIA, International Sporting Code, Appendix D: Land Speed Record Attempts, 2023",
+  "written": "2026-09-26"
+}

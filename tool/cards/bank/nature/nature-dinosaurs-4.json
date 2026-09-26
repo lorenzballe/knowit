@@ -1,0 +1,39 @@
+{
+  "id": "nature-dinosaurs-4",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the lack of dinosaur fossils in the three metres of rock below the impact layer shows they were already dying out?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Fossils are rare, so the last one found almost always sits below the true last day; older rock has had more chances to yield one. In 2011 Lyson and colleagues found a horned dinosaur's fossil just 13 cm below the boundary in Montana. The gap was in the finds, not in the dinosaurs.",
+  "move": "Where nobody has found something is not where it stopped existing.",
+  "trap": "An empty stretch of rock looks like evidence that they had gone.",
+  "keywords": [
+    "fossil record",
+    "hell creek",
+    "ceratopsian",
+    "signor-lipps effect",
+    "montana"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lyson et al., Biology Letters, 2011",
+  "source_kind": "paper",
+  "reference": "Lyson et al., Dinosaur extinction: closing the '3 m gap', Biology Letters, 2011",
+  "written": "2026-09-26"
+}

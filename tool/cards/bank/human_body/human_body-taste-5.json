@@ -1,0 +1,39 @@
+{
+  "id": "human_body-taste-5",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: one gene largely decides whether a person finds the chemical PTC bitter?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Variants of a single bitter-receptor gene, TAS2R38, explain most of the difference, by one estimate 55% to 85% of it. The trait surfaced by accident in 1931, when the chemist Arthur Fox spilled PTC powder at DuPont: a colleague complained of the bitterness while Fox, closer to it, tasted nothing.",
+  "move": "Before explaining a difference in general terms, look for a single switch.",
+  "trap": "Assuming a taste trait, like most traits, spreads across hundreds of genes.",
+  "keywords": [
+    "ptc",
+    "tas2r38",
+    "bitter taste",
+    "genetics",
+    "arthur fox"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kim et al., Science, 2003",
+  "source_kind": "paper",
+  "reference": "Kim, Jorgenson, Coon, Leppert, Risch & Drayna, Positional cloning of the human quantitative trait locus underlying taste sensitivity to phenylthiocarbamide, Science, 2003",
+  "written": "2026-09-26"
+}

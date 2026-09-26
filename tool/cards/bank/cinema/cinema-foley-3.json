@@ -1,0 +1,39 @@
+{
+  "id": "cinema-foley-3",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two actors talk while sitting perfectly still. Which Foley pass will the scene still get?",
+  "options": [
+    "Footsteps",
+    "Clothing movement",
+    "None at all"
+  ],
+  "correct": 1,
+  "answer": "Clothing movement. Foley artists call it the cloth or moves pass: they rustle fabric matched to each costume in front of a microphone, following every shrug and breath. Once production noise is cleaned away, a scene without it sounds dead, like two mannequins talking. Leather jackets are performed with leather.",
+  "move": "Stillness on screen is never silence; something small is always moving.",
+  "trap": "Nothing visibly moves, so it seems nothing needs a sound.",
+  "keywords": [
+    "cloth pass",
+    "costumes",
+    "foley stage",
+    "dialogue scenes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ament, The Foley Grail, 2009",
+  "source_kind": "book",
+  "reference": "Ament, The Foley Grail: The Art of Performing Sound for Film, Games, and Animation, Focal Press, 2009",
+  "written": "2026-09-26"
+}

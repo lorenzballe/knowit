@@ -1,0 +1,39 @@
+{
+  "id": "cinema-rediscovered-4",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: since the 2008 Buenos Aires find, Metropolis can be seen exactly as it premiered in 1927?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A worn 16mm duplicate in Buenos Aires restored about 25 minutes cut after the Berlin premiere, and the 2010 restoration put them back. But a few short scenes are still missing and are bridged by explanatory titles, and the recovered footage stays scratched and slightly cropped, easy to spot beside the rest.",
+  "move": "Recovered is not the same claim as complete; check which one is made.",
+  "trap": "The headlines said the complete film had been found.",
+  "keywords": [
+    "metropolis",
+    "fritz lang",
+    "buenos aires",
+    "film restoration",
+    "16mm"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murnau Foundation, Metropolis restoration, 2010",
+  "source_kind": "institution",
+  "reference": "Friedrich-Wilhelm-Murnau-Stiftung, Metropolis: the 2010 reconstruction, restoration notes, 2010",
+  "written": "2026-09-26"
+}

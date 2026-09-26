@@ -1,0 +1,39 @@
+{
+  "id": "human_body-digestion-4",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Counting every fold and villus, how large is the inner surface of the adult gut?",
+  "options": [
+    "About 250 square metres",
+    "About 2 square metres",
+    "About 30 square metres"
+  ],
+  "correct": 2,
+  "answer": "About 30 square metres, roughly half a badminton court. Measuring tissue under the microscope, researchers in Gothenburg put the whole tract at 30 to 40 square metres in 2014, nearly all of it small intestine. The large intestine adds only about 2, and the mouth, oesophagus and stomach together less than 1.",
+  "move": "A dramatic comparison deserves one look at how it was measured.",
+  "trap": "Recalling the textbook claim that the gut lining equals a tennis court.",
+  "keywords": [
+    "small intestine",
+    "villi",
+    "surface area",
+    "absorption"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Helander & Fändriks, Scand J Gastroenterol, 2014",
+  "source_kind": "paper",
+  "reference": "https://www.tandfonline.com/doi/full/10.3109/00365521.2014.898326",
+  "written": "2026-09-26"
+}

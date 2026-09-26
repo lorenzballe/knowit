@@ -1,0 +1,39 @@
+{
+  "id": "cinema-kubrick-3",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why could British cinemas not show A Clockwork Orange for over 25 years after 1973?",
+  "options": [
+    "The censor banned it",
+    "Kubrick withdrew it himself",
+    "A court ordered it pulled"
+  ],
+  "correct": 1,
+  "answer": "Kubrick withdrew it himself. The British censor had passed it uncut with an X certificate in 1971. After newspapers tied crimes to the film and his family received threats, Kubrick had Warner Bros. pull it from British distribution. It returned to British cinemas in 2000, the year after he died.",
+  "move": "When something vanishes, ask who had the power and the reason to remove it.",
+  "trap": "The censor banned it, because that is how films usually disappear.",
+  "keywords": [
+    "a clockwork orange",
+    "censorship",
+    "stanley kubrick",
+    "warner bros"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "LoBrutto, Stanley Kubrick: A Biography",
+  "source_kind": "book",
+  "reference": "LoBrutto, Stanley Kubrick: A Biography, Donald I. Fine, 1997",
+  "written": "2026-09-26"
+}

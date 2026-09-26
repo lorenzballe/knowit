@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-forums-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What gave two Chicago hobbyists the time to build the first dial-up bulletin board?",
+  "answer": "A blizzard. Snowed in by the Great Blizzard of January 1978, Ward Christensen wrote the software and Randy Suess assembled the hardware; CBBS went online on 16 February. They had it working in about two weeks but later said four, so it would not look rushed. Callers dialled in one at a time.",
+  "move": "Count the idle weeks behind a breakthrough, not only the talent.",
+  "keywords": [
+    "cbbs",
+    "bulletin board system",
+    "ward christensen",
+    "randy suess",
+    "chicago blizzard"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EDN, 2019",
+  "source_kind": "news_archive",
+  "reference": "https://www.edn.com/blizzard-brings-about-bulletin-board-systems-january-16-1978/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "language-old-slang-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did an Elizabethan magistrate compile one of the first glossaries of English slang?",
+  "answer": "To expose vagrants. Thomas Harman's Caveat for Common Cursitors, 1567, set out the tricks of wandering beggars and listed their secret cant, such as bouse for drink and ken for a house. Later pamphleteers copied his list for decades, so much supposed Elizabethan underworld speech traces back to one Kent landowner's notes.",
+  "move": "When every source agrees, check whether they all copied one.",
+  "keywords": [
+    "thomas harman",
+    "thieves cant",
+    "vagrancy",
+    "elizabethan england"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kinney, Rogues, Vagabonds and Sturdy Beggars, 1990",
+  "source_kind": "book",
+  "reference": "Kinney (ed.), Rogues, Vagabonds and Sturdy Beggars, University of Massachusetts Press, 1990",
+  "written": "2026-09-26"
+}

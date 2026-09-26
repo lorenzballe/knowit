@@ -1,0 +1,39 @@
+{
+  "id": "economics-chokepoints-3",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: every ship through the Panama Canal's locks is raised and lowered using fresh water?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The locks are filled by gravity from Gatun Lake, a rain-fed reservoir, and each crossing lets roughly 200 million litres run out to the sea. In the 2023 drought the canal authority cut daily crossings and the depth ships could load to. One of the world's busiest trade routes depends on the rainy season.",
+  "move": "Find out what a system spends each time it runs.",
+  "trap": "Assuming a canal between two oceans simply uses the sea.",
+  "keywords": [
+    "panama canal",
+    "gatun lake",
+    "locks",
+    "drought",
+    "fresh water"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Panama Canal Authority, Annual Report, 2023",
+  "source_kind": "institution",
+  "reference": "Panama Canal Authority, Annual Report, fiscal year 2023, 2023",
+  "written": "2026-09-26"
+}

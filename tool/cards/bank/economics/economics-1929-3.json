@@ -1,0 +1,39 @@
+{
+  "id": "economics-1929-3",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most American families owned shares when the stock market crashed in 1929?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. By Galbraith's count, only about 1.5 million Americans had accounts with brokers, in a population of 120 million. The crash ruined a small, visible class of investors; the Depression reached everyone else through failed banks, lost jobs and collapsing farm prices. Most families lost their savings in a bank, not on a ticker tape.",
+  "move": "The most photographed victims are rarely the most numerous ones.",
+  "trap": "Picturing the crowds on Wall Street as the whole country.",
+  "keywords": [
+    "wall street crash",
+    "share ownership",
+    "galbraith",
+    "brokerage accounts",
+    "great depression"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Galbraith, The Great Crash 1929, 1955",
+  "source_kind": "book",
+  "reference": "Galbraith, The Great Crash 1929, Houghton Mifflin, 1955",
+  "written": "2026-09-26"
+}

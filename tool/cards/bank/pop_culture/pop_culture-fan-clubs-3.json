@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fan-clubs-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 2015 organised voting slates filled several Hugo Award shortlists. What did the full electorate do in the final vote?",
+  "options": [
+    "Mostly crowned the slate's nominees",
+    "Voted No Award in five categories",
+    "Had the awards cancelled that year"
+  ],
+  "correct": 1,
+  "answer": "Voted No Award in five categories. Nominations came from a small, coordinated bloc who each listed the same few works, while the wider membership nominated scattered favourites. When everyone voted, the slate lost almost everywhere. The rules were then changed so a bloc could no longer fill a whole shortlist.",
+  "move": "The people who choose the options are rarely the people who choose between them.",
+  "trap": "A bloc that filled the shortlist looks like the majority of voters.",
+  "keywords": [
+    "hugo awards",
+    "sad puppies",
+    "no award",
+    "voting slates",
+    "worldcon"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "World Science Fiction Society, Hugo statistics, 2015",
+  "source_kind": "statistics",
+  "reference": "World Science Fiction Society, 2015 Hugo Award Voting Statistics, Sasquan, Spokane, 2015",
+  "written": "2026-09-26"
+}

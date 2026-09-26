@@ -1,0 +1,36 @@
+{
+  "id": "art-lost-colour-2",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "also": [
+    "art.sculpture.marble"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were some of the Parthenon sculptures in London scraped with copper tools in 1937?",
+  "answer": "To make them whiter. Joseph Duveen, the dealer paying for their new gallery, wanted white marble, and workmen used copper tools and carborundum, a hard abrasive, on the surface layer the stone had carried since antiquity. An internal inquiry in 1938 called the damage obvious. The museum kept it quiet until 1998.",
+  "move": "A patron paying for the display can end up deciding what the object is.",
+  "keywords": [
+    "parthenon sculptures",
+    "joseph duveen",
+    "british museum",
+    "cleaning",
+    "patina"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jenkins, British Museum Occasional Paper, 2001",
+  "source_kind": "institution",
+  "reference": "Ian Jenkins, Cleaning and Controversy: The Parthenon Sculptures 1811–1939, British Museum Occasional Paper 146, 2001",
+  "written": "2026-09-26"
+}

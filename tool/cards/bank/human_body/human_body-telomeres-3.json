@@ -1,0 +1,40 @@
+{
+  "id": "human_body-telomeres-3",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Mice bred to lack telomerase entirely: when do signs of worn-out chromosome tips appear?",
+  "options": [
+    "After several generations of breeding",
+    "Within weeks of birth",
+    "Late in life, in the first generation"
+  ],
+  "correct": 0,
+  "answer": "After several generations of breeding. Lab mice are born with telomeres several times longer than a human's, so the first knockout mice lived normally. Each generation inherited shorter tips; by about the fourth to sixth, mice showed fused chromosomes, infertility and failing blood-forming tissue. The reserve ran down across lifetimes, not within one.",
+  "move": "A large reserve can hide a missing supply for a long time.",
+  "trap": "Assuming an enzyme that maintains chromosomes must be needed at once.",
+  "keywords": [
+    "telomerase knockout",
+    "mice",
+    "telomeres",
+    "generations",
+    "infertility"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Blasco et al., Cell, 1997",
+  "source_kind": "paper",
+  "reference": "Blasco, Lee, Hande et al., Telomere shortening and tumor formation by mouse cells lacking telomerase RNA, Cell, 1997",
+  "written": "2026-09-26"
+}

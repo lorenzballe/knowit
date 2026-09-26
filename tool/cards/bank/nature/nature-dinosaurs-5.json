@@ -1,0 +1,38 @@
+{
+  "id": "nature-dinosaurs-5",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Was the asteroid impact enough on its own to end the age of dinosaurs?",
+  "sides": [
+    "Yes, the impact alone",
+    "No, volcanoes shared the blame"
+  ],
+  "answer": "The extinction is abrupt and sits on the impact layer worldwide. Iridium, shocked quartz and a crater 180 km wide leave no doubt about the blow. Hull and colleagues found most gas from India's Deccan eruptions was released well before the boundary, without a matching extinction: the volcanoes had their chance.",
+  "move": "Whichever side you took, it turns on dating the eruptions to within millennia.",
+  "counterpoint": "The Deccan Traps poured out hundreds of thousands of cubic kilometres of lava around the boundary, with pulses of carbon dioxide and sulphur that swung the climate. Life already stressed may have been primed to collapse, and eruptions after the impact could have slowed recovery. Dating is contested: one team puts the biggest pulses just before the impact.",
+  "keywords": [
+    "deccan traps",
+    "chicxulub",
+    "volcanism",
+    "mass extinction",
+    "dating"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hull et al., Science, 2020",
+  "source_kind": "paper",
+  "reference": "Hull et al., On impact and volcanism across the Cretaceous-Paleogene boundary, Science, 2020",
+  "written": "2026-09-26"
+}

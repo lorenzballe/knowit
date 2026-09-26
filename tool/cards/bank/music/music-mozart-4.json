@@ -1,0 +1,33 @@
+{
+  "id": "music-mozart-4",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the idea come from that Mozart composed whole works in his head and merely copied them out?",
+  "answer": "Largely from a letter forged in his name. Friedrich Rochlitz printed it in the Allgemeine musikalische Zeitung in 1815, with Mozart describing whole pieces arriving at once. Hundreds of his sketches and unfinished fragments survive, including abandoned openings, and Ulrich Konrad catalogued them in 1992. Mozart crossed things out like anyone else.",
+  "move": "When a story flatters genius, check who wrote it and when.",
+  "keywords": [
+    "forged letter",
+    "friedrich rochlitz",
+    "sketches",
+    "ulrich konrad",
+    "composing"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Konrad, Mozarts Schaffensweise, 1992",
+  "source_kind": "book",
+  "reference": "Konrad, Mozarts Schaffensweise: Studien zu den Werkautographen, Skizzen und Entwürfen, Vandenhoeck & Ruprecht, 1992",
+  "written": "2026-09-26"
+}

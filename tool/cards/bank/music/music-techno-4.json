@@ -1,0 +1,39 @@
+{
+  "id": "music-techno-4",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a German court ruled that a weekend of DJ sets at Berghain counts as a concert?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2016 the Berlin-Brandenburg fiscal court ruled that Berghain's club nights were concerts under the VAT law, so tickets are taxed at 7% rather than the 19% charged on entertainment. The test the courts apply is whether the music is the purpose of the night for an average visitor.",
+  "move": "When a word sets the tax rate, expect a fight over the word.",
+  "trap": "Assuming records played by a DJ cannot count as a performance.",
+  "keywords": [
+    "berghain",
+    "value added tax",
+    "fiscal court",
+    "club culture",
+    "berlin"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raue law firm, Berghain case, 2016",
+  "source_kind": "primary_document",
+  "reference": "https://raue.com/en/news/industries/arts-and-cultural-institutions/raue-llp-secures-victory-for-berghain-before-fiscal-court/",
+  "written": "2026-09-26"
+}

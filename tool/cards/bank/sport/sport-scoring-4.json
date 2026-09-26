@@ -1,0 +1,33 @@
+{
+  "id": "sport-scoring-4",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did gymnastics give up the perfect 10 in 2006?",
+  "answer": "A ceiling on the score was a ceiling on the sport. Under a maximum of 10, a harder routine performed slightly less cleanly could lose to a safe one done perfectly. The new code split marks into an open-ended difficulty score, built up from zero, and an execution score that starts at 10 and falls.",
+  "move": "Cap the reward and people stop attempting the hard thing.",
+  "keywords": [
+    "perfect 10",
+    "code of points",
+    "difficulty score",
+    "execution score",
+    "gymnastics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NBC Olympics, gymnastics scoring rules",
+  "source_kind": "news_archive",
+  "reference": "https://www.nbcolympics.com/news/gymnastics-101-olympic-scoring-rules-and-regulations",
+  "written": "2026-09-26"
+}

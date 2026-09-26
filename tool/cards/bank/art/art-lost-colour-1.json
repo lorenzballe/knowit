@@ -1,0 +1,43 @@
+{
+  "id": "art-lost-colour-1",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How can conservators map grains of Egyptian blue too small to see on an ancient statue?",
+  "options": [
+    "The grains glow in infrared under visible light",
+    "The grains fluoresce under an ultraviolet lamp",
+    "The grains show up dark on an X-ray"
+  ],
+  "correct": 0,
+  "answer": "The grains glow in infrared under visible light. Egyptian blue, the oldest synthetic pigment, re-emits absorbed light as strong near-infrared luminescence. A modified camera photographs a statue under ordinary light, and grains under a millimetre across shine white against dark stone. Faces and hems that look bare turn out to be dotted with blue.",
+  "move": "What looks blank to the eye may be loud to a different sensor.",
+  "trap": "Reaching for ultraviolet, the lamp museums use to spot later retouching.",
+  "keywords": [
+    "egyptian blue",
+    "infrared luminescence",
+    "ancient polychromy",
+    "imaging",
+    "pigment"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Verri, Analytical and Bioanalytical Chemistry, 2009",
+  "source_kind": "paper",
+  "reference": "Verri, The spatially resolved characterisation of Egyptian blue, Han blue and Han purple by photo-induced luminescence digital imaging, Analytical and Bioanalytical Chemistry, 2009",
+  "written": "2026-09-26"
+}

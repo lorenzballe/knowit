@@ -1,0 +1,32 @@
+{
+  "id": "human_body-microbiome-4",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the first randomised trial of faecal transplants against recurrent gut infection end?",
+  "answer": "Early, because the comparison had become lopsided. In the Dutch trial published in 2013, one infusion of donor faeces cured 13 of 16 patients with recurrent Clostridioides difficile, against 4 of 13 on the antibiotic vancomycin. An interim analysis halted the trial, and relapsing patients from the antibiotic arms got donor faeces too.",
+  "move": "A test can end early because the answer arrived early.",
+  "keywords": [
+    "faecal transplant",
+    "clostridioides difficile",
+    "vancomycin",
+    "randomised trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Nood et al., NEJM, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJMoa1205037",
+  "written": "2026-09-26"
+}

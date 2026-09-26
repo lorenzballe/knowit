@@ -1,0 +1,33 @@
+{
+  "id": "music-chord-loops-1",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can the same four chords sound hopeful in Let It Be and bleak in Zombie?",
+  "answer": "By starting the loop on a different chord. Let It Be cycles C, G, A minor, F; Zombie cycles roughly E minor, C, G, D, which is the same circle entered at its minor chord. A loop has no fixed beginning, so wherever the ear lands first becomes home. Same circle, different front door.",
+  "move": "Where a cycle begins can decide what it seems to mean.",
+  "keywords": [
+    "chord progression",
+    "let it be",
+    "zombie",
+    "relative minor",
+    "loops"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Everett, The Foundations of Rock, 2009",
+  "source_kind": "book",
+  "reference": "Everett, The Foundations of Rock: From Blue Suede Shoes to Suite: Judy Blue Eyes, Oxford University Press, 2009",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "sport-swimming-1",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "also": [
+    "sport.olympics.modern"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are swimming times given only to the hundredth of a second when the clocks can measure thousandths?",
+  "answer": "Because of the 1972 Olympic 400 m medley. Gunnar Larsson beat Tim McKee by 0.002 seconds, 4:31.981 to 4:31.983. A swimmer covers about 2 mm in a thousandth of a second, less than the difference allowed in building two lanes. Since then ties at the hundredth stand, and swimmers share the medal.",
+  "move": "Never report a difference finer than the ruler that produced it.",
+  "keywords": [
+    "gunnar larsson",
+    "tim mckee",
+    "1972 munich olympics",
+    "timing",
+    "hundredths"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olympic Games Munich 1972, official results",
+  "source_kind": "primary_document",
+  "reference": "Organising Committee for the Games of the XXth Olympiad, Official Report, Munich, 1974",
+  "written": "2026-09-26"
+}

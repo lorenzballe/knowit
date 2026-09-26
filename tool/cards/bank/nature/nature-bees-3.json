@@ -1,0 +1,32 @@
+{
+  "id": "nature-bees-3",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do tomato growers buy boxed colonies of bumblebees rather than renting honeybee hives?",
+  "answer": "Tomato flowers keep their pollen locked in tubes that release it only when shaken. A bumblebee grips the flower and vibrates its flight muscles without flapping, and the pollen pours out; honeybees do not do this. Before bumblebees were reared commercially from the late 1980s, greenhouse workers shook each flower cluster with electric wands.",
+  "move": "Check that a helper can do the specific job before paying for it.",
+  "keywords": [
+    "bumblebees",
+    "buzz pollination",
+    "tomatoes",
+    "greenhouses"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Velthuis & van Doorn, Apidologie, 2006",
+  "source_kind": "paper",
+  "reference": "Velthuis & van Doorn, A century of advances in bumblebee domestication and the economic and environmental aspects of its commercialization for pollination, Apidologie, 2006",
+  "written": "2026-09-26"
+}

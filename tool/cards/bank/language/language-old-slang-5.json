@@ -1,0 +1,32 @@
+{
+  "id": "language-old-slang-5",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a secret slang of gay men reach millions of BBC radio listeners in the 1960s?",
+  "answer": "Through a comedy show. In Round the Horne, from 1965, two camp characters, Julian and Sandy, spoke Polari, a slang built from Italian, Romani, back slang and theatre talk: bona for good, omi for man. Audiences laughed at words many did not know were code, and the exposure hastened the code's decline.",
+  "move": "A secret language stops working the moment outsiders learn it.",
+  "keywords": [
+    "polari",
+    "round the horne",
+    "bbc radio",
+    "gay history"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, Polari, Routledge, 2002",
+  "source_kind": "book",
+  "reference": "Baker, Polari: The Lost Language of Gay Men, Routledge, 2002",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "art-patrons-2",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Lorenzo de' Medici noted his family spent 663,755 florins from 1434 to 1471. At 3.5 g of gold per florin, how many tonnes of gold?",
+  "value": 2.3,
+  "unit": "tonnes of gold",
+  "tolerance": 0.1,
+  "answer": "2,323 kg / 1,000 = about 2.3 tonnes.",
+  "move": "Turn a sum of money into a physical pile before judging its size.",
+  "trap": "Stopping at kilograms and reading 2,323 as the answer.",
+  "hint": "Multiply florins by grams, then divide by a thousand twice.",
+  "steps": [
+    "663,755 florins x 3.5 g = about 2,323,000 g.",
+    "2,323,000 g / 1,000 = about 2,323 kg.",
+    "2,323 kg / 1,000 = about 2.3 tonnes."
+  ],
+  "keywords": [
+    "medici",
+    "gold florin",
+    "patronage",
+    "lorenzo de' medici"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gombrich, The Early Medici as Patrons",
+  "source_kind": "book",
+  "reference": "E. H. Gombrich, The Early Medici as Patrons of Art, in Norm and Form, Phaidon, 1966",
+  "written": "2026-09-26"
+}

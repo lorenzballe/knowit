@@ -1,0 +1,33 @@
+{
+  "id": "music-piano-1",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a well-tuned piano deliberately out of tune with the textbook octave?",
+  "answer": "Because its strings are stiff. A stiff string's overtones run slightly sharp of whole-number multiples, so tuners widen each octave to match them. The stretch adds up: the top notes sit tens of cents sharp of strict equal temperament, a cent being a hundredth of a semitone. An exactly mathematical piano sounds sour up top.",
+  "move": "When the parts are imperfect, tune them to each other, not to the ideal.",
+  "keywords": [
+    "stretch tuning",
+    "inharmonicity",
+    "piano strings",
+    "railsback curve",
+    "equal temperament"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Railsback, JASA, 1938",
+  "source_kind": "paper",
+  "reference": "Railsback, Scale temperament as applied to piano tuning, Journal of the Acoustical Society of America, 1938",
+  "written": "2026-09-26"
+}

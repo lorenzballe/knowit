@@ -1,0 +1,40 @@
+{
+  "id": "human_body-telomeres-4",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Hayflick's human cells stopped dividing after about 50 doublings. What did he grow with them to prove the limit was theirs?",
+  "options": [
+    "Cancer cells from a tumour",
+    "Old cells given fresh broth",
+    "Young cells of the opposite sex"
+  ],
+  "correct": 2,
+  "answer": "Young cells of the opposite sex. In 1961 Hayflick and Moorhead mixed old male cells with young female ones in one flask, told apart by their sex chromosomes. The male cells reached their limit and died out while the female cells kept dividing. Same broth, same handling: the limit travelled with the cells.",
+  "move": "Put the suspect and a control in the same conditions, then compare.",
+  "trap": "Reaching for fresh broth, which leaves the rest of the handling untested.",
+  "keywords": [
+    "leonard hayflick",
+    "cell culture",
+    "cell division limit",
+    "sex chromosomes",
+    "controls"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hayflick & Moorhead, Exp Cell Res, 1961",
+  "source_kind": "paper",
+  "reference": "Hayflick & Moorhead, The serial cultivation of human diploid cell strains, Experimental Cell Research, 1961",
+  "written": "2026-09-26"
+}

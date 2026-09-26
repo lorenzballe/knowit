@@ -1,0 +1,33 @@
+{
+  "id": "human_body-microbiome-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the heart drug digoxin lose its effect in some patients but not in others?",
+  "answer": "A gut bacterium disables it. Strains of Eggerthella lenta carrying a particular pair of genes convert digoxin to an inactive form before it can be absorbed. In 2013 researchers identified those genes and showed that the amino acid arginine, plentiful in dietary protein, suppressed them in mice and raised the drug's level in the blood.",
+  "move": "A dose is only what reaches its target after others take their share.",
+  "keywords": [
+    "digoxin",
+    "eggerthella lenta",
+    "drug metabolism",
+    "arginine",
+    "gut bacteria"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haiser et al., Science, 2013",
+  "source_kind": "paper",
+  "reference": "Haiser, Gootenberg, Chatman, Sirasani, Balskus & Turnbaugh, Predicting and manipulating cardiac drug inactivation by the human gut bacterium Eggerthella lenta, Science, 2013",
+  "written": "2026-09-26"
+}

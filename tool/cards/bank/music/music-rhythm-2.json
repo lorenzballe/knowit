@@ -1,0 +1,32 @@
+{
+  "id": "music-rhythm-2",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do the tiny timing slips of a human drummer make a beat feel groovier?",
+  "answer": "Mostly not, in listening tests. Matthew Davies and colleagues added small timing deviations to short drum and bass patterns; listeners rated the strictly quantised versions as groovy or groovier, and larger deviations lowered the ratings. Other studies agree, though musicians still argue. Groove came from where notes fell in the bar, not from millisecond slips.",
+  "move": "A story about why something works needs testing with that thing removed.",
+  "keywords": [
+    "microtiming",
+    "groove",
+    "quantisation",
+    "drum patterns"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davies et al., Music Perception, 2013",
+  "source_kind": "paper",
+  "reference": "Davies, Madison, Silva & Gouyon, The effect of microtiming deviations on the perception of groove in short rhythms, Music Perception, 2013",
+  "written": "2026-09-26"
+}

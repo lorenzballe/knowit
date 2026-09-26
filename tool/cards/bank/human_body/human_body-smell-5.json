@@ -1,0 +1,39 @@
+{
+  "id": "human_body-smell-5",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in a US national survey, about one in eight adults over 40 failed a simple smell test?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the 2011–2012 national health survey, 12.4% of adults aged 40 and over had measurable smell loss, and it climbed steeply with age: about 14% of those 80 and older could barely smell or not at all. The test was eight scratch-and-sniff odours, from chocolate to natural gas.",
+  "move": "A loss that nobody can see is easy to count too low.",
+  "trap": "Assuming smell loss is rare because it is so seldom discussed.",
+  "keywords": [
+    "smell loss",
+    "nhanes",
+    "smell test",
+    "ageing",
+    "anosmia"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoffman et al., Rev Endocr Metab Disord, 2016",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/27287364/",
+  "written": "2026-09-26"
+}

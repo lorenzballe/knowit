@@ -1,0 +1,33 @@
+{
+  "id": "nature-recent-losses-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the first mammal extinction blamed on climate change, and what exactly finished it?",
+  "answer": "The Bramble Cay melomys, a small rodent found only on a coral cay of a few hectares in the Torres Strait, about 3 m high. Storm surges on higher seas washed over the island again and again, stripping the plants it ate. It was last seen in 2009; Australia declared it extinct in 2019.",
+  "move": "The smallest range goes first when the edge moves.",
+  "keywords": [
+    "bramble cay melomys",
+    "torres strait",
+    "sea level rise",
+    "storm surge",
+    "rodent"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gynther, Waller & Leung, Queensland Government, 2016",
+  "source_kind": "institution",
+  "reference": "Gynther, Waller & Leung, Confirmation of the extinction of the Bramble Cay melomys Melomys rubicola on Bramble Cay, Torres Strait, Queensland Government, 2016",
+  "written": "2026-09-26"
+}

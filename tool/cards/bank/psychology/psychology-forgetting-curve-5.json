@@ -1,0 +1,39 @@
+{
+  "id": "psychology-forgetting-curve-5",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "To remember a set of facts for a year, when should one single review session follow the first study?",
+  "options": [
+    "The next day",
+    "About a month later",
+    "About six months later"
+  ],
+  "correct": 1,
+  "answer": "About a month later. In a study of more than 1,350 people, the best gap between study and review grew with the wait until the test: 20 to 40% of a one-week wait, but only 5 to 10% of a year. For a test a year away, that is three to five weeks.",
+  "move": "Space the practice to match how long the result has to last.",
+  "trap": "Reviewing the next day, while the material still feels fresh.",
+  "keywords": [
+    "spacing effect",
+    "review",
+    "study schedule",
+    "retention interval"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cepeda et al., Psychological Science, 2008",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1467-9280.2008.02209.x",
+  "written": "2026-09-26"
+}

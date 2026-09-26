@@ -1,0 +1,41 @@
+{
+  "id": "language-internet-slang-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "also": [
+    "language.untranslatable_words.japanese"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: the word emoji grew out of the English word emotion?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Emoji is Japanese: e, picture, plus moji, written character. Shigetaka Kurita's set of 176 small symbols for NTT Docomo's mobile internet service in 1999 made it widespread. The echo of emotion and emoticon is chance, though a handy one: the word needed no translation to travel.",
+  "move": "With enough words in the world, some will rhyme across languages by accident.",
+  "trap": "Emoji and emotion share a sound and a job, so a root seems shared.",
+  "keywords": [
+    "emoji",
+    "shigetaka kurita",
+    "ntt docomo",
+    "japanese"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Museum of Modern Art, New York, 2016",
+  "source_kind": "institution",
+  "reference": "Museum of Modern Art, New York, Shigetaka Kurita, Emoji (1998-1999), acquired 2016",
+  "written": "2026-09-26"
+}

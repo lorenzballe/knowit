@@ -1,0 +1,32 @@
+{
+  "id": "cinema-lighting-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before fast film stock, how were most night exteriors in Westerns really shot?",
+  "answer": "In broad daylight. Day for night meant filming in sun, underexposing by a stop or two, often through a blue filter, and keeping the glowing sky out of frame. Hard sun gave moonlight its sharp shadows. The French call it la nuit américaine, the title Truffaut gave his 1973 film about film-making.",
+  "move": "Look at what a place can do, not what the story says it is.",
+  "keywords": [
+    "day for night",
+    "underexposure",
+    "blue filter",
+    "westerns"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brown, Cinematography: Theory and Practice",
+  "source_kind": "book",
+  "reference": "Brown, Cinematography: Theory and Practice, Focal Press, 2002",
+  "written": "2026-09-26"
+}

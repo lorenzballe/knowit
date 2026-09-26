@@ -1,0 +1,33 @@
+{
+  "id": "economics-hyperinflation-2",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did German mortgage lenders get back after the 1923 hyperinflation had let borrowers repay in worthless marks?",
+  "answer": "Some of it, years later. After court battles and angry savers' campaigns, a revaluation law of 1925 restored many private mortgages to 25% of their gold value, reopening debts borrowers thought were settled. Holders of the government's war bonds were treated far worse. The state, the biggest debtor of all, largely kept its gain.",
+  "move": "After inflation, ask who writes the rules for settling old debts.",
+  "keywords": [
+    "weimar germany",
+    "mortgages",
+    "revaluation",
+    "war bonds",
+    "creditors"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feldman, The Great Disorder, 1993",
+  "source_kind": "book",
+  "reference": "Feldman, The Great Disorder: Politics, Economics, and Society in the German Inflation, 1914-1924, Oxford University Press, 1993",
+  "written": "2026-09-26"
+}

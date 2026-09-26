@@ -1,0 +1,36 @@
+{
+  "id": "weird_facts-goosebumps-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "also": [
+    "human_body.ageing.grey_hair"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Besides raising hairs in the cold, what does the tiny muscle behind gooseflesh do for hair growth?",
+  "answer": "It anchors a nerve that wakes hair stem cells. In mice, Ya-Chieh Hsu's team at Harvard found that the sympathetic nerve which makes the muscle contract also wraps the follicle's stem cells, and in prolonged cold its noradrenaline spurs them to grow new hair. A quick bristle and a slowly thickening coat share one wiring.",
+  "move": "A part that looks useless may be holding something else in place.",
+  "keywords": [
+    "arrector pili",
+    "hair follicle stem cells",
+    "sympathetic nerve",
+    "noradrenaline",
+    "cold"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shwartz et al., Cell, 2020",
+  "source_kind": "primary_document",
+  "reference": "Shwartz et al., Cell types promoting goosebumps form a niche to regulate hair follicle stem cells, Cell, 2020",
+  "written": "2026-09-26"
+}

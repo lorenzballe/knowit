@@ -1,0 +1,43 @@
+{
+  "id": "music-film-scores-3",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "also": [
+    "cinema.sound_design.music_cues"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "How were most feature films of the silent era shown to audiences in the 1920s?",
+  "options": [
+    "In silence, apart from the audience",
+    "With music played from gramophone discs",
+    "With live music, from piano to orchestra"
+  ],
+  "correct": 2,
+  "answer": "With live music. Even a small cinema had a pianist or organist, often working from cue sheets the distributors sent out listing moods and timings, and big city houses kept orchestras. The prints survived and the performances did not. The Birth of a Nation had toured in 1915 with its own orchestral score.",
+  "move": "Ask what part of the event was never going to be kept.",
+  "trap": "Only the soundless prints survive, so silence looks like the norm.",
+  "keywords": [
+    "silent films",
+    "cinema organists",
+    "cue sheets",
+    "birth of a nation",
+    "live music"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Altman, Silent Film Sound, 2004",
+  "source_kind": "book",
+  "reference": "Altman, Silent Film Sound, Columbia University Press, 2004",
+  "written": "2026-09-26"
+}

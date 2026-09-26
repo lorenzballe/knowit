@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fast-fashion-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of all the material used to make clothes, how much ends up recycled into new clothing?",
+  "options": [
+    "About 15%",
+    "Less than 1%",
+    "About 40%"
+  ],
+  "correct": 1,
+  "answer": "Less than 1%. The Ellen MacArthur Foundation estimated in 2017 that about 73% of clothing fibre ends up burned or landfilled, around 12% is downcycled into insulation, cleaning cloths and mattress stuffing, and under 1% returns as new garments. The equivalent of a rubbish lorry of textiles is burned or buried every second.",
+  "move": "A bin marked recycling tells you where things go in, not where they end.",
+  "trap": "About 15%: donation bins make recycling look routine.",
+  "keywords": [
+    "textile recycling",
+    "ellen macarthur foundation",
+    "landfill",
+    "clothing waste",
+    "downcycling"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Ellen MacArthur Foundation, 2017",
+  "source_kind": "institution",
+  "reference": "Ellen MacArthur Foundation, A New Textiles Economy: Redesigning Fashion's Future, 2017",
+  "written": "2026-09-26"
+}

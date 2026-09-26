@@ -1,0 +1,35 @@
+{
+  "id": "language-japanese-1",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "also": [
+    "psychology.emotions.joy"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which Japanese word did a psychiatrist say Western languages lacked, and then build a theory of Japan on?",
+  "answer": "Amae: the wish to be indulged, to lean on another's goodwill as a child does on a parent. Doi Takeo's 1971 bestseller argued that Japanese social life turns on it. Doi held the feeling itself to be universal; English lacked only an everyday noun for it, like a room with no sign on the door.",
+  "move": "A missing word shows what a language names, not what its speakers feel.",
+  "keywords": [
+    "amae",
+    "doi takeo",
+    "dependence",
+    "japanese psychology"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Doi, The Anatomy of Dependence, 1973",
+  "source_kind": "book",
+  "reference": "Doi, The Anatomy of Dependence, trans. John Bester, Kodansha International, 1973",
+  "written": "2026-09-26"
+}

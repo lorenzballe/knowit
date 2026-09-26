@@ -1,0 +1,41 @@
+{
+  "id": "sport-ancient-1",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Olympia's shortest footrace ran one stade: 600 local feet of about 32 cm each. How long was it, in metres?",
+  "value": 192,
+  "unit": "metres",
+  "answer": "600 × 0.32 = 192 metres.",
+  "move": "A unit that sounds fixed can mean different lengths in different towns.",
+  "trap": "Assuming the ancient sprint matched a modern 200 m.",
+  "hint": "Convert one foot to metres first, then multiply by the number of feet.",
+  "steps": [
+    "One Olympic foot is about 0.32 m.",
+    "600 × 0.32 = 192 metres."
+  ],
+  "keywords": [
+    "stadion",
+    "olympia",
+    "greek foot",
+    "footrace",
+    "stadium"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller, Ancient Greek Athletics, 2004",
+  "source_kind": "book",
+  "reference": "Miller, Ancient Greek Athletics, Yale University Press, 2004",
+  "written": "2026-09-26"
+}

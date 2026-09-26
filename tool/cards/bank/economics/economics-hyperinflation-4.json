@@ -1,0 +1,39 @@
+{
+  "id": "economics-hyperinflation-4",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after Germany halted its hyperinflation in late 1923, the money in circulation kept growing fast?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Thomas Sargent showed that the central bank's money kept rising steeply for months after prices steadied. What changed was belief: the Reichsbank stopped lending to the government and the budget was cut, so people trusted the new money and wanted to hold it again. Cash that had been spent instantly now sat in wallets.",
+  "move": "A promise about tomorrow can matter more than the quantity today.",
+  "trap": "Assuming inflation stops only when the presses stop.",
+  "keywords": [
+    "weimar germany",
+    "rentenmark",
+    "thomas sargent",
+    "stabilisation",
+    "money supply"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sargent, The Ends of Four Big Inflations, 1982",
+  "source_kind": "paper",
+  "reference": "Sargent, The Ends of Four Big Inflations, in Hall (ed.), Inflation: Causes and Effects, University of Chicago Press, 1982",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-balance-2",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the room spin when a drunk person lies down, and again the next morning?",
+  "answer": "Because alcohol changes the density of the balance sensors. It seeps into the cupula, the gel flap inside each semicircular canal, before it reaches the surrounding fluid, so the flap turns lighter and drifts with every tilt. Hours later it leaves the cupula first, the imbalance reverses, and the eyes flick the other way.",
+  "move": "Two things out of step can matter more than the level of either.",
+  "keywords": [
+    "alcohol",
+    "cupula",
+    "positional nystagmus",
+    "hangover",
+    "semicircular canals"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Money & Myles, Nature, 1974",
+  "source_kind": "paper",
+  "reference": "Money & Myles, Heavy water nystagmus and effects of alcohol, Nature, 1974",
+  "written": "2026-09-26"
+}

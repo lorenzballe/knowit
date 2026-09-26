@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-gadgets-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the game Snake was first created for Nokia mobile phones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The idea came from arcades: Gremlin's Blockade of 1976 had players steering a growing line and trying not to hit it. Nokia engineer Taneli Armanto adapted it for the Nokia 6110 in 1997, where the phone's small grid and keypad suited it. A phone put a 1970s arcade idea into millions of pockets.",
+  "move": "Ask where a thing was before it reached the place you met it.",
+  "trap": "The phone version is the one millions played, so it feels original.",
+  "keywords": [
+    "snake",
+    "nokia 6110",
+    "blockade",
+    "taneli armanto",
+    "mobile games"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Kent, Ultimate History of Video Games, 2001",
+  "source_kind": "book",
+  "reference": "Steven L. Kent, The Ultimate History of Video Games, Three Rivers Press, 2001",
+  "written": "2026-09-26"
+}
