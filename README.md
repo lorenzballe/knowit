@@ -698,6 +698,63 @@ is a RevenueCat package missing; one whose price never arrives is an App
 Store product not yet *Ready to Submit*. The first subscriptions go to App
 Review with an app version, attached on the version's page.
 
+## Astute+ on the web, and the account page
+
+`/account` is a reader's Astute on the web: the same account as the app,
+signed in with Apple or Google through the same Firebase project; the
+record from the backup the app keeps at `readers/{uid}`, and the gap from
+the board it publishes; the plan from RevenueCat; and Astute+ for sale
+through RevenueCat's **Web Billing**, which charges through Stripe and
+writes the same entitlement, `astuto_pro`, to the same customer. The app
+identifies readers to RevenueCat by their uid, so a subscription bought on
+the site is the app's own at its next launch, and one bought in a store
+shows on the site. Apple lets an app honour what was bought elsewhere as
+long as the same thing is sold in-app and the app never sends anyone
+elsewhere to buy it (3.1.3(b)); Play is the same in spirit. So the site
+sells, and the app does not mention it.
+
+The page is `site/account.html`, `site/assets/account.css` and
+`site/assets/account.js`; Firebase's SDK comes from Google's CDN, and
+RevenueCat's is vendored under `site/assets/vendor/` (MIT), served from the
+site like the fonts. The two public keys it needs are in
+`site/assets/keys.js`, and with either empty the page says accounts on the
+site are not connected yet. There is no server: RevenueCat's SDK talks to
+RevenueCat, Firebase's to Firebase, and Stripe's webhooks are RevenueCat's
+to answer. Deleting an account from the page does what the app does — a
+fresh sign-in, Apple's token revoked, the backup and the board removed, then
+the account — and, like the app, does not cancel a subscription.
+
+The page reads the same without a script, and is `noindex` until the first
+purchase has gone through end to end; then the pricing section's Download
+links on a computer can point at `/account?plan=yearly` instead of the code
+to scan.
+
+**Setting it up**, in the dashboards, once:
+
+- **Stripe**: an account for TheBaleCompany, activated (business details,
+  IBAN), with Stripe Tax on so VAT is collected where it is due.
+- **RevenueCat**, project Astute: *Apps & providers → + New → Web Billing*,
+  connected to that Stripe account. Two products, `plus_yearly` (a year,
+  €29.99, seven days free) and `plus_monthly` (a month, €3.99), both
+  attached to the `astuto_pro` entitlement, and packaged as *Annual* and
+  *Monthly* in the offering the web app sees as current. The web app's
+  public API key goes into `keys.js` as `REVENUECAT_WEB_KEY`: the sandbox
+  one (`rcb_sb_…`) first, which charges Stripe's test card 4242 4242 4242
+  4242 and makes the page say *Test mode*; the production one when it is
+  time.
+- **Firebase**, project `astuto-3d398`: *Project settings → Your apps → Add
+  app → Web*, named *Astute site* — its `apiKey` and `appId` go into
+  `keys.js`. *Authentication → Settings → Authorized domains* gains
+  `astutetheapp.com`. *Sign-in method → Google* wants a web client, which
+  Firebase makes. *Sign-in method → Apple* wants, in the Apple developer
+  portal, a Services ID (say `com.astuto.app.web`) with Sign in with Apple
+  on for the domain `astutetheapp.com` and the return URL
+  `https://astuto-3d398.firebaseapp.com/__/auth/handler`, entered on the
+  provider beside the key it already has.
+- **The app**, to be complete: an entitlement whose store is `rc_billing`
+  is managed on the site, and the Astute+ screen should say so instead of
+  pointing at the App Store or Play. Nothing else changes.
+
 ## What the app measures
 
 Nothing, unless a key was built into it. `lib/analytics.dart` is the one place

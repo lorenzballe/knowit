@@ -95,8 +95,10 @@ jobs:
       - name: Version the site's stylesheets and script so a deploy cannot be served from cache
         run: |
           v="${GITHUB_SHA::12}"
-          sed -i -E "s#/assets/(site\.css|landing\.css|main\.js)\"#/assets/\1?v=$v\"#g" _site/*.html
+          sed -i -E "s#/assets/(site\.css|landing\.css|account\.css|main\.js|account\.js)\"#/assets/\1?v=$v\"#g" _site/*.html
+          sed -i "s#'./keys.js'#'./keys.js?v=$v'#" _site/assets/account.js
           grep -o 'site.css?v=[0-9a-f]*' _site/index.html | head -1
+          grep -o "keys.js?v=[0-9a-f]*" _site/assets/account.js | head -1
           grep -o 'landing.css?v=[0-9a-f]*' _site/index.html | head -1
           grep -o 'main.js?v=[0-9a-f]*' _site/privacy.html | head -1
 
