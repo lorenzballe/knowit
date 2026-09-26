@@ -1,0 +1,40 @@
+{
+  "id": "food-pasta-2",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where does the earliest record of dried pasta made in bulk for export, from 1154, place its production?",
+  "options": [
+    "Near Palermo, in Sicily",
+    "Near Naples, in Campania",
+    "In Genoa, in Liguria"
+  ],
+  "correct": 0,
+  "answer": "Near Palermo, in Sicily. The geographer al-Idrisi, writing for the Norman king Roger II, described Trabia, where itriyya, dried strands of dough, were made in such quantity that ships carried them across the Mediterranean. Naples became the capital of macaroni only in the 1600s, when its poor switched from greens to pasta.",
+  "move": "The place most famous for a thing is often where it arrived later.",
+  "trap": "Naples owns the modern image of pasta, so it seems to own the start.",
+  "keywords": [
+    "al-idrisi",
+    "sicily",
+    "trabia",
+    "itriyya",
+    "dried pasta"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Serventi & Sabban, Pasta, 2002",
+  "source_kind": "book",
+  "reference": "Serventi & Sabban, Pasta: The Story of a Universal Food, Columbia University Press, 2002",
+  "written": "2026-09-26"
+}

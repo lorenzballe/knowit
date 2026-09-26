@@ -1,0 +1,39 @@
+{
+  "id": "food-pasta-3",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the first printed recipe for spaghetti carbonara appeared in the United States?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The dish is first named in print in La Stampa in 1950, as a Roman favourite of American officers after the liberation. Its first known recipe came in 1952 in Vittles and Vice, a guide to Chicago restaurants, with bacon and Parmesan. Italy's La Cucina Italiana printed one in 1954, with Gruyère and garlic.",
+  "move": "The older a dish looks, the more worth checking its paper trail.",
+  "trap": "Carbonara feels Roman and ancient, so its recipe must be Italian first.",
+  "keywords": [
+    "carbonara",
+    "vittles and vice",
+    "la stampa",
+    "american soldiers",
+    "rome"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "The Daily Beast, origins of carbonara",
+  "source_kind": "news_archive",
+  "reference": "https://www.thedailybeast.com/the-mysterious-origins-of-carbonara-italys-most-fought-over-pasta/",
+  "written": "2026-09-26"
+}

@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Chemistry World",
-  "source_kind": "news_archive",
-  "reference": "https://www.chemistryworld.com/opinion/how-the-pelican-got-its-hue/7499.article",
+  "source": "Moser and Thomas, Phthalocyanine Compounds, 1963",
+  "source_kind": "book",
+  "reference": "Frank H. Moser and Arthur L. Thomas, Phthalocyanine Compounds, Reinhold, 1963",
   "written": "2026-09-26"
 }

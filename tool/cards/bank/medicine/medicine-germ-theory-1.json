@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Ignaz Semmelweis noticed that women who delivered on the way to the hospital rarely caught it. In the doctors' ward, 1840 to 1846, about 98 mothers in 1,000 died; in the midwives' ward, 36. Doctors came straight from dissecting corpses. After chlorine handwashing began in 1847, the doctors' ward fell to about 13 in 1,000.",
+  "answer": "True. Ignaz Semmelweis noticed that women who delivered on the way in rarely caught it. In the doctors' ward, 1840 to 1846, about 98 mothers in 1,000 died; in the midwives' ward, 36. Doctors came from dissecting corpses. After chlorine handwashing began in 1847, the doctors' ward fell to about 13 in 1,000.",
   "move": "When the untreated do better, look at what the treatment carries in.",
   "trap": "Assuming a hospital birth with doctors must be the safer one.",
   "keywords": [

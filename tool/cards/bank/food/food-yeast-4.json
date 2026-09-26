@@ -5,7 +5,7 @@
   "strand": "food.bread_and_baking.yeast",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "confirmation",
   "question": "True or false: sugar can be fermented into alcohol with no living yeast cell present?",
   "options": [
     "True",
@@ -13,8 +13,8 @@
   ],
   "correct": 0,
   "answer": "True. In 1897 Eduard Buchner ground yeast with sand, pressed out its juice, and found that the cell-free liquid still turned sugar into alcohol and carbon dioxide. Fermentation was the work of molecules the cell makes, later called enzymes. It earned him the 1907 Nobel Prize in Chemistry and opened the field of biochemistry.",
-  "move": "Take a process apart to learn whether the whole is really required.",
-  "trap": "Holding that fermentation needs a living cell, the view Pasteur defended.",
+  "move": "Always seeing two things together does not show that one needs the other.",
+  "trap": "Every fermentation ever seen had living yeast in it, so life seemed required.",
   "keywords": [
     "eduard buchner",
     "cell-free fermentation",

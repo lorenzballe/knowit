@@ -10,10 +10,10 @@
   "options": [
     "About one in a hundred",
     "About one in four",
-    "About three in four"
+    "Well over half"
   ],
   "correct": 2,
-  "answer": "About three in four. In the Gaia-era census of stars within 32 light-years, about 250 of 340 are red dwarfs. Yet not one is easy to see without a telescope: the brightest, AX Microscopii, sits at the very limit of perfect skies. The night sky is a catalogue of the rare, bright few.",
+  "answer": "Well over half. In the Gaia-era census within 32 light-years, 61% of all stars and brown dwarfs are red dwarfs. Yet not one is easy to see without a telescope: the brightest, AX Microscopii, sits at the very limit of perfect skies. The night sky is a catalogue of the rare, bright few.",
   "move": "The easiest members to see are rarely the typical ones.",
   "trap": "The naked-eye sky has almost no red dwarfs, so they seem rare.",
   "keywords": [

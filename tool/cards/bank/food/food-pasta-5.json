@@ -1,0 +1,42 @@
+{
+  "id": "food-pasta-5",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many kilograms of pasta does the average Italian eat in a year?",
+  "value": 23,
+  "unit": "kg",
+  "withinFactor": 3,
+  "answer": "400 g x 52 weeks = about 21 kg a year.",
+  "move": "Build a yearly figure from one ordinary week, then multiply.",
+  "trap": "Picturing pasta at every meal and guessing a hundred kilos.",
+  "hint": "Start from the dry weight of one plate and how many plates a week.",
+  "steps": [
+    "A standard portion of dry pasta is about 80 g.",
+    "Assume about 5 portions a week: 5 x 80 g = 400 g.",
+    "400 g x 52 weeks = about 21 kg a year."
+  ],
+  "keywords": [
+    "pasta consumption",
+    "italy",
+    "per capita",
+    "portions"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Pasta Organisation, 2024",
+  "source_kind": "institution",
+  "reference": "https://internationalpasta.org/news/world-pasta-day-2024-a-billion-plates-of-pasta-in-10-years-to-feed-the-planet/",
+  "written": "2026-09-26"
+}

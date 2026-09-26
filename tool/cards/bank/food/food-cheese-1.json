@@ -1,0 +1,33 @@
+{
+  "id": "food-cheese-1",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the enzyme that curdles most American cheese come from today?",
+  "answer": "From microbes carrying a calf's gene. Chymosin, the enzyme in rennet that clots milk, once came only from the stomachs of slaughtered calves. In 1990 the FDA cleared chymosin made by bacteria given the cow's gene, the first ingredient from recombinant DNA approved for US food. Most US cheese now uses fermentation-made chymosin: a calf's stomach, replaced by a steel tank.",
+  "move": "Ask how an old ingredient is made now, not how it began.",
+  "keywords": [
+    "chymosin",
+    "rennet",
+    "genetic engineering",
+    "fda",
+    "calves"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA, 21 CFR 184.1685",
+  "source_kind": "primary_document",
+  "reference": "US Food and Drug Administration, Chymosin enzyme preparation, affirmation of GRAS status, Federal Register, 23 March 1990",
+  "written": "2026-09-26"
+}
