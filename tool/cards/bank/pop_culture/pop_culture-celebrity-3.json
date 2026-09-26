@@ -6,13 +6,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: the rule Kim Kardashian broke with a paid crypto post in 2021 was written for social media?",
+  "question": "True or false: the rule Kim Kardashian broke with a paid crypto post in 2021 dates from 1933?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. It was Section 17(b) of the Securities Act of 1933, aimed at paid touting of shares in newspapers and newsletters. She was paid $250,000 to post about EthereumMax tokens without saying so, and in 2022 settled with the SEC for $1.26 million. An Instagram story answered to a Depression-era law.",
+  "correct": 0,
+  "answer": "True. It was Section 17(b) of the Securities Act of 1933, aimed at paid touting of shares in newspapers and newsletters. She was paid $250,000 to post about EthereumMax tokens without saying so, and in 2022 settled with the SEC for $1.26 million. An Instagram story answered to a Depression-era law.",
   "move": "Before asking for a new law, check whether an old one already fits.",
   "trap": "New media seem to need new laws, so the rule must be recent.",
   "keywords": [

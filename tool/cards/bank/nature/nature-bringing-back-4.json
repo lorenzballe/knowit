@@ -1,0 +1,33 @@
+{
+  "id": "nature-bringing-back-4",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What went wrong when two German zoo directors tried to breed the extinct aurochs back?",
+  "answer": "They bred for a picture, not the animal. In the 1920s and 1930s Heinz and Lutz Heck crossed breeds such as Highland and Spanish fighting cattle until calves looked right to them. Heck cattle came out far smaller than aurochs bulls, which stood up to about 1.8 m at the shoulder. The last aurochs had died in Poland in 1627.",
+  "move": "Matching the look of a thing is not recreating the thing.",
+  "keywords": [
+    "aurochs",
+    "heck cattle",
+    "back-breeding",
+    "heck brothers",
+    "poland"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Vuure, Retracing the Aurochs, 2005",
+  "source_kind": "book",
+  "reference": "van Vuure, Retracing the Aurochs: History, Morphology and Ecology of an Extinct Wild Ox, Pensoft, 2005",
+  "written": "2026-09-26"
+}

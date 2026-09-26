@@ -1,0 +1,40 @@
+{
+  "id": "nature-bringing-back-5",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1984 the quagga became the first extinct animal to have its DNA read. What did genetics eventually show it was?",
+  "options": [
+    "A form of plains zebra",
+    "A close cousin of the horse",
+    "A separate zebra species"
+  ],
+  "correct": 0,
+  "answer": "A form of plains zebra. Fragments from a museum skin placed it among the zebras, and later work put it inside the plains zebra, differing mainly in coat. That is why a South African project has, since 1987, bred ordinary plains zebras for fewer stripes and browner backs, producing animals that look like quaggas.",
+  "move": "Looks can divide what ancestry joins; check the ancestry.",
+  "trap": "A half-striped brown coat looks too different to be the same zebra.",
+  "keywords": [
+    "quagga",
+    "plains zebra",
+    "ancient dna",
+    "quagga project",
+    "south africa"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Higuchi et al., Nature, 1984",
+  "source_kind": "paper",
+  "reference": "Higuchi, Bowman, Freiberger, Ryder & Wilson, DNA sequences from the quagga, an extinct member of the horse family, Nature, 1984",
+  "written": "2026-09-26"
+}

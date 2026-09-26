@@ -1,0 +1,33 @@
+{
+  "id": "art-abstraction-4",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did researchers find beneath the paint of Malevich's Black Square in 2015?",
+  "answer": "Earlier pictures in colour. Tretyakov Gallery researchers using X-rays found traces of two earlier compositions under the black. They also read a faint pencil note on the border echoing a 19th-century Paris joke: an all-black picture titled as a night-time fight in a cellar. Pure abstraction's founding image covers colour and a gag.",
+  "move": "Before calling a work a pure beginning, look at what lies beneath it.",
+  "keywords": [
+    "malevich",
+    "black square",
+    "tretyakov gallery",
+    "x-ray",
+    "suprematism"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tretyakov Gallery, Moscow, 2015",
+  "source_kind": "institution",
+  "reference": "State Tretyakov Gallery, Moscow, technical study of Malevich's Black Square, announced November 2015",
+  "written": "2026-09-26"
+}

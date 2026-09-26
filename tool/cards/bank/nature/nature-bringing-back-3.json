@@ -1,0 +1,33 @@
+{
+  "id": "nature-bringing-back-3",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did US wildlife officials clone a black-footed ferret from cells frozen in 1988?",
+  "answer": "To recover lost genes. Every black-footed ferret alive descends from seven animals bred after the species was found clinging on in Wyoming in the 1980s. Willa, a female whose cells went into a freezer, left no descendants; her clone Elizabeth Ann, born in 2020, carries variation missing from the whole living population. A freezer became a founder.",
+  "move": "Before a population shrinks further, save what its survivors have lost.",
+  "keywords": [
+    "black-footed ferret",
+    "cloning",
+    "genetic diversity",
+    "frozen zoo",
+    "wyoming"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Fish and Wildlife Service, 2021",
+  "source_kind": "institution",
+  "reference": "US Fish and Wildlife Service, announcement of the first cloned black-footed ferret, Elizabeth Ann, February 2021",
+  "written": "2026-09-26"
+}

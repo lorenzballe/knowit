@@ -1,0 +1,39 @@
+{
+  "id": "nature-bringing-back-2",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a clone of an animal from an extinct subspecies has been born alive?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2003 a clone of Celia, the last bucardo, a Pyrenean wild goat that died in 2000, was born in Spain to a hybrid goat mother. It was the only one of dozens of implanted embryos to reach birth, and it died within minutes of a malformed lung. The subspecies was extinct, revived and extinct again.",
+  "move": "The first success can be brief; ask how long it lasted.",
+  "trap": "De-extinction is always reported as something coming, not something done.",
+  "keywords": [
+    "bucardo",
+    "pyrenean ibex",
+    "cloning",
+    "celia",
+    "de-extinction"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Folch et al., Theriogenology, 2009",
+  "source_kind": "paper",
+  "reference": "Folch et al., First birth of an animal from an extinct subspecies (Capra pyrenaica pyrenaica) by cloning, Theriogenology, 2009",
+  "written": "2026-09-26"
+}

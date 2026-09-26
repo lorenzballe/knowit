@@ -1,0 +1,39 @@
+{
+  "id": "art-abstraction-2",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Which of these painters was making abstract paintings first?",
+  "options": [
+    "Wassily Kandinsky",
+    "Hilma af Klint",
+    "Kazimir Malevich"
+  ],
+  "correct": 1,
+  "answer": "Hilma af Klint, from 1906, about five years before Kandinsky. She showed the work to almost no one and asked that it stay unseen for 20 years after her death in 1944. Histories of abstraction were written from what hung in Paris, Munich and Moscow; she entered them after a Los Angeles exhibition in 1986.",
+  "move": "A history can only include what its historians were able to see.",
+  "trap": "Kandinsky is the name standard histories put first, so it comes first.",
+  "keywords": [
+    "hilma af klint",
+    "abstract painting",
+    "kandinsky",
+    "paintings for the temple"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guggenheim Museum, Hilma af Klint, 2018",
+  "source_kind": "institution",
+  "reference": "Tracey Bashkoff (ed.), Hilma af Klint: Paintings for the Future, Solomon R. Guggenheim Museum, 2018",
+  "written": "2026-09-26"
+}

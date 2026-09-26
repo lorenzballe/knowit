@@ -1,0 +1,33 @@
+{
+  "id": "sport-set-pieces-4",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was Wilt Chamberlain shooting his free throws on the night he scored 100 points in 1962?",
+  "answer": "Underhand, and he made 28 of 32. That season, tossing the ball up from between his knees, he hit about 61% of his free throws. He later went back to shooting overhand and finished his career near 51%. Rick Barry, who never gave up the underhand style, made about 90%.",
+  "move": "A method that works can still lose to one that looks better.",
+  "keywords": [
+    "wilt chamberlain",
+    "free throws",
+    "underhand shot",
+    "rick barry",
+    "basketball"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pomerantz, Wilt, 1962, 2005",
+  "source_kind": "book",
+  "reference": "Pomerantz, Wilt, 1962: The Night of 100 Points and the Dawn of a New Era, Crown, 2005",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "art-abstraction-1",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Kandinsky, Mondrian and Hilma af Klint all turned to abstraction in the same years. What linked them?",
+  "options": [
+    "A shared interest in theosophy",
+    "They had studied one another's work",
+    "Training under the same teacher"
+  ],
+  "correct": 0,
+  "answer": "A shared interest in theosophy. Mondrian joined the Dutch Theosophical Society in 1909; Kandinsky's On the Spiritual in Art of 1911 names Blavatsky's movement; af Klint painted from séances and later followed Rudolf Steiner. None needed the others. A common belief that colour and form could show unseen forces pushed each the same way.",
+  "move": "When separate people arrive at the same place, look for the road they shared.",
+  "trap": "Similar results suggest copying, the most direct link one can picture.",
+  "keywords": [
+    "theosophy",
+    "kandinsky",
+    "mondrian",
+    "hilma af klint",
+    "spiritualism"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ringbom, The Sounding Cosmos, 1970",
+  "source_kind": "book",
+  "reference": "Sixten Ringbom, The Sounding Cosmos: A Study in the Spiritualism of Kandinsky and the Genesis of Abstract Painting, Åbo Akademi, 1970",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cinema-unfinished-3",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "True or false: once about $90 million had been spent on Batgirl, releasing it was bound to beat shelving it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The $90 million was gone either way; only what came next could be weighed. Release meant more spending on effects and marketing against uncertain returns, while shelving let Warner Bros. Discovery take a tax write-down in 2022. A nearly finished superhero film was locked away unseen by arithmetic, not by quality.",
+  "move": "Decide on what is still to be spent, not on what already went.",
+  "trap": "Abandoning it feels like throwing away all the money already spent.",
+  "keywords": [
+    "batgirl",
+    "warner bros. discovery",
+    "tax write-down",
+    "shelved films"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Hollywood Reporter, August 2022",
+  "source_kind": "news_archive",
+  "reference": "The Hollywood Reporter, report on Warner Bros. Discovery shelving Batgirl, August 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-still-on-the-books-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do seven US state constitutions still say about atheists holding public office?",
+  "answer": "That they may not. Arkansas, Maryland, Mississippi, North Carolina, South Carolina, Tennessee and Texas keep clauses barring those who deny a Supreme Being. None can be enforced: in 1961 the Supreme Court struck down Maryland's religious test in Torcaso v. Watkins. Deleting them needs a constitutional amendment, so they stay in print.",
+  "move": "A dead rule stays on paper when removing it costs more than ignoring it.",
+  "keywords": [
+    "religious tests",
+    "state constitutions",
+    "torcaso v. watkins",
+    "atheists",
+    "public office"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Torcaso v. Watkins, US Supreme Court, 1961",
+  "source_kind": "primary_document",
+  "reference": "Torcaso v. Watkins, 367 U.S. 488, Supreme Court of the United States, 1961",
+  "written": "2026-09-26"
+}

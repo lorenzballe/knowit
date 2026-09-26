@@ -1,0 +1,33 @@
+{
+  "id": "sport-set-pieces-2",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the team that shoots first in a penalty shoot-out really win more often?",
+  "answer": "Perhaps slightly; the evidence is contested. Apesteguia and Palacios-Huerta found first-shooting teams won 60% of 269 shoot-outs and blamed the pressure of chasing. Kocher, Lenz and Sutter, with twice as many shoot-outs, found no significant edge. Football's lawmakers trialled a tennis-style A-B-B-A order, then dropped it in 2018.",
+  "move": "A striking result from one dataset is a question for the next.",
+  "keywords": [
+    "penalty shoot-out",
+    "abba",
+    "psychological pressure",
+    "ifab",
+    "kicking order"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Apesteguia & Palacios-Huerta, AER, 2010",
+  "source_kind": "paper",
+  "reference": "Apesteguia & Palacios-Huerta, Psychological Pressure in Competitive Environments: Evidence from a Randomized Natural Experiment, American Economic Review, 2010",
+  "written": "2026-09-26"
+}

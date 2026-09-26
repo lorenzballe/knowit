@@ -1,0 +1,38 @@
+{
+  "id": "art-abstraction-3",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: Kandinsky's so-called first abstract watercolour, inscribed 1910, is securely dated to that year.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Many scholars read it as a study for Composition VII of 1913 and suspect the earlier date was written on later, once being first had begun to matter. Apart from the inscription, little supports 1910. A key date in the story of abstract art rests on the artist's own pencil.",
+  "move": "A date written by someone who gains from it is a claim, not a record.",
+  "trap": "Trusting the date on the sheet because the artist himself wrote it.",
+  "keywords": [
+    "kandinsky",
+    "first abstract watercolour",
+    "dating",
+    "composition vii"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barnett, Kandinsky Watercolours, 1992",
+  "source_kind": "reference_work",
+  "reference": "Vivian Endicott Barnett, Kandinsky Watercolours: Catalogue Raisonné, Volume One 1900-1921, Sotheby's Publications, 1992",
+  "written": "2026-09-26"
+}

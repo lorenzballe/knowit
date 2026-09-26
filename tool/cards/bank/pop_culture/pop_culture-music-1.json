@@ -8,11 +8,11 @@
   "principle": "sampling",
   "question": "In 1991 Billboard's album chart switched from shop reports to counting barcode scans at tills. What happened?",
   "options": [
-    "Country and rap rose",
     "The top barely moved",
-    "Ballads and pop rose"
+    "Ballads and pop rose",
+    "Country and rap rose"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "Country and rap rose. The old chart relied on staff at selected shops reporting what sold best, which record labels could lobby and big-city stores dominated. Once SoundScan counted real sales, Garth Brooks and N.W.A reached No. 1 within months. The audience had been there all along, uncounted.",
   "move": "Before trusting a ranking, ask who was doing the reporting.",
   "trap": "Assuming a chart built from shop reports already measured real sales.",

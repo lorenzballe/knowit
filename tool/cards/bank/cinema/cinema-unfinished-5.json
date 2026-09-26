@@ -1,0 +1,37 @@
+{
+  "id": "cinema-unfinished-5",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a dead director's unfinished film be completed by other people?",
+  "sides": [
+    "Yes, finish it",
+    "No, leave it unfinished"
+  ],
+  "answer": "An unfinished film is seen by almost no one. Eisenstein shot ¡Que viva México! in 1930–32 and never cut it; the version Grigori Aleksandrov assembled in 1979 at least let audiences see the footage as a film. A careful completion, labelled as such, serves the work better than cans in a vault.",
+  "move": "Whichever side you took, the hinge is whose choices viewers believe they see.",
+  "counterpoint": "Editing is where a film is authored. Whoever cuts the footage makes the thousand choices the director never made, then sells them under a famous name. Better to show the material openly as fragments, rushes and notes, clearly unfinished, than to present a guess as the work itself.",
+  "keywords": [
+    "unfinished films",
+    "sergei eisenstein",
+    "que viva mexico",
+    "posthumous completion"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Contested archival practice",
+  "source_kind": "book",
+  "reference": "Geduld and Gottesman (eds), Sergei Eisenstein and Upton Sinclair: The Making and Unmaking of Que Viva Mexico, Indiana University Press, 1970",
+  "written": "2026-09-26"
+}
