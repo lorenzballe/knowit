@@ -1554,14 +1554,14 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ton score commence avec les cinq d\'aujourd\'hui.';
 
   @override
-  String get anonymousUsage => 'Usage anonyme';
+  String get anonymousUsage => 'Données d’usage';
 
   @override
   String get anonymousUsageLine =>
-      'Combien de cartes sont lues, gardées et dites, pour que les suivantes soient meilleures. Jamais ton nom, ton e-mail ni ce que tu écris.';
+      'Comment l’app est utilisée — ce qui est lu, gardé et dit, et ce qui ne marche pas — pour que les prochaines cartes soient meilleures. Jamais ton nom, ton e-mail ni ce que tu écris.';
 
   @override
-  String get usageOn => 'Des comptes seulement, aucun nom.';
+  String get usageOn => 'Partagées, sans ton nom ni tes mots.';
 
   @override
   String get usageOff => 'Plus rien n’est mesuré.';

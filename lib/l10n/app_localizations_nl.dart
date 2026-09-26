@@ -1548,14 +1548,14 @@ class AppLocalizationsNl extends AppLocalizations {
   String get scoreStartsToday => 'Je score begint met de vijf van vandaag.';
 
   @override
-  String get anonymousUsage => 'Anoniem gebruik';
+  String get anonymousUsage => 'Gebruiksgegevens';
 
   @override
   String get anonymousUsageLine =>
-      'Hoeveel kaarten gelezen, bewaard en gezegd worden, zodat de volgende beter zijn. Nooit je naam, je e-mail of wat je schrijft.';
+      'Hoe de app wordt gebruikt — wat gelezen, bewaard en gezegd wordt, en wat misgaat — zodat de volgende kaarten beter zijn. Nooit je naam, je e-mail of wat je schrijft.';
 
   @override
-  String get usageOn => 'Alleen aantallen, geen namen.';
+  String get usageOn => 'Gedeeld, zonder je naam of je woorden.';
 
   @override
   String get usageOff => 'Er wordt niets meer gemeten.';

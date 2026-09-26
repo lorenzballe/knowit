@@ -2253,19 +2253,19 @@ abstract class AppLocalizations {
   /// No description provided for @anonymousUsage.
   ///
   /// In en, this message translates to:
-  /// **'Anonymous usage'**
+  /// **'Usage data'**
   String get anonymousUsage;
 
   /// No description provided for @anonymousUsageLine.
   ///
   /// In en, this message translates to:
-  /// **'Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.'**
+  /// **'How the app is used — what gets read, kept and said, and what goes wrong — so the next cards are better ones. Never your name, your email, or anything you write.'**
   String get anonymousUsageLine;
 
   /// No description provided for @usageOn.
   ///
   /// In en, this message translates to:
-  /// **'Counts only, and no names.'**
+  /// **'Shared, without your name or your words.'**
   String get usageOn;
 
   /// No description provided for @usageOff.

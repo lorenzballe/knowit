@@ -1514,14 +1514,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get scoreStartsToday => '점수는 오늘의 다섯 장부터 시작해요.';
 
   @override
-  String get anonymousUsage => '익명 사용 정보';
+  String get anonymousUsage => '사용 데이터';
 
   @override
   String get anonymousUsageLine =>
-      '읽고, 담고, 말한 카드의 수만. 다음 카드를 더 좋게 만들기 위해서입니다. 이름도 이메일도, 적은 내용도 보내지 않습니다.';
+      '앱이 어떻게 쓰이는지(읽고, 담고, 말한 카드와 잘 안 된 점)를 보냅니다. 다음 카드를 더 좋게 만들기 위해서입니다. 이름도 이메일도, 적은 내용도 보내지 않습니다.';
 
   @override
-  String get usageOn => '숫자만, 이름은 없습니다.';
+  String get usageOn => '공유 중. 이름도, 적은 말도 포함하지 않습니다.';
 
   @override
   String get usageOff => '더 이상 아무것도 측정하지 않습니다.';

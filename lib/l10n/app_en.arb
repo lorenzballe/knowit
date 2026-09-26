@@ -1399,9 +1399,9 @@
   }
  },
  "scoreStartsToday": "Your score starts with today's five.",
- "anonymousUsage": "Anonymous usage",
- "anonymousUsageLine": "Counts of what gets read, kept and said, so the next cards are better ones. Never your name, your email, or anything you write.",
- "usageOn": "Counts only, and no names.",
+ "anonymousUsage": "Usage data",
+ "anonymousUsageLine": "How the app is used — what gets read, kept and said, and what goes wrong — so the next cards are better ones. Never your name, your email, or anything you write.",
+ "usageOn": "Shared, without your name or your words.",
  "usageOff": "Nothing more is measured.",
  "yourMix": "Your mix",
  "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",

@@ -1502,14 +1502,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get scoreStartsToday => 'スコアは今日の5枚から始まります。';
 
   @override
-  String get anonymousUsage => '匿名の利用状況';
+  String get anonymousUsage => '利用データ';
 
   @override
   String get anonymousUsageLine =>
-      '読まれた・保存された・話されたカードの数だけ。次のカードをよくするためです。名前もメールも、書いた内容も送りません。';
+      'アプリの使われ方（読まれた・保存された・話されたカード、うまくいかなかったこと）を送ります。次のカードをよくするためです。名前もメールも、書いた内容も送りません。';
 
   @override
-  String get usageOn => '数だけ、名前はなし。';
+  String get usageOn => '共有中。名前も、書いた言葉も含みません。';
 
   @override
   String get usageOff => 'もう何も計測しません。';

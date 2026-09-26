@@ -1534,14 +1534,14 @@ class AppLocalizationsTr extends AppLocalizations {
   String get scoreStartsToday => 'Puanın bugünün beş kartıyla başlıyor.';
 
   @override
-  String get anonymousUsage => 'Anonim kullanım';
+  String get anonymousUsage => 'Kullanım verileri';
 
   @override
   String get anonymousUsageLine =>
-      'Kaç kartın okunduğu, saklandığı ve söylendiği — sonrakiler daha iyi olsun diye. Adın, e-postan ya da yazdıkların asla.';
+      'Uygulamanın nasıl kullanıldığı — neyin okunduğu, saklandığı ve söylendiği, neyin ters gittiği — sonraki kartlar daha iyi olsun diye. Adın, e-postan ya da yazdıkların asla.';
 
   @override
-  String get usageOn => 'Yalnızca sayılar, isim yok.';
+  String get usageOn => 'Paylaşılıyor; adın ve sözlerin olmadan.';
 
   @override
   String get usageOff => 'Artık hiçbir şey ölçülmüyor.';

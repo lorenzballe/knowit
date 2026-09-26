@@ -1595,14 +1595,14 @@ class AppLocalizationsPl extends AppLocalizations {
       'Twój wynik zaczyna się od dzisiejszej piątki.';
 
   @override
-  String get anonymousUsage => 'Anonimowe użycie';
+  String get anonymousUsage => 'Dane o użyciu';
 
   @override
   String get anonymousUsageLine =>
-      'Ile kart zostaje przeczytanych, zachowanych i powiedzianych, żeby następne były lepsze. Nigdy twoje imię, e-mail ani to, co piszesz.';
+      'Jak używana jest aplikacja — co zostaje przeczytane, zachowane i powiedziane, i co nie działa — żeby następne karty były lepsze. Nigdy twoje imię, e-mail ani to, co piszesz.';
 
   @override
-  String get usageOn => 'Tylko liczby, żadnych imion.';
+  String get usageOn => 'Udostępniane, bez twojego imienia i twoich słów.';
 
   @override
   String get usageOff => 'Nic już nie jest mierzone.';

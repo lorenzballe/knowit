@@ -1592,14 +1592,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get scoreStartsToday => 'Ваш счёт начинается с сегодняшней пятёрки.';
 
   @override
-  String get anonymousUsage => 'Анонимная статистика';
+  String get anonymousUsage => 'Данные об использовании';
 
   @override
   String get anonymousUsageLine =>
-      'Сколько карточек прочитано, сохранено и сказано вслух — чтобы следующие были лучше. Никогда ваше имя, почта или то, что вы пишете.';
+      'Как используется приложение — что прочитано, сохранено и сказано вслух и что пошло не так, — чтобы следующие карточки были лучше. Никогда ваше имя, почта или то, что вы пишете.';
 
   @override
-  String get usageOn => 'Только цифры, без имён.';
+  String get usageOn => 'Передаются — без вашего имени и ваших слов.';
 
   @override
   String get usageOff => 'Больше ничего не измеряется.';

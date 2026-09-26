@@ -1550,14 +1550,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dein Punktestand beginnt mit den fünf von heute.';
 
   @override
-  String get anonymousUsage => 'Anonyme Nutzung';
+  String get anonymousUsage => 'Nutzungsdaten';
 
   @override
   String get anonymousUsageLine =>
-      'Wie viele Karten gelesen, behalten und gesagt werden, damit die nächsten besser sind. Nie dein Name, deine E-Mail oder was du schreibst.';
+      'Wie die App genutzt wird – was gelesen, behalten und gesagt wird und was schiefgeht –, damit die nächsten Karten besser sind. Nie dein Name, deine E-Mail oder was du schreibst.';
 
   @override
-  String get usageOn => 'Nur Zahlen, keine Namen.';
+  String get usageOn => 'Geteilt, ohne deinen Namen und deine Worte.';
 
   @override
   String get usageOff => 'Es wird nichts mehr gemessen.';
