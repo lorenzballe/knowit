@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "Socrates' jury had 500 members, and he said 30 votes going the other way would have acquitted him. How many voted guilty?",
+  "question": "Socrates' jury is usually put at 500; he said 30 votes going the other way would have acquitted him. How many voted guilty?",
   "value": 280,
   "unit": "jurors",
   "answer": "250 + 30 = 280.",

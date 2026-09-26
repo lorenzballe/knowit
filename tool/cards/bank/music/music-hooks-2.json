@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "anchoring",
-  "question": "The average intro on Billboard's year-end hits lasted over 20 seconds in 1986. How long by 2015?",
+  "question": "The average intro on US top-ten hits lasted over 20 seconds in the mid-1980s. How long by 2015?",
   "options": [
     "About 25 seconds",
     "About 12 seconds",
     "About 5 seconds"
   ],
   "correct": 2,
-  "answer": "About 5 seconds. Hubert Léveillé Gauvin timed the intros of thirty years of top hits: about 23 seconds in 1986, about 5 in 2015, a fall of roughly 78%. Titles were sung sooner too. A hit now opens with the singer, before a thumb can reach the skip button.",
+  "answer": "About 5 seconds. Hubert Léveillé Gauvin timed the intros of US top-ten singles from 1986 to 2015: over 20 seconds in the mid-1980s, about 5 by 2015, a fall of about 78%. Titles were sung sooner too. A hit now opens with the singer, before a thumb can reach the skip button.",
   "move": "When a starting figure is handed over, push the guess further than feels comfortable.",
   "trap": "Halving the 1980s figure feels like a bold enough guess.",
   "keywords": [

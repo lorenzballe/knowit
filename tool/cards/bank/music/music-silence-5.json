@@ -3,9 +3,6 @@
   "topic": "music",
   "genre": "music.sound_itself",
   "strand": "music.sound_itself.silence",
-  "also": [
-    "music.composers.mozart"
-  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -34,7 +31,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Letters of Mozart and His Family",
+  "source": "Anderson, Letters of Mozart and His Family, 1985",
   "source_kind": "primary_document",
   "reference": "Anderson (ed.), The Letters of Mozart and His Family, 3rd edition, Macmillan, 1985",
   "written": "2026-09-26"

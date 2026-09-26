@@ -3,32 +3,29 @@
   "topic": "music",
   "genre": "music.composers",
   "strand": "music.composers.film_scores",
-  "also": [
-    "cinema.sound_design.music_cues"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "survivorship",
-  "question": "How were most feature films of the silent era shown to audiences in the 1920s?",
+  "principle": "reflection",
+  "question": "When was Ennio Morricone's main music for Once Upon a Time in the West, 1968, recorded?",
   "options": [
-    "In silence, apart from the audience",
-    "With music played from gramophone discs",
-    "With live music, from piano to orchestra"
+    "After the edit was finished",
+    "Alongside the shooting, week by week",
+    "Before the cameras started rolling"
   ],
   "correct": 2,
-  "answer": "With live music. Even a small cinema had a pianist or organist, often working from cue sheets the distributors sent out listing moods and timings, and big city houses kept orchestras. The prints survived and the performances did not. The Birth of a Nation had toured in 1915 with its own orchestral score.",
-  "move": "Ask what part of the event was never going to be kept.",
-  "trap": "Only the soundless prints survive, so silence looks like the norm.",
+  "answer": "Before the cameras started rolling. Sergio Leone had Morricone write and record the main themes first, then played the recordings on set, so actors timed their movements, and the camera its moves, to the music. Most films work the other way: the composer starts once the picture is cut, timing each cue to the frame.",
+  "move": "Ask what was fixed first; everything after it had to fit.",
+  "trap": "Assuming the score always comes last, fitted to a finished cut.",
   "keywords": [
-    "silent films",
-    "cinema organists",
-    "cue sheets",
-    "birth of a nation",
-    "live music"
+    "ennio morricone",
+    "sergio leone",
+    "once upon a time in the west",
+    "film scores",
+    "playback on set"
   ],
   "era": "twentieth",
-  "region": "world",
-  "hook": "misconception",
+  "region": "europe",
+  "hook": "mechanism",
   "mood": "wonder",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -36,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Altman, Silent Film Sound, 2004",
+  "source": "Frayling, Sergio Leone, 2000",
   "source_kind": "book",
-  "reference": "Altman, Silent Film Sound, Columbia University Press, 2004",
+  "reference": "Frayling, Sergio Leone: Something to Do with Death, Faber and Faber, 2000",
   "written": "2026-09-26"
 }

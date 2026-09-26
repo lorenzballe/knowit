@@ -8,14 +8,14 @@
   "principle": "reflection",
   "question": "While a pianist keeps a key held down after playing a note, where is its hammer?",
   "options": [
-    "Pressed against the string",
-    "Fallen back, caught clear of the string",
-    "Swinging freely until the key rises"
+    "Resting on the string",
+    "Caught below the string",
+    "Bouncing until the key rises"
   ],
   "correct": 1,
-  "answer": "Fallen back, caught clear of the string. Bartolomeo Cristofori's escapement, built in Florence around 1700, releases the hammer so it flies the last stretch alone, strikes, and rebounds onto a felt catch. A hammer left touching would choke the note at once. The finger never hits the string; it throws something that does.",
+  "answer": "Caught below the string. Bartolomeo Cristofori's escapement, built in Florence around 1700, releases the hammer so it flies the last stretch alone, strikes, and falls back onto a felt catch. A hammer left touching would choke the note at once. The finger never hits the string; it throws something that does.",
   "move": "What starts an action is not always what finishes it.",
-  "trap": "Pressed against the string, since the key is still held down.",
+  "trap": "Resting on the string, since the key is still held down.",
   "keywords": [
     "escapement",
     "piano action",

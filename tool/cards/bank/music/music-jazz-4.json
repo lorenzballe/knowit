@@ -5,7 +5,7 @@
   "strand": "music.genres.jazz",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "anchoring",
   "question": "At very fast tempos, how uneven are the swung eighth notes jazz drummers play on the ride cymbal?",
   "options": [
     "Close to even, about 1 to 1",
@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Close to even. Measuring drummers on recordings, Friberg and Sundström found the long-short ratio falls as tempo rises: as high as 3.5 to 1 at slow tempos, near 1 to 1 at fast ones. The short note stayed around 100 milliseconds, as if it could get no shorter.",
   "move": "Notation is a shorthand; time what the players actually do.",
-  "trap": "Taking the textbook triplet notation for what drummers really play.",
+  "trap": "The 2 to 1 triplet taught in lessons pulls the guess.",
   "keywords": [
     "swing ratio",
     "ride cymbal",

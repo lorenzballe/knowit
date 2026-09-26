@@ -3,9 +3,6 @@
   "topic": "philosophy",
   "genre": "philosophy.paradoxes",
   "strand": "philosophy.paradoxes.liar",
-  "also": [
-    "science.maths_curios.infinity"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",

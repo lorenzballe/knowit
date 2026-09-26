@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confounding",
-  "question": "Why do narrow shoebox halls like Vienna's Musikverein, opened in 1870, still outshine most wider modern halls?",
+  "question": "What makes old shoebox halls like Vienna's Musikverein, opened in 1870, sound better than most modern halls?",
   "options": [
     "Their old wooden panelling resonates",
     "Their curved ceilings focus the sound",
@@ -33,7 +33,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Barron, Auditorium Acoustics and Architectural Design",
+  "source": "Barron, Auditorium Acoustics, 1993",
   "source_kind": "book",
   "reference": "Barron, Auditorium Acoustics and Architectural Design, E & FN Spon, 1993",
   "written": "2026-09-26"

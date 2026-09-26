@@ -3,9 +3,6 @@
   "topic": "music",
   "genre": "music.sound_itself",
   "strand": "music.sound_itself.frequencies",
-  "also": [
-    "music.composers.bach"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",

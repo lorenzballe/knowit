@@ -9,13 +9,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: Newton's laws allow a ball resting on a certain dome to start rolling at no particular moment?",
+  "question": "True or false: for a ball resting on one specially shaped dome, Newton's equations let it start rolling at an arbitrary moment, unpushed?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. John Norton described a dome shaped so that Newton's second law admits many solutions: the ball stays on the peak forever, or starts to roll off at any moment, with no force to trigger it. Laws and starting state are the same in every case. One ball, one past, endlessly many futures.",
+  "answer": "True. John Norton described a dome shaped so that Newton's second law admits many solutions: the ball stays on the peak forever, or rolls off at any moment, with no force to trigger it. Critics call the dome an unphysical idealisation; the mathematics stands. One ball, one past, endlessly many futures.",
   "move": "Before calling a system predictable, check that its rules allow only one future.",
   "trap": "Treating classical mechanics as the textbook model of perfect determinism.",
   "keywords": [

@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Laurens Hammond filed the first spring reverb patent in 1939, to make his electric organ sound as if it filled a church: coiled springs carried the signal as slow mechanical waves. Guitar amplifiers took up spring tanks built on his design in the early 1960s. Surf guitar's drip came from a church organ's problem.",
+  "answer": "True. Laurens Hammond filed a spring reverb patent in 1939, to make his electric organ sound as if it filled a church: coiled springs carried the signal as slow mechanical waves. Guitar amplifiers took up spring tanks built on his design in the early 1960s. Surf guitar's drip came from a church organ's problem.",
   "move": "A tool's most famous user is often not the one it was made for.",
   "trap": "False, since the sound is most famous from surf and twang guitar.",
   "keywords": [
@@ -31,8 +31,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "120 Years of Electronic Music",
-  "source_kind": "reference_work",
-  "reference": "https://120years.net/category/name/laurens-hammond/",
+  "source": "Hammond, US Patent 2,230,836, 1941",
+  "source_kind": "primary_document",
+  "reference": "Hammond, Electrical musical instrument, US Patent 2,230,836, filed 1939, granted 1941",
   "written": "2026-09-26"
 }

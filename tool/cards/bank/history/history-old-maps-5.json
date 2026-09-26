@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What happened to the map of France when astronomers timed the moons of Jupiter from its coasts in the 1670s?",
-  "answer": "It shrank. Picard and La Hire timed eclipses of Io, Jupiter's nearest large moon, at coastal ports and compared them with the same eclipses in Paris: the difference in local time gave the longitude. Brest moved more than a degree east of where maps had put it, and the Atlantic coast pulled in towards Paris.",
+  "answer": "It shrank. Picard and La Hire timed eclipses of Io, Jupiter's nearest large moon, at coastal ports and compared them with the same eclipses in Paris: the difference in local time gave the longitude. Brest moved well east of where maps had put it, and the Atlantic coast pulled in towards Paris.",
   "move": "Every longitude is a time difference; a map is only as good as its clocks.",
   "keywords": [
     "jean picard",

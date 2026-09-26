@@ -6,13 +6,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: for over 30 years, the first side of Kind of Blue sold slightly higher than the band played it?",
+  "question": "True or false: for over 30 years, the first side of Kind of Blue sounded higher than the band played?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. A tape machine at the 1959 session ran about 1.25% slow, so playback came out fast, roughly a fifth of a semitone sharp, on So What, Freddie Freeloader and Blue in Green. Engineer Mark Wilder caught it in 1992. Players transcribing those solos had found the band tuned somewhere between keys.",
+  "answer": "True. One of the tape machines at the 1959 session ran slow, so the master played back fast and a little sharp, well under a semitone, on So What, Freddie Freeloader and Blue in Green. The speed was corrected for a 1992 CD reissue. Players transcribing those solos had found the band tuned somewhere between keys.",
   "move": "The most copied version is not always the version that happened.",
   "trap": "Assuming the best-selling jazz album was checked note for note.",
   "keywords": [
@@ -26,14 +26,14 @@
   "region": "americas",
   "hook": "story",
   "mood": "playful",
-  "numeracy": 2,
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Tape Op Magazine, 2025",
-  "source_kind": "news_archive",
-  "reference": "https://tapeop.com/blog/2025/12/13/miles-davis-kind-of-blue-corrected-speed-reissue-from-analogue-productions",
+  "source": "Kahn, Kind of Blue, 2000",
+  "source_kind": "book",
+  "reference": "Kahn, Kind of Blue: The Making of the Miles Davis Masterpiece, Da Capo Press, 2000",
   "written": "2026-09-26"
 }

@@ -5,7 +5,7 @@
   "strand": "music.why_songs_work.chord_loops",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "sampling",
   "question": "In a sample of 100 classic rock songs, which chord most often moves straight to the home chord?",
   "options": [
     "The chord on the scale's fifth note",
