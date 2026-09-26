@@ -1,0 +1,32 @@
+{
+  "id": "art-ultramarine-1",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could grinding lapis lazuli very finely still fail to give a painter ultramarine?",
+  "answer": "Because most of the stone is not blue. Ground lapis gives a dull grey-blue: the blue mineral, lazurite, is mixed with white calcite and pyrite. Cennini's recipe kneads the powder into a dough of wax, resin and oil, then works it under lye. The blue grains sink out; the grey stays in the dough.",
+  "move": "Often the cost of a thing is the waste that must be removed.",
+  "keywords": [
+    "lapis lazuli",
+    "lazurite",
+    "cennino cennini",
+    "pigment extraction"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cennini, The Craftsman's Handbook",
+  "source_kind": "primary_document",
+  "reference": "Cennino Cennini, The Craftsman's Handbook (Il Libro dell'Arte), trans. Daniel V. Thompson, Yale University Press, 1933",
+  "written": "2026-09-26"
+}

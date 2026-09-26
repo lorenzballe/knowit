@@ -1,0 +1,39 @@
+{
+  "id": "art-ultramarine-2",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "How did France come to have a cheap artificial ultramarine by 1828?",
+  "options": [
+    "A chemist's accident in a dye works",
+    "A public prize with a price ceiling",
+    "A painter's experiments with kitchen clay"
+  ],
+  "correct": 1,
+  "answer": "A public prize with a price ceiling. In 1824 the Société d'Encouragement pour l'Industrie Nationale offered 6,000 francs for an artificial ultramarine as good as the natural one and costing no more than 300 francs a kilogram. Jean-Baptiste Guimet, an engineer at the Toulouse gunpowder works, won in 1828 and kept his process secret.",
+  "move": "Name the price you need, and inventors will aim at it.",
+  "trap": "Picturing a lucky accident, the way other famous colours were found.",
+  "keywords": [
+    "synthetic ultramarine",
+    "jean-baptiste guimet",
+    "industrial prize",
+    "société d'encouragement"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Springer, ChemTexts, 2025",
+  "source_kind": "paper",
+  "reference": "https://link.springer.com/article/10.1007/s40828-025-00204-8",
+  "written": "2026-09-26"
+}

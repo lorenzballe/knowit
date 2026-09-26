@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-sitcoms-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: I Love Lucy was shot on film mainly so that its stars could stay in Hollywood?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1951 network comedy went out live from New York, and the West Coast saw a blurry kinescope, a film shot off a monitor. Lucille Ball and Desi Arnaz refused to move, so the show was filmed in Los Angeles before an audience. Desilu took less money and kept the negatives.",
+  "move": "A technical innovation often starts as someone refusing to relocate.",
+  "trap": "Assuming film was chosen for picture quality or for later reruns.",
+  "keywords": [
+    "i love lucy",
+    "desilu",
+    "kinescope",
+    "lucille ball",
+    "desi arnaz"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sanders & Gilbert, Desilu, 1993",
+  "source_kind": "book",
+  "reference": "Coyne Steven Sanders and Tom Gilbert, Desilu: The Story of Lucille Ball and Desi Arnaz, William Morrow, 1993",
+  "written": "2026-09-26"
+}

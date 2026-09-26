@@ -1,0 +1,33 @@
+{
+  "id": "history-old-maps-1",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Mercator published his navigators' projection in 1569. Who first explained the mathematics that let others draw it?",
+  "answer": "An English mathematician, Edward Wright, in 1599. Mercator never said how he spaced his parallels, so nobody could copy the method exactly. Wright showed the spacing must grow as the running sum of the secant of latitude, and printed a table of it minute by minute: an integral, done by patient addition, before calculus existed.",
+  "move": "Whoever makes a method copyable often matters more than whoever invented it.",
+  "keywords": [
+    "edward wright",
+    "mercator projection",
+    "secant table",
+    "navigation",
+    "certaine errors in navigation"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monmonier, Rhumb Lines and Map Wars, 2004",
+  "source_kind": "book",
+  "reference": "Monmonier, Rhumb Lines and Map Wars: A Social History of the Mercator Projection, University of Chicago Press, 2004",
+  "written": "2026-09-26"
+}

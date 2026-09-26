@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-wombats-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where along a wombat's gut do its droppings get their flat faces and corners?",
+  "answer": "Inside the intestine, well before the exit. Dissections showed the cubes form in the last 17% of the gut, where the wall has bands about twice as thick and four times as stiff as the tissue between them. Stiff bands squeeze faster and flatten faces; soft ones lag and leave edges.",
+  "move": "Uneven stiffness can shape a thing as surely as a mould.",
+  "keywords": [
+    "wombat droppings",
+    "intestine",
+    "tissue stiffness",
+    "cube"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yang, Hu et al., Georgia Tech, 2021",
+  "source_kind": "institution",
+  "reference": "https://hu.gatech.edu/wp-content/uploads/2021/01/Hu21-wombat.pdf",
+  "written": "2026-09-26"
+}

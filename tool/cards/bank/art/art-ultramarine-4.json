@@ -1,0 +1,32 @@
+{
+  "id": "art-ultramarine-4",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What put grains of ultramarine into the dental tartar of a woman buried at a German convent?",
+  "answer": "Most likely, painting books. Researchers found lazurite grains in the hardened plaque of a woman buried at Dalheim around 1000 to 1200. The likeliest route is licking a brush to a point while painting with ultramarine, kept for the finest manuscripts. A craft usually credited to monks left its blue in a woman's teeth.",
+  "move": "A name missing from the records is not a worker missing from the work.",
+  "keywords": [
+    "dental calculus",
+    "manuscript illumination",
+    "medieval nuns",
+    "lapis lazuli"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Radini et al., Science Advances, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.aau7126",
+  "written": "2026-09-26"
+}

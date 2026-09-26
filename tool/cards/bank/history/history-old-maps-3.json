@@ -1,0 +1,39 @@
+{
+  "id": "history-old-maps-3",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: early maps showed California as an island because Spanish sailors had not yet explored its gulf?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Francisco de Ulloa sailed to the head of the Gulf of California in 1539, and for some 80 years most maps drew Baja California as a peninsula. The island appeared in the 1620s and was copied from map to map for over a century; Ferdinand VI decreed in 1747 that California was no island.",
+  "move": "Knowledge can go backwards; ask whether an error came before the truth or after.",
+  "trap": "Assuming maps only ever improve, so an error means nobody had looked.",
+  "keywords": [
+    "california",
+    "island of california",
+    "francisco de ulloa",
+    "gulf of california",
+    "map copying"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "McLaughlin & Mayo, California Map Society, 1995",
+  "source_kind": "reference_work",
+  "reference": "McLaughlin & Mayo, The Mapping of California as an Island: An Illustrated Checklist, California Map Society Occasional Paper No. 5, 1995",
+  "written": "2026-09-26"
+}

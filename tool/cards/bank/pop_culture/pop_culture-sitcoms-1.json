@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sitcoms-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did NBC find the money for Seinfeld's first season after its own research panned the pilot?",
+  "answer": "It came out of the specials budget. After the 1989 pilot tested weakly, programming executive Rick Ludwin gave up some of his own department's money for specials to fund four more episodes, one of the smallest season orders a US network has placed. The show that followed ran nine seasons.",
+  "move": "When the official budget says no, look for a budget someone else controls.",
+  "keywords": [
+    "seinfeld",
+    "rick ludwin",
+    "pilot",
+    "nbc",
+    "season order"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Armstrong, Seinfeldia, 2016",
+  "source_kind": "book",
+  "reference": "Jennifer Keishin Armstrong, Seinfeldia: How a Show About Nothing Changed Everything, Simon & Schuster, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-wombats-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did treating wild wombats for mange need a drug that stays in the body for weeks?",
+  "answer": "Because a wild wombat can rarely be dosed twice. Ivermectin and moxidectin clear from wombat blood fast, so one dose often fails to kill every mite. Fluralaner, sold as a dog flea treatment, lingers for weeks; in trials a single dose cleared mild to moderate mange within about four weeks.",
+  "move": "Choose the remedy that works on the only chance you will get.",
+  "keywords": [
+    "sarcoptic mange",
+    "fluralaner",
+    "bare-nosed wombat",
+    "mites"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Tasmania fluralaner guidelines, 2023",
+  "source_kind": "institution",
+  "reference": "https://figshare.utas.edu.au/articles/report/Guidelines_for_the_Use_of_Fluralaner_Bravecto_v_Spot-on_Solution_for_Dogs_v_v_to_Treat_Sarcoptic_Mange_in_Wombats/23249498",
+  "written": "2026-09-26"
+}

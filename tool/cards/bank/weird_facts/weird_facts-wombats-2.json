@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-wombats-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Camera traps watched 34 southern hairy-nosed wombat burrows for eight weeks. What went in most often?",
+  "options": [
+    "Black-footed rock-wallabies",
+    "The wombats themselves",
+    "Little penguins"
+  ],
+  "correct": 0,
+  "answer": "Black-footed rock-wallabies. They made nearly 2,000 visits, more than the wombats that dug the burrows. Little penguins were logged 27 times, among skinks, bettongs and birds. A warren is a public building: the owner is only one of many tenants coming in from the heat.",
+  "move": "Ask who else uses a thing before crediting it to its builder.",
+  "trap": "The owner seems the obvious visitor because it is the one pictured.",
+  "keywords": [
+    "wombat burrows",
+    "rock-wallaby",
+    "camera traps",
+    "little penguins"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Conversation, January 2020",
+  "source_kind": "news_archive",
+  "reference": "https://theconversation.com/tales-of-wombat-heroes-have-gone-viral-unfortunately-theyre-not-true-129891",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "sport-offside-4",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can an assistant referee with perfect eyesight still misjudge offside from where he stands?",
+  "answer": "Geometry. Unless the assistant is exactly level with the second-last defender, the offside line is seen at a slant, so players on the far side of the pitch appear shifted towards or away from goal. A study of 200 real decisions found 40 wrong, in the directions the viewing angle predicted.",
+  "move": "Before trusting a judgement of level, check where the judge was standing.",
+  "keywords": [
+    "assistant referee",
+    "viewing angle",
+    "offside line",
+    "optical error"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oudejans et al., Nature, 2000",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/35003639",
+  "written": "2026-09-26"
+}

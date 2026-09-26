@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-sitcoms-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do British sitcoms often end after a dozen episodes while American ones run past a hundred?",
+  "answer": "Different machines make them. A British series is often six episodes by one or two writers; Fawlty Towers is 12 episodes across 1975 and 1979. A US network season is around 22, written by a staff room, because about 100 episodes are needed to sell daily reruns to local stations.",
+  "move": "The length of a thing often tells you how it is paid for.",
+  "keywords": [
+    "fawlty towers",
+    "writers room",
+    "syndication",
+    "episode count"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Mills, The Sitcom, 2009",
+  "source_kind": "book",
+  "reference": "Brett Mills, The Sitcom, Edinburgh University Press, 2009",
+  "written": "2026-09-26"
+}

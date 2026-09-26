@@ -1,0 +1,36 @@
+{
+  "id": "sport-offside-1",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "also": [
+    "sport.tactics.formations"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did goals in England's top division jump by more than 40% in a single season in the 1920s?",
+  "answer": "A change to the offside law. Until 1925 an attacker needed three opponents between himself and the goal line, and full-backs such as Newcastle's Bill McCracken stepped up together to strand forwards. Cutting it to two lifted top-flight goals from 1,192 to 1,703 in a season: from 2.58 a match to 3.89.",
+  "move": "When a loophole is exploited everywhere, change the rule, not the players.",
+  "keywords": [
+    "offside law",
+    "1925 rule change",
+    "bill mccracken",
+    "offside trap",
+    "football league"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "FourFourTwo, the 1925 offside change",
+  "source_kind": "news_archive",
+  "reference": "https://www.fourfourtwo.com/features/the-one-rule-change-that-saw-the-birth-of-40-goal-a-season-strikers-like-dixie-dean-guy-whittingham-and-aleksandar-mitrovic",
+  "written": "2026-09-26"
+}
