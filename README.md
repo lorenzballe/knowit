@@ -16,23 +16,34 @@ Every push to `main` builds and publishes **https://astutetheapp.com** from
 GitHub Pages (`.github/workflows/deploy.yml`):
 
 - `/` is the landing page, designed in Claude Design and written out as
-  plain HTML in `site/index.html`: the design's own inline styles, the app's
-  screenshots in `site/assets/`, and `site/assets/main.js` for the few parts
-  that move (the menu, the calibration chart you can drag, the cards that
-  flip, the plan picker, the questions). It presents Astute on both stores,
-  with Apple's and Google's own badges: a phone's Download goes straight to
-  its own store, a computer's to a code to scan with the phone, which opens
-  `/get` and from there the right store. Today's question is shown live from
-  `/widget/days.json`, the file the widget reads. On top of the design:
-  words that rise, sections that come into view as they are reached, a
-  phone that turns towards the pointer and turns its card over when tapped,
-  a progress line in the three lights' colours, grain on the paper, and the
-  name large at the foot. It reads fully without JavaScript, and without
-  motion for anyone who has asked their system for less.
+  plain HTML in `site/index.html`, on classes rather than inline styles, with
+  its sections laid out in `site/assets/landing.css`: the first screen with
+  its phone and its fanned cards, today's question, the day's row, the two
+  cream sheets laid on the night paper (calibration, the science), the
+  cards that flip, the subjects going by both ways, the app's five screens
+  in a row, the widgets, friends, the plans, the questions and the last
+  word. `site/assets/main.js` adds what moves: the menu, the nav that
+  floats and frosts and its progress line in the three lights' colours,
+  things that come into view as they are reached, numbers that count up, a
+  light that follows the pointer across a card, the phone that turns
+  towards the pointer and turns its card over when tapped, the rows that
+  scroll with their dots, the calibration chart you can drag, the cards
+  that flip, the plan picker and the questions. Today's question is shown
+  live from `/widget/days.json`, the file the widget reads, with the
+  edition in the first screen's kicker and the time to the next one. It
+  presents Astute on both stores, with Apple's and Google's own badges: a
+  phone's Download goes straight to its own store, a computer's to a code
+  to scan with the phone, which opens `/get` and from there the right
+  store. It reads fully without JavaScript, and without motion for anyone
+  who has asked their system for less. The screens in `site/assets/` are
+  `tool/shots/` at 840×1826, as WebP.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
-  Fraunces and Figtree served from the site itself. Astute is published by
-  TheBaleCompany, and every page says so.
+  Fraunces and Figtree served from the site itself, and on a wide screen a
+  rail of the page's sections beside it. The nav and the footer are written
+  once, in `tool/site/chrome.py`, and stamped onto every page between the
+  markers each page carries; the deploy stops if a page has drifted. Astute
+  is published by TheBaleCompany, and every page says so.
 - `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
   store listings) and `assets/og.png`, the picture a shared link shows.
 - `/app/` is the app, built for the web: the live preview.

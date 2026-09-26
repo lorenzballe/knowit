@@ -20,11 +20,12 @@
 <a class="skip" href="#top">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
 
+<!-- @header -->
 <header class="site-nav">
   <div class="progress" aria-hidden="true"></div>
   <nav aria-label="Main">
     <a class="brand" href="/" aria-label="Astute — home">
-      <img src="/assets/icon.webp" width="32" height="32" alt="">
+      <img src="/assets/icon.webp" width="30" height="30" alt="">
       <span>Astute</span>
     </a>
     <div class="nav-links" data-hide-mobile>
@@ -34,17 +35,28 @@
       <a href="/#faq">FAQ</a>
     </div>
     <div class="nav-actions">
-      <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu">Menu</button>
       <a class="btn-download" href="https://apps.apple.com/app/id6806852300" data-store>Download</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" data-hide-desktop aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu"><i></i></button>
     </div>
   </nav>
   <div id="mobile-menu" data-hide-desktop hidden>
+    <div class="menu-links">
       <a href="/#how">How it works</a>
       <a href="/#science">The science</a>
       <a href="/#pricing">Pricing</a>
       <a href="/#faq">FAQ</a>
+      <a href="/support">Support</a>
+    </div>
+    <div class="menu-foot">
+      <p>Free on iPhone and Android · 13 languages · No ads</p>
+      <div class="stores small">
+        <a href="https://apps.apple.com/app/id6806852300"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.astuto.app"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>
+      </div>
+    </div>
   </div>
 </header>
+<!-- /@header -->
 
 <main class="lost" id="top">
   <div class="lost-card" role="button" tabindex="0" aria-pressed="false" aria-label="Page not found. Tap to turn the card over." data-flip>
@@ -63,24 +75,49 @@
   </div>
 </main>
 
+<!-- @footer -->
 <footer class="site-foot">
-  <div>
-    <a class="brand" href="/">
-      <img src="/assets/icon.webp" width="28" height="28" alt="" loading="lazy">
-      <span>Astute</span>
-    </a>
-    <nav aria-label="Footer">
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
-      <a href="/support">Support</a>
-      <a href="mailto:thebalecompany@gmail.com">thebalecompany@gmail.com</a>
-    </nav>
-    <div class="fine">
+  <div class="foot-wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/">
+          <img src="/assets/icon.webp" width="30" height="30" alt="" loading="lazy">
+          <span>Astute</span>
+        </a>
+        <p>Five cards a day. A little sharper. Free on iPhone and Android, in thirteen languages, with no ads.</p>
+        <div class="stores small">
+        <a href="https://apps.apple.com/app/id6806852300"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.astuto.app"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>
+        </div>
+      </div>
+      <nav class="foot-cols" aria-label="Footer">
+        <div>
+          <h3>Product</h3>
+          <a href="/#how">How it works</a>
+          <a href="/#science">The science</a>
+          <a href="/#pricing">Pricing</a>
+          <a href="/#faq">FAQ</a>
+        </div>
+        <div>
+          <h3>Help</h3>
+          <a href="/support">Support</a>
+          <a href="mailto:thebalecompany@gmail.com">Write to us</a>
+        </div>
+        <div>
+          <h3>Legal</h3>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
       <span>© 2026 TheBaleCompany</span>
       <span>Available in 13 languages</span>
+      <span class="tm">Apple, the Apple logo and App Store are trademarks of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</span>
     </div>
   </div>
   <div class="foot-mark" aria-hidden="true">Astute</div>
 </footer>
+<!-- /@footer -->
 </body>
 </html>
