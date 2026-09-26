@@ -5,7 +5,7 @@
   "strand": "medicine.vaccines.cold_chain",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "availability",
+  "principle": "reflection",
   "question": "For vaccines such as hepatitis B and tetanus, which cold-chain accident is the bigger threat?",
   "options": [
     "A day or two of summer heat",

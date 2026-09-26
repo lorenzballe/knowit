@@ -9,10 +9,10 @@
   "question": "Mayonnaise is mostly oil, plus vinegar and yolk, all runny liquids. What mainly lets it hold a peak?",
   "options": [
     "The egg yolk setting like custard",
-    "The oil droplets crammed against each other",
-    "The mustard's starch thickening the water"
+    "The mustard's starch thickening the water",
+    "The oil droplets crammed against each other"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "The oil droplets crammed against each other. Round droplets can fill at most about 74% of a space; beyond that they flatten into many-sided cells, and any flow must deform them. At 75 to 80% oil, mayonnaise is packed oil cells in thin films of water. Whisk in more oil and it stiffens further.",
   "move": "Crowding alone can turn a crowd of liquids into a solid.",
   "trap": "Egg is the famous ingredient, so it seems to do the thickening.",

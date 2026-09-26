@@ -11,11 +11,11 @@
   "principle": "reflection",
   "question": "A pinch of salt makes bitter grapefruit taste sweeter. What is the salt doing?",
   "options": [
-    "Drawing sugar out of the fruit's cells",
     "Silencing the bitterness that hid the sweetness",
+    "Drawing sugar out of the fruit's cells",
     "Switching on the tongue's sweet receptors"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Silencing the bitterness that hid the sweetness. Sodium ions suppress bitterness, and since bitter and sweet mask each other, removing one frees the other. Breslin and Beauchamp showed in 1997 that salt raised the sweetness of a bitter-sweet mixture without any added sugar. A pinch in bitter coffee works the same way.",
   "move": "An improvement can come from removing a mask, not adding anything.",
   "trap": "Salt draws out water, so it seems to draw out sugar too.",

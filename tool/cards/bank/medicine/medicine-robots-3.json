@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. In 2022 a Johns Hopkins team reported that STAR, the Smart Tissue Autonomous Robot, sewed keyhole bowel joins in four pigs, tracking tissue that shifted as the animals breathed. Its stitches were more consistent than surgeons'. Surgeons set up each operation and supervised; all four pigs survived the week of follow-up.",
+  "answer": "True. In 2022 a Johns Hopkins team reported that STAR, the Smart Tissue Autonomous Robot, sewed keyhole bowel joins in four pigs, tracking tissue that shifted as the animals breathed. In comparison tests its stitches were more evenly spaced than surgeons'. Surgeons set up each operation and supervised, but did not steer the needle.",
   "move": "What a familiar machine does is not the limit of what machines can do.",
   "trap": "Assuming surgical robots only ever copy a surgeon's hand movements.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Johns Hopkins University Hub, January 2022",
-  "source_kind": "institution",
-  "reference": "https://hub.jhu.edu/2022/01/26/star-robot-performs-intestinal-surgery",
+  "source": "Saeidi et al., Science Robotics, 2022",
+  "source_kind": "paper",
+  "reference": "Saeidi et al., Autonomous robotic laparoscopic surgery for intestinal anastomosis, Science Robotics, 2022",
   "written": "2026-09-26"
 }

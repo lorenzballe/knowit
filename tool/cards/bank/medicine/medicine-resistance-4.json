@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did sulphonamide resistance in British E. coli not fall when prescriptions dropped by 97%?",
-  "answer": "Because the resistance gene was not travelling alone. UK prescribing fell in the 1990s, yet resistant E. coli at a London hospital were no rarer in 1999 than in 1991. The gene sits on plasmids, mobile loops of DNA, beside genes for drugs still in use, which kept selecting the whole package.",
+  "question": "Why did sulphonamide resistance in British E. coli barely fall when prescriptions dropped by 97%?",
+  "answer": "Because the resistance gene was not travelling alone. UK prescribing fell through the 1990s, yet resistant E. coli from London patients were almost as common in 1999 as in 1991. The gene sits on plasmids, mobile loops of DNA, beside genes for drugs still in use, which kept selecting the whole package.",
   "move": "Stopping one cause changes little if the result is bundled with another.",
   "keywords": [
     "sulphonamides",
@@ -28,6 +28,6 @@
   "figure": "none",
   "source": "Enne et al., The Lancet, 2001",
   "source_kind": "paper",
-  "reference": "https://pubmed.ncbi.nlm.nih.gov/11343738/",
+  "reference": "Enne, Livermore, Stephens & Hall, Persistence of sulphonamide resistance in Escherichia coli in the UK despite national prescribing restriction, The Lancet, 2001",
   "written": "2026-09-26"
 }

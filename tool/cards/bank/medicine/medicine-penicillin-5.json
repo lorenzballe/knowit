@@ -12,7 +12,7 @@
   "tolerance": 0.1,
   "answer": "1/64 = 0.0156, so about 1.6% remains.",
   "move": "When something halves on a schedule, count the halvings before guessing what is left.",
-  "trap": "Guessing about half, as if the drug drained away in a straight line.",
+  "trap": "Guessing a quarter or more, underestimating how fast six halvings shrink a dose.",
   "hint": "Count how many half-lives fit into three hours.",
   "steps": [
     "3 hours is 180 minutes, and 180 / 30 = 6 half-lives.",

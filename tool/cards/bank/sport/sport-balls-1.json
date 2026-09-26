@@ -10,10 +10,10 @@
   "options": [
     "About a quarter shorter",
     "Almost exactly the same",
-    "About two-thirds longer"
+    "About 60% longer"
   ],
   "correct": 2,
-  "answer": "About two-thirds longer: 327 cm of seam against 203 cm. Its panels were shaped like pinwheel arms, so fewer pieces still meant more edge. Seams roughen a ball and shift the speed at which its drag suddenly drops; the smoother 2010 ball met that change near free-kick speeds and was notorious for wobbling.",
+  "answer": "About 60% longer: 327 cm of seam against 203 cm. Its panels were shaped like pinwheel arms, so fewer pieces still meant more edge. Seams roughen a ball and shift the speed at which its drag suddenly drops; the smoother 2010 ball met that change near free-kick speeds and was notorious for wobbling.",
   "move": "When shapes change, count the edges, not the number of pieces.",
   "trap": "Fewer panels sounds like fewer seams, so a shorter total.",
   "keywords": [

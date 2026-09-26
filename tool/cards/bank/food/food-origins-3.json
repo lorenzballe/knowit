@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Coffee drinking is documented among Sufi communities in Yemen by the mid-1400s, but the goatherd story first appears in print in 1671, in a Latin treatise on coffee by Antoine Faustus Nairon, a Maronite scholar teaching in Rome. Two centuries separate the drink from its origin story, which reached Europe before it reached any Arab source.",
+  "answer": "False. Coffee drinking is documented among Sufi communities in Yemen by the mid-1400s, but the goatherd story first appears in print in 1671, in a Latin treatise on coffee by Antoine Faustus Nairon, a Maronite scholar teaching in Rome. Two centuries separate the drink from its origin story.",
   "move": "Date a story by its first telling, not by the events it describes.",
   "trap": "Assuming a legend repeated everywhere must be as old as its subject.",
   "keywords": [

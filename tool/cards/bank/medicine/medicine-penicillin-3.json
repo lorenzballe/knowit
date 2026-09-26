@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "CDC, Clinical Features of Penicillin Allergy",
-  "source_kind": "institution",
-  "reference": "https://www.cdc.gov/antibiotic-use/hcp/clinical-signs/index.html",
+  "source": "Shenoy et al., JAMA, 2019",
+  "source_kind": "paper",
+  "reference": "Shenoy, Macy, Rowe & Blumenthal, Evaluation and management of penicillin allergy: a review, JAMA, 2019",
   "written": "2026-09-26"
 }

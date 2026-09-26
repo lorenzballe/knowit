@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "sampling",
-  "question": "True or false: a US infant vaccine was withdrawn about a year after licensing over a rare complication spotted only after launch?",
+  "question": "True or false: a US infant vaccine was withdrawn about a year after licensing over a rare complication confirmed only after launch?",
   "options": [
     "True",
     "False"

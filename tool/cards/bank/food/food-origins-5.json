@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. A 2019 assessment of all 124 known coffee species found 75 threatened, about 60%, including arabica in the wild. Nearly all coffee drunk comes from arabica and robusta, but the wild relatives hold the genes for resisting disease and heat that breeders will need. Many survive only in shrinking patches of African and Madagascan forest.",
+  "answer": "True. A 2019 assessment of all 124 known coffee species found 75 threatened, about 60%, including arabica in the wild. Nearly all coffee drunk is arabica or robusta, but wild relatives hold the genes for resisting disease and heat that breeders will need. Many survive only in shrinking patches of African and Madagascan forest.",
   "move": "Judge a family by all its members, not the two that everyone meets.",
   "trap": "Judging all coffee by the two species grown on every continent.",
   "keywords": [

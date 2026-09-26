@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "A steak put in a hot pan straight from its wet packet turns grey before it browns. Why?",
   "options": [
-    "Water washes off the browning sugars",
     "Surface water pins it near 100 °C",
+    "Water washes off the browning sugars",
     "Wet meat lacks the proteins that brown"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Surface water pins it near 100 °C. While water remains, the heat goes into boiling it off and the surface cannot climb higher. The Maillard reaction only becomes fast above about 140 °C, so the meat steams. Patting it dry, or salting it hours ahead, brings the crust minutes sooner.",
   "move": "Find what is soaking up the energy before adding more of it.",
   "trap": "Assuming the water removes an ingredient rather than capping the heat.",

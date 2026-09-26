@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. The swimming federation, then called FINA, banned the suits from January 2010 but never erased what they produced. Some marks outlived the suits by years: Paul Biedermann's 1:42.00 in the 200 m freestyle, set at Rome in 2009, was still the world record in 2024, the oldest individual long-course mark.",
+  "answer": "True. The swimming federation, then called FINA, banned the suits from January 2010 but never erased what they produced. Some marks outlived the suits by years: Paul Biedermann's 1:42.00 in the 200 m freestyle, set at Rome in 2009, still stood as the world record in 2025, the oldest individual long-course mark.",
   "move": "Banning a tool does not undo what it already produced.",
   "trap": "A ban on the equipment sounds like a ban on its results.",
   "keywords": [
@@ -32,7 +32,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "SwimSwam, oldest long-course records, 2024",
+  "source": "SwimSwam, oldest long-course world records",
   "source_kind": "news_archive",
   "reference": "https://swimswam.com/with-biedermanns-400-free-mark-broken-what-are-the-oldest-remaining-lcm-world-records/",
   "written": "2026-09-26"
