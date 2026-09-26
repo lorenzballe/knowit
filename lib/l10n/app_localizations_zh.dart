@@ -1637,4 +1637,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。';
+
+  @override
+  String get topOfTheWeek => '本周热门';
+
+  @override
+  String get topOfTheMonth => '本月热门';
+
+  @override
+  String topIn(String subject) {
+    return '$subject热门';
+  }
+
+  @override
+  String get topLineWeek => '过去 7 天里被喜欢、收藏和讲述最多的卡片';
+
+  @override
+  String get topLineMonth => '过去 30 天里被喜欢、收藏和讲述最多的卡片';
+
+  @override
+  String get topWeek => '周';
+
+  @override
+  String get topMonth => '月';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 位读者',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty => '榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。';
 }

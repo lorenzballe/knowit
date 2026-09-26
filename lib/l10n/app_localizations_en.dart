@@ -1690,4 +1690,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get perkJourneyLine =>
       'Your level, every subject strand by strand, what stayed, and the card to say tonight.';
+
+  @override
+  String get topOfTheWeek => 'Top of the week';
+
+  @override
+  String get topOfTheMonth => 'Top of the month';
+
+  @override
+  String topIn(String subject) {
+    return 'Top in $subject';
+  }
+
+  @override
+  String get topLineWeek => 'Most liked, saved and said in the last 7 days';
+
+  @override
+  String get topLineMonth => 'Most liked, saved and said in the last 30 days';
+
+  @override
+  String get topWeek => 'Week';
+
+  @override
+  String get topMonth => 'Month';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n readers',
+      one: '1 reader',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty =>
+      'Nothing on the list yet. Every card you like, save or say counts.';
 }

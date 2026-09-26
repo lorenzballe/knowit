@@ -1487,5 +1487,16 @@
  },
  "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
  "weekKeptTwoOwn": "A week kept: tomorrow two of the five are yours.",
- "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight."
+ "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
+ "topOfTheWeek": "Top of the week",
+ "topOfTheMonth": "Top of the month",
+ "topIn": "Top in {subject}",
+ "@topIn": {"placeholders": {"subject": {"type": "String"}}},
+ "topLineWeek": "Most liked, saved and said in the last 7 days",
+ "topLineMonth": "Most liked, saved and said in the last 30 days",
+ "topWeek": "Week",
+ "topMonth": "Month",
+ "topReaders": "{n, plural, =1{1 reader} other{{n} readers}}",
+ "@topReaders": {"placeholders": {"n": {"type": "int"}}},
+ "topEmpty": "Nothing on the list yet. Every card you like, save or say counts."
 }

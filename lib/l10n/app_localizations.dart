@@ -2453,6 +2453,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your level, every subject strand by strand, what stayed, and the card to say tonight.'**
   String get perkJourneyLine;
+
+  /// No description provided for @topOfTheWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Top of the week'**
+  String get topOfTheWeek;
+
+  /// No description provided for @topOfTheMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Top of the month'**
+  String get topOfTheMonth;
+
+  /// No description provided for @topIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Top in {subject}'**
+  String topIn(String subject);
+
+  /// No description provided for @topLineWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Most liked, saved and said in the last 7 days'**
+  String get topLineWeek;
+
+  /// No description provided for @topLineMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Most liked, saved and said in the last 30 days'**
+  String get topLineMonth;
+
+  /// No description provided for @topWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get topWeek;
+
+  /// No description provided for @topMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get topMonth;
+
+  /// No description provided for @topReaders.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 reader} other{{n} readers}}'**
+  String topReaders(int n);
+
+  /// No description provided for @topEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing on the list yet. Every card you like, save or say counts.'**
+  String get topEmpty;
 }
 
 class _AppLocalizationsDelegate

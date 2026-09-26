@@ -1737,4 +1737,46 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get perkJourneyLine =>
       'Твой уровень, каждый предмет по веткам, что осталось, и карточка, о которой рассказать сегодня вечером.';
+
+  @override
+  String get topOfTheWeek => 'Топ недели';
+
+  @override
+  String get topOfTheMonth => 'Топ месяца';
+
+  @override
+  String topIn(String subject) {
+    return 'Топ: $subject';
+  }
+
+  @override
+  String get topLineWeek =>
+      'Чаще всего нравились, сохранялись и пересказывались за 7 дней';
+
+  @override
+  String get topLineMonth =>
+      'Чаще всего нравились, сохранялись и пересказывались за 30 дней';
+
+  @override
+  String get topWeek => 'Неделя';
+
+  @override
+  String get topMonth => 'Месяц';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n читателя',
+      many: '$n читателей',
+      few: '$n читателя',
+      one: '$n читатель',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty =>
+      'В списке пока пусто. Считается каждая карточка, которую лайкнули, сохранили или рассказали.';
 }

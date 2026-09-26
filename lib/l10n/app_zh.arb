@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, other{{n} 张再现时仍答对}}",
   "nothingBackYet": "还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。",
   "weekKeptTwoOwn": "坚持了一周：明天五张里有两张是你的。",
-  "perkJourneyLine": "你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。"
+  "perkJourneyLine": "你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。",
+ "topOfTheWeek": "本周热门",
+ "topOfTheMonth": "本月热门",
+ "topIn": "{subject}热门",
+ "topLineWeek": "过去 7 天里被喜欢、收藏和讲述最多的卡片",
+ "topLineMonth": "过去 30 天里被喜欢、收藏和讲述最多的卡片",
+ "topWeek": "周",
+ "topMonth": "月",
+ "topReaders": "{n, plural, other{{n} 位读者}}",
+ "topEmpty": "榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。"
 }

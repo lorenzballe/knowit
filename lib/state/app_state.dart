@@ -19,6 +19,7 @@ import '../models/pill.dart';
 import '../models/reminder.dart';
 import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
+import '../sync/tally.dart';
 import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
 import 'progress.dart';
@@ -1284,6 +1285,7 @@ class AppState extends ChangeNotifier {
       savedIds.remove(pillId);
     } else {
       savedIds.insert(0, pillId);
+      unawaited(Tallies.instance.held(pillId));
     }
     await _prefs.setStringList(_kSavedIds, savedIds);
     Analytics.capture(had ? 'pill unsaved' : 'pill saved', {
@@ -1312,6 +1314,7 @@ class AppState extends ChangeNotifier {
       likedIds.remove(pillId);
     } else {
       likedIds.insert(0, pillId);
+      unawaited(Tallies.instance.held(pillId));
       dislikedIds.remove(pillId);
       await _prefs.setStringList(_kDislikedIds, dislikedIds);
     }
@@ -1338,6 +1341,7 @@ class AppState extends ChangeNotifier {
   Future<void> markSaid(String pillId) async {
     if (saidIds.contains(pillId)) return;
     saidIds.insert(0, pillId);
+    unawaited(Tallies.instance.held(pillId));
     await _prefs.setStringList(_kSaidIds, saidIds);
     // The one thing the app is actually for: a card that left the phone and
     // was said to somebody. If any number here is the north star, it is this.

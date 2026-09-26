@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, =1{1 beim Zurückkommen noch richtig} other{{n} beim Zurückkommen noch richtig}}",
   "nothingBackYet": "Noch ist nichts zurückgekommen. Eine Karte kommt nach drei Tagen wieder, dann nach einer Woche, dann nach einem Monat — und was du dann richtig hast, weißt du wirklich.",
   "weekKeptTwoOwn": "Eine Woche gehalten: morgen sind zwei der fünf deine.",
-  "perkJourneyLine": "Dein Niveau, jedes Fach Strang für Strang, was blieb, und die Karte für heute Abend."
+  "perkJourneyLine": "Dein Niveau, jedes Fach Strang für Strang, was blieb, und die Karte für heute Abend.",
+ "topOfTheWeek": "Top der Woche",
+ "topOfTheMonth": "Top des Monats",
+ "topIn": "Top in {subject}",
+ "topLineWeek": "Am meisten gemocht, behalten und erzählt in den letzten 7 Tagen",
+ "topLineMonth": "Am meisten gemocht, behalten und erzählt in den letzten 30 Tagen",
+ "topWeek": "Woche",
+ "topMonth": "Monat",
+ "topReaders": "{n, plural, =1{1 Leser} other{{n} Leser}}",
+ "topEmpty": "Noch nichts auf der Liste. Jede Karte, die du magst, behältst oder erzählst, zählt."
 }

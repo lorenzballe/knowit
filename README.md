@@ -234,11 +234,40 @@ cards on them are cards. A subject row across the top narrows every shelf at
 once.
 
 Two of the three shelves say what the canvas said. The middle one does not:
-the canvas ranks it by what everyone saved, and nothing counts saves — there
-is no server to count them on — so it is "the ones that ask the most", which
-is the order it was always in and a claim the app can stand behind. The
-third one the app can say for real, because the mix is the reader's own:
-**Because Space sits at full**, from the subject they pushed furthest up.
+the canvas ranks it by what everyone saved, and saving is counted now, but
+by the top list — so the rows stay "the ones that ask the most", which is
+the order they were always in. The third one the app can say for real,
+because the mix is the reader's own: **Because Space sits at full**, from
+the subject they pushed furthest up.
+
+**The top of the week and of the month** sit under today's shelf: the cards
+readers liked, saved and said most in the last 7 or 30 days, with a Week /
+Month switch level with the name, narrowed by the subject row like every
+other shelf ("Top in Economics"). It is the one ranking that came back,
+because it is the one with something true to rank by. It is numbered — a
+top that does not say which is first is not one — but the cards stay cards,
+each standing over the edge of its number, cut out of it by a ring of the
+page's colour, the number fading down behind it; each says how many readers
+kept it.
+
+How it counts (`lib/sync/tally.dart`): the first time a reader likes, saves
+or says a card, their phone adds one to that card's count for the day, at
+`tallies/{UTC day}` in Firestore — a number per card and nothing about who.
+Once per card per phone, ever, so a count is a count of readers, and
+liking, unliking and liking again is not a way up the list. Explore reads
+the last 30 days, at most every ten minutes; days older than three are
+settled and read once, then kept on the phone. Until the counts have been
+read the shelf is left out, so a phone that cannot read them — offline, or
+on rules not published yet — never shows a list that can never fill; once
+read, an empty list says what puts a card on it.
+
+`firestore.rules` holds every write to one card, plus one, on a day that is
+today on some clock, and lets nothing be taken back. **The rules have to be
+published for the list to appear**: Firebase console → Firestore Database →
+Rules → paste `firestore.rules` → Publish (or `firebase deploy --only
+firestore:rules`). The write is anonymous but not unforgeable — someone with
+a script could add to a card over and over — which at this scale is a risk
+the list can carry; per-reader limits would need a server.
 
 The **Archive** is artboard 70e — its head too: the name, the lens on the
 right and the count under it, with the way back beside the title, which is

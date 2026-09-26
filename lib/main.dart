@@ -21,6 +21,7 @@ import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
+import 'sync/tally.dart';
 import 'utils/home_widget.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
@@ -250,6 +251,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     await _account.ensureAnonymous(_app);
     if (!mounted) return;
     _identify();
+    // Signed in, even anonymously, is what the counts ask of a reader.
+    Tallies.instance.refresh();
     await _sayWidgets();
     final Subscription store = Subscription.instance
       ..addListener(_onEntitlementChanged);
@@ -754,6 +757,9 @@ class _AstutoShellState extends State<AstutoShell>
     if (tab < 0 || tab >= names.length) return;
     Analytics.screen(names[tab]);
     Analytics.capture('tab opened', {'tab': names[tab], 'by': by});
+    // Explore's top list, read again on the way in when it is ten minutes
+    // old; the call says so itself when it is not.
+    if (names[tab] == 'explore') Tallies.instance.refresh();
   }
 
   @override

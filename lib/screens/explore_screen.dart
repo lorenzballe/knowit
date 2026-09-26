@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import '../data/pill_bank.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../sync/tally.dart';
 import '../theme.dart';
 import '../widgets/scaled_text.dart';
 import '../widgets/subject_icon.dart';
@@ -28,6 +30,12 @@ import '../analytics.dart';
 /// The subject row across the top narrows every shelf at once. The search
 /// button opens a field over the whole pool, which is the one thing a
 /// ranked list was better at and the reason it is still here.
+///
+/// The one ranking that came back is the top of the week and of the month,
+/// because it is the one with something true to rank by: what readers
+/// liked, saved and said, counted across everyone. It is numbered, since a
+/// top that does not say which is first is not one — but the cards stay
+/// cards, each standing on its number.
 class ExploreScreen extends StatefulWidget {
   final AppState app;
 
@@ -47,6 +55,17 @@ class ExploreScreenState extends State<ExploreScreen> {
 
   bool _searching = false;
   String _query = '';
+
+  /// The top list's window: the last seven days, or the last thirty.
+  bool _topMonth = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Nothing to read before the reader is signed in; the call says so
+    // itself, and main asks again once they are.
+    Tallies.instance.refresh();
+  }
 
   /// A search is said once the reader stops typing, not at every letter —
   /// and only what shape it had: how long, and how much it found. What was
@@ -133,7 +152,14 @@ class ExploreScreenState extends State<ExploreScreen> {
               setState(() => _subject = next);
             },
           ),
-        Expanded(child: _searching ? _found(context) : _shelfList(context)),
+        Expanded(
+          child: _searching
+              ? _found(context)
+              : ListenableBuilder(
+                  listenable: Tallies.instance,
+                  builder: (context, _) => _shelfList(context),
+                ),
+        ),
       ],
     );
   }
@@ -147,13 +173,29 @@ class ExploreScreenState extends State<ExploreScreen> {
       pickedPills(seed: daySeed(DateTime.now()), count: 24),
     ).take(8).toList();
 
-    // The canvas ranks this shelf by what everyone saved. Nothing counts
-    // saves yet — there is no server to count them on — so it is ranked by
-    // what the cards ask instead, which is the same order the shelf was
-    // always in and a claim the app can stand behind.
+    // The canvas ranks this shelf by what everyone saved. Saves are counted
+    // now, and they rank the top list above it; this shelf stays ranked by
+    // what the cards ask, which is a different question and the order it
+    // was always in.
     final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 40))
         .take(6)
         .toList();
+
+    // The top list, narrowed by the subject row like every other shelf,
+    // and left out entirely until the counts have been read: a phone that
+    // cannot read them must not show a list that can never fill.
+    final Tallies tallies = Tallies.instance;
+    final List<(Pill, int)> top = [
+      if (tallies.answered)
+        for (final Ranked place in tallies.top(
+          _topMonth ? Tallies.monthDays : Tallies.weekDays,
+          where: (id) {
+            final Pill? pill = pillById(id);
+            return pill != null && (_subject == null || pill.topic == _subject);
+          },
+        ))
+          (pillById(place.id)!, place.readers),
+    ];
 
     // The third shelf is about the reader, and it is always there. An
     // install that never dragged the mix used to get two shelves and a
@@ -183,6 +225,43 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.sameForEveryone,
                 child: _BigRow(pills: fresh, onOpen: _open),
               ),
+            if (tallies.answered) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                title: _subject != null
+                    ? context.l10n.topIn(_subject!)
+                    : _topMonth
+                    ? context.l10n.topOfTheMonth
+                    : context.l10n.topOfTheWeek,
+                line: _topMonth
+                    ? context.l10n.topLineMonth
+                    : context.l10n.topLineWeek,
+                trailing: _WindowSwitch(
+                  month: _topMonth,
+                  onPick: (month) {
+                    Analytics.capture('explore top window', {
+                      'window': month ? 'month' : 'week',
+                      'subject': _subject ?? 'all',
+                    });
+                    setState(() => _topMonth = month);
+                  },
+                ),
+                child: top.isEmpty
+                    ? const _TopEmpty()
+                    : _TopRow(
+                        ranked: top,
+                        onOpen: (i) {
+                          Analytics.capture('explore top opened', {
+                            'rank': i + 1,
+                            'readers': top[i].$2,
+                            'window': _topMonth ? 'month' : 'week',
+                            'subject': _subject ?? 'all',
+                          });
+                          _open([for (final t in top) t.$1], top[i].$1);
+                        },
+                      ),
+              ),
+            ],
             if (asking.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
@@ -546,16 +625,33 @@ class _SubjectRow extends StatelessWidget {
   }
 }
 
-/// A shelf: what it holds, why it exists, and the cards.
+/// A shelf: what it holds, why it exists, and the cards — and, where the
+/// shelf can be turned, the control that turns it, level with its name.
 class _Shelf extends StatelessWidget {
-  const _Shelf({required this.title, required this.line, required this.child});
+  const _Shelf({
+    required this.title,
+    required this.line,
+    required this.child,
+    this.trailing,
+  });
 
   final String title;
   final String line;
   final Widget child;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
+    final Widget name = Text(
+      title,
+      style: AppText.body(
+        size: 16,
+        weight: FontWeight.w600,
+        height: 1,
+        spacing: -0.2,
+        color: context.p.ink,
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -564,17 +660,19 @@ class _Shelf extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: AppText.body(
-                  size: 16,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  spacing: -0.2,
-                  color: context.p.ink,
+              // The control sits level with the name, and the line runs
+              // under both, so a long one in any language keeps to a line.
+              if (trailing == null)
+                name
+              else
+                Row(
+                  children: [
+                    Expanded(child: name),
+                    const SizedBox(width: 12),
+                    trailing!,
+                  ],
                 ),
-              ),
-              const SizedBox(height: 3),
+              SizedBox(height: trailing == null ? 3 : 4),
               Text(
                 line,
                 style: AppText.body(
@@ -848,6 +946,295 @@ class _SmallRow extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// This week or this month, for the top list: two words, one lit — the
+/// subject row's chip, made into a pair.
+class _WindowSwitch extends StatelessWidget {
+  const _WindowSwitch({required this.month, required this.onPick});
+
+  final bool month;
+  final ValueChanged<bool> onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget side(String label, bool isMonth) {
+      final bool on = month == isMonth;
+      return Semantics(
+        key: ValueKey('top-${isMonth ? 'month' : 'week'}-${on ? 'on' : 'off'}'),
+        button: true,
+        selected: on,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: on ? null : () => onPick(isMonth),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            height: 24,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: on
+                  ? context.p.inverse
+                  : context.p.inverse.withValues(alpha: 0),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              label,
+              style: AppText.body(
+                size: 11.5,
+                weight: FontWeight.w600,
+                height: 1,
+                color: on
+                    ? context.p.onInverse
+                    : context.p.ink.withValues(alpha: 0.55),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(2.5),
+      decoration: BoxDecoration(
+        color: context.p.ink.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          side(context.l10n.topWeek, false),
+          side(context.l10n.topMonth, true),
+        ],
+      ),
+    );
+  }
+}
+
+/// The top list: each card standing on its place, the number behind it.
+class _TopRow extends StatelessWidget {
+  const _TopRow({required this.ranked, required this.onOpen});
+
+  final List<(Pill, int)> ranked;
+  final ValueChanged<int> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 196,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+        itemCount: ranked.length,
+        separatorBuilder: (_, _) => const SizedBox(width: 4),
+        itemBuilder: (context, i) => _Placed(
+          rank: i + 1,
+          pill: ranked[i].$1,
+          readers: ranked[i].$2,
+          onTap: () => onOpen(i),
+        ),
+      ),
+    );
+  }
+}
+
+/// One place on the list: the number, and the card standing in front of
+/// it, over the number's last edge — so the card is still the thing, and
+/// the number is what it stands on. A ring of the page's own colour runs
+/// round the card where it meets the number, the way a magazine cuts a
+/// picture out of the type behind it.
+class _Placed extends StatelessWidget {
+  const _Placed({
+    required this.rank,
+    required this.pill,
+    required this.readers,
+    required this.onTap,
+  });
+
+  final int rank;
+  final Pill pill;
+  final int readers;
+  final VoidCallback onTap;
+
+  static const double _card = 146;
+  static const double _ring = 3;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final TextStyle numeral = AppText.display(
+      size: 124,
+      weight: FontWeight.w700,
+      height: 1,
+      spacing: -6,
+      color: ink,
+    );
+    // Measured, because a 1 is half the width of a 2: a fixed gap would
+    // leave the one adrift and bury the other.
+    final TextPainter painter = TextPainter(
+      text: TextSpan(text: '$rank', style: numeral),
+      textDirection: TextDirection.ltr,
+      textScaler: TextScaler.noScaling,
+    )..layout();
+    final double width = painter.width;
+    painter.dispose();
+    final double cardLeft = width - math.max(8, width * 0.14);
+    final Color sub = pill.ink.withValues(alpha: 0.66);
+
+    return GestureDetector(
+      key: ValueKey('top-${pill.id}'),
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: SizedBox(
+        width: cardLeft + _card + _ring * 2,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: 0,
+              bottom: -13,
+              child: ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (rect) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [ink, ink.withValues(alpha: 0.42)],
+                ).createShader(rect),
+                child: Text(
+                  '$rank',
+                  textScaler: TextScaler.noScaling,
+                  style: numeral,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: cardLeft,
+              width: _card + _ring * 2,
+              child: Container(
+                padding: const EdgeInsets.all(_ring),
+                decoration: BoxDecoration(
+                  color: context.p.surface,
+                  borderRadius: BorderRadius.circular(19 + _ring),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(14, 14, 14, 13),
+                  decoration: BoxDecoration(
+                    color: pill.color,
+                    borderRadius: BorderRadius.circular(19),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SubjectIcon(
+                            subject: pill.topic,
+                            size: 14,
+                            ink: pill.ink,
+                          ),
+                          const SizedBox(width: 6),
+                          Flexible(
+                            child: Text(
+                              pill.topic.toUpperCase(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.label(
+                                size: 8.5,
+                                weight: FontWeight.w700,
+                                spacing: 1.1,
+                                color: sub,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 8),
+                          child: ScaledText(
+                            text: pill.question,
+                            min: 10.5,
+                            max: 15,
+                            alignment: Alignment.topLeft,
+                            styleFor: (size) => AppText.display(
+                              size: size,
+                              weight: FontWeight.w600,
+                              height: 1.15,
+                              spacing: -0.4 * size / 15,
+                              color: pill.ink,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        context.l10n.topReaders(readers),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.body(
+                          size: 11,
+                          weight: FontWeight.w600,
+                          height: 1,
+                          color: pill.ink.withValues(alpha: 0.72),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The list before anything is on it: an empty first place, and what puts
+/// a card there.
+class _TopEmpty extends StatelessWidget {
+  const _TopEmpty();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        key: const ValueKey('top-empty'),
+        padding: const EdgeInsets.fromLTRB(18, 14, 18, 14),
+        decoration: BoxDecoration(
+          color: context.p.ink.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: Row(
+          children: [
+            Text(
+              '1',
+              style: AppText.display(
+                size: 44,
+                weight: FontWeight.w700,
+                height: 1,
+                color: context.p.ink.withValues(alpha: 0.16),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                context.l10n.topEmpty,
+                style: AppText.body(
+                  size: 12.5,
+                  height: 1.4,
+                  color: context.p.inkMuted,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

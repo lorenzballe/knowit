@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, other{{n}枚は戻ってきても正解}}",
   "nothingBackYet": "まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。",
   "weekKeptTwoOwn": "1週間続いた：明日は5枚のうち2枚があなたのカード。",
-  "perkJourneyLine": "あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。"
+  "perkJourneyLine": "あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。",
+ "topOfTheWeek": "今週のトップ",
+ "topOfTheMonth": "今月のトップ",
+ "topIn": "{subject}のトップ",
+ "topLineWeek": "過去7日間で、いちばんいいね・保存・話されたカード",
+ "topLineMonth": "過去30日間で、いちばんいいね・保存・話されたカード",
+ "topWeek": "週",
+ "topMonth": "月",
+ "topReaders": "{n, plural, other{{n}人}}",
+ "topEmpty": "まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。"
 }

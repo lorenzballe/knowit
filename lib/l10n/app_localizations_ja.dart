@@ -1640,4 +1640,36 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。';
+
+  @override
+  String get topOfTheWeek => '今週のトップ';
+
+  @override
+  String get topOfTheMonth => '今月のトップ';
+
+  @override
+  String topIn(String subject) {
+    return '$subjectのトップ';
+  }
+
+  @override
+  String get topLineWeek => '過去7日間で、いちばんいいね・保存・話されたカード';
+
+  @override
+  String get topLineMonth => '過去30日間で、いちばんいいね・保存・話されたカード';
+
+  @override
+  String get topWeek => '週';
+
+  @override
+  String get topMonth => '月';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n人');
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty => 'まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。';
 }

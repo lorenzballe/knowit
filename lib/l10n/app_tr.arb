@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, =1{1 tanesi dönüşte hâlâ doğru} other{{n} tanesi dönüşte hâlâ doğru}}",
   "nothingBackYet": "Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.",
   "weekKeptTwoOwn": "Bir hafta tamam: yarın beşten ikisi senin.",
-  "perkJourneyLine": "Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart."
+  "perkJourneyLine": "Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart.",
+ "topOfTheWeek": "Haftanın en iyileri",
+ "topOfTheMonth": "Ayın en iyileri",
+ "topIn": "{subject}: en iyiler",
+ "topLineWeek": "Son 7 günde en çok beğenilen, saklanan ve anlatılanlar",
+ "topLineMonth": "Son 30 günde en çok beğenilen, saklanan ve anlatılanlar",
+ "topWeek": "Hafta",
+ "topMonth": "Ay",
+ "topReaders": "{n, plural, =1{1 okur} other{{n} okur}}",
+ "topEmpty": "Listede henüz bir şey yok. Beğendiğin, sakladığın ya da anlattığın her kart sayılır."
 }

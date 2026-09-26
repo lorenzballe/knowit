@@ -29,6 +29,7 @@ import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
+import 'package:astuto/sync/tally.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
@@ -363,13 +364,14 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
-    // A shelf says what it holds and why it is a shelf. The middle one is
-    // the honest version of the canvas's "kept the most": nothing counts
-    // saves yet, so it is ranked by what the cards ask.
+    // A shelf says what it holds and why it is a shelf. The rows are ranked
+    // by what the cards ask; what readers kept is the top list's, which
+    // only appears once the counts have been read — never, here.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('The ones that ask the most'), findsOneWidget);
     expect(find.text('Across everyone, not just your mix'), findsOneWidget);
+    expect(find.text('Top of the week'), findsNothing);
 
     // The subject row narrows every shelf at once. A card from another
     // subject is on the top shelf before, and gone after.
@@ -405,6 +407,80 @@ void main() {
     await _settle(tester);
     expect(find.textContaining('matching'), findsOneWidget);
     expect(find.text("Today's shelf"), findsNothing);
+  });
+
+  testWidgets("Explore's top list: numbered cards, the week or the month, "
+      'narrowed by the subject row', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    final DateTime now = DateTime.now();
+    String ago(int days) => tallyDay(now.subtract(Duration(days: days)));
+    final Pill econ = PillBank.cards.firstWhere((p) => p.topic == 'Economics');
+    final Pill econToo = PillBank.cards.lastWhere(
+      (p) => p.topic == 'Economics',
+    );
+    final Pill other = PillBank.cards.firstWhere((p) => p.topic != 'Economics');
+    final Tallies tallies = Tallies(
+      storeOverride: MemoryTallyStore({
+        ago(0): {other.id: 9, econ.id: 4},
+        ago(12): {econToo.id: 30},
+      }),
+    );
+    Tallies.useForTest(tallies);
+    addTearDown(() => Tallies.useForTest(Tallies()));
+    await tester.runAsync(tallies.refresh);
+
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+
+    // The week: nine readers, then four, in that order, each card on its
+    // number. The card from twelve days ago is the month's, not the week's.
+    expect(find.text('Top of the week'), findsOneWidget);
+    expect(
+      find.text('Most liked, saved and said in the last 7 days'),
+      findsOneWidget,
+    );
+    final Finder first = find.byKey(ValueKey('top-${other.id}'));
+    final Finder second = find.byKey(ValueKey('top-${econ.id}'));
+    expect(first, findsOneWidget);
+    expect(second, findsOneWidget);
+    expect(tester.getCenter(first).dx, lessThan(tester.getCenter(second).dx));
+    expect(find.text('9 readers'), findsOneWidget);
+    expect(find.byKey(ValueKey('top-${econToo.id}')), findsNothing);
+
+    // The month brings it in, at the head of the list.
+    await tester.tap(find.byKey(const ValueKey('top-month-off')));
+    await _settle(tester);
+    expect(find.text('Top of the month'), findsOneWidget);
+    expect(find.byKey(const ValueKey('top-month-on')), findsOneWidget);
+    final Finder head = find.byKey(ValueKey('top-${econToo.id}'));
+    expect(head, findsOneWidget);
+    expect(
+      tester.getCenter(head).dx,
+      lessThan(tester.getCenter(find.byKey(ValueKey('top-${other.id}'))).dx),
+    );
+
+    // A subject narrows the list like every other shelf, and names it.
+    await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
+    await _settle(tester);
+    expect(find.text('Top in Economics'), findsOneWidget);
+    expect(find.byKey(ValueKey('top-${other.id}')), findsNothing);
+    expect(find.byKey(ValueKey('top-${econ.id}')), findsOneWidget);
+
+    // A subject nobody has counted yet says how a card gets there.
+    final String quiet = kMixSubjects
+        .map((s) => s.name)
+        .firstWhere((name) => name != 'Economics' && name != other.topic);
+    await tester.tap(find.byKey(ValueKey('subject-$quiet-off')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
+    expect(
+      find.text(
+        'Nothing on the list yet. Every card you like, save or say counts.',
+      ),
+      findsOneWidget,
+    );
   });
 
   group("The phone's language", () {
