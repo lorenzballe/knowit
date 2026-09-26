@@ -3,6 +3,9 @@
   "topic": "technology",
   "genre": "technology.where_things_come_from",
   "strand": "technology.where_things_come_from.rare_metals",
+  "also": [
+    "medicine.diagnosis.scans"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "US Geological Survey, helium commodity summaries"
+  "figure": "none",
+  "source": "US Geological Survey, helium commodity summaries",
+  "source_kind": "statistics",
+  "reference": "US Geological Survey, Mineral Commodity Summaries: Helium, 2024"
 }

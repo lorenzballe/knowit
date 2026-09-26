@@ -25,5 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "US Geological Survey; International Cement Review"
+  "source": "US Geological Survey; International Cement Review",
+  "disabled": true
 }

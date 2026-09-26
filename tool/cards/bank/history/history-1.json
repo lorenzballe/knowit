@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Koch et al., Quaternary Science Reviews, 2019"
+  "figure": "none",
+  "source": "Koch et al., Quaternary Science Reviews, 2019",
+  "source_kind": "paper",
+  "reference": "Koch, Brierley, Maslin & Lewis, Earth system impacts of the European arrival and Great Dying in the Americas after 1492, Quaternary Science Reviews, 2019"
 }

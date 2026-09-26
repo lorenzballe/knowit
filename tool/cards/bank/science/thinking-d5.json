@@ -3,6 +3,9 @@
   "topic": "science",
   "genre": "science.maths_curios",
   "strand": "science.maths_curios.probability",
+  "also": [
+    "philosophy.knowledge.science"
+  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +32,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation"
+  "figure": "none",
+  "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation",
+  "source_kind": "paper",
+  "reference": "Fang & Casadevall, Research Funding: the Case for a Modified Lottery, mBio, 2016"
 }

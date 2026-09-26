@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Schmandt-Besserat, Before Writing, 1992"
+  "source": "Schmandt-Besserat, Before Writing, 1992",
+  "disabled": true
 }

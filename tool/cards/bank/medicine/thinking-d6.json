@@ -1,8 +1,8 @@
 {
   "id": "thinking-d6",
-  "topic": "human_body",
-  "genre": "human_body.blood_and_heart",
-  "strand": "human_body.blood_and_heart.circulation",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in transplant policy"
+  "figure": "none",
+  "source": "Contested question in transplant policy",
+  "source_kind": "paper",
+  "reference": "Arshad, Anderson & Sharif, Comparison of organ donation and transplantation rates between opt-out and opt-in systems, Kidney International, 2019"
 }

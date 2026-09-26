@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Winner's curse in A/B testing"
+  "figure": "none",
+  "source": "Winner's curse in A/B testing",
+  "source_kind": "book",
+  "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020"
 }

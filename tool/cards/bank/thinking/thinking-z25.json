@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Asymmetric test errors"
+  "figure": "none",
+  "source": "Asymmetric test errors",
+  "source_kind": "book",
+  "reference": "Eddy, Probabilistic reasoning in clinical medicine, in Kahneman, Slovic & Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982"
 }

@@ -1,8 +1,8 @@
 {
   "id": "thinking-d8",
-  "topic": "human_body",
-  "genre": "human_body.ageing",
-  "strand": "human_body.ageing.longevity",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in preventive medicine"
+  "figure": "none",
+  "source": "Contested question in preventive medicine",
+  "source_kind": "paper",
+  "reference": "Welch & Black, Overdiagnosis in Cancer, Journal of the National Cancer Institute, 2010"
 }

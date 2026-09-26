@@ -2,17 +2,17 @@
   "id": "thinking-10",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "exponential",
   "question": "A landfill fills in 40 years at current waste growth of 7% a year. At 10% growth, roughly how much sooner?",
   "options": [
-    "About four years",
-    "About twelve years",
-    "Barely any difference"
+    "Barely any difference",
+    "About eight years",
+    "About twenty years"
   ],
   "correct": 1,
-  "answer": "At 7% the volume doubles roughly every ten years; at 10% roughly every seven. Over four decades that gap compounds into more than a decade of life gone. Small differences in a growth rate are not small differences in an outcome.",
-  "move": "Three percentage points on a growth rate cost this landfill twelve years.",
+  "answer": "About eight years. What fills a landfill is the running total. At 7% growth, forty years add up to about 200 years of today's waste; at 10% the same total piles up in about 32 years. Three points on the growth rate take a fifth off the landfill's life.",
+  "move": "Small changes in a growth rate are large changes in the total.",
   "trap": "Treating a few extra percent as a small change.",
   "simply": "A pile that doubles every ten years is nothing for ages and then swallows the room. Make it double every seven instead and you do not add a little — you lose a decade.",
   "keywords": [
@@ -31,5 +31,7 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "source": "Doubling time and compound growth"
+  "source": "Doubling time and compound growth",
+  "source_kind": "arithmetic",
+  "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
 }

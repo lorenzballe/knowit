@@ -27,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Bonnefon, Shariff & Rahwan, Science, 2016"
+  "figure": "none",
+  "source": "Bonnefon, Shariff & Rahwan, Science, 2016",
+  "source_kind": "paper",
+  "reference": "Bonnefon, Shariff & Rahwan, The social dilemma of autonomous vehicles, Science, 2016"
 }

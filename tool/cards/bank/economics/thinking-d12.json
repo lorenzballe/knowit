@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in market regulation"
+  "figure": "none",
+  "source": "Contested question in market regulation",
+  "source_kind": "paper",
+  "reference": "Wolfers & Zitzewitz, Prediction Markets, Journal of Economic Perspectives, 2004"
 }

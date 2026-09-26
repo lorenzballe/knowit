@@ -1,8 +1,8 @@
 {
   "id": "pop_culture-3",
-  "topic": "pop_culture",
-  "genre": "pop_culture.logos_and_brands",
-  "strand": "pop_culture.logos_and_brands.colours",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Digital colour grading practice, post-2000"
+  "figure": "none",
+  "source": "Digital colour grading practice, post-2000",
+  "source_kind": "book",
+  "reference": "Misek, Chromatic Cinema: A History of Screen Color, Wiley-Blackwell, 2010"
 }

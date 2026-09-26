@@ -2,7 +2,7 @@
   "id": "thinking-7",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "confirmation",
   "question": "Rule: anyone hired without a degree must have five years' experience. Four files: no degree / has degree / six years' experience / two years' experience. Which two must you open?",
   "options": [
@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The Wason selection task, in a hiring file"
+  "figure": "none",
+  "source": "The Wason selection task, in a hiring file",
+  "source_kind": "paper",
+  "reference": "Wason, Reasoning about a rule, Quarterly Journal of Experimental Psychology, 1968"
 }

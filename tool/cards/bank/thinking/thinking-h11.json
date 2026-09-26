@@ -1,0 +1,39 @@
+{
+  "id": "thinking-h11",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A drug's level in the blood halves every 6 hours. After a 400 mg dose, how many mg remain a day later?",
+  "value": 25,
+  "unit": "mg",
+  "answer": "25 mg remain after a day.",
+  "move": "What halves never reaches zero; count the halvings, not the amount lost.",
+  "trap": "Taking off a fixed 100 mg every six hours, as if steady.",
+  "hint": "Count how many six-hour halvings fit in a day.",
+  "steps": [
+    "A day is 24 / 6 = 4 half-lives.",
+    "400 halved four times: 200, 100, 50, 25.",
+    "25 mg remain after a day."
+  ],
+  "keywords": [
+    "half-life",
+    "drug levels",
+    "exponential decay",
+    "doses"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Exponential decay, arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Rowland & Tozer, Clinical Pharmacokinetics and Pharmacodynamics, Lippincott Williams & Wilkins, 2011",
+  "written": "2026-09-26"
+}

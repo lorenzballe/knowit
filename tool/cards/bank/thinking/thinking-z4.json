@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Survivorship in cultural comparison"
+  "figure": "none",
+  "source": "Survivorship in cultural comparison",
+  "source_kind": "book",
+  "reference": "Taleb, Fooled by Randomness, Texere, 2001"
 }

@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Hall-Heroult process, 1886"
+  "source": "Hall-Heroult process, 1886",
+  "disabled": true
 }

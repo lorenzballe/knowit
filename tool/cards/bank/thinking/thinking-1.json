@@ -2,12 +2,12 @@
   "id": "thinking-1",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "baseRate",
   "question": "A school of 2,000 screens every pupil for a condition that affects 1 in 500. The screen catches 90% of cases and wrongly flags 5%. A child is flagged. Odds they have it?",
   "options": [
     "About 90%",
-    "About 7%",
+    "About 3%",
     "About half"
   ],
   "correct": 1,
@@ -31,5 +31,7 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "source": "Base rate neglect in universal screening"
+  "source": "Base rate neglect in universal screening",
+  "source_kind": "arithmetic",
+  "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
 }

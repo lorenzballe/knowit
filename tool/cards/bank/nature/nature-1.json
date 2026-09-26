@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Yu et al., Geophysical Research Letters, 2015"
+  "source": "Yu et al., Geophysical Research Letters, 2015",
+  "disabled": true
 }

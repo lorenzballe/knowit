@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h19",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "In 2009 Bulgaria's lottery drew the same six numbers in two draws running. What does that suggest?",
+  "options": [
+    "The draw was rigged",
+    "Nothing, given every draw everywhere",
+    "A one-in-a-trillion miracle"
+  ],
+  "correct": 1,
+  "answer": "Nothing by itself. One draw matching the one before has odds of about one in 5 million, but hundreds of lotteries have run many draws a year for decades, so a repeat somewhere was due. Bulgaria investigated and found no wrongdoing.",
+  "move": "Before calling something a miracle, count everywhere it could have happened.",
+  "trap": "Judging the odds of this draw, not of any draw anywhere.",
+  "keywords": [
+    "lottery",
+    "bulgaria",
+    "coincidence",
+    "truly large numbers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hand, The Improbability Principle, 2014",
+  "source_kind": "book",
+  "reference": "Hand, The Improbability Principle, Scientific American / Farrar, Straus and Giroux, 2014",
+  "written": "2026-09-26"
+}

@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Erisman et al., Nature Geoscience, 2008"
+  "source": "Erisman et al., Nature Geoscience, 2008",
+  "disabled": true
 }

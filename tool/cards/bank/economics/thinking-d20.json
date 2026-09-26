@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in higher education"
+  "figure": "none",
+  "source": "Contested question in higher education",
+  "source_kind": "book",
+  "reference": "Kenyon Jones, The People's University: 150 Years of the University of London and its External Students, University of London, 2008"
 }

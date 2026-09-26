@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Henrich, Heine & Norenzayan, Behavioral and Brain Sciences, 2010"
+  "figure": "none",
+  "source": "Henrich, Heine & Norenzayan, Behavioral and Brain Sciences, 2010",
+  "source_kind": "paper",
+  "reference": "Henrich, Heine & Norenzayan, The weirdest people in the world?, Behavioral and Brain Sciences, 2010"
 }

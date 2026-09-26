@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Ramachandran, Nature, filling-in of the blind spot"
+  "source": "Ramachandran, Nature, filling-in of the blind spot",
+  "disabled": true
 }

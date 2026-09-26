@@ -1,8 +1,8 @@
 {
   "id": "thinking-d11",
-  "topic": "science",
-  "genre": "science.maths_curios",
-  "strand": "science.maths_curios.probability",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in scientific publishing"
+  "figure": "none",
+  "source": "Contested question in scientific publishing",
+  "source_kind": "paper",
+  "reference": "Ross-Hellauer, What is open peer review? A systematic review, F1000Research, 2017"
 }

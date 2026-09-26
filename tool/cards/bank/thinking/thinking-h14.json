@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h14",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "Ana outshoots Bea from close range and from long range, yet Bea has the better overall percentage. Possible?",
+  "options": [
+    "No, the figures must be wrong",
+    "Yes, if Bea takes more close shots",
+    "Only if they played different games"
+  ],
+  "correct": 1,
+  "answer": "Yes. Close shots go in far more often than long ones. If most of Bea's attempts are close and most of Ana's are long, Bea's total is weighted towards easy shots and beats Ana's, although Ana is better at each kind. The total measures the shot mix as much as the shooter.",
+  "move": "A total is a weighted average; ask who chose the weights.",
+  "trap": "Assuming someone better at every part must be better overall.",
+  "keywords": [
+    "shooting percentage",
+    "basketball",
+    "weighted averages",
+    "simpson's paradox"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Simpson's paradox in sport statistics",
+  "source_kind": "paper",
+  "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982",
+  "written": "2026-09-26"
+}

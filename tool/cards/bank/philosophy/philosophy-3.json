@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The sorites paradox, attributed to Eubulides"
+  "figure": "none",
+  "source": "The sorites paradox, attributed to Eubulides",
+  "source_kind": "book",
+  "reference": "Williamson, Vagueness, Routledge, 1994"
 }

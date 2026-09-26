@@ -1,8 +1,8 @@
 {
   "id": "thinking-d15",
-  "topic": "economics",
-  "genre": "economics.pricing_tricks",
-  "strand": "economics.pricing_tricks.decoy_options",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in pharmaceutical economics"
+  "figure": "none",
+  "source": "Contested question in pharmaceutical economics",
+  "source_kind": "paper",
+  "reference": "Kesselheim, Avorn & Sarpatwari, The High Cost of Prescription Drugs in the United States: Origins and Prospects for Reform, JAMA, 2016"
 }

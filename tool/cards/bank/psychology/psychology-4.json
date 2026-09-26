@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Rozenblit & Keil, Cognitive Science, 2002"
+  "figure": "none",
+  "source": "Rozenblit & Keil, Cognitive Science, 2002",
+  "source_kind": "paper",
+  "reference": "Rozenblit & Keil, The misunderstood limits of folk science: an illusion of explanatory depth, Cognitive Science, 2002"
 }

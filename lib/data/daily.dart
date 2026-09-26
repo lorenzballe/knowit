@@ -14,9 +14,9 @@
 /// The question of the day is the one card a friend can be asked about
 /// ("did you get it?"), the one the morning notification can quote a
 /// fortnight ahead, and the one square in the shared grid that means the
-/// same thing on every phone. It costs the mix nothing: every card that
-/// asks and can be marked lives under Thinking, and Thinking was never off
-/// anybody's deck.
+/// same thing on every phone. It costs the mix nothing: it is always one of
+/// Thinking's, and Thinking was never off anybody's deck. The subjects ask
+/// questions of their own too, and those are dealt from the mix.
 library;
 
 import 'dart:math';
@@ -24,6 +24,7 @@ import 'dart:math';
 import '../models/pill.dart';
 import 'pill_bank.dart';
 import 'pills_repository.dart';
+import 'topics.dart';
 
 /// The day the calendar began. Edition 1.
 final DateTime kEpoch = DateTime(2026, 9, 1);
@@ -88,7 +89,7 @@ Pill questionOfTheDay(DateTime date) => questionOfEdition(editionOf(date));
 /// asked on every phone whatever else the bank did in between. Past the end
 /// of the calendar, or on a phone that never updates, the chain below takes
 /// over: each edition keeps clear of what the editions before it asked, for
-/// three quarters of a lap of the cards that can be marked, so the same
+/// three quarters of a lap of Thinking's cards that can be marked, so the same
 /// question does not come round again for months. The archive still keeps a
 /// note of what was actually dealt rather than trusting either to say.
 Pill questionOfEdition(int edition) {
@@ -112,10 +113,17 @@ Pill? _frozen(int edition) {
 }
 
 Pill _ask(int edition) {
-  final pool = PillBank.cards
+  final graded = PillBank.cards
       .where((p) => p.asksSomething && p.isGraded)
       .toList();
-  if (pool.isEmpty) return PillBank.cards.first;
+  if (graded.isEmpty) return PillBank.cards.first;
+  // Thinking's, as the calendar the bundler writes is: the question is
+  // everybody's, and Thinking is the one subject on every deck. The
+  // subjects' own questions are dealt from the mix instead.
+  final thinking = graded
+      .where((p) => p.topic == kTopics['thinking']!.name)
+      .toList();
+  final pool = thinking.isEmpty ? graded : thinking;
   final int window = max(0, (pool.length * 0.75).floor());
   final recent = <String>{
     for (var e = edition - window; e < edition; e++) ?_questions[e]?.id,

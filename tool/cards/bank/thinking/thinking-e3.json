@@ -31,5 +31,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Mehl et al., Science, 2007"
+  "figure": "none",
+  "source": "Mehl et al., Science, 2007",
+  "source_kind": "paper",
+  "reference": "Mehl, Vazire, Ramírez-Esparza, Slatcher & Pennebaker, Are Women Really More Talkative Than Men?, Science, 2007"
 }

@@ -3,6 +3,9 @@
   "topic": "technology",
   "genre": "technology.ai",
   "strand": "technology.ai.limits",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +32,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in medical regulation"
+  "figure": "none",
+  "source": "Contested question in medical regulation",
+  "source_kind": "paper",
+  "reference": "Topol, High-performance medicine: the convergence of human and artificial intelligence, Nature Medicine, 2019"
 }

@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h20",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: pupils with the worst mock-exam marks will, on average, do better in the real exam even without extra help?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A mark is part ability and part luck on the day, and the lowest marks collect the worst luck. On the next test the luck is drawn again, so the group drifts back towards its average — which is why extra lessons aimed at them look effective even when they are not.",
+  "move": "Part of every score is luck, and luck is not repeated on demand.",
+  "trap": "Low marks feel like low ability, which should not move by itself.",
+  "keywords": [
+    "exams",
+    "regression to the mean",
+    "pupils",
+    "interventions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barnett et al., IJE, 2005",
+  "source_kind": "paper",
+  "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005",
+  "written": "2026-09-26"
+}

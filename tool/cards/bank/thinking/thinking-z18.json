@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Healthy-user bias in nutrition studies"
+  "figure": "none",
+  "source": "Healthy-user bias in nutrition studies",
+  "source_kind": "paper",
+  "reference": "Bjelakovic et al., Antioxidant supplements for prevention of mortality in healthy participants and patients with various diseases, Cochrane Database of Systematic Reviews, 2012"
 }

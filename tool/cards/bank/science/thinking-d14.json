@@ -3,6 +3,9 @@
   "topic": "science",
   "genre": "science.cold_and_heat",
   "strand": "science.cold_and_heat.insulation",
+  "also": [
+    "nature.weather.clouds"
+  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +32,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in climate policy"
+  "figure": "none",
+  "source": "Contested question in climate policy",
+  "source_kind": "institution",
+  "reference": "National Academies of Sciences, Engineering, and Medicine, Reflecting Sunlight: Recommendations for Solar Geoengineering Research and Research Governance, 2021"
 }

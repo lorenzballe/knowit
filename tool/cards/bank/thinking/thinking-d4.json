@@ -27,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in conservation biology"
+  "figure": "none",
+  "source": "Contested question in conservation biology",
+  "source_kind": "paper",
+  "reference": "Bennett et al., Spending limited resources on de-extinction could lead to net biodiversity loss, Nature Ecology & Evolution, 2017"
 }

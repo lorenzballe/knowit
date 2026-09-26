@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The missing control group"
+  "figure": "none",
+  "source": "The missing control group",
+  "source_kind": "paper",
+  "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"
 }

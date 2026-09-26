@@ -1,8 +1,8 @@
 {
   "id": "weird_facts-4",
-  "topic": "weird_facts",
-  "genre": "weird_facts.records",
-  "strand": "weird_facts.records.fastest",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Slow steaming, adopted across container shipping post-2008"
+  "figure": "none",
+  "source": "Slow steaming, adopted across container shipping post-2008",
+  "source_kind": "paper",
+  "reference": "Cariou, Is slow steaming a sustainable means of reducing CO2 emissions from container shipping?, Transportation Research Part D, 2011"
 }

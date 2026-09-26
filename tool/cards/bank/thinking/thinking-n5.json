@@ -31,5 +31,7 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "source": "Powers of two"
+  "source": "Powers of two",
+  "source_kind": "arithmetic",
+  "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
 }

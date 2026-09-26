@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Nozick, Newcomb's Problem and Two Principles of Choice, 1969"
+  "figure": "none",
+  "source": "Nozick, Newcomb's Problem and Two Principles of Choice, 1969",
+  "source_kind": "book",
+  "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Essays in Honor of Carl G. Hempel, Reidel, 1969"
 }

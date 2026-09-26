@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Survivorship in customer surveys"
+  "figure": "none",
+  "source": "Survivorship in customer surveys",
+  "source_kind": "paper",
+  "reference": "Hernán, Hernández-Díaz & Robins, A structural approach to selection bias, Epidemiology, 2004"
 }

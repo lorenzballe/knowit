@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confounding in educational research"
+  "figure": "none",
+  "source": "Confounding in educational research",
+  "source_kind": "paper",
+  "reference": "Evans, Kelley, Sikora & Treiman, Family scholarly culture and educational success: Books and schooling in 27 nations, Research in Social Stratification and Mobility, 2010"
 }

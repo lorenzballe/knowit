@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Self-selection in ratings"
+  "figure": "none",
+  "source": "Self-selection in ratings",
+  "source_kind": "paper",
+  "reference": "Hu, Pavlou & Zhang, Overcoming the J-shaped distribution of product reviews, Communications of the ACM, 2009"
 }

@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h5",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a shop that prices goods at cost plus 50% keeps half of each sale as margin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Buy at €100 and sell at €150, and the €50 kept is a third of the price, not half. Markup is measured on the cost and margin on the sale, so the same €50 is 50% one way and 33% the other.",
+  "move": "Name the base of every percentage before you compare two of them.",
+  "trap": "Reading fifty per cent on the cost as fifty per cent of the price.",
+  "keywords": [
+    "markup",
+    "margin",
+    "pricing",
+    "percentages"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Markup and margin, arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+  "written": "2026-09-26"
+}

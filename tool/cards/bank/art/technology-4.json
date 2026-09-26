@@ -1,8 +1,8 @@
 {
   "id": "technology-4",
-  "topic": "technology",
-  "genre": "technology.screens",
-  "strand": "technology.screens.oled",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Bayer filter demosaicing, standard in digital sensors"
+  "figure": "none",
+  "source": "Bayer filter demosaicing, standard in digital sensors",
+  "source_kind": "primary_document",
+  "reference": "Bayer, Color imaging array, US Patent 3,971,065, 1976"
 }

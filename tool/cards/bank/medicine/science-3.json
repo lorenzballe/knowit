@@ -1,8 +1,8 @@
 {
   "id": "science-3",
-  "topic": "science",
-  "genre": "science.chemistry_at_home",
-  "strand": "science.chemistry_at_home.cleaning",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "D'Costa et al., Nature, 2011"
+  "figure": "none",
+  "source": "D'Costa et al., Nature, 2011",
+  "source_kind": "paper",
+  "reference": "D'Costa et al., Antibiotic resistance is ancient, Nature, 2011"
 }

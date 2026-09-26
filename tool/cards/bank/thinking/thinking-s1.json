@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Survivorship bias in the built environment"
+  "figure": "none",
+  "source": "Survivorship bias in the built environment",
+  "source_kind": "paper",
+  "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
 }

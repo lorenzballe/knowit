@@ -1,0 +1,34 @@
+{
+  "id": "science-4",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "also": [
+    "economics.trade_routes.container_ships"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did cleaning up shipping fuel warm the planet?",
+  "answer": "Yes, measurably. Ships burned high-sulphur fuel that seeded brighter clouds over the oceans, reflecting sunlight. A 2020 rule cut that sulphur by around 80% almost overnight, the clouds dimmed, and one climate model puts the extra warming at up to three years' worth.",
+  "move": "One pollution rule ran the planet's most accidental experiment.",
+  "keywords": [
+    "ship emissions",
+    "sulphur",
+    "clouds",
+    "aerosols"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jordan et al., Earth's Future, 2024",
+  "source_kind": "paper",
+  "reference": "doi:10.1029/2024EF005011"
+}

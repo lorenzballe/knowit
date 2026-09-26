@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h21",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "After a month with a sleep app, 70% of users say they sleep better. What is the missing number?",
+  "options": [
+    "The app's average star rating",
+    "How a similar group without it slept",
+    "How long the users slept before"
+  ],
+  "correct": 1,
+  "answer": "How a similar group without the app slept. People install a sleep app in a bad patch, and bad patches mostly pass; the attention alone can help too. Only a comparison group shows how much of the 70% the app itself did, and it may be very little.",
+  "move": "An improvement needs a twin who got nothing before it counts as an effect.",
+  "trap": "A before-and-after with nobody who went without.",
+  "keywords": [
+    "sleep apps",
+    "control groups",
+    "self-report",
+    "evaluation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holland, JASA, 1986",
+  "source_kind": "paper",
+  "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986",
+  "written": "2026-09-26"
+}

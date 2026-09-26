@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Survivorship in historical sources"
+  "figure": "none",
+  "source": "Survivorship in historical sources",
+  "source_kind": "book",
+  "reference": "Taleb, Fooled by Randomness, Texere, 2001"
 }

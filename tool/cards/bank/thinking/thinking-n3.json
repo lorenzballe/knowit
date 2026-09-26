@@ -2,19 +2,19 @@
   "id": "thinking-n3",
   "topic": "thinking",
   "kind": "number",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "computation",
-  "question": "A hedge grows 60 cm each summer and is cut back 40 cm each winter. It starts at 2 m. In which summer does it first pass 5 m?",
-  "value": 16,
+  "question": "A hedge grows 60 cm each summer and is cut back 40 cm each winter. It starts at 2 m. In which summer does it first reach 5 m?",
+  "value": 13,
   "unit": "summers",
-  "answer": "So it passes 5 m during the growth of year 13. Counting the first summer as one: summer 13.",
+  "answer": "So the 13th summer takes it to 5 m.",
   "move": "The last step is bigger than all the ones before it.",
   "hint": "It only keeps 20 cm a year — except in the summer it finally gets there.",
   "steps": [
-    "Net gain per full year: 60 - 40 = 20 cm.",
-    "It must reach 5 m during a summer's growth, so before that summer it needs 5.00 - 0.60 = 4.40 m.",
-    "From 2 m to 4.40 m at 20 cm a year takes 12 years... (4.40 - 2.00) / 0.20 = 12.",
-    "So it passes 5 m during the growth of year 13. Counting the first summer as one: summer 13."
+    "Each full year, summer then winter, adds 60 - 40 = 20 cm.",
+    "To reach 5 m during a summer it must start that summer at 5.00 - 0.60 = 4.40 m.",
+    "From 2.00 m to 4.40 m takes (4.40 - 2.00) / 0.20 = 12 full years.",
+    "So the 13th summer takes it to 5 m."
   ],
   "keywords": [
     "arithmetic",
@@ -31,5 +31,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Net-progress problems"
+  "figure": "none",
+  "source": "Net-progress problems",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
 }

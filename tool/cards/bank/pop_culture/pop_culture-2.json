@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Vickers, Audio Engineering Society, 2010"
+  "figure": "none",
+  "source": "Vickers, Audio Engineering Society, 2010",
+  "source_kind": "paper",
+  "reference": "Vickers, The Loudness War: Background, Speculation and Recommendations, Audio Engineering Society Convention Paper 8175, 2010"
 }

@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h15",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "True or false: the share of income paid in tax can rise even if every income bracket's rate falls?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It happened in the United States between 1974 and 1978: the average rate fell within every income bracket, yet the overall rate rose, because inflation pushed more of the country's income into the higher brackets, where rates were steepest. The mix moved faster than the rates.",
+  "move": "A shift in the mix can outrun a change in every part.",
+  "trap": "If every part goes down, the whole must go down too.",
+  "keywords": [
+    "income tax",
+    "tax brackets",
+    "inflation",
+    "simpson's paradox"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Wagner, The American Statistician, 1982",
+  "source_kind": "paper",
+  "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982",
+  "written": "2026-09-26"
+}

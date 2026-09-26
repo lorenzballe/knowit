@@ -124,6 +124,12 @@ The gate refuses a card outside these without reading it.
 
 - 2 or 3. With 2, a comparison (*"He owns a car" / "He owns a car and has
   solar panels"*). With 3: one right, one the trap, one plausible.
+- **True or false** is a `pickOne` with exactly the options `["True",
+  "False"]`, in that order: the question is a statement (*"True or false:
+  the Amazon supplies about a fifth of the oxygen people breathe?"*) that is
+  unambiguously true or false as worded — no "mostly", no "it depends" —
+  and sounds like its opposite. Across the bank, about as many are true as
+  false.
 - Same length, same precision: the right one is not recognisable for being
   longer, more precise, or more hedged.
 - Never "all of the above", "none", "it depends".
@@ -146,6 +152,9 @@ The gate refuses a card outside these without reading it.
 - Every step is redone by the critic with a calculator. One wrong step, no card.
 - The question states the unit of the expected answer (*"in thousands of
   tonnes"*), so nobody is wrong on format.
+- The `value` stays under 10,000: the app reads a typed comma as a decimal
+  point, so "11,268" arrives as 11.268. Choose the unit that keeps the
+  number small (*"in millions"*, *"in km"*).
 
 ## 9. The debate (`debate`)
 
@@ -190,6 +199,13 @@ Every card that asks carries **one** principle. `read` cards carry none.
 
 - **The trap is the principle going wrong.** If the trap is not that
   principle failing, the tag is wrong.
+- On a card that asks about a **fact**, the principle is the reason a
+  sensible reader's first answer is wrong: `reflection` when it is simply
+  the quick answer (gross for net, the obvious cause, the textbook story);
+  otherwise the principle that names it — the vivid over the common
+  (`availability`), what survived (`survivorship`), a hidden third cause
+  (`confounding`), compounding (`exponential`), and so on. `reflection` is
+  the honest fallback, not the default.
 - **Never the textbook instance**: no Linda the bank teller, no mammogram,
   no Monty Hall, no bullet holes on returning bombers. The principle goes in
   a context the reader does not expect — that is the only thing that
@@ -228,6 +244,9 @@ Every card that asks carries **one** principle. `read` cards carry none.
 
 **The topic decides the scene; the principle decides the question.** A
 Science card that asks is a principle set in science, not a science quiz.
+It may ask about a fact — which of three is right, whether a claim is true —
+when the fact is the layer under the known one and the wrong answer is one
+a well-read reader reaches for; the principle names why they reach for it.
 
 | `topic` | What it is |
 |---|---|

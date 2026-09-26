@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "UNEP Global Mercury Assessment"
+  "figure": "none",
+  "source": "UNEP Global Mercury Assessment",
+  "source_kind": "institution",
+  "reference": "UNEP, Global Mercury Assessment 2018, 2019"
 }

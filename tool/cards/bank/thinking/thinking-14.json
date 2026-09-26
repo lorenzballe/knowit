@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Gigerenzer, Risk Analysis, 2006"
+  "figure": "none",
+  "source": "Gigerenzer, Risk Analysis, 2006",
+  "source_kind": "paper",
+  "reference": "Gigerenzer, Out of the Frying Pan into the Fire: Behavioral Reactions to Terrorist Attacks, Risk Analysis, 2006"
 }

@@ -2,7 +2,7 @@
   "id": "thinking-e2",
   "topic": "thinking",
   "kind": "estimate",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "estimation",
   "question": "How many bricks are in a typical four-storey apartment building, in thousands?",
   "value": 250,
@@ -32,5 +32,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Standard brick dimensions and coursing"
+  "figure": "none",
+  "source": "Standard brick dimensions and coursing",
+  "source_kind": "arithmetic",
+  "reference": "BS 3921:1985, Specification for clay bricks"
 }

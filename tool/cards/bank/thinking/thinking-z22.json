@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Lichtenstein et al., judged frequency of lethal events"
+  "figure": "none",
+  "source": "Lichtenstein et al., judged frequency of lethal events",
+  "source_kind": "paper",
+  "reference": "Lichtenstein, Slovic, Fischhoff, Layman & Combs, Judged frequency of lethal events, Journal of Experimental Psychology: Human Learning and Memory, 1978"
 }

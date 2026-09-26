@@ -1,8 +1,11 @@
 {
   "id": "thinking-d17",
-  "topic": "philosophy",
-  "genre": "philosophy.ethics",
-  "strand": "philosophy.ethics.duty",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "also": [
+    "philosophy.ethics.duty"
+  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +32,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Declaration of Helsinki, contested since 2000"
+  "figure": "none",
+  "source": "Declaration of Helsinki, contested since 2000",
+  "source_kind": "primary_document",
+  "reference": "World Medical Association, Declaration of Helsinki, 2013 revision"
 }

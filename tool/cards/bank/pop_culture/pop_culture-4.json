@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Charles Douglass and the Laff Box"
+  "source": "Charles Douglass and the Laff Box",
+  "disabled": true
 }

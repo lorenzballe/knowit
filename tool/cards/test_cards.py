@@ -434,7 +434,10 @@ class ThePlumbing(unittest.TestCase):
                 self.assertTrue(card["reference"].startswith("https://example"), card["reference"])
                 self.assertIn(card["source_kind"], sources.KINDS)
                 self.assertTrue(card["quote"])
-            self.assertEqual(outcomes[0].domain, sources.domain_of(files and json.loads(files[0].read_text())["reference"]))
+            # The outcome names the site of its own card, whichever file that is:
+            # the plan's order follows the bank, and the files' order is the alphabet.
+            first = next(f for f in files if f.stem == outcomes[0].id)
+            self.assertEqual(outcomes[0].domain, sources.domain_of(json.loads(first.read_text())["reference"]))
 
     def test_a_thinking_card_is_arithmetic_and_skips_the_scout(self):
         bank = check.load_bank()

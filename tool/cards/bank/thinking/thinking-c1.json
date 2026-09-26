@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confirmation bias in everyday judgement"
+  "figure": "none",
+  "source": "Confirmation bias in everyday judgement",
+  "source_kind": "paper",
+  "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
 }

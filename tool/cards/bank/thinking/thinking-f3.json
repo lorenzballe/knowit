@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Counterfactual reasoning"
+  "source": "Counterfactual reasoning",
+  "source_kind": "paper",
+  "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"
 }

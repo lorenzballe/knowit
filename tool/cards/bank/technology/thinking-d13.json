@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in criminal justice"
+  "figure": "none",
+  "source": "Contested question in criminal justice",
+  "source_kind": "paper",
+  "reference": "Kleinberg, Lakkaraju, Leskovec, Ludwig & Mullainathan, Human Decisions and Machine Predictions, Quarterly Journal of Economics, 2018"
 }

@@ -3,6 +3,9 @@
   "topic": "space",
   "genre": "space.rockets",
   "strand": "space.rockets.fuel_chemistry",
+  "also": [
+    "technology.where_things_come_from.rare_metals"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "US Department of Energy, Pu-238 supply programme"
+  "figure": "none",
+  "source": "US Department of Energy, Pu-238 supply programme",
+  "source_kind": "institution",
+  "reference": "National Research Council, Radioisotope Power Systems: An Imperative for Maintaining U.S. Leadership in Space Exploration, National Academies Press, 2009"
 }

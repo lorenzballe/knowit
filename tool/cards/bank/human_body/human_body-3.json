@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Furness, Nature Reviews Gastroenterology & Hepatology, 2012"
+  "source": "Furness, Nature Reviews Gastroenterology & Hepatology, 2012",
+  "disabled": true
 }

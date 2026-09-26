@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "BIPM, 2019 redefinition of the SI"
+  "figure": "none",
+  "source": "BIPM, 2019 redefinition of the SI",
+  "source_kind": "standard",
+  "reference": "BIPM, The International System of Units (SI Brochure), 9th edition, 2019"
 }

@@ -1,8 +1,70 @@
 {
  "format": 1,
- "version": 202609202030,
- "built": "2026-09-20T20:30:56Z",
+ "version": 202609261555,
+ "built": "2026-09-26T15:55:42Z",
  "cards": [
+  {
+   "id": "technology-4",
+   "topic": "art",
+   "genre": "art.photography",
+   "strand": "art.photography.digital",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Is a photo a record of what was there?",
+   "answer": "Partly a reconstruction. Each pixel on a camera sensor measures only one colour, behind a red, green or blue filter. The other two values are interpolated from the neighbours. Every ordinary digital photograph is roughly two-thirds informed guesswork, done well enough that nobody notices.",
+   "move": "Two of every three colour values in your photos were guessed.",
+   "keywords": [
+    "camera sensors",
+    "bayer filter",
+    "demosaicing",
+    "pixels"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Bayer filter demosaicing, standard in digital sensors",
+   "source_kind": "primary_document",
+   "reference": "Bayer, Color imaging array, US Patent 3,971,065, 1976"
+  },
+  {
+   "id": "pop_culture-3",
+   "topic": "cinema",
+   "genre": "cinema.how_films_are_made",
+   "strand": "cinema.how_films_are_made.lighting",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why are blockbusters orange and teal?",
+   "answer": "Skin tones sit in the orange range, and teal is directly opposite on the colour wheel — so pushing shadows teal makes faces jump forward. Digital grading made the move cheap and instant in the 2000s, and a look that once took effort became the default.",
+   "move": "Faces are orange, so the shadows went teal. That is the whole reason.",
+   "keywords": [
+    "orange and teal",
+    "colour grading",
+    "complementary colours",
+    "blockbusters"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Digital colour grading practice, post-2000",
+   "source_kind": "book",
+   "reference": "Misek, Chromatic Cinema: A History of Screen Color, Wiley-Blackwell, 2010"
+  },
   {
    "id": "economics-1",
    "topic": "economics",
@@ -29,7 +91,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Kuznets, National Income 1929-1932, US Senate, 1934"
+   "source": "Kuznets, National Income 1929-1932, US Senate, 1934",
+   "disabled": true
   },
   {
    "id": "economics-2",
@@ -57,7 +120,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Royal FloraHolland, Aalsmeer"
+   "figure": "none",
+   "source": "Royal FloraHolland, Aalsmeer",
+   "source_kind": "company",
+   "reference": "Royal FloraHolland, Annual Report, 2022"
   },
   {
    "id": "economics-3",
@@ -85,7 +151,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Levinson, The Box, 2006"
+   "source": "Levinson, The Box, 2006",
+   "disabled": true
   },
   {
    "id": "economics-4",
@@ -114,7 +181,9 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Simpson's paradox in labour statistics"
+   "source": "Simpson's paradox in labour statistics",
+   "source_kind": "paper",
+   "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982"
   },
   {
    "id": "economics-5",
@@ -142,7 +211,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Lloyd's of London, asbestos and the Names, 1988-1996"
+   "figure": "none",
+   "source": "Lloyd's of London, asbestos and the Names, 1988-1996",
+   "source_kind": "book",
+   "reference": "Duguid, On the Brink: How a Crisis Transformed Lloyd's of London, Palgrave Macmillan, 2014"
   },
   {
    "id": "thinking-d10",
@@ -175,7 +247,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in urban economics"
+   "figure": "none",
+   "source": "Contested question in urban economics",
+   "source_kind": "book",
+   "reference": "Shoup, The High Cost of Free Parking, Planners Press, 2005"
   },
   {
    "id": "thinking-d12",
@@ -208,40 +283,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in market regulation"
-  },
-  {
-   "id": "thinking-d15",
-   "topic": "economics",
-   "genre": "economics.pricing_tricks",
-   "strand": "economics.pricing_tricks.decoy_options",
-   "kind": "debate",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Should drug patents be shorter than twenty years?",
-   "sides": [
-    "Yes, shorten them",
-    "No, keep the term"
-   ],
-   "answer": "The monopoly is paid for in lives: people who cannot afford a drug that costs cents to manufacture. A shorter term still rewards invention while moving the moment of cheap generics closer, and much of the underlying science was publicly funded anyway.",
-   "move": "Both sides are arguing about the same number from different ends of the development timeline.",
-   "counterpoint": "The patent clock starts at discovery, not at approval, so a drug that spends a decade in trials may see only a few protected years already. Cut it further and the projects that die first are the slow ones — antibiotics, rare diseases — where the payback was marginal to begin with.",
-   "keywords": [
-    "drug patents",
-    "monopoly",
-    "pharmaceutical prices",
-    "innovation"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "abstract",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Contested question in pharmaceutical economics"
+   "figure": "none",
+   "source": "Contested question in market regulation",
+   "source_kind": "paper",
+   "reference": "Wolfers & Zitzewitz, Prediction Markets, Journal of Economic Perspectives, 2004"
   },
   {
    "id": "thinking-d20",
@@ -274,7 +319,41 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in higher education"
+   "figure": "none",
+   "source": "Contested question in higher education",
+   "source_kind": "book",
+   "reference": "Kenyon Jones, The People's University: 150 Years of the University of London and its External Students, University of London, 2008"
+  },
+  {
+   "id": "weird_facts-4",
+   "topic": "economics",
+   "genre": "economics.trade_routes",
+   "strand": "economics.trade_routes.container_ships",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Why did container ships get slower?",
+   "answer": "Deliberately, after 2008. Fuel use rises steeply with speed, so cutting speed by around a tenth saves a disproportionate share of the fuel. When freight rates collapsed and fuel stayed dear, slowing down beat sailing fast — and much of the fleet never sped back up.",
+   "move": "The world's cargo slowed down on purpose and mostly stayed slow.",
+   "keywords": [
+    "slow steaming",
+    "container ships",
+    "fuel",
+    "shipping"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Slow steaming, adopted across container shipping post-2008",
+   "source_kind": "paper",
+   "reference": "Cariou, Is slow steaming a sustainable means of reducing CO2 emissions from container shipping?, Transportation Research Part D, 2011"
   },
   {
    "id": "history-1",
@@ -302,13 +381,19 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Koch et al., Quaternary Science Reviews, 2019"
+   "figure": "none",
+   "source": "Koch et al., Quaternary Science Reviews, 2019",
+   "source_kind": "paper",
+   "reference": "Koch, Brierley, Maslin & Lewis, Earth system impacts of the European arrival and Great Dying in the Americas after 1492, Quaternary Science Reviews, 2019"
   },
   {
    "id": "history-2",
    "topic": "history",
    "genre": "history.maps_and_borders",
    "strand": "history.maps_and_borders.old_maps",
+   "also": [
+    "art.forgeries.detection"
+   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
@@ -330,7 +415,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating"
+   "figure": "none",
+   "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating",
+   "source_kind": "paper",
+   "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004"
   },
   {
    "id": "history-3",
@@ -359,7 +447,8 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Nightingale, Notes on Matters Affecting the Health of the British Army, 1858"
+   "source": "Nightingale, Notes on Matters Affecting the Health of the British Army, 1858",
+   "disabled": true
   },
   {
    "id": "history-4",
@@ -387,7 +476,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Hall-Heroult process, 1886"
+   "source": "Hall-Heroult process, 1886",
+   "disabled": true
   },
   {
    "id": "history-5",
@@ -415,7 +505,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Ellis, The Coffee House: A Cultural History, 2004"
+   "source": "Ellis, The Coffee House: A Cultural History, 2004",
+   "disabled": true
   },
   {
    "id": "human_body-1",
@@ -443,7 +534,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Ramachandran, Nature, filling-in of the blind spot"
+   "source": "Ramachandran, Nature, filling-in of the blind spot",
+   "disabled": true
   },
   {
    "id": "human_body-2",
@@ -471,7 +563,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Manolagas, Endocrine Reviews, bone remodelling"
+   "source": "Manolagas, Endocrine Reviews, bone remodelling",
+   "disabled": true
   },
   {
    "id": "human_body-3",
@@ -499,13 +592,17 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Furness, Nature Reviews Gastroenterology & Hepatology, 2012"
+   "source": "Furness, Nature Reviews Gastroenterology & Hepatology, 2012",
+   "disabled": true
   },
   {
    "id": "human_body-4",
    "topic": "human_body",
    "genre": "human_body.the_brain",
    "strand": "human_body.the_brain.neurons",
+   "also": [
+    "science.light_and_colour.pigments"
+   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
@@ -527,7 +624,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "CIE colorimetry, metamerism"
+   "figure": "none",
+   "source": "CIE colorimetry, metamerism",
+   "source_kind": "reference_work",
+   "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, Wiley, 1982"
   },
   {
    "id": "human_body-5",
@@ -555,73 +655,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Sinoatrial node automaticity, standard physiology"
-  },
-  {
-   "id": "thinking-d6",
-   "topic": "human_body",
-   "genre": "human_body.blood_and_heart",
-   "strand": "human_body.blood_and_heart.circulation",
-   "kind": "debate",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Should organ donation be opt-out by default, so everyone is a donor unless they register otherwise?",
-   "sides": [
-    "Yes, presumed consent",
-    "No, keep opt-in"
-   ],
-   "answer": "Defaults decide outcomes for anything people do not get round to. Most people say they support donation and never register, so opt-in measures paperwork rather than willingness. Countries that switched report more organs available, and objecting stays a single form away.",
-   "move": "The default changed the register. Whether it changed the operating theatre is a separate question.",
-   "counterpoint": "The jump in donations in opt-out countries mostly tracks transplant infrastructure and how families are approached, not the default itself — Spain's results came years after its law. And consent that was never given is not consent: families asked at the worst hour of their lives may refuse harder when the state has already assumed an answer.",
-   "keywords": [
-    "organ donation",
-    "defaults",
-    "opt-out",
-    "transplants"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "practical",
-   "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "mixed",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Contested question in transplant policy"
-  },
-  {
-   "id": "thinking-d8",
-   "topic": "human_body",
-   "genre": "human_body.ageing",
-   "strand": "human_body.ageing.longevity",
-   "kind": "debate",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Should we screen healthy people for cancer earlier and more often?",
-   "sides": [
-    "Yes, screen earlier",
-    "No, hold the line"
-   ],
-   "answer": "Screening moves a diagnosis from late to early, and early is where treatment works. Someone whose tumour is caught at stage one gets a different life from someone caught at stage three, and the cost of a scan is trivial against the cost of chemotherapy.",
-   "move": "Survival going up and deaths going down are not the same measurement, and only one of them is the point.",
-   "counterpoint": "In a population where the disease is rare, most positives are false, and each one buys biopsies, anxiety and sometimes surgery. Screening also finds tumours that would never have caused harm, and treating those is pure loss. Five-year survival rises whenever you diagnose earlier, even when the date of death does not move at all.",
-   "keywords": [
-    "cancer screening",
-    "overdiagnosis",
-    "early detection",
-    "lead time"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 2,
-   "abstraction": "mixed",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Contested question in preventive medicine"
+   "source": "Sinoatrial node automaticity, standard physiology",
+   "disabled": true
   },
   {
    "id": "language-1",
@@ -649,7 +684,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Dingemanse, Torreira & Enfield, PLOS ONE, 2013"
+   "figure": "none",
+   "source": "Dingemanse, Torreira & Enfield, PLOS ONE, 2013",
+   "source_kind": "paper",
+   "reference": "doi:10.1371/journal.pone.0078273"
   },
   {
    "id": "language-2",
@@ -677,7 +715,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Schmandt-Besserat, Before Writing, 1992"
+   "source": "Schmandt-Besserat, Before Writing, 1992",
+   "disabled": true
   },
   {
    "id": "language-3",
@@ -705,7 +744,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Berlin & Kay, Basic Color Terms, 1969"
+   "source": "Berlin & Kay, Basic Color Terms, 1969",
+   "disabled": true
   },
   {
    "id": "language-4",
@@ -733,7 +773,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Senghas & Coppola, Psychological Science, 2001"
+   "figure": "none",
+   "source": "Senghas & Coppola, Psychological Science, 2001",
+   "source_kind": "paper",
+   "reference": "Senghas & Coppola, Children creating language: How Nicaraguan Sign Language acquired a spatial grammar, Psychological Science, 2001"
   },
   {
    "id": "language-5",
@@ -761,7 +804,224 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Saenger, Space Between Words, 1997"
+   "figure": "none",
+   "source": "Saenger, Space Between Words, 1997",
+   "source_kind": "book",
+   "reference": "Saenger, Space Between Words: The Origins of Silent Reading, Stanford University Press, 1997"
+  },
+  {
+   "id": "science-3",
+   "topic": "medicine",
+   "genre": "medicine.antibiotics",
+   "strand": "medicine.antibiotics.resistance",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Did we create antibiotic resistance?",
+   "answer": "We selected it; we did not invent it. Genes conferring resistance to several antibiotic classes have been recovered from 30,000-year-old permafrost, long before any human made a drug. Resistance is an ancient feature of microbial life that our use of antibiotics turned into an emergency.",
+   "move": "Resistance genes are older than agriculture.",
+   "keywords": [
+    "antibiotic resistance",
+    "permafrost",
+    "ancient genes",
+    "selection"
+   ],
+   "era": "timeless",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "D'Costa et al., Nature, 2011",
+   "source_kind": "paper",
+   "reference": "D'Costa et al., Antibiotic resistance is ancient, Nature, 2011"
+  },
+  {
+   "id": "thinking-d6",
+   "topic": "medicine",
+   "genre": "medicine.surgery",
+   "strand": "medicine.surgery.transplants",
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Should organ donation be opt-out by default, so everyone is a donor unless they register otherwise?",
+   "sides": [
+    "Yes, presumed consent",
+    "No, keep opt-in"
+   ],
+   "answer": "Defaults decide outcomes for anything people do not get round to. Most people say they support donation and never register, so opt-in measures paperwork rather than willingness. Countries that switched report more organs available, and objecting stays a single form away.",
+   "move": "The default changed the register. Whether it changed the operating theatre is a separate question.",
+   "counterpoint": "The jump in donations in opt-out countries mostly tracks transplant infrastructure and how families are approached, not the default itself — Spain's results came years after its law. And consent that was never given is not consent: families asked at the worst hour of their lives may refuse harder when the state has already assumed an answer.",
+   "keywords": [
+    "organ donation",
+    "defaults",
+    "opt-out",
+    "transplants"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Contested question in transplant policy",
+   "source_kind": "paper",
+   "reference": "Arshad, Anderson & Sharif, Comparison of organ donation and transplantation rates between opt-out and opt-in systems, Kidney International, 2019"
+  },
+  {
+   "id": "thinking-d7",
+   "topic": "medicine",
+   "genre": "medicine.vaccines",
+   "strand": "medicine.vaccines.how_they_work",
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Should volunteers be deliberately infected with a disease to test a vaccine faster?",
+   "sides": [
+    "Yes, run challenge trials",
+    "No, wait for field trials"
+   ],
+   "answer": "A challenge trial can answer in weeks what a field trial answers in a year, and during an epidemic that gap is counted in deaths. Healthy adult volunteers already accept comparable risks in kidney donation and firefighting, and the risk here is bounded, monitored and reversible.",
+   "move": "Notice the argument is not about the numbers. It is about who is allowed to accept a risk on behalf of everyone.",
+   "counterpoint": "You cannot fully consent to a disease nobody has yet characterised, and the volunteers most willing to sign up are often those with the least to fall back on. A single death in a trial where the researchers caused the infection would be a very different event, both morally and for every trial that came after it.",
+   "keywords": [
+    "challenge trials",
+    "vaccines",
+    "volunteers",
+    "epidemics"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "abstract",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Contested question in research ethics",
+   "source_kind": "paper",
+   "reference": "Eyal, Lipsitch & Smith, Human Challenge Studies to Accelerate Coronavirus Vaccine Licensure, Journal of Infectious Diseases, 2020"
+  },
+  {
+   "id": "thinking-d8",
+   "topic": "medicine",
+   "genre": "medicine.diagnosis",
+   "strand": "medicine.diagnosis.scans",
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Should we screen healthy people for cancer earlier and more often?",
+   "sides": [
+    "Yes, screen earlier",
+    "No, hold the line"
+   ],
+   "answer": "Screening moves a diagnosis from late to early, and early is where treatment works. Someone whose tumour is caught at stage one gets a different life from someone caught at stage three, and the cost of a scan is trivial against the cost of chemotherapy.",
+   "move": "Survival going up and deaths going down are not the same measurement, and only one of them is the point.",
+   "counterpoint": "In a population where the disease is rare, most positives are false, and each one buys biopsies, anxiety and sometimes surgery. Screening also finds tumours that would never have caused harm, and treating those is pure loss. Five-year survival rises whenever you diagnose earlier, even when the date of death does not move at all.",
+   "keywords": [
+    "cancer screening",
+    "overdiagnosis",
+    "early detection",
+    "lead time"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Contested question in preventive medicine",
+   "source_kind": "paper",
+   "reference": "Welch & Black, Overdiagnosis in Cancer, Journal of the National Cancer Institute, 2010"
+  },
+  {
+   "id": "thinking-d15",
+   "topic": "medicine",
+   "genre": "medicine.antibiotics",
+   "strand": "medicine.antibiotics.new_ones",
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "Should drug patents be shorter than twenty years?",
+   "sides": [
+    "Yes, shorten them",
+    "No, keep the term"
+   ],
+   "answer": "The monopoly is paid for in lives: people who cannot afford a drug that costs cents to manufacture. A shorter term still rewards invention while moving the moment of cheap generics closer, and much of the underlying science was publicly funded anyway.",
+   "move": "Both sides are arguing about the same number from different ends of the development timeline.",
+   "counterpoint": "The patent clock starts at discovery, not at approval, so a drug that spends a decade in trials may see only a few protected years already. Cut it further and the projects that die first are the slow ones — antibiotics, rare diseases — where the payback was marginal to begin with.",
+   "keywords": [
+    "drug patents",
+    "monopoly",
+    "pharmaceutical prices",
+    "innovation"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "abstract",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Contested question in pharmaceutical economics",
+   "source_kind": "paper",
+   "reference": "Kesselheim, Avorn & Sarpatwari, The High Cost of Prescription Drugs in the United States: Origins and Prospects for Reform, JAMA, 2016"
+  },
+  {
+   "id": "thinking-d17",
+   "topic": "medicine",
+   "genre": "medicine.pain",
+   "strand": "medicine.pain.placebo",
+   "also": [
+    "philosophy.ethics.duty"
+   ],
+   "kind": "debate",
+   "difficulty": "medium",
+   "principle": "none",
+   "question": "When a treatment that works already exists, should new drugs still be tested against a sugar pill?",
+   "sides": [
+    "Yes, use placebo",
+    "No, test against the best existing drug"
+   ],
+   "answer": "A placebo arm is the cleanest measurement there is, needs fewer patients, and answers the question that regulators actually ask. Against an existing drug you can only show something is not much worse, which is how a slow drift towards weaker medicines begins.",
+   "move": "The cleanest experiment and the useful question are pulling in opposite directions here.",
+   "counterpoint": "It means deliberately giving a patient nothing when something known to help exists. And the answer it produces is not the one anybody needs: no doctor is choosing between this drug and nothing, they are choosing between this drug and the one already on the shelf.",
+   "keywords": [
+    "placebo controls",
+    "clinical trials",
+    "research ethics",
+    "helsinki declaration"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "abstract",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Declaration of Helsinki, contested since 2000",
+   "source_kind": "primary_document",
+   "reference": "World Medical Association, Declaration of Helsinki, 2013 revision"
   },
   {
    "id": "nature-1",
@@ -789,7 +1049,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Yu et al., Geophysical Research Letters, 2015"
+   "source": "Yu et al., Geophysical Research Letters, 2015",
+   "disabled": true
   },
   {
    "id": "nature-2",
@@ -817,7 +1078,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "UNEP, Sand and Sustainability, 2019"
+   "figure": "none",
+   "source": "UNEP, Sand and Sustainability, 2019",
+   "source_kind": "institution",
+   "reference": "UNEP, Sand and Sustainability: Finding new solutions for environmental governance of global sand resources, 2019"
   },
   {
    "id": "nature-3",
@@ -845,7 +1109,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Pauly, Trends in Ecology & Evolution, 1995"
+   "figure": "none",
+   "source": "Pauly, Trends in Ecology & Evolution, 1995",
+   "source_kind": "paper",
+   "reference": "Pauly, Anecdotes and the shifting baseline syndrome of fisheries, Trends in Ecology & Evolution, 1995"
   },
   {
    "id": "nature-4",
@@ -873,7 +1140,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The Great Oxidation Event"
+   "source": "The Great Oxidation Event",
+   "disabled": true
   },
   {
    "id": "nature-5",
@@ -901,7 +1169,83 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Karst, Jones & Hoeksema, Nature Ecology & Evolution, 2023"
+   "figure": "none",
+   "source": "Karst, Jones & Hoeksema, Nature Ecology & Evolution, 2023",
+   "source_kind": "paper",
+   "reference": "Karst, Jones & Hoeksema, Positive citation bias and overinterpreted results lead to misinformation on common mycorrhizal networks in forests, Nature Ecology & Evolution, 2023"
+  },
+  {
+   "id": "nature-rainforests-x1",
+   "topic": "nature",
+   "genre": "nature.trees_and_forests",
+   "strand": "nature.trees_and_forests.rainforests",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "True or false: the Amazon supplies about a fifth of the oxygen people breathe?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. The forest makes plenty of oxygen and uses almost all of it again: trees respire about half, and microbes rotting its leaves and wood take most of the rest. Its net contribution is close to zero. The oxygen in the air is a stock laid down over hundreds of millions of years.",
+   "move": "Before crediting a producer, subtract what it uses up itself.",
+   "trap": "Counting the oxygen a forest makes and forgetting what it burns.",
+   "keywords": [
+    "amazon",
+    "oxygen",
+    "respiration",
+    "photosynthesis",
+    "net production"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Malhi, University of Oxford, 2019",
+   "source_kind": "institution",
+   "reference": "https://nature.ox.ac.uk/research_stories/rainforests-are-not-the-lungs-of-our-planet/",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "science-4",
+   "topic": "nature",
+   "genre": "nature.weather",
+   "strand": "nature.weather.clouds",
+   "also": [
+    "economics.trade_routes.container_ships"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Did cleaning up shipping fuel warm the planet?",
+   "answer": "Yes, measurably. Ships burned high-sulphur fuel that seeded brighter clouds over the oceans, reflecting sunlight. A 2020 rule cut that sulphur by around 80% almost overnight, the clouds dimmed, and one climate model puts the extra warming at up to three years' worth.",
+   "move": "One pollution rule ran the planet's most accidental experiment.",
+   "keywords": [
+    "ship emissions",
+    "sulphur",
+    "clouds",
+    "aerosols"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Jordan et al., Earth's Future, 2024",
+   "source_kind": "paper",
+   "reference": "doi:10.1029/2024EF005011"
   },
   {
    "id": "philosophy-1",
@@ -929,7 +1273,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Williams and Nagel, Moral Luck, 1976"
+   "figure": "none",
+   "source": "Williams and Nagel, Moral Luck, 1976",
+   "source_kind": "paper",
+   "reference": "Williams & Nagel, Moral Luck, Proceedings of the Aristotelian Society, Supplementary Volume 50, 1976"
   },
   {
    "id": "philosophy-2",
@@ -957,7 +1304,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Nozick, Newcomb's Problem and Two Principles of Choice, 1969"
+   "figure": "none",
+   "source": "Nozick, Newcomb's Problem and Two Principles of Choice, 1969",
+   "source_kind": "book",
+   "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Essays in Honor of Carl G. Hempel, Reidel, 1969"
   },
   {
    "id": "philosophy-3",
@@ -985,7 +1335,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The sorites paradox, attributed to Eubulides"
+   "figure": "none",
+   "source": "The sorites paradox, attributed to Eubulides",
+   "source_kind": "book",
+   "reference": "Williamson, Vagueness, Routledge, 1994"
   },
   {
    "id": "philosophy-4",
@@ -996,7 +1349,7 @@
    "difficulty": "easy",
    "principle": "none",
    "question": "Is survival what you actually care about?",
-   "answer": "Parfit argued not. If you were replaced by someone psychologically continuous with you, what matters to you would carry on — so the question \"but would it be me?\" may be empty rather than hard. He thought realising this made death less frightening, and said so while dying.",
+   "answer": "Parfit argued not. If you were replaced by someone psychologically continuous with you, what matters to you would carry on — so the question \"but would it be me?\" may be empty rather than hard. He wrote that seeing this made his own death seem less bad.",
    "move": "Parfit's claim: identity is not what matters. Continuity is.",
    "keywords": [
     "derek parfit",
@@ -1013,7 +1366,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Parfit, Reasons and Persons, 1984"
+   "figure": "none",
+   "source": "Parfit, Reasons and Persons, 1984",
+   "source_kind": "book",
+   "reference": "Parfit, Reasons and Persons, Oxford University Press, 1984, p. 281"
   },
   {
    "id": "philosophy-5",
@@ -1041,40 +1397,46 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Parfit, Reasons and Persons, 1984; the repugnant conclusion"
+   "figure": "none",
+   "source": "Parfit, Reasons and Persons, 1984; the repugnant conclusion",
+   "source_kind": "book",
+   "reference": "Parfit, Reasons and Persons, Oxford University Press, 1984, part four"
   },
   {
-   "id": "thinking-d17",
+   "id": "thinking-d11",
    "topic": "philosophy",
-   "genre": "philosophy.ethics",
-   "strand": "philosophy.ethics.duty",
+   "genre": "philosophy.knowledge",
+   "strand": "philosophy.knowledge.science",
    "kind": "debate",
    "difficulty": "medium",
    "principle": "none",
-   "question": "When a treatment that works already exists, should new drugs still be tested against a sugar pill?",
+   "question": "Should peer review be signed rather than anonymous?",
    "sides": [
-    "Yes, use placebo",
-    "No, test against the best existing drug"
+    "Yes, sign reviews",
+    "No, keep it blind"
    ],
-   "answer": "A placebo arm is the cleanest measurement there is, needs fewer patients, and answers the question that regulators actually ask. Against an existing drug you can only show something is not much worse, which is how a slow drift towards weaker medicines begins.",
-   "move": "The cleanest experiment and the useful question are pulling in opposite directions here.",
-   "counterpoint": "It means deliberately giving a patient nothing when something known to help exists. And the answer it produces is not the one anybody needs: no doctor is choosing between this drug and nothing, they are choosing between this drug and the one already on the shelf.",
+   "answer": "Anonymity protects the reviewer who kills a rival's paper, sits on it for eight months, or demands their own work be cited. A name attached to a judgement makes the judgement more careful, and readers can finally see who vouched for what.",
+   "move": "Whichever you picked, the question is who carries the cost of an honest opinion.",
+   "counterpoint": "The junior reviewer who signs a hard review of a powerful lab is the one who pays for it, at their next grant or job application. Remove anonymity and criticism does not become fairer, it becomes quieter — and the people it goes quiet for are exactly those with the most power already.",
    "keywords": [
-    "placebo controls",
-    "clinical trials",
-    "research ethics",
-    "helsinki declaration"
+    "peer review",
+    "anonymity",
+    "open review",
+    "journals"
    ],
    "era": "recent",
    "region": "world",
    "hook": "paradox",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 0,
    "abstraction": "abstract",
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Declaration of Helsinki, contested since 2000"
+   "figure": "none",
+   "source": "Contested question in scientific publishing",
+   "source_kind": "paper",
+   "reference": "Ross-Hellauer, What is open peer review? A systematic review, F1000Research, 2017"
   },
   {
    "id": "pop_culture-1",
@@ -1102,7 +1464,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The Winstons, Amen Brother, 1969"
+   "figure": "none",
+   "source": "The Winstons, Amen Brother, 1969",
+   "source_kind": "primary_document",
+   "reference": "The Winstons, Color Him Father / Amen, Brother, Metromedia Records, 1969"
   },
   {
    "id": "pop_culture-2",
@@ -1130,35 +1495,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Vickers, Audio Engineering Society, 2010"
-  },
-  {
-   "id": "pop_culture-3",
-   "topic": "pop_culture",
-   "genre": "pop_culture.logos_and_brands",
-   "strand": "pop_culture.logos_and_brands.colours",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why are blockbusters orange and teal?",
-   "answer": "Skin tones sit in the orange range, and teal is directly opposite on the colour wheel — so pushing shadows teal makes faces jump forward. Digital grading made the move cheap and instant in the 2000s, and a look that once took effort became the default.",
-   "move": "Faces are orange, so the shadows went teal. That is the whole reason.",
-   "keywords": [
-    "orange and teal",
-    "colour grading",
-    "complementary colours",
-    "blockbusters"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "mechanism",
-   "mood": "playful",
-   "numeracy": 0,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "source": "Digital colour grading practice, post-2000"
+   "figure": "none",
+   "source": "Vickers, Audio Engineering Society, 2010",
+   "source_kind": "paper",
+   "reference": "Vickers, The Loudness War: Background, Speculation and Recommendations, Audio Engineering Society Convention Paper 8175, 2010"
   },
   {
    "id": "pop_culture-4",
@@ -1186,7 +1526,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Charles Douglass and the Laff Box"
+   "source": "Charles Douglass and the Laff Box",
+   "disabled": true
   },
   {
    "id": "pop_culture-5",
@@ -1214,7 +1555,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Nielsen ratings methodology"
+   "source": "Nielsen ratings methodology",
+   "disabled": true
   },
   {
    "id": "psychology-1",
@@ -1242,7 +1584,8 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Flynn, Psychological Bulletin, 1987"
+   "source": "Flynn, Psychological Bulletin, 1987",
+   "disabled": true
   },
   {
    "id": "psychology-2",
@@ -1270,7 +1613,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Henrich, Heine & Norenzayan, Behavioral and Brain Sciences, 2010"
+   "figure": "none",
+   "source": "Henrich, Heine & Norenzayan, Behavioral and Brain Sciences, 2010",
+   "source_kind": "paper",
+   "reference": "Henrich, Heine & Norenzayan, The weirdest people in the world?, Behavioral and Brain Sciences, 2010"
   },
   {
    "id": "psychology-3",
@@ -1298,7 +1644,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Wells & Bradfield, Journal of Applied Psychology, 1998"
+   "figure": "none",
+   "source": "Wells & Bradfield, Journal of Applied Psychology, 1998",
+   "source_kind": "paper",
+   "reference": "Wells & Bradfield, Good, you identified the suspect: feedback to eyewitnesses distorts their reports of the witnessing experience, Journal of Applied Psychology, 1998"
   },
   {
    "id": "psychology-4",
@@ -1326,7 +1675,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Rozenblit & Keil, Cognitive Science, 2002"
+   "figure": "none",
+   "source": "Rozenblit & Keil, Cognitive Science, 2002",
+   "source_kind": "paper",
+   "reference": "Rozenblit & Keil, The misunderstood limits of folk science: an illusion of explanatory depth, Cognitive Science, 2002"
   },
   {
    "id": "psychology-5",
@@ -1354,7 +1706,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Johansson et al., Science, 2005"
+   "figure": "none",
+   "source": "Johansson et al., Science, 2005",
+   "source_kind": "paper",
+   "reference": "Johansson, Hall, Sikström & Olsson, Failure to detect mismatches between intention and outcome in a simple decision task, Science, 2005"
   },
   {
    "id": "thinking-d9",
@@ -1387,7 +1742,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in education research"
+   "figure": "none",
+   "source": "Contested question in education research",
+   "source_kind": "institution",
+   "reference": "Education Endowment Foundation, Teaching and Learning Toolkit: Setting and streaming, 2021"
   },
   {
    "id": "thinking-d19",
@@ -1420,7 +1778,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in road safety"
+   "figure": "none",
+   "source": "Contested question in road safety",
+   "source_kind": "paper",
+   "reference": "Rosén & Sander, Pedestrian fatality risk as a function of car impact speed, Accident Analysis & Prevention, 2009"
   },
   {
    "id": "science-1",
@@ -1448,13 +1809,19 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "BIPM, 2019 redefinition of the SI"
+   "figure": "none",
+   "source": "BIPM, 2019 redefinition of the SI",
+   "source_kind": "standard",
+   "reference": "BIPM, The International System of Units (SI Brochure), 9th edition, 2019"
   },
   {
    "id": "science-2",
    "topic": "science",
    "genre": "science.physics",
    "strand": "science.physics.relativity",
+   "also": [
+    "philosophy.knowledge.science"
+   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
@@ -1476,63 +1843,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Baldwin, Notes and Records of the Royal Society, 2015"
-  },
-  {
-   "id": "science-3",
-   "topic": "science",
-   "genre": "science.chemistry_at_home",
-   "strand": "science.chemistry_at_home.cleaning",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Did we create antibiotic resistance?",
-   "answer": "We selected it; we did not invent it. Genes conferring resistance to several antibiotic classes have been recovered from 30,000-year-old permafrost, long before any human made a drug. Resistance is an ancient feature of microbial life that our use of antibiotics turned into an emergency.",
-   "move": "Resistance genes are older than agriculture.",
-   "keywords": [
-    "antibiotic resistance",
-    "permafrost",
-    "ancient genes",
-    "selection"
-   ],
-   "era": "timeless",
-   "region": "world",
-   "hook": "misconception",
-   "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "mixed",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "source": "D'Costa et al., Nature, 2011"
-  },
-  {
-   "id": "science-4",
-   "topic": "science",
-   "genre": "science.cold_and_heat",
-   "strand": "science.cold_and_heat.fire",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Did cleaning up shipping fuel warm the planet?",
-   "answer": "Yes, measurably. Ships burned high-sulphur fuel that seeded brighter clouds over the oceans, reflecting sunlight. A 2020 rule cut that sulphur by around 80% almost overnight, the clouds dimmed, and the extra warming is estimated at roughly two to three years' worth.",
-   "move": "One pollution rule ran the planet's most accidental experiment.",
-   "keywords": [
-    "ship emissions",
-    "sulphur",
-    "clouds",
-    "aerosols"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "mixed",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Yuan et al., Communications Earth & Environment, 2024"
+   "figure": "none",
+   "source": "Baldwin, Notes and Records of the Royal Society, 2015",
+   "source_kind": "paper",
+   "reference": "Baldwin, Credibility, peer review, and Nature, 1945-1990, Notes and Records of the Royal Society, 2015"
   },
   {
    "id": "science-5",
@@ -1560,13 +1874,60 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Erisman et al., Nature Geoscience, 2008"
+   "source": "Erisman et al., Nature Geoscience, 2008",
+   "disabled": true
+  },
+  {
+   "id": "science-relativity-x1",
+   "topic": "science",
+   "genre": "science.physics",
+   "strand": "science.physics.relativity",
+   "also": [
+    "science.physics.gravity"
+   ],
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Without relativity corrections, how far would a GPS satellite's clock drift from ground clocks each day?",
+   "options": [
+    "About 38 nanoseconds",
+    "About 38 microseconds",
+    "About 38 milliseconds"
+   ],
+   "correct": 1,
+   "answer": "About 38 microseconds. Weaker gravity 20,200 km up makes the satellite clock gain about 46 microseconds a day, and its orbital speed makes it lose about 7. Because positions come from light-travel times, 38 microseconds of error is roughly 11 km of drift in a single day.",
+   "move": "Multiply a small timing error by the speed of light before calling it small.",
+   "trap": "Assuming relativity only matters close to the speed of light.",
+   "keywords": [
+    "gps",
+    "general relativity",
+    "atomic clocks",
+    "time dilation",
+    "satellites"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Ashby, Living Reviews in Relativity, 2003",
+   "source_kind": "paper",
+   "reference": "doi:10.12942/lrr-2003-1",
+   "written": "2026-09-26"
   },
   {
    "id": "thinking-d5",
    "topic": "science",
    "genre": "science.maths_curios",
    "strand": "science.maths_curios.probability",
+   "also": [
+    "philosophy.knowledge.science"
+   ],
    "kind": "debate",
    "difficulty": "medium",
    "principle": "none",
@@ -1593,79 +1954,19 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation"
-  },
-  {
-   "id": "thinking-d7",
-   "topic": "science",
-   "genre": "science.maths_curios",
-   "strand": "science.maths_curios.probability",
-   "kind": "debate",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Should volunteers be deliberately infected with a disease to test a vaccine faster?",
-   "sides": [
-    "Yes, run challenge trials",
-    "No, wait for field trials"
-   ],
-   "answer": "A challenge trial can answer in weeks what a field trial answers in a year, and during an epidemic that gap is counted in deaths. Healthy adult volunteers already accept comparable risks in kidney donation and firefighting, and the risk here is bounded, monitored and reversible.",
-   "move": "Notice the argument is not about the numbers. It is about who is allowed to accept a risk on behalf of everyone.",
-   "counterpoint": "You cannot fully consent to a disease nobody has yet characterised, and the volunteers most willing to sign up are often those with the least to fall back on. A single death in a trial where the researchers caused the infection would be a very different event, both morally and for every trial that came after it.",
-   "keywords": [
-    "challenge trials",
-    "vaccines",
-    "volunteers",
-    "epidemics"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "abstract",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Contested question in research ethics"
-  },
-  {
-   "id": "thinking-d11",
-   "topic": "science",
-   "genre": "science.maths_curios",
-   "strand": "science.maths_curios.probability",
-   "kind": "debate",
-   "difficulty": "medium",
-   "principle": "none",
-   "question": "Should peer review be signed rather than anonymous?",
-   "sides": [
-    "Yes, sign reviews",
-    "No, keep it blind"
-   ],
-   "answer": "Anonymity protects the reviewer who kills a rival's paper, sits on it for eight months, or demands their own work be cited. A name attached to a judgement makes the judgement more careful, and readers can finally see who vouched for what.",
-   "move": "Whichever you picked, the question is who carries the cost of an honest opinion.",
-   "counterpoint": "The junior reviewer who signs a hard review of a powerful lab is the one who pays for it, at their next grant or job application. Remove anonymity and criticism does not become fairer, it becomes quieter — and the people it goes quiet for are exactly those with the most power already.",
-   "keywords": [
-    "peer review",
-    "anonymity",
-    "open review",
-    "journals"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 0,
-   "abstraction": "abstract",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Contested question in scientific publishing"
+   "figure": "none",
+   "source": "Trialled by the Health Research Council of New Zealand and the Volkswagen Foundation",
+   "source_kind": "paper",
+   "reference": "Fang & Casadevall, Research Funding: the Case for a Modified Lottery, mBio, 2016"
   },
   {
    "id": "thinking-d14",
    "topic": "science",
    "genre": "science.cold_and_heat",
    "strand": "science.cold_and_heat.insulation",
+   "also": [
+    "nature.weather.clouds"
+   ],
    "kind": "debate",
    "difficulty": "medium",
    "principle": "none",
@@ -1692,7 +1993,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in climate policy"
+   "figure": "none",
+   "source": "Contested question in climate policy",
+   "source_kind": "institution",
+   "reference": "National Academies of Sciences, Engineering, and Medicine, Reflecting Sunlight: Recommendations for Solar Geoengineering Research and Research Governance, 2021"
   },
   {
    "id": "space-1",
@@ -1720,13 +2024,19 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "NASA Exoplanet Archive, detection-method bias"
+   "figure": "none",
+   "source": "NASA Exoplanet Archive, detection-method bias",
+   "source_kind": "paper",
+   "reference": "Akeson et al., The NASA Exoplanet Archive: Data and Tools for Exoplanet Research, Publications of the Astronomical Society of the Pacific, 2013"
   },
   {
    "id": "space-2",
    "topic": "space",
    "genre": "space.rockets",
    "strand": "space.rockets.fuel_chemistry",
+   "also": [
+    "technology.where_things_come_from.rare_metals"
+   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
@@ -1748,7 +2058,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "US Department of Energy, Pu-238 supply programme"
+   "figure": "none",
+   "source": "US Department of Energy, Pu-238 supply programme",
+   "source_kind": "institution",
+   "reference": "National Research Council, Radioisotope Power Systems: An Imperative for Maintaining U.S. Leadership in Space Exploration, National Academies Press, 2009"
   },
   {
    "id": "space-3",
@@ -1776,7 +2089,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Federation Aeronautique Internationale; ISS reboost logs"
+   "figure": "none",
+   "source": "Federation Aeronautique Internationale; ISS reboost logs",
+   "source_kind": "paper",
+   "reference": "McDowell, The edge of space: Revisiting the Karman Line, Acta Astronautica, 2018"
   },
   {
    "id": "space-4",
@@ -1804,7 +2120,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "NASA Orbital Debris Program Office"
+   "figure": "none",
+   "source": "NASA Orbital Debris Program Office",
+   "source_kind": "institution",
+   "reference": "NASA Orbital Debris Program Office, Orbital Debris Quarterly News 13(2), 2009"
   },
   {
    "id": "space-5",
@@ -1832,7 +2151,8 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Chandra X-ray Observatory, Perseus cluster"
+   "source": "Chandra X-ray Observatory, Perseus cluster",
+   "disabled": true
   },
   {
    "id": "technology-1",
@@ -1860,7 +2180,8 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "TeleGeography Submarine Cable Map"
+   "source": "TeleGeography Submarine Cable Map",
+   "disabled": true
   },
   {
    "id": "technology-2",
@@ -1888,13 +2209,19 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Yasuoka & Yasuoka, Kyoto University, 2011"
+   "figure": "none",
+   "source": "Yasuoka & Yasuoka, Kyoto University, 2011",
+   "source_kind": "paper",
+   "reference": "Yasuoka & Yasuoka, On the Prehistory of QWERTY, ZINBUN 42, Kyoto University, 2011"
   },
   {
    "id": "technology-3",
    "topic": "technology",
    "genre": "technology.where_things_come_from",
    "strand": "technology.where_things_come_from.rare_metals",
+   "also": [
+    "medicine.diagnosis.scans"
+   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
@@ -1916,35 +2243,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "US Geological Survey, helium commodity summaries"
-  },
-  {
-   "id": "technology-4",
-   "topic": "technology",
-   "genre": "technology.screens",
-   "strand": "technology.screens.oled",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Is a photo a record of what was there?",
-   "answer": "Partly a reconstruction. Each pixel on a camera sensor measures only one colour, behind a red, green or blue filter. The other two values are interpolated from the neighbours. Every ordinary digital photograph is roughly two-thirds informed guesswork, done well enough that nobody notices.",
-   "move": "Two of every three colour values in your photos were guessed.",
-   "keywords": [
-    "camera sensors",
-    "bayer filter",
-    "demosaicing",
-    "pixels"
-   ],
-   "era": "recent",
-   "region": "none",
-   "hook": "mechanism",
-   "mood": "wonder",
-   "numeracy": 1,
-   "abstraction": "concrete",
-   "shelf_life": "evergreen",
-   "mature": false,
-   "language": "en",
-   "source": "Bayer filter demosaicing, standard in digital sensors"
+   "figure": "none",
+   "source": "US Geological Survey, helium commodity summaries",
+   "source_kind": "statistics",
+   "reference": "US Geological Survey, Mineral Commodity Summaries: Helium, 2024"
   },
   {
    "id": "technology-5",
@@ -1972,7 +2274,8 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Charette, IEEE Spectrum, automotive software"
+   "source": "Charette, IEEE Spectrum, automotive software",
+   "disabled": true
   },
   {
    "id": "thinking-d13",
@@ -2005,13 +2308,19 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in criminal justice"
+   "figure": "none",
+   "source": "Contested question in criminal justice",
+   "source_kind": "paper",
+   "reference": "Kleinberg, Lakkaraju, Leskovec, Ludwig & Mullainathan, Human Decisions and Machine Predictions, Quarterly Journal of Economics, 2018"
   },
   {
    "id": "thinking-d16",
    "topic": "technology",
    "genre": "technology.ai",
    "strand": "technology.ai.limits",
+   "also": [
+    "medicine.diagnosis.symptoms"
+   ],
    "kind": "debate",
    "difficulty": "medium",
    "principle": "none",
@@ -2038,7 +2347,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in medical regulation"
+   "figure": "none",
+   "source": "Contested question in medical regulation",
+   "source_kind": "paper",
+   "reference": "Topol, High-performance medicine: the convergence of human and artificial intelligence, Nature Medicine, 2019"
   },
   {
    "id": "thinking-d18",
@@ -2071,18 +2383,21 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in election law"
+   "figure": "none",
+   "source": "Contested question in election law",
+   "source_kind": "institution",
+   "reference": "Information Commissioner's Office, Democracy disrupted? Personal information and political influence, 2018"
   },
   {
    "id": "thinking-1",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "baseRate",
    "question": "A school of 2,000 screens every pupil for a condition that affects 1 in 500. The screen catches 90% of cases and wrongly flags 5%. A child is flagged. Odds they have it?",
    "options": [
     "About 90%",
-    "About 7%",
+    "About 3%",
     "About half"
    ],
    "correct": 1,
@@ -2106,7 +2421,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Base rate neglect in universal screening"
+   "source": "Base rate neglect in universal screening",
+   "source_kind": "arithmetic",
+   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
   },
   {
    "id": "thinking-2",
@@ -2140,13 +2457,15 @@
    "mature": false,
    "language": "en",
    "figure": "nested_circles",
-   "source": "Conjunction rule of probability"
+   "source": "Conjunction rule of probability",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983"
   },
   {
    "id": "thinking-3",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "conditional",
    "question": "You are one of three finalists. A panel member privately tells you that one of the other two has been rejected. Have your chances improved?",
    "options": [
@@ -2173,13 +2492,16 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The three prisoners problem, Gardner 1959"
+   "figure": "none",
+   "source": "The three prisoners problem, Gardner 1959",
+   "source_kind": "paper",
+   "reference": "Gardner, Mathematical Games, Scientific American, October 1959"
   },
   {
    "id": "thinking-4",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "coincidence",
    "question": "Order codes are generated at random from a million possibilities. After how many orders is a repeat more likely than not?",
    "options": [
@@ -2206,7 +2528,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The birthday bound, applied to identifiers"
+   "figure": "none",
+   "source": "The birthday bound, applied to identifiers",
+   "source_kind": "arithmetic",
+   "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
   },
   {
    "id": "thinking-5",
@@ -2239,7 +2564,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship bias in surviving artefacts"
+   "figure": "none",
+   "source": "Survivorship bias in surviving artefacts",
+   "source_kind": "paper",
+   "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
   },
   {
    "id": "thinking-6",
@@ -2272,13 +2600,16 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Regression to the mean in self-treatment"
+   "figure": "none",
+   "source": "Regression to the mean in self-treatment",
+   "source_kind": "paper",
+   "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005"
   },
   {
    "id": "thinking-7",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "confirmation",
    "question": "Rule: anyone hired without a degree must have five years' experience. Four files: no degree / has degree / six years' experience / two years' experience. Which two must you open?",
    "options": [
@@ -2305,7 +2636,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The Wason selection task, in a hiring file"
+   "figure": "none",
+   "source": "The Wason selection task, in a hiring file",
+   "source_kind": "paper",
+   "reference": "Wason, Reasoning about a rule, Quarterly Journal of Experimental Psychology, 1968"
   },
   {
    "id": "thinking-8",
@@ -2340,7 +2674,9 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Simpson's paradox in operational metrics"
+   "source": "Simpson's paradox in operational metrics",
+   "source_kind": "paper",
+   "reference": "Simpson, The Interpretation of Interaction in Contingency Tables, Journal of the Royal Statistical Society Series B, 1951"
   },
   {
    "id": "thinking-9",
@@ -2373,23 +2709,26 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Framing of multi-buy discounts"
+   "figure": "none",
+   "source": "Framing of multi-buy discounts",
+   "source_kind": "arithmetic",
+   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
   },
   {
    "id": "thinking-10",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "exponential",
    "question": "A landfill fills in 40 years at current waste growth of 7% a year. At 10% growth, roughly how much sooner?",
    "options": [
-    "About four years",
-    "About twelve years",
-    "Barely any difference"
+    "Barely any difference",
+    "About eight years",
+    "About twenty years"
    ],
    "correct": 1,
-   "answer": "At 7% the volume doubles roughly every ten years; at 10% roughly every seven. Over four decades that gap compounds into more than a decade of life gone. Small differences in a growth rate are not small differences in an outcome.",
-   "move": "Three percentage points on a growth rate cost this landfill twelve years.",
+   "answer": "About eight years. What fills a landfill is the running total. At 7% growth, forty years add up to about 200 years of today's waste; at 10% the same total piles up in about 32 years. Three points on the growth rate take a fifth off the landfill's life.",
+   "move": "Small changes in a growth rate are large changes in the total.",
    "trap": "Treating a few extra percent as a small change.",
    "simply": "A pile that doubles every ten years is nothing for ages and then swallows the room. Make it double every seven instead and you do not add a little — you lose a decade.",
    "keywords": [
@@ -2408,7 +2747,9 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
-   "source": "Doubling time and compound growth"
+   "source": "Doubling time and compound growth",
+   "source_kind": "arithmetic",
+   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
   },
   {
    "id": "thinking-11",
@@ -2441,7 +2782,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Independence and the gambler's fallacy"
+   "figure": "none",
+   "source": "Independence and the gambler's fallacy",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Belief in the law of small numbers, Psychological Bulletin, 1971"
   },
   {
    "id": "thinking-12",
@@ -2474,7 +2818,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Sunk cost in public works"
+   "figure": "none",
+   "source": "Sunk cost in public works",
+   "source_kind": "paper",
+   "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985"
   },
   {
    "id": "thinking-13",
@@ -2507,7 +2854,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Anchoring in negotiation"
+   "figure": "none",
+   "source": "Anchoring in negotiation",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science, 1974"
   },
   {
    "id": "thinking-14",
@@ -2540,7 +2890,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Gigerenzer, Risk Analysis, 2006"
+   "figure": "none",
+   "source": "Gigerenzer, Risk Analysis, 2006",
+   "source_kind": "paper",
+   "reference": "Gigerenzer, Out of the Frying Pan into the Fire: Behavioral Reactions to Terrorist Attacks, Risk Analysis, 2006"
   },
   {
    "id": "thinking-15",
@@ -2573,7 +2926,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confirmation and the untested counterfactual"
+   "figure": "none",
+   "source": "Confirmation and the untested counterfactual",
+   "source_kind": "paper",
+   "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
   },
   {
    "id": "thinking-a1",
@@ -2606,7 +2962,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Englich, Mussweiler & Strack, 2006"
+   "figure": "none",
+   "source": "Englich, Mussweiler & Strack, 2006",
+   "source_kind": "paper",
+   "reference": "Englich, Mussweiler & Strack, Playing Dice With Criminal Sentences, Personality and Social Psychology Bulletin, 2006"
   },
   {
    "id": "thinking-a2",
@@ -2639,7 +2998,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Reference price effects in retail"
+   "figure": "none",
+   "source": "Reference price effects in retail",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science, 1974"
   },
   {
    "id": "thinking-b1",
@@ -2673,13 +3035,15 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Base rate neglect applied to screening"
+   "source": "Base rate neglect applied to screening",
+   "source_kind": "arithmetic",
+   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
   },
   {
    "id": "thinking-b2",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "baseRate",
    "question": "A hiring tool spots the 5% of applicants who become top performers, with 80% accuracy. You are flagged. What are your odds?",
    "options": [
@@ -2707,7 +3071,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Base rate neglect in selection"
+   "source": "Base rate neglect in selection",
+   "source_kind": "arithmetic",
+   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
   },
   {
    "id": "thinking-c1",
@@ -2740,7 +3106,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confirmation bias in everyday judgement"
+   "figure": "none",
+   "source": "Confirmation bias in everyday judgement",
+   "source_kind": "paper",
+   "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
   },
   {
    "id": "thinking-d1",
@@ -2771,7 +3140,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested policy question"
+   "figure": "none",
+   "source": "Contested policy question",
+   "source_kind": "paper",
+   "reference": "Orben & Przybylski, The association between adolescent well-being and digital technology use, Nature Human Behaviour, 2019"
   },
   {
    "id": "thinking-d2",
@@ -2802,7 +3174,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Bonnefon, Shariff & Rahwan, Science, 2016"
+   "figure": "none",
+   "source": "Bonnefon, Shariff & Rahwan, Science, 2016",
+   "source_kind": "paper",
+   "reference": "Bonnefon, Shariff & Rahwan, The social dilemma of autonomous vehicles, Science, 2016"
   },
   {
    "id": "thinking-d3",
@@ -2815,7 +3190,7 @@
     "Yes, pay donors",
     "No, keep it a gift"
    ],
-   "answer": "People die on waiting lists while healthy kidneys go undonated. Iran, the one country with a regulated payment system, has no waiting list. We already pay surgeons, nurses and hospitals — the only person forbidden to benefit is the one taking the risk.",
+   "answer": "People die on waiting lists while healthy kidneys go undonated. Iran, the one country with a regulated payment system, reported its kidney waiting list cleared by 1999. We already pay surgeons, nurses and hospitals — the only person forbidden to benefit is the one taking the risk.",
    "move": "Both sides agree people are dying. They disagree about what counts as a free choice.",
    "counterpoint": "A price makes the poor the supply. If the offer is life-changing money, refusing stops being a free choice, and the burden of organ removal lands almost entirely on people with no other options. Consent given under financial pressure is the thing the rule exists to protect.",
    "keywords": [
@@ -2833,7 +3208,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in medical ethics"
+   "figure": "none",
+   "source": "Contested question in medical ethics",
+   "source_kind": "paper",
+   "reference": "Ghods & Savaj, Iranian Model of Paid and Regulated Living-Unrelated Kidney Donation, Clinical Journal of the American Society of Nephrology, 2006"
   },
   {
    "id": "thinking-d4",
@@ -2864,7 +3242,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Contested question in conservation biology"
+   "figure": "none",
+   "source": "Contested question in conservation biology",
+   "source_kind": "paper",
+   "reference": "Bennett et al., Spending limited resources on de-extinction could lead to net biodiversity loss, Nature Ecology & Evolution, 2017"
   },
   {
    "id": "thinking-e1",
@@ -2900,13 +3281,16 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "International Coffee Organization"
+   "figure": "none",
+   "source": "International Coffee Organization",
+   "source_kind": "arithmetic",
+   "reference": "International Coffee Organization, domestic consumption statistics, 2019"
   },
   {
    "id": "thinking-e2",
    "topic": "thinking",
    "kind": "estimate",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "estimation",
    "question": "How many bricks are in a typical four-storey apartment building, in thousands?",
    "value": 250,
@@ -2936,7 +3320,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Standard brick dimensions and coursing"
+   "figure": "none",
+   "source": "Standard brick dimensions and coursing",
+   "source_kind": "arithmetic",
+   "reference": "BS 3921:1985, Specification for clay bricks"
   },
   {
    "id": "thinking-e3",
@@ -2971,7 +3358,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Mehl et al., Science, 2007"
+   "figure": "none",
+   "source": "Mehl et al., Science, 2007",
+   "source_kind": "paper",
+   "reference": "Mehl, Vazire, Ramírez-Esparza, Slatcher & Pennebaker, Are Women Really More Talkative Than Men?, Science, 2007"
   },
   {
    "id": "thinking-e4",
@@ -3006,7 +3396,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Urban transit fleet statistics"
+   "figure": "none",
+   "source": "Urban transit fleet statistics",
+   "source_kind": "arithmetic",
+   "reference": "Department for Transport, Annual bus statistics: England, 2019"
   },
   {
    "id": "thinking-e5",
@@ -3041,7 +3434,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Platform disclosures, order-of-magnitude"
+   "figure": "none",
+   "source": "Platform disclosures, order-of-magnitude",
+   "source_kind": "arithmetic",
+   "reference": "YouTube, press statistics: 500 hours of video uploaded every minute, 2019"
   },
   {
    "id": "thinking-f1",
@@ -3074,7 +3470,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Selection on the dependent variable"
+   "figure": "none",
+   "source": "Selection on the dependent variable",
+   "source_kind": "paper",
+   "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
   },
   {
    "id": "thinking-f2",
@@ -3107,7 +3506,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confounding by indication"
+   "figure": "none",
+   "source": "Confounding by indication",
+   "source_kind": "paper",
+   "reference": "Kyriacou & Lewis, Confounding by Indication in Clinical Research, JAMA, 2016"
   },
   {
    "id": "thinking-f3",
@@ -3141,7 +3543,9 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Counterfactual reasoning"
+   "source": "Counterfactual reasoning",
+   "source_kind": "paper",
+   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"
   },
   {
    "id": "thinking-f4",
@@ -3175,7 +3579,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Multiple comparisons problem"
+   "source": "Multiple comparisons problem",
+   "source_kind": "paper",
+   "reference": "Ioannidis, Why Most Published Research Findings Are False, PLOS Medicine, 2005"
   },
   {
    "id": "thinking-f5",
@@ -3208,7 +3614,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Sampling bias"
+   "figure": "none",
+   "source": "Sampling bias",
+   "source_kind": "paper",
+   "reference": "Squire, Why the 1936 Literary Digest Poll Failed, Public Opinion Quarterly, 1988"
   },
   {
    "id": "thinking-g1",
@@ -3241,7 +3650,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Non-response bias"
+   "figure": "none",
+   "source": "Non-response bias",
+   "source_kind": "paper",
+   "reference": "Groves, Nonresponse Rates and Nonresponse Bias in Household Surveys, Public Opinion Quarterly, 2006"
   },
   {
    "id": "thinking-g2",
@@ -3274,7 +3686,785 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Self-selection in ratings"
+   "figure": "none",
+   "source": "Self-selection in ratings",
+   "source_kind": "paper",
+   "reference": "Hu, Pavlou & Zhang, Overcoming the J-shaped distribution of product reviews, Communications of the ACM, 2009"
+  },
+  {
+   "id": "thinking-h1",
+   "topic": "thinking",
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "A cyclist rides 6 km uphill at 10 km/h and straight back down at 30 km/h. What is the average speed, in km/h?",
+   "value": 15,
+   "unit": "km/h",
+   "answer": "12 km in 0.8 hours is 15 km/h.",
+   "move": "Average the times, not the speeds, when the distance is fixed.",
+   "trap": "Averaging 10 and 30, because both legs cover the same distance.",
+   "hint": "Work out how long each half takes, not how fast it is.",
+   "steps": [
+    "Uphill: 6 / 10 = 0.6 hours.",
+    "Downhill: 6 / 30 = 0.2 hours.",
+    "12 km in 0.8 hours is 15 km/h."
+   ],
+   "keywords": [
+    "average speed",
+    "harmonic mean",
+    "cycling",
+    "time"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Averaging speeds over equal distances",
+   "source_kind": "arithmetic",
+   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h2",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "hard",
+   "principle": "reflection",
+   "question": "A magnitude 8 earthquake against a magnitude 6: how much more energy does the bigger one release?",
+   "options": [
+    "About a third more",
+    "About 100 times",
+    "About 1,000 times"
+   ],
+   "correct": 2,
+   "answer": "About 1,000 times. Each whole step on the magnitude scale is ten times the shaking recorded and about 32 times the energy, so two steps are roughly 32 × 32. A magnitude 8 releases in one event what a thousand magnitude 6 quakes would.",
+   "move": "On a scale that counts powers, one step is never one step.",
+   "trap": "Knowing each step is ten times, and stopping at the shaking.",
+   "keywords": [
+    "earthquakes",
+    "magnitude",
+    "logarithmic scale",
+    "energy"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "number",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Kanamori, Journal of Geophysical Research, 1977",
+   "source_kind": "paper",
+   "reference": "Kanamori, The energy release in great earthquakes, Journal of Geophysical Research, 1977",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h3",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "Driving 10,000 km a year, which upgrade saves more fuel: 5 to 10 km per litre, or 20 to 40?",
+   "options": [
+    "20 to 40 km per litre",
+    "5 to 10 km per litre",
+    "They save the same"
+   ],
+   "correct": 1,
+   "answer": "5 to 10. At 5 km per litre the year takes 2,000 litres and at 10 it takes 1,000: a saving of 1,000. Going from 20 to 40 cuts 500 litres to 250: a saving of 250. Both double, but one doubling starts from a far thirstier engine.",
+   "move": "Judge an improvement by what it saves, not by its ratio.",
+   "trap": "Both are doublings, and the bigger numbers look like the bigger gain.",
+   "keywords": [
+    "fuel economy",
+    "km per litre",
+    "mpg illusion",
+    "ratios"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "practical",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "bars",
+   "source": "Larrick & Soll, Science, 2008",
+   "source_kind": "paper",
+   "reference": "Larrick & Soll, The MPG Illusion, Science, 2008",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h4",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "baseRate",
+   "question": "A pill cuts a disease's yearly risk from 2 in 1,000 to 1 in 1,000. How many must take it to spare one person?",
+   "options": [
+    "About 2",
+    "About 50",
+    "About 1,000"
+   ],
+   "correct": 2,
+   "answer": "About 1,000. The pill halves the risk, but the risk was 2 in 1,000 to begin with, so it removes one case per 1,000 people a year. Doctors call this the number needed to treat. The same halving on a 1-in-2 risk would spare one person in four.",
+   "move": "Ask what a halving is a halving of before you are impressed.",
+   "trap": "Hearing that the pill halves the risk and picturing half the patients saved.",
+   "keywords": [
+    "relative risk",
+    "absolute risk",
+    "number needed to treat",
+    "medicines"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "dots",
+   "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
+   "source_kind": "paper",
+   "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h5",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "True or false: a shop that prices goods at cost plus 50% keeps half of each sale as margin?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. Buy at €100 and sell at €150, and the €50 kept is a third of the price, not half. Markup is measured on the cost and margin on the sale, so the same €50 is 50% one way and 33% the other.",
+   "move": "Name the base of every percentage before you compare two of them.",
+   "trap": "Reading fifty per cent on the cost as fifty per cent of the price.",
+   "keywords": [
+    "markup",
+    "margin",
+    "pricing",
+    "percentages"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Markup and margin, arithmetic",
+   "source_kind": "arithmetic",
+   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h6",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "reflection",
+   "question": "A rope hugs the equator. Add 1 m to its length and raise it evenly all round. Can a cat crawl under?",
+   "options": [
+    "No, the gap is microscopic",
+    "Yes, the gap is about 16 cm",
+    "Barely, the gap is about 1 mm"
+   ],
+   "correct": 1,
+   "answer": "Yes, easily. A circle's circumference is 2π times its radius, so adding 1 m to the rope lifts it by 1 ÷ 2π, about 16 cm, all the way round — whatever the size of the circle. The same extra metre around a football would lift it by the same 16 cm.",
+   "move": "When the intuition comes from size, check whether size appears in the formula.",
+   "trap": "One metre spread over 40,000 km feels like nothing at all.",
+   "keywords": [
+    "circumference",
+    "radius",
+    "equator",
+    "rope puzzle"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 3,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "nested_circles",
+   "source": "Circumference and radius of a circle",
+   "source_kind": "arithmetic",
+   "reference": "Courant & Robbins, What Is Mathematics?, revised by Stewart, Oxford University Press, 1996",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h7",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "conjunction",
+   "question": "A launch needs five independent steps done on time, each 90% likely. How likely is an on-time launch?",
+   "options": [
+    "About 90%",
+    "About 60%",
+    "About 30%"
+   ],
+   "correct": 1,
+   "answer": "About 60%. Every step must succeed, so the chances multiply: 0.9 × 0.9 × 0.9 × 0.9 × 0.9 is 0.59. Each step looks safe on its own, and the plan still fails two times in five. Ten such steps would fail more often than they succeed.",
+   "move": "Multiply the odds of every step a plan needs before trusting it.",
+   "trap": "Each step is safe, so the whole plan feels safe.",
+   "keywords": [
+    "project planning",
+    "probability",
+    "multiplying chances",
+    "deadlines"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "practical",
+   "numeracy": 3,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Tversky & Kahneman, Psychological Review, 1983",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h8",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "conjunction",
+   "question": "A new café opens on your street, with a gifted barista. Which is more likely?",
+   "options": [
+    "It survives three years",
+    "It wins an award and survives three years"
+   ],
+   "correct": 0,
+   "answer": "Surviving three years. Every café that wins an award and survives is also a café that survives, so the second can never be the likelier. The award supplies a reason, and a reason makes a story feel probable while cutting down the number of ways it can come true.",
+   "move": "Each added reason is one more thing that has to be true.",
+   "trap": "The award explains the survival, so the story feels more likely.",
+   "keywords": [
+    "small business",
+    "probability",
+    "stories",
+    "subsets"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "nested_circles",
+   "source": "Conjunction rule, applied to a forecast",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h9",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "conjunction",
+   "question": "True or false: a team with a 70% chance of winning each of its last four matches will probably win all four?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. Each win has to happen, so the chances multiply: 0.7 × 0.7 × 0.7 × 0.7 is about 0.24. A team that is favourite in every single match still has only about one chance in four of winning the lot.",
+   "move": "Being favourite at every step is not being favourite for the journey.",
+   "trap": "Favourite in every match feels like favourite for the whole run.",
+   "keywords": [
+    "sport",
+    "winning runs",
+    "probability",
+    "favourites"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Multiplication rule of probability",
+   "source_kind": "arithmetic",
+   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h10",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "exponential",
+   "question": "A €1,000 card debt grows at 2% a month, unpaid, for three years. Roughly what is owed?",
+   "options": [
+    "About €1,720",
+    "About €2,040",
+    "About €3,000"
+   ],
+   "correct": 1,
+   "answer": "About €2,040. Each month's 2% is charged on the interest already added, so the debt multiplies by 1.02 thirty-six times, which is a little over 2. Simple interest would give €1,720: the gap is interest on interest, and it widens every month.",
+   "move": "Turn a monthly rate into a yearly one before deciding it is small.",
+   "trap": "Adding 2% thirty-six times instead of multiplying by it.",
+   "keywords": [
+    "compound interest",
+    "credit cards",
+    "debt",
+    "monthly rates"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "doubling",
+   "source": "Compound interest, arithmetic",
+   "source_kind": "arithmetic",
+   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h11",
+   "topic": "thinking",
+   "kind": "number",
+   "difficulty": "medium",
+   "principle": "exponential",
+   "question": "A drug's level in the blood halves every 6 hours. After a 400 mg dose, how many mg remain a day later?",
+   "value": 25,
+   "unit": "mg",
+   "answer": "25 mg remain after a day.",
+   "move": "What halves never reaches zero; count the halvings, not the amount lost.",
+   "trap": "Taking off a fixed 100 mg every six hours, as if steady.",
+   "hint": "Count how many six-hour halvings fit in a day.",
+   "steps": [
+    "A day is 24 / 6 = 4 half-lives.",
+    "400 halved four times: 200, 100, 50, 25.",
+    "25 mg remain after a day."
+   ],
+   "keywords": [
+    "half-life",
+    "drug levels",
+    "exponential decay",
+    "doses"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 3,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "doubling",
+   "source": "Exponential decay, arithmetic",
+   "source_kind": "arithmetic",
+   "reference": "Rowland & Tozer, Clinical Pharmacokinetics and Pharmacodynamics, Lippincott Williams & Wilkins, 2011",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h12",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "conditional",
+   "question": "True or false: most crashes happen within a few kilometres of home, so driving near home is riskier?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 1,
+   "answer": "False. Most crashes happen near home because most driving happens near home. The share of crashes in a place says where people drive, not how dangerous each kilometre there is. To compare risk, divide the crashes by the kilometres driven in each place.",
+   "move": "Where most accidents happen is mostly where most people are.",
+   "trap": "Reading the share of crashes as the danger of the place.",
+   "keywords": [
+    "road safety",
+    "exposure",
+    "crash statistics",
+    "conditional probability"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Evans, Traffic Safety, 2004",
+   "source_kind": "book",
+   "reference": "Evans, Traffic Safety, Science Serving Society, 2004",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h13",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "hard",
+   "principle": "conditional",
+   "question": "Two friends each roll a die in secret. You ask whether either rolled a six; they say yes. Chance both did?",
+   "options": [
+    "1 in 6",
+    "1 in 11",
+    "1 in 36"
+   ],
+   "correct": 1,
+   "answer": "1 in 11. Of the 36 equally likely pairs, 11 contain at least one six, and only one of those is a double six. The yes ruled out the 25 pairs without a six, but it did not tell you which die showed it, so the other die is not a fresh roll.",
+   "move": "Ask exactly what you were told, and which cases it rules out.",
+   "trap": "One die shows a six, so the other feels like a fresh roll.",
+   "keywords": [
+    "dice",
+    "conditional probability",
+    "information",
+    "sample space"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 3,
+   "abstraction": "abstract",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "dots",
+   "source": "Conditional probability, counting outcomes",
+   "source_kind": "arithmetic",
+   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h14",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "simpson",
+   "question": "Ana outshoots Bea from close range and from long range, yet Bea has the better overall percentage. Possible?",
+   "options": [
+    "No, the figures must be wrong",
+    "Yes, if Bea takes more close shots",
+    "Only if they played different games"
+   ],
+   "correct": 1,
+   "answer": "Yes. Close shots go in far more often than long ones. If most of Bea's attempts are close and most of Ana's are long, Bea's total is weighted towards easy shots and beats Ana's, although Ana is better at each kind. The total measures the shot mix as much as the shooter.",
+   "move": "A total is a weighted average; ask who chose the weights.",
+   "trap": "Assuming someone better at every part must be better overall.",
+   "keywords": [
+    "shooting percentage",
+    "basketball",
+    "weighted averages",
+    "simpson's paradox"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "bars",
+   "source": "Simpson's paradox in sport statistics",
+   "source_kind": "paper",
+   "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h15",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "simpson",
+   "question": "True or false: the share of income paid in tax can rise even if every income bracket's rate falls?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 0,
+   "answer": "True. It happened in the United States between 1974 and 1978: the average rate fell within every income bracket, yet the overall rate rose, because inflation pushed more of the country's income into the higher brackets, where rates were steepest. The mix moved faster than the rates.",
+   "move": "A shift in the mix can outrun a change in every part.",
+   "trap": "If every part goes down, the whole must go down too.",
+   "keywords": [
+    "income tax",
+    "tax brackets",
+    "inflation",
+    "simpson's paradox"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "bars",
+   "source": "Wagner, The American Statistician, 1982",
+   "source_kind": "paper",
+   "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h16",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "independence",
+   "question": "Two weather services, working from the same satellite data, both give a 70% chance of rain. How sure should you be?",
+   "options": [
+    "About 91%",
+    "Not much more than 70%",
+    "Certain: two sources agree"
+   ],
+   "correct": 1,
+   "answer": "Not much more than 70%. Combining forecasts sharpens the odds only when their errors are independent. Two services reading the same satellites through similar models share their mistakes, so their agreement is close to one forecast repeated. The 91% would need them to be wrong for different reasons.",
+   "move": "Agreement counts only as often as the sources could have disagreed.",
+   "trap": "Treating two agreeing sources as two separate pieces of evidence.",
+   "keywords": [
+    "weather forecasts",
+    "independent evidence",
+    "correlated errors",
+    "sources"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Clemen, International Journal of Forecasting, 1989",
+   "source_kind": "paper",
+   "reference": "Clemen, Combining forecasts: A review and annotated bibliography, International Journal of Forecasting, 1989",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h17",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "sunkCost",
+   "question": "Three years into a law degree, you realise you want to be an engineer. What should those three years count for?",
+   "options": [
+    "Finishing, or they were wasted",
+    "Only what they give you from now on",
+    "Half of the decision"
+   ],
+   "correct": 1,
+   "answer": "Only what they give you from now on. The years are spent whichever way you choose; what still counts is what they carry forward — skills, a qualification, contacts — weighed against the years an unwanted career would take. Finishing to avoid wasting them spends more years to protect ones already gone.",
+   "move": "The past votes only through what it hands to the future.",
+   "trap": "Stopping now feels like throwing three years away.",
+   "keywords": [
+    "careers",
+    "degrees",
+    "sunk cost",
+    "decisions"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "practical",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Arkes & Blumer, 1985",
+   "source_kind": "paper",
+   "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h18",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "availability",
+   "question": "In the European Union, which kills more people each year: air pollution or road crashes?",
+   "options": [
+    "Road crashes, by far",
+    "Air pollution, by over ten times",
+    "About the same"
+   ],
+   "correct": 1,
+   "answer": "Air pollution, by more than ten times. Road crashes kill about 20,000 people a year across the European Union; fine-particle pollution is estimated to cause well over 200,000 early deaths. A crash is an event with a name and a place. A pollution death is recorded as a stroke or a heart attack.",
+   "move": "The risks you can photograph are rarely the ones doing the killing.",
+   "trap": "Crashes are named events; pollution deaths are filed under other causes.",
+   "keywords": [
+    "air pollution",
+    "road deaths",
+    "risk perception",
+    "european union"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "number",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "years",
+   "mature": false,
+   "language": "en",
+   "figure": "bars",
+   "source": "Lelieveld et al., European Heart Journal, 2019",
+   "source_kind": "paper",
+   "reference": "Lelieveld et al., Cardiovascular disease burden from ambient air pollution in Europe reassessed using novel hazard ratio functions, European Heart Journal, 2019",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h19",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "coincidence",
+   "question": "In 2009 Bulgaria's lottery drew the same six numbers in two draws running. What does that suggest?",
+   "options": [
+    "The draw was rigged",
+    "Nothing, given every draw everywhere",
+    "A one-in-a-trillion miracle"
+   ],
+   "correct": 1,
+   "answer": "Nothing by itself. One draw matching the one before has odds of about one in 5 million, but hundreds of lotteries have run many draws a year for decades, so a repeat somewhere was due. Bulgaria investigated and found no wrongdoing.",
+   "move": "Before calling something a miracle, count everywhere it could have happened.",
+   "trap": "Judging the odds of this draw, not of any draw anywhere.",
+   "keywords": [
+    "lottery",
+    "bulgaria",
+    "coincidence",
+    "truly large numbers"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "story",
+   "mood": "playful",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Hand, The Improbability Principle, 2014",
+   "source_kind": "book",
+   "reference": "Hand, The Improbability Principle, Scientific American / Farrar, Straus and Giroux, 2014",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h20",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "regression",
+   "question": "True or false: pupils with the worst mock-exam marks will, on average, do better in the real exam even without extra help?",
+   "options": [
+    "True",
+    "False"
+   ],
+   "correct": 0,
+   "answer": "True. A mark is part ability and part luck on the day, and the lowest marks collect the worst luck. On the next test the luck is drawn again, so the group drifts back towards its average — which is why extra lessons aimed at them look effective even when they are not.",
+   "move": "Part of every score is luck, and luck is not repeated on demand.",
+   "trap": "Low marks feel like low ability, which should not move by itself.",
+   "keywords": [
+    "exams",
+    "regression to the mean",
+    "pupils",
+    "interventions"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Barnett et al., IJE, 2005",
+   "source_kind": "paper",
+   "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005",
+   "written": "2026-09-26"
+  },
+  {
+   "id": "thinking-h21",
+   "topic": "thinking",
+   "kind": "pickOne",
+   "difficulty": "medium",
+   "principle": "counterfactual",
+   "question": "After a month with a sleep app, 70% of users say they sleep better. What is the missing number?",
+   "options": [
+    "The app's average star rating",
+    "How a similar group without it slept",
+    "How long the users slept before"
+   ],
+   "correct": 1,
+   "answer": "How a similar group without the app slept. People install a sleep app in a bad patch, and bad patches mostly pass; the attention alone can help too. Only a comparison group shows how much of the 70% the app itself did, and it may be very little.",
+   "move": "An improvement needs a twin who got nothing before it counts as an effect.",
+   "trap": "A before-and-after with nobody who went without.",
+   "keywords": [
+    "sleep apps",
+    "control groups",
+    "self-report",
+    "evaluation"
+   ],
+   "era": "recent",
+   "region": "none",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "source": "Holland, JASA, 1986",
+   "source_kind": "paper",
+   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986",
+   "written": "2026-09-26"
   },
   {
    "id": "thinking-i1",
@@ -3307,7 +4497,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Gambler's fallacy in hiring"
+   "figure": "none",
+   "source": "Gambler's fallacy in hiring",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Belief in the law of small numbers, Psychological Bulletin, 1971"
   },
   {
    "id": "thinking-k1",
@@ -3340,7 +4533,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Counterfactual reasoning in operations"
+   "figure": "none",
+   "source": "Counterfactual reasoning in operations",
+   "source_kind": "paper",
+   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"
   },
   {
    "id": "thinking-m1",
@@ -3373,7 +4569,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Multiple comparisons in experimentation"
+   "figure": "none",
+   "source": "Multiple comparisons in experimentation",
+   "source_kind": "book",
+   "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020"
   },
   {
    "id": "thinking-m2",
@@ -3406,7 +4605,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Subgroup analysis"
+   "figure": "none",
+   "source": "Subgroup analysis",
+   "source_kind": "paper",
+   "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010"
   },
   {
    "id": "thinking-n1",
@@ -3440,7 +4642,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Combinations, C(20,2)"
+   "figure": "none",
+   "source": "Combinations, C(20,2)",
+   "source_kind": "arithmetic",
+   "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
   },
   {
    "id": "thinking-n2",
@@ -3473,25 +4678,28 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Round-robin scheduling"
+   "figure": "none",
+   "source": "Round-robin scheduling",
+   "source_kind": "arithmetic",
+   "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
   },
   {
    "id": "thinking-n3",
    "topic": "thinking",
    "kind": "number",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "computation",
-   "question": "A hedge grows 60 cm each summer and is cut back 40 cm each winter. It starts at 2 m. In which summer does it first pass 5 m?",
-   "value": 16,
+   "question": "A hedge grows 60 cm each summer and is cut back 40 cm each winter. It starts at 2 m. In which summer does it first reach 5 m?",
+   "value": 13,
    "unit": "summers",
-   "answer": "So it passes 5 m during the growth of year 13. Counting the first summer as one: summer 13.",
+   "answer": "So the 13th summer takes it to 5 m.",
    "move": "The last step is bigger than all the ones before it.",
    "hint": "It only keeps 20 cm a year — except in the summer it finally gets there.",
    "steps": [
-    "Net gain per full year: 60 - 40 = 20 cm.",
-    "It must reach 5 m during a summer's growth, so before that summer it needs 5.00 - 0.60 = 4.40 m.",
-    "From 2 m to 4.40 m at 20 cm a year takes 12 years... (4.40 - 2.00) / 0.20 = 12.",
-    "So it passes 5 m during the growth of year 13. Counting the first summer as one: summer 13."
+    "Each full year, summer then winter, adds 60 - 40 = 20 cm.",
+    "To reach 5 m during a summer it must start that summer at 5.00 - 0.60 = 4.40 m.",
+    "From 2.00 m to 4.40 m takes (4.40 - 2.00) / 0.20 = 12 full years.",
+    "So the 13th summer takes it to 5 m."
    ],
    "keywords": [
     "arithmetic",
@@ -3508,7 +4716,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Net-progress problems"
+   "figure": "none",
+   "source": "Net-progress problems",
+   "source_kind": "arithmetic",
+   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
   },
   {
    "id": "thinking-n4",
@@ -3541,7 +4752,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Permutations without repetition"
+   "figure": "none",
+   "source": "Permutations without repetition",
+   "source_kind": "arithmetic",
+   "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
   },
   {
    "id": "thinking-n5",
@@ -3576,7 +4790,9 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
-   "source": "Powers of two"
+   "source": "Powers of two",
+   "source_kind": "arithmetic",
+   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
   },
   {
    "id": "thinking-n6",
@@ -3609,7 +4825,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Least common multiple"
+   "figure": "none",
+   "source": "Least common multiple",
+   "source_kind": "arithmetic",
+   "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, Oxford University Press, 2008"
   },
   {
    "id": "thinking-p1",
@@ -3642,7 +4861,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Percentage change, arithmetic"
+   "figure": "none",
+   "source": "Percentage change, arithmetic",
+   "source_kind": "paper",
+   "reference": "Frederick, Cognitive Reflection and Decision Making, Journal of Economic Perspectives, 2005"
   },
   {
    "id": "thinking-r1",
@@ -3675,7 +4897,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Regression to the mean in management"
+   "figure": "none",
+   "source": "Regression to the mean in management",
+   "source_kind": "paper",
+   "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005"
   },
   {
    "id": "thinking-s1",
@@ -3708,7 +4933,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship bias in the built environment"
+   "figure": "none",
+   "source": "Survivorship bias in the built environment",
+   "source_kind": "paper",
+   "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
   },
   {
    "id": "thinking-s2",
@@ -3741,7 +4969,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship bias in fund performance"
+   "figure": "none",
+   "source": "Survivorship bias in fund performance",
+   "source_kind": "paper",
+   "reference": "Brown, Goetzmann, Ibbotson & Ross, Survivorship Bias in Performance Studies, Review of Financial Studies, 1992"
   },
   {
    "id": "thinking-u1",
@@ -3773,7 +5004,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Sunk cost in subscriptions"
+   "figure": "none",
+   "source": "Sunk cost in subscriptions",
+   "source_kind": "paper",
+   "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985"
   },
   {
    "id": "thinking-v1",
@@ -3787,7 +5021,7 @@
     "Suicide"
    ],
    "correct": 1,
-   "answer": "Suicide takes roughly twice as many lives as homicide worldwide. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
+   "answer": "Suicide, by about half as many again: roughly 700,000 deaths a year worldwide against about 460,000 homicides. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
    "move": "What you can recall easily is a fact about the news, not about the world.",
    "trap": "Reaching for the one that gets reported.",
    "keywords": [
@@ -3805,7 +5039,10 @@
    "shelf_life": "years",
    "mature": true,
    "language": "en",
-   "source": "WHO global health estimates"
+   "figure": "none",
+   "source": "WHO, 2021; UNODC, 2023",
+   "source_kind": "statistics",
+   "reference": "WHO, Suicide worldwide in 2019: Global Health Estimates, 2021; UNODC, Global Study on Homicide, 2023"
   },
   {
    "id": "thinking-w1",
@@ -3838,7 +5075,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Law of truly large numbers"
+   "figure": "none",
+   "source": "Law of truly large numbers",
+   "source_kind": "paper",
+   "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
   },
   {
    "id": "thinking-x1",
@@ -3871,7 +5111,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Healthy-user bias"
+   "figure": "none",
+   "source": "Healthy-user bias",
+   "source_kind": "paper",
+   "reference": "Shrank, Patrick & Brookhart, Healthy User and Related Biases in Observational Studies of Preventive Interventions, Journal of General Internal Medicine, 2011"
   },
   {
    "id": "thinking-x2",
@@ -3904,13 +5147,16 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confounding by family background"
+   "figure": "none",
+   "source": "Confounding by family background",
+   "source_kind": "paper",
+   "reference": "Sala & Gobet, Does Far Transfer Exist? Negative Evidence From Chess, Music, and Working Memory Training, Current Directions in Psychological Science, 2017"
   },
   {
    "id": "thinking-z1",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "baseRate",
    "question": "An insurer flags 2% of claims as suspicious. About 1 claim in 400 is actually fraudulent, and the flag catches most of those. Your claim is flagged. Odds it is fraud?",
    "options": [
@@ -3938,7 +5184,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Base rate neglect in claims screening"
+   "source": "Base rate neglect in claims screening",
+   "source_kind": "arithmetic",
+   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
   },
   {
    "id": "thinking-z2",
@@ -3972,7 +5220,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Screening for rare conditions"
+   "source": "Screening for rare conditions",
+   "source_kind": "arithmetic",
+   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
   },
   {
    "id": "thinking-z3",
@@ -4006,7 +5256,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Precision and recall on rare events"
+   "source": "Precision and recall on rare events",
+   "source_kind": "paper",
+   "reference": "Saito & Rehmsmeier, The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets, PLOS ONE, 2015"
   },
   {
    "id": "thinking-z4",
@@ -4039,7 +5291,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship in cultural comparison"
+   "figure": "none",
+   "source": "Survivorship in cultural comparison",
+   "source_kind": "book",
+   "reference": "Taleb, Fooled by Randomness, Texere, 2001"
   },
   {
    "id": "thinking-z5",
@@ -4072,7 +5327,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship in local business"
+   "figure": "none",
+   "source": "Survivorship in local business",
+   "source_kind": "paper",
+   "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
   },
   {
    "id": "thinking-z6",
@@ -4105,7 +5363,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship in historical sources"
+   "figure": "none",
+   "source": "Survivorship in historical sources",
+   "source_kind": "book",
+   "reference": "Taleb, Fooled by Randomness, Texere, 2001"
   },
   {
    "id": "thinking-z7",
@@ -4138,7 +5399,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Regression to the mean in road safety"
+   "figure": "none",
+   "source": "Regression to the mean in road safety",
+   "source_kind": "book",
+   "reference": "Hauer, Observational Before-After Studies in Road Safety, Pergamon, 1997"
   },
   {
    "id": "thinking-z8",
@@ -4171,7 +5435,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Regression to the mean in management"
+   "figure": "none",
+   "source": "Regression to the mean in management",
+   "source_kind": "paper",
+   "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005"
   },
   {
    "id": "thinking-z9",
@@ -4204,7 +5471,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confirmation through selective application"
+   "figure": "none",
+   "source": "Confirmation through selective application",
+   "source_kind": "paper",
+   "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
   },
   {
    "id": "thinking-z10",
@@ -4237,7 +5507,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Selection of measurement occasions"
+   "figure": "none",
+   "source": "Selection of measurement occasions",
+   "source_kind": "paper",
+   "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
   },
   {
    "id": "thinking-z11",
@@ -4270,7 +5543,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Anchoring in menu design"
+   "figure": "none",
+   "source": "Anchoring in menu design",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science, 1974"
   },
   {
    "id": "thinking-z12",
@@ -4303,7 +5579,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Anchoring in fundraising"
+   "figure": "none",
+   "source": "Anchoring in fundraising",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science, 1974"
   },
   {
    "id": "thinking-z13",
@@ -4336,7 +5615,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Self-selection in call-in polling"
+   "figure": "none",
+   "source": "Self-selection in call-in polling",
+   "source_kind": "paper",
+   "reference": "Squire, Why the 1936 Literary Digest Poll Failed, Public Opinion Quarterly, 1988"
   },
   {
    "id": "thinking-z14",
@@ -4369,7 +5651,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Usage-frequency confounding"
+   "figure": "none",
+   "source": "Usage-frequency confounding",
+   "source_kind": "paper",
+   "reference": "Hernán, Hernández-Díaz & Robins, A structural approach to selection bias, Epidemiology, 2004"
   },
   {
    "id": "thinking-z15",
@@ -4402,7 +5687,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Survivorship in customer surveys"
+   "figure": "none",
+   "source": "Survivorship in customer surveys",
+   "source_kind": "paper",
+   "reference": "Hernán, Hernández-Díaz & Robins, A structural approach to selection bias, Epidemiology, 2004"
   },
   {
    "id": "thinking-z16",
@@ -4435,7 +5723,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confounding in educational research"
+   "figure": "none",
+   "source": "Confounding in educational research",
+   "source_kind": "paper",
+   "reference": "Evans, Kelley, Sikora & Treiman, Family scholarly culture and educational success: Books and schooling in 27 nations, Research in Social Stratification and Mobility, 2010"
   },
   {
    "id": "thinking-z17",
@@ -4468,7 +5759,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confounding by investment"
+   "figure": "none",
+   "source": "Confounding by investment",
+   "source_kind": "paper",
+   "reference": "Branas et al., Citywide cluster randomized trial to restore blighted vacant land and its effects on violence, crime, and fear, PNAS, 2018"
   },
   {
    "id": "thinking-z18",
@@ -4501,7 +5795,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Healthy-user bias in nutrition studies"
+   "figure": "none",
+   "source": "Healthy-user bias in nutrition studies",
+   "source_kind": "paper",
+   "reference": "Bjelakovic et al., Antioxidant supplements for prevention of mortality in healthy participants and patients with various diseases, Cochrane Database of Systematic Reviews, 2012"
   },
   {
    "id": "thinking-z19",
@@ -4535,7 +5832,9 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
-   "source": "Multiple comparisons in trial reporting"
+   "source": "Multiple comparisons in trial reporting",
+   "source_kind": "paper",
+   "reference": "Goldacre et al., COMPare: a prospective cohort study correcting and monitoring 58 misreported trials in real time, Trials, 2019"
   },
   {
    "id": "thinking-z20",
@@ -4568,7 +5867,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Winner's curse in A/B testing"
+   "figure": "none",
+   "source": "Winner's curse in A/B testing",
+   "source_kind": "book",
+   "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020"
   },
   {
    "id": "thinking-z21",
@@ -4601,7 +5903,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Availability heuristic in risk perception"
+   "figure": "none",
+   "source": "Availability heuristic in risk perception",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Availability: A heuristic for judging frequency and probability, Cognitive Psychology, 1973"
   },
   {
    "id": "thinking-z22",
@@ -4634,7 +5939,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Lichtenstein et al., judged frequency of lethal events"
+   "figure": "none",
+   "source": "Lichtenstein et al., judged frequency of lethal events",
+   "source_kind": "paper",
+   "reference": "Lichtenstein, Slovic, Fischhoff, Layman & Combs, Judged frequency of lethal events, Journal of Experimental Psychology: Human Learning and Memory, 1978"
   },
   {
    "id": "thinking-z23",
@@ -4667,7 +5975,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Sunk cost in everyday choices"
+   "figure": "none",
+   "source": "Sunk cost in everyday choices",
+   "source_kind": "paper",
+   "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985"
   },
   {
    "id": "thinking-z24",
@@ -4700,7 +6011,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Escalation of commitment"
+   "figure": "none",
+   "source": "Escalation of commitment",
+   "source_kind": "paper",
+   "reference": "Staw, Knee-deep in the big muddy: a study of escalating commitment to a chosen course of action, Organizational Behavior and Human Performance, 1976"
   },
   {
    "id": "thinking-z25",
@@ -4733,7 +6047,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Asymmetric test errors"
+   "figure": "none",
+   "source": "Asymmetric test errors",
+   "source_kind": "book",
+   "reference": "Eddy, Probabilistic reasoning in clinical medicine, in Kahneman, Slovic & Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982"
   },
   {
    "id": "thinking-z26",
@@ -4766,7 +6083,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Confusing the conditional"
+   "figure": "none",
+   "source": "Confusing the conditional",
+   "source_kind": "book",
+   "reference": "Eddy, Probabilistic reasoning in clinical medicine, in Kahneman, Slovic & Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982"
   },
   {
    "id": "thinking-z27",
@@ -4799,7 +6119,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Common-mode failure"
+   "figure": "none",
+   "source": "Common-mode failure",
+   "source_kind": "book",
+   "reference": "Reason, Human Error, Cambridge University Press, 1990"
   },
   {
    "id": "thinking-z28",
@@ -4832,7 +6155,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Correlation in portfolio risk"
+   "figure": "none",
+   "source": "Correlation in portfolio risk",
+   "source_kind": "paper",
+   "reference": "Markowitz, Portfolio Selection, Journal of Finance, 1952"
   },
   {
    "id": "thinking-z29",
@@ -4865,7 +6191,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The law of truly large numbers"
+   "figure": "none",
+   "source": "The law of truly large numbers",
+   "source_kind": "paper",
+   "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
   },
   {
    "id": "thinking-z30",
@@ -4898,7 +6227,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Base rate of remembered coincidences"
+   "figure": "none",
+   "source": "Base rate of remembered coincidences",
+   "source_kind": "paper",
+   "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
   },
   {
    "id": "thinking-z31",
@@ -4932,13 +6264,15 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
-   "source": "Powers of three"
+   "source": "Powers of three",
+   "source_kind": "arithmetic",
+   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
   },
   {
    "id": "thinking-z32",
    "topic": "thinking",
    "kind": "pickOne",
-   "difficulty": "medium",
+   "difficulty": "hard",
    "principle": "exponential",
    "question": "A cost grows 3% a year and a budget grows 1%. After 30 years, how much larger is the cost relative to the budget?",
    "options": [
@@ -4966,7 +6300,9 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
-   "source": "Compound growth of a ratio"
+   "source": "Compound growth of a ratio",
+   "source_kind": "arithmetic",
+   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
   },
   {
    "id": "thinking-z33",
@@ -5000,7 +6336,9 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Case-mix in hospital comparison"
+   "source": "Case-mix in hospital comparison",
+   "source_kind": "paper",
+   "reference": "Julious & Mullee, Confounding and Simpson's paradox, BMJ, 1994"
   },
   {
    "id": "thinking-z34",
@@ -5034,7 +6372,9 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Simpson's paradox in admissions"
+   "source": "Simpson's paradox in admissions",
+   "source_kind": "paper",
+   "reference": "Bickel, Hammel & O'Connell, Sex Bias in Graduate Admissions: Data from Berkeley, Science, 1975"
   },
   {
    "id": "thinking-z35",
@@ -5067,7 +6407,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "The missing control group"
+   "figure": "none",
+   "source": "The missing control group",
+   "source_kind": "paper",
+   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"
   },
   {
    "id": "thinking-z36",
@@ -5100,7 +6443,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Additionality in policy evaluation"
+   "figure": "none",
+   "source": "Additionality in policy evaluation",
+   "source_kind": "reference_work",
+   "reference": "HM Treasury, The Green Book: Central Government Guidance on Appraisal and Evaluation, 2022"
   },
   {
    "id": "thinking-z37",
@@ -5134,7 +6480,9 @@
    "mature": false,
    "language": "en",
    "figure": "nested_circles",
-   "source": "Conjunction in expert forecasting"
+   "source": "Conjunction in expert forecasting",
+   "source_kind": "paper",
+   "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983"
   },
   {
    "id": "thinking-z38",
@@ -5167,7 +6515,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Successive proportions"
+   "figure": "none",
+   "source": "Successive proportions",
+   "source_kind": "arithmetic",
+   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
   },
   {
    "id": "thinking-z39",
@@ -5200,7 +6551,10 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "source": "Rate problems"
+   "figure": "none",
+   "source": "Rate problems",
+   "source_kind": "arithmetic",
+   "reference": "Little, A Proof for the Queuing Formula: L = λW, Operations Research, 1961"
   },
   {
    "id": "weird_facts-1",
@@ -5229,7 +6583,8 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "US Geological Survey; International Cement Review"
+   "source": "US Geological Survey; International Cement Review",
+   "disabled": true
   },
   {
    "id": "weird_facts-2",
@@ -5257,7 +6612,10 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "UNEP Global Mercury Assessment"
+   "figure": "none",
+   "source": "UNEP Global Mercury Assessment",
+   "source_kind": "institution",
+   "reference": "UNEP, Global Mercury Assessment 2018, 2019"
   },
   {
    "id": "weird_facts-3",
@@ -5285,35 +6643,8 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "FAO; vanillin production statistics"
-  },
-  {
-   "id": "weird_facts-4",
-   "topic": "weird_facts",
-   "genre": "weird_facts.records",
-   "strand": "weird_facts.records.fastest",
-   "kind": "read",
-   "difficulty": "easy",
-   "principle": "none",
-   "question": "Why did container ships get slower?",
-   "answer": "Deliberately, after 2008. Fuel use rises steeply with speed, so cutting speed by around a tenth saves a disproportionate share of the fuel. When freight rates collapsed and fuel stayed dear, slowing down beat sailing fast — and much of the fleet never sped back up.",
-   "move": "The world's cargo slowed down on purpose and mostly stayed slow.",
-   "keywords": [
-    "slow steaming",
-    "container ships",
-    "fuel",
-    "shipping"
-   ],
-   "era": "recent",
-   "region": "world",
-   "hook": "paradox",
-   "mood": "sober",
-   "numeracy": 2,
-   "abstraction": "concrete",
-   "shelf_life": "years",
-   "mature": false,
-   "language": "en",
-   "source": "Slow steaming, adopted across container shipping post-2008"
+   "source": "FAO; vanillin production statistics",
+   "disabled": true
   },
   {
    "id": "weird_facts-5",
@@ -5341,7 +6672,8 @@
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "USGS phosphate rock; Cordell et al., Global Environmental Change, 2009"
+   "source": "USGS phosphate rock; Cordell et al., Global Environmental Change, 2009",
+   "disabled": true
   }
  ],
  "editions": {
@@ -5764,6 +7096,12 @@
   "417": "thinking-n5",
   "418": "thinking-z36",
   "419": "thinking-z16",
-  "420": "thinking-r1"
+  "420": "thinking-r1",
+  "421": "thinking-f3",
+  "422": "thinking-h20",
+  "423": "thinking-h3",
+  "424": "thinking-h11",
+  "425": "thinking-h1",
+  "426": "thinking-e2"
  }
 }

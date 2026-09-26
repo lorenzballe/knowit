@@ -2,7 +2,7 @@
   "id": "thinking-4",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "coincidence",
   "question": "Order codes are generated at random from a million possibilities. After how many orders is a repeat more likely than not?",
   "options": [
@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The birthday bound, applied to identifiers"
+  "figure": "none",
+  "source": "The birthday bound, applied to identifiers",
+  "source_kind": "arithmetic",
+  "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
 }

@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The Winstons, Amen Brother, 1969"
+  "figure": "none",
+  "source": "The Winstons, Amen Brother, 1969",
+  "source_kind": "primary_document",
+  "reference": "The Winstons, Color Him Father / Amen, Brother, Metromedia Records, 1969"
 }

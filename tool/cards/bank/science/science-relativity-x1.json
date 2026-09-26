@@ -1,0 +1,43 @@
+{
+  "id": "science-relativity-x1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Without relativity corrections, how far would a GPS satellite's clock drift from ground clocks each day?",
+  "options": [
+    "About 38 nanoseconds",
+    "About 38 microseconds",
+    "About 38 milliseconds"
+  ],
+  "correct": 1,
+  "answer": "About 38 microseconds. Weaker gravity 20,200 km up makes the satellite clock gain about 46 microseconds a day, and its orbital speed makes it lose about 7. Because positions come from light-travel times, 38 microseconds of error is roughly 11 km of drift in a single day.",
+  "move": "Multiply a small timing error by the speed of light before calling it small.",
+  "trap": "Assuming relativity only matters close to the speed of light.",
+  "keywords": [
+    "gps",
+    "general relativity",
+    "atomic clocks",
+    "time dilation",
+    "satellites"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ashby, Living Reviews in Relativity, 2003",
+  "source_kind": "paper",
+  "reference": "doi:10.12942/lrr-2003-1",
+  "written": "2026-09-26"
+}

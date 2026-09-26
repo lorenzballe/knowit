@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confounding by investment"
+  "figure": "none",
+  "source": "Confounding by investment",
+  "source_kind": "paper",
+  "reference": "Branas et al., Citywide cluster randomized trial to restore blighted vacant land and its effects on violence, crime, and fear, PNAS, 2018"
 }

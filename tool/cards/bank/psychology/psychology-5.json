@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Johansson et al., Science, 2005"
+  "figure": "none",
+  "source": "Johansson et al., Science, 2005",
+  "source_kind": "paper",
+  "reference": "Johansson, Hall, Sikström & Olsson, Failure to detect mismatches between intention and outcome in a simple decision task, Science, 2005"
 }

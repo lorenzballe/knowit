@@ -3,6 +3,9 @@
   "topic": "science",
   "genre": "science.physics",
   "strand": "science.physics.relativity",
+  "also": [
+    "philosophy.knowledge.science"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +27,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Baldwin, Notes and Records of the Royal Society, 2015"
+  "figure": "none",
+  "source": "Baldwin, Notes and Records of the Royal Society, 2015",
+  "source_kind": "paper",
+  "reference": "Baldwin, Credibility, peer review, and Nature, 1945-1990, Notes and Records of the Royal Society, 2015"
 }

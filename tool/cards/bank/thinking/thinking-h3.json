@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h3",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Driving 10,000 km a year, which upgrade saves more fuel: 5 to 10 km per litre, or 20 to 40?",
+  "options": [
+    "20 to 40 km per litre",
+    "5 to 10 km per litre",
+    "They save the same"
+  ],
+  "correct": 1,
+  "answer": "5 to 10. At 5 km per litre the year takes 2,000 litres and at 10 it takes 1,000: a saving of 1,000. Going from 20 to 40 cuts 500 litres to 250: a saving of 250. Both double, but one doubling starts from a far thirstier engine.",
+  "move": "Judge an improvement by what it saves, not by its ratio.",
+  "trap": "Both are doublings, and the bigger numbers look like the bigger gain.",
+  "keywords": [
+    "fuel economy",
+    "km per litre",
+    "mpg illusion",
+    "ratios"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Larrick & Soll, Science, 2008",
+  "source_kind": "paper",
+  "reference": "Larrick & Soll, The MPG Illusion, Science, 2008",
+  "written": "2026-09-26"
+}

@@ -2,7 +2,7 @@
   "id": "thinking-b2",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "baseRate",
   "question": "A hiring tool spots the 5% of applicants who become top performers, with 80% accuracy. You are flagged. What are your odds?",
   "options": [
@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "source": "Base rate neglect in selection"
+  "source": "Base rate neglect in selection",
+  "source_kind": "arithmetic",
+  "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
 }

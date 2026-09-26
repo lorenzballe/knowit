@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "source": "Multiple comparisons problem"
+  "source": "Multiple comparisons problem",
+  "source_kind": "paper",
+  "reference": "Ioannidis, Why Most Published Research Findings Are False, PLOS Medicine, 2005"
 }

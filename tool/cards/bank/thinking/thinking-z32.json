@@ -2,7 +2,7 @@
   "id": "thinking-z32",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "exponential",
   "question": "A cost grows 3% a year and a budget grows 1%. After 30 years, how much larger is the cost relative to the budget?",
   "options": [
@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "source": "Compound growth of a ratio"
+  "source": "Compound growth of a ratio",
+  "source_kind": "arithmetic",
+  "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
 }

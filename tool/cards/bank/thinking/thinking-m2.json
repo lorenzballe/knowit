@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Subgroup analysis"
+  "figure": "none",
+  "source": "Subgroup analysis",
+  "source_kind": "paper",
+  "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010"
 }

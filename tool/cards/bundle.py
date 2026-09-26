@@ -48,9 +48,15 @@ def extend_editions(editions: dict[str, str], cards: list[dict], until: int) -> 
     A question stays out for three quarters of a lap of the graded pool, and
     never less than the gap check.py enforces; the pick is seeded by the
     edition so two machines extending the same calendar write the same thing.
+
+    The pool is Thinking's graded cards only. The question of the day is
+    everybody's, whatever their mix, and it costs nobody's mix anything only
+    because Thinking is on every deck; a subject's graded cards are dealt
+    from the mix, to the readers who kept that subject on.
     """
     graded = sorted(
-        c["id"] for c in cards if c["kind"] in check.GRADED and not c.get("disabled")
+        c["id"] for c in cards
+        if c["kind"] in check.GRADED and c["topic"] == "thinking" and not c.get("disabled")
     )
     if not graded:
         raise SystemExit("no graded card to make a question of the day from")

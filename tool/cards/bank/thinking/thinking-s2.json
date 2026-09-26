@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Survivorship bias in fund performance"
+  "figure": "none",
+  "source": "Survivorship bias in fund performance",
+  "source_kind": "paper",
+  "reference": "Brown, Goetzmann, Ibbotson & Ross, Survivorship Bias in Performance Studies, Review of Financial Studies, 1992"
 }

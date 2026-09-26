@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Williams and Nagel, Moral Luck, 1976"
+  "figure": "none",
+  "source": "Williams and Nagel, Moral Luck, 1976",
+  "source_kind": "paper",
+  "reference": "Williams & Nagel, Moral Luck, Proceedings of the Aristotelian Society, Supplementary Volume 50, 1976"
 }

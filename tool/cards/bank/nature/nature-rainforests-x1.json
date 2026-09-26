@@ -1,0 +1,39 @@
+{
+  "id": "nature-rainforests-x1",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Amazon supplies about a fifth of the oxygen people breathe?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The forest makes plenty of oxygen and uses almost all of it again: trees respire about half, and microbes rotting its leaves and wood take most of the rest. Its net contribution is close to zero. The oxygen in the air is a stock laid down over hundreds of millions of years.",
+  "move": "Before crediting a producer, subtract what it uses up itself.",
+  "trap": "Counting the oxygen a forest makes and forgetting what it burns.",
+  "keywords": [
+    "amazon",
+    "oxygen",
+    "respiration",
+    "photosynthesis",
+    "net production"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malhi, University of Oxford, 2019",
+  "source_kind": "institution",
+  "reference": "https://nature.ox.ac.uk/research_stories/rainforests-are-not-the-lungs-of-our-planet/",
+  "written": "2026-09-26"
+}

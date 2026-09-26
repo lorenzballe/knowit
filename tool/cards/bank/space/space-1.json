@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "NASA Exoplanet Archive, detection-method bias"
+  "figure": "none",
+  "source": "NASA Exoplanet Archive, detection-method bias",
+  "source_kind": "paper",
+  "reference": "Akeson et al., The NASA Exoplanet Archive: Data and Tools for Exoplanet Research, Publications of the Astronomical Society of the Pacific, 2013"
 }

@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Usage-frequency confounding"
+  "figure": "none",
+  "source": "Usage-frequency confounding",
+  "source_kind": "paper",
+  "reference": "Hernán, Hernández-Díaz & Robins, A structural approach to selection bias, Epidemiology, 2004"
 }

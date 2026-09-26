@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Law of truly large numbers"
+  "figure": "none",
+  "source": "Law of truly large numbers",
+  "source_kind": "paper",
+  "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
 }

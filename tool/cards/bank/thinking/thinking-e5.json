@@ -31,5 +31,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Platform disclosures, order-of-magnitude"
+  "figure": "none",
+  "source": "Platform disclosures, order-of-magnitude",
+  "source_kind": "arithmetic",
+  "reference": "YouTube, press statistics: 500 hours of video uploaded every minute, 2019"
 }

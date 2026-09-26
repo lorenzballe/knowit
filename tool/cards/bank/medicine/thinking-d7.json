@@ -1,8 +1,8 @@
 {
   "id": "thinking-d7",
-  "topic": "science",
-  "genre": "science.maths_curios",
-  "strand": "science.maths_curios.probability",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",
@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in research ethics"
+  "figure": "none",
+  "source": "Contested question in research ethics",
+  "source_kind": "paper",
+  "reference": "Eyal, Lipsitch & Smith, Human Challenge Studies to Accelerate Coronavirus Vaccine Licensure, Journal of Infectious Diseases, 2020"
 }

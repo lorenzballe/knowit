@@ -1,0 +1,39 @@
+{
+  "id": "thinking-h1",
+  "topic": "thinking",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A cyclist rides 6 km uphill at 10 km/h and straight back down at 30 km/h. What is the average speed, in km/h?",
+  "value": 15,
+  "unit": "km/h",
+  "answer": "12 km in 0.8 hours is 15 km/h.",
+  "move": "Average the times, not the speeds, when the distance is fixed.",
+  "trap": "Averaging 10 and 30, because both legs cover the same distance.",
+  "hint": "Work out how long each half takes, not how fast it is.",
+  "steps": [
+    "Uphill: 6 / 10 = 0.6 hours.",
+    "Downhill: 6 / 30 = 0.2 hours.",
+    "12 km in 0.8 hours is 15 km/h."
+  ],
+  "keywords": [
+    "average speed",
+    "harmonic mean",
+    "cycling",
+    "time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Averaging speeds over equal distances",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+  "written": "2026-09-26"
+}

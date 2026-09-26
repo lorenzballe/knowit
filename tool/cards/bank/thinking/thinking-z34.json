@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Simpson's paradox in admissions"
+  "source": "Simpson's paradox in admissions",
+  "source_kind": "paper",
+  "reference": "Bickel, Hammel & O'Connell, Sex Bias in Graduate Admissions: Data from Berkeley, Science, 1975"
 }

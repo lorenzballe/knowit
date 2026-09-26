@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "source": "Conjunction rule of probability"
+  "source": "Conjunction rule of probability",
+  "source_kind": "paper",
+  "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983"
 }

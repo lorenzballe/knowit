@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h2",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A magnitude 8 earthquake against a magnitude 6: how much more energy does the bigger one release?",
+  "options": [
+    "About a third more",
+    "About 100 times",
+    "About 1,000 times"
+  ],
+  "correct": 2,
+  "answer": "About 1,000 times. Each whole step on the magnitude scale is ten times the shaking recorded and about 32 times the energy, so two steps are roughly 32 × 32. A magnitude 8 releases in one event what a thousand magnitude 6 quakes would.",
+  "move": "On a scale that counts powers, one step is never one step.",
+  "trap": "Knowing each step is ten times, and stopping at the shaking.",
+  "keywords": [
+    "earthquakes",
+    "magnitude",
+    "logarithmic scale",
+    "energy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kanamori, Journal of Geophysical Research, 1977",
+  "source_kind": "paper",
+  "reference": "Kanamori, The energy release in great earthquakes, Journal of Geophysical Research, 1977",
+  "written": "2026-09-26"
+}

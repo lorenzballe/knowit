@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Kuznets, National Income 1929-1932, US Senate, 1934"
+  "source": "Kuznets, National Income 1929-1932, US Senate, 1934",
+  "disabled": true
 }

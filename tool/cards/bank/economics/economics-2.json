@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Royal FloraHolland, Aalsmeer"
+  "figure": "none",
+  "source": "Royal FloraHolland, Aalsmeer",
+  "source_kind": "company",
+  "reference": "Royal FloraHolland, Annual Report, 2022"
 }

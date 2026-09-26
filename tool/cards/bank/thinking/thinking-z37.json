@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "source": "Conjunction in expert forecasting"
+  "source": "Conjunction in expert forecasting",
+  "source_kind": "paper",
+  "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983"
 }

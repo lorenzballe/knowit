@@ -2,7 +2,7 @@
   "id": "thinking-3",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "conditional",
   "question": "You are one of three finalists. A panel member privately tells you that one of the other two has been rejected. Have your chances improved?",
   "options": [
@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "The three prisoners problem, Gardner 1959"
+  "figure": "none",
+  "source": "The three prisoners problem, Gardner 1959",
+  "source_kind": "paper",
+  "reference": "Gardner, Mathematical Games, Scientific American, October 1959"
 }
