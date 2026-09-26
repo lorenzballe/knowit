@@ -1,0 +1,38 @@
+{
+  "id": "food-roasting-1",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a dark roast carries noticeably more caffeine per bean than a light roast of the same coffee?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Caffeine survives roasting almost intact, so each bean keeps about the same amount whatever its colour. The darker taste comes from roasting chemistry, not stimulant. Weight and volume shift the comparison: dark beans are lighter and puffier, so a scoop of dark roast holds fewer beans and slightly less caffeine than a scoop of light.",
+  "move": "A stronger flavour is not evidence of a stronger dose.",
+  "trap": "Taking the heavier, bitterer taste of dark roast as more caffeine.",
+  "keywords": [
+    "caffeine",
+    "dark roast",
+    "light roast",
+    "bean density"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hečimović et al., Food Chemistry, 2011",
+  "source_kind": "paper",
+  "reference": "Hečimović, Belščak-Cvitanović, Horžić & Komes, Comparative study of polyphenols and caffeine in different coffee varieties affected by the degree of roasting, Food Chemistry, 2011",
+  "written": "2026-09-26"
+}

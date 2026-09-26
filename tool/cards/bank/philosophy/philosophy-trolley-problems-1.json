@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Which debate was the runaway tram dilemma invented for, before anyone called it a trolley problem?",
-  "answer": "Abortion. Philippa Foot's 1967 paper tested the doctrine of double effect, a Catholic moral rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson renamed it for American readers, and the bystander at the switch arrived only in 1985.",
+  "answer": "Abortion. Philippa Foot's 1967 paper tested the doctrine of double effect, a Catholic moral rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson named it the trolley problem in 1976, and the bystander at the switch arrived only in 1985.",
   "move": "Ask what a famous example was built to test before arguing with it.",
   "keywords": [
     "philippa foot",
@@ -28,6 +28,6 @@
   "figure": "timeline",
   "source": "Foot, Oxford Review, 1967",
   "source_kind": "paper",
-  "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review, 1967; Thomson, The Trolley Problem, Yale Law Journal 94, 1985",
+  "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review 5, 1967; Thomson, Killing, Letting Die, and the Trolley Problem, The Monist 59, 1976; Thomson, The Trolley Problem, Yale Law Journal 94, 1985",
   "written": "2026-09-26"
 }

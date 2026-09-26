@@ -13,7 +13,7 @@
     "He may not turn it"
   ],
   "correct": 2,
-  "answer": "He may not turn it. In 2008 Thomson reversed her earlier verdict. Suppose the bystander could also send the trolley onto himself: if he would not pay that price to save the five, he cannot make the lone worker pay it for him. The famous puzzle, she decided, was a non-problem.",
+  "answer": "He may not turn it. In 2008 Thomson reversed her earlier verdict. Suppose he could also send the trolley onto himself: if he would not pay that price to save the five, he cannot make the lone worker pay it. So the old puzzle, why he may turn it when a surgeon may not kill, vanished.",
   "move": "Before making a stranger pay a price, ask whether you would pay it.",
   "trap": "Assuming the case's champion kept the verdict almost everyone gives.",
   "keywords": [
@@ -34,6 +34,6 @@
   "figure": "none",
   "source": "Thomson, Philosophy & Public Affairs, 2008",
   "source_kind": "paper",
-  "reference": "https://wmit-pages-prod.s3.amazonaws.com/wp-content/uploads/sites/283/2022/06/12154735/thomson2.pdf",
+  "reference": "Thomson, Turning the Trolley, Philosophy & Public Affairs 36 (4), 2008",
   "written": "2026-09-26"
 }

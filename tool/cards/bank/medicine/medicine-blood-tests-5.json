@@ -1,0 +1,39 @@
+{
+  "id": "medicine-blood-tests-5",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a high-dose hair-and-nail supplement can make a heart-attack blood test read falsely normal?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Many lab tests, including some for troponin, a heart-damage marker, use biotin as a molecular hook; biotin flooding the sample jams it. Daily need is about 0.03 mg, but beauty supplements can hold 100 mg a pill. In 2017 the FDA warned after a patient on high-dose biotin died following a falsely low troponin result.",
+  "move": "Tell the doctor about anything you swallow, even the harmless-sounding.",
+  "trap": "Assuming a vitamin cannot interfere with how a test works.",
+  "keywords": [
+    "biotin",
+    "troponin",
+    "immunoassay",
+    "supplements",
+    "heart attack"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA, biotin interference communication",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/medical-devices/in-vitro-diagnostics/biotin-interference-troponin-lab-tests-assays-subject-biotin-interference",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "medicine-blood-tests-4",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can make HbA1c, the standard long-term blood sugar test, read falsely reassuring?",
+  "answer": "Red blood cells that die young. HbA1c measures how much haemoglobin has picked up sugar, and a red cell normally lives about 120 days, so it averages the last two to three months. When cells are destroyed or lost early, through haemolysis, bleeding or recent transfusion, they have less time to collect sugar. The number drops while the glucose does not.",
+  "move": "Know how long a measure takes to fill before reading its level.",
+  "keywords": [
+    "hba1c",
+    "diabetes",
+    "red blood cells",
+    "haemolysis",
+    "glycated haemoglobin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Diabetes Association, Standards of Care, 2024",
+  "source_kind": "institution",
+  "reference": "American Diabetes Association, Standards of Care in Diabetes, section 6: Glycemic Goals and Hypoglycemia, Diabetes Care, 2024",
+  "written": "2026-09-26"
+}
