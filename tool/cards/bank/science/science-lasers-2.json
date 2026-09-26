@@ -1,0 +1,39 @@
+{
+  "id": "science-lasers-2",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a green laser pointer can shine invisible infrared light strong enough to harm the eye?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Most green pointers make their colour in steps: a diode's infrared pumps a crystal that emits longer infrared, and a second crystal halves its wavelength to green. A filter should stop the leftovers. In 2010 US government testers found cheap pointers leaking infrared past safe limits: light nobody blinks at, because nobody sees it.",
+  "move": "Check what a process leaves behind, not only what it was built to make.",
+  "trap": "Assuming a green beam contains nothing but the green you see.",
+  "keywords": [
+    "green laser pointers",
+    "infrared",
+    "frequency doubling",
+    "eye safety",
+    "nist"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST Technical Note 1668, 2010",
+  "source_kind": "institution",
+  "reference": "Galang, Restelli, Hagley and Clark, A Green Laser Pointer Hazard, NIST Technical Note 1668, 2010",
+  "written": "2026-09-26"
+}

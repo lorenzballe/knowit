@@ -1,0 +1,33 @@
+{
+  "id": "science-plastics-2",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to 'biodegradable' shopping bags left in the sea and in soil for three years?",
+  "answer": "Many survived intact. In a Plymouth study, bags sold as biodegradable, along with oxo-degradable and ordinary ones, spent three years buried in soil or sunk in seawater and could still hold a load of shopping. Only open air broke them up, into fragments. A compostable bag was gone from the sea within three months.",
+  "move": "A label that says it breaks down should say where, and how fast.",
+  "keywords": [
+    "biodegradable plastic",
+    "carrier bags",
+    "compostable bags",
+    "marine litter",
+    "plymouth"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Napper & Thompson, Environmental Science & Technology, 2019",
+  "source_kind": "paper",
+  "reference": "Napper & Thompson, Environmental Deterioration of Biodegradable, Oxo-biodegradable, Compostable, and Conventional Plastic Carrier Bags in the Sea, Soil, and Open-Air Over a 3-Year Period, Environmental Science & Technology, 2019",
+  "written": "2026-09-26"
+}

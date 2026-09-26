@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did Meta train its small Llama 3 model on far more text than the 'optimal' recipe says?",
-  "answer": "Because that recipe minimises the wrong bill. The Chinchilla rule, about 20 word-pieces per adjustable number, buys the best model for a fixed training budget. Yet a model is trained once and used billions of times, and small ones cost less to run. Meta fed its 8-billion-number model over 15 trillion word-pieces: 1,900 per number.",
+  "answer": "Because that recipe minimises the wrong bill. The Chinchilla rule, about 20 word-pieces per adjustable number, buys the best model for a fixed training budget. A model is trained once and used billions of times, and small ones cost less to run. Meta fed its 8-billion-number model over 15 trillion word-pieces, nearly 1,900 per number.",
   "move": "Optimise for the cost you pay most often, not the one you pay first.",
   "keywords": [
     "llama 3",

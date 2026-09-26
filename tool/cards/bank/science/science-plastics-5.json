@@ -1,0 +1,41 @@
+{
+  "id": "science-plastics-5",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "also": [
+    "science.materials.glass"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should shops be pushed to replace plastic packaging with glass, paper or metal?",
+  "sides": [
+    "Yes, replace it",
+    "No, keep plastic"
+  ],
+  "answer": "Plastic's harm is not its carbon but its persistence. Between 4.8 and 12.7 million tonnes reached the oceans in 2010 alone, breaking into fragments that never leave. Glass, paper and metal are inert, degradable or collected far more reliably. Emissions can be cut with clean energy; plastic in the sea cannot be recalled.",
+  "move": "Both sides want less harm; they disagree on which harm to count first.",
+  "counterpoint": "Swapping usually makes climate harm worse. A 2024 study found plastic had lower greenhouse emissions than its alternatives in 15 of 16 uses, because glass and metal are heavy and energy-hungry to make and move. Most ocean plastic leaks from places without waste collection; building collection there beats changing materials everywhere.",
+  "keywords": [
+    "plastic packaging",
+    "life-cycle assessment",
+    "ocean plastic",
+    "greenhouse emissions",
+    "glass bottles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meng et al., Environmental Science & Technology, 2024",
+  "source_kind": "paper",
+  "reference": "Meng, Brandão & Cullen, Replacing Plastics with Alternatives Is Worse for Greenhouse Gas Emissions in Most Cases, Environmental Science & Technology, 2024",
+  "written": "2026-09-26"
+}

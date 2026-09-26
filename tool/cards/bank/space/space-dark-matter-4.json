@@ -1,0 +1,40 @@
+{
+  "id": "space-dark-matter-4",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a big cluster of galaxies, where is most of the ordinary matter, the kind made of atoms?",
+  "options": [
+    "In the stars of its galaxies",
+    "In hot gas between its galaxies",
+    "In cold dust inside its galaxies"
+  ],
+  "correct": 1,
+  "answer": "In hot gas between the galaxies. At tens of millions of degrees it shines mainly in X-rays, so ordinary photographs miss it, yet in the richest clusters it outweighs the stars several times over. Even so, gas and stars together are a small fraction of a cluster's total mass; most is dark matter.",
+  "move": "What shows up in the picture depends on the camera, not the world.",
+  "trap": "Pictures of clusters show galaxies, so the stars seem to be the mass.",
+  "keywords": [
+    "galaxy clusters",
+    "intracluster gas",
+    "x-rays",
+    "baryons",
+    "dark matter"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Sarazin, X-ray Emission from Clusters of Galaxies, 1988",
+  "source_kind": "book",
+  "reference": "Sarazin, X-ray Emission from Clusters of Galaxies, Cambridge University Press, 1988",
+  "written": "2026-09-26"
+}

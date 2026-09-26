@@ -13,7 +13,7 @@
     "Nickel"
   ],
   "correct": 0,
-  "answer": "Lithium. A smelter burns off the graphite, plastic and electrolyte and melts the rest: cobalt, nickel and copper sink into an alloy worth refining, while lithium and aluminium float off in the slag, the glassy waste on top. Recovering it from slag costs extra. The metal on the label is the one left behind.",
+  "answer": "Lithium. A smelter burns off the graphite, plastic and electrolyte and melts the rest: cobalt, nickel and copper sink into an alloy worth refining, while lithium and aluminium float off in the slag, the glassy waste on top. Recovering lithium from slag costs extra. The metal on the label is the one left behind.",
   "move": "Check what a process keeps before assuming it keeps what matters most.",
   "trap": "Cobalt, because the battery's namesake surely gets recovered first.",
   "keywords": [

@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did ageing iPhones switch off with charge still showing, until Apple quietly slowed them down?",
-  "answer": "Worn batteries could no longer deliver bursts of current. Age raises a cell's internal resistance, so a sudden load, like an app opening on a cold day, drags the voltage below the phone's cut-off. From early 2017 Apple capped peak speed to prevent the shutdowns, without telling users. A new battery restored full speed.",
+  "answer": "Worn batteries could no longer deliver bursts of current. Age raises a cell's internal resistance, so a sudden load, like an app opening on a cold day, drags the voltage below the phone's cut-off. From early 2017 Apple capped peak speed to prevent the shutdowns, without saying so. A new battery restored full speed.",
   "move": "Before suspecting a plot, find the part that wears out.",
   "keywords": [
     "iphone",

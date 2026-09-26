@@ -1,0 +1,33 @@
+{
+  "id": "history-ottoman-1",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who collected the Ottoman Empire's salt and tobacco revenues after 1881?",
+  "answer": "Its foreign creditors. After defaulting in 1875, the empire accepted, in the 1881 Decree of Muharrem, a cut in its debt from about £191 million to £106 million. A council representing the bondholders took over the salt and tobacco monopolies and the taxes on stamps, spirits, fish and silk, collecting them with its own staff.",
+  "move": "Default can cost a state its tax offices as well as its credit.",
+  "keywords": [
+    "ottoman public debt administration",
+    "decree of muharrem",
+    "sovereign default",
+    "bondholders",
+    "tobacco monopoly"
+  ],
+  "era": "nineteenth",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Britannica, Decree of Muharrem",
+  "source_kind": "reference_work",
+  "reference": "https://www.britannica.com/topic/Decree-of-Muharrem",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "history-ottoman-4",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Under Süleyman the Magnificent, in the mid-1500s, how were most of the empire's viziers born?",
+  "options": [
+    "Muslim, in Anatolian Turkish families",
+    "Christian, in Balkan villages",
+    "Muslim, in Arab or Persian families"
+  ],
+  "correct": 1,
+  "answer": "Christian, in Balkan villages. Most had been taken as boys through the devshirme, a levy of Christian children, or as captives on the frontier, then converted and trained in the palace school. Owing everything to the sultan and nothing to a family, they could be promoted, or executed, at will.",
+  "move": "A ruler who fears rivals may staff the top with outsiders.",
+  "trap": "Muslim Turks, since a Muslim Turkish dynasty ruled the empire.",
+  "keywords": [
+    "devshirme",
+    "grand vizier",
+    "süleyman the magnificent",
+    "palace school",
+    "balkans"
+  ],
+  "era": "early_modern",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Belleten, Rise of Indigenous Ottoman Viziers, 2025",
+  "source_kind": "paper",
+  "reference": "https://belleten.gov.tr/eng/full-text/3806/eng",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-pigments-1",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Chromium atoms make rubies red. What colour is the chromium oxide that painters buy as a pigment?",
+  "options": [
+    "Deep red, like ruby",
+    "Bright yellow",
+    "Dull green"
+  ],
+  "correct": 2,
+  "answer": "Dull green. It is the same chromium, but its surroundings decide which light it absorbs. Squeezed tightly by oxygen in a ruby's crystal, it absorbs yellow-green and looks red; held more loosely in its own oxide, it absorbs orange-red and looks green. Emeralds owe their green to the same looser grip.",
+  "move": "The same ingredient can do opposite things in a different setting.",
+  "trap": "Assuming an element carries its colour wherever it goes.",
+  "keywords": [
+    "chromium",
+    "ruby",
+    "emerald",
+    "chromium oxide green",
+    "crystal field"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nassau, The Physics and Chemistry of Color, 2001",
+  "source_kind": "book",
+  "reference": "Nassau, The Physics and Chemistry of Color: The Fifteen Causes of Color, 2nd edition, Wiley, 2001",
+  "written": "2026-09-26"
+}

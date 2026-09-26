@@ -1,0 +1,33 @@
+{
+  "id": "space-dark-matter-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a galaxy with almost no dark matter count as evidence that dark matter exists?",
+  "answer": "Because the main rival struggles to explain it. If the extra pull seen in galaxies came from modified gravity, it should follow ordinary matter everywhere. In 2018 van Dokkum's team found star clusters in NGC 1052-DF2 moving as if its stars were nearly all its mass. A substance can go missing; a law cannot.",
+  "move": "The strongest evidence can be an absence where an idea says none is possible.",
+  "keywords": [
+    "ngc 1052-df2",
+    "dark matter",
+    "modified gravity",
+    "star clusters",
+    "pieter van dokkum"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Dokkum et al., Nature, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature25767",
+  "written": "2026-09-26"
+}

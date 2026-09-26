@@ -1,0 +1,33 @@
+{
+  "id": "science-pigments-4",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can the same white pigment whiten paint yet vanish into a clear sunscreen?",
+  "answer": "By making the grains smaller. Titanium dioxide scatters visible light best in grains about 0.2–0.3 micrometres across, roughly half a wavelength, which makes paint opaque white. Made ten times finer, around 20 nanometres, the grains let visible light through but still absorb ultraviolet. The same compound goes on the skin as a clear cream.",
+  "move": "Before calling two things different materials, check whether only the size differs.",
+  "keywords": [
+    "titanium dioxide",
+    "sunscreen",
+    "nanoparticles",
+    "white paint",
+    "light scattering"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smijs and Pavel, Nanotechnology, Science and Applications, 2011",
+  "source_kind": "paper",
+  "reference": "Smijs and Pavel, Titanium dioxide and zinc oxide nanoparticles in sunscreens: focus on their safety and effectiveness, Nanotechnology, Science and Applications 4, 95, 2011",
+  "written": "2026-09-26"
+}

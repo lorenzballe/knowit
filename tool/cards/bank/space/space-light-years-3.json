@@ -4,7 +4,7 @@
   "genre": "space.stars_and_light",
   "strand": "space.stars_and_light.light_years",
   "kind": "estimate",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "estimation",
   "question": "Voyager 1 travels at about 17 km/s. How long would it take to cover the 4.2 light-years to the nearest star, in thousands of years?",
   "value": 74,

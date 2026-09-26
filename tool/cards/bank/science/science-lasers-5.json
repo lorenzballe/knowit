@@ -1,0 +1,38 @@
+{
+  "id": "science-lasers-5",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should selling handheld laser pointers stronger than 1 milliwatt to the public be banned?",
+  "sides": [
+    "Yes, ban them",
+    "No, punish misuse"
+  ],
+  "answer": "Below about 1 milliwatt, the blink reflex protects the eye; stronger pointers can burn a retina faster than anyone looks away, and a beam scattered across a cockpit window can dazzle a pilot during landing. Nobody needs that power to point at a slide. A sales ban stops the hazard at the one point anyone controls.",
+  "move": "Both sides want fewer injuries; they differ on whether sales or aim can be policed.",
+  "counterpoint": "Bans on sale are easily dodged: powerful lasers are bought online, often mislabelled, so a ban mainly burdens astronomers, surveyors and teachers who use brighter beams responsibly. The harm comes from pointing lasers at people and aircraft, which can be targeted directly, as Britain did in 2018 with prison terms for shining lasers at vehicles.",
+  "keywords": [
+    "laser pointers",
+    "eye injuries",
+    "aviation safety",
+    "regulation",
+    "blink reflex"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IEC 60825-1, Safety of laser products, 2014",
+  "source_kind": "standard",
+  "reference": "International Electrotechnical Commission, IEC 60825-1:2014, Safety of laser products, Part 1: Equipment classification and requirements, 2014",
+  "written": "2026-09-26"
+}

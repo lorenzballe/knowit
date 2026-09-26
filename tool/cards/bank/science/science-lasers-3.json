@@ -1,0 +1,33 @@
+{
+  "id": "science-lasers-3",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On what did IBM researchers first try the ultraviolet laser now used to reshape eyes?",
+  "answer": "Leftover Thanksgiving turkey. In November 1981 Rangaswamy Srinivasan took turkey cartilage into the lab and found a 193 nm ultraviolet laser carved it cleanly. Its photons break molecular bonds outright, so tissue vanishes in thin layers without scorching what is next to it. Eye surgeons adapted the method to sculpt the cornea.",
+  "move": "A tool's best use often turns up far from the job it was built for.",
+  "keywords": [
+    "excimer laser",
+    "lasik",
+    "ibm",
+    "cornea",
+    "ultraviolet"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trokel, Srinivasan and Braren, 1983",
+  "source_kind": "paper",
+  "reference": "Trokel, Srinivasan and Braren, Excimer laser surgery of the cornea, American Journal of Ophthalmology 96, 710, 1983",
+  "written": "2026-09-26"
+}

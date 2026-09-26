@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do fast-charging claims for phones and cars usually stop at 80%?",
+  "question": "Why do fast-charging claims so often stop at 80% rather than 100%?",
   "answer": "Because the last fifth is slow by design. A charger pushes constant current until the cell hits its voltage limit at roughly 80% full. Then it holds that voltage and lets the current dwindle, or the cell would overshoot its safe limit. The last 20% can take as long as the first 80%.",
   "move": "When a figure stops at a round number, ask what happens after it.",
   "keywords": [

@@ -1,0 +1,39 @@
+{
+  "id": "space-dark-matter-3",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: experiments copying the crystals of DAMA, the one detector reporting a yearly dark matter signal, have confirmed it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. DAMA, under the Gran Sasso mountain in Italy, has reported since the late 1990s a yearly rise and fall in its sodium iodide crystals, as Earth's orbit should vary its speed through dark matter. ANAIS-112 in Spain and COSINE-100 in South Korea used the same kind of crystal and found no such swing.",
+  "move": "Repeating a result is not the same as having it repeated.",
+  "trap": "A signal that repeats every year for decades feels too steady to be wrong.",
+  "keywords": [
+    "dama/libra",
+    "annual modulation",
+    "anais-112",
+    "cosine-100",
+    "sodium iodide"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amaré et al., Physical Review D, 2021",
+  "source_kind": "paper",
+  "reference": "Amaré et al., Annual modulation results from three-year exposure of ANAIS-112, Physical Review D 103, 102005, 2021",
+  "written": "2026-09-26"
+}

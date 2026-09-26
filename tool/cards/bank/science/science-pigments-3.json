@@ -1,0 +1,33 @@
+{
+  "id": "science-pigments-3",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a splash of water make a T-shirt or a patch of sand look darker?",
+  "answer": "Water hides the surfaces that scatter light. In dry cloth or sand, every boundary between air and solid bounces light back. Water bends light nearly as much as the solids, so when it fills the gaps those boundaries barely reflect, and light travels deeper and is absorbed. Pigment ground in oil darkens the same way.",
+  "move": "What happens at the edges can matter more than what things are made of.",
+  "keywords": [
+    "wet fabric",
+    "sand",
+    "light scattering",
+    "refractive index",
+    "oil paint"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lekner and Dorf, Applied Optics, 1988",
+  "source_kind": "paper",
+  "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988",
+  "written": "2026-09-26"
+}

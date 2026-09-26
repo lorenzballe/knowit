@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "In 1984, NSA engineers found Soviet bugs in 16 IBM typewriters at the US embassy in Moscow. What did they capture?",
+  "question": "In 1984, NSA engineers found Soviet bugs inside 16 IBM typewriters used by US diplomats in the USSR. What did they capture?",
   "options": [
     "Conversations in the room",
     "Images of each finished page",

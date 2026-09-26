@@ -4,7 +4,7 @@
   "genre": "technology.batteries",
   "strand": "technology.batteries.recycling",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "exponential",
   "question": "If every electric car sold in 2014 were recycled in 2024, what share of 2024's new batteries could they supply?",
   "options": [

@@ -1,0 +1,33 @@
+{
+  "id": "science-plastics-1",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the makers of one of the first plastics claim it would save?",
+  "answer": "Elephants and tortoises. Celluloid, patented by John Wesley Hyatt in 1870, stood in for ivory and tortoiseshell in combs, knife handles and piano keys, and its makers advertised it as relief for animals hunted for those scarce materials. Plastic began as the conservationist's answer: a comb that did not cost a tortoise.",
+  "move": "A fix for one scarcity can become the next glut.",
+  "keywords": [
+    "celluloid",
+    "john wesley hyatt",
+    "ivory",
+    "tortoiseshell",
+    "early plastics"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meikle, American Plastic: A Cultural History, 1995",
+  "source_kind": "book",
+  "reference": "Meikle, American Plastic: A Cultural History, Rutgers University Press, 1995",
+  "written": "2026-09-26"
+}

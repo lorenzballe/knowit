@@ -1,0 +1,39 @@
+{
+  "id": "history-ottoman-5",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Istanbul's first printed book appeared more than two centuries before its first printed book in Turkish?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In December 1493 the brothers David and Samuel ibn Nahmias, Jews exiled from Iberia, printed a Hebrew code of law in Istanbul, the first known book printed with movable type in the Islamic world. Armenian and Greek presses followed. The first book in Ottoman Turkish came from İbrahim Müteferrika's press in 1729.",
+  "move": "Ask whose output was counted before accepting that something came late.",
+  "trap": "False, because the Ottomans shunned printing until the 1720s.",
+  "keywords": [
+    "printing press",
+    "istanbul",
+    "ibn nahmias",
+    "hebrew printing",
+    "müteferrika"
+  ],
+  "era": "medieval",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Columbia GSAS, Hebrew printing in early Constantinople",
+  "source_kind": "institution",
+  "reference": "https://www.gsas.columbia.edu/events/printed-ishmaels-realm-hebrew-printing-early-constantinople",
+  "written": "2026-09-26"
+}

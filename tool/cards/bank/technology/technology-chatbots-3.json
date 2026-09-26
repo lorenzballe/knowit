@@ -16,7 +16,7 @@
     "That it was real"
   ],
   "correct": 2,
-  "answer": "That it was real. Asked for its source, it said the case could be found on Westlaw and LexisNexis; asked whether its other cases were fake, it said no. None existed. The court fined the lawyers $5,000 and made them write to each real judge named as the author of a fake opinion.",
+  "answer": "That it was real, and could be found on Westlaw and LexisNexis. Asked whether its other cases were fake, it said no. None of them existed. The court fined the lawyers and their firm $5,000 and made them write to each real judge named as the author of a fake opinion.",
   "move": "Never ask a source to vouch for itself.",
   "trap": "That it had invented it, as if a source could check itself.",
   "keywords": [
