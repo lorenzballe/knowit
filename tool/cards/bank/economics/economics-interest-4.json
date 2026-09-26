@@ -4,7 +4,7 @@
   "genre": "economics.money_and_banks",
   "strand": "economics.money_and_banks.interest",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "reflection",
   "question": "A car loan charges a 'flat' 5% a year on the full sum for three years, repaid monthly. Roughly what is the true annual rate?",
   "options": [

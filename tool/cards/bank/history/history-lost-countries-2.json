@@ -1,0 +1,33 @@
+{
+  "id": "history-lost-countries-2",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Ryukyu Kingdom serve two masters, China and Japan, for over 250 years?",
+  "answer": "By hiding one from the other. After the Japanese domain of Satsuma invaded in 1609, the islands kept paying tribute to China as a loyal kingdom while answering to Satsuma. When Chinese envoys came, Satsuma's officials kept out of sight and Ryukyuans avoided Japanese names and dress. Japan annexed the kingdom in 1879.",
+  "move": "A small state between giants may survive by keeping each one's story intact.",
+  "keywords": [
+    "ryukyu kingdom",
+    "satsuma",
+    "tributary system",
+    "okinawa",
+    "qing china"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smits, Visions of Ryukyu, 1999",
+  "source_kind": "book",
+  "reference": "Smits, Visions of Ryukyu: Identity and Ideology in Early-Modern Thought and Politics, University of Hawai'i Press, 1999",
+  "written": "2026-09-26"
+}

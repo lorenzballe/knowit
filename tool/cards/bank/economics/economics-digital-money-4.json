@@ -12,8 +12,8 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The 2021 law that obliged every business to accept bitcoin was amended in January 2025, as a condition of a $1.4 billion IMF loan: accepting it became voluntary, and taxes can no longer be paid in it. The US dollar, El Salvador's official currency since 2001, stayed the money people actually spend.",
-  "move": "Check that a famous policy is still in force before citing it.",
+  "answer": "False. The 2021 law that obliged every business to accept bitcoin was amended in January 2025, as a condition of a $1.4 billion IMF loan: accepting it became voluntary, and taxes can no longer be paid in it. The US dollar, El Salvador's official currency since 2001, stayed the money people spend.",
+  "move": "A famous law may have been quietly amended; look up its current text.",
   "trap": "Remembering the 2021 headline and missing the quieter 2025 amendment.",
   "keywords": [
     "el salvador",

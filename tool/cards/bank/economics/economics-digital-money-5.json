@@ -11,7 +11,7 @@
   "unit": "years",
   "tolerance": 0.1,
   "answer": "1,458 / 365 = about 4.0 years.",
-  "move": "When a rhythm looks scheduled, check which quantity was actually fixed.",
+  "move": "When a rhythm looks scheduled, find which quantity was really fixed.",
   "trap": "Thinking the code sets a date rather than a block count.",
   "hint": "Turn the blocks into minutes first, then the minutes into days.",
   "steps": [

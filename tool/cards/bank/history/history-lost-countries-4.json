@@ -1,0 +1,40 @@
+{
+  "id": "history-lost-countries-4",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Charles Tilly counted about 25 independent states in Europe in 1900. About how many political units were there in 1500?",
+  "options": [
+    "About 30",
+    "About 100",
+    "About 500"
+  ],
+  "correct": 2,
+  "answer": "About 500. Tilly's count for 1500 is some 500 more or less independent units, against about 25 in 1900: 1 in 20 survived. Duchies, prince-bishoprics, city republics and free cities were swallowed by larger neighbours, and the states on today's map are the survivors.",
+  "move": "Before judging how stable something is, count what disappeared.",
+  "trap": "Imagining 1500 as today's map with a few extra kingdoms.",
+  "keywords": [
+    "charles tilly",
+    "state formation",
+    "city-states",
+    "principalities",
+    "european map"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Tilly, The Formation of National States, 1975",
+  "source_kind": "book",
+  "reference": "Tilly (ed.), The Formation of National States in Western Europe, Princeton University Press, 1975",
+  "written": "2026-09-26"
+}

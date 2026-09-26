@@ -1,0 +1,39 @@
+{
+  "id": "history-lost-countries-1",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Prussia was formally abolished only in 1947, by the Allies occupying Germany?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1871 Prussia became the largest state of the German Empire, with nearly two-thirds of its land and most of its people, and stayed a state under Weimar. The Nazis hollowed it out, but the Allied Control Council's Law No. 46 dissolved it on 25 February 1947, calling it a bearer of militarism.",
+  "move": "Absorbed is not the same as abolished; check when the law ended it.",
+  "trap": "Picturing Prussia dissolving into Germany at unification in 1871.",
+  "keywords": [
+    "prussia",
+    "german empire",
+    "allied control council",
+    "allied occupation",
+    "german unification"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Clark, Iron Kingdom, 2006",
+  "source_kind": "book",
+  "reference": "Clark, Iron Kingdom: The Rise and Downfall of Prussia, 1600–1947, Allen Lane, 2006",
+  "written": "2026-09-26"
+}

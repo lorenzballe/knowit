@@ -11,7 +11,7 @@
   "unit": "million dollars",
   "tolerance": 0.5,
   "answer": "8.608 billion cents = $86.08 million.",
-  "move": "Multiply the tiny loss by the count before calling it small.",
+  "move": "A tiny loss per unit is only tiny until you multiply by volume.",
   "trap": "Counting the whole 3.69 cents as the loss, not the 2.69.",
   "hint": "Work out the loss on a single coin first, then multiply by the number made.",
   "steps": [
