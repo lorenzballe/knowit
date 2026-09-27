@@ -1,0 +1,40 @@
+{
+  "id": "music-chord-loops-10",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 17th-century Venetian opera, a bass repeating four steps down from the home note usually signalled what?",
+  "options": [
+    "A lament",
+    "A dance",
+    "A storm"
+  ],
+  "correct": 0,
+  "answer": "A lament. Ellen Rosand traced how the descending tetrachord, four notes stepping down a fourth from the home note, became Venetian opera's emblem of grief; Purcell's Dido sings her lament over a chromatic version. Repeating basses carried dances too. Pop's slow loops sliding down a scale inherit the mourning.",
+  "move": "A pattern that repeats in many settings can still carry one fixed meaning.",
+  "trap": "Ground basses underpinned dances, so a repeating bass sounds like dancing.",
+  "keywords": [
+    "lament bass",
+    "descending tetrachord",
+    "venetian opera",
+    "purcell",
+    "ground bass"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosand, The Musical Quarterly, 1979",
+  "source_kind": "paper",
+  "reference": "Rosand, The Descending Tetrachord: An Emblem of Lament, The Musical Quarterly, 1979",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "music-chord-loops-9",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A loop of five chords, two beats each, runs in 4/4 under four-bar phrases. After how many bars do they realign?",
+  "value": 20,
+  "unit": "bars",
+  "answer": "80 / 4 = 20 bars.",
+  "move": "When two cycles differ, count both in the smallest shared unit first.",
+  "trap": "Multiplying the cycles, 10 x 16 beats, and landing on 40 bars.",
+  "hint": "Measure both cycles in beats before looking for where they meet.",
+  "steps": [
+    "Loop: 5 chords x 2 beats = 10 beats.",
+    "Phrase: 4 bars x 4 beats = 16 beats.",
+    "They meet at the lowest common multiple of 10 and 16: 80 beats.",
+    "80 / 4 = 20 bars."
+  ],
+  "keywords": [
+    "chord loop",
+    "phrase length",
+    "lowest common multiple",
+    "metre"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lowest common multiple of 10 and 16",
+  "source_kind": "arithmetic",
+  "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, Oxford University Press, 2008",
+  "written": "2026-09-27"
+}

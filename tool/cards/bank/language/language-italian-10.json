@@ -1,0 +1,33 @@
+{
+  "id": "language-italian-10",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 2004 sticker campaign in Palermo turn the word pizzo, protection money, against the Mafia?",
+  "answer": "By shaming the payer, not the collector. Stickers appeared overnight saying that a whole people who pays the pizzo is a people without dignity. The group behind them, Addiopizzo, then published lists of shops that refused to pay so customers could choose them. Pizzo means beak: the extortioner wets his beak in every till.",
+  "move": "To break a silent bargain, make the quiet side of it visible.",
+  "keywords": [
+    "pizzo",
+    "addiopizzo",
+    "palermo",
+    "extortion",
+    "mafia"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Addiopizzo, Palermo",
+  "source_kind": "institution",
+  "reference": "https://www.addiopizzo.org",
+  "written": "2026-09-27"
+}

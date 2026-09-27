@@ -6,20 +6,20 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Norman Kretzmann argued in 1966 that a God outside time must be ignorant of something. Of what?",
+  "question": "Norman Kretzmann argued in 1966 that an unchanging God must be ignorant of something. Of what?",
   "options": [
     "The future choices of free people",
     "His own eternal nature",
     "What time it is now"
   ],
   "correct": 2,
-  "answer": "What time it is now. Knowing it is noon means knowing different things at different times: at noon that it is noon, later that it was. A being outside time can know every dated fact, but never that a date is today. Timelessness answered the old puzzle of foreknowledge and left the clock without hands.",
+  "answer": "What time it is now. Knowing it is noon means knowing different things at different times: at noon that it is noon, later that it was. An unchanging being knows every dated fact, but never that a date is today. Timelessness answered the old puzzle of foreknowledge and left the clock without hands.",
   "move": "A vantage point that sees everything can still miss where you are standing.",
   "trap": "The free future, the very puzzle timelessness was meant to solve.",
   "keywords": [
     "norman kretzmann",
     "omniscience",
-    "timeless god",
+    "immutability",
     "indexical knowledge"
   ],
   "era": "twentieth",

@@ -1,0 +1,33 @@
+{
+  "id": "art-lost-colour-6",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the painted faces of the Terracotta Army often flake away within minutes of being uncovered?",
+  "answer": "Because the paint sat on lacquer. Qin craftsmen coated each clay soldier in east Asian lacquer, then painted over it. After two thousand years in damp earth, the lacquer shrinks and curls as soon as it meets dry air, taking the colour with it. Excavators now keep fresh surfaces moist as they dig.",
+  "move": "Something preserved by its surroundings can be destroyed by being rescued from them.",
+  "keywords": [
+    "terracotta army",
+    "lacquer",
+    "qin shihuang",
+    "excavation",
+    "polychromy"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bavarian State Conservation Office, 2001",
+  "source_kind": "institution",
+  "reference": "Catharina Blänsdorf, Erwin Emmerling & Michael Petzet (eds), Die Terrakottaarmee des Ersten Chinesischen Kaisers Qin Shihuang, Bayerisches Landesamt für Denkmalpflege, 2001",
+  "written": "2026-09-27"
+}

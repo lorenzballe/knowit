@@ -1,0 +1,39 @@
+{
+  "id": "language-italian-8",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: magari, the Italian word for if only and perhaps, comes from Greek rather than Latin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Magari comes from Greek makarios, blessed or happy, through a Byzantine form makári that already meant if only. It entered Italian through the Greek-speaking south; Sicilian has macari. A Greek today who hopes for good weather still says makári, in the same breath an Italian would use.",
+  "move": "A rule that holds for most cases still has to be checked on this one.",
+  "trap": "Assuming an everyday Italian word must descend from Latin.",
+  "keywords": [
+    "magari",
+    "greek",
+    "byzantium",
+    "southern italy",
+    "etymology"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Accademia della Crusca, consulenza linguistica",
+  "source_kind": "institution",
+  "reference": "https://accademiadellacrusca.it/it/consulenza/magari-o-forse-risolveremo-i-vostri-dubbi/35661",
+  "written": "2026-09-27"
+}

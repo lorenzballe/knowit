@@ -1,0 +1,33 @@
+{
+  "id": "art-bronze-7",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do conservators keep some excavated bronzes in cases of deliberately dry air?",
+  "answer": "To halt bronze disease. Chloride from the soil lies in pits as cuprous chloride; with moisture and oxygen it turns into a pale green powder and releases acid, which attacks fresh metal and makes more chloride. Below about 40% relative humidity the reaction stalls and the powder stops spreading.",
+  "move": "When damage feeds itself, cut off the one ingredient it cannot do without.",
+  "keywords": [
+    "bronze disease",
+    "chloride corrosion",
+    "relative humidity",
+    "conservation",
+    "copper alloys"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scott, Copper and Bronze in Art, 2002",
+  "source_kind": "book",
+  "reference": "David A. Scott, Copper and Bronze in Art: Corrosion, Colorants, Conservation, Getty Conservation Institute, 2002",
+  "written": "2026-09-27"
+}

@@ -5,7 +5,7 @@
   "strand": "human_body.gut.microbiome",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "survivorship",
+  "principle": "sampling",
   "question": "Of 38 published studies giving germ-free rodents a patient's gut microbes, 36 passed on the disease. What does that mostly show?",
   "options": [
     "Gut microbes drive most of these diseases",
@@ -13,13 +13,13 @@
     "Mouse studies are biased towards positive results"
   ],
   "correct": 2,
-  "answer": "A bias towards positive results. Reviewing them in 2020, Walter and colleagues judged a 95% transfer rate implausible for diseases with many causes. Studies often used faeces from few donors, counted mice caged together as independent evidence, and needed a positive result to be published. The rodents received microbes; the causal claims were extrapolated.",
-  "move": "A near-perfect success rate is itself a reason to look for the failures.",
-  "trap": "Taking the published successes as the full record of attempts.",
+  "answer": "A bias towards positive results. Reviewing them in 2020, Walter and colleagues judged a 95% transfer rate implausible for diseases with many causes. Most studies used faeces from few donors, then counted each mouse, often caged with others, as independent evidence, inflating certainty. The rodents received microbes; the causal claims were extrapolated.",
+  "move": "Count the independent sources, not the number of measurements taken from them.",
+  "trap": "Counting every sick mouse as a separate proof, though few donors were tested.",
   "keywords": [
     "germ-free mice",
     "faecal transfer",
-    "publication bias",
+    "pseudo-replication",
     "causality"
   ],
   "era": "recent",

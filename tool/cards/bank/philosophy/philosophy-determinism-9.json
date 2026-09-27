@@ -16,7 +16,7 @@
     "The doctor's visit is fated with the cure"
   ],
   "correct": 2,
-  "answer": "The doctor's visit is fated with the cure. Cicero reports Chrysippus's reply to the lazy argument: some events are co-fated: one comes only through the other. If recovery is fated, it is fated to come by way of the doctor. A wrestler fated to fight at Olympia is fated to have an opponent.",
+  "answer": "The doctor's visit is fated with the cure. Cicero reports Chrysippus's reply to the lazy argument: some events are co-fated, so one comes only by way of the other. If recovery is fated, it is fated to come through the doctor. A wrestler fated to fight at Olympia is fated to have an opponent.",
   "move": "An outcome being settled does not make the steps towards it optional.",
   "trap": "Treating a fixed outcome as if it no longer needed its causes.",
   "keywords": [

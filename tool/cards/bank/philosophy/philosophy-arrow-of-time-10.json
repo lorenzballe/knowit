@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "sampling",
-  "question": "True or false: the second law of thermodynamics forbids a system's entropy from falling, even for a moment?",
+  "question": "True or false: the second law of thermodynamics forbids the total entropy of a system and its surroundings from falling, even briefly?",
   "options": [
     "True",
     "False"

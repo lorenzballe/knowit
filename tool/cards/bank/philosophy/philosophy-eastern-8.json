@@ -4,9 +4,9 @@
   "genre": "philosophy.ancient_thinkers",
   "strand": "philosophy.ancient_thinkers.eastern",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "anchoring",
-  "question": "Sri Lankan tradition dates the Buddha's death to 544 BC. Where do many specialists now place it?",
+  "question": "Sri Lankan tradition dates the Buddha's death to 544 BC. Where has most scholarship moved it since the late 1980s?",
   "options": [
     "About 480 BC",
     "About 400 BC",

@@ -1,0 +1,39 @@
+{
+  "id": "art-lost-colour-7",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: some late-Gothic German wooden altarpieces were delivered deliberately unpainted?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From about 1490 carvers such as Tilman Riemenschneider delivered limewood altarpieces with only a thin, tinted glaze, letting the carving carry the image. His Münnerstadt altarpiece was finished bare in 1492; a dozen years later the parish had Veit Stoss paint it. The later colour, not the bare wood, was the alteration.",
+  "move": "Correct an old mistake without overcorrecting into a new one.",
+  "trap": "Having learned old sculpture was painted, assuming all of it was.",
+  "keywords": [
+    "riemenschneider",
+    "limewood",
+    "altarpieces",
+    "veit stoss",
+    "münnerstadt"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baxandall, The Limewood Sculptors, 1980",
+  "source_kind": "book",
+  "reference": "Michael Baxandall, The Limewood Sculptors of Renaissance Germany, Yale University Press, 1980",
+  "written": "2026-09-27"
+}

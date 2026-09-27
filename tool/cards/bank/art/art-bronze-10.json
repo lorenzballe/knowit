@@ -1,0 +1,38 @@
+{
+  "id": "art-bronze-10",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Are the bronzes cast from Degas's wax figures after his death truly works by Degas?",
+  "sides": [
+    "Yes, they are Degas",
+    "No, they are reproductions"
+  ],
+  "answer": "Yes. Every form in them is his: the Hébrard foundry cast from his own waxes and clays in numbered editions soon after he died in 1917. Bronze preserves shapes that the fragile originals were already losing. Without the casts, most people would never see his sculpture at all, and many figures would be crumbled wax.",
+  "move": "Whichever side you took, it turns on whether choosing the material is part of art.",
+  "counterpoint": "No. Degas modelled in wax and clay, exhibited only one sculpture, and never had any cast in bronze. Choosing a material, a surface and an edition size are artistic decisions, and he made none of them. Surviving waxes show colour, fabric and texture that bronze flattens. A cast he never approved records his forms, not his finished work.",
+  "keywords": [
+    "degas",
+    "posthumous casts",
+    "hébrard foundry",
+    "wax sculpture",
+    "editions"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Gallery of Art, Degas sculpture catalogue",
+  "source_kind": "institution",
+  "reference": "Suzanne Glover Lindsay, Daphne S. Barbour & Shelley G. Sturman, Edgar Degas Sculpture, National Gallery of Art, Washington, 2010",
+  "written": "2026-09-27"
+}

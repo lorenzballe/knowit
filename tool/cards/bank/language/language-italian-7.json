@@ -1,0 +1,40 @@
+{
+  "id": "language-italian-7",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Tangente is both the geometric tangent and the Italian word for a bribe. How did it gain the second sense?",
+  "options": [
+    "From the line that barely grazes a curve",
+    "From the share that falls to each person",
+    "From a Milanese nickname for tax inspectors"
+  ],
+  "correct": 1,
+  "answer": "From the share that falls to each person. Latin tangere is to touch, and in Italian the portion that touches someone, their quota, was a tangente long before the bribe sense. A kickback is simply someone's cut. The Milan scandal of 1992 named the whole system Tangentopoli, Bribesville.",
+  "move": "A clever metaphor that fits is not yet evidence that it happened.",
+  "trap": "Seeing a neat image of a line that only just touches.",
+  "keywords": [
+    "tangente",
+    "tangentopoli",
+    "bribery",
+    "etymology",
+    "milan"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cortelazzo & Zolli, DELI, Zanichelli, 1999",
+  "source_kind": "reference_work",
+  "reference": "Cortelazzo & Zolli, Dizionario etimologico della lingua italiana, 2nd edition, Zanichelli, 1999",
+  "written": "2026-09-27"
+}

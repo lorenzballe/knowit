@@ -16,7 +16,7 @@
     "Black holes at galaxy centres"
   ],
   "correct": 2,
-  "answer": "Black holes at galaxy centres. Egan and Lineweaver estimated in 2010 that supermassive black holes hold about 3 x 10^104 units of entropy, against about 10^89 in the background radiation: a factor of a thousand trillion. Black hole entropy grows with horizon area: the one at the Milky Way's centre outweighs all its stars together.",
+  "answer": "Black holes at galaxy centres. Egan and Lineweaver estimated in 2010 that supermassive black holes hold about 3 x 10^104 units of entropy, against roughly 10^89 in the background radiation: some thousand trillion times more. Black hole entropy grows with horizon area: the one at the Milky Way's centre outweighs all its stars together.",
   "move": "Tally the biggest items first; they often outweigh everything else put together.",
   "trap": "The background radiation, the famous afterglow that comes first to mind.",
   "keywords": [

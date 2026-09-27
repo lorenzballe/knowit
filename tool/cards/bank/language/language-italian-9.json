@@ -1,0 +1,40 @@
+{
+  "id": "language-italian-9",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "An Italian minister mocked young adults living with their parents as bamboccioni, big babies. Where did Italy rank in the EU in 2023?",
+  "options": [
+    "The latest to leave home in the EU",
+    "Close to the EU average age",
+    "Late, but behind four other countries"
+  ],
+  "correct": 2,
+  "answer": "Late, but behind four other countries. Eurostat put Italy's average age of leaving home at 30.0, against 26.3 for the EU; Croatia, Slovakia, Greece and Spain were later still, and Bulgaria tied. The word made it an Italian vice. The data show a southern and eastern European pattern.",
+  "move": "A famous word for a habit can make one country its only owner.",
+  "trap": "Taking the most quoted example as the most extreme case.",
+  "keywords": [
+    "bamboccioni",
+    "leaving home",
+    "eurostat",
+    "young adults",
+    "italy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Eurostat, age of leaving home, 2024",
+  "source_kind": "institution",
+  "reference": "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20240930-2",
+  "written": "2026-09-27"
+}

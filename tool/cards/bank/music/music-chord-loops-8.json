@@ -1,0 +1,33 @@
+{
+  "id": "music-chord-loops-8",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the chord loop at the end of Hey Jude do that a classical cadence never does?",
+  "answer": "It runs the pull of fifths backwards. It cycles F, E flat, B flat, F: from E flat each chord climbs a fifth, where a classical cadence falls a fifth to reach home. Theorists call it a double plagal cadence: the hymn's amen twice over. About four of the single's seven minutes ride on it.",
+  "move": "A pattern can keep its parts and reverse the direction that gave them force.",
+  "keywords": [
+    "hey jude",
+    "double plagal cadence",
+    "circle of fifths",
+    "beatles",
+    "coda"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Everett, The Beatles as Musicians, 1999",
+  "source_kind": "book",
+  "reference": "Everett, The Beatles as Musicians: Revolver through the Anthology, Oxford University Press, 1999",
+  "written": "2026-09-27"
+}

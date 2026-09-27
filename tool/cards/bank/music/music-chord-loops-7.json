@@ -1,0 +1,39 @@
+{
+  "id": "music-chord-loops-7",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in much rock, the sung melody stresses notes that are not in the chord playing beneath it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. David Temperley called it the melodic-harmonic divorce: the voice moves in its own pentatonic scale while the band turns a chord loop, and stressed melody notes are often not chord tones. Classical harmony teaches that strong-beat notes belong to the chord. In rock, the singer and the band share a key, not a chord.",
+  "move": "A rule learned from one tradition can be broken daily by another.",
+  "trap": "Harmony textbooks teach that important melody notes belong to the chord.",
+  "keywords": [
+    "melody",
+    "harmony",
+    "pentatonic scale",
+    "rock",
+    "chord tones"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Temperley, Popular Music, 2007",
+  "source_kind": "paper",
+  "reference": "Temperley, The melodic-harmonic 'divorce' in rock, Popular Music, 2007",
+  "written": "2026-09-27"
+}

@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Two addicts cannot resist the drug. One hates his craving; one welcomes it. On Frankfurt's view, who takes it freely?",
+  "question": "Two addicts cannot resist the drug. One hates his craving; one welcomes it. On Frankfurt's view, who can be responsible for taking it?",
   "options": [
     "The one who welcomes it",
     "The one who hates it",
     "Neither, since both are compelled"
   ],
   "correct": 0,
-  "answer": "The one who welcomes it. In his 1971 paper Frankfurt calls the unwilling addict a helpless bystander to a desire he rejects. The willing addict would take the drug anyway, but he endorses the craving that moves him, so he takes it freely. Same craving, same drug: only one man is on its side.",
+  "answer": "The one who welcomes it. In his 1971 paper Frankfurt calls the unwilling addict a helpless bystander to a desire he rejects. The willing addict could not resist either, but he endorses the craving and makes it his own will, so he may be morally responsible. Same craving, same drug: only one man is on its side.",
   "move": "Ask not only what someone wants, but whether they want to want it.",
-  "trap": "Assuming no act can be free if it could not have been resisted.",
+  "trap": "Assuming nobody answers for an act they could not have resisted.",
   "keywords": [
     "harry frankfurt",
     "second-order desires",

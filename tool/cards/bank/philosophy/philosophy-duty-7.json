@@ -4,7 +4,7 @@
   "genre": "philosophy.ethics",
   "strand": "philosophy.ethics.duty",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "reflection",
   "question": "Kant grants that a world where nobody ever helps anybody could exist. Why, then, does refusing all help fail his test?",
   "options": [

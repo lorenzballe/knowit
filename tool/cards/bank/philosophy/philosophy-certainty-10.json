@@ -12,9 +12,9 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. To build an equilateral triangle, Euclid draws two circles and takes the point where they cross, but nothing in his postulates says they must cross. Every drawing showed them meeting, so the gap stayed invisible for two thousand years, until the axiom systems of the late nineteenth century, such as David Hilbert's of 1899.",
+  "answer": "True. To build an equilateral triangle, Euclid draws two circles and takes the point where they cross, but nothing in his postulates says they must cross. Every drawing showed them meeting, so the gap drew little notice until the nineteenth century; axiom systems such as David Hilbert's of 1899 closed it.",
   "move": "A picture that always agrees with you cannot check your reasoning.",
-  "trap": "Trusting a proof that every diagram has confirmed for two millennia.",
+  "trap": "Trusting a proof that every diagram has confirmed for centuries.",
   "keywords": [
     "euclid",
     "elements",

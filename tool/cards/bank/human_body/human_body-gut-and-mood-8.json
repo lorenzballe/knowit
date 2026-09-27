@@ -6,16 +6,16 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "counterfactual",
-  "question": "Two years after a water outbreak, 36% of infected townspeople had irritable bowel syndrome, as did 10% of the uninfected. Extra cases per 1,000 infected?",
+  "question": "After a water outbreak, irritable bowel syndrome struck 36% of those who fell ill and 10% who did not. Extra cases per 1,000 ill?",
   "value": 260,
   "unit": "cases",
   "answer": "360 - 100 = 260 extra cases.",
   "move": "Subtract what would have happened anyway before crediting a cause.",
-  "trap": "Blaming the infection for all 360 cases, ignoring the background rate.",
-  "hint": "Some infected people would have developed the condition without any outbreak.",
+  "trap": "Blaming the outbreak for all 360 cases, ignoring the background rate.",
+  "hint": "Some of those who fell ill would have developed the condition without any outbreak.",
   "steps": [
-    "Cases among 1,000 infected: 36% of 1,000 = 360.",
-    "Cases expected anyway, at the uninfected rate: 10% of 1,000 = 100.",
+    "Cases among 1,000 who fell ill: 36% of 1,000 = 360.",
+    "Cases expected anyway, at the rate in those who stayed well: 10% of 1,000 = 100.",
     "360 - 100 = 260 extra cases."
   ],
   "keywords": [
