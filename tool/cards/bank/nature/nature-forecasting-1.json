@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did the first weather forecast calculated from physics predict an impossible jump in pressure?",
-  "answer": "Its starting data were unbalanced; the physics was sound. Working by hand in wartime France, Lewis Fry Richardson spent about six weeks computing six hours of weather and got a pressure rise of 145 hectopascals, about a hundred times too big. In 2006 Peter Lynch smoothed the same observations and got a realistic forecast.",
+  "answer": "Its starting data were unbalanced; the physics was sound. Working by hand in wartime France, Lewis Fry Richardson spent about six weeks computing six hours of weather and got a pressure rise of 145 hectopascals, about a hundred times too big. Decades later Peter Lynch smoothed the same observations and got a realistic forecast.",
   "move": "A sound method fed jittery measurements can still return nonsense.",
   "keywords": [
     "lewis fry richardson",

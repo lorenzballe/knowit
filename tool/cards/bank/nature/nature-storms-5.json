@@ -27,6 +27,6 @@
   "figure": "none",
   "source": "NOAA National Hurricane Center",
   "source_kind": "institution",
-  "reference": "National Hurricane Center, The Saffir-Simpson Hurricane Wind Scale, NOAA, 2021",
+  "reference": "https://www.nhc.noaa.gov/aboutsshws.php",
   "written": "2026-09-26"
 }
