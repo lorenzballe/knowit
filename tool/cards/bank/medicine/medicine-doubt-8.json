@@ -1,0 +1,39 @@
+{
+  "id": "medicine-doubt-8",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Japan's HPV vaccination rate fell from about 70% to under 1% without the vaccine ever being withdrawn?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In June 2013, after televised reports of girls with pain and abnormal movements, the health ministry suspended only its active recommendation; the vaccine stayed free and on the schedule. Uptake collapsed anyway. A Nagoya survey later found no excess of 24 reported symptoms in vaccinated women. The recommendation returned in April 2022.",
+  "move": "A quiet step back by an authority can move people as much as a ban.",
+  "trap": "Assuming a collapse that steep needs a ban or a proven harm.",
+  "keywords": [
+    "hpv vaccine",
+    "japan",
+    "vaccine recommendation",
+    "uptake",
+    "cervical cancer"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hanley et al., The Lancet, 2015",
+  "source_kind": "paper",
+  "reference": "Hanley, Yoshioka, Ito & Kishi, HPV vaccination crisis in Japan, The Lancet, 2015",
+  "written": "2026-09-27"
+}

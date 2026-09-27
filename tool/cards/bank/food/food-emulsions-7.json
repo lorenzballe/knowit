@@ -1,0 +1,33 @@
+{
+  "id": "food-emulsions-7",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the smallest droplets in an orange-oil drink emulsion shrink while the big ones grow?",
+  "answer": "Because curvature squeezes them. The tighter a droplet's curve, the higher the pressure inside, so oil in a small droplet dissolves more readily and drifts to larger ones. Citrus oils dissolve slightly in water, so such drinks coarsen on the shelf. Makers blend in an insoluble oil, which a shrinking droplet cannot shed.",
+  "move": "Where small units pay a higher cost to exist, the big ones absorb them.",
+  "keywords": [
+    "ostwald ripening",
+    "orange oil",
+    "beverage emulsions",
+    "laplace pressure",
+    "triglycerides"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Journal of Food Science, 2012, on ripening",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1750-3841.2011.02484.x",
+  "written": "2026-09-27"
+}

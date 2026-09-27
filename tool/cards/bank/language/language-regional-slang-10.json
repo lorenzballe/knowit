@@ -1,0 +1,38 @@
+{
+  "id": "language-regional-slang-10",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should primary school teachers correct pupils who use local dialect words and grammar in class?",
+  "sides": [
+    "Yes, correct them",
+    "No, leave them"
+  ],
+  "answer": "Standard English is the dialect of exams, job interviews and most written work, and children from homes that do not speak it have the most to gain from learning it early. Correction need not shame: a teacher who turns we was into we were is handing over a tool that wealthier pupils bring from home.",
+  "move": "Whichever side you took, the hinge is whether the standard adds or replaces.",
+  "counterpoint": "Correction teaches children that the way their families speak is wrong, and pupils who feel judged talk less in class. Linguists find local grammar, from the Black Country to Teesside, fully rule-governed. Teaching standard English as an extra register for some settings adds the skill without the stigma, and keeps the classroom talking.",
+  "keywords": [
+    "standard english",
+    "dialect",
+    "schools",
+    "black country",
+    "teesside"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trudgill, Standard English: what it isn't, 1999",
+  "source_kind": "book",
+  "reference": "Trudgill, Standard English: what it isn't, in Bex & Watts (eds.), Standard English: The Widening Debate, Routledge, 1999",
+  "written": "2026-09-27"
+}

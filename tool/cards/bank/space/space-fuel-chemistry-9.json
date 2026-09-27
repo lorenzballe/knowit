@@ -13,7 +13,7 @@
   "answer": "14.1 ÷ 5.3 ≈ 2.7 times the volume.",
   "move": "Weigh and measure separately; the lightest ingredient can fill the room.",
   "trap": "Assuming the ingredient used in the smaller amount needs the smaller tank.",
-  "hint": "Work out how many litres each liquid takes up for one burn's worth.",
+  "hint": "Find how many times denser the oxygen is, then allow for its six-fold mass.",
   "steps": [
     "1 kg of hydrogen fills 1 ÷ 71 ≈ 0.0141 m³, about 14.1 litres.",
     "6 kg of oxygen fill 6 ÷ 1,141 ≈ 0.0053 m³, about 5.3 litres.",

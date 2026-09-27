@@ -1,0 +1,33 @@
+{
+  "id": "art-famous-fakes-6",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Besides the paintings, what did John Drewe forge in the Myatt–Drewe fraud, and where did he put it?",
+  "answer": "Their history, placed inside the archives. Drewe won access to the Tate Gallery archive and the Victoria and Albert Museum's library, then slipped in doctored exhibition catalogues and gallery records listing John Myatt's fakes as long-known works. A researcher checking a picture's provenance found the fraud's own paperwork waiting on the shelf.",
+  "move": "Check who put the record there before trusting what it confirms.",
+  "keywords": [
+    "john drewe",
+    "john myatt",
+    "tate archive",
+    "provenance",
+    "exhibition catalogues"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salisbury & Sujo, Provenance, 2009",
+  "source_kind": "book",
+  "reference": "Laney Salisbury & Aly Sujo, Provenance: How a Con Man and a Forger Rewrote the History of Modern Art, Penguin Press, 2009",
+  "written": "2026-09-27"
+}

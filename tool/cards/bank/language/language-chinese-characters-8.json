@@ -1,0 +1,42 @@
+{
+  "id": "language-chinese-characters-8",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "China's 1988 list of 2,500 common characters covers 97.97% of text. In a 2,000-character article, how many characters fall outside it?",
+  "value": 40.6,
+  "unit": "characters",
+  "tolerance": 1,
+  "answer": "4,060 / 100 = 40.6 characters, about 41.",
+  "move": "A small leftover share of something large is still a large number.",
+  "trap": "Reading 98 per cent coverage as meaning almost nothing is left unknown.",
+  "hint": "Find the share the list misses, then apply it to the article.",
+  "steps": [
+    "Share of text outside the list: 100% - 97.97% = 2.03%.",
+    "2,000 x 2.03 = 4,060.",
+    "4,060 / 100 = 40.6 characters, about 41."
+  ],
+  "keywords": [
+    "common characters",
+    "text coverage",
+    "literacy",
+    "character frequency"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "List of Common Characters in Modern Chinese, 1988",
+  "source_kind": "primary_document",
+  "reference": "https://ies.chd.edu.cn/2020/1214/c8224a173945/page.htm",
+  "written": "2026-09-27"
+}

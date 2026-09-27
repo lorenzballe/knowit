@@ -1,0 +1,39 @@
+{
+  "id": "food-emulsions-10",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: lecithin is the molecule doing most of the emulsifying in an egg-yolk mayonnaise?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The main workers are low-density lipoproteins, tiny balls of protein and phospholipid in the yolk. At the oil surface they burst open and spread their proteins and phospholipids together into a film tougher than either alone. Purified lecithin makes weaker emulsions than whole yolk. The textbook molecule is one part of a team.",
+  "move": "A single named cause is often a team with one famous member.",
+  "trap": "True, because lecithin is the emulsifier every label and textbook names.",
+  "keywords": [
+    "egg yolk",
+    "lecithin",
+    "lipoproteins",
+    "phospholipids",
+    "mayonnaise"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anton, J Sci Food Agric, 2013",
+  "source_kind": "paper",
+  "reference": "Anton, Egg yolk: structures, functionalities and processes, Journal of the Science of Food and Agriculture, 2013",
+  "written": "2026-09-27"
+}

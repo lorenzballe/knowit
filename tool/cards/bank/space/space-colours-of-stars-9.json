@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "reflection",
-  "question": "Seen up close, what colour would a cool brown dwarf, a failed star at about 1,000 °C, look?",
+  "question": "A cool brown dwarf's sodium vapour swallows most of its yellow and green light. What colour would it look up close?",
   "options": [
     "Dull red",
     "Magenta",
     "Deep brown"
   ],
   "correct": 1,
-  "answer": "Magenta, according to model spectra. Sodium and potassium vapour in its atmosphere swallow yellow and green light, so what escapes is deep red with a little blue. The name brown dwarf, coined by Jill Tarter in 1975, described a colour between red and black, not a measurement.",
+  "answer": "Magenta, according to model spectra. Broad sodium absorption removes the middle of the visible spectrum, and what escapes is mostly deep red with a little blue: a purple-red. The name brown dwarf, coined by Jill Tarter in 1975, was chosen before any had been seen, not from a measurement.",
   "move": "A name records what someone expected, not what was later seen.",
   "trap": "Picturing any cooling hot body glowing dull red, like an ember.",
   "keywords": [

@@ -1,0 +1,32 @@
+{
+  "id": "art-motives-7",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a novelist and a rock star set out to show about the art world by inventing a painter in 1998?",
+  "answer": "That people would claim to remember him. William Boyd wrote a biography of Nat Tate, an abstract painter said to have destroyed nearly all his work before killing himself in 1960, and drew the surviving pictures himself. At the New York launch, where David Bowie read from the book, guests said they knew the work.",
+  "move": "Nobody likes to admit ignorance in a room where everyone seems to know.",
+  "keywords": [
+    "nat tate",
+    "william boyd",
+    "david bowie",
+    "art hoax"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boyd, Nat Tate, 1998",
+  "source_kind": "book",
+  "reference": "William Boyd, Nat Tate: An American Artist 1928–1960, 21 Publishing, 1998",
+  "written": "2026-09-27"
+}

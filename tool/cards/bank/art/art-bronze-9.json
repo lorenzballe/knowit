@@ -8,11 +8,11 @@
   "principle": "anchoring",
   "question": "Organic residue in the casting core of the Capitoline Wolf, long called Etruscan, dates it to when?",
   "options": [
-    "The fifth century BC",
     "Between about 1021 and 1153",
+    "The fifth century BC",
     "The 1470s, with the twins"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Between about 1021 and 1153. A restorer, Anna Maria Carruba, first noticed the wolf was cast in one pour, a medieval habit, not in ancient sections. Radiocarbon from organic matter trapped in its clay core then gave that range, at 95% confidence. The twins were added in the Renaissance; the wolf is Romanesque too.",
   "move": "An old label is a claim to test, not a starting point to adjust.",
   "trap": "Holding to the fifth-century date the wolf carried for centuries.",

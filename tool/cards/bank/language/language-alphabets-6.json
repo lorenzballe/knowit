@@ -1,0 +1,33 @@
+{
+  "id": "language-alphabets-6",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does G stand seventh in the Latin alphabet, when its Greek ancestor gamma stood third?",
+  "answer": "Because C already held third place. Etruscan had no g sound, so gamma reached Rome as C, writing k. In the 3rd century BC Rome added a stroke to C to make G and slotted it into seventh place, left empty when Z was dropped. Z came back later, tacked on at the very end.",
+  "move": "An odd position in a list often marks where something was taken out.",
+  "keywords": [
+    "letter g",
+    "latin alphabet",
+    "etruscan",
+    "gamma",
+    "letter z"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gordon, Introduction to Latin Epigraphy, 1983",
+  "source_kind": "book",
+  "reference": "Gordon, Illustrated Introduction to Latin Epigraphy, University of California Press, 1983",
+  "written": "2026-09-27"
+}

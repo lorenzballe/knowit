@@ -1,0 +1,43 @@
+{
+  "id": "food-emulsions-9",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A tablespoon of mayonnaise holds 12 ml of oil as droplets 10 micrometres across. Their total surface, in square metres?",
+  "value": 7.2,
+  "unit": "square metres",
+  "tolerance": 0.3,
+  "answer": "600,000 x 0.000012 = 7.2 square metres.",
+  "move": "Chop anything finely enough and its surface outgrows its volume.",
+  "trap": "Guessing a few square centimetres, the size of the spoon.",
+  "hint": "A sphere's surface divided by its volume is 6 over its diameter.",
+  "steps": [
+    "Surface per volume of a sphere = 6 / diameter = 6 / 0.00001 m = 600,000 per metre.",
+    "12 ml = 0.000012 cubic metres of oil.",
+    "600,000 x 0.000012 = 7.2 square metres."
+  ],
+  "keywords": [
+    "mayonnaise",
+    "droplet size",
+    "surface area",
+    "emulsifier",
+    "interface"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Surface-to-volume ratio of spheres",
+  "source_kind": "book",
+  "reference": "McClements, Food Emulsions: Principles, Practices, and Techniques, 3rd edition, CRC Press, 2015",
+  "written": "2026-09-27"
+}

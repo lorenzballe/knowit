@@ -1,0 +1,40 @@
+{
+  "id": "language-internet-slang-7",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Dictionaries date much early online slang from Usenet newsgroup posts rather than chat rooms or pagers. What best explains that?",
+  "options": [
+    "Usenet was archived, so its posts survive",
+    "Most online slang was coined on Usenet",
+    "Lexicographers of the time read Usenet"
+  ],
+  "correct": 0,
+  "answer": "Usenet was archived, so its posts survive. Henry Spencer at the University of Toronto kept tapes of newsgroups from 1981 to 1991, and Google folded them into its searchable Groups archive in 2001. Chat logs, bulletin boards and early text messages mostly vanished. A first citation dates the oldest surviving page, not the first speaker.",
+  "move": "An old record tells you what was kept, not what was said.",
+  "trap": "Reading the first surviving record as the place a word was born.",
+  "keywords": [
+    "usenet",
+    "henry spencer",
+    "google groups",
+    "first citations",
+    "archives"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Google, 20 Year Usenet Timeline, 2001",
+  "source_kind": "primary_document",
+  "reference": "Google, Google Groups: 20 Year Usenet Timeline, archive announcement, December 2001",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-old-slang-8",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: the whole nine yards first appears in print during the Second World War?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Researchers searching digitised newspapers found the whole nine yards in an Indiana paper of 1912, and the whole six yards in Kentucky in 1907. That rules out the vivid explanations, a fighter plane's 8-metre ammunition belt among them. The number seems to have grown for emphasis. Nobody knows which yards were meant.",
+  "move": "A story with more details is not a story with more evidence.",
+  "trap": "The wartime tale of ammunition belts feels too specific to be invented.",
+  "keywords": [
+    "whole nine yards",
+    "idioms",
+    "newspapers",
+    "ammunition belts",
+    "etymology"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mitchell Commercial, Indiana, 1912",
+  "source_kind": "primary_document",
+  "reference": "The Mitchell Commercial, Mitchell, Indiana, 1912",
+  "written": "2026-09-27"
+}

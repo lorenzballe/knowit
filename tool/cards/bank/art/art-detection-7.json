@@ -1,0 +1,33 @@
+{
+  "id": "art-detection-7",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Warhol Foundation's authentication board, which ruled on disputed Warhols, shut itself down in 2012?",
+  "answer": "Because saying no had become ruinously expensive. A collector, Joe Simon-Whelan, sued after the board rejected his 1964 self-portrait, alleging a conspiracy to control the Warhol market. Defending the case cost the foundation millions in legal fees. Other artists' foundations also stopped giving opinions, leaving owners with nobody entitled to say yes.",
+  "move": "An expert who can be sued for an opinion soon stops giving one.",
+  "keywords": [
+    "warhol foundation",
+    "authentication board",
+    "lawsuit",
+    "joe simon-whelan",
+    "catalogue raisonné"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Philanthropy News Digest, 2011",
+  "source_kind": "news_archive",
+  "reference": "https://philanthropynewsdigest.org/news/warhol-foundation-dissolves-authentication-board",
+  "written": "2026-09-27"
+}

@@ -4,14 +4,13 @@
   "genre": "food.cooking_science",
   "strand": "food.cooking_science.maillard",
   "also": [
-    "human_body.blood_and_heart.blood_types",
     "medicine.diagnosis.blood_tests"
   ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "What does the HbA1c blood test for diabetes share with the crust on a steak?",
-  "answer": "Its first chemical step. Glucose in the blood binds slowly to haemoglobin's amino groups, the opening move of the Maillard reaction, without heat and without browning. Red cells live about 120 days, so the share of haemoglobin carrying glucose reads like a record of the last two to three months of blood sugar. The body keeps its own slow browning log.",
+  "answer": "Its first chemical step. Blood glucose binds slowly to haemoglobin's amino groups, the opening move of the Maillard reaction, with no heat and no browning. Red cells live about 120 days, so the share of haemoglobin carrying glucose records roughly the last three months of blood sugar. The body keeps its own slow browning log.",
   "move": "A slow, steady reaction can serve as a clock for whatever feeds it.",
   "keywords": [
     "hba1c",

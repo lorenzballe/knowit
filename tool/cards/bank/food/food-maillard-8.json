@@ -13,7 +13,7 @@
     "Fully wet, as in a solution"
   ],
   "correct": 1,
-  "answer": "Moderately moist. Measured as water activity, from 0 to 1, browning peaks around 0.6 to 0.8. Drier, the molecules cannot move to meet; wetter, they are diluted, and water, a product of the reaction, holds it back. Milk powder kept dry stays white for years; the same powder in a damp shed turns beige and loses usable lysine.",
+  "answer": "Moderately moist. On the water-activity scale, 0 to 1, browning peaks around 0.6 to 0.8. Drier, the molecules cannot move to meet; wetter, they are diluted, and water, a product of the reaction, holds it back. Milk powder kept dry stays white for years; kept damp, it turns beige and loses usable lysine.",
   "move": "When two forces pull opposite ways, look for the peak in between.",
   "trap": "Fully wet, because chemical reactions are assumed to need a solution.",
   "keywords": [

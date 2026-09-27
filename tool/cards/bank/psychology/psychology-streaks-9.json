@@ -24,6 +24,9 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
+  "builds_on": [
+    "psychology-streaks-7"
+  ],
   "figure": "none",
   "source": "Acland & Levy, Management Science, 2015",
   "source_kind": "paper",

@@ -1,0 +1,43 @@
+{
+  "id": "art-detection-9",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "A test flags 95% of fakes and 5% of genuine paintings. If 2% of lots are fake, what percentage of flagged lots are fake?",
+  "value": 28,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "19 fakes / 68 flagged ≈ 28 percent.",
+  "move": "When the thing sought is rare, most alarms are false.",
+  "trap": "Answering 95%, the share of fakes the test catches.",
+  "hint": "Picture 1,000 lots and count the flagged fakes and flagged genuine works separately.",
+  "steps": [
+    "Take 1,000 lots: 20 are fake, and 95% of them, 19, are flagged.",
+    "980 are genuine, and 5% of them, 49, are flagged too.",
+    "Flagged lots: 19 + 49 = 68.",
+    "19 fakes / 68 flagged ≈ 28 percent."
+  ],
+  "keywords": [
+    "authentication test",
+    "false positives",
+    "auction lots",
+    "natural frequencies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Gigerenzer & Hoffrage, Psychological Review, 1995",
+  "source_kind": "paper",
+  "reference": "Gerd Gigerenzer & Ulrich Hoffrage, How to improve Bayesian reasoning without instruction: frequency formats, Psychological Review, 1995",
+  "written": "2026-09-27"
+}

@@ -4,19 +4,20 @@
   "genre": "psychology.attention",
   "strand": "psychology.attention.focus",
   "kind": "number",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "computation",
-  "question": "Checking 30 items one at a time at 40 ms each, stopping at the target: how many ms longer is 'absent' than an average 'present'?",
-  "value": 600,
+  "question": "Scanning 30 items at 40 ms each and stopping at a randomly placed target, how many ms longer is 'absent' than an average 'present'?",
+  "value": 580,
   "unit": "milliseconds",
-  "answer": "1,200 − 600 = 600 ms.",
+  "answer": "1,200 − 620 = 580 ms.",
   "move": "Proving something is absent takes far longer than finding it.",
-  "trap": "No difference, as if each answer required checking every item.",
-  "hint": "Ask how far through the display the target turns up on average.",
+  "trap": "600, taking an average 'present' to need exactly 15 checks.",
+  "hint": "Ask at which position, on average, a randomly placed target turns up.",
   "steps": [
     "'Absent' needs every item checked: 30 × 40 = 1,200 ms.",
-    "'Present' finds the target halfway on average: 15 × 40 = 600 ms.",
-    "1,200 − 600 = 600 ms."
+    "'Present': the target is equally likely at positions 1 to 30, so on average (1 + 30) / 2 = 15.5 checks.",
+    "15.5 × 40 = 620 ms.",
+    "1,200 − 620 = 580 ms."
   ],
   "keywords": [
     "serial search",

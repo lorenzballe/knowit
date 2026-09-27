@@ -1,0 +1,39 @@
+{
+  "id": "language-chinese-characters-9",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in wēijī, the Chinese word for crisis, the syllable jī means opportunity?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Here 机 means a hinge point, the moment when things turn; its older form 機 named a mechanism such as a crossbow trigger. It carries opportunity only inside words like jīhuì. The sinologist Victor Mair has documented how danger plus opportunity spread through English speeches from 1959 on.",
+  "move": "Check what a part means in this whole, not in another one.",
+  "trap": "Spotting jī in jīhuì, opportunity, and looking no further.",
+  "keywords": [
+    "weiji",
+    "crisis",
+    "victor mair",
+    "character meaning",
+    "jihui"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mair, danger + opportunity ≠ crisis, 2009",
+  "source_kind": "paper",
+  "reference": "Mair, danger + opportunity ≠ crisis: How a misunderstanding about Chinese characters has led many astray, Pinyin.info, 2009",
+  "written": "2026-09-27"
+}

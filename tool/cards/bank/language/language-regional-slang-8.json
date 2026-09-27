@@ -1,0 +1,40 @@
+{
+  "id": "language-regional-slang-8",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A 2010 petition asked for hella, Northern Californian slang for very, to name the SI prefix for 10^27. What happened?",
+  "options": [
+    "The official prefix became ronna instead",
+    "Hella was adopted into the SI",
+    "No prefix was ever set for 10^27"
+  ],
+  "correct": 0,
+  "answer": "The official prefix became ronna instead. Google's calculator and Wolfram Alpha played along and converted hella units, which made it look settled. But only the General Conference on Weights and Measures sets SI prefixes, and in 2022 it chose ronna for 10^27 and quetta for 10^30. Hella stayed where it started, on Bay Area streets.",
+  "move": "Before treating something as approved, find out who has the power to approve it.",
+  "trap": "Remembering hella working in Google's calculator and taking that as official.",
+  "keywords": [
+    "hella",
+    "si prefixes",
+    "ronna",
+    "northern california",
+    "bipm"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BIPM, CGPM 2022, Resolution 3",
+  "source_kind": "institution",
+  "reference": "https://www.bipm.org/en/cgpm-2022/resolution-3",
+  "written": "2026-09-27"
+}

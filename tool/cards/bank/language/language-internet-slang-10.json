@@ -1,0 +1,32 @@
+{
+  "id": "language-internet-slang-10",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did TikTok creators start saying unalive instead of killed, dead or suicide?",
+  "answer": "To slip past the algorithm. Creators believed that words like kill, suicide or sex could get a video hidden or removed, so they swapped in unalive, seggs and similar forms; researchers call the practice algospeak. The workarounds then travelled offline. A word built to fool a filter is now heard where no filter runs.",
+  "move": "People reshape words to pass whatever is doing the listening.",
+  "keywords": [
+    "algospeak",
+    "tiktok",
+    "unalive",
+    "content moderation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steen et al., Social Media + Society, 2023",
+  "source_kind": "paper",
+  "reference": "Steen, Yurechko & Klug, You Can (Not) Say What You Want: Using Algospeak to Contend with Algorithmic Content Moderation on TikTok, Social Media + Society, 2023",
+  "written": "2026-09-27"
+}

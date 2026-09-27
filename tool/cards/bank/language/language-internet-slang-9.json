@@ -1,0 +1,39 @@
+{
+  "id": "language-internet-slang-9",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Japanese internet users write the character for grass to show that they are laughing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Laughter was first typed as warai, from warau, to laugh, then cut to a single w. A burst of laughter became wwww, which looks like a row of grass blades, so users began writing kusa, grass, instead. A post that is very funny is called a great meadow.",
+  "move": "A symbol can drift through its shape, not only its sound or sense.",
+  "trap": "Rejecting it because grass shares no sound or sense with laughter.",
+  "keywords": [
+    "kusa",
+    "warai",
+    "japanese",
+    "laughter",
+    "www"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tsūshin Yōgo no Kiso Chishiki, entry kusa",
+  "source_kind": "reference_work",
+  "reference": "https://www.wdic.org/w/WDIC/%E8%8D%89",
+  "written": "2026-09-27"
+}

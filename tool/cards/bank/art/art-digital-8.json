@@ -9,10 +9,10 @@
   "question": "Light is scarce and noise dominates. Quadruple the light reaching each pixel: how much cleaner does the image get?",
   "options": [
     "Four times cleaner",
-    "Twice as clean",
-    "Sixteen times cleaner"
+    "Sixteen times cleaner",
+    "Twice as clean"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Twice as clean. Photons arrive at random, so a pixel expecting 100 varies by about the square root, 10: one part in ten. At 400 photons the variation is 20, one part in twenty. Signal grows four times, noise twice. This shot noise is physics, not a sensor flaw, and no engineer can remove it.",
   "move": "Averages sharpen with the square root of the count, not the count.",
   "trap": "Assuming the image cleans up in step with the light collected.",

@@ -1,0 +1,38 @@
+{
+  "id": "language-alphabets-8",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should Kazakhstan finish replacing Cyrillic with the Latin alphabet for writing the Kazakh language?",
+  "sides": [
+    "Yes, finish the switch",
+    "No, keep Cyrillic"
+  ],
+  "answer": "The Cyrillic set was built for Russian and carries letters native Kazakh words hardly need. Latin letters match the keyboards, phones and Turkic neighbours, from Turkey to Azerbaijan, that already use them. The switch was decreed in 2017; every year of delay adds signs, forms and textbooks that will one day be reprinted anyway.",
+  "move": "Whichever side you took, who pays for the years of two scripts decides it.",
+  "counterpoint": "Uzbekistan legislated a Latin alphabet in 1993, and three decades on Cyrillic still fills its shop signs, newspapers and offices: two scripts split by generation. Kazakhstan's own first Latin version, full of apostrophes, was mocked and redrawn. Every library, archive and adult reader built on Cyrillic pays the cost, and phones already type Cyrillic perfectly well.",
+  "keywords": [
+    "kazakh",
+    "cyrillic",
+    "latin alphabet",
+    "uzbekistan",
+    "script reform"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Decree No. 569, President of Kazakhstan, 2017",
+  "source_kind": "primary_document",
+  "reference": "Decree of the President of the Republic of Kazakhstan No. 569, On the transfer of the Kazakh alphabet from Cyrillic to Latin script, 26 October 2017",
+  "written": "2026-09-27"
+}

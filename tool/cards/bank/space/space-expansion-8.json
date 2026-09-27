@@ -5,7 +5,7 @@
   "strand": "space.edge_of_the_universe.expansion",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "exponential",
+  "principle": "reflection",
   "question": "True or false: since cosmic expansion is accelerating, the Hubble rate, recession speed per unit of distance, is rising?",
   "options": [
     "True",

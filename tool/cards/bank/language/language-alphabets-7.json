@@ -1,0 +1,39 @@
+{
+  "id": "language-alphabets-7",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Mongolian script descends from right-to-left Aramaic and was turned to run vertically. Which way do its columns go?",
+  "options": [
+    "Top to bottom, left to right",
+    "Top to bottom, right to left",
+    "Bottom to top, left to right"
+  ],
+  "correct": 0,
+  "answer": "Top to bottom, left to right. The Mongols took the script from the Uyghurs around 1204, and its lines had been turned a quarter turn anticlockwise. The start of each right-to-left line swung to the top, and the first line swung to the left. Chinese columns, set beside it, run the other way.",
+  "move": "Work out how a thing was made before assuming it copies its neighbour.",
+  "trap": "Copying the Chinese layout, the best-known vertical script in the region.",
+  "keywords": [
+    "mongolian script",
+    "uyghur script",
+    "aramaic",
+    "writing direction"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kara, Books of the Mongolian Nomads, 2005",
+  "source_kind": "book",
+  "reference": "Kara, Books of the Mongolian Nomads: More than Eight Centuries of Writing Mongolian, Indiana University, 2005",
+  "written": "2026-09-27"
+}

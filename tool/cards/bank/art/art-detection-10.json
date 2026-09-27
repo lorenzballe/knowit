@@ -1,0 +1,33 @@
+{
+  "id": "art-detection-10",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did van Meegeren's fake Vermeers pass the alcohol test that softens and lifts fresh oil paint?",
+  "answer": "With plastic. He mixed phenol-formaldehyde resin, the stuff of Bakelite, into his paint and baked each canvas until it set rock-hard. Alcohol and a hot needle could no longer tell it from paint that had cured for three centuries. The same resin convicted him: Paul Coremans' team found it before his 1947 trial.",
+  "move": "The trick that beats one test often becomes the evidence for the next.",
+  "keywords": [
+    "han van meegeren",
+    "bakelite",
+    "phenol-formaldehyde",
+    "paul coremans",
+    "alcohol test"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coremans, Van Meegeren's Faked Vermeers, 1949",
+  "source_kind": "book",
+  "reference": "P. B. Coremans, Van Meegeren's Faked Vermeers and De Hooghs: A Scientific Examination, Meulenhoff, Amsterdam, 1949",
+  "written": "2026-09-27"
+}

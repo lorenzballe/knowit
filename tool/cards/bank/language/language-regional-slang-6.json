@@ -1,0 +1,33 @@
+{
+  "id": "language-regional-slang-6",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does aris mean backside in Cockney rhyming slang, when it rhymes with nothing rude?",
+  "answer": "Because it rhymes twice. Aris is short for Aristotle, which rhymes with bottle; bottle is short for bottle and glass, which rhymes with arse. Each step drops the rhyming word, so the meaning sits two rhymes out of sight. A Londoner who says someone fell on his aris has hidden the word behind a philosopher.",
+  "move": "A code gets safer each time the clue itself is encoded.",
+  "keywords": [
+    "rhyming slang",
+    "cockney",
+    "aris",
+    "aristotle",
+    "london"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ayto, Oxford Dictionary of Rhyming Slang, 2002",
+  "source_kind": "reference_work",
+  "reference": "Ayto, The Oxford Dictionary of Rhyming Slang, Oxford University Press, 2002",
+  "written": "2026-09-27"
+}

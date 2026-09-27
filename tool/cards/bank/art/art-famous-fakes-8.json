@@ -1,0 +1,39 @@
+{
+  "id": "art-famous-fakes-8",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the turkeys in Schleswig Cathedral's supposedly medieval murals are what exposed their forger?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Birds unknown in Europe before Columbus were read instead as evidence that Norsemen had reached America and brought turkeys home. The painter Lothar Malskat, who repainted the murals from 1937, exposed himself: in 1952 he confessed to faking Gothic murals in Lübeck as well. Only then were the turkeys painted out.",
+  "move": "An oddity tends to be read as support for what the reader already believes.",
+  "trap": "Assuming so glaring an anachronism must have given the fake away.",
+  "keywords": [
+    "lothar malskat",
+    "schleswig cathedral",
+    "turkeys",
+    "murals",
+    "norse voyages"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keats, Forged, 2013",
+  "source_kind": "book",
+  "reference": "Jonathon Keats, Forged: Why Fakes Are the Great Art of Our Age, Oxford University Press, 2013",
+  "written": "2026-09-27"
+}

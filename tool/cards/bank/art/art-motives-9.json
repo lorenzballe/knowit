@@ -1,0 +1,40 @@
+{
+  "id": "art-motives-9",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Keating, Hebborn and van Meegeren each blamed resentment of the art world. What does that reveal about forgers' motives?",
+  "options": [
+    "Little: the silent ones left no reasons",
+    "Resentment of experts drives most forgers",
+    "Most forgers are artists who failed first"
+  ],
+  "correct": 0,
+  "answer": "Little: the silent ones left no reasons. A forger's motive enters the record only if he is caught and then chooses to explain, and memoirs favour grievance over greed. Forgers never caught, or caught and silent, are missing from the count. The famous confessions are a sample chosen by the wish to be heard.",
+  "move": "Stated reasons come mostly from people who wanted to state them.",
+  "trap": "Taking the famous confessions as a portrait of all forgers.",
+  "keywords": [
+    "tom keating",
+    "eric hebborn",
+    "han van meegeren",
+    "confessions",
+    "motives"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Charney, The Art of Forgery, 2015",
+  "source_kind": "book",
+  "reference": "Noah Charney, The Art of Forgery: The Minds, Motives and Methods of Master Forgers, Phaidon, 2015",
+  "written": "2026-09-27"
+}
