@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-tallest-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "The 1958 Lituya Bay wave in Alaska is recorded at 524 m. What does that figure measure?",
+  "options": [
+    "The wave's crest height in the bay",
+    "How high water surged up a hillside",
+    "How high the spray was thrown"
+  ],
+  "correct": 1,
+  "answer": "How high water surged up a hillside. A rockslide plunged into the fjord, and the displaced water ran up the opposite slope, stripping trees to 524 m. That is run-up, not wave height; a scale model put the crest in the bay near 150 m. Still colossal, but under a third of the famous number.",
+  "move": "Ask exactly what a record height was measured from and to.",
+  "trap": "Reading the headline height as the size of the wave itself.",
+  "keywords": [
+    "lituya bay",
+    "megatsunami",
+    "run-up",
+    "rockslide",
+    "alaska"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fritz, Hager & Minor, 2001",
+  "source_kind": "primary_document",
+  "reference": "Fritz, Hager & Minor, Lituya Bay case: rockslide impact and wave run-up, Science of Tsunami Hazards, 2001",
+  "written": "2026-09-27"
+}

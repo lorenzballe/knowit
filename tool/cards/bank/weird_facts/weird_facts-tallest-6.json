@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-tallest-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: before the Burj Khalifa, the tallest structure ever built was a radio mast in Poland?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Warsaw radio mast, finished in 1974, stood about 646 m, held up by steel guy wires. It collapsed in August 1991 during work on those wires, and nothing as tall stood until the Burj Khalifa passed it in 2009. For 18 years the height record belonged to a structure that no longer existed.",
+  "move": "The tallest of the past may be the one no longer standing.",
+  "trap": "Judging past records by the towers that are still standing today.",
+  "keywords": [
+    "warsaw radio mast",
+    "guyed masts",
+    "tallest structures",
+    "burj khalifa",
+    "collapse"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "TVP World, Warsaw radio mast collapse",
+  "source_kind": "news_archive",
+  "reference": "https://tvpworld.com/79715989/remembering-the-collapse-of-the-warsaw-radio-mast-the-worlds-tallest-manmade-structure",
+  "written": "2026-09-27"
+}

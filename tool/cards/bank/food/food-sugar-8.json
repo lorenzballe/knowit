@@ -1,0 +1,33 @@
+{
+  "id": "food-sugar-8",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a German visitor in 1598 blame for Queen Elizabeth I's black teeth?",
+  "answer": "Sugar. Paul Hentzner saw the ageing queen at Greenwich and noted her blackened teeth, a defect he thought the English prone to from eating too much sugar. Sugar was then a costly import, used by the rich in sweetmeats and moulded table sculptures. Decay was a courtier's complaint long before it reached the poor.",
+  "move": "A disease of plenty begins at the top of the table.",
+  "keywords": [
+    "elizabeth i",
+    "paul hentzner",
+    "tooth decay",
+    "sweetmeats",
+    "tudor court"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mintz, Sweetness and Power, 1985",
+  "source_kind": "book",
+  "reference": "Mintz, Sweetness and Power: The Place of Sugar in Modern History, Viking, 1985",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-tallest-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A giraffe's brain can sit 2 m above its heart. What pressure, in mmHg, does lifting blood that high cost?",
+  "value": 155,
+  "unit": "mmHg",
+  "tolerance": 2,
+  "answer": "Mercury is 13.6 times as dense as water: 2,110 / 13.6 ≈ 155 mmHg.",
+  "move": "Height costs pressure, and the pump pays it before any work begins.",
+  "trap": "Treating 2 m as trivial next to a heart's ordinary push.",
+  "hint": "Turn the column of blood into an equivalent column of mercury using their densities.",
+  "steps": [
+    "A 2 m column is 2,000 mm of blood.",
+    "Blood is 1.055 times as dense as water: 2,000 × 1.055 = 2,110 mm of water.",
+    "Mercury is 13.6 times as dense as water: 2,110 / 13.6 ≈ 155 mmHg."
+  ],
+  "keywords": [
+    "giraffe",
+    "blood pressure",
+    "hydrostatic pressure",
+    "heart",
+    "neck"
+  ],
+  "era": "timeless",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mitchell et al., J. Exp. Biology, 2006",
+  "source_kind": "primary_document",
+  "reference": "Mitchell et al., The origin of mean arterial and jugular venous blood pressures in giraffes, Journal of Experimental Biology, 2006",
+  "written": "2026-09-27"
+}

@@ -13,7 +13,7 @@
     "A magnetic field from behind the screen"
   ],
   "correct": 2,
-  "answer": "A magnetic field from behind the screen. A grid of coils under the display pulses a field; a coil and capacitor in the pen resonate with it and send back a faint signal that the grid locates. Pressing the nib alters that reply, so pressure travels too. Samsung's first Galaxy Note pen, in 2011, worked this way.",
+  "answer": "A magnetic field from behind the screen. A grid of coils under the display pulses a field; a coil and capacitor in the pen resonate with it and send back a faint signal the grid locates. Pressing the nib alters that reply. Samsung's first Galaxy Note pen, in 2011, worked this way.",
   "move": "Before assuming a gadget carries its own power, look for what feeds it.",
   "trap": "A pen that clips into its slot seems to charge there.",
   "keywords": [

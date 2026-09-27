@@ -1,0 +1,39 @@
+{
+  "id": "food-roasting-8",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Coffee measured by the scoop, not by weight: which roast puts more caffeine in the cup?",
+  "options": [
+    "The dark roast",
+    "The light roast",
+    "Both exactly the same"
+  ],
+  "correct": 1,
+  "answer": "The light roast. Caffeine barely breaks down in roasting, so gram for gram the two are close, the dark slightly ahead because it lost more water and other matter. But dark beans puff up and lose density, so a scoop holds fewer grams of them. By volume, the denser light beans deliver more caffeine.",
+  "move": "Ask what a measure counts before comparing two things with it.",
+  "trap": "Knowing caffeine survives roasting, and forgetting that the beans swell.",
+  "keywords": [
+    "caffeine",
+    "roast level",
+    "bean density",
+    "dosing by volume"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clarke & Macrae, Coffee: Chemistry, 1985",
+  "source_kind": "book",
+  "reference": "Clarke & Macrae (eds), Coffee, Volume 1: Chemistry, Elsevier Applied Science, 1985",
+  "written": "2026-09-27"
+}

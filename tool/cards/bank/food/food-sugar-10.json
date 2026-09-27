@@ -1,0 +1,36 @@
+{
+  "id": "food-sugar-10",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "also": [
+    "history.empires.british"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did it cost a British family in 1791 to stop eating slave-grown sugar?",
+  "answer": "Money as well as pleasure. Abolitionists reckoned some 300,000 people gave up West Indian sugar after William Fox's pamphlet urged it. The alternative, East Indian sugar grown without slaves, paid a higher import duty, because Parliament shielded its Caribbean colonies. Grocers advertised the dearer sugar as free-grown. Conscience came with a surcharge set by law.",
+  "move": "Find who set the price of the ethical choice.",
+  "keywords": [
+    "sugar boycott",
+    "abolition",
+    "william fox",
+    "east india sugar",
+    "import duties"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hochschild, Bury the Chains, 2005",
+  "source_kind": "book",
+  "reference": "Hochschild, Bury the Chains: Prophets and Rebels in the Fight to Free an Empire's Slaves, Houghton Mifflin, 2005",
+  "written": "2026-09-27"
+}
