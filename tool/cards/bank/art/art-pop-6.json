@@ -1,0 +1,33 @@
+{
+  "id": "art-pop-6",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Roy Lichtenstein get his machine-looking printers' dots onto canvas in the early 1960s?",
+  "answer": "By hand, through holes. In 1961 he pushed paint through a perforated metal screen with a dog-grooming brush; later came perforated paper stencils, and assistants did much of the dabbing. The dots imitated cheap printing but were applied by hand, each visible from across a room. The mechanical look was a craftsman's illusion.",
+  "move": "A machine look can take more handwork than the machine ever did.",
+  "keywords": [
+    "roy lichtenstein",
+    "ben-day dots",
+    "stencil",
+    "comic strips",
+    "technique"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lobel, Image Duplicator, 2002",
+  "source_kind": "book",
+  "reference": "Michael Lobel, Image Duplicator: Roy Lichtenstein and the Emergence of Pop Art, Yale University Press, 2002",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "art-patrons-6",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1436 Florence finally gave the mercenary John Hawkwood the monument voted for him in 1393. What was it?",
+  "options": [
+    "A painted horse and rider",
+    "A bronze horse and rider",
+    "A marble tomb with his effigy"
+  ],
+  "correct": 0,
+  "answer": "A painted horse and rider. Paolo Uccello frescoed a fictive statue on its plinth in greenish earth on the cathedral wall. The marble tomb voted in 1393 was never built, and the cathedral works made Uccello repaint his first horse. The commune honoured its general for the price of a wall.",
+  "move": "An honour can be kept cheaply by imitating the expensive version.",
+  "trap": "Picturing a bronze like the equestrian statues Italy soon raised.",
+  "keywords": [
+    "john hawkwood",
+    "paolo uccello",
+    "florence cathedral",
+    "equestrian monument",
+    "fresco"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pope-Hennessy, Paolo Uccello, 1950",
+  "source_kind": "book",
+  "reference": "John Pope-Hennessy, The Complete Work of Paolo Uccello, Phaidon, 1950",
+  "written": "2026-09-27"
+}

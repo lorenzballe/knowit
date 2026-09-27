@@ -3,9 +3,6 @@
   "topic": "history",
   "genre": "history.everyday_life",
   "strand": "history.everyday_life.clothes",
-  "also": [
-    "human_body.skin_and_bone.bone_strength"
-  ],
   "kind": "debate",
   "difficulty": "medium",
   "principle": "none",

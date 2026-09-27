@@ -1,0 +1,39 @@
+{
+  "id": "art-florence-9",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the patterned marble front of Florence Cathedral was finished before Michelangelo was born?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It was finished in 1887. The medieval front, left half-built, was pulled down in 1587, and the cathedral faced its square with rough bare masonry for nearly three centuries. Emilio De Fabris's design, chosen by competition, went up from 1876. The Gothic face in every photograph is younger than the Statue of Liberty.",
+  "move": "A building's style tells you what it imitates, not when it was built.",
+  "trap": "Trusting Gothic-looking marble to be as old as its style.",
+  "keywords": [
+    "florence cathedral",
+    "facade",
+    "emilio de fabris",
+    "gothic revival",
+    "santa maria del fiore"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "King, Brunelleschi's Dome, 2000",
+  "source_kind": "book",
+  "reference": "Ross King, Brunelleschi's Dome: The Story of the Great Cathedral in Florence, Chatto & Windus, 2000",
+  "written": "2026-09-27"
+}

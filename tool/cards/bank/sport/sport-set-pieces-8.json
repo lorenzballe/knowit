@@ -11,11 +11,11 @@
   "principle": "conditional",
   "question": "In major-tournament shoot-outs, how did kicks that would win the match compare with kicks that had to score to avoid defeat?",
   "options": [
-    "Kicks to win scored far more",
     "About the same rate",
+    "Kicks to win scored far more",
     "Kicks to survive scored more"
   ],
-  "correct": 0,
+  "correct": 1,
   "answer": "Kicks to win scored far more often: about 92% against 62%, in Jordet and Hartman's study of World Cup, European Championship and Copa América shoot-outs. Same spot, same goal, same kind of kicker; only what a miss would mean had changed. The goal was the same width; the stakes were not.",
   "move": "The same task changes odds when failure, not success, is on the line.",
   "trap": "Assuming a penalty is a penalty, whatever hangs on it.",

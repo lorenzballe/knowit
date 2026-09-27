@@ -1,0 +1,42 @@
+{
+  "id": "art-florence-8",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Ghiberti worked on Baptistery doors from 1403 to 1424, then 1425 to 1452. What share of his 77 years is that, in whole per cent?",
+  "value": 62,
+  "unit": "per cent",
+  "answer": "48 / 77 = about 62 per cent.",
+  "move": "Measure a great work in the years of life it consumed.",
+  "hint": "Add the two spans of years, then compare the total with his lifespan.",
+  "steps": [
+    "1424 - 1403 = 21 years.",
+    "1452 - 1425 = 27 years.",
+    "21 + 27 = 48 years.",
+    "48 / 77 = about 62 per cent."
+  ],
+  "keywords": [
+    "ghiberti",
+    "baptistery doors",
+    "gates of paradise",
+    "bronze",
+    "florence"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Krautheimer, Lorenzo Ghiberti, 1956",
+  "source_kind": "book",
+  "reference": "Richard Krautheimer, Lorenzo Ghiberti, Princeton University Press, 1956",
+  "written": "2026-09-27"
+}

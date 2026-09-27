@@ -1,0 +1,40 @@
+{
+  "id": "art-cubism-10",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Cézanne's 1904 letter, later read as a recipe for Cubism, told a young painter to treat nature by which three forms?",
+  "options": [
+    "Cube, sphere and cone",
+    "Cylinder, sphere and cone",
+    "Cube, cylinder and pyramid"
+  ],
+  "correct": 1,
+  "answer": "Cylinder, sphere and cone. Writing to Émile Bernard in April 1904, Cézanne named no cube; he was talking about modelling volume in light, not breaking objects into facets. The letter appeared in print in 1907, just as Picasso and Braque were starting out. A movement named after cubes adopted a recipe without one.",
+  "move": "Check the original wording before trusting the version everyone cites.",
+  "trap": "Letting the movement's name slip a cube into the list.",
+  "keywords": [
+    "cézanne",
+    "émile bernard",
+    "cylinder sphere cone",
+    "letter",
+    "proto-cubism"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Doran, Conversations with Cézanne, 2001",
+  "source_kind": "book",
+  "reference": "Michael Doran (ed.), Conversations with Cézanne, University of California Press, 2001",
+  "written": "2026-09-27"
+}

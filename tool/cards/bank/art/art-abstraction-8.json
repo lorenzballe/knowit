@@ -1,0 +1,39 @@
+{
+  "id": "art-abstraction-8",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Mondrian left the De Stijl group partly because a fellow member started painting diagonal lines?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Mondrian held that only horizontals and verticals could express balance. When Theo van Doesburg tilted his lines in the mid-1920s, calling the change Elementarism, Mondrian withdrew from De Stijl around 1925. Yet Mondrian had painted diamond-shaped canvases himself, keeping every line upright inside a tilted frame.",
+  "move": "The smallest rule in a system is often the one defended hardest.",
+  "trap": "Doubting that a partnership could break over the angle of a line.",
+  "keywords": [
+    "mondrian",
+    "de stijl",
+    "theo van doesburg",
+    "elementarism",
+    "diagonal"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blotkamp, Mondrian: The Art of Destruction, 1994",
+  "source_kind": "book",
+  "reference": "Carel Blotkamp, Mondrian: The Art of Destruction, Reaktion Books, 1994",
+  "written": "2026-09-27"
+}

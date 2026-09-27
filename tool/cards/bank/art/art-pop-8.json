@@ -1,0 +1,39 @@
+{
+  "id": "art-pop-8",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the line about everyone being world-famous for fifteen minutes first appeared in a Swedish museum's catalogue?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It was printed, credited to Warhol, in the catalogue of his 1968 retrospective at the Moderna Museet in Stockholm. Whether he ever said it is doubted: the curator Pontus Hultén is among those proposed as its real author, and Warhol later played with the line. His most quoted sentence may be exhibition copy.",
+  "move": "Trace a famous saying to its first printing before assigning it.",
+  "trap": "Picturing Warhol saying it to a camera, as he so often spoke.",
+  "keywords": [
+    "andy warhol",
+    "fifteen minutes",
+    "moderna museet",
+    "pontus hultén",
+    "attribution"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gopnik, Warhol, 2020",
+  "source_kind": "book",
+  "reference": "Blake Gopnik, Warhol, Ecco, 2020",
+  "written": "2026-09-27"
+}

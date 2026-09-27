@@ -1,0 +1,40 @@
+{
+  "id": "art-abstraction-7",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "After several minutes in front of one of Ad Reinhardt's late black paintings, what do attentive viewers begin to see?",
+  "options": [
+    "A cross of slightly different blacks",
+    "Only an even, unbroken black",
+    "Their own reflection in the gloss"
+  ],
+  "correct": 0,
+  "answer": "A cross of slightly different blacks. Each canvas, about 1.5 m square, is divided into nine squares of near-black reds, blues and greens, arranged so that a cross emerges as the eye adapts. He drained oil from his paint to keep the surface matte and free of glare. Photographs almost never show the cross.",
+  "move": "Some differences appear only to someone willing to keep looking.",
+  "trap": "Taking black paintings to be plain black, as a glance confirms.",
+  "keywords": [
+    "ad reinhardt",
+    "black paintings",
+    "dark adaptation",
+    "matte surface",
+    "cross"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rose, Art as Art, 1975",
+  "source_kind": "book",
+  "reference": "Barbara Rose (ed.), Art as Art: The Selected Writings of Ad Reinhardt, Viking, 1975",
+  "written": "2026-09-27"
+}

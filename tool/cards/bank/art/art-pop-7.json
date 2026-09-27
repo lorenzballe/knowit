@@ -1,0 +1,33 @@
+{
+  "id": "art-pop-7",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did James Rosenquist's years painting billboards above Times Square teach him about big pictures?",
+  "answer": "That big images dissolve close up. Up against a giant face or plate of spaghetti, he saw only shapes of colour. His canvases crop fragments at that scale and jam them together. F-111, of 1964 to 1965, runs 26 metres round a room: a fighter plane cut by cake, a tyre, a hairdryer.",
+  "move": "Stand where the maker stood, and familiar images turn into shapes.",
+  "keywords": [
+    "james rosenquist",
+    "billboards",
+    "times square",
+    "f-111",
+    "scale"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenquist, Painting Below Zero, 2009",
+  "source_kind": "book",
+  "reference": "James Rosenquist with David Dalton, Painting Below Zero: Notes on a Life in Art, Alfred A. Knopf, 2009",
+  "written": "2026-09-27"
+}

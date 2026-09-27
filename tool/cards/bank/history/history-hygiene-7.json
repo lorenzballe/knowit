@@ -3,9 +3,6 @@
   "topic": "history",
   "genre": "history.everyday_life",
   "strand": "history.everyday_life.hygiene",
-  "also": [
-    "medicine.medical_history.germ_theory"
-  ],
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "reflection",

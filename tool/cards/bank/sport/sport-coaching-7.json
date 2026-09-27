@@ -8,11 +8,11 @@
   "principle": "conditional",
   "question": "Runner on first, nobody out: a sacrifice bunt moves him to second at the cost of an out. What happens to expected runs?",
   "options": [
-    "They fall",
     "They rise",
-    "They stay level"
+    "They stay level",
+    "They fall"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "They fall, by roughly a quarter in run-expectancy tables since Lindsey's in 1963: an out is worth more than a base. Yet the chance of scoring at least one run barely moves, so late in a close game, when one run decides it, the bunt is near break-even.",
   "move": "Before judging a move, ask whether the goal is many points or one.",
   "trap": "Assuming a runner in scoring position must be worth the out.",

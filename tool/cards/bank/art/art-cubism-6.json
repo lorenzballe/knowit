@@ -1,0 +1,33 @@
+{
+  "id": "art-cubism-6",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the two ancient Iberian stone heads Picasso kept while painting Les Demoiselles d'Avignon come from?",
+  "answer": "From the Louvre, stolen. Géry Pieret, a Belgian adventurer who acted as Apollinaire's secretary, took them and sold them to Picasso in 1907. When the Mona Lisa vanished in 1911, the heads became dangerous: they were handed back, and Apollinaire spent days in jail. Faces behind the Demoiselles had walked out of the Louvre.",
+  "move": "Ask how the objects on a studio shelf got there.",
+  "keywords": [
+    "iberian heads",
+    "picasso",
+    "apollinaire",
+    "louvre theft",
+    "géry pieret"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Read, Picasso and Apollinaire, 2008",
+  "source_kind": "book",
+  "reference": "Peter Read, Picasso and Apollinaire: The Persistence of Memory, University of California Press, 2008",
+  "written": "2026-09-27"
+}

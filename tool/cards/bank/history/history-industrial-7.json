@@ -5,7 +5,7 @@
   "strand": "history.revolutions.industrial",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "confounding",
+  "principle": "reflection",
   "question": "True or false: Americans born around 1860 grew up shorter on average than those born around 1830, though incomes had risen?",
   "options": [
     "True",
@@ -13,7 +13,7 @@
   ],
   "correct": 0,
   "answer": "True. Military records show average height of native-born American men falling by a couple of centimetres across those cohorts, while income per head grew. John Komlos points to what income leaves out: dearer food as farm goods went to distant markets, and crowded towns full of infection. City children paid in stature.",
-  "move": "When two measures of welfare part ways, look for what drives both.",
+  "move": "When two measures of welfare part ways, ask what each one leaves out.",
   "trap": "Taking rising income per head as a measure of how well people lived.",
   "keywords": [
     "heights",

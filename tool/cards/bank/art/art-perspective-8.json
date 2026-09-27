@@ -1,0 +1,33 @@
+{
+  "id": "art-perspective-8",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where do the receding lines meet in the painted architecture on Roman villa walls?",
+  "answer": "Mostly not at one point. At Boscoreale and Pompeii, receding beams and cornices converge in pairs towards a vertical axis down the middle, like a fishbone, so each zone looks deep but no single eye position fits the whole wall. Erwin Panofsky called this the vanishing axis. The single vanishing point waited for Florence.",
+  "move": "Looking right in each part does not make the whole consistent.",
+  "keywords": [
+    "roman wall painting",
+    "boscoreale",
+    "vanishing axis",
+    "panofsky",
+    "pompeii"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Panofsky, Perspective as Symbolic Form, 1991",
+  "source_kind": "book",
+  "reference": "Erwin Panofsky, Perspective as Symbolic Form, trans. Christopher S. Wood, Zone Books, 1991",
+  "written": "2026-09-27"
+}
