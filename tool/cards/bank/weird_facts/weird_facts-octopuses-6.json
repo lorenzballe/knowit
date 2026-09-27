@@ -6,20 +6,21 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: the octopus heart that supplies its body stops beating while the animal jet-swims?",
+  "question": "True or false: the common octopus, a master of colour camouflage, has only one kind of light-sensitive pigment in its eyes?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. Of its three hearts, two push blood through the gills and one, the systemic heart, sends it round the body. Wells and colleagues found that in swimming common octopuses the systemic heart halts, as the squeezing mantle chokes the blood returning to it. Bottom-living octopuses crawl far more than they swim.",
-  "move": "Check whether the effort itself cuts off the supply it depends on.",
-  "trap": "Assuming three hearts must give extra power for bursts of speed.",
+  "answer": "True. Its retina carries a single visual pigment, most sensitive to blue-green light, so it cannot compare wavelengths the way eyes with two or more pigments do. Behavioural tests by Messenger in 1977 found no sign that octopuses tell colours apart. Yet the same animal vanishes against red weed and green algae.",
+  "move": "A result that looks like skill may run on a different sense entirely.",
+  "trap": "Assuming an animal that matches colours so well must see them.",
   "keywords": [
-    "octopus hearts",
-    "jet propulsion",
-    "circulation",
-    "common octopus"
+    "common octopus",
+    "visual pigment",
+    "colour blindness",
+    "camouflage",
+    "retina"
   ],
   "era": "timeless",
   "region": "none",
@@ -31,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Wells et al., J. Exp. Biology, 1987",
+  "source": "Messenger, J. Exp. Biology, 1977",
   "source_kind": "primary_document",
-  "reference": "Wells, Duthie, Houlihan, Smith & Wells, Blood flow and pressure changes in exercising octopuses (Octopus vulgaris), Journal of Experimental Biology, 1987",
+  "reference": "Messenger, Evidence that Octopus is colour blind, Journal of Experimental Biology, 1977",
   "written": "2026-09-27"
 }

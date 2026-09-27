@@ -9,7 +9,7 @@
   "question": "In summer 2012 Greenland's Jakobshavn glacier flowed about 17 km a year, four times its 1990s pace. How many more metres a day?",
   "value": 35,
   "unit": "metres a day",
-  "tolerance": 1,
+  "tolerance": 2,
   "answer": "46.6 − 11.6 = 35 m a day faster.",
   "move": "Turn a yearly rate into a daily one to see it move.",
   "trap": "Treating a glacier as too slow for its speed to matter daily.",

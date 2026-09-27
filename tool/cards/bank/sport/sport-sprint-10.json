@@ -5,7 +5,7 @@
   "strand": "sport.records.sprint",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "availability",
   "question": "What mainly lets the fastest sprinters reach higher top speeds than slower runners?",
   "options": [
     "Hitting the ground with more force",

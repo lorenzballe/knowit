@@ -6,18 +6,18 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "A giraffe's brain can sit 2 m above its heart. What pressure, in mmHg, does lifting blood that high cost?",
-  "value": 155,
+  "question": "A giraffe's brain sits 2 m above its heart; mercury is 13 times as dense as blood. How many mmHg lift blood there?",
+  "value": 154,
   "unit": "mmHg",
-  "tolerance": 2,
-  "answer": "Mercury is 13.6 times as dense as water: 2,110 / 13.6 ≈ 155 mmHg.",
+  "tolerance": 5,
+  "answer": "2,000 / 13 ≈ 154 mmHg.",
   "move": "Height costs pressure, and the pump pays it before any work begins.",
   "trap": "Treating 2 m as trivial next to a heart's ordinary push.",
-  "hint": "Turn the column of blood into an equivalent column of mercury using their densities.",
+  "hint": "Ask how tall a column of mercury would press as hard as the blood.",
   "steps": [
     "A 2 m column is 2,000 mm of blood.",
-    "Blood is 1.055 times as dense as water: 2,000 × 1.055 = 2,110 mm of water.",
-    "Mercury is 13.6 times as dense as water: 2,110 / 13.6 ≈ 155 mmHg."
+    "Mercury is 13 times as dense, so the same pressure needs a column 13 times shorter.",
+    "2,000 / 13 ≈ 154 mmHg."
   ],
   "keywords": [
     "giraffe",

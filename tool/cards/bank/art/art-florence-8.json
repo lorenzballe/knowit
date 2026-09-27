@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "Ghiberti worked on Baptistery doors from 1403 to 1424, then 1425 to 1452. What share of his 77 years is that, to the nearest 10 per cent?",
+  "question": "Ghiberti spent 1403 to 1424, then 1425 to 1452, on Baptistery doors. What share of his 77 years is that, to the nearest 10 per cent?",
   "value": 60,
   "unit": "per cent",
   "answer": "48 / 77 = about 0.62, so 60 per cent to the nearest 10.",

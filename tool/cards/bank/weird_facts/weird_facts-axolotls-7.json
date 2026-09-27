@@ -8,12 +8,12 @@
   "principle": "sampling",
   "question": "Can an axolotl regrow the lens of its eye after the lens is removed?",
   "options": [
-    "Yes, at any age",
-    "Never; only newts can do it",
-    "Only for about two weeks after hatching"
+    "Yes, throughout its life",
+    "No, at no stage of life",
+    "Only as a young larva"
   ],
   "correct": 2,
-  "answer": "Only for about two weeks after hatching. Suetsugu-Maki and colleagues found young larvae rebuild a lens from cells of the iris, but the ability vanishes as they grow; newts keep it all their lives. Axolotls had long been said to lack it entirely, a verdict drawn from animals past that early window.",
+  "answer": "Only as a young larva, up to about two weeks after hatching. Suetsugu-Maki and colleagues found young larvae rebuild a lens from cells of the iris, but the ability vanishes as they grow; newts keep it all their lives. Axolotls had long been said to lack it entirely, a verdict drawn from animals past that early window.",
   "move": "Ask when in life an ability was tested before declaring it missing.",
   "trap": "Trusting the long-standing verdict, reached by testing only older animals.",
   "keywords": [
