@@ -1,0 +1,33 @@
+{
+  "id": "music-bach-1",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Whom did Leipzig's town council want as its cantor in 1723 before it settled for Bach?",
+  "answer": "Georg Philipp Telemann, then Christoph Graupner. Telemann used the offer to win a pay rise in Hamburg, and Graupner's employer in Darmstadt would not release him. Bach was the third choice, and one councillor noted that since the best could not be had, a middling one would have to do. He stayed 27 years.",
+  "move": "A ranking made at hiring time says more about the committee than the candidate.",
+  "keywords": [
+    "leipzig",
+    "thomaskantor",
+    "telemann",
+    "graupner",
+    "town council"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New Bach Reader, 1998",
+  "source_kind": "primary_document",
+  "reference": "David and Mendel, rev. Wolff, The New Bach Reader, W. W. Norton, 1998",
+  "written": "2026-09-26"
+}

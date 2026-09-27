@@ -1,0 +1,33 @@
+{
+  "id": "technology-dns-1",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are there exactly 13 named root servers at the top of the internet's naming system?",
+  "answer": "Because of a packet size set in 1987. The DNS standard capped a reply sent by UDP, its quick one-packet message, at 512 bytes, and a list of 13 server names with their addresses was what fitted. The 13 names survive, but each is now shared by many machines, well over a thousand in all.",
+  "move": "Odd fixed numbers in a system are often a fossil of an old limit.",
+  "keywords": [
+    "root servers",
+    "dns",
+    "udp",
+    "512 bytes",
+    "anycast"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mockapetris, RFC 1035, 1987",
+  "source_kind": "standard",
+  "reference": "Mockapetris, RFC 1035: Domain Names, Implementation and Specification, IETF, 1987",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-rainforests-2",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Terry Erwin's famous 1982 estimate of 30 million insect species was scaled up from beetles in how many trees?",
+  "options": [
+    "About 2,000 across the tropics",
+    "About 200 in one forest",
+    "19, all of one species"
+  ],
+  "correct": 2,
+  "answer": "19, all of one species. In Panama, Erwin fogged the crowns of 19 Luehea seemannii trees with insecticide, counted about 1,200 beetle species, then multiplied through guesses: the share tied to that tree, 50,000 tropical tree species, beetles as 40% of arthropods. Later estimates put insects nearer 5.5 million species.",
+  "move": "Ask how big the sample was before believing how big the claim is.",
+  "trap": "About 2,000 trees, because a global figure seems to need one.",
+  "keywords": [
+    "terry erwin",
+    "insect species",
+    "canopy fogging",
+    "beetles",
+    "panama"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Erwin 1982; Stork 2018",
+  "source_kind": "paper",
+  "reference": "Erwin, Tropical forests: their richness in Coleoptera and other arthropod species, The Coleopterists Bulletin, 1982; Stork, How many species of insects and other terrestrial arthropods are there on Earth?, Annual Review of Entomology, 2018",
+  "written": "2026-09-26"
+}

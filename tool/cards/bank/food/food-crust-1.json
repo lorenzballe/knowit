@@ -1,0 +1,42 @@
+{
+  "id": "food-crust-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A loaf bakes for 40 minutes in a 230 °C oven. How hot does the centre of the crumb get?",
+  "options": [
+    "About 150 °C",
+    "About 98 °C",
+    "About 220 °C"
+  ],
+  "correct": 1,
+  "answer": "About 98 °C. While the crumb holds water, heat goes into making steam, so a boiling front near 100 °C creeps inward. Only the dried outer layer climbs well past 100 °C, and only there can a brown crust form. A loaf is a pot of boiling water wrapped in toast.",
+  "move": "Wherever water is boiling off, the temperature is capped near 100 °C.",
+  "trap": "Letting the 230 °C oven setting pull the guess far upward.",
+  "keywords": [
+    "crumb temperature",
+    "evaporation front",
+    "crust formation",
+    "baking"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vanin et al., Trends Food Sci. Technol., 2009",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/abs/pii/S0924224409001307",
+  "written": "2026-09-26"
+}

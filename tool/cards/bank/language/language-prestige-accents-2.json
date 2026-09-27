@@ -1,0 +1,33 @@
+{
+  "id": "language-prestige-accents-2",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before the Second World War, which way of saying car sounded upper-class in New York?",
+  "answer": "Dropping the r. Well-to-do New Yorkers followed the r-less British model, as Franklin Roosevelt's speeches show. After the war prestige flipped. In 1962 William Labov asked staff in three department stores for the fourth floor: at upmarket Saks about six in ten sounded an r, at bargain S. Klein about two in ten.",
+  "move": "Yesterday's polish can become today's accent to lose.",
+  "keywords": [
+    "new york city",
+    "r-dropping",
+    "william labov",
+    "department stores",
+    "franklin roosevelt"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Labov, English in New York City, 1966",
+  "source_kind": "book",
+  "reference": "Labov, The Social Stratification of English in New York City, Center for Applied Linguistics, 1966",
+  "written": "2026-09-26"
+}

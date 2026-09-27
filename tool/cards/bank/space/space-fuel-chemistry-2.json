@@ -1,0 +1,33 @@
+{
+  "id": "space-fuel-chemistry-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do hydrogen rocket engines deliberately burn with too little oxygen?",
+  "answer": "Because light exhaust is fast exhaust. Burning hydrogen completely takes about 8 kg of oxygen per kilogram; the Shuttle's main engines used 6. The spare hydrogen leaves unburnt, and its tiny molecules lower the average weight of the exhaust, so the same heat drives it out faster. The engine wastes fuel to gain speed.",
+  "move": "The efficient setting is not always the complete one.",
+  "keywords": [
+    "liquid hydrogen",
+    "mixture ratio",
+    "exhaust velocity",
+    "rs-25",
+    "specific impulse"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sutton & Biblarz, Rocket Propulsion Elements, 2017",
+  "source_kind": "book",
+  "reference": "Sutton & Biblarz, Rocket Propulsion Elements, 9th ed., Wiley, 2017",
+  "written": "2026-09-26"
+}

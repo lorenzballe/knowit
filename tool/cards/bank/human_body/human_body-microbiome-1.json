@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Breast milk carries large amounts of complex sugars that the baby cannot digest. What are they for?",
+  "options": [
+    "Feeding bacteria in the baby's gut",
+    "Thickening the milk so it clings",
+    "Carrying surplus sugar out of the mother"
+  ],
+  "correct": 0,
+  "answer": "Feeding bacteria in the baby's gut. These oligosaccharides are the third-largest solid ingredient of human milk, after lactose and fat, yet reach the colon undigested. There Bifidobacterium infantis, which carries a cluster of genes for breaking them down, thrives and crowds out rivals. In breastfed infants, bifidobacteria often make up most of the gut's bacteria.",
+  "move": "When a system makes something it cannot use, find who does.",
+  "trap": "Assuming whatever a body cannot use must be surplus it sheds.",
+  "keywords": [
+    "human milk oligosaccharides",
+    "breast milk",
+    "bifidobacterium",
+    "infant gut"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bode, Glycobiology, 2012",
+  "source_kind": "paper",
+  "reference": "Bode, Human milk oligosaccharides: every baby needs a sugar mama, Glycobiology, 2012",
+  "written": "2026-09-26"
+}

@@ -1736,4 +1736,44 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get topEmpty =>
       'Aún no hay nada en la lista. Cada carta que te gusta, guardas o cuentas suma.';
+
+  @override
+  String get readMark => 'Leída';
+
+  @override
+  String get lovedSinceTheStart => 'Las más queridas desde el principio';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Las más queridas en $subject';
+  }
+
+  @override
+  String get lovedLine =>
+      'Lo que más han guardado los lectores y tú aún no has leído';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Tu primera semana: $n días más con cuatro de las cinco tuyas.',
+      one: 'Tu primera semana: mañana es el último día, cuatro de las cinco son tuyas.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Tu primera semana termina esta noche. Desde mañana una de las cinco es tuya y tres son de todos; Astute+ mantiene las cinco tuyas.';
+
+  @override
+  String get forYouShelf => 'Para ti';
+
+  @override
+  String get forYouLine => 'Lo que tu lectura pone primero';
+
+  @override
+  String get exploreOffline =>
+      'Estás sin conexión. Esto es Explorar tal como se leyó por última vez.';
 }

@@ -1,0 +1,33 @@
+{
+  "id": "food-cheese-3",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Swiss Emmental develop fewer and fewer holes over recent decades?",
+  "answer": "Because milk got cleaner. Holes form where carbon dioxide from propionic bacteria gathers around tiny particles, and a 2015 Agroscope study found microscopic hay dust in the milk doing that job. Closed modern milking systems keep hay out, so the gas had fewer places to start. Adding measured hay powder brought the holes back.",
+  "move": "When a result fades after a clean-up, suspect the dirt was doing something.",
+  "keywords": [
+    "emmental",
+    "cheese eyes",
+    "hay dust",
+    "propionic bacteria",
+    "agroscope"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swissinfo, 2015",
+  "source_kind": "news_archive",
+  "reference": "https://www.swissinfo.ch/eng/sci-tech/mystery-solved_hay-particles-responsible-for-holes-in-swiss-cheese/41457054",
+  "written": "2026-09-26"
+}

@@ -3,6 +3,9 @@
   "topic": "human_body",
   "genre": "human_body.the_brain",
   "strand": "human_body.the_brain.neurons",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +27,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "CIE colorimetry, metamerism"
+  "figure": "none",
+  "source": "CIE colorimetry, metamerism",
+  "source_kind": "reference_work",
+  "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, Wiley, 1982"
 }

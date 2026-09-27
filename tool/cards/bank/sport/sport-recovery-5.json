@@ -1,0 +1,39 @@
+{
+  "id": "sport-recovery-5",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A runner starts a new recovery remedy at the height of post-race soreness. Three days later the pain has gone. Why?",
+  "options": [
+    "The remedy sped up healing",
+    "The remedy only masked the pain",
+    "It would have faded anyway"
+  ],
+  "correct": 2,
+  "answer": "It would have faded anyway. Delayed soreness peaks one to three days after hard exercise and clears within about a week, whatever is done. People reach for remedies at the peak, so almost anything tried then is followed by improvement. Trials against untreated controls find most remedies make small differences at best.",
+  "move": "Anything started at the worst moment will seem to work.",
+  "trap": "Crediting the remedy because relief followed it.",
+  "keywords": [
+    "muscle soreness",
+    "recovery remedies",
+    "natural course",
+    "controlled trials"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Connolly, Sayers & McHugh, 2003",
+  "source_kind": "paper",
+  "reference": "Connolly, Sayers & McHugh, Treatment and prevention of delayed onset muscle soreness, Journal of Strength and Conditioning Research, 2003",
+  "written": "2026-09-26"
+}

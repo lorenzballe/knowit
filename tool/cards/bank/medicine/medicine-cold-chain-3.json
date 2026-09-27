@@ -1,0 +1,33 @@
+{
+  "id": "medicine-cold-chain-3",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Pfizer Covid vaccine's permitted fridge life grow from five days to a month in 2021?",
+  "answer": "With data, not a new formula. The five-day limit for thawed vials at 2 to 8 °C was simply as far as stability testing had reached at authorisation. In May 2021, on further stability data from Pfizer, regulators extended it to a month. Ordinary clinic fridges could now hold the vaccine.",
+  "move": "A limit on a label may mark where testing stopped, not where things fail.",
+  "keywords": [
+    "pfizer-biontech",
+    "mrna vaccine",
+    "refrigerator storage",
+    "stability data",
+    "fda"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Hospital Association News, May 2021",
+  "source_kind": "news_archive",
+  "reference": "https://www.aha.org/news/headline/2021-05-20-fda-authorizes-storing-thawed-pfizer-covid-19-vaccine-refrigerator-30-days",
+  "written": "2026-09-26"
+}

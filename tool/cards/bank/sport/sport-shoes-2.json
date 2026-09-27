@@ -1,0 +1,39 @@
+{
+  "id": "sport-shoes-2",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: sawing through the carbon plate of a Nike Vaporfly wipes out most of its energy saving?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Healey and Hoogkamer made six cuts across the forefoot plate. Energy cost rose by only about 0.5%, not a significant change, against the roughly 4% the shoe saves. The benefit seems to come from the thick, springy foam and the shoe's shape working together. A shoe with a sawn plate ran almost as well.",
+  "move": "Take the famous part out and see whether anything stops working.",
+  "trap": "The rigid plate is the visible novelty, so it gets the credit.",
+  "keywords": [
+    "carbon plate",
+    "vaporfly",
+    "running economy",
+    "midsole foam",
+    "super shoes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Healey & Hoogkamer, J Sport Health Sci, 2022",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/pii/S2095254621000739",
+  "written": "2026-09-26"
+}

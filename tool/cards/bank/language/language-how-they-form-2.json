@@ -1,0 +1,33 @@
+{
+  "id": "language-how-they-form-2",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When settlers from all over Britain reached New Zealand, whose accent did their grandchildren end up speaking?",
+  "answer": "Nobody's in particular. Recordings made by a broadcasting Mobile Unit in the 1940s, of people born from the 1850s, show the first local generation mixing features from many parents' dialects. Peter Trudgill argues that in the next generation the commonest variants in the mix won out, giving an accent no settler had spoken.",
+  "move": "A mixture can settle into something none of its ingredients were.",
+  "keywords": [
+    "new zealand english",
+    "mobile unit",
+    "new-dialect formation",
+    "peter trudgill",
+    "settlers"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trudgill, New-Dialect Formation, 2004",
+  "source_kind": "book",
+  "reference": "Trudgill, New-Dialect Formation: The Inevitability of Colonial Englishes, Edinburgh University Press, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-circulation-4",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "An arteriole relaxes and its radius grows by 19%. At the same pressure, how much more blood flows through it?",
+  "options": [
+    "About 19% more",
+    "About twice as much",
+    "About 40% more"
+  ],
+  "correct": 1,
+  "answer": "About twice as much. For smooth flow through a tube, Poiseuille's law makes flow rise with the fourth power of the radius: 1.19 x 1.19 x 1.19 x 1.19 ≈ 2. So the body steers blood with its smallest arteries: narrowing them by a sixth halves an organ's supply.",
+  "move": "When a size is multiplied by itself four times, small changes stop being small.",
+  "trap": "Assuming flow grows in step with the width.",
+  "keywords": [
+    "poiseuille's law",
+    "arterioles",
+    "blood flow",
+    "vessel radius"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
+  "source_kind": "book",
+  "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",
+  "written": "2026-09-26"
+}

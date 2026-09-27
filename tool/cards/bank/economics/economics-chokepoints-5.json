@@ -1,0 +1,39 @@
+{
+  "id": "economics-chokepoints-5",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Turkey may charge merchant ships a toll for passing through the Bosphorus?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Montreux Convention of 1936 gives merchant ships free passage in peacetime; Turkey may charge only fixed fees for lighthouses, sanitary control and rescue services. So one of the busiest straits on earth earns its owner little, while Egypt took about $10 billion from the Suez Canal in 2023.",
+  "move": "Owning the gate is worth only what the treaties let you charge.",
+  "trap": "Carrying over the Suez and Panama model of paying to pass.",
+  "keywords": [
+    "bosphorus",
+    "montreux convention",
+    "turkey",
+    "straits",
+    "tolls"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Montreux Convention, 1936",
+  "source_kind": "primary_document",
+  "reference": "Convention Regarding the Regime of the Straits, signed at Montreux, 20 July 1936",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "art-synthetics-5",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: synthetic alizarin, first made from coal tar in 1868, is a different molecule from the red in madder root.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It is the same molecule. In 1868 Carl Graebe and Carl Liebermann made alizarin from anthracene, a coal-tar product, so factories could replace the plant rather than imitate it. Within a few decades most of the madder fields around Avignon, once a major crop, had gone.",
+  "move": "A perfect chemical copy leaves the original nothing to compete on but price.",
+  "trap": "Synthetic sounds like imitation, so a different compound seems likely.",
+  "keywords": [
+    "alizarin",
+    "madder",
+    "graebe and liebermann",
+    "coal tar",
+    "anthracene"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Garfield, Mauve, 2000",
+  "source_kind": "book",
+  "reference": "Simon Garfield, Mauve: How One Man Invented a Colour That Changed the World, Faber and Faber, 2000",
+  "written": "2026-09-26"
+}

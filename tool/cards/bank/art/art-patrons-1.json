@@ -1,0 +1,35 @@
+{
+  "id": "art-patrons-1",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "also": [
+    "art.colour_and_pigment.ultramarine"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "As the 1400s went on, what did Florentine patrons start writing into contracts instead of gold and blue?",
+  "answer": "The master's own hand. Early contracts itemised materials: gold leaf, and ultramarine at a stated price by weight. Michael Baxandall traced a shift across the century toward clauses requiring the master himself to paint the figures, above all the faces, rather than his assistants. Paying for skill became the new way to show off.",
+  "move": "When the costly thing becomes common, status moves to what cannot be bought in bulk.",
+  "keywords": [
+    "michael baxandall",
+    "painting contracts",
+    "workshops",
+    "ultramarine"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baxandall, Painting and Experience, 1972",
+  "source_kind": "book",
+  "reference": "Michael Baxandall, Painting and Experience in Fifteenth-Century Italy, Oxford University Press, 1972",
+  "written": "2026-09-26"
+}

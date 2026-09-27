@@ -1,0 +1,38 @@
+{
+  "id": "history-france-5",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Was the Terror of 1793–94 driven mainly by war and rebellion rather than by revolutionary ideology?",
+  "sides": [
+    "Yes, war and revolt",
+    "No, ideology"
+  ],
+  "answer": "The Terror followed the danger. It began with foreign armies on French soil and revolts in the Vendée, Lyon and Toulon, and most death sentences were passed in those rebel regions; Paris accounted for 2,639 of 16,594. Remove the civil war and the invasion, and most of the killing has no occasion.",
+  "move": "Whichever side you took, the timing of the killing against the danger decides it.",
+  "counterpoint": "In Paris the killing peaked after the danger passed. The Law of 22 Prairial, in June 1794, denied defendants counsel, and executions there rose from about 3 a day to about 29, just as victories in Belgium lifted the threat of invasion. A politics that sorted citizens into the virtuous and enemies needed no war to keep killing.",
+  "keywords": [
+    "reign of terror",
+    "vendée",
+    "law of 22 prairial",
+    "revolutionary tribunal",
+    "civil war"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Furet, Interpreting the French Revolution, 1981",
+  "source_kind": "book",
+  "reference": "Furet, Interpreting the French Revolution, Cambridge University Press, 1981; Greer, The Incidence of the Terror during the French Revolution, Harvard University Press, 1935",
+  "written": "2026-09-26"
+}

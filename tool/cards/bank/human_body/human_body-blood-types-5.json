@@ -1,0 +1,38 @@
+{
+  "id": "human_body-blood-types-5",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: for plasma transfusions, group AB is the universal donor?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Red cells carry the A and B antigens, so group O cells suit anyone; plasma carries the antibodies, and only AB plasma has neither anti-A nor anti-B. So AB plasma can go to any patient, while O plasma, full of both, suits only group O. Just 3 to 4% of people are AB.",
+  "move": "When the thing being given changes, check whether the rule flips.",
+  "trap": "Carrying over the red-cell rule that makes O the universal donor.",
+  "keywords": [
+    "plasma",
+    "universal donor",
+    "abo antibodies",
+    "transfusion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klein & Anstee, Mollison's Blood Transfusion, 2014",
+  "source_kind": "book",
+  "reference": "Klein & Anstee, Mollison's Blood Transfusion in Clinical Medicine, 12th edition, Wiley-Blackwell, 2014",
+  "written": "2026-09-26"
+}

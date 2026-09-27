@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Successive proportions"
+  "figure": "none",
+  "source": "Successive proportions",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
 }

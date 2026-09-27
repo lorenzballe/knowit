@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-goosebumps-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: some people can raise gooseflesh on their skin at will, with no cold or emotion?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Heathers and colleagues studied 32 people who could do it; most described a kind of inner tensing, often starting at the back of the head, and some could raise it on one side of the body only. As a group they scored higher than usual on openness to experience.",
+  "move": "A reflex called involuntary is sometimes just one nobody has tried to steer.",
+  "trap": "Assuming a nerve response outside conscious control can never be steered.",
+  "keywords": [
+    "voluntary piloerection",
+    "gooseflesh",
+    "autonomic nervous system",
+    "openness"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heathers et al., PeerJ, 2018",
+  "source_kind": "primary_document",
+  "reference": "Heathers et al., The voluntary control of piloerection, PeerJ, 2018",
+  "written": "2026-09-26"
+}

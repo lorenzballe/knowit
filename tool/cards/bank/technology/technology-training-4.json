@@ -1,0 +1,39 @@
+{
+  "id": "technology-training-4",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: more than nine in ten of the words GPT-3 was trained on were English?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True: about 93% by word count, as OpenAI's GPT-3 paper reports; every other language together made up the remaining 7%. The model's picture of the world was drawn mostly from English pages, which is part of why early chatbots handled other languages, and the places where they are spoken, less well.",
+  "move": "Ask what the sample was made of before trusting its picture of the world.",
+  "trap": "False, picturing a multilingual web rather than the text actually chosen.",
+  "keywords": [
+    "gpt-3",
+    "training data",
+    "english",
+    "languages",
+    "openai"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Brown et al., GPT-3 paper, 2020",
+  "source_kind": "paper",
+  "reference": "Brown et al., Language Models are Few-Shot Learners, Advances in Neural Information Processing Systems, 2020",
+  "written": "2026-09-26"
+}

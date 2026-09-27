@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-odd-fines-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did CBS never pay the fine for the 2004 Super Bowl half-time show?",
+  "answer": "Because the courts threw it out. The FCC fined CBS $550,000, the maximum $27,500 for each of 20 stations it owned. In 2011 an appeals court ruled that punishing a fleeting image of nudity broke the regulator's own earlier policy without fair notice. In 2012 the Supreme Court declined to revive it.",
+  "move": "A penalty is only as strong as the notice given before it.",
+  "keywords": [
+    "fcc",
+    "cbs",
+    "super bowl",
+    "indecency",
+    "fair notice"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CBS Corp. v. FCC, Third Circuit, 2011",
+  "source_kind": "primary_document",
+  "reference": "CBS Corporation v. Federal Communications Commission, US Court of Appeals for the Third Circuit, 2011",
+  "written": "2026-09-26"
+}

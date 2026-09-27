@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-names-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might an economist named Abbott reach tenure more easily than an equally able one named Young?",
+  "answer": "Because economists list co-authors alphabetically. Einav and Yariv found surnames early in the alphabet linked to tenure in top US departments and to fellowship of the Econometric Society. Psychology, which orders authors by contribution, showed no such link. In a crowded reference list, Abbott is the name before the et al.",
+  "move": "Where credit follows an arbitrary order, the order itself becomes an advantage.",
+  "keywords": [
+    "alphabetical order",
+    "surnames",
+    "economists",
+    "tenure",
+    "co-authorship"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Einav and Yariv, Journal of Economic Perspectives, 2006",
+  "source_kind": "statistics",
+  "reference": "doi:10.1257/089533006776526085",
+  "written": "2026-09-26"
+}

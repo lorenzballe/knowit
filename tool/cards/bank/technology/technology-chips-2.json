@@ -1,0 +1,33 @@
+{
+  "id": "technology-chips-2",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the war in Ukraine threaten the lasers that print patterns onto chips?",
+  "answer": "Because of neon. The deep-ultraviolet lasers used in chipmaking run on a gas that is mostly neon, and before 2022 two Ukrainian firms, in Mariupol and Odesa, purified about half the world's chip-grade supply. Their crude neon was skimmed from the oxygen plants of Soviet-era steel mills: steelmaking's leftovers, feeding chip fabs.",
+  "move": "Trace a critical input back until you reach somebody else's waste.",
+  "keywords": [
+    "neon",
+    "excimer lasers",
+    "ukraine",
+    "steel mills",
+    "lithography"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alper, Reuters, 11 March 2022",
+  "source_kind": "news_archive",
+  "reference": "Alper, Exclusive: Ukraine halts half of world's neon output for chips, clouding outlook, Reuters, 11 March 2022",
+  "written": "2026-09-26"
+}

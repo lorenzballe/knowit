@@ -1,0 +1,33 @@
+{
+  "id": "sport-diet-1",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did needle biopsies of Swedish volunteers in the 1960s show about diet and endurance?",
+  "answer": "That stored muscle glycogen sets how long hard exercise lasts. After days on a high-carbohydrate diet, subjects cycled roughly three times as long before exhaustion as after a fat-and-protein diet, and their thigh muscles held several times more glycogen. Carbohydrate loading before endurance races grew from these experiments.",
+  "move": "Measure what is stored inside before arguing about willpower.",
+  "keywords": [
+    "muscle glycogen",
+    "carbohydrate loading",
+    "muscle biopsy",
+    "endurance",
+    "sweden"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bergström et al., Acta Physiologica Scandinavica, 1967",
+  "source_kind": "paper",
+  "reference": "Bergström, Hermansen, Hultman & Saltin, Diet, muscle glycogen and physical performance, Acta Physiologica Scandinavica, 1967",
+  "written": "2026-09-26"
+}

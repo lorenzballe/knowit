@@ -1,0 +1,32 @@
+{
+  "id": "cinema-destroyed-1",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did one studio lose almost its entire silent-era library in a single day?",
+  "answer": "Because it was kept in one place. In July 1937 the nitrate film in Fox's storage vaults at Little Ferry, New Jersey, caught fire and destroyed most of the studio's negatives from before 1935. Whole careers went with them: nearly all of Theda Bara's films, Fox's biggest star of the 1910s, are lost.",
+  "move": "Keep what cannot be replaced in more than one place.",
+  "keywords": [
+    "fox film corporation",
+    "little ferry vault fire",
+    "theda bara",
+    "nitrate film"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Slide, Nitrate Won't Wait, 1992",
+  "source_kind": "book",
+  "reference": "Slide, Nitrate Won't Wait: A History of Film Preservation in the United States, McFarland, 1992",
+  "written": "2026-09-26"
+}

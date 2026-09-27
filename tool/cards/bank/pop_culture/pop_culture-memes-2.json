@@ -1,0 +1,36 @@
+{
+  "id": "pop_culture-memes-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "also": [
+    "pop_culture.internet_culture.forums"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Mike Godwin first spread his rule about Nazi comparisons across Usenet groups?",
+  "answer": "As a deliberate experiment in spreading an idea. From 1990 Godwin, a lawyer, posted his rule, that a long online argument will sooner or later compare someone to Hitler, to make careless comparisons look foolish. He called it a counter-meme and described the test in Wired in October 1994. Others soon cited it unprompted.",
+  "move": "An idea spreads furthest when it is short enough to quote.",
+  "keywords": [
+    "godwin's law",
+    "mike godwin",
+    "usenet",
+    "counter-meme",
+    "wired"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Godwin, Wired, October 1994",
+  "source_kind": "news_archive",
+  "reference": "Mike Godwin, Meme, Counter-meme, Wired, issue 2.10, October 1994",
+  "written": "2026-09-26"
+}

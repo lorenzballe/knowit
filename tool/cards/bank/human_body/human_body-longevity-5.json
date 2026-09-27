@@ -1,0 +1,37 @@
+{
+  "id": "human_body-longevity-5",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is there a fixed upper limit to the human lifespan?",
+  "sides": [
+    "Yes, a ceiling near 115",
+    "No, no fixed ceiling"
+  ],
+  "answer": "Survival to 100 has soared, yet the highest reported age at death rose until the 1990s and then stalled. Jeanne Calment's 122 years, reached in 1997, is still unbeaten almost three decades later. Gains at extreme ages have shrunk, which suggests that bodies, not medicine, set a ceiling around 115, with rare outliers.",
+  "move": "Whichever side you took, whether death rates flatten at extreme ages is the hinge.",
+  "counterpoint": "Studies of verified Italians aged 105 and over found the yearly risk of death stops rising and levels off at about 50%. With a flat risk there is no hard ceiling, only ever-thinner odds, and a new record needs only enough people reaching extreme age. Statisticians also criticised how the 2016 analysis of a plateau split its data.",
+  "keywords": [
+    "maximum lifespan",
+    "jeanne calment",
+    "mortality plateau",
+    "supercentenarians"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barbi et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "Barbi, Lagona, Marsili, Vaupel & Wachter, The plateau of human mortality: demography of longevity pioneers, Science, 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-gendered-nouns-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In a world survey of 257 languages, roughly what share have grammatical gender?",
+  "options": [
+    "A little under half",
+    "Nearly all of them",
+    "About one in ten"
+  ],
+  "correct": 0,
+  "answer": "A little under half. In the World Atlas of Language Structures, 112 of the 257 languages sampled have gender and 145 have none. Finnish, Turkish and Japanese manage without it. French, German, Spanish, Russian and Hindi all have it because they descend from one family, Indo-European, whose ancestor did.",
+  "move": "Before generalising, ask whether your examples are cousins.",
+  "trap": "Judging the world by the European languages one happens to have studied.",
+  "keywords": [
+    "grammatical gender",
+    "language atlas",
+    "indo-european",
+    "language typology"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Corbett, World Atlas of Language Structures, 2013",
+  "source_kind": "reference_work",
+  "reference": "Corbett, Number of Genders, in Dryer & Haspelmath (eds.), The World Atlas of Language Structures Online, 2013",
+  "written": "2026-09-26"
+}

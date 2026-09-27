@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confounding by indication"
+  "figure": "none",
+  "source": "Confounding by indication",
+  "source_kind": "paper",
+  "reference": "Kyriacou & Lewis, Confounding by Indication in Clinical Research, JAMA, 2016"
 }

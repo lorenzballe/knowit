@@ -1,0 +1,45 @@
+{
+  "id": "human_body-blood-types-4",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "Blood type was tested against 68 personality items; 3 came out significant. At a 5% threshold, how many would chance alone give?",
+  "value": 3.4,
+  "unit": "items",
+  "tolerance": 0.4,
+  "answer": "About 3.4 items, close to the 3 found.",
+  "move": "Before counting hits, count how many times the net was cast.",
+  "trap": "Three hits look like a pattern rather than expected noise.",
+  "hint": "Treat each item as a separate lottery ticket with a 1 in 20 chance.",
+  "steps": [
+    "With no real link, each item still has a 5% chance of passing.",
+    "68 x 0.05 = 3.4.",
+    "About 3.4 items, close to the 3 found."
+  ],
+  "keywords": [
+    "blood type personality",
+    "multiple comparisons",
+    "statistical significance",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Nawata, Japanese Journal of Psychology, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.4992/jjpsy.85.13016",
+  "written": "2026-09-26"
+}

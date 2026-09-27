@@ -1,0 +1,36 @@
+{
+  "id": "food-kimchi-1",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "also": [
+    "food.spices.chilli"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the first Korean book to mention chilli, in 1614, say about the plant?",
+  "answer": "That it was highly poisonous. The encyclopedia Jibong yuseol called it Japanese mustard, since it had arrived from Japan, and warned of its toxicity. For centuries before, kimchi was pale, salted vegetables flavoured with garlic, ginger or brine. Chilli appears in kimchi recipes only in the 1700s, and red kimchi spread through the 1800s.",
+  "move": "Date a tradition by its ingredients, not by how old it feels.",
+  "keywords": [
+    "jibong yuseol",
+    "chilli pepper",
+    "korea",
+    "columbian exchange",
+    "red kimchi"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Journal of Ethnic Foods, 2025",
+  "source_kind": "paper",
+  "reference": "https://journalofethnicfoods.biomedcentral.com/articles/10.1186/s42779-025-00271-9",
+  "written": "2026-09-26"
+}

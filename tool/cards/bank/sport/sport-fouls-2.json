@@ -1,0 +1,33 @@
+{
+  "id": "sport-fouls-2",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when experienced referees judged the same recorded tackles with and without crowd noise?",
+  "answer": "With the crowd audible, they gave 15.5% fewer fouls against the home side. Qualified referees watched the same video of Premier League challenges; the only difference between the two groups was the soundtrack. The home fans' roar at a tackle was being heard as evidence of how hard it was.",
+  "move": "Ask what the judge heard, not only what the judge saw.",
+  "keywords": [
+    "referees",
+    "crowd noise",
+    "home advantage",
+    "fouls",
+    "decision making"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nevill, Balmer & Williams, 2002",
+  "source_kind": "paper",
+  "reference": "Nevill, Balmer & Williams, The influence of crowd noise and experience upon refereeing decisions in football, Psychology of Sport and Exercise, 2002",
+  "written": "2026-09-26"
+}

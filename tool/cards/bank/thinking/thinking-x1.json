@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Healthy-user bias"
+  "figure": "none",
+  "source": "Healthy-user bias",
+  "source_kind": "paper",
+  "reference": "Shrank, Patrick & Brookhart, Healthy User and Related Biases in Observational Studies of Preventive Interventions, Journal of General Internal Medicine, 2011"
 }

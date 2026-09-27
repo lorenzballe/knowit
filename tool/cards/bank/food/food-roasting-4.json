@@ -1,0 +1,38 @@
+{
+  "id": "food-roasting-4",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should coffee sold in California carry a cancer warning because roasting creates acrylamide?",
+  "sides": [
+    "Yes, warn",
+    "No, exempt it"
+  ],
+  "answer": "Roasting creates acrylamide, which causes cancer in animals and is classed as a probable human carcinogen. California's law puts the burden on sellers to show a listed chemical poses no significant risk, and in 2018 a court ruled the coffee industry had not shown it. Buyers are entitled to know.",
+  "move": "Whichever side you took, judging the chemical or the whole drink decides it.",
+  "counterpoint": "The drink matters, not one molecule in it. In 2016 the WHO's cancer agency moved coffee out of its possible carcinogen group after reviewing over 1,000 studies, several of which linked it to lower liver and womb cancer risk. California agreed in 2019 and exempted coffee. A warning on everything teaches people to ignore warnings.",
+  "keywords": [
+    "acrylamide",
+    "proposition 65",
+    "cancer warning",
+    "california",
+    "iarc"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loomis et al., Lancet Oncology, 2016",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/S1470-2045(16)30239-X",
+  "written": "2026-09-26"
+}

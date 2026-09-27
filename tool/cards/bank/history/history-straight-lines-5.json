@@ -1,0 +1,33 @@
+{
+  "id": "history-straight-lines-5",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What dispute were Mason and Dixon hired to settle when they surveyed their line in the 1760s?",
+  "answer": "A property quarrel between two families. The Penns of Pennsylvania and the Calverts of Maryland had long disputed where their grants met; an English astronomer and a surveyor ran the line by the stars from 1763 to 1767, setting stones carved with each family's arms. Only later did it divide free states from slave.",
+  "move": "A line drawn for one purpose can come to mean something else entirely.",
+  "keywords": [
+    "mason-dixon line",
+    "penn family",
+    "calvert family",
+    "boundary survey",
+    "astronomy"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Danson, Drawing the Line, 2001",
+  "source_kind": "book",
+  "reference": "Danson, Drawing the Line: How Mason and Dixon Surveyed the Most Famous Border in America, John Wiley & Sons, 2001",
+  "written": "2026-09-26"
+}

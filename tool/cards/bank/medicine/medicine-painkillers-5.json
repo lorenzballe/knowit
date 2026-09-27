@@ -1,0 +1,43 @@
+{
+  "id": "medicine-painkillers-5",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "After surgery, ibuprofen 400 mg has an NNT of 2.5; codeine 60 mg, 12. Per 120 patients, how many more does ibuprofen relieve?",
+  "value": 38,
+  "unit": "patients",
+  "answer": "48 - 10 = 38 more patients.",
+  "move": "Turn a treatment ratio into people before comparing two options.",
+  "trap": "Assuming the prescription opioid must beat an over-the-counter pill.",
+  "hint": "Divide the patients by each NNT, then compare the two results.",
+  "steps": [
+    "NNT is how many must be treated for one extra success beyond placebo.",
+    "Ibuprofen: 120 / 2.5 = 48 extra successes.",
+    "Codeine: 120 / 12 = 10 extra successes.",
+    "48 - 10 = 38 more patients."
+  ],
+  "keywords": [
+    "number needed to treat",
+    "ibuprofen",
+    "codeine",
+    "postoperative pain",
+    "oxford league table"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moore et al., Cochrane overview, 2015",
+  "source_kind": "paper",
+  "reference": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008659.pub3/full",
+  "written": "2026-09-26"
+}

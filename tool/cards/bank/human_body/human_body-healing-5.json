@@ -1,0 +1,39 @@
+{
+  "id": "human_body-healing-5",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Dementia caregivers healed a small standard wound 24% slower than matched peers. Which follow-up best tests whether stress caused it?",
+  "options": [
+    "Repeat with many more caregivers and peers",
+    "Ask caregivers to rate their own stress",
+    "Wound the same people when calm, then stressed"
+  ],
+  "correct": 2,
+  "answer": "Wound the same people when calm, then stressed. Caregivers may differ from peers in sleep, diet or health, and a bigger sample keeps all that. In 1998 the same team gave dental students identical mouth wounds in the summer holidays and three days before exams: exam-time wounds took 40% longer, about three days, to heal.",
+  "move": "More of the same comparison cannot remove what the comparison itself hides.",
+  "trap": "More people feels like stronger proof, but repeats the same comparison.",
+  "keywords": [
+    "wound healing",
+    "psychological stress",
+    "caregivers",
+    "within-person design"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marucha et al., Psychosomatic Medicine, 1998",
+  "source_kind": "paper",
+  "reference": "doi:10.1097/00006842-199805000-00025",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "music-film-scores-1",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Nino Rota's score for The Godfather pulled from the 1973 Oscar race?",
+  "answer": "Because its love theme reused a melody Rota had written for Fortunella, a 1958 Italian comedy, and original-score rules shut out recycled music. The nomination was withdrawn. Two years later The Godfather Part II, built on the same theme, won the Oscar for original dramatic score for Rota and Carmine Coppola.",
+  "move": "A rule applied case by case can reward what it once banned.",
+  "keywords": [
+    "nino rota",
+    "the godfather",
+    "academy awards",
+    "fortunella",
+    "film music"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy Awards database, 1973 and 1975",
+  "source_kind": "institution",
+  "reference": "Academy of Motion Picture Arts and Sciences, Official Academy Awards Database, 45th (1973) and 47th (1975) Awards",
+  "written": "2026-09-26"
+}

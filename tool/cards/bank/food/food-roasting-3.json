@@ -1,0 +1,41 @@
+{
+  "id": "food-roasting-3",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Green coffee costs €8 a kilo, and a dark roast loses 20% of the weight. What does a roasted kilo cost, in euros?",
+  "value": 10,
+  "unit": "euros",
+  "answer": "1.25 x €8 = €10.",
+  "move": "A loss taken off the end must be divided back, not added on.",
+  "trap": "Adding 20% to the price and landing on €9.60.",
+  "hint": "Work out how much green coffee has to go into the roaster to get one roasted kilo out.",
+  "steps": [
+    "1 kg of green beans roasts down to 0.8 kg.",
+    "One roasted kilo needs 1 / 0.8 = 1.25 kg of green beans.",
+    "1.25 x €8 = €10."
+  ],
+  "keywords": [
+    "roast loss",
+    "green coffee",
+    "coffee price",
+    "moisture"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sweet Maria's Coffee Library",
+  "source_kind": "company",
+  "reference": "https://library.sweetmarias.com/how-to-calculate-weight-loss-in-coffee-roasting/",
+  "written": "2026-09-26"
+}

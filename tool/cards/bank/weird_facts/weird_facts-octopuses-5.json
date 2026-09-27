@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-octopuses-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Wild gloomy octopuses in Jervis Bay were filmed throwing silt and shells. How do they throw?",
+  "options": [
+    "Flicking it with one arm",
+    "A jet from the siphon",
+    "Spitting it from the beak"
+  ],
+  "correct": 1,
+  "answer": "A jet from the siphon. The octopus gathers debris in its arms, then blasts water from its siphon to fire the load out from under its body. In 24 hours of footage, about 10 octopuses threw 102 times; one female repeatedly hit a male who was trying to mate with her.",
+  "move": "Ask what the body is built to push before guessing how it throws.",
+  "trap": "Throwing means an arm swing, so eight arms seem the obvious launcher.",
+  "keywords": [
+    "gloomy octopus",
+    "jervis bay",
+    "debris throwing",
+    "siphon"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Sydney, November 2022",
+  "source_kind": "institution",
+  "reference": "https://www.sydney.edu.au/news-opinion/news/2022/11/10/octopuses-witnessed-hurling-silt-shells-and-algae.html",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-hygiene-3",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did 18th-century Japanese cities escape the sewage crisis of European ones?",
+  "answer": "Because excrement had a price. Farmers bought city waste as fertiliser, paying in cash or vegetables, so collectors carted it out instead of dumping it. In Osaka the right to sell a building's faeces belonged to the landlord, while the tenants sold their own urine.",
+  "move": "Give a waste a price and someone will come to collect it.",
+  "keywords": [
+    "night soil",
+    "edo",
+    "osaka",
+    "fertiliser",
+    "sanitation"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hanley, Journal of Interdisciplinary History, 1987",
+  "source_kind": "paper",
+  "reference": "Hanley, Urban Sanitation in Preindustrial Japan, Journal of Interdisciplinary History, 1987",
+  "written": "2026-09-26"
+}

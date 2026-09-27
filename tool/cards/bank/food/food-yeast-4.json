@@ -1,0 +1,38 @@
+{
+  "id": "food-yeast-4",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: sugar can be fermented into alcohol with no living yeast cell present?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1897 Eduard Buchner ground yeast with sand, pressed out its juice, and found that the cell-free liquid still turned sugar into alcohol and carbon dioxide. Fermentation was the work of molecules the cell makes, later called enzymes. It earned him the 1907 Nobel Prize in Chemistry and opened the field of biochemistry.",
+  "move": "Always seeing two things together does not show that one needs the other.",
+  "trap": "Every fermentation ever seen had living yeast in it, so life seemed required.",
+  "keywords": [
+    "eduard buchner",
+    "cell-free fermentation",
+    "enzymes",
+    "nobel prize"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nobel Prize in Chemistry 1907",
+  "source_kind": "institution",
+  "reference": "https://www.nobelprize.org/prizes/chemistry/1907/summary/",
+  "written": "2026-09-26"
+}

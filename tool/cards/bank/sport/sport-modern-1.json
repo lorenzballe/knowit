@@ -1,0 +1,33 @@
+{
+  "id": "sport-modern-1",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Jim Thorpe's 1912 Olympic titles were restored in 1982. Why did the IOC rule on his case again in 2022?",
+  "answer": "Because 1982 made him only a co-champion. Stripped in 1913 for having been paid to play minor-league baseball, he was reinstated alongside the athletes promoted into his places. In July 2022 the IOC listed him as the sole winner of the pentathlon and decathlon, 69 years after his death.",
+  "move": "A correction can leave half the original wrong standing beside it.",
+  "keywords": [
+    "jim thorpe",
+    "amateurism",
+    "stockholm 1912",
+    "decathlon",
+    "ioc"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IOC, Jim Thorpe decision, 2022",
+  "source_kind": "institution",
+  "reference": "International Olympic Committee, Jim Thorpe to be displayed as sole Olympic champion of 1912 pentathlon and decathlon, press release, 15 July 2022",
+  "written": "2026-09-26"
+}

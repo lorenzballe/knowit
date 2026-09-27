@@ -1,0 +1,32 @@
+{
+  "id": "language-japanese-2",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Japanese law defined karōshi, death from overwork, in 2014, what did it count besides heart attacks?",
+  "answer": "Suicide. The 2014 Act on Promotion of Measures to Prevent Karoshi covers death from stroke or heart disease brought on by excessive work, and also suicide from a mental disorder caused by intense strain at work. A word coined by doctors became a legal category, with a government white paper every year.",
+  "move": "Where a law draws the edge of a category, the count inside it changes.",
+  "keywords": [
+    "karoshi",
+    "overwork",
+    "suicide",
+    "japanese law"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ministry of Health, Labour and Welfare, 2016",
+  "source_kind": "institution",
+  "reference": "Ministry of Health, Labour and Welfare, White Paper on Measures to Prevent Karoshi, Tokyo, 2016",
+  "written": "2026-09-26"
+}

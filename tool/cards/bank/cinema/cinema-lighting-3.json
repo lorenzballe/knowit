@@ -1,0 +1,41 @@
+{
+  "id": "cinema-lighting-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "also": [
+    "art.photography.darkroom"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: on early silent-era film stock, red lips photographed almost black?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Orthochromatic stock responded to blue and green light but hardly at all to red, so red came out dark and blue skies bleached to white. Make-up was designed around it, with pale bases and lip colours chosen for how they read in grey. Panchromatic stock, sensitive to red, took over in the later 1920s.",
+  "move": "A recording shows what the instrument could sense, not what was there.",
+  "trap": "Assuming film sees each colour as bright as the eye does.",
+  "keywords": [
+    "orthochromatic film",
+    "panchromatic film",
+    "make-up",
+    "silent film"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salt, Film Style and Technology",
+  "source_kind": "book",
+  "reference": "Salt, Film Style and Technology: History and Analysis, 2nd edn, Starword, 1992",
+  "written": "2026-09-26"
+}

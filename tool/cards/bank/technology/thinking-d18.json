@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in election law"
+  "figure": "none",
+  "source": "Contested question in election law",
+  "source_kind": "institution",
+  "reference": "Information Commissioner's Office, Democracy disrupted? Personal information and political influence, 2018"
 }

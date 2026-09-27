@@ -1,0 +1,39 @@
+{
+  "id": "language-brand-names-1",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Aspirin is still a registered Bayer trademark in some countries?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Bayer registered it in 1899. It lost the name in the United States, where a 1921 court held that the public knew no other word for the drug, and in Britain and France after 1918. In Germany, Canada and dozens of other countries it remains Bayer's, so Canadian pharmacies sell the generic as ASA.",
+  "move": "Check where your examples come from before calling something universal.",
+  "trap": "English usage treats aspirin as generic, so it must be everywhere.",
+  "keywords": [
+    "aspirin",
+    "bayer",
+    "genericide",
+    "trademark law",
+    "canada"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Bayer Co. v. United Drug Co., 1921",
+  "source_kind": "primary_document",
+  "reference": "Bayer Co. v. United Drug Co., 272 F. 505 (S.D.N.Y. 1921)",
+  "written": "2026-09-26"
+}

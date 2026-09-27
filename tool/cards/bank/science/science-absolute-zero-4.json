@@ -1,0 +1,38 @@
+{
+  "id": "science-absolute-zero-4",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a gas measured at a negative temperature on the kelvin scale is colder than absolute zero?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It is hotter than any positive temperature. Temperature measures how disorder changes with added energy; when energy has a ceiling and most particles crowd near it, adding more makes the system tidier, and the temperature comes out negative. Such a potassium gas, made in Munich in 2013, would give heat to anything it touched.",
+  "move": "Before trusting a minus sign, ask what the scale is built from.",
+  "trap": "Reading the minus sign as below zero, as on a thermometer.",
+  "keywords": [
+    "negative temperature",
+    "potassium atoms",
+    "entropy",
+    "kelvin scale"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Braun et al., Science, 2013",
+  "source_kind": "paper",
+  "reference": "Braun, Ronzheimer, Schreiber, Hodgman, Rom, Bloch & Schneider, Negative Absolute Temperature for Motional Degrees of Freedom, Science, 2013",
+  "written": "2026-09-26"
+}

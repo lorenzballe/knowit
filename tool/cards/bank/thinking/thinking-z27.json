@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Common-mode failure"
+  "figure": "none",
+  "source": "Common-mode failure",
+  "source_kind": "book",
+  "reference": "Reason, Human Error, Cambridge University Press, 1990"
 }

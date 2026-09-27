@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in education research"
+  "figure": "none",
+  "source": "Contested question in education research",
+  "source_kind": "institution",
+  "reference": "Education Endowment Foundation, Teaching and Learning Toolkit: Setting and streaming, 2021"
 }

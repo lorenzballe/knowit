@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-sneezes-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to a man who pinched his nose and shut his mouth to stifle a sneeze?",
+  "answer": "He tore his throat. The trapped pressure burst through the back of his pharynx, and air leaked into the tissues of his neck and chest, which crackled when pressed. Doctors in Leicester fed him through a tube and kept him in hospital for a week, then reported the case in 2018.",
+  "move": "Blocking an outlet does not remove the force; it chooses where it goes.",
+  "keywords": [
+    "sneezing",
+    "pharynx",
+    "throat injury",
+    "leicester",
+    "case report"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BMJ Case Reports, 2018",
+  "source_kind": "primary_document",
+  "reference": "Snap, crackle and pop: when sneezing leads to crackling in the neck, BMJ Case Reports, 2018",
+  "written": "2026-09-26"
+}

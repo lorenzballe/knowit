@@ -1,0 +1,38 @@
+{
+  "id": "human_body-left-and-right-5",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: everything the left eye sees is handled by the right half of the brain?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The split follows the field of view, not the eye: everything left of centre, seen by either eye, goes to the right hemisphere. At the optic chiasm only fibres from the inner half of each retina cross, so each optic nerve divides roughly in two. Close one eye and both hemispheres still see.",
+  "move": "Know what is being sorted before guessing where it will go.",
+  "trap": "Assuming the eyes cross over just as the limbs do.",
+  "keywords": [
+    "optic chiasm",
+    "visual field",
+    "retina",
+    "hemispheres"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Purves et al., Neuroscience, 2012",
+  "source_kind": "book",
+  "reference": "Purves et al., Neuroscience, 5th edition, Sinauer Associates, 2012",
+  "written": "2026-09-26"
+}

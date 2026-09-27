@@ -1,0 +1,33 @@
+{
+  "id": "sport-ancient-5",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did an Athenian who won at Olympia receive back home, beyond the olive wreath?",
+  "answer": "Cash, and later free meals for life. Plutarch reports that Solon's laws paid an Olympic victor 500 drachmas and an Isthmian victor 100, when a sheep was valued at one drachma. By the fifth century BC, Olympic victors could also dine at public expense in the city's town hall, the prytaneion.",
+  "move": "A prize that looks symbolic may sit on top of one that is not.",
+  "keywords": [
+    "solon",
+    "olive wreath",
+    "drachmas",
+    "prytaneion",
+    "athens"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plutarch, Life of Solon, 23",
+  "source_kind": "primary_document",
+  "reference": "Plutarch, Lives, Volume I: Solon, trans. Bernadotte Perrin, Loeb Classical Library, Harvard, 1914",
+  "written": "2026-09-26"
+}

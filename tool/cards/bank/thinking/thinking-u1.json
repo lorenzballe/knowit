@@ -28,5 +28,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Sunk cost in subscriptions"
+  "figure": "none",
+  "source": "Sunk cost in subscriptions",
+  "source_kind": "paper",
+  "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985"
 }

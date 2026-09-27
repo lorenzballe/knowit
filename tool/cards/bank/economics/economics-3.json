@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Levinson, The Box, 2006"
+  "source": "Levinson, The Box, 2006",
+  "disabled": true
 }

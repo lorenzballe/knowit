@@ -1,0 +1,39 @@
+{
+  "id": "language-italian-3",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Italian qualunquismo means sneering indifference to all politics. Where does the word come from?",
+  "options": [
+    "Machiavelli's The Prince",
+    "An anarchist pamphlet of 1900",
+    "A 1944 satirical newspaper"
+  ],
+  "correct": 2,
+  "answer": "A 1944 satirical newspaper. The playwright Guglielmo Giannini founded L'Uomo qualunque, the ordinary man, in Rome and turned it into a party that won seats in the 1946 constituent assembly by attacking all politicians alike. The party faded within a few years; its name lives on as a common noun for the mood.",
+  "move": "The famous name that comes to mind is rarely the actual source.",
+  "trap": "Machiavelli is the name every reader attaches to Italian political cynicism.",
+  "keywords": [
+    "qualunquismo",
+    "guglielmo giannini",
+    "uomo qualunque",
+    "anti-politics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Setta, L'Uomo qualunque, Laterza, 1975",
+  "source_kind": "book",
+  "reference": "Setta, L'Uomo qualunque 1944-1948, Laterza, 1975",
+  "written": "2026-09-26"
+}

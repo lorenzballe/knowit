@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h4",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A pill cuts a disease's yearly risk from 2 in 1,000 to 1 in 1,000. How many must take it to spare one person?",
+  "options": [
+    "About 2",
+    "About 50",
+    "About 1,000"
+  ],
+  "correct": 2,
+  "answer": "About 1,000. The pill halves the risk, but the risk was 2 in 1,000 to begin with, so it removes one case per 1,000 people a year. Doctors call this the number needed to treat. The same halving on a 1-in-2 risk would spare one person in four.",
+  "move": "Ask what a halving is a halving of before you are impressed.",
+  "trap": "Hearing that the pill halves the risk and picturing half the patients saved.",
+  "keywords": [
+    "relative risk",
+    "absolute risk",
+    "number needed to treat",
+    "medicines"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
+  "source_kind": "paper",
+  "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",
+  "written": "2026-09-26"
+}

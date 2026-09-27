@@ -1,0 +1,41 @@
+{
+  "id": "cinema-lighting-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A key light is set three stops brighter than the fill. How many times more light is that?",
+  "value": 8,
+  "unit": "times",
+  "answer": "2 x 2 x 2 = 8 times the light.",
+  "move": "Steps that each double do not add up; they multiply.",
+  "trap": "Answering 3 or 6 by adding the stops instead of doubling.",
+  "hint": "Ask what a single stop does to the amount of light.",
+  "steps": [
+    "One stop doubles the light.",
+    "Three stops is three doublings in a row.",
+    "2 x 2 x 2 = 8 times the light."
+  ],
+  "keywords": [
+    "lighting ratio",
+    "f-stops",
+    "key light",
+    "fill light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Ray, The Manual of Photography",
+  "source_kind": "book",
+  "reference": "Ray (ed.), The Manual of Photography, 9th edn, Focal Press, 2000",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-refresh-rates-1",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does American television run at 59.94 fields a second instead of a round 60?",
+  "answer": "Because of colour, in 1953. The colour signal rode on a second wave near 3.58 MHz, which clashed with the 4.5 MHz sound carrier to make visible patterns. Retuning the sound would have broken existing black-and-white sets, so engineers slowed the picture by 0.1%. Editing software still offers 29.97 frames a second.",
+  "move": "Compatibility with what people already own usually beats elegance.",
+  "keywords": [
+    "ntsc",
+    "colour television",
+    "59.94 hz",
+    "frame rate",
+    "subcarrier"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Poynton, Digital Video and HD, 2012",
+  "source_kind": "book",
+  "reference": "Poynton, Digital Video and HD: Algorithms and Interfaces, 2nd edition, Morgan Kaufmann, 2012",
+  "written": "2026-09-26"
+}

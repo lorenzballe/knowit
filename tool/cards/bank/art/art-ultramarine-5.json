@@ -1,0 +1,32 @@
+{
+  "id": "art-ultramarine-5",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What household job did cheap synthetic ultramarine take on in Victorian Britain?",
+  "answer": "Making the washing look white. Laundry blue, such as Reckitt's from the 1850s, put synthetic ultramarine in the final rinse. Blue cancels the yellow that old cotton and soap leave, so the eye reads the cloth as whiter, though it reflects slightly less light. The painters' costliest blue ended in a cloth bag.",
+  "move": "A colour cast is often cured by adding its opposite, not removing it.",
+  "keywords": [
+    "laundry blue",
+    "reckitt's blue",
+    "synthetic ultramarine",
+    "whitening"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MFA Boston, CAMEO materials database",
+  "source_kind": "reference_work",
+  "reference": "https://cameo.mfa.org/wiki/Reckitt's_Blue",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-fear-4",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Lab-raised monkeys watched videos of monkeys recoiling in fear, edited to show either toy snakes or flowers. What did they learn?",
+  "options": [
+    "To fear whichever object was on screen",
+    "To fear the snakes, but not the flowers",
+    "Nothing: fear needs a real encounter"
+  ],
+  "correct": 1,
+  "answer": "To fear the snakes, but not the flowers. The fearful behaviour on screen was identical; only the object had been spliced in. Observers came to fear toy snakes and a toy crocodile, and did not come to fear flowers or a toy rabbit. The same lesson stuck to one object and slid off the other.",
+  "move": "Some lessons stick at the first telling because the learner was built for them.",
+  "trap": "Assuming a watching monkey copies any fear, whatever its object.",
+  "keywords": [
+    "rhesus monkeys",
+    "snake fear",
+    "observational learning",
+    "preparedness",
+    "phobias"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cook & Mineka, Journal of Abnormal Psychology, 1989",
+  "source_kind": "paper",
+  "reference": "Cook & Mineka, Observational conditioning of fear to fear-relevant versus fear-irrelevant stimuli in rhesus monkeys, Journal of Abnormal Psychology, 1989",
+  "written": "2026-09-26"
+}

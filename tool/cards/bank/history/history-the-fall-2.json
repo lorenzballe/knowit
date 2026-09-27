@@ -1,0 +1,40 @@
+{
+  "id": "history-the-fall-2",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Lead from Roman silver smelting settled on Greenland's ice. When did those emissions collapse?",
+  "options": [
+    "Around 165, with a plague",
+    "Around 410, with the sack of Rome",
+    "Around 476, with the last emperor"
+  ],
+  "correct": 0,
+  "answer": "Around 165, with the Antonine Plague. Lead in Greenland ice tracks European smelting of lead-silver ores. It rose through the early empire, plunged with the plague of 165 and another in the third century, and stayed low for over 500 years. By this measure the Roman economy peaked three centuries before 476.",
+  "move": "The date everyone remembers is rarely when the change began.",
+  "trap": "Around 476, the date every textbook gives for the fall.",
+  "keywords": [
+    "greenland ice",
+    "lead pollution",
+    "antonine plague",
+    "silver mining",
+    "roman economy"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "McConnell et al., PNAS, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1721818115",
+  "written": "2026-09-26"
+}

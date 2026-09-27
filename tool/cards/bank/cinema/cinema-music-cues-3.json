@@ -1,0 +1,32 @@
+{
+  "id": "cinema-music-cues-3",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before sound films, how did a small-town pianist know what to play under a chase?",
+  "answer": "From books sorted by mood. Studios sent cue sheets suggesting pieces scene by scene, and publishers sold anthologies such as Erno Rapée's Motion Picture Moods for Pianists and Organists, 1924, with ready music indexed under headings like chase, storm, love or mystery. The same few hurries and agitatos served thousands of films.",
+  "move": "A shared vocabulary is what lets strangers improvise the same thing.",
+  "keywords": [
+    "silent film accompaniment",
+    "erno rapée",
+    "photoplay music",
+    "cinema pianists"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rapée, Motion Picture Moods, 1924",
+  "source_kind": "primary_document",
+  "reference": "Rapée, Motion Picture Moods for Pianists and Organists, G. Schirmer, 1924",
+  "written": "2026-09-26"
+}

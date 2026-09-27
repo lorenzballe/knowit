@@ -1,0 +1,39 @@
+{
+  "id": "food-origins-3",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the tale of a goatherd whose goats found coffee appears in writing soon after coffee spread?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Coffee drinking is documented among Sufi communities in Yemen by the mid-1400s, but the goatherd story first appears in print in 1671, in a Latin treatise on coffee by Antoine Faustus Nairon, a Maronite scholar teaching in Rome. Two centuries separate the drink from its origin story.",
+  "move": "Date a story by its first telling, not by the events it describes.",
+  "trap": "Assuming a legend repeated everywhere must be as old as its subject.",
+  "keywords": [
+    "kaldi",
+    "coffee legend",
+    "yemen",
+    "sufi",
+    "nairon"
+  ],
+  "era": "early_modern",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Ukers, All About Coffee, 1922",
+  "source_kind": "book",
+  "reference": "Ukers, All About Coffee, The Tea and Coffee Trade Journal Company, 1922",
+  "written": "2026-09-26"
+}

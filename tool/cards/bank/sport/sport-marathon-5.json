@@ -1,0 +1,38 @@
+{
+  "id": "sport-marathon-5",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a women's marathon record set behind male pacemakers count as the women's world record?",
+  "sides": [
+    "Yes, count it",
+    "No, keep them separate"
+  ],
+  "answer": "Pacemakers are legal in every big-city marathon, and men pacing women are simply the pacers available at that speed. The runner still covers every metre on her own legs. Paula Radcliffe's 2:15:25 of 2003 was run within the rules of its day, and splitting records by who ran alongside invites endless reclassification.",
+  "move": "Whichever side you took, how much pace-setters really help is what decides it.",
+  "counterpoint": "Running in a pack saves energy by cutting air resistance; a woman surrounded by faster men gets more shelter and pacing than any woman in a women-only race can. Drafting studies put the energy saved at a few per cent, and at this level a few per cent is minutes. Hence a separate women-only record.",
+  "keywords": [
+    "paula radcliffe",
+    "pacemakers",
+    "drafting",
+    "women-only record",
+    "mixed race"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoogkamer, Kram & Arellano, Sports Medicine, 2017",
+  "source_kind": "paper",
+  "reference": "Hoogkamer, Kram & Arellano, How biomechanical improvements in running economy could break the 2-hour marathon barrier, Sports Medicine, 2017",
+  "written": "2026-09-26"
+}

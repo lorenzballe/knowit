@@ -1,0 +1,38 @@
+{
+  "id": "technology-charging-4",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a 100-watt USB-C laptop charger will push 100 watts into a phone plugged into it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A USB-C charger offers a menu, and the phone orders from it. It supplies a safe 5 volts until the phone requests, by a handshake over the cable, a higher voltage it can take; the phone then draws only the current it wants. A 25-watt phone takes about 25 watts from a 100-watt brick.",
+  "move": "A rating says the most on offer, not what gets taken.",
+  "trap": "More watts on the label must mean more power forced in.",
+  "keywords": [
+    "usb-c",
+    "usb power delivery",
+    "chargers",
+    "voltage negotiation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USB-IF, USB Power Delivery Specification, 2021",
+  "source_kind": "standard",
+  "reference": "USB Implementers Forum, USB Power Delivery Specification, Revision 3.1, 2021",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-latin-roots-4",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why does the English word debt carry a b that nobody pronounces?",
+  "options": [
+    "The b was once pronounced",
+    "Scholars respelled it after Latin",
+    "Printers padded lines with it"
+  ],
+  "correct": 1,
+  "answer": "Scholars respelled it after Latin. English took the word from French as dette and first wrote it that way. In the fifteenth and sixteenth centuries, writers who knew Latin debitum inserted the b to show its pedigree. Doubt, from dubitare, got the same treatment. The letter records a scholar's reading, not English speech.",
+  "move": "A spelling can record someone's taste rather than anyone's speech.",
+  "trap": "Assuming every silent letter is a sound that later fell away.",
+  "keywords": [
+    "debt",
+    "silent letters",
+    "debitum",
+    "spelling",
+    "renaissance scholars"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crystal, Spell It Out, 2012",
+  "source_kind": "book",
+  "reference": "Crystal, Spell It Out: The Singular Story of English Spelling, Profile Books, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sport-recovery-4",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Eleven university basketball players spent ten hours a night in bed for weeks and shot about 9% better. What follows?",
+  "options": [
+    "Extra sleep improves shooting by 9%",
+    "Promising, but practice could explain it",
+    "Nothing, since eleven is too few"
+  ],
+  "correct": 1,
+  "answer": "Promising, but practice could explain it. The Stanford study had no comparison group: the same players were training through their season, so some gain would have come anyway. Sleep was tracked with wrist monitors, and the result fits wider sleep research. It is a lead, not a measured effect.",
+  "move": "Ask what would have happened to the same people doing nothing different.",
+  "trap": "Crediting all of the improvement to the one change that was announced.",
+  "keywords": [
+    "sleep extension",
+    "basketball",
+    "stanford",
+    "athletic performance",
+    "control group"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mah et al., Sleep, 2011",
+  "source_kind": "paper",
+  "reference": "Mah, Mah, Kezirian & Dement, The effects of sleep extension on the athletic performance of collegiate basketball players, Sleep, 2011",
+  "written": "2026-09-26"
+}

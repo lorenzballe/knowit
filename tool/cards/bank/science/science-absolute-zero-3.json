@@ -1,0 +1,32 @@
+{
+  "id": "science-absolute-zero-3",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What stops even the best refrigerator from ever reaching absolute zero?",
+  "answer": "Every cooling step is smaller than the last. Magnetic cooling, for example, exploits the gap in disorder between a salt in a strong field and in a weak one. The third law says that gap closes near absolute zero, so each round only divides the temperature: 1 kelvin, then 0.1, then 0.01, never zero.",
+  "move": "Halving what remains, again and again, never gets you to nothing.",
+  "keywords": [
+    "third law of thermodynamics",
+    "magnetic cooling",
+    "entropy",
+    "refrigeration"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Blundell & Blundell, Concepts in Thermal Physics, 2010",
+  "source_kind": "book",
+  "reference": "Blundell & Blundell, Concepts in Thermal Physics, 2nd edition, Oxford University Press, 2010",
+  "written": "2026-09-26"
+}

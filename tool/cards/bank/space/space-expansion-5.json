@@ -1,0 +1,38 @@
+{
+  "id": "space-expansion-5",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does the clash between two measurements of the universe's expansion rate point to new physics?",
+  "sides": [
+    "Yes, new physics",
+    "No, hidden errors"
+  ],
+  "answer": "The early universe, read from the cosmic background, predicts an expansion rate about 8% slower than nearby stars used as distance markers measure. Independent teams, instruments and methods keep landing on either side, and the gap exceeds five standard deviations. Errors that large would have surfaced by now; something in the standard model is missing.",
+  "move": "Whichever side you took, the hinge is whether the distance ladder's errors are really understood.",
+  "counterpoint": "The biggest gap rests on one distance ladder, built on pulsating stars in crowded images. When Wendy Freedman's team rebuilt it with the James Webb telescope using other kinds of stars, they landed about halfway, within reach of the early-universe value. And every new physics proposed to fix this number breaks some other measurement.",
+  "keywords": [
+    "hubble tension",
+    "hubble constant",
+    "cosmic distance ladder",
+    "james webb space telescope",
+    "cosmology"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Di Valentino et al., Class. Quantum Grav., 2021",
+  "source_kind": "paper",
+  "reference": "Di Valentino et al., In the realm of the Hubble tension: a review of solutions, Classical and Quantum Gravity 38, 153001, 2021",
+  "written": "2026-09-26"
+}

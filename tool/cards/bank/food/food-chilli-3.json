@@ -1,0 +1,38 @@
+{
+  "id": "food-chilli-3",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: the seeds of a chilli make almost none of its capsaicin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Capsaicin is made in glands on the placenta, the pale ribs that hold the seeds, and the seeds taste hot mainly because they sit pressed against it. Scraping out seeds and ribs together tames a chilli; scraping out seeds alone and leaving the ribs keeps most of the fire in the pan.",
+  "move": "The thing that sits next to the cause often takes the blame.",
+  "trap": "Seeds come out with the heat, so they seem to be its source.",
+  "keywords": [
+    "capsaicin",
+    "chilli seeds",
+    "placenta",
+    "pith"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bosland & Votava, Peppers, CABI, 2012",
+  "source_kind": "book",
+  "reference": "Bosland & Votava, Peppers: Vegetable and Spice Capsicums, 2nd edition, CABI, 2012",
+  "written": "2026-09-26"
+}

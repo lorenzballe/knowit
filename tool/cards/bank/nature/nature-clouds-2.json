@@ -1,0 +1,33 @@
+{
+  "id": "nature-clouds-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who gave clouds the Latin names still used today, and what did he do for a living?",
+  "answer": "Luke Howard, a Quaker chemist who made pharmaceuticals in London. In an 1802 lecture he sorted clouds into cirrus, cumulus and stratus, plus combinations, arguing that shapes follow the processes making them. Lamarck's French scheme of the same year faded; the Latin crossed borders. Goethe was taken enough to write poems in his honour.",
+  "move": "A name meant to travel should belong to no single language.",
+  "keywords": [
+    "luke howard",
+    "cloud classification",
+    "cumulus",
+    "cirrus",
+    "goethe"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamblyn, The Invention of Clouds, 2001",
+  "source_kind": "book",
+  "reference": "Hamblyn, The Invention of Clouds: How an Amateur Meteorologist Forged the Language of the Skies, Picador, 2001",
+  "written": "2026-09-26"
+}

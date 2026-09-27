@@ -1,0 +1,40 @@
+{
+  "id": "nature-night-vision-5",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Roughly how many times dimmer than direct sunlight is the light of a full moon?",
+  "options": [
+    "About 400 times",
+    "About 40,000 times",
+    "About 400,000 times"
+  ],
+  "correct": 2,
+  "answer": "About 400,000 times. The Sun shines at magnitude −26.7 and the full Moon at about −12.7, and those 14 steps, each a factor of about 2.5, multiply to roughly 400,000. The eye hides the gulf by widening the pupil and handing over from cones to rods, so moonlight feels merely dim.",
+  "move": "Senses report big ratios as small steps; measure before trusting brightness or loudness.",
+  "trap": "About 400 times, because moonlight feels only somewhat dimmer.",
+  "keywords": [
+    "moonlight",
+    "sunlight",
+    "magnitude scale",
+    "dark adaptation",
+    "rods and cones"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allen's Astrophysical Quantities, 2000",
+  "source_kind": "reference_work",
+  "reference": "Cox (ed.), Allen's Astrophysical Quantities, 4th edition, Springer, 2000",
+  "written": "2026-09-26"
+}

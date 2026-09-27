@@ -1,0 +1,33 @@
+{
+  "id": "cinema-practical-2",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Mary Poppins set live actors among cartoons without coloured fringes around their hair?",
+  "answer": "Sodium light. Actors stood before a screen lit by sodium-vapour lamps, which glow in one narrow band of yellow. A prism in the camera sent that yellow to a second film, making a perfect matte, and all other light to the colour negative. Fine hair and transparent veils kept edges that blue screens lost.",
+  "move": "Separate things by a property only one of them has.",
+  "keywords": [
+    "sodium vapour process",
+    "mary poppins",
+    "ub iwerks",
+    "matte",
+    "prism"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Iwerks & Kenworthy, The Hand Behind the Mouse",
+  "source_kind": "book",
+  "reference": "Iwerks & Kenworthy, The Hand Behind the Mouse, Disney Editions, 2001",
+  "written": "2026-09-26"
+}

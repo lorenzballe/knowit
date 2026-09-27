@@ -1,0 +1,42 @@
+{
+  "id": "technology-refresh-rates-4",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "European television showed 24-frame-per-second films at 25 frames per second. How many minutes did a 120-minute film last?",
+  "value": 115.2,
+  "unit": "minutes",
+  "tolerance": 0.1,
+  "answer": "6,912 / 60 = 115.2 minutes.",
+  "move": "A small change of rate, applied to everything, adds up to minutes.",
+  "trap": "Assuming the length stays the same because every frame is shown.",
+  "hint": "Count the frames first: they do not change, only how fast they go by.",
+  "steps": [
+    "The film holds 120 x 60 x 24 = 172,800 frames.",
+    "At 25 frames a second: 172,800 / 25 = 6,912 seconds.",
+    "6,912 / 60 = 115.2 minutes."
+  ],
+  "keywords": [
+    "pal",
+    "frame rate",
+    "speed-up",
+    "film transfer"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ascher & Pincus, The Filmmaker's Handbook, 2012",
+  "source_kind": "book",
+  "reference": "Ascher & Pincus, The Filmmaker's Handbook, 4th edition, Plume, 2012",
+  "written": "2026-09-26"
+}

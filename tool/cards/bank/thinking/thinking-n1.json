@@ -30,5 +30,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Combinations, C(20,2)"
+  "figure": "none",
+  "source": "Combinations, C(20,2)",
+  "source_kind": "arithmetic",
+  "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
 }

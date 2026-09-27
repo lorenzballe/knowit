@@ -1,0 +1,33 @@
+{
+  "id": "food-pepper-4",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the oldest known peppercorn found outside India come from?",
+  "answer": "From the nose of Ramesses II. When the pharaoh was embalmed after his death in 1213 BC, black peppercorns were packed into his nostrils, probably to keep the nose in shape. Pepper then grew only in southern India, so the seeds had crossed thousands of kilometres of sea and desert to reach a royal corpse.",
+  "move": "A single seed in the wrong place can map a whole trade route.",
+  "keywords": [
+    "ramesses ii",
+    "mummification",
+    "peppercorns",
+    "ancient trade",
+    "egypt"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "World History Encyclopedia, Pepper",
+  "source_kind": "reference_work",
+  "reference": "https://www.worldhistory.org/Pepper/",
+  "written": "2026-09-26"
+}

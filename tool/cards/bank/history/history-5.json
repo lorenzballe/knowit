@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Ellis, The Coffee House: A Cultural History, 2004"
+  "source": "Ellis, The Coffee House: A Cultural History, 2004",
+  "disabled": true
 }

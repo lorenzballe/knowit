@@ -1,0 +1,33 @@
+{
+  "id": "art-darkroom-4",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a black-and-white print sit in daylight for a century without darkening?",
+  "answer": "Because the unexposed silver salts were washed out. In 1819 the astronomer John Herschel found that hyposulphite of soda, now sodium thiosulphate, dissolves them, and in 1839 he saw it could fix a camera image. Talbot's first prints were only soaked in strong salt, which slowed the darkening. Darkroom workers still call fixer hypo.",
+  "move": "Making something is half the job; stopping it from changing is the other.",
+  "keywords": [
+    "john herschel",
+    "hypo",
+    "sodium thiosulphate",
+    "fixing",
+    "silver salts"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schaaf, Out of the Shadows, 1992",
+  "source_kind": "book",
+  "reference": "Larry J. Schaaf, Out of the Shadows: Herschel, Talbot and the Invention of Photography, Yale University Press, 1992",
+  "written": "2026-09-26"
+}

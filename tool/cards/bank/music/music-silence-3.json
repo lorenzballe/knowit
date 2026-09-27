@@ -1,0 +1,40 @@
+{
+  "id": "music-silence-3",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Cage's 4′33″ lasts 273 seconds, and absolute zero is minus 273 °C. What best explains the match?",
+  "options": [
+    "Coincidence, the lengths came by chance",
+    "A deliberate nod to absolute zero",
+    "The standard length of a radio slot"
+  ],
+  "correct": 0,
+  "answer": "Coincidence. Cage fixed the lengths of the three movements by chance procedures, and the premiere's timings, 30 seconds, 2 minutes 23 and 1 minute 40, happen to add up to 273. The link to absolute zero rests on no statement of Cage's; it circulates because it sounds too neat to be an accident.",
+  "move": "With enough numbers around, some of them will match.",
+  "trap": "A match this exact feels too neat to be an accident.",
+  "keywords": [
+    "cage's silent piece",
+    "absolute zero",
+    "chance operations",
+    "john cage",
+    "movement timings"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pritchett, The Music of John Cage, 1993",
+  "source_kind": "book",
+  "reference": "Pritchett, The Music of John Cage, Cambridge University Press, 1993",
+  "written": "2026-09-26"
+}

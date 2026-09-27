@@ -1,0 +1,39 @@
+{
+  "id": "language-how-they-form-5",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Why is Australian English so uniform from Perth to Sydney, when accents in England change county by county?",
+  "options": [
+    "Radio and television flattened it",
+    "Settlers all came from one region",
+    "Settlers' children blended one new accent"
+  ],
+  "correct": 2,
+  "answer": "Settlers' children blended one new accent. Children of colonists from across Britain and Ireland levelled their parents' dialects into a common speech, and observers remarked on a distinct local way of talking by the 1820s, a century before radio. The accent travelled with the settlers; accents in England had fifteen centuries to drift apart.",
+  "move": "Check whether the pattern was already there before the cause you blame.",
+  "trap": "Broadcasting is the most visible modern force on how people speak.",
+  "keywords": [
+    "australian english",
+    "currency lads",
+    "dialect levelling",
+    "colonial speech"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Moore, Speaking Our Language, 2008",
+  "source_kind": "book",
+  "reference": "Moore, Speaking Our Language: The Story of Australian English, Oxford University Press, 2008",
+  "written": "2026-09-26"
+}

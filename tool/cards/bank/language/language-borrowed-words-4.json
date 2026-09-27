@@ -1,0 +1,42 @@
+{
+  "id": "language-borrowed-words-4",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "also": [
+    "history.everyday_life.hygiene"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when English borrowed shampoo from Hindi, it meant washing the hair?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It meant massage. Hindi chāmpo comes from chāmpnā, to press or knead, and eighteenth-century English used shampoo for kneading the body in a bath. Sake Dean Mahomed ran shampooing vapour baths in Brighton from the 1810s as a medical cure. Hair-washing took over the word only in the Victorian era.",
+  "move": "Meanings keep moving after a word has crossed a border.",
+  "trap": "Assuming a loanword arrived with the meaning it has today.",
+  "keywords": [
+    "shampoo",
+    "hindi",
+    "massage",
+    "sake dean mahomed",
+    "brighton"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fisher, The First Indian Author in English, 1996",
+  "source_kind": "book",
+  "reference": "Fisher, The First Indian Author in English: Dean Mahomed in India, Ireland and England, Oxford University Press, 1996",
+  "written": "2026-09-26"
+}

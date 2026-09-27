@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-fast-fashion-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were thousands of garment workers inside Rana Plaza on the morning it collapsed?",
+  "answer": "Because they had been ordered back in. Cracks appeared in the eight-storey building near Dhaka on 23 April 2013, and a bank on a lower floor closed, but factory managers told workers to return. The next morning it collapsed, killing 1,134 people. Floors had been added without permits and carried heavy machines and generators.",
+  "move": "A warning ignored under deadline pressure is still a warning received.",
+  "keywords": [
+    "rana plaza",
+    "bangladesh",
+    "garment factories",
+    "building safety",
+    "dhaka"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Labour Organization",
+  "source_kind": "institution",
+  "reference": "International Labour Organization, The Rana Plaza Accident and its Aftermath, 2017",
+  "written": "2026-09-26"
+}

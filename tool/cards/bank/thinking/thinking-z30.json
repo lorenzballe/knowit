@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Base rate of remembered coincidences"
+  "figure": "none",
+  "source": "Base rate of remembered coincidences",
+  "source_kind": "paper",
+  "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
 }

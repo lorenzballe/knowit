@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-rebrands-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was painted on British post vans during the Consignia years?",
+  "answer": "Royal Mail, as before. Consignia, adopted in 2001 when the Post Office became a public limited company, was the name of the holding group; letters still went out in Royal Mail and Parcelforce vans. The ridicule fell on a word most customers never saw, and in 2002 the group became Royal Mail Group.",
+  "move": "Before mocking a rename, check which name the public actually meets.",
+  "keywords": [
+    "consignia",
+    "royal mail",
+    "post office",
+    "corporate names",
+    "parcelforce"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Post & Parcel",
+  "source_kind": "news_archive",
+  "reference": "https://postandparcel.info/6311/news/change-of-consignia-name-to-royal-mail-could-cost-gbp-1m/",
+  "written": "2026-09-26"
+}

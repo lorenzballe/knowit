@@ -1,0 +1,38 @@
+{
+  "id": "food-emulsions-5",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a spread made without egg be allowed to call itself mayonnaise?",
+  "sides": [
+    "Yes, let it",
+    "No, keep the name"
+  ],
+  "answer": "A name describes what food does on the plate, not a recipe frozen in law. Plant proteins can emulsify oil as egg yolk does, and buyers see the ingredients list. Rules written to stop cheating on oil content should not shield incumbents from a product that is better for people with egg allergies.",
+  "move": "Decide first whether a food name protects buyers or protects a recipe.",
+  "counterpoint": "A standard name is a promise that saves every shopper reading every label. United States rules define mayonnaise as at least 65% oil with egg yolk; that is what the word guarantees. Let any spread borrow it and the word stops meaning anything, and the cheapest imitation sets the price for honest makers.",
+  "keywords": [
+    "mayonnaise",
+    "standards of identity",
+    "food labelling",
+    "egg-free",
+    "regulation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Code of Federal Regulations, 21 CFR 169.140",
+  "source_kind": "primary_document",
+  "reference": "Code of Federal Regulations, Title 21, Section 169.140, Mayonnaise, US Food and Drug Administration, 2023",
+  "written": "2026-09-26"
+}

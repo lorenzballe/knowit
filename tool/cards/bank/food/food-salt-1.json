@@ -1,0 +1,46 @@
+{
+  "id": "food-salt-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Pasta water salted at 10 g per litre: by how many °C does its boiling point rise?",
+  "value": 0.18,
+  "unit": "°C",
+  "tolerance": 0.02,
+  "answer": "0.342 x 0.512 = about 0.18 °C.",
+  "move": "Before crediting an ingredient with an effect, size the effect.",
+  "trap": "Believing salted water boils hotter enough to cook pasta faster.",
+  "hint": "Salt weighs 58.4 g per mole and splits in two; count particles, then use water's boiling constant, 0.512 °C per mole per kg.",
+  "steps": [
+    "10 g / 58.4 g per mole = 0.171 mol of salt in 1 kg of water.",
+    "Each unit splits into 2 ions: 0.171 x 2 = 0.342 mol of particles.",
+    "Each mole of particles per kg lifts water's boiling point 0.512 °C.",
+    "0.342 x 0.512 = about 0.18 °C."
+  ],
+  "keywords": [
+    "boiling point elevation",
+    "pasta water",
+    "sodium chloride",
+    "colligative properties"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Atkins & de Paula, Physical Chemistry, 2006",
+  "source_kind": "book",
+  "reference": "Atkins & de Paula, Atkins' Physical Chemistry, 8th edition, Oxford University Press, 2006",
+  "written": "2026-09-26"
+}

@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Permutations without repetition"
+  "figure": "none",
+  "source": "Permutations without repetition",
+  "source_kind": "arithmetic",
+  "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
 }

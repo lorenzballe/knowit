@@ -1,0 +1,39 @@
+{
+  "id": "human_body-longevity-2",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in large family trees, a person's lifespan correlates with the lifespans of their siblings' spouses?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Mining family trees covering over 400 million people, a 2018 study found lifespans correlated between spouses and between siblings-in-law, who share no genes, because people marry partners like themselves in habits, wealth and place. Allowing for that pushed the heritability of lifespan below 7%, far under older estimates of 20% to 30%.",
+  "move": "Resemblance within families is not all in the genes.",
+  "trap": "Assuming only shared genes or a shared home can make lifespans alike.",
+  "keywords": [
+    "heritability",
+    "lifespan",
+    "assortative mating",
+    "family trees",
+    "in-laws"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ruby et al., Genetics, 2018",
+  "source_kind": "paper",
+  "reference": "Ruby, Wright, Rand et al., Estimates of the heritability of human longevity are substantially inflated due to assortative mating, Genetics, 2018",
+  "written": "2026-09-26"
+}

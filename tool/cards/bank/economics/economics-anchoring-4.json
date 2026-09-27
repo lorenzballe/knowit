@@ -1,0 +1,40 @@
+{
+  "id": "economics-anchoring-4",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "When New York taxi card screens suggested higher tip percentages, what happened?",
+  "options": [
+    "Tips barely moved; riders kept their habits",
+    "Tips rose, but more left no card tip",
+    "Tips fell, as riders resented the pressure"
+  ],
+  "correct": 1,
+  "answer": "Tips rose, but more left no card tip. Across 13 million New York rides, Haggag and Paci found that higher suggested percentages lifted the amounts people tipped. The same suggestions pushed more riders to skip the card tip entirely. A 30% button pulled the average up and pushed some riders off the screen.",
+  "move": "A preset amount is the seller's hope, printed as your option.",
+  "trap": "Believing the tip is set by the ride, not by the screen.",
+  "keywords": [
+    "tipping",
+    "default options",
+    "taxis",
+    "new york",
+    "suggested tips"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haggag and Paci, AEJ: Applied, 2014",
+  "source_kind": "paper",
+  "reference": "Haggag & Paci, Default Tips, American Economic Journal: Applied Economics, 2014",
+  "written": "2026-09-26"
+}

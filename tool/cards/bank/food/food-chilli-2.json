@@ -1,0 +1,32 @@
+{
+  "id": "food-chilli-2",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can birds swallow the hottest chillies whole without flinching?",
+  "answer": "Their version of the capsaicin receptor does not respond to it. Mammals crush chilli seeds; birds swallow them whole and pass them intact, far away. In trials, cactus mice shunned hot fruit that thrashers ate freely. The burn sorts diners, turning away the ones that grind seeds and inviting the ones that plant them.",
+  "move": "A deterrent that stops some visitors may be selecting the ones it wants.",
+  "keywords": [
+    "birds",
+    "seed dispersal",
+    "capsaicin receptor",
+    "directed deterrence"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tewksbury & Nabhan, Nature, 2001",
+  "source_kind": "paper",
+  "reference": "Tewksbury & Nabhan, Directed deterrence by capsaicin in chillies, Nature, 2001",
+  "written": "2026-09-26"
+}

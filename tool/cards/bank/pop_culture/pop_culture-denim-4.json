@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-denim-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why did Turkey ban sandblasting of denim in 2009?",
+  "options": [
+    "It used too much water",
+    "Exports faced new EU rules",
+    "Workers were dying of silicosis"
+  ],
+  "correct": 2,
+  "answer": "Workers were dying of silicosis. Blasting jeans with sand for a worn look filled small workshops with fine crystalline silica, which scars the lungs; young Turkish workers fell ill within a few years of starting, and some died. Big brands announced their own bans afterwards, and the work drifted to countries with weaker enforcement.",
+  "move": "When a product looks worn for free, someone paid for the wear.",
+  "trap": "EU rules: trade pressure seems the usual reason an industry changes method.",
+  "keywords": [
+    "sandblasting",
+    "silicosis",
+    "turkey",
+    "garment workers",
+    "distressed jeans"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Akgun et al., European Respiratory Journal, 2008",
+  "source_kind": "primary_document",
+  "reference": "Akgun et al., An epidemic of silicosis among former denim sandblasters, European Respiratory Journal, 2008",
+  "written": "2026-09-26"
+}

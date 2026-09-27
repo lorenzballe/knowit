@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Independence and the gambler's fallacy"
+  "figure": "none",
+  "source": "Independence and the gambler's fallacy",
+  "source_kind": "paper",
+  "reference": "Tversky & Kahneman, Belief in the law of small numbers, Psychological Bulletin, 1971"
 }

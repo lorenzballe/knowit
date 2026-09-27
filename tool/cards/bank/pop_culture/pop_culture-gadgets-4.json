@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-gadgets-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: the 1998 Furby could record words it heard and learn to say them back?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Furby had no recording chip. Its vocabulary was fixed at the factory; as it was played with, it gradually swapped its own babble, Furbish, for English words it already stored. Children heard new words soon after saying them. The US National Security Agency still banned it from its offices that winter.",
+  "move": "Something that says many things will sometimes say what you just said.",
+  "trap": "It said new words after people spoke nearby, so it must listen.",
+  "keywords": [
+    "furby",
+    "tiger electronics",
+    "toys",
+    "nsa",
+    "speech"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Washington Post, 13 January 1999",
+  "source_kind": "news_archive",
+  "reference": "https://www.washingtonpost.com/archive/politics/1999/01/13/a-toy-story-of-hairy-espionage/edb69b8a-1b41-47f8-8166-b8839cd637f3/",
+  "written": "2026-09-26"
+}

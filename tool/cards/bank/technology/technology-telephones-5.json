@@ -1,0 +1,40 @@
+{
+  "id": "technology-telephones-5",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "When US towns switched telephone exchanges to automatic dialling, cutting operator jobs, what happened to employment among the next generation of young women?",
+  "options": [
+    "It held, as they found other work",
+    "It fell with the lost operator jobs",
+    "It rose as telephones spread"
+  ],
+  "correct": 0,
+  "answer": "It held. Economists comparing cities switched at different times between 1920 and 1940 found cutovers cut young women's operator jobs by 50 to 80%, yet later cohorts were no less likely to work: they moved into clerical and service jobs. The cost fell on operators already in post, more of whom ended in worse-paid work.",
+  "move": "Count what people did next, not only the jobs that vanished.",
+  "trap": "It fell, since every lost operator job looks like a lost worker.",
+  "keywords": [
+    "telephone operators",
+    "automation",
+    "dial switching",
+    "women's employment",
+    "at&t"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feigenbaum & Gross, Quarterly Journal of Economics, 2024",
+  "source_kind": "paper",
+  "reference": "Feigenbaum & Gross, Answering the Call of Automation: How the Labor Market Adjusted to Mechanizing Telephone Operation, Quarterly Journal of Economics, 2024",
+  "written": "2026-09-26"
+}

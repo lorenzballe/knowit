@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Selection on the dependent variable"
+  "figure": "none",
+  "source": "Selection on the dependent variable",
+  "source_kind": "paper",
+  "reference": "Denrell, Vicarious Learning, Undersampling of Failure, and the Myths of Management, Organization Science, 2003"
 }

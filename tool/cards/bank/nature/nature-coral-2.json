@@ -1,0 +1,39 @@
+{
+  "id": "nature-coral-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: bleaching caused most of the coral lost on the Great Barrier Reef between 1985 and 2012?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Analysing 27 years of surveys, De'ath and colleagues found coral cover fell from 28% to 14% and put 48% of the loss down to cyclones, 42% to coral-eating crown-of-thorns starfish and 10% to bleaching. The balance has shifted since: from 2016 onwards, repeated marine heatwaves have bleached the reef again and again.",
+  "move": "Split a loss by cause before choosing which cause to fight.",
+  "trap": "True, since bleaching is the cause that fills reef news.",
+  "keywords": [
+    "great barrier reef",
+    "coral cover",
+    "crown-of-thorns starfish",
+    "cyclones",
+    "coral bleaching"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "De'ath et al., PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "De'ath, Fabricius, Sweatman & Puotinen, The 27-year decline of coral cover on the Great Barrier Reef and its causes, PNAS, 2012",
+  "written": "2026-09-26"
+}

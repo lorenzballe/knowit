@@ -1,0 +1,40 @@
+{
+  "id": "science-rust-2",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A 2016 study priced the world's corrosion damage. About what share of global GDP did it come to?",
+  "options": [
+    "About 0.3%",
+    "About 3%",
+    "About 30%"
+  ],
+  "correct": 1,
+  "answer": "About 3%. NACE International, the corrosion engineers' body, put it at US$2.5 trillion a year, 3.4% of world output, across every sector of the economy. Corrosion rarely makes news because it works slowly and fails piecemeal. The study reckoned 15–35% could be saved with methods already known.",
+  "move": "Slow, scattered losses often outweigh the dramatic ones.",
+  "trap": "Rust feels like a nuisance, because it never makes headlines.",
+  "keywords": [
+    "corrosion",
+    "rust",
+    "nace international",
+    "infrastructure",
+    "gdp"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NACE International, IMPACT study, 2016",
+  "source_kind": "institution",
+  "reference": "Koch et al., International Measures of Prevention, Application, and Economics of Corrosion Technologies Study, NACE International, 2016",
+  "written": "2026-09-26"
+}

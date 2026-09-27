@@ -1,0 +1,33 @@
+{
+  "id": "art-motives-5",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Eric Hebborn insist that his drawings in the manner of old masters were not forgeries?",
+  "answer": "Because he never signed them. Hebborn drew in the manner of masters from Mantegna to Van Dyck on old paper and let experts supply the names; a wrong attribution, he argued, was their error. Suspicion began in 1978, when a curator found two supposed old drawings on the same paper. He later claimed 1,000 fakes.",
+  "move": "A claim can mislead even when nobody wrote a false word.",
+  "keywords": [
+    "eric hebborn",
+    "old master drawings",
+    "attribution",
+    "konrad oberhuber",
+    "colnaghi"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hebborn, Drawn to Trouble, 1991",
+  "source_kind": "book",
+  "reference": "Eric Hebborn, Drawn to Trouble: The Forging of an Artist, Mainstream Publishing, 1991",
+  "written": "2026-09-26"
+}

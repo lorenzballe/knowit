@@ -1,0 +1,39 @@
+{
+  "id": "science-plastics-3",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Of all the plastic made from 1950 to 2015, what share was made in the last 13 of those 65 years?",
+  "options": [
+    "About a tenth",
+    "About a fifth",
+    "About half"
+  ],
+  "correct": 2,
+  "answer": "About half. Production grew from 2 million tonnes in 1950 to about 380 million in 2015, and growth that fast piles much of the total into the latest years. Of 8,300 million tonnes made by 2015, about half dates from 2002 on: younger than euro coins.",
+  "move": "When something keeps growing, most of it is recent.",
+  "trap": "About a fifth: 13 of 65 years is a fifth of the time.",
+  "keywords": [
+    "plastic production",
+    "exponential growth",
+    "cumulative output",
+    "polymers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Geyer, Jambeck & Law, Science Advances, 2017",
+  "source_kind": "paper",
+  "reference": "Geyer, Jambeck & Law, Production, use, and fate of all plastics ever made, Science Advances, 2017",
+  "written": "2026-09-26"
+}

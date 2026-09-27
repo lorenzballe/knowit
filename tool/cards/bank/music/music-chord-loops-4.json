@@ -1,0 +1,38 @@
+{
+  "id": "music-chord-loops-4",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a chord progression paired with a particular rhythm be protected by copyright?",
+  "sides": [
+    "Yes, protect the pairing",
+    "No, keep it free"
+  ],
+  "answer": "A song's identity often lives in its groove: which chords, and exactly where they land. Chords alone are common, but a specific progression welded to a specific syncopation is a creative choice, and juries can hear it. Leaving it unprotected lets a famous artist lift the feel of an obscure song and keep every penny.",
+  "move": "Whichever side you took, it turns on how much of the pairing is commonplace.",
+  "counterpoint": "In 2023 a New York jury found Ed Sheeran's Thinking Out Loud did not copy Let's Get It On, though both set a similar loop to a similar lilt; the defence played older songs built on the same pairing. Owning pairings would fence off a small commons that every songwriter draws on, and reward whoever sued first.",
+  "keywords": [
+    "ed sheeran",
+    "copyright",
+    "chord progression",
+    "let's get it on",
+    "thinking out loud"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffin v. Sheeran, S.D.N.Y., 2023",
+  "source_kind": "primary_document",
+  "reference": "Griffin v. Sheeran, jury verdict, United States District Court for the Southern District of New York, 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "history-straight-lines-4",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the border between North and South Korea today follows the 38th parallel?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The 38th parallel was the line two US officers, Dean Rusk and Charles Bonesteel, picked in August 1945 to split the Soviet and American zones. Today's border is the 1953 armistice line, drawn where the fighting stopped. It crosses the parallel on a slant: Kaesong, once in the South, now lies in the North.",
+  "move": "A name can stay fixed long after the thing it names has moved.",
+  "trap": "The phrase 38th parallel still stands for the Korean border in the news.",
+  "keywords": [
+    "38th parallel",
+    "korean war",
+    "armistice line",
+    "kaesong",
+    "dean rusk"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Cumings, The Korean War: A History, 2010",
+  "source_kind": "book",
+  "reference": "Cumings, The Korean War: A History, Modern Library, 2010",
+  "written": "2026-09-26"
+}

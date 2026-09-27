@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-gadgets-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the inventor of the PalmPilot test his design months before any circuit existed?",
+  "answer": "He carried a block of wood. Jeff Hawkins cut it to the size he wanted, kept it in his shirt pocket, and pulled it out in meetings to tap at imaginary screens with a stick. What he learned about size and daily habits shaped the first Pilot of 1996, which fitted that same pocket.",
+  "move": "Carry a fake version of the thing before building the real one.",
+  "keywords": [
+    "palmpilot",
+    "jeff hawkins",
+    "prototype",
+    "personal digital assistant"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butter & Pogue, Piloting Palm, 2002",
+  "source_kind": "book",
+  "reference": "Andrea Butter and David Pogue, Piloting Palm: The Inside Story of Palm, Handspring, and the Birth of the Billion-Dollar Handheld Industry, Wiley, 2002",
+  "written": "2026-09-26"
+}

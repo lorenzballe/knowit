@@ -1,0 +1,32 @@
+{
+  "id": "cinema-hits-5",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the Indian wrestling drama Dangal take most of its box office?",
+  "answer": "In China. Released there in May 2017, months after its Indian opening, Aamir Khan's film about a father who trains his daughters to wrestle took around $190 million, more than it earned at home. For a while a Hindi film's biggest crowds were queuing in Chinese multiplexes.",
+  "move": "A product's home market is not always its biggest one.",
+  "keywords": [
+    "dangal",
+    "aamir khan",
+    "chinese box office",
+    "indian cinema"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Variety, 2017",
+  "source_kind": "news_archive",
+  "reference": "Variety, Why 'Dangal's' Triumph in China Could Be a Game-Changer for India, 2017, https://variety.com/2017/film/asia/why-dangal-china-triumph-changes-could-be-game-changer-1202439053/",
+  "written": "2026-09-26"
+}

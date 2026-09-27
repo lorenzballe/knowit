@@ -1,0 +1,39 @@
+{
+  "id": "psychology-streaks-1",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Volunteers repeated one new daily habit in the same setting. What was the longest estimated time for it to become automatic?",
+  "options": [
+    "About 8 months",
+    "About 66 days",
+    "About 3 weeks"
+  ],
+  "correct": 0,
+  "answer": "About 8 months: 254 days. Lally and colleagues followed 96 volunteers repeating an eating, drinking or exercise habit daily. The median, 66 days, is the figure now quoted everywhere, but estimates ran from 18 to 254 days, and the slowest were projected well past the 84 days the study lasted.",
+  "move": "Ask how far the slowest cases sit from the quoted average.",
+  "trap": "Recalling the widely quoted 66 days, which was only the middle case.",
+  "keywords": [
+    "habit formation",
+    "automaticity",
+    "median",
+    "lally"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lally et al., European J Social Psychology, 2010",
+  "source_kind": "paper",
+  "reference": "Lally, van Jaarsveld, Potts & Wardle, How are habits formed: modelling habit formation in the real world, European Journal of Social Psychology, 2010",
+  "written": "2026-09-26"
+}

@@ -1728,4 +1728,43 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get topEmpty =>
       'Nothing on the list yet. Every card you like, save or say counts.';
+
+  @override
+  String get readMark => 'Read';
+
+  @override
+  String get lovedSinceTheStart => 'Loved since the start';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Loved in $subject';
+  }
+
+  @override
+  String get lovedLine => 'What readers kept most, and you have not read yet';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Your first week: $n more days with four of the five yours.',
+      one: 'Your first week: tomorrow is its last day, four of the five yours.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.';
+
+  @override
+  String get forYouShelf => 'For you';
+
+  @override
+  String get forYouLine => 'What your reading puts first';
+
+  @override
+  String get exploreOffline =>
+      'You are offline. This is Explore as it was last read.';
 }

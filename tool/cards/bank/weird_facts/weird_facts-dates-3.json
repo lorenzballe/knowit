@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-dates-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: over the Gregorian calendar's 400-year cycle, the 13th falls equally often on each weekday?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The cycle lasts 146,097 days, exactly 20,871 weeks, so it repeats with the weekdays locked in place and its small imbalances never average out. Of its 4,800 thirteenths, 688 fall on a Friday, more than on any other day; Thursday and Saturday get 684 each.",
+  "move": "A cycle that repeats exactly never averages away its own lopsidedness.",
+  "trap": "Assuming centuries of shuffling must spread the dates evenly.",
+  "keywords": [
+    "gregorian calendar",
+    "friday the 13th",
+    "weekdays",
+    "leap years"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scientific American, Friday the 13th",
+  "source_kind": "news_archive",
+  "reference": "https://www.scientificamerican.com/article/why-friday-the-13th-is-a-mathematical-inevitability/",
+  "written": "2026-09-26"
+}

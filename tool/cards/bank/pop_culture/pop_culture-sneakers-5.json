@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sneakers-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What persuaded Adidas to give a rap group a shoe deal in 1986?",
+  "answer": "A concert crowd holding its trainers in the air. In 1986 Run-DMC asked a Madison Square Garden audience to raise their shoes while an Adidas executive watched thousands go up. A deal reported at $1 million or more followed, among the first for musicians rather than athletes. The group wore Superstars without laces.",
+  "move": "Before paying for demand, find a way to see it with your own eyes.",
+  "keywords": [
+    "run-dmc",
+    "adidas superstar",
+    "my adidas",
+    "endorsement",
+    "hip-hop"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smit, Pitch Invasion, 2006",
+  "source_kind": "book",
+  "reference": "Barbara Smit, Pitch Invasion: Adidas, Puma and the Making of Modern Sport, Allen Lane, 2006",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-confirmation-4",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: correcting a false belief usually makes people cling to it harder?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Across five experiments with more than 10,100 people and 52 politically charged claims, corrections moved beliefs towards the facts, even among partisans who disliked them; none produced a backfire. The famous digging-in effect came from far smaller studies. The relative who never concedes at dinner is memorable, not typical.",
+  "move": "Judge persuasion by the average listener, not the loudest holdout.",
+  "trap": "Remembering arguments where someone dug in, and taking them as the rule.",
+  "keywords": [
+    "backfire effect",
+    "fact-checking",
+    "corrections",
+    "misinformation",
+    "partisanship"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood & Porter, Political Behavior, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1007/s11109-018-9443-y",
+  "written": "2026-09-26"
+}

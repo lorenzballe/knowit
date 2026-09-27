@@ -1,0 +1,33 @@
+{
+  "id": "history-guilds-4",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How were the scenes of York's medieval mystery plays shared out?",
+  "answer": "By trade. Each craft guild staged one pageant on a wagon, often a scene that suited its work: the shipwrights built Noah's Ark, the fishers and mariners staged the Flood, the goldsmiths brought the Magi's gifts and the bakers served the Last Supper. The cycle ran on Corpus Christi from the 1370s until 1569.",
+  "move": "Give each group the piece of the job it already knows.",
+  "keywords": [
+    "york mystery plays",
+    "craft guilds",
+    "corpus christi",
+    "pageant wagons",
+    "shipwrights"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beadle and King, York Mystery Plays, 1984",
+  "source_kind": "book",
+  "reference": "Beadle and King (eds.), York Mystery Plays: A Selection in Modern Spelling, Oxford University Press, 1984",
+  "written": "2026-09-26"
+}

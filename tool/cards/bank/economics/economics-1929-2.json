@@ -1,0 +1,36 @@
+{
+  "id": "economics-1929-2",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "also": [
+    "economics.money_and_banks.printing_cash"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did America's money supply shrink by about a third after 1929 while the Federal Reserve's own money grew?",
+  "answer": "Through the banks. About 9,000 failed or suspended from 1930 to 1933, and their deposits, the bulk of all money, froze or vanished. Savers kept cash at home and surviving banks hoarded reserves, so each Fed dollar supported fewer dollars of deposits. The Fed's notes kept circulating while the money built on them collapsed.",
+  "move": "Money is mostly promises between banks, and fear cancels promises.",
+  "keywords": [
+    "bank failures",
+    "money supply",
+    "federal reserve",
+    "friedman and schwartz",
+    "deposits"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Friedman and Schwartz, A Monetary History, 1963",
+  "source_kind": "book",
+  "reference": "Friedman & Schwartz, A Monetary History of the United States, 1867-1960, Princeton University Press, 1963",
+  "written": "2026-09-26"
+}

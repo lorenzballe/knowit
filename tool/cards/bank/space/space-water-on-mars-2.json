@@ -1,0 +1,33 @@
+{
+  "id": "space-water-on-mars-2",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.water_on_mars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can telescopes on Earth gauge how much water Mars once had, from the thin vapour left today?",
+  "answer": "By weighing its hydrogen. Light hydrogen escapes to space more easily than the heavy kind, deuterium, so leftover water grows richer in it. Martian water carries about seven times Earth's share. Working back, a 2015 study found at least a 137 m global layer: an ocean on almost a fifth of the planet.",
+  "move": "What leaks out first leaves its mark on what stays behind.",
+  "keywords": [
+    "deuterium",
+    "hydrogen escape",
+    "ancient ocean",
+    "isotopes",
+    "telescopes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Villanueva et al., Science, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aaa3630",
+  "written": "2026-09-26"
+}

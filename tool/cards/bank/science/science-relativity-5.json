@@ -1,0 +1,33 @@
+{
+  "id": "science-relativity-5",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would a snapshot of a ball flying past at nearly light speed show?",
+  "answer": "A round ball, apparently rotated. Its length really does shrink, but light from its far parts must set off earlier to reach the camera with the rest, and the two effects add up to a turn. Predicted in 1959, it was first shown in 2025, with laser pulses mimicking a light speed under 2 m/s.",
+  "move": "What is true and what a camera records can be two different things.",
+  "keywords": [
+    "length contraction",
+    "terrell-penrose effect",
+    "special relativity",
+    "tu wien",
+    "high-speed photography"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hornof et al., Communications Physics, 2025",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s42005-025-02003-6",
+  "written": "2026-09-26"
+}

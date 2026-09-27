@@ -1,0 +1,40 @@
+{
+  "id": "food-yeast-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why do baker's yeast factories drip molasses into their aerated tanks bit by bit instead of all at once?",
+  "options": [
+    "Too much sugar would kill the yeast",
+    "Rich sugar makes yeast brew alcohol",
+    "Molasses would foam over the tanks"
+  ],
+  "correct": 1,
+  "answer": "Rich sugar makes yeast brew alcohol. Even with plenty of air, baker's yeast switches to fermenting when sugar is abundant, spending it on ethanol instead of new cells. Factories therefore feed molasses gradually, keeping sugar so scarce that the yeast burns it with oxygen and multiplies. The product is cells, not beer.",
+  "move": "If a machine wastes fuel when rich, feed it lean on purpose.",
+  "trap": "Picturing sugar as a poison at high doses, as in jam.",
+  "keywords": [
+    "baker's yeast",
+    "molasses",
+    "fed-batch",
+    "crabtree effect",
+    "ethanol"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Hoek et al., Appl. Environ. Microbiol., 1998",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC106631/",
+  "written": "2026-09-26"
+}

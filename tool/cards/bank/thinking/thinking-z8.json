@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Regression to the mean in management"
+  "figure": "none",
+  "source": "Regression to the mean in management",
+  "source_kind": "paper",
+  "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005"
 }

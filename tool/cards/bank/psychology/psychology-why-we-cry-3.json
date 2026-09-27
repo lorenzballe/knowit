@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-cry-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a Dutch survey, what share of parents of six-month-olds admitted shaking, slapping or smothering their crying baby?",
+  "answer": "About one in twenty. That share said they had smothered, slapped or shaken their baby at least once because of its crying, and it was higher where the crying seemed excessive to the parents. A cry is built to summon care and usually does; past a limit, it can summon harm.",
+  "move": "Any alarm loud enough to compel help can also wear out the helper.",
+  "keywords": [
+    "infant crying",
+    "shaken babies",
+    "child abuse",
+    "parents",
+    "netherlands"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "dots",
+  "source": "Reijneveld et al., The Lancet, 2004",
+  "source_kind": "paper",
+  "reference": "Reijneveld, van der Wal, Brugman, Hira Sing & Verloove-Vanhorick, Infant crying and abuse, The Lancet, 2004",
+  "written": "2026-09-26"
+}

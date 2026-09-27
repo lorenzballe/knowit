@@ -1,0 +1,38 @@
+{
+  "id": "food-maillard-3",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: searing a steak over high heat first seals its juices inside?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The idea comes from the chemist Justus von Liebig in the 1840s, and it went untested for nearly a century. Seared steaks lose as much moisture as others, often more, since the hot surface drives water out. The loud sizzle in the pan is juice escaping as steam.",
+  "move": "A step that looks protective still needs a comparison without it.",
+  "trap": "A crisp brown crust looks like a barrier, so it feels like one.",
+  "keywords": [
+    "searing",
+    "justus von liebig",
+    "meat juices",
+    "crust"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGee, On Food and Cooking, 2004",
+  "source_kind": "book",
+  "reference": "McGee, On Food and Cooking: The Science and Lore of the Kitchen, Scribner, 2004",
+  "written": "2026-09-26"
+}

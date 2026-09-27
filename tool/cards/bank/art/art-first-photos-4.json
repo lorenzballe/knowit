@@ -1,0 +1,33 @@
+{
+  "id": "art-first-photos-4",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Hippolyte Bayard photograph himself as a drowned man in 1840?",
+  "answer": "In protest. Bayard had made direct positive prints on paper and shown them in Paris by mid-1839, but the state's reward went to Daguerre. His self-portrait slumped as a corpse carries a note on the back saying he drowned himself in despair at the neglect. The first staged photographs include a complaint about credit.",
+  "move": "Staging a picture to make a point is as old as the picture itself.",
+  "keywords": [
+    "hippolyte bayard",
+    "self-portrait",
+    "direct positive",
+    "daguerre",
+    "staged photograph"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Batchen, Burning with Desire, 1997",
+  "source_kind": "book",
+  "reference": "Geoffrey Batchen, Burning with Desire: The Conception of Photography, MIT Press, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-fast-fashion-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments add a per-item levy to ultra-cheap fast fashion?",
+  "sides": [
+    "Yes, levy each item",
+    "No, leave prices alone"
+  ],
+  "answer": "Clothes this cheap push their costs onto others: landfill, burned stock, polluted rivers and bales of waste exported to poorer countries. A levy on each item folds some of that cost into the price, slows the flood of throwaway pieces and funds collection. French lawmakers have already voted for a penalty of this kind.",
+  "move": "Whichever side you took, the hinge is whether price or use drives the waste.",
+  "counterpoint": "A flat charge per item falls hardest on the poorest buyers, for whom cheap clothes are the budget, not a luxury. It targets price rather than harm: an expensive garment can be worn as rarely as a cheap one. Online orders cross borders easily, so durability rules, takeback duties and honest labels would reach the waste more directly.",
+  "keywords": [
+    "fast fashion",
+    "eco-levy",
+    "france",
+    "clothing waste",
+    "consumer prices"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "French National Assembly, 2024",
+  "source_kind": "primary_document",
+  "reference": "Assemblée nationale, proposition de loi visant à réduire l'impact environnemental de l'industrie textile, adopted at first reading, March 2024",
+  "written": "2026-09-26"
+}

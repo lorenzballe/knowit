@@ -1,0 +1,33 @@
+{
+  "id": "medicine-scans-4",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an ultrasound probe need a layer of gel against the skin?",
+  "answer": "Because a thin film of air would reflect almost all the sound back. Sound crosses a boundary well only when both sides resist it similarly, and air is thousands of times less resistant than tissue: about 99.9% bounces at a tissue-air boundary. The same law keeps ultrasound from seeing through air-filled lungs or gassy bowel.",
+  "move": "A gap of almost nothing can block what a wall of flesh lets through.",
+  "keywords": [
+    "ultrasound",
+    "acoustic impedance",
+    "coupling gel",
+    "reflection",
+    "sound waves"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Szabo, Diagnostic Ultrasound Imaging, 2004",
+  "source_kind": "book",
+  "reference": "Szabo, Diagnostic Ultrasound Imaging: Inside Out, Elsevier Academic Press, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "technology-chips-4",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "An extreme-ultraviolet chip-printing machine bounces its light off about ten mirrors, each reflecting about 70%. How much reaches the wafer?",
+  "options": [
+    "About 70%",
+    "About 30%",
+    "About 3%"
+  ],
+  "correct": 2,
+  "answer": "About 3%. Each bounce keeps 70% of what arrived, so ten bounces keep 0.7 to the tenth power, about 0.028. No lens can be used, because every material absorbs this light, so mirrors of molybdenum and silicon layers do the work. The source must pour out at least 35 times the power the wafer receives.",
+  "move": "When a loss repeats at every step, multiply it; never subtract it once.",
+  "trap": "About 30%, sensing the losses add up but underrating how fast.",
+  "keywords": [
+    "euv lithography",
+    "multilayer mirrors",
+    "reflectivity",
+    "chipmaking"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bakshi, EUV Lithography, SPIE Press, 2018",
+  "source_kind": "book",
+  "reference": "Bakshi (ed.), EUV Lithography, 2nd edition, SPIE Press, 2018",
+  "written": "2026-09-26"
+}

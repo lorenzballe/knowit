@@ -1,0 +1,33 @@
+{
+  "id": "human_body-digestion-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the gut doing when an empty stomach growls a couple of hours after a meal?",
+  "answer": "Housekeeping. Between meals a wave of strong contractions, the migrating motor complex, sweeps from the stomach to the end of the small intestine roughly every 90 to 120 minutes, clearing leftover food and bacteria. Pushing gas and fluid ahead of it makes the noise; eating stops it at once.",
+  "move": "A noisy system at rest may simply be cleaning itself.",
+  "keywords": [
+    "migrating motor complex",
+    "stomach growling",
+    "small intestine",
+    "fasting",
+    "bacteria"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deloose et al., Nat Rev Gastroenterol Hepatol, 2012",
+  "source_kind": "paper",
+  "reference": "Deloose, Janssen, Depoortere & Tack, The migrating motor complex: control mechanisms and its role in health and disease, Nature Reviews Gastroenterology & Hepatology, 2012",
+  "written": "2026-09-26"
+}

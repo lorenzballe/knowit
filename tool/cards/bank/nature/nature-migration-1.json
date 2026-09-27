@@ -1,0 +1,33 @@
+{
+  "id": "nature-migration-1",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does a migrating monarch butterfly keep the clock its sun compass needs?",
+  "answer": "In its antennae. Steering by the sun means knowing the hour, since the sun crosses the sky. Reppert's group found monarchs with antennae removed, or painted black to block light, lost their south-westward bearing; clear paint left them on course. The clock steering a flight of up to 4,000 km sits in two thin feelers.",
+  "move": "A compass that uses a moving reference needs a clock beside it.",
+  "keywords": [
+    "monarch butterfly",
+    "sun compass",
+    "circadian clock",
+    "antennae",
+    "mexico"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Merlin, Gegear & Reppert, Science, 2009",
+  "source_kind": "paper",
+  "reference": "Merlin, Gegear & Reppert, Antennal circadian clocks coordinate sun compass orientation in migratory monarch butterflies, Science, 2009",
+  "written": "2026-09-26"
+}

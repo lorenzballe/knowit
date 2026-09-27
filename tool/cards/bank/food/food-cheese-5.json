@@ -1,0 +1,38 @@
+{
+  "id": "food-cheese-5",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the United States drop its rule that raw-milk cheese must age at least 60 days before sale?",
+  "sides": [
+    "Yes, drop it",
+    "No, keep it"
+  ],
+  "answer": "The rule dates from 1949 and rests on 1940s evidence, chiefly typhoid bacteria dying out in aged cheddar. A 2010 study found E. coli O157 still detectable in raw-milk Gouda and cheddar after 270 days, so ageing gives false comfort while banning young raw-milk cheeses outright. Safety should come from testing milk and inspecting dairies.",
+  "move": "Whichever side you took, whether ageing or testing better controls the risk decides it.",
+  "counterpoint": "The 60-day rule keeps off the shelf exactly the cheeses that carry most risk. A 2015 FDA and Health Canada assessment put the listeriosis risk from raw-milk soft-ripened cheese at 50 to 160 times that of pasteurised versions. Listeria strikes pregnant women and the elderly hardest. An imperfect barrier still blocks the worst category.",
+  "keywords": [
+    "raw milk cheese",
+    "60-day rule",
+    "listeria",
+    "food safety",
+    "fda"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FDA and Health Canada risk assessment, 2015",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/food/risk-and-safety-assessments-food/joint-fda-health-canada-quantitative-assessment-risk-listeriosis-soft-ripened-cheese-consumption",
+  "written": "2026-09-26"
+}

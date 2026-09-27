@@ -1,0 +1,38 @@
+{
+  "id": "economics-decoy-options-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: decoys that reliably sway choices among options described by numbers work as well on realistic product displays?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Shown as pictures or realistic descriptions instead of tables of attributes, decoys mostly stopped working in Frederick, Lee and Baskin's studies; Yang and Lynn found the same with real products. The effect's discoverers now say it needs the dominance to be plain at a glance. It lives most comfortably in a table of numbers.",
+  "move": "A result is only as wide as the materials it was tested on.",
+  "trap": "Assuming an effect found on number tables holds on real shelves.",
+  "keywords": [
+    "decoy effect",
+    "attraction effect",
+    "replication",
+    "product displays"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frederick, Lee & Baskin, J. Marketing Research, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1509/jmr.12.0061",
+  "written": "2026-09-26"
+}

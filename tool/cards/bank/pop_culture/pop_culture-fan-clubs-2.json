@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-fan-clubs-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Frank Sinatra's press agent make sure the first screaming crowds turned up in 1942?",
+  "answer": "He reportedly paid for them. George Evans is said to have hired teenage girls at the Paramount Theatre in New York, at $5 each, to scream and swoon on cue, with an ambulance waiting outside. Other girls in the audience copied them. By 1944 crowds of fans filled Times Square unpaid.",
+  "move": "A crowd is the best advertisement for a crowd.",
+  "keywords": [
+    "frank sinatra",
+    "george evans",
+    "bobby-soxers",
+    "paramount theatre"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kaplan, Frank: The Voice, 2010",
+  "source_kind": "book",
+  "reference": "James Kaplan, Frank: The Voice, Doubleday, 2010",
+  "written": "2026-09-26"
+}

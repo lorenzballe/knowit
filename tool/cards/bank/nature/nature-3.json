@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Pauly, Trends in Ecology & Evolution, 1995"
+  "figure": "none",
+  "source": "Pauly, Trends in Ecology & Evolution, 1995",
+  "source_kind": "paper",
+  "reference": "Pauly, Anecdotes and the shifting baseline syndrome of fisheries, Trends in Ecology & Evolution, 1995"
 }

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-marketing-3",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under US law, a trailer showing an actor later cut from the film can be false advertising?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2022 two viewers sued Universal after renting Yesterday for Ana de Armas, who appears in its trailer but was cut from the film. A federal judge in California ruled that a trailer is commercial speech, an advertisement, so false-advertising law can apply to it. The trailer is a promise.",
+  "move": "Once something is used to sell, it is judged as a sales pitch.",
+  "trap": "A trailer looks like part of the creative work, so free speech.",
+  "keywords": [
+    "trailers",
+    "false advertising",
+    "commercial speech",
+    "yesterday",
+    "ana de armas"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woulfe v. Universal City Studios, 2022",
+  "source_kind": "primary_document",
+  "reference": "Woulfe v. Universal City Studios LLC, US District Court for the Central District of California, order of December 2022",
+  "written": "2026-09-26"
+}

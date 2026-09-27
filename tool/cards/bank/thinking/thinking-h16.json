@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h16",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Two weather services, working from the same satellite data, both give a 70% chance of rain. How sure should you be?",
+  "options": [
+    "About 91%",
+    "Not much more than 70%",
+    "Certain: two sources agree"
+  ],
+  "correct": 1,
+  "answer": "Not much more than 70%. Combining forecasts sharpens the odds only when their errors are independent. Two services reading the same satellites through similar models share their mistakes, so their agreement is close to one forecast repeated. The 91% would need them to be wrong for different reasons.",
+  "move": "Agreement counts only as often as the sources could have disagreed.",
+  "trap": "Treating two agreeing sources as two separate pieces of evidence.",
+  "keywords": [
+    "weather forecasts",
+    "independent evidence",
+    "correlated errors",
+    "sources"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clemen, International Journal of Forecasting, 1989",
+  "source_kind": "paper",
+  "reference": "Clemen, Combining forecasts: A review and annotated bibliography, International Journal of Forecasting, 1989",
+  "written": "2026-09-26"
+}

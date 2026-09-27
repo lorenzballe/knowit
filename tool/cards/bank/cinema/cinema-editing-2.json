@@ -1,0 +1,39 @@
+{
+  "id": "cinema-editing-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a typical Hollywood feature made between 1930 and 1960, how long did the average shot last?",
+  "options": [
+    "About 3 seconds",
+    "About 10 seconds",
+    "About 30 seconds"
+  ],
+  "correct": 1,
+  "answer": "About 10 seconds. David Bordwell's counts put most studio-era features between 8 and 11 seconds a shot. The celebrated long takes were exceptions; the slowness people remember lies in the staging, not the cutting. By 2000 many features averaged 3 to 6 seconds a shot, and action films often cut every 2 or 3.",
+  "move": "The famous exception is the one you remember, not the one that was typical.",
+  "trap": "Picturing the famous unbroken takes and taking them for the norm.",
+  "keywords": [
+    "average shot length",
+    "david bordwell",
+    "studio era",
+    "cutting pace"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Bordwell, Film Quarterly, 2002",
+  "source_kind": "paper",
+  "reference": "Bordwell, Intensified Continuity: Visual Style in Contemporary American Film, Film Quarterly 55(3), 2002",
+  "written": "2026-09-26"
+}

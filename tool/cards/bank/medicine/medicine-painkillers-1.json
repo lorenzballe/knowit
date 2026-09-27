@@ -1,0 +1,33 @@
+{
+  "id": "medicine-painkillers-1",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the US approve in January 2025 that no pain drug had offered for over twenty years?",
+  "answer": "A new mechanism. Suzetrigine blocks NaV1.8, a sodium channel found mainly in peripheral pain-sensing nerves, so the signal is stopped before it reaches the spinal cord. It works outside the brain, gives no high, and is not a controlled substance. Its approval covers acute pain only, tested after bunion surgery and tummy tucks.",
+  "move": "Stopping a message at its source spares everything downstream.",
+  "keywords": [
+    "suzetrigine",
+    "nav1.8",
+    "sodium channels",
+    "non-opioid painkillers",
+    "vertex"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vertex Pharmaceuticals, FDA approval announcement, 2025",
+  "source_kind": "company",
+  "reference": "https://news.vrtx.com/news-releases/news-release-details/vertex-announces-fda-approval-journavxtm-suzetrigine-first-class",
+  "written": "2026-09-26"
+}

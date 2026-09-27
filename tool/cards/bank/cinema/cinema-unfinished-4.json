@@ -1,0 +1,32 @@
+{
+  "id": "cinema-unfinished-4",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long did Terry Gilliam's Don Quixote film take from its first shooting day to its premiere?",
+  "answer": "Eighteen years. Shooting began in Spain in 2000 and collapsed within a week: military jets roared over the location, a flash flood swept away equipment, and the lead, Jean Rochefort, could not ride. The insurers took the script rights. Gilliam won them back and premiered The Man Who Killed Don Quixote at Cannes in 2018.",
+  "move": "A project abandoned is often only paused until the rights come home.",
+  "keywords": [
+    "terry gilliam",
+    "don quixote",
+    "lost in la mancha",
+    "film insurance"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Fulton and Pepe, Lost in La Mancha",
+  "source_kind": "primary_document",
+  "reference": "Fulton and Pepe (directors), Lost in La Mancha, IFC Films, 2002",
+  "written": "2026-09-26"
+}

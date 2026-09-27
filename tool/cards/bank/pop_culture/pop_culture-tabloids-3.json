@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-tabloids-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why would a tabloid pay a fortune for a celebrity story it never intends to print?",
+  "answer": "To bury it. In catch and kill, a publisher buys exclusive rights so nobody else can run the story. In December 2018 the National Enquirer's owner, American Media, admitted to federal prosecutors that it paid a model $150,000 in 2016 for her account of an affair with Donald Trump, to keep it from voters.",
+  "move": "Paying for silence can look exactly like paying for news.",
+  "keywords": [
+    "catch and kill",
+    "national enquirer",
+    "american media",
+    "exclusive rights"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Attorney, SDNY, December 2018",
+  "source_kind": "primary_document",
+  "reference": "US Attorney's Office, Southern District of New York, press release on American Media Inc. non-prosecution agreement, 12 December 2018",
+  "written": "2026-09-26"
+}

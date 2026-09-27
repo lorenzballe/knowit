@@ -1,0 +1,36 @@
+{
+  "id": "technology-training-3",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "also": [
+    "technology.ai.chatbots"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who taught ChatGPT's safety filter what violent and abusive text looks like?",
+  "answer": "Workers in Nairobi. To teach a filter to catch harmful text, OpenAI needed tens of thousands of examples labelled by hand; through an outsourcing firm, Sama, Kenyan staff read and tagged passages describing sexual abuse, torture and suicide. In 2023 TIME reported their take-home pay at about $1.32 to $2 an hour.",
+  "move": "Ask who did the unpleasant work that makes a product feel clean.",
+  "keywords": [
+    "data labelling",
+    "content moderation",
+    "sama",
+    "kenya",
+    "chatgpt"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Perrigo, TIME, January 2023",
+  "source_kind": "news_archive",
+  "reference": "Perrigo, Exclusive: OpenAI Used Kenyan Workers on Less Than $2 Per Hour to Make ChatGPT Less Toxic, TIME, 2023",
+  "written": "2026-09-26"
+}

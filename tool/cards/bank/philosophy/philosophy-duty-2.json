@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-duty-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the word deontology, now the name for duty-based ethics, was coined by a founder of utilitarianism?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Jeremy Bentham built the word from the Greek deon, what is binding, to name a utilitarian science of duty: conduct judged by the pleasure and pain it causes. His Deontology was published in 1834, two years after his death. Duty set against consequences is a later sense, fixed by C. D. Broad in 1930.",
+  "move": "Words outlive the meanings their inventors gave them.",
+  "trap": "Assuming a theory's name was coined by its own champions.",
+  "keywords": [
+    "deontology",
+    "jeremy bentham",
+    "utilitarianism",
+    "c. d. broad",
+    "etymology"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bentham, Deontology, ed. Goldworth, 1983",
+  "source_kind": "book",
+  "reference": "Bentham, Deontology, ed. Goldworth, Clarendon Press, 1983; Broad, Five Types of Ethical Theory, Kegan Paul, 1930",
+  "written": "2026-09-26"
+}

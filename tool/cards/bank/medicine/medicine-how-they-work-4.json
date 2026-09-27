@@ -1,0 +1,40 @@
+{
+  "id": "medicine-how-they-work-4",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why did the first vaccines made from a bacterium's sugar coat fail to protect children under two?",
+  "options": [
+    "Maternal antibodies mopped up the vaccine",
+    "Infant immune systems ignore bare sugars",
+    "Infant doses were cut too small"
+  ],
+  "correct": 1,
+  "answer": "Infant immune systems ignore bare sugars. Polysaccharides, long sugar chains, stimulate B cells without help from T cells, a route that barely works before about age two and leaves little memory. Bolting the sugar to a protein, often tetanus toxoid, recruits T-cell help. That conjugate design made Hib meningitis rare in vaccinated countries.",
+  "move": "When a message is ignored, change the messenger rather than shouting louder.",
+  "trap": "Blaming mothers' antibodies, which do blunt the measles vaccine in infancy.",
+  "keywords": [
+    "conjugate vaccines",
+    "polysaccharides",
+    "hib",
+    "t cells",
+    "infants"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pollard, Perrett & Beverley, Nature Reviews Immunology, 2009",
+  "source_kind": "paper",
+  "reference": "Pollard, Perrett & Beverley, Maintaining protection against invasive bacteria with protein-polysaccharide conjugate vaccines, Nature Reviews Immunology, 2009",
+  "written": "2026-09-26"
+}

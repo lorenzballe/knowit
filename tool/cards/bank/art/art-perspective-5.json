@@ -1,0 +1,32 @@
+{
+  "id": "art-perspective-5",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the feet of Mantegna's foreshortened dead Christ smaller than strict perspective allows?",
+  "answer": "Because strict perspective would have hidden him. Seen from the soles at that range, correct projection makes the feet huge and lets them block the chest and face. Mantegna shrank them and kept the head large, putting meaning ahead of geometry. The wounded feet stay readable without eclipsing the body.",
+  "move": "An exact method still needs someone to decide what matters most.",
+  "keywords": [
+    "andrea mantegna",
+    "lamentation",
+    "foreshortening",
+    "dead christ"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kemp, The Science of Art, 1990",
+  "source_kind": "book",
+  "reference": "Martin Kemp, The Science of Art: Optical Themes in Western Art from Brunelleschi to Seurat, Yale University Press, 1990",
+  "written": "2026-09-26"
+}

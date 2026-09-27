@@ -1,0 +1,33 @@
+{
+  "id": "economics-four-day-week-2",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Iceland's much-reported 'four-day week' trials of 2015 to 2019 really change?",
+  "answer": "Hours, not days. About 2,500 workers, over 1% of the workforce, went from 40 hours to 35 or 36 on the same pay, mostly by shortening days: shorter meetings, staggered shifts, earlier closing. Unions then won shorter hours, or the right to them, for most workers. Headlines said four days; timesheets said 35 hours.",
+  "move": "Check what a policy changed before repeating what it was called.",
+  "keywords": [
+    "iceland",
+    "shorter working week",
+    "working hours",
+    "trade unions",
+    "public sector"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alda and Autonomy, Going Public, 2021",
+  "source_kind": "institution",
+  "reference": "Haraldsson & Kellam, Going Public: Iceland's Journey to a Shorter Working Week, Alda and Autonomy, 2021",
+  "written": "2026-09-26"
+}

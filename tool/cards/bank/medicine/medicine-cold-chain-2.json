@@ -1,0 +1,40 @@
+{
+  "id": "medicine-cold-chain-2",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "For vaccines such as hepatitis B and tetanus, which cold-chain accident is the bigger threat?",
+  "options": [
+    "A day or two of summer heat",
+    "Exposure to strong daylight",
+    "Freezing in a fridge or cool box"
+  ],
+  "correct": 2,
+  "answer": "Freezing. Their aluminium adjuvant clumps when ice forms, the damage is permanent, and the vials look normal. A 2007 review found that 14% to 35% of fridges or shipments exposed vaccine to freezing temperatures. The cold chain's commonest fault is being too cold.",
+  "move": "Guard against the failure your precautions create, not only the one they prevent.",
+  "trap": "Picturing heat as the enemy, since the whole system is called cold.",
+  "keywords": [
+    "freezing",
+    "hepatitis b vaccine",
+    "aluminium adjuvant",
+    "refrigerators",
+    "cold chain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Matthias et al., Vaccine, 2007",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/17382434/",
+  "written": "2026-09-26"
+}

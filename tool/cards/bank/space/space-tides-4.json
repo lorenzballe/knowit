@@ -1,0 +1,35 @@
+{
+  "id": "space-tides-4",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the energy of the particle beams in CERN's 27 km LEP collider rise and fall with the Moon?",
+  "answer": "Because the Moon raises tides in rock as well as in water. The ground swells and settles twice a day, and the stretching changed the ring's 27 km circumference by about a millimetre, enough to shift the beam energy measurably. The biggest collider of its day had to correct for where the Moon was.",
+  "move": "Even the ruler moves; ask what your reference is standing on.",
+  "keywords": [
+    "earth tides",
+    "lep collider",
+    "cern",
+    "beam energy"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arnaudon et al., Nuclear Instruments and Methods, 1995",
+  "source_kind": "paper",
+  "reference": "Arnaudon et al., Effects of terrestrial tides on the LEP beam energy, Nuclear Instruments and Methods in Physics Research A, 1995",
+  "written": "2026-09-26"
+}

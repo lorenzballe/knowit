@@ -1,0 +1,39 @@
+{
+  "id": "sport-set-pieces-5",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when football introduced the penalty kick in 1891, the kicker could shoot from anywhere along a line?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The 1891 law let the kick be taken from any point about 11 m out from the goal line, and the goalkeeper could advance about 5.5 m to meet it. The penalty spot arrived in 1902, with the penalty area still marked today. The idea came from William McCrum, an Irish goalkeeper.",
+  "move": "Details that look timeless were usually added one fix at a time.",
+  "trap": "The spot looks so basic it must have come with the kick.",
+  "keywords": [
+    "penalty kick",
+    "william mccrum",
+    "penalty spot",
+    "laws of the game",
+    "1891"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Harvey, Football: The First Hundred Years, 2005",
+  "source_kind": "book",
+  "reference": "Harvey, Football: The First Hundred Years, The Untold Story, Routledge, 2005",
+  "written": "2026-09-26"
+}

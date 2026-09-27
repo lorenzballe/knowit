@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-tiny-nations-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What became of the fortune Nauru earned by mining away most of its own island?",
+  "answer": "Most of it was lost. Phosphate made Nauruans briefly among the richest people per head on Earth, and royalties went into a trust meant to outlast the mines. Poor investments drained it, from property abroad to a failed London musical about Leonardo da Vinci. The mined interior remains a field of bare coral pinnacles.",
+  "move": "A fund that outlives its source needs better judgment than the source did.",
+  "keywords": [
+    "nauru",
+    "phosphate",
+    "sovereign wealth",
+    "mining"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McDaniel and Gowdy, Paradise for Sale, 2000",
+  "source_kind": "reference_work",
+  "reference": "McDaniel and Gowdy, Paradise for Sale: A Parable of Nature, University of California Press, 2000",
+  "written": "2026-09-26"
+}

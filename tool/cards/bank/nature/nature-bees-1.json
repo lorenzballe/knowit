@@ -1,0 +1,39 @@
+{
+  "id": "nature-bees-1",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the world keeps more managed honeybee hives today than it did in 1961?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. FAO counts show the global stock of managed hives growing by nearly half between 1961 and 2007, and still rising since. Colonies do die in large numbers each winter, but beekeepers split the survivors to replace them. The bees in real decline are mostly wild ones: bumblebees and solitary bees that nobody restocks.",
+  "move": "A loss that someone is paid to replace will not show in the count.",
+  "trap": "Headlines about dying honeybees make their numbers seem to be falling.",
+  "keywords": [
+    "honeybees",
+    "beehives",
+    "wild bees",
+    "colony losses",
+    "fao"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Aizen & Harder, Current Biology, 2009",
+  "source_kind": "paper",
+  "reference": "Aizen & Harder, The global stock of domesticated honey bees is growing slower than agricultural demand for pollination, Current Biology, 2009",
+  "written": "2026-09-26"
+}

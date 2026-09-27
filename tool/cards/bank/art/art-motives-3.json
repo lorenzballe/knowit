@@ -1,0 +1,38 @@
+{
+  "id": "art-motives-3",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "If no expert can tell a forgery from the original, is the forgery worth less as art?",
+  "sides": [
+    "Yes, worth less",
+    "No, worth the same"
+  ],
+  "answer": "Yes. A painting is not only a surface but an achievement: someone found that composition, that light, for the first time. A forger who copies a style solves no problem the original artist had not already solved. Admiring the fake means admiring an invention its maker never made, so exposure rightly changes its worth.",
+  "move": "Whichever side you took, it turns on whether art is an object or a deed.",
+  "counterpoint": "No. The pleasure a picture gives lives in what the eye meets, and that has not changed. Van Meegeren's Emmaus drew crowds in Rotterdam in 1938; nothing on the canvas altered when his name replaced Vermeer's. Prices fell because the market pays for names and scarcity, and that is snobbery, not aesthetics.",
+  "keywords": [
+    "forgery",
+    "authenticity",
+    "aesthetics",
+    "han van meegeren",
+    "originality"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dutton (ed), The Forger's Art, 1983",
+  "source_kind": "book",
+  "reference": "Denis Dutton (ed), The Forger's Art: Forgery and the Philosophy of Art, University of California Press, 1983",
+  "written": "2026-09-26"
+}

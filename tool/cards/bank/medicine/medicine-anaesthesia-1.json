@@ -1,0 +1,33 @@
+{
+  "id": "medicine-anaesthesia-1",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did scientists around 1900 find predicted how powerfully a gas would anaesthetise?",
+  "answer": "How well it dissolves in olive oil. Hans Meyer and Charles Overton, working separately, found that potency tracked fat solubility across chemicals of very different shapes, which pointed to the fatty membranes of cells. In 1984 Nicholas Franks and William Lieb showed anaesthetics could block a fat-free protein, firefly luciferase. Proteins are now the suspects.",
+  "move": "A pattern that holds across everything can still point to the wrong place.",
+  "keywords": [
+    "meyer-overton rule",
+    "olive oil",
+    "anaesthetic potency",
+    "luciferase",
+    "cell membranes"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Franks, Nature Reviews Neuroscience, 2008",
+  "source_kind": "paper",
+  "reference": "Franks, General anaesthesia: from molecular targets to neuronal pathways of sleep and arousal, Nature Reviews Neuroscience, 2008",
+  "written": "2026-09-26"
+}

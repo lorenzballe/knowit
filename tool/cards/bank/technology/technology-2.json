@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Yasuoka & Yasuoka, Kyoto University, 2011"
+  "figure": "none",
+  "source": "Yasuoka & Yasuoka, Kyoto University, 2011",
+  "source_kind": "paper",
+  "reference": "Yasuoka & Yasuoka, On the Prehistory of QWERTY, ZINBUN 42, Kyoto University, 2011"
 }

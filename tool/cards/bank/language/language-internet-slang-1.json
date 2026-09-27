@@ -1,0 +1,38 @@
+{
+  "id": "language-internet-slang-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the earliest written OMG known to the Oxford English Dictionary predates the internet by decades?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The dictionary's first citation is a 1917 letter from Admiral John Fisher to Winston Churchill, joking about a new order of knighthood, O.M.G., for Oh my God. OMG and LOL entered the dictionary in 2011; texting made the abbreviation common, but an admiral had written it first.",
+  "move": "Where a word is most often seen is not where it was born.",
+  "trap": "Seeing OMG only on screens makes it feel born of texting.",
+  "keywords": [
+    "omg",
+    "oxford english dictionary",
+    "john fisher",
+    "winston churchill"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oxford English Dictionary, 2011 update",
+  "source_kind": "reference_work",
+  "reference": "Oxford English Dictionary, entry OMG, int., added in the March 2011 update",
+  "written": "2026-09-26"
+}

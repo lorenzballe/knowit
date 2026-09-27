@@ -1,0 +1,39 @@
+{
+  "id": "art-darkroom-1",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: modern black-and-white camera film can be developed under the red safelight used for printing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Black-and-white printing paper is made sensitive mainly to blue and green, so dim red or amber light cannot fog it. Most black-and-white film since the mid-twentieth century is panchromatic, sensitive to red as well, and must go into its developing tank in total darkness. The red-lit room of films is the printing stage.",
+  "move": "Before copying a routine, check it was built for your material.",
+  "trap": "Picturing the red darkroom glow of films as the whole process.",
+  "keywords": [
+    "safelight",
+    "panchromatic film",
+    "printing paper",
+    "darkroom",
+    "spectral sensitivity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Langford, Basic Photography, 2010",
+  "source_kind": "book",
+  "reference": "Michael Langford, Anna Fox & Richard Sawdon Smith, Langford's Basic Photography, 9th edition, Focal Press, 2010",
+  "written": "2026-09-26"
+}

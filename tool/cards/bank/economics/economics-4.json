@@ -25,5 +25,7 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Simpson's paradox in labour statistics"
+  "source": "Simpson's paradox in labour statistics",
+  "source_kind": "paper",
+  "reference": "Wagner, Simpson's Paradox in Real Life, The American Statistician, 1982"
 }

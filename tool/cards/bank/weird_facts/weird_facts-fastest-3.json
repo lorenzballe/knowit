@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-fastest-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a sailfish has been reliably measured swimming faster than 100 km/h?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The famous figure of about 110 km/h traces to line stripped off a fishing reel, timed decades ago. From muscle contraction times and tail-beat length, Svendsen's team put the sailfish's top speed nearer 8 m/s, about 30 km/h. A reel's whine is not a speedometer.",
+  "move": "Trace a famous figure to the instrument that first produced it.",
+  "trap": "The 110 km/h figure is repeated so often it seems measured.",
+  "keywords": [
+    "sailfish",
+    "swimming speed",
+    "muscle contraction",
+    "myth"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Svendsen et al., Biology Open, 2016",
+  "source_kind": "primary_document",
+  "reference": "Svendsen et al., Maximum swimming speeds of sailfish and three other large marine predatory fish species, Biology Open, 2016",
+  "written": "2026-09-26"
+}

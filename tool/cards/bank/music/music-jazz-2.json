@@ -1,0 +1,33 @@
+{
+  "id": "music-jazz-2",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which songbook did nearly every jazz student own for three decades, although selling it was illegal?",
+  "answer": "The Real Book. In the 1970s two Berklee students copied the lead sheets, melody and chords, of hundreds of standards without licensing any of them, and copies spread through photocopy shops. Composers earned nothing from it until Hal Leonard cleared the rights and issued a legal edition in 2004, keeping the handwritten look.",
+  "move": "Standards are set by what gets copied, not by what gets approved.",
+  "keywords": [
+    "real book",
+    "fake books",
+    "berklee",
+    "lead sheets",
+    "copyright"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kernfeld, The Story of Fake Books, 2006",
+  "source_kind": "book",
+  "reference": "Kernfeld, The Story of Fake Books: Bootlegging Songs to Musicians, Scarecrow Press, 2006",
+  "written": "2026-09-26"
+}

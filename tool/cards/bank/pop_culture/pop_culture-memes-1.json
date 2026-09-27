@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-memes-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the man who drew the Trollface grin has earned money from licensing it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Carlos Ramirez drew the face in Microsoft Paint in 2008 and later registered its copyright. By 2015 he said licences and settlements had brought in more than $100,000, and a video game using the face had been pulled from Nintendo's online store. Every reposting was free; every printed shirt was not.",
+  "move": "Free to share and free to sell are different permissions.",
+  "trap": "False: a face copied millions of times seems to belong to everyone.",
+  "keywords": [
+    "trollface",
+    "carlos ramirez",
+    "copyright",
+    "licensing",
+    "rage comics"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kotaku, 2015",
+  "source_kind": "news_archive",
+  "reference": "https://kotaku.com/the-maker-of-the-trollface-meme-is-counting-his-money-1696228810",
+  "written": "2026-09-26"
+}

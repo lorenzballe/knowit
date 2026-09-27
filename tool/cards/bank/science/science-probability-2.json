@@ -1,0 +1,33 @@
+{
+  "id": "science-probability-2",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Two players bet on a fair coin tossed every second for a year. How long is the luckier one usually ahead?",
+  "answer": "Most of the year. In half of games the leader is ahead for more than 311 days; in one game in 20, for all but about 14 hours. Erasing a lead takes an equal run the other way, and such runs are slow, so one player often stays in front for months on end.",
+  "move": "A long lead in a fair game is evidence of nothing but time.",
+  "keywords": [
+    "arcsine law",
+    "coin tossing",
+    "random walk",
+    "leads",
+    "fair games"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feller, Introduction to Probability Theory, 1968",
+  "source_kind": "book",
+  "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, 3rd edition, Wiley, 1968",
+  "written": "2026-09-26"
+}

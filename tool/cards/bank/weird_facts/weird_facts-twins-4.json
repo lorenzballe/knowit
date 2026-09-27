@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-twins-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Two separated identical twins each married a Linda, then a Betty. What best explains matches like these in a twin study?",
+  "options": [
+    "Genes shaping taste in partners",
+    "Secret contact before the reunion",
+    "Chance across many pairs and questions"
+  ],
+  "correct": 2,
+  "answer": "Chance across many pairs and questions. The Minnesota study compared about 137 reared-apart pairs on tests and questionnaires with hundreds of items each, so a few uncanny matches were bound to turn up. Its claims about genes rest on correlations measured across all the pairs, not on the one pair whose wives shared names.",
+  "move": "Count the chances a match had to happen before calling it uncanny.",
+  "trap": "Reading a spectacular match as a genetic signal, not a lottery win.",
+  "keywords": [
+    "jim twins",
+    "minnesota twin study",
+    "thomas bouchard",
+    "twins reared apart"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Segal, Born Together—Reared Apart, 2012",
+  "source_kind": "reference_work",
+  "reference": "Segal, Born Together—Reared Apart: The Landmark Minnesota Twin Study, Harvard University Press, 2012",
+  "written": "2026-09-26"
+}

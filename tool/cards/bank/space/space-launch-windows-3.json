@@ -1,0 +1,39 @@
+{
+  "id": "space-launch-windows-3",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: tilting a satellite's orbit by 10 degrees takes more fuel than raising it by 1,000 km?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True, by more than double. From a 400 km orbit, a 10-degree turn costs about 1.3 km/s of speed change, because the whole orbital velocity must be redirected; a 1,000 km climb costs about 0.5 km/s. That is why station launches must leave the moment Earth's spin carries the pad under the orbit.",
+  "move": "Changing direction can cost more than going further.",
+  "trap": "Climbing 1,000 km sounds like a journey; tilting sounds like steering.",
+  "keywords": [
+    "orbital plane change",
+    "delta-v",
+    "launch window",
+    "space station",
+    "orbit raising"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vallado, Fundamentals of Astrodynamics and Applications, 2013",
+  "source_kind": "book",
+  "reference": "Vallado, Fundamentals of Astrodynamics and Applications, 4th ed., Microcosm Press, 2013",
+  "written": "2026-09-26"
+}

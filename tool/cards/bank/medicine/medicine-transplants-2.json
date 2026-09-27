@@ -1,0 +1,38 @@
+{
+  "id": "medicine-transplants-2",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a kidney transplant, the failed kidneys are taken out and the new one goes in their place?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The donor kidney is usually placed low in the front of the abdomen, just above the groin, and joined to blood vessels running to the leg and to the bladder. The patient's own kidneys are normally left where they are. Someone who has had three transplants can be carrying five kidneys.",
+  "move": "Replacing a part need not mean putting the new one in the same place.",
+  "trap": "Assuming a transplant is a straight swap, like replacing a car part.",
+  "keywords": [
+    "kidney transplant",
+    "iliac fossa",
+    "surgery",
+    "native kidneys"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NHS, Kidney transplant: what happens",
+  "source_kind": "institution",
+  "reference": "https://www.nhs.uk/conditions/kidney-transplant/what-happens/",
+  "written": "2026-09-26"
+}

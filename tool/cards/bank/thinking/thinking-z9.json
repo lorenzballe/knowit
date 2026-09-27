@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confirmation through selective application"
+  "figure": "none",
+  "source": "Confirmation through selective application",
+  "source_kind": "paper",
+  "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
 }

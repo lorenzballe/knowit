@@ -1,0 +1,45 @@
+{
+  "id": "space-perseverance-3",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "also": [
+    "space.rockets.fuel_chemistry"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "MOXIE, Perseverance's oxygen maker, managed 12 g an hour at best. How many years to make the 25 tonnes a four-person launch needs?",
+  "value": 237.8,
+  "unit": "years",
+  "tolerance": 3,
+  "answer": "2,083,000 / 8,760 hours a year ≈ 237.8 years.",
+  "move": "Proof that something works says nothing yet about making enough of it.",
+  "trap": "Taking a successful demonstration as nearly a working supply.",
+  "hint": "Turn the tonnes into grams, the grams into hours, and the hours into years.",
+  "steps": [
+    "25 tonnes is 25,000,000 g.",
+    "25,000,000 / 12 ≈ 2,083,000 hours.",
+    "2,083,000 / 8,760 hours a year ≈ 237.8 years."
+  ],
+  "keywords": [
+    "moxie",
+    "oxygen",
+    "mars ascent",
+    "in-situ resources"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA JPL, MOXIE mission results, 2023",
+  "source_kind": "institution",
+  "reference": "NASA Jet Propulsion Laboratory, NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission, 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "food-saffron-3",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: saffron's colour dissolves far more readily in water than in oil?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Its pigment, crocin, comes from a carotenoid, the fat-soluble family of carrots and paprika, but it carries sugar groups at both ends that make it dissolve in water. That is why saffron is steeped in warm water or stock: a risotto turns gold, while oil stirred with saffron stays nearly clear.",
+  "move": "Check how a colour dissolves before choosing the liquid to carry it.",
+  "trap": "Assuming saffron behaves like paprika, whose red runs into fat.",
+  "keywords": [
+    "crocin",
+    "carotenoids",
+    "saffron colour",
+    "solubility",
+    "risotto"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubio Moraga et al., Planta, 2004",
+  "source_kind": "paper",
+  "reference": "Rubio Moraga, Nohales, Fernández Pérez & Gómez-Gómez, Glucosylation of the saffron apocarotenoid crocetin by a glucosyltransferase isolated from Crocus sativus stigmas, Planta, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "art-marble-2",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What makes polished white marble look more like skin than other white stones do?",
+  "options": [
+    "Its surface takes a glossier polish",
+    "Light enters the stone before scattering back",
+    "It reflects more light than other stones"
+  ],
+  "correct": 1,
+  "answer": "Light enters the stone before scattering back. Calcite crystals are slightly translucent, so light travels a short way inside before it re-emerges, softening shadows as skin does. Plaster and opaque stones return it from the surface and look chalky. Computer graphics had to model the same effect before rendered faces stopped looking like plastic.",
+  "move": "A surface often looks the way it does because of what lies just beneath.",
+  "trap": "Crediting the polish, the part of the finish the eye notices first.",
+  "keywords": [
+    "carrara marble",
+    "calcite",
+    "subsurface scattering",
+    "translucency",
+    "skin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jensen et al., SIGGRAPH, 2001",
+  "source_kind": "paper",
+  "reference": "Jensen, Marschner, Levoy & Hanrahan, A Practical Model for Subsurface Light Transport, Proceedings of SIGGRAPH, 2001",
+  "written": "2026-09-26"
+}

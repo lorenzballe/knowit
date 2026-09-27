@@ -1,0 +1,33 @@
+{
+  "id": "music-jazz-1",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did New York keep Thelonious Monk out of its jazz clubs from 1951 to 1957?",
+  "answer": "Through the cabaret card. Anyone working in a New York venue that served alcohol needed an identity card issued by the police, and a drug conviction could cost it. Monk lost his after a 1951 narcotics arrest; Billie Holiday lost hers in 1947. The city abolished the cards in 1967.",
+  "move": "A permit to work is a quiet way to decide who gets heard.",
+  "keywords": [
+    "cabaret card",
+    "thelonious monk",
+    "billie holiday",
+    "new york police",
+    "licensing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chevigny, Gigs, Routledge, 1991",
+  "source_kind": "book",
+  "reference": "Chevigny, Gigs: Jazz and the Cabaret Laws in New York City, Routledge, 1991",
+  "written": "2026-09-26"
+}

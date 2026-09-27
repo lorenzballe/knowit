@@ -1,0 +1,38 @@
+{
+  "id": "space-reusable-boosters-5",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is booster reuse the main reason the cost of reaching orbit has fallen?",
+  "sides": [
+    "Yes, reuse did it",
+    "No, other things did"
+  ],
+  "answer": "A rocket's first stage is most of its cost, and a Falcon 9 booster flies again and again, so that cost is spread across many flights. Reuse also makes a launch every few days possible: building a fresh booster each time would cap the pace and keep prices where the old expendable rockets left them.",
+  "move": "Whichever side you took, ask who kept the money that reuse saved.",
+  "counterpoint": "Falcon 9 undercut its rivals before any booster flew twice: in 2016, with every stage still new, its list price was about $62 million, far below other American rockets. Since reuse became routine, that price has risen, to about $67 million by 2022. In-house manufacturing, simpler design and fixed-price contracts did the cutting; reuse fattened the margins.",
+  "keywords": [
+    "reusable rockets",
+    "launch costs",
+    "falcon 9",
+    "spacex",
+    "pricing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones, International Conference on Environmental Systems, 2018",
+  "source_kind": "paper",
+  "reference": "Jones, The Recent Large Reduction in Space Launch Cost, 48th International Conference on Environmental Systems, 2018",
+  "written": "2026-09-26"
+}

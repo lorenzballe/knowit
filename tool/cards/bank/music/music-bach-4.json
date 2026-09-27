@@ -1,0 +1,42 @@
+{
+  "id": "music-bach-4",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the well-tempered of Bach's title means the equal temperament pianos use today?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Bach's day well-tempered meant any tuning in which all 24 keys were usable, and most such tunings left the keys unequal, so C major and F sharp major had different colours. Equal temperament, every semitone the same size, was one option and became the norm on pianos only in the 19th century.",
+  "move": "Read an old word in its own century before reading it in ours.",
+  "trap": "Reading the modern meaning of a tuning word back into 1722.",
+  "keywords": [
+    "well-tempered clavier",
+    "equal temperament",
+    "tuning",
+    "keys",
+    "temperament"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duffin, How Equal Temperament Ruined Harmony, 2007",
+  "source_kind": "book",
+  "reference": "Duffin, How Equal Temperament Ruined Harmony (and Why You Should Care), W. W. Norton, 2007",
+  "written": "2026-09-26"
+}

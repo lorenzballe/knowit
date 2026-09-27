@@ -1,0 +1,33 @@
+{
+  "id": "science-rainbows-4",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do the faint pastel stripes just inside some rainbows reveal about light?",
+  "answer": "That it travels as a wave. Rays taking different paths through a drop leave at the same angle and interfere, adding up in some directions and cancelling in others. Straight-line ray optics cannot make these bands; Thomas Young cited them in 1804 as evidence for waves. They need small drops of even size.",
+  "move": "The faintest detail is often the one the old theory cannot explain.",
+  "keywords": [
+    "supernumerary bows",
+    "thomas young",
+    "interference",
+    "wave theory of light",
+    "raindrops"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boyer, The Rainbow, 1987",
+  "source_kind": "book",
+  "reference": "Boyer, The Rainbow: From Myth to Mathematics, Princeton University Press, 1987",
+  "written": "2026-09-26"
+}

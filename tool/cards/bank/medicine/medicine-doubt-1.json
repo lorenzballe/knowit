@@ -1,0 +1,33 @@
+{
+  "id": "medicine-doubt-1",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened in Britain after a 1974 report linked the whooping cough vaccine to brain damage?",
+  "answer": "Uptake fell from about 80% to about 30% by 1978, and the disease came back. Between 1977 and 1979 more than 100,000 cases and 36 deaths were reported in large epidemics. Parliament answered with the Vaccine Damage Payments Act of 1979, a no-fault compensation scheme that still pays out today.",
+  "move": "When a protection is dropped, count what it was quietly holding back.",
+  "keywords": [
+    "whooping cough",
+    "pertussis vaccine",
+    "vaccine scare",
+    "britain",
+    "vaccine damage payments act"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, Vaccine, 2003",
+  "source_kind": "paper",
+  "reference": "Baker, The pertussis vaccine controversy in Great Britain, 1974-1986, Vaccine, 2003",
+  "written": "2026-09-26"
+}

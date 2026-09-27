@@ -1,0 +1,40 @@
+{
+  "id": "technology-refresh-rates-5",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "In NVIDIA's 2019 aiming experiments, which helped players hit targets more?",
+  "options": [
+    "Both helped about equally",
+    "Raising refresh above 60 Hz",
+    "Cutting 30 ms of delay"
+  ],
+  "correct": 2,
+  "answer": "Cutting 30 ms of delay. The researchers varied delay and refresh rate separately, which ordinary hardware rarely does, since faster screens usually also cut delay. Removing 30 ms improved aiming more than raising the refresh rate above 60 Hz. Much of the edge players credit to smoother motion may come from the screen answering sooner.",
+  "move": "When two improvements always arrive together, test them apart before crediting either.",
+  "trap": "Refresh rate, because smoother motion is what players can see.",
+  "keywords": [
+    "refresh rate",
+    "latency",
+    "nvidia",
+    "aiming",
+    "video games"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spjut et al., SIGGRAPH Asia, 2019",
+  "source_kind": "paper",
+  "reference": "Spjut et al., Latency of 30 ms Benefits First Person Targeting Tasks More Than Refresh Rate Above 60 Hz, SIGGRAPH Asia Technical Briefs, 2019",
+  "written": "2026-09-26"
+}

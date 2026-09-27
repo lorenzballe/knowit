@@ -36,6 +36,8 @@ BANK = HERE / "bank"
 SCHEMA = HERE / "schema.json"
 BANNED = HERE / "banned.txt"
 EDITIONS = HERE / "editions.json"
+# The cards everybody meets on a day besides its question, frozen like it.
+COMMONS = HERE / "commons.json"
 
 GRADED = {"pickOne", "number", "estimate"}
 ASKS = GRADED | {"debate"}
@@ -85,6 +87,11 @@ def ordered(card: dict) -> dict:
 # Two months, whatever the pool: the calendar is frozen, so the window it was
 # built with is what it is judged by, not the pool it happens to sit over.
 EDITION_GAP = 60
+
+# How many common cards an edition holds (the three a free day deals, and
+# spares), and how many editions a common card stays out for afterwards.
+COMMON_SPARES = 8
+COMMON_GAP = 14
 
 # Words that carry nothing, for telling two questions apart. The same list
 # the app's own test uses, so the two never disagree about what a twin is.
@@ -500,7 +507,38 @@ def check_editions(editions: dict, cards: list[dict]) -> list[str]:
     return problems
 
 
-def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool = False) -> dict[str, list[str]]:
+def check_commons(commons: dict, cards: list[dict]) -> list[str]:
+    problems = []
+    by_id = {c["id"]: c for c in cards}
+    keys = sorted(int(k) for k in commons)
+    if keys and keys != list(range(1, keys[-1] + 1)):
+        problems.append("commons are not consecutive from 1")
+    last_seen: dict[str, int] = {}
+    for e in keys:
+        ids = commons[str(e)]
+        if not isinstance(ids, list) or len(ids) > COMMON_SPARES:
+            problems.append(f"edition {e} holds {len(ids)} common cards; at most {COMMON_SPARES}")
+            continue
+        topics = set()
+        for cid in ids:
+            card = by_id.get(cid)
+            if card is None:
+                problems.append(f"edition {e}'s commons name {cid}, which is not in the bank")
+                continue
+            if card["kind"] != "read":
+                problems.append(f"edition {e}'s common {cid} asks; a common card tells")
+            if card.get("disabled"):
+                problems.append(f"edition {e}'s common {cid} is retired")
+            if card["topic"] in topics:
+                problems.append(f"edition {e} holds two common cards of {card['topic']}")
+            topics.add(card["topic"])
+            if cid in last_seen and e - last_seen[cid] < COMMON_GAP:
+                problems.append(f"common {cid} comes back at edition {e}, {e - last_seen[cid]} days after {last_seen[cid]}")
+            last_seen[cid] = e
+    return problems
+
+
+def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool = False, commons: dict | None = None) -> dict[str, list[str]]:
     """Every problem in the bank, keyed by card id (or '*' for the whole)."""
     schema = load_schema()
     banned = load_banned()
@@ -516,6 +554,8 @@ def check_bank(cards: list[dict], editions: dict | None = None, *, strict: bool 
     whole = check_twins(cards) + check_links(cards)
     if editions is not None:
         whole += check_editions(editions, cards)
+    if commons is not None:
+        whole += check_commons(commons, cards)
     if whole:
         out["*"] = whole
     return out
@@ -547,14 +587,15 @@ def main(argv: list[str] | None = None) -> int:
         return 1 if bad else 0
 
     editions = json.loads(EDITIONS.read_text(encoding="utf-8")) if EDITIONS.exists() else None
-    report = check_bank(bank, editions, strict=args.strict)
+    commons = json.loads(COMMONS.read_text(encoding="utf-8")) if COMMONS.exists() else None
+    report = check_bank(bank, editions, strict=args.strict, commons=commons)
     for cid, problems in report.items():
         for p in problems:
             print(f"{cid}: {p}")
     if report:
         print(f"{len(report)} problem{'s' if len(report) != 1 else ''} in {len(bank)} cards")
         return 1
-    print(f"{len(bank)} cards, {len(editions or {})} editions: all clear")
+    print(f"{len(bank)} cards, {len(editions or {})} editions, {len(commons or {})} commons: all clear")
     return 0
 
 

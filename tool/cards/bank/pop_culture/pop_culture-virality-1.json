@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-virality-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a study of New York Times articles, which emotion made readers less likely to email a story on?",
+  "options": [
+    "Sadness",
+    "Anger",
+    "Awe"
+  ],
+  "correct": 0,
+  "answer": "Sadness. Berger and Milkman tracked thousands of articles over three months and found that stories stirring high-arousal feelings, such as awe, anger and anxiety, were shared more, while sadness, a low-arousal state, cut sharing. What counted was how stirred up the reader felt, not whether the feeling was pleasant.",
+  "move": "Sort feelings by how much they make people move, not how nice they are.",
+  "trap": "Anger: an unpleasant feeling seems likely to stop people passing a story on.",
+  "keywords": [
+    "jonah berger",
+    "sharing",
+    "emotion",
+    "arousal",
+    "new york times"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berger & Milkman, Journal of Marketing Research, 2012",
+  "source_kind": "primary_document",
+  "reference": "Berger & Milkman, What Makes Online Content Viral?, Journal of Marketing Research, 2012",
+  "written": "2026-09-26"
+}

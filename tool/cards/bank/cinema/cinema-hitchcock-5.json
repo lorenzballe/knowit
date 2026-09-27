@@ -1,0 +1,39 @@
+{
+  "id": "cinema-hitchcock-5",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which Hitchcock film won the Academy Award for Best Picture?",
+  "options": [
+    "Psycho",
+    "Vertigo",
+    "Rebecca"
+  ],
+  "correct": 2,
+  "answer": "Rebecca, in 1940, his first American film, and the statuette went to its producer, David O. Selznick. Hitchcock was nominated for best director five times and never won a competitive Oscar. Vertigo, a modest earner on release, topped the Sight and Sound critics' poll of the greatest films in 2012.",
+  "move": "A reputation today tells little about the verdict when the work was new.",
+  "trap": "Vertigo, the one now ranked among the greatest films.",
+  "keywords": [
+    "rebecca",
+    "academy awards",
+    "david o. selznick",
+    "vertigo"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wiley & Bona, Inside Oscar",
+  "source_kind": "book",
+  "reference": "Wiley & Bona, Inside Oscar: The Unofficial History of the Academy Awards, Ballantine Books, 1996",
+  "written": "2026-09-26"
+}

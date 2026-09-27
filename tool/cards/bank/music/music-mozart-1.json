@@ -1,0 +1,39 @@
+{
+  "id": "music-mozart-1",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Mozart was buried in a pauper's grave because he died penniless?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. He was buried in December 1791 in a shared grave at St Marx under Joseph II's burial rules, which sent most middle-class Viennese to common graves with no mourners at the graveside. His third-class funeral was the ordinary kind. He left debts, but in the 1780s he had been among Vienna's well-paid musicians.",
+  "move": "A vivid scene from a film is not a record of what happened.",
+  "trap": "The rain-soaked pauper's burial from films is the first picture.",
+  "keywords": [
+    "mozart's burial",
+    "st marx",
+    "joseph ii",
+    "vienna",
+    "funerals"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Braunbehrens, Mozart in Vienna, 1990",
+  "source_kind": "book",
+  "reference": "Braunbehrens, Mozart in Vienna, 1781-1791, trans. Bell, Grove Weidenfeld, 1990",
+  "written": "2026-09-26"
+}

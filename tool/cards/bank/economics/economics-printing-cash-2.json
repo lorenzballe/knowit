@@ -1,0 +1,33 @@
+{
+  "id": "economics-printing-cash-2",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the largest-value banknote the Bank of England prints, and what is it for?",
+  "answer": "The £100 million 'titan', alongside the £1 million 'giant'. Neither circulates. Banks in Scotland and Northern Ireland may issue their own notes, but each must be fully backed by assets held at the Bank of England, and these notes let that backing sit compactly in its vaults. One titan stands behind ten million Scottish tenners.",
+  "move": "When anyone may print money, ask what they must lock away first.",
+  "keywords": [
+    "bank of england",
+    "titans",
+    "giants",
+    "scottish banknotes",
+    "backing assets"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bank of England, Scottish and Northern Ireland banknotes",
+  "source_kind": "institution",
+  "reference": "Bank of England, Scottish and Northern Ireland banknotes: backing assets, giants and titans, 2024",
+  "written": "2026-09-26"
+}

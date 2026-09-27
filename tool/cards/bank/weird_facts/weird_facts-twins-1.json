@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-twins-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the twin brothers who gave Twinsburg, Ohio, its name end their lives?",
+  "answer": "On the same day, of the same illness. Moses and Aaron Wilcox married two sisters, farmed as partners and held their property in common. They offered land for a town square if the settlement took the name Twinsburg. Both died in 1827, within hours of each other, and were buried in one grave.",
+  "move": "Ask how many ordinary pairs lived and died unremarked beside the famous one.",
+  "keywords": [
+    "wilcox twins",
+    "twinsburg",
+    "ohio",
+    "twins days"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Twins Days Festival, Community of Twinsburg",
+  "source_kind": "institution",
+  "reference": "https://twinsdays.org/about/community-of-twinsburg/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "food-salt-5",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments push the whole population's salt intake down, rather than only that of people at risk?",
+  "sides": [
+    "Yes, the whole population",
+    "No, only those at risk"
+  ],
+  "answer": "Blood pressure rises with salt across the whole population, and many strokes strike people whose readings count as normal. Small cuts for millions prevent more deaths than big cuts for a few. England cut average intake from about 9.5 g to 8.1 g a day in 2003–2011, largely by reformulating bread and processed food.",
+  "move": "The fight turns on whether a low-intake danger zone really exists.",
+  "counterpoint": "The benefit is proven in people with high blood pressure and high intake; for the rest it is inferred. A study of over 100,000 people in 17 countries found risk lowest between about 3 and 6 g of sodium a day, where most people already sit, and rising below it. Push everyone down and some will overshoot.",
+  "keywords": [
+    "salt reduction",
+    "blood pressure",
+    "public health",
+    "sodium intake",
+    "reformulation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "He, Pombo-Rodrigues & MacGregor, BMJ Open, 2014",
+  "source_kind": "paper",
+  "reference": "He, Pombo-Rodrigues & MacGregor, Salt reduction in England from 2003 to 2011: its relationship to blood pressure, stroke and ischaemic heart disease mortality, BMJ Open, 2014",
+  "written": "2026-09-26"
+}

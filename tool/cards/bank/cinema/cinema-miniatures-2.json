@@ -1,0 +1,44 @@
+{
+  "id": "cinema-miniatures-2",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 1:16 model ship must move like a real one. By the square-root rule, how many frames a second should a 24-frame camera run?",
+  "value": 96,
+  "unit": "frames a second",
+  "answer": "24 x 4 = 96 frames a second.",
+  "move": "When size shrinks, time shrinks by less; check the rule before scaling.",
+  "trap": "Running 16 times faster, as if time shrank with size.",
+  "hint": "Gravity sets the pace: a fall takes time in proportion to the square root of its height.",
+  "steps": [
+    "Motion under gravity speeds up by the square root of the scale.",
+    "The square root of 16 is 4.",
+    "24 x 4 = 96 frames a second."
+  ],
+  "keywords": [
+    "miniatures",
+    "frame rate",
+    "slow motion",
+    "scaling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fielding, Special Effects Cinematography",
+  "source_kind": "book",
+  "reference": "Fielding, The Technique of Special Effects Cinematography, 4th edn, Focal Press, 1985",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-streaming-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2020, how much of a title did a Netflix account need to watch for Netflix to count it?",
+  "options": [
+    "Two minutes",
+    "Seventy per cent",
+    "All of it"
+  ],
+  "correct": 0,
+  "answer": "Two minutes. From late 2019 Netflix counted any account that watched two minutes as having chosen a title, replacing a rule of 70% of a film or of a single episode. The company said the new count ran about 35% higher on average. A pressed play button became a viewer.",
+  "move": "Before comparing two counts, check that both count the same thing.",
+  "trap": "Assuming a view means someone watched most of what they started.",
+  "keywords": [
+    "netflix",
+    "view counts",
+    "shareholder letter",
+    "audience metrics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Netflix letter to shareholders, January 2020",
+  "source_kind": "company",
+  "reference": "Netflix, Fourth Quarter 2019 Letter to Shareholders, 21 January 2020",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "music-frequencies-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do baroque orchestras usually tune their A to 415 Hz rather than 440?",
+  "answer": "As a convention, not a rediscovery. Pitch in the 17th and 18th centuries varied from town to town and organ to organ, from well below 415 to over 440. Period players settled on 415 because it sits almost exactly a semitone below 440, so a harpsichord can switch by sliding its keyboard one key.",
+  "move": "A historical standard can be a modern convenience wearing old clothes.",
+  "keywords": [
+    "baroque pitch",
+    "415 hz",
+    "harpsichord",
+    "tuning standards",
+    "period instruments"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haynes, A History of Performing Pitch, 2002",
+  "source_kind": "book",
+  "reference": "Haynes, A History of Performing Pitch: The Story of A, Scarecrow Press, 2002",
+  "written": "2026-09-26"
+}

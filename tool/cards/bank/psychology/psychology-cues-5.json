@@ -1,0 +1,38 @@
+{
+  "id": "psychology-cues-5",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: for acts done often in a stable setting, past behaviour predicts what people do next better than their intentions?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ouellette and Wood's meta-analysis found that for frequent acts in stable settings, like buckling a seatbelt, past behaviour predicted future behaviour directly and intentions added little. For rare or shifting acts, like giving blood, intentions did most of the predicting. What someone did last Tuesday outranks what they meant to do.",
+  "move": "To predict a routine, ask what was done yesterday, not what is planned.",
+  "trap": "Assuming people do what they intend, since that is how choosing feels.",
+  "keywords": [
+    "intentions",
+    "past behaviour",
+    "meta-analysis",
+    "prediction"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ouellette & Wood, Psychological Bulletin, 1998",
+  "source_kind": "paper",
+  "reference": "Ouellette & Wood, Habit and intention in everyday life: the multiple processes by which past behavior predicts future behavior, Psychological Bulletin, 1998",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "sport-set-pieces-3",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "NFL kickers made 99.3% of extra points before a 2015 rule pushed the kick back, then 94.2%. How many times more often did they miss?",
+  "value": 8.3,
+  "unit": "times",
+  "tolerance": 0.1,
+  "answer": "5.8 ÷ 0.7 ≈ 8.3 times.",
+  "move": "When success is close to certain, compare the failures instead.",
+  "trap": "Reading a five-point drop in success as a small change.",
+  "hint": "Work out the share of kicks missed in each season first.",
+  "steps": [
+    "Missed before: 100 − 99.3 = 0.7%.",
+    "Missed after: 100 − 94.2 = 5.8%.",
+    "5.8 ÷ 0.7 ≈ 8.3 times."
+  ],
+  "keywords": [
+    "extra point",
+    "nfl",
+    "american football",
+    "kicking",
+    "rule change"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Pro Football Reference, kicking statistics",
+  "source_kind": "statistics",
+  "reference": "Pro-Football-Reference, NFL Kicking statistics, 2014 and 2015 seasons, 2015",
+  "written": "2026-09-26"
+}

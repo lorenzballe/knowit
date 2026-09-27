@@ -1,0 +1,33 @@
+{
+  "id": "science-fire-2",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a halon extinguisher stop a fire without removing its oxygen?",
+  "answer": "By breaking the chain reaction. A flame runs on short-lived fragments of molecules, hydrogen atoms and hydroxyl radicals, that carry the reaction from one fuel molecule to the next. Bromine from the halon captures them and is freed to capture more, so a few per cent of halon suffices. The oxygen stays; the messengers go.",
+  "move": "To stop a chain reaction, go after what carries it, not what feeds it.",
+  "keywords": [
+    "halon",
+    "fire extinguishers",
+    "free radicals",
+    "chain reaction",
+    "bromine"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Drysdale, An Introduction to Fire Dynamics, 2011",
+  "source_kind": "book",
+  "reference": "Drysdale, An Introduction to Fire Dynamics, 3rd edition, Wiley, 2011",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "medicine-cold-chain-1",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a nurse with no thermometer tell whether a vial of vaccine has been spoiled by heat?",
+  "answer": "From a sticker that keeps a running total of heat. A vaccine vial monitor is a square inside a circle; the square darkens faster the warmer it gets, and never lightens. Once it matches the circle, the vial is discarded. First used on oral polio vaccine in 1996, billions have been printed since.",
+  "move": "Measure the total dose, not the reading at the moment you look.",
+  "keywords": [
+    "vaccine vial monitor",
+    "heat exposure",
+    "oral polio vaccine",
+    "unicef"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO, Getting started with vaccine vial monitors, 2002",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Getting started with vaccine vial monitors: questions and answers on field operations, WHO/V&B/02.35, 2002",
+  "written": "2026-09-26"
+}

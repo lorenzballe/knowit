@@ -1673,4 +1673,41 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get topEmpty => '榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。';
+
+  @override
+  String get readMark => '已读';
+
+  @override
+  String get lovedSinceTheStart => '自开始以来最受喜爱';
+
+  @override
+  String lovedIn(String subject) {
+    return '$subject中最受喜爱';
+  }
+
+  @override
+  String get lovedLine => '读者保留最多、而你还没读过的卡片';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '你的第一周：五张中有四张是你的，还剩$n天。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      '你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。';
+
+  @override
+  String get forYouShelf => '为你推荐';
+
+  @override
+  String get forYouLine => '你的阅读最先带来的内容';
+
+  @override
+  String get exploreOffline => '你已离线。这是上次读取的\"探索\"页面。';
 }

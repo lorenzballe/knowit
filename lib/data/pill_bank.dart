@@ -33,6 +33,12 @@ import '../analytics.dart';
 /// server, no key, and a reader who is offline simply keeps what they have.
 const String kBankUrl = 'https://astutetheapp.com/cards/cards.json';
 
+/// The published bank's version and nothing else — a few dozen bytes. A
+/// phone asks this first and downloads [kBankUrl] only when it names a
+/// newer bank than the one in use, so an app that is up to date spends a
+/// request, not the whole bank, finding that out.
+const String kBankVersionUrl = 'https://astutetheapp.com/cards/version.json';
+
 /// What a fetch of [kBankUrl] returns: the body on 200, null on anything
 /// else. Replaceable, so tests never touch the network.
 typedef BankFetcher = Future<String?> Function(String url);
@@ -46,12 +52,18 @@ class BankBundle {
   final Set<String> retired;
   final Map<int, String> editions;
 
+  /// The cards everybody meets on an edition besides its question, frozen
+  /// like the question (see `commonOfEdition`). Empty on a bundle from
+  /// before they were frozen, and the app then chains its own.
+  final Map<int, List<String>> commons;
+
   const BankBundle({
     required this.version,
     required this.built,
     required this.cards,
     required this.retired,
     required this.editions,
+    this.commons = const {},
   });
 
   /// Reads a bundle. Throws [FormatException] on a document the app could
@@ -96,12 +108,28 @@ class BankBundle {
         editions[n] = id;
       }
     }
+    final commons = <int, List<String>>{};
+    final rawCommons = doc['commons'];
+    if (rawCommons is Map) {
+      for (final e in rawCommons.entries) {
+        final n = int.tryParse('${e.key}');
+        final ids = e.value;
+        if (n == null || ids is! List) {
+          throw FormatException('edition ${e.key} has no common cards');
+        }
+        commons[n] = [
+          for (final id in ids)
+            if (id is String && seen.contains(id)) id,
+        ];
+      }
+    }
     return BankBundle(
       version: version,
       built: doc['built'] is String ? doc['built'] as String : '',
       cards: cards,
       retired: retired,
       editions: editions,
+      commons: commons,
     );
   }
 }
@@ -134,6 +162,9 @@ class PillBank {
   /// The question of the day, by edition, as the bank froze it. Editions
   /// past the end of the calendar are dealt by the app itself.
   static Map<int, String> get editions => _bundle.editions;
+
+  /// The frozen common cards, by edition. See [BankBundle.commons].
+  static Map<int, List<String>> get commons => _bundle.commons;
 
   /// The stamp of the bundle in use; higher is newer.
   static int get version => _bundle.version;
@@ -180,7 +211,8 @@ class PillBank {
   /// How a bundle is fetched. Tests replace it; the default goes over HTTP.
   static BankFetcher fetch = _fetchOverHttp;
 
-  /// Downloads the newest bundle and keeps it for the next start. Returns
+  /// Downloads the newest bundle, when there is one, and keeps it for the
+  /// next start: the version is asked for first ([kBankVersionUrl]). Returns
   /// whether something newer than the bank in use was stored. Never throws:
   /// a phone with no signal is the normal case, not an error.
   static Future<bool> refresh(SharedPreferences prefs) async {
@@ -196,6 +228,20 @@ class PillBank {
           'cards_fetched': got?.cards.length,
         });
     try {
+      // The version first. When it cannot be read — no such file on an
+      // older site, a hiccup — the bank itself is asked for, as before.
+      int? latest;
+      try {
+        final String? note = await fetch(kBankVersionUrl);
+        final Object? parsed = note == null ? null : jsonDecode(note);
+        if (parsed is Map && parsed['version'] is int) {
+          latest = parsed['version'] as int;
+        }
+      } catch (_) {}
+      if (latest != null && latest <= version) {
+        say('up to date');
+        return false;
+      }
       final body = await fetch(kBankUrl);
       if (body == null) {
         say('no answer');

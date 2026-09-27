@@ -1,0 +1,38 @@
+{
+  "id": "science-primes-5",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: in the first 100 million primes, a prime's last digit tells you nothing about the next prime's last digit?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. After a prime ending in 1, the next ends in 1 only 18.5% of the time, against 25% if the digits were independent; it ends in 3 or 7 about 30% of the time. Every final digit shows the same reluctance to repeat, a pattern explained in 2016 by a conjecture still unproved.",
+  "move": "Random-looking is not the same as independent; check what follows what.",
+  "trap": "Primes look random, so one's final digit should say nothing about the next.",
+  "keywords": [
+    "prime numbers",
+    "last digits",
+    "consecutive primes",
+    "randomness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Lemke Oliver & Soundararajan, PNAS, 2016",
+  "source_kind": "paper",
+  "reference": "Lemke Oliver & Soundararajan, Unexpected biases in the distribution of consecutive primes, Proceedings of the National Academy of Sciences of the USA, 2016",
+  "written": "2026-09-26"
+}

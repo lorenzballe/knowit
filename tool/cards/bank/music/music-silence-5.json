@@ -1,0 +1,38 @@
+{
+  "id": "music-silence-5",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should concert audiences hold their applause in the silences between a symphony's movements?",
+  "sides": [
+    "Yes, keep the silence",
+    "No, let them clap"
+  ],
+  "answer": "The gap between movements belongs to the piece. A symphony is an arc, and the pause lets a last chord fade and the next begin from quiet. Mahler wrote into his Second Symphony a pause of at least five minutes after the first movement. A shared hush turns two thousand strangers into one audience.",
+  "move": "Whichever side you took, the hinge is whether the pause belongs to the work.",
+  "counterpoint": "The hush is a recent rule. In 1778 Mozart wrote to his father that the Paris audience broke into applause in the middle of his new symphony's first movement, at a passage written to win it, and he was delighted. Many movements end in a blaze built to draw a response, and enforced silence makes newcomers feel like trespassers.",
+  "keywords": [
+    "applause",
+    "symphony",
+    "concert etiquette",
+    "mahler",
+    "paris symphony"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anderson, Letters of Mozart and His Family, 1985",
+  "source_kind": "primary_document",
+  "reference": "Anderson (ed.), The Letters of Mozart and His Family, 3rd edition, Macmillan, 1985",
+  "written": "2026-09-26"
+}

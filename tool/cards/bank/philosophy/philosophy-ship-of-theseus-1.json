@@ -1,0 +1,36 @@
+{
+  "id": "philosophy-ship-of-theseus-1",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "also": [
+    "philosophy.ancient_thinkers.socrates"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Socrates' execution have to wait about a month after his trial?",
+  "answer": "A ship was away. Each year Athens sent the ship said to have carried Theseus home from Crete on a sacred voyage to Delos, and no one could be executed until it returned. Plato's Phaedo says it was garlanded the day before the trial. Plutarch says Athenians kept it for centuries, replacing rotten timbers.",
+  "move": "Behind a famous thought experiment there is often a real object someone maintained.",
+  "keywords": [
+    "delos",
+    "socrates",
+    "execution",
+    "sacred ship",
+    "plutarch"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Phaedo 58a-c; Plutarch, Theseus 23",
+  "source_kind": "primary_document",
+  "reference": "Plato, Phaedo 58a-c, trans. Gallop, Clarendon Press, 1975; Plutarch, Life of Theseus 23, trans. Perrin, Loeb Classical Library, Harvard University Press, 1914",
+  "written": "2026-09-26"
+}

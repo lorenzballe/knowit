@@ -1,0 +1,33 @@
+{
+  "id": "food-kimchi-2",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were engineers copying when they designed the first mass-market kimchi refrigerator, launched in Korea in 1995?",
+  "answer": "A clay crock buried in winter ground. Soil cools a jar directly and holds it at a steady temperature and humidity, while an ordinary fridge blows dry air that pulls moisture from food. Dimchae was a chest opened from the top, like reaching into a jar. By 2011 about 81% of households owned one.",
+  "move": "Before building a machine, measure what the old method got right.",
+  "keywords": [
+    "kimchi refrigerator",
+    "dimchae",
+    "onggi",
+    "fermentation temperature",
+    "korean households"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Korea Times, 2011",
+  "source_kind": "news_archive",
+  "reference": "https://www.koreatimes.co.kr/business/tech-science/20111121/kimchi-refrigerator-maintains-taste-of-fermented-food",
+  "written": "2026-09-26"
+}

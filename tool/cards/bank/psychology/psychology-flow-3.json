@@ -1,0 +1,32 @@
+{
+  "id": "psychology-flow-3",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is an easy task matched to modest skill enough to produce flow?",
+  "answer": "No. The first model placed flow wherever challenge matched skill. When Massimini and Carli in Milan sampled people's daily lives, easy tasks met with low skill felt apathetic, not absorbing. Flow appeared only when both challenge and skill ran above the person's own average. Folding laundry is perfectly matched to ability, and dull.",
+  "move": "Balance is not enough; both the demand and the ability have to be high.",
+  "keywords": [
+    "flow channel",
+    "challenge and skill",
+    "apathy",
+    "experience sampling"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Massimini & Carli, in Optimal Experience, 1988",
+  "source_kind": "book",
+  "reference": "Massimini & Carli, The systematic assessment of flow in daily experience, in Csikszentmihalyi & Csikszentmihalyi (eds), Optimal Experience, Cambridge University Press, 1988",
+  "written": "2026-09-26"
+}

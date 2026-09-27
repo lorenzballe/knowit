@@ -1,0 +1,39 @@
+{
+  "id": "nature-storms-3",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: no tropical cyclone can form within 200 km of the equator?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Typhoon Vamei formed in December 2001 at about 1.5° north, some 165 km from the equator, and came ashore beside Singapore. Cyclones need spin from Earth's rotation, which fades to nothing at the equator. There, a cold wind surge squeezed through the narrow southern South China Sea supplied the spin instead.",
+  "move": "A cause that fades to zero can be stood in for by another.",
+  "trap": "Earth's rotation gives no spin at the equator, so nothing can form.",
+  "keywords": [
+    "typhoon vamei",
+    "equator",
+    "coriolis effect",
+    "south china sea",
+    "singapore"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Chang, Liu & Kuo, Geophysical Research Letters, 2003",
+  "source_kind": "paper",
+  "reference": "Chang, Liu & Kuo, Typhoon Vamei: An equatorial tropical cyclone formation, Geophysical Research Letters, 2003",
+  "written": "2026-09-26"
+}

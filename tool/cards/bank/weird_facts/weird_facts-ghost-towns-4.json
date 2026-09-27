@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-ghost-towns-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Were China's empty new cities, such as Ordos Kangbashi, a costly mistake?",
+  "sides": [
+    "Yes, a mistake",
+    "No, built ahead"
+  ],
+  "answer": "Whole districts were built on borrowed money and land-sale revenue, far ahead of anyone wanting to live there. Flats bought as investments stood dark for years, leaving local governments with debts tied to property prices. Cities should follow jobs and people; building the shell first bets public money on a crowd that may not come.",
+  "move": "Whichever side you took, the answer depends on how long you wait before judging.",
+  "counterpoint": "China's cities have repeatedly been built before the people arrived, and many filled. Shanghai's Pudong was mocked as empty in the 1990s and became the country's financial centre. Kangbashi gained tens of thousands of residents once government offices and good schools moved in. Judging a new city a ghost after five years mistakes a slow start for a failure.",
+  "keywords": [
+    "ghost cities",
+    "ordos kangbashi",
+    "urbanisation",
+    "pudong",
+    "china"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shepard, Ghost Cities of China, 2015",
+  "source_kind": "reference_work",
+  "reference": "Shepard, Ghost Cities of China, Zed Books, 2015",
+  "written": "2026-09-26"
+}

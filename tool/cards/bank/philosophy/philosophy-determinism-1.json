@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-determinism-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In what kind of book did Laplace set out an intellect able to calculate the whole future?",
+  "answer": "A book about probability. The all-knowing intellect, later called Laplace's demon, is best known from his Philosophical Essay on Probabilities of 1814: knowing every force and every position, it would see past and future alike. For Laplace chance lived in us, not in nature. Probability was the arithmetic of a mind that knows too little.",
+  "move": "When something looks random, ask whether the randomness is in the thing or in you.",
+  "keywords": [
+    "laplace",
+    "laplace's demon",
+    "probability",
+    "determinism",
+    "ignorance"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laplace, Philosophical Essay on Probabilities, 1814",
+  "source_kind": "book",
+  "reference": "Laplace, A Philosophical Essay on Probabilities, trans. Truscott & Emory, Dover, 1951",
+  "written": "2026-09-26"
+}

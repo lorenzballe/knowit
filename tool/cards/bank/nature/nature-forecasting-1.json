@@ -1,0 +1,32 @@
+{
+  "id": "nature-forecasting-1",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the first weather forecast calculated from physics predict an impossible jump in pressure?",
+  "answer": "Its starting data were unbalanced; the physics was sound. Working by hand in wartime France, Lewis Fry Richardson spent about six weeks computing six hours of weather and got a pressure rise of 145 hectopascals, about a hundred times too big. Decades later Peter Lynch smoothed the same observations and got a realistic forecast.",
+  "move": "A sound method fed jittery measurements can still return nonsense.",
+  "keywords": [
+    "lewis fry richardson",
+    "numerical weather prediction",
+    "air pressure",
+    "initial conditions"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lynch, The Emergence of Numerical Weather Prediction",
+  "source_kind": "book",
+  "reference": "Lynch, The Emergence of Numerical Weather Prediction: Richardson's Dream, Cambridge University Press, 2006",
+  "written": "2026-09-26"
+}

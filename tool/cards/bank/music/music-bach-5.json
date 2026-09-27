@@ -1,0 +1,40 @@
+{
+  "id": "music-bach-5",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Bach's obituary credits him with five yearly cycles of church cantatas. Roughly how much of that survives?",
+  "options": [
+    "Nearly all of it",
+    "About two-thirds",
+    "About a third"
+  ],
+  "correct": 1,
+  "answer": "About two-thirds. A yearly cycle meant a cantata for every Sunday and feast day, about 60, so five cycles come to about 300, and around 200 sacred cantatas survive. His manuscripts were split among his heirs, and Wilhelm Friedemann sold much of his share. Whether all five cycles were ever complete is debated.",
+  "move": "Before praising a body of work, ask how much of it was lost.",
+  "trap": "Taking the roughly 200 cantatas on record for everything he wrote.",
+  "keywords": [
+    "cantatas",
+    "obituary",
+    "wilhelm friedemann bach",
+    "lost manuscripts",
+    "leipzig"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Dürr, The Cantatas of J. S. Bach, 2005",
+  "source_kind": "book",
+  "reference": "Dürr, The Cantatas of J. S. Bach, trans. Jones, Oxford University Press, 2005",
+  "written": "2026-09-26"
+}

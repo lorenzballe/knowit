@@ -1,0 +1,41 @@
+{
+  "id": "cinema-miniatures-5",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "also": [
+    "cinema.special_effects.cgi"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Blade Runner 2049, winner of the 2018 visual effects Oscar, relied partly on physical miniatures?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Weta Workshop built large, detailed miniatures of the film's city, which were shot with real light and haze and then extended digitally. Miniatures never disappeared from big productions; they stopped being noticed once audiences assumed every effect was digital. A good model now passes for computer graphics.",
+  "move": "What gets talked about is the loud part of a practice, not all of it.",
+  "trap": "False, because a recent effects film must be all digital.",
+  "keywords": [
+    "blade runner 2049",
+    "weta workshop",
+    "miniatures",
+    "visual effects oscar"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lapointe, Titan Books, 2017",
+  "source_kind": "book",
+  "reference": "Lapointe, The Art and Soul of Blade Runner 2049, Titan Books, 2017",
+  "written": "2026-09-26"
+}

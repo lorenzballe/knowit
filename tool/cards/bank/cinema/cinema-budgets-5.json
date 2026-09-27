@@ -1,0 +1,42 @@
+{
+  "id": "cinema-budgets-5",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "A shoot needs 30 outdoor days, each with an independent 95% chance of good weather. What is the chance none is lost?",
+  "options": [
+    "About 20%",
+    "About 50%",
+    "About 95%"
+  ],
+  "correct": 0,
+  "answer": "About 20%. The days must all go well, so the chances multiply: 0.95 multiplied by itself 30 times is about 0.21. That is why budgets carry a contingency, often around a tenth of the total, and why outdoor schedules keep cover sets ready for a wet morning. A safe-looking day is a risky month.",
+  "move": "Many small risks in a row add up to a likely failure.",
+  "trap": "About 95%, since every single day is very likely fine.",
+  "keywords": [
+    "contingency",
+    "shooting schedule",
+    "weather cover",
+    "probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Honthaner, The Complete Film Production Handbook",
+  "source_kind": "book",
+  "reference": "Honthaner, The Complete Film Production Handbook, 4th edn, Focal Press, 2010",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "music-silence-4",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: a completely silent score was published more than 50 years before Cage's 4′33″?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1897 the French comic writer Alphonse Allais printed a funeral march for a great deaf man: a page of empty bars, since great sorrows are mute. In 1919 Erwin Schulhoff wrote a movement made only of rests. Cage's piece was new in treating the room's sounds as the music, not in its silence.",
+  "move": "The famous case is often the survivor of several earlier tries.",
+  "trap": "The famous silent piece is the only one anyone still hears about.",
+  "keywords": [
+    "alphonse allais",
+    "erwin schulhoff",
+    "silent music",
+    "rests",
+    "silent scores"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allais, Oeuvres anthumes, ed. Caradec, 1989",
+  "source_kind": "book",
+  "reference": "Allais, Oeuvres anthumes, ed. Caradec, Robert Laffont, Bouquins, 1989",
+  "written": "2026-09-26"
+}

@@ -73,6 +73,7 @@ dependencies:
   # The paywall's two links, the terms and the privacy policy, which Apple
   # requires beside a subscription (lib/legal.dart).
   url_launcher: ^6.3.2
+  cloud_functions: ^6.5.0
 
 dev_dependencies:
   flutter_test:

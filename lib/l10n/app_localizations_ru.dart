@@ -1779,4 +1779,46 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get topEmpty =>
       'В списке пока пусто. Считается каждая карточка, которую лайкнули, сохранили или рассказали.';
+
+  @override
+  String get readMark => 'Прочитано';
+
+  @override
+  String get lovedSinceTheStart => 'Самые любимые с самого начала';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Самые любимые: $subject';
+  }
+
+  @override
+  String get lovedLine =>
+      'То, что читатели сохраняли чаще всего, а вы ещё не читали';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
+      many: 'Ваша первая неделя: ещё $n дней, когда четыре из пяти ваши.',
+      few: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
+      one: 'Ваша первая неделя: завтра последний день, четыре из пяти карточек ваши.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Ваша первая неделя заканчивается сегодня вечером. С завтрашнего дня одна из пяти карточек ваша, а три — общие; с Astute+ все пять остаются вашими.';
+
+  @override
+  String get forYouShelf => 'Для вас';
+
+  @override
+  String get forYouLine => 'То, что ваше чтение ставит на первое место';
+
+  @override
+  String get exploreOffline =>
+      'Вы офлайн. Это раздел «Обзор» в том виде, в каком он был прочитан в последний раз.';
 }

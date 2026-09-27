@@ -1,0 +1,41 @@
+{
+  "id": "cinema-music-cues-4",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Film runs at 24 frames per second. A cue's click track runs at 96 beats per minute. How many frames per beat?",
+  "value": 15,
+  "unit": "frames",
+  "answer": "24 / 1.6 = 15 frames per beat.",
+  "move": "Put both rates in the same unit of time before dividing them.",
+  "trap": "Dividing 96 by 24 and getting 4, mixing minutes with seconds.",
+  "hint": "Turn the tempo into beats per second first.",
+  "steps": [
+    "96 beats per minute / 60 seconds = 1.6 beats per second.",
+    "Each second holds 24 frames.",
+    "24 / 1.6 = 15 frames per beat."
+  ],
+  "keywords": [
+    "click track",
+    "tempo",
+    "frame rate",
+    "film scoring"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karlin and Wright, On the Track",
+  "source_kind": "book",
+  "reference": "Karlin and Wright, On the Track: A Guide to Contemporary Film Scoring, 2nd edition, Routledge, 2004",
+  "written": "2026-09-26"
+}

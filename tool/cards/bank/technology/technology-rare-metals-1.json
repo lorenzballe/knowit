@@ -1,0 +1,33 @@
+{
+  "id": "technology-rare-metals-1",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the hafnium in modern transistors come from?",
+  "answer": "From the nuclear industry's leftovers. Reactor fuel cladding is zirconium, which always comes mixed with hafnium, and the hafnium must go because it absorbs neutrons hundreds of times more strongly. Hafnium is almost never mined for itself; it is what zirconium refiners set aside, and chipmakers turn it into the insulating film on transistor gates.",
+  "move": "A supply that exists as someone's leftovers grows only when their business does.",
+  "keywords": [
+    "hafnium",
+    "zirconium",
+    "nuclear fuel cladding",
+    "neutron absorption",
+    "transistor gates"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USGS Mineral Commodity Summaries, 2024",
+  "source_kind": "institution",
+  "reference": "US Geological Survey, Mineral Commodity Summaries 2024: Zirconium and Hafnium, 2024",
+  "written": "2026-09-26"
+}

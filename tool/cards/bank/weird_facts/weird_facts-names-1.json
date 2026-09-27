@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-names-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which two surnames on a 1977 urology paper helped give nominative determinism its name?",
+  "answer": "Splatt and Weedon. Their article on incontinence in the British Journal of Urology was among the examples readers sent to New Scientist's Feedback column, which in 1994 named the idea of people drifting into work that suits their names. Another exhibit was a book on the polar regions by Daniel Snowman.",
+  "move": "A name that fits the job is remembered; the thousands that do not vanish.",
+  "keywords": [
+    "nominative determinism",
+    "new scientist",
+    "surnames",
+    "urology"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Improbable Research, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://improbable.com/2013/09/22/nominative-determinism/",
+  "written": "2026-09-26"
+}

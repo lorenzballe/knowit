@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-dream-1",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did people who could not remember playing Tetris see as they fell asleep that night?",
+  "answer": "Falling Tetris pieces. Three patients with dense amnesia from brain damage played the game and, at sleep onset, reported the same drifting blocks as healthy players, while unable to recall ever playing. Some experienced players even saw older versions of the game they had played before. The images come from memory the dreamer cannot consult.",
+  "move": "Forgetting an experience is no proof it has stopped shaping the mind.",
+  "keywords": [
+    "tetris",
+    "amnesia",
+    "hypnagogic images",
+    "sleep onset",
+    "memory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stickgold et al., Science, 2000",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.290.5490.350",
+  "written": "2026-09-26"
+}

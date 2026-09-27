@@ -1,0 +1,33 @@
+{
+  "id": "human_body-gut-and-mood-4",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does anxiety bring on an irritable gut, or does an irritable gut bring on anxiety?",
+  "answer": "Both. Following about a thousand Australian adults for 12 years, researchers found that anxiety at the start predicted new gut disorders such as irritable bowel syndrome, and that gut disorders at the start predicted new anxiety and depression. Some patients' troubles begin in the head, others' in the bowel, and the traffic runs both ways.",
+  "move": "Before deciding which came first, check whether each can start the other.",
+  "keywords": [
+    "irritable bowel syndrome",
+    "anxiety",
+    "depression",
+    "gut-brain axis",
+    "cohort study"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koloski et al., Gut, 2012",
+  "source_kind": "paper",
+  "reference": "Koloski, Jones, Kalantar, Weltman, Zaguirre & Talley, The brain–gut pathway in functional gastrointestinal disorders is bidirectional: a 12-year prospective population-based study, Gut, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "psychology-flow-1",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: when working adults were paged at random, flow turned up more often at work than in free time?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Csikszentmihalyi and LeFevre paged workers at random moments for a week. Flow, high challenge met by high skill, appeared in 54% of reports from work and 18% of those from leisure, much of which went on television. Yet at work people more often said they wished to be doing something else.",
+  "move": "Where a feeling was first studied is not where it mostly happens.",
+  "trap": "Picturing flow as climbers and chess players, the cases first studied.",
+  "keywords": [
+    "flow",
+    "experience sampling",
+    "work",
+    "leisure"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Csikszentmihalyi & LeFevre, JPSP, 1989",
+  "source_kind": "paper",
+  "reference": "Csikszentmihalyi & LeFevre, Optimal experience in work and leisure, Journal of Personality and Social Psychology, 1989",
+  "written": "2026-09-26"
+}

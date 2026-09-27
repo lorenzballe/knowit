@@ -1,0 +1,33 @@
+{
+  "id": "medicine-barbers-5",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which royal operation in 1686 helped raise French surgeons above their barber origins?",
+  "answer": "The removal of Louis XIV's anal fistula. Charles-François Félix, the king's first surgeon, from a trade still joined to barbers, rehearsed on other patients for months before operating in November 1686. The king recovered and rewarded him with land and nobility. Surgeons gained a Royal Academy in 1731 and left the barbers in 1743.",
+  "move": "One visible success can move a whole trade's standing.",
+  "keywords": [
+    "louis xiv",
+    "anal fistula",
+    "charles-françois félix",
+    "french surgeons",
+    "versailles"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tidsskrift for Den norske legeforening, 2016",
+  "source_kind": "paper",
+  "reference": "https://tidsskriftet.no/en/2016/08/medical-history/sun-kings-anal-fistula",
+  "written": "2026-09-26"
+}

@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Chandra X-ray Observatory, Perseus cluster"
+  "source": "Chandra X-ray Observatory, Perseus cluster",
+  "disabled": true
 }

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-sneezes-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What simple test did Francis Bacon use to find out why sunlight makes some people sneeze?",
+  "answer": "He faced the sun with his eyes shut. The Aristotelian answer had been the sun's heat on the nose; Bacon found that without light entering the eyes the sneeze did not come, so the eyes were the route. The photic sneeze reflex is estimated to affect about 18 to 35% of people.",
+  "move": "To find which route a cause takes, block one route and watch.",
+  "keywords": [
+    "photic sneeze reflex",
+    "francis bacon",
+    "sunlight",
+    "experiment"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Provine, Curious Behavior, 2012",
+  "source_kind": "reference_work",
+  "reference": "Provine, Curious Behavior: Yawning, Laughing, Hiccupping, and Beyond, Harvard University Press, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-altitude-4",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: air at a 2,500 m training camp contains a smaller percentage of oxygen than air at sea level?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Oxygen makes up about 20.9% of dry air at any height athletes train at. What falls is the pressure: at 2,500 m it is about three quarters of sea level, so each breath carries fewer molecules of everything. Altitude tents work the other way, removing oxygen to mimic the same shortage.",
+  "move": "Separate how much of the mixture is there from how much mixture there is.",
+  "trap": "Assuming thin air means air with less oxygen in the mix.",
+  "keywords": [
+    "oxygen",
+    "air pressure",
+    "partial pressure",
+    "altitude tents",
+    "hypoxia"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West, Schoene & Milledge, High Altitude Medicine, 2007",
+  "source_kind": "book",
+  "reference": "West, Schoene & Milledge, High Altitude Medicine and Physiology, Hodder Arnold, 2007",
+  "written": "2026-09-26"
+}

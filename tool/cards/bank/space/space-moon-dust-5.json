@@ -1,0 +1,39 @@
+{
+  "id": "space-moon-dust-5",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Moon's soil grows darker, not paler, the longer it lies exposed at the surface?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Micrometeorite strikes and the solar wind coat each grain in glass studded with iron particles a few millionths of a millimetre across, and these absorb light. Rock freshly dug out by an impact is bright, which is why young craters such as Tycho wear pale rays, while older rays fade into the grey.",
+  "move": "Exposure does not always fade a thing; sometimes it coats it.",
+  "trap": "Expecting sunlight to bleach the soil, as it bleaches things on Earth.",
+  "keywords": [
+    "space weathering",
+    "nanophase iron",
+    "crater rays",
+    "tycho",
+    "micrometeorites"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pieters & Noble, JGR Planets, 2016",
+  "source_kind": "paper",
+  "reference": "Pieters & Noble, Space weathering on airless bodies, Journal of Geophysical Research: Planets, 2016",
+  "written": "2026-09-26"
+}

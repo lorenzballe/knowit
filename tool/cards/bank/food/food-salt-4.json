@@ -1,0 +1,33 @@
+{
+  "id": "food-salt-4",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can almost no bacteria grow in saturated brine, though it is mostly water?",
+  "answer": "Because its water is held, not free. Microbes need water they can take up, measured as water activity, 0 to 1. Most bacteria stop below about 0.91, Staphylococcus aureus near 0.86; saturated brine sits near 0.75, so cells lose water instead of gaining it. Only salt-loving microbes thrive, and they turn salt ponds pink.",
+  "move": "Ask how much of a resource is usable, not how much is present.",
+  "keywords": [
+    "water activity",
+    "salt curing",
+    "bacteria",
+    "halophiles",
+    "preservation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jay, Modern Food Microbiology, 2005",
+  "source_kind": "book",
+  "reference": "Jay, Loessner & Golden, Modern Food Microbiology, 7th edition, Springer, 2005",
+  "written": "2026-09-26"
+}

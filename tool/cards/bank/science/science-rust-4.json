@@ -1,0 +1,33 @@
+{
+  "id": "science-rust-4",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why has Delhi's iron pillar, set up about 1,600 years ago, barely rusted?",
+  "answer": "Chemistry, not a lost secret. The wrought iron is unusually rich in phosphorus, and as Delhi's weather wets and dries it, a thin, tight film rich in iron phosphate builds up instead of flaking rust. Metallurgist R. Balasubramaniam set out the explanation in 2000; the pillar is armoured by its own first corrosion.",
+  "move": "Before crediting a lost secret, check the ingredients and the weather.",
+  "keywords": [
+    "delhi iron pillar",
+    "phosphorus",
+    "wrought iron",
+    "protective film",
+    "rust"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Balasubramaniam, Corrosion Science, 2000",
+  "source_kind": "paper",
+  "reference": "Balasubramaniam, On the corrosion resistance of the Delhi iron pillar, Corrosion Science 42, 2103, 2000",
+  "written": "2026-09-26"
+}

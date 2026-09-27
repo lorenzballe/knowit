@@ -1,0 +1,39 @@
+{
+  "id": "sport-offside-3",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "When assistant referees got offside wrong at the 2002 World Cup, which mistake was most common?",
+  "options": [
+    "Flagging attackers who were onside",
+    "Missing attackers who were offside",
+    "Both mistakes about equally"
+  ],
+  "correct": 0,
+  "answer": "Flagging attackers who were onside. About 26% of offside situations were judged wrongly, and most errors were raised flags. A forward in motion is seen slightly ahead of where he really is when the pass is struck, so level looks beyond. The attack that was wrongly stopped leaves nothing to replay.",
+  "move": "The mistakes that end the story are the ones nobody sees on the replay.",
+  "trap": "Recalling goals given from offside, which are replayed endlessly.",
+  "keywords": [
+    "assistant referees",
+    "offside errors",
+    "2002 world cup",
+    "flash-lag effect"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Helsen et al., Journal of Sports Sciences, 2006",
+  "source_kind": "paper",
+  "reference": "Helsen, Gilis & Weston, Errors in judging offside in association football: test of the optical error versus the perceptual flash-lag hypothesis, Journal of Sports Sciences, 2006",
+  "written": "2026-09-26"
+}

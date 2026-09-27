@@ -1,0 +1,32 @@
+{
+  "id": "food-pepper-5",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the tingle of Sichuan pepper feel like to the nerves it triggers?",
+  "answer": "A vibration of about 50 taps a second. London researchers put the ground husks on volunteers' lips in 2013 and had them match the tingle to a vibrating finger pad: they chose around 50 hertz, the range of light-touch nerve fibres. The spice fools the sense of touch, not of taste or heat.",
+  "move": "A sensation can be measured by matching it to one you can dial.",
+  "keywords": [
+    "sichuan pepper",
+    "sanshool",
+    "touch receptors",
+    "vibration"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hagura et al., Proc. R. Soc. B, 2013",
+  "source_kind": "paper",
+  "reference": "Hagura, Barber & Haggard, Food vibrations: Asian spice sets lips trembling, Proceedings of the Royal Society B, 2013",
+  "written": "2026-09-26"
+}

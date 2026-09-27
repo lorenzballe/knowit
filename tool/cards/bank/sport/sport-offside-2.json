@@ -1,0 +1,39 @@
+{
+  "id": "sport-offside-2",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a striker's outstretched arm beyond the last defender can make him offside?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. For offside the hands and arms of every player, goalkeepers included, are ignored, and the law puts the top of the arm at the bottom of the armpit. A shoulder, a knee or a toe can be offside; a fingertip cannot, since a player may not legally score with it.",
+  "move": "Before judging whether a line was crossed, ask which parts are allowed to count.",
+  "trap": "Assuming any part of the body past the line counts.",
+  "keywords": [
+    "offside position",
+    "arms",
+    "armpit",
+    "laws of the game",
+    "ifab"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 11",
+  "source_kind": "primary_document",
+  "reference": "https://www.theifab.com/laws/latest/offside/",
+  "written": "2026-09-26"
+}

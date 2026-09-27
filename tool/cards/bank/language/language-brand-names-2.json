@@ -1,0 +1,40 @@
+{
+  "id": "language-brand-names-2",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Where was the ice-cream brand Häagen-Dazs founded?",
+  "options": [
+    "The Bronx, New York",
+    "Copenhagen, Denmark",
+    "Amsterdam, Netherlands"
+  ],
+  "correct": 0,
+  "answer": "The Bronx, New York. Reuben Mattus made up the name around 1960 to sound Scandinavian, as a nod to Denmark's rescue of its Jews in the Second World War. The words mean nothing, and Danish does not even use the letter ä. The umlaut is decoration.",
+  "move": "Test a clue by asking whether the genuine article would look like that.",
+  "trap": "The umlauts and the Nordic look seem to point to Denmark.",
+  "keywords": [
+    "häagen-dazs",
+    "reuben mattus",
+    "bronx",
+    "umlaut",
+    "brand naming"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rose Mattus, The Emperor of Ice Cream, 2004",
+  "source_kind": "book",
+  "reference": "Mattus & Friedman, The Emperor of Ice Cream: The True Story of Häagen-Dazs, The Wordsmithy, 2004, ISBN 9780974885704",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-eternity-5",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Would a life that never ended eventually become unbearable?",
+  "sides": [
+    "Yes, it would pall",
+    "No, it could stay good"
+  ],
+  "answer": "Bernard Williams took Elina Makropulos, held at 42 by an elixir for three centuries, who refuses more: everything has happened to her before. A self that keeps its character runs out of new desires; a self that keeps changing is not really you surviving. Either way, endless life loses what made you want it.",
+  "move": "It turns on whether the best goods wear out with repetition.",
+  "counterpoint": "Boredom is a fact about some pleasures, not about life. Many goods renew themselves: a favourite piece of music, a meal with friends, a walk by the sea are wanted again and again, as John Martin Fischer argued in 1994. An endless life could be a rhythm of such returns, not a queue of used-up novelties.",
+  "keywords": [
+    "immortality",
+    "bernard williams",
+    "makropulos case",
+    "boredom",
+    "john martin fischer"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williams, Problems of the Self, 1973",
+  "source_kind": "book",
+  "reference": "Williams, The Makropulos Case: Reflections on the Tedium of Immortality, in Problems of the Self, Cambridge University Press, 1973; Fischer, Why Immortality Is Not So Bad, International Journal of Philosophical Studies 2, 1994",
+  "written": "2026-09-26"
+}

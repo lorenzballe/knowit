@@ -1,0 +1,38 @@
+{
+  "id": "medicine-doubt-5",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should schools turn away children whose parents refuse vaccines on grounds of personal belief?",
+  "sides": [
+    "Yes, end belief exemptions",
+    "No, keep them"
+  ],
+  "answer": "A child in the next seat cannot opt out of an outbreak. After California ended belief exemptions in 2015, such exemptions among new kindergarteners fell from over 2% to about 0.5%. Exemptions cluster in the same schools, so a healthy state average hides pockets where measles, which needs about 95% vaccinated, finds its opening.",
+  "move": "The decider is whether a ban vaccinates the refusers or only moves them elsewhere.",
+  "counterpoint": "Coercion turns a hesitant parent into a hostile one, and it leaks. In California, medical exemptions rose after the ban and offset much of the gain, and some families moved to home schooling. Many hesitant parents come round when a trusted doctor takes time with them; a mandate spends that trust on the few who never will.",
+  "keywords": [
+    "vaccine mandates",
+    "belief exemptions",
+    "california",
+    "schools",
+    "measles"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Delamater et al., Pediatrics, 2019",
+  "source_kind": "paper",
+  "reference": "https://doi.org/10.1542/peds.2018-3301",
+  "written": "2026-09-26"
+}

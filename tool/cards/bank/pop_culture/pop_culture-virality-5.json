@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-virality-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do most posts that reach huge audiences online actually get there?",
+  "answer": "Mostly through one big broadcast, not long chains of friends. Goel, Anderson, Hofman and Watts studied about a billion diffusion events on Twitter and found popularity depended chiefly on the size of the largest single broadcast, and was only weakly tied to how chain-like the spread was. Most huge audiences trace back to one account.",
+  "move": "When something spreads, look for the one big megaphone before the chain.",
+  "keywords": [
+    "structural virality",
+    "twitter",
+    "diffusion",
+    "broadcast",
+    "duncan watts"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goel et al., Management Science, 2016",
+  "source_kind": "primary_document",
+  "reference": "Goel, Anderson, Hofman & Watts, The Structural Virality of Online Diffusion, Management Science, 2016",
+  "written": "2026-09-26"
+}

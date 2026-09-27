@@ -1,0 +1,33 @@
+{
+  "id": "cinema-unfinished-1",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the 2021 buyers of Jodorowsky's Dune storyboard book fail to get for their €2.66 million?",
+  "answer": "The right to make anything from it. A crypto collective, Spice DAO, bought a copy of the pitch book for Alejandro Jodorowsky's abandoned 1970s Dune at Christie's in Paris, then announced plans for an animated series. Copyright stayed with its authors. They owned the book the way a buyer of a novel owns paper.",
+  "move": "Owning the object and owning the right to copy it are separate purchases.",
+  "keywords": [
+    "jodorowsky's dune",
+    "spice dao",
+    "copyright",
+    "storyboards",
+    "christie's"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christie's Paris sale, 2021",
+  "source_kind": "company",
+  "reference": "Christie's Paris, sale of a copy of the Jodorowsky Dune storyboard book, November 2021",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "food-sugar-5",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments tax sugary drinks to cut how much sugar people consume?",
+  "sides": [
+    "Yes, tax them",
+    "No, do not"
+  ],
+  "answer": "Britain's levy, announced in 2016 and charged from 2018, taxed drinks by sugar content, and makers cut the sugar before it began: sugar in taxed drinks fell by a third or more. Researchers later linked it to fewer obese girls aged 10 and 11. A tax that changes recipes reaches people who never read labels.",
+  "move": "Ask whether the gain came from the price or from the recipe change.",
+  "counterpoint": "Such taxes take a larger share of poorer households' budgets, and the evidence on body weight is thin: studies find small, uneven effects, and sugar can come back through sweets and food. Britain's gains came from reformulation, which a direct limit on sugar per litre could have required without taxing anyone.",
+  "keywords": [
+    "sugar tax",
+    "soft drinks levy",
+    "reformulation",
+    "obesity",
+    "regressive taxes"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers et al., PLOS Medicine, 2023",
+  "source_kind": "paper",
+  "reference": "Rogers et al., Associations between trajectories of obesity prevalence in English primary school children and the UK soft drinks industry levy, PLOS Medicine, 2023",
+  "written": "2026-09-26"
+}

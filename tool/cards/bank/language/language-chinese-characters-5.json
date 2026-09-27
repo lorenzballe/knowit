@@ -1,0 +1,42 @@
+{
+  "id": "language-chinese-characters-5",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "China's 1872 telegraph code sent each character as four digits, each from 0 to 9. How many codes, in thousands?",
+  "value": 10,
+  "unit": "thousand codes",
+  "answer": "10,000 codes is 10 thousand.",
+  "move": "Each extra position multiplies the possibilities rather than adding to them.",
+  "trap": "Adding the choices, 4 x 10, instead of multiplying them.",
+  "hint": "Work out how many codes two digits give, then combine two such pairs.",
+  "steps": [
+    "Each digit can take 10 values.",
+    "Two digits give 10 x 10 = 100 codes.",
+    "Four digits give 100 x 100 = 10,000 codes.",
+    "10,000 codes is 10 thousand."
+  ],
+  "keywords": [
+    "chinese telegraph code",
+    "telegraphy",
+    "four-digit code",
+    "codebook"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mullaney, The Chinese Typewriter, 2017",
+  "source_kind": "book",
+  "reference": "Mullaney, The Chinese Typewriter: A History, MIT Press, 2017",
+  "written": "2026-09-26"
+}

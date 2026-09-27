@@ -1,0 +1,32 @@
+{
+  "id": "language-double-negatives-1",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does everyday spoken French drop the ne and say je sais pas?",
+  "answer": "Because negation runs in a cycle. Old French ne had worn weak, so speakers added pas, a step, for emphasis: not even a step. Pas slowly became the negative itself, and ne is now dropped in most casual speech. Otto Jespersen described the cycle in 1917; English not, from nought, went round it too.",
+  "move": "Emphasis wears out with use and has to be topped up.",
+  "keywords": [
+    "jespersen cycle",
+    "french negation",
+    "otto jespersen",
+    "ne pas"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jespersen, Negation in English, 1917",
+  "source_kind": "book",
+  "reference": "Jespersen, Negation in English and Other Languages, Høst, Copenhagen, 1917",
+  "written": "2026-09-26"
+}

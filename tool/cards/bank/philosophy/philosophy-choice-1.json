@@ -1,0 +1,43 @@
+{
+  "id": "philosophy-choice-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Brain activity creeps upward for about half a second before a freely timed movement. What did a 2012 model propose that creep is?",
+  "options": [
+    "A decision made before awareness",
+    "Random noise averaged back from movements",
+    "Muscles bracing ahead of the movement"
+  ],
+  "correct": 1,
+  "answer": "Random noise averaged back from movements. Aaron Schurger's team modelled the brain as drifting activity that triggers a movement whenever it crosses a threshold. Align recordings on each movement and average them: only drifts that reached the threshold are counted, so a smooth ramp appears. The ramp is drawn by the averaging.",
+  "move": "Line up only the cases where something happened, and a build-up will appear.",
+  "trap": "Reading the early ramp as the brain deciding before the person knows.",
+  "keywords": [
+    "readiness potential",
+    "neural noise",
+    "aaron schurger",
+    "averaging",
+    "voluntary movement"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schurger, Sitt & Dehaene, PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "Schurger, Sitt & Dehaene, An accumulator model for spontaneous neural activity prior to self-initiated movement, Proceedings of the National Academy of Sciences 109 (42), 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-dialects-4",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "When Italy unified in 1861, roughly what share of its people spoke standard Italian?",
+  "options": [
+    "About three-quarters",
+    "About half",
+    "Under a tenth"
+  ],
+  "correct": 2,
+  "answer": "Under a tenth. Tullio De Mauro estimated about 2.5 per cent; Arrigo Castellani, recounting, put it nearer 10. Standard Italian was literary Tuscan, the language of Dante and of official documents, while daily life ran in Piedmontese, Neapolitan, Sicilian and dozens more. Schools, conscription and later television made it the spoken national language.",
+  "move": "What was written down is not a sample of what was said.",
+  "trap": "Italy's surviving books and laws were almost all written in Italian.",
+  "keywords": [
+    "italian unification",
+    "tullio de mauro",
+    "standard italian",
+    "tuscan",
+    "dialects"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "De Mauro, Storia linguistica dell'Italia unita, 1963",
+  "source_kind": "book",
+  "reference": "De Mauro, Storia linguistica dell'Italia unita, Laterza, 1963",
+  "written": "2026-09-26"
+}

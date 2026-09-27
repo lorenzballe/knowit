@@ -1,0 +1,39 @@
+{
+  "id": "music-jazz-5",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: for over 30 years, the first side of Kind of Blue sounded higher than the band played?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A tape machine at the 1959 session ran slow, so the master played back fast and a little sharp, well under a semitone, on So What, Freddie Freeloader and Blue in Green. An engineer caught the error only in 1992. Players transcribing those solos had found the band tuned somewhere between keys.",
+  "move": "The most copied version is not always the version that happened.",
+  "trap": "Assuming the best-selling jazz album was checked note for note.",
+  "keywords": [
+    "kind of blue",
+    "miles davis",
+    "tape speed",
+    "pitch",
+    "mastering"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahn, Kind of Blue, 2000",
+  "source_kind": "book",
+  "reference": "Kahn, Kind of Blue: The Making of the Miles Davis Masterpiece, Da Capo Press, 2000",
+  "written": "2026-09-26"
+}

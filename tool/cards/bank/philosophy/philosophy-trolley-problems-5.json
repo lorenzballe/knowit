@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-trolley-problems-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a state be allowed to shoot down a hijacked airliner to stop it being flown into a crowd?",
+  "sides": [
+    "Yes, allow it",
+    "No, forbid it"
+  ],
+  "answer": "Passengers on an airliner aimed at a packed stadium die either way; shooting it down changes only how many die with them. A government that could stop the attack and refuses is choosing thousands of deaths to keep its own hands clean, and the people in the stands have a right to life too.",
+  "move": "Both sides turn on whether a life that is ending anyway still counts in full.",
+  "counterpoint": "Germany's constitutional court struck down exactly such a law in 2006: killing innocent passengers treats them as mere objects in a rescue of others, and a life with minutes left is still protected. And the crash is never certain in time — on United 93 in 2001, passengers fought the hijackers and the plane came down in an empty field.",
+  "keywords": [
+    "hijacked airliner",
+    "aviation security act",
+    "human dignity",
+    "german constitutional court",
+    "shoot-down"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "German Federal Constitutional Court, 2006",
+  "source_kind": "primary_document",
+  "reference": "Bundesverfassungsgericht, Judgment of the First Senate of 15 February 2006, 1 BvR 357/05, BVerfGE 115, 118",
+  "written": "2026-09-26"
+}

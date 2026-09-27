@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h10",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A €1,000 card debt grows at 2% a month, unpaid, for three years. Roughly what is owed?",
+  "options": [
+    "About €1,720",
+    "About €2,040",
+    "About €3,000"
+  ],
+  "correct": 1,
+  "answer": "About €2,040. Each month's 2% is charged on the interest already added, so the debt multiplies by 1.02 thirty-six times, which is a little over 2. Simple interest would give €1,720: the gap is interest on interest, and it widens every month.",
+  "move": "Turn a monthly rate into a yearly one before deciding it is small.",
+  "trap": "Adding 2% thirty-six times instead of multiplying by it.",
+  "keywords": [
+    "compound interest",
+    "credit cards",
+    "debt",
+    "monthly rates"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Compound interest, arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978",
+  "written": "2026-09-26"
+}

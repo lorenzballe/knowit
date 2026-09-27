@@ -1,0 +1,33 @@
+{
+  "id": "medicine-symptoms-3",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does appendicitis pain usually start around the navel before settling low on the right?",
+  "answer": "Because two nerve systems report it in turn. Early swelling stretches the appendix, whose gut nerves enter the spinal cord at the same level as the skin around the navel, so the brain places the pain vaguely there. Later it irritates the lining of the abdominal wall, which has precise nerves, and the pain moves.",
+  "move": "Where it hurts and where the trouble is are two separate questions.",
+  "keywords": [
+    "appendicitis",
+    "referred pain",
+    "visceral pain",
+    "peritoneum",
+    "abdominal pain"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bailey & Love's Short Practice of Surgery",
+  "source_kind": "reference_work",
+  "reference": "Williams, O'Connell & McCaskie (eds), Bailey & Love's Short Practice of Surgery, 27th edition, CRC Press, 2018",
+  "written": "2026-09-26"
+}

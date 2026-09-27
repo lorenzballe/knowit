@@ -1,0 +1,36 @@
+{
+  "id": "technology-factories-1",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "also": [
+    "history.revolutions.industrial"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did electrifying factories barely raise their productivity until the 1920s?",
+  "answer": "Because owners first kept the old layout. Early factories swapped the steam engine for one big motor still turning the same shafts and belts, in the same multi-storey buildings. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines arranged around the work, not the driveshaft.",
+  "move": "A new tool pays off only after the work is rearranged around it.",
+  "keywords": [
+    "electrification",
+    "productivity paradox",
+    "unit drive",
+    "factory layout",
+    "paul david"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "David, American Economic Review, 1990",
+  "source_kind": "paper",
+  "reference": "David, The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox, American Economic Review 80(2), 1990",
+  "written": "2026-09-26"
+}

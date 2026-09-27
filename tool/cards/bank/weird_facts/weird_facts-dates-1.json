@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-dates-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can dying people hold off death until a birthday or a holiday has passed?",
+  "sides": [
+    "Yes, some can",
+    "No, it is noise"
+  ],
+  "answer": "Death records keep showing dips before meaningful dates and bumps after them. Phillips and King found fewer Jewish deaths in the week before Passover and more in the week after. Hospice staff describe patients waiting for a wedding or a grandchild. A goal plausibly works through appetite, effort and choices about treatment.",
+  "move": "Whichever side you took, it turns on counting every date, not the chosen ones.",
+  "counterpoint": "Ohio's death certificates for 1989 to 2000, nearly 310,000 cancer deaths, showed no fewer deaths in the week before Christmas, Thanksgiving or a birthday than in the week after. The early studies were small and examined many occasions, so some dips were bound to appear. A patient who waits is remembered; one who dies the night before is not.",
+  "keywords": [
+    "death dates",
+    "holidays",
+    "birthdays",
+    "cancer deaths",
+    "passover"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Young and Hade, JAMA, 2004",
+  "source_kind": "statistics",
+  "reference": "Young and Hade, Holidays, birthdays, and postponement of cancer death, JAMA, 2004",
+  "written": "2026-09-26"
+}

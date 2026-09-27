@@ -1,0 +1,38 @@
+{
+  "id": "cinema-budgets-4",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: El Mariachi reached cinemas in 1993 having cost about $7,000 in total?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. About $7,000 paid for Robert Rodriguez's shoot on 16 mm film, some of it earned as a paid volunteer in a drug trial. Columbia then spent many times that sum on sound, a blow-up to 35 mm and prints before release. The legendary figure bought the raw footage, not the film audiences saw.",
+  "move": "Ask which stage a famous price tag covers before comparing it with others.",
+  "trap": "True, because the $7,000 figure is quoted as the film's cost.",
+  "keywords": [
+    "el mariachi",
+    "robert rodriguez",
+    "micro-budget",
+    "post-production"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rodriguez, Rebel Without a Crew, 1995",
+  "source_kind": "book",
+  "reference": "Rodriguez, Rebel Without a Crew, Dutton, 1995",
+  "written": "2026-09-26"
+}

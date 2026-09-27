@@ -1,0 +1,40 @@
+{
+  "id": "music-guitar-5",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On a Fender Stratocaster, what does the bar Fender named the tremolo arm actually vary?",
+  "options": [
+    "The note's pitch",
+    "The note's volume",
+    "The pickups' tone"
+  ],
+  "correct": 0,
+  "answer": "The pitch. Properly, tremolo is a wobble in volume and vibrato a wobble in pitch, and Leo Fender swapped them: the 1954 Stratocaster's synchronized tremolo bends pitch, while Fender amplifiers labelled vibrato pulse the volume. Guitarists inherited both errors. The whammy bar is a vibrato arm still wearing the wrong name tag.",
+  "move": "Check what a control does before trusting what it is called.",
+  "trap": "The volume, because that is what the word tremolo means.",
+  "keywords": [
+    "stratocaster",
+    "leo fender",
+    "tremolo",
+    "vibrato",
+    "whammy bar"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duchossoir, The Fender Stratocaster, 1994",
+  "source_kind": "book",
+  "reference": "Duchossoir, The Fender Stratocaster, Hal Leonard, 1994",
+  "written": "2026-09-26"
+}

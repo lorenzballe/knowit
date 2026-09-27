@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-style-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "When and where was the Wonderbra's plunging push-up design first created?",
+  "options": [
+    "Britain in the 1990s",
+    "Paris in the 1980s",
+    "Canada in the 1960s"
+  ],
+  "correct": 2,
+  "answer": "Canada in the 1960s. Louise Poirier designed the plunge push-up model for the Montreal maker Canadelle in 1964. The 1990s craze came when the licence changed hands and Britain relaunched it in 1994, with billboards of Eva Herzigova. A thirty-year-old design was sold as the news of the season.",
+  "move": "The year a thing became famous is rarely the year it was made.",
+  "trap": "Britain in the 1990s, when the billboard campaign made it famous.",
+  "keywords": [
+    "wonderbra",
+    "canadelle",
+    "louise poirier",
+    "lingerie",
+    "advertising"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Farrell-Beck & Gau, Uplift, 2002",
+  "source_kind": "book",
+  "reference": "Jane Farrell-Beck and Colleen Gau, Uplift: The Bra in America, University of Pennsylvania Press, 2002",
+  "written": "2026-09-26"
+}

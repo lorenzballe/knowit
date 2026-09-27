@@ -1,0 +1,32 @@
+{
+  "id": "cinema-miniatures-4",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were the surface details on the original Star Wars spaceship models made from?",
+  "answer": "Pieces of shop-bought plastic model kits. Industrial Light & Magic's model makers cut up kits of tanks, cars, ships and aircraft and glued the parts onto the hulls, a practice called kitbashing, so every surface read as dense machinery at a glance. Enthusiasts still identify the donor kits, piece by piece, from photographs.",
+  "move": "Complexity that reads at a glance can be borrowed rather than designed.",
+  "keywords": [
+    "kitbashing",
+    "star wars",
+    "industrial light & magic",
+    "model kits"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, Industrial Light & Magic, 1986",
+  "source_kind": "book",
+  "reference": "Smith, Industrial Light & Magic: The Art of Special Effects, Del Rey, 1986",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "space-martian-weather-1",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the whole Martian atmosphere heavier in some months than in others?",
+  "answer": "Because part of it freezes out. Mars's air is mostly carbon dioxide, and in polar winter it settles on the ground as dry ice, returning as gas in spring. From 1976 the Viking landers watched surface pressure rise and fall by up to a quarter over a Martian year: a planet breathing in and out.",
+  "move": "When a quantity swings, ask where it goes while it is missing.",
+  "keywords": [
+    "carbon dioxide",
+    "polar caps",
+    "dry ice",
+    "viking landers",
+    "air pressure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hess et al., Geophysical Research Letters, 1980",
+  "source_kind": "paper",
+  "reference": "Hess, Ryan, Tillman et al., The annual cycle of pressure on Mars measured by Viking Landers 1 and 2, Geophysical Research Letters 7(3), 1980",
+  "written": "2026-09-26"
+}

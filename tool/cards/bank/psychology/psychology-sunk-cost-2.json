@@ -1,0 +1,36 @@
+{
+  "id": "psychology-sunk-cost-2",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "also": [
+    "sport.tactics.coaching"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did NBA teams give high draft picks more playing time than their performance justified?",
+  "answer": "Apparently yes, but less than first claimed. Staw and Hoang found that, performance held equal, earlier picks got more minutes and lasted longer in the league, as if teams were honouring the price of the pick. Camerer and Weber's reanalysis found a weaker effect. Coaches may also know things about talent that statistics miss.",
+  "move": "Before blaming bias, rule out that the insiders simply know more.",
+  "keywords": [
+    "nba draft",
+    "playing time",
+    "basketball",
+    "escalation of commitment",
+    "sunk costs"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Staw & Hoang, Administrative Science Quarterly, 1995",
+  "source_kind": "paper",
+  "reference": "Staw & Hoang, Sunk costs in the NBA: why draft order affects playing time and survival in professional basketball, Administrative Science Quarterly, 1995",
+  "written": "2026-09-26"
+}

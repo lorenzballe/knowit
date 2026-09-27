@@ -1,0 +1,33 @@
+{
+  "id": "music-bach-2",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Bach spend almost four weeks under arrest in Weimar in 1717?",
+  "answer": "For insisting on leaving. He had taken a post at Köthen, and the Duke of Weimar refused to let him go. The court secretary recorded him held from 6 November to 2 December for too stubbornly forcing his dismissal, then released in disgrace. A court musician was a servant, and servants did not resign.",
+  "move": "Look at the contract before admiring the career.",
+  "keywords": [
+    "weimar",
+    "köthen",
+    "arrest",
+    "court musicians",
+    "duke of weimar"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolff, Bach: The Learned Musician, 2000",
+  "source_kind": "book",
+  "reference": "Wolff, Johann Sebastian Bach: The Learned Musician, W. W. Norton, 2000",
+  "written": "2026-09-26"
+}

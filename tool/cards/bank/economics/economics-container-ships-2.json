@@ -1,0 +1,33 @@
+{
+  "id": "economics-container-ships-2",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Felixstowe, a small Suffolk harbour, overtake London and Liverpool as Britain's container port?",
+  "answer": "By being too small to be regulated. The National Dock Labour Scheme of 1947 reserved work at major ports for registered dockers, but Felixstowe fell outside it. Containers need a fraction of the old gangs, so Felixstowe adopted them in 1967 without a fight. London's upstream docks closed; the ships went to the seaside.",
+  "move": "Look for where the rules stop before asking where the growth starts.",
+  "keywords": [
+    "felixstowe",
+    "national dock labour scheme",
+    "dockers",
+    "port of london",
+    "containerisation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hansard, Felixstowe Dock and Railway Bill, 1985",
+  "source_kind": "primary_document",
+  "reference": "https://api.parliament.uk/historic-hansard/commons/1985/may/13/felixstowe-dock-and-railway-bill",
+  "written": "2026-09-26"
+}

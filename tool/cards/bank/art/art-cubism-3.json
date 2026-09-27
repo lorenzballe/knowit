@@ -1,0 +1,32 @@
+{
+  "id": "art-cubism-3",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was odd about the real-world material Picasso glued into his first collage in 1912?",
+  "answer": "It was itself a fake. Still Life with Chair Caning includes a piece of oilcloth printed to look like woven cane, on an oval canvas ringed with rope. The one scrap of everyday life he let into a painting was already a machine-printed imitation. Reality entered art as wipe-clean table covering.",
+  "move": "Ask whether the real thing in front of you is itself a copy.",
+  "keywords": [
+    "picasso",
+    "collage",
+    "chair caning",
+    "oilcloth"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Richardson, A Life of Picasso II, 1996",
+  "source_kind": "book",
+  "reference": "John Richardson, A Life of Picasso, Volume II: 1907-1917, Random House, 1996",
+  "written": "2026-09-26"
+}

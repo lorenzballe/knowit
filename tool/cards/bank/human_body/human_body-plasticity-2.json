@@ -1,0 +1,42 @@
+{
+  "id": "human_body-plasticity-2",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "also": [
+    "philosophy.knowledge.science"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Children born blind, given sight by surgery at 8 to 17, could identify a shape by touch. Could they then recognise it by sight?",
+  "options": [
+    "Yes, at once",
+    "Only after some days",
+    "Not even after months"
+  ],
+  "correct": 1,
+  "answer": "Only after some days. Held and colleagues tested five such children in India soon after surgery: matching shapes touch-to-touch was near perfect and sight-to-sight good, but touch-to-sight was barely better than a coin toss. Within days the matching improved. Molyneux had put this question to Locke in 1693; it took three centuries to test.",
+  "move": "Knowing a thing one way does not mean knowing it every way.",
+  "trap": "A shape is a shape, whichever sense first learned it.",
+  "keywords": [
+    "molyneux's question",
+    "project prakash",
+    "congenital cataracts",
+    "touch and vision"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Held et al., Nature Neuroscience, 2011",
+  "source_kind": "paper",
+  "reference": "Held et al., The newly sighted fail to match seen with felt, Nature Neuroscience, 2011",
+  "written": "2026-09-26"
+}

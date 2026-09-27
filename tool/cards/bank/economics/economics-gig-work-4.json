@@ -1,0 +1,38 @@
+{
+  "id": "economics-gig-work-4",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in a typical week of 2017, about one US worker in ten did short jobs found through apps?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Bureau of Labor Statistics counted 1.6 million such workers in May 2017, about 1% of everyone employed. Counts over a whole year run several times higher, because many people do app work only now and then. Couriers are highly visible on city streets and small in the national payroll.",
+  "move": "Count the workers, not the adverts, before sizing a trend.",
+  "trap": "Judging the gig economy's size by how often its couriers pass by.",
+  "keywords": [
+    "gig economy",
+    "platform work",
+    "bureau of labor statistics",
+    "contingent workers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "BLS, Monthly Labor Review, September 2018",
+  "source_kind": "statistics",
+  "reference": "US Bureau of Labor Statistics, Electronically mediated work: new questions in the Contingent Worker Supplement, Monthly Labor Review, September 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "music-piano-4",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Estimate the combined pull of all the strings inside a concert grand piano, in tonnes.",
+  "value": 18,
+  "unit": "tonnes",
+  "withinFactor": 3,
+  "answer": "About 18 tonnes.",
+  "move": "Add up many small pulls before calling anything delicate.",
+  "trap": "Picturing a guitar's gentle pull and guessing under a tonne.",
+  "hint": "Count strings rather than keys, then give each one a pull of tens of kilograms.",
+  "steps": [
+    "88 notes, most with two or three strings: roughly 230 strings.",
+    "Each string is pulled tight at about 80 kg of force.",
+    "230 x 80 kg = 18,400 kg.",
+    "About 18 tonnes."
+  ],
+  "keywords": [
+    "string tension",
+    "concert grand",
+    "cast-iron frame",
+    "piano strings"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fletcher & Rossing, Physics of Musical Instruments",
+  "source_kind": "book",
+  "reference": "Fletcher & Rossing, The Physics of Musical Instruments, Springer, 1998",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "psychology-sleep-stages-5",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Roughly how many years of an 80-year life are spent in REM sleep?",
+  "value": 5,
+  "unit": "years",
+  "withinFactor": 3,
+  "answer": "6% of 80 years ≈ 5 years.",
+  "move": "What happens every night, unnoticed, can still fill years.",
+  "trap": "Picturing dreams as brief flashes before waking, not hours each night.",
+  "hint": "Start from the hours of REM in one night and the share of a day they make.",
+  "steps": [
+    "An adult sleeps about 7.5 hours, roughly a fifth of it in REM.",
+    "7.5 / 5 = 1.5 hours of REM a day.",
+    "1.5 / 24 = about 6% of every day.",
+    "6% of 80 years ≈ 5 years."
+  ],
+  "keywords": [
+    "rem sleep",
+    "dreaming",
+    "lifetime",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carskadon & Dement, Normal human sleep, 2011",
+  "source_kind": "reference_work",
+  "reference": "Carskadon & Dement, Normal human sleep: an overview, in Principles and Practice of Sleep Medicine, 5th edition, Elsevier, 2011",
+  "written": "2026-09-26"
+}

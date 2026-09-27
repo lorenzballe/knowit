@@ -1,0 +1,32 @@
+{
+  "id": "art-perspective-2",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Brunelleschi test whether his painting of Florence's Baptistery matched the building itself?",
+  "answer": "With a peephole and a mirror. He drilled a hole through the panel at the vanishing point; a viewer stood where he had painted from and looked through the back, at a mirror reflecting the picture. Painted and real Baptistery lined up. The sky was burnished silver, so real clouds drifted across it.",
+  "move": "A claim about how things look should come with a way to check it.",
+  "keywords": [
+    "filippo brunelleschi",
+    "baptistery",
+    "mirror experiment",
+    "vanishing point"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Manetti, Life of Brunelleschi",
+  "source_kind": "primary_document",
+  "reference": "Antonio di Tuccio Manetti, The Life of Brunelleschi, ed. Howard Saalman, Pennsylvania State University Press, 1970",
+  "written": "2026-09-26"
+}

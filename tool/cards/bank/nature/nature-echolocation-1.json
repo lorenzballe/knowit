@@ -1,0 +1,33 @@
+{
+  "id": "nature-echolocation-1",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do bats not deafen themselves with their own calls?",
+  "answer": "They brace their ears for each shout. Some bats call at up to 140 decibels at 10 cm, a level that would injure human ears if people could hear it. A muscle in the middle ear tightens just before each call, damping the bones that carry sound, then relaxes in time for the faint echo.",
+  "move": "To hear a whisper right after a shout, close the door while shouting.",
+  "keywords": [
+    "bats",
+    "echolocation",
+    "middle ear",
+    "decibels",
+    "hearing protection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Henson 1965; Surlykke & Kalko 2008",
+  "source_kind": "paper",
+  "reference": "Henson, The activity and function of the middle-ear muscles in echo-locating bats, Journal of Physiology, 1965; Surlykke & Kalko, Echolocating bats cry out loud to detect their prey, PLoS ONE, 2008",
+  "written": "2026-09-26"
+}

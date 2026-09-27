@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-style-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did bringing grunge to the catwalk in 1992 cost the designer Marc Jacobs?",
+  "answer": "His job. His spring 1993 collection for Perry Ellis, shown in late 1992, remade thrift-shop flannel shirts and floral dresses in costly fabrics. Buyers and critics balked, and the company dismissed him. Years later the show was treated as prophetic; in 2018 he reissued the collection under his own name.",
+  "move": "Being early looks exactly like being wrong until the calendar catches up.",
+  "keywords": [
+    "marc jacobs",
+    "perry ellis",
+    "grunge",
+    "catwalk",
+    "flannel"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steele, Fifty Years of Fashion, 1997",
+  "source_kind": "book",
+  "reference": "Valerie Steele, Fifty Years of Fashion: New Look to Now, Yale University Press, 1997",
+  "written": "2026-09-26"
+}

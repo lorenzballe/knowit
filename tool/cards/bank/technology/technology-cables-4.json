@@ -1,0 +1,41 @@
+{
+  "id": "technology-cables-4",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Light in optical fibre covers about 200 km per millisecond. What is the fastest possible round trip, in milliseconds, over a 5,600 km transatlantic cable?",
+  "value": 56,
+  "unit": "milliseconds",
+  "answer": "Round trip: 28 x 2 = 56 ms.",
+  "move": "Distance sets a floor on delay that no upgrade can remove.",
+  "trap": "Using light's speed in a vacuum and forgetting glass slows it.",
+  "hint": "Work out the one-way time first, then add the time for the reply to come back.",
+  "steps": [
+    "Glass slows light to about two-thirds of its vacuum speed: about 200 km per millisecond.",
+    "One way: 5,600 / 200 = 28 ms.",
+    "Round trip: 28 x 2 = 56 ms."
+  ],
+  "keywords": [
+    "latency",
+    "optical fibre",
+    "speed of light",
+    "transatlantic cables"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Agrawal, Fiber-Optic Communication Systems, 2010",
+  "source_kind": "book",
+  "reference": "Agrawal, Fiber-Optic Communication Systems, 4th edition, Wiley, 2010",
+  "written": "2026-09-26"
+}

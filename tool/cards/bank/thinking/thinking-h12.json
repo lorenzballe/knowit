@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h12",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: most crashes happen within a few kilometres of home, so driving near home is riskier?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Most crashes happen near home because most driving happens near home. The share of crashes in a place says where people drive, not how dangerous each kilometre there is. To compare risk, divide the crashes by the kilometres driven in each place.",
+  "move": "Where most accidents happen is mostly where most people are.",
+  "trap": "Reading the share of crashes as the danger of the place.",
+  "keywords": [
+    "road safety",
+    "exposure",
+    "crash statistics",
+    "conditional probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans, Traffic Safety, 2004",
+  "source_kind": "book",
+  "reference": "Evans, Traffic Safety, Science Serving Society, 2004",
+  "written": "2026-09-26"
+}

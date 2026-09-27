@@ -1,0 +1,40 @@
+{
+  "id": "medicine-symptoms-1",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Among women admitted to US hospitals with a confirmed heart attack, how many had no chest pain?",
+  "options": [
+    "About 4 in 5",
+    "About 1 in 20",
+    "About 2 in 5"
+  ],
+  "correct": 2,
+  "answer": "About 2 in 5. In over 1.1 million heart-attack patients from 1994 to 2006, 42% of women and 31% of men arrived without chest pain, reporting breathlessness, nausea, sweating or fatigue instead. Those without chest pain waited longer for care and died more often in hospital, especially younger women.",
+  "move": "The famous version of a warning is not the usual version.",
+  "trap": "Picturing the film heart attack, a man clutching his chest.",
+  "keywords": [
+    "heart attack",
+    "chest pain",
+    "women",
+    "symptoms",
+    "registry"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Canto et al., JAMA, 2012",
+  "source_kind": "paper",
+  "reference": "https://jamanetwork.com/journals/jama/fullarticle/1355992",
+  "written": "2026-09-26"
+}

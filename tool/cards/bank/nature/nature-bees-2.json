@@ -1,0 +1,33 @@
+{
+  "id": "nature-bees-2",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did decoding thousands of honeybee dances reveal about the hardest season for English bees?",
+  "answer": "High summer, not spring or autumn. A waggle dance encodes how far a bee flew to food, so Couvillon, Schürch and Ratnieks read thousands of dances in Sussex over two years. Bees flew furthest in July and August, after spring blossom and before ivy. A green field in July can be a food desert.",
+  "move": "Green is not the same as useful; ask what is actually on offer.",
+  "keywords": [
+    "waggle dance",
+    "honeybees",
+    "foraging",
+    "sussex",
+    "summer gap"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Couvillon, Schürch & Ratnieks, PLoS ONE, 2014",
+  "source_kind": "paper",
+  "reference": "Couvillon, Schürch & Ratnieks, Waggle dance distances as integrative indicators of seasonal foraging challenges, PLoS ONE, 2014",
+  "written": "2026-09-26"
+}

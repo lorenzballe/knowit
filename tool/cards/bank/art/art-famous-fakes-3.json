@@ -1,0 +1,36 @@
+{
+  "id": "art-famous-fakes-3",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "also": [
+    "art.sculpture.marble"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What date did the Getty Museum's label give for the marble kouros it bought in 1985?",
+  "answer": "Two dates: Greek, about 530 BC, or modern forgery. The statue's paperwork, meant to trace it to a Swiss collection in the 1930s, proved fake, while studies of its weathered marble surface never settled the matter. It stayed on show under both dates until the museum removed it in 2018.",
+  "move": "An honest label can say what is unknown instead of choosing a side.",
+  "keywords": [
+    "getty kouros",
+    "getty museum",
+    "provenance",
+    "marble",
+    "authenticity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Getty Kouros Colloquium, 1993",
+  "source_kind": "book",
+  "reference": "The Getty Kouros Colloquium, Athens, 25–27 May 1992, Kapon Editions, 1993",
+  "written": "2026-09-26"
+}

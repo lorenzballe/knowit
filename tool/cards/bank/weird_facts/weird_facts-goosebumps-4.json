@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-goosebumps-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When music gives a listener chills, when does the brain start releasing dopamine?",
+  "options": [
+    "Only at the moment of the chill",
+    "Only once the music has stopped",
+    "Already in the seconds before it"
+  ],
+  "correct": 2,
+  "answer": "Already in the seconds before it. Scanning listeners with PET, Salimpoor and colleagues found dopamine released in the caudate while they anticipated a favourite passage, and in the nucleus accumbens at the peak itself. Two regions, two moments: the wanting and the having. A familiar crescendo pays out before it arrives.",
+  "move": "Much of a pleasure is paid out in waiting for it.",
+  "trap": "Assuming the reward lands with the thrill itself.",
+  "keywords": [
+    "musical chills",
+    "dopamine",
+    "anticipation",
+    "caudate",
+    "nucleus accumbens"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salimpoor et al., Nature Neuroscience, 2011",
+  "source_kind": "primary_document",
+  "reference": "Salimpoor et al., Anatomically distinct dopamine release during anticipation and experience of peak emotion to music, Nature Neuroscience, 2011",
+  "written": "2026-09-26"
+}

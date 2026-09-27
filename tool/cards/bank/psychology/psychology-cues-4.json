@@ -1,0 +1,39 @@
+{
+  "id": "psychology-cues-4",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Employees were mailed a flu-clinic reminder; some were also asked to write the date and time they would go. By how much did vaccination rise?",
+  "options": [
+    "About 40 percentage points",
+    "No measurable change",
+    "About 4 percentage points"
+  ],
+  "correct": 2,
+  "answer": "About 4 percentage points. In Milkman and colleagues' study, about 33% of employees who got only the reminder were vaccinated, against about 37% of those prompted to note a date and time. Tying the act to a moment on the calendar helped, but most of those 37% would have gone anyway.",
+  "move": "Most of what follows a nudge would have happened without it.",
+  "trap": "Crediting the plan with everyone who got the jab afterwards.",
+  "keywords": [
+    "implementation intentions",
+    "flu vaccination",
+    "planning prompts",
+    "nudges"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Milkman et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Milkman, Beshears, Choi, Laibson & Madrian, Using implementation intentions prompts to enhance influenza vaccination rates, Proceedings of the National Academy of Sciences, 2011",
+  "written": "2026-09-26"
+}

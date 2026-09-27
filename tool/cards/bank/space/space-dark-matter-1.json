@@ -1,0 +1,43 @@
+{
+  "id": "space-dark-matter-1",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Near the Sun, dark matter averages about one proton's mass per 3 cm³. How many grams of it fill a volume the size of Earth?",
+  "value": 600,
+  "unit": "grams",
+  "withinFactor": 3,
+  "answer": "A proton weighs 1.7 × 10^-24 g, so 3.7 × 10^26 × 1.7 × 10^-24 ≈ 600 g.",
+  "move": "Dominant overall and negligible in any one place can both be true.",
+  "trap": "Expecting tonnes, since dark matter outweighs ordinary matter about five to one.",
+  "hint": "Work out Earth's volume in cubic centimetres first.",
+  "steps": [
+    "Earth's radius is about 6,400 km, so its volume is 4/3 × 3.14 × (6.4 × 10^8 cm)³ ≈ 1.1 × 10^27 cm³.",
+    "At one proton's mass per 3 cm³, that holds about 3.7 × 10^26 proton masses.",
+    "A proton weighs 1.7 × 10^-24 g, so 3.7 × 10^26 × 1.7 × 10^-24 ≈ 600 g."
+  ],
+  "keywords": [
+    "dark matter",
+    "local density",
+    "earth",
+    "fermi estimate",
+    "protons"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Read, Journal of Physics G, 2014",
+  "source_kind": "paper",
+  "reference": "Read, The local dark matter density, Journal of Physics G: Nuclear and Particle Physics 41, 063101, 2014",
+  "written": "2026-09-26"
+}

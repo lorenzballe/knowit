@@ -1,0 +1,40 @@
+{
+  "id": "space-reusable-boosters-3",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "NASA quoted about $450 million as the cost of launching a Space Shuttle mission. What did a flight cost averaged over the whole programme?",
+  "options": [
+    "About $450 million",
+    "About $5 billion",
+    "About $1.5 billion"
+  ],
+  "correct": 2,
+  "answer": "About $1.5 billion. The $450 million was roughly the running cost of one more flight; it left out design, building the orbiters, the pads and a standing army of staff. Pielke and Byerly divided the programme's lifetime cost, in 2010 dollars, by its 135 flights.",
+  "move": "Ask whether a price is for one more, or for the whole thing.",
+  "trap": "Taking the quoted per-flight figure as the whole cost of a flight.",
+  "keywords": [
+    "space shuttle",
+    "launch costs",
+    "marginal cost",
+    "reusability",
+    "nasa"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Pielke & Byerly, Nature, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/472038d",
+  "written": "2026-09-26"
+}

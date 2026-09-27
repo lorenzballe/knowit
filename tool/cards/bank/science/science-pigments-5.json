@@ -1,0 +1,38 @@
+{
+  "id": "science-pigments-5",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should titanium dioxide, the white pigment in sweets and icing, be banned from food, as the EU has done?",
+  "sides": [
+    "Yes, ban it",
+    "No, keep it"
+  ],
+  "answer": "Its only job in food is cosmetic, making sweets and icing brighter white, so it must clear a high bar. In 2021 Europe's food-safety agency said it could no longer rule out damage to DNA from the nanoparticles it contains, and set no safe daily intake. A colour nobody needs does not earn that doubt.",
+  "move": "The disagreement is not about the evidence but about what an unexcluded risk should cost.",
+  "counterpoint": "The same data did not show harm, only an inability to exclude it, and regulators in Britain, Canada and Australia reviewed it and kept it. It passes through the gut largely unabsorbed. Banning on an unexcluded risk invites banning almost anything, and the substitutes, from rice starch to calcium carbonate, give duller, less stable whites.",
+  "keywords": [
+    "titanium dioxide",
+    "e171",
+    "food additives",
+    "efsa",
+    "nanoparticles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EFSA Journal, titanium dioxide opinion, 2021",
+  "source_kind": "institution",
+  "reference": "EFSA Panel on Food Additives and Flavourings, Safety assessment of titanium dioxide (E171) as a food additive, EFSA Journal 19(5), 2021",
+  "written": "2026-09-26"
+}

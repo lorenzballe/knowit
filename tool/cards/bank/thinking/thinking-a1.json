@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Englich, Mussweiler & Strack, 2006"
+  "figure": "none",
+  "source": "Englich, Mussweiler & Strack, 2006",
+  "source_kind": "paper",
+  "reference": "Englich, Mussweiler & Strack, Playing Dice With Criminal Sentences, Personality and Social Psychology Bulletin, 2006"
 }

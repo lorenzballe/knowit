@@ -1,0 +1,33 @@
+{
+  "id": "economics-gig-work-1",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Britain's Supreme Court rule Uber drivers were workers but Deliveroo riders were not?",
+  "answer": "Because Deliveroo riders could send someone else. In 2021 the court found Uber controlled drivers' fares, terms and ratings, making them workers owed the minimum wage and holiday pay. In 2023 it found riders had a genuine right to pass a delivery to a substitute, so owed no personal service. One clause changed the category.",
+  "move": "Read the clause that decides the category, not the job it describes.",
+  "keywords": [
+    "uber",
+    "deliveroo",
+    "uk supreme court",
+    "worker status",
+    "substitution clause"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Supreme Court, Uber and Deliveroo judgments",
+  "source_kind": "primary_document",
+  "reference": "Uber BV v Aslam [2021] UKSC 5; Independent Workers' Union of Great Britain v Central Arbitration Committee [2023] UKSC 43",
+  "written": "2026-09-26"
+}

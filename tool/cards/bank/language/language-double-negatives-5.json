@@ -1,0 +1,40 @@
+{
+  "id": "language-double-negatives-5",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "also": [
+    "language.accents.dialects"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should schools correct pupils who use double negatives in their everyday speech?",
+  "sides": [
+    "Yes, correct them",
+    "No, leave speech alone"
+  ],
+  "answer": "Standard English is the dialect of exams, job interviews and most written work, and examiners and employers still mark negative concord down on sight. Schools that stay silent leave the children with least exposure to the standard to learn its rules from the people who will penalise them. Correction is information, not contempt.",
+  "move": "The hinge is whether correction adds a second dialect or replaces the first.",
+  "counterpoint": "Negative concord is rule-governed grammar, standard in Spanish and Italian and in many English dialects; correcting a child's speech tells them their home language is wrong. Teachers who contrast home and school forms explicitly, teaching when each fits, report better command of standard written English than red-pen correction brings, and without the shame.",
+  "keywords": [
+    "negative concord",
+    "standard english",
+    "schools",
+    "dialect"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wheeler & Swords, Code-Switching, 2006",
+  "source_kind": "book",
+  "reference": "Wheeler & Swords, Code-Switching: Teaching Standard English in Urban Classrooms, National Council of Teachers of English, 2006",
+  "written": "2026-09-26"
+}

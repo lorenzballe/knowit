@@ -1,0 +1,33 @@
+{
+  "id": "medicine-hospitals-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What paid for Guy's Hospital in London, whose building began in 1721?",
+  "answer": "A timely exit from a financial bubble. Thomas Guy, a bookseller grown rich printing Bibles, held South Sea Company shares and sold them in 1720, before the crash. He spent much of the fortune on a hospital for patients St Thomas's turned away as incurable. It opened in 1726, over a year after his death.",
+  "move": "Ask where a gift's money came from, and when it was taken out.",
+  "keywords": [
+    "thomas guy",
+    "guy's hospital",
+    "south sea bubble",
+    "voluntary hospitals",
+    "london"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cameron, Mr Guy's Hospital, 1954",
+  "source_kind": "book",
+  "reference": "Cameron, Mr Guy's Hospital 1726-1948, Longmans, Green, 1954",
+  "written": "2026-09-26"
+}

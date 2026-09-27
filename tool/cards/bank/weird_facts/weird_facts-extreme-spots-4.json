@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-extreme-spots-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when a volcano erupted beside the world's most remote inhabited settlement in 1961?",
+  "answer": "The whole population left for England. Tristan da Cunha's islanders were taken off by ship and resettled near Southampton, and in 1963 most chose to return. More than 2,400 km from the nearest inhabited land, the island still has no airstrip; the way in is several days' sailing from Cape Town.",
+  "move": "Ask what people are going back to before assuming a better place will hold them.",
+  "keywords": [
+    "tristan da cunha",
+    "volcano",
+    "evacuation",
+    "remote islands"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Munch, Crisis in Utopia, 1971",
+  "source_kind": "reference_work",
+  "reference": "Munch, Crisis in Utopia: The Ordeal of Tristan da Cunha, Crowell, 1971",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-presentism-5",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If time really flows, at what rate does it flow?",
+  "answer": "One second per second, which critics say is not a rate. A rate measures change against time, so time's flow would need a second time to measure it, and that a third. J. J. C. Smart turned this on the moving now in 1949. Defenders reply that a rate of one is still a rate.",
+  "move": "Ask what a rate would be measured against before quoting it.",
+  "keywords": [
+    "passage of time",
+    "j. j. c. smart",
+    "moving now",
+    "rate of time"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smart, The River of Time, Mind, 1949",
+  "source_kind": "paper",
+  "reference": "Smart, The River of Time, Mind 58 (232), 1949, pp. 483-494",
+  "written": "2026-09-26"
+}

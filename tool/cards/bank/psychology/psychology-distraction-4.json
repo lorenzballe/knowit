@@ -1,0 +1,38 @@
+{
+  "id": "psychology-distraction-4",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: repeated tests confirm that a silent phone lying face-down on the desk lowers working-memory scores?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2017 Ward and colleagues reported that a phone on the desk, even silent and face-down, lowered working-memory scores compared with one left in another room. When Ruiz Pardo and Minda repeated the design in 2022, they found no reliable effect. The phone on the desk turned out to weigh less than the headline.",
+  "move": "Expect the first dramatic result on any question to shrink when repeated.",
+  "trap": "Taking a striking first result as the true size of the effect.",
+  "keywords": [
+    "smartphones",
+    "brain drain",
+    "replication",
+    "working memory"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ruiz Pardo & Minda, Acta Psychologica, 2022",
+  "source_kind": "paper",
+  "reference": "Ruiz Pardo & Minda, Reexamining the brain drain effect: a replication of Ward et al. (2017), Acta Psychologica, 2022",
+  "written": "2026-09-26"
+}

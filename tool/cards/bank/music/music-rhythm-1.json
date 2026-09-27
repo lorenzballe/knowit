@@ -1,0 +1,33 @@
+{
+  "id": "music-rhythm-1",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do the Cuban tresillo rhythm and a particle accelerator's timing system have in common?",
+  "answer": "The same algorithm. Spreading 3 beats as evenly as possible over 8 pulses gives 3+3+2, the tresillo under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
+  "move": "When a pattern feels natural, look for the simple rule that makes it.",
+  "keywords": [
+    "tresillo",
+    "euclidean rhythms",
+    "godfried toussaint",
+    "algorithm",
+    "cinquillo"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Toussaint, Proceedings of Bridges, 2005",
+  "source_kind": "paper",
+  "reference": "Toussaint, The Euclidean algorithm generates traditional musical rhythms, Proceedings of BRIDGES: Mathematical Connections in Art, Music and Science, 2005",
+  "written": "2026-09-26"
+}

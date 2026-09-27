@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-celebrity-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the rule Kim Kardashian broke with a paid crypto post in 2021 dates from 1933?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It was Section 17(b) of the Securities Act of 1933, aimed at paid touting of shares in newspapers and newsletters. She was paid $250,000 to post about EthereumMax tokens without saying so, and in 2022 settled with the SEC for $1.26 million. An Instagram story answered to a Depression-era law.",
+  "move": "Before asking for a new law, check whether an old one already fits.",
+  "trap": "New media seem to need new laws, so the rule must be recent.",
+  "keywords": [
+    "kim kardashian",
+    "sec",
+    "securities act 1933",
+    "ethereummax",
+    "endorsements"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SEC press release 2022-183",
+  "source_kind": "primary_document",
+  "reference": "https://www.sec.gov/newsroom/press-releases/2022-183",
+  "written": "2026-09-26"
+}

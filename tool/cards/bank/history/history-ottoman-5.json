@@ -1,0 +1,39 @@
+{
+  "id": "history-ottoman-5",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: books were printed in Istanbul more than two centuries before any Ottoman Turkish book in Arabic script?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1493, by the date in its colophon, though some argue for 1504, the brothers David and Samuel ibn Nahmias, Jews exiled from Iberia, printed a Hebrew code of law in Istanbul. Armenian and Greek presses followed. İbrahim Müteferrika's press printed its first Ottoman Turkish book in 1729.",
+  "move": "Ask whose output was counted before accepting that something came late.",
+  "trap": "False, because the Ottomans shunned printing until the 1720s.",
+  "keywords": [
+    "printing press",
+    "istanbul",
+    "ibn nahmias",
+    "hebrew printing",
+    "müteferrika"
+  ],
+  "era": "medieval",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Sabev, Waiting for Müteferrika, 2018",
+  "source_kind": "book",
+  "reference": "Sabev, Waiting for Müteferrika: Glimpses of Early Modern Ottoman Printing (1726-1746), Academic Studies Press, 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-insomnia-1",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "People with chronic insomnia say they are exhausted all day. Do they fall asleep faster in daytime nap tests?",
+  "answer": "No: as fast as good sleepers, or slower. Offered a series of daytime chances to nap under recording, people with insomnia typically take as long or longer to drop off, despite feeling drained. Their metabolic rate runs high around the clock too. They are tired but wired, aroused day and night.",
+  "move": "Feeling tired and being sleepy are different states; test which one it is.",
+  "keywords": [
+    "hyperarousal",
+    "insomnia",
+    "daytime sleepiness",
+    "nap tests",
+    "metabolic rate"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fernandez-Mendoza & Vgontzas, Current Psychiatry Reports, 2013",
+  "source_kind": "paper",
+  "reference": "Fernandez-Mendoza & Vgontzas, Insomnia and its impact on physical and mental health, Current Psychiatry Reports, 2013",
+  "written": "2026-09-26"
+}

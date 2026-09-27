@@ -1,0 +1,33 @@
+{
+  "id": "food-emulsions-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does clear ouzo turn milky the moment water is poured in, with no emulsifier present?",
+  "answer": "Because its anise oil, anethole, dissolves in strong alcohol but not in water. Diluting the spirit forces the oil out everywhere at once, as droplets about a micrometre across that scatter light. They hang there for hours with no stabiliser, a behaviour physicists named the ouzo effect in 2003. Pastis clouds the same way.",
+  "move": "Change the solvent and something dissolved can reappear all at once.",
+  "keywords": [
+    "ouzo effect",
+    "anethole",
+    "spontaneous emulsion",
+    "pastis",
+    "light scattering"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vitale & Katz, Langmuir, 2003",
+  "source_kind": "paper",
+  "reference": "Vitale & Katz, Liquid droplet dispersions formed by homogeneous liquid-liquid nucleation: the ouzo effect, Langmuir, 2003",
+  "written": "2026-09-26"
+}

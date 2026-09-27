@@ -1,0 +1,43 @@
+{
+  "id": "art-synthetics-1",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why are some bright yellows in Van Gogh's paintings slowly turning brown?",
+  "options": [
+    "Light altering the chromium in the paint",
+    "Yellowed varnish lying over the paint",
+    "Soot and grime from years of display"
+  ],
+  "correct": 0,
+  "answer": "Light altering the chromium. His chrome yellow, a synthetic lead chromate, darkens where light reduces its chromium to a greenish-brown form. Synchrotron studies in 2011 found the change in a thin skin at the paint surface, worst in the paler, sulfur-rich grades. Cleaning cannot fix it: the brown is the paint itself.",
+  "move": "Before blaming the dirt on top, check the thing underneath.",
+  "trap": "Varnish yellows and can be removed, so it seems the natural culprit.",
+  "keywords": [
+    "chrome yellow",
+    "van gogh",
+    "lead chromate",
+    "paint degradation",
+    "synchrotron"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monico et al., Analytical Chemistry, 2011",
+  "source_kind": "paper",
+  "reference": "Monico et al., Degradation Process of Lead Chromate in Paintings by Vincent van Gogh Studied by Means of Synchrotron X-ray Spectromicroscopy, Analytical Chemistry, 2011",
+  "written": "2026-09-26"
+}

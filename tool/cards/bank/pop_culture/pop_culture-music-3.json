@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-music-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the grunge slang glossary The New York Times printed in 1992 came from Seattle musicians' real speech?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A reporter asked Megan Jasper, who had worked at the Sub Pop label, for the scene's slang, and she made it up on the spot: lamestain for an uncool person, harsh realm for bummer. The paper printed the list. A small magazine, The Baffler, exposed the hoax the following year.",
+  "move": "If you arrive wanting an answer, someone will happily supply one.",
+  "trap": "A source inside the scene seemed to confirm exactly what was sought.",
+  "keywords": [
+    "grunge",
+    "megan jasper",
+    "sub pop",
+    "new york times",
+    "hoax"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marin, The New York Times, 1992",
+  "source_kind": "news_archive",
+  "reference": "Rick Marin, Grunge: A Success Story, The New York Times, 15 November 1992",
+  "written": "2026-09-26"
+}

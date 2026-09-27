@@ -1,0 +1,39 @@
+{
+  "id": "science-plastics-4",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Roughly what share of the world's oil goes into making plastics?",
+  "options": [
+    "About 30%",
+    "About 6%",
+    "About 60%"
+  ],
+  "correct": 1,
+  "answer": "About 6%, by a 2016 estimate: roughly what all the world's aircraft use. Most oil is burned as fuel in engines and boilers and vanishes as it is used, while plastic stays in view all day, in every room and every bin.",
+  "move": "What you see all day is not necessarily what uses the most.",
+  "trap": "About 30%: plastic is everywhere, so it must take much of the oil.",
+  "keywords": [
+    "plastics",
+    "oil consumption",
+    "feedstock",
+    "aviation fuel"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ellen MacArthur Foundation, The New Plastics Economy, 2016",
+  "source_kind": "institution",
+  "reference": "World Economic Forum, Ellen MacArthur Foundation & McKinsey & Company, The New Plastics Economy: Rethinking the future of plastics, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-ghost-towns-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Western Australia pass a law to erase the town of Wittenoom altogether?",
+  "answer": "Because its dust can still kill. Wittenoom mined blue asbestos until 1966, and mine waste was spread on roads and gardens. Mesothelioma, a cancer that can appear decades after exposure, killed former miners and residents. The Wittenoom Closure Act of 2022 let the state acquire the last homes and clear the town.",
+  "move": "When the harm comes decades late, the place outlives its warnings.",
+  "keywords": [
+    "wittenoom",
+    "blue asbestos",
+    "mesothelioma",
+    "western australia"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wittenoom Closure Act 2022 (WA)",
+  "source_kind": "primary_document",
+  "reference": "Wittenoom Closure Act 2022, Parliament of Western Australia, 2022",
+  "written": "2026-09-26"
+}

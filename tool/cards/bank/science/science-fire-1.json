@@ -1,0 +1,33 @@
+{
+  "id": "science-fire-1",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did fire first appear on Earth?",
+  "answer": "About 420 million years ago, in the last tenth of Earth's history. Fire needs fuel, oxygen and a spark. Lightning was always there, but fuel arrived only with land plants, and oxygen had to rise high enough. The oldest charcoal is that old: for four billion years, lightning struck ground with nothing to burn.",
+  "move": "A thing needs all its ingredients; the last one to arrive sets the date.",
+  "keywords": [
+    "charcoal",
+    "wildfire",
+    "land plants",
+    "oxygen",
+    "silurian"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Glasspool, Edwards & Axe, Geology, 2004",
+  "source_kind": "paper",
+  "reference": "Glasspool, Edwards & Axe, Charcoal in the Silurian as evidence for the earliest wildfire, Geology, 2004",
+  "written": "2026-09-26"
+}

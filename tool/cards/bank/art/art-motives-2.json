@@ -1,0 +1,43 @@
+{
+  "id": "art-motives-2",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "also": [
+    "art.renaissance.florence"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Attributed to a follower of Leonardo, what did today's Salvator Mundi fetch at a London sale in 1958?",
+  "options": [
+    "About £4.5 million",
+    "About £45,000",
+    "About £45"
+  ],
+  "correct": 2,
+  "answer": "About £45. Cleaned, restored and attributed to Leonardo himself, the same walnut panel sold at Christie's in New York in 2017 for $450 million. The panel was the same at both sales; the name on the label was not. That gap is the space every forger works in.",
+  "move": "Ask how much of a price is the thing and how much the name.",
+  "trap": "Letting the $450 million pull the guess into the thousands or millions.",
+  "keywords": [
+    "salvator mundi",
+    "leonardo",
+    "attribution",
+    "auction prices",
+    "christie's"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Irish Times, Salvator Mundi, 2017",
+  "source_kind": "news_archive",
+  "reference": "https://www.irishtimes.com/life-and-style/homes-and-property/fine-art-antiques/leonardo-da-vinci-s-saviour-of-the-world-sold-for-45-in-1958-now-for-sale-at-100m-1.3265906",
+  "written": "2026-09-26"
+}

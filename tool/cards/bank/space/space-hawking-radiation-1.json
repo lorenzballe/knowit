@@ -1,0 +1,42 @@
+{
+  "id": "space-hawking-radiation-1",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "space.edge_of_the_universe.cosmic_background",
+    "science.physics.quantum"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a lone black hole of one solar mass, with no gas falling in, is growing rather than shrinking?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It glows at about 60 billionths of a kelvin, while the cosmic background it bathes in is 2.7 K, so it absorbs more than it radiates. Only a hole under about 60% of the Moon's mass is hotter than the sky around it. Known black holes will grow until the universe cools below them.",
+  "move": "Ask what the surroundings give back before declaring something in decline.",
+  "trap": "Assuming Hawking radiation means every black hole is shrinking now.",
+  "keywords": [
+    "hawking temperature",
+    "cosmic microwave background",
+    "black hole evaporation",
+    "thermal equilibrium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hawking, Communications in Mathematical Physics, 1975",
+  "source_kind": "paper",
+  "reference": "Hawking, Particle Creation by Black Holes, Communications in Mathematical Physics, 1975",
+  "written": "2026-09-26"
+}

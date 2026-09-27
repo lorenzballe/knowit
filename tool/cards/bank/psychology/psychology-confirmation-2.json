@@ -1,0 +1,33 @@
+{
+  "id": "psychology-confirmation-2",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are more intelligent people better at judging evidence that goes against their own side?",
+  "answer": "No better, on average. Myside bias, judging evidence by whether it favours one's own side, barely tracks intelligence. Asked whether a dangerous German car should be banned from American roads, or a dangerous American car from German ones, American students favoured banning the German car, and higher SAT scores made no difference.",
+  "move": "A sharp mind argues its side better, not more fairly.",
+  "keywords": [
+    "myside bias",
+    "intelligence",
+    "sat scores",
+    "motivated reasoning",
+    "car safety"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stanovich, West & Toplak, Current Directions, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0963721413480174",
+  "written": "2026-09-26"
+}

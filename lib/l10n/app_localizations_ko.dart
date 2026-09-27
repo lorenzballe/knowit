@@ -1684,4 +1684,41 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get topEmpty => '아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요.';
+
+  @override
+  String get readMark => '읽음';
+
+  @override
+  String get lovedSinceTheStart => '처음부터 가장 사랑받은 카드';
+
+  @override
+  String lovedIn(String subject) {
+    return '$subject에서 가장 사랑받은 카드';
+  }
+
+  @override
+  String get lovedLine => '독자들이 가장 많이 간직한 카드 중 아직 읽지 않은 것';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '첫 주: 다섯 장 중 네 장이 당신의 카드인 날이 $n일 남았어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      '첫 주가 오늘 밤 끝나요. 내일부터 다섯 장 중 한 장은 당신의 카드, 세 장은 모두의 카드예요. Astute+는 다섯 장 모두 당신의 카드로 지켜 줘요.';
+
+  @override
+  String get forYouShelf => '당신을 위해';
+
+  @override
+  String get forYouLine => '당신의 읽기가 앞세우는 것';
+
+  @override
+  String get exploreOffline => '오프라인 상태예요. 마지막으로 불러온 탐색 화면이에요.';
 }

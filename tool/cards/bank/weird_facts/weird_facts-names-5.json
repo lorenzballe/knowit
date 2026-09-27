@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-names-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: Abraham Lincoln had a secretary named Kennedy, just as John F. Kennedy had one named Lincoln?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Kennedy's personal secretary really was Evelyn Lincoln, from his Senate years to his death. Lincoln's secretaries were John Nicolay and John Hay, with William Stoddard as an assistant; there was no Kennedy. The mirror comes from a coincidence list that circulated in the 1960s, where one true detail carries an invented twin.",
+  "move": "When a story is perfectly symmetrical, check the half nobody bothered to source.",
+  "trap": "Letting the true half vouch for the tidy mirrored half.",
+  "keywords": [
+    "abraham lincoln",
+    "john f. kennedy",
+    "evelyn lincoln",
+    "john nicolay",
+    "coincidence lists"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nicolay's papers, ed. Burlingame, 2000",
+  "source_kind": "primary_document",
+  "reference": "Burlingame (ed.), With Lincoln in the White House: Letters, Memoranda, and Other Writings of John G. Nicolay, 1860–1865, Southern Illinois University Press, 2000",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "language-regional-slang-3",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: the British insult chav began life as an acronym?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Chav comes from Romani chavvi, child, a word used for generations in the south-east of England. The acronym explanations, council housed and violent and its variants, were invented after the word spread in the early 2000s. Every letter fits the story because every letter was chosen afterwards.",
+  "move": "An explanation built to fit every detail is proved by none of them.",
+  "trap": "An acronym that accounts for each letter feels too exact to be invented.",
+  "keywords": [
+    "chav",
+    "romani",
+    "backronym",
+    "class"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones, Chavs, Verso, 2011",
+  "source_kind": "book",
+  "reference": "Jones, Chavs: The Demonization of the Working Class, Verso, 2011",
+  "written": "2026-09-26"
+}

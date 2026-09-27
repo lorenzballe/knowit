@@ -1,0 +1,33 @@
+{
+  "id": "human_body-taste-3",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a West African berry make lemon juice taste sweet for a while?",
+  "answer": "Through a protein that switches the sweet receptor on only in acid. Miraculin, from Synsepalum dulcificum, binds the tongue's sweet receptor and does not activate it at neutral pH. When acid arrives, the protein changes shape and turns the receptor on. Each sour mouthful then registers as sweet until the protein washes off.",
+  "move": "The same key can lock or unlock, depending on the conditions around it.",
+  "keywords": [
+    "miraculin",
+    "miracle berry",
+    "sweet receptor",
+    "acidity",
+    "ph"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koizumi et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Koizumi, Tsuchiya, Nakajima et al., Human sweet taste receptor mediates acid-induced sweetness of miraculin, PNAS, 2011",
+  "written": "2026-09-26"
+}

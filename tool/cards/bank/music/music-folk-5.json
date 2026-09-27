@@ -1,0 +1,38 @@
+{
+  "id": "music-folk-5",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a singer's arrangement of a traditional song be protected by copyright?",
+  "sides": [
+    "Yes, protect it",
+    "No, keep it common"
+  ],
+  "answer": "Arranging a ballad is real work: choosing verses, shaping the tune, finding the guitar part. Martin Carthy taught Paul Simon his Scarborough Fair in 1965, and the hit version credited Simon and Garfunkel as arrangers, not him. Protecting the arrangement, never the song itself, pays for that craft and leaves the tradition free for everyone.",
+  "move": "Whichever side you took, the question is where arranging ends and inheriting begins.",
+  "counterpoint": "Folk songs live because every singer changes them and nobody owns the change. Carthy had learned the ballad from others and shaped it as they had. Once arrangements carry rights, singers must fear that a verse order or a chord heard on a record brings a lawyer's letter, and the songs stop moving between people.",
+  "keywords": [
+    "scarborough fair",
+    "martin carthy",
+    "paul simon",
+    "copyright",
+    "traditional songs"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frith & Marshall, Music and Copyright, 2004",
+  "source_kind": "book",
+  "reference": "Frith and Marshall (eds), Music and Copyright, 2nd edition, Edinburgh University Press, 2004",
+  "written": "2026-09-26"
+}

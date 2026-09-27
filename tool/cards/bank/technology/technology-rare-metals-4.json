@@ -1,0 +1,39 @@
+{
+  "id": "technology-rare-metals-4",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: neodymium, the rare earth in wind-turbine and car-motor magnets, is scarcer in Earth's crust than lead?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Neodymium makes up about 41 parts per million of the crust and lead about 14, so there is roughly three times as much neodymium. The name dates from the late 1700s, when these oxides were novelties from a Swedish mine. Even thulium, the scarcest stable rare earth, is seven times as common as silver.",
+  "move": "A name tells you what someone thought when they named it.",
+  "trap": "Trusting the word rare in the group's name.",
+  "keywords": [
+    "neodymium",
+    "rare earths",
+    "crustal abundance",
+    "lead",
+    "thulium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "CRC Handbook of Chemistry and Physics, 2016",
+  "source_kind": "book",
+  "reference": "Haynes (ed.), CRC Handbook of Chemistry and Physics, 97th edition, Abundance of Elements in the Earth's Crust and in the Sea, CRC Press, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "sport-scoring-3",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A basketball team makes half its two-point shots. What three-point percentage scores the same per shot, in percent?",
+  "value": 33.3,
+  "unit": "percent",
+  "tolerance": 0.5,
+  "answer": "p x 3 = 1, so p = 1/3, about 33.3%.",
+  "move": "Compare options by what each attempt is worth, not by how often it succeeds.",
+  "trap": "Expecting a harder shot to need a similar success rate to pay.",
+  "hint": "Work out how many points one two-point attempt is worth on average.",
+  "steps": [
+    "A 50% two is worth 0.5 x 2 = 1 point per shot.",
+    "A three is worth p x 3 points per shot.",
+    "p x 3 = 1, so p = 1/3, about 33.3%."
+  ],
+  "keywords": [
+    "three-point shot",
+    "expected value",
+    "basketball",
+    "shot selection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldsberry, SprawlBall, 2019",
+  "source_kind": "book",
+  "reference": "Goldsberry, SprawlBall: A Visual Tour of the New Era of the NBA, Houghton Mifflin Harcourt, 2019",
+  "written": "2026-09-26"
+}

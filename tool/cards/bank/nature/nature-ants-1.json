@@ -1,0 +1,39 @@
+{
+  "id": "nature-ants-1",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "All the world's ants together weigh how much, compared with all the world's people?",
+  "options": [
+    "About the same",
+    "About a fifth as much",
+    "About ten times as much"
+  ],
+  "correct": 1,
+  "answer": "About a fifth as much. Pooling hundreds of field counts from every continent but Antarctica, Schultheiss and colleagues estimated 20 quadrillion ants holding about 12 million tonnes of carbon, roughly a fifth of humanity's. The old claim of equal weight had never been measured. It still comes to some 2.5 million ants per person.",
+  "move": "A figure repeated often enough starts to sound measured; ask who measured it.",
+  "trap": "The famous claim that ants match humans by weight comes to mind.",
+  "keywords": [
+    "ants",
+    "biomass",
+    "global estimate",
+    "carbon"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Schultheiss et al., PNAS, 2022",
+  "source_kind": "paper",
+  "reference": "Schultheiss et al., The abundance, biomass, and distribution of ants on Earth, Proceedings of the National Academy of Sciences, 2022",
+  "written": "2026-09-26"
+}

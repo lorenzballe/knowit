@@ -1,0 +1,33 @@
+{
+  "id": "music-acoustics-4",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the inside of New York's Philharmonic Hall, opened in 1962, torn out and rebuilt twice?",
+  "answer": "Because it sounded dry and thin from the opening night, with weak bass. Its acoustician, Leo Beranek, blamed design changes made during construction, and years of adjustments failed. Renamed Avery Fisher Hall, it was gutted and rebuilt inside in 1976, then rebuilt again as David Geffen Hall, which reopened in 2022.",
+  "move": "A room is an instrument, and a committee can detune it.",
+  "keywords": [
+    "philharmonic hall",
+    "lincoln center",
+    "avery fisher hall",
+    "david geffen hall",
+    "concert hall acoustics"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beranek, Riding the Waves, 2008",
+  "source_kind": "book",
+  "reference": "Beranek, Riding the Waves: A Life in Sound, Science, and Industry, MIT Press, 2008",
+  "written": "2026-09-26"
+}

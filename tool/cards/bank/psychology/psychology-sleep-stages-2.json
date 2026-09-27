@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sleep-stages-2",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the sleeping brain still tell its own name from other names?",
+  "answer": "Yes. Played a string of recorded names while asleep, people produced more K-complexes, a large brainwave of light sleep, to their own name than to others, and reacted more to names they had been told to listen for. The ears stay open all night; the brain decides what counts as news.",
+  "move": "Attention does not switch off; it switches to a shorter list.",
+  "keywords": [
+    "own name",
+    "k-complexes",
+    "sleeping brain",
+    "hearing",
+    "light sleep"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oswald, Taylor & Treisman, Brain, 1960",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/brain/83.3.440",
+  "written": "2026-09-26"
+}

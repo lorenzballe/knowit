@@ -1,0 +1,38 @@
+{
+  "id": "food-cheese-2",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the crunchy white specks inside a long-aged Parmesan are grains of salt?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. They are mostly crystals of tyrosine, an amino acid freed as enzymes cut milk proteins apart over many months. Tyrosine dissolves poorly, so once enough builds up it comes out of solution as hard white clusters. X-ray analysis finds similar crystals in aged Gouda. Each crunch records months of protein breakdown.",
+  "move": "The first substance that comes to mind is not the only one that can crystallise.",
+  "trap": "Salt is the crystal everyone knows, and hard cheese tastes salty.",
+  "keywords": [
+    "tyrosine",
+    "amino acid crystals",
+    "parmigiano reggiano",
+    "proteolysis"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tansman et al., Dairy Science & Technology, 2015",
+  "source_kind": "paper",
+  "reference": "Tansman, Kindstedt & Hughes, Crystal fingerprinting: elucidating the crystals of Cheddar, Parmigiano-Reggiano, Gouda, and soft washed-rind cheeses using powder x-ray diffractometry, Dairy Science & Technology, 2015",
+  "written": "2026-09-26"
+}

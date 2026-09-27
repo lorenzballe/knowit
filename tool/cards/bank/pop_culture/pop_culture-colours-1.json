@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-colours-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which product won the first US appeals ruling that a single colour could be registered as a trademark?",
+  "options": [
+    "Tiffany's jewellery boxes",
+    "Owens Corning's pink insulation",
+    "UPS's brown delivery vans"
+  ],
+  "correct": 1,
+  "answer": "Owens Corning's pink insulation. In 1985 the Federal Circuit held that pink, dyed into its glass-fibre insulation since 1956, did no technical job and had come to identify the maker, so it could be registered. The product sits hidden in lofts; buyers learned the colour from advertising, fronted by the Pink Panther.",
+  "move": "The most famous example is rarely the first one.",
+  "trap": "Tiffany's boxes: the best-known brand colour must have come first.",
+  "keywords": [
+    "owens corning",
+    "pink insulation",
+    "colour trademark",
+    "federal circuit"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "In re Owens-Corning Fiberglas, 1985",
+  "source_kind": "primary_document",
+  "reference": "https://law.justia.com/cases/federal/appellate-courts/F2/774/1116/10307/",
+  "written": "2026-09-26"
+}

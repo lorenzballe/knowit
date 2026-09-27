@@ -323,19 +323,39 @@ double leanOf(Pill pill, Map<String, double> taste) {
   return (1 + lean).clamp(0.2, 3.0);
 }
 
-/// How well a card suits what the reader says they know of its subject.
+/// How well a card suits what the reader knows of its subject.
 ///
-/// Solid on a subject: the cards that ask something, and the harder ones,
-/// come up half again as often; a plain easy read, less. New to it: the
-/// other way round. Some, or nothing said: no change. It is a lean on the
-/// draw, not a rule — a reader solid on history still meets a history fact,
-/// only later in the queue than the question about it.
+/// Pitched a notch above, always. A read is the way in and costs nothing;
+/// a question that is easy for somebody teaches them nothing and tells
+/// them the app is not serious, and a question a little past them is the
+/// one they remember. So:
+///
+/// - **curious** (0): mostly told, and asked at medium — a hard question
+///   on a subject somebody is new to is a door shut, not a stretch;
+/// - **some** (1), where everybody starts: asked a little more than told,
+///   and a hard question as welcome as a medium one;
+/// - **solid** (2): asked rather than told, and hard well before medium.
+///
+/// It is a lean on the draw, not a rule — a reader solid on history still
+/// meets a history fact, only later in the queue than the question about
+/// it. Nothing said counts as some.
 double _fit(Pill pill, int? level) {
-  if (level == null || level == 1) return 1;
-  final bool demanding =
-      pill.asksSomething || pill.difficulty != Difficulty.easy;
-  if (level >= 2) return demanding ? 1.5 : 0.7;
-  return demanding ? 0.7 : 1.5;
+  final int l = level ?? 1;
+  if (!pill.asksSomething) {
+    return switch (l) {
+      0 => 1.5,
+      1 => 1.0,
+      _ => 0.7,
+    };
+  }
+  final bool hard = pill.difficulty == Difficulty.hard;
+  // Hard cards are about one ask in fourteen, so a lean on them has to be
+  // strong to be felt at all.
+  return switch (l) {
+    0 => hard ? 0.5 : 1.0,
+    1 => hard ? 1.5 : 1.3,
+    _ => hard ? 3.0 : 1.2,
+  };
 }
 
 /// A rotating pick of cards, the same for everybody.

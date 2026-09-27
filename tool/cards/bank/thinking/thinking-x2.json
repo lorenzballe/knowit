@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confounding by family background"
+  "figure": "none",
+  "source": "Confounding by family background",
+  "source_kind": "paper",
+  "reference": "Sala & Gobet, Does Far Transfer Exist? Negative Evidence From Chess, Music, and Working Memory Training, Current Directions in Psychological Science, 2017"
 }

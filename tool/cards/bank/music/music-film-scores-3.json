@@ -1,0 +1,40 @@
+{
+  "id": "music-film-scores-3",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When was Ennio Morricone's main music for Once Upon a Time in the West, 1968, recorded?",
+  "options": [
+    "After the edit was finished",
+    "Alongside the shooting, week by week",
+    "Before the cameras started rolling"
+  ],
+  "correct": 2,
+  "answer": "Before the cameras started rolling. Sergio Leone had Morricone write and record the main themes first, then played the recordings on set, so actors timed their movements, and the camera its moves, to the music. Most films work the other way: the composer starts once the picture is cut, timing each cue to the frame.",
+  "move": "Ask what was fixed first; everything after it had to fit.",
+  "trap": "Assuming the score always comes last, fitted to a finished cut.",
+  "keywords": [
+    "ennio morricone",
+    "sergio leone",
+    "spaghetti westerns",
+    "film scores",
+    "playback on set"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frayling, Sergio Leone, 2000",
+  "source_kind": "book",
+  "reference": "Frayling, Sergio Leone: Something to Do with Death, Faber and Faber, 2000",
+  "written": "2026-09-26"
+}

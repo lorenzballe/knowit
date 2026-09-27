@@ -1,0 +1,33 @@
+{
+  "id": "history-france-4",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many of the 1789 grievance lists that opened the Revolution demanded a republic?",
+  "answer": "Almost none. The cahiers de doléances, written by tens of thousands of parishes, guilds and assemblies, asked for fairer taxes, regular meetings of the Estates-General and an end to seigneurial dues, addressed loyally to the king. France became a republic only in September 1792, after war and the king's flight.",
+  "move": "Do not read the ending of a story back into its first demands.",
+  "keywords": [
+    "cahiers de doléances",
+    "grievance lists",
+    "estates-general",
+    "monarchy",
+    "republic"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shapiro & Markoff, Revolutionary Demands, 1998",
+  "source_kind": "book",
+  "reference": "Shapiro & Markoff, Revolutionary Demands: A Content Analysis of the Cahiers de Doléances of 1789, Stanford University Press, 1998",
+  "written": "2026-09-26"
+}

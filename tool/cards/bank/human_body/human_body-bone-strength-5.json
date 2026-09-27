@@ -1,0 +1,39 @@
+{
+  "id": "human_body-bone-strength-5",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "People with low vitamin D levels break more bones. In a trial of 25,871 adults, what did daily vitamin D do to fractures?",
+  "options": [
+    "Cut them by about a third",
+    "Made no clear difference",
+    "Cut hip fractures but not others"
+  ],
+  "correct": 1,
+  "answer": "Made no clear difference. Over about five years, 769 of 12,927 people taking 2,000 units a day had fractures, against 782 of 12,944 on placebo, and hip fractures did not fall either. Low vitamin D often travels with frailty, illness and days spent indoors, which break bones on their own.",
+  "move": "A marker of trouble is not always a lever to pull.",
+  "trap": "If low levels go with fractures, adding vitamin D should prevent them.",
+  "keywords": [
+    "vitamin d",
+    "fractures",
+    "vital trial",
+    "supplements"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LeBoff et al., NEJM, 2022",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJMoa2202106",
+  "written": "2026-09-26"
+}

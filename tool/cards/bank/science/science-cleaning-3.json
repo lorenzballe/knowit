@@ -1,0 +1,40 @@
+{
+  "id": "science-cleaning-3",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A disinfectant kills 99.999% of bacteria; a cheaper spray kills 99.9%. How many times more bacteria survive the cheaper spray?",
+  "options": [
+    "About 0.1% more",
+    "About twice as many",
+    "About 100 times as many"
+  ],
+  "correct": 2,
+  "answer": "About 100 times as many. What matters is what is left: 0.1% against 0.001%. The European test for a bactericidal product, EN 1276, demands the 99.999%, within five minutes. On a chopping board carrying a million bacteria, that is 10 survivors against 1,000.",
+  "move": "Near 100%, compare what is left over, not what was removed.",
+  "trap": "Reading 99.9% and 99.999% as practically the same number.",
+  "keywords": [
+    "disinfectant",
+    "log reduction",
+    "en 1276",
+    "bacteria",
+    "kitchen hygiene"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CEN, EN 1276 bactericidal suspension test",
+  "source_kind": "standard",
+  "reference": "European Committee for Standardization, EN 1276:2019, Chemical disinfectants and antiseptics, quantitative suspension test for bactericidal activity, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-formations-5",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: England won the 1966 World Cup final without fielding a single out-and-out winger?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Alf Ramsey tried three different wingers in the group games, then dropped them all for a narrow midfield of four, with Alan Ball covering the right flank. The side was nicknamed the Wingless Wonders. Its shape, four defenders, four midfielders and two strikers, became the 4-4-2 English football leaned on for decades.",
+  "move": "Judge a formation by the players available, not by the fashion of the day.",
+  "trap": "Picturing 1960s football with wingers hugging both touchlines.",
+  "keywords": [
+    "alf ramsey",
+    "1966 world cup",
+    "wingless wonders",
+    "4-4-2",
+    "alan ball"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McKinstry, Sir Alf, 2006",
+  "source_kind": "book",
+  "reference": "McKinstry, Sir Alf: A Major Reappraisal of the Life and Times of England's Greatest Football Manager, HarperSport, 2006",
+  "written": "2026-09-26"
+}

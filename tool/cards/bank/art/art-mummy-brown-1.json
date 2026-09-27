@@ -1,0 +1,32 @@
+{
+  "id": "art-mummy-brown-1",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What finally stopped a London colourman selling mummy brown in the 1960s?",
+  "answer": "Supply, not scruples. C. Roberson & Co., artists' colourmen since the early 1800s, told Time magazine in 1964 that it had no mummy left to grind. The paint mixed ground Egyptian remains with white pitch and myrrh. A colour made from human bodies outlived the Victorians and ended only when the stock room was empty.",
+  "move": "Ask whether a practice was abandoned or simply ran out.",
+  "keywords": [
+    "mummy brown",
+    "roberson",
+    "artists' colourmen",
+    "egyptian mummies"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smithsonian Magazine, 2014",
+  "source_kind": "news_archive",
+  "reference": "https://www.smithsonianmag.com/smart-news/ground-mummies-were-once-ingredient-paint-180950350/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "human_body-fingerprints-4",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: fingerprint experts have declared a certain match between a crime-scene print and an innocent person?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. After the 2004 Madrid train bombings, an FBI database search put an Oregon lawyer, Brandon Mayfield, among its closest candidates; three FBI examiners and a court-appointed expert called the match certain. Spanish police traced the print to an Algerian man. Searching tens of millions of prints makes a convincing look-alike far more likely.",
+  "move": "Search a big enough haystack and something will look like a needle.",
+  "trap": "Fingerprints are unique, so a careful expert cannot confuse two.",
+  "keywords": [
+    "brandon mayfield",
+    "madrid bombings",
+    "fingerprint databases",
+    "false identification"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DOJ Inspector General, Mayfield review, 2006",
+  "source_kind": "institution",
+  "reference": "US Department of Justice, Office of the Inspector General, A Review of the FBI's Handling of the Brandon Mayfield Case, 2006",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "psychology-streaks-5",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do streak counters in habit apps help people build lasting habits?",
+  "sides": [
+    "Yes, they help",
+    "No, they get in the way"
+  ],
+  "answer": "A visible streak turns a vague goal into a daily fact, and reluctance to lose a run gets people practising on bad days. Daily repetition in a stable setting is what builds automaticity, and a streak rewards exactly that repetition. The counter is scaffolding for the weeks before the habit can stand on its own.",
+  "move": "Whichever side you took, the test is what happens the day after a break.",
+  "counterpoint": "A counter rewards the count, not the practice, so people do the minimum that keeps it alive. It also makes one miss look like failure, though a single missed day barely affects how a habit forms, and a broken run can feel like a reason to stop. The habit leans on the app, and goes when the app goes.",
+  "keywords": [
+    "streaks",
+    "habit apps",
+    "automaticity",
+    "motivation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood & Rünger, Annual Review of Psychology, 2016",
+  "source_kind": "paper",
+  "reference": "Wood & Rünger, Psychology of habit, Annual Review of Psychology, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-straight-lines-3",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the ruler-straight country roads of the American Midwest suddenly jog sideways every so often?",
+  "answer": "Because the Earth is round. The public land survey laid out square townships 9.7 km on a side along meridians, but meridians converge towards the pole, so the squares would have shrunk northwards. Surveyors reset the grid along correction lines, usually every 39 km, and roads that follow the grid step sideways there.",
+  "move": "Any grid laid on a curved surface must break somewhere; look for the seams.",
+  "keywords": [
+    "public land survey",
+    "correction lines",
+    "townships",
+    "meridians",
+    "midwest roads"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "BLM, Manual of Surveying Instructions, 2009",
+  "source_kind": "primary_document",
+  "reference": "Bureau of Land Management, Manual of Surveying Instructions for the Survey of the Public Lands of the United States, 2009",
+  "written": "2026-09-26"
+}

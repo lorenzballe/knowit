@@ -1,0 +1,40 @@
+{
+  "id": "science-pigments-2",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Why do the trees in many 17th-century Dutch landscape paintings look blue?",
+  "options": [
+    "The painters chose blue foliage",
+    "Their yellow has faded away",
+    "Old varnish has turned them blue"
+  ],
+  "correct": 1,
+  "answer": "Their yellow has faded. Painters often mixed greens from a stable blue and a yellow lake, a dye fixed onto a chalky base, and those yellows fade in light. The blue survived and the yellow did not, so leaves painted green now read as blue-grey.",
+  "move": "What looks like the original taste may be only what lasted.",
+  "trap": "Taking the colours that survived for the colours that were painted.",
+  "keywords": [
+    "yellow lake",
+    "dutch landscapes",
+    "fading",
+    "old master paintings",
+    "foliage"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saunders and Kirby, National Gallery Technical Bulletin, 1994",
+  "source_kind": "paper",
+  "reference": "Saunders and Kirby, Light-induced colour changes in red and yellow lake pigments, National Gallery Technical Bulletin 15, 1994",
+  "written": "2026-09-26"
+}

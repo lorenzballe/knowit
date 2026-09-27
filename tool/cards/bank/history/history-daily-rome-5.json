@@ -1,0 +1,39 @@
+{
+  "id": "history-daily-rome-5",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Rome's cheap public grain was reserved for citizens who were poor?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cheap grain was a citizen's right, rich or poor. When Gaius Gracchus's grain law passed in 123 BC, Piso Frugi, an ex-consul who had fought it, turned up to collect his ration. Cicero reports his reply: if Gracchus meant to share out Piso's goods among everyone, Piso would claim his share.",
+  "move": "Check who is on the list before calling a benefit charity.",
+  "trap": "True, because a food handout must have targeted the needy.",
+  "keywords": [
+    "grain dole",
+    "gaius gracchus",
+    "piso frugi",
+    "cicero",
+    "citizenship"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cicero, Tusculan Disputations 3.48",
+  "source_kind": "primary_document",
+  "reference": "Cicero, Tusculan Disputations, trans. J. E. King, Loeb Classical Library, Harvard University Press, 1927",
+  "written": "2026-09-26"
+}

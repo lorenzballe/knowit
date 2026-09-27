@@ -1,0 +1,33 @@
+{
+  "id": "nature-coral-3",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when loudspeakers played healthy-reef sounds over dead coral?",
+  "answer": "Young fish moved in. Many reef fish spend their first weeks drifting as larvae in open water and find a reef partly by its noise: snapping shrimp, grunting and chattering fish. On degraded patches of the Great Barrier Reef, Gordon and colleagues' recordings doubled the number of young fish settling, with 50% more species.",
+  "move": "Silence can be the signal that keeps newcomers away.",
+  "keywords": [
+    "coral reefs",
+    "reef sounds",
+    "fish larvae",
+    "loudspeakers",
+    "reef restoration"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gordon et al., Nature Communications, 2019",
+  "source_kind": "paper",
+  "reference": "Gordon et al., Acoustic enrichment can enhance fish community development on degraded coral reef habitat, Nature Communications, 2019",
+  "written": "2026-09-26"
+}

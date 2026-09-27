@@ -1,0 +1,32 @@
+{
+  "id": "music-folk-2",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was Woody Guthrie's This Land Is Your Land first written to answer?",
+  "answer": "Irving Berlin's God Bless America, a radio hit for Kate Smith. Guthrie wrote his reply in February 1940 with the refrain God blessed America for me. Its verses about a No Trespassing sign and hungry people queuing by the relief office were left out of the versions later sung in schools.",
+  "move": "When a song becomes an anthem, check which verses were dropped.",
+  "keywords": [
+    "woody guthrie",
+    "protest songs",
+    "god bless america",
+    "irving berlin"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cray, Ramblin' Man, 2004",
+  "source_kind": "book",
+  "reference": "Cray, Ramblin' Man: The Life and Times of Woody Guthrie, W. W. Norton, 2004",
+  "written": "2026-09-26"
+}

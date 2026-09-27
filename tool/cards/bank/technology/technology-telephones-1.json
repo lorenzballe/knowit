@@ -1,0 +1,36 @@
+{
+  "id": "technology-telephones-1",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does each key on a touch-tone phone sound two notes at once?",
+  "answer": "So a voice cannot dial by accident. Single tones turn up in speech and music, so Bell Labs gave each key one note from a low group and one from a high group, none a harmonic of another: the 1 key is 697 plus 1,209 hertz. Speech rarely produces that exact pair.",
+  "move": "Make a signal something the noise around it cannot imitate.",
+  "keywords": [
+    "touch-tone",
+    "dtmf",
+    "bell labs",
+    "frequencies",
+    "telephone keypad"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schenker, Bell System Technical Journal, 1960",
+  "source_kind": "paper",
+  "reference": "Schenker, Pushbutton Calling with a Two-Group Voice-Frequency Code, Bell System Technical Journal, 1960",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-echolocation-3",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A bat hears a moth's echo. If the moth were twice as far away, how strong would the echo be?",
+  "options": [
+    "Half as strong",
+    "A quarter as strong",
+    "A sixteenth as strong"
+  ],
+  "correct": 2,
+  "answer": "A sixteenth, or weaker. The call spreads in all directions, so at twice the distance a quarter of the sound reaches the moth; the echo spreads again on the way back, another factor of four. Air also soaks up high pitches. Doubling a bat's range would take at least 16 times the power.",
+  "move": "When a loss applies twice, multiply it twice before judging the damage.",
+  "trap": "A quarter: applying the inverse-square law to the outward trip only.",
+  "keywords": [
+    "echolocation",
+    "inverse-square law",
+    "echoes",
+    "bats",
+    "moths"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Au, The Sonar of Dolphins, 1993",
+  "source_kind": "book",
+  "reference": "Au, The Sonar of Dolphins, Springer-Verlag, 1993",
+  "written": "2026-09-26"
+}

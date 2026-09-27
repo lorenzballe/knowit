@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-tallest-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "About how much of the Burj Khalifa's 828 m is spire above its highest usable floor?",
+  "options": [
+    "About 3%",
+    "About 10%",
+    "About 30%"
+  ],
+  "correct": 2,
+  "answer": "About 30%. A 2013 study by the Council on Tall Buildings and Urban Habitat put the unusable top at 244 m, about 29% of the height. That stretch alone would be one of the taller skyscrapers in many European cities. The spire is there to win the height record.",
+  "move": "Ask how much of a headline figure does any work.",
+  "trap": "A spire looks like a slim tip, so a few per cent seems right.",
+  "keywords": [
+    "burj khalifa",
+    "vanity height",
+    "spire",
+    "skyscrapers",
+    "ctbuh"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "CTBUH, Vanity Height study, 2013",
+  "source_kind": "institution",
+  "reference": "Council on Tall Buildings and Urban Habitat, Vanity Height: The Empty Space in Today's Tallest, 2013",
+  "written": "2026-09-26"
+}

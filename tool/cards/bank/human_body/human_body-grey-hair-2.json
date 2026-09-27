@@ -1,0 +1,33 @@
+{
+  "id": "human_body-grey-hair-2",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a single hair that has already turned grey regain its colour?",
+  "answer": "Sometimes. Hair grows about a centimetre a month, so pigment along a strand is a timeline. Scanning single hairs this way, a 2021 study found greyed hairs in several people that had darkened again from the root. In one person, a cluster of hairs regained colour around a holiday that coincided with lower reported stress.",
+  "move": "A change that looks final may just be slow to reverse.",
+  "keywords": [
+    "grey hair",
+    "repigmentation",
+    "hair shaft",
+    "stress",
+    "timeline"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenberg et al., eLife, 2021",
+  "source_kind": "paper",
+  "reference": "Rosenberg, Rausser, Ren et al., Quantitative mapping of human hair greying and reversal in relation to life stress, eLife, 2021",
+  "written": "2026-09-26"
+}

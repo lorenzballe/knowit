@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-arrow-of-time-4",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What finally stopped Maxwell's demon from breaking the second law of thermodynamics?",
+  "answer": "Its need to forget. The demon sorts fast molecules from slow by watching them; Charles Bennett showed in 1982 that watching can in principle be free, but wiping its memory to make room must release heat, as Rolf Landauer had argued in 1961. A 2012 experiment in Lyon measured that heat for one erased bit.",
+  "move": "Knowing can be free; it is forgetting that costs.",
+  "keywords": [
+    "maxwell's demon",
+    "landauer's principle",
+    "charles bennett",
+    "information",
+    "second law"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bérut et al., Nature, 2012",
+  "source_kind": "paper",
+  "reference": "Bérut et al., Experimental verification of Landauer's principle linking information and thermodynamics, Nature 483, 2012, pp. 187-189",
+  "written": "2026-09-26"
+}

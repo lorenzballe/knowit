@@ -1,0 +1,35 @@
+{
+  "id": "weird_facts-tallest-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "also": [
+    "nature.trees_and_forests.ancient_trees"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What sets the ceiling on how tall any tree can grow?",
+  "answer": "Water. A tree pulls water up through thin tubes against gravity and friction, and near the top of the tallest redwoods the leaves are water-starved, smaller and thicker. Measuring that stress up the trunk, Koch's team projected a maximum of about 122 to 130 m. The crown of a giant is always thirsty.",
+  "move": "Find what gets scarcer with every step, and the limit is there.",
+  "keywords": [
+    "coast redwood",
+    "tree height",
+    "xylem",
+    "water stress"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koch, Sillett et al., Nature, 2004",
+  "source_kind": "primary_document",
+  "reference": "Koch, Sillett, Jennings & Davis, The limits to tree height, Nature, 2004",
+  "written": "2026-09-26"
+}

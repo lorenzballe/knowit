@@ -1,0 +1,41 @@
+{
+  "id": "sport-offside-5",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Offside cameras locate players 50 times a second. At 10 m/s of relative speed, how many centimetres can the gap change between two samples?",
+  "value": 20,
+  "unit": "cm",
+  "answer": "1,000 / 50 = 20 cm.",
+  "move": "A measurement is only as fine as the gap between its samples.",
+  "trap": "Treating a line drawn on one frame as the exact moment.",
+  "hint": "Work out how far the players move in one fiftieth of a second.",
+  "steps": [
+    "10 m/s is 1,000 cm every second.",
+    "One sample lasts 1/50 of a second.",
+    "1,000 / 50 = 20 cm."
+  ],
+  "keywords": [
+    "semi-automated offside",
+    "tracking cameras",
+    "frame rate",
+    "var"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FIFA, semi-automated offside technology",
+  "source_kind": "institution",
+  "reference": "https://inside.fifa.com/innovation/world-cup-2022/semi-automated-offside-technology",
+  "written": "2026-09-26"
+}

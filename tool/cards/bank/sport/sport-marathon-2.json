@@ -1,0 +1,42 @@
+{
+  "id": "sport-marathon-2",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Kelvin Kiptum ran the 2023 Chicago Marathon in 2:00:35. On average, how many seconds did each 100 m take?",
+  "value": 17.1,
+  "unit": "seconds",
+  "tolerance": 0.2,
+  "answer": "7,235 / 421.95 = about 17.1 seconds.",
+  "move": "Shrink a long effort to one small unit before judging how hard it is.",
+  "trap": "Picturing a jog because the event lasts two hours.",
+  "hint": "Turn the time into seconds and the distance into 100 m stretches.",
+  "steps": [
+    "2:00:35 is 7,200 + 35 = 7,235 seconds.",
+    "42.195 km is 421.95 stretches of 100 m.",
+    "7,235 / 421.95 = about 17.1 seconds."
+  ],
+  "keywords": [
+    "kelvin kiptum",
+    "chicago marathon",
+    "marathon pace",
+    "world record"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Athletics, marathon records",
+  "source_kind": "statistics",
+  "reference": "World Athletics, official world records list, men's marathon, Kiptum 2:00:35, ratified 2024",
+  "written": "2026-09-26"
+}

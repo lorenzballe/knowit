@@ -1,0 +1,42 @@
+{
+  "id": "space-event-horizons-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the Event Horizon Telescope's black hole images, how wide is the dark centre compared with the horizon itself?",
+  "options": [
+    "About 2.5 times as wide",
+    "About the same width",
+    "About 10 times as wide"
+  ],
+  "correct": 0,
+  "answer": "About 2.5 times as wide. Light skimming the hole is bent so hard that rays aimed well outside the horizon are still swallowed: for a non-spinning hole, the dark patch has 2.6 times the horizon's radius. The picture shows the horizon's silhouette, magnified by the hole's own gravity acting as a lens.",
+  "move": "Ask how much of what you see is the lens rather than the object.",
+  "trap": "Taking the black disc in the picture for the horizon itself.",
+  "keywords": [
+    "event horizon telescope",
+    "black hole shadow",
+    "gravitational lensing",
+    "m87"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Falcke, Melia & Agol, Astrophysical Journal Letters, 2000",
+  "source_kind": "paper",
+  "reference": "Falcke, Melia & Agol, Viewing the Shadow of the Black Hole at the Galactic Center, Astrophysical Journal Letters, 2000",
+  "written": "2026-09-26"
+}

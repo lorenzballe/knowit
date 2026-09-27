@@ -1,0 +1,43 @@
+{
+  "id": "food-sourdough-4",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "also": [
+    "human_body.gut.digestion"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In wholemeal sourdough, what does most of the work of breaking down phytate, the bran compound that locks up minerals?",
+  "options": [
+    "The lactic acid bacteria",
+    "The wild yeasts",
+    "The wheat's own enzymes"
+  ],
+  "correct": 2,
+  "answer": "The wheat's own enzymes. Bran carries phytase, an enzyme that dismantles phytate best in mildly acid dough. In a 2005 trial, dough brought to about pH 5.5 lost roughly 70% of its phytate whether soured by a starter or by plain lactic acid; unsoured dough lost about 40%. The microbes supply acid; the grain cuts.",
+  "move": "Before crediting the newcomer, see what the old ingredients do under the same conditions.",
+  "trap": "Crediting the bacteria because they are the celebrated part of sourdough.",
+  "keywords": [
+    "phytate",
+    "phytase",
+    "wholemeal bread",
+    "minerals",
+    "lactic acid"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leenhardt et al., J. Agric. Food Chem., 2005",
+  "source_kind": "paper",
+  "reference": "doi:10.1021/jf049193q",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "human_body-heartbeat-5",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a leg muscle be held in one long contraction, but heart muscle cannot?",
+  "answer": "Its impulse is too long. A heart cell's impulse lasts about 250 milliseconds, nearly as long as the squeeze it triggers, and it cannot fire again until that ends, so each beat must ease off before the next. A skeletal muscle's impulse lasts about 2 milliseconds, so rapid impulses fuse into one sustained pull.",
+  "move": "A built-in pause can be what keeps a system working.",
+  "keywords": [
+    "cardiac muscle",
+    "refractory period",
+    "action potential",
+    "skeletal muscle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall & Hall, Guyton and Hall Physiology, 2021",
+  "source_kind": "book",
+  "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
+  "written": "2026-09-26"
+}

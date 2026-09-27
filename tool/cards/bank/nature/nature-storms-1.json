@@ -1,0 +1,39 @@
+{
+  "id": "nature-storms-1",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In US hurricanes and tropical storms from 1963 to 2012, what killed the most people?",
+  "options": [
+    "Wind and flying debris",
+    "Storm surge from the sea",
+    "Rain floods far inland"
+  ],
+  "correct": 1,
+  "answer": "Storm surge from the sea. Counting every death over 50 years, Rappaport found water behind nearly nine in ten: surge 49%, rain floods 27%, surf and drownings offshore another 12%. Wind, the part a storm's category describes, killed 8%. The deadliest moment is a street filling quietly from the sea.",
+  "move": "The part of a danger you can see is rarely the part that kills.",
+  "trap": "Wind is what the category measures and what the cameras film.",
+  "keywords": [
+    "storm surge",
+    "hurricane deaths",
+    "flooding",
+    "tropical storms"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Rappaport, Bulletin of the AMS, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1175/BAMS-D-12-00074.1",
+  "written": "2026-09-26"
+}

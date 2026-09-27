@@ -1,0 +1,36 @@
+{
+  "id": "art-detection-1",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "also": [
+    "art.colour_and_pigment.synthetics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What exposed Wolfgang Beltracchi, the forger of early twentieth-century masters, in 2008?",
+  "answer": "A white pigment. A painting sold as Heinrich Campendonk's Red Picture with Horses, dated 1914, contained titanium white, which was not made commercially as a pigment until years later. Beltracchi had used a tube of zinc white whose maker did not list its titanium. The canvas had fetched a record €2.88 million at auction.",
+  "move": "A careful liar is often undone by a detail he never thought to check.",
+  "keywords": [
+    "wolfgang beltracchi",
+    "titanium white",
+    "heinrich campendonk",
+    "pigment dating",
+    "zinc white"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koldehoff & Timm, Falsche Bilder, echtes Geld, 2012",
+  "source_kind": "book",
+  "reference": "Stefan Koldehoff & Tobias Timm, Falsche Bilder, echtes Geld: Der Fälschungscoup des Jahrhunderts, Galiani Berlin, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-ship-of-theseus-2",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What twist did Thomas Hobbes add to the old puzzle of a ship repaired plank by plank?",
+  "answer": "A second ship. Suppose someone keeps each old plank as it comes out, then reassembles them in the same order. Two ships now claim to be the original: the repaired one that never stopped sailing, and the rebuilt one of the first wood. Two ships numerically the same, Hobbes wrote in 1655, is absurd.",
+  "move": "When two things claim one identity, ask what the name was tracking.",
+  "keywords": [
+    "thomas hobbes",
+    "identity",
+    "planks",
+    "de corpore"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hobbes, De Corpore II.11.7, 1655",
+  "source_kind": "book",
+  "reference": "Hobbes, De Corpore II.11.7, in Calkins (ed.), The Metaphysical System of Hobbes, Open Court, 1905",
+  "written": "2026-09-26"
+}

@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Selection of measurement occasions"
+  "figure": "none",
+  "source": "Selection of measurement occasions",
+  "source_kind": "paper",
+  "reference": "Nickerson, Confirmation Bias: A Ubiquitous Phenomenon in Many Guises, Review of General Psychology, 1998"
 }

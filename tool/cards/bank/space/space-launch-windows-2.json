@@ -1,0 +1,40 @@
+{
+  "id": "space-launch-windows-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "NASA's Psyche probe missed its 2022 launch window and left 14 months later. How much later did its arrival at the asteroid become?",
+  "options": [
+    "About 14 months",
+    "About 7 years",
+    "About 3.5 years"
+  ],
+  "correct": 2,
+  "answer": "About 3.5 years. The route relies on a Mars flyby, and planets do not wait: the 2022 plan would have reached the asteroid in January 2026, while the 2023 launch had to loop the Sun until Mars came round again in 2026, and arrives in August 2029.",
+  "move": "A small delay in a fixed schedule can cost a whole cycle.",
+  "trap": "Assuming a 14-month launch slip simply shifts arrival by 14 months.",
+  "keywords": [
+    "psyche mission",
+    "launch window",
+    "gravity assist",
+    "mars flyby",
+    "nasa"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "NASA Psyche Independent Review Board, 2022",
+  "source_kind": "institution",
+  "reference": "NASA, Psyche Independent Review Board Final Report, 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "science-rainbows-5",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a rainbow in fog come out almost white?",
+  "answer": "Because fog droplets are tiny, under about 0.05 mm across. Light passing drops that small spreads out, an effect called diffraction, which smears each colour's bow so wide that the bands overlap and mix back to white. What remains is a broad, pale arc, sometimes with a faint red outer edge.",
+  "move": "Shrink anything far enough and the rules that sorted it stop working.",
+  "keywords": [
+    "fogbow",
+    "fog droplets",
+    "diffraction",
+    "white rainbow"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greenler, Rainbows, Halos, and Glories, 1980",
+  "source_kind": "book",
+  "reference": "Greenler, Rainbows, Halos, and Glories, Cambridge University Press, 1980",
+  "written": "2026-09-26"
+}

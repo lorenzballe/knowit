@@ -1,0 +1,39 @@
+{
+  "id": "medicine-anaesthesia-4",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a large randomised trial found that under an hour of general anaesthesia in infancy lowered IQ at age five?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The GAS trial randomised over 700 infants having hernia repairs to under an hour of general anaesthesia or to awake regional anaesthesia, and found equivalent IQ at five. Earlier alarm came from observational studies, in which children who need surgery differ from those who do not. Long or repeated exposures are less studied.",
+  "move": "Before blaming a treatment, ask what sent people to receive it.",
+  "trap": "Trusting studies that linked childhood surgery to later learning problems.",
+  "keywords": [
+    "gas trial",
+    "infants",
+    "general anaesthesia",
+    "neurodevelopment",
+    "spinal anaesthesia"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCann et al., The Lancet, 2019",
+  "source_kind": "paper",
+  "reference": "McCann et al., Neurodevelopmental outcome at 5 years of age after general anaesthesia or awake-regional anaesthesia in infancy (GAS): an equivalence, randomised, controlled trial, The Lancet, 2019",
+  "written": "2026-09-26"
+}

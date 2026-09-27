@@ -1,0 +1,33 @@
+{
+  "id": "history-ottoman-2",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did the Ottoman Empire first convene an elected parliament?",
+  "answer": "In March 1877, thirteen years before Japan's first parliament. The constitution of December 1876 created a chamber of deputies, chosen through provincial councils, with Muslim, Christian and Jewish members. It lasted less than a year: in February 1878 Sultan Abdülhamid II sent it home, and it did not meet again until 1908.",
+  "move": "Early reforms are easy to miss when they are quickly reversed.",
+  "keywords": [
+    "ottoman parliament",
+    "constitution of 1876",
+    "abdülhamid ii",
+    "first constitutional era",
+    "japan"
+  ],
+  "era": "nineteenth",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Devereux, The First Ottoman Constitutional Period, 1963",
+  "source_kind": "book",
+  "reference": "Devereux, The First Ottoman Constitutional Period: A Study of the Midhat Constitution and Parliament, Johns Hopkins Press, 1963",
+  "written": "2026-09-26"
+}

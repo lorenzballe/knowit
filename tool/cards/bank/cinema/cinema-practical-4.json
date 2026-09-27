@@ -1,0 +1,42 @@
+{
+  "id": "cinema-practical-4",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "also": [
+    "science.cold_and_heat.fire"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What makes the big orange fireball in most film explosions?",
+  "options": [
+    "Military high explosive like TNT",
+    "Petrol and a small charge",
+    "Magnesium powder and flash paper"
+  ],
+  "correct": 1,
+  "answer": "Petrol and a small charge. Crews scatter petrol or naphtha into the air with a little explosive, and it burns as a slow, bright fireball with little blast. Military explosives do the opposite: a violent shock, a brief flash, a cloud of grey dust. The explosion most people picture was built for cameras.",
+  "move": "Ask where a picture in your head came from before trusting it.",
+  "trap": "Military high explosive, because real bombs look that way in films.",
+  "keywords": [
+    "pyrotechnics",
+    "fireball",
+    "naphtha",
+    "explosives"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rickitt, Special Effects, 2007",
+  "source_kind": "book",
+  "reference": "Rickitt, Special Effects: The History and Technique, Billboard Books, 2007",
+  "written": "2026-09-26"
+}

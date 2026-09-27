@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-ghost-towns-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "At its 1959 peak, 5,259 people lived on Hashima's 6.3 hectares. How many thousand people per square kilometre is that?",
+  "value": 83.5,
+  "unit": "thousand people per km²",
+  "tolerance": 1,
+  "answer": "About 83.5 thousand people per km².",
+  "move": "Convert every area to one unit before comparing crowds.",
+  "trap": "Dividing by 6.3 as if hectares were square kilometres.",
+  "hint": "Turn hectares into square kilometres first; there are 100 hectares in one.",
+  "steps": [
+    "1 km² is 100 hectares, so 6.3 hectares = 0.063 km².",
+    "5,259 / 0.063 ≈ 83,480 people per km².",
+    "About 83.5 thousand people per km²."
+  ],
+  "keywords": [
+    "hashima",
+    "gunkanjima",
+    "population density",
+    "coal mining",
+    "japan"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burke-Gaffney, Cabinet, 2002",
+  "source_kind": "news_archive",
+  "reference": "https://www.cabinetmagazine.org/issues/7/burke-gaffney.php",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "food-saffron-4",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which country grows the great majority of the world's saffron?",
+  "options": [
+    "Spain",
+    "Iran",
+    "India"
+  ],
+  "correct": 1,
+  "answer": "Iran. Estimates of its share run from about 80% to over 90% of a world harvest of a few hundred tonnes, much of it from Khorasan, where some fields are still watered by qanats, underground channels centuries old. Spain, whose name sells saffron at a premium, exports far more than it grows.",
+  "move": "Ask where a product is grown, not where it was last packed.",
+  "trap": "La Mancha labels are the famous ones, so Spain seems the source.",
+  "keywords": [
+    "iran",
+    "khorasan",
+    "saffron production",
+    "qanats",
+    "spain"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAO, Qanat-based saffron farming, Gonabad",
+  "source_kind": "institution",
+  "reference": "https://www.fao.org/giahs/giahs-around-the-world/iran-qanat-based-saffron-system/en",
+  "written": "2026-09-26"
+}

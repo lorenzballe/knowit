@@ -1,0 +1,41 @@
+{
+  "id": "economics-interest-5",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Britain caps payday charges at 0.8% of the loan a day and 100% in total. After how many days does the total cap bite?",
+  "value": 125,
+  "unit": "days",
+  "answer": "100 / 0.8 = 125 days.",
+  "move": "Divide the limit by the rate to find when the limit arrives.",
+  "trap": "Assuming a daily charge this small could never double a debt.",
+  "hint": "Ask how many daily slices of 0.8% fit into 100%.",
+  "steps": [
+    "The total cap is 100% of the sum borrowed.",
+    "Each day adds at most 0.8% of that sum.",
+    "100 / 0.8 = 125 days."
+  ],
+  "keywords": [
+    "payday loans",
+    "price caps",
+    "financial conduct authority",
+    "consumer credit"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FCA, high-cost short-term credit price cap, 2015",
+  "source_kind": "primary_document",
+  "reference": "Financial Conduct Authority, PS14/16: Detailed rules for the price cap on high-cost short-term credit, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "history-industrial-2",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in 1800, British industry got more of its power from water wheels than from steam engines?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Estimates of installed power give water wheels roughly three times the horsepower of steam engines in 1800, and the two were level only around 1830. Early cotton mills clustered on Pennine streams; steam's great advantage came later, when it freed factories to move into towns beside their workers and coal.",
+  "move": "The famous machine of an age is rarely the one doing most of the work.",
+  "trap": "The steam engine is the icon, so it must have powered the mills.",
+  "keywords": [
+    "water wheels",
+    "steam engines",
+    "horsepower",
+    "cotton mills",
+    "industrial power"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Crafts, Economic Journal, 2004",
+  "source_kind": "paper",
+  "reference": "Crafts, Steam as a General Purpose Technology: A Growth Accounting Perspective, Economic Journal, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "technology-chatbots-5",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a 2025 study of how people use ChatGPT, what share of messages were about computer programming?",
+  "options": [
+    "About 4%",
+    "About a third",
+    "About half"
+  ],
+  "correct": 0,
+  "answer": "About 4%. Economists at OpenAI, Harvard and Duke classified a sample of consumer conversations from 2024–25: practical guidance, seeking information and writing made up nearly 80%, and more than 70% of messages had nothing to do with work. The typical request is advice, not code.",
+  "move": "What gets written about most is not what gets done most.",
+  "trap": "About half, because coding is the use tech news covers most.",
+  "keywords": [
+    "chatgpt",
+    "usage study",
+    "programming",
+    "writing",
+    "consumer chatbots"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Chatterji et al., NBER Working Paper 34255, 2025",
+  "source_kind": "paper",
+  "reference": "Chatterji, Cunningham, Deming, Hitzig, Ong, Shan & Wadman, How People Use ChatGPT, NBER Working Paper 34255, 2025",
+  "written": "2026-09-26"
+}

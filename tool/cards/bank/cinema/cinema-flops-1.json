@@ -1,0 +1,32 @@
+{
+  "id": "cinema-flops-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did one 1980 western lead to the sale of the studio Chaplin and Pickford founded?",
+  "answer": "By being paid for long after it should have been stopped. United Artists' new managers kept funding Michael Cimino's Heaven's Gate as it ran months over schedule and several times over budget. It opened to savage reviews and earned a few million dollars in America. In 1981 its owner, Transamerica, sold United Artists to MGM.",
+  "move": "Never let a single bet grow big enough to sink the house.",
+  "keywords": [
+    "heaven's gate",
+    "united artists",
+    "michael cimino",
+    "studio collapse"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bach, Final Cut, 1985",
+  "source_kind": "book",
+  "reference": "Bach, Final Cut: Dreams and Disaster in the Making of Heaven's Gate, William Morrow, 1985",
+  "written": "2026-09-26"
+}

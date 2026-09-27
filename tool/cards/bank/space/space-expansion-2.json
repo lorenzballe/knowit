@@ -1,0 +1,33 @@
+{
+  "id": "space-expansion-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 1931 English translation of Lemaître's paper on cosmic expansion leave out his expansion rate?",
+  "answer": "Because Lemaître cut it himself. His 1927 paper, in a Belgian journal, had derived the expansion and estimated its rate two years before Hubble. The missing paragraphs later fuelled talk of censorship, until Mario Livio found Lemaître's letter in 2011: he had judged his old estimate superseded and saw no point in reprinting it.",
+  "move": "Before suspecting a cover-up, check whether the author made the cut.",
+  "keywords": [
+    "georges lemaître",
+    "edwin hubble",
+    "hubble constant",
+    "translation",
+    "mario livio"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Livio, Nature, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/479171a",
+  "written": "2026-09-26"
+}

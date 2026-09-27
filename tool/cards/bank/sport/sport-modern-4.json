@@ -1,0 +1,43 @@
+{
+  "id": "sport-modern-4",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A Paris 2024 gold medal's 6 g of gold, about 0.3 cm³, covers roughly 120 cm². How thick is it, in micrometres?",
+  "value": 25,
+  "unit": "micrometres",
+  "tolerance": 2,
+  "answer": "0.025 mm = 25 micrometres.",
+  "move": "Check whether a name describes the surface or the substance.",
+  "trap": "Picturing gilding as a film far too thin to measure.",
+  "hint": "Divide the volume of gold by the area it covers, then convert the units.",
+  "steps": [
+    "0.3 cm³ ÷ 120 cm² = 0.0025 cm.",
+    "0.0025 cm = 0.025 mm.",
+    "0.025 mm = 25 micrometres."
+  ],
+  "keywords": [
+    "gold medal",
+    "paris 2024",
+    "gold plating",
+    "silver",
+    "micrometre"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oxford Economics, Paris gold medal, 2024",
+  "source_kind": "institution",
+  "reference": "https://www.oxfordeconomics.com/resource/economists-notebook-how-much-is-a-paris-olympic-gold-medal-worth/",
+  "written": "2026-09-26"
+}

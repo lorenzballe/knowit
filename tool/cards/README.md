@@ -15,7 +15,7 @@ tool/cards/
   domains.txt              sites blocked, sites never a reference, sites trusted per subject
   generate.py              scout, reader, writer, gate, critic, files
   tag.py                   tags for cards that have none
-  bundle.py                bank → lib/data/embedded_bank.dart + web/cards/cards.json
+  bundle.py                bank → lib/data/embedded_bank.dart + web/cards/cards.json + version.json
   test_cards.py            the pipeline without the model
 ```
 
@@ -63,8 +63,9 @@ tool/cards/
    **pull request** opens with the cards, their strands, their sites and
    the receipt in its body.
 9. A person reads the pull request. **Merging is the review.** The deploy
-   workflow then publishes `web/cards/cards.json`; the app downloads it at
-   start, keeps it, and deals from it the next morning.
+   workflow then publishes `web/cards/cards.json` and `version.json`; the
+   app asks the version at start, downloads the bank only when it is newer,
+   keeps it, and deals from it the next morning.
 
 Thinking cards are arithmetic: they skip the scout and the reader, and the
 critic redoes their numbers. With `--batch`, which the nightly run uses,
@@ -103,6 +104,25 @@ open, and it is never off anybody's deck. Everything else has both, and
 disagree. The 170 cards written before the tags existed were tagged by hand
 and sit under the nearest strand; `tag.py --missing` asks the model to tag
 whatever has none, one cheap call a card, no critic.
+
+## The first hand-written set
+
+In September 2026 the bank was grown by hand, before the nightly run, to at
+least five cards on every strand: 1,643 new cards (`"written":
+"2026-09-26"`), written strand by strand to the rules in `RULES.md` and held
+to `check.py --strict`. Each subject was written in two halves, and every
+half then went through a critic who fact-checked each card and fixed,
+softened or rewrote it, and a verifier who searched the claims the critic
+could not confirm. Reads are a little under half of the new cards; the rest
+ask: three-option, True/False (a `pickOne` whose options are exactly
+`["True", "False"]`), number or estimate, and a debate or so per strand.
+Hard cards are 7% of those that ask.
+
+The same pass went over the first 170. Twenty-three banal ones were retired
+(`"disabled": true`), eleven moved to the strand they are really about, a
+handful corrected, and every one kept was given a `source_kind`, a
+`reference` and a `figure`. Twenty-one Thinking cards were added so every
+principle has at least five of them.
 
 ## Running it by hand
 
@@ -151,9 +171,10 @@ says in its title it is not to be merged.
 
 `editions.json` maps an edition (day 1 = 1 September 2026) to the id of the
 question of the day. An edition, once written, never changes; `bundle.py`
-extends it 400 days past today, choosing a graded card that has not been
-asked for three quarters of a lap of the graded pool and never less than 60
-editions. Before this file existed the app computed the calendar from the
+extends it 400 days past today, choosing a graded Thinking card that has
+not been asked for three quarters of a lap of that pool and never less than
+60 editions. The app draws from Thinking too when an edition is missing, and
+falls back to every graded card only if Thinking has none. Before this file existed the app computed the calendar from the
 pool on the fly, and a card added anywhere re-dealt every day since the
 epoch.
 

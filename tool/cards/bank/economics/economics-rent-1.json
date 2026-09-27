@@ -1,0 +1,33 @@
+{
+  "id": "economics-rent-1",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the rule that rent should take no more than 30% of income come from?",
+  "answer": "From American public housing law. The Brooke Amendment of 1969 capped public tenants' rent at 25% of income, and Congress raised it to 30% in 1981 to save money. A subsidy formula for the poorest became a yardstick for everyone. But 30% of a high income leaves plenty; of a low one, little.",
+  "move": "Before obeying a rule of thumb, find out whom it was written for.",
+  "keywords": [
+    "thirty percent rule",
+    "brooke amendment",
+    "public housing",
+    "affordability",
+    "rent burden"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Housing and Urban Development Act of 1969",
+  "source_kind": "primary_document",
+  "reference": "Housing and Urban Development Act of 1969, Public Law 91-152, section 213 (Brooke Amendment), 1969",
+  "written": "2026-09-26"
+}

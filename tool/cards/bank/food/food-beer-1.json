@@ -1,0 +1,36 @@
+{
+  "id": "food-beer-1",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do most clauses of Bavaria's 1516 beer decree, the famous purity law, actually regulate?",
+  "answer": "The price. Most of the Ingolstadt decree sets what may be charged for beer: at most one pfennig a Mass in winter, two in summer. A single line allows only barley, hops and water; yeast, not yet understood, goes unmentioned. Historians often read the barley rule as keeping wheat and rye for bakers.",
+  "move": "Read a famous law in full before quoting its most famous line.",
+  "keywords": [
+    "reinheitsgebot",
+    "bavaria",
+    "beer prices",
+    "barley",
+    "hops"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hornsey, A History of Beer and Brewing",
+  "source_kind": "book",
+  "reference": "Hornsey, A History of Beer and Brewing, Royal Society of Chemistry, 2003",
+  "written": "2026-09-26"
+}

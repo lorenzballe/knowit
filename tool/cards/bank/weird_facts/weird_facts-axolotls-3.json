@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-axolotls-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Surveys in 1998 found about 6,000 wild axolotls per km² in Xochimilco. What did the 2014 survey find?",
+  "options": [
+    "About 3,000 per km²",
+    "About 600 per km²",
+    "About 35 per km²"
+  ],
+  "correct": 2,
+  "answer": "About 35 per km². Density fell to about 100 by 2008 and kept falling, a drop of more than 99% in 16 years. Polluted canals, introduced carp and tilapia, and the loss of the chinampas, the old farm islands, did it. The world's best-studied salamander is nearly gone from its only home.",
+  "move": "Let a starting number set the scale, never the size of the change.",
+  "trap": "Halving or a tenfold fall already feels drastic from 6,000.",
+  "keywords": [
+    "xochimilco",
+    "axolotl decline",
+    "population survey",
+    "invasive fish",
+    "chinampas"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scientific American, 2015",
+  "source_kind": "news_archive",
+  "reference": "https://www.scientificamerican.com/article/biologys-beloved-amphibian-the-axolotl-is-racing-toward-extinction1/",
+  "written": "2026-09-26"
+}

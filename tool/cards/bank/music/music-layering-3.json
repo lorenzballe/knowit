@@ -1,0 +1,42 @@
+{
+  "id": "music-layering-3",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "For I'm Not in Love, 10cc's three singers each sang every note of a chromatic scale, octave included, 16 times. How many voices?",
+  "value": 624,
+  "unit": "voices",
+  "answer": "48 x 13 = 624 voices.",
+  "move": "Count the fence posts, not the gaps between them.",
+  "trap": "Using 12 notes and forgetting the octave at the top.",
+  "hint": "Build the choir for a single note first, then count the notes, both ends included.",
+  "steps": [
+    "A chromatic scale up to its octave has 13 notes.",
+    "3 singers x 16 takes = 48 voices on each note.",
+    "48 x 13 = 624 voices."
+  ],
+  "keywords": [
+    "10cc",
+    "i'm not in love",
+    "tape loops",
+    "vocal overdubs",
+    "chromatic scale"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sound On Sound, Classic Tracks: 10cc",
+  "source_kind": "news_archive",
+  "reference": "https://www.soundonsound.com/techniques/classic-tracks-10cc-not-love",
+  "written": "2026-09-26"
+}

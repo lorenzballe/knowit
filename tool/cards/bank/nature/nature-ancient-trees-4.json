@@ -1,0 +1,33 @@
+{
+  "id": "nature-ancient-trees-4",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What has happened to Africa's oldest baobabs since 2005?",
+  "answer": "Most have died or broken apart. While radiocarbon-dating the giants, Patrut's team recorded that 9 of the 13 oldest and 5 of the 6 largest died or lost their oldest stems within about 12 years. Climate change is suspected, not proven. Panke in Zimbabwe, about 2,500 years old, collapsed and died in 2010–11.",
+  "move": "A cluster of deaths is a question, not yet an answer.",
+  "keywords": [
+    "baobabs",
+    "radiocarbon dating",
+    "southern africa",
+    "panke",
+    "tree deaths"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Patrut et al., Nature Plants, 2018",
+  "source_kind": "paper",
+  "reference": "Patrut et al., The demise of the largest and oldest African baobabs, Nature Plants, 2018",
+  "written": "2026-09-26"
+}

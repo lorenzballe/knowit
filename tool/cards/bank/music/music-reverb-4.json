@@ -1,0 +1,40 @@
+{
+  "id": "music-reverb-4",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The gated drum sound, a huge room roar chopped off abruptly, was discovered while recording which album?",
+  "options": [
+    "Peter Gabriel's third album",
+    "Phil Collins's Face Value",
+    "Bruce Springsteen's Born in the USA"
+  ],
+  "correct": 0,
+  "answer": "Peter Gabriel's third album, 1980. At London's Townhouse Studios, engineer Hugh Padgham heard Phil Collins's drums through a talkback microphone, heavily compressed and cut by a noise gate, which silences quiet signal: the room exploded, then went silent. Intruder was built on it; In the Air Tonight followed in 1981.",
+  "move": "The version everyone remembers is often the second one.",
+  "trap": "Face Value, because In the Air Tonight made the sound famous.",
+  "keywords": [
+    "gated reverb",
+    "peter gabriel",
+    "phil collins",
+    "hugh padgham",
+    "townhouse studios"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Peter Gabriel, third album, 1980",
+  "source_kind": "primary_document",
+  "reference": "Peter Gabriel, Peter Gabriel (third album), Charisma Records, 1980, sleeve credits",
+  "written": "2026-09-26"
+}

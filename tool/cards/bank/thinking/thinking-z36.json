@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Additionality in policy evaluation"
+  "figure": "none",
+  "source": "Additionality in policy evaluation",
+  "source_kind": "reference_work",
+  "reference": "HM Treasury, The Green Book: Central Government Guidance on Appraisal and Evaluation, 2022"
 }

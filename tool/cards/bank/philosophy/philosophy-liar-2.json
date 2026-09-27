@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-liar-2",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which ancient poet's epitaph claimed he had been worn to death by the liar paradox?",
+  "answer": "Philitas of Cos, poet and tutor to the future Ptolemy II. The epitaph quoted by Athenaeus has him say that the Liar argument, and nights spent pondering it, killed him. It may be a joke, but logicians took the puzzle seriously: Chrysippus wrote several books on it. The sentence has outlived them all.",
+  "move": "Some questions deserve a name and a shelf before they deserve your nights.",
+  "keywords": [
+    "philitas of cos",
+    "liar paradox",
+    "athenaeus",
+    "chrysippus",
+    "epitaph"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sorensen, A Brief History of the Paradox, 2003",
+  "source_kind": "book",
+  "reference": "Sorensen, A Brief History of the Paradox, Oxford University Press, 2003",
+  "written": "2026-09-26"
+}

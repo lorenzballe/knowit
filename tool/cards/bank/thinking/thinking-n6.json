@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Least common multiple"
+  "figure": "none",
+  "source": "Least common multiple",
+  "source_kind": "arithmetic",
+  "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, Oxford University Press, 2008"
 }

@@ -1,0 +1,40 @@
+{
+  "id": "economics-rent-5",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2014, which started building the most new homes: Tokyo, all of England, or California?",
+  "options": [
+    "Tokyo",
+    "England",
+    "California"
+  ],
+  "correct": 0,
+  "answer": "Tokyo, with about 142,000 housing starts, against about 137,000 in England and 84,000 in California. Japan's zoning is set nationally, and most building that fits the zone needs no local approval. Tokyo's rents stayed broadly flat for years while London's and San Francisco's climbed. A city a quarter England's size outbuilt it.",
+  "move": "Where prices rise, ask first who is allowed to build.",
+  "trap": "Picking England, which has about four times Tokyo's population.",
+  "keywords": [
+    "tokyo",
+    "zoning",
+    "housing starts",
+    "england",
+    "california"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Japan MLIT housing starts statistics, 2014",
+  "source_kind": "statistics",
+  "reference": "Ministry of Land, Infrastructure, Transport and Tourism (Japan), Housing Starts Statistics, 2014",
+  "written": "2026-09-26"
+}

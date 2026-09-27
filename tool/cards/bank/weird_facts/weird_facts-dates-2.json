@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-dates-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "How many people must be in a room for an even chance that two birthdays fall within a day of each other?",
+  "options": [
+    "About 23",
+    "About 14",
+    "About 60"
+  ],
+  "correct": 1,
+  "answer": "About 14. Each person now blocks three days of the calendar rather than one, so near-clashes pile up far faster than exact ones. Diaconis and Mosteller set out the general rule in 1989. Allow a week either side and seven people suffice: one dinner table.",
+  "move": "Every nearly you allow multiplies the ways a coincidence can happen.",
+  "trap": "Reaching for 23, the famous figure for exactly shared birthdays.",
+  "keywords": [
+    "birthday problem",
+    "near coincidences",
+    "probability",
+    "persi diaconis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diaconis and Mosteller, JASA, 1989",
+  "source_kind": "reference_work",
+  "reference": "doi:10.1080/01621459.1989.10478847",
+  "written": "2026-09-26"
+}

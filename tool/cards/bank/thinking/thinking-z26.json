@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Confusing the conditional"
+  "figure": "none",
+  "source": "Confusing the conditional",
+  "source_kind": "book",
+  "reference": "Eddy, Probabilistic reasoning in clinical medicine, in Kahneman, Slovic & Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982"
 }

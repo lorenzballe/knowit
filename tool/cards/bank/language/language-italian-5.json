@@ -1,0 +1,32 @@
+{
+  "id": "language-italian-5",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What kind of political reform does the Italian word gattopardismo describe?",
+  "answer": "Change staged so that the same people stay in charge. The word comes from The Leopard, Lampedusa's novel of 1958, in which a young Sicilian aristocrat joins Garibaldi's revolt, reasoning that if everything is to stay as it is, everything must change. New flags go up on the old palace.",
+  "move": "When a reform is announced, check who holds the keys afterwards.",
+  "keywords": [
+    "gattopardismo",
+    "the leopard",
+    "lampedusa",
+    "reform"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tomasi di Lampedusa, Il Gattopardo, 1958",
+  "source_kind": "book",
+  "reference": "Tomasi di Lampedusa, Il Gattopardo, Feltrinelli, 1958",
+  "written": "2026-09-26"
+}

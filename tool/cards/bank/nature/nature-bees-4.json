@@ -1,0 +1,39 @@
+{
+  "id": "nature-bees-4",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: varroa mites kill honeybee colonies mainly through the damage their feeding does?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Feeding weakens a bee, but the mite's worse harm is the viruses it injects, above all deformed wing virus. When varroa reached Hawaii, Martin and colleagues found that virus's prevalence in bees rose from about 10% to 100%, with a millionfold higher load. Workers emerge with crumpled wings that cannot fly.",
+  "move": "Look past the visible attacker to whatever it brings in with it.",
+  "trap": "The mite can be seen on the bee; the virus cannot.",
+  "keywords": [
+    "varroa mite",
+    "deformed wing virus",
+    "honeybees",
+    "hawaii",
+    "viral load"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Martin et al., Science, 2012",
+  "source_kind": "paper",
+  "reference": "Martin et al., Global honey bee viral landscape altered by a parasitic mite, Science 336, 2012, pp. 1304-1306, doi:10.1126/science.1220941",
+  "written": "2026-09-26"
+}

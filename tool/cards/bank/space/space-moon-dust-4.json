@@ -1,0 +1,39 @@
+{
+  "id": "space-moon-dust-4",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "With no wind or rain, how often is the top 2 cm of the Moon's soil churned over by impacts?",
+  "options": [
+    "About every 8 million years",
+    "About every 80,000 years",
+    "About every 800 million years"
+  ],
+  "correct": 1,
+  "answer": "About every 80,000 years. Before-and-after images from NASA's Lunar Reconnaissance Orbiter caught over 200 new craters and thousands of faint splotches from their spray, churning the surface about 100 times faster than older models said. The Apollo bootprints, a centimetre or two deep, should be scrambled within about 100,000 years, not millions.",
+  "move": "Many small unseen events can outwork one large visible one.",
+  "trap": "No wind or rain, so the soil must lie still for millions of years.",
+  "keywords": [
+    "regolith gardening",
+    "micrometeorites",
+    "lunar reconnaissance orbiter",
+    "apollo bootprints"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Speyerer et al., Nature, 2016",
+  "source_kind": "paper",
+  "reference": "Speyerer, Povilaitis, Robinson, Thomas & Wagner, Quantifying crater production and regolith overturn on the Moon with temporal imaging, Nature, 2016",
+  "written": "2026-09-26"
+}

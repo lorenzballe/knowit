@@ -1,0 +1,33 @@
+{
+  "id": "nature-bringing-back-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What exactly were the dire wolf pups that Colossal Biosciences announced in 2025?",
+  "answer": "Grey wolves with 20 edits across 14 genes, chosen to give a bigger frame, a pale coat and other traits read from dire wolf DNA. The dire wolf's line split from the grey wolf's millions of years earlier, so the two differ across far more of the genome. What was revived was a look.",
+  "move": "Ask how much was changed before accepting what a thing is called.",
+  "keywords": [
+    "dire wolf",
+    "colossal biosciences",
+    "gene editing",
+    "grey wolf",
+    "de-extinction"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Perri et al., Nature, 2021",
+  "source_kind": "paper",
+  "reference": "Perri et al., Dire wolves were the last of an ancient New World canid lineage, Nature, 2021; Kluger, The Return of the Dire Wolf, Time, 2025, https://time.com/7274542/colossal-dire-wolf/",
+  "written": "2026-09-26"
+}

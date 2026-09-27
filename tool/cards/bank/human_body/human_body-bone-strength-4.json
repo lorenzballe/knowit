@@ -1,0 +1,38 @@
+{
+  "id": "human_body-bone-strength-4",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "True or false: most older women who break a bone have bone density in the osteoporosis range?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Studies put the share of fractures in women whose scans fall short of the osteoporosis threshold at between about half and four in five. Far more women have moderately low density than very low, so even at lower individual risk the larger group produces most breaks: the many with modest risk outnumber the few.",
+  "move": "Count how many people are in each group before blaming the riskiest.",
+  "trap": "Assuming the highest-risk group must supply most of the cases.",
+  "keywords": [
+    "osteoporosis",
+    "bone density scans",
+    "fragility fractures",
+    "osteopenia"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Siris et al., Archives of Internal Medicine, 2004",
+  "source_kind": "paper",
+  "reference": "Siris et al., Bone mineral density thresholds for pharmacological intervention to prevent fractures, Archives of Internal Medicine, 2004",
+  "written": "2026-09-26"
+}

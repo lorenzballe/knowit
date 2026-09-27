@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Karst, Jones & Hoeksema, Nature Ecology & Evolution, 2023"
+  "figure": "none",
+  "source": "Karst, Jones & Hoeksema, Nature Ecology & Evolution, 2023",
+  "source_kind": "paper",
+  "reference": "Karst, Jones & Hoeksema, Positive citation bias and overinterpreted results lead to misinformation on common mycorrhizal networks in forests, Nature Ecology & Evolution, 2023"
 }

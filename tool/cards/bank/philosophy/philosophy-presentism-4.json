@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-presentism-4",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What did J. M. E. McTaggart's 1908 paper, source of the A-series and B-series, set out to prove?",
+  "options": [
+    "That time is unreal",
+    "That only the present exists",
+    "That time flows at one rate"
+  ],
+  "correct": 0,
+  "answer": "That time is unreal. McTaggart held that change needs the A-series, events being past, present or future, but that every event would then have to be all three, a contradiction; the B-series of earlier and later alone gives no change. His conclusion won few converts, yet his two labels still organise the debate.",
+  "move": "An argument's vocabulary can outlive its conclusion by a century.",
+  "trap": "Linking his past-present-future series with the view that only now exists.",
+  "keywords": [
+    "mctaggart",
+    "unreality of time",
+    "a-series",
+    "b-series"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McTaggart, Mind, 1908",
+  "source_kind": "paper",
+  "reference": "McTaggart, The Unreality of Time, Mind 17 (68), 1908, pp. 457-474",
+  "written": "2026-09-26"
+}

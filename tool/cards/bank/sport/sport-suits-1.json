@@ -1,0 +1,40 @@
+{
+  "id": "sport-suits-1",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A major swimming championship usually brings a handful of world records. How many fell at Rome in 2009?",
+  "options": [
+    "About 10",
+    "About 40",
+    "About 4"
+  ],
+  "correct": 1,
+  "answer": "About 40: 43 world records fell in eight days of racing. Rome was the last world championships before polyurethane bodysuits were banned in January 2010. The Beijing Olympics a year earlier, already called a record glut, had produced 25. Some Rome marks stood for over a decade, set in suits nobody may now wear.",
+  "move": "When the rules of a game change, old baselines stop applying.",
+  "trap": "Scaling up from ordinary meets, a record-rich one sounds like ten.",
+  "keywords": [
+    "bodysuits",
+    "world records",
+    "rome 2009",
+    "polyurethane",
+    "swimming"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swimming World Magazine",
+  "source_kind": "news_archive",
+  "reference": "https://www.swimmingworldmagazine.com/news/eight-years-later-the-super-suit-era-still-plagues-the-record-books/",
+  "written": "2026-09-26"
+}

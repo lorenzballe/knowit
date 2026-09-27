@@ -1,0 +1,33 @@
+{
+  "id": "music-acoustics-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What problem at Harvard in 1895 turned the acoustics of rooms into a science?",
+  "answer": "A lecture hall in the new Fogg Art Museum where speech blurred into echoes. The physicist Wallace Sabine carried seat cushions between rooms at night, timing how long a sound took to die. The time rose with the room's volume and fell with its absorption; Boston's Symphony Hall of 1900 was built to his formula.",
+  "move": "A nuisance measured patiently can become a law.",
+  "keywords": [
+    "wallace sabine",
+    "fogg museum",
+    "reverberation time",
+    "symphony hall",
+    "harvard"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sabine, Collected Papers on Acoustics, 1922",
+  "source_kind": "paper",
+  "reference": "Sabine, Collected Papers on Acoustics, Harvard University Press, 1922",
+  "written": "2026-09-26"
+}

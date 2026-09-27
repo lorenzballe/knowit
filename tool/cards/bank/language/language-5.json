@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Saenger, Space Between Words, 1997"
+  "figure": "none",
+  "source": "Saenger, Space Between Words, 1997",
+  "source_kind": "book",
+  "reference": "Saenger, Space Between Words: The Origins of Silent Reading, Stanford University Press, 1997"
 }

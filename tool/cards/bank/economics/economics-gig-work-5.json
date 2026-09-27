@@ -1,0 +1,33 @@
+{
+  "id": "economics-gig-work-5",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Amazon's platform for small online tasks named after an eighteenth-century chess machine?",
+  "answer": "Because that machine, the Mechanical Turk, hid a human chess player inside, and the platform does much the same: people do tasks sold as computation. Hara and colleagues tracked 2,676 of its workers and found median pay of about $2 an hour; only 4% earned over $7.25, partly because searching for tasks went unpaid.",
+  "move": "When software seems to think, ask whose hands are inside it.",
+  "keywords": [
+    "mechanical turk",
+    "crowd work",
+    "microtasks",
+    "amazon",
+    "hidden labour"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hara et al., CHI, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1145/3173574.3174023",
+  "written": "2026-09-26"
+}

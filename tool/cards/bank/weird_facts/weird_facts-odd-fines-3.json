@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-odd-fines-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "When Chicago's public libraries scrapped overdue fines in 2019, what happened to book returns?",
+  "options": [
+    "They rose, including long-lost books",
+    "They fell as borrowers stopped caring",
+    "Nothing measurable changed"
+  ],
+  "correct": 0,
+  "answer": "They rose, including long-lost books. Chicago also wiped existing debts, and returns of overdue items jumped in the following months. Fines had kept many borrowers, often poorer ones, away from the library altogether, the book still on a shelf at home. The penalty meant to bring books back had been keeping them out.",
+  "move": "Before crediting a penalty, ask what people would do without it.",
+  "trap": "Fines seem to be what makes borrowers bring books back at all.",
+  "keywords": [
+    "chicago public library",
+    "overdue fines",
+    "library returns",
+    "amnesty"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chicago Public Library, 2019",
+  "source_kind": "institution",
+  "reference": "https://www.chipublib.org/news/mayor-lightfoot-and-chicago-public-library-announce-elimination-of-late-fees-outstanding-debt-to-increase-access-to-libraries-citywide/",
+  "written": "2026-09-26"
+}

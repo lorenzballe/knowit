@@ -1,0 +1,36 @@
+{
+  "id": "economics-anchoring-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "also": [
+    "economics.everyday_costs.rent"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Besides income and local prices, what shapes how much rent a newcomer to a city chooses to pay?",
+  "answer": "The rents of the city they left. Simonsohn and Loewenstein found that movers arriving from pricier cities rent more expensive homes than equally paid movers from cheaper ones. The gap fades when they move again within their new city: the old price list stays in the head until the next lease.",
+  "move": "The last prices you lived with are still shopping for you.",
+  "keywords": [
+    "rent",
+    "movers",
+    "reference prices",
+    "housing costs",
+    "anchoring"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simonsohn and Loewenstein, Economic Journal, 2006",
+  "source_kind": "paper",
+  "reference": "Simonsohn & Loewenstein, Mistake #37: The Effect of Previously Encountered Prices on Current Housing Demand, The Economic Journal, 2006",
+  "written": "2026-09-26"
+}

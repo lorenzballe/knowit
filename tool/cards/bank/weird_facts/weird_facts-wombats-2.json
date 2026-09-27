@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-wombats-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Camera traps watched 34 southern hairy-nosed wombat burrows on an island for six months. What was recorded using them most?",
+  "options": [
+    "Black-footed rock-wallabies",
+    "The wombats themselves",
+    "Little penguins"
+  ],
+  "correct": 0,
+  "answer": "Black-footed rock-wallabies. On Wedge Island in 2015 they were logged using burrows 1,795 times, against 1,674 for the wombats that dug them. Bettongs, skinks, dragons and little penguins came too. A warren is a public building: the owner is only one of many tenants coming in from the heat.",
+  "move": "Ask who else uses a thing before crediting it to its builder.",
+  "trap": "People only see wombats at burrows, so wombats seem the main users.",
+  "keywords": [
+    "wombat burrows",
+    "rock-wallaby",
+    "camera traps",
+    "little penguins"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thornett et al., Australian Mammalogy, 2017",
+  "source_kind": "primary_document",
+  "reference": "https://www.publish.csiro.au/am/am15052",
+  "written": "2026-09-26"
+}

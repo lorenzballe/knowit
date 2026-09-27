@@ -298,6 +298,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
           child: _Tomorrow(
             lead: _tomorrowsLead(app),
             rewarded: app.tomorrowIsRewarded,
+            welcomeLeft: app.welcomeDaysLeftAfterToday,
+            welcomeEnds: app.welcomeEndsTonight,
           ),
         ),
         if (app.reviewsWaiting.isNotEmpty)
@@ -448,9 +450,9 @@ class _TodayDoneViewState extends State<TodayDoneView>
       height: _cardHeight,
       child: MagicCard(
         eyebrow: l.plusNameCaps,
-        headline: l.theOthersYours(
-          app.todaysDeck.length - app.ownIdsToday.length,
-        ),
+        headline: app.inWelcome
+            ? l.plusCardHeadline
+            : l.theOthersYours(app.todaysDeck.length - app.ownIdsToday.length),
         line: l.magicLine,
         action: l.magicUnlock,
         onAction: _sell,
@@ -1193,7 +1195,12 @@ class _Dots extends StatelessWidget {
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({required this.lead, this.rewarded = false});
+  const _Tomorrow({
+    required this.lead,
+    this.rewarded = false,
+    this.welcomeLeft = 0,
+    this.welcomeEnds = false,
+  });
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
@@ -1203,6 +1210,15 @@ class _Tomorrow extends StatelessWidget {
   /// said — once, the night before, where it reads as a reward rather
   /// than as a rule.
   final bool rewarded;
+
+  /// Welcome days still to come after today, on the free plan: said every
+  /// evening of the week, so four of five being theirs reads as a welcome
+  /// with an end rather than as the rule.
+  final int welcomeLeft;
+
+  /// True the evening the welcome week ends: tomorrow is the first shared
+  /// day, and the reader hears it tonight, with what Astute+ keeps.
+  final bool welcomeEnds;
 
   @override
   Widget build(BuildContext context) {
@@ -1243,12 +1259,22 @@ class _Tomorrow extends StatelessWidget {
                   color: context.p.ink.withValues(alpha: 0.6),
                 ),
               ),
-              if (rewarded)
+              if (rewarded || welcomeEnds || welcomeLeft > 0)
                 Padding(
                   padding: const EdgeInsets.only(top: 3),
                   child: Text(
-                    context.l10n.weekKeptTwoOwn,
-                    key: const ValueKey('week-reward'),
+                    welcomeEnds
+                        ? context.l10n.welcomeWeekEnds
+                        : welcomeLeft > 0
+                        ? context.l10n.welcomeDaysLeft(welcomeLeft)
+                        : context.l10n.weekKeptTwoOwn,
+                    key: ValueKey(
+                      welcomeEnds
+                          ? 'welcome-ends'
+                          : welcomeLeft > 0
+                          ? 'welcome-left'
+                          : 'week-reward',
+                    ),
                     style: AppText.body(
                       size: 12.5,
                       weight: FontWeight.w600,

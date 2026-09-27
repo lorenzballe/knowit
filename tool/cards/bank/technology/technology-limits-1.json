@@ -1,0 +1,33 @@
+{
+  "id": "technology-limits-1",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do chatbots make up an answer rather than admit they do not know?",
+  "answer": "Because they are graded like students on a test with no penalty for wrong answers. Most benchmarks score 'I don't know' and a wrong answer both as zero, so guessing never loses, and training chases scores. Asked for one author's thesis title, three popular models each gave a wrong title.",
+  "move": "Score a blank the same as a wrong answer and everyone guesses.",
+  "keywords": [
+    "hallucination",
+    "benchmarks",
+    "guessing",
+    "evaluation",
+    "language models"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kalai et al., OpenAI, 2025",
+  "source_kind": "paper",
+  "reference": "Kalai, Nachum, Vempala & Zhang, Why Language Models Hallucinate, arXiv:2509.04664, 2025",
+  "written": "2026-09-26"
+}

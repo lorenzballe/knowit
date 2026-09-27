@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-wombats-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the northern hairy-nosed wombat recovered from about 35 animals mainly through captive breeding?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Recovery happened in the wild, at Epping Forest in Queensland. The site became a national park, cattle competing for grass were removed, and a predator-proof fence went up against wild dogs in 2002. From about 35 animals in the early 1980s, numbers passed 400 by 2024.",
+  "move": "Before crediting the rescue, ask what stopped the losses in the first place.",
+  "trap": "Species rescues are pictured as zoo nurseries, so captivity seems likely.",
+  "keywords": [
+    "northern hairy-nosed wombat",
+    "epping forest",
+    "cattle",
+    "predator fence"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Queensland State of the Environment, 2024",
+  "source_kind": "institution",
+  "reference": "https://www.stateoftheenvironment.detsi.qld.gov.au/biodiversity/case-studies/northern-hairy-nosed-wombat",
+  "written": "2026-09-26"
+}

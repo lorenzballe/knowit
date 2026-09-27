@@ -1,0 +1,40 @@
+{
+  "id": "nature-dinosaurs-3",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In one 2017 model, how likely was a mass extinction had the dinosaur-killing asteroid struck a random spot on Earth?",
+  "options": [
+    "Near certain",
+    "About one in two",
+    "About one in eight"
+  ],
+  "correct": 2,
+  "answer": "About one in eight, by one model. Kaiho and Oshima traced the killing darkness to soot from rocks rich in oil and organic matter, which underlie only about 13% of Earth's surface. The shelf off Yucatán was one. A strike almost anywhere else, open ocean included, would on their estimate have spared the dinosaurs' world.",
+  "move": "Ask how the same blow would have landed somewhere else.",
+  "trap": "A 10 km asteroid seems catastrophic wherever it happens to land.",
+  "keywords": [
+    "chicxulub",
+    "asteroid impact",
+    "soot",
+    "yucatán",
+    "mass extinction"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Kaiho & Oshima, Scientific Reports, 2017",
+  "source_kind": "paper",
+  "reference": "Kaiho & Oshima, Site of asteroid impact changed the history of life on Earth: the low probability of mass extinction, Scientific Reports, 2017",
+  "written": "2026-09-26"
+}

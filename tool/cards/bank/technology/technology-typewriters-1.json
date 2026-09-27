@@ -1,0 +1,35 @@
+{
+  "id": "technology-typewriters-1",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "also": [
+    "language.writing_systems.chinese_characters"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a Chinese typewriter cope with a script of thousands of characters?",
+  "answer": "By choosing rather than pressing. A tray held a couple of thousand metal characters; the typist slid a selector over the grid and pressed a lever to strike the chosen one onto the page. From the 1950s typists arranged trays so characters used together sat side by side: predictive text in metal.",
+  "move": "When choices outnumber buttons, put the likely ones closest.",
+  "keywords": [
+    "chinese typewriter",
+    "characters",
+    "type tray",
+    "predictive text"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mullaney, The Chinese Typewriter, MIT Press, 2017",
+  "source_kind": "book",
+  "reference": "Mullaney, The Chinese Typewriter: A History, MIT Press, 2017",
+  "written": "2026-09-26"
+}

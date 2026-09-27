@@ -1,0 +1,33 @@
+{
+  "id": "music-folk-1",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the recordings on Harry Smith's 1952 Anthology of American Folk Music come from?",
+  "answer": "From commercial 78s. Smith, a record collector, chose 84 tracks that companies had issued between 1927 and 1932 and sold as hillbilly and race records. The revival treated them as documents of a vanished America, yet several of the singers were alive, and Mississippi John Hurt was found and recording again in 1963.",
+  "move": "Before calling something a document, ask who made it to sell.",
+  "keywords": [
+    "harry smith",
+    "folk anthology",
+    "78 rpm records",
+    "mississippi john hurt",
+    "folk revival"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smithsonian Folkways, Anthology reissue, 1997",
+  "source_kind": "institution",
+  "reference": "Smith (ed.), Anthology of American Folk Music, reissue with notes, Smithsonian Folkways Recordings, 1997",
+  "written": "2026-09-26"
+}

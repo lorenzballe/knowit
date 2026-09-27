@@ -1,0 +1,33 @@
+{
+  "id": "history-lost-countries-5",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the first king of united Italy called Victor Emmanuel the Second?",
+  "answer": "Because he kept his number as king of Sardinia: in law, Italy was the Kingdom of Sardinia enlarged and renamed in 1861. Sardinia's constitution, the Statuto granted in 1848, became Italy's and lasted until 1948. The first capital, the laws and the ruling house all came from Turin.",
+  "move": "When a union keeps one partner's names and numbers, ask who absorbed whom.",
+  "keywords": [
+    "kingdom of sardinia",
+    "victor emmanuel ii",
+    "italian unification",
+    "statuto albertino",
+    "turin"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Riall, Risorgimento, 2009",
+  "source_kind": "book",
+  "reference": "Riall, Risorgimento: The History of Italy from Napoleon to Nation-State, Palgrave Macmillan, 2009",
+  "written": "2026-09-26"
+}

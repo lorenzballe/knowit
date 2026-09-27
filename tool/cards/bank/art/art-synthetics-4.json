@@ -1,0 +1,32 @@
+{
+  "id": "art-synthetics-4",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did an iron factory vessel in Scotland give painters one of their strongest modern blues?",
+  "answer": "By contaminating a batch. In 1928 chemists at Scottish Dyes in Grangemouth found a stable blue-green impurity in phthalimide made in an iron vessel. The iron had joined the reaction. The compound, named phthalocyanine, was launched by ICI in 1935 as Monastral Blue. A reject batch became a staple of every artists' paint range.",
+  "move": "Before throwing out a contaminated batch, ask what the contamination made.",
+  "keywords": [
+    "phthalocyanine blue",
+    "grangemouth",
+    "ici",
+    "monastral blue"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moser and Thomas, Phthalocyanine Compounds, 1963",
+  "source_kind": "book",
+  "reference": "Frank H. Moser and Arthur L. Thomas, Phthalocyanine Compounds, Reinhold, 1963",
+  "written": "2026-09-26"
+}

@@ -24,5 +24,6 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "TeleGeography Submarine Cable Map"
+  "source": "TeleGeography Submarine Cable Map",
+  "disabled": true
 }

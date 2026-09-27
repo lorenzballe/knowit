@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-axolotls-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the albino axolotl's golden or white colouring came from a different species?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The albino gene was bred in during the 1960s from an albino tiger salamander, a related species, through hybrid crosses carried back into axolotl lines. In 2017 geneticists found tiger salamander DNA around that gene in laboratory animals. The pale, dark-eyed leucistic axolotl is a separate mutation, native to the species.",
+  "move": "Check the pedigree of a trait before calling it pure.",
+  "trap": "Pet colours seem like mutations bred within the species itself.",
+  "keywords": [
+    "albino axolotl",
+    "tiger salamander",
+    "hybridisation",
+    "laboratory stock"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woodcock et al., Scientific Reports, 2017",
+  "source_kind": "primary_document",
+  "reference": "Woodcock et al., Identification of mutant genes and introgressed tiger salamander DNA in the laboratory axolotl, Ambystoma mexicanum, Scientific Reports, 2017",
+  "written": "2026-09-26"
+}

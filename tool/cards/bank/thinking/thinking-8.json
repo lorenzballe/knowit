@@ -31,5 +31,7 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Simpson's paradox in operational metrics"
+  "source": "Simpson's paradox in operational metrics",
+  "source_kind": "paper",
+  "reference": "Simpson, The Interpretation of Interaction in Contingency Tables, Journal of the Royal Statistical Society Series B, 1951"
 }

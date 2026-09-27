@@ -1,0 +1,38 @@
+{
+  "id": "nature-root-networks-3",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a tree's roots rarely spread beyond the edge of its crown?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Gilman found roots reaching 1.7 to 3.8 times as far from the trunk as the edge of the crown, depending on species. They also stay shallow, nearly all in the top metre of soil. The real shape is a wide plate: a trench dug well outside the shade can still cut its supply.",
+  "move": "What is hidden rarely copies the shape of what shows.",
+  "trap": "Picturing the roots as a mirror image of the crown.",
+  "keywords": [
+    "tree roots",
+    "drip line",
+    "root spread",
+    "arboriculture"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Gilman, Journal of Arboriculture, 1988",
+  "source_kind": "paper",
+  "reference": "Gilman, Predicting root spread from trunk diameter and branch spread, Journal of Arboriculture, 1988; Perry, The ecology of tree roots and the practical significance thereof, Journal of Arboriculture, 1982",
+  "written": "2026-09-26"
+}

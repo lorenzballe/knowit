@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-axolotls-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the first full axolotl genome show was missing from it?",
+  "answer": "A gene called PAX3, which other vertebrates need to build muscle and nerve tissue; a close relative, PAX7, does its job. The genome itself holds about 32 billion base pairs, more than ten times the human count, swollen by repeated sequences. The genes it does have sit scattered through an enormous library.",
+  "move": "A bigger instruction set can still lack a page others need.",
+  "keywords": [
+    "axolotl genome",
+    "pax3",
+    "pax7",
+    "genome size"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Max Planck Society, January 2018",
+  "source_kind": "institution",
+  "reference": "https://www.mpg.de/11886639/decoding-the-axolotl-genome",
+  "written": "2026-09-26"
+}

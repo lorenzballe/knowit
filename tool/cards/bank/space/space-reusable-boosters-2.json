@@ -1,0 +1,33 @@
+{
+  "id": "space-reusable-boosters-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What becomes of the Space Shuttle's main engines when they fly on NASA's SLS rocket?",
+  "answer": "They are dropped in the ocean. Built to be reused, and flown on Shuttle missions, the engines now ride the SLS core stage four at a time and sink with it after one flight. When the stock runs out, their replacements fly once too: in 2020 NASA ordered 18 for about $1.79 billion.",
+  "move": "Reusable is a property of the plan, not of the hardware.",
+  "keywords": [
+    "space launch system",
+    "rs-25",
+    "space shuttle",
+    "solid rocket boosters",
+    "expendable rockets"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA, press release, 1 May 2020",
+  "source_kind": "institution",
+  "reference": "NASA, NASA Commits to Future Artemis Missions With More SLS Rocket Engines, press release, 1 May 2020",
+  "written": "2026-09-26"
+}

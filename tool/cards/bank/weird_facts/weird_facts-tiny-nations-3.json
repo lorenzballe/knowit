@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-tiny-nations-3",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "also": [
+    "nature.oceans.coral"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Tuvalu's total land area grew between 1971 and 2014, while the sea around it rose?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Comparing aerial photographs and satellite images of all 101 islands, Kench and colleagues found net land area up 2.9%, about 73 hectares, although local sea level rose at about twice the global rate. Waves and storms keep piling up coral sand and gravel: some islets shrank, others grew and shifted.",
+  "move": "A rising threat can reshape a thing before it drowns it.",
+  "trap": "Picturing low islands simply going under as the water rises.",
+  "keywords": [
+    "tuvalu",
+    "sea level rise",
+    "atolls",
+    "coral islands",
+    "erosion"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Kench et al., Nature Communications, 2018",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1038/s41467-018-02954-1",
+  "written": "2026-09-26"
+}

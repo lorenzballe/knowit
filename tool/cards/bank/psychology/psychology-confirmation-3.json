@@ -1,0 +1,39 @@
+{
+  "id": "psychology-confirmation-3",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Told that 2-4-6 fits a hidden rule, people propose their own triples to test guesses. Why do most announce a wrong rule?",
+  "options": [
+    "They test only triples their guess allows",
+    "The hidden rule is too complex to guess",
+    "They are allowed too few test triples"
+  ],
+  "correct": 0,
+  "answer": "They test only triples their guess allows. The rule was simply any three rising numbers, so a guess like even numbers going up by two keeps earning yeses. Only a triple the guess forbids, such as 1-2-3, could expose it. Seeking yeses often works; it fails when the truth is broader than the guess.",
+  "move": "When every test says yes, ask whether a broader rule would say yes too.",
+  "trap": "Assuming people fail because the hidden rule must be complicated.",
+  "keywords": [
+    "wason 2-4-6 task",
+    "hypothesis testing",
+    "positive testing",
+    "confirmation bias"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wason, Quarterly Journal of Experimental Psychology, 1960",
+  "source_kind": "paper",
+  "reference": "Wason, On the failure to eliminate hypotheses in a conceptual task, Quarterly Journal of Experimental Psychology, 1960",
+  "written": "2026-09-26"
+}

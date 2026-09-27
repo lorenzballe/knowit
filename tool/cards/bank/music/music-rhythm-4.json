@@ -1,0 +1,40 @@
+{
+  "id": "music-rhythm-4",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In an online study of funk drum breaks, which ones made listeners most want to move?",
+  "options": [
+    "The most syncopated breaks",
+    "The least syncopated breaks",
+    "Moderately syncopated breaks"
+  ],
+  "correct": 2,
+  "answer": "Moderately syncopated breaks. Syncopation means accents placed off the beat. Maria Witek's team found that both the urge to move and the pleasure rose with syncopation, then fell as it grew heavy: an inverted U. Too few off-beat accents leave the body nothing to fill; too many and it loses the pulse altogether.",
+  "move": "When some of a thing helps, test whether more of it keeps helping.",
+  "trap": "The most syncopated, if off-beat accents are what make funk groove.",
+  "keywords": [
+    "syncopation",
+    "groove",
+    "funk",
+    "drum breaks",
+    "inverted u"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Witek et al., PLoS ONE, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0094446",
+  "written": "2026-09-26"
+}

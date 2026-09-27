@@ -1,0 +1,32 @@
+{
+  "id": "psychology-distraction-2",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What kind of background sound most disrupts memorising a string of digits, even when it is ignored?",
+  "answer": "Sound that keeps changing, speech above all. In serial recall, unattended speech hurts even in a language the listener does not know, while steady noise does little, and loudness matters less than change. Shifting syllables break into the silent rehearsal that holds the order: an overheard phone call costs more than a louder, steady fan.",
+  "move": "Steady noise can be tuned out; variation keeps claiming the ear.",
+  "keywords": [
+    "irrelevant speech effect",
+    "serial recall",
+    "background noise",
+    "working memory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salamé & Baddeley, 1982",
+  "source_kind": "paper",
+  "reference": "Salamé & Baddeley, Disruption of short-term memory by unattended speech: implications for the structure of working memory, Journal of Verbal Learning and Verbal Behavior, 1982",
+  "written": "2026-09-26"
+}

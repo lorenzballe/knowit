@@ -1,0 +1,38 @@
+{
+  "id": "psychology-sunk-cost-5",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should money already spent and unrecoverable ever count in deciding whether to carry on?",
+  "sides": [
+    "Yes, sometimes",
+    "No, never"
+  ],
+  "answer": "Past spending often carries information: heavy funding suggests people who knew more judged the project promising. Quitting can wreck a reputation for finishing things, which has future value, and on a tight budget abandoning may leave nothing to show. Economists have shown that, in such cases, letting sunk costs weigh can be the rational choice.",
+  "move": "Whichever side you took, the hinge is whether the past carries news about the future.",
+  "counterpoint": "Every one of those reasons is about the future: information, reputation and budgets can be counted as future costs and benefits. The spent money itself adds nothing. Treating it as a reason is the reflex that kept Concorde flying; in one classic survey, 33 of 61 people picked a ski weekend they expected to enjoy less because it cost more.",
+  "keywords": [
+    "sunk costs",
+    "rational choice",
+    "reputation",
+    "concorde",
+    "decision making"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McAfee, Mialon & Mialon, Economic Inquiry, 2010",
+  "source_kind": "paper",
+  "reference": "McAfee, Mialon & Mialon, Do sunk costs matter?, Economic Inquiry, 2010",
+  "written": "2026-09-26"
+}

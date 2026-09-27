@@ -1,0 +1,39 @@
+{
+  "id": "medicine-barbers-4",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a London barber-surgeon recommended lemon juice against scurvy more than a century before James Lind's 1747 trial?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. John Woodall, surgeon-general to the East India Company, urged lemon juice for scurvy in The Surgions Mate, his 1617 manual for ship surgeons. The advice was known and then diluted by rival cures such as vinegar and malt. The Royal Navy made lemon juice standard issue only in 1795, 178 years later.",
+  "move": "The famous test of an idea is rarely where the idea began.",
+  "trap": "Assuming the famous 1747 trial was where the citrus idea began.",
+  "keywords": [
+    "scurvy",
+    "lemon juice",
+    "john woodall",
+    "east india company",
+    "james lind"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Royal Museums Greenwich, The Surgeon's Mate",
+  "source_kind": "institution",
+  "reference": "https://www.rmg.co.uk/stories/maritime-history/library-archive/surgeons-mate-john-woodall",
+  "written": "2026-09-26"
+}

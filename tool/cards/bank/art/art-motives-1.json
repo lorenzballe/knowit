@@ -1,0 +1,36 @@
+{
+  "id": "art-motives-1",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "also": [
+    "art.forgeries.detection"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the forger Tom Keating write words in lead white on canvases before painting over them?",
+  "answer": "To plant evidence against himself. Lead white blocks X-rays, so the words would show on any X-ray. Keating, a restorer who claimed some 2,000 fakes of Samuel Palmer and others, said he acted against dealers who grew rich on artists. Some canvases also hid a glycerine layer that would lift the paint in cleaning.",
+  "move": "Some people break the rules chiefly to show the rule-keepers up.",
+  "keywords": [
+    "tom keating",
+    "lead white",
+    "x-ray",
+    "samuel palmer",
+    "art dealers"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keating, Norman & Norman, The Fake's Progress, 1977",
+  "source_kind": "book",
+  "reference": "Tom Keating, Geraldine Norman & Frank Norman, The Fake's Progress, Hutchinson, 1977",
+  "written": "2026-09-26"
+}

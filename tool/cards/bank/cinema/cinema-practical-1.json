@@ -1,0 +1,35 @@
+{
+  "id": "cinema-practical-1",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "also": [
+    "cinema.special_effects.miniatures"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Metropolis put real actors inside skyscrapers that were only table-top models?",
+  "answer": "With a mirror. In the Schüfftan process a mirror at 45 degrees before the lens reflected the model, and the silvering was scraped off wherever the actors should appear, so the camera saw the full-size set through clear glass there. Model and actors met inside the camera, in one exposure, with nothing added afterwards.",
+  "move": "Before combining two things later, ask whether they can be combined at once.",
+  "keywords": [
+    "schüfftan process",
+    "metropolis",
+    "mirrors",
+    "fritz lang"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Minden & Bachmann, Fritz Lang's Metropolis",
+  "source_kind": "book",
+  "reference": "Minden & Bachmann (eds), Fritz Lang's Metropolis: Cinematic Visions of Technology and Fear, Camden House, 2000",
+  "written": "2026-09-26"
+}

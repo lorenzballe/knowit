@@ -1,0 +1,38 @@
+{
+  "id": "music-hooks-3",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: on Spotify, about a quarter of all song plays are abandoned within the first five seconds?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Spotify researchers found that about a quarter of streams stop inside five seconds, and only about half play to the end. Skips crowd into the opening seconds, long before most choruses arrive. The opening bars of a song work like a shop window passed at walking pace.",
+  "move": "A person's own habits are a sample of one, and a flattering one.",
+  "trap": "Judging from one's own listening, where chosen songs mostly play through.",
+  "keywords": [
+    "spotify",
+    "skipping",
+    "streaming",
+    "song openings"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Montecchio, Roy & Pachet, PLoS ONE, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0239418",
+  "written": "2026-09-26"
+}

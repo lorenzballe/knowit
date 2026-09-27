@@ -1,0 +1,33 @@
+{
+  "id": "sport-balls-4",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do golf's rule-makers plan to shorten the longest drives from 2028 without changing a single club?",
+  "answer": "By testing balls with a faster robot swing. Under the new test, a ball struck at a clubhead speed of about 201 km/h may not travel beyond about 290 m; the old test swung at about 193 km/h. Balls passing the harder test fly shorter; the longest hitters should lose around 12 to 14 m.",
+  "move": "To change a limit without rewriting it, change the test that enforces it.",
+  "keywords": [
+    "golf ball",
+    "rollback",
+    "driving distance",
+    "usga",
+    "r&a"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CBS Sports, golf ball rollback, 2023",
+  "source_kind": "news_archive",
+  "reference": "https://www.cbssports.com/golf/news/usga-r-a-announce-universal-golf-ball-rollback-to-limit-distance-with-implementation-set-for-2028",
+  "written": "2026-09-26"
+}

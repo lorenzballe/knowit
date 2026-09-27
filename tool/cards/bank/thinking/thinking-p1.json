@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Percentage change, arithmetic"
+  "figure": "none",
+  "source": "Percentage change, arithmetic",
+  "source_kind": "paper",
+  "reference": "Frederick, Cognitive Reflection and Decision Making, Journal of Economic Perspectives, 2005"
 }

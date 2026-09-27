@@ -1,0 +1,32 @@
+{
+  "id": "language-regional-slang-4",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Singapore's government start a campaign against its own local slang in 2000?",
+  "answer": "To protect standard English as the language of trade and schooling. The Speak Good English Movement urged people off Singlish, the local English that mixes in Hokkien, Malay and Tamil words such as kiasu, afraid to lose. Singlish outlasted the posters and became a badge of local identity.",
+  "move": "Official disapproval can turn a habit into a badge.",
+  "keywords": [
+    "singlish",
+    "speak good english movement",
+    "singapore",
+    "kiasu"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubdy, World Englishes, 2001",
+  "source_kind": "paper",
+  "reference": "Rubdy, Creative destruction: Singapore's Speak Good English movement, World Englishes, 2001",
+  "written": "2026-09-26"
+}

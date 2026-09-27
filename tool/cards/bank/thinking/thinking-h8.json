@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h8",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "A new café opens on your street, with a gifted barista. Which is more likely?",
+  "options": [
+    "It survives three years",
+    "It wins an award and survives three years"
+  ],
+  "correct": 0,
+  "answer": "Surviving three years. Every café that wins an award and survives is also a café that survives, so the second can never be the likelier. The award supplies a reason, and a reason makes a story feel probable while cutting down the number of ways it can come true.",
+  "move": "Each added reason is one more thing that has to be true.",
+  "trap": "The award explains the survival, so the story feels more likely.",
+  "keywords": [
+    "small business",
+    "probability",
+    "stories",
+    "subsets"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Conjunction rule, applied to a forecast",
+  "source_kind": "paper",
+  "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983",
+  "written": "2026-09-26"
+}

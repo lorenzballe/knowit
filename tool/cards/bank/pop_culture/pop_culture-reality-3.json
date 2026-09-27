@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-reality-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the BBC's televised prison study of 2002, what did the volunteers cast as guards do?",
+  "options": [
+    "Grew harsher as the role demanded",
+    "Never cohered into a united authority",
+    "Walked out on the first day"
+  ],
+  "correct": 1,
+  "answer": "They never cohered. The psychologists Stephen Reicher and Alex Haslam found the guards did not identify with their role, while the prisoners bonded as a group and overturned the regime. The volunteers set up an equal commune; when it faltered, some pushed for a harsh new order. Roles alone made nobody cruel.",
+  "move": "A uniform does little until people feel they belong to it.",
+  "trap": "The famous 1971 prison story says a role turns people cruel.",
+  "keywords": [
+    "bbc prison study",
+    "stephen reicher",
+    "alex haslam",
+    "the experiment",
+    "group identity"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reicher & Haslam, BJSP, 2006",
+  "source_kind": "primary_document",
+  "reference": "Reicher and Haslam, Rethinking the Psychology of Tyranny: The BBC Prison Study, British Journal of Social Psychology, 2006",
+  "written": "2026-09-26"
+}

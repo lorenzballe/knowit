@@ -1,0 +1,38 @@
+{
+  "id": "technology-dns-5",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should web browsers encrypt their DNS lookups by default, even where networks filter them?",
+  "sides": [
+    "Yes, encrypt by default",
+    "No, leave it to networks"
+  ],
+  "answer": "Plain DNS lookups travel unencrypted, so anyone on the path, from a café's router to an internet provider, can log every site a person visits or quietly redirect them. Encryption closes that gap for everyone at once, and users who want filtering can still choose a filtering resolver. Privacy should not require expertise.",
+  "move": "Whichever side you took, it turns on whom you trust more with your lookups.",
+  "counterpoint": "Encrypted lookups by default mostly move the data rather than hide it: from a local provider under national law to a handful of large resolver companies, often abroad. They also blind the filters schools, firms and parents use against malware and abuse, and in 2019 British internet providers' trade body nominated Mozilla as an internet villain for it.",
+  "keywords": [
+    "dns over https",
+    "encryption",
+    "privacy",
+    "parental filters",
+    "mozilla"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoffman & McManus, RFC 8484, 2018",
+  "source_kind": "standard",
+  "reference": "Hoffman & McManus, RFC 8484: DNS Queries over HTTPS (DoH), IETF, 2018",
+  "written": "2026-09-26"
+}

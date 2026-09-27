@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-local-bans-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a federal appeals court decide in 2018 about sharing meals in Fort Lauderdale's parks?",
+  "answer": "That a public meal can be protected speech. In 2014 the city restricted outdoor food sharing, and Arnold Abbott, a 90-year-old volunteer, was charged for feeding homeless people. The court held that a group's weekly meal in a park was expressive conduct under the First Amendment. A shared plate can carry a message.",
+  "move": "Ask what an act says before judging a rule that bans it.",
+  "keywords": [
+    "fort lauderdale",
+    "food sharing",
+    "homelessness",
+    "first amendment",
+    "arnold abbott"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Court of Appeals, 11th Circuit, 2018",
+  "source_kind": "primary_document",
+  "reference": "Fort Lauderdale Food Not Bombs v. City of Fort Lauderdale, US Court of Appeals for the Eleventh Circuit, 2018",
+  "written": "2026-09-26"
+}

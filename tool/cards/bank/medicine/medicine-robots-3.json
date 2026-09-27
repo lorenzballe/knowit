@@ -1,0 +1,39 @@
+{
+  "id": "medicine-robots-3",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a robot has stitched two ends of intestine together inside living pigs without a surgeon guiding its movements?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2022 a Johns Hopkins team reported that STAR, the Smart Tissue Autonomous Robot, sewed keyhole bowel joins in four pigs, tracking tissue that shifted as the animals breathed. In comparison tests its stitches were more evenly spaced than surgeons'. Surgeons set up each operation and supervised, but did not steer the needle.",
+  "move": "What a familiar machine does is not the limit of what machines can do.",
+  "trap": "Assuming surgical robots only ever copy a surgeon's hand movements.",
+  "keywords": [
+    "star robot",
+    "autonomous surgery",
+    "anastomosis",
+    "johns hopkins",
+    "pigs"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saeidi et al., Science Robotics, 2022",
+  "source_kind": "paper",
+  "reference": "Saeidi et al., Autonomous robotic laparoscopic surgery for intestinal anastomosis, Science Robotics, 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "space-martian-weather-2",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the dust storms that wrap all of Mars start in the southern hemisphere's spring or summer?",
+  "answer": "Because Mars is then closest to the Sun. Its orbit is stretched enough that sunlight at the nearest point is about 45% stronger than at the farthest, and the nearest point falls in late southern spring. Extra heat drives stronger winds, which lift dust, which soaks up more sunlight: a storm that feeds itself.",
+  "move": "An uneven input can make one season far wilder than its mirror.",
+  "keywords": [
+    "dust storms",
+    "perihelion",
+    "orbit",
+    "southern summer",
+    "sunlight"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zurek and Martin, Journal of Geophysical Research, 1993",
+  "source_kind": "paper",
+  "reference": "Zurek and Martin, Interannual variability of planet-encircling dust storms on Mars, Journal of Geophysical Research: Planets 98(E2), 1993",
+  "written": "2026-09-26"
+}

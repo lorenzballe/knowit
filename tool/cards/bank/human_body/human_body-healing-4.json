@@ -1,0 +1,38 @@
+{
+  "id": "human_body-healing-4",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a graze resurfaces faster kept moist under a film than left open to form a scab?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1962 George Winter gave young pigs shallow wounds and covered some with polythene film: those kept moist grew new skin across about twice as fast as those left open. A scab is dried, dead tissue, and new skin cells must tunnel beneath it instead of gliding over a moist bed.",
+  "move": "What looks like protection can be the obstacle.",
+  "trap": "Treating the scab as the body's own bandage.",
+  "keywords": [
+    "moist wound healing",
+    "scab",
+    "epithelialisation",
+    "wound dressings"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winter, Nature, 1962",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/193293a0",
+  "written": "2026-09-26"
+}

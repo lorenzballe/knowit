@@ -1,0 +1,32 @@
+{
+  "id": "human_body-smell-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many different smells can a human nose tell apart?",
+  "answer": "Nobody knows. A 2014 paper in Science put the figure above a trillion, extrapolating from 26 people sniffing mixtures drawn from 128 odorants. In 2015 two reanalyses showed the method was so sensitive to its assumptions that the same data could support estimates many orders of magnitude apart.",
+  "move": "An extrapolation is only as solid as the model stretched across the gap.",
+  "keywords": [
+    "olfaction",
+    "odour mixtures",
+    "extrapolation",
+    "odour discrimination"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gerkin & Castro, eLife, 2015",
+  "source_kind": "paper",
+  "reference": "https://elifesciences.org/articles/08127",
+  "written": "2026-09-26"
+}

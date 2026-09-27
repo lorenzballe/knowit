@@ -1,0 +1,37 @@
+{
+  "id": "cinema-cgi-5",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should performances captured on set and finished by animators be eligible for acting awards?",
+  "sides": [
+    "Yes, it is acting",
+    "No, it is shared work"
+  ],
+  "answer": "The actor chooses every beat: the timing, the eyes, the voice, the weight of the body. Andy Serkis played Gollum and Caesar on set, opposite the other actors, and the animation follows his recorded face and movement. Heavy make-up has never disqualified a performance; pixels laid over the same performance should not either.",
+  "move": "The question turns on how much of the final image the actor controlled.",
+  "counterpoint": "The final image is built by animators who adjust, exaggerate and sometimes replace what the actor did, frame by frame. Voters cannot see where the capture ends and the animators' choices begin. An acting award to one name would erase dozens of artists whose decisions are the ones on screen.",
+  "keywords": [
+    "performance capture",
+    "andy serkis",
+    "animators",
+    "acting awards"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Menache, Understanding Motion Capture",
+  "source_kind": "book",
+  "reference": "Menache, Understanding Motion Capture for Computer Animation and Video Games, Morgan Kaufmann, 2000",
+  "written": "2026-09-26"
+}

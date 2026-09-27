@@ -1,0 +1,36 @@
+{
+  "id": "space-expansion-4",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "also": [
+    "space.edge_of_the_universe.cosmic_background"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Could astronomers living 100 billion years from now discover that the universe is expanding?",
+  "answer": "Probably not. Accelerating expansion will have carried every galaxy beyond our merged home group out of sight, so there will be nothing receding to measure. The cosmic background will be stretched too thin to detect. Krauss and Scherrer argued that such astronomers would conclude, as people did before 1920, that the universe is static.",
+  "move": "Some evidence exists only for a while, so gather it while it lasts.",
+  "keywords": [
+    "accelerating expansion",
+    "far future",
+    "cosmic microwave background",
+    "local group",
+    "observational cosmology"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krauss & Scherrer, General Relativity and Gravitation, 2007",
+  "source_kind": "paper",
+  "reference": "doi:10.1007/s10714-007-0472-9",
+  "written": "2026-09-26"
+}

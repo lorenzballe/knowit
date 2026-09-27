@@ -1,0 +1,40 @@
+{
+  "id": "history-lost-countries-3",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1898 the United States annexed Hawaii, five years after its queen was overthrown. By what legal route?",
+  "options": [
+    "A joint resolution of Congress",
+    "A treaty ratified by the Senate",
+    "A vote of Hawaii's people"
+  ],
+  "correct": 0,
+  "answer": "A joint resolution of Congress. An annexation treaty had failed to reach the two-thirds Senate vote a treaty needs, after Native Hawaiian petitions with more than 20,000 signatures opposed it. A joint resolution needed only simple majorities in both houses. The Hawaiian flag came down at Iolani Palace in August 1898.",
+  "move": "When the front door needs a supermajority, watch for a side door.",
+  "trap": "Territory like Alaska came by treaty, so this must have too.",
+  "keywords": [
+    "kingdom of hawaii",
+    "annexation",
+    "newlands resolution",
+    "joint resolution",
+    "petitions"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Silva, Aloha Betrayed, 2004",
+  "source_kind": "book",
+  "reference": "Silva, Aloha Betrayed: Native Hawaiian Resistance to American Colonialism, Duke University Press, 2004",
+  "written": "2026-09-26"
+}

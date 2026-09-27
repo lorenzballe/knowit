@@ -1,0 +1,33 @@
+{
+  "id": "space-colours-of-stars-4",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes a blue star's spectrum look so different from a red star's?",
+  "answer": "Mostly temperature, not ingredients. In 1925 Cecilia Payne showed that heat decides which atoms keep their electrons, and so which dark lines appear; beneath the differences, stars are overwhelmingly hydrogen and helium. After Henry Norris Russell objected, her thesis called the hydrogen figure almost certainly not real. Four years later Russell confirmed it.",
+  "move": "Before blaming what things are made of, check the conditions they are in.",
+  "keywords": [
+    "cecilia payne",
+    "stellar spectra",
+    "hydrogen",
+    "henry norris russell",
+    "spectral classes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Payne, Stellar Atmospheres, 1925",
+  "source_kind": "book",
+  "reference": "Payne, Stellar Atmospheres: A Contribution to the Observational Study of High Temperature in the Reversing Layers of Stars, Harvard Observatory Monographs No. 1, 1925",
+  "written": "2026-09-26"
+}

@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Anchoring in fundraising"
+  "figure": "none",
+  "source": "Anchoring in fundraising",
+  "source_kind": "paper",
+  "reference": "Tversky & Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science, 1974"
 }

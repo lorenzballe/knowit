@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Federation Aeronautique Internationale; ISS reboost logs"
+  "figure": "none",
+  "source": "Federation Aeronautique Internationale; ISS reboost logs",
+  "source_kind": "paper",
+  "reference": "McDowell, The edge of space: Revisiting the Karman Line, Acta Astronautica, 2018"
 }

@@ -1,0 +1,32 @@
+{
+  "id": "nature-storms-5",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did US forecasters strip out of the five hurricane categories in 2010?",
+  "answer": "Storm surge and pressure. The old scale promised surge heights for each category, but surge depends on a storm's size and how the seabed shelves. Katrina, a Category 3 at landfall, drove about 8 m of surge into Mississippi; Ike, a Category 2, flooded Texas like a stronger storm. It now rates wind alone.",
+  "move": "One number can rank only one of the ways a thing does harm.",
+  "keywords": [
+    "saffir-simpson scale",
+    "storm surge",
+    "hurricane katrina",
+    "hurricane ike"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NOAA National Hurricane Center",
+  "source_kind": "institution",
+  "reference": "Schott et al., The Saffir-Simpson Hurricane Wind Scale, National Hurricane Center, NOAA, 2012",
+  "written": "2026-09-26"
+}

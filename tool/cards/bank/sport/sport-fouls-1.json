@@ -1,0 +1,33 @@
+{
+  "id": "sport-fouls-1",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did football stop sending off every defender who fouls to deny a goal inside his own box?",
+  "answer": "Because the team was punished three times: a foul that denied an obvious goal-scoring chance in the box brought a penalty, a red card and a suspension. Since 2016, a defender who genuinely tries to play the ball gets a yellow instead; holding or pushing with no attempt at the ball is still a red.",
+  "move": "When one act draws several penalties, check whether they punish the same harm twice.",
+  "keywords": [
+    "triple punishment",
+    "red card",
+    "penalty kick",
+    "law 12",
+    "ifab"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sky Sports, new IFAB laws, 2016",
+  "source_kind": "news_archive",
+  "reference": "https://www.skysports.com/football/news/12010/10308834/euro-2016-triple-punishment-kick-offs-penalties-new-ifab-football-laws-on-show-in-france",
+  "written": "2026-09-26"
+}

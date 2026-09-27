@@ -1,0 +1,33 @@
+{
+  "id": "nature-migration-5",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What flips a solitary desert locust into the swarming kind?",
+  "answer": "Being jostled on its hind legs. When drying plants force locusts to crowd together, repeated touching of the back legs raises serotonin in their nervous system, and within hours shy, solitary insects become restless and seek each other out. Blocking serotonin stopped the change; adding it caused it without crowding. A swarm starts as bumping.",
+  "move": "Large collective shifts can start from a small, local trigger.",
+  "keywords": [
+    "desert locust",
+    "swarming",
+    "serotonin",
+    "crowding",
+    "gregarious phase"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anstey et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Anstey, Rogers, Ott, Burrows & Simpson, Serotonin mediates behavioral gregarization underlying swarm formation in desert locusts, Science, 2009",
+  "written": "2026-09-26"
+}

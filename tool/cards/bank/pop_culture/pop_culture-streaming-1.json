@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-streaming-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Netflix never put the $1 million prize-winning recommendation algorithm into service?",
+  "answer": "It was not worth the plumbing. The 2009 winner blended over a hundred models to predict DVD star ratings about 10% better. Netflix engineers judged the extra accuracy too small for the work of running it, and by then most members were streaming, where what people play says more than what they rate.",
+  "move": "A contest fixes the question just before the question changes.",
+  "keywords": [
+    "netflix prize",
+    "recommendation algorithms",
+    "star ratings",
+    "dvd rental"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Netflix Technology Blog, 2012",
+  "source_kind": "company",
+  "reference": "Amatriain and Basilico, Netflix Recommendations: Beyond the 5 Stars (Part 1), Netflix Technology Blog, 2012",
+  "written": "2026-09-26"
+}

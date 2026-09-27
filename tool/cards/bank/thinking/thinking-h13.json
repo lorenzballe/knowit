@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h13",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Two friends each roll a die in secret. You ask whether either rolled a six; they say yes. Chance both did?",
+  "options": [
+    "1 in 6",
+    "1 in 11",
+    "1 in 36"
+  ],
+  "correct": 1,
+  "answer": "1 in 11. Of the 36 equally likely pairs, 11 contain at least one six, and only one of those is a double six. The yes ruled out the 25 pairs without a six, but it did not tell you which die showed it, so the other die is not a fresh roll.",
+  "move": "Ask exactly what you were told, and which cases it rules out.",
+  "trap": "One die shows a six, so the other feels like a fresh roll.",
+  "keywords": [
+    "dice",
+    "conditional probability",
+    "information",
+    "sample space"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Conditional probability, counting outcomes",
+  "source_kind": "arithmetic",
+  "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",
+  "written": "2026-09-26"
+}

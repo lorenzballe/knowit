@@ -1,0 +1,41 @@
+{
+  "id": "cinema-flops-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A flop opens to $30 million; each later weekend takes 40% of the previous one. All weekends together, in millions of dollars?",
+  "value": 50,
+  "unit": "million dollars",
+  "answer": "30 / 0.6 = 50 million dollars.",
+  "move": "When each step keeps a fixed share, the first step is most of the total.",
+  "trap": "Expecting a long tail that keeps adding, when each weekend shrinks.",
+  "hint": "A total that keeps a fixed fraction each time adds up to the first term divided by what is lost.",
+  "steps": [
+    "The weekends run 30, 12, 4.8, 1.9 and so on.",
+    "Each keeps 0.4 of the last, so the total is 30 / (1 - 0.4).",
+    "30 / 0.6 = 50 million dollars."
+  ],
+  "keywords": [
+    "weekend drops",
+    "opening weekend",
+    "geometric series",
+    "box-office decay"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Vogel, Entertainment Industry Economics",
+  "source_kind": "book",
+  "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
+  "written": "2026-09-26"
+}

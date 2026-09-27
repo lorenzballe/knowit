@@ -1,0 +1,39 @@
+{
+  "id": "art-florence-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which guild did a painter working in 15th-century Florence have to join?",
+  "options": [
+    "The physicians' and apothecaries' guild",
+    "The stonemasons' and woodworkers' guild",
+    "The wool merchants' guild"
+  ],
+  "correct": 0,
+  "answer": "The physicians' and apothecaries' guild, the Arte dei Medici e Speziali. Apothecaries sold pigments alongside drugs and spices, so painters were enrolled with the trade that supplied them. Stone carvers joined the masons and woodworkers instead. A painter's name sat in the same register as a spice dealer's.",
+  "move": "Institutions are often sorted by supply chain, not by what people think they do.",
+  "trap": "Filing painters with sculptors, as artists working with their hands.",
+  "keywords": [
+    "apothecaries' guild",
+    "guilds",
+    "pigment trade",
+    "florentine painters"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wackernagel, The World of the Florentine Renaissance Artist",
+  "source_kind": "book",
+  "reference": "Martin Wackernagel, The World of the Florentine Renaissance Artist, trans. Alison Luchs, Princeton University Press, 1981",
+  "written": "2026-09-26"
+}

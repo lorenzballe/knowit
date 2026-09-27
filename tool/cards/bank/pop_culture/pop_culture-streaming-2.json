@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-streaming-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: America's most-streamed television show of 2020 was a streaming service's own original series?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Nielsen measured 57 billion minutes of The Office, an NBC sitcom that ended in 2013, well ahead of any original. Second was Grey's Anatomy, another network show. Originals win the publicity; old network series, with hundreds of episodes to leave running, win the hours.",
+  "move": "Count the hours people spend, not the launches people discuss.",
+  "trap": "Originals get the headlines and the awards, so they seem most watched.",
+  "keywords": [
+    "the office",
+    "nielsen",
+    "streaming minutes",
+    "originals",
+    "library content"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Nielsen, Tops of 2020",
+  "source_kind": "statistics",
+  "reference": "https://www.nielsen.com/insights/2021/tops-of-2020-nielsen-streaming-unwrapped/",
+  "written": "2026-09-26"
+}

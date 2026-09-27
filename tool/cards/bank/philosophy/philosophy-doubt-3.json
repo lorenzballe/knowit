@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-doubt-3",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Descartes defend doubting all his beliefs at once instead of one at a time?",
+  "answer": "With a basket of apples. If some are rotten and the rot might spread, tip the whole basket out, then inspect each apple and put back only the sound ones. Replying to the Jesuit Bourdin in 1642, Descartes said beliefs taken in since childhood need the same treatment, since the bad ones spoil the rest.",
+  "move": "When errors can spread, check everything once rather than patch one by one.",
+  "keywords": [
+    "descartes",
+    "method of doubt",
+    "basket of apples",
+    "pierre bourdin",
+    "meditations"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Descartes, Seventh Replies, 1642",
+  "source_kind": "book",
+  "reference": "Descartes, Seventh Set of Objections and Replies, in The Philosophical Writings of Descartes II, trans. Cottingham, Stoothoff & Murdoch, Cambridge University Press, 1984",
+  "written": "2026-09-26"
+}

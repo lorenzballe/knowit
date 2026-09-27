@@ -15,6 +15,14 @@ class _Refusing implements TallyStore {
   @override
   Future<Map<String, Map<String, int>>> read(List<String> days) async =>
       throw StateError('permission-denied');
+
+  @override
+  Future<void> addTotal(String pillId) async =>
+      throw StateError('permission-denied');
+
+  @override
+  Future<Map<String, int>> readTotals() async =>
+      throw StateError('permission-denied');
 }
 
 /// Lets the write that [Tallies.held] sends off land.
@@ -61,12 +69,15 @@ void main() {
       'then by id — over the week or the month, narrowed as asked', () async {
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(0): {'a': 3, 'b': 1},
-        ago(2): {'c': 3, 'b': 1},
-        ago(6): {'d': 2},
-        ago(7): {'e': 9},
-        ago(29): {'f': 1},
-        ago(30): {'g': 50},
+        // Today and yesterday are still open: never on the list.
+        ago(0): {'z': 99},
+        ago(1): {'z': 99},
+        ago(2): {'a': 3, 'b': 1},
+        ago(4): {'c': 3, 'b': 1},
+        ago(8): {'d': 2},
+        ago(9): {'e': 9},
+        ago(31): {'f': 1},
+        ago(32): {'g': 50},
       }),
       clock: () => now,
     );
@@ -75,7 +86,8 @@ void main() {
 
     List<String> ids(List<Ranked> list) => [for (final r in list) r.id];
 
-    // a and c both have three; a was counted today, c two days ago.
+    // a and c both have three; a was counted on the last closed day, c two
+    // days before it.
     expect(ids(tallies.top(7)), ['a', 'c', 'b', 'd']);
     expect(tallies.top(7)[2].readers, 2, reason: 'b over two days');
 
@@ -93,7 +105,10 @@ void main() {
     final Tallies tallies = Tallies(storeOverride: store, clock: () => clock);
 
     await tallies.refresh();
-    expect(store.asked.single, hasLength(Tallies.monthDays));
+    expect(
+      store.asked.single,
+      hasLength(Tallies.closedAfter + Tallies.monthDays),
+    );
 
     // Ten minutes is fresh: nothing is asked for.
     clock = now.add(const Duration(minutes: 5));
@@ -150,4 +165,104 @@ void main() {
       expect(store.days[day], {a: 1, b: 1});
     },
   );
+
+  group('The launch crowd', () {
+    final List<String> ids = [for (var i = 0; i < 2000; i++) 'card-$i'];
+
+    test('is the same on every phone, and seeds about one card in seven', () {
+      final a = TopSeed(ids: () => ids).on('2026-10-02');
+      final b = TopSeed(ids: () => ids).on('2026-10-02');
+      expect(a, b);
+      final seeded = ids.where((id) => TopSeed.popularity(id) > 0).length;
+      expect(seeded, inInclusiveRange(220, 380));
+    });
+
+    test('gives the list something to show before any count is read, '
+        'and the real readers rank on top of it', () async {
+      final Tallies seeded = Tallies(
+        storeOverride: MemoryTallyStore({
+          ago(Tallies.closedAfter): {'card-real': 500},
+        }),
+        seed: TopSeed(ids: () => ids),
+        clock: () => now,
+      );
+      expect(seeded.answered, isFalse);
+      expect(seeded.ready, isTrue);
+      final List<Ranked> before = seeded.top(7);
+      expect(before, isNotEmpty);
+      expect(before.first.readers, greaterThan(before.last.readers - 1));
+
+      await seeded.refresh();
+      expect(seeded.top(7).first.id, 'card-real');
+      expect(seeded.top(7).first.readers, greaterThanOrEqualTo(500));
+      // The month holds at least what the week does, card for card.
+      final Map<String, int> month = {
+        for (final r in seeded.top(30, limit: 5000)) r.id: r.readers,
+      };
+      for (final r in seeded.top(7, limit: 5000)) {
+        expect(month[r.id], greaterThanOrEqualTo(r.readers), reason: r.id);
+      }
+    });
+
+    test('is off unless asked for', () {
+      expect(Tallies().ready, isFalse);
+      expect(Tallies().top(30), isEmpty);
+    });
+  });
+
+  test('the list is fixed for the day: a like today moves nothing until '
+      'its day has closed', () async {
+    DateTime clock = now;
+    final MemoryTallyStore store = MemoryTallyStore({
+      ago(3): {'science-2': 2},
+    });
+    final Tallies tallies = Tallies(storeOverride: store, clock: () => clock);
+    await tallies.refresh();
+    await tallies.held('science-1');
+    await tallies.held('science-1');
+    await _landed();
+    List<String> ids() => [for (final r in tallies.top(7)) r.id];
+    expect(ids(), ['science-2'], reason: 'today is still open');
+
+    // Two midnights later the day has closed, on every phone at once.
+    clock = now.add(const Duration(days: 2));
+    await tallies.refresh(force: true);
+    expect(ids(), ['science-2', 'science-1']);
+  });
+
+  test('loved since the start: the counts for good, over the launch crowd, '
+      'narrowed as asked', () async {
+    final MemoryTallyStore store = MemoryTallyStore();
+    final Tallies tallies = Tallies(storeOverride: store, clock: () => now);
+    await tallies.held('science-1');
+    await _landed();
+    expect(store.totals, {'science-1': 1});
+    store.totals['space-2'] = 40;
+    await tallies.refresh(force: true);
+    expect([for (final r in tallies.allTime()) r.id], ['space-2', 'science-1']);
+    expect(
+      [for (final r in tallies.allTime(where: (id) => id != 'space-2')) r.id],
+      ['science-1'],
+    );
+    // With the crowd, cards nobody has held yet are there too, the ones
+    // readers did hold ranked by both.
+    final Tallies seeded = Tallies(
+      storeOverride: store,
+      seed: TopSeed(ids: () => [for (var i = 0; i < 400; i++) 'card-$i']),
+      clock: () => now,
+    );
+    await seeded.refresh();
+    expect(seeded.allTime(limit: 400).length, greaterThan(2));
+  });
+
+  test('a card read in Explore is read: the day never deals it', () async {
+    final AppState app = AppState();
+    await app.init();
+    final String id = PillBank.cards.last.id;
+    await app.markReadElsewhere(id);
+    expect(app.seenIds, contains(id));
+    final AppState again = AppState();
+    await again.init();
+    expect(again.seenIds, contains(id), reason: 'kept across a restart');
+  });
 }

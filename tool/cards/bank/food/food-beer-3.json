@@ -1,0 +1,42 @@
+{
+  "id": "food-beer-3",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Wort reads 1.052 on a hydrometer; the finished beer reads 1.012. Brewers multiply the drop by 131.25. What strength, in % ABV?",
+  "value": 5.25,
+  "unit": "% ABV",
+  "tolerance": 0.05,
+  "answer": "0.040 x 131.25 = 5.25% ABV.",
+  "move": "A reading that falls can hide two changes pulling the same way.",
+  "trap": "Reading the drop of 0.040 as 4% alcohol.",
+  "hint": "The hydrometer tracks density: sugar makes the wort heavier, alcohol makes beer lighter.",
+  "steps": [
+    "Density drop as yeast turns sugar into alcohol: 1.052 - 1.012 = 0.040.",
+    "0.040 x 131.25 = 5.25% ABV."
+  ],
+  "keywords": [
+    "hydrometer",
+    "original gravity",
+    "alcohol by volume",
+    "wort",
+    "homebrewing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Palmer, How to Brew",
+  "source_kind": "book",
+  "reference": "Palmer, How to Brew, 4th edition, Brewers Publications, 2017",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h6",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A rope hugs the equator. Add 1 m to its length and raise it evenly all round. Can a cat crawl under?",
+  "options": [
+    "No, the gap is microscopic",
+    "Yes, the gap is about 16 cm",
+    "Barely, the gap is about 1 mm"
+  ],
+  "correct": 1,
+  "answer": "Yes, easily. A circle's circumference is 2π times its radius, so adding 1 m to the rope lifts it by 1 ÷ 2π, about 16 cm, all the way round — whatever the size of the circle. The same extra metre around a football would lift it by the same 16 cm.",
+  "move": "When the intuition comes from size, check whether size appears in the formula.",
+  "trap": "One metre spread over 40,000 km feels like nothing at all.",
+  "keywords": [
+    "circumference",
+    "radius",
+    "equator",
+    "rope puzzle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Circumference and radius of a circle",
+  "source_kind": "arithmetic",
+  "reference": "Courant & Robbins, What Is Mathematics?, revised by Stewart, Oxford University Press, 1996",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-offside-1",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Under the Football Association's first laws of 1863, when was a player offside?",
+  "answer": "Whenever he was ahead of the ball. As in rugby, a player in front of the ball could not take part in play, so passing forward to a team-mate was impossible and teams advanced by dribbling in packs. In 1866 the rule was relaxed: three opponents between attacker and goal made him onside.",
+  "move": "Look at what a rule forbids to see which game its makers had in mind.",
+  "keywords": [
+    "football association",
+    "1863 laws",
+    "offside origins",
+    "dribbling",
+    "rugby"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harvey, Football: The First Hundred Years, 2005",
+  "source_kind": "book",
+  "reference": "Harvey, Football: The First Hundred Years: The Untold Story, Routledge, 2005",
+  "written": "2026-09-26"
+}

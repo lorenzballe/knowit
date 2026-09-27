@@ -1,0 +1,38 @@
+{
+  "id": "human_body-plasticity-3",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a toddler's frontal cortex packs more synapses into each cubic millimetre than an adult's?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Counting synapses under the electron microscope, Huttenlocher found their density in the frontal cortex peaking at one to two years, about 50% above the adult average, then falling through childhood and adolescence. Development sculpts as much as it builds: surplus connections are pruned, and in the prefrontal cortex the pruning continues into the twenties.",
+  "move": "Getting better at something often means keeping less of what you had.",
+  "trap": "Learning adds connections, so the adult must have more.",
+  "keywords": [
+    "synaptic pruning",
+    "synapses",
+    "frontal cortex",
+    "brain development"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huttenlocher, Brain Research, 1979",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/0006-8993(79)90349-4",
+  "written": "2026-09-26"
+}

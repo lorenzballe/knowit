@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "NASA Orbital Debris Program Office"
+  "figure": "none",
+  "source": "NASA Orbital Debris Program Office",
+  "source_kind": "institution",
+  "reference": "NASA Orbital Debris Program Office, Orbital Debris Quarterly News 13(2), 2009"
 }

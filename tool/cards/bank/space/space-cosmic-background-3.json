@@ -1,0 +1,40 @@
+{
+  "id": "space-cosmic-background-3",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 2014 BICEP2 announced a swirl pattern in the cosmic background, hailed as gravitational waves from the universe's first instant. What mostly caused it?",
+  "options": [
+    "Dust in the Milky Way",
+    "Gravitational waves from the first instant",
+    "A fault in the telescope"
+  ],
+  "correct": 0,
+  "answer": "Dust in the Milky Way. Grains aligned by the galaxy's magnetic field glow with polarised light that makes the same swirls. BICEP2 had leaned on early, uncertain estimates of the dust; in 2015 a joint analysis with Planck's dust maps found the signal consistent with dust alone. The primordial waves are still undetected.",
+  "move": "When the result is exactly what you hoped for, check the dust first.",
+  "trap": "The pattern matched what the team had built the telescope to find.",
+  "keywords": [
+    "bicep2",
+    "b-mode polarisation",
+    "cosmic inflation",
+    "galactic dust",
+    "planck satellite"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BICEP2/Keck and Planck Collaborations, PRL, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.114.101301",
+  "written": "2026-09-26"
+}

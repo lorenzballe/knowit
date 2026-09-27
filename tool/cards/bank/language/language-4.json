@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Senghas & Coppola, Psychological Science, 2001"
+  "figure": "none",
+  "source": "Senghas & Coppola, Psychological Science, 2001",
+  "source_kind": "paper",
+  "reference": "Senghas & Coppola, Children creating language: How Nicaraguan Sign Language acquired a spatial grammar, Psychological Science, 2001"
 }

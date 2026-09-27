@@ -1,0 +1,33 @@
+{
+  "id": "nature-magnetic-sense-4",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do magnetic bacteria in northern ponds swim towards magnetic north?",
+  "answer": "To go down. A chain of magnetite crystals inside each cell works as a compass needle, and in the northern hemisphere field lines dip into the ground, so swimming north along them leads into the low-oxygen mud they need. Southern strains swim south; at the magnetic equator, where lines lie flat, both kinds turn up.",
+  "move": "Ask what a navigator is trying to reach, not just which way it points.",
+  "keywords": [
+    "magnetotactic bacteria",
+    "magnetite",
+    "magnetic field",
+    "sediment",
+    "richard blakemore"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blakemore, Frankel & Kalmijn, Nature, 1980",
+  "source_kind": "paper",
+  "reference": "Blakemore, Frankel & Kalmijn, South-seeking magnetotactic bacteria in the Southern Hemisphere, Nature, 1980",
+  "written": "2026-09-26"
+}

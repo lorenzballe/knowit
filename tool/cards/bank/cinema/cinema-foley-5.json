@@ -1,0 +1,33 @@
+{
+  "id": "cinema-foley-5",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What sound did the cameras on 1960s Italian western sets record?",
+  "answer": "None. Italian studios usually shot without sound, and casts mixed Italian, Spanish, German and American actors each speaking their own language. Everything was made afterwards: every line dubbed, every hoof, spur and creaking door performed in a studio. Directors could call out instructions in the middle of a take, as in the silent era.",
+  "move": "Seamless is often a sign of reconstruction rather than capture.",
+  "keywords": [
+    "spaghetti westerns",
+    "sergio leone",
+    "post-synchronisation",
+    "dubbing",
+    "cinecittà"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frayling, Sergio Leone biography, 2000",
+  "source_kind": "book",
+  "reference": "Frayling, Sergio Leone: Something to Do with Death, Faber and Faber, 2000",
+  "written": "2026-09-26"
+}

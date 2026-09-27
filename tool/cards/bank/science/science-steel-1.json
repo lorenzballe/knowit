@@ -1,0 +1,33 @@
+{
+  "id": "science-steel-1",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did some welded wartime ships break in two while sitting in calm water?",
+  "answer": "Cold made their steel brittle. Constance Tipper showed that the plate, tough when warm, cracked like glass below a transition temperature that cold seas reached. Welding made each hull one continuous piece, so a crack from a square hatch corner could run round it. The tanker Schenectady split in two at its dock in 1943.",
+  "move": "Test materials at the worst conditions they will meet, not the average.",
+  "keywords": [
+    "liberty ships",
+    "brittle fracture",
+    "constance tipper",
+    "welding",
+    "ductile-brittle transition"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tipper, The Brittle Fracture Story, 1962",
+  "source_kind": "book",
+  "reference": "Tipper, The Brittle Fracture Story, Cambridge University Press, 1962",
+  "written": "2026-09-26"
+}

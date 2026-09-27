@@ -1,0 +1,33 @@
+{
+  "id": "technology-mainframes-1",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a byte hold eight bits, rather than six or ten?",
+  "answer": "Because IBM chose eight for its System/360 in 1964. Its earlier machines used six-bit characters; eight bits allowed 256 symbols, lower-case included, or two decimal digits of four bits each, suiting both text and business sums. The 360 sold so widely that its byte became everyone's. Every file size is still counted in it.",
+  "move": "Many standards are one successful product's choice that everyone copied.",
+  "keywords": [
+    "byte",
+    "system/360",
+    "ibm",
+    "character codes",
+    "packed decimal"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amdahl, Blaauw & Brooks, IBM Journal, 1964",
+  "source_kind": "paper",
+  "reference": "Amdahl, Blaauw & Brooks, Architecture of the IBM System/360, IBM Journal of Research and Development, 1964",
+  "written": "2026-09-26"
+}

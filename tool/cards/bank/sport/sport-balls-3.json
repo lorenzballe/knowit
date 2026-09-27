@@ -1,0 +1,39 @@
+{
+  "id": "sport-balls-3",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: MLB's scientists traced the 2015–17 home run surge mainly to hitters changing their swings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Scientists reporting to Major League Baseball in 2018 found that balls hit the same way were carrying farther, because the balls had less air drag. They could not tie the lower drag to any property they measured, and drag varied more from one ball to the next than from year to year.",
+  "move": "When two things change at once, measure each before crediting the famous one.",
+  "trap": "The swing-angle fashion was the visible change, so it gets the credit.",
+  "keywords": [
+    "baseball",
+    "home runs",
+    "air drag",
+    "major league baseball",
+    "launch angle"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MLB home run committee report, 2018",
+  "source_kind": "institution",
+  "reference": "https://www.mlb.com/press-release/major-league-baseball-receives-report-on-increased-home-run-rate-278136100",
+  "written": "2026-09-26"
+}

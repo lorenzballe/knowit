@@ -1,0 +1,32 @@
+{
+  "id": "language-nordic-5",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which language did Danish borrow its best-known export word, hygge, from?",
+  "answer": "Norwegian. Hygge meant wellbeing in Norwegian and appears in Danish writing around 1800; it goes back to Old Norse, and English hug may share the root. The word sold across Europe in 2016 as the essence of Danishness is a loan from the neighbours to the north.",
+  "move": "The word a country is famous for may be borrowed from next door.",
+  "keywords": [
+    "hygge",
+    "danish",
+    "norwegian",
+    "loanwords"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wiking, The Little Book of Hygge, 2016",
+  "source_kind": "book",
+  "reference": "Wiking, The Little Book of Hygge, Penguin Life, 2016",
+  "written": "2026-09-26"
+}

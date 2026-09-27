@@ -1,0 +1,40 @@
+{
+  "id": "human_body-gut-and-mood-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A gut bacterium calmed stressed mice through the vagus nerve. What did it do in healthy men?",
+  "options": [
+    "Halved their stress hormone response",
+    "No measurable effect at all",
+    "Made them calmer but sleepier"
+  ],
+  "correct": 1,
+  "answer": "No measurable effect. In 2011, Lactobacillus rhamnosus JB-1 reduced anxious behaviour and stress hormones in mice, and cutting the vagus nerve abolished the effect. In 2017 the same strain, given to 29 healthy men for eight weeks against a placebo, changed neither their stress response nor their scores on mood and thinking tests.",
+  "move": "A finding travels only as far as the subjects it was tested on.",
+  "trap": "Expecting a clean result in mice to carry over to people.",
+  "keywords": [
+    "psychobiotics",
+    "lactobacillus rhamnosus",
+    "vagus nerve",
+    "mice",
+    "placebo"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kelly et al., Brain, Behavior, and Immunity, 2017",
+  "source_kind": "paper",
+  "reference": "Kelly, Allen, Temko et al., Lost in translation? The potential psychobiotic Lactobacillus rhamnosus (JB-1) fails to modulate stress or cognitive performance in healthy male subjects, Brain, Behavior, and Immunity, 2017",
+  "written": "2026-09-26"
+}

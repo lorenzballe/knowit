@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Correlation in portfolio risk"
+  "figure": "none",
+  "source": "Correlation in portfolio risk",
+  "source_kind": "paper",
+  "reference": "Markowitz, Portfolio Selection, Journal of Finance, 1952"
 }

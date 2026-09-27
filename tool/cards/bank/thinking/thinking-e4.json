@@ -31,5 +31,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Urban transit fleet statistics"
+  "figure": "none",
+  "source": "Urban transit fleet statistics",
+  "source_kind": "arithmetic",
+  "reference": "Department for Transport, Annual bus statistics: England, 2019"
 }

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-joy-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Swedish lottery winners were surveyed 5 to 22 years after a big win. What had the money changed?",
+  "options": [
+    "Little: they had adapted back",
+    "Happiness, more than life satisfaction",
+    "Life satisfaction, more than happiness"
+  ],
+  "correct": 2,
+  "answer": "Life satisfaction, more than happiness. Against matched players who won little or nothing, big winners rated their lives higher for over a decade, with no sign of fading; the effect on happiness and mental health was clearly smaller. The belief that winners soon adapt traces to a 1978 study of 22 winners.",
+  "move": "A small study that became famous deserves a second, larger look.",
+  "trap": "Trusting the famous finding that lottery winners quickly adapt back.",
+  "keywords": [
+    "lottery winners",
+    "life satisfaction",
+    "happiness",
+    "hedonic adaptation",
+    "sweden"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lindqvist et al., Review of Economic Studies, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/restud/rdaa006",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "art-cubism-2",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which army put painters with an eye for Cubism to work during the First World War, and on what?",
+  "answer": "The French army, on camouflage. In 1915 it set up a camouflage section under the painter Lucien-Victor Guirand de Scévola, who later credited Cubist ways of breaking up forms. Artists painted guns and lorries in broken patches and built fake trees to hide lookouts. Fragmenting an object on canvas became a way of hiding one.",
+  "move": "A technique invented for one purpose often finds its real use elsewhere.",
+  "keywords": [
+    "camouflage",
+    "first world war",
+    "guirand de scévola",
+    "cubism"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Behrens, False Colors, 2002",
+  "source_kind": "book",
+  "reference": "Roy R. Behrens, False Colors: Art, Design and Modern Camouflage, Bobolink Books, 2002",
+  "written": "2026-09-26"
+}

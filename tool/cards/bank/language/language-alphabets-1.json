@@ -1,0 +1,33 @@
+{
+  "id": "language-alphabets-1",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the Greek alphabet find vowels, when its Phoenician model wrote none?",
+  "answer": "In Phoenician consonants Greek had no use for. Aleph was a glottal stop, a catch in the throat; Greek speakers kept the letter for the vowel that followed it, and it became alpha. He became epsilon, yod became iota, ayin became omicron. Every European vowel letter descends from consonants recycled around 800 BC.",
+  "move": "The parts that do not fit a borrower often become its invention.",
+  "keywords": [
+    "greek alphabet",
+    "phoenician",
+    "vowels",
+    "aleph",
+    "alpha"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Powell, Homer and the Greek Alphabet, 1991",
+  "source_kind": "book",
+  "reference": "Powell, Homer and the Origin of the Greek Alphabet, Cambridge University Press, 1991",
+  "written": "2026-09-26"
+}

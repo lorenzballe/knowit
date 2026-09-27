@@ -1,0 +1,38 @@
+{
+  "id": "technology-oled-5",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: at typical indoor brightness, switching an OLED phone to dark mode saves under a tenth of its battery use?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Purdue researchers measured 3 to 9% savings at 30 to 50% brightness, rising to 39 to 47% only at full brightness. Screen power climbs steeply with brightness, so dimmed pixels cost little either way, and the processor and radios keep drawing their share. Dark mode pays off mainly in sunlight.",
+  "move": "A saving measured at the extreme may vanish at ordinary settings.",
+  "trap": "False, since black OLED pixels are switched off entirely.",
+  "keywords": [
+    "dark mode",
+    "battery life",
+    "screen brightness",
+    "purdue"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dash & Hu, ACM MobiSys, 2021",
+  "source_kind": "paper",
+  "reference": "Dash & Hu, How much battery does dark mode save? An accurate OLED display power profiler for modern smartphones, ACM MobiSys, 2021",
+  "written": "2026-09-26"
+}

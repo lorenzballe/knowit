@@ -10,7 +10,7 @@
     "Suicide"
   ],
   "correct": 1,
-  "answer": "Suicide takes roughly twice as many lives as homicide worldwide. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
+  "answer": "Suicide, by about half as many again: roughly 700,000 deaths a year worldwide against about 460,000 homicides. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
   "move": "What you can recall easily is a fact about the news, not about the world.",
   "trap": "Reaching for the one that gets reported.",
   "keywords": [
@@ -28,5 +28,8 @@
   "shelf_life": "years",
   "mature": true,
   "language": "en",
-  "source": "WHO global health estimates"
+  "figure": "none",
+  "source": "WHO, 2021; UNODC, 2023",
+  "source_kind": "statistics",
+  "reference": "WHO, Suicide worldwide in 2019: Global Health Estimates, 2021; UNODC, Global Study on Homicide, 2023"
 }

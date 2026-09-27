@@ -1,0 +1,40 @@
+{
+  "id": "medicine-chronic-2",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a 2016 US national survey, what share of adults reported pain on most days for six months?",
+  "options": [
+    "About 1 in 50",
+    "About 1 in 5",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About 1 in 5. The National Health Interview Survey put chronic pain at 20.4% of adults, around 50 million people. For 8%, the pain limited work or life activities most days. A condition that common rarely shows: no cast, no scar, and most sufferers are not held back on most days.",
+  "move": "What leaves no visible mark is counted too low by the eye.",
+  "trap": "Guessing low, because chronic pain is rarely seen or talked about.",
+  "keywords": [
+    "chronic pain",
+    "prevalence",
+    "national health interview survey",
+    "high-impact pain",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Dahlhamer et al., CDC MMWR, 2018",
+  "source_kind": "statistics",
+  "reference": "https://www.cdc.gov/mmwr/volumes/67/wr/pdfs/mm6736a2-H.pdf",
+  "written": "2026-09-26"
+}

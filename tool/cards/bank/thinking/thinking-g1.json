@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Non-response bias"
+  "figure": "none",
+  "source": "Non-response bias",
+  "source_kind": "paper",
+  "reference": "Groves, Nonresponse Rates and Nonresponse Bias in Household Surveys, Public Opinion Quarterly, 2006"
 }

@@ -1,0 +1,39 @@
+{
+  "id": "art-marble-4",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Hiram Powers carved each of the six full-size marble versions of his Greek Slave himself?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Between 1844 and 1869 professional carvers in his Florence studio copied his plaster model into marble, transferring measured points with a pointing machine. That was ordinary practice: the sculptor modelled in clay, assistants cut the stone, and the master might only finish the surface. The fame went to the man who shaped the clay.",
+  "move": "A signature names who was responsible, not whose hands did the work.",
+  "trap": "Picturing the lone sculptor with a chisel, the image museums sell.",
+  "keywords": [
+    "hiram powers",
+    "greek slave",
+    "pointing machine",
+    "studio assistants",
+    "plaster model"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smithsonian American Art Museum, Greek Slave model",
+  "source_kind": "institution",
+  "reference": "https://americanart.si.edu/artwork/model-of-the-greek-slave-20060",
+  "written": "2026-09-26"
+}

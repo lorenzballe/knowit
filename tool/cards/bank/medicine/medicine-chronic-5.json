@@ -1,0 +1,32 @@
+{
+  "id": "medicine-chronic-5",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "For what share of people with low back pain can a doctor name a specific cause?",
+  "answer": "Only about one in ten. The remaining 90% or so is labelled non-specific: no fracture, infection, tumour or trapped nerve explains it. This is the condition that causes more years lived with disability worldwide than any other. Most of that burden rests on a diagnosis that says what the pain is not.",
+  "move": "A common label can mean nobody knows yet.",
+  "keywords": [
+    "low back pain",
+    "non-specific pain",
+    "disability",
+    "diagnosis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maher, Underwood & Buchbinder, The Lancet, 2017",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/27745712/",
+  "written": "2026-09-26"
+}

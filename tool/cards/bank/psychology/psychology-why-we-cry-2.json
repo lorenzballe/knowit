@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-cry-2",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a good cry at a sad film leave people feeling better, and when?",
+  "answer": "Yes, but not at first. Of 60 viewers of two sad films, the 28 who cried felt worse straight after, were back to their starting mood 20 minutes later, and felt better than before after 90 minutes. The 32 who stayed dry felt no change. The relief comes late, after a dip.",
+  "move": "Judge a remedy by its whole curve, not the moment after.",
+  "keywords": [
+    "crying",
+    "mood",
+    "catharsis",
+    "sad films",
+    "tears"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Gračanin et al., Motivation and Emotion, 2015",
+  "source_kind": "paper",
+  "reference": "Gračanin, Vingerhoets, Kardum et al., Why crying does and sometimes does not seem to alleviate mood: a quasi-experimental study, Motivation and Emotion, 2015",
+  "written": "2026-09-26"
+}

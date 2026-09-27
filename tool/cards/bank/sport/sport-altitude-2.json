@@ -1,0 +1,35 @@
+{
+  "id": "sport-altitude-2",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "also": [
+    "human_body.blood_and_heart.circulation"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How quickly does living at altitude add to the blood's oxygen-carrying capacity?",
+  "answer": "Slowly: about 1% more haemoglobin for every 100 hours spent high. The kidneys raise their output of the hormone erythropoietin within hours, but new red cells take weeks to mature. That is why camps last three to four weeks at around 2,000 to 2,500 m, and a short trip up the mountain does almost nothing.",
+  "move": "Ask how long the body needs to build what the signal asks for.",
+  "keywords": [
+    "haemoglobin mass",
+    "erythropoietin",
+    "red blood cells",
+    "altitude camps"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gore et al., Br J Sports Med, 2013",
+  "source_kind": "paper",
+  "reference": "Gore et al., Altitude training and haemoglobin mass from the optimised carbon monoxide rebreathing method determined by a meta-analysis, British Journal of Sports Medicine, 2013",
+  "written": "2026-09-26"
+}

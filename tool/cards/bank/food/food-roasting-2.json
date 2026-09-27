@@ -1,0 +1,33 @@
+{
+  "id": "food-roasting-2",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do bags of freshly roasted coffee beans carry a small one-way valve?",
+  "answer": "Because the beans keep exhaling. Roasting traps carbon dioxide in the bean, which seeps out for days and would swell a sealed bag. Leaving beans open to degas lets in the oxygen that stales them. The valve, introduced by the Italian packager Goglio in the 1960s, lets gas out and no air in.",
+  "move": "When a product must breathe out, stop it breathing in.",
+  "keywords": [
+    "degassing valve",
+    "carbon dioxide",
+    "packaging",
+    "goglio",
+    "staling"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Global Coffee Report",
+  "source_kind": "news_archive",
+  "reference": "https://www.gcrmag.com/goglio-leads-the-pack-a-history-of-innovation-in-coffee-packaging/",
+  "written": "2026-09-26"
+}

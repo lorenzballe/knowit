@@ -1,0 +1,43 @@
+{
+  "id": "science-cooking-reactions-1",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 5 g spoonful of bicarbonate of soda, 84 g per mole, fizzes with enough vinegar. How many litres of carbon dioxide come off?",
+  "value": 1.4,
+  "unit": "litres",
+  "tolerance": 0.1,
+  "answer": "A mole of gas fills about 24 litres at room temperature: 0.06 x 24 = 1.4 litres.",
+  "move": "A solid that turns to gas swells hundreds of times over.",
+  "trap": "Picturing the gas as roughly the size of the spoonful.",
+  "hint": "Each unit of bicarbonate gives one unit of gas, and a mole of any gas fills about 24 litres.",
+  "steps": [
+    "5 g / 84 g per mole = 0.06 moles of bicarbonate.",
+    "Each mole of bicarbonate releases one mole of carbon dioxide: 0.06 moles.",
+    "A mole of gas fills about 24 litres at room temperature: 0.06 x 24 = 1.4 litres."
+  ],
+  "keywords": [
+    "bicarbonate of soda",
+    "vinegar",
+    "carbon dioxide",
+    "baking",
+    "moles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IUPAC standard atomic weights, 2021",
+  "source_kind": "reference_work",
+  "reference": "IUPAC Commission on Isotopic Abundances and Atomic Weights, Standard atomic weights of the elements, 2021",
+  "written": "2026-09-26"
+}

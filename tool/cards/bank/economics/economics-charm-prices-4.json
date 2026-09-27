@@ -1,0 +1,33 @@
+{
+  "id": "economics-charm-prices-4",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do prices ending in 99 cents do to how often a shop changes its prices?",
+  "answer": "They make prices stickier. In years of scanner data from Dominick's, a Chicago supermarket chain, Levy and colleagues found prices ending in 9 were both the most common and the least likely to change. A tag at $2.99 skips the small moves and waits for a cost rise big enough to justify $3.49.",
+  "move": "A price that is convenient to keep will be kept longer than it should.",
+  "keywords": [
+    "price endings",
+    "price rigidity",
+    "supermarkets",
+    "scanner data",
+    "inflation"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levy et al., REStat, 2011",
+  "source_kind": "paper",
+  "reference": "Levy, Lee, Chen, Kauffman & Bergen, Price Points and Price Rigidity, Review of Economics and Statistics, 2011",
+  "written": "2026-09-26"
+}

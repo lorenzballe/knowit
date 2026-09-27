@@ -1,0 +1,40 @@
+{
+  "id": "nature-deep-sea-1",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Ocean trenches reach almost 11 km down. How deep is the deepest fish ever filmed?",
+  "options": [
+    "About 10.9 km",
+    "About 8.3 km",
+    "About 5 km"
+  ],
+  "correct": 1,
+  "answer": "About 8.3 km: a snailfish filmed at 8,336 m in the Izu-Ogasawara Trench off Japan in 2022. Fish seem capped there because their cells need a molecule, TMAO, that shields proteins from pressure, and more of it the deeper they go. Near 8,200 m the dose would make their body fluids as concentrated as seawater.",
+  "move": "How far a space extends says little about how far its occupants go.",
+  "trap": "About 10.9 km, letting the trench's depth set the guess.",
+  "keywords": [
+    "snailfish",
+    "hadal zone",
+    "ocean trenches",
+    "tmao",
+    "deep-sea pressure"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yancey et al., PNAS, 2014; UWA, 2023",
+  "source_kind": "paper",
+  "reference": "Yancey et al., Marine fish may be biochemically constrained from inhabiting the deepest ocean depths, PNAS, 2014; University of Western Australia and Tokyo University of Marine Science and Technology, deepest fish filmed at 8,336 m, announced 2023",
+  "written": "2026-09-26"
+}

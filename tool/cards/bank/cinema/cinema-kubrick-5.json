@@ -1,0 +1,43 @@
+{
+  "id": "cinema-kubrick-5",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "also": [
+    "cinema.how_films_are_made.lighting"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Barry Lyndon's candlelit scenes used an f/0.7 lens. How much more light does it admit than an f/1.4 lens?",
+  "options": [
+    "About twice as much",
+    "About four times as much",
+    "About eight times as much"
+  ],
+  "correct": 1,
+  "answer": "About four times. Light through a lens scales with the area of its opening, so with the square of the ratio of f-numbers: (1.4 / 0.7)² = 4. The Zeiss lenses, built for NASA, let candles alone light a room, at the price of focus so shallow that actors could barely lean forward.",
+  "move": "When a width changes, the area changes by its square.",
+  "trap": "About twice, because the f-number was halved.",
+  "keywords": [
+    "barry lyndon",
+    "f-number",
+    "zeiss lens",
+    "candlelight",
+    "nasa"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Alcott, American Cinematographer, 1976",
+  "source_kind": "primary_document",
+  "reference": "Alcott, Photographing Stanley Kubrick's Barry Lyndon, American Cinematographer, March 1976",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-joy-4",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: the statistics that found happiness spreading between friends also find height spreading between them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Applied to American teenagers, the standard method detected acne, headaches and even height passing between friends, though none of them can spread that way. Once shared surroundings were allowed for, all three effects became small and insignificant. Friends share schools, towns and incomes, and those move moods too.",
+  "move": "When friends change together, check what they share before crediting influence.",
+  "trap": "Height cannot spread, so a sound method would find nothing.",
+  "keywords": [
+    "happiness contagion",
+    "social networks",
+    "confounding",
+    "height",
+    "friendship"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cohen-Cole & Fletcher, BMJ, 2008",
+  "source_kind": "paper",
+  "reference": "doi:10.1136/bmj.a2533",
+  "written": "2026-09-26"
+}

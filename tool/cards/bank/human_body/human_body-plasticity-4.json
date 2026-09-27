@@ -1,0 +1,32 @@
+{
+  "id": "human_body-plasticity-4",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the adult human hippocampus, the brain's memory hub, keep making new neurons?",
+  "answer": "Contested, and tissue handling may decide it. Radiocarbon in neuron DNA suggested about 700 new neurons a day in each hippocampus (2013). A 2018 study found them fading to undetectable levels after childhood; a 2019 study of quickly preserved brains found thousands in people up to 87. Slow preservation can hide the marker both counted.",
+  "move": "When careful studies disagree, look at how the samples were kept.",
+  "keywords": [
+    "adult neurogenesis",
+    "hippocampus",
+    "radiocarbon dating",
+    "tissue preservation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moreno-Jiménez et al., Nature Medicine, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41591-019-0375-9",
+  "written": "2026-09-26"
+}

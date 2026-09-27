@@ -1,0 +1,43 @@
+{
+  "id": "medicine-blood-tests-2",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "Each normal range spans the middle 95% of healthy people. Across 20 independent tests, what percentage of healthy people get an abnormal flag?",
+  "value": 64,
+  "unit": "percent",
+  "answer": "About 64%.",
+  "move": "Run enough checks on anything and something will look wrong.",
+  "trap": "Guessing 5%, the rate for one test, for the whole panel.",
+  "hint": "Work out the chance that every result lands inside its range, then subtract.",
+  "steps": [
+    "Chance one test comes back normal: 0.95.",
+    "Chance all 20 are normal: 0.95^20 = 0.358.",
+    "Chance at least one is flagged: 1 - 0.358 = 0.642.",
+    "About 64%."
+  ],
+  "keywords": [
+    "reference intervals",
+    "blood tests",
+    "false positives",
+    "multiple testing",
+    "health checks"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "CLSI EP28-A3c, reference intervals standard",
+  "source_kind": "standard",
+  "reference": "Clinical and Laboratory Standards Institute, EP28-A3c: Defining, Establishing, and Verifying Reference Intervals in the Clinical Laboratory, 2008",
+  "written": "2026-09-26"
+}

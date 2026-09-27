@@ -1,0 +1,33 @@
+{
+  "id": "medicine-placebo-3",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1978, what cancelled the pain relief that dummy injections gave patients after wisdom-tooth surgery?",
+  "answer": "Naloxone, a drug that blocks opioid receptors. In a San Francisco trial, patients whose pain eased after a placebo felt it return when given naloxone, while non-responders did not get worse. So the relief ran partly on the brain's own opioids, endorphins. A saline injection had a chemistry that a drug could switch off.",
+  "move": "Something that can be blocked by a drug is not imaginary.",
+  "keywords": [
+    "placebo analgesia",
+    "naloxone",
+    "endorphins",
+    "wisdom teeth",
+    "jon levine"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levine, Gordon & Fields, The Lancet, 1978",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/80579/",
+  "written": "2026-09-26"
+}

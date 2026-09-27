@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-streaming-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did HBO's owner take its own finished series Westworld off its streaming service?",
+  "answer": "To stop it costing money. In late 2022 Warner Bros. Discovery pulled Westworld and other shows from HBO Max, a cut widely reported as a way to shed residuals, the fees owed to cast and crew for continued use. It then licensed them to free, advert-funded channels on Roku and Tubi.",
+  "move": "A shelf that charges rent will be emptied, whatever sits on it.",
+  "keywords": [
+    "westworld",
+    "hbo max",
+    "warner bros discovery",
+    "residuals",
+    "fast channels"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deadline, January 2023",
+  "source_kind": "news_archive",
+  "reference": "https://deadline.com/2023/01/westworld-gets-new-home-as-warner-bros-discovery-strikes-roku-tubi-fast-channel-deals-1235245347/",
+  "written": "2026-09-26"
+}

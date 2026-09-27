@@ -1,0 +1,36 @@
+{
+  "id": "space-perseverance-4",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On Mars, why would the high notes of a distant tune arrive before the low ones?",
+  "answer": "Because Martian air carries sound at two speeds. Perseverance's microphone, timing the cracks of its laser on rocks, found sounds above about 240 Hz travel near 250 m/s and lower ones about 10 m/s slower: thin carbon dioxide lags behind quick pressure swings. Over 100 m, a chord splits by a sixtieth of a second.",
+  "move": "Check whether the medium treats every part of a message alike.",
+  "keywords": [
+    "speed of sound",
+    "supercam",
+    "carbon dioxide",
+    "mars atmosphere",
+    "microphone"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maurice et al., Nature, 2022",
+  "source_kind": "paper",
+  "reference": "Maurice et al., In situ recording of Mars soundscape, Nature, 2022",
+  "written": "2026-09-26"
+}

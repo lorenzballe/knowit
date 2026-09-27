@@ -1,0 +1,33 @@
+{
+  "id": "nature-deep-sea-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did wartime echo sounders mistake for a second seabed?",
+  "answer": "A layer of animals. In 1942 Navy-funded scientists off California found echoes from a false bottom a few hundred metres down in deep water. It rose towards the surface at dusk and sank at dawn, which Martin Johnson read in 1945 as life: fish, shrimp and jellies making the largest daily migration on Earth.",
+  "move": "When a fixed feature moves on a schedule, suspect something alive.",
+  "keywords": [
+    "deep scattering layer",
+    "sonar",
+    "vertical migration",
+    "martin johnson",
+    "twilight zone"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eyring, Christensen & Raitt, 1948",
+  "source_kind": "paper",
+  "reference": "Eyring, Christensen & Raitt, Reverberation in the sea, Journal of the Acoustical Society of America, 1948",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-sitcoms-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should streaming services cut or pull old sitcom episodes whose jokes now read as slurs?",
+  "sides": [
+    "Yes, cut or pull them",
+    "No, keep them whole"
+  ],
+  "answer": "A library is a publisher, and publishers choose what they sell. A slur played for laughs lands on viewers who never agreed to hear it, including children browsing at random. Nothing is destroyed: the episode survives on disc and in archives. Streaming simply stops pushing it into living rooms by autoplay.",
+  "move": "Whichever side you took, the question is who the joke laughs at.",
+  "counterpoint": "Cutting a scene removes its context too. In the 1975 Fawlty Towers episode pulled by UKTV in 2020, the slurs belong to a senile major the show mocks, and the episode came back within days with a warning. An edited stream quietly becomes the only version most people ever see.",
+  "keywords": [
+    "fawlty towers",
+    "uktv",
+    "content warnings",
+    "censorship",
+    "streaming libraries"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ABC News, June 2020",
+  "source_kind": "news_archive",
+  "reference": "https://www.abc.net.au/news/2020-06-12/fawlty-towers-episode-removed-by-uktv-overracial-slur/12348070",
+  "written": "2026-09-26"
+}

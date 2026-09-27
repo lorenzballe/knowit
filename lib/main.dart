@@ -7,9 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'analytics.dart';
 import 'cloud.dart';
+import 'data/pill_bank.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'l10n/l10n.dart';
+import 'models/pill.dart';
 import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
@@ -21,10 +23,39 @@ import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
+import 'sync/served.dart';
 import 'sync/tally.dart';
+import 'sync/trace.dart';
 import 'utils/home_widget.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
+
+/// The seeded crowd for Explore's top list: the live bank, tilted to what
+/// readers keep — a question over a fact, a debate over both, the hard ones,
+/// and the subjects people pass on.
+TopSeed launchCrowd() => TopSeed(
+  ids: () => PillBank.cards.map((p) => p.id),
+  appeal: (id) {
+    final Pill? p = PillBank.byId(id);
+    if (p == null) return 0;
+    var a = 1.0;
+    if (p.challenge is TakeASide) {
+      a *= 1.3;
+    } else if (p.asksSomething) {
+      a *= 1.2;
+    }
+    if (p.difficulty == Difficulty.hard) a *= 1.2;
+    if (const {
+      'Weird facts',
+      'Psychology',
+      'Space',
+      'Human body',
+    }.contains(p.topic)) {
+      a *= 1.2;
+    }
+    return a;
+  },
+);
 
 Future<void> main() async {
   Analytics.launched();
@@ -44,6 +75,9 @@ Future<void> main() async {
     'ms': cloudMs,
     'failure': Cloud.failure == null ? null : Analytics.short(Cloud.failure!),
   });
+  // Explore's top list, with the launch crowd under the real counts until
+  // there are enough of them. See TopSeed.
+  Tallies.instance = Tallies(seed: launchCrowd());
   // Session replay takes its pictures from under this widget. Only where
   // measurement is running and the platform records at all.
   runApp(
@@ -229,8 +263,17 @@ class _AstutoRootState extends State<AstutoRoot> {
     super.initState();
     _account.watch(_app);
     _lifecycle = AppLifecycleListener(
-      onPause: _account.flush,
-      onDetach: _account.flush,
+      onPause: () {
+        // How long the app was open this time: the one number a daily
+        // habit is measured by, said before the flush that carries it.
+        Analytics.capture('app paused', {'ms_in_app': Analytics.msSinceLaunch});
+        _account.flush();
+        Trace.instance.flush();
+      },
+      onDetach: () {
+        _account.flush();
+        Trace.instance.flush();
+      },
       // Coming back to the foreground re-arms tomorrow's nudge with today's
       // streak in it, and quietly — no prompt ever comes from here.
       onResume: () {
@@ -759,7 +802,10 @@ class _AstutoShellState extends State<AstutoShell>
     Analytics.capture('tab opened', {'tab': names[tab], 'by': by});
     // Explore's top list, read again on the way in when it is ten minutes
     // old; the call says so itself when it is not.
-    if (names[tab] == 'explore') Tallies.instance.refresh();
+    if (names[tab] == 'explore') {
+      Tallies.instance.refresh();
+      Served.instance.explore();
+    }
   }
 
   @override

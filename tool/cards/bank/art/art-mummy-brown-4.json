@@ -1,0 +1,39 @@
+{
+  "id": "art-mummy-brown-4",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What did Edward Burne-Jones do with his tube of mummy brown once he learned what it was made of?",
+  "options": [
+    "Sent it back to his colourman",
+    "Used it up on one last canvas",
+    "Buried it in his garden"
+  ],
+  "correct": 2,
+  "answer": "Buried it in his garden. Assured by Alma-Tadema that the paint was ground from real Egyptian mummies, he fetched the tube from his studio and buried it there and then, as his wife Georgiana later recalled. A Victorian painter answered a paint label with a funeral: a tube laid in the earth like a body.",
+  "move": "Knowing where a material comes from can end a habit overnight.",
+  "trap": "Returning a product that disappoints is what a customer usually does.",
+  "keywords": [
+    "edward burne-jones",
+    "georgiana burne-jones",
+    "mummy brown",
+    "pre-raphaelites"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Georgiana Burne-Jones, Memorials, 1904",
+  "source_kind": "book",
+  "reference": "Georgiana Burne-Jones, Memorials of Edward Burne-Jones, 2 vols, Macmillan, 1904",
+  "written": "2026-09-26"
+}

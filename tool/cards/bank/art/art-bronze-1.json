@@ -1,0 +1,36 @@
+{
+  "id": "art-bronze-1",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "also": [
+    "art.sculpture.lost_colour"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does one of the Riace warriors have copper lips and silver teeth?",
+  "answer": "To stand out against bright metal. The two Greek bronzes of the 400s BC have lips and nipples inlaid in reddish copper and eyes of calcite; one shows a row of silver teeth. Such contrasts suit bronze polished to a warm brown, the finish most specialists think intended. Today's dark patina is largely corrosion.",
+  "move": "Judge an old object by its first surface, not by what time added.",
+  "keywords": [
+    "riace bronzes",
+    "inlays",
+    "copper",
+    "patina",
+    "greek sculpture"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mattusch, Classical Bronzes, 1996",
+  "source_kind": "book",
+  "reference": "Carol C. Mattusch, Classical Bronzes: The Art and Craft of Greek and Roman Statuary, Cornell University Press, 1996",
+  "written": "2026-09-26"
+}

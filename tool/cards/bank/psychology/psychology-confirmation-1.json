@@ -1,0 +1,33 @@
+{
+  "id": "psychology-confirmation-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Long before psychologists named confirmation bias, who described it in detail, and with what example?",
+  "answer": "Francis Bacon, in 1620. Once the mind adopts an opinion, he wrote, it draws all things to support it and neglects the rest. His example: a man shown temple paintings of sailors who prayed and survived shipwreck asked where those who prayed and drowned were painted. The negative instance, Bacon added, is the more forcible.",
+  "move": "Before counting the hits, ask where the misses are kept.",
+  "keywords": [
+    "francis bacon",
+    "novum organum",
+    "confirmation bias",
+    "shipwreck",
+    "superstition"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bacon, Novum Organum, 1620",
+  "source_kind": "book",
+  "reference": "Bacon, The New Organon, ed. Jardine & Silverthorne, Cambridge University Press, 2000",
+  "written": "2026-09-26"
+}

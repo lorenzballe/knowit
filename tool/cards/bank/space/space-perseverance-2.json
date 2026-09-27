@@ -1,0 +1,38 @@
+{
+  "id": "space-perseverance-2",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: Perseverance has found a Martian rock whose chemistry only living things could have produced?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2024 it sampled a mudstone nicknamed Cheyava Falls, with millimetre-wide leopard spots rimmed by iron minerals that on Earth often form where microbes feed on organic matter. Published in 2025 as a potential biosignature, it still has non-living explanations nobody has ruled out. Only the sample, in a lab on Earth, could decide.",
+  "move": "Evidence that fits your idea is not yet evidence against the rival idea.",
+  "trap": "Taking features that fit life as features only life can make.",
+  "keywords": [
+    "cheyava falls",
+    "biosignatures",
+    "leopard spots",
+    "jezero crater"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hurowitz et al., Nature, 2025",
+  "source_kind": "paper",
+  "reference": "Hurowitz et al., Redox-driven mineral and organic associations in Jezero Crater, Mars, Nature, 2025",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-glass-4",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a toughened glass panel can shatter by itself, years after fitting, with nothing touching it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The best-known culprit is a speck of nickel sulphide trapped when the glass was made. Toughening freezes it in a high-temperature crystal form; over months or years it reverts and swells by a few per cent, enough to release the stress stored in the pane. Baking panes at about 290 °C weeds most out.",
+  "move": "A flaw can wait years for the conditions that set it off.",
+  "trap": "Glass only breaks when something hits it or bends it.",
+  "keywords": [
+    "toughened glass",
+    "nickel sulphide",
+    "spontaneous breakage",
+    "heat soak test"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EN 14179, heat soaked toughened safety glass",
+  "source_kind": "standard",
+  "reference": "EN 14179-1:2005, Glass in building — Heat soaked thermally toughened soda lime silicate safety glass — Part 1: Definition and description",
+  "written": "2026-09-26"
+}

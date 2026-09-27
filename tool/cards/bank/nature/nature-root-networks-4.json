@@ -1,0 +1,32 @@
+{
+  "id": "nature-root-networks-4",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the first pines planted in Western Australia sicken and stop growing?",
+  "answer": "The soil lacked their fungi. Pines depend on ectomycorrhizal fungi, which sheathe their roots and gather phosphorus and nitrogen in exchange for sugar, and no pine had grown there before. In the 1920s foresters found the cure: soil carried in from an established pine plantation, worked into the nursery beds, set seedlings growing.",
+  "move": "Transplant anything alone and you may leave behind the partner that made it work.",
+  "keywords": [
+    "pine plantations",
+    "mycorrhizal fungi",
+    "western australia",
+    "soil inoculation"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kessell, Empire Forestry Journal, 1927",
+  "source_kind": "paper",
+  "reference": "Kessell, Soil organisms: the dependence of certain pine species on a biological soil factor, Empire Forestry Journal, 1927",
+  "written": "2026-09-26"
+}

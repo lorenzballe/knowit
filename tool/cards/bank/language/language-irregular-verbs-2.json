@@ -1,0 +1,39 @@
+{
+  "id": "language-irregular-verbs-2",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In baseball, a batter who hits a high catchable ball is said to fly out. Yesterday, he did what?",
+  "options": [
+    "Flew out",
+    "Flied out",
+    "Flown out"
+  ],
+  "correct": 1,
+  "answer": "Flied out. Here fly is made from the noun a fly, short for fly ball, and a verb built from a noun takes the regular -ed, not the irregular past of the verb it resembles. The same logic gives a city ringed by troops, not rung, and a player who grandstanded.",
+  "move": "Ask what a word is made from before deciding which rule it obeys.",
+  "trap": "Fly already has the past tense flew, so flew out sounds right.",
+  "keywords": [
+    "flied out",
+    "baseball",
+    "past tense",
+    "steven pinker"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kim et al., Cognitive Science, 1991",
+  "source_kind": "paper",
+  "reference": "Kim, Pinker, Prince & Prasada, Why no mere mortal has ever flown out to center field, Cognitive Science, 1991",
+  "written": "2026-09-26"
+}

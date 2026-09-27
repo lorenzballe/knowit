@@ -1,0 +1,33 @@
+{
+  "id": "music-techno-3",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Berlin's Love Parade, a rave of hundreds of thousands, registered for years as a political demonstration?",
+  "answer": "Because a demonstration is a protected right, and the public covers its policing and street cleaning. The first parade, in July 1989, was about 150 people on the Kurfürstendamm under the slogan Peace, Joy, Pancakes. In 2001 the Federal Constitutional Court refused to restore that status, and the costs fell on the organisers.",
+  "move": "Ask who pays for the cleanup before calling an event free.",
+  "keywords": [
+    "love parade",
+    "berlin",
+    "demonstration",
+    "constitutional court",
+    "rave"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "German Law Journal, 2001",
+  "source_kind": "paper",
+  "reference": "https://www.cambridge.org/core/journals/german-law-journal/article/cuttingin-on-the-dance-the-federal-constitutional-court-rejects-a-motion-for-a-temporary-injunction-from-berlins-love-parade/F64606DA9367958F183A7619C82704C8",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cinema-editing-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the Kuleshov effect was established by measuring audience reactions in the 1920s?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The original footage is lost, and the evidence is Kuleshov's and Pudovkin's own later accounts, which even disagree on the shots used. The first controlled recreation, in 1992, found viewers mostly read the face as neutral whatever it was cut with. A 2016 study with a better design found only a modest effect.",
+  "move": "Before citing a classic demonstration, ask who counted the results, and how.",
+  "trap": "Assuming a textbook effect rests on a textbook experiment.",
+  "keywords": [
+    "kuleshov effect",
+    "montage",
+    "replication",
+    "soviet cinema"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Barratt et al., Perception, 2016",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0301006616638595",
+  "written": "2026-09-26"
+}

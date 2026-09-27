@@ -1,0 +1,39 @@
+{
+  "id": "human_body-heartbeat-4",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Slower resting pulses go with longer lives. In a trial of 19,102 heart patients, what did a pulse-slowing drug do?",
+  "options": [
+    "Cut neither deaths nor attacks",
+    "Cut deaths and heart attacks",
+    "Cut attacks but not deaths"
+  ],
+  "correct": 0,
+  "answer": "Cut neither. In the 2014 SIGNIFY trial, ivabradine lowered resting pulses as intended, yet cardiovascular deaths and heart attacks were no fewer than on placebo, and patients with severe angina fared slightly worse. A slow pulse partly marks what produces it: fitness and a healthy heart. Slowing the needle did not change the engine.",
+  "move": "Pushing a gauge to a good reading does not fix what it measures.",
+  "trap": "If slow pulses mark long lives, slowing the pulse should help.",
+  "keywords": [
+    "resting heart rate",
+    "ivabradine",
+    "signify trial",
+    "surrogate markers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fox et al., NEJM, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJMoa1406430",
+  "written": "2026-09-26"
+}

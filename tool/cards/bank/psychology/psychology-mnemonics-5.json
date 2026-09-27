@@ -1,0 +1,38 @@
+{
+  "id": "psychology-mnemonics-5",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a major 2013 review of ten study techniques rated keyword mnemonics among the most useful?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Dunlosky and colleagues rated the keyword mnemonic, tying a foreign word to a vivid image of a similar-sounding one, low utility. It suits word pairs, takes effort to build, and in some studies its edge faded after a delay. Only practice testing and spaced practice were rated high.",
+  "move": "Judge a method by what is left a week later, not by how it feels.",
+  "trap": "Trusting a technique because its images are so easy to picture.",
+  "keywords": [
+    "keyword mnemonic",
+    "study techniques",
+    "practice testing",
+    "vocabulary"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dunlosky et al., Psychological Science, Public Interest, 2013",
+  "source_kind": "paper",
+  "reference": "Dunlosky, Rawson, Marsh, Nathan & Willingham, Improving students' learning with effective learning techniques, Psychological Science in the Public Interest, 2013",
+  "written": "2026-09-26"
+}

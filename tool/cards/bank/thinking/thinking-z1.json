@@ -2,7 +2,7 @@
   "id": "thinking-z1",
   "topic": "thinking",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "baseRate",
   "question": "An insurer flags 2% of claims as suspicious. About 1 claim in 400 is actually fraudulent, and the flag catches most of those. Your claim is flagged. Odds it is fraud?",
   "options": [
@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "source": "Base rate neglect in claims screening"
+  "source": "Base rate neglect in claims screening",
+  "source_kind": "arithmetic",
+  "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
 }

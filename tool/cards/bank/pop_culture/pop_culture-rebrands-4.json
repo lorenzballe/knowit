@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-rebrands-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did ValuJet get a new name after its 1996 crash?",
+  "answer": "It bought one. After Flight 592 burned and crashed in the Everglades in May 1996, killing all 110 aboard, and regulators grounded the airline for months, ValuJet bought the much smaller AirTran Airways in 1997 and took its name for the combined company. The larger partner disappeared inside the smaller one's livery.",
+  "move": "When a name becomes a liability, buying a smaller one can be cheaper than repair.",
+  "keywords": [
+    "valujet",
+    "airtran",
+    "flight 592",
+    "airlines",
+    "airline mergers"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EBSCO Research Starters, ValuJet Flight 592",
+  "source_kind": "institution",
+  "reference": "https://www.ebsco.com/research-starters/history/valujet-flight-592-crash",
+  "written": "2026-09-26"
+}

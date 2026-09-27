@@ -1,0 +1,38 @@
+{
+  "id": "nature-coral-5",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should places ban sunscreens containing the UV filter oxybenzone to protect coral reefs?",
+  "sides": [
+    "Yes, ban them",
+    "No, allow them"
+  ],
+  "answer": "In laboratory tests, Downs and colleagues found oxybenzone deformed and killed coral larvae at low concentrations, and crowded swimming bays can carry measurable amounts. Mineral sunscreens and swim shirts are cheap alternatives. When a small switch removes a plausible harm to reefs already weakened by heat, waiting for perfect proof lets damage pile up.",
+  "move": "Whichever side you took, the dose actually found on reefs decides it.",
+  "counterpoint": "Field surveys mostly find oxybenzone far below the levels that harmed corals in the laboratory, and in 2022 the US National Academies judged the evidence too thin to characterise the risk. Heat is what is bleaching reefs worldwide. Bans let governments look busy, may put people off sunscreen, and pull attention from the emissions that matter.",
+  "keywords": [
+    "oxybenzone",
+    "sunscreen",
+    "coral reefs",
+    "uv filters",
+    "precaution"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASEM, Sunscreens in Aquatic Environments, 2022",
+  "source_kind": "institution",
+  "reference": "National Academies of Sciences, Engineering, and Medicine, Review of Fate, Exposure, and Effects of Sunscreens in Aquatic Environments and Implications for Sunscreen Usage and Human Health, National Academies Press, 2022; Downs et al., Toxicopathological effects of the sunscreen UV filter, oxybenzone (benzophenone-3), on coral planulae and cultured primary cells and its environmental contamination in Hawaii and the U.S. Virgin Islands, Archives of Environmental Contamination and Toxicology, 2016",
+  "written": "2026-09-26"
+}

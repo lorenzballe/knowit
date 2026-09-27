@@ -1,0 +1,39 @@
+{
+  "id": "medicine-painkillers-4",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: codeine relieves pain on its own, without the body first turning any of it into morphine?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Most of its effect comes from the small share, around a tenth, that the liver enzyme CYP2D6 converts to morphine. Gene variants make some people poor converters, who get little relief, and others ultra-rapid, who can overdose on a normal dose. After child deaths, the FDA barred codeine for under-12s in 2017.",
+  "move": "The same dose is not the same drug in two different bodies.",
+  "trap": "Taking codeine for a weaker opioid that acts by itself.",
+  "keywords": [
+    "codeine",
+    "morphine",
+    "cyp2d6",
+    "pharmacogenetics",
+    "children"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Food and Drug Administration, 2017",
+  "source_kind": "institution",
+  "reference": "US Food and Drug Administration, Drug Safety Communication: FDA restricts use of prescription codeine pain and cough medicines and tramadol pain medicines in children, 2017",
+  "written": "2026-09-26"
+}

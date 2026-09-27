@@ -1,0 +1,36 @@
+{
+  "id": "space-moon-dust-2",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "also": [
+    "space.the_moon.landing_sites"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Apollo 12 landed less than 200 m from the old Surveyor 3 probe. What did its landing do to the probe?",
+  "answer": "Sandblasted it. The descent engine's exhaust drove fine grit low and fast across the surface. When the crew walked over and cut off parts to bring home, the side that had faced their lander was pitted and scoured, with sharp outlines where struts had shielded it. Every lunar landing is also a small dust storm.",
+  "move": "Every arrival changes the place it arrives at.",
+  "keywords": [
+    "apollo 12",
+    "surveyor 3",
+    "rocket exhaust",
+    "sandblasting",
+    "regolith"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Immer et al., Icarus, 2011",
+  "source_kind": "paper",
+  "reference": "Immer, Metzger, Hintze, Nick & Horan, Apollo 12 Lunar Module exhaust plume impingement on Lunar Surveyor III, Icarus, 2011",
+  "written": "2026-09-26"
+}

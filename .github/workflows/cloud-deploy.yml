@@ -1,0 +1,45 @@
+# Deploys the server: the functions, the Firestore rules and the indexes.
+#
+# Run by hand from the Actions tab, never on a push: a deploy changes what
+# every phone is dealt from tomorrow, and it should be a decision. It needs
+# one secret, FIREBASE_SERVICE_ACCOUNT: the JSON key of a service account
+# on the project with the roles Cloud Functions Admin, Firebase Rules Admin,
+# Cloud Scheduler Admin, Service Account User and Artifact Registry Writer
+# (Firebase console → Project settings → Service accounts → Generate new
+# private key gives one with enough, as the project's default account).
+name: Cloud deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: What to deploy
+        default: functions,firestore:rules,firestore:indexes
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: functions/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+        working-directory: functions
+      - run: npm test
+        working-directory: functions
+      - name: Deploy
+        env:
+          KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          test -n "$KEY" || { echo "FIREBASE_SERVICE_ACCOUNT is not set"; exit 1; }
+          printf '%s' "$KEY" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          npx --yes firebase-tools@15 deploy --only "${{ inputs.only }}" --project astuto-3d398 --non-interactive --force

@@ -1,0 +1,40 @@
+{
+  "id": "food-origins-2",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After Brazil, which country grows the most coffee?",
+  "options": [
+    "Colombia",
+    "Vietnam",
+    "Ethiopia"
+  ],
+  "correct": 1,
+  "answer": "Vietnam. It grows mostly robusta, the hardier, more bitter species used in instant coffee and blends, on the central highlands, where planting boomed from the 1990s. Its harvest is more than twice Colombia's. Robusta rarely carries a country's name on the bag, so the second-largest origin is one few drinkers could point to.",
+  "move": "The name printed on the label is not a measure of the volume behind it.",
+  "trap": "Colombia, whose name is advertised on bags and in cafés everywhere.",
+  "keywords": [
+    "vietnam",
+    "robusta",
+    "coffee production",
+    "brazil",
+    "colombia"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "USDA FAS, Coffee: World Markets and Trade",
+  "source_kind": "statistics",
+  "reference": "USDA Foreign Agricultural Service, Coffee: World Markets and Trade, June 2024",
+  "written": "2026-09-26"
+}

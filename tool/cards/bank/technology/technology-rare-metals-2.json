@@ -1,0 +1,33 @@
+{
+  "id": "technology-rare-metals-2",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did chemists take 44 years to notice that one rare-earth 'element' was really two?",
+  "answer": "Because the rare earths are chemical near-copies. Carl Mosander named didymium, the twin, in 1841; only in 1885 did Carl Auer von Welsbach split it into praseodymium and neodymium, by crystallising its salts over and over. Refiners still face the same sameness: separation plants run the liquid through hundreds of extraction tanks in series.",
+  "move": "When two things behave identically, expect them to be counted as one.",
+  "keywords": [
+    "didymium",
+    "neodymium",
+    "praseodymium",
+    "rare earth separation",
+    "auer von welsbach"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Emsley, Nature's Building Blocks, 2011",
+  "source_kind": "book",
+  "reference": "Emsley, Nature's Building Blocks: An A-Z Guide to the Elements, 2nd edition, Oxford University Press, 2011",
+  "written": "2026-09-26"
+}

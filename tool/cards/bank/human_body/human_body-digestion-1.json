@@ -1,0 +1,36 @@
+{
+  "id": "human_body-digestion-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did northern Europeans and East African herders inherit their adult milk digestion from shared ancestors?",
+  "answer": "No. Each population carries its own mutation, arisen separately within the last several thousand years, yet they sit in the same short stretch of DNA: a switch that normally turns the lactase gene off after weaning. Evolution flipped that one switch several separate times, wherever people kept animals for milk.",
+  "move": "The same solution twice can mean the same problem twice, not shared descent.",
+  "keywords": [
+    "lactase persistence",
+    "milk",
+    "convergent evolution",
+    "pastoralists",
+    "mutation"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tishkoff et al., Nature Genetics, 2007",
+  "source_kind": "paper",
+  "reference": "Tishkoff, Reed, Ranciaro et al., Convergent adaptation of human lactase persistence in Africa and Europe, Nature Genetics, 2007",
+  "written": "2026-09-26"
+}

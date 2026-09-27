@@ -1,8 +1,9 @@
 rules_version = '2';
 
-// Astute stores one document per reader, one board per reader that a
-// friend may look at, and a count per card per day of how many readers held
-// on to it. The policy: you may read and write your own, anyone signed in
+// Astute stores one document per reader, with what they did and what was
+// dealt them under it, one board per reader that a friend may look at, a
+// count per card per day of how many readers held on to it, the same count
+// kept for good, and Explore as the server assembled it. The policy: you may read and write your own, anyone signed in
 // may read a board or a day's counts and add one to a count, and nothing
 // else exists.
 //
@@ -48,6 +49,51 @@ service cloud.firestore {
       match /saved/{pillId} {
         allow read, write: if isOwner(uid);
       }
+
+      // What the reader did, a document per UTC day: the events the app
+      // wrote down (see lib/sync/trace.dart), which the server reads to
+      // deal them their day. Theirs to write and to read; the server's
+      // functions read it with admin rights and nobody else does.
+      match /activity/{day} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+          && request.resource.data.keys().hasOnly(['ev', 'n', 'at'])
+          && request.resource.data.ev is list
+          && request.resource.data.ev.size() <= 2000;
+      }
+
+      // What the server worked out about the reader, and what it dealt
+      // them: read by the phone, written only by the functions. A day a
+      // phone could write itself would be a day the server did not deal.
+      match /profile/{doc} {
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+
+      match /days/{day} {
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+
+      match /explore/{doc} {
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+    }
+
+    // When the reader was last here and what their clock's offset is: how
+    // the nightly dealer knows whose tomorrow starts next. Theirs alone.
+    match /presence/{uid} {
+      allow read, write: if isOwner(uid);
+    }
+
+    // Explore as the server put it together for everybody — the shelves and
+    // the lists with the cards on them — read by every signed-in phone,
+    // written only by the functions.
+    match /explore/{doc} {
+      allow read: if request.auth != null;
+      allow write: if false;
     }
 
     // A board is the part of a record a friend may see: streak, weeks,
@@ -82,6 +128,31 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['k', 'n'])
         && isCardId(request.resource.data.k)
         && request.resource.data.n.size() <= 2000
+        && request.resource.data.n.diff(resource.data.n).affectedKeys()
+             .hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k]
+             == resource.data.n.get(request.resource.data.k, 0) + 1;
+      allow delete: if false;
+    }
+
+    // The same counts kept for good: one document per shard — the part of
+    // a card's id before its first dash, so science-2 is under science —
+    // one number per card, nothing about who. Explore's "loved since the
+    // start" is read off them. The same one-at-a-time rule as the days,
+    // without the clock: a total is never over, and never taken back.
+    match /totals/{shard} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.k.split('-')[0] == shard
+        && request.resource.data.n.keys().hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k] == 1;
+      allow update: if request.auth != null
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.k.split('-')[0] == shard
+        && request.resource.data.n.size() <= 5000
         && request.resource.data.n.diff(resource.data.n).affectedKeys()
              .hasOnly([request.resource.data.k])
         && request.resource.data.n[request.resource.data.k]

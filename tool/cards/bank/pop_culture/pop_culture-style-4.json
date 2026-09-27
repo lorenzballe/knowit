@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-style-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: George Michael did not appear in the video for his 1990 single Freedom '90?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Tired of selling himself as a pin-up, he cast five models from Peter Lindbergh's January 1990 British Vogue cover to lip-sync his words instead: Naomi Campbell, Linda Evangelista, Cindy Crawford, Christy Turlington and Tatjana Patitz. The video, by David Fincher, made them household names. The supermodel era began in a pop star's absence.",
+  "move": "Removing the obvious centre can make the edges famous.",
+  "trap": "A pop star's video is where the pop star is shown.",
+  "keywords": [
+    "george michael",
+    "supermodels",
+    "british vogue",
+    "peter lindbergh",
+    "music video"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "British Vogue, January 1990 cover",
+  "source_kind": "primary_document",
+  "reference": "British Vogue, January 1990 issue, cover photographed by Peter Lindbergh",
+  "written": "2026-09-26"
+}

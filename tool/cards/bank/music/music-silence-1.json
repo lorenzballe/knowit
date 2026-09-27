@@ -1,0 +1,33 @@
+{
+  "id": "music-silence-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did John Cage hear inside Harvard's anechoic chamber, a room built to swallow every sound?",
+  "answer": "Two sounds, one high and one low. Cage later said an engineer told him they were his nervous system and his blood. Nerves make no audible tone, and the faint ringing that deep quiet exposes in many ears is a likelier source. Either way he concluded there was no such thing as silence.",
+  "move": "Remove every sound outside and the listener becomes the source.",
+  "keywords": [
+    "john cage",
+    "anechoic chamber",
+    "harvard",
+    "tinnitus",
+    "nervous system"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cage, Silence: Lectures and Writings, 1961",
+  "source_kind": "book",
+  "reference": "Cage, Silence: Lectures and Writings, Wesleyan University Press, 1961",
+  "written": "2026-09-26"
+}

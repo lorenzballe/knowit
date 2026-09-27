@@ -1,0 +1,36 @@
+{
+  "id": "sport-swimming-1",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "also": [
+    "sport.olympics.modern"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens when two Olympic swimmers touch the wall in exactly the same hundredth of a second?",
+  "answer": "They share the medal. Swimming stopped separating racers by thousandths after 1972, when Gunnar Larsson won the Olympic 400 m medley by 0.002 seconds. So ties stand: at Sydney in 2000, Anthony Ervin and Gary Hall Jr both clocked 21.98 in the 50 m freestyle, and two gold medals were awarded.",
+  "move": "When the measurement cannot separate two results, do not invent a winner.",
+  "keywords": [
+    "dead heat",
+    "gunnar larsson",
+    "anthony ervin",
+    "gary hall jr",
+    "timing"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olympic Games Munich 1972, official report",
+  "source_kind": "primary_document",
+  "reference": "Organising Committee for the Games of the XXth Olympiad, Official Report, Munich, 1974",
+  "written": "2026-09-26"
+}

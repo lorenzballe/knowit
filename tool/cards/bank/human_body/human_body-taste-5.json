@@ -1,0 +1,39 @@
+{
+  "id": "human_body-taste-5",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the sting of sparkling water comes only from bubbles bursting against the tongue?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Taste cells built to sense sourness detect the dissolved gas itself. An enzyme on their surface, carbonic anhydrase 4, turns carbon dioxide into acid they can register, and mice lacking those cells barely responded to fizzy water. Climbers taking acetazolamide, an altitude drug that blocks such enzymes, find beer and fizzy drinks taste flat.",
+  "move": "A sensation that feels mechanical may be chemistry in disguise.",
+  "trap": "Picturing fizz as pure touch, bubbles popping against the tongue.",
+  "keywords": [
+    "carbonation",
+    "carbon dioxide",
+    "sour taste",
+    "carbonic anhydrase",
+    "acetazolamide"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chandrashekar et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Chandrashekar, Yarmolinsky, von Buchholtz, Oka, Sly, Ryba & Zuker, The taste of carbonation, Science, 2009",
+  "written": "2026-09-26"
+}

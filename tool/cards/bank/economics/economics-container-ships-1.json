@@ -1,0 +1,33 @@
+{
+  "id": "economics-container-ships-1",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are shipping containers 20 and 40 feet long, when the two pioneering lines used neither size?",
+  "answer": "Because a committee chose round numbers and the government paid for them. Sea-Land ran 35-foot boxes and Matson 24-foot ones, but American standards panels around 1960 chose 10, 20, 30 and 40 feet, and federal shipbuilding subsidies went only to ships built for those sizes. The pioneers rebuilt their fleets around a committee's measurements.",
+  "move": "A standard is a political settlement long before it is an engineering one.",
+  "keywords": [
+    "container standards",
+    "sea-land",
+    "matson",
+    "iso sizes",
+    "shipbuilding subsidies"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levinson, The Box, 2006",
+  "source_kind": "book",
+  "reference": "Levinson, The Box: How the Shipping Container Made the World Smaller and the World Economy Bigger, Princeton University Press, 2006",
+  "written": "2026-09-26"
+}

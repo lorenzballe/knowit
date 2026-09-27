@@ -1,0 +1,38 @@
+{
+  "id": "technology-mainframes-5",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Was the worldwide effort to fix the millennium bug before 2000 worth what it cost?",
+  "sides": [
+    "Yes, it was worth it",
+    "No, it was overblown"
+  ],
+  "answer": "The quiet New Year was the result, not proof of waste. Two-digit years, a habit from when memory was costly, were real and everywhere, and testing found them in billing, payroll and control systems. Where fixes were missed, errors surfaced, such as wrong Down's syndrome risk results sent to pregnant women in Sheffield.",
+  "move": "Whichever side you took, the missing control, what untouched systems would have done, decides it.",
+  "counterpoint": "Countries and firms that spent little, such as Italy and South Korea, came through with no more trouble than those that spent heavily. The US alone put its bill at around $100 billion, and the consultants selling the fixes also sized the threat. Most failures that did occur were minor and quickly patched, as ordinary testing would have managed anyway.",
+  "keywords": [
+    "y2k",
+    "millennium bug",
+    "two-digit years",
+    "legacy code",
+    "risk"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Senate Y2K committee, final report, 2000",
+  "source_kind": "primary_document",
+  "reference": "US Senate Special Committee on the Year 2000 Technology Problem, Y2K Aftermath: Crisis Averted, Final Committee Report, 2000",
+  "written": "2026-09-26"
+}

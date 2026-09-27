@@ -1,0 +1,32 @@
+{
+  "id": "cinema-new-wave-2",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which feature, made five years before Breathless by a photographer with no film training, already worked like the New Wave?",
+  "answer": "La Pointe Courte, shot by Agnès Varda in 1954 in a fishing quarter of Sète, on a tiny budget, through a company she founded for it. Alain Resnais edited it. It set documentary scenes of fishermen beside a couple's stylised conversations. The woman later called the grandmother of the New Wave was 26.",
+  "move": "Look for the movement's work done before the movement had a name.",
+  "keywords": [
+    "agnès varda",
+    "la pointe courte",
+    "alain resnais",
+    "sète"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Varda, Varda par Agnès, 1994",
+  "source_kind": "book",
+  "reference": "Varda, Varda par Agnès, Cahiers du cinéma, 1994",
+  "written": "2026-09-26"
+}

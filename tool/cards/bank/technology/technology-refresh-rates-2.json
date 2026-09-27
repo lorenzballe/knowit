@@ -1,0 +1,32 @@
+{
+  "id": "technology-refresh-rates-2",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could a 60 Hz tube television show motion more sharply than a 60 Hz flat screen?",
+  "answer": "Because the tube flashed and the flat screen holds. A tube's phosphor glowed for a millisecond or two, then went dark; an LCD or OLED keeps each frame lit for the full 16.7 ms. Eyes tracking a moving object slide across that held image, smearing it. Makers now insert black frames to imitate the flash.",
+  "move": "What stays still while you move smears; brief glimpses stay sharp.",
+  "keywords": [
+    "sample and hold",
+    "motion blur",
+    "cathode ray tubes",
+    "black frame insertion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kurita, SID Symposium Digest, 2001",
+  "source_kind": "paper",
+  "reference": "Kurita, Moving picture quality improvement for hold-type AM-LCDs, SID Symposium Digest of Technical Papers 32, 2001",
+  "written": "2026-09-26"
+}

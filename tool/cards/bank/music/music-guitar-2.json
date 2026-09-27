@@ -1,0 +1,33 @@
+{
+  "id": "music-guitar-2",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do heavily distorted rock guitars favour two-note power chords over full major chords?",
+  "answer": "Because distortion invents notes: clipping adds tones at the sums and differences of the frequencies going in. A tempered fifth is almost exactly 3:2, so those new tones line up with the root's family. The tempered major third sits about 14 cents off a pure 5:4, so its products land off and beat: mud.",
+  "move": "An ingredient that works alone can spoil once the heat is turned up.",
+  "keywords": [
+    "power chords",
+    "distortion",
+    "intermodulation",
+    "equal temperament",
+    "major third"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lilja, Modern Heavy Metal conference, 2015",
+  "source_kind": "paper",
+  "reference": "Esa Lilja, Dealing with the 3rd: Anatomy of distorted chords and subsequent compositional features in classic heavy metal, in Karjalainen & Kärki (eds), Modern Heavy Metal: Markets, Practices and Cultures, Aalto University, 2015, pp. 393–403",
+  "written": "2026-09-26"
+}

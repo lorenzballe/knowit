@@ -1,0 +1,33 @@
+{
+  "id": "medicine-new-ones-1",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was teixobactin, an antibiotic announced in 2015, found in soil that had been searched for decades?",
+  "answer": "By growing bacteria that refuse to grow in a laboratory. Most soil microbes never form colonies on a dish, so earlier hunts had sampled only a small minority. A team led by Kim Lewis sealed soil bacteria in a device buried back in the soil, the iChip. A newly cultured species, Eleftheria terrae, made teixobactin.",
+  "move": "When a well-searched place runs dry, question the method of searching.",
+  "keywords": [
+    "teixobactin",
+    "ichip",
+    "soil bacteria",
+    "kim lewis",
+    "culturing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ling et al., Nature, 2015",
+  "source_kind": "paper",
+  "reference": "Ling et al., A new antibiotic kills pathogens without detectable resistance, Nature, 2015",
+  "written": "2026-09-26"
+}

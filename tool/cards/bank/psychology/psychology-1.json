@@ -24,5 +24,6 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Flynn, Psychological Bulletin, 1987"
+  "source": "Flynn, Psychological Bulletin, 1987",
+  "disabled": true
 }

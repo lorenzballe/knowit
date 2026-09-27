@@ -1,0 +1,33 @@
+{
+  "id": "sport-hosting-4",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could Los Angeles dictate its own terms for hosting the 1984 Summer Olympics?",
+  "answer": "Because it was the only city bidding. After Montreal's debts, Tehran had pulled out, and the IOC had to accept a privately run Games with no city money at risk. Organisers reused the 1932 Coliseum, sold sponsorships and made a surplus of over $200 million, part of which still funds youth sport in Los Angeles.",
+  "move": "The side with no competitors writes the contract.",
+  "keywords": [
+    "los angeles 1984",
+    "olympic bids",
+    "sponsorship",
+    "la memorial coliseum",
+    "surplus"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LA 1984 Official Report",
+  "source_kind": "primary_document",
+  "reference": "Los Angeles Olympic Organizing Committee, Official Report of the Games of the XXIIIrd Olympiad Los Angeles 1984, 1985",
+  "written": "2026-09-26"
+}

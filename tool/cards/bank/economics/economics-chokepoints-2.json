@@ -1,0 +1,33 @@
+{
+  "id": "economics-chokepoints-2",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Denmark stop ship captains understating their cargo's value to cut the toll at the Sound?",
+  "answer": "It kept the right to buy the cargo at the declared price. From the 1560s the Sound toll was levied on the value each master declared, and the crown could take the goods at that figure. Declare low and risk selling your cargo cheap; declare high and overpay. Honesty became the cheapest option.",
+  "move": "Let people name their own price, then make them stand by it.",
+  "keywords": [
+    "sound toll",
+    "denmark",
+    "oresund",
+    "self-assessment",
+    "tax evasion"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haan et al., European Economic Review, 2012",
+  "source_kind": "paper",
+  "reference": "Haan, Heijnen, Schoonbeek & Toolsema, Sound taxation? On the use of self-declared value, European Economic Review 56(2), 2012",
+  "written": "2026-09-26"
+}

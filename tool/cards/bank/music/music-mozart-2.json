@@ -1,0 +1,33 @@
+{
+  "id": "music-mozart-2",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a researcher find in a Prague music archive in 2015 bearing both Mozart's and Salieri's names?",
+  "answer": "A piece they wrote together. Per la ricuperata salute di Ophelia, a short cantata for the singer Nancy Storace's return to the stage in 1785, has music by Salieri, Mozart and a composer named Cornetti, to words by Lorenzo Da Ponte. The printed copy turned up in the Czech Museum of Music.",
+  "move": "A famous rivalry is usually a story told about colleagues.",
+  "keywords": [
+    "salieri",
+    "nancy storace",
+    "lorenzo da ponte",
+    "czech museum of music",
+    "cantata"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Czech Museum of Music, Prague, 2016",
+  "source_kind": "institution",
+  "reference": "Czech Museum of Music, presentation of Per la ricuperata salute di Ophelia, National Museum, Prague, 2016",
+  "written": "2026-09-26"
+}

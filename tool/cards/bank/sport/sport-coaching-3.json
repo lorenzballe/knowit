@@ -1,0 +1,33 @@
+{
+  "id": "sport-coaching-3",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who picked the England football team during Walter Winterbottom's sixteen years as its manager?",
+  "answer": "A committee of Football Association officials. Winterbottom, manager from 1946 to 1962, coached and advised, but a selection committee chose the players. Alf Ramsey took the job only on condition that he alone would pick the side, and four years later England won the World Cup.",
+  "move": "Before blaming the person in charge, check who actually made the decisions.",
+  "keywords": [
+    "walter winterbottom",
+    "alf ramsey",
+    "selection committee",
+    "football association",
+    "england"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson, The Anatomy of England, 2010",
+  "source_kind": "book",
+  "reference": "Wilson, The Anatomy of England: A History in Ten Matches, Orion, 2010",
+  "written": "2026-09-26"
+}

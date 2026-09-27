@@ -1,0 +1,32 @@
+{
+  "id": "economics-decoy-options-1",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the first study of decoy options, in 1982, show that choice theory had ruled out?",
+  "answer": "An added option raising the share of an existing one. Standard models held that a newcomer can only take buyers away, a property called regularity. Huber, Payne and Puto added options clearly worse than one of the existing choices, and that choice gained share. An option almost nobody picked sold its neighbour.",
+  "move": "More choice can change the winner, not just split the vote.",
+  "keywords": [
+    "decoy effect",
+    "asymmetric dominance",
+    "regularity",
+    "choice theory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huber, Payne & Puto, J. Consumer Research, 1982",
+  "source_kind": "paper",
+  "reference": "doi:10.1086/208899",
+  "written": "2026-09-26"
+}

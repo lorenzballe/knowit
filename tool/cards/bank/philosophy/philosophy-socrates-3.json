@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-socrates-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "The Delphic oracle declared that nobody was wiser than Socrates. According to Plato's Apology, what did he do next?",
+  "options": [
+    "Began teaching as the god's chosen sage",
+    "Dismissed it as a riddle not worth solving",
+    "Looked for someone wiser to prove it wrong"
+  ],
+  "correct": 2,
+  "answer": "Looked for someone wiser to prove it wrong. Socrates questioned politicians, poets and craftsmen, expecting to carry a counterexample back to the god. Each believed he knew things he did not. Socrates concluded he was wiser only in not thinking he knew what he did not. He tested a compliment by hunting for its refutation.",
+  "move": "To test a flattering claim, go looking for the case that breaks it.",
+  "trap": "Assuming a man told he is wisest takes it as a mission.",
+  "keywords": [
+    "delphic oracle",
+    "apology",
+    "wisdom",
+    "refutation"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Apology 21a-23b",
+  "source_kind": "primary_document",
+  "reference": "Plato, Apology 21a-23b, in The Last Days of Socrates, trans. Tredennick & Tarrant, Penguin, 2003",
+  "written": "2026-09-26"
+}

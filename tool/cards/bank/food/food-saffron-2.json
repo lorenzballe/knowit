@@ -1,0 +1,42 @@
+{
+  "id": "food-saffron-2",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many crocus flowers must be picked by hand to make one gram of dried saffron?",
+  "value": 150,
+  "unit": "flowers",
+  "withinFactor": 3,
+  "answer": "1,000 mg / 6.6 mg = about 150 flowers.",
+  "move": "Price a luxury by counting the hands that touch each gram.",
+  "trap": "Picturing a gram as a pinch from a handful of flowers.",
+  "hint": "Count the threads in one flower, then ask what a single dried thread weighs.",
+  "steps": [
+    "Each flower carries 3 red stigmas, the only part kept.",
+    "3 stigmas x about 2.2 mg dried = about 6.6 mg per flower.",
+    "1,000 mg / 6.6 mg = about 150 flowers."
+  ],
+  "keywords": [
+    "saffron harvest",
+    "stigmas",
+    "crocus flowers",
+    "hand picking"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kafi et al., Saffron, 2006",
+  "source_kind": "book",
+  "reference": "Kafi, Koocheki, Rashed & Nassiri (eds), Saffron (Crocus sativus): Production and Processing, Science Publishers, 2006",
+  "written": "2026-09-26"
+}

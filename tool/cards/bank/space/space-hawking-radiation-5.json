@@ -1,0 +1,42 @@
+{
+  "id": "space-hawking-radiation-5",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "science.physics.quantum",
+    "philosophy.knowledge.science"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do laboratory black holes made of sound confirm that real black holes emit Hawking radiation?",
+  "sides": [
+    "Yes, they test the mechanism",
+    "No, they test only the analogy"
+  ],
+  "answer": "Hawking's derivation barely uses gravity: any horizon, for light or for sound, in any flowing medium, should give off a thermal glow at a temperature set by how sharply the flow changes. In 2019 a sound horizon in an ultracold gas did exactly that, at the predicted temperature. Same mathematics, same result, now measured.",
+  "move": "Whichever side you took, it turns on whether matching equations mean matching nature.",
+  "counterpoint": "An analogy confirms only what two systems share, and whether they share the physics that matters is the very question. A sound horizon in cold gas says nothing about the quantum gravity near a real horizon, where the derivation leans on wavelengths shorter than any known physics reaches. Only a real black hole could settle it.",
+  "keywords": [
+    "analogue black holes",
+    "bose-einstein condensate",
+    "sonic horizon",
+    "hawking radiation",
+    "confirmation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dardashti, Thébault & Winsberg, BJPS, 2017",
+  "source_kind": "paper",
+  "reference": "Dardashti, Thébault & Winsberg, Confirmation via Analogue Simulation: What Dumb Holes Could Tell Us about Gravity, British Journal for the Philosophy of Science, 2017",
+  "written": "2026-09-26"
+}

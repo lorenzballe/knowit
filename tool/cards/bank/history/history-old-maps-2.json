@@ -1,0 +1,42 @@
+{
+  "id": "history-old-maps-2",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "On Mercator's 1569 projection, how many times larger does a patch of land at 60° latitude look than at the equator?",
+  "value": 4,
+  "unit": "times",
+  "answer": "Area is stretched 2 × 2 = 4 times.",
+  "move": "A stretch applied in two directions multiplies, so square it before judging.",
+  "trap": "Answering 2, as if only the east–west stretch counted.",
+  "hint": "Mercator stretches north–south exactly as much as east–west, and the east–west stretch is set by how short a parallel is.",
+  "steps": [
+    "At latitude φ a parallel is cos φ times the equator's length, but is drawn full width: stretched 1 / cos φ.",
+    "cos 60° = 0.5, so east–west is stretched 1 / 0.5 = 2 times, and north–south by the same.",
+    "Area is stretched 2 × 2 = 4 times."
+  ],
+  "keywords": [
+    "mercator projection",
+    "map distortion",
+    "latitude",
+    "area scale",
+    "conformal map"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Snyder, Map Projections: A Working Manual, 1987",
+  "source_kind": "reference_work",
+  "reference": "Snyder, Map Projections: A Working Manual, US Geological Survey Professional Paper 1395, 1987",
+  "written": "2026-09-26"
+}

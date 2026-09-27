@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-memes-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should images that become memes be free for anyone to reuse, adverts included?",
+  "sides": [
+    "Yes, free to reuse",
+    "No, owners get paid"
+  ],
+  "answer": "A meme is made by the crowd that remixes it, not by whoever held the camera; its value comes from millions of reuses. Billing for it would chill parody and reward luck. Copyright exists to reward creation, and going viral is something that happens to an image, not something its owner did.",
+  "move": "Whichever side you took, the line between a joke and a sale decides it.",
+  "counterpoint": "The image is still someone's work, often someone's face, and brands profit from it. Grumpy Cat's owners licensed their cat for a coffee drink; when the maker sold products beyond the deal, a US jury in 2018 awarded them $710,001. Free use for jokes is one thing; free use to sell goods is another.",
+  "keywords": [
+    "grumpy cat",
+    "copyright",
+    "memes",
+    "licensing",
+    "advertising"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NPR, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.npr.org/sections/thetwo-way/2018/01/25/580588088/grumpy-cat-awarded-710-000-in-copyright-infringement-suit",
+  "written": "2026-09-26"
+}

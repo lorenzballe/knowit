@@ -1,0 +1,40 @@
+{
+  "id": "sport-fouls-3",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When German league matches were played without fans in 2020, what happened to visitors' disadvantage in yellow cards?",
+  "options": [
+    "It shrank",
+    "It grew",
+    "It stayed the same"
+  ],
+  "correct": 0,
+  "answer": "It shrank. With crowds, referees in the top two divisions had booked visitors more often than hosts for similar play. In empty stadiums that gap narrowed, most of all where away fans had been scarce. Analyses differ on whether hosts were booked more or visitors less, but the tilt had come from the stands.",
+  "move": "Take the audience away and watch which decisions change.",
+  "trap": "Assuming referees book only what they see, so nothing would change.",
+  "keywords": [
+    "ghost games",
+    "covid-19",
+    "yellow cards",
+    "bundesliga",
+    "referee bias"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Endrich & Gesche, Economics Letters, 2020",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/pii/S0165176520303815",
+  "written": "2026-09-26"
+}

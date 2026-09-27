@@ -1,0 +1,38 @@
+{
+  "id": "technology-rare-metals-5",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should buyers of tin, tantalum and tungsten avoid ore from conflict zones like eastern Congo?",
+  "sides": [
+    "Yes, avoid it",
+    "No, keep buying"
+  ],
+  "answer": "When armed groups tax or control a mine, each purchase helps pay their soldiers, and distant buyers are the one lever those groups cannot intimidate. US disclosure rules from 2010 pushed smelters into supply-chain audits, and many mines in eastern Congo have since been inspected and validated as free of armed groups.",
+  "move": "Whichever side you took, it turns on whether buyers trace a supply or walk away.",
+  "counterpoint": "The rules worked as an embargo. Buyers found it cheaper to drop Congolese ore than to trace it, miners lost their income, and armed groups moved to gold and to looting. One study found infant deaths rose sharply in villages near the affected mines; another found violence against civilians increased. The miners paid first.",
+  "keywords": [
+    "conflict minerals",
+    "dodd-frank",
+    "congo",
+    "tantalum",
+    "due diligence"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parker, Foltz & Elsea, 2016",
+  "source_kind": "paper",
+  "reference": "Parker, Foltz & Elsea, Unintended Consequences of Sanctions for Human Rights: Conflict Minerals and Infant Mortality, Journal of Law and Economics 59(4), 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "science-quantum-1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: a radon atom that has already lasted a month is more likely to decay this week than a newly formed one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A nucleus does not wear out: a radon-222 atom a month old has the same 50% chance of decaying in the next 3.8 days as one just formed. A sample shrinks because atoms leave it, not because survivors age. Uranium atoms older than the Earth decay at the rate they did when forged.",
+  "move": "Ask whether a thing can wear out before calling it overdue.",
+  "trap": "Treating an old atom like an old machine, near the end.",
+  "keywords": [
+    "radon",
+    "half-life",
+    "radioactive decay",
+    "uranium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Institute of Physics, IOPSpark, decay constant",
+  "source_kind": "institution",
+  "reference": "https://spark.iop.org/decay-constant-radioactive",
+  "written": "2026-09-26"
+}

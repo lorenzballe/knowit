@@ -1,0 +1,38 @@
+{
+  "id": "science-fire-5",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should forest managers deliberately burn far more land to prevent bigger wildfires?",
+  "sides": [
+    "Yes, burn much more",
+    "No, keep it limited"
+  ],
+  "answer": "A century of putting out every fire, by 10 a.m. the next day under a US Forest Service rule of 1935, has packed dry forests with fuel that frequent low fires once cleared. Burning in chosen weather is the only way to remove it at scale; otherwise it burns anyway, in the worst weather.",
+  "move": "The fuel must go either way; the fight is over which risk to run.",
+  "counterpoint": "Planned burns escape. New Mexico's largest recorded wildfire, in 2022, began as two Forest Service burns that got away and destroyed hundreds of homes. Smoke harms health whoever lights the fire, warming is shrinking the windows of safe weather, and thinning by machine around towns removes fuel where it matters with far less risk.",
+  "keywords": [
+    "prescribed burning",
+    "wildfire",
+    "fire suppression",
+    "forest management",
+    "fuel"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "North et al., Science, 2015",
+  "source_kind": "paper",
+  "reference": "North et al., Reform forest fire management, Science, 2015",
+  "written": "2026-09-26"
+}

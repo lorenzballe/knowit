@@ -1,0 +1,42 @@
+{
+  "id": "music-film-scores-2",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "also": [
+    "cinema.directors.kubrick"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "True or false: Kubrick's 2001: A Space Odyssey reached cinemas with none of the score he commissioned for it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Alex North wrote and recorded music for the film early in 1968, and Kubrick dropped all of it, keeping the concert pieces he had edited to: Richard Strauss, Johann Strauss, Ligeti, Khachaturian. North reportedly found out at the premiere. His unused score was finally recorded and released in 1993.",
+  "move": "What has already been paid for is no argument for keeping it.",
+  "trap": "Assuming music already paid for and recorded had to be used.",
+  "keywords": [
+    "stanley kubrick",
+    "alex north",
+    "2001 a space odyssey",
+    "temp track",
+    "ligeti"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LoBrutto, Stanley Kubrick: A Biography, 1997",
+  "source_kind": "book",
+  "reference": "LoBrutto, Stanley Kubrick: A Biography, Donald I. Fine Books, 1997",
+  "written": "2026-09-26"
+}

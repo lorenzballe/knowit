@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-swooshes-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Adidas bought the rights to its three stripes from another shoemaker?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the early 1950s Adidas bought the three-stripe mark from the Finnish firm Karhu, reportedly for the equivalent of about €1,600 and two bottles of whisky; the whisky rests on Karhu's own telling. Karhu, Finnish for bear, carried on under its own name while its stripes went to Germany.",
+  "move": "The name that made a sign famous is not always the name that made it.",
+  "trap": "False: a brand's signature mark feels like its founder's own invention.",
+  "keywords": [
+    "adidas",
+    "karhu",
+    "three stripes",
+    "trademark",
+    "helsinki olympics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Drinks Business, 2021",
+  "source_kind": "news_archive",
+  "reference": "https://www.thedrinksbusiness.com/2021/09/two-bottles-of-whisky-helped-in-purchase-of-adidas-logo/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-lasers-4",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the man who coined the word laser wait decades for his patents?",
+  "answer": "Because rivals patented first and he had filed late. In 1957 Gordon Gould sketched the device in a notebook headed laser and had it notarised at a Bronx sweet shop, but a patent went to Charles Townes and Arthur Schawlow. Gould's claims were granted from 1977 onward, after a legal war lasting three decades.",
+  "move": "Priority is proved by paperwork, and paperwork has its own timetable.",
+  "keywords": [
+    "gordon gould",
+    "laser patent",
+    "charles townes",
+    "notebook",
+    "patent war"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Taylor, Laser, Simon & Schuster, 2000",
+  "source_kind": "book",
+  "reference": "Taylor, Laser: The Inventor, the Nobel Laureate, and the Thirty-Year Patent War, Simon & Schuster, 2000",
+  "written": "2026-09-26"
+}

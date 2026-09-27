@@ -1,0 +1,40 @@
+{
+  "id": "cinema-rediscovered-5",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Some silent features survive only as shortened 16mm or 9.5mm prints made for home viewing. Why did those last?",
+  "options": [
+    "They were printed on non-flammable film",
+    "Collectors stored them more carefully",
+    "Studios made far more of them"
+  ],
+  "correct": 0,
+  "answer": "They were printed on non-flammable film. Kodak sold 16mm from 1923 only on acetate safety base, and Pathé's 9.5mm was also non-nitrate, so home copies neither burned nor decomposed like 35mm cinema prints. Features cut down for rental libraries such as Kodascope sometimes became the only copy left.",
+  "move": "What lasts is often decided by the material, not by anyone's care.",
+  "trap": "Survival seems to reward the prints someone cherished most.",
+  "keywords": [
+    "16mm film",
+    "9.5mm film",
+    "safety film",
+    "kodascope",
+    "home movies"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cherchi Usai, Silent Cinema, 2000",
+  "source_kind": "book",
+  "reference": "Cherchi Usai, Silent Cinema: An Introduction, BFI Publishing, 2000",
+  "written": "2026-09-26"
+}

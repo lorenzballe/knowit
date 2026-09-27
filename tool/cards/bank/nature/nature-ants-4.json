@@ -1,0 +1,35 @@
+{
+  "id": "nature-ants-4",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "also": [
+    "nature.extinction.dinosaurs"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did ants first begin farming fungus, and what was happening to the planet then?",
+  "answer": "About 66 million years ago, around the time an asteroid ended the age of dinosaurs. Comparing the genomes of hundreds of ant and fungus species, Schultz and colleagues dated the start of farming to then, when fungi living on dead plants flourished in the aftermath. Leafcutters still feed their gardens fresh leaves.",
+  "move": "A catastrophe for most can be the opening for a few.",
+  "keywords": [
+    "fungus-farming ants",
+    "leafcutter ants",
+    "agriculture",
+    "asteroid impact"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schultz et al., Science, 2024",
+  "source_kind": "paper",
+  "reference": "Schultz et al., The coevolution of fungus-ant agriculture, Science, 2024",
+  "written": "2026-09-26"
+}

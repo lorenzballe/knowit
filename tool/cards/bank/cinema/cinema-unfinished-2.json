@@ -1,0 +1,38 @@
+{
+  "id": "cinema-unfinished-2",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Orson Welles's last feature, shot in the 1970s, premiered more than 30 years after he died?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Other Side of the Wind was shot between 1970 and 1976, but the money ran out and its negative sat in a Paris vault, frozen by disputes among its backers, including an Iranian company caught up in the 1979 revolution. Netflix paid for the edit, guided by Welles's notes. It premiered in 2018.",
+  "move": "Unfinished work has a second life once the lawyers stop arguing.",
+  "trap": "A director dead since 1985 seems unable to release anything later.",
+  "keywords": [
+    "orson welles",
+    "welles unfinished film",
+    "netflix",
+    "film financing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Karp, Orson Welles's Last Movie, 2015",
+  "source_kind": "book",
+  "reference": "Karp, Orson Welles's Last Movie: The Making of The Other Side of the Wind, St. Martin's Press, 2015",
+  "written": "2026-09-26"
+}

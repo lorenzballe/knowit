@@ -1,0 +1,41 @@
+{
+  "id": "art-ultramarine-3",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: ultramarine, ground from a gemstone, withstands dilute acid better than most pigments?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Dilute acid bleaches it quickly, with a smell of rotten eggs. The blue comes from sulfur ions held in a cage of aluminium silicate; acid breaks the cage, hydrogen sulfide escapes and the colour goes. Conservators use this as a test: a drop of acid under the microscope, and the blue vanishes.",
+  "move": "Hard to scratch and hard to dissolve are different kinds of tough.",
+  "trap": "Assuming a gemstone's hardness means it resists chemical attack too.",
+  "keywords": [
+    "ultramarine",
+    "acid",
+    "sulfur",
+    "pigment identification"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plesters, Artists' Pigments, 1993",
+  "source_kind": "reference_work",
+  "reference": "Joyce Plesters, Ultramarine Blue, Natural and Artificial, in Artists' Pigments vol. 2, ed. Ashok Roy, National Gallery of Art, Washington, 1993",
+  "written": "2026-09-26"
+}

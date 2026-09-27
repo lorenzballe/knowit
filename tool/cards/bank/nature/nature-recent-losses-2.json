@@ -1,0 +1,39 @@
+{
+  "id": "nature-recent-losses-2",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: one lighthouse keeper's pet cat wiped out New Zealand's Stephens Island wren?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cats reached the island with the lighthouse settlement in 1894 and soon went feral. Galbreath and Brown traced a breeding population, not one pet, that wiped out a flightless wren science had only just described from birds the cats carried in to the keeper, David Lyall. The single named cat is a later embellishment.",
+  "move": "Every vivid detail added to a story is one more thing that must be true.",
+  "trap": "One named cat makes the tale feel precise, and so more credible.",
+  "keywords": [
+    "stephens island wren",
+    "feral cats",
+    "lighthouse",
+    "new zealand",
+    "flightless birds"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galbreath & Brown, Notornis, 2004",
+  "source_kind": "paper",
+  "reference": "Galbreath & Brown, The tale of the lighthouse-keeper's cat: Discovery and extinction of the Stephens Island wren (Traversia lyalli), Notornis, 2004",
+  "written": "2026-09-26"
+}

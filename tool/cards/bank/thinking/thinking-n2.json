@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Round-robin scheduling"
+  "figure": "none",
+  "source": "Round-robin scheduling",
+  "source_kind": "arithmetic",
+  "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
 }

@@ -1,0 +1,33 @@
+{
+  "id": "nature-ancient-trees-1",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did counting rings in bristlecone pines do to the dates of European prehistory?",
+  "answer": "Pushed them back by centuries. Radiocarbon dating assumed the air's carbon-14 never varied; Hans Suess measured it in bristlecone rings of known age and found early dates came out too young. Corrected, Europe's megalithic tombs moved back before the eastern tombs they were supposed to copy.",
+  "move": "Check the instrument before arguing about what it measured.",
+  "keywords": [
+    "radiocarbon dating",
+    "bristlecone pine",
+    "tree rings",
+    "megaliths",
+    "hans suess"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Renfrew, Before Civilization, 1973",
+  "source_kind": "book",
+  "reference": "Renfrew, Before Civilization: The Radiocarbon Revolution and Prehistoric Europe, Jonathan Cape, 1973",
+  "written": "2026-09-26"
+}

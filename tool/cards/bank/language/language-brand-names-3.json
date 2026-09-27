@@ -1,0 +1,33 @@
+{
+  "id": "language-brand-names-3",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the verb to google, used for any web search, make Google's trademark generic in law?",
+  "answer": "No, a US appeals court ruled in 2017, in Elliott v. Google. The Ninth Circuit held that the test is what the word names for the public: a type of product, or one maker's. Using it as a verb for searching did not show that people called any search engine a google.",
+  "move": "Ask what a word is taken to name, not how often it gets used.",
+  "keywords": [
+    "google",
+    "genericide",
+    "elliott v google",
+    "ninth circuit",
+    "trademark"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elliott v. Google, Ninth Circuit, 2017",
+  "source_kind": "primary_document",
+  "reference": "Elliott v. Google, Inc., 860 F.3d 1151 (9th Cir. 2017)",
+  "written": "2026-09-26"
+}

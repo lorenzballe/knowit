@@ -1,0 +1,33 @@
+{
+  "id": "language-brand-names-5",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could rivals sell linoleum soon after Frederick Walton invented both the floor covering and its name?",
+  "answer": "Because Walton named the product, not his firm. He coined linoleum, from Latin linum, flax, and oleum, oil, in his 1860s patent as the material's only name. In 1878 an English court held that the word described the thing and was free once the patent lapsed: often cited as the first brand name gone generic.",
+  "move": "Give a new thing a common name and a brand name, or lose both.",
+  "keywords": [
+    "linoleum",
+    "frederick walton",
+    "genericide",
+    "patent",
+    "trademark"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simpson, Cheap, Quick, and Easy, 1999",
+  "source_kind": "book",
+  "reference": "Simpson, Cheap, Quick, and Easy: Imitative Architectural Materials, 1870-1930, University of Tennessee Press, 1999",
+  "written": "2026-09-26"
+}

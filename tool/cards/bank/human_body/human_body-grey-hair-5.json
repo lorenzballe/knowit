@@ -1,0 +1,39 @@
+{
+  "id": "human_body-grey-hair-5",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: by the age of 50, about half of all people have hair at least half grey?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Surveying 4,192 people across several continents, researchers in 2012 found the share of 50-year-olds with at least half their hair grey ranged from 6% to 23%, depending on ancestry and natural hair colour. People of Asian and African descent greyed later than those of European descent.",
+  "move": "A rule of thumb with suspiciously round numbers deserves a recount.",
+  "trap": "Trusting the neat dermatology rule of thumb known as 50-50-50.",
+  "keywords": [
+    "grey hair",
+    "rule of thumb",
+    "ancestry",
+    "age fifty",
+    "survey"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Panhard, Lozano & Loussouarn, Br J Dermatol, 2012",
+  "source_kind": "paper",
+  "reference": "https://onlinelibrary.wiley.com/doi/10.1111/j.1365-2133.2012.11095.x",
+  "written": "2026-09-26"
+}

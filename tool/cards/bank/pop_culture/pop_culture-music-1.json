@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-music-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 1991 Billboard's album chart switched from shop reports to counting barcode scans at tills. What happened?",
+  "options": [
+    "The top barely moved",
+    "Ballads and pop rose",
+    "Country and rap rose"
+  ],
+  "correct": 2,
+  "answer": "Country and rap rose. The old chart relied on staff at selected shops reporting what sold best, which record labels could lobby and big-city stores dominated. Once SoundScan counted real sales, Garth Brooks and N.W.A reached No. 1 within months. The audience had been there all along, uncounted.",
+  "move": "Before trusting a ranking, ask who was doing the reporting.",
+  "trap": "Assuming a chart built from shop reports already measured real sales.",
+  "keywords": [
+    "soundscan",
+    "billboard 200",
+    "garth brooks",
+    "nwa",
+    "music charts"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Billboard, May 1991",
+  "source_kind": "news_archive",
+  "reference": "Billboard, first Billboard 200 chart compiled from Nielsen SoundScan data, issue of 25 May 1991",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-guilds-3",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who still tests the coins of the Royal Mint in a court of law each year?",
+  "answer": "A medieval guild. At the Trial of the Pyx, a jury from the Goldsmiths' Company, sitting as a formal court, counts, weighs and tests the metal of coins set aside from every batch the Mint struck. Coins have been judged like this since at least 1282; since 1871 the trial sits in Goldsmiths' Hall.",
+  "move": "An institution outlives its era when it keeps a job everyone needs done.",
+  "keywords": [
+    "trial of the pyx",
+    "goldsmiths' company",
+    "royal mint",
+    "coinage",
+    "assay"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Goldsmiths' Company, Trial of the Pyx",
+  "source_kind": "institution",
+  "reference": "https://www.thegoldsmiths.co.uk/the-trial-of-the-pyx",
+  "written": "2026-09-26"
+}

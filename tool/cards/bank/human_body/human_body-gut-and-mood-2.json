@@ -1,0 +1,33 @@
+{
+  "id": "human_body-gut-and-mood-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the commonest antidepressants so often cause nausea in the first weeks?",
+  "answer": "Because they act on the gut long before they lift mood. SSRIs block the recycling of serotonin everywhere, and the gut holds most of the body's serotonin. The extra serotonin stimulates 5-HT3 receptors on gut nerves that signal nausea to the brainstem: the same receptors the anti-sickness drug ondansetron blocks.",
+  "move": "A drug goes everywhere its target is, not only where it is wanted.",
+  "keywords": [
+    "ssri",
+    "antidepressants",
+    "nausea",
+    "5-ht3 receptors",
+    "ondansetron"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stahl, Essential Psychopharmacology, 2021",
+  "source_kind": "book",
+  "reference": "Stahl, Stahl's Essential Psychopharmacology, 5th edition, Cambridge University Press, 2021",
+  "written": "2026-09-26"
+}

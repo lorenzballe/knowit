@@ -1,0 +1,33 @@
+{
+  "id": "food-maillard-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are German pretzels dipped in a bath of lye before they are baked?",
+  "answer": "To make the Maillard reaction run fast. Browning speeds up in alkaline conditions, because the amino groups that react with sugars stay free instead of being tied up by acid. A dip in 3 to 4% sodium hydroxide gives a mahogany crust in minutes; baking turns the lye into milder sodium carbonate.",
+  "move": "Change the conditions and the same reaction can run many times faster.",
+  "keywords": [
+    "pretzels",
+    "lye",
+    "sodium hydroxide",
+    "maillard reaction",
+    "alkalinity"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Martins et al., Trends Food Sci. Technol., 2000",
+  "source_kind": "paper",
+  "reference": "Martins, Jongen & van Boekel, A review of Maillard reaction in food and implications to kinetic modelling, Trends in Food Science & Technology, 2000",
+  "written": "2026-09-26"
+}

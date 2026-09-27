@@ -1,0 +1,39 @@
+{
+  "id": "space-landing-sites-4",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the rocks the Apollo crews brought home are a fair sample of the Moon's surface as a whole?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. All six Apollo sites lie on the near side, and several sit in or beside one odd region rich in thorium, which orbiters later showed covers a small part of the surface. Lunar meteorites, knocked off at random, are mostly thorium-poor highland rock. The first far-side sample came back only in 2024.",
+  "move": "Before trusting a big haul, ask how many places it came from.",
+  "trap": "Assuming 382 kg of rock from six sites speaks for the whole Moon.",
+  "keywords": [
+    "apollo samples",
+    "sampling bias",
+    "procellarum kreep terrane",
+    "lunar meteorites",
+    "chang'e 6"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Jolliff et al., Journal of Geophysical Research, 2000",
+  "source_kind": "paper",
+  "reference": "Jolliff, Gillis, Haskin, Korotev & Wieczorek, Major lunar crustal terranes: Surface expressions and crust-mantle origins, Journal of Geophysical Research, 2000",
+  "written": "2026-09-26"
+}

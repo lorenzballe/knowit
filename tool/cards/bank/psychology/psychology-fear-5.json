@@ -1,0 +1,39 @@
+{
+  "id": "psychology-fear-5",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: exposure therapy cures a phobia by erasing the fear memory behind it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Exposure lays down a second memory, that the feared thing is now safe, which competes with the first instead of deleting it. The new memory is tied to where it was learned: in rats and in people, extinguished fear returns when tested elsewhere. A phobia beaten in the clinic can be waiting at home.",
+  "move": "Suppressed is not deleted, so test the fix where it will be used.",
+  "trap": "The fear has gone, so the memory behind it must be gone.",
+  "keywords": [
+    "exposure therapy",
+    "extinction",
+    "renewal",
+    "phobias",
+    "fear memory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bouton, Learning & Memory, 2004",
+  "source_kind": "paper",
+  "reference": "https://learnmem.cshlp.org/content/11/5/485.full.pdf",
+  "written": "2026-09-26"
+}

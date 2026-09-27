@@ -1,0 +1,40 @@
+{
+  "id": "nature-currents-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In spring and summer, steady winds blow south along California's coast. What do they do to the coastal sea?",
+  "options": [
+    "Warm it, piling surface water ashore",
+    "Barely change its temperature",
+    "Cool it, drawing deep water up"
+  ],
+  "correct": 2,
+  "answer": "Cool it, drawing deep water up. On a spinning planet, water pushed by the wind moves on average at right angles to it: to the right in the northern hemisphere, here out to sea. Cold, nutrient-rich water rises to replace it, feeding the coast's fisheries and chilling the air into San Francisco's summer fog.",
+  "move": "A push does not always move things the way it points.",
+  "trap": "Barely change it, as if the water simply moved with the wind.",
+  "keywords": [
+    "ekman transport",
+    "upwelling",
+    "california current",
+    "coriolis effect",
+    "fog"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Talley et al., Descriptive Physical Oceanography, 2011",
+  "source_kind": "book",
+  "reference": "Talley, Pickard, Emery & Swift, Descriptive Physical Oceanography: An Introduction, 6th edition, Academic Press, 2011",
+  "written": "2026-09-26"
+}

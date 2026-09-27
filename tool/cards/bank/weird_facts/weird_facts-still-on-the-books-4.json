@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-still-on-the-books-4",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Kentucky officials taking office still swear they have never fought a duel?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Section 228 of Kentucky's constitution requires officers, and lawyers admitted to the bar, to swear that as citizens of the state they have not fought a duel with deadly weapons, sent or accepted a challenge, or acted as a second. New governors still recite the clause at their swearing-in.",
+  "move": "A claim that sounds invented deserves a check, not a shrug.",
+  "trap": "An oath about duels sounds like an invented item from a weird-law list.",
+  "keywords": [
+    "kentucky constitution",
+    "duelling",
+    "oath of office",
+    "section 228"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kentucky Constitution, Section 228",
+  "source_kind": "primary_document",
+  "reference": "Constitution of Kentucky, Section 228, oath of officers and attorneys, as in force 2026",
+  "written": "2026-09-26"
+}

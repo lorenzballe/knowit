@@ -1,0 +1,36 @@
+{
+  "id": "art-lost-colour-4",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "also": [
+    "history.middle_ages.cathedrals"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did laser cleaning of the portals of Amiens Cathedral reveal in the 1990s?",
+  "answer": "That the stone saints had been painted. Laser cleaning, begun in 1992, exposed thirteenth-century blues, reds, ochres and gilding under the grime, best kept in the sheltered recesses and tympanums. Since 1999 summer evenings have projected those colours back onto the west front with light. The grey Gothic façade is a weathered one.",
+  "move": "The plain version of an old thing is often just the worn version.",
+  "keywords": [
+    "amiens cathedral",
+    "laser cleaning",
+    "gothic portal",
+    "polychromy",
+    "light projection"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amiens Métropole, La polychromie de la Cathédrale",
+  "source_kind": "institution",
+  "reference": "https://www.amiens.fr/Vivre-a-Amiens/Culture-Patrimoine/Les-Archives-municipales-et-communautaires/Tresors-d-Archives/Tresors-d-archives/La-polychromie-de-la-Cathedrale",
+  "written": "2026-09-26"
+}

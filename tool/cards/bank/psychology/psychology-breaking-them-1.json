@@ -1,0 +1,32 @@
+{
+  "id": "psychology-breaking-them-1",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When is an attempt to change a household's everyday habits most likely to work?",
+  "answer": "Soon after they move house. Verplanken and Roy offered households an intervention to live more sustainably, and it changed behaviour more among people who had moved in the previous three months. A move scrambles the cues that ran old routines, opening a short window before new ones set: the habit discontinuity hypothesis.",
+  "move": "Launch a change when life has already shuffled the old routines.",
+  "keywords": [
+    "moving house",
+    "habit discontinuity",
+    "sustainable behaviour",
+    "context change"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Verplanken & Roy, J Environmental Psychology, 2016",
+  "source_kind": "paper",
+  "reference": "Verplanken & Roy, Empowering interventions to promote sustainable lifestyles: testing the habit discontinuity hypothesis in a field experiment, Journal of Environmental Psychology, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "music-piano-5",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can a pianist change a single note's tone by touch, beyond how loud it is?",
+  "sides": [
+    "Yes, touch shapes tone",
+    "No, only speed counts"
+  ],
+  "answer": "The hammer is not all that reaches the ear. Werner Goebl and colleagues found that striking a key from above, rather than pressing it from its surface, adds a thump of finger and key that arrives just before the tone. Listeners hear that noise as part of the note, so two equal notes can differ.",
+  "move": "Whichever side you took, it turns on whether noise around a note counts as tone.",
+  "counterpoint": "Once the escapement releases it, the hammer flies free, and the string learns only one thing: how fast it arrived. Tests since Hart, Fuller and Lusby in 1934 find that matching hammer speed matches the tone. What pianists call colour is loudness, timing and pedalling across many notes: real artistry, but nothing hidden in a single key.",
+  "keywords": [
+    "piano touch",
+    "tone colour",
+    "hammer velocity",
+    "werner goebl",
+    "key noise"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goebl, Bresin & Galembo, JASA, 2005",
+  "source_kind": "paper",
+  "reference": "Goebl, Bresin & Galembo, Touch and temporal behavior of grand piano actions, Journal of the Acoustical Society of America, 2005",
+  "written": "2026-09-26"
+}

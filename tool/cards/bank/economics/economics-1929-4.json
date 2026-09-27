@@ -1,0 +1,40 @@
+{
+  "id": "economics-1929-4",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the 1930s, which best predicted how soon a country's economy began to recover?",
+  "options": [
+    "When it left the gold standard",
+    "How far its stock market fell",
+    "How high it raised its tariffs"
+  ],
+  "correct": 0,
+  "answer": "When it left gold. Eichengreen and Sachs found that countries which cut the link early, like Britain in 1931, could lower interest rates and let prices rise, and recovered sooner. France and the rest of the gold bloc held on until 1936 and were still sliding. The exit date sorted the league table.",
+  "move": "Look for the constraint a country chose to keep, not the shock it suffered.",
+  "trap": "Picking the market crash, the most vivid image of the Depression.",
+  "keywords": [
+    "gold standard",
+    "eichengreen and sachs",
+    "recovery",
+    "gold bloc",
+    "exchange rates"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Eichengreen and Sachs, J. Economic History, 1985",
+  "source_kind": "paper",
+  "reference": "Eichengreen & Sachs, Exchange Rates and Economic Recovery in the 1930s, Journal of Economic History, 1985",
+  "written": "2026-09-26"
+}

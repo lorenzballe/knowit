@@ -1,0 +1,33 @@
+{
+  "id": "medicine-penicillin-1",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What went wrong for the first person treated for an infection with purified penicillin, in Oxford in 1941?",
+  "answer": "The drug worked and the supply ran out. Albert Alexander, a 43-year-old policeman, improved within a day of his first dose in February 1941. So little penicillin existed that it was extracted from his urine and injected again. When the supply was exhausted after five days the infection returned, and he died in March.",
+  "move": "A cure that cannot be made in quantity is still only an experiment.",
+  "keywords": [
+    "albert alexander",
+    "penicillin",
+    "howard florey",
+    "oxford",
+    "first patient"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abraham, Chain, Florey et al., The Lancet, 1941",
+  "source_kind": "paper",
+  "reference": "Abraham, Chain, Fletcher, Florey, Gardner, Heatley & Jennings, Further observations on penicillin, The Lancet, 1941",
+  "written": "2026-09-26"
+}

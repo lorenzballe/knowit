@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-colours-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in 2013 a UK appeal court upheld Cadbury's trademark on its shade of purple?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Court of Appeal struck out the application for Pantone 2685C because it claimed purple either as the whole surface of the wrapper or as its predominant colour. That left rivals unable to tell what was banned: a registration covering many possible signs is not one sign. Cadbury wrappers stayed purple, without the monopoly.",
+  "move": "A right nobody can locate precisely is a right nobody can respect.",
+  "trap": "True: a colour this familiar feels as if it must be owned.",
+  "keywords": [
+    "cadbury",
+    "nestle",
+    "purple",
+    "pantone 2685c",
+    "court of appeal"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Design Week, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://www.designweek.co.uk/issues/october-2013/cadbury-loses-legal-fight-over-rights-to-pantone-2685c-purple/",
+  "written": "2026-09-26"
+}

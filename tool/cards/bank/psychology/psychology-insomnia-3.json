@@ -1,0 +1,33 @@
+{
+  "id": "psychology-insomnia-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When people with insomnia sleep in a laboratory, how does the recording compare with their own account?",
+  "answer": "It usually shows more sleep than they report. Many people with insomnia overestimate how long they took to fall asleep and how long they lay awake, and underestimate their total sleep, compared with brain recordings. The gap is part of the disorder: a night that felt sleepless can show hours of recorded sleep.",
+  "move": "Measure before trusting a feeling about how much of something happened.",
+  "keywords": [
+    "sleep misperception",
+    "paradoxical insomnia",
+    "polysomnography",
+    "sleep latency",
+    "insomnia"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Buysse, JAMA, 2013",
+  "source_kind": "paper",
+  "reference": "Buysse, Insomnia, JAMA, 2013",
+  "written": "2026-09-26"
+}

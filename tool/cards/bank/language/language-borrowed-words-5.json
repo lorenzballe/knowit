@@ -1,0 +1,38 @@
+{
+  "id": "language-borrowed-words-5",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a state coin official native words to replace English loanwords?",
+  "sides": [
+    "Yes, coin replacements",
+    "No, let usage decide"
+  ],
+  "answer": "Official terms give speakers a choice they would not otherwise have. Quebec's language office coined courriel for email, and it became ordinary usage there. Vocabulary decides who can follow a field: native words keep science and law readable to people who never learned English; a coinage offered before the loan settles has a real chance.",
+  "move": "Whichever side you took, whether speakers adopt the coinages decides it.",
+  "counterpoint": "Speakers decide, not committees. France's 1994 Toubon law requires French in contracts, advertising and workplaces, yet week-end and parking stayed, and many official coinages are rarely heard. Borrowing is how languages grow: English absorbed thousands of French words and lost nothing. Effort spent policing vocabulary would do more good teaching reading and writing.",
+  "keywords": [
+    "toubon law",
+    "loanwords",
+    "courriel",
+    "language policy",
+    "quebec"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loi Toubon, Journal officiel, 1994",
+  "source_kind": "primary_document",
+  "reference": "Loi n° 94-665 du 4 août 1994 relative à l'emploi de la langue française, Journal officiel de la République française, 1994",
+  "written": "2026-09-26"
+}

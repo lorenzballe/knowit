@@ -1,0 +1,38 @@
+{
+  "id": "art-cubism-4",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Les Demoiselles d'Avignon went on public show roughly nine years after Picasso painted it.",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Painted in 1907, it stayed in the studio, seen by friends, dealers and a few painters, until an exhibition organised by the writer André Salmon in Paris in 1916, who gave it its title. It was not reproduced widely until the 1920s. The founding picture of Cubism spent its first decade as studio talk.",
+  "move": "Influence can travel by word of mouth long before the public sees anything.",
+  "trap": "A picture this famous seems as if it must have been famous at once.",
+  "keywords": [
+    "les demoiselles d'avignon",
+    "picasso",
+    "andré salmon",
+    "exhibition history"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubin, Seckel and Cousins, MoMA, 1994",
+  "source_kind": "institution",
+  "reference": "William Rubin, Hélène Seckel and Judith Cousins, Les Demoiselles d'Avignon, Studies in Modern Art 3, Museum of Modern Art, 1994",
+  "written": "2026-09-26"
+}

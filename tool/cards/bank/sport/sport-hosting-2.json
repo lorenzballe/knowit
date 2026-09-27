@@ -1,0 +1,33 @@
+{
+  "id": "sport-hosting-2",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long did it take Quebec to pay off the debt from Montreal's 1976 Olympics?",
+  "answer": "About thirty years: the last of it was cleared in November 2006. The stadium, nicknamed the Big Owe, got its retractable roof only in 1987, and it never worked well. A special tobacco tax helped pay. A Games lasting about two weeks was still being paid for by smokers born after it.",
+  "move": "Ask who pays for a party after the guests have gone home.",
+  "keywords": [
+    "montreal 1976",
+    "olympic stadium",
+    "public debt",
+    "tobacco tax",
+    "quebec"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "CBC News, 2006",
+  "source_kind": "news_archive",
+  "reference": "https://www.cbc.ca/news/canada/montreal/quebec-s-big-owe-stadium-debt-is-over-1.602530",
+  "written": "2026-09-26"
+}

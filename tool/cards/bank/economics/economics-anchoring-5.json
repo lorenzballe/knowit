@@ -1,0 +1,42 @@
+{
+  "id": "economics-anchoring-5",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: printing a minimum payment on a credit-card bill lowers what people choose to repay?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Neil Stewart's experiment, people shown a minimum repaid less than people shown no minimum at all, and later studies in Britain and the United States found the same pull. A floor meant to guarantee some repayment becomes the number people start from. Real card accounts show payments bunched at the printed minimum.",
+  "move": "Written minimums turn into targets; pick your number before reading theirs.",
+  "trap": "Assuming a minimum can only push payments upward.",
+  "keywords": [
+    "credit cards",
+    "minimum payments",
+    "debt repayment",
+    "anchoring",
+    "card statements"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stewart, Psychological Science, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1467-9280.2008.02255.x",
+  "written": "2026-09-26"
+}

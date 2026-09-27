@@ -1,0 +1,32 @@
+{
+  "id": "cinema-budgets-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a Georgia peach logo appear in the end credits of so many blockbusters?",
+  "answer": "It is worth 10% of the budget spent there. Since 2008 Georgia has given productions a tax credit of 20% of qualifying local spending, plus 10% for showing the state's logo, and a production owing no Georgia tax can sell the credit to one that does. Studios built soundstages outside Atlanta to collect it.",
+  "move": "Follow a location decision back to the tax code before the scenery.",
+  "keywords": [
+    "film tax credit",
+    "georgia",
+    "soundstages",
+    "atlanta"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Georgia Entertainment Industry Investment Act",
+  "source_kind": "primary_document",
+  "reference": "Georgia Entertainment Industry Investment Act, O.C.G.A. § 48-7-40.26, 2008",
+  "written": "2026-09-26"
+}

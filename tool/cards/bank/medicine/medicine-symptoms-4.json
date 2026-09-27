@@ -1,0 +1,33 @@
+{
+  "id": "medicine-symptoms-4",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When 23 online symptom checkers were tested on standard patient cases, how often did they name the right diagnosis first?",
+  "answer": "About a third of the time. A 2015 Harvard audit fed them 45 written cases; the correct diagnosis came first in 34% and in the top 20 in 58%. Triage advice leaned cautious, sending people to doctors for problems safe to treat at home. A list of twenty guesses reads like an answer.",
+  "move": "A long list of possibilities is not a diagnosis.",
+  "keywords": [
+    "symptom checkers",
+    "self-diagnosis",
+    "triage",
+    "clinical vignettes",
+    "online health"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Semigran et al., BMJ, 2015",
+  "source_kind": "paper",
+  "reference": "Semigran, Linder, Gidengil & Mehrotra, Evaluation of symptom checkers for self diagnosis and triage: audit study, BMJ, 2015",
+  "written": "2026-09-26"
+}

@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Nielsen ratings methodology"
+  "source": "Nielsen ratings methodology",
+  "disabled": true
 }

@@ -1,0 +1,33 @@
+{
+  "id": "economics-groceries-1",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the share of its income a household spends on food reveal?",
+  "answer": "How poor it is. Ernst Engel found in 1857, from Belgian workers' budgets, that the share spent on food falls as income rises, though richer families spend more in money. In the United States today the poorest fifth of households spend around a third of their income on food, the richest under a tenth.",
+  "move": "Measure a burden as a share of what each person has.",
+  "keywords": [
+    "engel's law",
+    "ernst engel",
+    "household budgets",
+    "food spending",
+    "poverty"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "USDA Economic Research Service, Food Expenditure Series",
+  "source_kind": "statistics",
+  "reference": "USDA Economic Research Service, Food Expenditure Series: food spending as a share of income by quintile, 2024",
+  "written": "2026-09-26"
+}

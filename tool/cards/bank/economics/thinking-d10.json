@@ -29,5 +29,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in urban economics"
+  "figure": "none",
+  "source": "Contested question in urban economics",
+  "source_kind": "book",
+  "reference": "Shoup, The High Cost of Free Parking, Planners Press, 2005"
 }

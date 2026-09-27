@@ -1,0 +1,36 @@
+{
+  "id": "language-latin-roots-3",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "also": [
+    "history.ancient_rome.daily_rome"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Were Roman soldiers really paid in salt, as the story behind salary goes?",
+  "answer": "No ancient source says so. Salarium, an allowance, does come from sal, salt, but no ancient text says soldiers received salt, and soldiers were paid in coin, mostly silver. The salt-wage story is modern: an Italian Latin dictionary of 1771 is among the first to state it.",
+  "move": "A true origin can still be carrying a made-up explanation.",
+  "keywords": [
+    "salary",
+    "salarium",
+    "roman army",
+    "salt",
+    "folk etymology"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Conversation, on salary and salt",
+  "source_kind": "institution",
+  "reference": "https://theconversation.com/our-pay-is-called-a-salary-but-were-roman-soldiers-really-paid-in-salt-290057",
+  "written": "2026-09-26"
+}

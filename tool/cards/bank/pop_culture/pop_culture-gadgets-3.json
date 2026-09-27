@@ -1,0 +1,44 @@
+{
+  "id": "pop_culture-gadgets-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "also": [
+    "technology.old_machines.telephones"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A text message carries 140 bytes, and each basic character uses 7 bits. How many characters fit?",
+  "value": 160,
+  "unit": "characters",
+  "answer": "1,120 / 7 = 160 characters.",
+  "move": "A strange limit is often a round size divided by an odd unit.",
+  "hint": "Turn the bytes into bits before dividing.",
+  "steps": [
+    "140 bytes x 8 bits = 1,120 bits.",
+    "Each character in the basic alphabet takes 7 bits.",
+    "1,120 / 7 = 160 characters."
+  ],
+  "keywords": [
+    "sms",
+    "text messages",
+    "160 characters",
+    "gsm",
+    "character encoding"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hillebrand, GSM and UMTS, 2002",
+  "source_kind": "book",
+  "reference": "Friedhelm Hillebrand (ed.), GSM and UMTS: The Creation of Global Mobile Communication, Wiley, 2002",
+  "written": "2026-09-26"
+}

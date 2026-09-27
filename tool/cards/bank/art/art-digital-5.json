@@ -1,0 +1,41 @@
+{
+  "id": "art-digital-5",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "also": [
+    "technology.ai.limits"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should news outlets publish only photographs that carry a signed record of every edit since capture?",
+  "sides": [
+    "Yes, require the record",
+    "No, keep it optional"
+  ],
+  "answer": "Yes. Generated and altered images are now cheap and convincing, and a reader cannot tell them apart by eye. The C2PA standard lets a camera sign an image at capture and log each later change. A newsroom that insists on it can show its work, and anything unsigned invites the question it should.",
+  "move": "Whichever side you took, it turns on what an unsigned picture comes to mean.",
+  "counterpoint": "No. Most of the world's cameras and phones do not sign images, and platforms often strip the data. Photographers in dangerous places may need to hide time and location. A rule would drop authentic witness pictures while a signed record proves only that nothing changed after capture, not that the scene was staged honestly.",
+  "keywords": [
+    "c2pa",
+    "content credentials",
+    "photojournalism",
+    "image provenance",
+    "generated images"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "C2PA Technical Specification, 2022",
+  "source_kind": "standard",
+  "reference": "Coalition for Content Provenance and Authenticity, C2PA Technical Specification, version 1.0, 2022",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-chilli-1",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In wild Bolivian chillies, what enemy does the burning capsaicin mainly protect the seeds from?",
+  "answer": "A fungus. Tewksbury's team found that Fusarium, entering through punctures made by sap-sucking bugs, killed more seeds than any animal, and that capsaicin slowed it. Where bugs were common, most plants in a population were pungent; where rare, many wild plants made no capsaicin at all. The heat may have begun as a fungicide.",
+  "move": "Before naming a defence's target, count what actually kills the thing defended.",
+  "keywords": [
+    "capsaicin",
+    "fusarium",
+    "wild chillies",
+    "bolivia",
+    "seed defence"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tewksbury et al., PNAS, 2008",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.0802691105",
+  "written": "2026-09-26"
+}

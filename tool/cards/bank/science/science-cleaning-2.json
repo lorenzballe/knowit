@@ -1,0 +1,38 @@
+{
+  "id": "science-cleaning-2",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: alcohol diluted to about 70% with water kills bacteria better than pure alcohol does?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Alcohol kills by unravelling a microbe's proteins, and that happens faster with water present; pure alcohol mainly dries things out. US federal guidance for hospitals puts the best range at 60–90% alcohol in water, with strength falling off sharply below 50%. A bottle of absolute ethanol is the weaker disinfectant.",
+  "move": "More of the active ingredient is not the same as more effect.",
+  "trap": "Assuming the purer the alcohol, the stronger the disinfectant.",
+  "keywords": [
+    "hand sanitiser",
+    "ethanol",
+    "disinfection",
+    "protein denaturation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC Guideline for Disinfection and Sterilization, 2008",
+  "source_kind": "institution",
+  "reference": "Rutala, Weber and HICPAC, Guideline for Disinfection and Sterilization in Healthcare Facilities, US Centers for Disease Control and Prevention, 2008",
+  "written": "2026-09-26"
+}

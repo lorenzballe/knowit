@@ -1,0 +1,32 @@
+{
+  "id": "cinema-hits-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a 1939 film still top the inflation-adjusted North American box-office chart?",
+  "answer": "Because it kept coming back. Before television and home video, a cinema was the only place to see a film, so Gone with the Wind was re-released again and again: 1947, 1954, 1961, 1967 and later. Its adjusted total adds up the audiences of several decades, not the crowds of one run.",
+  "move": "Before comparing totals, ask how many chances each one had to add up.",
+  "keywords": [
+    "gone with the wind",
+    "re-releases",
+    "inflation-adjusted gross",
+    "home video"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Harmetz, On the Road to Tara, 1996",
+  "source_kind": "book",
+  "reference": "Harmetz, On the Road to Tara: The Making of Gone with the Wind, Harry N. Abrams, 1996",
+  "written": "2026-09-26"
+}

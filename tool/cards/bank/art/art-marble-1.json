@@ -1,0 +1,36 @@
+{
+  "id": "art-marble-1",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "also": [
+    "art.sculpture.bronze"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many Roman marble statues lean against a carved tree stump?",
+  "answer": "Because the originals were bronze. Greek sculptors cast many famous figures in hollow bronze, strong in tension, which could balance on slim ankles. Marble cracks under that load, so Roman copyists added stumps and struts. The Doryphoros, the spear-bearer, survives mainly in marble copies, whose full-length versions lean on a trunk the original never had.",
+  "move": "When a copy adds a part, ask what the original managed without it.",
+  "keywords": [
+    "roman copies",
+    "doryphoros",
+    "tree stump supports",
+    "greek bronzes",
+    "tensile strength"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Metropolitan Museum, Roman Copies of Greek Statues",
+  "source_kind": "institution",
+  "reference": "https://www.metmuseum.org/essays/roman-copies-of-greek-statues",
+  "written": "2026-09-26"
+}

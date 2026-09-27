@@ -1,0 +1,33 @@
+{
+  "id": "human_body-telomeres-1",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a chromosome lose a little of its tip each time a cell divides?",
+  "answer": "The copying machinery cannot reach the end. DNA polymerase extends a strand only from a short primer laid ahead of it, and at a linear chromosome's tip there is no room for the last one. Alexei Olovnikov in 1971 and James Watson in 1972 each saw this. Bacteria, with circular chromosomes, have no tips.",
+  "move": "A process that cannot reach its own edge will wear that edge down.",
+  "keywords": [
+    "end-replication problem",
+    "dna polymerase",
+    "telomeres",
+    "alexei olovnikov",
+    "chromosomes"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olovnikov, Journal of Theoretical Biology, 1973",
+  "source_kind": "paper",
+  "reference": "Olovnikov, A theory of marginotomy, Journal of Theoretical Biology, 1973",
+  "written": "2026-09-26"
+}

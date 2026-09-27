@@ -1,0 +1,39 @@
+{
+  "id": "medicine-symptoms-5",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a fever happens because infection makes the body produce more heat than it can shed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Signals from the immune system make the brain raise its thermostat, via a messenger called prostaglandin E2, and the body then shivers and narrows skin vessels to reach the new setting. That is why a rising fever feels cold. Ibuprofen and paracetamol reset the thermostat, which is why they do little for heatstroke.",
+  "move": "A body heading somewhere on purpose looks broken to an outsider.",
+  "trap": "Picturing fever as overheating, like an engine that runs too hot.",
+  "keywords": [
+    "fever",
+    "hypothalamus",
+    "prostaglandin",
+    "shivering",
+    "heatstroke"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harrison's Principles of Internal Medicine",
+  "source_kind": "reference_work",
+  "reference": "Dinarello & Porat, Fever, in Harrison's Principles of Internal Medicine, 20th edition, McGraw-Hill, 2018",
+  "written": "2026-09-26"
+}

@@ -32,5 +32,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "International Coffee Organization"
+  "figure": "none",
+  "source": "International Coffee Organization",
+  "source_kind": "arithmetic",
+  "reference": "International Coffee Organization, domestic consumption statistics, 2019"
 }

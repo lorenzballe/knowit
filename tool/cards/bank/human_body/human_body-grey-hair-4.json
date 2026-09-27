@@ -1,0 +1,40 @@
+{
+  "id": "human_body-grey-hair-4",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "When a person's hair seems to turn white in a few days, what is the likeliest explanation?",
+  "options": [
+    "Stress bleaching pigment inside the hairs",
+    "Dark hairs falling out, sparing grey ones",
+    "Air bubbles forming inside the hair shafts"
+  ],
+  "correct": 1,
+  "answer": "Dark hairs falling out. A hair shaft is dead, so pigment already in it cannot be withdrawn. In a sudden bout of alopecia areata, an immune attack on follicles, pigmented hairs are mostly shed and white ones spared. A partly grey head then turns white in days, because only the grey hairs are left.",
+  "move": "When a crowd changes colour overnight, ask who left.",
+  "trap": "Picturing fright draining the colour from hairs already grown.",
+  "keywords": [
+    "alopecia areata",
+    "white hair",
+    "hair loss",
+    "hair shaft",
+    "fright"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nahm, Navarini & Kelly, Int J Trichology, 2013",
+  "source_kind": "paper",
+  "reference": "Nahm, Navarini & Kelly, Canities subita: a reappraisal of evidence based on 196 case reports published in the medical literature, International Journal of Trichology, 2013",
+  "written": "2026-09-26"
+}

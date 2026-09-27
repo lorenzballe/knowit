@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-science-3",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: astrology has been put to a double-blind scientific test, and failed it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Shawn Carlson's study, published in Nature in 1985, astrologers matched each volunteer's birth chart to one of three personality profiles, one of them genuine. They chose correctly about a third of the time, the rate of pure guessing, after predicting they would manage at least half. Astrology is testable; it fails.",
+  "move": "A claim that can fail a test is a claim; check whether it did.",
+  "trap": "Filing astrology as untestable, the textbook case of pseudoscience.",
+  "keywords": [
+    "astrology",
+    "shawn carlson",
+    "double-blind test",
+    "falsifiability"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carlson, Nature, 1985",
+  "source_kind": "paper",
+  "reference": "Carlson, A double-blind test of astrology, Nature 318, 1985, pp. 419-425",
+  "written": "2026-09-26"
+}

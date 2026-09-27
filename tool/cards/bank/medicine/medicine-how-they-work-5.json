@@ -1,0 +1,43 @@
+{
+  "id": "medicine-how-they-work-5",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Each measles case infects about 15 people, and two vaccine doses protect 97% of children. What percentage must be vaccinated to stop outbreaks?",
+  "value": 96,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "93.3 / 0.97 = about 96%.",
+  "move": "A target for the protected must be divided by how often protection takes.",
+  "trap": "Stopping at 93%, forgetting that some vaccinated children stay unprotected.",
+  "hint": "Ask what share can stay unprotected if each case must infect fewer than one.",
+  "steps": [
+    "Spread stops when each case infects fewer than one person on average.",
+    "So at most 1 in 15 can be susceptible: 1 - 1/15 = 93.3% must be immune.",
+    "Only 97% of the vaccinated are immune, so coverage = 93.3 / 0.97.",
+    "93.3 / 0.97 = about 96%."
+  ],
+  "keywords": [
+    "herd immunity",
+    "measles",
+    "reproduction number",
+    "vaccine coverage"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Fine, Eames & Heymann, Clinical Infectious Diseases, 2011",
+  "source_kind": "paper",
+  "reference": "Fine, Eames & Heymann, Herd immunity: a rough guide, Clinical Infectious Diseases, 2011",
+  "written": "2026-09-26"
+}

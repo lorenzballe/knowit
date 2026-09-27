@@ -1,0 +1,36 @@
+{
+  "id": "philosophy-eternity-2",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did al-Ghazali use Saturn and the Sun to argue that the world cannot be eternal?",
+  "answer": "By counting circuits. If the world had no beginning, Saturn, once in thirty years, and the Sun, yearly, have each made infinitely many; yet the Sun's total should be thirty times Saturn's, and each must be odd or even. Around 1095 he judged it absurd. Cantor's mathematics now calls both totals the same size.",
+  "move": "When every answer to a question is absurd, suspect the question's assumption.",
+  "keywords": [
+    "al-ghazali",
+    "eternity of the world",
+    "infinity",
+    "saturn",
+    "incoherence of the philosophers"
+  ],
+  "era": "medieval",
+  "region": "middle_east",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "al-Ghazali, The Incoherence of the Philosophers",
+  "source_kind": "book",
+  "reference": "al-Ghazali, The Incoherence of the Philosophers, trans. Marmura, Brigham Young University Press, 2000, First Discussion",
+  "written": "2026-09-26"
+}

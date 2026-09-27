@@ -1,0 +1,36 @@
+{
+  "id": "pop_culture-swooshes-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "also": [
+    "pop_culture.fashion.sneakers"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a running shoe carry a large mark on its side at all?",
+  "answer": "Because the side mark began as structure. Early spikes had leather strips stitched across the midfoot to steady the upper, and Adi Dassler's shoes wore them as stripes. The trade kept calling any side logo a stripe: in 1971 Phil Knight asked a design student for a stripe that suggested motion.",
+  "move": "Before reading a symbol as decoration, ask what job it once did.",
+  "keywords": [
+    "side stripe",
+    "running shoes",
+    "adi dassler",
+    "phil knight",
+    "shoe design"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike, Scribner, 2016",
+  "written": "2026-09-26"
+}

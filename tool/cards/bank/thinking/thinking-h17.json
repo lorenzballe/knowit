@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h17",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "Three years into a law degree, you realise you want to be an engineer. What should those three years count for?",
+  "options": [
+    "Finishing, or they were wasted",
+    "Only what they give you from now on",
+    "Half of the decision"
+  ],
+  "correct": 1,
+  "answer": "Only what they give you from now on. The years are spent whichever way you choose; what still counts is what they carry forward — skills, a qualification, contacts — weighed against the years an unwanted career would take. Finishing to avoid wasting them spends more years to protect ones already gone.",
+  "move": "The past votes only through what it hands to the future.",
+  "trap": "Stopping now feels like throwing three years away.",
+  "keywords": [
+    "careers",
+    "degrees",
+    "sunk cost",
+    "decisions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arkes & Blumer, 1985",
+  "source_kind": "paper",
+  "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes, 1985",
+  "written": "2026-09-26"
+}

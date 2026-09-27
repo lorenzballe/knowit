@@ -1,0 +1,40 @@
+{
+  "id": "economics-chokepoints-4",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Diverting from Suez round the Cape adds about 3,600 nautical miles. At 15 knots, how many extra days at sea?",
+  "value": 10,
+  "unit": "days",
+  "answer": "3,600 / 360 = 10 days.",
+  "move": "Turn a distance into days before judging what a detour costs.",
+  "hint": "A knot is one nautical mile per hour; start with a day's run.",
+  "steps": [
+    "15 knots x 24 hours = 360 nautical miles a day.",
+    "3,600 / 360 = 10 days."
+  ],
+  "keywords": [
+    "cape of good hope",
+    "suez canal",
+    "red sea",
+    "shipping routes",
+    "transit time"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "UNCTAD, Review of Maritime Transport, 2024",
+  "source_kind": "institution",
+  "reference": "UNCTAD, Review of Maritime Transport 2024, United Nations, 2024",
+  "written": "2026-09-26"
+}

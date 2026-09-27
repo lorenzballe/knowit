@@ -1,0 +1,33 @@
+{
+  "id": "history-1848-1",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Palermo rising of January 1848, the first of that year's revolutions, begin?",
+  "answer": "By appointment. Posters went up three days early announcing a rising for 12 January, the birthday of King Ferdinand II, himself born in Palermo. The rising came on the day, drove Bourbon troops from most of Sicily and won 16 months of self-rule, six weeks before Paris rose.",
+  "move": "A date announced in public turns private discontent into common knowledge.",
+  "keywords": [
+    "sicilian revolution",
+    "palermo",
+    "ferdinand ii",
+    "revolutions of 1848",
+    "two sicilies"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Rapport, 1848: Year of Revolution, 2008",
+  "source_kind": "book",
+  "reference": "Rapport, 1848: Year of Revolution, Little, Brown, 2008",
+  "written": "2026-09-26"
+}

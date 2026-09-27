@@ -12,6 +12,7 @@ import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/reader_profile.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
@@ -64,7 +65,20 @@ Future<void> _finishDay(WidgetTester tester) async {
 /// What a fresh install on the free plan is dealt today: every subject,
 /// nothing read — the question of the day, two of the edition's, and two of
 /// the reader's own from the whole pool.
-List<Pill> get _todaysFive => dealDay(date: DateTime.now()).cards;
+List<Pill> get _todaysFive {
+  // A first day as the app deals it to a reader who never set the mix:
+  // read by ReaderProfile as having said nothing, so it opens on the
+  // subjects that hook most people, a notch above.
+  final ReaderProfile untold = ReaderProfile.read(weights: const {});
+  // And a welcome day: four of the five the reader's own.
+  return dealDay(
+    date: DateTime.now(),
+    topics: kTopicOrder.toSet(),
+    weights: untold.weightsOn(0, const {}),
+    levels: untold.levelsUnder(const {}),
+    own: kOwnCardsWelcome,
+  ).cards;
+}
 
 /// The paywall's headline, which is what a gate opens onto.
 final Finder _paywallHeadline = find.text('Every card, chosen for you.');
@@ -422,8 +436,8 @@ void main() {
     final Pill other = PillBank.cards.firstWhere((p) => p.topic != 'Economics');
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(0): {other.id: 9, econ.id: 4},
-        ago(12): {econToo.id: 30},
+        ago(Tallies.closedAfter): {other.id: 9, econ.id: 4},
+        ago(Tallies.closedAfter + 12): {econToo.id: 30},
       }),
     );
     Tallies.useForTest(tallies);
@@ -1654,7 +1668,7 @@ void main() {
     expect(find.text('Day 1 · five read'), findsOneWidget);
   });
 
-  testWidgets('the free day marks the two cards that are the reader\'s own', (
+  testWidgets('the free day marks the cards that are the reader\'s own', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed());
@@ -1663,7 +1677,8 @@ void main() {
 
     final app = AppState();
     await app.init();
-    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    // A first day is a welcome day: four of the five the reader's own.
+    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
     expect(app.todaysDeck, hasLength(kPillsPerDay));
     // The question of the day is dealt, and it is nobody's own.
     final question = questionOfTheDay(DateTime.now());
@@ -1692,7 +1707,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
-    expect(marked, kOwnCardsFree);
+    expect(marked, kOwnCardsWelcome);
   });
 
   testWidgets(
@@ -1775,7 +1790,7 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('The other 4, yours.'), findsOneWidget);
+        expect(find.text('Make all five yours.'), findsOneWidget);
         expect(find.text('Try 7 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         await tester.pump(const Duration(seconds: 6));
@@ -1876,7 +1891,7 @@ void main() {
       // Past the fifth: the offer, at the front, and the counter gives way
       // to the plan's name. No skip here — a swipe is the way back.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('The other 4, yours.'), findsOneWidget);
+      expect(find.text('Make all five yours.'), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);

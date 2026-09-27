@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-doubt-2",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Sextus Empiricus say sceptics stumbled on peace of mind?",
+  "answer": "By giving up, like Apelles with his sponge. The painter could not render a horse's foam, gave up and flung at the picture the sponge he wiped his brushes with, and its mark made the foam. Sceptics sought calm by settling what is true, failed, suspended judgement — and calm followed, as if by chance.",
+  "move": "Some things arrive only once you stop grabbing for them.",
+  "keywords": [
+    "sextus empiricus",
+    "pyrrhonism",
+    "apelles",
+    "suspension of judgement",
+    "tranquillity"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sextus Empiricus, Outlines of Pyrrhonism, I.28",
+  "source_kind": "book",
+  "reference": "Sextus Empiricus, Outlines of Pyrrhonism I.28-29, trans. Bury, Loeb Classical Library, Harvard University Press, 1933",
+  "written": "2026-09-26"
+}

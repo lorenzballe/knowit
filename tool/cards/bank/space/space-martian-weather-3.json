@@ -1,0 +1,36 @@
+{
+  "id": "space-martian-weather-3",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "also": [
+    "space.mars_and_rovers.water_on_mars"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a Martian dust storm help the planet lose what remains of its water?",
+  "answer": "By lifting water to where sunlight can break it. Dust absorbs sunlight and warms the middle atmosphere, so vapour that would normally freeze out low rises tens of kilometres higher. There ultraviolet light splits the molecules and the light hydrogen escapes. During the 2018 global storm, the water reaching those heights surged.",
+  "move": "Weather can carry a thing to the place where it gets destroyed.",
+  "keywords": [
+    "dust storms",
+    "water vapour",
+    "hydrogen escape",
+    "maven",
+    "upper atmosphere"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stone et al., Science, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aba5229",
+  "written": "2026-09-26"
+}

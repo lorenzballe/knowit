@@ -1,0 +1,32 @@
+{
+  "id": "food-roasting-5",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before the 1860s, who did the roasting for most American coffee drinkers?",
+  "answer": "They did, at home. Roasted beans went stale fast, so grocers sold coffee green and households roasted it in skillets. In 1868 John Arbuckle patented a glaze of egg and sugar that sealed roasted beans against air, and sold them in one-pound paper packages called Ariosa. The kitchen roaster retired with the frontier.",
+  "move": "Ask what had to be solved before a chore could leave the house.",
+  "keywords": [
+    "john arbuckle",
+    "ariosa",
+    "home roasting",
+    "packaged coffee"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pendergrast, Uncommon Grounds, 1999",
+  "source_kind": "book",
+  "reference": "Pendergrast, Uncommon Grounds: The History of Coffee and How It Transformed Our World, Basic Books, 1999",
+  "written": "2026-09-26"
+}

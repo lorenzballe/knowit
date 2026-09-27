@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-virtue-5",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the 1958 paper that revived virtue ethics tell philosophers to stop doing?",
+  "answer": "Moral philosophy. Elizabeth Anscombe's Modern Moral Philosophy argued that the moral ought was a leftover from belief in a divine lawgiver, and that ethics should wait for an adequate account of intention, action and wanting. The same paper coined the word consequentialism, as a label for the views she was attacking.",
+  "move": "When the basic words are confused, stop arguing and fix the words.",
+  "keywords": [
+    "elizabeth anscombe",
+    "modern moral philosophy",
+    "consequentialism",
+    "virtue ethics",
+    "moral ought"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anscombe, Philosophy, 1958",
+  "source_kind": "paper",
+  "reference": "Anscombe, Modern Moral Philosophy, Philosophy 33 (124), 1958, pp. 1-19",
+  "written": "2026-09-26"
+}

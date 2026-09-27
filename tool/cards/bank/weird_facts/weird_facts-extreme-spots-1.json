@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-extreme-spots-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the 58°C measured at El Azizia, Libya, in 1922 is still the world's official hottest air temperature?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A World Meteorological Organization panel rejected it in 2012 after 90 years in the record books: the observer was new to the job, the instrument was unsuitable, and the value was likely misread. The record passed to Death Valley's 56.7°C of 1913, a reading some meteorologists also doubt.",
+  "move": "Long use makes a figure familiar; it does not make it verified.",
+  "trap": "Assuming a record that stood for 90 years must have been checked.",
+  "keywords": [
+    "el azizia",
+    "death valley",
+    "temperature records",
+    "world meteorological organization"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "El Fadli et al., BAMS, 2013",
+  "source_kind": "institution",
+  "reference": "El Fadli et al., World Meteorological Organization assessment of the purported world record 58°C temperature extreme at El Azizia, Libya, Bulletin of the American Meteorological Society, 2013",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "sport-recovery-2",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the same punishing downhill run leave far less soreness when repeated a few weeks later?",
+  "answer": "The first bout protects against the next. Known as the repeated-bout effect, it appears after a single session and lasts for weeks. Nerves recruit the muscle differently, connective tissue stiffens and the inflammatory response is damped. The second descent does less damage, not merely hurts less.",
+  "move": "The first hard dose of anything teaches the body what to expect.",
+  "keywords": [
+    "repeated-bout effect",
+    "muscle damage",
+    "adaptation",
+    "downhill running"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McHugh, Scand J Med Sci Sports, 2003",
+  "source_kind": "paper",
+  "reference": "McHugh, Recent advances in the understanding of the repeated bout effect, Scandinavian Journal of Medicine & Science in Sports, 2003",
+  "written": "2026-09-26"
+}

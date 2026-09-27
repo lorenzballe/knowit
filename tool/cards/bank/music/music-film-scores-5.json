@@ -1,0 +1,37 @@
+{
+  "id": "music-film-scores-5",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should directors stop editing films to borrowed temp music before the composer has started?",
+  "sides": [
+    "Yes, drop the temp track",
+    "No, keep the temp track"
+  ],
+  "answer": "A temp track sets the target before the composer has seen a frame. After weeks of cutting to it, a director hears anything different as wrong, and the commissioned score becomes an imitation of the borrowed one. Composers get handed the same few favourite pieces, one reason so many big films sound alike.",
+  "move": "Whichever side you took, the question is whether a sketch can stay a sketch.",
+  "counterpoint": "Directors are rarely musicians, and a temp track is the clearest way they have to say what a scene needs: this pace, this weight, quiet here. Without it composers guess and rewrite. Editors also need rhythm to cut to, and a good composer can take the brief and still write something of their own.",
+  "keywords": [
+    "temp track",
+    "film editing",
+    "directors",
+    "film composers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sadoff, Popular Music, 2006",
+  "source_kind": "paper",
+  "reference": "Sadoff, The role of the music editor and the 'temp track' as blueprint for the score, source music, and scource music of films, Popular Music, 2006",
+  "written": "2026-09-26"
+}

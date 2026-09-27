@@ -1,0 +1,43 @@
+{
+  "id": "art-first-photos-5",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "Maxwell's 1861 colour photograph of a tartan ribbon shows red, yet its plates were blind to red light. How?",
+  "options": [
+    "The plate was faintly red-sensitive after all",
+    "The red plate was coloured by hand",
+    "The red dye also reflected ultraviolet"
+  ],
+  "correct": 2,
+  "answer": "The red dye also reflected ultraviolet. The collodion plates responded mainly to blue and ultraviolet, and the red filter let some ultraviolet through. Many red dyes reflect it, so the ribbon's red stripes registered on the red plate anyway. Ralph Evans worked this out in 1961. The demonstration worked for a reason Maxwell never intended.",
+  "move": "A result that comes out right has not yet shown the method worked.",
+  "trap": "Assuming the right colour came through the channel built for it.",
+  "keywords": [
+    "james clerk maxwell",
+    "tartan ribbon",
+    "three-colour photography",
+    "ultraviolet",
+    "collodion"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heritage, the tartan ribbon, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.3390/heritage6020054",
+  "written": "2026-09-26"
+}

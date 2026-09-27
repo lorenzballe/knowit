@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-tabloids-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Before it described newspapers, what was the word tabloid registered as a trademark for?",
+  "options": [
+    "Compressed medicine tablets",
+    "A half-size printing press",
+    "A typeface for headlines"
+  ],
+  "correct": 0,
+  "answer": "Compressed medicine tablets. Burroughs Wellcome registered Tabloid in 1884 for its pills, and the word came to mean anything condensed. Around 1900 it was applied to small-format papers that squeezed the news into short, punchy stories. The news came in pill form.",
+  "move": "A word's first owner rarely keeps control of what it comes to mean.",
+  "trap": "The printing press, because the word now names a paper size.",
+  "keywords": [
+    "tabloid",
+    "burroughs wellcome",
+    "trademark",
+    "newspaper format"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Church & Tansey, Burroughs Wellcome & Co., 2007",
+  "source_kind": "book",
+  "reference": "Roy Church and E. M. Tansey, Burroughs Wellcome & Co.: Knowledge, Trust, Profit and the Transformation of the British Pharmaceutical Industry 1880-1940, Crucible Books, 2007",
+  "written": "2026-09-26"
+}

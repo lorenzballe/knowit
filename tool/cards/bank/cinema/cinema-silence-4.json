@@ -1,0 +1,38 @@
+{
+  "id": "cinema-silence-4",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most of the dialogue in The Jazz Singer, the 1927 talkie, appears on intertitles?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Its Vitaphone discs carried a full orchestral score and Al Jolson's songs, but synchronised speech lasts only a couple of minutes, much of it Jolson improvising between numbers. The plot's conversations are still printed on cards, in the silent manner. The talking picture arrived as a silent film with islands of speech.",
+  "move": "A famous first is usually a small part of the thing it names.",
+  "trap": "Taking the label first talkie to mean a film full of talk.",
+  "keywords": [
+    "the jazz singer",
+    "al jolson",
+    "vitaphone",
+    "intertitles"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eyman, The Speed of Sound, 1997",
+  "source_kind": "book",
+  "reference": "Eyman, The Speed of Sound: Hollywood and the Talkie Revolution, 1926–1930, Simon & Schuster, 1997",
+  "written": "2026-09-26"
+}

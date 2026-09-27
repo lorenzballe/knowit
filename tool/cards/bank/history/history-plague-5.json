@@ -1,0 +1,36 @@
+{
+  "id": "history-plague-5",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "also": [
+    "economics.work_and_wages.minimum_wage"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did England do with the fines it took from workers demanding post-plague wages?",
+  "answer": "It paid village taxes with them. Under the labour laws that capped pay after the Black Death, fines went to lighten each village's share of a parliamentary tax. In Essex in 1352 they came to £710, and £675 went to poorer villages: more than half the county's £1,234 assessment was paid from workers' fines.",
+  "move": "Follow a fine to see whose bill it quietly pays.",
+  "keywords": [
+    "statute of labourers",
+    "black death",
+    "wages",
+    "essex",
+    "taxation"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Victoria County History of Essex, vol. 4",
+  "source_kind": "reference_work",
+  "reference": "https://www.british-history.ac.uk/vch/essex/vol4/pp296-302",
+  "written": "2026-09-26"
+}

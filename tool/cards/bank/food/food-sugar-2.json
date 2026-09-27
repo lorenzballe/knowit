@@ -1,0 +1,43 @@
+{
+  "id": "food-sugar-2",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "also": [
+    "history.empires.british"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of the Africans carried across the Atlantic as slaves, roughly what share landed in what became the United States?",
+  "options": [
+    "About 4%",
+    "About 30%",
+    "About half"
+  ],
+  "correct": 0,
+  "answer": "About 4%, some 390,000 of more than 10 million who survived the crossing. Most went to the sugar colonies of Brazil and the Caribbean, where cane work killed people faster than they had children, so planters kept buying more. Jamaica alone received far more Africans than all of mainland North America.",
+  "move": "The history told most often is not always the largest share of it.",
+  "trap": "American slavery is the story most told, so it seems the biggest.",
+  "keywords": [
+    "transatlantic slave trade",
+    "sugar plantations",
+    "caribbean",
+    "brazil",
+    "jamaica"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Eltis & Richardson, Yale University Press, 2010",
+  "source_kind": "book",
+  "reference": "Eltis & Richardson, Atlas of the Transatlantic Slave Trade, Yale University Press, 2010",
+  "written": "2026-09-26"
+}

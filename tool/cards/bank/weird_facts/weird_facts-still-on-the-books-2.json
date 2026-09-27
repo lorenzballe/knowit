@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-still-on-the-books-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the oldest statute still in force in England deal with?",
+  "answer": "Seizing goods for debt, and tenants spoiling land. The Statute of Marlborough, passed in 1267 after a civil war, still has a few chapters in force. Most curb distress, taking a debtor's goods without a court's order; one forbids tenants to waste the land they farm. Its clauses have outlived the barons by 750 years.",
+  "move": "Rules written to end a crisis tend to outlast the crisis by centuries.",
+  "keywords": [
+    "statute of marlborough",
+    "henry iii",
+    "distress",
+    "debt",
+    "tenancy"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, An Introduction to English Legal History",
+  "source_kind": "reference_work",
+  "reference": "Baker, An Introduction to English Legal History, 5th edition, Oxford University Press, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-neurons-1",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made Golgi's 1873 silver stain able to show a single neuron whole?",
+  "answer": "Its unreliability. His black reaction darkens only a few cells in every hundred, seemingly at random, but each one entirely; stain every cell and the slice would be solid black. Why it picks those cells is still unknown. Cajal used it to show neurons are separate cells; Golgi denied it in his 1906 Nobel lecture.",
+  "move": "Show everything at once and nothing can be seen.",
+  "keywords": [
+    "golgi stain",
+    "camillo golgi",
+    "santiago ramón y cajal",
+    "neuron doctrine",
+    "nobel prize"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Shepherd, Foundations of the Neuron Doctrine, 1991",
+  "source_kind": "book",
+  "reference": "Shepherd, Foundations of the Neuron Doctrine, Oxford University Press, 1991",
+  "written": "2026-09-26"
+}

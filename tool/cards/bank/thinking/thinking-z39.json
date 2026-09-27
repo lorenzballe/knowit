@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Rate problems"
+  "figure": "none",
+  "source": "Rate problems",
+  "source_kind": "arithmetic",
+  "reference": "Little, A Proof for the Queuing Formula: L = λW, Operations Research, 1961"
 }

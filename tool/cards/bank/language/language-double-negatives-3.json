@@ -1,0 +1,38 @@
+{
+  "id": "language-double-negatives-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "True or false: 18th-century grammar books drove the double negative out of standard written English?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. When Robert Lowth's grammar of 1762 declared that two negatives make an affirmative, multiple negation had already largely vanished from educated writing. Studies of personal letters date its decline to the 1500s and 1600s, generations before any grammar book. The grammarians wrote down a rule the literate had mostly adopted already.",
+  "move": "Before crediting a rule with a change, check when the change began.",
+  "trap": "A rule in print looks like the cause of the change it describes.",
+  "keywords": [
+    "robert lowth",
+    "prescriptive grammar",
+    "multiple negation",
+    "historical sociolinguistics"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nevalainen & Raumolin-Brunberg, Historical Sociolinguistics, 2003",
+  "source_kind": "book",
+  "reference": "Nevalainen & Raumolin-Brunberg, Historical Sociolinguistics: Language Change in Tudor and Stuart England, Longman, 2003",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-certainty-2",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "After four years of checking, how sure were the referees of Thomas Hales's proof of the Kepler conjecture?",
+  "options": [
+    "Certain, as with any accepted proof",
+    "99% certain, but unable to finish",
+    "No more than half sure"
+  ],
+  "correct": 1,
+  "answer": "99% certain. Hales's 1998 proof of the densest way to stack spheres ran to hundreds of pages plus long computer calculations, and the twelve referees could not check every step. A chain of thousands of links is only as sure as all of them together. A machine-checked version was finished only in 2014.",
+  "move": "When a proof outgrows any single reader, certainty becomes a matter of trust.",
+  "trap": "Treating a proof too long to check as certain by definition.",
+  "keywords": [
+    "kepler conjecture",
+    "thomas hales",
+    "mathematical proof",
+    "sphere packing",
+    "flyspeck"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hales et al., Forum of Mathematics, Pi, 2017",
+  "source_kind": "paper",
+  "reference": "Hales et al., A formal proof of the Kepler conjecture, Forum of Mathematics, Pi 5, e2, 2017",
+  "written": "2026-09-26"
+}

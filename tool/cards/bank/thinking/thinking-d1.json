@@ -27,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested policy question"
+  "figure": "none",
+  "source": "Contested policy question",
+  "source_kind": "paper",
+  "reference": "Orben & Przybylski, The association between adolescent well-being and digital technology use, Nature Human Behaviour, 2019"
 }

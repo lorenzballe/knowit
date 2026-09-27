@@ -1,0 +1,33 @@
+{
+  "id": "human_body-longevity-3",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Japanese officials discover in 2010 when they went looking for registered centenarians?",
+  "answer": "That many were long dead. The man listed as Tokyo's oldest, Sogen Kato, supposedly 111, was found mummified in his bedroom; he had probably died in 1978, and relatives had kept drawing his pension. A nationwide check of family registers then found about 230,000 people aged 100 or more whose whereabouts nobody could confirm.",
+  "move": "The oldest ages in any record are where record errors pile up.",
+  "keywords": [
+    "centenarians",
+    "sogen kato",
+    "family registers",
+    "pension fraud",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newman, bioRxiv, 2019",
+  "source_kind": "paper",
+  "reference": "Newman, Supercentenarians and the oldest-old are concentrated into regions with no birth certificates and short lifespans, bioRxiv, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-infinity-3",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can adding up the same endless list of numbers in a different order change the total?",
+  "answer": "Yes, if its positive and negative terms each add up to infinity alone. Bernhard Riemann showed in the 1850s that such a series can be reordered to reach any total. 1 − 1/2 + 1/3 − 1/4 … comes to about 0.693; take one positive then two negatives, and the same terms make half that.",
+  "move": "When huge amounts nearly cancel, small choices decide what is left.",
+  "keywords": [
+    "riemann rearrangement theorem",
+    "bernhard riemann",
+    "infinite series",
+    "conditional convergence",
+    "natural logarithm"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rudin, Principles of Mathematical Analysis, 1976",
+  "source_kind": "book",
+  "reference": "Rudin, Principles of Mathematical Analysis, 3rd edition, McGraw-Hill, 1976",
+  "written": "2026-09-26"
+}

@@ -1719,4 +1719,44 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get topEmpty =>
       'Listede henüz bir şey yok. Beğendiğin, sakladığın ya da anlattığın her kart sayılır.';
+
+  @override
+  String get readMark => 'Okundu';
+
+  @override
+  String get lovedSinceTheStart => 'Başından beri en sevilenler';
+
+  @override
+  String lovedIn(String subject) {
+    return '$subject alanında en sevilenler';
+  }
+
+  @override
+  String get lovedLine =>
+      'Okurların en çok sakladığı ve senin henüz okumadığın kartlar';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'İlk haftan: beş karttan dördünün senin olduğu $n gün daha.',
+      one: 'İlk haftan: yarın son günü, beş karttan dördü senin.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan biri senin, üçü herkesin; Astute+ ile beşi de senin kalır.';
+
+  @override
+  String get forYouShelf => 'Senin için';
+
+  @override
+  String get forYouLine => 'Okumanın öne çıkardıkları';
+
+  @override
+  String get exploreOffline =>
+      'Çevrimdışısın. Bu, Keşfet\'in en son okunduğu hâli.';
 }

@@ -1,0 +1,32 @@
+{
+  "id": "technology-oled-1",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which company invented the OLED, the glowing-molecule display in most flagship phones?",
+  "answer": "Kodak. In 1987 Ching Tang and Steven Van Slyke, chemists at its Rochester labs, reported a thin stack of organic films that glowed when current passed through it. Kodak licensed the patents, made a few small screens, and in 2009 sold its OLED business to LG, now the leading maker of OLED television panels.",
+  "move": "Invention and profit rarely happen in the same building.",
+  "keywords": [
+    "kodak",
+    "ching tang",
+    "organic light-emitting diodes",
+    "lg"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tang & Van Slyke, Applied Physics Letters, 1987",
+  "source_kind": "paper",
+  "reference": "Tang & Van Slyke, Organic electroluminescent diodes, Applied Physics Letters 51, 1987",
+  "written": "2026-09-26"
+}

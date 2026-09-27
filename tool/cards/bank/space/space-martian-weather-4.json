@@ -1,0 +1,39 @@
+{
+  "id": "space-martian-weather-4",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: snow falls from clouds on Mars?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2008 the Phoenix lander's laser, pointed up at night, saw water-ice crystals falling in streaks from clouds about 4 km high. In the polar night, orbiters detect clouds of carbon dioxide that drop dry-ice snow. Rovers have not caught it: they land near the equator, and mostly work by day.",
+  "move": "Where the cameras go decides what the pictures can show.",
+  "trap": "Rover photos show only dry red ground, so no snow.",
+  "keywords": [
+    "snow",
+    "phoenix lander",
+    "lidar",
+    "water-ice clouds",
+    "dry ice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whiteway et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "Whiteway et al., Mars Water-Ice Clouds and Precipitation, Science 325, 2009",
+  "written": "2026-09-26"
+}

@@ -9,7 +9,7 @@
     "Yes, pay donors",
     "No, keep it a gift"
   ],
-  "answer": "People die on waiting lists while healthy kidneys go undonated. Iran, the one country with a regulated payment system, has no waiting list. We already pay surgeons, nurses and hospitals — the only person forbidden to benefit is the one taking the risk.",
+  "answer": "People die on waiting lists while healthy kidneys go undonated. Iran, the one country with a regulated payment system, reported its kidney waiting list cleared by 1999. We already pay surgeons, nurses and hospitals — the only person forbidden to benefit is the one taking the risk.",
   "move": "Both sides agree people are dying. They disagree about what counts as a free choice.",
   "counterpoint": "A price makes the poor the supply. If the offer is life-changing money, refusing stops being a free choice, and the burden of organ removal lands almost entirely on people with no other options. Consent given under financial pressure is the thing the rule exists to protect.",
   "keywords": [
@@ -27,5 +27,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Contested question in medical ethics"
+  "figure": "none",
+  "source": "Contested question in medical ethics",
+  "source_kind": "paper",
+  "reference": "Ghods & Savaj, Iranian Model of Paid and Regulated Living-Unrelated Kidney Donation, Clinical Journal of the American Society of Nephrology, 2006"
 }

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-joy-1",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a conversation, who laughs more: the person talking or the person listening?",
+  "answer": "The one talking. Recording 1,200 bouts of everyday laughter, Robert Provine found speakers laughed 46% more than their listeners, and most laughs followed remarks that were not jokes. Laughs landed at pauses between phrases, almost never mid-phrase. Laughter works less like applause for wit than like a comma between two people.",
+  "move": "A laugh says more about the relationship than about the joke.",
+  "keywords": [
+    "laughter",
+    "conversation",
+    "robert provine",
+    "humour",
+    "social signals"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Provine, Ethology, 1993",
+  "source_kind": "paper",
+  "reference": "Provine, Laughter punctuates speech: linguistic, social and gender contexts of laughter, Ethology, 1993",
+  "written": "2026-09-26"
+}

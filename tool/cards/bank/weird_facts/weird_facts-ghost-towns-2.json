@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-ghost-towns-2",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the villagers of Tyneham, in Dorset, never go home after leaving in 1943?",
+  "answer": "Because the army kept the land. They left in December 1943 so troops could train for D-Day, pinning a note to the church door asking soldiers to treat the houses kindly until their return. In 1948 the land was bought compulsorily. The village still sits inside a firing range, open on set days.",
+  "move": "A temporary arrangement with no end date tends to become the permanent one.",
+  "keywords": [
+    "tyneham",
+    "dorset",
+    "requisition",
+    "second world war",
+    "firing range"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright, The Village That Died for England, 1995",
+  "source_kind": "reference_work",
+  "reference": "Wright, The Village That Died for England: The Strange Story of Tyneham, Jonathan Cape, 1995",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "language-japanese-4",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "also": [
+    "pop_culture.internet_culture.virality"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the four-circle ikigai chart of love, skill, need and pay comes from Japan?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The chart was drawn in 2014 by the blogger Marc Winn, who put the word ikigai on Andrés Zuzunaga's Venn diagram of purpose. In Japanese, ikigai is an ordinary word for whatever makes life worth living, a grandchild or a vegetable patch, with no requirement that it pay.",
+  "move": "Ask who first drew the picture, not whose word labels it.",
+  "trap": "A Japanese word on the chart makes the chart itself seem Japanese.",
+  "keywords": [
+    "ikigai",
+    "venn diagram",
+    "marc winn",
+    "purpose"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winn, The View Inside Me, 2014",
+  "source_kind": "primary_document",
+  "reference": "Winn, What's your ikigai?, The View Inside Me (blog), May 2014",
+  "written": "2026-09-26"
+}

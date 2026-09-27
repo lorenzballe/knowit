@@ -30,5 +30,7 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "source": "Base rate neglect applied to screening"
+  "source": "Base rate neglect applied to screening",
+  "source_kind": "arithmetic",
+  "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
 }

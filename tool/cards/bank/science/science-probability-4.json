@@ -1,0 +1,40 @@
+{
+  "id": "science-probability-4",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Flip a coin four times and note the share of heads among flips right after a head. Averaged over many runs, what is it?",
+  "options": [
+    "About 40%",
+    "About 50%",
+    "About 60%"
+  ],
+  "correct": 0,
+  "answer": "About 40%: 17/42. Each flip is fair, but picking flips that follow a head selects within a short run: once a head is picked, the flips left in that run hold one head fewer. The 1985 study that called basketball's hot hand a fallacy measured shooting this way; corrected, its data point the other way.",
+  "move": "How you pick the cases can bias a count even when each case is fair.",
+  "trap": "About 50%: coins have no memory, so every flip is even.",
+  "keywords": [
+    "hot hand",
+    "coin flips",
+    "selection bias",
+    "basketball",
+    "streaks"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller & Sanjurjo, Econometrica, 2018",
+  "source_kind": "paper",
+  "reference": "Miller & Sanjurjo, Surprised by the Hot Hand Fallacy? A Truth in the Law of Small Numbers, Econometrica, 2018",
+  "written": "2026-09-26"
+}

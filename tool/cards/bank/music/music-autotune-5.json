@@ -1,0 +1,38 @@
+{
+  "id": "music-autotune-5",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should commercial recordings disclose when a singer's vocal has been pitch-corrected?",
+  "sides": [
+    "Yes, label it",
+    "No, leave it unlabelled"
+  ],
+  "answer": "Listeners judge singers partly on singing in tune, and buy tickets on it. Silent correction sells a skill the performer may lack, much as undisclosed retouching sells a body that does not exist; France has required labels on retouched commercial photos of models since 2017. A plain credit would tell audiences what they are praising.",
+  "move": "Whichever side you took, it turns on whether records document performances or build them.",
+  "counterpoint": "Records have always been assembled: tape splices, retakes, the best syllables comped from twenty takes, reverb from rooms that never existed. Pitch correction is one more edit, routine in commercial pop, so a label would sit on nearly everything and tell nobody anything. The concert stage already exists as the test of raw skill.",
+  "keywords": [
+    "pitch correction",
+    "disclosure",
+    "retouching",
+    "vocal editing",
+    "labelling"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Décret n° 2017-738, France, 2017",
+  "source_kind": "primary_document",
+  "reference": "Décret n° 2017-738 du 4 mai 2017 relatif aux photographies à usage commercial, Journal officiel de la République française, 2017",
+  "written": "2026-09-26"
+}

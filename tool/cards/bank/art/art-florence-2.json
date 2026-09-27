@@ -1,0 +1,40 @@
+{
+  "id": "art-florence-2",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.florence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Roughly how many people lived in Florence in 1427, when Masaccio and Donatello were at work?",
+  "options": [
+    "About 400,000",
+    "About 40,000",
+    "About 150,000"
+  ],
+  "correct": 1,
+  "answer": "About 40,000. The city's tax census of 1427, the Catasto, counted fewer than 40,000 people, well under half the population before the Black Death of 1348. The artists who defined an age worked in a place the size of a modern market town, where most of them could know each other by sight.",
+  "move": "A place's fame is no guide to its size.",
+  "trap": "Scaling from today's Florence, a city of well over 300,000.",
+  "keywords": [
+    "florentine catasto",
+    "population",
+    "black death",
+    "masaccio",
+    "donatello"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Herlihy and Klapisch-Zuber, Tuscans and Their Families, 1985",
+  "source_kind": "book",
+  "reference": "David Herlihy and Christiane Klapisch-Zuber, Tuscans and Their Families: A Study of the Florentine Catasto of 1427, Yale University Press, 1985",
+  "written": "2026-09-26"
+}

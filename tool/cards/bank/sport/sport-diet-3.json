@@ -1,0 +1,39 @@
+{
+  "id": "sport-diet-3",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Earlier studies suggested muscle could use only about 20 g of protein per meal. A 2023 trial gave 100 g. What happened?",
+  "options": [
+    "The extra was burnt as fuel",
+    "The excess was stored as fat",
+    "Muscle built more, for longer"
+  ],
+  "correct": 2,
+  "answer": "Muscle built more, for longer. After whole-body resistance exercise, 100 g of milk protein raised muscle protein building more than 25 g did, and kept it raised through all 12 hours measured. Earlier trials had used smaller doses and watched for only a few hours, so a slower, longer response looked like a ceiling.",
+  "move": "A limit found by looking briefly may only be a limit of the looking.",
+  "trap": "Holding to the familiar 20 g ceiling and expecting the rest wasted.",
+  "keywords": [
+    "protein",
+    "muscle protein synthesis",
+    "resistance exercise",
+    "meal size"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trommelen et al., Cell Reports Medicine, 2023",
+  "source_kind": "paper",
+  "reference": "Trommelen et al., The anabolic response to protein ingestion during recovery from exercise has no upper limit in magnitude and duration in vivo in humans, Cell Reports Medicine, 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-touch-3",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did folding phones have to abandon the invisible conductor used in ordinary touchscreens?",
+  "answer": "Because that conductor, indium tin oxide, is brittle. It is a ceramic that carries current yet lets light through, laid in patterned films a fraction of a micrometre thick, and bent over and over it cracks. Folding screens moved to meshes of metal lines too fine to see, or to silver nanowires.",
+  "move": "A material chosen for one virtue brings its weaknesses along.",
+  "keywords": [
+    "indium tin oxide",
+    "transparent conductors",
+    "foldable phones",
+    "metal mesh",
+    "silver nanowires"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hecht, Hu & Irvin, Advanced Materials, 2011",
+  "source_kind": "paper",
+  "reference": "Hecht, Hu & Irvin, Emerging Transparent Electrodes Based on Thin Films of Carbon Nanotubes, Graphene, and Metallic Nanostructures, Advanced Materials 23, 2011",
+  "written": "2026-09-26"
+}

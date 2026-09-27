@@ -1,0 +1,37 @@
+{
+  "id": "thinking-h18",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the European Union, which kills more people each year: air pollution or road crashes?",
+  "options": [
+    "Road crashes, by far",
+    "Air pollution, by over ten times",
+    "About the same"
+  ],
+  "correct": 1,
+  "answer": "Air pollution, by more than ten times. Road crashes kill about 20,000 people a year across the European Union; fine-particle pollution is estimated to cause well over 200,000 early deaths. A crash is an event with a name and a place. A pollution death is recorded as a stroke or a heart attack.",
+  "move": "The risks you can photograph are rarely the ones doing the killing.",
+  "trap": "Crashes are named events; pollution deaths are filed under other causes.",
+  "keywords": [
+    "air pollution",
+    "road deaths",
+    "risk perception",
+    "european union"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Lelieveld et al., European Heart Journal, 2019",
+  "source_kind": "paper",
+  "reference": "Lelieveld et al., Cardiovascular disease burden from ambient air pollution in Europe reassessed using novel hazard ratio functions, European Heart Journal, 2019",
+  "written": "2026-09-26"
+}

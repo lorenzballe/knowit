@@ -25,5 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Nightingale, Notes on Matters Affecting the Health of the British Army, 1858"
+  "source": "Nightingale, Notes on Matters Affecting the Health of the British Army, 1858",
+  "disabled": true
 }

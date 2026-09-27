@@ -24,5 +24,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Lloyd's of London, asbestos and the Names, 1988-1996"
+  "figure": "none",
+  "source": "Lloyd's of London, asbestos and the Names, 1988-1996",
+  "source_kind": "book",
+  "reference": "Duguid, On the Brink: How a Crisis Transformed Lloyd's of London, Palgrave Macmillan, 2014"
 }

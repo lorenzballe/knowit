@@ -1,0 +1,33 @@
+{
+  "id": "nature-deep-sea-3",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which 1860 repair job undermined the belief that the deep sea was lifeless?",
+  "answer": "Raising a broken telegraph cable. Edward Forbes had argued in the 1840s that life petered out below about 550 m. The cable between Sardinia and Algeria came up from around 2,000 m crusted with corals and molluscs that had grown on it, so they could not have been snagged on the way up.",
+  "move": "Absence of evidence from places nobody sampled is only absence of sampling.",
+  "keywords": [
+    "azoic hypothesis",
+    "edward forbes",
+    "telegraph cable",
+    "mediterranean",
+    "deep-sea life"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rozwadowski, Fathoming the Ocean, 2005",
+  "source_kind": "book",
+  "reference": "Rozwadowski, Fathoming the Ocean: The Discovery and Exploration of the Deep Sea, Harvard University Press, 2005",
+  "written": "2026-09-26"
+}

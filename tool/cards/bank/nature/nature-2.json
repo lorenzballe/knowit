@@ -24,5 +24,8 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "UNEP, Sand and Sustainability, 2019"
+  "figure": "none",
+  "source": "UNEP, Sand and Sustainability, 2019",
+  "source_kind": "institution",
+  "reference": "UNEP, Sand and Sustainability: Finding new solutions for environmental governance of global sand resources, 2019"
 }

@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-tallest-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Ignoring friction, what suction in megapascals must hold water up to the top of a 116 m redwood?",
+  "value": 1.1,
+  "unit": "MPa",
+  "tolerance": 0.1,
+  "answer": "About 1.1 MPa, roughly 11 atmospheres of pull.",
+  "move": "Water can be pulled far harder than air pressure can ever push it.",
+  "trap": "Assuming suction tops out at one atmosphere, about 10 m of water.",
+  "hint": "Start from the weight of one metre of water column over one square metre.",
+  "steps": [
+    "A water column's pressure is density × gravity × height.",
+    "1,000 kg/m³ × 9.8 m/s² = 9,800 Pa for each metre of height.",
+    "9,800 Pa × 116 m = about 1,137,000 Pa.",
+    "About 1.1 MPa, roughly 11 atmospheres of pull."
+  ],
+  "keywords": [
+    "sap",
+    "hydrostatic pressure",
+    "coast redwood",
+    "cohesion-tension"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hydrostatic pressure, density × g × height",
+  "source_kind": "arithmetic",
+  "reference": "Tyree & Zimmermann, Xylem Structure and the Ascent of Sap, Springer, 2002",
+  "written": "2026-09-26"
+}

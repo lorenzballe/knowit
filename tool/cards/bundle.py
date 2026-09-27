@@ -31,6 +31,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 EMBEDDED = ROOT / "lib" / "data" / "embedded_bank.dart"
 PUBLISHED = ROOT / "web" / "cards" / "cards.json"
+# What a phone asks first: the published bundle's version and nothing else,
+# a few dozen bytes, so an app already holding it never downloads the whole
+# bank again to find that out.
+VERSION = PUBLISHED.parent / "version.json"
 
 # Edition 1. The same date as kEpoch in lib/data/daily.dart.
 EPOCH = dt.date(2026, 9, 1)
@@ -48,9 +52,15 @@ def extend_editions(editions: dict[str, str], cards: list[dict], until: int) -> 
     A question stays out for three quarters of a lap of the graded pool, and
     never less than the gap check.py enforces; the pick is seeded by the
     edition so two machines extending the same calendar write the same thing.
+
+    The pool is Thinking's graded cards only. The question of the day is
+    everybody's, whatever their mix, and it costs nobody's mix anything only
+    because Thinking is on every deck; a subject's graded cards are dealt
+    from the mix, to the readers who kept that subject on.
     """
     graded = sorted(
-        c["id"] for c in cards if c["kind"] in check.GRADED and not c.get("disabled")
+        c["id"] for c in cards
+        if c["kind"] in check.GRADED and c["topic"] == "thinking" and not c.get("disabled")
     )
     if not graded:
         raise SystemExit("no graded card to make a question of the day from")
@@ -65,13 +75,49 @@ def extend_editions(editions: dict[str, str], cards: list[dict], until: int) -> 
     return out
 
 
-def build(cards: list[dict], editions: dict[str, str], *, version: int, built: str) -> dict:
+def extend_commons(commons: dict[str, list[str]], cards: list[dict], until: int) -> dict[str, list[str]]:
+    """Adds each edition's common cards up to [until], keeping clear of what came before.
+
+    The cards everybody meets on a day besides its question: COMMON_SPARES
+    reading cards, never two of one subject, out for three quarters of a lap
+    of the reading pool at COMMON_SPARES an edition. Frozen here, like the
+    question, so a phone dealing its own day and a server dealing it for
+    the reader hand out the same three.
+    """
+    pool = sorted(c["id"] for c in cards if c["kind"] == "read" and not c.get("disabled"))
+    if len(pool) < check.COMMON_SPARES:
+        raise SystemExit("too few reading cards to make an edition's common cards from")
+    topic_of = {c["id"]: c["topic"] for c in cards}
+    window = max(check.COMMON_GAP, int(len(pool) * 0.75) // check.COMMON_SPARES)
+    out = {k: list(v) for k, v in commons.items()}
+    last = max((int(k) for k in out), default=0)
+    for e in range(last + 1, until + 1):
+        recent = {cid for x in range(e - window, e) for cid in out.get(str(x), [])}
+        rng = random.Random(e * 6007 + 91)
+        fresh = [cid for cid in pool if cid not in recent]
+        stale = [cid for cid in pool if cid in recent]
+        rng.shuffle(fresh)
+        rng.shuffle(stale)
+        picked, topics = [], set()
+        for cid in fresh + stale:
+            if len(picked) >= check.COMMON_SPARES:
+                break
+            if topic_of[cid] in topics:
+                continue
+            topics.add(topic_of[cid])
+            picked.append(cid)
+        out[str(e)] = picked
+    return out
+
+
+def build(cards: list[dict], editions: dict[str, str], commons: dict[str, list[str]], *, version: int, built: str) -> dict:
     return {
         "format": 1,
         "version": version,
         "built": built,
         "cards": [check.public(c) for c in cards],
         "editions": editions,
+        "commons": commons,
     }
 
 
@@ -94,7 +140,23 @@ def same_content(a: dict | None, b: dict) -> bool:
     """Whether two bundles hold the same cards and calendar, whatever the stamp."""
     if a is None:
         return False
-    return a.get("cards") == b.get("cards") and a.get("editions") == b.get("editions")
+    return (a.get("cards") == b.get("cards") and a.get("editions") == b.get("editions")
+            and a.get("commons", {}) == b.get("commons", {}))
+
+
+def version_note(bundle: dict) -> str:
+    return json.dumps({"version": bundle["version"], "cards": len(bundle["cards"])}) + "\n"
+
+
+def version_current() -> bool:
+    """Whether version.json names the version cards.json holds."""
+    if not (PUBLISHED.exists() and VERSION.exists()):
+        return False
+    try:
+        return json.loads(VERSION.read_text(encoding="utf-8")) == json.loads(
+            version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))))
+    except (json.JSONDecodeError, KeyError):
+        return False
 
 
 def read_embedded() -> dict | None:
@@ -127,39 +189,47 @@ def main(argv: list[str] | None = None) -> int:
 
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
     editions = json.loads(check.EDITIONS.read_text(encoding="utf-8")) if check.EDITIONS.exists() else {}
+    commons = json.loads(check.COMMONS.read_text(encoding="utf-8")) if check.COMMONS.exists() else {}
     # A check holds the copies to the calendar as it is; only a write extends
     # it, or a bundle would go stale every midnight.
     if not args.check:
         editions = extend_editions(editions, cards, until=edition_of(today) + AHEAD_DAYS)
-    problems = check.check_editions(editions, cards)
+        commons = extend_commons(commons, cards, until=edition_of(today) + AHEAD_DAYS)
+    problems = check.check_editions(editions, cards) + check.check_commons(commons, cards)
     if problems:
         for p in problems:
             print(p)
         return 1
 
     now = dt.datetime.now(dt.timezone.utc)
-    bundle = build(cards, editions, version=int(now.strftime("%Y%m%d%H%M")), built=now.strftime("%Y-%m-%dT%H:%M:%SZ"))
+    bundle = build(cards, editions, commons, version=int(now.strftime("%Y%m%d%H%M")), built=now.strftime("%Y-%m-%dT%H:%M:%SZ"))
     text = json.dumps(bundle, ensure_ascii=False, indent=1) + "\n"
 
     current = same_content(read_embedded(), bundle)
     published = PUBLISHED.exists() and same_content(json.loads(PUBLISHED.read_text(encoding="utf-8")), bundle)
     if args.check:
-        if current and published:
+        if current and published and version_current():
             print(f"{len(cards)} cards, {len(editions)} editions: both copies current")
             return 0
-        print("stale:" + ("" if current else " lib/data/embedded_bank.dart") + ("" if published else " web/cards/cards.json"))
+        print("stale:" + ("" if current else " lib/data/embedded_bank.dart") + ("" if published else " web/cards/cards.json")
+              + ("" if version_current() else " web/cards/version.json"))
         print("run python3 tool/cards/bundle.py")
         return 1
 
     if current and published:
+        if not version_current():
+            VERSION.write_text(version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))), encoding="utf-8")
+            print(f"wrote {VERSION.relative_to(ROOT)}")
         print(f"{len(cards)} cards, {len(editions)} editions: nothing to do")
         return 0
     check.EDITIONS.write_text(json.dumps(editions, indent=2) + "\n", encoding="utf-8")
+    check.COMMONS.write_text(json.dumps(commons, indent=1) + "\n", encoding="utf-8")
     EMBEDDED.write_text(render_dart(text), encoding="utf-8")
     PUBLISHED.parent.mkdir(parents=True, exist_ok=True)
     PUBLISHED.write_text(text, encoding="utf-8")
+    VERSION.write_text(version_note(bundle), encoding="utf-8")
     print(f"{len(cards)} cards, {len(editions)} editions, version {bundle['version']}")
-    print(f"wrote {EMBEDDED.relative_to(ROOT)} and {PUBLISHED.relative_to(ROOT)}")
+    print(f"wrote {EMBEDDED.relative_to(ROOT)}, {PUBLISHED.relative_to(ROOT)} and {VERSION.relative_to(ROOT)}")
     return 0
 
 

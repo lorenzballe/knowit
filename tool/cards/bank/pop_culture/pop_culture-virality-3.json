@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-virality-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the money from the 2014 ice bucket challenge help find?",
+  "answer": "A gene linked to motor neurone disease. The ALS Association reported about $115 million raised that summer, and part went to Project MinE, an international effort to sequence patients' genomes. In 2016 it helped tie variants of a gene called NEK1 to the disease. Critics had dismissed the craze as buckets of water.",
+  "move": "Judge a fad by where its money went, not by how silly it looked.",
+  "keywords": [
+    "ice bucket challenge",
+    "als association",
+    "project mine",
+    "nek1",
+    "charity fundraising"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kenna et al., Nature Genetics, 2016",
+  "source_kind": "primary_document",
+  "reference": "Kenna et al., NEK1 variants confer susceptibility to amyotrophic lateral sclerosis, Nature Genetics, 2016",
+  "written": "2026-09-26"
+}

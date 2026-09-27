@@ -1,0 +1,38 @@
+{
+  "id": "sport-recovery-3",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: regular ice baths after weight training help muscles grow bigger and stronger?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 12-week trial, men who sat in cold water after each strength session gained less muscle and strength than men who did an active cool-down instead. Cold damps the inflammation and blood flow that signal muscles to adapt. It can help an athlete feel fresher for tomorrow's match.",
+  "move": "Feeling better and getting better are different results; check which one was measured.",
+  "trap": "Taking less soreness the next day as proof of better recovery.",
+  "keywords": [
+    "ice baths",
+    "cold water immersion",
+    "strength training",
+    "muscle growth"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roberts et al., Journal of Physiology, 2015",
+  "source_kind": "paper",
+  "reference": "Roberts et al., Post-exercise cold water immersion attenuates acute anabolic signalling and long-term adaptations in muscle to strength training, Journal of Physiology, 2015",
+  "written": "2026-09-26"
+}

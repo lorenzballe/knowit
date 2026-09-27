@@ -1,0 +1,40 @@
+{
+  "id": "history-straight-lines-2",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1529, how did Spain and Portugal settle where their 1494 dividing line fell on the far side of the world?",
+  "options": [
+    "Astronomers timed an eclipse at both ends",
+    "Spain sold its claim to Portugal",
+    "The Pope marked it on a globe"
+  ],
+  "correct": 1,
+  "answer": "Spain sold its claim to Portugal. The 1494 treaty put the line 370 leagues west of the Cape Verde islands without saying which island or which league, and nobody could measure longitude at sea. After experts at Badajoz failed to agree in 1524, Spain took 350,000 ducats for the Moluccas in 1529.",
+  "move": "When a thing cannot be measured, expect it to be bought.",
+  "trap": "Remembering the papal line of 1493 and giving the Pope the job.",
+  "keywords": [
+    "treaty of tordesillas",
+    "treaty of zaragoza",
+    "longitude",
+    "moluccas",
+    "cape verde"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Davenport, European Treaties, 1917",
+  "source_kind": "primary_document",
+  "reference": "Davenport (ed.), European Treaties bearing on the History of the United States and its Dependencies to 1648, Carnegie Institution of Washington, 1917",
+  "written": "2026-09-26"
+}

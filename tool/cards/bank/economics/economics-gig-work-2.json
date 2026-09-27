@@ -1,0 +1,33 @@
+{
+  "id": "economics-gig-work-2",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How were London's dockers hired in the 1880s?",
+  "answer": "At the dock gates, a few hours at a time. Foremen picked men from the crowd at each call-on, and a job could end after an hour. The great strike of 1889 won sixpence an hour, the docker's tanner, and a minimum engagement of four hours. Daily hiring at the call stands lasted until 1967.",
+  "move": "Most new ways of working have an old name; look it up.",
+  "keywords": [
+    "dockers",
+    "casual labour",
+    "london docks",
+    "dock strike",
+    "call-on"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lovell, Stevedores and Dockers, 1969",
+  "source_kind": "book",
+  "reference": "Lovell, Stevedores and Dockers: A Study of Trade Unionism in the Port of London, 1870-1914, Macmillan, 1969",
+  "written": "2026-09-26"
+}

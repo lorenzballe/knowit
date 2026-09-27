@@ -1,0 +1,39 @@
+{
+  "id": "medicine-germ-theory-5",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the engineers who built London's great sewers in the 1860s knew cholera spread through water?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Joseph Bazalgette and his board acted on the theory that disease rose from foul air; the Great Stink of 1858 pushed the plan through Parliament. By carrying sewage away from the river by the city, they also kept it further from drinking water. Its success could be read as proof of the bad-air theory.",
+  "move": "A plan that works is not proof its reasoning was right.",
+  "trap": "Assuming a measure that stopped cholera was built on the right theory.",
+  "keywords": [
+    "joseph bazalgette",
+    "sewers",
+    "miasma",
+    "great stink",
+    "cholera"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halliday, The Great Stink of London, 1999",
+  "source_kind": "book",
+  "reference": "Halliday, The Great Stink of London: Sir Joseph Bazalgette and the Cleansing of the Victorian Metropolis, Sutton Publishing, 1999",
+  "written": "2026-09-26"
+}

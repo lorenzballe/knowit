@@ -1,0 +1,33 @@
+{
+  "id": "history-the-fall-4",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Alaric ask for in his last offer before sacking Rome in 410?",
+  "answer": "Very little. After earlier demands for gold, grain, land and a Roman generalship were refused, Alaric asked only for Noricum, a poor, raided frontier province on the Danube, and a yearly grant of grain, with no gold and no office. The emperor's ministers still said no. Months later, in August 410, his Goths entered Rome.",
+  "move": "Refusing a small demand can cost more than granting it.",
+  "keywords": [
+    "alaric",
+    "sack of rome",
+    "noricum",
+    "honorius",
+    "goths"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zosimus, New History 5.50",
+  "source_kind": "primary_document",
+  "reference": "Zosimus, New History, trans. R. T. Ridley, Australian Association for Byzantine Studies, 1982",
+  "written": "2026-09-26"
+}

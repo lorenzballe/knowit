@@ -1,0 +1,42 @@
+{
+  "id": "art-motives-4",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "also": [
+    "art.renaissance.patrons"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the young Michelangelo carved a Cupid that was then aged and sold as an ancient Roman statue?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1496 he carved a sleeping Cupid; it was treated to look excavated, and the dealer Baldassarre del Milanese sold it to Cardinal Raffaele Riario as an antique. The cardinal found out and demanded his money back, but the affair brought Michelangelo to Rome, where his first great commissions followed. The Cupid is lost.",
+  "move": "Talent and fraud are not opposites; skill is what makes a fraud possible.",
+  "trap": "Assuming a genius would never need to pass work off as another's.",
+  "keywords": [
+    "michelangelo",
+    "sleeping cupid",
+    "cardinal riario",
+    "antiquities",
+    "forgery"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vasari, Lives of the Artists",
+  "source_kind": "primary_document",
+  "reference": "Giorgio Vasari, The Lives of the Artists, trans. Julia Conaway Bondanella & Peter Bondanella, Oxford University Press, 1991",
+  "written": "2026-09-26"
+}

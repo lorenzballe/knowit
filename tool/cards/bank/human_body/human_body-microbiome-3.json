@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: mice raised with no gut microbes eat more than normal mice yet carry less fat?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Conventionally raised mice carried about 42% more body fat than germ-free ones while eating less. Given gut microbes from normal mice, germ-free mice grew markedly fatter within two weeks without eating more. Bacteria ferment fibre the mouse cannot digest into fatty acids it can absorb, and they nudge the host towards storing fat.",
+  "move": "Count what is absorbed, not what is served.",
+  "trap": "Assuming the calories a body gets equal the calories it eats.",
+  "keywords": [
+    "germ-free mice",
+    "body fat",
+    "fermentation",
+    "fatty acids",
+    "energy harvest"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bäckhed et al., PNAS, 2004",
+  "source_kind": "paper",
+  "reference": "Bäckhed, Ding, Wang et al., The gut microbiota as an environmental factor that regulates fat storage, PNAS, 2004",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "food-espresso-1",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did espresso bars start serving coffee topped with a layer of fine foam?",
+  "answer": "After the Second World War. Earlier bar machines pushed water through with steam at 1.5 to 2 bar, giving a thin, often scorched cup. Achille Gaggia's spring-lever machines, sold from 1948, reached 8 to 10 bar, forcing coffee oils and carbon dioxide into a fine foam. Gaggia sold it as crema naturale: natural coffee cream.",
+  "move": "A new side effect sells better once someone gives it a flattering name.",
+  "keywords": [
+    "achille gaggia",
+    "crema",
+    "lever machine",
+    "brewing pressure"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gaggia company history",
+  "source_kind": "company",
+  "reference": "https://www.gaggia.com/85-years-of-heritage-1938-1947/",
+  "written": "2026-09-26"
+}

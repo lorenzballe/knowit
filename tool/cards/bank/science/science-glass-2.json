@@ -1,0 +1,33 @@
+{
+  "id": "science-glass-2",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is window glass made so flat without being ground or polished?",
+  "answer": "By floating it on molten tin. Most flat glass is now poured as a ribbon onto a bath of liquid tin, which is perfectly level, a method Alastair Pilkington brought into production in 1959. Left alone, the glass spreads until gravity and surface tension balance at about 6 mm thick; rollers stretch it thinner.",
+  "move": "The cheapest precision is the kind physics supplies for free.",
+  "keywords": [
+    "float glass",
+    "molten tin",
+    "alastair pilkington",
+    "window glass",
+    "surface tension"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pilkington, Proceedings of the Royal Society, 1969",
+  "source_kind": "paper",
+  "reference": "Pilkington, Review Lecture: The Float Glass Process, Proceedings of the Royal Society of London A, 1969",
+  "written": "2026-09-26"
+}

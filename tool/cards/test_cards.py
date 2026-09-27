@@ -197,6 +197,9 @@ class TheGate(unittest.TestCase):
             thinking_card(id="thinking-b"),
             read_card(id="space-r"),
         ]
+        self.assertEqual(check.check_commons({"1": ["space-r"], "2": []}, cards), [])
+        self.assertTrue(any("asks" in p for p in check.check_commons({"1": ["thinking-a"]}, cards)))
+        self.assertTrue(any("comes back" in p for p in check.check_commons({"1": ["space-r"], "2": ["space-r"]}, cards)))
         self.assertEqual(check.check_editions({"1": "thinking-a", "2": "thinking-b"}, cards), [])
         self.assertTrue(any("cannot be marked" in p for p in check.check_editions({"1": "space-r"}, cards)))
         self.assertTrue(any("comes back" in p for p in check.check_editions({"1": "thinking-a", "2": "thinking-a"}, cards)))
@@ -434,7 +437,10 @@ class ThePlumbing(unittest.TestCase):
                 self.assertTrue(card["reference"].startswith("https://example"), card["reference"])
                 self.assertIn(card["source_kind"], sources.KINDS)
                 self.assertTrue(card["quote"])
-            self.assertEqual(outcomes[0].domain, sources.domain_of(files and json.loads(files[0].read_text())["reference"]))
+            # The outcome names the site of its own card, whichever file that is:
+            # the plan's order follows the bank, and the files' order is the alphabet.
+            first = next(f for f in files if f.stem == outcomes[0].id)
+            self.assertEqual(outcomes[0].domain, sources.domain_of(json.loads(first.read_text())["reference"]))
 
     def test_a_thinking_card_is_arithmetic_and_skips_the_scout(self):
         bank = check.load_bank()

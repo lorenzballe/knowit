@@ -1,0 +1,39 @@
+{
+  "id": "language-nordic-2",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where does the Scandinavian Law of Jante, the rule against thinking yourself special, come from?",
+  "options": [
+    "A 1933 novel by Aksel Sandemose",
+    "A medieval Danish legal code",
+    "Lutheran catechisms for village schools"
+  ],
+  "correct": 0,
+  "answer": "A 1933 novel. In A Fugitive Crosses His Tracks, Aksel Sandemose invented Jante, a small town modelled on his birthplace, Nykøbing Mors, and gave it ten commandments, the first being that you are not to think you are anything. A satirist's list became the region's shorthand for its own conformity.",
+  "move": "A saying that sounds like ancient law may be a novelist's joke.",
+  "trap": "The word law suggests a statute, so a medieval code sounds right.",
+  "keywords": [
+    "law of jante",
+    "aksel sandemose",
+    "conformity",
+    "scandinavia"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sandemose, En flyktning krysser sitt spor, 1933",
+  "source_kind": "book",
+  "reference": "Sandemose, En flyktning krysser sitt spor, Oslo, 1933",
+  "written": "2026-09-26"
+}

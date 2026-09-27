@@ -1,0 +1,33 @@
+{
+  "id": "sport-swimming-3",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must swimmers in most strokes surface within 15 m of the start and each turn?",
+  "answer": "Because underwater is faster. A body submerged by about a metre escapes the surface waves that make up much of a swimmer's drag. At the 1988 Olympics David Berkoff and others kicked most of a backstroke length underwater; the sport capped it at 10 m that year, and settled on 15 m in 1991.",
+  "move": "If the loophole is faster than the sport, the sport will close it.",
+  "keywords": [
+    "underwater kick",
+    "wave drag",
+    "david berkoff",
+    "15 metre rule",
+    "backstroke"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maglischo, Swimming Fastest, 2003",
+  "source_kind": "book",
+  "reference": "Maglischo, Swimming Fastest, Human Kinetics, 2003",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cinema-cgi-4",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a three-dimensional computer-animated hand appeared in a feature film six years before Tron?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Futureworld, in 1976, showed a computer-animated hand and face made years earlier at the University of Utah by Ed Catmull, later a Pixar founder, and Fred Parke. Tron, in 1982, was the first to build long sequences this way. A few seconds of shaded polygons came before the famous light cycles.",
+  "move": "The first famous example is rarely the first example.",
+  "trap": "False, because Tron is the film everyone links with early computer graphics.",
+  "keywords": [
+    "futureworld",
+    "tron",
+    "ed catmull",
+    "university of utah"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Price, The Pixar Touch, 2008",
+  "source_kind": "book",
+  "reference": "Price, The Pixar Touch: The Making of a Company, Knopf, 2008",
+  "written": "2026-09-26"
+}

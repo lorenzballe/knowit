@@ -1,0 +1,39 @@
+{
+  "id": "nature-magnetic-sense-1",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: swapping the magnetic field's north and south sends a migrating robin the wrong way?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Robins read the tilt of the field lines, not their polarity. In 1972 the Wiltschkos showed caged robins kept their heading when the whole field was reversed, yet turned round when only its vertical part was flipped. At the magnetic equator, where the lines lie flat, such a compass cannot tell poleward from equatorward.",
+  "move": "Two instruments can agree every day and still measure different things.",
+  "trap": "Picturing the bird's compass as a needle that points north.",
+  "keywords": [
+    "european robin",
+    "magnetic compass",
+    "inclination",
+    "bird migration",
+    "wiltschko"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wiltschko & Wiltschko, Science, 1972",
+  "source_kind": "paper",
+  "reference": "Wiltschko & Wiltschko, Magnetic compass of European robins, Science, 1972",
+  "written": "2026-09-26"
+}

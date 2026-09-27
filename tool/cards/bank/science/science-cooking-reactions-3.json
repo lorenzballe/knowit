@@ -1,0 +1,33 @@
+{
+  "id": "science-cooking-reactions-3",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What turns a cut onion's chemistry into tear gas?",
+  "answer": "A second enzyme, found only in 2002. Cutting lets the enzyme alliinase break down sulphur compounds, and the tear gas was assumed to be a by-product. Japanese researchers found lachrymatory-factor synthase, which builds it on purpose. Suppress that gene, they suggested, and an onion could keep its flavour without the tears.",
+  "move": "When a harmful result looks accidental, check whether something is built to make it.",
+  "keywords": [
+    "onions",
+    "tears",
+    "lachrymatory-factor synthase",
+    "alliinase",
+    "enzymes"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Imai et al., Nature, 2002",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/419685a",
+  "written": "2026-09-26"
+}

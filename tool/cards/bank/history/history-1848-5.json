@@ -1,0 +1,39 @@
+{
+  "id": "history-1848-5",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: the Communist Manifesto, published in February 1848, helped inspire that month's revolution in Paris?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It was printed in German in London in the same week the Paris crowds rose, in a small run for a small émigré league, and few in Paris could have read it. It reached a mass readership only from the 1870s. Both it and the revolution sprang from the same hungry, restless decade.",
+  "move": "Two events at the same time may share a cause rather than cause each other.",
+  "trap": "Same month, famous text: it is natural to assume one caused the other.",
+  "keywords": [
+    "communist manifesto",
+    "karl marx",
+    "february revolution",
+    "communist league",
+    "émigrés"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Sperber, Karl Marx: A Nineteenth-Century Life, 2013",
+  "source_kind": "book",
+  "reference": "Sperber, Karl Marx: A Nineteenth-Century Life, Liveright, 2013",
+  "written": "2026-09-26"
+}

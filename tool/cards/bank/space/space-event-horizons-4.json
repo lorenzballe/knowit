@@ -1,0 +1,35 @@
+{
+  "id": "space-event-horizons-4",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can you already be inside a black hole's event horizon while the space around you is still perfectly flat?",
+  "answer": "Yes. An event horizon is defined by the future: it bounds the region from which light will never escape. If a heavy shell of matter is falling towards you, the horizon is born at the centre, in empty flat space, and swells outwards to meet the shell. No instrument could feel it pass.",
+  "move": "Some boundaries are drawn by what will happen, not by what is.",
+  "keywords": [
+    "event horizon",
+    "collapsing shell",
+    "causality",
+    "general relativity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ashtekar & Krishnan, Living Reviews in Relativity, 2004",
+  "source_kind": "paper",
+  "reference": "Ashtekar & Krishnan, Isolated and Dynamical Horizons and Their Applications, Living Reviews in Relativity, 2004",
+  "written": "2026-09-26"
+}

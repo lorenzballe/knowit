@@ -1,0 +1,33 @@
+{
+  "id": "history-the-fall-1",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who first dated the end of the Western Roman Empire to 476?",
+  "answer": "A chronicler in Constantinople, four decades later. Marcellinus Comes, writing around 518, is the earliest surviving source to enter under 476 that the western empire perished with Romulus Augustulus. In Italy the change looked smaller: Odoacer kept the Senate and ruled nominally under the eastern emperor. The date later served Justinian's case for reconquering Italy.",
+  "move": "A turning point is often named later, by someone who needed one.",
+  "keywords": [
+    "marcellinus comes",
+    "476",
+    "romulus augustulus",
+    "odoacer",
+    "justinian"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Croke, Chiron, 1983",
+  "source_kind": "paper",
+  "reference": "Croke, A.D. 476: The Manufacture of a Turning Point, Chiron 13, 1983, 81-119",
+  "written": "2026-09-26"
+}

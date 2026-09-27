@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-certainty-1",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A forecaster is 100% sure. Evidence arrives that is 1,000 times likelier if she is wrong. By Bayes' rule, her new probability?",
+  "options": [
+    "Still 100%",
+    "About 0.1%",
+    "About 50%"
+  ],
+  "correct": 0,
+  "answer": "Still 100%. Bayes' rule multiplies the odds held beforehand by the strength of the evidence, and certainty means infinite odds: a thousand to one against still leaves infinity. The statistician Dennis Lindley named the lesson Cromwell's rule, after Oliver Cromwell's 1650 plea to the Church of Scotland: think it possible you may be mistaken.",
+  "move": "Keep a sliver of doubt, or no evidence will ever reach you.",
+  "trap": "Letting the strength of the evidence stand in for the answer.",
+  "keywords": [
+    "cromwell's rule",
+    "bayes' rule",
+    "dennis lindley",
+    "probability",
+    "certainty"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lindley, Making Decisions, 1985",
+  "source_kind": "book",
+  "reference": "Lindley, Making Decisions, 2nd edition, Wiley, 1985",
+  "written": "2026-09-26"
+}

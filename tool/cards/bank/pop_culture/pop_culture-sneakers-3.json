@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sneakers-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What building gave Nike the idea of showing the air cushion inside a shoe?",
+  "answer": "The Centre Pompidou in Paris. Tinker Hatfield, trained as an architect, was struck by a building that shows its pipes and structure on the outside, and cut a window into the midsole so buyers could see the air unit. The Air Max 1 went on sale in 1987 with its cushioning on display.",
+  "move": "Showing how something works can be the whole selling point.",
+  "keywords": [
+    "air max 1",
+    "tinker hatfield",
+    "centre pompidou",
+    "midsole",
+    "architecture"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abstract: The Art of Design, Netflix, 2017",
+  "source_kind": "primary_document",
+  "reference": "Abstract: The Art of Design, season 1, episode Tinker Hatfield: Footwear Design, Netflix, 2017",
+  "written": "2026-09-26"
+}

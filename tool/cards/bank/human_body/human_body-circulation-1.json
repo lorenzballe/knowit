@@ -1,0 +1,33 @@
+{
+  "id": "human_body-circulation-1",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did William Harvey show that blood circulates, before anyone had seen a capillary?",
+  "answer": "With arithmetic. In 1628 he took deliberately low estimates for the blood each beat expels, multiplied by the beats in half an hour, and got more blood than the whole body holds. Food could not replace that; the same blood had to come round. Malpighi first saw capillaries in 1661, four years after Harvey died.",
+  "move": "A rough sum done honestly can settle what no one can yet see.",
+  "keywords": [
+    "william harvey",
+    "circulation of the blood",
+    "capillaries",
+    "marcello malpighi",
+    "galen"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harvey, trans. Whitteridge, Blackwell, 1976",
+  "source_kind": "book",
+  "reference": "Harvey, An Anatomical Disputation Concerning the Movement of the Heart and Blood in Living Creatures, trans. Whitteridge, Blackwell, 1976",
+  "written": "2026-09-26"
+}

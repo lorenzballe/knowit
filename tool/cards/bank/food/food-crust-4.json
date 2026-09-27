@@ -1,0 +1,39 @@
+{
+  "id": "food-crust-4",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: German bakers give pretzels their dark glossy crust by dipping them in caustic soda?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Laugenbrezeln are dipped briefly in cold sodium hydroxide solution of about 3 to 4%, the chemical in drain cleaner. The alkali speeds browning and sets a shiny skin. In the oven the film reacts with carbon dioxide and becomes sodium carbonate, the mild soda that gives the crust its faint soapy bite.",
+  "move": "How dangerous a substance sounds matters less than the dose and what it becomes.",
+  "trap": "Picturing drain cleaner and assuming no bakery could use it on food.",
+  "keywords": [
+    "pretzel",
+    "sodium hydroxide",
+    "lye",
+    "sodium carbonate",
+    "laugenbrezel"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGee, On Food and Cooking, 2004",
+  "source_kind": "book",
+  "reference": "McGee, On Food and Cooking: The Science and Lore of the Kitchen, Scribner, 2004",
+  "written": "2026-09-26"
+}

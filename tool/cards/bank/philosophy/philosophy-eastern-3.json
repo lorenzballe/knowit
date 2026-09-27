@@ -1,0 +1,36 @@
+{
+  "id": "philosophy-eastern-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "also": [
+    "philosophy.paradoxes.ship_of_theseus"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Buddhist monk Nagasena teach a Greek king that there is no enduring self?",
+  "answer": "With the king's chariot. In the Questions of King Milinda, Nagasena asks Menander, a Greek ruling in north-west India around 150 BC, whether the chariot is its pole, axle, wheels or frame. None of them, the king admits, nor anything apart from them. Chariot names the parts in order, says the monk; so does Nagasena.",
+  "move": "When nothing on the list is the thing, perhaps the thing is the list.",
+  "keywords": [
+    "nagasena",
+    "menander",
+    "chariot",
+    "no-self",
+    "milindapanha"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horner, Milinda's Questions, 1963",
+  "source_kind": "book",
+  "reference": "Horner, Milinda's Questions, vol. 1, Luzac, 1963",
+  "written": "2026-09-26"
+}

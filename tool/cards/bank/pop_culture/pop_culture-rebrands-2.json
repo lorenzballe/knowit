@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-rebrands-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "When Dunkin' Donuts dropped the word Donuts from its name, roughly what share of its sales were drinks?",
+  "options": [
+    "About 20%",
+    "About 40%",
+    "About 60%"
+  ],
+  "correct": 2,
+  "answer": "About 60%. Coffee and other drinks already brought in most of the money when the chain announced in September 2018 that it would trade simply as Dunkin' from January 2019. The name described the shop of 1950; the till described a coffee seller that happened to sell doughnuts.",
+  "move": "A name records what a business was, not what it now sells.",
+  "trap": "About 20%: the word on the sign pulls the guess toward doughnuts.",
+  "keywords": [
+    "dunkin",
+    "coffee",
+    "brand names",
+    "doughnuts",
+    "sales mix"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NPR, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.npr.org/2018/09/26/651905960/dunkin-deletes-donuts-from-its-name",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "cinema-miniatures-1",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "also": [
+    "cinema.special_effects.practical"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "How tall were the Kong models animated for most of King Kong's shots in 1933?",
+  "options": [
+    "About 45 centimetres",
+    "About 2 metres",
+    "About 6 metres"
+  ],
+  "correct": 0,
+  "answer": "About 45 centimetres. Marcel Delgado built them on jointed metal skeletons covered in rubber and rabbit fur, and Willis O'Brien's animators moved them a fraction between frames. A giant head and hand were built for close-ups. The fur that seems to ripple in the wind is fingerprints, pressed flat and springing back between frames.",
+  "move": "The size something plays is no guide to the size it is.",
+  "trap": "About 6 metres, with the giant on the screen in mind.",
+  "keywords": [
+    "king kong",
+    "stop motion",
+    "willis o'brien",
+    "marcel delgado"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldner & Turner, The Making of King Kong",
+  "source_kind": "book",
+  "reference": "Goldner & Turner, The Making of King Kong, A. S. Barnes, 1975",
+  "written": "2026-09-26"
+}

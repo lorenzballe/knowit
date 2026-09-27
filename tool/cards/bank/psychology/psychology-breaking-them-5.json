@@ -1,0 +1,38 @@
+{
+  "id": "psychology-breaking-them-5",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in daily life, people high in self-control fight off temptations more often than other people do?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. When Hofmann and colleagues beeped 205 adults at random for a week, those high in self-control reported weaker desires, less conflict and fewer bouts of resisting. Their edge seemed to lie upstream, in lives arranged so the fight came up less often: no biscuits in the cupboard, the gym bag packed by the door.",
+  "move": "The easiest temptation to beat is the one arranged out of reach.",
+  "trap": "Crediting their good record to winning more fights with temptation.",
+  "keywords": [
+    "self-control",
+    "temptation",
+    "experience sampling",
+    "willpower"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hofmann et al., JPSP, 2012",
+  "source_kind": "paper",
+  "reference": "Hofmann, Baumeister, Förster & Vohs, Everyday temptations: an experience sampling study of desire, conflict, and self-control, Journal of Personality and Social Psychology, 2012",
+  "written": "2026-09-26"
+}

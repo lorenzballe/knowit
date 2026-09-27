@@ -1,0 +1,33 @@
+{
+  "id": "psychology-halo-effect-3",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which qualities do people credit to good-looking strangers, and which do they not?",
+  "answer": "Social ease far more than virtue. Pooling studies of the beautiful-is-good stereotype, Alice Eagly's team found the boost from attractiveness was largest for social competence, middling for adjustment and intellect, and near zero for integrity and concern for others. Beauty buys the assumption of charm, not of honesty.",
+  "move": "An impression spreads to neighbouring traits first; check how far it has travelled.",
+  "keywords": [
+    "physical attractiveness",
+    "beauty stereotype",
+    "meta-analysis",
+    "social competence",
+    "integrity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Eagly et al., Psychological Bulletin, 1991",
+  "source_kind": "paper",
+  "reference": "Eagly, Ashmore, Makhijani & Longo, What is beautiful is good, but...: a meta-analytic review of research on the physical attractiveness stereotype, Psychological Bulletin, 1991",
+  "written": "2026-09-26"
+}

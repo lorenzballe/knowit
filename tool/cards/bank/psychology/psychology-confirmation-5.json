@@ -1,0 +1,39 @@
+{
+  "id": "psychology-confirmation-5",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "In standard psychology papers, 96% confirm their first hypothesis. In Registered Reports, accepted before any data exist, what share do?",
+  "options": [
+    "About nine in ten",
+    "Fewer than half",
+    "About one in ten"
+  ],
+  "correct": 1,
+  "answer": "Fewer than half: 31 of 71, or 44%, against 146 of 152 standard papers. When a journal commits to publishing before results exist, a yes is no longer the ticket to print, and nothing is gained by reporting only the analyses that give one. The 96% measures the road to publication.",
+  "move": "Ask whether the result was allowed to come out either way.",
+  "trap": "Reading the 96% as how often psychologists' hypotheses are simply correct.",
+  "keywords": [
+    "registered reports",
+    "publication bias",
+    "positive results",
+    "replication crisis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scheel, Schijen & Lakens, AMPPS, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/25152459211007467",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-colours-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After a 2012 US appeals ruling, which shoes does Louboutin's red-sole trademark cover?",
+  "options": [
+    "Only shoes sold under Louboutin labels",
+    "Any shoe with a red sole",
+    "Red soles contrasting with the upper"
+  ],
+  "correct": 2,
+  "answer": "Red soles contrasting with the upper. The Second Circuit found buyers read the lacquered red sole as Louboutin's only when it stood out from the rest of the shoe, and ordered the registration narrowed. Yves Saint Laurent kept selling its all-red shoes, red soles included.",
+  "move": "Ask under which conditions a claim holds before assuming it always does.",
+  "trap": "Any red sole: the trademark sounds absolute once it is granted.",
+  "keywords": [
+    "louboutin",
+    "red soles",
+    "yves saint laurent",
+    "second circuit",
+    "colour trademark"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Louboutin v YSL, Second Circuit, 2012",
+  "source_kind": "primary_document",
+  "reference": "Christian Louboutin S.A. v. Yves Saint Laurent America Holding, Inc., 696 F.3d 206 (2d Cir. 2012)",
+  "written": "2026-09-26"
+}

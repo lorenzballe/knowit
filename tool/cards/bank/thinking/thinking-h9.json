@@ -1,0 +1,36 @@
+{
+  "id": "thinking-h9",
+  "topic": "thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: a team with a 70% chance of winning each of its last four matches will probably win all four?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Each win has to happen, so the chances multiply: 0.7 × 0.7 × 0.7 × 0.7 is about 0.24. A team that is favourite in every single match still has only about one chance in four of winning the lot.",
+  "move": "Being favourite at every step is not being favourite for the journey.",
+  "trap": "Favourite in every match feels like favourite for the whole run.",
+  "keywords": [
+    "sport",
+    "winning runs",
+    "probability",
+    "favourites"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Multiplication rule of probability",
+  "source_kind": "arithmetic",
+  "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",
+  "written": "2026-09-26"
+}

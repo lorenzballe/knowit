@@ -1,0 +1,35 @@
+{
+  "id": "cinema-music-cues-1",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "also": [
+    "music.composers.film_scores"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a film music cue labelled 4M2 tell the people scoring it?",
+  "answer": "It is the second music cue in reel 4. Cues are numbered reel by reel at the spotting session, where composer, director and music editor watch the cut and fix where each piece starts and stops. Films are no longer cut on reels, but a two-hour score still runs from 1M1 into 6M or 7M.",
+  "move": "Old labels outlive the machines that made them; read them as history.",
+  "keywords": [
+    "spotting session",
+    "cue numbering",
+    "film reels",
+    "music editors"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Complete Guide to Film Scoring",
+  "source_kind": "book",
+  "reference": "Davis, Complete Guide to Film Scoring: The Art and Business of Writing Music for Movies and TV, 2nd edition, Berklee Press, 2010",
+  "written": "2026-09-26"
+}

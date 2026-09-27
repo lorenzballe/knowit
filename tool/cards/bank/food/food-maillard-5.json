@@ -1,0 +1,32 @@
+{
+  "id": "food-maillard-5",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What turns a white garlic bulb into soft, sweet black garlic over several weeks?",
+  "answer": "The Maillard reaction, run slowly. Whole bulbs sit at about 60 to 80 °C in humid heat for weeks; the garlic's stored fructans break into sugars, which react with amino acids and brown the cloves through. No microbes take part, though it is often sold as fermented. The cloves end up like liquorice jelly.",
+  "move": "A product's label can name a process that never happened to it.",
+  "keywords": [
+    "black garlic",
+    "maillard reaction",
+    "fructans",
+    "slow browning"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kimura et al., J. Food Drug Anal., 2017",
+  "source_kind": "paper",
+  "reference": "Kimura et al., Black garlic: a critical review of its production, bioactivity, and application, Journal of Food and Drug Analysis, 2017",
+  "written": "2026-09-26"
+}

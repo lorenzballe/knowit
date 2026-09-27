@@ -1,0 +1,32 @@
+{
+  "id": "food-sourdough-2",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a mature sourdough starter, which are more numerous: the yeasts or the bacteria?",
+  "answer": "The bacteria, by far. Lactic acid bacteria typically outnumber the yeasts 10 to 100 to one, at hundreds of millions of cells per gram. The bigger yeasts make most of the gas that lifts the loaf; the bacteria make its acids. Under a microscope, each scattered yeast cell sits in a crowd of tiny rods.",
+  "move": "The loudest worker in a team is rarely the most numerous one.",
+  "keywords": [
+    "lactic acid bacteria",
+    "wild yeast",
+    "sourdough starter",
+    "fermentation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Minervini et al., Applied and Environmental Microbiology, 2012",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3273004/",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-sunk-cost-4",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: mice and rats, like people, get less likely to quit a wait the longer they have already waited?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In matched foraging tasks, mice and rats queued for flavoured food and people for short videos; in all three species, the more time already sunk into a wait, the less likely they were to abandon it. The pull built up only after the decision to wait, not during the deliberation before it.",
+  "move": "Decide how long to wait before starting, when the past cannot argue yet.",
+  "trap": "Honouring sunk costs seems a human quirk of pride or money.",
+  "keywords": [
+    "mice",
+    "rats",
+    "sunk costs",
+    "foraging",
+    "waiting"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sweis et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aar8644",
+  "written": "2026-09-26"
+}

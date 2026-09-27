@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-virality-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: bots were the main reason false news outran true news on Twitter?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Vosoughi, Roy and Aral traced about 126,000 rumour cascades from 2006 to 2017; falsehoods were about 70% more likely to be retweeted than the truth. Bots spread true and false stories at similar rates, so removing them left the gap intact. People, drawn to what seemed new, did the spreading.",
+  "move": "Before blaming the villain in the headline, check what remains once it is removed.",
+  "trap": "True: bots are the vivid, much-reported culprit in every misinformation story.",
+  "keywords": [
+    "false news",
+    "twitter",
+    "bots",
+    "rumour cascades",
+    "novelty"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vosoughi, Roy & Aral, Science, 2018",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1126/science.aap9559",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-touch-2",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the multi-finger gestures on the first iPhone come from?",
+  "answer": "Largely from a PhD born of hand pain. Wayne Westerman, whose repetitive strain injury made typing hard, wrote his 1999 University of Delaware thesis on tracking many fingers on a touch surface. With his adviser John Elias he founded FingerWorks to sell gesture keyboards. Apple bought the company in 2005, two years before the iPhone.",
+  "move": "Tools built for people with a limitation often end up serving everyone.",
+  "keywords": [
+    "fingerworks",
+    "wayne westerman",
+    "multi-touch",
+    "iphone",
+    "repetitive strain injury"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Westerman, PhD thesis, University of Delaware, 1999",
+  "source_kind": "paper",
+  "reference": "Westerman, Hand Tracking, Finger Identification, and Chordic Manipulation on a Multi-Touch Surface, PhD thesis, University of Delaware, 1999",
+  "written": "2026-09-26"
+}

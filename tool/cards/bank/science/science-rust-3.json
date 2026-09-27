@@ -1,0 +1,33 @@
+{
+  "id": "science-rust-3",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Aluminium reacts with air more readily than iron does. Why doesn't a can crumble away the way a nail rusts?",
+  "answer": "Its oxide stays put. The film on aluminium takes up only a little more room than the metal it replaced, so it clings, a few nanometres thick, and seals the surface. Rust needs about twice the space of its iron, so it cracks and flakes, and each flake bares fresh metal to the air.",
+  "move": "How readily something reacts matters less than whether its first damage protects it.",
+  "keywords": [
+    "aluminium",
+    "rust",
+    "oxide layer",
+    "pilling-bedworth ratio",
+    "corrosion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pilling and Bedworth, J. Inst. Metals, 1923",
+  "source_kind": "paper",
+  "reference": "Pilling and Bedworth, The oxidation of metals at high temperatures, Journal of the Institute of Metals 29, 529, 1923",
+  "written": "2026-09-26"
+}

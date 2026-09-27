@@ -1734,4 +1734,44 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get topEmpty =>
       'Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee.';
+
+  @override
+  String get readMark => 'Gelezen';
+
+  @override
+  String get lovedSinceTheStart => 'Het meest geliefd sinds het begin';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Het meest geliefd in $subject';
+  }
+
+  @override
+  String get lovedLine =>
+      'Wat lezers het vaakst bewaarden en jij nog niet hebt gelezen';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Je eerste week: nog $n dagen met vier van de vijf van jou.',
+      one: 'Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Je eerste week eindigt vanavond. Vanaf morgen is één van de vijf van jou en drie zijn van iedereen; met Astute+ blijven alle vijf van jou.';
+
+  @override
+  String get forYouShelf => 'Voor jou';
+
+  @override
+  String get forYouLine => 'Wat je lezen vooropzet';
+
+  @override
+  String get exploreOffline =>
+      'Je bent offline. Dit is Verkennen zoals het het laatst gelezen is.';
 }

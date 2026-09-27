@@ -1,0 +1,37 @@
+{
+  "id": "weird_facts-still-on-the-books-5",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should every law expire after a fixed period unless lawmakers vote to renew it?",
+  "sides": [
+    "Yes, add sunset clauses",
+    "No, let laws stand"
+  ],
+  "answer": "Laws outlive their reasons: duelling oaths and medieval debt rules still stand because nobody is obliged to look. In 2013 Britain needed a single Act to repeal hundreds of dead statutes at once. An expiry date forces a review, a vote and a record of who wanted the rule kept.",
+  "move": "Whichever side you took, whether lawmakers have time to renew decides it.",
+  "counterpoint": "Expiry creates cliff edges: taxes, contracts and criminal offences lapse if a busy or deadlocked parliament misses a deadline. Renewals then become rubber stamps, as long-running security powers show. People and businesses plan on stable law, and obsolete statutes do little harm because courts and prosecutors simply leave them unused.",
+  "keywords": [
+    "sunset clauses",
+    "statute law repeals",
+    "legislation",
+    "obsolete laws"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Statute Law (Repeals) Act 2013",
+  "source_kind": "primary_document",
+  "reference": "Statute Law (Repeals) Act 2013, c. 2, United Kingdom Parliament, 2013",
+  "written": "2026-09-26"
+}

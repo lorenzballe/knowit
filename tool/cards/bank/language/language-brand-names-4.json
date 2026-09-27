@@ -1,0 +1,32 @@
+{
+  "id": "language-brand-names-4",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Otis company lose escalator, a word it had owned as a trademark?",
+  "answer": "Partly by its own hand. When the US Patent Office cancelled the registration in 1950, the evidence included Otis's own advertising and patents, using escalator for any moving staircase. A trademark has to point to one maker; Otis had used it to name the machine. Rivals could now sell escalators as escalators.",
+  "move": "The way an owner talks about a name teaches everyone else how to use it.",
+  "keywords": [
+    "escalator",
+    "otis elevator",
+    "genericide",
+    "patent office"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haughton Elevator Co. v. Seeberger, 1950",
+  "source_kind": "primary_document",
+  "reference": "Haughton Elevator Co. v. Seeberger, 85 USPQ 80 (Commissioner of Patents, 1950)",
+  "written": "2026-09-26"
+}

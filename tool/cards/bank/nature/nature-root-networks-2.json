@@ -1,0 +1,40 @@
+{
+  "id": "nature-root-networks-2",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "On forested islands in northern Sweden, where did most of the carbon stored in the soil come from?",
+  "options": [
+    "Needles and leaves dropped on top",
+    "Roots and the fungi around them",
+    "Dead trunks and fallen branches"
+  ],
+  "correct": 1,
+  "answer": "Roots and the fungi around them. Using carbon-14 from 1960s bomb tests as a clock, Clemmensen and colleagues found that 50 to 70% of the stored carbon came from roots and their fungi, not from litter falling on the surface. The humus was built from below, out of dead fungal threads and roots.",
+  "move": "What you can see arriving is not always what stays.",
+  "trap": "Needles and leaves, because litter is what visibly piles up.",
+  "keywords": [
+    "soil carbon",
+    "mycorrhizal fungi",
+    "boreal forest",
+    "roots",
+    "carbon-14"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clemmensen et al., Science, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1231923",
+  "written": "2026-09-26"
+}

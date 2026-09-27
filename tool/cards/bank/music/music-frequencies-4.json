@@ -1,0 +1,40 @@
+{
+  "id": "music-frequencies-4",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Tune twelve pure fifths upward from a C, each exactly 3 to 2. Where do you land against seven octaves up?",
+  "options": [
+    "Exactly on the note",
+    "About a quarter of a semitone sharp",
+    "About a whole semitone flat"
+  ],
+  "correct": 1,
+  "answer": "About a quarter of a semitone sharp. Twelve fifths multiply the frequency by 1.5 to the 12th power, about 129.7; seven octaves multiply it by 2 to the 7th, 128. The gap, about 1.4%, is the Pythagorean comma. Every keyboard tuning is a decision about where to hide it.",
+  "move": "Small errors repeated down a chain do not stay small.",
+  "trap": "Assuming a mismatch too small to hear per step stays that small.",
+  "keywords": [
+    "pythagorean comma",
+    "perfect fifths",
+    "octaves",
+    "temperament",
+    "circle of fifths"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barbour, Tuning and Temperament, 1951",
+  "source_kind": "book",
+  "reference": "Barbour, Tuning and Temperament: A Historical Survey, Michigan State College Press, 1951",
+  "written": "2026-09-26"
+}

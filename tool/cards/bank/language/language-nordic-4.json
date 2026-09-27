@@ -1,0 +1,32 @@
+{
+  "id": "language-nordic-4",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who first put the Norwegian word friluftsliv, open-air life, into print?",
+  "answer": "Henrik Ibsen, in On the Heights, a long poem written around 1860. Its young narrator leaves the valley and his bride for the high mountain plateau and chooses its solitude over the life below. A word now printed on school timetables and outdoor charity leaflets began in a playwright's verse about walking away from people.",
+  "move": "A cheerful word's first use may carry a much bleaker sense.",
+  "keywords": [
+    "friluftsliv",
+    "henrik ibsen",
+    "outdoor life",
+    "norway"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gelter, Canadian Journal of Environmental Education, 2000",
+  "source_kind": "paper",
+  "reference": "Gelter, Friluftsliv: The Scandinavian Philosophy of Outdoor Life, Canadian Journal of Environmental Education, 2000",
+  "written": "2026-09-26"
+}

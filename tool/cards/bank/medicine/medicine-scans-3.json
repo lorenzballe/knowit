@@ -1,0 +1,39 @@
+{
+  "id": "medicine-scans-3",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after thyroid ultrasound spread through South Korean health check-ups, deaths from thyroid cancer fell sharply?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Between 1993 and 2011 diagnoses rose about fifteenfold, making it the country's most common cancer, yet the death rate from it stayed flat. Most tumours found were small papillary cancers that would never have harmed anyone. Nearly all were treated anyway, most by removing the thyroid, which means hormone pills for life.",
+  "move": "Finding more of a disease is not the same as preventing its harm.",
+  "trap": "Assuming that finding more cancers early must save more lives.",
+  "keywords": [
+    "thyroid cancer",
+    "ultrasound screening",
+    "overdiagnosis",
+    "south korea",
+    "thyroidectomy"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ahn, Kim & Welch, NEJM, 2014",
+  "source_kind": "paper",
+  "reference": "Ahn, Kim & Welch, Korea's thyroid-cancer epidemic: screening and overdiagnosis, New England Journal of Medicine, 2014",
+  "written": "2026-09-26"
+}

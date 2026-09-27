@@ -1,0 +1,40 @@
+{
+  "id": "economics-four-day-week-4",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "In 1930 Keynes forecast that by 2030 living standards would be four to eight times higher and working weeks fifteen hours. How has it gone?",
+  "options": [
+    "Incomes on track; hours far off",
+    "Hours on track; incomes far off",
+    "Both far off the mark"
+  ],
+  "correct": 0,
+  "answer": "Incomes on track; hours far off. Real income per head in Britain and the United States has risen roughly five- to eightfold since 1930, inside Keynes's range: growth of 2% a year compounds to about sevenfold in a century. Weekly hours fell only modestly. The riches arrived; the leisure mostly did not.",
+  "move": "Before calling a century forecast wild, compound the growth rate yourself.",
+  "trap": "Assuming an eightfold rise in a century must be fantasy.",
+  "keywords": [
+    "keynes",
+    "working hours",
+    "economic growth",
+    "leisure",
+    "compound growth"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Pecchi and Piga, Revisiting Keynes, MIT Press, 2008",
+  "source_kind": "book",
+  "reference": "Pecchi & Piga (eds.), Revisiting Keynes: Economic Possibilities for Our Grandchildren, MIT Press, 2008",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "medicine-blood-tests-3",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which of these can push a healthy person's potassium result high enough to look dangerous?",
+  "options": [
+    "A banana eaten before the test",
+    "A clenched fist during the draw",
+    "A glass of water beforehand"
+  ],
+  "correct": 1,
+  "answer": "A clenched fist during the draw. Working forearm muscles release potassium into the local vein; a 1990 study found clenching could raise the reading by 1 to 2 mmol per litre, on a normal range of about 3.5 to 5. The alarm comes from the arm, not the heart.",
+  "move": "Ask what the act of measuring did to the thing measured.",
+  "trap": "Picking the banana, the food everyone links with potassium.",
+  "keywords": [
+    "potassium",
+    "pseudohyperkalaemia",
+    "phlebotomy",
+    "fist clenching",
+    "haemolysis"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Don et al., NEJM, 1990",
+  "source_kind": "paper",
+  "reference": "https://www.nejm.org/doi/full/10.1056/NEJM199005033221806",
+  "written": "2026-09-26"
+}

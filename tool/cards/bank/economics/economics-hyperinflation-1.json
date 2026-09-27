@@ -1,0 +1,33 @@
+{
+  "id": "economics-hyperinflation-1",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does very high inflation widen a government's budget deficit all by itself?",
+  "answer": "Because taxes arrive late. A tax assessed in March and paid in June loses value meanwhile: at 50% a month, prices more than triple in three months, so the payment buys under a third of what was due. Julio Olivera and Vito Tanzi described it. The state prints to fill the gap.",
+  "move": "When money is melting, whoever pays last pays least.",
+  "keywords": [
+    "tanzi effect",
+    "tax lags",
+    "budget deficit",
+    "money printing",
+    "hyperinflation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tanzi, IMF Staff Papers, 1977",
+  "source_kind": "paper",
+  "reference": "Tanzi, Inflation, Lags in Collection, and the Real Value of Tax Revenue, IMF Staff Papers, 1977",
+  "written": "2026-09-26"
+}

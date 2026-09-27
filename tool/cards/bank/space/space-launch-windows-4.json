@@ -1,0 +1,36 @@
+{
+  "id": "space-launch-windows-4",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "also": [
+    "nature.weather.storms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why may a rocket not launch through a cloud that has produced no lightning at all?",
+  "answer": "Because the rocket can make the lightning. A tall conductor trailing a long, ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. Apollo 12 was hit twice within its first minute in 1969, with no storm reported; in 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
+  "move": "Check whether your own action creates the danger you are watching for.",
+  "keywords": [
+    "triggered lightning",
+    "apollo 12",
+    "launch rules",
+    "atlas-centaur",
+    "exhaust plume"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA, Apollo 12 Mission Report, 1970",
+  "source_kind": "institution",
+  "reference": "NASA Manned Spacecraft Center, Apollo 12 Mission Report, MSC-01855, 1970",
+  "written": "2026-09-26"
+}

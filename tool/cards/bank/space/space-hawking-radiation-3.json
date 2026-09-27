@@ -1,0 +1,32 @@
+{
+  "id": "space-hawking-radiation-3",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would a black hole finishing its evaporation today have weighed when it formed in the early universe?",
+  "answer": "About as much as a mountain: some 500 billion kilograms, packed into less than the width of a proton. Evaporation time grows with the cube of the mass, so anything much heavier is still here and anything lighter is long gone. Gamma-ray telescopes have watched for their final bursts. None has been seen.",
+  "move": "Where lifetime climbs steeply with size, the ones ending today share one size.",
+  "keywords": [
+    "primordial black holes",
+    "black hole evaporation",
+    "gamma-ray bursts",
+    "early universe"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carr et al., Physical Review D, 2010",
+  "source_kind": "paper",
+  "reference": "Carr, Kohri, Sendouda & Yokoyama, New cosmological constraints on primordial black holes, Physical Review D, 2010",
+  "written": "2026-09-26"
+}

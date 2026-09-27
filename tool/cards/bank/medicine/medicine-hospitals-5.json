@@ -1,0 +1,33 @@
+{
+  "id": "medicine-hospitals-5",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How were patients bedded in Paris's great hospital, the Hôtel-Dieu, in the 18th century?",
+  "answer": "Several to a bed. Most of its roughly 1,200 beds were large ones shared by four or more, and patients far outnumbered beds. The surgeon Jacques Tenon's 1788 survey put its death rate above one in five, higher than the city's smaller hospitals. The fevered, the dying and the recovering shared one mattress.",
+  "move": "Before blaming a place's patients, count how many share each bed.",
+  "keywords": [
+    "hôtel-dieu",
+    "paris",
+    "jacques tenon",
+    "overcrowding",
+    "hospital beds"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Curious History of L'Hôtel-Dieu de Paris",
+  "source_kind": "paper",
+  "reference": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5212799/",
+  "written": "2026-09-26"
+}

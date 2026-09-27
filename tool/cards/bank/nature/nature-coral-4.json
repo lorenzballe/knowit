@@ -1,0 +1,33 @@
+{
+  "id": "nature-coral-4",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How often is a typical coral reef now hit by severe bleaching?",
+  "answer": "About once every 6 years. At 100 reefs worldwide, Hughes's team found the median gap between severe bleaching events shrank from 25 to 30 years in the early 1980s to about 6 by 2016. The fastest-growing corals need at least 10 to 15 years to recover, so reefs are now struck again before they heal.",
+  "move": "Compare the time between blows with the time needed to heal.",
+  "keywords": [
+    "coral bleaching",
+    "marine heatwaves",
+    "reef recovery",
+    "return time",
+    "global warming"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Hughes et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "Hughes et al., Spatial and temporal patterns of mass bleaching of corals in the Anthropocene, Science, 2018",
+  "written": "2026-09-26"
+}

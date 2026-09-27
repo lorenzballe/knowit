@@ -1,0 +1,33 @@
+{
+  "id": "nature-night-vision-3",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the eyes of Arctic reindeer change colour between summer and winter?",
+  "answer": "To gather more light in the polar night. The mirror behind the retina shines gold in summer and deep blue in winter: pupils held wide for months probably raise pressure in the eye, squeezing the mirror's collagen fibres closer, so it reflects bluer light and scatters more through the retina. Sensitivity rises; sharpness falls.",
+  "move": "A trade-off can be reset by season rather than fixed for life.",
+  "keywords": [
+    "reindeer",
+    "tapetum lucidum",
+    "arctic winter",
+    "eyeshine",
+    "collagen"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stokkan et al., Proc. R. Soc. B, 2013",
+  "source_kind": "paper",
+  "reference": "Stokkan et al., Shifting mirrors: adaptive changes in retinal reflections to winter darkness in Arctic reindeer, Proceedings of the Royal Society B, 2013",
+  "written": "2026-09-26"
+}

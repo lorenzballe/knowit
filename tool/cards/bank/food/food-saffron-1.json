@@ -1,0 +1,33 @@
+{
+  "id": "food-saffron-1",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why has no saffron crocus ever been grown from its own seed?",
+  "answer": "Because it is a sterile triploid, with three sets of chromosomes, and sets no viable seed. Every plant is a clone, multiplied from underground corms. A 2019 genetic study traced the crop to wild Crocus cartwrightianus near Athens: fields from Kashmir to La Mancha grow copies of one ancient plant.",
+  "move": "Where every plant is a copy, one disease can meet no resistance.",
+  "keywords": [
+    "crocus sativus",
+    "triploid",
+    "clones",
+    "corms",
+    "crocus cartwrightianus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nemati et al., Mol. Phylogenet. Evol., 2019",
+  "source_kind": "paper",
+  "reference": "Nemati et al., Saffron (Crocus sativus) is an autotriploid that evolved in Attica (Greece) from wild Crocus cartwrightianus, Molecular Phylogenetics and Evolution, 2019",
+  "written": "2026-09-26"
+}

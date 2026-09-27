@@ -1,0 +1,32 @@
+{
+  "id": "cinema-marketing-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Jaws change about the way a big film was launched?",
+  "answer": "It opened everywhere at once, pushed by television. Prestige films usually opened in a few big-city cinemas and spread slowly as prints and reviews travelled. In June 1975 Universal put Jaws into more than 400 cinemas together and bought national prime-time TV advertising the week before. The opening weekend itself became the event.",
+  "move": "When everyone can hear the news at once, the first day decides the rest.",
+  "keywords": [
+    "jaws",
+    "saturation release",
+    "television advertising",
+    "summer blockbuster"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cook, Lost Illusions, 2000",
+  "source_kind": "book",
+  "reference": "Cook, Lost Illusions: American Cinema in the Shadow of Watergate and Vietnam, 1970–1979, Scribner, 2000",
+  "written": "2026-09-26"
+}

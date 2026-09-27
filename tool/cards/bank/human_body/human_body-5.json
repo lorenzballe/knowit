@@ -24,5 +24,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Sinoatrial node automaticity, standard physiology"
+  "source": "Sinoatrial node automaticity, standard physiology",
+  "disabled": true
 }

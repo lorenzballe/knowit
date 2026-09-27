@@ -1,0 +1,32 @@
+{
+  "id": "technology-chips-3",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What exactly did Gordon Moore forecast in 1965, in the paper behind his famous law?",
+  "answer": "A yearly doubling, and it was about cost. Moore plotted the number of components per chip at which each component came out cheapest, saw it doubling every year, and projected 65,000 by 1975. In 1975 he slowed the forecast to a doubling every two years. The law began as the bottom of a cost curve.",
+  "move": "Before quoting a famous law, read what its author actually measured.",
+  "keywords": [
+    "moore's law",
+    "gordon moore",
+    "integrated circuits",
+    "component cost"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Moore, Electronics, 19 April 1965",
+  "source_kind": "paper",
+  "reference": "Moore, Cramming more components onto integrated circuits, Electronics 38(8), 1965",
+  "written": "2026-09-26"
+}

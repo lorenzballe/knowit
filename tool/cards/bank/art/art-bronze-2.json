@@ -1,0 +1,40 @@
+{
+  "id": "art-bronze-2",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Many of the finest surviving ancient Greek bronze statues were found where?",
+  "options": [
+    "In royal tombs",
+    "In church treasuries",
+    "In the sea"
+  ],
+  "correct": 2,
+  "answer": "In the sea. On land, a bronze statue was a store of metal, and over the centuries almost all were melted into coins, tools and weapons. Only what sank out of reach escaped: the Riace warriors, the god from Cape Artemision, the Antikythera youth and the Marathon boy all came up from the seabed.",
+  "move": "Ask what protected the survivors, not only what destroyed the rest.",
+  "trap": "Picturing tombs, where so many other ancient treasures were kept safe.",
+  "keywords": [
+    "greek bronzes",
+    "shipwrecks",
+    "riace bronzes",
+    "artemision",
+    "melting"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Daehner & Lapatin, Power and Pathos, 2015",
+  "source_kind": "book",
+  "reference": "Jens M. Daehner & Kenneth Lapatin (eds), Power and Pathos: Bronze Sculpture of the Hellenistic World, J. Paul Getty Museum, 2015",
+  "written": "2026-09-26"
+}

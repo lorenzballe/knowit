@@ -1,0 +1,40 @@
+{
+  "id": "sport-swimming-4",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Over 200 m freestyle, which pool produces the faster world record, and why?",
+  "options": [
+    "The 25 m pool: more push-offs",
+    "The 50 m pool: fewer interruptions",
+    "Neither: same distance, same time"
+  ],
+  "correct": 0,
+  "answer": "The 25 m pool: more push-offs. Seven turns instead of three means seven more pushes off a wall, each faster than swimming, followed by a stretch underwater. That is why short-course and long-course records are kept separately, and short-course times run two to three seconds quicker over 200 m.",
+  "move": "Count how often the rules let someone push off something solid.",
+  "trap": "Picturing turns as pauses that break the swimmer's rhythm.",
+  "keywords": [
+    "short course",
+    "long course",
+    "turns",
+    "push-off",
+    "world records"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Counsilman, The Science of Swimming, 1968",
+  "source_kind": "book",
+  "reference": "Counsilman, The Science of Swimming, Prentice-Hall, 1968",
+  "written": "2026-09-26"
+}

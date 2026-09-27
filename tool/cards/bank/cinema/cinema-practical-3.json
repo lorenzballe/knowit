@@ -1,0 +1,38 @@
+{
+  "id": "cinema-practical-3",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the house front that falls around Buster Keaton in Steamboat Bill, Jr. was a lightweight prop?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The facade was a real timber frame weighing around two tonnes by most accounts, and an open attic window was placed to pass around Keaton with only a few centimetres to spare. A light prop would have flexed and floated as it fell. Keaton stood on a marked spot and did not move.",
+  "move": "When something looks too dangerous to be real, ask what faking it would cost.",
+  "trap": "True, because no studio would drop a real wall on its star.",
+  "keywords": [
+    "buster keaton",
+    "steamboat bill jr",
+    "stunts",
+    "falling facade"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meade, Buster Keaton: Cut to the Chase",
+  "source_kind": "book",
+  "reference": "Meade, Buster Keaton: Cut to the Chase, HarperCollins, 1995",
+  "written": "2026-09-26"
+}

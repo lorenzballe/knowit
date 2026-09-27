@@ -240,6 +240,25 @@ the order they were always in. The third one the app can say for real,
 because the mix is the reader's own: **Because Space sits at full**, from
 the subject they pushed furthest up.
 
+**Read or not.** A card read anywhere is read: a card opened in Explore
+and turned past, or open when the viewer closes, counts like one read in
+the day (`markReadElsewhere`), so the day never hands it back as a daily
+card months later. Explore then treats its shelves by what they are for.
+The top list is one list for everybody, so a card the reader has read stays
+on its place, with a tick and *Read* under it. The shelves for finding
+things — today's, *loved since the start*, the ones that ask the most,
+*because Space* — hold only cards the reader has not read, because a card
+already read is not a find. Somebody who arrived late finds the best of
+what came before them; somebody who has been here two years finds the next
+one they missed, never a list of old news.
+
+**Loved since the start** sits under the top list: the cards readers held
+on to most over all time — the counts kept for good at `totals/{shard}`
+(the part of a card's id before its first dash), plus the launch crowd's
+average since the first of September 2026 — minus what the reader has
+read. It is not closed day by day like the top list: it is a shelf for
+finding what you missed, not a ranking to quote.
+
 **The top of the week and of the month** sit under today's shelf: the cards
 readers liked, saved and said most in the last 7 or 30 days, with a Week /
 Month switch level with the name, narrowed by the subject row like every
@@ -256,13 +275,33 @@ or says a card, their phone adds one to that card's count for the day, at
 Once per card per phone, ever, so a count is a count of readers, and
 liking, unliking and liking again is not a way up the list. Explore reads
 the last 30 days, at most every ten minutes; days older than three are
-settled and read once, then kept on the phone. Until the counts have been
-read — or where they cannot be, offline, on the web preview, or before the
-rules are published — nothing is ranked: the shelf shows its first three
+settled and read once, then kept on the phone. Without the launch crowd
+below, until the counts have been read — or where they cannot be, offline,
+on the web preview, or before the rules are published — nothing is ranked: the shelf shows its first three
 places numbered and empty, the first saying what puts a card there, at the
 list's own height so nothing jumps when the cards arrive. A first version
 hid the shelf until the counts were read, and so on every phone where they
 could not be it was a feature nobody could find.
+
+**One list, fixed for the day.** The list counts closed days only: the
+rules take a count for a day until two days after it began, so from
+midnight UTC the day before yesterday is final, and the week is the seven
+days up to it. That makes it the same list on every phone, and one that
+does not move from one midnight UTC to the next — a list that counted today
+would shift under the reader all day, and differently on each phone, since
+a phone sees its own like at once and everybody else's only on its next
+reading. Two days of lag is the price, and a top of the week can pay it.
+
+**The launch crowd.** A top list opened as three empty places, on every
+phone, for the weeks before anybody had held on to anything — so for now
+it is seeded (`TopSeed`, installed in `main.dart`). About one card in seven
+is given a believable daily following, heavy-tailed the way real lists are
+and turning over month by month, tilted to what readers keep (a question
+over a fact, a debate over both, the hard ones); the real counts are added
+on top and rank above it as they come. It is the same list on every phone,
+because it is computed from the card ids and the day. It is a stand-in and
+says nothing true about readers: construct `Tallies.instance` without a seed
+to retire it once the real counts can carry the list alone.
 
 `firestore.rules` holds every write to one card, plus one, on a day that is
 today on some clock, and lets nothing be taken back. **The rules have to be
@@ -271,6 +310,22 @@ Rules → paste `firestore.rules` → Publish (or `firebase deploy --only
 firestore:rules`). The write is anonymous but not unforgeable — someone with
 a script could add to a card over and over — which at this scale is a risk
 the list can carry; per-reader limits would need a server.
+
+**What is online, and what is on the phone.** The way the apps that feel
+like they know you do it, in proportion. *The server decides.* What the
+reader does is written down with their account (the trace, below), the
+server reads it and deals their day and their Explore shelf from it, and
+the phone reads one document for each. *Only what is needed travels.* A day
+is five cards whole; Explore is the shelves whole; the search is asked on
+the server. The phone still carries a bank, but downloads a new one only
+when `cards/version.json` names it, and uses it for the one thing the
+server cannot do — deal a day when it is not there. *Offline shows what
+was last read.* The server's day is kept on the phone the evening it
+arrives; Explore as last read is shown with a line saying so, and the
+counts the phone keeps are the closed days only, so nothing offline is a
+guess. What the server cannot do in time, the phone does as it always did:
+the morning waits four seconds for the day, eight for one dealt on the
+spot, and then deals from the same calendar. See *The server*, below.
 
 The **Archive** is artboard 70e — its head too: the name, the lens on the
 right and the count under it, with the way back beside the title, which is
@@ -476,7 +531,9 @@ gets a third card, and offers the writer the three thinnest principles
 rather than one, so the principle fits the strand instead of being forced
 onto it. The 170 cards written before the tags existed were tagged by hand
 and sit under the nearest strand; `tool/cards/tag.py` asks the model to tag
-whatever has none.
+whatever has none. In September 2026 the bank was grown by hand to at least
+five cards on every strand (see *The first hand-written set* in
+`tool/cards/README.md`).
 
 On the phone the tags are read three ways. A genre or strand the reader
 turned off in the mix goes behind every card that is on, never out of the
@@ -512,9 +569,25 @@ days until the pool runs dry.
 
 ## The day, and whose it is
 
-A day is five cards on both plans. On the free plan one of them is the
+A day is five cards on both plans.
+
+**The welcome week.** A free reader's first seven days — days read, not days
+since the install — hold four cards of their own and the question of the
+day (`kWelcomeDays`, `kOwnCardsWelcome`). The first week is when an app is
+judged, and the onboarding has just asked the reader what they like: a
+first morning of four cards they did not choose would answer that the
+question was for show. So the first week is theirs, dealt by the reading of
+their onboarding, a notch above, opening on what they came for. Every
+evening of it the finished day says how many welcome days are left, and on
+the seventh it says the week ends tonight, what tomorrow looks like, and
+what Astute+ keeps — so the eighth morning is a thing they were told, not
+one they notice. Through the week the card after the fifth offers to *make
+all five yours*, since four already are.
+
+From the eighth day, on the free plan one of them is the
 reader's own — dealt from the mix, from the subjects and strands they kept
-on, at the level they said they were — and four are everybody's: the
+on, at the level the onboarding was read to start them at (see *Reading
+the onboarding*) — and four are everybody's: the
 question of the day, and three more from the day's edition, the same for
 every free reader in the world (`commonOfEdition`, chained so a card does
 not come round for weeks, never two of one subject; a reader who has
@@ -533,8 +606,9 @@ The question of the day (`lib/data/daily.dart`) is one edition a day from
 the first of September 2026, chained so the same question does not come
 round again for months, and dealt from the first edition on every phone
 that holds the same pool, which is what makes it the same question
-everywhere. It costs the mix nothing. Every card that asks and can be
-marked lives under Thinking, and Thinking was never off anybody's deck.
+everywhere. It costs the mix nothing. The question of the day is always a
+Thinking card (the app and `bundle.py` both draw it from Thinking alone),
+and Thinking was never off anybody's deck.
 What the shared question buys is a common object — the card a friend can
 be asked about ("did you get it?"), the one the morning notification can
 quote a fortnight ahead, the one square in the shared grid that means the
@@ -942,11 +1016,12 @@ These are declared in the UI rather than faked:
 - **Email sign-in.** Apple and Google are wired; the email button says plainly
   that it is not connected. Firebase's email link needs a domain of ours with
   universal links, since Dynamic Links was retired.
-- **The bank is still the first hundred and seventy.** The pipeline that
-  grows it is built and tested against a canned model; the first real night
+- **The nightly pipeline has not run for real.** The pipeline that grows
+  the bank is built and tested against a canned model; the first real night
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
-  allowed to open pull requests. Until then sixty cards that tell, at three
-  a day, is twenty days of new reading.
+  allowed to open pull requests. The bank itself no longer waits on it: in
+  September 2026 it was grown by hand to 1,790 live cards, at least five on
+  every one of the 324 strands.
 - **The kept signing key.** Optional. Without it `codemagic.yaml` signs as it
   always has: it revokes every distribution certificate in the account and
   mints a new one, which needs nothing set up but fails, with ITMS-90035,
@@ -961,12 +1036,11 @@ These are declared in the UI rather than faked:
   build leaves the group out rather than failing at signing: today's card
   shows the question of the day from the web instead of the reader's own,
   and the streak and the five ask for the app to be opened.
-- **Depth under every strand.** Every card is tagged with a strand and the
-  dealer honours the switches, but 170 cards over 324 strands is a card
-  under half of them and nothing under the rest; a reader who turns
-  everything off but *Space · Rockets* is dealt those cards and then
-  whatever is nearest. The generator writes towards the thinnest strands
-  first, so this closes at the pace of the nightly run.
+- **Depth under every strand.** Every strand now holds at least five live
+  cards, so a reader who turns everything off but *Space · Rockets* is dealt
+  five of their own before the dealer reaches for whatever is nearest. Five
+  is a floor, not a library: a strand that narrow still runs dry in a few
+  days, and the generator writes towards the thinnest strands first.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with
@@ -1169,6 +1243,137 @@ judgement away.
   every card becomes an excuse to write the first one badly.
 - **What the other side says** — on a debate, the strongest case against
   whichever side you took.
+
+## Reading the onboarding
+
+The onboarding asks two things — how much of each subject (a handle per
+subject, pushed up or down) and, one layer down, which genres and strands
+to leave out — and never what the reader knows. `ReaderProfile`
+(`lib/data/reader_profile.dart`) reads those two answers the way a person
+would, rather than at face value:
+
+- **The gap, not the number.** A mix left at the top everywhere says
+  nothing. One subject held at the top while others came down says *this
+  one is mine*: the subject is **claimed**.
+- **Pruning is expertise.** Somebody who opens Space, turns off the Moon and
+  keeps black holes knows the field well enough to have an opinion inside
+  it. A subject pruned from inside is claimed too, and the strands left on
+  in a pruned genre are the most precise thing the reader has said.
+- **How many stayed.** Four subjects or fewer is a specialist, who wants
+  depth, and every one of them counts as chosen; twelve or more is a
+  generalist, who wants range.
+- **Whether anything moved.** A reader who walked straight through told the
+  app nothing, and it does not pretend they did.
+
+Three things follow, on both plans:
+
+1. **Everybody starts a notch above.** Nobody starts as a beginner: every
+   subject in the mix starts at *some*, and a claimed one at *solid*. The
+   dealer pitches each level above itself (`_fit`): at *some* a hard
+   question is as welcome as a medium one; at *solid* hard comes well
+   before medium; only a subject measured *curious* is mostly told and
+   asked at medium. The first card an app puts in front of somebody decides
+   whether it is taken seriously — a stretch reads as respect, an easy
+   quiz as a toy. The measured level (`measuredLevels`) replaces the start
+   as soon as a subject has four judgements.
+2. **Hand-picked strands lean the draw** — the strands kept in a pruned
+   genre by as much as about four likes, the genres kept whole in a pruned
+   subject a little — from the first card, not the tenth.
+3. **The first week opens on what they came for.** The first three days
+   sharpen the mix towards its top (the weights cubed, squared, then to the
+   power 1.5); from the fourth day the mix is exactly what was set, and the
+   range they asked for arrives. A reader who said nothing opens instead on
+   the subjects that hook most people — the mind, space, the body, the
+   strange, the past — then gets the whole spread. That list is a
+   judgement; replace it with what `mix set` shows readers push up.
+
+The edition's everyday cards follow the mix too: an edition carries eight,
+never two of a subject, and a free day takes the three on the reader's
+mix first, so somebody who dragged Sport to nothing is not handed a Sport
+card three mornings a week because it was everybody's. Readers with the
+same subjects still share the same three.
+
+`onboarding completed` carries the reading's shape — how many subjects were
+claimed and started solid, how many strands were picked by hand — never
+which.
+
+## The server
+
+The phone dealt its own day from what the reader *said* — the mix, what
+was pruned, what they liked — and read Explore off the bank it carried. It
+never used what the reader *did*: how long a card held them, what they
+threw on in a second, what a shelf showed them that they never opened. The
+apps that feel like they know you are built on exactly that record, kept
+where the thing that decides can read it. So:
+
+**The trace** (`lib/sync/trace.dart`). Every gesture the app already
+measures passes through `Analytics.capture` with its facts; the trace keeps
+the ones that matter — card shown, opened, turned (and how long the front
+held them first), a hint asked for, answered with its confidence, its time
+and *which* option or number (the shape of the wrong answers tells a trap
+from a slip), liked, saved, said, shared, thrown down, the shelves looked
+at and how far down, the day started and finished, how long the app was
+open — compacts them, and writes them in
+batches to `readers/{uid}/activity/{UTC day}`, with the reader's presence
+(their clock, whether they hold Astute+) at `presence/{uid}`. It is
+batched (25 events or 20 seconds, and when the app leaves the screen), it
+waits offline, and it carries no prose: never a reason typed on a card, never
+a search. It is the reader's: nobody else may read it, it is cleared after
+three weeks, and it goes with the account.
+
+**The profile and the day** (`functions/`, Cloud Functions in
+europe-west1). The server reads the backup, the trace and the presence into
+the same three things the phone's own reading produced, only sharper: a
+level per subject, measured where there is something to measure; a taste
+over every tag, moved by likes and throws and — new — by dwell (a card that
+held the reader twice their median is a card that took; one thrown on in a
+third of it did not) and by cards shown and never opened; and the mix as
+leaned. Two things keep that taste honest. A strand looked at within the
+week is dealt at half its weight, so a liking is met again later rather
+than tomorrow; and on about every other day (a coin seeded by reader and
+date, the same on every server) one of the day's reads is an *explorer*: a
+card from a strand the reader has never met, chosen on level alone with
+the taste set aside, and named in the day (`explorer`), so the next
+morning's trace says whether it took. A taste that only confirms itself
+narrows to nothing; the server can only learn from what it showed. Every
+number in this is one line with its reason beside it — the dwell signals
+are trusted only from five timed cards, the taste never moves past 0.6 on
+one tag, the trace of the last three weeks with the second week at half —
+and `functions/README.md` lists them. From that it deals the day by the
+phone's own rules, card for card in what is everybody's (the question of the day and the edition's
+common cards are read off the calendar `bundle.py` freezes, on both sides),
+and writes it whole to `readers/{uid}/days/{date}`. A phone asks for
+tomorrow the evening it finishes today, and the nightly pass deals every
+active reader's local today and tomorrow ahead of them; the morning reads
+one document, from the phone's own cache in milliseconds. `dealt_by` on
+`day started` says who dealt it.
+
+**Explore** is assembled once an hour for everybody (`explore/latest`:
+today's shelf, the ones that ask the most, the top of the week and the
+month over closed days, loved since the start, per subject) and once a day
+for each reader (`readers/{uid}/explore/current`: the subject that is theirs,
+and *For you* — what the profile puts first, one card per strand, at most
+two per subject). The search runs on the server over the newest bank; the
+phone answers from its own first and swaps in the server's.
+
+**The hashes are the phone's, bit for bit.** The crowd under the top list
+and the order the shelves turn in are computed on both sides from the
+same functions (`functions/src/rng.ts` against `lib/sync/tally.dart` and
+`lib/data/pills_repository.dart`), and a test holds the server to numbers
+the phone printed.
+
+**What is not built yet** is in `functions/README.md`: learning from
+everyone ("readers who kept this also kept that"), which the trace and the
+totals already hold everything for, and a store webhook so the server is
+sure of Astute+ rather than told.
+
+**To turn it on:** with the Firebase project on the Blaze plan, run the
+*Cloud deploy* workflow from the Actions tab (it needs one repository
+secret, `FIREBASE_SERVICE_ACCOUNT`, the JSON key of a service account on
+the project — `functions/README.md` says which), or `firebase deploy
+--only functions,firestore:rules,firestore:indexes` from a machine that is
+logged in. The privacy policy is already updated for it. Until then every phone deals for itself, as it did,
+and writes its trace for the day the server reads it.
 
 ## The shape of a day
 

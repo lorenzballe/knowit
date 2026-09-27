@@ -3,6 +3,9 @@
   "topic": "history",
   "genre": "history.maps_and_borders",
   "strand": "history.maps_and_borders.old_maps",
+  "also": [
+    "art.forgeries.detection"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -24,5 +27,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating"
+  "figure": "none",
+  "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating",
+  "source_kind": "paper",
+  "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004"
 }

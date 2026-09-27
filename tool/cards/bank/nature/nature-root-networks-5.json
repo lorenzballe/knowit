@@ -1,0 +1,33 @@
+{
+  "id": "nature-root-networks-5",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does oak wilt spread from a dying oak to its healthy neighbours?",
+  "answer": "Mostly underground, through fused roots. Neighbouring oaks often graft root to root, joining their plumbing, and the wilt fungus travels through the joins, so dead trees appear in widening rings around the first. Crews stop it by ploughing a trench more than a metre deep between sick and healthy trees, cutting the grafts.",
+  "move": "The link that lets help through lets harm through too.",
+  "keywords": [
+    "oak wilt",
+    "root grafts",
+    "fungal disease",
+    "trenching",
+    "oaks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Juzwik et al., Plant Disease, 2011",
+  "source_kind": "paper",
+  "reference": "Juzwik, Appel, MacDonald & Burks, Challenges and successes in managing oak wilt in the United States, Plant Disease, 2011",
+  "written": "2026-09-26"
+}

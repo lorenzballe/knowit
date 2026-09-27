@@ -397,5 +397,14 @@
  "topWeek": "Woche",
  "topMonth": "Monat",
  "topReaders": "{n, plural, =1{1 Leser} other{{n} Leser}}",
- "topEmpty": "Noch nichts auf der Liste. Jede Karte, die du magst, behältst oder erzählst, zählt."
+ "topEmpty": "Noch nichts auf der Liste. Jede Karte, die du magst, behältst oder erzählst, zählt.",
+ "readMark": "Gelesen",
+ "lovedSinceTheStart": "Seit Beginn am meisten geliebt",
+ "lovedIn": "Am meisten geliebt in {subject}",
+ "lovedLine": "Was Leser am häufigsten behalten haben und du noch nicht gelesen hast",
+ "welcomeDaysLeft": "{n, plural, =1{Deine erste Woche: morgen ist ihr letzter Tag, vier der fünf sind deine.} other{Deine erste Woche: noch {n} Tage, an denen vier der fünf deine sind.}}",
+ "welcomeWeekEnds": "Deine erste Woche endet heute Abend. Ab morgen ist eine der fünf deine und drei gehören allen; mit Astute+ bleiben alle fünf deine.",
+ "forYouShelf": "Für dich",
+ "forYouLine": "Was dein Lesen nach vorn stellt",
+ "exploreOffline": "Du bist offline. Das ist Entdecken, wie es zuletzt gelesen wurde."
 }

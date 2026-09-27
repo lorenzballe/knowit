@@ -1,0 +1,33 @@
+{
+  "id": "economics-rent-3",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is rent high because landlords' costs are high, or are their costs high because rent is?",
+  "answer": "Mostly the second. David Ricardo argued in 1817 that corn is not dear because landlords take rent; rent is paid because corn is dear. Rents follow what tenants can pay for a scarce place, and property prices rise to match. A landlord with no mortgage charges the same as one with a huge one.",
+  "move": "Ask what the buyer can pay before blaming the seller's costs.",
+  "keywords": [
+    "david ricardo",
+    "economic rent",
+    "land prices",
+    "landlords",
+    "scarcity"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ricardo, Principles of Political Economy, 1817",
+  "source_kind": "book",
+  "reference": "Ricardo, On the Principles of Political Economy and Taxation, ed. Sraffa, Cambridge University Press, 1951",
+  "written": "2026-09-26"
+}

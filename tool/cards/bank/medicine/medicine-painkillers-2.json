@@ -1,0 +1,42 @@
+{
+  "id": "medicine-painkillers-2",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "also": [
+    "medicine.pain.chronic"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: in a trial of 1,652 patients, regular paracetamol sped recovery from acute low back pain no more than placebo?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the Australian PACE trial, median recovery took 17 days on regular paracetamol and 16 on dummy tablets. Most acute back pain settles within weeks whatever is taken, so the pill gets the credit for time. Guidelines that had recommended it first were revised within a few years.",
+  "move": "Before crediting a remedy, ask how the untreated ones did.",
+  "trap": "Reading recovery after the tablets as recovery because of them.",
+  "keywords": [
+    "paracetamol",
+    "low back pain",
+    "pace trial",
+    "placebo",
+    "natural recovery"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williams et al., The Lancet, 2014",
+  "source_kind": "paper",
+  "reference": "Williams et al., Efficacy of paracetamol for acute low-back pain: a double-blind, randomised controlled trial, The Lancet, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "technology-chatbots-2",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Air Canada's website chatbot invented a refund policy, who did a tribunal hold responsible?",
+  "answer": "The airline. In 2024 a British Columbia tribunal rejected Air Canada's suggestion that its chatbot was a separate legal entity responsible for its own actions, calling it remarkable. The bot had promised a bereavement refund after travel, while the page it linked to said the opposite. The bill came to 812 Canadian dollars.",
+  "move": "Whoever deploys a tool answers for what the tool says.",
+  "keywords": [
+    "air canada",
+    "chatbot liability",
+    "bereavement fares",
+    "civil resolution tribunal"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moffatt v. Air Canada, 2024 BCCRT 149",
+  "source_kind": "primary_document",
+  "reference": "Moffatt v. Air Canada, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia, 2024",
+  "written": "2026-09-26"
+}

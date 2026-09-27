@@ -1,0 +1,33 @@
+{
+  "id": "human_body-digestion-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the pancreas not digest itself with the protein-cutting enzymes it makes?",
+  "answer": "It makes them switched off. Trypsin leaves as inactive trypsinogen; its normal key, an enzyme called enteropeptidase, sits on the lining of the small intestine; freed trypsin then activates the rest in a cascade. A single mutation that stops trypsin being shut down causes a hereditary pancreatitis, in which the gland digests itself.",
+  "move": "Ship the dangerous tool unarmed, and keep the trigger somewhere else.",
+  "keywords": [
+    "pancreas",
+    "trypsinogen",
+    "enteropeptidase",
+    "pancreatitis",
+    "enzyme cascade"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whitcomb et al., Nature Genetics, 1996",
+  "source_kind": "paper",
+  "reference": "Whitcomb, Gorry, Preston et al., Hereditary pancreatitis is caused by a mutation in the cationic trypsinogen gene, Nature Genetics, 1996",
+  "written": "2026-09-26"
+}

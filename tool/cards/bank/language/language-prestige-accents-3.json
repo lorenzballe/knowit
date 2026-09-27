@@ -1,0 +1,42 @@
+{
+  "id": "language-prestige-accents-3",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "also": [
+    "language.accents.how_they_form"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Elizabeth II's vowels stayed essentially unchanged across decades of her Christmas broadcasts?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Harrington, Palethorpe and Watson measured her vowels in Christmas broadcasts from the 1950s to the 1980s and found them drifting towards the standard southern accent of younger speakers. The vowel in had, for one, became more open. Even the most insulated speaker in the country moved with the community.",
+  "move": "Even the steadiest voice drifts with the voices around it.",
+  "trap": "An adult's accent, especially an elite one, seems fixed after youth.",
+  "keywords": [
+    "elizabeth ii",
+    "christmas broadcasts",
+    "vowels",
+    "received pronunciation",
+    "sound change"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Harrington, Palethorpe & Watson, Nature, 2000",
+  "source_kind": "paper",
+  "reference": "Harrington, Palethorpe & Watson, Does the Queen speak the Queen's English?, Nature 408, 2000",
+  "written": "2026-09-26"
+}

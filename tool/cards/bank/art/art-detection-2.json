@@ -1,0 +1,45 @@
+{
+  "id": "art-detection-2",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Fresh lead white carries excess lead-210, which halves every 22 years. After 220 years, by what factor has that excess shrunk?",
+  "value": 1024,
+  "unit": "times",
+  "answer": "2 multiplied by itself 10 times = 1,024 times smaller.",
+  "move": "Count the halvings first; the size of the fall follows from the count.",
+  "trap": "Answering ten, counting the halvings instead of multiplying them together.",
+  "hint": "Count the half-lives first, then ask what each one does.",
+  "steps": [
+    "220 ÷ 22 = 10 half-lives.",
+    "Each half-life divides the excess by 2.",
+    "2 multiplied by itself 10 times = 1,024 times smaller."
+  ],
+  "keywords": [
+    "lead-210",
+    "lead white",
+    "half-life",
+    "radioactive dating",
+    "van meegeren"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keisch et al., Science, 1967",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.155.3767.1238",
+  "written": "2026-09-26"
+}

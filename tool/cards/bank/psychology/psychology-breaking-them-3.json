@@ -1,0 +1,39 @@
+{
+  "id": "psychology-breaking-them-3",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "When Schachter surveyed two ordinary communities, what share of those who had ever tried to quit smoking had succeeded?",
+  "options": [
+    "Fewer than one in ten",
+    "About a quarter",
+    "More than half"
+  ],
+  "correct": 2,
+  "answer": "More than half, most with no treatment at all. Clinic studies had painted relapse as the norm, but clinics see people who failed on their own, the hardest cases. Asking around a university psychology department and a seaside town, Schachter found about six in ten who had tried had stopped, on average for years.",
+  "move": "Those who come for help are the ones who could not manage alone.",
+  "trap": "Applying clinic relapse rates, drawn from the hardest cases, to everyone.",
+  "keywords": [
+    "self-cure",
+    "smoking",
+    "relapse",
+    "clinic samples"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schachter, American Psychologist, 1982",
+  "source_kind": "paper",
+  "reference": "Schachter, Recidivism and self-cure of smoking and obesity, American Psychologist, 1982",
+  "written": "2026-09-26"
+}

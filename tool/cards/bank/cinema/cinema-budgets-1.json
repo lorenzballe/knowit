@@ -1,0 +1,32 @@
+{
+  "id": "cinema-budgets-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who can take a film away from its director when the shoot runs far over budget?",
+  "answer": "The completion guarantor. Banks lending against an independent film demand a bond promising delivery on budget, and the bond company reads the daily cost reports in return. In the last resort it can take over, replace the director and finish the film. Usually the threat suffices: a visit from the guarantor rewrites the schedule.",
+  "move": "Whoever pays when a plan fails ends up holding the real power over it.",
+  "keywords": [
+    "completion bond",
+    "film finance",
+    "insurance",
+    "production budget"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vogel, Entertainment Industry Economics",
+  "source_kind": "book",
+  "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edn, Cambridge University Press, 2015",
+  "written": "2026-09-26"
+}

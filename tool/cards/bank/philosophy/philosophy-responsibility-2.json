@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-responsibility-2",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.responsibility",
+  "also": [
+    "philosophy.free_will.determinism"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Told the universe is fully determined, people judged Bill, who kills his family to be with his lover. What share called him fully responsible?",
+  "options": [
+    "About seven in ten",
+    "About one in ten",
+    "About four in ten"
+  ],
+  "correct": 0,
+  "answer": "About seven in ten. In Shaun Nichols and Joshua Knobe's 2007 study, 72% held Bill fully morally responsible. Another group, asked only whether anyone in such a universe could be fully responsible, answered no: 86% of them. In theory nobody is to blame; faced with a burning house and a named man, Bill is.",
+  "move": "What people endorse in the abstract can vanish when a concrete case arrives.",
+  "trap": "Expecting people to apply the determinism they have just accepted.",
+  "keywords": [
+    "experimental philosophy",
+    "determinism",
+    "moral responsibility",
+    "folk intuitions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Nichols & Knobe, Noûs, 2007",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1468-0068.2007.00666.x",
+  "written": "2026-09-26"
+}

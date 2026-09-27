@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-oldest-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did researchers learn that a clam dredged off Iceland was the oldest individual animal ever precisely aged?",
+  "answer": "By sectioning its shell and counting growth lines, which only works on a dead clam. The ocean quahog, dredged in 2006, had been frozen on board as routine. A first count of the hinge said about 405 years; a recount in 2013 said 507. It hatched before Henry VIII took the throne.",
+  "move": "Some measurements can only be taken once, so decide what is worth it.",
+  "keywords": [
+    "ocean quahog",
+    "arctica islandica",
+    "growth rings",
+    "iceland",
+    "bangor university"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butler et al., Bangor University, 2013",
+  "source_kind": "primary_document",
+  "reference": "Butler et al., Variability of marine climate on the North Icelandic Shelf in a 1357-year proxy archive based on growth increments in the bivalve Arctica islandica, Palaeogeography, Palaeoclimatology, Palaeoecology, 2013",
+  "written": "2026-09-26"
+}

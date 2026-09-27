@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-eternity-1",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Boethius, awaiting execution, say separates the eternal from the merely endless?",
+  "answer": "Having it all at once. Eternity, he wrote in The Consolation of Philosophy around 524, is the whole of an endless life possessed together and complete. A world with no beginning or end would still live one moment at a time, losing yesterday and not yet holding tomorrow: everlasting, not eternal.",
+  "move": "More of the same is not a different kind of thing.",
+  "keywords": [
+    "boethius",
+    "consolation of philosophy",
+    "eternity",
+    "everlasting",
+    "divine foreknowledge"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boethius, The Consolation of Philosophy, V.6",
+  "source_kind": "book",
+  "reference": "Boethius, The Consolation of Philosophy V.6, trans. Walsh, Oxford University Press, 1999",
+  "written": "2026-09-26"
+}

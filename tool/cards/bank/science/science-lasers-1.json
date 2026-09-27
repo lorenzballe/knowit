@@ -1,0 +1,39 @@
+{
+  "id": "science-lasers-1",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Laser goggles are rated by optical density. What fraction of the beam do goggles rated OD 5 let through?",
+  "options": [
+    "About a fifth",
+    "About one in 100,000",
+    "About one in 50"
+  ],
+  "correct": 1,
+  "answer": "About one in 100,000. Optical density counts powers of ten: OD 1 passes a tenth, OD 2 a hundredth, OD 5 a hundred-thousandth. A 1-watt beam leaves 10 microwatts. The rating holds only at the colours printed on the frame; goggles dense for green laser light can be nearly clear to infrared.",
+  "move": "On any scale that counts powers of ten, each step multiplies.",
+  "trap": "Reading OD 5 as five times weaker, like a simple scale.",
+  "keywords": [
+    "laser safety goggles",
+    "optical density",
+    "eye protection",
+    "infrared"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ANSI Z136.1, Safe Use of Lasers",
+  "source_kind": "standard",
+  "reference": "American National Standards Institute, ANSI Z136.1, American National Standard for Safe Use of Lasers, Laser Institute of America, 2014",
+  "written": "2026-09-26"
+}

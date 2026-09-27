@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eternity-3",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Thomas Aquinas held that reason alone cannot prove the world had a beginning?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. That the world did not always exist, he wrote in the Summa, is held by faith alone and cannot be demonstrated. In a short treatise of about 1271 he went further: a world created by God yet with no first moment involves no contradiction. Creation, for Aquinas, meant dependence, not a date.",
+  "move": "Know which of your beliefs you could prove and which you simply hold.",
+  "trap": "Assuming a medieval theologian would claim to have proved creation.",
+  "keywords": [
+    "thomas aquinas",
+    "eternity of the world",
+    "creation",
+    "summa theologiae",
+    "faith and reason"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aquinas, Summa Theologiae, I, q.46, a.2",
+  "source_kind": "book",
+  "reference": "Aquinas, Summa Theologiae I, q.46, a.2, trans. Fathers of the English Dominican Province, Benziger, 1947",
+  "written": "2026-09-26"
+}

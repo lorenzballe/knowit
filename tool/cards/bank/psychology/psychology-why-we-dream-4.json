@@ -1,0 +1,41 @@
+{
+  "id": "psychology-why-we-dream-4",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "also": [
+    "psychology.sleep_and_dreams.sleep_stages"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: dreams happen only during REM sleep?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Since David Foulkes's studies in 1962, sleepers woken from non-REM sleep have regularly reported dreams, usually shorter, vaguer and more thought-like than REM dreams, but dreams all the same. Any theory that explains dreaming purely as REM machinery at work has to account for the dreams REM leaves out.",
+  "move": "Where something happens most is not the only place it happens.",
+  "trap": "Learning that REM is the dreaming stage, and reading it as the only one.",
+  "keywords": [
+    "non-rem sleep",
+    "dream reports",
+    "david foulkes",
+    "rem sleep"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Foulkes, Journal of Abnormal and Social Psychology, 1962",
+  "source_kind": "paper",
+  "reference": "Foulkes, Dream reports from different states of sleep, Journal of Abnormal and Social Psychology, 1962",
+  "written": "2026-09-26"
+}

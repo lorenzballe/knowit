@@ -29,5 +29,8 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "source": "Framing of multi-buy discounts"
+  "figure": "none",
+  "source": "Framing of multi-buy discounts",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
 }

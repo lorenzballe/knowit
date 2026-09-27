@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-doubt-1",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When his own sceptical arguments left David Hume in despair, what cured him?",
+  "answer": "Dinner and a game of backgammon. Reason could not dispel the doubts, Hume wrote in 1739, but nature could: he dined, played, talked and was merry with friends, and after three or four hours the arguments seemed so cold, strained and ridiculous that he could not bring himself to return to them.",
+  "move": "A doubt you cannot live by is a puzzle, not a plan.",
+  "keywords": [
+    "david hume",
+    "scepticism",
+    "backgammon",
+    "treatise of human nature"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hume, A Treatise of Human Nature, 1739",
+  "source_kind": "book",
+  "reference": "Hume, A Treatise of Human Nature 1.4.7, ed. Norton & Norton, Oxford University Press, 2000",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-latin-roots-5",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: sincere comes from Latin sine cera, without wax, the mark of honest sculptors?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The tale: dishonest sculptors filled cracks in marble with wax, so honest work was sold without it. No Latin text supports it. Sincerus meant clean, pure or unmixed, and its origin is uncertain; the wax story is a later folk etymology. It survives on detail: the crack, the wax softening in the sun.",
+  "move": "Each vivid detail in a story is one more thing that must be true.",
+  "trap": "The sculptor story is too specific to feel invented.",
+  "keywords": [
+    "sincere",
+    "sincerus",
+    "folk etymology",
+    "sculptors",
+    "wax"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Online Etymology Dictionary, sincere",
+  "source_kind": "reference_work",
+  "reference": "https://www.etymonline.com/word/sincere",
+  "written": "2026-09-26"
+}

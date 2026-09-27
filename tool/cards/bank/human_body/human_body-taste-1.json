@@ -1,0 +1,36 @@
+{
+  "id": "human_body-taste-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "also": [
+    "food.cooking_science.salt"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a pinch of salt taste pleasant while a mouthful of brine tastes repellent?",
+  "answer": "Because two different sets of cells answer. Low salt enters dedicated taste cells through a sodium channel, ENaC, and reads as pleasant. At high concentrations salt also fires the cells that sense bitter and sour, which drive rejection. Mice lacking those two cell types stopped avoiding strongly salted water.",
+  "move": "When a little pleases and a lot repels, look for a second sensor.",
+  "keywords": [
+    "salt taste",
+    "sodium channel",
+    "taste cells",
+    "aversion",
+    "mice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oka et al., Nature, 2013",
+  "source_kind": "paper",
+  "reference": "Oka, Butnaru, von Buchholtz, Ryba & Zuker, High salt recruits aversive taste pathways, Nature, 2013",
+  "written": "2026-09-26"
+}

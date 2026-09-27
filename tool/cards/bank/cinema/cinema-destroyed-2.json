@@ -1,0 +1,39 @@
+{
+  "id": "cinema-destroyed-2",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Of the American silent features made from 1912 to 1929, what share survives complete in its original 35mm form?",
+  "options": [
+    "About 80%",
+    "About 45%",
+    "About 14%"
+  ],
+  "correct": 2,
+  "answer": "About 14%. A Library of Congress survey of nearly 11,000 features found about 70% entirely lost; most of the rest survive incomplete, in foreign versions or on smaller-gauge copies. The silent era that film histories describe is reconstructed from a small, lucky fraction of what audiences actually saw.",
+  "move": "Before judging a whole era, ask how much of it is left to judge.",
+  "trap": "About 45%: the silent films one hears of all seem to exist.",
+  "keywords": [
+    "silent films",
+    "library of congress",
+    "film survival",
+    "35mm"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Pierce, Library of Congress, 2013",
+  "source_kind": "institution",
+  "reference": "Pierce, The Survival of American Silent Feature Films: 1912–1929, Council on Library and Information Resources and Library of Congress, 2013",
+  "written": "2026-09-26"
+}

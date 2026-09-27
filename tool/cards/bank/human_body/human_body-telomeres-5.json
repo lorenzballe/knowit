@@ -1,0 +1,39 @@
+{
+  "id": "human_body-telomeres-5",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: people who inherit longer telomeres are less likely to develop cancer?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Using gene variants that fix telomere length at conception, which lifestyle cannot confound, a 2017 analysis found longer telomeres raised the risk of several cancers, including melanoma, glioma and lung adenocarcinoma. Longer tips let a cell divide more times before it halts, including a cell on its way to a tumour.",
+  "move": "What travels with good health is not always what produces it.",
+  "trap": "Treating long telomeres as youth, and youth as protection from cancer.",
+  "keywords": [
+    "telomere length",
+    "cancer risk",
+    "mendelian randomisation",
+    "melanoma",
+    "glioma"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haycock et al., JAMA Oncology, 2017",
+  "source_kind": "paper",
+  "reference": "Telomeres Mendelian Randomization Collaboration (Haycock et al.), Association between telomere length and risk of cancer and non-neoplastic diseases: a Mendelian randomization study, JAMA Oncology, 2017",
+  "written": "2026-09-26"
+}

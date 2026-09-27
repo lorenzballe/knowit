@@ -1,0 +1,42 @@
+{
+  "id": "technology-factories-5",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Labour per plane falls to 80% whenever total output doubles. To the nearest percent, what share of the first plane's hours does plane 1,024 take?",
+  "value": 11,
+  "unit": "% of the first plane's hours",
+  "answer": "About 11% of the first plane's hours.",
+  "move": "Improvement per doubling compounds; count the doublings, not the units.",
+  "trap": "Guessing about half, because a 20% cut per doubling sounds modest.",
+  "hint": "Count how many doublings take you from plane 1 to plane 1,024.",
+  "steps": [
+    "1,024 is 2 multiplied by itself 10 times: ten doublings.",
+    "Two doublings leave 0.8 x 0.8 = 0.64.",
+    "Ten doublings leave 0.64 to the fifth power, about 0.107.",
+    "About 11% of the first plane's hours."
+  ],
+  "keywords": [
+    "learning curve",
+    "wright's law",
+    "aircraft production",
+    "labour hours"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Wright, Journal of the Aeronautical Sciences, 1936",
+  "source_kind": "paper",
+  "reference": "Wright, Factors Affecting the Cost of Airplanes, Journal of the Aeronautical Sciences 3(4), 1936",
+  "written": "2026-09-26"
+}

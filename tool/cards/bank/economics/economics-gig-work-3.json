@@ -1,0 +1,40 @@
+{
+  "id": "economics-gig-work-3",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Uber's pay formula ignores the driver's sex. Do male drivers in the United States still earn more per hour?",
+  "options": [
+    "No, pay per hour is equal",
+    "Yes, about 7% more",
+    "Yes, about 30% more"
+  ],
+  "correct": 1,
+  "answer": "Yes, about 7% more. Studying over a million US Uber drivers, Cook and colleagues traced the whole gap to three things: men had more experience on the app, drove in more lucrative places, and drove faster, fitting more trips into an hour. No discrimination was needed. A formula blind to sex still paid by speed.",
+  "move": "A rule that ignores a trait can still pay by what travels with it.",
+  "trap": "Assuming a formula that ignores sex must pay the sexes equally.",
+  "keywords": [
+    "uber",
+    "gender pay gap",
+    "gig economy",
+    "algorithms",
+    "ride-hailing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cook et al., Review of Economic Studies, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1093/restud/rdaa081",
+  "written": "2026-09-26"
+}

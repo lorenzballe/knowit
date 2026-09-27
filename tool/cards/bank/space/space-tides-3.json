@@ -1,0 +1,45 @@
+{
+  "id": "space-tides-3",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Earth is 81 times the Moon's mass and 3.7 times its radius. How many times stronger is Earth's tide on the Moon than the reverse?",
+  "value": 21.9,
+  "unit": "times",
+  "tolerance": 0.2,
+  "answer": "81 / 3.7 ≈ 21.9, so about 22 times.",
+  "move": "Equal forces between two bodies can still do very unequal things.",
+  "trap": "Action equals reaction, so the two tides must be equal.",
+  "hint": "A tide grows with the mass doing the pulling and with the width of the body being stretched.",
+  "steps": [
+    "The heavier puller multiplies the stretch by 81.",
+    "The Moon's smaller width divides it by 3.7.",
+    "81 / 3.7 ≈ 21.9, so about 22 times."
+  ],
+  "keywords": [
+    "tides",
+    "earth-moon system",
+    "tidal stretch",
+    "newton's third law"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murray & Dermott, Solar System Dynamics, 1999",
+  "source_kind": "book",
+  "reference": "Murray & Dermott, Solar System Dynamics, Cambridge University Press, 1999",
+  "written": "2026-09-26"
+}

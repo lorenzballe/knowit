@@ -1,0 +1,32 @@
+{
+  "id": "nature-dinosaurs-2",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were the bird lineages that survived the asteroid impact probably ground-dwellers?",
+  "answer": "Because the forests fell. Fossil pollen shows trees dying back across much of the world after the impact, and fern spores surging over bare ground. Field and colleagues reconstructed the ancestors of every living bird group as ground-living; treetop birds lost their habitat along with their perches.",
+  "move": "In a collapse, what survives is shaped by what it did not depend on.",
+  "keywords": [
+    "birds",
+    "forest collapse",
+    "fern spike",
+    "end-cretaceous extinction"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Field et al., Current Biology, 2018",
+  "source_kind": "paper",
+  "reference": "Field et al., Early evolution of modern birds structured by global forest collapse at the end-Cretaceous mass extinction, Current Biology, 2018",
+  "written": "2026-09-26"
+}
