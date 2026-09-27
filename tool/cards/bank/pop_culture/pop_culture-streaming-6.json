@@ -32,6 +32,9 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
+  "builds_on": [
+    "pop_culture-streaming-2"
+  ],
   "figure": "bars",
   "source": "Netflix, What We Watched report, 2023",
   "source_kind": "company",

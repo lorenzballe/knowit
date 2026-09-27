@@ -3,9 +3,6 @@
   "topic": "pop_culture",
   "genre": "pop_culture.logos_and_brands",
   "strand": "pop_culture.logos_and_brands.swooshes",
-  "also": [
-    "economics.everyday_costs.subscriptions"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
@@ -16,7 +13,7 @@
     "About 30%"
   ],
   "correct": 1,
-  "answer": "About 8%. Nike reported demand creation expense, its name for adverts, endorsement contracts, free kit and brand events, of $4.3 billion against revenue of $51.4 billion. Making and delivering the goods cost far more: about $28 billion. The swoosh is everywhere because the shoes are, not because the budget is vast.",
+  "answer": "About 8%. Nike reported demand creation expense, its name for adverts, endorsement contracts, free kit and brand events, of $4.3 billion against revenue of $51.4 billion. Making and delivering the goods cost far more: about $28.5 billion. The swoosh is everywhere because the shoes are, not because the budget is vast.",
   "move": "How often a name is seen says little about what it spends.",
   "trap": "A brand seen everywhere seems to spend a third of its takings on it.",
   "keywords": [

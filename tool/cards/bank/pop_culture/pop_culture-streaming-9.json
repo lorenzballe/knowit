@@ -10,7 +10,7 @@
   "difficulty": "medium",
   "principle": "estimation",
   "question": "HBO Max reportedly paid $425 million for five years of Friends, 236 episodes. Roughly what is that per episode per year, in thousands of dollars?",
-  "value": 360,
+  "value": 350,
   "unit": "thousand dollars",
   "withinFactor": 3,
   "answer": "$85 million / 240 = about $350 thousand.",

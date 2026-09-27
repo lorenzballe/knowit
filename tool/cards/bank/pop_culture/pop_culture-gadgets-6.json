@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What grew inside the satellite whose failure silenced most American pagers in May 1998?",
-  "answer": "Tin whiskers: hair-thin crystals that sprout from tin-plated parts over years and can bridge two contacts. One was blamed for shorting the main processor of PanAmSat's Galaxy IV; the backup had already failed unnoticed. The satellite drifted out of position, and about 90% of US pagers, some 45 million, went quiet together.",
+  "question": "What most likely grew inside the satellite whose failure silenced most American pagers in May 1998?",
+  "answer": "Tin whiskers: hair-thin crystals that sprout from tin-plated parts over years and can bridge two contacts. Engineers judged them the most likely cause of the short in PanAmSat's Galaxy IV main processor; the backup had already failed unnoticed. About 90% of US pagers, some 45 million, went quiet together.",
   "move": "A backup nobody tests is a single point of failure in disguise.",
   "keywords": [
     "pagers",
@@ -29,8 +29,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "The Irish Times, Galaxy IV report, 1998",
-  "source_kind": "news_archive",
-  "reference": "https://www.irishtimes.com/news/satellite-failure-puts-beepers-out-1.155006",
+  "source": "Leidecker and Brusse, NASA Goddard, 2006",
+  "source_kind": "institution",
+  "reference": "https://nepp.nasa.gov/whisker/reference/tech_papers/2006-Leidecker-Tin-Whisker-Failures.pdf",
   "written": "2026-09-27"
 }

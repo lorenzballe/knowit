@@ -16,7 +16,7 @@
   "hint": "Turn bytes into bits first; the 56 counts bits per second.",
   "steps": [
     "4 MB x 8 bits = 32 megabits, or 32,000 kilobits.",
-    "Real lines gave about 50 kilobits a second, below the 56 on the box.",
+    "Good lines gave about 50 kilobits a second, below the 56 on the box.",
     "32,000 / 50 = 640 seconds.",
     "640 / 60 = about 11 minutes."
   ],

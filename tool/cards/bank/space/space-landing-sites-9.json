@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. SLIM landed about 55 m from its aim point, a record for the Moon at the time, by matching craters below against a map on board. But one of its two main engines lost a nozzle some 50 m up, and the lander tipped onto its nose, its solar cells facing west.",
+  "answer": "True. SLIM landed about 55 m from its aim point, far closer than earlier robotic landers, by matching craters below against a map on board. But one of its two main engines lost a nozzle some 50 m up, and the lander tipped onto its nose, its solar cells facing west.",
   "move": "Hitting the target and landing well are two separate tests.",
   "trap": "Assuming a lander that tipped over must have missed its mark.",
   "keywords": [
@@ -31,8 +31,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Space.com, January 2024",
-  "source_kind": "news_archive",
-  "reference": "https://www.space.com/japan-slim-moon-precise-landing",
+  "source": "JAXA, SLIM landing results, 2024",
+  "source_kind": "institution",
+  "reference": "Japan Aerospace Exploration Agency (JAXA), Smart Lander for Investigating Moon (SLIM): landing results briefing, January 2024",
   "written": "2026-09-27"
 }

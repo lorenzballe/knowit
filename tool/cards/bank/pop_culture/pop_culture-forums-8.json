@@ -10,14 +10,14 @@
   "value": 20.16,
   "unit": "million dollars a year",
   "tolerance": 0.5,
-  "answer": "$1.68 million x 12 = about $20.2 million a year.",
+  "answer": "$1.68 million x 12 = $20.16 million a year.",
   "move": "Multiply a tiny unit price by the real volume before calling it cheap.",
   "trap": "Skipping the per-thousand step and landing a thousand times too high.",
   "hint": "Count the blocks of a thousand calls first, then price a month, then a year.",
   "steps": [
     "7 billion calls / 1,000 = 7 million blocks of 1,000.",
     "7 million x $0.24 = $1.68 million a month.",
-    "$1.68 million x 12 = about $20.2 million a year."
+    "$1.68 million x 12 = $20.16 million a year."
   ],
   "keywords": [
     "reddit",

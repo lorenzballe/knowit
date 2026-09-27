@@ -16,7 +16,7 @@
     "Soil darkened by boots and rover wheels"
   ],
   "correct": 2,
-  "answer": "Soil darkened by boots and rover wheels. Trampling disturbed the pale top layer and exposed darker grains, which absorb more sunlight. Orbital images show the dark paths, and models fit a surface warming of 1.6 to 3.5 °C when the probes went in, seeping downwards for years. The experiment was recording its own footprints.",
+  "answer": "Soil darkened by boots and rover wheels. Trampling disturbed the pale top layer and exposed darker grains, which absorb more sunlight. Orbital images show the dark paths, and models fit a surface warming of a few degrees once the probes went in, seeping downwards for years. The experiment was recording its own footprints.",
   "move": "Before reading a trend, ask what the act of measuring changed.",
   "trap": "Suspecting the instruments, the usual culprit when a probe reads warm.",
   "keywords": [
