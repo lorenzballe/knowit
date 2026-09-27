@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "computation",
-  "question": "Aspirin disables a platelet for its whole life. If a tenth of platelets are replaced each day, how many days until half are new?",
+  "question": "Aspirin disables a platelet for its whole life. Platelets live about 10 days, replaced steadily. How many days until half are new?",
   "value": 5,
   "unit": "days",
   "answer": "50 / 10 = 5 days.",
@@ -14,7 +14,7 @@
   "trap": "Answering in hours, since aspirin itself leaves the blood within an hour.",
   "hint": "Platelets have no nucleus, so a blocked one is never repaired; count replacements.",
   "steps": [
-    "Each day about 10% of platelets are freshly made.",
+    "Platelets live about 10 days, so about 10% are replaced each day, the oldest first.",
     "Half the platelets is 50%.",
     "50 / 10 = 5 days."
   ],

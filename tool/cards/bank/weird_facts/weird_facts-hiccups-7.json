@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Watching a developing fetus by ultrasound, which of these movements appears first?",
+  "question": "Watching a developing foetus by ultrasound, which of these movements appears first?",
   "options": [
     "Breathing movements",
     "Hiccups",
@@ -17,9 +17,9 @@
   "move": "An apparent malfunction may be older than the system it disrupts.",
   "trap": "Choosing breathing, since a hiccup looks like a breath gone wrong.",
   "keywords": [
-    "fetal hiccups",
+    "foetal hiccups",
     "ultrasound",
-    "fetal movements",
+    "foetal movements",
     "pregnancy"
   ],
   "era": "timeless",

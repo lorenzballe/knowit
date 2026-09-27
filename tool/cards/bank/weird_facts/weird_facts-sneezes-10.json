@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "Donna Griffiths sneezed an estimated one million times in the first year of her fit of nearly three years. On average, one sneeze every how many seconds?",
+  "question": "In the first year of a sneezing fit lasting nearly three years, Donna Griffiths sneezed about a million times. One sneeze every how many seconds?",
   "value": 31.5,
   "unit": "seconds",
   "tolerance": 0.5,

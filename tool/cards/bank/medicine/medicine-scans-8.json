@@ -13,7 +13,7 @@
     "About equally often"
   ],
   "correct": 2,
-  "answer": "About equally often. McDonald and colleagues at the Mayo Clinic matched thousands of patients on illness and kidney function and found no difference in kidney injury, dialysis or death. People who need an urgent CT are often very ill, and ill kidneys falter anyway. Caution now centres on patients whose kidneys are already badly failing.",
+  "answer": "About equally often. McDonald and colleagues at the Mayo Clinic matched thousands of patients on illness and kidney function and found no difference in kidney injury; a follow-up found none in dialysis or death. Very ill people need urgent CTs, and ill kidneys falter anyway. Caution now centres on kidneys already badly failing.",
   "move": "Before blaming what came first, ask what brought the person there.",
   "trap": "About twice as often, blaming the dye for injuries that merely followed it.",
   "keywords": [

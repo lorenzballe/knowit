@@ -4,7 +4,7 @@
   "genre": "medicine.medical_history",
   "strand": "medicine.medical_history.barbers",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "confirmation",
   "question": "True or false: the Church council held at Tours in 1163 declared that the Church abhors blood, barring clergy from surgery?",
   "options": [

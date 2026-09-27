@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "availability",
-  "question": "Reviewers read the notes of 2,000 patients who died in English hospitals. What share of those deaths did they judge more likely than not avoidable?",
+  "question": "Reviewers read the notes of thousands of patients who died in English hospitals. What share of deaths did they judge more likely than not avoidable?",
   "options": [
     "About 1 in 3",
     "About 1 in 30",

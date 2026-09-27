@@ -23,7 +23,7 @@
     "seal of cause",
     "whisky"
   ],
-  "era": "medieval",
+  "era": "early_modern",
   "region": "europe",
   "hook": "story",
   "mood": "playful",
@@ -33,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Incorporated Trades of Edinburgh, Surgeons",
-  "source_kind": "institution",
-  "reference": "https://edinburghtrades.co.uk/trades/surgeons/",
+  "source": "Dingwall, A Famous and Flourishing Society, 2005",
+  "source_kind": "book",
+  "reference": "Dingwall, A Famous and Flourishing Society: The History of the Royal College of Surgeons of Edinburgh, 1505-2005, Edinburgh University Press, 2005",
   "written": "2026-09-27"
 }

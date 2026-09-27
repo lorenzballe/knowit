@@ -9,13 +9,13 @@
   "question": "Diagnosed by pressing tender points, fibromyalgia patients were about 90% women. Once symptom questionnaires replaced the pressure test, what did the ratio become?",
   "options": [
     "Still about 9 women to 1 man",
-    "About 2 women to 1 man",
-    "About 1 woman to 1 man"
+    "About 4 women to 1 man",
+    "Under 2 women to 1 man"
   ],
-  "correct": 1,
-  "answer": "About 2 women to 1 man. The 1990 criteria required pain at 11 of 18 pressed points, and women on average feel pressure as pain at lower force. Many men with the same widespread pain never reached 11. The diagnosis had been partly sorting patients by the pressure of a thumb.",
+  "correct": 2,
+  "answer": "Under 2 women to 1 man. The 1990 criteria required pain at 11 of 18 pressed points, and women on average feel pressure as pain at lower force, so many men with the same widespread pain never reached 11. Surveys scored by symptoms narrowed the gap sharply. The diagnosis had partly sorted patients by the pressure of a thumb.",
   "move": "Ask whether the test used to find a group decided who was found.",
-  "trap": "Taking a disease's sex ratio as fixed biology rather than a measurement.",
+  "trap": "Still about 9 to 1, taking the sex ratio as fixed biology.",
   "keywords": [
     "fibromyalgia",
     "tender points",

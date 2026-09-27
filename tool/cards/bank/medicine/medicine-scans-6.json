@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "baseRate",
-  "question": "Enough childhood head CT scans can triple the risk of a later brain tumour. Per 10,000 head scans in under-10s, about how many extra tumours?",
+  "question": "Enough childhood head CT scans can triple later brain tumour risk. Per 10,000 head scans in under-10s, how many extra tumours within ten years?",
   "options": [
     "About 1",
     "About 30",
     "About 300"
   ],
   "correct": 0,
-  "answer": "About 1. Pearce and colleagues followed about 180,000 young people scanned in Britain from 1985 to 2002. A brain dose of about 50 mGy, two or three scans, roughly tripled the risk; but brain tumours in children are so rare that this adds about one case per 10,000 scans within ten years.",
+  "answer": "About 1. Pearce and colleagues followed about 180,000 young people scanned in Britain from 1985 to 2002. A brain dose of about 60 mGy, two or three scans, roughly tripled the risk; but brain tumours in children are so rare that this adds about one case per 10,000 head scans within ten years.",
   "move": "A tripled risk means little until you know how small it started.",
   "trap": "About 300, because a tripled risk sounds like a large share.",
   "keywords": [
@@ -35,6 +35,6 @@
   "figure": "dots",
   "source": "Pearce et al., The Lancet, 2012",
   "source_kind": "paper",
-  "reference": "https://www.ncl.ac.uk/press/articles/archive/2012/06/radiationexposurefromctscansinchildhoodcouldtripletheriskofleukaemia.html",
+  "reference": "Pearce et al., Radiation exposure from CT scans in childhood and subsequent risk of leukaemia and brain tumours: a retrospective cohort study, The Lancet, 2012",
   "written": "2026-09-27"
 }
