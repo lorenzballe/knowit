@@ -1,0 +1,23 @@
+{
+  "name": "astute-functions",
+  "private": true,
+  "description": "What Astute's server does for a reader: reads what they did, works out what they know and like, deals their day, assembles Explore.",
+  "type": "module",
+  "engines": { "node": "22" },
+  "main": "lib/index.js",
+  "scripts": {
+    "data": "cp ../web/cards/cards.json data/bank.json && python3 -c \"import sys,json;sys.path.insert(0,'../tool/cards');import genres;json.dump({t:[{'id':g.id,'label':g.label,'strands':[{'id':s.id,'label':s.label} for s in g.strands]} for g in gl] for t,gl in genres.by_topic().items()},open('data/genres.json','w'),indent=1)\"",
+    "build": "npm run data && tsc",
+    "test": "npm run build && node --test lib/*.test.js",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore",
+    "deploy": "npm run build && firebase deploy --only functions"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.4.0",
+    "firebase-functions": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.0"
+  }
+}

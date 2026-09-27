@@ -1,0 +1,1982 @@
+{
+ "science": [
+  {
+   "id": "science.physics",
+   "label": "Physics",
+   "strands": [
+    {
+     "id": "science.physics.gravity",
+     "label": "Gravity"
+    },
+    {
+     "id": "science.physics.quantum",
+     "label": "Quantum"
+    },
+    {
+     "id": "science.physics.relativity",
+     "label": "Relativity"
+    }
+   ]
+  },
+  {
+   "id": "science.chemistry_at_home",
+   "label": "Chemistry at home",
+   "strands": [
+    {
+     "id": "science.chemistry_at_home.cleaning",
+     "label": "Cleaning"
+    },
+    {
+     "id": "science.chemistry_at_home.cooking_reactions",
+     "label": "Cooking reactions"
+    },
+    {
+     "id": "science.chemistry_at_home.rust",
+     "label": "Rust"
+    }
+   ]
+  },
+  {
+   "id": "science.light_and_colour",
+   "label": "Light and colour",
+   "strands": [
+    {
+     "id": "science.light_and_colour.rainbows",
+     "label": "Rainbows"
+    },
+    {
+     "id": "science.light_and_colour.pigments",
+     "label": "Pigments"
+    },
+    {
+     "id": "science.light_and_colour.lasers",
+     "label": "Lasers"
+    }
+   ]
+  },
+  {
+   "id": "science.cold_and_heat",
+   "label": "Cold and heat",
+   "strands": [
+    {
+     "id": "science.cold_and_heat.absolute_zero",
+     "label": "Absolute zero"
+    },
+    {
+     "id": "science.cold_and_heat.insulation",
+     "label": "Insulation"
+    },
+    {
+     "id": "science.cold_and_heat.fire",
+     "label": "Fire"
+    }
+   ]
+  },
+  {
+   "id": "science.maths_curios",
+   "label": "Maths curios",
+   "strands": [
+    {
+     "id": "science.maths_curios.infinity",
+     "label": "Infinity"
+    },
+    {
+     "id": "science.maths_curios.primes",
+     "label": "Primes"
+    },
+    {
+     "id": "science.maths_curios.probability",
+     "label": "Probability"
+    }
+   ]
+  },
+  {
+   "id": "science.materials",
+   "label": "Materials",
+   "strands": [
+    {
+     "id": "science.materials.glass",
+     "label": "Glass"
+    },
+    {
+     "id": "science.materials.steel",
+     "label": "Steel"
+    },
+    {
+     "id": "science.materials.plastics",
+     "label": "Plastics"
+    }
+   ]
+  }
+ ],
+ "space": [
+  {
+   "id": "space.black_holes",
+   "label": "Black holes",
+   "strands": [
+    {
+     "id": "space.black_holes.event_horizons",
+     "label": "Event horizons"
+    },
+    {
+     "id": "space.black_holes.supermassive_ones",
+     "label": "Supermassive ones"
+    },
+    {
+     "id": "space.black_holes.hawking_radiation",
+     "label": "Hawking radiation"
+    }
+   ]
+  },
+  {
+   "id": "space.the_moon",
+   "label": "The Moon",
+   "strands": [
+    {
+     "id": "space.the_moon.tides",
+     "label": "Tides"
+    },
+    {
+     "id": "space.the_moon.landing_sites",
+     "label": "Landing sites"
+    },
+    {
+     "id": "space.the_moon.moon_dust",
+     "label": "Moon dust"
+    }
+   ]
+  },
+  {
+   "id": "space.mars_and_rovers",
+   "label": "Mars and rovers",
+   "strands": [
+    {
+     "id": "space.mars_and_rovers.perseverance",
+     "label": "Perseverance"
+    },
+    {
+     "id": "space.mars_and_rovers.martian_weather",
+     "label": "Martian weather"
+    },
+    {
+     "id": "space.mars_and_rovers.water_on_mars",
+     "label": "Water on Mars"
+    }
+   ]
+  },
+  {
+   "id": "space.stars_and_light",
+   "label": "Stars and light",
+   "strands": [
+    {
+     "id": "space.stars_and_light.star_death",
+     "label": "Star death"
+    },
+    {
+     "id": "space.stars_and_light.light_years",
+     "label": "Light years"
+    },
+    {
+     "id": "space.stars_and_light.colours_of_stars",
+     "label": "Colours of stars"
+    }
+   ]
+  },
+  {
+   "id": "space.rockets",
+   "label": "Rockets",
+   "strands": [
+    {
+     "id": "space.rockets.reusable_boosters",
+     "label": "Reusable boosters"
+    },
+    {
+     "id": "space.rockets.fuel_chemistry",
+     "label": "Fuel chemistry"
+    },
+    {
+     "id": "space.rockets.launch_windows",
+     "label": "Launch windows"
+    }
+   ]
+  },
+  {
+   "id": "space.edge_of_the_universe",
+   "label": "Edge of the universe",
+   "strands": [
+    {
+     "id": "space.edge_of_the_universe.expansion",
+     "label": "Expansion"
+    },
+    {
+     "id": "space.edge_of_the_universe.dark_matter",
+     "label": "Dark matter"
+    },
+    {
+     "id": "space.edge_of_the_universe.cosmic_background",
+     "label": "Cosmic background"
+    }
+   ]
+  }
+ ],
+ "psychology": [
+  {
+   "id": "psychology.memory",
+   "label": "Memory",
+   "strands": [
+    {
+     "id": "psychology.memory.forgetting_curve",
+     "label": "Forgetting curve"
+    },
+    {
+     "id": "psychology.memory.false_memories",
+     "label": "False memories"
+    },
+    {
+     "id": "psychology.memory.mnemonics",
+     "label": "Mnemonics"
+    }
+   ]
+  },
+  {
+   "id": "psychology.attention",
+   "label": "Attention",
+   "strands": [
+    {
+     "id": "psychology.attention.focus",
+     "label": "Focus"
+    },
+    {
+     "id": "psychology.attention.distraction",
+     "label": "Distraction"
+    },
+    {
+     "id": "psychology.attention.flow",
+     "label": "Flow"
+    }
+   ]
+  },
+  {
+   "id": "psychology.habits",
+   "label": "Habits",
+   "strands": [
+    {
+     "id": "psychology.habits.cues",
+     "label": "Cues"
+    },
+    {
+     "id": "psychology.habits.streaks",
+     "label": "Streaks"
+    },
+    {
+     "id": "psychology.habits.breaking_them",
+     "label": "Breaking them"
+    }
+   ]
+  },
+  {
+   "id": "psychology.emotions",
+   "label": "Emotions",
+   "strands": [
+    {
+     "id": "psychology.emotions.fear",
+     "label": "Fear"
+    },
+    {
+     "id": "psychology.emotions.joy",
+     "label": "Joy"
+    },
+    {
+     "id": "psychology.emotions.why_we_cry",
+     "label": "Why we cry"
+    }
+   ]
+  },
+  {
+   "id": "psychology.bias",
+   "label": "Bias",
+   "strands": [
+    {
+     "id": "psychology.bias.confirmation",
+     "label": "Confirmation"
+    },
+    {
+     "id": "psychology.bias.sunk_cost",
+     "label": "Sunk cost"
+    },
+    {
+     "id": "psychology.bias.halo_effect",
+     "label": "Halo effect"
+    }
+   ]
+  },
+  {
+   "id": "psychology.sleep_and_dreams",
+   "label": "Sleep and dreams",
+   "strands": [
+    {
+     "id": "psychology.sleep_and_dreams.sleep_stages",
+     "label": "Sleep stages"
+    },
+    {
+     "id": "psychology.sleep_and_dreams.why_we_dream",
+     "label": "Why we dream"
+    },
+    {
+     "id": "psychology.sleep_and_dreams.insomnia",
+     "label": "Insomnia"
+    }
+   ]
+  }
+ ],
+ "economics": [
+  {
+   "id": "economics.pricing_tricks",
+   "label": "Pricing tricks",
+   "strands": [
+    {
+     "id": "economics.pricing_tricks.anchoring",
+     "label": "Anchoring"
+    },
+    {
+     "id": "economics.pricing_tricks.charm_prices",
+     "label": "Charm prices"
+    },
+    {
+     "id": "economics.pricing_tricks.decoy_options",
+     "label": "Decoy options"
+    }
+   ]
+  },
+  {
+   "id": "economics.money_and_banks",
+   "label": "Money and banks",
+   "strands": [
+    {
+     "id": "economics.money_and_banks.printing_cash",
+     "label": "Printing cash"
+    },
+    {
+     "id": "economics.money_and_banks.interest",
+     "label": "Interest"
+    },
+    {
+     "id": "economics.money_and_banks.digital_money",
+     "label": "Digital money"
+    }
+   ]
+  },
+  {
+   "id": "economics.work_and_wages",
+   "label": "Work and wages",
+   "strands": [
+    {
+     "id": "economics.work_and_wages.minimum_wage",
+     "label": "Minimum wage"
+    },
+    {
+     "id": "economics.work_and_wages.gig_work",
+     "label": "Gig work"
+    },
+    {
+     "id": "economics.work_and_wages.four_day_week",
+     "label": "Four-day week"
+    }
+   ]
+  },
+  {
+   "id": "economics.trade_routes",
+   "label": "Trade routes",
+   "strands": [
+    {
+     "id": "economics.trade_routes.container_ships",
+     "label": "Container ships"
+    },
+    {
+     "id": "economics.trade_routes.silk_roads",
+     "label": "Silk roads"
+    },
+    {
+     "id": "economics.trade_routes.chokepoints",
+     "label": "Chokepoints"
+    }
+   ]
+  },
+  {
+   "id": "economics.crises",
+   "label": "Crises",
+   "strands": [
+    {
+     "id": "economics.crises.1929",
+     "label": "1929"
+    },
+    {
+     "id": "economics.crises.2008",
+     "label": "2008"
+    },
+    {
+     "id": "economics.crises.hyperinflation",
+     "label": "Hyperinflation"
+    }
+   ]
+  },
+  {
+   "id": "economics.everyday_costs",
+   "label": "Everyday costs",
+   "strands": [
+    {
+     "id": "economics.everyday_costs.rent",
+     "label": "Rent"
+    },
+    {
+     "id": "economics.everyday_costs.groceries",
+     "label": "Groceries"
+    },
+    {
+     "id": "economics.everyday_costs.subscriptions",
+     "label": "Subscriptions"
+    }
+   ]
+  }
+ ],
+ "technology": [
+  {
+   "id": "technology.where_things_come_from",
+   "label": "Where things come from",
+   "strands": [
+    {
+     "id": "technology.where_things_come_from.chips",
+     "label": "Chips"
+    },
+    {
+     "id": "technology.where_things_come_from.rare_metals",
+     "label": "Rare metals"
+    },
+    {
+     "id": "technology.where_things_come_from.factories",
+     "label": "Factories"
+    }
+   ]
+  },
+  {
+   "id": "technology.the_internet",
+   "label": "The internet",
+   "strands": [
+    {
+     "id": "technology.the_internet.cables",
+     "label": "Cables"
+    },
+    {
+     "id": "technology.the_internet.dns",
+     "label": "DNS"
+    },
+    {
+     "id": "technology.the_internet.data_centres",
+     "label": "Data centres"
+    }
+   ]
+  },
+  {
+   "id": "technology.screens",
+   "label": "Screens",
+   "strands": [
+    {
+     "id": "technology.screens.oled",
+     "label": "OLED"
+    },
+    {
+     "id": "technology.screens.refresh_rates",
+     "label": "Refresh rates"
+    },
+    {
+     "id": "technology.screens.touch",
+     "label": "Touch"
+    }
+   ]
+  },
+  {
+   "id": "technology.batteries",
+   "label": "Batteries",
+   "strands": [
+    {
+     "id": "technology.batteries.lithium",
+     "label": "Lithium"
+    },
+    {
+     "id": "technology.batteries.charging",
+     "label": "Charging"
+    },
+    {
+     "id": "technology.batteries.recycling",
+     "label": "Recycling"
+    }
+   ]
+  },
+  {
+   "id": "technology.old_machines",
+   "label": "Old machines",
+   "strands": [
+    {
+     "id": "technology.old_machines.typewriters",
+     "label": "Typewriters"
+    },
+    {
+     "id": "technology.old_machines.telephones",
+     "label": "Telephones"
+    },
+    {
+     "id": "technology.old_machines.mainframes",
+     "label": "Mainframes"
+    }
+   ]
+  },
+  {
+   "id": "technology.ai",
+   "label": "AI",
+   "strands": [
+    {
+     "id": "technology.ai.training",
+     "label": "Training"
+    },
+    {
+     "id": "technology.ai.chatbots",
+     "label": "Chatbots"
+    },
+    {
+     "id": "technology.ai.limits",
+     "label": "Limits"
+    }
+   ]
+  }
+ ],
+ "history": [
+  {
+   "id": "history.ancient_rome",
+   "label": "Ancient Rome",
+   "strands": [
+    {
+     "id": "history.ancient_rome.roads",
+     "label": "Roads"
+    },
+    {
+     "id": "history.ancient_rome.daily_rome",
+     "label": "Daily Rome"
+    },
+    {
+     "id": "history.ancient_rome.the_fall",
+     "label": "The fall"
+    }
+   ]
+  },
+  {
+   "id": "history.middle_ages",
+   "label": "Middle Ages",
+   "strands": [
+    {
+     "id": "history.middle_ages.cathedrals",
+     "label": "Cathedrals"
+    },
+    {
+     "id": "history.middle_ages.plague",
+     "label": "Plague"
+    },
+    {
+     "id": "history.middle_ages.guilds",
+     "label": "Guilds"
+    }
+   ]
+  },
+  {
+   "id": "history.empires",
+   "label": "Empires",
+   "strands": [
+    {
+     "id": "history.empires.ottoman",
+     "label": "Ottoman"
+    },
+    {
+     "id": "history.empires.mongol",
+     "label": "Mongol"
+    },
+    {
+     "id": "history.empires.british",
+     "label": "British"
+    }
+   ]
+  },
+  {
+   "id": "history.everyday_life",
+   "label": "Everyday life",
+   "strands": [
+    {
+     "id": "history.everyday_life.food",
+     "label": "Food"
+    },
+    {
+     "id": "history.everyday_life.clothes",
+     "label": "Clothes"
+    },
+    {
+     "id": "history.everyday_life.hygiene",
+     "label": "Hygiene"
+    }
+   ]
+  },
+  {
+   "id": "history.revolutions",
+   "label": "Revolutions",
+   "strands": [
+    {
+     "id": "history.revolutions.france",
+     "label": "France"
+    },
+    {
+     "id": "history.revolutions.industrial",
+     "label": "Industrial"
+    },
+    {
+     "id": "history.revolutions.1848",
+     "label": "1848"
+    }
+   ]
+  },
+  {
+   "id": "history.maps_and_borders",
+   "label": "Maps and borders",
+   "strands": [
+    {
+     "id": "history.maps_and_borders.straight_lines",
+     "label": "Straight lines"
+    },
+    {
+     "id": "history.maps_and_borders.lost_countries",
+     "label": "Lost countries"
+    },
+    {
+     "id": "history.maps_and_borders.old_maps",
+     "label": "Old maps"
+    }
+   ]
+  }
+ ],
+ "human_body": [
+  {
+   "id": "human_body.the_brain",
+   "label": "The brain",
+   "strands": [
+    {
+     "id": "human_body.the_brain.neurons",
+     "label": "Neurons"
+    },
+    {
+     "id": "human_body.the_brain.left_and_right",
+     "label": "Left and right"
+    },
+    {
+     "id": "human_body.the_brain.plasticity",
+     "label": "Plasticity"
+    }
+   ]
+  },
+  {
+   "id": "human_body.blood_and_heart",
+   "label": "Blood and heart",
+   "strands": [
+    {
+     "id": "human_body.blood_and_heart.blood_types",
+     "label": "Blood types"
+    },
+    {
+     "id": "human_body.blood_and_heart.heartbeat",
+     "label": "Heartbeat"
+    },
+    {
+     "id": "human_body.blood_and_heart.circulation",
+     "label": "Circulation"
+    }
+   ]
+  },
+  {
+   "id": "human_body.skin_and_bone",
+   "label": "Skin and bone",
+   "strands": [
+    {
+     "id": "human_body.skin_and_bone.healing",
+     "label": "Healing"
+    },
+    {
+     "id": "human_body.skin_and_bone.fingerprints",
+     "label": "Fingerprints"
+    },
+    {
+     "id": "human_body.skin_and_bone.bone_strength",
+     "label": "Bone strength"
+    }
+   ]
+  },
+  {
+   "id": "human_body.senses",
+   "label": "Senses",
+   "strands": [
+    {
+     "id": "human_body.senses.taste",
+     "label": "Taste"
+    },
+    {
+     "id": "human_body.senses.smell",
+     "label": "Smell"
+    },
+    {
+     "id": "human_body.senses.balance",
+     "label": "Balance"
+    }
+   ]
+  },
+  {
+   "id": "human_body.gut",
+   "label": "Gut",
+   "strands": [
+    {
+     "id": "human_body.gut.microbiome",
+     "label": "Microbiome"
+    },
+    {
+     "id": "human_body.gut.digestion",
+     "label": "Digestion"
+    },
+    {
+     "id": "human_body.gut.gut_and_mood",
+     "label": "Gut and mood"
+    }
+   ]
+  },
+  {
+   "id": "human_body.ageing",
+   "label": "Ageing",
+   "strands": [
+    {
+     "id": "human_body.ageing.telomeres",
+     "label": "Telomeres"
+    },
+    {
+     "id": "human_body.ageing.grey_hair",
+     "label": "Grey hair"
+    },
+    {
+     "id": "human_body.ageing.longevity",
+     "label": "Longevity"
+    }
+   ]
+  }
+ ],
+ "philosophy": [
+  {
+   "id": "philosophy.ethics",
+   "label": "Ethics",
+   "strands": [
+    {
+     "id": "philosophy.ethics.trolley_problems",
+     "label": "Trolley problems"
+    },
+    {
+     "id": "philosophy.ethics.duty",
+     "label": "Duty"
+    },
+    {
+     "id": "philosophy.ethics.virtue",
+     "label": "Virtue"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.knowledge",
+   "label": "Knowledge",
+   "strands": [
+    {
+     "id": "philosophy.knowledge.certainty",
+     "label": "Certainty"
+    },
+    {
+     "id": "philosophy.knowledge.science",
+     "label": "Science"
+    },
+    {
+     "id": "philosophy.knowledge.doubt",
+     "label": "Doubt"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.time",
+   "label": "Time",
+   "strands": [
+    {
+     "id": "philosophy.time.arrow_of_time",
+     "label": "Arrow of time"
+    },
+    {
+     "id": "philosophy.time.presentism",
+     "label": "Presentism"
+    },
+    {
+     "id": "philosophy.time.eternity",
+     "label": "Eternity"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.free_will",
+   "label": "Free will",
+   "strands": [
+    {
+     "id": "philosophy.free_will.determinism",
+     "label": "Determinism"
+    },
+    {
+     "id": "philosophy.free_will.choice",
+     "label": "Choice"
+    },
+    {
+     "id": "philosophy.free_will.responsibility",
+     "label": "Responsibility"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.ancient_thinkers",
+   "label": "Ancient thinkers",
+   "strands": [
+    {
+     "id": "philosophy.ancient_thinkers.socrates",
+     "label": "Socrates"
+    },
+    {
+     "id": "philosophy.ancient_thinkers.stoics",
+     "label": "Stoics"
+    },
+    {
+     "id": "philosophy.ancient_thinkers.eastern",
+     "label": "Eastern"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.paradoxes",
+   "label": "Paradoxes",
+   "strands": [
+    {
+     "id": "philosophy.paradoxes.ship_of_theseus",
+     "label": "Ship of Theseus"
+    },
+    {
+     "id": "philosophy.paradoxes.zeno",
+     "label": "Zeno"
+    },
+    {
+     "id": "philosophy.paradoxes.liar",
+     "label": "Liar"
+    }
+   ]
+  }
+ ],
+ "pop_culture": [
+  {
+   "id": "pop_culture.logos_and_brands",
+   "label": "Logos and brands",
+   "strands": [
+    {
+     "id": "pop_culture.logos_and_brands.swooshes",
+     "label": "Swooshes"
+    },
+    {
+     "id": "pop_culture.logos_and_brands.rebrands",
+     "label": "Rebrands"
+    },
+    {
+     "id": "pop_culture.logos_and_brands.colours",
+     "label": "Colours"
+    }
+   ]
+  },
+  {
+   "id": "pop_culture.internet_culture",
+   "label": "Internet culture",
+   "strands": [
+    {
+     "id": "pop_culture.internet_culture.memes",
+     "label": "Memes"
+    },
+    {
+     "id": "pop_culture.internet_culture.forums",
+     "label": "Forums"
+    },
+    {
+     "id": "pop_culture.internet_culture.virality",
+     "label": "Virality"
+    }
+   ]
+  },
+  {
+   "id": "pop_culture.fashion",
+   "label": "Fashion",
+   "strands": [
+    {
+     "id": "pop_culture.fashion.denim",
+     "label": "Denim"
+    },
+    {
+     "id": "pop_culture.fashion.sneakers",
+     "label": "Sneakers"
+    },
+    {
+     "id": "pop_culture.fashion.fast_fashion",
+     "label": "Fast fashion"
+    }
+   ]
+  },
+  {
+   "id": "pop_culture.tv",
+   "label": "TV",
+   "strands": [
+    {
+     "id": "pop_culture.tv.sitcoms",
+     "label": "Sitcoms"
+    },
+    {
+     "id": "pop_culture.tv.reality",
+     "label": "Reality"
+    },
+    {
+     "id": "pop_culture.tv.streaming",
+     "label": "Streaming"
+    }
+   ]
+  },
+  {
+   "id": "pop_culture.fame",
+   "label": "Fame",
+   "strands": [
+    {
+     "id": "pop_culture.fame.celebrity",
+     "label": "Celebrity"
+    },
+    {
+     "id": "pop_culture.fame.tabloids",
+     "label": "Tabloids"
+    },
+    {
+     "id": "pop_culture.fame.fan_clubs",
+     "label": "Fan clubs"
+    }
+   ]
+  },
+  {
+   "id": "pop_culture.nineties",
+   "label": "Nineties",
+   "strands": [
+    {
+     "id": "pop_culture.nineties.gadgets",
+     "label": "Gadgets"
+    },
+    {
+     "id": "pop_culture.nineties.music",
+     "label": "Music"
+    },
+    {
+     "id": "pop_culture.nineties.style",
+     "label": "Style"
+    }
+   ]
+  }
+ ],
+ "nature": [
+  {
+   "id": "nature.trees_and_forests",
+   "label": "Trees and forests",
+   "strands": [
+    {
+     "id": "nature.trees_and_forests.root_networks",
+     "label": "Root networks"
+    },
+    {
+     "id": "nature.trees_and_forests.ancient_trees",
+     "label": "Ancient trees"
+    },
+    {
+     "id": "nature.trees_and_forests.rainforests",
+     "label": "Rainforests"
+    }
+   ]
+  },
+  {
+   "id": "nature.animal_senses",
+   "label": "Animal senses",
+   "strands": [
+    {
+     "id": "nature.animal_senses.echolocation",
+     "label": "Echolocation"
+    },
+    {
+     "id": "nature.animal_senses.magnetic_sense",
+     "label": "Magnetic sense"
+    },
+    {
+     "id": "nature.animal_senses.night_vision",
+     "label": "Night vision"
+    }
+   ]
+  },
+  {
+   "id": "nature.oceans",
+   "label": "Oceans",
+   "strands": [
+    {
+     "id": "nature.oceans.deep_sea",
+     "label": "Deep sea"
+    },
+    {
+     "id": "nature.oceans.currents",
+     "label": "Currents"
+    },
+    {
+     "id": "nature.oceans.coral",
+     "label": "Coral"
+    }
+   ]
+  },
+  {
+   "id": "nature.weather",
+   "label": "Weather",
+   "strands": [
+    {
+     "id": "nature.weather.storms",
+     "label": "Storms"
+    },
+    {
+     "id": "nature.weather.clouds",
+     "label": "Clouds"
+    },
+    {
+     "id": "nature.weather.forecasting",
+     "label": "Forecasting"
+    }
+   ]
+  },
+  {
+   "id": "nature.insects",
+   "label": "Insects",
+   "strands": [
+    {
+     "id": "nature.insects.bees",
+     "label": "Bees"
+    },
+    {
+     "id": "nature.insects.ants",
+     "label": "Ants"
+    },
+    {
+     "id": "nature.insects.migration",
+     "label": "Migration"
+    }
+   ]
+  },
+  {
+   "id": "nature.extinction",
+   "label": "Extinction",
+   "strands": [
+    {
+     "id": "nature.extinction.dinosaurs",
+     "label": "Dinosaurs"
+    },
+    {
+     "id": "nature.extinction.recent_losses",
+     "label": "Recent losses"
+    },
+    {
+     "id": "nature.extinction.bringing_back",
+     "label": "Bringing back"
+    }
+   ]
+  }
+ ],
+ "language": [
+  {
+   "id": "language.word_origins",
+   "label": "Word origins",
+   "strands": [
+    {
+     "id": "language.word_origins.latin_roots",
+     "label": "Latin roots"
+    },
+    {
+     "id": "language.word_origins.borrowed_words",
+     "label": "Borrowed words"
+    },
+    {
+     "id": "language.word_origins.brand_names",
+     "label": "Brand names"
+    }
+   ]
+  },
+  {
+   "id": "language.writing_systems",
+   "label": "Writing systems",
+   "strands": [
+    {
+     "id": "language.writing_systems.alphabets",
+     "label": "Alphabets"
+    },
+    {
+     "id": "language.writing_systems.chinese_characters",
+     "label": "Chinese characters"
+    },
+    {
+     "id": "language.writing_systems.lost_scripts",
+     "label": "Lost scripts"
+    }
+   ]
+  },
+  {
+   "id": "language.accents",
+   "label": "Accents",
+   "strands": [
+    {
+     "id": "language.accents.how_they_form",
+     "label": "How they form"
+    },
+    {
+     "id": "language.accents.dialects",
+     "label": "Dialects"
+    },
+    {
+     "id": "language.accents.prestige_accents",
+     "label": "Prestige accents"
+    }
+   ]
+  },
+  {
+   "id": "language.untranslatable_words",
+   "label": "Untranslatable words",
+   "strands": [
+    {
+     "id": "language.untranslatable_words.japanese",
+     "label": "Japanese"
+    },
+    {
+     "id": "language.untranslatable_words.nordic",
+     "label": "Nordic"
+    },
+    {
+     "id": "language.untranslatable_words.italian",
+     "label": "Italian"
+    }
+   ]
+  },
+  {
+   "id": "language.grammar_oddities",
+   "label": "Grammar oddities",
+   "strands": [
+    {
+     "id": "language.grammar_oddities.irregular_verbs",
+     "label": "Irregular verbs"
+    },
+    {
+     "id": "language.grammar_oddities.double_negatives",
+     "label": "Double negatives"
+    },
+    {
+     "id": "language.grammar_oddities.gendered_nouns",
+     "label": "Gendered nouns"
+    }
+   ]
+  },
+  {
+   "id": "language.slang",
+   "label": "Slang",
+   "strands": [
+    {
+     "id": "language.slang.internet_slang",
+     "label": "Internet slang"
+    },
+    {
+     "id": "language.slang.regional_slang",
+     "label": "Regional slang"
+    },
+    {
+     "id": "language.slang.old_slang",
+     "label": "Old slang"
+    }
+   ]
+  }
+ ],
+ "weird_facts": [
+  {
+   "id": "weird_facts.animal_oddities",
+   "label": "Animal oddities",
+   "strands": [
+    {
+     "id": "weird_facts.animal_oddities.wombats",
+     "label": "Wombats"
+    },
+    {
+     "id": "weird_facts.animal_oddities.octopuses",
+     "label": "Octopuses"
+    },
+    {
+     "id": "weird_facts.animal_oddities.axolotls",
+     "label": "Axolotls"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.records",
+   "label": "Records",
+   "strands": [
+    {
+     "id": "weird_facts.records.tallest",
+     "label": "Tallest"
+    },
+    {
+     "id": "weird_facts.records.fastest",
+     "label": "Fastest"
+    },
+    {
+     "id": "weird_facts.records.oldest",
+     "label": "Oldest"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.strange_laws",
+   "label": "Strange laws",
+   "strands": [
+    {
+     "id": "weird_facts.strange_laws.still_on_the_books",
+     "label": "Still on the books"
+    },
+    {
+     "id": "weird_facts.strange_laws.local_bans",
+     "label": "Local bans"
+    },
+    {
+     "id": "weird_facts.strange_laws.odd_fines",
+     "label": "Odd fines"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.coincidences",
+   "label": "Coincidences",
+   "strands": [
+    {
+     "id": "weird_facts.coincidences.twins",
+     "label": "Twins"
+    },
+    {
+     "id": "weird_facts.coincidences.dates",
+     "label": "Dates"
+    },
+    {
+     "id": "weird_facts.coincidences.names",
+     "label": "Names"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.body_oddities",
+   "label": "Body oddities",
+   "strands": [
+    {
+     "id": "weird_facts.body_oddities.hiccups",
+     "label": "Hiccups"
+    },
+    {
+     "id": "weird_facts.body_oddities.sneezes",
+     "label": "Sneezes"
+    },
+    {
+     "id": "weird_facts.body_oddities.goosebumps",
+     "label": "Goosebumps"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.odd_places",
+   "label": "Odd places",
+   "strands": [
+    {
+     "id": "weird_facts.odd_places.ghost_towns",
+     "label": "Ghost towns"
+    },
+    {
+     "id": "weird_facts.odd_places.tiny_nations",
+     "label": "Tiny nations"
+    },
+    {
+     "id": "weird_facts.odd_places.extreme_spots",
+     "label": "Extreme spots"
+    }
+   ]
+  }
+ ],
+ "sport": [
+  {
+   "id": "sport.rules_and_why",
+   "label": "Rules and why",
+   "strands": [
+    {
+     "id": "sport.rules_and_why.offside",
+     "label": "Offside"
+    },
+    {
+     "id": "sport.rules_and_why.fouls",
+     "label": "Fouls"
+    },
+    {
+     "id": "sport.rules_and_why.scoring",
+     "label": "Scoring"
+    }
+   ]
+  },
+  {
+   "id": "sport.records",
+   "label": "Records",
+   "strands": [
+    {
+     "id": "sport.records.sprint",
+     "label": "Sprint"
+    },
+    {
+     "id": "sport.records.marathon",
+     "label": "Marathon"
+    },
+    {
+     "id": "sport.records.swimming",
+     "label": "Swimming"
+    }
+   ]
+  },
+  {
+   "id": "sport.training",
+   "label": "Training",
+   "strands": [
+    {
+     "id": "sport.training.recovery",
+     "label": "Recovery"
+    },
+    {
+     "id": "sport.training.altitude",
+     "label": "Altitude"
+    },
+    {
+     "id": "sport.training.diet",
+     "label": "Diet"
+    }
+   ]
+  },
+  {
+   "id": "sport.equipment",
+   "label": "Equipment",
+   "strands": [
+    {
+     "id": "sport.equipment.shoes",
+     "label": "Shoes"
+    },
+    {
+     "id": "sport.equipment.balls",
+     "label": "Balls"
+    },
+    {
+     "id": "sport.equipment.suits",
+     "label": "Suits"
+    }
+   ]
+  },
+  {
+   "id": "sport.olympics",
+   "label": "Olympics",
+   "strands": [
+    {
+     "id": "sport.olympics.ancient",
+     "label": "Ancient"
+    },
+    {
+     "id": "sport.olympics.modern",
+     "label": "Modern"
+    },
+    {
+     "id": "sport.olympics.hosting",
+     "label": "Hosting"
+    }
+   ]
+  },
+  {
+   "id": "sport.tactics",
+   "label": "Tactics",
+   "strands": [
+    {
+     "id": "sport.tactics.formations",
+     "label": "Formations"
+    },
+    {
+     "id": "sport.tactics.set_pieces",
+     "label": "Set pieces"
+    },
+    {
+     "id": "sport.tactics.coaching",
+     "label": "Coaching"
+    }
+   ]
+  }
+ ],
+ "cinema": [
+  {
+   "id": "cinema.how_films_are_made",
+   "label": "How films are made",
+   "strands": [
+    {
+     "id": "cinema.how_films_are_made.editing",
+     "label": "Editing"
+    },
+    {
+     "id": "cinema.how_films_are_made.lighting",
+     "label": "Lighting"
+    },
+    {
+     "id": "cinema.how_films_are_made.budgets",
+     "label": "Budgets"
+    }
+   ]
+  },
+  {
+   "id": "cinema.directors",
+   "label": "Directors",
+   "strands": [
+    {
+     "id": "cinema.directors.kubrick",
+     "label": "Kubrick"
+    },
+    {
+     "id": "cinema.directors.hitchcock",
+     "label": "Hitchcock"
+    },
+    {
+     "id": "cinema.directors.new_wave",
+     "label": "New wave"
+    }
+   ]
+  },
+  {
+   "id": "cinema.special_effects",
+   "label": "Special effects",
+   "strands": [
+    {
+     "id": "cinema.special_effects.practical",
+     "label": "Practical"
+    },
+    {
+     "id": "cinema.special_effects.cgi",
+     "label": "CGI"
+    },
+    {
+     "id": "cinema.special_effects.miniatures",
+     "label": "Miniatures"
+    }
+   ]
+  },
+  {
+   "id": "cinema.sound_design",
+   "label": "Sound design",
+   "strands": [
+    {
+     "id": "cinema.sound_design.foley",
+     "label": "Foley"
+    },
+    {
+     "id": "cinema.sound_design.silence",
+     "label": "Silence"
+    },
+    {
+     "id": "cinema.sound_design.music_cues",
+     "label": "Music cues"
+    }
+   ]
+  },
+  {
+   "id": "cinema.box_office",
+   "label": "Box office",
+   "strands": [
+    {
+     "id": "cinema.box_office.flops",
+     "label": "Flops"
+    },
+    {
+     "id": "cinema.box_office.hits",
+     "label": "Hits"
+    },
+    {
+     "id": "cinema.box_office.marketing",
+     "label": "Marketing"
+    }
+   ]
+  },
+  {
+   "id": "cinema.lost_films",
+   "label": "Lost films",
+   "strands": [
+    {
+     "id": "cinema.lost_films.destroyed",
+     "label": "Destroyed"
+    },
+    {
+     "id": "cinema.lost_films.rediscovered",
+     "label": "Rediscovered"
+    },
+    {
+     "id": "cinema.lost_films.unfinished",
+     "label": "Unfinished"
+    }
+   ]
+  }
+ ],
+ "music": [
+  {
+   "id": "music.why_songs_work",
+   "label": "Why songs work",
+   "strands": [
+    {
+     "id": "music.why_songs_work.hooks",
+     "label": "Hooks"
+    },
+    {
+     "id": "music.why_songs_work.chord_loops",
+     "label": "Chord loops"
+    },
+    {
+     "id": "music.why_songs_work.rhythm",
+     "label": "Rhythm"
+    }
+   ]
+  },
+  {
+   "id": "music.instruments",
+   "label": "Instruments",
+   "strands": [
+    {
+     "id": "music.instruments.piano",
+     "label": "Piano"
+    },
+    {
+     "id": "music.instruments.guitar",
+     "label": "Guitar"
+    },
+    {
+     "id": "music.instruments.strange_ones",
+     "label": "Strange ones"
+    }
+   ]
+  },
+  {
+   "id": "music.studio_tricks",
+   "label": "Studio tricks",
+   "strands": [
+    {
+     "id": "music.studio_tricks.reverb",
+     "label": "Reverb"
+    },
+    {
+     "id": "music.studio_tricks.autotune",
+     "label": "Autotune"
+    },
+    {
+     "id": "music.studio_tricks.layering",
+     "label": "Layering"
+    }
+   ]
+  },
+  {
+   "id": "music.genres",
+   "label": "Genres",
+   "strands": [
+    {
+     "id": "music.genres.jazz",
+     "label": "Jazz"
+    },
+    {
+     "id": "music.genres.techno",
+     "label": "Techno"
+    },
+    {
+     "id": "music.genres.folk",
+     "label": "Folk"
+    }
+   ]
+  },
+  {
+   "id": "music.composers",
+   "label": "Composers",
+   "strands": [
+    {
+     "id": "music.composers.bach",
+     "label": "Bach"
+    },
+    {
+     "id": "music.composers.mozart",
+     "label": "Mozart"
+    },
+    {
+     "id": "music.composers.film_scores",
+     "label": "Film scores"
+    }
+   ]
+  },
+  {
+   "id": "music.sound_itself",
+   "label": "Sound itself",
+   "strands": [
+    {
+     "id": "music.sound_itself.frequencies",
+     "label": "Frequencies"
+    },
+    {
+     "id": "music.sound_itself.acoustics",
+     "label": "Acoustics"
+    },
+    {
+     "id": "music.sound_itself.silence",
+     "label": "Silence"
+    }
+   ]
+  }
+ ],
+ "art": [
+  {
+   "id": "art.colour_and_pigment",
+   "label": "Colour and pigment",
+   "strands": [
+    {
+     "id": "art.colour_and_pigment.ultramarine",
+     "label": "Ultramarine"
+    },
+    {
+     "id": "art.colour_and_pigment.mummy_brown",
+     "label": "Mummy brown"
+    },
+    {
+     "id": "art.colour_and_pigment.synthetics",
+     "label": "Synthetics"
+    }
+   ]
+  },
+  {
+   "id": "art.renaissance",
+   "label": "Renaissance",
+   "strands": [
+    {
+     "id": "art.renaissance.florence",
+     "label": "Florence"
+    },
+    {
+     "id": "art.renaissance.patrons",
+     "label": "Patrons"
+    },
+    {
+     "id": "art.renaissance.perspective",
+     "label": "Perspective"
+    }
+   ]
+  },
+  {
+   "id": "art.modern_art",
+   "label": "Modern art",
+   "strands": [
+    {
+     "id": "art.modern_art.cubism",
+     "label": "Cubism"
+    },
+    {
+     "id": "art.modern_art.abstraction",
+     "label": "Abstraction"
+    },
+    {
+     "id": "art.modern_art.pop",
+     "label": "Pop"
+    }
+   ]
+  },
+  {
+   "id": "art.sculpture",
+   "label": "Sculpture",
+   "strands": [
+    {
+     "id": "art.sculpture.marble",
+     "label": "Marble"
+    },
+    {
+     "id": "art.sculpture.bronze",
+     "label": "Bronze"
+    },
+    {
+     "id": "art.sculpture.lost_colour",
+     "label": "Lost colour"
+    }
+   ]
+  },
+  {
+   "id": "art.photography",
+   "label": "Photography",
+   "strands": [
+    {
+     "id": "art.photography.first_photos",
+     "label": "First photos"
+    },
+    {
+     "id": "art.photography.darkroom",
+     "label": "Darkroom"
+    },
+    {
+     "id": "art.photography.digital",
+     "label": "Digital"
+    }
+   ]
+  },
+  {
+   "id": "art.forgeries",
+   "label": "Forgeries",
+   "strands": [
+    {
+     "id": "art.forgeries.famous_fakes",
+     "label": "Famous fakes"
+    },
+    {
+     "id": "art.forgeries.detection",
+     "label": "Detection"
+    },
+    {
+     "id": "art.forgeries.motives",
+     "label": "Motives"
+    }
+   ]
+  }
+ ],
+ "medicine": [
+  {
+   "id": "medicine.vaccines",
+   "label": "Vaccines",
+   "strands": [
+    {
+     "id": "medicine.vaccines.how_they_work",
+     "label": "How they work"
+    },
+    {
+     "id": "medicine.vaccines.cold_chain",
+     "label": "Cold chain"
+    },
+    {
+     "id": "medicine.vaccines.doubt",
+     "label": "Doubt"
+    }
+   ]
+  },
+  {
+   "id": "medicine.antibiotics",
+   "label": "Antibiotics",
+   "strands": [
+    {
+     "id": "medicine.antibiotics.penicillin",
+     "label": "Penicillin"
+    },
+    {
+     "id": "medicine.antibiotics.resistance",
+     "label": "Resistance"
+    },
+    {
+     "id": "medicine.antibiotics.new_ones",
+     "label": "New ones"
+    }
+   ]
+  },
+  {
+   "id": "medicine.surgery",
+   "label": "Surgery",
+   "strands": [
+    {
+     "id": "medicine.surgery.anaesthesia",
+     "label": "Anaesthesia"
+    },
+    {
+     "id": "medicine.surgery.transplants",
+     "label": "Transplants"
+    },
+    {
+     "id": "medicine.surgery.robots",
+     "label": "Robots"
+    }
+   ]
+  },
+  {
+   "id": "medicine.pain",
+   "label": "Pain",
+   "strands": [
+    {
+     "id": "medicine.pain.chronic",
+     "label": "Chronic"
+    },
+    {
+     "id": "medicine.pain.painkillers",
+     "label": "Painkillers"
+    },
+    {
+     "id": "medicine.pain.placebo",
+     "label": "Placebo"
+    }
+   ]
+  },
+  {
+   "id": "medicine.diagnosis",
+   "label": "Diagnosis",
+   "strands": [
+    {
+     "id": "medicine.diagnosis.scans",
+     "label": "Scans"
+    },
+    {
+     "id": "medicine.diagnosis.blood_tests",
+     "label": "Blood tests"
+    },
+    {
+     "id": "medicine.diagnosis.symptoms",
+     "label": "Symptoms"
+    }
+   ]
+  },
+  {
+   "id": "medicine.medical_history",
+   "label": "Medical history",
+   "strands": [
+    {
+     "id": "medicine.medical_history.barbers",
+     "label": "Barbers"
+    },
+    {
+     "id": "medicine.medical_history.germ_theory",
+     "label": "Germ theory"
+    },
+    {
+     "id": "medicine.medical_history.hospitals",
+     "label": "Hospitals"
+    }
+   ]
+  }
+ ],
+ "food": [
+  {
+   "id": "food.bread_and_baking",
+   "label": "Bread and baking",
+   "strands": [
+    {
+     "id": "food.bread_and_baking.sourdough",
+     "label": "Sourdough"
+    },
+    {
+     "id": "food.bread_and_baking.yeast",
+     "label": "Yeast"
+    },
+    {
+     "id": "food.bread_and_baking.crust",
+     "label": "Crust"
+    }
+   ]
+  },
+  {
+   "id": "food.coffee",
+   "label": "Coffee",
+   "strands": [
+    {
+     "id": "food.coffee.roasting",
+     "label": "Roasting"
+    },
+    {
+     "id": "food.coffee.espresso",
+     "label": "Espresso"
+    },
+    {
+     "id": "food.coffee.origins",
+     "label": "Origins"
+    }
+   ]
+  },
+  {
+   "id": "food.fermentation",
+   "label": "Fermentation",
+   "strands": [
+    {
+     "id": "food.fermentation.cheese",
+     "label": "Cheese"
+    },
+    {
+     "id": "food.fermentation.kimchi",
+     "label": "Kimchi"
+    },
+    {
+     "id": "food.fermentation.beer",
+     "label": "Beer"
+    }
+   ]
+  },
+  {
+   "id": "food.spices",
+   "label": "Spices",
+   "strands": [
+    {
+     "id": "food.spices.pepper",
+     "label": "Pepper"
+    },
+    {
+     "id": "food.spices.saffron",
+     "label": "Saffron"
+    },
+    {
+     "id": "food.spices.chilli",
+     "label": "Chilli"
+    }
+   ]
+  },
+  {
+   "id": "food.cooking_science",
+   "label": "Cooking science",
+   "strands": [
+    {
+     "id": "food.cooking_science.maillard",
+     "label": "Maillard"
+    },
+    {
+     "id": "food.cooking_science.emulsions",
+     "label": "Emulsions"
+    },
+    {
+     "id": "food.cooking_science.salt",
+     "label": "Salt"
+    }
+   ]
+  },
+  {
+   "id": "food.food_history",
+   "label": "Food history",
+   "strands": [
+    {
+     "id": "food.food_history.pasta",
+     "label": "Pasta"
+    },
+    {
+     "id": "food.food_history.sugar",
+     "label": "Sugar"
+    },
+    {
+     "id": "food.food_history.potatoes",
+     "label": "Potatoes"
+    }
+   ]
+  }
+ ]
+}
