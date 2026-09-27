@@ -1,0 +1,40 @@
+{
+  "id": "art-marble-9",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By weight, what becomes of most of the stone cut from Carrara's marble quarries today?",
+  "options": [
+    "Sawn slabs for floors and walls",
+    "Blocks for sculptors' studios",
+    "Ground calcium carbonate powder"
+  ],
+  "correct": 2,
+  "answer": "Ground calcium carbonate powder. Only sound, fault-free blocks can be sawn, and freeing them from a mountain shatters far more rock than it frees. Estimates range, but around three quarters of what leaves the quarries goes to crushing plants, ending up in paper, paint, plastics and toothpaste. Michelangelo's mountain is mostly sold by the sack.",
+  "move": "Ask where the bulk goes, not where the showpiece goes.",
+  "trap": "Picturing statues and worktops, the uses of marble everyone has seen.",
+  "keywords": [
+    "carrara",
+    "quarrying",
+    "calcium carbonate",
+    "quarry waste",
+    "apuan alps"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "The Dial, The Curse of Carrara Marble",
+  "source_kind": "news_archive",
+  "reference": "https://www.thedial.world/articles/news/issue-30/carrara-marble-mining",
+  "written": "2026-09-27"
+}

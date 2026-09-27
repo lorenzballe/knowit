@@ -1,0 +1,32 @@
+{
+  "id": "music-hooks-10",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many recent pop hits credit five or more songwriters?",
+  "answer": "Because of track-and-hook writing. A producer builds the instrumental first; several topliners, writers of melody and words, then try hooks over it, and each hook that survives earns its writer a credit. John Seabrook describes Ester Dean improvising syllables over a beat until a phrase stuck. A chorus gets auditioned like an actor.",
+  "move": "Many names on a result can mean many tries, not many hands.",
+  "keywords": [
+    "track and hook",
+    "topliners",
+    "songwriting credits",
+    "ester dean"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seabrook, The Song Machine, 2015",
+  "source_kind": "book",
+  "reference": "Seabrook, The Song Machine: Inside the Hit Factory, W. W. Norton, 2015",
+  "written": "2026-09-27"
+}

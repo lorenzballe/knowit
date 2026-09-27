@@ -1,0 +1,42 @@
+{
+  "id": "art-marble-7",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A marble figure is copied at exactly twice the height. By what factor does the pressure on its ankles rise?",
+  "value": 2,
+  "unit": "times",
+  "answer": "Pressure is weight over area: 8 / 4 = 2 times.",
+  "move": "Scale a thing up and it grows heavier faster than it grows stronger.",
+  "trap": "Answering eight, the weight, and forgetting the ankles thicken too.",
+  "hint": "Compare how the weight and the area carrying it each grow with size.",
+  "steps": [
+    "Weight grows with volume: 2 × 2 × 2 = 8 times heavier.",
+    "The ankles' cross-section grows with area: 2 × 2 = 4 times larger.",
+    "Pressure is weight over area: 8 / 4 = 2 times."
+  ],
+  "keywords": [
+    "square-cube law",
+    "marble statues",
+    "ankles",
+    "scaling",
+    "stress"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galileo, Two New Sciences, 1638",
+  "source_kind": "book",
+  "reference": "Galileo Galilei, Dialogues Concerning Two New Sciences, trans. Henry Crew & Alfonso de Salvio, Macmillan, 1914",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "music-hooks-7",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "also": [
+    "psychology.attention.distraction"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In a 2015 experiment, which activity cut how often a just-heard song replayed in people's heads?",
+  "options": [
+    "Tapping a finger steadily",
+    "Chewing gum",
+    "Sitting still with eyes closed"
+  ],
+  "correct": 1,
+  "answer": "Chewing gum. Philip Beaman's team at Reading played people catchy songs, then had them count how often the tune came back: gum cut both the wanted and the unwanted replays, and finger tapping, the control for plain busyness, did not match it. Inner singing seems to borrow the speech muscles. A busy jaw leaves the inner voice without a mouth.",
+  "move": "To stop a habit of mind, occupy the machinery it runs on.",
+  "trap": "Choosing tapping, since any steady movement should crowd a tune out.",
+  "keywords": [
+    "earworms",
+    "chewing gum",
+    "inner speech",
+    "involuntary musical imagery"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beaman, Powell & Rapley, QJEP, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1080/17470218.2015.1034142",
+  "written": "2026-09-27"
+}

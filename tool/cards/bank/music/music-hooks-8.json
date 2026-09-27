@@ -1,0 +1,32 @@
+{
+  "id": "music-hooks-8",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the 2014 finding that Wannabe is the world's catchiest song actually measure?",
+  "answer": "How fast players of one online game named short clips. Over 12,000 people played Hooked on Music, run by the University of Amsterdam with Manchester's Museum of Science and Industry: Wannabe averaged 2.29 seconds, Mambo No. 5 2.48, Eye of the Tiger 2.62. The ranking says which fragments those players had stored best, from a fixed list.",
+  "move": "Before accepting a title like best ever, ask who was asked and from what list.",
+  "keywords": [
+    "hooked on music",
+    "recognition time",
+    "catchiness",
+    "spice girls"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "CNN, 5 November 2014",
+  "source_kind": "news_archive",
+  "reference": "https://www.cnn.com/2014/11/05/showbiz/wannabe-catchiest-song",
+  "written": "2026-09-27"
+}

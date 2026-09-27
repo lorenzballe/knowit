@@ -1,0 +1,38 @@
+{
+  "id": "language-nordic-6",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Sweden's right to roam, allemansrätten, is spelled out rule by rule in a written statute?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The constitution says only that everyone shall have access to nature under the right of public access; it never lists what that right contains. The content is custom, fenced in by other laws on trespass, damage and nature protection. A tent pitched for one night is allowed because nothing forbids it.",
+  "move": "Some rules live in what is forbidden, not in what is granted.",
+  "trap": "Assuming a right everyone knows must be written down somewhere.",
+  "keywords": [
+    "allemansrätten",
+    "right to roam",
+    "swedish constitution",
+    "custom"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Regeringsformen, chapter 2, article 15",
+  "source_kind": "primary_document",
+  "reference": "Regeringsformen (SFS 1974:152), chapter 2, article 15, as amended in 1994, Sveriges riksdag",
+  "written": "2026-09-27"
+}

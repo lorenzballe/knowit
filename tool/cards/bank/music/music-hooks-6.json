@@ -1,0 +1,42 @@
+{
+  "id": "music-hooks-6",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "also": [
+    "psychology.memory.mnemonics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Among Billboard Hot 100 singles from 1958 to 2012, what did more repetitive lyrics predict?",
+  "options": [
+    "Better odds of reaching number one",
+    "A faster fall down the chart",
+    "Nothing, once a song had charted"
+  ],
+  "correct": 0,
+  "answer": "Better odds of reaching number one. Joseph Nunes and colleagues scored the lyrics of Hot 100 singles across 54 years: the more repetitive ones were likelier to reach the top, got there faster, and more often debuted in the Top 40. Their lab tests showed repeated words are processed more easily. A chorus heard twice is half-learned.",
+  "move": "What is easy to take in is often mistaken for what is good.",
+  "trap": "Expecting repetition to tire listeners and cut a song's run short.",
+  "keywords": [
+    "repetition",
+    "lyrics",
+    "billboard hot 100",
+    "processing fluency"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nunes, Ordanini & Valsesia, 2015",
+  "source_kind": "paper",
+  "reference": "Nunes, Ordanini & Valsesia, The power of repetition: Repetitive lyrics in a song increase processing fluency and drive market success, Journal of Consumer Psychology, 2015",
+  "written": "2026-09-27"
+}
