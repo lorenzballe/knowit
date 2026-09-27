@@ -4,14 +4,14 @@
   "genre": "art.photography",
   "strand": "art.photography.first_photos",
   "also": [
-    "science.light_and_colour.rainbows"
+    "science.light_and_colour.pigments"
   ],
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "confirmation",
   "question": "Maxwell's 1861 colour photograph of a tartan ribbon shows red, yet its plates were blind to red light. How?",
   "options": [
-    "Red light leaked through the red filter",
+    "The plate was faintly red-sensitive after all",
     "The red plate was coloured by hand",
     "The red dye also reflected ultraviolet"
   ],

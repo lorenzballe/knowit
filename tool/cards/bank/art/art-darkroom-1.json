@@ -3,13 +3,10 @@
   "topic": "art",
   "genre": "art.photography",
   "strand": "art.photography.darkroom",
-  "also": [
-    "cinema.how_films_are_made.lighting"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: black-and-white film can be developed under the red safelight used for printing?",
+  "question": "True or false: modern black-and-white camera film can be developed under the red safelight used for printing?",
   "options": [
     "True",
     "False"

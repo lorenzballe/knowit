@@ -3,9 +3,6 @@
   "topic": "art",
   "genre": "art.sculpture",
   "strand": "art.sculpture.bronze",
-  "also": [
-    "art.forgeries.motives"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",

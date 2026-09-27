@@ -1,0 +1,33 @@
+{
+  "id": "medicine-hospitals-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do hospital planners treat a hospital as full when only about 85% of its beds are occupied?",
+  "answer": "Because emergencies arrive unevenly. A 1999 simulation of an English acute hospital found that above about 85% average occupancy, random surges regularly left no bed free; above 90%, shortages became routine. A spare bed is not waste but a buffer. At 95% occupancy, a busy Monday leaves patients waiting on trolleys in corridors.",
+  "move": "A system run near its limit fails on its ordinary bad days.",
+  "keywords": [
+    "bed occupancy",
+    "emergency admissions",
+    "queueing",
+    "hospital capacity",
+    "simulation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bagust, Place & Posnett, BMJ, 1999",
+  "source_kind": "paper",
+  "reference": "Bagust, Place & Posnett, Dynamics of bed use in accommodating emergency admissions: stochastic simulation model, BMJ, 1999",
+  "written": "2026-09-26"
+}

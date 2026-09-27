@@ -3,14 +3,11 @@
   "topic": "art",
   "genre": "art.photography",
   "strand": "art.photography.darkroom",
-  "also": [
-    "science.chemistry_at_home.cleaning"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why can a black-and-white print sit in daylight for a century without darkening?",
-  "answer": "Because the unexposed silver salts were washed out. In 1819 the astronomer John Herschel found that hyposulphite of soda, now sodium thiosulfate, dissolves them, and in 1839 he saw it could fix a camera image. Talbot's first prints were only soaked in strong salt, which slowed the darkening. Darkroom workers still call fixer hypo.",
+  "answer": "Because the unexposed silver salts were washed out. In 1819 the astronomer John Herschel found that hyposulphite of soda, now sodium thiosulphate, dissolves them, and in 1839 he saw it could fix a camera image. Talbot's first prints were only soaked in strong salt, which slowed the darkening. Darkroom workers still call fixer hypo.",
   "move": "Making something is half the job; stopping it from changing is the other.",
   "keywords": [
     "john herschel",

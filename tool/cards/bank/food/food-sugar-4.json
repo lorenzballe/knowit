@@ -1,0 +1,33 @@
+{
+  "id": "food-sugar-4",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did internal sugar-industry papers from the 1960s reveal about a landmark review on diet and heart disease?",
+  "answer": "That the industry paid for it. In 1965 the Sugar Research Foundation paid two Harvard nutritionists about $6,500 to review the evidence; their 1967 review, in a leading medical journal, played down sugar and blamed dietary fat. The funding went undisclosed. Historians found the letters in 2016, half a century after the fat-versus-sugar debate had been framed.",
+  "move": "Before weighing a review, find out who asked for it and paid.",
+  "keywords": [
+    "sugar research foundation",
+    "harvard",
+    "heart disease",
+    "industry funding",
+    "dietary fat"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kearns, Schmidt & Glantz, JAMA Intern. Med., 2016",
+  "source_kind": "paper",
+  "reference": "Kearns, Schmidt & Glantz, Sugar industry and coronary heart disease research: a historical analysis of internal industry documents, JAMA Internal Medicine, 2016",
+  "written": "2026-09-26"
+}

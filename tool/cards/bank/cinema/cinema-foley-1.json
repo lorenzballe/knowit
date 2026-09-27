@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did Jack Foley's craft begin with a film that had already been shot?",
-  "answer": "Because the film was shot silent. Universal made Show Boat in 1928 as a silent, then had to give it sound once talkies took over. Jack Foley's small crew projected it on a wall and performed the footsteps, doors and rustles live, into one microphone, in one continuous take.",
+  "answer": "Because the film was shot silent. Universal made Show Boat in 1928 as a silent, then had to give it sound once talkies took over. Jack Foley's small crew projected it on a wall and performed the footsteps, doors and rustles live, into one microphone, while the picture ran.",
   "move": "Many lasting methods began as a patch for someone else's deadline.",
   "keywords": [
     "jack foley",
@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "CineMontage, Motion Picture Editors Guild",
-  "source_kind": "news_archive",
-  "reference": "https://cinemontage.org/foley-noises-for-talkies/",
+  "source": "Ament, The Foley Grail, 2009",
+  "source_kind": "book",
+  "reference": "Ament, The Foley Grail: The Art of Performing Sound for Film, Games, and Animation, Focal Press, 2009",
   "written": "2026-09-26"
 }

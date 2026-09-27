@@ -1,0 +1,40 @@
+{
+  "id": "medicine-hospitals-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In James Simpson's 1869 survey, what share of major amputations in large British hospitals ended in death?",
+  "options": [
+    "About 4%",
+    "About 90%",
+    "About 40%"
+  ],
+  "correct": 2,
+  "answer": "About 40%. Simpson counted 855 deaths in 2,089 hospital amputations, against 226 in 2,098 done in country practice, about 11%. He called the difference hospitalism, blaming crowded, badly aired wards. Critics answered that city hospitals got the worst injuries. Either way, the operating table was safer in a farmhouse kitchen.",
+  "move": "Check where the danger sat before crediting the place that treated it.",
+  "trap": "Guessing low, from a modern sense that amputation is survivable.",
+  "keywords": [
+    "james young simpson",
+    "hospitalism",
+    "amputation",
+    "surgical mortality",
+    "victorian hospitals"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Simpson's Hospitalism, reviewed 2004",
+  "source_kind": "paper",
+  "reference": "https://www.researchgate.net/publication/8040687_Surgical_experience_hospital_size_and_severity_adjusted_mortality_James_Y_Simpson_1869",
+  "written": "2026-09-26"
+}

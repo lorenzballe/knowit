@@ -6,18 +6,18 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "computation",
-  "question": "Daguerre's 1839 camera lens worked at about f/14, Petzval's 1840 portrait lens at f/3.6. How many times more light did Petzval's admit?",
-  "value": 15,
+  "question": "Daguerre's 1839 camera lens worked at about f/15, Petzval's 1840 portrait lens at f/3.6. How many times more light did Petzval's admit?",
+  "value": 17.4,
   "unit": "times",
   "tolerance": 1,
-  "answer": "3.9 × 3.9 ≈ 15 times the light.",
+  "answer": "4.17 × 4.17 ≈ 17.4 times the light.",
   "move": "When a width changes, ask whether what matters is an area.",
   "trap": "Dividing the f-numbers and answering four, forgetting the opening is an area.",
   "hint": "The f-number measures the width of the opening; light passes through an area.",
   "steps": [
     "Light admitted goes with the square of the ratio of f-numbers.",
-    "14 ÷ 3.6 ≈ 3.9.",
-    "3.9 × 3.9 ≈ 15 times the light."
+    "15 ÷ 3.6 ≈ 4.17.",
+    "4.17 × 4.17 ≈ 17.4 times the light."
   ],
   "keywords": [
     "petzval lens",

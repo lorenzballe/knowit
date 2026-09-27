@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did the first laser cleaning of a French cathedral portal reveal at Amiens?",
-  "answer": "That the stone saints had been painted. Laser cleaning of Amiens's west front from 1993 exposed traces of thirteenth-century colour under the soot. Analysis identified the pigments and where each had been, and since 1999 summer evenings have projected those colours back onto the portal with light. The grey Gothic façade is a weathered one.",
+  "question": "What did laser cleaning of the portals of Amiens Cathedral reveal in the 1990s?",
+  "answer": "That the stone saints had been painted. Laser cleaning, begun in 1992, exposed thirteenth-century blues, reds, ochres and gilding under the grime, best kept in the sheltered recesses and tympanums. Since 1999 summer evenings have projected those colours back onto the west front with light. The grey Gothic façade is a weathered one.",
   "move": "The plain version of an old thing is often just the worn version.",
   "keywords": [
     "amiens cathedral",
@@ -29,8 +29,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Journal of Cultural Heritage, portal cleaning",
-  "source_kind": "paper",
-  "reference": "https://www.sciencedirect.com/science/article/abs/pii/S1296207402012220",
+  "source": "Amiens Métropole, La polychromie de la Cathédrale",
+  "source_kind": "institution",
+  "reference": "https://www.amiens.fr/Vivre-a-Amiens/Culture-Patrimoine/Les-Archives-municipales-et-communautaires/Tresors-d-Archives/Tresors-d-archives/La-polychromie-de-la-Cathedrale",
   "written": "2026-09-26"
 }

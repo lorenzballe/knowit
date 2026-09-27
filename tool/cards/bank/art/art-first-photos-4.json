@@ -3,9 +3,6 @@
   "topic": "art",
   "genre": "art.photography",
   "strand": "art.photography.first_photos",
-  "also": [
-    "art.forgeries.motives"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",

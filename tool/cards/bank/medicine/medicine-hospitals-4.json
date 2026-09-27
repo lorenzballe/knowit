@@ -1,0 +1,40 @@
+{
+  "id": "medicine-hospitals-4",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "On a typical day, what share of patients in European acute hospitals have an infection caught in healthcare?",
+  "options": [
+    "About 1 in 15",
+    "About 1 in 500",
+    "About 1 in 3"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 15. The ECDC's 2016 to 2017 survey of 310,755 patients in 1,209 hospitals found 6.5% with at least one. Most were routine: pneumonia, urinary infections, infected surgical wounds, bloodstream infections from drips. Few make the news. On a ward of 30 beds, two patients are fighting an infection the hospital gave them.",
+  "move": "The harm that never makes the news is often the commonest.",
+  "trap": "Guessing rare, because only outbreaks and superbugs reach the news.",
+  "keywords": [
+    "healthcare-associated infections",
+    "ecdc",
+    "point prevalence survey",
+    "pneumonia",
+    "hospital safety"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "ECDC point prevalence survey, 2016-2017",
+  "source_kind": "statistics",
+  "reference": "https://www.ecdc.europa.eu/en/publications-data/point-prevalence-survey-healthcare-associated-infections-and-antimicrobial-use-5",
+  "written": "2026-09-26"
+}
