@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-fastest-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long does a hydra's stinging capsule take to fire, and how hard does it accelerate?",
+  "answer": "About 700 nanoseconds, at up to 5.4 million times gravity. Nüchter and colleagues filmed the capsules of hydra, a freshwater relative of jellyfish, with ultra-fast cameras. The coiled capsule bursts open and drives a tiny stylet through the prey's outer skin. A harpoon smaller than a cell outpaces every muscle ever timed.",
+  "move": "The smallest machines reach speeds that no large one would survive.",
+  "keywords": [
+    "hydra",
+    "nematocyst",
+    "stinging cells",
+    "acceleration",
+    "cnidarians"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nüchter et al., Current Biology, 2006",
+  "source_kind": "primary_document",
+  "reference": "Nüchter, Benoit, Engel, Özbek & Holstein, Nanosecond-scale kinetics of nematocyst discharge, Current Biology, 2006",
+  "written": "2026-09-27"
+}

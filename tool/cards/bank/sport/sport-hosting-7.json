@@ -1,0 +1,32 @@
+{
+  "id": "sport-hosting-7",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which ordinary words could land a London business in legal trouble if paired in its adverts around 2012?",
+  "answer": "Words like Games, 2012, gold and summer. The London Olympic Games and Paralympic Games Act 2006 gave organisers a right against any advert suggesting a link with the Games, and listed pairings a court could take as evidence, such as Games with 2012, or 2012 with gold or summer. Sponsors had paid for the silence.",
+  "move": "What a sponsor buys is often the right to stop others speaking.",
+  "keywords": [
+    "london 2012",
+    "ambush marketing",
+    "sponsors",
+    "advertising law"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "London Olympic Games Act 2006, Schedule 4",
+  "source_kind": "primary_document",
+  "reference": "London Olympic Games and Paralympic Games Act 2006, Schedule 4, UK Parliament, 2006",
+  "written": "2026-09-27"
+}

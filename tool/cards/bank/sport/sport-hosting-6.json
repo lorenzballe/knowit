@@ -1,0 +1,33 @@
+{
+  "id": "sport-hosting-6",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were the 1976 Winter Olympics, awarded to Denver, held in Innsbruck instead?",
+  "answer": "Because Colorado's voters refused to pay. Denver won the Games in 1970, but costs climbed and venues drifted far from the city; in November 1972 a statewide ballot barred public money for them, with about 60% voting yes. Denver handed the Games back, and Innsbruck, host in 1964, stepped in with venues already built.",
+  "move": "A promise made by officials is only as firm as the voters behind it.",
+  "keywords": [
+    "denver",
+    "1976 winter olympics",
+    "innsbruck",
+    "referendum",
+    "colorado"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guttmann, The Olympics",
+  "source_kind": "book",
+  "reference": "Guttmann, The Olympics: A History of the Modern Games, University of Illinois Press, 2002",
+  "written": "2026-09-27"
+}

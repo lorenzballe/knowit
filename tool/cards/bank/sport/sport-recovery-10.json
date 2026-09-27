@@ -1,0 +1,38 @@
+{
+  "id": "sport-recovery-10",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should athletes take anti-inflammatory painkillers to get through soreness during heavy training?",
+  "sides": [
+    "Yes, when needed",
+    "No, keep them out"
+  ],
+  "answer": "Soreness that stops an athlete training costs more fitness than a few pills. In adults over 60, Trappe's group found that ibuprofen taken through twelve weeks of resistance training increased muscle growth rather than blunting it. Refusing relief on principle can mean skipped sessions and altered technique, which carry their own risks of injury.",
+  "move": "Whichever side you took, the dose and who takes it decide the answer.",
+  "counterpoint": "Inflammation is part of the signal to adapt. In young adults, Lilja and colleagues found that high daily ibuprofen doses over eight weeks of training blunted gains in muscle size and strength, and endurance athletes who dose up for long events risk kidney injury. Masking pain also hides the warning that separates useful soreness from damage.",
+  "keywords": [
+    "ibuprofen",
+    "anti-inflammatory drugs",
+    "muscle growth",
+    "soreness",
+    "adaptation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lilja et al., Acta Physiologica, 2018",
+  "source_kind": "paper",
+  "reference": "Lilja et al., High doses of anti-inflammatory drugs compromise muscle strength and hypertrophic adaptations to resistance training in young adults, Acta Physiologica, 2018",
+  "written": "2026-09-27"
+}

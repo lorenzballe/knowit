@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-sneezes-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How far can the droplets of an uncovered sneeze travel indoors, and why so far?",
+  "answer": "Up to 7 or 8 metres. Filming with high-speed cameras, Lydia Bourouiba's laboratory at MIT showed that a sneeze is a turbulent puff of warm, moist gas carrying droplets of every size inside it, keeping them aloft long after their weight alone would have dropped them. The two-metre rule assumed each droplet flew alone.",
+  "move": "Check whether a thing travels alone or rides inside something larger.",
+  "keywords": [
+    "sneeze",
+    "droplets",
+    "gas cloud",
+    "distancing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bourouiba, JAMA, 2020",
+  "source_kind": "primary_document",
+  "reference": "Bourouiba, Turbulent gas clouds and respiratory pathogen emissions: potential implications for reducing transmission of COVID-19, JAMA, 2020",
+  "written": "2026-09-27"
+}

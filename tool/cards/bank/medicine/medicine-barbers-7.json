@@ -1,0 +1,39 @@
+{
+  "id": "medicine-barbers-7",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: Pierre Louis's famous 1835 count of pneumonia patients led him to reject bloodletting as useless?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Among 77 patients, those bled in the first four days died more often than those bled later, yet Louis concluded bleeding helped a little: early-bled survivors recovered a few days sooner. He shrank its reputation rather than ending it. The count remembered as the end of the lancet ended with a recommendation to use it.",
+  "move": "Read what a pioneer concluded, not only what later readers made of it.",
+  "trap": "True, since his count is remembered as the end of bloodletting.",
+  "keywords": [
+    "pierre louis",
+    "bloodletting",
+    "numerical method",
+    "pneumonia",
+    "paris"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "James Lind Library, Louis 1835",
+  "source_kind": "reference_work",
+  "reference": "https://www.jameslindlibrary.org/articles/pierre-charles-alexandre-louis-and-the-evaluation-of-bloodletting/",
+  "written": "2026-09-27"
+}

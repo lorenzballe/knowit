@@ -1,0 +1,39 @@
+{
+  "id": "sport-hosting-10",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: Great Britain won more Olympic medals at Rio in 2016 than at its home Games in London?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True: 67 in Rio against 65 in London, a rare rise for a nation just after hosting. Much of the London haul came from National Lottery money aimed at sports likely to win medals, and that funding kept rising after 2012. The home crowd went away; the money stayed.",
+  "move": "Before crediting the obvious cause, watch what happens when it leaves.",
+  "trap": "Crediting home crowds for the London haul and expecting a fall.",
+  "keywords": [
+    "team gb",
+    "rio 2016",
+    "london 2012",
+    "lottery funding",
+    "home advantage"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "IOC, Olympic results, Rio 2016",
+  "source_kind": "statistics",
+  "reference": "International Olympic Committee, Official Results Book, Rio 2016 Olympic Games, 2016",
+  "written": "2026-09-27"
+}

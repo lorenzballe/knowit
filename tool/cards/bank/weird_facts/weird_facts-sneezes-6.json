@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-sneezes-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which single chemical signal did researchers find mice need in order to sneeze?",
+  "answer": "A peptide called neuromedin B. Li and colleagues found that nerve cells in the nose carrying it pass irritant signals to a small cluster of brainstem neurons; mice lacking the peptide, or with those neurons removed, no longer sneezed at irritants. A reflex that looks like plumbing turned on one molecular key.",
+  "move": "A reflex that looks mechanical may hinge on a single messenger molecule.",
+  "keywords": [
+    "neuromedin b",
+    "sneeze reflex",
+    "mice",
+    "brainstem"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Li et al., Cell, 2021",
+  "source_kind": "statistics",
+  "reference": "Li et al., Sneezing reflex is mediated by a peptidergic pathway from nose to brainstem, Cell, 2021",
+  "written": "2026-09-27"
+}

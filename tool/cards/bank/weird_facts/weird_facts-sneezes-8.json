@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-sneezes-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Filmed with high-speed cameras, roughly how fast does the air of a human sneeze leave the body?",
+  "options": [
+    "Under 60 km/h",
+    "About 160 km/h",
+    "Over 500 km/h"
+  ],
+  "correct": 0,
+  "answer": "Under 60 km/h. Tang and colleagues filmed six volunteers and measured peak airflow of 4.5 m/s, about 16 km/h; other high-speed studies find faster jets, still well below 100 km/h. The 160 km/h figure repeated in quizzes is far above anything filmed. A cyclist could keep pace with the slower sneezes.",
+  "move": "Ask who measured a famous number, and with what.",
+  "trap": "Picking 160 km/h, the figure quoted so often it feels measured.",
+  "keywords": [
+    "sneeze speed",
+    "airflow",
+    "high-speed imaging",
+    "shadowgraph"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tang et al., PLOS ONE, 2013",
+  "source_kind": "statistics",
+  "reference": "doi:10.1371/journal.pone.0059970",
+  "written": "2026-09-27"
+}

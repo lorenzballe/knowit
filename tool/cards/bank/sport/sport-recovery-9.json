@@ -1,0 +1,40 @@
+{
+  "id": "sport-recovery-9",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Compared with simply resting, what does massage do to the clearance of lactate from a hard-worked muscle?",
+  "options": [
+    "Speeds it up",
+    "Slows it down",
+    "Makes no difference"
+  ],
+  "correct": 1,
+  "answer": "Slows it down. Measuring forearm blood flow after hard handgrip exercise, Wiltshire and colleagues found massage mechanically impeded flow into the muscle, and lactate cleared more slowly than with passive rest; gentle active exercise cleared it fastest. The flushing story lasted because massage feels good, and feeling good was taken as the proof.",
+  "move": "A treatment that feels good has passed one test, not every test.",
+  "trap": "Speeds it up: the familiar picture of massage flushing out waste.",
+  "keywords": [
+    "massage",
+    "lactate",
+    "blood flow",
+    "active recovery",
+    "handgrip exercise"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wiltshire et al., Med Sci Sports Exerc, 2010",
+  "source_kind": "paper",
+  "reference": "Wiltshire, Poitras, Pak, Hong, Rayner & Tschakovsky, Massage impairs postexercise muscle blood flow and lactic acid removal, Medicine & Science in Sports & Exercise, 2010",
+  "written": "2026-09-27"
+}

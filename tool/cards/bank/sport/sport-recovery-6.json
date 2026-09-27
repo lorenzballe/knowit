@@ -1,0 +1,33 @@
+{
+  "id": "sport-recovery-6",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do sports doctors tell overtraining syndrome apart from ordinary heavy fatigue?",
+  "answer": "Mostly in hindsight. No blood test or single marker settles it, so the diagnosis is made by ruling out other causes, and the clearest difference is how long recovery takes: days to weeks after functional overreaching, weeks to months after the non-functional kind, and months or longer in the full syndrome. The calendar decides the label.",
+  "move": "When no test separates two states, watch how long each one lasts.",
+  "keywords": [
+    "overtraining syndrome",
+    "overreaching",
+    "fatigue",
+    "diagnosis",
+    "consensus statement"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Meeusen et al., ECSS and ACSM consensus, 2013",
+  "source_kind": "paper",
+  "reference": "Meeusen et al., Prevention, diagnosis, and treatment of the overtraining syndrome: joint consensus statement of the ECSS and the ACSM, Medicine & Science in Sports & Exercise, 2013",
+  "written": "2026-09-27"
+}

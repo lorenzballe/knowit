@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-fastest-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Which animal holds the fastest speed yet measured in level, flapping flight?",
+  "options": [
+    "The peregrine falcon",
+    "The white-throated needletail swift",
+    "The Brazilian free-tailed bat"
+  ],
+  "correct": 2,
+  "answer": "The Brazilian free-tailed bat. In 2016 McCracken's team followed radio-tagged bats from a light aircraft in Texas: all seven neared 100 km/h, and one reached about 160 km/h. The peregrine's famous 300-plus km/h is a dive, powered by gravity. These were ground speeds, so a tailwind may have helped: a record with an asterisk.",
+  "move": "Check whether a famous record was set under the conditions you mean.",
+  "trap": "Recalling the peregrine's dive speed and applying it to level flight.",
+  "keywords": [
+    "brazilian free-tailed bat",
+    "flight speed",
+    "peregrine falcon",
+    "radio tracking"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCracken et al., Royal Society Open Science, 2016",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1098/rsos.160398",
+  "written": "2026-09-27"
+}

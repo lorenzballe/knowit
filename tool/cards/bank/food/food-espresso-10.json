@@ -1,0 +1,40 @@
+{
+  "id": "food-espresso-10",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "From the same 18 g dose, a barista pulls a short ristretto and a long lungo. Which extracts more of the coffee?",
+  "options": [
+    "The lungo",
+    "The ristretto",
+    "Both extract the same"
+  ],
+  "correct": 0,
+  "answer": "The lungo. Strength is how concentrated the cup is; extraction is how much of the dose dissolved. The ristretto tastes stronger because little water carries what it took. The lungo keeps flowing through the puck and dissolves more in total, spread through two or three times the liquid: weaker in the cup, yet more extracted.",
+  "move": "How concentrated something is says little about how much of it there is.",
+  "trap": "Reading the stronger taste as more coffee pulled from the grounds.",
+  "keywords": [
+    "extraction",
+    "brew strength",
+    "ristretto",
+    "lungo",
+    "brew ratio"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lingle, The Coffee Brewing Handbook, 1996",
+  "source_kind": "book",
+  "reference": "Lingle, The Coffee Brewing Handbook, Specialty Coffee Association of America, 1996",
+  "written": "2026-09-27"
+}

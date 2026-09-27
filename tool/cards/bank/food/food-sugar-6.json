@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. It halved it, from sixpence a gallon under the 1733 Molasses Act to threepence. But the old duty had been dodged for thirty years by smuggling and bribed customs men, so almost nobody paid it. The new act came with inspectors and courts to collect it. New England's rum distillers faced a real bill for the first time.",
+  "answer": "False. It halved it, from sixpence a gallon under the 1733 Molasses Act to threepence. But the old duty had been dodged for thirty years through smuggling and bribed customs men, so almost nobody paid it. The new act came with inspectors and courts. New England's rum distillers faced a real bill at last.",
   "move": "Compare a new rule with what people actually paid, not with the old paper.",
   "trap": "True, since a tax that caused protest must have gone up.",
   "keywords": [

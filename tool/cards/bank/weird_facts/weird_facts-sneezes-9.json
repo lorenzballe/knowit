@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-sneezes-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: blessing a sneeze began with Pope Gregory the Great during the Roman plague of 590?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. More than five centuries earlier, Pliny the Elder asked in his Natural History why people wish good health to someone who sneezes, and noted that even the gloomy emperor Tiberius insisted on the greeting, in his carriage too. The plague story may explain one prayer, not the custom. Pliny already found its origin lost.",
+  "move": "Every extra detail in an origin story is one more thing to check.",
+  "trap": "A story with a pope, a plague and a year sounds documented.",
+  "keywords": [
+    "bless you",
+    "pliny the elder",
+    "tiberius",
+    "sneeze customs"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pliny the Elder, Natural History, Book 28",
+  "source_kind": "primary_document",
+  "reference": "Pliny the Elder, Natural History, Book 28, trans. W. H. S. Jones, Loeb Classical Library, Harvard University Press, 1963",
+  "written": "2026-09-27"
+}
