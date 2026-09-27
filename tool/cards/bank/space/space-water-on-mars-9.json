@@ -1,0 +1,38 @@
+{
+  "id": "space-water-on-mars-9",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.water_on_mars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the 2024 case for liquid water 11 to 20 km under Mars rested on seismometers at several sites?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It rested on one seismometer, on NASA's InSight lander in Elysium Planitia. Marsquake waves travelled beneath it at speeds that fit rock with water-filled cracks; extrapolated planet-wide, that would be enough for an ocean 1 to 2 km deep. The reading is contested. One instrument, one spot, a claim about a planet.",
+  "move": "Ask how many places were measured before accepting a claim about everywhere.",
+  "trap": "Assuming a planet-wide claim must stand on planet-wide measurements.",
+  "keywords": [
+    "insight lander",
+    "marsquakes",
+    "groundwater",
+    "mid-crust"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright, Manga & Panning, PNAS, 2024",
+  "source_kind": "paper",
+  "reference": "Wright, Manga & Panning, Liquid water in the Martian mid-crust, Proceedings of the National Academy of Sciences, 2024",
+  "written": "2026-09-27"
+}

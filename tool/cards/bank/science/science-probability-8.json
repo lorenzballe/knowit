@@ -1,0 +1,39 @@
+{
+  "id": "science-probability-8",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "simpson",
+  "question": "Early in 2020, Italy's overall COVID-19 case fatality rate was higher than China's. What did a comparison by age group show?",
+  "options": [
+    "Italy lower in every age group",
+    "Italy higher in every age group",
+    "Italy higher in most age groups"
+  ],
+  "correct": 0,
+  "answer": "Italy lower in every age group. Its confirmed cases were far older than China's, and older patients die far more often, so the mix of who was infected pushed Italy's total up while each age band fared better. Two totals built from different mixes of people compared the mixes, not the care.",
+  "move": "Before comparing two totals, check that they are made of the same mix.",
+  "trap": "Italy higher in every group, as a total usually reflects its parts.",
+  "keywords": [
+    "simpson's paradox",
+    "case fatality rate",
+    "covid-19",
+    "age structure"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "von Kügelgen, Gresele & Schölkopf, 2021",
+  "source_kind": "paper",
+  "reference": "von Kügelgen, Gresele & Schölkopf, Simpson's Paradox in COVID-19 Case Fatality Rates: A Mediation Analysis of Age-Related Causal Effects, IEEE Transactions on Artificial Intelligence, 2021",
+  "written": "2026-09-27"
+}

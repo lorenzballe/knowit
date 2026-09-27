@@ -1,0 +1,38 @@
+{
+  "id": "nature-currents-10",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the Atlantic's overturning circulation already weakening because of global warming?",
+  "sides": [
+    "Yes, it is weakening",
+    "No, that is not shown"
+  ],
+  "answer": "A patch of the North Atlantic south of Greenland has cooled while nearly everywhere else warmed, the fingerprint models predict for a slowing overturning. Caesar and colleagues read it as a weakening of about 15% since the mid-twentieth century, and sediment records suggest the circulation is at its weakest in over a thousand years.",
+  "move": "Whichever side you took, the length of record needed to see a trend decides it.",
+  "counterpoint": "Direct measurement began only in 2004, with moorings strung across the Atlantic at 26°N, and twenty years of a noisy flow cannot separate a trend from natural swings. Worthington and colleagues' 30-year reconstruction from ocean data finds no significant decline. The cold patch has other plausible causes, including shifts in the atmosphere above it.",
+  "keywords": [
+    "atlantic overturning",
+    "amoc",
+    "gulf stream",
+    "climate change",
+    "rapid array"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Caesar et al., Nature, 2018",
+  "source_kind": "paper",
+  "reference": "Caesar et al., Observed fingerprint of a weakening Atlantic Ocean overturning circulation, Nature, 2018; Worthington et al., A 30-year reconstruction of the Atlantic meridional overturning circulation shows no decline, Ocean Science, 2021",
+  "written": "2026-09-27"
+}

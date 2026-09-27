@@ -1,0 +1,42 @@
+{
+  "id": "economics-interest-9",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A $200,000 30-year mortgage at 6% costs $1,199 a month. What percentage of the first payment is interest?",
+  "value": 83.4,
+  "unit": "percent",
+  "tolerance": 0.5,
+  "answer": "$1,000 / $1,199 = about 83.4%.",
+  "move": "Early payments on a long loan mostly pay rent on the money.",
+  "trap": "Assuming each payment splits roughly evenly between interest and debt.",
+  "hint": "Each month's interest is charged on the whole balance still owed.",
+  "steps": [
+    "Monthly rate: 6% / 12 = 0.5%.",
+    "First month's interest: $200,000 x 0.005 = $1,000.",
+    "$1,000 / $1,199 = about 83.4%."
+  ],
+  "keywords": [
+    "mortgages",
+    "amortisation",
+    "monthly payments",
+    "home loans"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brealey, Myers & Allen, Corporate Finance",
+  "source_kind": "book",
+  "reference": "Brealey, Myers & Allen, Principles of Corporate Finance, 13th edition, McGraw-Hill, 2020",
+  "written": "2026-09-27"
+}

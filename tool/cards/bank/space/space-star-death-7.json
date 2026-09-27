@@ -1,0 +1,39 @@
+{
+  "id": "space-star-death-7",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "When a massive star's core collapses and the star explodes, what share of the energy released leaves as light?",
+  "options": [
+    "Most of it",
+    "About 1%",
+    "Under 0.01%"
+  ],
+  "correct": 2,
+  "answer": "Under 0.01%. About 99% escapes as neutrinos, carrying off the energy of a core falling in to a ball some 20 km across. About 1% drives the blast outwards, and the light is a hundredth of that or less. That sliver is still enough to outshine a galaxy of billions of stars for weeks.",
+  "move": "What can be seen of an event may be its smallest part.",
+  "trap": "Taking the flash that outshines a galaxy as most of the output.",
+  "keywords": [
+    "core collapse",
+    "supernova energy",
+    "neutrinos",
+    "neutron star"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Janka, Annual Review, 2012",
+  "source_kind": "paper",
+  "reference": "Janka, Explosion Mechanisms of Core-Collapse Supernovae, Annual Review of Nuclear and Particle Science 62, 407, 2012",
+  "written": "2026-09-27"
+}

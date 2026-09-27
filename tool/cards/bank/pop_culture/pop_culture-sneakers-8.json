@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-sneakers-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Adidas bought Reebok in 2006 for about €3.1 billion. Roughly what did it sell Reebok for in 2021?",
+  "options": [
+    "About €2 billion",
+    "About €3 billion",
+    "About €6 billion"
+  ],
+  "correct": 0,
+  "answer": "About €2 billion. Adidas agreed in 2021 to sell Reebok to Authentic Brands Group for up to €2.1 billion, after years of shrinking sales. Fifteen years of inflation make the loss larger than the headline gap. The 2006 price set no floor for the 2021 buyer.",
+  "move": "What you paid tells a buyer nothing about what the thing is worth.",
+  "trap": "The purchase price feels like a baseline the sale should match.",
+  "keywords": [
+    "adidas",
+    "reebok",
+    "authentic brands group",
+    "acquisitions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Adidas press release, August 2021",
+  "source_kind": "company",
+  "reference": "Adidas, adidas to divest Reebok to Authentic Brands Group, press release, 12 August 2021",
+  "written": "2026-09-27"
+}

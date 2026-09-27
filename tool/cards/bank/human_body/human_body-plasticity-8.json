@@ -1,0 +1,39 @@
+{
+  "id": "human_body-plasticity-8",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "regression",
+  "question": "Stroke patients seemed to regain about 70% of their lost arm function within months, whatever the damage. Why did critics doubt the rule?",
+  "options": [
+    "Therapy, not the brain, produced the gains",
+    "Recovery tracks loss partly by arithmetic",
+    "Patients who died dropped out of the data"
+  ],
+  "correct": 1,
+  "answer": "Recovery tracks loss partly by arithmetic. Recovery is the final score minus the first, so correlating it with the first builds in a link, and a scale's ceiling squeezes mild cases into looking proportional. Reanalyses found the rule explained far less than the 80% of variation first reported; defenders dispute how much less.",
+  "move": "Correlate a change with its own starting point and a link appears for free.",
+  "trap": "Suspecting rehabilitation took the credit, the usual worry about recovery data.",
+  "keywords": [
+    "stroke recovery",
+    "proportional recovery rule",
+    "mathematical coupling",
+    "rehabilitation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hope et al., Brain, 2019",
+  "source_kind": "paper",
+  "reference": "Hope et al., Recovery after stroke: not so proportional after all?, Brain, 2019",
+  "written": "2026-09-27"
+}

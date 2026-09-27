@@ -1,0 +1,43 @@
+{
+  "id": "technology-data-centres-10",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "A 100-megawatt data centre runs flat out all year. How many thousand British homes use as much electricity?",
+  "value": 324,
+  "unit": "thousand homes",
+  "withinFactor": 3,
+  "answer": "876,000 / 2.7 ≈ 324 thousand homes.",
+  "move": "Turn power into energy before comparing a machine with a household.",
+  "trap": "Setting megawatts against a home's kilowatts without counting the hours.",
+  "hint": "Turn megawatts into megawatt-hours by counting the hours in a year.",
+  "steps": [
+    "100 MW × 8,760 hours in a year = 876,000 MWh.",
+    "Ofgem puts a typical British home at about 2.7 MWh of electricity a year.",
+    "876,000 / 2.7 ≈ 324 thousand homes."
+  ],
+  "keywords": [
+    "data centre electricity",
+    "megawatts",
+    "households",
+    "ofgem",
+    "energy use"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ofgem, Typical Domestic Consumption Values, 2023",
+  "source_kind": "institution",
+  "reference": "Ofgem, Review of Typical Domestic Consumption Values 2023, Ofgem, 2023",
+  "written": "2026-09-27"
+}

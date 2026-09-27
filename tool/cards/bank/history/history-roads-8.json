@@ -1,0 +1,40 @@
+{
+  "id": "history-roads-8",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "An early Roman law made a right of way 8 Roman feet wide where it ran straight. How wide on a bend?",
+  "options": [
+    "The same 8 feet",
+    "12 feet",
+    "16 feet"
+  ],
+  "correct": 2,
+  "answer": "16 feet. The Twelve Tables, Rome's first written code, fixed a way across private land at 8 feet on the straight and double that where it turned, as the jurist Gaius later quoted. A cart, or a pair of yoked oxen, swings wide on a turn. The law wrote the turning circle into property.",
+  "move": "Measure the room a thing needs when it turns, not when it runs straight.",
+  "trap": "Assuming a road's legal width is the same along its length.",
+  "keywords": [
+    "twelve tables",
+    "right of way",
+    "road width",
+    "gaius",
+    "roman law"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gaius, in Justinian's Digest 8.3.8",
+  "source_kind": "primary_document",
+  "reference": "The Digest of Justinian, vol. 1, ed. Mommsen, Krueger and Watson, University of Pennsylvania Press, 1985",
+  "written": "2026-09-27"
+}

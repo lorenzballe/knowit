@@ -1,0 +1,38 @@
+{
+  "id": "technology-mainframes-7",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: an application written for IBM's System/360 in the 1960s can still run unchanged on IBM's current mainframes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. IBM has made each mainframe architecture a superset of the last, so programs built for the 1964 System/360 still execute on today's Z machines, and banks and insurers run code decades old. Some payroll runs today on instructions first defined when Lyndon Johnson was president.",
+  "move": "Where rewriting is costly, the old code outlives every machine it ran on.",
+  "trap": "Judging all computers by phones and laptops that age out within years.",
+  "keywords": [
+    "system/360",
+    "backward compatibility",
+    "ibm z",
+    "legacy code"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "IBM, z/Architecture Principles of Operation",
+  "source_kind": "company",
+  "reference": "IBM, z/Architecture Principles of Operation, SA22-7832, 2022",
+  "written": "2026-09-27"
+}

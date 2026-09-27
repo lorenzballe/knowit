@@ -1,0 +1,32 @@
+{
+  "id": "psychology-flow-7",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of the difference between people in how readily they fall into flow runs in families' genes?",
+  "answer": "About a third, by one large twin study. Mosing and colleagues asked thousands of Swedish twins how often they felt flow at work, at home and at leisure. Identical twins resembled each other more than non-identical ones, putting the heritable share at roughly 30 to 35%. The rest lay in experiences not shared.",
+  "move": "A trait can run in families without being settled at birth.",
+  "keywords": [
+    "flow proneness",
+    "heritability",
+    "twin study",
+    "sweden"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mosing et al., Twin Res Hum Genet, 2012",
+  "source_kind": "paper",
+  "reference": "Mosing, Magnusson, Pedersen, Nakamura, Madison & Ullén, Heritability of proneness for psychological flow experiences, Twin Research and Human Genetics, 2012",
+  "written": "2026-09-27"
+}

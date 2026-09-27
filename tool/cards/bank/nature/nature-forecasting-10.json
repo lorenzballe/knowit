@@ -1,0 +1,38 @@
+{
+  "id": "nature-forecasting-10",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: week-ahead forecasts for the Southern Hemisphere remain clearly worse than for the Northern, which has far more weather stations?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In the 1980s southern forecasts lagged well behind. From the 1990s, models learned to take in satellite measurements directly, and satellites see both hemispheres alike. By the early 2000s the gap had nearly closed, as Simmons and Hollingsworth showed. Over the empty Southern Ocean, most of the observing network is now in orbit.",
+  "move": "Check that an old handicap still binds before explaining anything with it.",
+  "trap": "Reasoning from the station map, which still favours the north.",
+  "keywords": [
+    "southern hemisphere",
+    "satellites",
+    "data assimilation",
+    "forecast skill"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simmons & Hollingsworth, QJRMS, 2002",
+  "source_kind": "paper",
+  "reference": "Simmons & Hollingsworth, Some aspects of the improvement in skill of numerical weather prediction, Quarterly Journal of the Royal Meteorological Society, 2002",
+  "written": "2026-09-27"
+}

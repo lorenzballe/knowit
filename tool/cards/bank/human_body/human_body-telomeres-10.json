@@ -1,0 +1,37 @@
+{
+  "id": "human_body-telomeres-10",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should telomere-length tests be sold to the public as a measure of biological age?",
+  "sides": [
+    "Yes, sell them",
+    "No, not yet"
+  ],
+  "answer": "Short telomeres in blood are linked, across large studies, to heart disease and earlier death, and the test needs only a blood or saliva sample. People are already told their cholesterol and blood pressure, which also predict risk imperfectly. A number that falls with age can motivate change, and adults can judge it for themselves.",
+  "move": "Whichever side you took, how precisely one person can be measured decides it.",
+  "counterpoint": "The common laboratory method, qPCR, is noisy enough that a retest can move a person far up or down the ranking. Most of the variation is set at birth, so one reading says little about how fast someone is ageing, and nothing proven lengthens telomeres safely. The number sells worry, not a plan.",
+  "keywords": [
+    "telomere tests",
+    "biological age",
+    "qpcr",
+    "biomarkers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mather et al., J Gerontol A, 2011",
+  "source_kind": "paper",
+  "reference": "Mather, Jorm, Parslow & Christensen, Is telomere length a biomarker of aging? A review, Journals of Gerontology Series A, 2011",
+  "written": "2026-09-27"
+}

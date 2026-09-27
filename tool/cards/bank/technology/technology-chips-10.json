@@ -1,0 +1,38 @@
+{
+  "id": "technology-chips-10",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should rich countries pay billions to build leading-edge chip factories at home?",
+  "sides": [
+    "Yes, fund home fabs",
+    "No, keep buying abroad"
+  ],
+  "answer": "Nearly all of the most advanced logic chips come from Taiwan, across a strait from China, which claims the island. A blockade would halt cars, phones and weapons worldwide at once. The US CHIPS Act of 2022 set aside $39 billion in factory grants: insurance, and cheap against a shock that size.",
+  "move": "Whichever side you took, ask whether a factory ends a dependence or just moves it.",
+  "counterpoint": "Chipmaking runs on a web no nation owns: Dutch lithography, Japanese chemicals, American design software, Taiwanese know-how. A fab in Arizona still needs all of them, and TSMC delayed its first plant there, citing a shortage of skilled workers. Subsidies may buy factories that open a generation behind, while the real dependence stays where it was.",
+  "keywords": [
+    "chips act",
+    "taiwan",
+    "semiconductor subsidies",
+    "tsmc",
+    "supply chain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CHIPS and Science Act, 2022",
+  "source_kind": "primary_document",
+  "reference": "CHIPS and Science Act, Public Law 117-167, US Congress, 2022",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-reality-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: France's highest appeal court ruled that contestants on a reality dating show were employees?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In June 2009 the Cour de cassation upheld that people filmed on L'Île de la tentation, a Temptation Island format, worked under employment contracts. They took part in imposed activities, at set times, away from their ordinary lives, and were expected to produce reactions. Flirting on camera was ruled to be work.",
+  "move": "Whether something is work depends on who sets the hours and tasks.",
+  "trap": "Treating contestants as volunteers because they applied to be on screen.",
+  "keywords": [
+    "temptation island",
+    "cour de cassation",
+    "employment contracts",
+    "contestants"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cour de cassation, chambre sociale, 3 June 2009",
+  "source_kind": "primary_document",
+  "reference": "https://www.legifrance.gouv.fr/juri/id/JURITEXT000020708141/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-rebrands-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Pearl Milling Company, which replaced the Aunt Jemima brand in 2021, was a name newly invented by marketers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It was the name of the mill in St. Joseph, Missouri, behind the self-rising pancake mix of 1889, before the product had a mascot. Retiring the Aunt Jemima image, a racial caricature, PepsiCo's Quaker Oats reached into its own history. The newest name on the box was the oldest one.",
+  "move": "Before calling a new name invented, look in the company's own past.",
+  "trap": "New corporate names sound focus-grouped, so this one seems invented too.",
+  "keywords": [
+    "pearl milling company",
+    "aunt jemima",
+    "quaker oats",
+    "pepsico",
+    "pancake mix"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "PepsiCo press release, February 2021",
+  "source_kind": "company",
+  "reference": "PepsiCo, Aunt Jemima Brand to Change Name to Pearl Milling Company, press release, 9 February 2021",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-confirmation-8",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Five fingerprint experts saw a match each had made years before, told it was a notorious misidentification. How many still called it a match?",
+  "options": [
+    "All five",
+    "Three",
+    "One"
+  ],
+  "correct": 2,
+  "answer": "One. Itiel Dror and colleagues gave the experts prints they had themselves identified, with the story that these came from the FBI's mistaken match in the 2004 Madrid bombings. Three now declared the prints did not match and one could not decide. Same ridges, same examiners, different verdicts, steered by what they expected to find.",
+  "move": "Hide the story from whoever checks the evidence until the checking is done.",
+  "trap": "Trusting experts to read their own verified work the same way twice.",
+  "keywords": [
+    "fingerprints",
+    "forensic science",
+    "itiel dror",
+    "madrid bombings",
+    "context effects"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dror, Charlton & Péron, Forensic Science International, 2006",
+  "source_kind": "paper",
+  "reference": "Dror, Charlton & Péron, Contextual information renders experts vulnerable to making erroneous identifications, Forensic Science International, 2006",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "nature-rainforests-7",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Across the Amazon, how do tree species that people domesticated before 1492 compare in abundance with other species?",
+  "options": [
+    "About as common as the rest",
+    "Far likelier to be dominant",
+    "Rarer, since planting stopped"
+  ],
+  "correct": 1,
+  "answer": "Far likelier to be dominant. Levis and colleagues found species domesticated by pre-Columbian peoples, such as Brazil nut and cacao, about five times as likely as others to rank among the hyperdominant trees, and commonest near archaeological sites. Groves tended for millennia outlived their tenders. Parts of the wild Amazon are abandoned orchards.",
+  "move": "Before crediting nature with a pattern, ask who lived there first.",
+  "trap": "Assuming the forest's make-up reflects soil and climate alone.",
+  "keywords": [
+    "domestication",
+    "brazil nut",
+    "hyperdominance",
+    "pre-columbian amazonia",
+    "archaeology"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "nature-rainforests-1"
+  ],
+  "figure": "none",
+  "source": "Levis et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "Levis et al., Persistent effects of pre-Columbian plant domestication on Amazonian forest composition, Science, 2017",
+  "written": "2026-09-27"
+}

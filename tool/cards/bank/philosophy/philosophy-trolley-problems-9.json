@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-trolley-problems-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: the people readiest to push one man to save five also show more concern for distant strangers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Kahane and colleagues found in 2015 that approving the sacrifice went with higher scores on psychopathy and no greater readiness to give to people far away or to weigh everyone's welfare equally. Critics dispute how far this generalises. A shrug at harm and a love of the greater number can produce the same answer.",
+  "move": "Two people can give the same answer for opposite reasons; ask for the reason.",
+  "trap": "Reading willingness to sacrifice one as care for the many.",
+  "keywords": [
+    "sacrificial dilemmas",
+    "utilitarianism",
+    "psychopathy",
+    "impartial beneficence"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahane et al., Cognition, 2015",
+  "source_kind": "paper",
+  "reference": "Kahane, Everett, Earp, Farias & Savulescu, 'Utilitarian' judgments in sacrificial moral dilemmas do not reflect impartial concern for the greater good, Cognition 134, 2015, pp. 193-209",
+  "written": "2026-09-27"
+}

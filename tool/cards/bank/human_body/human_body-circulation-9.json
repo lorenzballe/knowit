@@ -1,0 +1,46 @@
+{
+  "id": "human_body-circulation-9",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "With 1 mmHg equal to 13.6 mm of water, how much higher is arterial pressure at ankles 1.2 m below the heart, in mmHg?",
+  "value": 88.2,
+  "unit": "mmHg",
+  "tolerance": 1,
+  "answer": "About 88 mmHg higher than at the heart.",
+  "move": "In any column of fluid, ask how high it stands before comparing pressures.",
+  "trap": "Assuming the heart sets one pressure for the whole body.",
+  "hint": "Turn the height of the column into millimetres of water first.",
+  "steps": [
+    "Treat blood as water: 1.2 m is a column of 1,200 mm.",
+    "Each mmHg is 13.6 mm of water: 1,200 / 13.6 = 88.2.",
+    "About 88 mmHg higher than at the heart."
+  ],
+  "simply": "At the heart, mean arterial pressure is about 90 to 100 mmHg; at the ankles of someone standing it is nearly double. The veins there gain the same extra pressure, so the push driving blood through the ankles barely changes.",
+  "keywords": [
+    "blood pressure",
+    "gravity",
+    "standing",
+    "hydrostatic pressure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rowell, Human Cardiovascular Control, 1993",
+  "source_kind": "book",
+  "reference": "Rowell, Human Cardiovascular Control, Oxford University Press, 1993",
+  "written": "2026-09-27"
+}

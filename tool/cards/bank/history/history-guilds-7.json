@@ -1,0 +1,39 @@
+{
+  "id": "history-guilds-7",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "True or false: the phrase at sixes and sevens comes from a 1484 ruling between two London guilds?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The ruling was real: in 1484 the mayor, Robert Billesden, settled a precedence feud by making the Skinners and the Merchant Taylors swap sixth and seventh place yearly. But Chaucer had written of setting the world on six and seven a century earlier, in a phrase from dice. The guilds walked into an idiom.",
+  "move": "Before trusting an origin story, check which came first.",
+  "trap": "Finding a perfect match and not checking whether the phrase came first.",
+  "keywords": [
+    "sixes and sevens",
+    "billesden award",
+    "skinners",
+    "merchant taylors",
+    "chaucer"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chaucer, Troilus and Criseyde, book 4",
+  "source_kind": "primary_document",
+  "reference": "Benson (ed.), The Riverside Chaucer, Houghton Mifflin, 1987",
+  "written": "2026-09-27"
+}

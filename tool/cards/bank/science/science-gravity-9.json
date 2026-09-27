@@ -1,0 +1,42 @@
+{
+  "id": "science-gravity-9",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Air pressure is the weight of the air overhead. Roughly how many trillion tonnes does Earth's whole atmosphere weigh?",
+  "value": 5150,
+  "unit": "trillion tonnes",
+  "withinFactor": 3,
+  "answer": "10 x 510 = about 5,100 trillion tonnes.",
+  "move": "Multiply a small load by the area it covers before calling it light.",
+  "trap": "Guessing small, because air feels as if it weighs nothing.",
+  "hint": "Start from how many tonnes of air press on one square metre.",
+  "steps": [
+    "Sea-level pressure, about 101,000 pascals, is the weight of about 10 tonnes of air on each square metre.",
+    "Earth's surface is about 510 trillion square metres.",
+    "10 x 510 = about 5,100 trillion tonnes."
+  ],
+  "keywords": [
+    "atmosphere",
+    "air pressure",
+    "mass of air",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trenberth & Smith, Journal of Climate, 2005",
+  "source_kind": "paper",
+  "reference": "Trenberth & Smith, The Mass of the Atmosphere: A Constraint on Global Analyses, Journal of Climate 18, 864, 2005",
+  "written": "2026-09-27"
+}

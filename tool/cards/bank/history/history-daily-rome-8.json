@@ -1,0 +1,40 @@
+{
+  "id": "history-daily-rome-8",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Roman epitaphs from North Africa give far longer lifespans than epitaphs from Rome itself. What do such gaps mainly measure?",
+  "options": [
+    "Differences in climate and disease",
+    "Differences in commemoration habits",
+    "Differences in diet and wealth"
+  ],
+  "correct": 1,
+  "answer": "Differences in commemoration habits. Keith Hopkins showed in 1966 that epitaph ages cannot be turned into life tables: they record whom families chose to commemorate, and ages rounded to fives and tens. African stones abound in the old and in claimed centenarians; Rome's lean towards the young. The stones map mourners' customs, not deaths.",
+  "move": "Before reading a record as the world, ask who chose to make it.",
+  "trap": "Reading tombstone ages as a record of how long people lived.",
+  "keywords": [
+    "epitaphs",
+    "life expectancy",
+    "keith hopkins",
+    "north africa",
+    "demography"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Hopkins, Population Studies, 1966",
+  "source_kind": "paper",
+  "reference": "Hopkins, On the Probable Age Structure of the Roman Population, Population Studies 20, 1966, 245-264",
+  "written": "2026-09-27"
+}

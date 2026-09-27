@@ -1,0 +1,39 @@
+{
+  "id": "economics-groceries-9",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: big American supermarket chains mostly charge the same prices in rich and poor neighbourhoods?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. DellaVigna and Gentzkow found chains set nearly identical prices across their stores, even where local incomes and competition differ widely, and that tailoring prices would raise profits by about 7%. Because poorer shoppers are more sensitive to price, one price leaves them paying more than local pricing would, and richer shoppers less.",
+  "move": "Check whether a price is set for the place or for the whole chain.",
+  "trap": "Picturing chains charging more wherever shoppers have fewer options.",
+  "keywords": [
+    "uniform pricing",
+    "supermarket chains",
+    "price discrimination",
+    "neighbourhoods",
+    "retail"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DellaVigna & Gentzkow, QJE, 2019",
+  "source_kind": "paper",
+  "reference": "DellaVigna & Gentzkow, Uniform Pricing in U.S. Retail Chains, Quarterly Journal of Economics, 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-socrates-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In Plato's Meno, a boy must find the side of a square twice the area of a 2-by-2 square. What is it?",
+  "options": [
+    "A side of 4",
+    "A side of 3",
+    "The first square's diagonal"
+  ],
+  "correct": 2,
+  "answer": "The first square's diagonal. The boy first doubles the side, but 4 gives an area of 16. He tries 3: area 9, still not 8. Socrates draws the diagonal, whose square is exactly 8, and counts the boy's stumped silence as progress. No fraction can name that length.",
+  "move": "Doubling a length never simply doubles what that length encloses.",
+  "trap": "Doubling the side, because the question says double.",
+  "keywords": [
+    "meno",
+    "doubling the square",
+    "recollection",
+    "socratic method",
+    "geometry"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Meno 82b-85b",
+  "source_kind": "primary_document",
+  "reference": "Plato, Meno, trans. Sharples, Aris & Phillips, 1985",
+  "written": "2026-09-27"
+}

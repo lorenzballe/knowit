@@ -1,0 +1,40 @@
+{
+  "id": "technology-factories-8",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A machine's queue behaves like a simple random queue. Its load rises from 80% busy to 90%. How does average waiting change?",
+  "options": [
+    "It grows by about an eighth",
+    "It more than doubles",
+    "It grows about tenfold"
+  ],
+  "correct": 1,
+  "answer": "It more than doubles. In a simple random queue, waiting scales with load divided by spare capacity: 0.8 / 0.2 is 4, while 0.9 / 0.1 is 9, so waits grow 2.25 times. At 95% busy the factor is 19. The plants run closest to full are the ones where orders sit longest.",
+  "move": "The last few per cent of capacity cost the most waiting.",
+  "trap": "Assuming ten more points of load add about ten per cent waiting.",
+  "keywords": [
+    "queueing",
+    "utilisation",
+    "waiting time",
+    "factory physics",
+    "bottlenecks"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Hopp & Spearman, Factory Physics, 2008",
+  "source_kind": "book",
+  "reference": "Hopp & Spearman, Factory Physics, 3rd edition, Waveland Press, 2008",
+  "written": "2026-09-27"
+}

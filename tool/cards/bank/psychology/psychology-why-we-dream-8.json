@@ -1,0 +1,40 @@
+{
+  "id": "psychology-why-we-dream-8",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "People who said they never dreamt were woken in a laboratory during REM sleep. How often did they report a dream?",
+  "options": [
+    "Almost never",
+    "About half the time",
+    "Nearly every time"
+  ],
+  "correct": 1,
+  "answer": "About half the time. In a 1959 study, self-described non-dreamers woken from REM reported dreams on nearly half the awakenings, against over nine in ten for people who said they dreamt often. Everyone dreams; what differs is how much survives the trip to morning. A dreamless night is usually a forgotten one.",
+  "move": "A report of never is often a report of not remembering.",
+  "trap": "Taking people's word that nothing happened because they recall nothing.",
+  "keywords": [
+    "dream recall",
+    "non-dreamers",
+    "rem awakenings",
+    "sleep laboratory",
+    "forgetting"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goodenough et al., J Abnormal Social Psychology, 1959",
+  "source_kind": "paper",
+  "reference": "Goodenough, Shapiro, Holden & Steinschriber, A comparison of dreamers and nondreamers: eye movements, electroencephalograms, and the recall of dreams, Journal of Abnormal and Social Psychology, 1959",
+  "written": "2026-09-27"
+}

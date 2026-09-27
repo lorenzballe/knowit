@@ -1,0 +1,39 @@
+{
+  "id": "psychology-focus-6",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "How many identical dots, drifting among identical decoys, can a person keep track of at once?",
+  "options": [
+    "About four, a fixed limit",
+    "Up to eight, or as few as one",
+    "Seven, give or take two"
+  ],
+  "correct": 1,
+  "answer": "Up to eight, or as few as one. Alvarez and Franconeri found observers tracked about eight dots when they moved slowly, and only one when they moved fast. Franconeri later argued that speed matters mainly by bringing targets close to decoys. The limit belongs to the display as much as to the mind.",
+  "move": "Before quoting a capacity, ask under what conditions it was measured.",
+  "trap": "About four, the capacity figure textbooks give for tracking.",
+  "keywords": [
+    "multiple object tracking",
+    "attention capacity",
+    "object speed",
+    "crowding"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alvarez & Franconeri, Journal of Vision, 2007",
+  "source_kind": "paper",
+  "reference": "Alvarez & Franconeri, How many objects can you track? Evidence for a resource-limited attentive tracking mechanism, Journal of Vision, 2007",
+  "written": "2026-09-27"
+}

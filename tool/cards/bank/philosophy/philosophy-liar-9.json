@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-liar-9",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "How many syllables are in the phrase: the least integer not nameable in fewer than nineteen syllables?",
+  "value": 18,
+  "unit": "syllables",
+  "answer": "5 + 4 + 9 = 18 syllables: it names in 18 what cannot be named under 19.",
+  "move": "A description can defeat itself by being shorter than it forbids.",
+  "hint": "Group the words by how many syllables each one has.",
+  "steps": [
+    "the, least, not, in, than: 5 words of one syllable, so 5.",
+    "fewer, nineteen: 2 syllables each, so 4.",
+    "integer, nameable, syllables: 3 syllables each, so 9.",
+    "5 + 4 + 9 = 18 syllables: it names in 18 what cannot be named under 19."
+  ],
+  "keywords": [
+    "berry paradox",
+    "bertrand russell",
+    "definability",
+    "self-reference"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Russell, American Journal of Mathematics, 1908",
+  "source_kind": "paper",
+  "reference": "Russell, Mathematical Logic as Based on the Theory of Types, American Journal of Mathematics 30 (3), 1908",
+  "written": "2026-09-27"
+}

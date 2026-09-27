@@ -1,0 +1,35 @@
+{
+  "id": "history-clothes-6",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did a Victorian labourer's Sunday suit usually spend Monday to Saturday?",
+  "answer": "At the pawnbroker's. Families pledged their best clothes on Monday for a few shillings to see out the week, and redeemed them on Saturday, after payday, to wear on Sunday. Clothing made up a large share of all pledges, and the weekly interest was the price of looking respectable one day in seven.",
+  "move": "Where credit is scarce, anything that holds its value becomes a bank.",
+  "keywords": [
+    "pawnbroking",
+    "sunday best",
+    "working-class credit",
+    "clothing"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tebbutt, Making Ends Meet, 1983",
+  "source_kind": "book",
+  "reference": "Tebbutt, Making Ends Meet: Pawnbroking and Working-Class Credit, Leicester University Press, 1983",
+  "written": "2026-09-27"
+}

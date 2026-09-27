@@ -1,0 +1,40 @@
+{
+  "id": "space-reusable-boosters-9",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Which extra kilogram of hardware costs a two-stage rocket the most payload to orbit?",
+  "options": [
+    "One on the first stage",
+    "One on the upper stage",
+    "Both cost the same"
+  ],
+  "correct": 1,
+  "answer": "One on the upper stage. It rides all the way to orbital speed, so each added kilogram costs about a kilogram of payload. A first-stage kilogram is dropped a few minutes in, far short of orbital speed, and costs only a fraction of that. That is why upper stages are thrown away.",
+  "move": "Weight matters most on whatever goes the whole distance.",
+  "trap": "Treating a kilogram as a kilogram wherever it rides.",
+  "keywords": [
+    "upper stage",
+    "payload",
+    "stage mass",
+    "reusability",
+    "rocket staging"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Humble, Henry & Larson, Space Propulsion, 1995",
+  "source_kind": "book",
+  "reference": "Humble, Henry & Larson, Space Propulsion Analysis and Design, McGraw-Hill, 1995",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "nature-deep-sea-8",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: all the deep seafloor ever seen by cameras or human eyes would fit into a tenth of Belgium?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Tallying deep dives since the 1950s, Bell's team put the seafloor below 200 m ever seen at about 0.001% of the total, some 4,000 km². Most of it lies off just three countries: the United States, Japan and New Zealand. Sonar has mapped about a quarter of the seabed; eyes have seen a speck.",
+  "move": "Before trusting how much is known, ask what counted as seeing it.",
+  "trap": "Anchoring on the familiar mapping figures, which measure sonar, not sight.",
+  "keywords": [
+    "seafloor exploration",
+    "deep dives",
+    "ocean mapping",
+    "sampling bias"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Bell et al., Science Advances, 2025",
+  "source_kind": "paper",
+  "reference": "Bell et al., How little we've seen: a visual coverage estimate of the deep seafloor, Science Advances, 2025",
+  "written": "2026-09-27"
+}

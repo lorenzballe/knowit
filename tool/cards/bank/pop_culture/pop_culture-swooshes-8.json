@@ -1,0 +1,36 @@
+{
+  "id": "pop_culture-swooshes-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "also": [
+    "pop_culture.fashion.sneakers"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the photographer of the leaping Jordan picture lose his case over Nike's Jumpman logo?",
+  "answer": "Nobody owns a pose. Jacobus Rentmeester photographed Michael Jordan leaping for Life magazine in 1984; Nike restaged the leap with its own photographer, and its silhouette became the Jumpman. In 2018 the Ninth Circuit found Nike had not copied his choices of light, angle and setting. His Jordan leapt over grass, Nike's over a skyline.",
+  "move": "Copyright guards how a thing was shown, not the thing shown.",
+  "keywords": [
+    "jumpman",
+    "jacobus rentmeester",
+    "michael jordan",
+    "copyright",
+    "nike"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rentmeester v. Nike, Ninth Circuit, 2018",
+  "source_kind": "primary_document",
+  "reference": "https://law.justia.com/cases/federal/appellate-courts/ca9/15-35509/15-35509-2018-02-27.html",
+  "written": "2026-09-27"
+}

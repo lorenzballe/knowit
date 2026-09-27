@@ -1,0 +1,41 @@
+{
+  "id": "pop_culture-gadgets-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 1.44 MB floppy disk holds 2,880 sectors of 512 bytes. How many bytes does its MB stand for, in thousands?",
+  "value": 1024,
+  "unit": "thousand bytes",
+  "answer": "1,000 x 1,024 = 1,024,000 bytes, or 1,024 thousand.",
+  "move": "When a unit looks round, check which base it was rounded in.",
+  "trap": "Assuming a megabyte is either a million bytes or 1,048,576.",
+  "hint": "Write 512 as half of 1,024 and see what 2,880 becomes when halved.",
+  "steps": [
+    "2,880 sectors x 512 bytes = 1,440 x 1,024 bytes.",
+    "The label calls that 1.44 MB, so 1 MB = 1,000 x 1,024 bytes.",
+    "1,000 x 1,024 = 1,024,000 bytes, or 1,024 thousand."
+  ],
+  "keywords": [
+    "floppy disk",
+    "megabyte",
+    "bytes",
+    "storage"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mueller, Upgrading and Repairing PCs, 1999",
+  "source_kind": "book",
+  "reference": "Scott Mueller, Upgrading and Repairing PCs, 11th edition, Que, 1999",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-quantum-7",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The 2015 Delft Bell test, the first to close its main loopholes at once, rested on how many entangled pairs?",
+  "options": [
+    "About 245",
+    "About 245,000",
+    "About 245 million"
+  ],
+  "correct": 0,
+  "answer": "About 245. Electron spins in two diamonds 1.3 km apart became entangled only when photons from both happened to meet, about once an hour, so 18 days yielded 245. That beat the classical limit with about a 4% chance of a fluke. Two photon experiments later that year, with far larger samples, confirmed it.",
+  "move": "Ask how many cases a landmark result stands on, not only its verdict.",
+  "trap": "About 245 million, since physics results rest on huge datasets.",
+  "keywords": [
+    "bell test",
+    "entanglement",
+    "delft",
+    "electron spins",
+    "sample size"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hensen et al., Nature, 2015",
+  "source_kind": "paper",
+  "reference": "Hensen et al., Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres, Nature 526, 682, 2015",
+  "written": "2026-09-27"
+}

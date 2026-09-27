@@ -1,0 +1,43 @@
+{
+  "id": "science-infinity-10",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Start with a triangle of area 1. Each round, every edge sprouts a triangle one ninth the size of the previous round's. Final area?",
+  "value": 1.6,
+  "unit": "area units",
+  "tolerance": 0.01,
+  "answer": "Final area: 1 + 3/5 = 1.6.",
+  "move": "A boundary can grow forever around something that stays finite.",
+  "trap": "Expecting an endless area, because the outline grows without limit.",
+  "hint": "Each edge turns into four edges, so count the new triangles as well as their size.",
+  "steps": [
+    "Round 1: 3 triangles of 1/9 each add 1/3.",
+    "Each round has 4 times as many triangles at 1/9 the size, so it adds 4/9 of the last round.",
+    "Total added: 1/3 × 1 / (1 − 4/9) = 1/3 × 9/5 = 3/5.",
+    "Final area: 1 + 3/5 = 1.6."
+  ],
+  "keywords": [
+    "koch snowflake",
+    "fractals",
+    "geometric series",
+    "perimeter"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Mandelbrot, The Fractal Geometry of Nature",
+  "source_kind": "book",
+  "reference": "Mandelbrot, The Fractal Geometry of Nature, W. H. Freeman, 1982",
+  "written": "2026-09-27"
+}

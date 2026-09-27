@@ -1,0 +1,33 @@
+{
+  "id": "space-reusable-boosters-7",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did SpaceX design its Super Heavy booster to be caught by arms on the launch tower instead of landing on legs?",
+  "answer": "To save weight and time. Legs strong enough for a booster that size would ride to the edge of space and back on every flight, costing payload. Caught by the tower's arms, the booster also ends up where it can be refuelled and stacked again. The first catch came on 13 October 2024.",
+  "move": "The cheapest part to carry is the one left on the ground.",
+  "keywords": [
+    "starship",
+    "super heavy",
+    "tower catch",
+    "landing legs",
+    "spacex"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, 13 October 2024",
+  "source_kind": "news_archive",
+  "reference": "Chang, SpaceX Catches Returning Rocket in Mechanical Arms, The New York Times, 13 October 2024",
+  "written": "2026-09-27"
+}

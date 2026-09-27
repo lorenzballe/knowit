@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-arrow-of-time-6",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What flaw did Josef Loschmidt find in Boltzmann's proof that a gas's disorder must grow?",
+  "answer": "That the laws it used run just as well backwards. Reverse every molecule's velocity in a spread-out gas and it gathers itself up again, obeying the same mechanics. So growing disorder cannot come from the laws alone; it needs a special start, what David Albert called the past hypothesis: a past of very low entropy.",
+  "move": "If a rule works both ways, the direction must come from where things started.",
+  "keywords": [
+    "reversibility objection",
+    "josef loschmidt",
+    "ludwig boltzmann",
+    "past hypothesis"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Albert, Time and Chance, 2000",
+  "source_kind": "book",
+  "reference": "Albert, Time and Chance, Harvard University Press, 2000, chapter 4",
+  "written": "2026-09-27"
+}

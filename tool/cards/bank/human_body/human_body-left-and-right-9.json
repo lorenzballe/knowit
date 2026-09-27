@@ -1,0 +1,39 @@
+{
+  "id": "human_body-left-and-right-9",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Left-handers are about one person in ten but a far larger share of top fencers. What best explains the excess?",
+  "options": [
+    "A right-hemisphere edge in spatial skill",
+    "Opponents rarely practise against them",
+    "Left-handers are born with faster reflexes"
+  ],
+  "correct": 1,
+  "answer": "Opponents rarely practise against them. Most players spend their careers facing right-handers, so a left-hander's angles arrive unfamiliar. Raymond and colleagues found the excess in sports played against a direct opponent, such as fencing, but not in sports without one. A talent built into the brain would show up everywhere.",
+  "move": "An advantage that rests on being rare fades once it is common.",
+  "trap": "Reaching for a brain-based talent instead of the opponent's unfamiliarity.",
+  "keywords": [
+    "left-handedness",
+    "fencing",
+    "frequency dependence",
+    "interactive sports"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raymond et al., Proceedings B, 1996",
+  "source_kind": "paper",
+  "reference": "Raymond, Pontier, Dufour & Møller, Frequency-dependent maintenance of left handedness in humans, Proceedings of the Royal Society B, 1996",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "science-absolute-zero-6",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do physicists take the temperature of a gas cooled to a millionth of a kelvin?",
+  "answer": "They switch off the trap and photograph the cloud as it spreads. Any thermometer would be far hotter than the gas and would warm it, so the atoms' own speeds are measured instead: how fast the cloud swells gives the temperature. At a millionth of a kelvin, sodium atoms drift about 2 centimetres a second.",
+  "move": "When any probe would disturb a thing, let it go and watch.",
+  "keywords": [
+    "time-of-flight imaging",
+    "ultracold atoms",
+    "thermometry",
+    "sodium atoms"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ketterle, Durfee & Stamper-Kurn, 1999",
+  "source_kind": "paper",
+  "reference": "Ketterle, Durfee & Stamper-Kurn, Making, probing and understanding Bose-Einstein condensates, Proceedings of the International School of Physics Enrico Fermi, Course CXL, IOS Press, 1999",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-joy-10",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Students in California and the Midwest rated their own life satisfaction, then guessed the other group's. Who was more satisfied?",
+  "options": [
+    "The Californians, clearly",
+    "The Midwesterners, slightly",
+    "Neither: they were about equal"
+  ],
+  "correct": 2,
+  "answer": "Neither: they were about equal. Both groups predicted Californians would be happier, citing climate, and Californians were indeed far more pleased with their weather. But weather barely moved overall satisfaction. Imagining a life elsewhere, people focused on what differed between the places and forgot the jobs, friends and worries that did not.",
+  "move": "Nothing weighs as much in a life as it does while being compared.",
+  "trap": "Letting sunshine, the obvious difference, stand in for a whole life.",
+  "keywords": [
+    "focusing illusion",
+    "california",
+    "life satisfaction",
+    "climate",
+    "affective forecasting"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schkade & Kahneman, Psychological Science, 1998",
+  "source_kind": "paper",
+  "reference": "Schkade & Kahneman, Does living in California make people happy? A focusing illusion in judgments of life satisfaction, Psychological Science, 1998",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-eternity-10",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Wittgenstein's Tractatus say that a mortal could have eternal life?",
+  "answer": "By living in the present. If eternity means not endless duration but timelessness, he wrote in 1921, eternal life belongs to those who live in the present. Death, on the same page, is not an event in life: it is not lived through. Life has no end the way the visual field has no edge.",
+  "move": "Some limits cannot be seen from inside what they limit.",
+  "keywords": [
+    "ludwig wittgenstein",
+    "tractatus",
+    "timelessness",
+    "death"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wittgenstein, Tractatus, 6.4311",
+  "source_kind": "book",
+  "reference": "Wittgenstein, Tractatus Logico-Philosophicus, trans. Pears & McGuinness, Routledge & Kegan Paul, 1961, 6.4311",
+  "written": "2026-09-27"
+}

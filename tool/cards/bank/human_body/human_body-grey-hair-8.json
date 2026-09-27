@@ -1,0 +1,43 @@
+{
+  "id": "human_body-grey-hair-8",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "About how many growth cycles does a single scalp hair follicle go through in an 80-year life?",
+  "value": 25,
+  "unit": "cycles",
+  "withinFactor": 3,
+  "answer": "80 / 3.25 = about 25 cycles.",
+  "move": "Count how many times a store is drawn on before judging its size.",
+  "trap": "Picturing hair renewed every year, or growing without pause.",
+  "hint": "Start from how long one scalp hair keeps growing before it falls out.",
+  "steps": [
+    "A scalp hair grows for about 3 years before it stops.",
+    "Rest and shedding add about 3 months: about 3.25 years a cycle.",
+    "80 / 3.25 = about 25 cycles."
+  ],
+  "simply": "Each cycle, the follicle must restock its pigment cells from its stem cells, so a lifetime of colour depends on a couple of dozen restockings.",
+  "keywords": [
+    "hair cycle",
+    "anagen",
+    "hair follicle",
+    "pigment stem cells"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paus & Cotsarelis, NEJM, 1999",
+  "source_kind": "paper",
+  "reference": "Paus & Cotsarelis, The biology of hair follicles, New England Journal of Medicine, 1999",
+  "written": "2026-09-27"
+}

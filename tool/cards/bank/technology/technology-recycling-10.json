@@ -1,0 +1,42 @@
+{
+  "id": "technology-recycling-10",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Iron phosphate cathode powder is LiFePO4. With atomic masses Li 7, Fe 56, P 31, O 16, what percentage is lithium?",
+  "value": 4.4,
+  "unit": "per cent",
+  "tolerance": 0.1,
+  "answer": "About 4.4 per cent.",
+  "move": "The ingredient a thing is named after may be the smallest part of it.",
+  "trap": "Expecting the metal on the label to be a large share of the powder.",
+  "hint": "Add the masses of every atom in the formula, then take lithium's slice.",
+  "steps": [
+    "Molar mass: 7 + 56 + 31 + 4 × 16 = 158.",
+    "Lithium's share: 7 / 158 = 0.044.",
+    "About 4.4 per cent."
+  ],
+  "keywords": [
+    "lithium iron phosphate",
+    "cathode",
+    "atomic mass",
+    "lithium recovery"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "LiFePO4 molar mass",
+  "source_kind": "arithmetic",
+  "reference": "Prohaska et al., Standard atomic weights of the elements 2021 (IUPAC Technical Report), Pure and Applied Chemistry, 2022",
+  "written": "2026-09-27"
+}

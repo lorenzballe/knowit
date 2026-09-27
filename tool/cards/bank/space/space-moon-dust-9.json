@@ -1,0 +1,42 @@
+{
+  "id": "space-moon-dust-9",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A fenderless rover wheel flings Moon dust at 3 m/s and 45°. Gravity is 1.6 m/s², no air. How many metres does it fly?",
+  "value": 5.6,
+  "unit": "metres",
+  "tolerance": 0.1,
+  "answer": "9 / 1.6 ≈ 5.6 m.",
+  "move": "Remove the air and the smallest things fly as far as the largest.",
+  "trap": "Picturing Earth's dust, which air stops within centimetres.",
+  "hint": "At 45°, with no air, range is the speed squared divided by gravity.",
+  "steps": [
+    "At 45° with no air, range = speed squared / gravity.",
+    "3 x 3 = 9.",
+    "9 / 1.6 ≈ 5.6 m."
+  ],
+  "keywords": [
+    "lunar rover",
+    "fender",
+    "ballistic dust",
+    "lunar gravity"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halliday, Resnick & Walker, Fundamentals of Physics",
+  "source_kind": "book",
+  "reference": "Halliday, Resnick & Walker, Fundamentals of Physics, Wiley, 2013",
+  "written": "2026-09-27"
+}

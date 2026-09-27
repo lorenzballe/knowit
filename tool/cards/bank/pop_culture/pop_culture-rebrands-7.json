@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-rebrands-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In 1998 and 1999, US firms renamed themselves with dotcom names. Whose share prices jumped most on the news?",
+  "options": [
+    "Both kinds, by about the same",
+    "Firms already trading online",
+    "Neither: prices barely moved"
+  ],
+  "correct": 0,
+  "answer": "Both kinds, by about the same. Cooper, Dimitrov and Rau found gains beyond the market's of about 74% over the ten days around the announcement, and the jump was similar whatever a firm's actual internet involvement. Firms with no online business made the comparison: they changed nothing but the name. Investors were buying three letters.",
+  "move": "To credit the substance, find a case that had only the label.",
+  "trap": "Assuming investors paid for real internet business, not the label.",
+  "keywords": [
+    "dotcom bubble",
+    "name changes",
+    "share prices",
+    "abnormal returns"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cooper, Dimitrov & Rau, Journal of Finance, 2001",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1111/0022-1082.00408",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-insomnia-10",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "regression",
+  "question": "True or false: in trials of modern sleeping pills, people given dummy pills also fell asleep noticeably faster?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Pooling trial data submitted to the US drug regulator, Huedo-Medina and colleagues found that placebo groups improved by a substantial share of what the drug groups gained. People join trials after a run of bad nights, which tend to ease anyway; expectation helps too. The pill gets credit for much of the recovery.",
+  "move": "Ask how people who got nothing fared before crediting the treatment.",
+  "trap": "Assuming a dummy pill cannot change anything as physical as sleep.",
+  "keywords": [
+    "placebo",
+    "sleeping pills",
+    "z-drugs",
+    "clinical trials",
+    "regression to the mean"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huedo-Medina et al., BMJ, 2012",
+  "source_kind": "paper",
+  "reference": "Huedo-Medina, Kirsch, Middlemass, Klonizakis & Siriwardena, Effectiveness of non-benzodiazepine hypnotics in treatment of adult insomnia: meta-analysis of data submitted to the Food and Drug Administration, BMJ, 2012",
+  "written": "2026-09-27"
+}

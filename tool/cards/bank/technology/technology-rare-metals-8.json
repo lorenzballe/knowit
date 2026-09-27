@@ -1,0 +1,40 @@
+{
+  "id": "technology-rare-metals-8",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Rare-earth prices soared in 2011 after China cut export quotas. What became of Molycorp, the American miner that expanded to fill the gap?",
+  "options": [
+    "Became the West's main supplier",
+    "Nationalised as a strategic asset",
+    "Bankrupt within about four years"
+  ],
+  "correct": 2,
+  "answer": "Bankrupt within about four years. Prices rose several-fold in 2011, and Molycorp spent over a billion dollars rebuilding its Mountain Pass mine in California. Then Chinese exports recovered, manufacturers designed out some rare earths, and prices sank. Molycorp filed for bankruptcy in June 2015, owing about $1.7 billion.",
+  "move": "Plan for the price after the panic, not the price during it.",
+  "trap": "Treating record prices as the new level to plan around.",
+  "keywords": [
+    "molycorp",
+    "mountain pass",
+    "rare earth prices",
+    "export quotas",
+    "bankruptcy"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "High Country News, 2015",
+  "source_kind": "news_archive",
+  "reference": "https://www.hcn.org/articles/the-u-s-s-only-rare-earth-mine-files-bankruptcy/",
+  "written": "2026-09-27"
+}

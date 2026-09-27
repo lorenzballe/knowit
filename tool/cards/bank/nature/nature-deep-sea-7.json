@@ -1,0 +1,40 @@
+{
+  "id": "nature-deep-sea-7",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Of the carbon fixed by plankton in sunlit water, roughly what share sinks all the way to an abyssal seafloor 4 km down?",
+  "options": [
+    "About 1%",
+    "About 10%",
+    "About a third"
+  ],
+  "correct": 0,
+  "answer": "About 1%. Only around a tenth of surface production sinks out of the top 100 m, as dead cells and droppings called marine snow, and animals and microbes eat it on the way down. Martin's traps showed the flux shrinking at every depth. Life on the abyssal plain feeds on the crumbs of crumbs.",
+  "move": "Small losses at every step leave almost nothing to arrive.",
+  "trap": "Counting the loss at the surface and forgetting every loss below it.",
+  "keywords": [
+    "marine snow",
+    "biological pump",
+    "carbon flux",
+    "abyssal plain",
+    "sediment traps"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Martin et al., Deep-Sea Research, 1987",
+  "source_kind": "paper",
+  "reference": "Martin, Knauer, Karl & Broenkow, VERTEX: carbon cycling in the northeast Pacific, Deep-Sea Research, 1987",
+  "written": "2026-09-27"
+}

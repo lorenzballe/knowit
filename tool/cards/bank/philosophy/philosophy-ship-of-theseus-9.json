@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-ship-of-theseus-9",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Each year a random 5% of a ship's planks are replaced, old or new alike. After how many years are under half the originals left?",
+  "value": 14,
+  "unit": "years",
+  "answer": "Check: 0.95 multiplied 14 times is 0.49, just under half: 14 years.",
+  "move": "A steady percentage loss halves things slowly and never quite finishes.",
+  "trap": "Answering 10 years, as if 5% a year removed half in ten.",
+  "hint": "The originals shrink by a fixed share each year, not a fixed number.",
+  "steps": [
+    "Each year 5% of the remaining originals go, so 95% stay.",
+    "A steady loss rate halves a stock in about 70 / rate years.",
+    "70 / 5 = 14.",
+    "Check: 0.95 multiplied 14 times is 0.49, just under half: 14 years."
+  ],
+  "keywords": [
+    "plank replacement",
+    "exponential decay",
+    "rule of 70",
+    "gradual replacement"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Bartlett, American Journal of Physics, 1978",
+  "source_kind": "paper",
+  "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics 46, 1978",
+  "written": "2026-09-27"
+}

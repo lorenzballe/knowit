@@ -1,0 +1,39 @@
+{
+  "id": "economics-printing-cash-9",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "From 2008 to 2014 the Federal Reserve roughly quadrupled base money, the reserves and cash it issues. How much did broad money grow?",
+  "options": [
+    "About fourfold, in step",
+    "By about half",
+    "Not at all"
+  ],
+  "correct": 1,
+  "answer": "By about half. Base money went from under $1 trillion to about $4 trillion, but the new reserves mostly sat at the Fed, earning interest there. Broad money, mainly bank deposits, rose from about $7.7 trillion to $11.5 trillion, near its usual pace. Four times the base, half as much again in money.",
+  "move": "Money created is not money spent until someone borrows it.",
+  "trap": "Applying the textbook multiplier, so money grows in step with reserves.",
+  "keywords": [
+    "quantitative easing",
+    "monetary base",
+    "broad money",
+    "bank reserves"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "FRED, Federal Reserve Bank of St. Louis",
+  "source_kind": "statistics",
+  "reference": "Federal Reserve Bank of St. Louis, FRED series BOGMBASE and M2SL, 2025",
+  "written": "2026-09-27"
+}

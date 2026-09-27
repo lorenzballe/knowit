@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-presentism-8",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "In a growing universe of time, past people are as real as you and feel they live at the newest moment. What follows?",
+  "options": [
+    "You cannot know you are at the edge",
+    "Past people must lack all experience",
+    "The newest moment must feel different"
+  ],
+  "correct": 0,
+  "answer": "You cannot know you are at the edge. On C. D. Broad's growing block, the past stays real; only the future is missing. Every past thinker is real, conscious and sure it is now, and they vastly outnumber those at the edge. Braddon-Mitchell pressed this in 2004. Odds are, your now is an old one.",
+  "move": "Before assuming you are in the special spot, count everyone who feels they are.",
+  "trap": "Hoping the newest moment feels different from the inside.",
+  "keywords": [
+    "growing block",
+    "c. d. broad",
+    "david braddon-mitchell",
+    "the present"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Braddon-Mitchell, Analysis, 2004",
+  "source_kind": "paper",
+  "reference": "Braddon-Mitchell, How do we know it is now now?, Analysis 64 (3), 2004, pp. 199-203",
+  "written": "2026-09-27"
+}

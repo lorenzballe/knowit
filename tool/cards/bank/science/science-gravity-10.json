@@ -1,0 +1,35 @@
+{
+  "id": "science-gravity-10",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the official uncertainty on Newton's constant G grow about twelvefold in 1998?",
+  "answer": "Because one careful laboratory disagreed. In 1995 PTB, Germany's national standards institute, reported a G about 0.6% above the accepted value, far outside everyone's error bars. With no fault found in it, CODATA, which sets the recommended constants, widened its uncertainty from about 0.013% to 0.15%. Later measurements did not repeat the German value.",
+  "move": "An honest error bar can grow even as the evidence improves.",
+  "keywords": [
+    "gravitational constant",
+    "codata",
+    "ptb",
+    "measurement uncertainty"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "science-gravity-1"
+  ],
+  "figure": "none",
+  "source": "Mohr & Taylor, Reviews of Modern Physics, 2000",
+  "source_kind": "paper",
+  "reference": "Mohr & Taylor, CODATA recommended values of the fundamental physical constants: 1998, Reviews of Modern Physics 72, 351, 2000",
+  "written": "2026-09-27"
+}

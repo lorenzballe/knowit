@@ -1,0 +1,38 @@
+{
+  "id": "nature-magnetic-sense-9",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under red light, migratory birds orient by their magnetic compass as well as under green light?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Wiltschko and colleagues found caged silvereyes oriented normally under blue or green light but lost their way under red. That fits the leading idea: the compass runs on a light-triggered reaction in the eye, probably in a protein called cryptochrome that absorbs blue-green light. The bird's magnetic sense seems to be something it sees.",
+  "move": "Test a sense under changed conditions to learn what it is built from.",
+  "trap": "Assuming a magnetic sense would work whatever the light.",
+  "keywords": [
+    "silvereye",
+    "red light",
+    "cryptochrome",
+    "bird migration"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wiltschko et al., Nature, 1993",
+  "source_kind": "paper",
+  "reference": "Wiltschko, Munro, Ford & Wiltschko, Red light disrupts magnetic orientation of migratory birds, Nature, 1993",
+  "written": "2026-09-27"
+}

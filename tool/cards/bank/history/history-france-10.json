@@ -1,0 +1,38 @@
+{
+  "id": "history-france-10",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after revolutionary France legalised divorce in 1792, most divorces in its cities were sought by wives?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The law of September 1792 let either spouse divorce, on grounds from cruelty and desertion to simple incompatibility. In Rouen, Roderick Phillips found women behind most petitions brought by one spouse, many escaping violent or absent husbands. The restored monarchy abolished divorce in 1816; it returned only in 1884.",
+  "move": "Ask who most needed an exit before guessing who used it.",
+  "trap": "Assuming a revolution led by men wrote its new liberties for men.",
+  "keywords": [
+    "divorce",
+    "rouen",
+    "women",
+    "marriage law"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Phillips, Family Breakdown in Late Eighteenth-Century France",
+  "source_kind": "book",
+  "reference": "Phillips, Family Breakdown in Late Eighteenth-Century France: Divorces in Rouen, 1792–1803, Clarendon Press, 1980",
+  "written": "2026-09-27"
+}

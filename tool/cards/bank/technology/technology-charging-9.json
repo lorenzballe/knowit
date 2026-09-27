@@ -1,0 +1,41 @@
+{
+  "id": "technology-charging-9",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A car charges at 200 kW. How many times less heat do its cables make at 800 volts than at 400 volts?",
+  "value": 4,
+  "unit": "times",
+  "answer": "Heat in a cable grows with current squared: (500 / 250)² = 4.",
+  "move": "Where losses grow with the square, halving the cause quarters the cost.",
+  "trap": "Halving the current and expecting the heat to halve too.",
+  "hint": "Find the current each way; a wire's heat goes with the current squared.",
+  "steps": [
+    "At 400 volts: 200,000 W / 400 V = 500 A.",
+    "At 800 volts: 200,000 W / 800 V = 250 A.",
+    "Heat in a cable grows with current squared: (500 / 250)² = 4."
+  ],
+  "keywords": [
+    "800-volt batteries",
+    "fast charging",
+    "cable heating",
+    "electric current"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Hughes, Electrical and Electronic Technology, 2016",
+  "source_kind": "book",
+  "reference": "Hughes, Electrical and Electronic Technology, 12th edition, Pearson, 2016",
+  "written": "2026-09-27"
+}

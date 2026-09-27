@@ -1,0 +1,39 @@
+{
+  "id": "psychology-flow-9",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Students rated flow reached alone and flow reached with other people. Which kind did they rate as more enjoyable?",
+  "options": [
+    "Flow reached alone",
+    "Flow reached with others",
+    "Neither, both about equal"
+  ],
+  "correct": 1,
+  "answer": "Flow reached with others. Walker compared flow in solitary activities, in ones done alongside others, and in ones needing interaction, like a team game. Social flow was rated more enjoyable than solitary flow, and interactive flow most of all. Picture a band locked into a groove.",
+  "move": "The picture that comes to mind first is not a survey of the cases.",
+  "trap": "Flow reached alone, because absorption calls up the lone painter or coder.",
+  "keywords": [
+    "social flow",
+    "enjoyment",
+    "team activities",
+    "solitude"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walker, Journal of Positive Psychology, 2010",
+  "source_kind": "paper",
+  "reference": "Walker, Experiencing flow: is doing it together better than doing it alone?, Journal of Positive Psychology, 2010",
+  "written": "2026-09-27"
+}

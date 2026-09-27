@@ -1,0 +1,42 @@
+{
+  "id": "human_body-fingerprints-9",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Galton put the odds of two fingerprints matching by chance at 1 in 64 billion. What made his figure so small?",
+  "options": [
+    "His sample of prints was small",
+    "He left out identical twins",
+    "He treated each region as independent"
+  ],
+  "correct": 2,
+  "answer": "He treated each region as independent. Galton cut a print into 24 squares, gave each a one-in-two chance of being guessed, and multiplied, adding factors for pattern and ridge count. But neighbouring ridges share their flow, so one square predicts the next. Multiplying odds that lean on each other makes a coincidence look impossibly rare.",
+  "move": "Multiply chances only when one tells you nothing about the other.",
+  "trap": "Blaming a small sample, the usual weak point of old statistics.",
+  "keywords": [
+    "francis galton",
+    "fingerprint statistics",
+    "probability",
+    "independence"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stigler, Genetics, 1995",
+  "source_kind": "paper",
+  "reference": "Stigler, Galton and identification by fingerprints, Genetics, 1995",
+  "written": "2026-09-27"
+}

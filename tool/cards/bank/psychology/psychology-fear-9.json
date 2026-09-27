@@ -1,0 +1,39 @@
+{
+  "id": "psychology-fear-9",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: exposure therapy for a phobia only works if the fear subsides before each session ends?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. How far fear falls within a session predicts the outcome months later poorly; patients who stay frightened to the end often do as well. Michelle Craske's team argues that what counts is learning that the feared outcome did not come. The lesson is that the dog did not bite, not that the heart slowed.",
+  "move": "Judge a treatment by what lasts, not by how the session felt.",
+  "trap": "Taking calm at the end of a session as the sign of cure.",
+  "keywords": [
+    "exposure therapy",
+    "habituation",
+    "inhibitory learning",
+    "michelle craske",
+    "phobia"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Craske et al., Behaviour Research and Therapy, 2008",
+  "source_kind": "paper",
+  "reference": "Craske, Kircanski, Zelikowsky, Mystkowski, Chowdhury & Baker, Optimizing inhibitory learning during exposure therapy, Behaviour Research and Therapy, 2008",
+  "written": "2026-09-27"
+}

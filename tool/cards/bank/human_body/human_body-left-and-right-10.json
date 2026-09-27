@@ -1,0 +1,39 @@
+{
+  "id": "human_body-left-and-right-10",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Damage to which half of the brain more often leaves a patient ignoring one whole side of the world?",
+  "options": [
+    "Either half, about equally",
+    "The right half",
+    "The left half"
+  ],
+  "correct": 1,
+  "answer": "The right half. Severe, lasting neglect of the left side of space follows right-hemisphere strokes far more often than the mirror case follows left ones. The right hemisphere attends to both sides of space, the left mostly to the right, so only right damage leaves one side unwatched. Patients eat from half the plate.",
+  "move": "Symmetry in the parts does not guarantee symmetry in what they do.",
+  "trap": "Expecting the two halves to mirror each other, as they do for movement.",
+  "keywords": [
+    "hemispatial neglect",
+    "stroke",
+    "attention",
+    "right hemisphere"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corbetta & Shulman, Annual Review of Neuroscience",
+  "source_kind": "paper",
+  "reference": "Corbetta & Shulman, Spatial neglect and attention networks, Annual Review of Neuroscience, 2011",
+  "written": "2026-09-27"
+}

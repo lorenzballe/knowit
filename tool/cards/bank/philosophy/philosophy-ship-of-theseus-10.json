@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-ship-of-theseus-10",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is a historic building rebuilt from new materials after its destruction still authentic?",
+  "sides": [
+    "Yes, it is authentic",
+    "No, it is a replica"
+  ],
+  "answer": "Warsaw's Old Town was blown up by German forces in 1944 and rebuilt from paintings, drawings and surveys; UNESCO listed it in 1980 as a reconstruction. The 1994 Nara Document accepted that authenticity can lie in form, craft, use and spirit, not only in original fabric. Otherwise a city loses its past twice.",
+  "move": "It turns on whether authenticity lives in the material or in the continuing practice.",
+  "counterpoint": "A rebuilt facade tells visitors something that did not happen: continuity. Original fabric carries evidence, tool marks, repairs and damage no drawing records, and once lost it can only be imitated. The Venice Charter of 1964 ruled out reconstruction for that reason. A copy, however loving, is testimony written after the fact.",
+  "keywords": [
+    "warsaw old town",
+    "reconstruction",
+    "nara document",
+    "venice charter",
+    "authenticity"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ICOMOS, Nara Document on Authenticity, 1994",
+  "source_kind": "primary_document",
+  "reference": "ICOMOS, The Nara Document on Authenticity, 1994; ICOMOS, International Charter for the Conservation and Restoration of Monuments and Sites (Venice Charter), 1964",
+  "written": "2026-09-27"
+}

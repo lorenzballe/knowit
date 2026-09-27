@@ -1,0 +1,40 @@
+{
+  "id": "history-plague-8",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "England lost perhaps half its people in 1348 and 1349. When did its population regain the level it had before?",
+  "options": [
+    "In the early 1600s",
+    "By about 1400",
+    "By about 1500"
+  ],
+  "correct": 0,
+  "answer": "In the early 1600s, on most estimates. Plague kept returning every decade or so, and deaths outran births: England fell further, to around 2 million in the mid-1400s. Only under the early Stuarts did it pass its pre-plague level of roughly 4.5 to 5 million. Some villages never returned, surviving as bumps in fields.",
+  "move": "One blow heals; a blow that keeps repeating sets a new normal.",
+  "trap": "Expecting a rebound within a few generations, as after one blow.",
+  "keywords": [
+    "england population",
+    "recurrent plague",
+    "demography",
+    "deserted villages",
+    "recovery"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Broadberry et al., British Economic Growth, 2015",
+  "source_kind": "book",
+  "reference": "Broadberry, Campbell, Klein, Overton and van Leeuwen, British Economic Growth, 1270-1870, Cambridge University Press, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "history-cathedrals-8",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "also": [
+    "history.middle_ages.plague"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "In 1339 Siena began a vast new nave that would have turned its cathedral into a transept. What became of it?",
+  "options": [
+    "Completed in the 1500s after long pauses",
+    "Finished on a smaller scale by 1400",
+    "Abandoned in 1357, its walls left standing"
+  ],
+  "correct": 2,
+  "answer": "Abandoned in 1357, its walls left standing. The plague of 1348 had taken much of Siena's workforce and wealth, and the new work had shown structural faults. The city stopped, pulled down unsafe parts and kept its old cathedral. The unfinished façade wall, the facciatone, still stands beside it, open to the sky.",
+  "move": "What is already built is not a reason to build the rest.",
+  "trap": "Assuming a city that had spent so much would finish the job.",
+  "keywords": [
+    "siena cathedral",
+    "duomo nuovo",
+    "black death",
+    "facciatone",
+    "abandoned buildings"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Norman, Siena and the Virgin, 1999",
+  "source_kind": "book",
+  "reference": "Norman, Siena and the Virgin: Art and Politics in a Late Medieval City State, Yale University Press, 1999",
+  "written": "2026-09-27"
+}

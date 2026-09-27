@@ -1,0 +1,38 @@
+{
+  "id": "economics-minimum-wage-10",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: more than one US hourly worker in ten is paid the federal minimum of $7.25 or less?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Bureau of Labor Statistics counted about 1% of hourly-paid workers at or below $7.25 in 2023, fewer than a million people, many of them in tipped jobs. Thirty states and Washington DC set higher minimums, and employers elsewhere often pay above it. The federal figure is a headline more than a wage.",
+  "move": "A number often quoted is not necessarily a number often paid.",
+  "trap": "Assuming the famous federal figure is what many people earn.",
+  "keywords": [
+    "federal minimum wage",
+    "hourly workers",
+    "state minimums",
+    "tipped workers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BLS, Characteristics of Minimum Wage Workers",
+  "source_kind": "statistics",
+  "reference": "US Bureau of Labor Statistics, Characteristics of minimum wage workers, 2023, BLS Reports, 2024",
+  "written": "2026-09-27"
+}

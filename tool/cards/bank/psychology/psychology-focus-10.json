@@ -1,0 +1,32 @@
+{
+  "id": "psychology-focus-10",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "People tracking white shapes miss an unexpected cross. What property of the cross decides whether they see it?",
+  "answer": "How closely it resembles what they are tracking. Most and colleagues had people follow white shapes and ignore black ones. An unexpected white cross was usually noticed; a black one, matching the ignored set, was mostly missed, and grey fell between. Attention filters by feature, and the filter hides whatever matches the rejected pile.",
+  "move": "What gets missed is whatever looks like the things being ignored.",
+  "keywords": [
+    "inattentional blindness",
+    "attentional set",
+    "similarity",
+    "selective ignoring"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Most et al., Psychological Science, 2001",
+  "source_kind": "paper",
+  "reference": "Most, Simons, Scholl, Jimenez, Clifford & Chabris, How not to be seen: the contribution of similarity and selective ignoring to sustained inattentional blindness, Psychological Science, 2001",
+  "written": "2026-09-27"
+}

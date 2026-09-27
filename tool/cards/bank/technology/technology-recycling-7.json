@@ -1,0 +1,39 @@
+{
+  "id": "technology-recycling-7",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the early 2020s, what supplied most of the material entering lithium-ion battery recyclers?",
+  "options": [
+    "Worn-out electric-car batteries",
+    "Scrap from battery factories",
+    "Old phones and laptops"
+  ],
+  "correct": 1,
+  "answer": "Scrap from battery factories. New plants reject much of their output while they learn, and cutting coated foil leaves offcuts; all of it arrives fresh, sorted and in bulk. Electric cars sold in large numbers only from about 2018, and most are still driving. Recyclers were fed by the gigafactories' mistakes.",
+  "move": "Before picturing where supply comes from, ask what has actually reached its end.",
+  "trap": "Picturing the retired electric cars that recycling is always said to await.",
+  "keywords": [
+    "production scrap",
+    "gigafactories",
+    "recycling feedstock",
+    "electric cars"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "International Energy Agency, Global EV Outlook 2023",
+  "source_kind": "institution",
+  "reference": "International Energy Agency, Global EV Outlook 2023: Catching up with climate ambitions, 2023",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-colours-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "In 2014 a US court sided with T-Mobile's magenta against AT&T's Aio Wireless. What was Aio barred from using?",
+  "options": [
+    "Any shade of pink or purple",
+    "Large blocks of one plum shade",
+    "Only the exact Pantone magenta"
+  ],
+  "correct": 1,
+  "answer": "Large blocks of one plum shade. A Texas federal judge found Aio's Pantone 676C, spread across shop walls and adverts, confusingly close to T-Mobile's magenta, and enjoined large swaths of it or similar shades. Pinks in general stayed free. A colour mark reaches past its exact number, but only as far as confusion does.",
+  "move": "A right drawn around one number usually reaches its neighbours too.",
+  "trap": "Treating the registered Pantone number as the mark's exact boundary.",
+  "keywords": [
+    "t-mobile",
+    "magenta",
+    "aio wireless",
+    "colour trademarks",
+    "pantone"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "T-Mobile US v. Aio Wireless, S.D. Tex., 2014",
+  "source_kind": "primary_document",
+  "reference": "https://www.courtlistener.com/opinion/8730752/t-mobile-us-inc-v-aio-wireless-llc/",
+  "written": "2026-09-27"
+}

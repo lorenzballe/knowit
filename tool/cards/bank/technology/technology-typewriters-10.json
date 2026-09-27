@@ -1,0 +1,39 @@
+{
+  "id": "technology-typewriters-10",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On a typical manual typewriter, what did pressing the shift key physically do?",
+  "options": [
+    "It swapped in a second set of typebars",
+    "It raised the carriage or lowered the typebars",
+    "It turned each typebar's head halfway round"
+  ],
+  "correct": 1,
+  "answer": "It moved the carriage or the typebars. Each bar carried two letters on one slug, capital above small, and shift lifted the carriage or dropped the basket of bars so the other half struck. One bar per key halved the moving parts. Lifting a whole carriage was heavy work for a little finger.",
+  "move": "When one part does two jobs, look for what moves to switch between them.",
+  "trap": "Picturing capitals as a separate set of letters needing their own parts.",
+  "keywords": [
+    "shift key",
+    "typebars",
+    "carriage",
+    "capital letters"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adler, The Writing Machine, 1973",
+  "source_kind": "book",
+  "reference": "Adler, The Writing Machine: A History of the Typewriter, Allen & Unwin, 1973",
+  "written": "2026-09-27"
+}

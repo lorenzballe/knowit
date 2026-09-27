@@ -1,0 +1,39 @@
+{
+  "id": "science-cooking-reactions-10",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A tomato sauce holding 0.6 mg of iron per 100 g simmers in an unenamelled cast-iron pot. Roughly how much iron afterwards?",
+  "options": [
+    "About 6 mg",
+    "About 0.7 mg",
+    "About 60 mg"
+  ],
+  "correct": 0,
+  "answer": "About 6 mg, roughly ten times as much. Acid in the tomatoes dissolves iron from the pot wall during a long simmer. In a 1986 US test, spaghetti sauce rose from about 0.6 to nearly 6 mg per 100 g. One serving then carries a good share of an adult's daily iron.",
+  "move": "A container can be an ingredient; ask what it gives up.",
+  "trap": "About 0.7 mg, as a seasoned pot seems to add almost nothing.",
+  "keywords": [
+    "cast iron",
+    "tomato sauce",
+    "dietary iron",
+    "acidity"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brittin & Nossaman, J. Am. Diet. Assoc., 1986",
+  "source_kind": "paper",
+  "reference": "Brittin & Nossaman, Iron content of food cooked in iron utensils, Journal of the American Dietetic Association 86, 897, 1986",
+  "written": "2026-09-27"
+}

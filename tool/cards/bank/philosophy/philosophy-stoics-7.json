@@ -1,0 +1,35 @@
+{
+  "id": "philosophy-stoics-7",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "also": [
+    "philosophy.paradoxes.ship_of_theseus"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the early Stoics say would happen to the whole world, again and again?",
+  "answer": "It would burn up and be remade exactly as before. In the conflagration everything turns to fire; the same order then rebuilds the same cosmos, people included. Later reports say Socrates would again face the same accusers and drink the same poison. Stoics debated whether that Socrates is the same man or an exact twin.",
+  "move": "Ask whether a perfect copy is the same thing or only its twin.",
+  "keywords": [
+    "conflagration",
+    "eternal recurrence",
+    "stoic cosmology",
+    "identity"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Long & Sedley, The Hellenistic Philosophers, 1987",
+  "source_kind": "reference_work",
+  "reference": "Long & Sedley, The Hellenistic Philosophers, vol. 1, section 52, Cambridge University Press, 1987",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-cables-7",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does mending a cable five kilometres down take at least three passes with a grapnel?",
+  "answer": "Because a loop hauled up whole from that depth would likely snap. The ship drags a grapnel that cuts the cable, then hooks one end and buoys it, then raises the other. A spare length is spliced in on deck, and the last joint goes down as a loop kilometres long.",
+  "move": "When lifting something whole is impossible, cut it and fetch the halves.",
+  "keywords": [
+    "cable repair",
+    "grapnel",
+    "cable ships",
+    "splicing",
+    "deep sea"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burnett, Beckman & Davenport, Submarine Cables handbook",
+  "source_kind": "book",
+  "reference": "Burnett, Beckman & Davenport (eds.), Submarine Cables: The Handbook of Law and Policy, Martinus Nijhoff, 2014",
+  "written": "2026-09-27"
+}

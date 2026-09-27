@@ -1,0 +1,39 @@
+{
+  "id": "nature-storms-8",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Atlantic storms lasting two days or less rose from under one a year around 1900 to about five. What best explains it?",
+  "options": [
+    "Warmer seas spawn more weak storms",
+    "Satellites and aircraft now spot them",
+    "Stronger El Niños cut storms short"
+  ],
+  "correct": 1,
+  "answer": "Satellites and aircraft now spot them. A storm that lived a day over open ocean in 1900 entered the record only if a ship happened to cross it. Landsea and colleagues found that storms lasting longer than two days show little rise over the same century. The brief ones blew and died unwatched.",
+  "move": "Before trusting a rising count, ask whether the counting got better.",
+  "trap": "Reading a longer list as a warmer ocean rather than sharper eyes.",
+  "keywords": [
+    "tropical storms",
+    "storm counts",
+    "satellites",
+    "hurricane database"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Landsea et al., Journal of Climate, 2010",
+  "source_kind": "paper",
+  "reference": "https://journals.ametsoc.org/view/journals/clim/23/10/2009jcli3034.1.xml",
+  "written": "2026-09-27"
+}

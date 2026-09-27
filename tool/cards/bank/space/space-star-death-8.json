@@ -1,0 +1,39 @@
+{
+  "id": "space-star-death-8",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A star born with about 200 times the Sun's mass and few heavy elements comes to the end of its life. What remains?",
+  "options": [
+    "A black hole of about 100 Suns",
+    "A neutron star",
+    "Nothing at all"
+  ],
+  "correct": 2,
+  "answer": "Nothing at all. Its core grows so hot that light turns into pairs of electrons and positrons, robbing the core of pressure. It falls in, burns its oxygen at once and blows itself apart. This is why single stars should leave no black holes between roughly 50 and 130 Suns: the biggest cores erase themselves.",
+  "move": "A trend that holds through the middle can break at the ends.",
+  "trap": "Assuming a bigger star always leaves a bigger remnant.",
+  "keywords": [
+    "pair-instability supernova",
+    "massive stars",
+    "black hole mass gap",
+    "positrons"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heger & Woosley, Astrophysical Journal, 2002",
+  "source_kind": "paper",
+  "reference": "Heger & Woosley, The Nucleosynthetic Signature of Population III, The Astrophysical Journal 567, 532, 2002",
+  "written": "2026-09-27"
+}

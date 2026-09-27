@@ -1,0 +1,33 @@
+{
+  "id": "nature-magnetic-sense-6",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did bonnethead sharks do when placed in the magnetic field of a site 600 km south of home?",
+  "answer": "They headed north, towards home. Keller and colleagues put bonnetheads caught off Florida in a tank ringed with electric coils that reproduced the field's strength and tilt at a distant spot. Under the southern field the sharks oriented northward, as if they knew they had been moved. They return to the same estuaries every year.",
+  "move": "A compass tells direction; a map also tells you where you are.",
+  "keywords": [
+    "bonnethead shark",
+    "magnetic map",
+    "navigation",
+    "field strength",
+    "inclination"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Keller et al., Current Biology, 2021",
+  "source_kind": "paper",
+  "reference": "Keller et al., Map-like use of Earth's magnetic field in sharks, Current Biology, 2021",
+  "written": "2026-09-27"
+}

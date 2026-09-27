@@ -1,0 +1,32 @@
+{
+  "id": "human_body-digestion-10",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What differs in the saliva of people whose ancestors lived on rice, wheat or tubers?",
+  "answer": "It carries more starch-cutting enzyme. The gene for salivary amylase, AMY1, comes in anything from about 2 to 15 copies per person, and enzyme levels track the copies. In 2007, populations with starch-rich diets averaged more copies than rainforest hunters, herders and Arctic peoples who eat little starch. Chewed bread is already being digested.",
+  "move": "What a people eat for long enough can be counted in their genes.",
+  "keywords": [
+    "salivary amylase",
+    "amy1",
+    "starch",
+    "gene copies"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Perry et al., Nature Genetics, 2007",
+  "source_kind": "paper",
+  "reference": "Perry, Dominy, Claw et al., Diet and the evolution of human amylase gene copy number variation, Nature Genetics, 2007",
+  "written": "2026-09-27"
+}

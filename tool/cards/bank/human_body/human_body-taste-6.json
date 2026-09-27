@@ -1,0 +1,36 @@
+{
+  "id": "human_body-taste-6",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "also": [
+    "human_body.senses.balance"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the sensor that lets the tongue taste sour share with the inner ear's balance organs?",
+  "answer": "A gene. Sour-sensing cells detect acid through otopetrin-1, a channel that lets protons, the core of every acid, flow straight into the cell. The gene was named years earlier from mutant mice that walked with tilted heads, because their inner ears grew no ear stones. Mice lacking it respond far less to sour.",
+  "move": "A name records where something was found first, not what it mainly does.",
+  "keywords": [
+    "sour taste",
+    "otopetrin-1",
+    "proton channel",
+    "ear stones",
+    "taste cells"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tu et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "Tu, Cooper, Wang et al., An evolutionarily conserved gene family encodes proton-selective ion channels, Science, 2018",
+  "written": "2026-09-27"
+}

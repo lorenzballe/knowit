@@ -1,0 +1,32 @@
+{
+  "id": "nature-night-vision-8",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did night-fighter crews in the Second World War wear red goggles indoors before flying?",
+  "answer": "To start their night vision early. Rods, the cells that see in dim light, barely respond to deep red, so red light let cones read maps and faces while rods rebuilt their light-sensitive pigment, which takes about half an hour of darkness. Crews could walk from a bright briefing room straight into the night.",
+  "move": "Protect the slow resource while the fast one does the work.",
+  "keywords": [
+    "red goggles",
+    "dark adaptation",
+    "rods",
+    "night fighters"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hecht & Hsia, JOSA, 1945",
+  "source_kind": "paper",
+  "reference": "Hecht & Hsia, Dark adaptation following light adaptation to red and white lights, Journal of the Optical Society of America, 1945",
+  "written": "2026-09-27"
+}

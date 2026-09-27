@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sleep-stages-10",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "From which stage of sleep is a person usually hardest to wake with a sound?",
+  "options": [
+    "Deep slow-wave sleep",
+    "REM, the dreaming stage",
+    "Stage N2, light sleep"
+  ],
+  "correct": 0,
+  "answer": "Deep slow-wave sleep. Sounds must be loudest to wake people from it, and those woken are groggiest. In REM, despite the vivid dreams, waking thresholds are closer to light N2 sleep, The deepest-seeming experience is not the deepest sleep.",
+  "move": "How absorbing an experience is says little about how hard it is to interrupt.",
+  "trap": "Assuming the stage with the most vivid dreams must be the deepest.",
+  "keywords": [
+    "arousal threshold",
+    "slow-wave sleep",
+    "rem sleep",
+    "sleep inertia",
+    "waking"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rechtschaffen et al., Perceptual and Motor Skills, 1966",
+  "source_kind": "paper",
+  "reference": "Rechtschaffen, Hauri & Zeitlin, Auditory awakening thresholds in REM and NREM sleep stages, Perceptual and Motor Skills, 1966",
+  "written": "2026-09-27"
+}

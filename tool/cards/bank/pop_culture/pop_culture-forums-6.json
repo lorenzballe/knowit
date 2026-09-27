@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-forums-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Why did three Usenet administrators set up the alt. hierarchy of discussion groups in 1987?",
+  "options": [
+    "To route round a veto on new groups",
+    "To keep adult material apart",
+    "To move off-topic chatter elsewhere"
+  ],
+  "correct": 0,
+  "answer": "To route round a veto. New groups in Usenet's main hierarchies needed the nod of the backbone cabal, the operators of its biggest relay sites, who refused ones such as rec.drugs. John Gilmore, Brian Reid and Gordon Moffett built alt.*, where groups needed no vote. Among the first were alt.drugs and alt.gourmand, for recipes.",
+  "move": "A gatekeeper who says no often creates the door around them.",
+  "trap": "Its later fame for adult groups makes that seem the reason.",
+  "keywords": [
+    "usenet",
+    "alt hierarchy",
+    "backbone cabal",
+    "newsgroups",
+    "john gilmore"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hauben & Hauben, Netizens, 1997",
+  "source_kind": "book",
+  "reference": "Michael Hauben & Ronda Hauben, Netizens: On the History and Impact of Usenet and the Internet, IEEE Computer Society Press, 1997",
+  "written": "2026-09-27"
+}

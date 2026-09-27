@@ -1,0 +1,40 @@
+{
+  "id": "history-food-10",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "also": [
+    "food.food_history.potatoes"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Would stopping Ireland's food exports in 1846–47 have prevented most deaths in the Great Famine?",
+  "sides": [
+    "Yes, close the ports",
+    "No, the gap was too big"
+  ],
+  "answer": "Food kept leaving while people starved: grain, cattle, pigs and butter went to Britain through the worst months of 1846 and 1847. Irish ports had been closed to food exports in the dearth of 1782–83, so the remedy was known. Kept at home and handed out early, that food could have fed the hungriest districts.",
+  "move": "Whichever side you took, the size of the lost crop against the exports decides it.",
+  "counterpoint": "The potato failure was vast: the lost crop held several times the food in all the grain Ireland exported. By 1847 Ireland imported far more grain than it sent out, and people still died, because the starving had no money and relief came late. Keeping the exports could have closed only part of the gap.",
+  "keywords": [
+    "great famine",
+    "ireland",
+    "food exports",
+    "famine relief"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ó Gráda, Black '47 and Beyond, 1999",
+  "source_kind": "book",
+  "reference": "Ó Gráda, Black '47 and Beyond: The Great Irish Famine in History, Economy, and Memory, Princeton University Press, 1999",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "nature-ancient-trees-10",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A living tree has 4,800 rings; a dead trunk, 3,000, its outer 400 matching the living tree's inner 400. How many years do they span?",
+  "value": 7400,
+  "unit": "years",
+  "answer": "7,800 − 400 = 7,400 years.",
+  "move": "When two records overlap, count the overlap once.",
+  "trap": "Adding the two counts and forgetting the shared years.",
+  "hint": "Line the two trunks up on the rings they share before adding anything.",
+  "steps": [
+    "Laid end to end, the two trees hold 4,800 + 3,000 = 7,800 rings.",
+    "The 400 matched rings are the same years, counted twice.",
+    "7,800 − 400 = 7,400 years."
+  ],
+  "keywords": [
+    "crossdating",
+    "bristlecone pine",
+    "tree-ring chronology",
+    "dead wood"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Ferguson, Science, 1968",
+  "source_kind": "paper",
+  "reference": "Ferguson, Bristlecone pine: science and esthetics, Science, 1968",
+  "written": "2026-09-27"
+}

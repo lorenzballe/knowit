@@ -1,0 +1,43 @@
+{
+  "id": "technology-oled-10",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 1,080 × 2,400 OLED gives every pixel a green subpixel but only every other pixel a red one. How many million red subpixels?",
+  "value": 1.296,
+  "unit": "million red subpixels",
+  "tolerance": 0.01,
+  "answer": "2,592,000 / 2 ≈ 1.3 million red subpixels.",
+  "move": "Ask what each counted unit contains before multiplying by the count.",
+  "trap": "Assuming every pixel has its own red, green and blue.",
+  "hint": "Count the pixels first, then ask how many of them own a red.",
+  "steps": [
+    "1,080 × 2,400 = 2,592,000 pixels.",
+    "Red and blue alternate from pixel to pixel, so only half the pixels have a red.",
+    "2,592,000 / 2 ≈ 1.3 million red subpixels."
+  ],
+  "keywords": [
+    "subpixels",
+    "pentile",
+    "diamond layout",
+    "resolution",
+    "oled phones"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tsujimura, OLED Display Fundamentals, 2017",
+  "source_kind": "book",
+  "reference": "Tsujimura, OLED Display Fundamentals and Applications, 2nd edition, Wiley, 2017",
+  "written": "2026-09-27"
+}

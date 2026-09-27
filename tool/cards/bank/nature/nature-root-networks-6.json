@@ -1,0 +1,33 @@
+{
+  "id": "nature-root-networks-6",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a leafless kauri stump in a New Zealand forest stay alive?",
+  "answer": "On its neighbours' water. Its roots are grafted to nearby kauri, and Bader and Leuzinger found its sap runs in reverse: water seeps in at night, when the intact trees rest, and drains out by day, when they pull hard. With no leaves of its own, it lives as an outgrowth of theirs.",
+  "move": "A part that looks dead may be running on someone else's supply.",
+  "keywords": [
+    "kauri",
+    "tree stump",
+    "root grafts",
+    "sap flow",
+    "water potential"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bader & Leuzinger, iScience, 2019",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/31398586/",
+  "written": "2026-09-27"
+}

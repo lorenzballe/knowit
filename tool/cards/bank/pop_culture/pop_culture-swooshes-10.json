@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-swooshes-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the swoosh was on shoes before the company that sold them was called Nike?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The mark first appeared in 1971 and 1972, when the firm was Blue Ribbon Sports, an Oregon importer of Japanese running shoes; Nike was only the name of its own new shoe line. The company took Nike as its legal name in 1978. For six years the swoosh advertised a brand, not a firm.",
+  "move": "A product can outgrow the company, and then the company takes its name.",
+  "trap": "Assuming the logo was drawn for a company already named Nike.",
+  "keywords": [
+    "blue ribbon sports",
+    "nike",
+    "swoosh",
+    "company name"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Strasser & Becklund, Swoosh, 1991",
+  "source_kind": "book",
+  "reference": "J. B. Strasser & Laurie Becklund, Swoosh: The Unauthorized Story of Nike and the Men Who Played There, Harcourt Brace Jovanovich, 1991",
+  "written": "2026-09-27"
+}

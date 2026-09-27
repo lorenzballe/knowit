@@ -1,0 +1,37 @@
+{
+  "id": "psychology-breaking-them-10",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should health services pay smokers cash rewards for staying off cigarettes?",
+  "sides": [
+    "Yes, pay them",
+    "No, spend it elsewhere"
+  ],
+  "answer": "Money works where exhortation fails. In Volpp and colleagues' trial, employees offered up to $750 were about three times as likely to have quit 9 to 12 months on, 14.7% against 5.0%, and the gap held after payments ended. Each quitter saves a health system far more than the reward costs.",
+  "move": "Whichever side you took, the hinge is what happens after the last payment.",
+  "counterpoint": "The effect shrinks once the money stops: 18 months on, the same trial showed 9.4% against 3.6%. Payments reward some who would have quit anyway, strike many as unfair to those who never smoked, and may teach that health is a job done for wages. Free medication and counselling have firmer long-term records.",
+  "keywords": [
+    "financial incentives",
+    "smoking cessation",
+    "health policy",
+    "randomised trial"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Volpp et al., NEJM, 2009",
+  "source_kind": "paper",
+  "reference": "Volpp et al., A randomized, controlled trial of financial incentives for smoking cessation, New England Journal of Medicine, 2009",
+  "written": "2026-09-27"
+}

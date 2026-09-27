@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-gadgets-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sunkCost",
+  "question": "Motorola's Iridium satellite phone network cost over $5 billion and went bankrupt in 1999. What did buyers pay for it?",
+  "options": [
+    "About $2.5 billion",
+    "About $500 million",
+    "About $25 million"
+  ],
+  "correct": 2,
+  "answer": "About $25 million, roughly half a cent per dollar spent. Brick-sized handsets cost about $3,000 and calls several dollars a minute, so far fewer customers signed up than planned. Buyers paid for what the 66 satellites could earn from then on. Motorola had been preparing to steer them into the atmosphere to burn.",
+  "move": "What something cost says nothing about what it is worth now.",
+  "trap": "Expecting a price near what was spent, as if cost set value.",
+  "keywords": [
+    "iridium",
+    "motorola",
+    "satellite phones",
+    "bankruptcy"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Air & Space, history of Iridium",
+  "source_kind": "news_archive",
+  "reference": "https://www.smithsonianmag.com/air-space-magazine/the-rise-and-fall-and-rise-of-iridium-5615034/",
+  "written": "2026-09-27"
+}

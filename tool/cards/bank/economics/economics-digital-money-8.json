@@ -1,0 +1,39 @@
+{
+  "id": "economics-digital-money-8",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By one leading estimate, what share of Kenyan households did mobile money lift out of extreme poverty by 2014?",
+  "options": [
+    "About 2%",
+    "About 20%",
+    "Almost none"
+  ],
+  "correct": 0,
+  "answer": "About 2%, roughly 194,000 households. Suri and Jack compared households whose nearest M-Pesa agents multiplied fastest with others, and found the largest gains among women who moved from farming into business. Critics dispute the design and the size; even at face value, the figure is modest. A celebrated success, counted in thousands rather than millions.",
+  "move": "A famous success still needs its size checked.",
+  "trap": "Picking a fifth, because M-Pesa is development's best-known success story.",
+  "keywords": [
+    "m-pesa",
+    "kenya",
+    "poverty",
+    "mobile money"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Suri and Jack, Science, 2016",
+  "source_kind": "paper",
+  "reference": "Suri & Jack, The long-run poverty and gender impacts of mobile money, Science, 2016",
+  "written": "2026-09-27"
+}

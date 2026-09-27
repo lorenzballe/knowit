@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-presentism-10",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Relativity lets observers disagree about what is happening now. Which 'now' do many presentists defend as the real one?",
+  "options": [
+    "Each observer's own, equally real",
+    "The frame at rest with the cosmic glow",
+    "None; now cannot be defined"
+  ],
+  "correct": 1,
+  "answer": "The frame at rest with the cosmic glow. A presentist cannot let existence depend on who is looking, so Dean Zimmerman and others pick one slicing of space-time: the one where the Big Bang's leftover radiation looks the same in every direction. Cosmologists use it for convenience; no experiment shows it to be privileged.",
+  "move": "If what exists depends on who is asking, you have given up on what exists.",
+  "trap": "Letting each observer's now count, which makes existence relative.",
+  "keywords": [
+    "special relativity",
+    "simultaneity",
+    "cosmic microwave background",
+    "dean zimmerman"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zimmerman, Oxford Handbook of Philosophy of Time",
+  "source_kind": "book",
+  "reference": "Zimmerman, Presentism and the Space-Time Manifold, in Callender (ed.), The Oxford Handbook of Philosophy of Time, Oxford University Press, 2011",
+  "written": "2026-09-27"
+}

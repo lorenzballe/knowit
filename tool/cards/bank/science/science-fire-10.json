@@ -1,0 +1,37 @@
+{
+  "id": "science-fire-10",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should furniture foam be required to resist a small open flame, even if that means adding flame retardants?",
+  "sides": [
+    "Yes, require it",
+    "No, drop the rule"
+  ],
+  "answer": "Many deadly house fires grow from upholstered furniture, and modern foam burns fast and hot. Britain's strict 1988 furniture rules were followed by a long fall in fire deaths, and government reviews credited them with lives saved. Chemicals can be swapped for safer ones; a sofa that shrugs off a match buys escape time.",
+  "move": "Whichever side you took, it turns on how much escape time the chemicals buy.",
+  "counterpoint": "California's 1975 rule made foam pass a small-flame test, so makers loaded it with retardants, since found in household dust and in people's blood. Reviews found little sign it saved lives: deadly furniture fires mostly start from a smouldering cigarette on the fabric, not a flame reaching the foam. In 2013 California switched to a smoulder test.",
+  "keywords": [
+    "flame retardants",
+    "upholstered furniture",
+    "fire regulations",
+    "foam"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shaw et al., Reviews on Environmental Health, 2010",
+  "source_kind": "paper",
+  "reference": "Shaw et al., Halogenated flame retardants: do the fire safety benefits justify the risks?, Reviews on Environmental Health, 2010",
+  "written": "2026-09-27"
+}

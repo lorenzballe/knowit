@@ -1,0 +1,40 @@
+{
+  "id": "psychology-why-we-cry-8",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Ninety-seven women logged about 1,000 crying episodes in daily diaries. After what share did they report feeling better?",
+  "options": [
+    "About a third",
+    "Nearly all of them",
+    "Almost none"
+  ],
+  "correct": 0,
+  "answer": "About a third. Most episodes brought no change in mood, and some left the crier feeling worse. Relief came more often when someone offered comfort, and less often for people who struggle to name their feelings. Asked about crying in general, people say it helps: the good cries are the ones memory keeps.",
+  "move": "Ask whether the evidence was logged at the time or recalled later.",
+  "trap": "Going by memory, where the relieving cries are the ones that stand out.",
+  "keywords": [
+    "crying diary",
+    "catharsis",
+    "mood",
+    "social support",
+    "jonathan rottenberg"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bylsma et al., J Research in Personality, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/j.jrp.2011.04.007",
+  "written": "2026-09-27"
+}

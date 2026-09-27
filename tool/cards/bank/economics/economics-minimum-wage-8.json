@@ -1,0 +1,32 @@
+{
+  "id": "economics-minimum-wage-8",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened after Congress set American Samoa on a path to the US federal minimum wage in 2007?",
+  "answer": "Congress had to back off. The law raised Samoa's minimum 50 cents a year towards the mainland rate, in an economy where typical pay was far lower. Tuna canneries, the main private employers, cut jobs; one closed in 2009 with about 2,000 lost, and later laws delayed the rises. Same wage, different median, different bite.",
+  "move": "Judge a wage floor against local pay, not against another place's.",
+  "keywords": [
+    "american samoa",
+    "tuna canneries",
+    "minimum wage",
+    "congress"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US GAO, American Samoa minimum wage",
+  "source_kind": "institution",
+  "reference": "US Government Accountability Office, American Samoa and Commonwealth of the Northern Mariana Islands: Employment, Earnings, and Status of Key Industries Since Minimum Wage Increases Began, GAO-11-427, 2011",
+  "written": "2026-09-27"
+}

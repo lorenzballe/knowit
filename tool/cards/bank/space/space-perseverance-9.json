@@ -1,0 +1,41 @@
+{
+  "id": "space-perseverance-9",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "also": [
+    "space.mars_and_rovers.water_on_mars"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the first rocks Perseverance cored on the floor of Jezero crater, a former lake, were lake sediments?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Jezero was chosen for its lake and river delta, and its floor was widely expected to be lake mud. Instead the first cores, in 2021, were igneous rock, one built from olivine crystals that settled in a thick body of melt. Water had later altered them and left salts in their pores.",
+  "move": "What a place is famous for may not be what its ground is made of.",
+  "trap": "Assuming a former lake's floor must be made of lake sediment.",
+  "keywords": [
+    "jezero crater",
+    "igneous rock",
+    "olivine",
+    "sample cores"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farley et al., Science, 2022",
+  "source_kind": "paper",
+  "reference": "Farley et al., Aqueously altered igneous rocks sampled on the floor of Jezero crater, Mars, Science, 2022",
+  "written": "2026-09-27"
+}

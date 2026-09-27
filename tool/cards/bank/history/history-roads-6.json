@@ -1,0 +1,33 @@
+{
+  "id": "history-roads-6",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can archaeologists tell which way carts moved through the streets of Pompeii?",
+  "answer": "From scrapes on the kerbstones. A cart turning a corner grinds its wheel against the kerb on one side, so the wear shows which way it turned. Mapping such marks and the ruts in stepping stones, Eric Poehler reconstructed a system in which many streets were one-way. The pavement kept the traffic log.",
+  "move": "Wear marks record what nobody thought worth writing down.",
+  "keywords": [
+    "pompeii",
+    "one-way streets",
+    "kerbstones",
+    "cart ruts",
+    "eric poehler"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Poehler, The Traffic Systems of Pompeii, 2017",
+  "source_kind": "book",
+  "reference": "Poehler, The Traffic Systems of Pompeii, Oxford University Press, 2017",
+  "written": "2026-09-27"
+}

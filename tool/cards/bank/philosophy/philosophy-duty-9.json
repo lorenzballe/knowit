@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-duty-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "If an island people agreed to dissolve their state, what did Kant say they must first do with the last murderer in prison?",
+  "options": [
+    "Release him, as the state is gone",
+    "Execute him before they disperse",
+    "Exile him, since nobody is at risk"
+  ],
+  "correct": 1,
+  "answer": "Execute him before they disperse. In The Metaphysics of Morals (1797), Kant made punishment a duty owed to desert, not a tool for protection. With no society left to shield, the sentence still stands, so that each receives what his deeds are worth and the blood guilt does not cling to the people.",
+  "move": "Ask whether a rule is justified by what it achieves or by what it answers.",
+  "trap": "Assuming punishment loses its point once nobody needs protecting.",
+  "keywords": [
+    "retributivism",
+    "capital punishment",
+    "immanuel kant",
+    "desert"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kant, The Metaphysics of Morals, 6:333",
+  "source_kind": "book",
+  "reference": "Kant, The Metaphysics of Morals, trans. Gregor, Cambridge University Press, 1996, 6:333",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-ship-of-theseus-8",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "also": [
+    "philosophy.ancient_thinkers.stoics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Dion is a whole man; Theon is Dion minus one foot. Dion's foot is cut off. Which survives, according to Chrysippus?",
+  "options": [
+    "Dion survives; Theon has perished",
+    "Both survive, now in one body",
+    "Theon survives; Dion has perished"
+  ],
+  "correct": 0,
+  "answer": "Dion survives; Theon has perished. Philo reports the reasoning: two individuals cannot fill one and the same body, so one must go. Dion can survive losing a foot, as anyone can; Theon, though he lost nothing, is squeezed out. Many modern metaphysicians prefer the answer Chrysippus ruled out: two things sharing one body.",
+  "move": "Surviving a loss and surviving a merger are different questions.",
+  "trap": "Theon lost nothing, so surely it is Theon who survives.",
+  "keywords": [
+    "dion and theon",
+    "chrysippus",
+    "coincident objects",
+    "personal identity"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sedley, Phronesis, 1982",
+  "source_kind": "paper",
+  "reference": "Sedley, The Stoic Criterion of Identity, Phronesis 27 (3), 1982",
+  "written": "2026-09-27"
+}

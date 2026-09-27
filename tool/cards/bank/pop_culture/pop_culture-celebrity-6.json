@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-celebrity-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 1944 lawsuit by a film actress end the studios' power to keep stars under contract indefinitely?",
+  "answer": "By counting calendar years. Warner Bros. added every suspension, imposed when Olivia de Havilland refused a part, to the end of her seven-year contract. A California appeals court ruled that seven years meant seven calendar years. Record labels won a partial carve-out in 1987 and can still sue artists for undelivered albums.",
+  "move": "Read a contract's clock: who can stop it, and who can restart it.",
+  "keywords": [
+    "olivia de havilland",
+    "warner bros",
+    "studio contracts",
+    "seven-year rule",
+    "record labels"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "De Havilland v. Warner Bros. Pictures, 1944",
+  "source_kind": "primary_document",
+  "reference": "De Havilland v. Warner Bros. Pictures, 67 Cal. App. 2d 225, California Court of Appeal, 1944",
+  "written": "2026-09-27"
+}

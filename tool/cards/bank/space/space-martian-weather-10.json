@@ -1,0 +1,32 @@
+{
+  "id": "space-martian-weather-10",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the sky around the setting Sun on Mars turn blue, when the daytime sky is butterscotch?",
+  "answer": "It is the size of the dust. Grains about a thousandth of a millimetre across absorb blue and scatter red widely, tinting the day sky, but they throw blue light forward, close to its original path. At sunset, looking towards the Sun through a long path of dust, the forward glow forms a blue halo.",
+  "move": "The same particles can colour a scene differently from every angle of view.",
+  "keywords": [
+    "martian sunset",
+    "dust scattering",
+    "sky colour",
+    "spirit and opportunity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lemmon et al., Science, 2004",
+  "source_kind": "paper",
+  "reference": "Lemmon et al., Atmospheric imaging results from the Mars Exploration Rovers: Spirit and Opportunity, Science, 2004",
+  "written": "2026-09-27"
+}

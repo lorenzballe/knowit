@@ -1,0 +1,40 @@
+{
+  "id": "nature-ancient-trees-8",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Two churchyard yews: one solid, with 800 rings; one hollow, its remaining shell holding 500. Which is probably older?",
+  "options": [
+    "The solid one, by 300 years",
+    "The hollow one",
+    "Both about 650 years old"
+  ],
+  "correct": 1,
+  "answer": "The hollow one. Yew heartwood rots out after some centuries, so the rings missing from a hollow tree are exactly its oldest ones; 500 is a floor, not an age. Hollowing itself comes with great age. That is why Britain's oldest yews have no ring-counted age at all, only estimates that differ by centuries.",
+  "move": "The records that vanish first are often the oldest ones.",
+  "trap": "Comparing ring counts as if both trees had kept every ring.",
+  "keywords": [
+    "yew",
+    "hollow trees",
+    "tree rings",
+    "churchyards",
+    "age estimates"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bevan-Jones, The Ancient Yew, 2002",
+  "source_kind": "book",
+  "reference": "Bevan-Jones, The Ancient Yew: A History of Taxus baccata, Windgather Press, 2002",
+  "written": "2026-09-27"
+}

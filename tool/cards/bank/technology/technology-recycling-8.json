@@ -1,0 +1,39 @@
+{
+  "id": "technology-recycling-8",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: from 2031, EU law requires new electric-car batteries to contain at least a quarter recycled lithium?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The EU Batteries Regulation sets 6% for lithium from 2031, rising to 12% from 2036; nickel starts at 6%, cobalt at 16%. Higher shares would be impossible, because few batteries have yet come back. Lead, whose recycling loop has run for a century, gets 85% from the same year.",
+  "move": "A target reveals what supply the rule-makers believe exists.",
+  "trap": "Assuming a green law would demand a large recycled share at once.",
+  "keywords": [
+    "eu batteries regulation",
+    "recycled content",
+    "lithium",
+    "cobalt",
+    "lead"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Regulation (EU) 2023/1542 on batteries",
+  "source_kind": "primary_document",
+  "reference": "Regulation (EU) 2023/1542 of the European Parliament and of the Council concerning batteries and waste batteries, Article 8, 2023",
+  "written": "2026-09-27"
+}

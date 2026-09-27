@@ -1,0 +1,43 @@
+{
+  "id": "technology-chips-8",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Defects land at random on a wafer, on average one per 500 mm² chip. Roughly what share of chips have none?",
+  "options": [
+    "Almost none",
+    "About 37%",
+    "About 80%"
+  ],
+  "correct": 1,
+  "answer": "About 37%. Random defects clump by chance: some chips catch two or three, leaving others clean. With an average of one per chip, the Poisson rule gives e to the minus one, about 0.37, defect-free. Halve the chip to 250 mm² and about 61% survive, one reason large processors are now built from chiplets.",
+  "move": "An average of one per box still leaves plenty of boxes empty.",
+  "trap": "An average of one defect per chip sounds like every chip is hit.",
+  "keywords": [
+    "chip yield",
+    "defect density",
+    "poisson distribution",
+    "chiplets",
+    "wafers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "May & Spanos, semiconductor manufacturing textbook",
+  "source_kind": "book",
+  "reference": "May & Spanos, Fundamentals of Semiconductor Manufacturing and Process Control, Wiley-IEEE Press, 2006",
+  "written": "2026-09-27"
+}

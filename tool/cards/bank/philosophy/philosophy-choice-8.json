@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-choice-8",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Descartes held that the will is at its freest when nothing pulls it either way?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In the fourth Meditation, Descartes calls that indifference the lowest grade of freedom, a mark of ignorance rather than of power. The more clearly he sees that one option is true or good, the more freely he embraces it. His freest will is not balanced on a pin but carried along by the light.",
+  "move": "Being drawn by a good reason is not the same as being pushed.",
+  "trap": "Picturing freedom as a will poised evenly between equal options.",
+  "keywords": [
+    "descartes",
+    "indifference",
+    "freedom of the will",
+    "meditations"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Descartes, Meditations IV, 1641",
+  "source_kind": "primary_document",
+  "reference": "Descartes, Meditations on First Philosophy, trans. Cottingham, Cambridge University Press, 1996",
+  "written": "2026-09-27"
+}

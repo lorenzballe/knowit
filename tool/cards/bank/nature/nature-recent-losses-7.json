@@ -1,0 +1,32 @@
+{
+  "id": "nature-recent-losses-7",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What wiped out most of the native tree snails of Tahiti and Moorea within a few decades?",
+  "answer": "Another snail, released on purpose. On Tahiti in 1974 and Moorea in 1977, the predatory rosy wolf snail was let loose to control an earlier invader, the giant African land snail. It preferred the native Partula tree snails: about 55 of the islands' 61 species vanished from the wild. Several survived only in zoo tanks.",
+  "move": "A remedy free to choose its targets may not choose yours.",
+  "keywords": [
+    "partula snails",
+    "rosy wolf snail",
+    "biological control",
+    "society islands"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haponski et al., Evolutionary Applications, 2019",
+  "source_kind": "paper",
+  "reference": "Haponski et al., Deconstructing an infamous extinction crisis: Survival of Partula species on Moorea and Tahiti, Evolutionary Applications, 2019",
+  "written": "2026-09-27"
+}

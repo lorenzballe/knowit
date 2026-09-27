@@ -1,0 +1,33 @@
+{
+  "id": "economics-hyperinflation-7",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What backed the Rentenmark, the currency that ended Germany's hyperinflation in November 1923?",
+  "answer": "Officially, a mortgage on German farmland and business property, which no noteholder could ever claim. The notes could not be exchanged for gold or for land. What held them up was a fixed ceiling on how many could be issued. One Rentenmark replaced a trillion paper marks, on a mortgage nobody could foreclose.",
+  "move": "A promise works when its limits are believed, whatever stands behind it.",
+  "keywords": [
+    "rentenmark",
+    "weimar germany",
+    "currency reform",
+    "mortgage backing",
+    "paper marks"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fergusson, When Money Dies, 1975",
+  "source_kind": "book",
+  "reference": "Fergusson, When Money Dies: The Nightmare of the Weimar Collapse, William Kimber, 1975",
+  "written": "2026-09-27"
+}

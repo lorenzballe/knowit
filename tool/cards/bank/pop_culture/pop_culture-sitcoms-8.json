@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-sitcoms-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a 2019 experiment, adding recorded laughter made listeners rate feeble jokes as funnier?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Qing Cai, Sophie Scott and colleagues in London played 40 groan-worthy jokes with and without laughter added. Posed laughter lifted the ratings by about 10%; spontaneous laughter lifted them more. Autistic and non-autistic adults were swayed alike. The audience on the soundtrack votes before the viewer does.",
+  "move": "Other people's reaction is part of what you think you are judging.",
+  "trap": "Assuming people discount laughter they can tell is recorded.",
+  "keywords": [
+    "canned laughter",
+    "jokes",
+    "laugh track",
+    "humour ratings"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cai et al., Current Biology, 2019",
+  "source_kind": "statistics",
+  "reference": "https://www.sciencedirect.com/science/article/pii/S0960982219306876",
+  "written": "2026-09-27"
+}

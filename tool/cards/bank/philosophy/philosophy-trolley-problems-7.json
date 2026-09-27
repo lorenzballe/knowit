@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-trolley-problems-7",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "About a third of people approve pushing the man off the footbridge by hand. What share approve shoving him with a long pole?",
+  "options": [
+    "About a third, much the same",
+    "About two thirds, like a switch",
+    "About half, somewhere between"
+  ],
+  "correct": 0,
+  "answer": "About a third, much the same. In Greene and colleagues' 2009 study, the pole won no more approval than bare hands. What moved verdicts was muscle: dropping him through a trapdoor by a switch raised approval to about 60%. Touch and personal force had always come together; the pole pulled them apart.",
+  "move": "When two causes always travel together, find a case that separates them.",
+  "trap": "Crediting bodily contact, which always came packaged with muscular force.",
+  "keywords": [
+    "footbridge case",
+    "personal force",
+    "joshua greene",
+    "moral intuition"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Greene et al., Cognition, 2009",
+  "source_kind": "paper",
+  "reference": "Greene, Cushman, Stewart, Lowenberg, Nystrom & Cohen, Pushing moral buttons: The interaction between personal force and intention in moral judgment, Cognition 111 (3), 2009, pp. 364-371",
+  "written": "2026-09-27"
+}

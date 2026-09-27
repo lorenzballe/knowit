@@ -1,0 +1,39 @@
+{
+  "id": "nature-forecasting-7",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "US tornado warnings are in force for about 60% of tornadoes when they strike. Roughly what share of those warnings are false alarms?",
+  "options": [
+    "About 1 in 10",
+    "About half",
+    "About 7 in 10"
+  ],
+  "correct": 2,
+  "answer": "About 7 in 10. Tornadoes are rare at any one spot, while radar shows many rotating storms that never put one down. To cover six tornadoes in ten, forecasters must warn on far more storms than will produce one. Brooks and Correia tracked it over three decades: most warned towns see only rain and hail.",
+  "move": "A net wide enough to catch a rare thing catches plenty besides.",
+  "trap": "Assuming a warning that catches most tornadoes must rarely be wrong.",
+  "keywords": [
+    "tornado warnings",
+    "false alarms",
+    "national weather service",
+    "radar"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Brooks & Correia, Weather and Forecasting, 2018",
+  "source_kind": "paper",
+  "reference": "Brooks & Correia, Long-Term Performance Metrics for National Weather Service Tornado Warnings, Weather and Forecasting, 2018",
+  "written": "2026-09-27"
+}

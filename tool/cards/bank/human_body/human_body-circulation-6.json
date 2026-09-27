@@ -1,0 +1,32 @@
+{
+  "id": "human_body-circulation-6",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to the fluid that seeps out of the capillaries all day long?",
+  "answer": "Lymph vessels carry most of it back, a few litres a day. Textbooks long had capillaries soaking it up again at their venous end; Levick and Michel's revised account shows that in most tissues outward seepage continues almost the whole way along. The surplus drains into the great veins at the base of the neck.",
+  "move": "Find where the overflow goes before believing a system balances itself.",
+  "keywords": [
+    "lymph",
+    "capillaries",
+    "starling principle",
+    "fluid exchange"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levick & Michel, Cardiovascular Research, 2010",
+  "source_kind": "paper",
+  "reference": "Levick & Michel, Microvascular fluid exchange and the revised Starling principle, Cardiovascular Research, 2010",
+  "written": "2026-09-27"
+}

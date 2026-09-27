@@ -1,0 +1,45 @@
+{
+  "id": "space-dark-matter-8",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Galaxies' extra pull appears where acceleration falls below 1.2 × 10⁻¹⁰ m/s². At that rate, how many years to reach 1 m/s from rest?",
+  "value": 264,
+  "unit": "years",
+  "tolerance": 10,
+  "answer": "8.3 × 10⁹ ÷ 3.15 × 10⁷ ≈ 264 years.",
+  "move": "Tests in strong conditions say nothing about how things behave when faint.",
+  "trap": "Expecting a flaw in the law of gravity to show up in a laboratory.",
+  "hint": "Divide the speed by the acceleration, then turn the seconds into years.",
+  "steps": [
+    "Time = speed ÷ acceleration = 1 ÷ (1.2 × 10⁻¹⁰) ≈ 8.3 × 10⁹ seconds.",
+    "A year is about 3.15 × 10⁷ seconds.",
+    "8.3 × 10⁹ ÷ 3.15 × 10⁷ ≈ 264 years."
+  ],
+  "keywords": [
+    "modified gravity",
+    "radial acceleration relation",
+    "galaxy rotation",
+    "acceleration scale"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGaugh, Lelli & Schombert, Physical Review Letters, 2016",
+  "source_kind": "paper",
+  "reference": "McGaugh, Lelli & Schombert, Radial Acceleration Relation in Rotationally Supported Galaxies, Physical Review Letters 117, 201101, 2016",
+  "written": "2026-09-27"
+}

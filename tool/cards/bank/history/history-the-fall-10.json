@@ -1,0 +1,33 @@
+{
+  "id": "history-the-fall-10",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Odoacer's soldiers were given a third of Italy in 476, a third of what?",
+  "answer": "Historians disagree. Procopius says the soldiers demanded a third of the land. In 1980 Walter Goffart argued that such settlements handed over a third of the tax due from estates, not the fields, which would explain why Italy's Roman landowners stayed rich. Critics reply that the texts speak of land. The ledger is still open.",
+  "move": "When a source gives a share, ask what it is a share of.",
+  "keywords": [
+    "odoacer",
+    "hospitalitas",
+    "walter goffart",
+    "procopius",
+    "land settlement"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goffart, Barbarians and Romans, 1980",
+  "source_kind": "book",
+  "reference": "Goffart, Barbarians and Romans, A.D. 418-584: The Techniques of Accommodation, Princeton University Press, 1980",
+  "written": "2026-09-27"
+}

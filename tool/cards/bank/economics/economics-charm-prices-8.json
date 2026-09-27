@@ -1,0 +1,38 @@
+{
+  "id": "economics-charm-prices-8",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: US heart-attack patients just past their 80th birthday got bypass surgery less often than those just short of it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Olenski and colleagues compared patients admitted within two weeks either side of turning 80, alike at baseline. About 7% of those still 79 had bypass surgery, against 5.3% of the new 80-year-olds. A few weeks of age changed nothing in their hearts; it changed the first digit on the chart.",
+  "move": "A threshold in the head is not a threshold in the body.",
+  "trap": "Assuming doctors weigh the patient's health, not the digit in front.",
+  "keywords": [
+    "left-digit bias",
+    "bypass surgery",
+    "age thresholds",
+    "heart attacks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olenski et al., NEJM, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJMc1911289",
+  "written": "2026-09-27"
+}

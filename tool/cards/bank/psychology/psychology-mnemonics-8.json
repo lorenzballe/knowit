@@ -1,0 +1,32 @@
+{
+  "id": "psychology-mnemonics-8",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did medieval scholars mainly train their memories for, if not to store texts word for word?",
+  "answer": "To compose. Mary Carruthers argues that monastic and scholastic memory training built an ordered stock of material a mind could search. The Latin inventio meant both finding and inventing: a preacher walked the places of his memory to gather what to say. A sermon was assembled from the shelves, not recited from a page.",
+  "move": "A store that can be searched beats one that is merely full.",
+  "keywords": [
+    "medieval memory",
+    "inventio",
+    "mary carruthers",
+    "monastic learning"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carruthers, The Book of Memory, 1990",
+  "source_kind": "book",
+  "reference": "Carruthers, The Book of Memory: A Study of Memory in Medieval Culture, Cambridge University Press, 1990",
+  "written": "2026-09-27"
+}

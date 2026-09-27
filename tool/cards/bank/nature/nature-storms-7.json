@@ -1,0 +1,40 @@
+{
+  "id": "nature-storms-7",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A cyclone killed about 138,000 people in Bangladesh in 1991. Cyclone Sidr, of similar strength, struck in 2007. How many died?",
+  "options": [
+    "About 130,000",
+    "About 35,000",
+    "About 3,400"
+  ],
+  "correct": 2,
+  "answer": "About 3,400. Between the two storms Bangladesh built a warning network, with volunteers carrying alerts village to village, and some 2,000 raised concrete shelters. About 2 million people were moved out of Sidr's path before it landed. The sea rose much as before; this time families watched it from the upper floors of shelters.",
+  "move": "When the hazard stays the same, look at what changed on the ground.",
+  "trap": "Anchoring on the 1991 toll because the two storms were alike.",
+  "keywords": [
+    "cyclone sidr",
+    "bangladesh",
+    "cyclone shelters",
+    "early warning",
+    "1991 cyclone"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Haque et al., Bulletin of the WHO, 2012",
+  "source_kind": "paper",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3302549/",
+  "written": "2026-09-27"
+}

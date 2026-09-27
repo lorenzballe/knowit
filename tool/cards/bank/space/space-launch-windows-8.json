@@ -1,0 +1,39 @@
+{
+  "id": "space-launch-windows-8",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Forecasters give each of three consecutive launch days a 30% chance of a weather scrub. How likely is losing all three?",
+  "options": [
+    "About 2.7%",
+    "More than 2.7%",
+    "Less than 2.7%"
+  ],
+  "correct": 1,
+  "answer": "More than 2.7%. Multiplying assumes each day's weather is separate, but weather comes in systems that sit over a coast for days: the stalled front that scrubs Monday is often still there on Tuesday. One scrub raises the odds of the next, so a run of three is likelier than the product.",
+  "move": "Before multiplying chances, ask whether one outcome makes the next likelier.",
+  "trap": "Multiplying the three chances as if each day's weather were separate.",
+  "keywords": [
+    "launch scrubs",
+    "weather forecasts",
+    "probability",
+    "weather persistence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilks, Statistical Methods, Atmospheric Sciences, 2011",
+  "source_kind": "book",
+  "reference": "Wilks, Statistical Methods in the Atmospheric Sciences, 3rd ed., Academic Press, 2011",
+  "written": "2026-09-27"
+}

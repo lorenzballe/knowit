@@ -1,0 +1,38 @@
+{
+  "id": "psychology-distraction-8",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: an interruption lasting under three seconds can double the errors people make in a step-by-step task?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Altmann, Trafton and Hambrick broke into a sequence of steps with a brief typing task: interruptions averaging 2.8 seconds roughly doubled errors on resuming, and about 4.4 seconds tripled them. The place in the sequence was lost, not time. A nurse glancing at a monitor mid-dose can lose the step.",
+  "move": "Judge an interruption by what it knocks loose, not by how long it lasts.",
+  "trap": "False, because a pause that short leaves almost no time to forget.",
+  "keywords": [
+    "interruptions",
+    "sequence errors",
+    "procedural tasks",
+    "place-keeping"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Altmann, Trafton & Hambrick, JEP: General, 2014",
+  "source_kind": "paper",
+  "reference": "Altmann, Trafton & Hambrick, Momentary interruptions can derail the train of thought, Journal of Experimental Psychology: General, 2014",
+  "written": "2026-09-27"
+}

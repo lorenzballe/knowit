@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-arrow-of-time-8",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which prediction about a shrinking universe did Stephen Hawking make in 1985 and then withdraw?",
+  "answer": "That time's arrow would turn round. Hawking argued that under his no-boundary proposal disorder would fall if the universe recollapsed. His student Raymond Laflamme and Don Page showed the proposal implied no such thing, and Hawking conceded in A Brief History of Time. On the way to a crunch, cups still break.",
+  "move": "A symmetry in the equations need not show up in the world they describe.",
+  "keywords": [
+    "stephen hawking",
+    "big crunch",
+    "cosmological arrow",
+    "no-boundary proposal"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hawking, A Brief History of Time",
+  "source_kind": "book",
+  "reference": "Hawking, A Brief History of Time, Bantam, 1988, chapter 9",
+  "written": "2026-09-27"
+}

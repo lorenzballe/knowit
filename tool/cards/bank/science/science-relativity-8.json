@@ -1,0 +1,32 @@
+{
+  "id": "science-relativity-8",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can relativity matter in a wire whose electrons drift at well under a millimetre a second?",
+  "answer": "Because magnetism is relativity's correction to electricity. To a charge moving alongside, the wire's electrons and nuclei shrink by different amounts, so it stops looking neutral. The imbalance has twenty-odd zeros after the decimal point, but electric forces are so huge and so exactly cancelled that this sliver is the whole magnetic pull.",
+  "move": "A small effect can be large when it is all that survives a cancellation.",
+  "keywords": [
+    "magnetism",
+    "electric current",
+    "length contraction",
+    "special relativity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Purcell, Electricity and Magnetism, 1965",
+  "source_kind": "book",
+  "reference": "Purcell, Electricity and Magnetism, Berkeley Physics Course vol. 2, McGraw-Hill, 1965",
+  "written": "2026-09-27"
+}

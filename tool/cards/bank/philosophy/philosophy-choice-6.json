@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-choice-6",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Sartre tell a pupil torn between joining the Free French and staying with his mother?",
+  "answer": "You are free, so choose: invent. In his 1945 lecture Existentialism Is a Humanism, Sartre says no ethical doctrine could settle the case. The twist: by bringing the question to Sartre rather than to a priest who favoured collaboration, the young man already knew what advice he would get. Picking the adviser was the decision.",
+  "move": "Choosing whom to ask is often choosing the answer.",
+  "keywords": [
+    "jean-paul sartre",
+    "existentialism",
+    "advice",
+    "moral dilemma",
+    "free french"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sartre, Existentialism Is a Humanism, 1946",
+  "source_kind": "primary_document",
+  "reference": "Sartre, Existentialism Is a Humanism, trans. Macomber, Yale University Press, 2007",
+  "written": "2026-09-27"
+}

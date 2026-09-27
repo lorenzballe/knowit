@@ -1,0 +1,33 @@
+{
+  "id": "space-star-death-6",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What put radioactive iron-60 into seabed crusts across the world's oceans about two million years ago?",
+  "answer": "Supernovae a few hundred light-years away. Iron-60 has a half-life of 2.6 million years, so none survives from Earth's formation; any found must be recent. Wallner's team found it in crusts and sediments from three oceans, peaking between 1.5 and 3.2 million years ago: stardust that settled while early humans walked in Africa.",
+  "move": "A clock that runs out tells you the thing is recent.",
+  "keywords": [
+    "iron-60",
+    "supernovae",
+    "seabed crusts",
+    "half-life",
+    "stardust"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Wallner et al., Nature, 2016",
+  "source_kind": "paper",
+  "reference": "Wallner et al., Recent near-Earth supernovae probed by global deposition of interstellar radioactive 60Fe, Nature 532, 69, 2016",
+  "written": "2026-09-27"
+}

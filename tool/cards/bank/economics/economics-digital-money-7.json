@@ -1,0 +1,32 @@
+{
+  "id": "economics-digital-money-7",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did US agents get back most of the bitcoin ransom paid after the 2021 Colonial Pipeline attack?",
+  "answer": "By following it. Every bitcoin transfer is on a public ledger; investigators traced the 75 coins Colonial paid through a chain of addresses to one whose key the FBI held, and seized 63.7 of them. Bitcoin hides names, not movements. The price had fallen: those coins were worth $2.3 million of the $4.4 million paid.",
+  "move": "A record anyone can read stays private only until one entry is linked.",
+  "keywords": [
+    "bitcoin",
+    "ransomware",
+    "colonial pipeline",
+    "blockchain tracing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US District Court, seizure warrant, 2021",
+  "source_kind": "primary_document",
+  "reference": "United States District Court for the Northern District of California, Application and Affidavit for Seizure Warrant (Colonial Pipeline ransom), 7 June 2021",
+  "written": "2026-09-27"
+}

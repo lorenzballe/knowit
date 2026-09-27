@@ -1,0 +1,39 @@
+{
+  "id": "science-relativity-6",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In 1971 atomic clocks flew round the world, eastward and westward. Compared with clocks left on the ground, which came back behind?",
+  "options": [
+    "Both sets of flying clocks",
+    "Only the eastbound clocks",
+    "Only the westbound clocks"
+  ],
+  "correct": 1,
+  "answer": "Only the eastbound clocks, by about 59 nanoseconds; the westbound ones gained about 273. The ground spins eastward too, so judged from Earth's centre an eastbound plane moves faster than the airport and a westbound one slower. Weaker gravity aloft sped up both sets, and only the westbound clocks kept that gain.",
+  "move": "Ask what the reference itself is doing before calling anything moving.",
+  "trap": "Both, because moving clocks always run slow.",
+  "keywords": [
+    "hafele-keating experiment",
+    "atomic clocks",
+    "time dilation",
+    "earth's rotation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hafele & Keating, Science, 1972",
+  "source_kind": "paper",
+  "reference": "Hafele & Keating, Around-the-World Atomic Clocks: Observed Relativistic Time Gains, Science 177, 168, 1972",
+  "written": "2026-09-27"
+}

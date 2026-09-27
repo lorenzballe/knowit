@@ -1,0 +1,42 @@
+{
+  "id": "science-fire-7",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "also": [
+    "nature.trees_and_forests.rainforests"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Indonesia's 1997 fires burned largely in peat, smouldering underground. Their carbon equalled what share of that year's global fossil-fuel emissions?",
+  "options": [
+    "About 1%",
+    "Roughly a quarter",
+    "About double"
+  ],
+  "correct": 1,
+  "answer": "Roughly a quarter: between 13% and 40%, by the estimate of Susan Page's team, or 0.81 to 2.57 billion tonnes of carbon. Most came from peat, waterlogged plant matter metres deep, drained for plantations and then set smouldering for months. A smoulder shows little flame and can burn on underground through the rain.",
+  "move": "Judge a fire by what it consumes, not by how bright it looks.",
+  "trap": "About 1%, since a low smoulder looks too feeble to matter.",
+  "keywords": [
+    "peat fires",
+    "indonesia",
+    "smouldering",
+    "carbon emissions"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Page et al., Nature, 2002",
+  "source_kind": "paper",
+  "reference": "Page, Siegert, Rieley, Boehm, Jaya & Limin, The amount of carbon released from peat and forest fires in Indonesia during 1997, Nature, 2002",
+  "written": "2026-09-27"
+}

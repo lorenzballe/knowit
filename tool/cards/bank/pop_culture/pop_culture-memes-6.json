@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-memes-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the 1996 Dancing Baby animation made for, before it spread by email?",
+  "answer": "To sell software. Michael Girard and Robert Lurye built it as a sample file for Character Studio, a plug-in for animating figures in 3D Studio Max. Passed on as a looping GIF, it was dancing on Ally McBeal by 1998. An early mass-shared animation was an advert for the tool that drew it.",
+  "move": "Ask who made the first copy, and what they wanted it to show.",
+  "keywords": [
+    "dancing baby",
+    "character studio",
+    "3d animation",
+    "email",
+    "gif"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shifman, Memes in Digital Culture, 2014",
+  "source_kind": "book",
+  "reference": "Limor Shifman, Memes in Digital Culture, MIT Press, 2014",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-music-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: Don't Speak, top of Billboard's US radio airplay chart for 16 weeks, never appeared on the Hot 100?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Until December 1998 a song had to be on sale as a single to enter the Hot 100, and No Doubt's label kept Don't Speak on the album only, to sell albums. Radio hits such as Iris and Torn were missing for the same reason. The chart archive under-records the decade's radio.",
+  "move": "An archive keeps only what its rules let in.",
+  "trap": "Treating the Hot 100 archive as a full record of the decade's hits.",
+  "keywords": [
+    "billboard hot 100",
+    "no doubt",
+    "airplay",
+    "chart rules"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Billboard, 1998 Hot 100 rule change",
+  "source_kind": "news_archive",
+  "reference": "https://billboard.com/articles/columns/chart-beat/8458527/hot-100-rule-change-1998-airplay-singles",
+  "written": "2026-09-27"
+}

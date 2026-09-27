@@ -1,0 +1,32 @@
+{
+  "id": "science-glass-8",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does it take to turn a molten metal into a glass instead of a crystal?",
+  "answer": "Speed. Metal atoms find their crystal places almost at once, so the melt must be cooled faster than they can line up. In 1960 Pol Duwez's group at Caltech made the first metallic glass, gold with silicon, by splatting drops onto cold copper at about a million degrees a second. The result: flakes a few micrometres thick.",
+  "move": "Order takes time; deny it the time and disorder is what stays.",
+  "keywords": [
+    "metallic glass",
+    "rapid cooling",
+    "gold-silicon alloy",
+    "pol duwez"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klement, Willens & Duwez, Nature, 1960",
+  "source_kind": "paper",
+  "reference": "Klement, Willens & Duwez, Non-crystalline Structure in Solidified Gold–Silicon Alloys, Nature, 1960",
+  "written": "2026-09-27"
+}

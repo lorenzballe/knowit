@@ -1,0 +1,39 @@
+{
+  "id": "psychology-false-memories-10",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Abuse memories recovered in suggestive therapy were compared with ones that returned spontaneously. Which could independent evidence corroborate?",
+  "options": [
+    "Neither kind, hardly ever",
+    "Only those that returned spontaneously",
+    "Both kinds, about equally often"
+  ],
+  "correct": 1,
+  "answer": "Only those that returned spontaneously. Geraerts and colleagues sought independent corroboration: 37% of memories that came back unexpectedly outside therapy were confirmed, close to the 45% for memories never forgotten, against none of those recovered in suggestive therapy. How a memory comes back says more than whether it was ever lost.",
+  "move": "Sort cases by how they arose before judging them all together.",
+  "trap": "Neither kind, since recovered memories are known from discredited court cases.",
+  "keywords": [
+    "recovered memories",
+    "suggestive therapy",
+    "corroboration",
+    "childhood abuse"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Geraerts et al., Psychological Science, 2007",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1467-9280.2007.01940.x",
+  "written": "2026-09-27"
+}

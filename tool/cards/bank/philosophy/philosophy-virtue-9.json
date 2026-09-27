@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-virtue-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A habitual liar asks what he should do. Why does 'whatever a virtuous person would do' fail him?",
+  "options": [
+    "Virtuous people would never need his remedies",
+    "Virtuous people disagree among themselves",
+    "Virtue cannot be defined without rules"
+  ],
+  "correct": 0,
+  "answer": "Virtuous people would never need his remedies. Robert Johnson argued in 2003 that the liar ought to watch himself and practise honesty in small things, which a virtuous person, having nothing to cure, would never do. Right action for someone depends on who they are now: a crutch is right only for a broken leg.",
+  "move": "Advice for the finished version of you may be wrong for you now.",
+  "trap": "Reaching for the standard worry that good people disagree.",
+  "keywords": [
+    "right action",
+    "moral improvement",
+    "robert johnson",
+    "virtuous agent"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson, Ethics, 2003",
+  "source_kind": "paper",
+  "reference": "Johnson, Virtue and Right, Ethics 113 (4), 2003, pp. 810-834",
+  "written": "2026-09-27"
+}

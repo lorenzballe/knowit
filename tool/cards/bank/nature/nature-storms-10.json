@@ -1,0 +1,41 @@
+{
+  "id": "nature-storms-10",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Sea level rises about 1 cm per hectopascal of pressure drop. An eye reads 910 hPa, the air outside 1,010. Pressure-driven surge, in metres?",
+  "value": 1,
+  "unit": "metres",
+  "answer": "100 cm = 1 metre.",
+  "move": "Before blaming one force, work out how much of the effect it can carry.",
+  "trap": "Crediting the low pressure with most of a surge several metres high.",
+  "hint": "Work out how far the eye sits below the surrounding pressure.",
+  "steps": [
+    "Pressure deficit: 1,010 − 910 = 100 hPa.",
+    "Rise: 100 hPa × 1 cm = 100 cm.",
+    "100 cm = 1 metre."
+  ],
+  "keywords": [
+    "storm surge",
+    "air pressure",
+    "inverse barometer",
+    "hurricane eye"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pugh, Tides, Surges and Mean Sea-Level",
+  "source_kind": "book",
+  "reference": "Pugh, Tides, Surges and Mean Sea-Level, John Wiley & Sons, 1987",
+  "written": "2026-09-27"
+}

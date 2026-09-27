@@ -1,0 +1,43 @@
+{
+  "id": "space-supermassive-ones-8",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "The star S2 circles the Milky Way's central black hole every 16 years, about 1,000 Earth–Sun distances out. How many million suns is the hole?",
+  "value": 3.9,
+  "unit": "million suns",
+  "tolerance": 0.1,
+  "answer": "1 billion / 256 ≈ 3.9 million suns.",
+  "move": "Anything in orbit weighs what it circles; time the orbit, not the object.",
+  "trap": "Forgetting to square the period, which gives 62 million.",
+  "hint": "In Earth–Sun distances and years, an orbit's size cubed over its period squared gives the mass in suns.",
+  "steps": [
+    "Kepler, in these units: mass in suns = distance cubed / period squared.",
+    "Distance cubed: 1,000 x 1,000 x 1,000 = 1 billion.",
+    "Period squared: 16 x 16 = 256.",
+    "1 billion / 256 ≈ 3.9 million suns."
+  ],
+  "keywords": [
+    "sagittarius a star",
+    "s2",
+    "kepler's third law",
+    "galactic centre"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GRAVITY Collaboration, Astronomy & Astrophysics, 2020",
+  "source_kind": "paper",
+  "reference": "GRAVITY Collaboration, Detection of the Schwarzschild precession in the orbit of the star S2 near the Galactic centre massive black hole, Astronomy & Astrophysics, 2020",
+  "written": "2026-09-27"
+}

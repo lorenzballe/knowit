@@ -1,0 +1,39 @@
+{
+  "id": "human_body-smell-9",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Older adults who failed a five-smell test died more often within five years. What remained after allowing for age, illness and dementia?",
+  "options": [
+    "The link disappeared",
+    "About three times the odds of death",
+    "A small excess, about 10%"
+  ],
+  "correct": 1,
+  "answer": "About three times the odds of death. Among 3,005 US adults aged 57 to 85, those who could not smell had 3.37 times the odds of dying, after allowing for age, health, cognition, mental health, smoking, alcohol and nutrition. The authors suggest the nose shows how well the body still renews itself.",
+  "move": "Adjust for the obvious causes first, then look at what is left.",
+  "trap": "Assuming smell loss is only a stand-in for being old and ill.",
+  "keywords": [
+    "anosmia",
+    "mortality",
+    "smell test",
+    "older adults"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pinto et al., PLOS ONE, 2014",
+  "source_kind": "paper",
+  "reference": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0107541",
+  "written": "2026-09-27"
+}

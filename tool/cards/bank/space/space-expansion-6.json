@@ -1,0 +1,35 @@
+{
+  "id": "space-expansion-6",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was cosmic time dilation finally seen in quasars, after a 2010 study had found none?",
+  "answer": "By treating their flicker as random and fitting it across 190 quasars watched for two decades. Expansion should make events at redshift 4 look five times slower, as it already does for distant supernovae. Lewis and Brewer found exactly that stretch in 2023: seen from here, the young universe runs in slow motion.",
+  "move": "Finding nothing may only mean the clock was too noisy to read.",
+  "keywords": [
+    "quasars",
+    "time dilation",
+    "redshift",
+    "cosmic expansion"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewis & Brewer, Nature Astronomy, 2023",
+  "source_kind": "paper",
+  "reference": "Lewis & Brewer, Detection of the cosmological time dilation of high-redshift quasars, Nature Astronomy, 2023",
+  "written": "2026-09-27"
+}

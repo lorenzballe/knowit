@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-determinism-10",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Spinoza say a stone in flight would believe, if it could think?",
+  "answer": "That it moves freely, of its own will. In a 1674 letter Spinoza argued that a thrown stone, aware of its effort to keep moving but not of the hand behind it, would call itself free. People are alike: conscious of desires, blind to their causes. A drunkard, he adds, thinks he talks freely.",
+  "move": "Feeling that nothing pushed you is not evidence that nothing did.",
+  "keywords": [
+    "spinoza",
+    "thrown stone",
+    "illusion of freedom",
+    "letter 58"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spinoza, Letter 58 to Schuller, 1674",
+  "source_kind": "primary_document",
+  "reference": "Spinoza, The Letters, trans. Shirley, Hackett, 1995",
+  "written": "2026-09-27"
+}

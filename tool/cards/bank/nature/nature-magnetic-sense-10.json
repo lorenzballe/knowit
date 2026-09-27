@@ -1,0 +1,40 @@
+{
+  "id": "nature-magnetic-sense-10",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "Decades of studies reported fruit flies sensing magnetic fields. What did a large, blinded 2023 replication find?",
+  "options": [
+    "A clear magnetic response",
+    "A response only in blue light",
+    "No detectable magnetic effect"
+  ],
+  "correct": 2,
+  "answer": "No detectable magnetic effect. Bassetto, Mouritsen and colleagues repeated classic fly experiments with large numbers of flies, blinded scoring and careful control of heat and stray fields, and found nothing. Other labs still report effects, so the question is open. For years, positive results had piled up without anyone testing them this hard.",
+  "move": "A pile of agreeing results is not a test until someone tries to break one.",
+  "trap": "Expecting the often-reported blue-light effect to survive blinded testing.",
+  "keywords": [
+    "fruit flies",
+    "drosophila",
+    "cryptochrome",
+    "replication",
+    "magnetoreception"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bassetto et al., Nature, 2023",
+  "source_kind": "paper",
+  "reference": "Bassetto et al., No evidence for magnetic field effects on the behaviour of Drosophila, Nature, 2023",
+  "written": "2026-09-27"
+}

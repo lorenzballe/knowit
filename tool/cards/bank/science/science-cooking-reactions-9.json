@@ -1,0 +1,41 @@
+{
+  "id": "science-cooking-reactions-9",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "also": [
+    "food.cooking_science.maillard"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should foods high in acrylamide, such as coffee and crisps, carry cancer warnings?",
+  "sides": [
+    "Yes, warn buyers",
+    "No, no warnings"
+  ],
+  "answer": "Yes. Acrylamide forms when starchy foods are fried, roasted or baked hot, and it causes cancer in rodents; the WHO's cancer agency rates it probably carcinogenic to humans. Buyers can cut their intake easily, by toasting lighter or choosing other products. A warning costs little and lets people decide.",
+  "move": "Whichever side you took, the hinge is how much animal evidence counts without human confirmation.",
+  "counterpoint": "No. Large studies of people's diets have found no consistent link between dietary acrylamide and cancer, and the rodent doses were far above anything eaten. In 2019 California exempted coffee from its warning law on that basis. A label on every roasted food teaches shoppers to ignore labels.",
+  "keywords": [
+    "acrylamide",
+    "cancer warnings",
+    "coffee",
+    "crisps",
+    "iarc"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IARC Monographs, volume 60, 1994",
+  "source_kind": "institution",
+  "reference": "International Agency for Research on Cancer, IARC Monographs on the Evaluation of Carcinogenic Risks to Humans, Volume 60: Some Industrial Chemicals, 1994",
+  "written": "2026-09-27"
+}

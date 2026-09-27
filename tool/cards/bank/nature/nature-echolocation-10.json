@@ -1,0 +1,32 @@
+{
+  "id": "nature-echolocation-10",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do big brown bats so often bite a luna moth's tail instead of its body?",
+  "answer": "The tails are sonar decoys. Each long hindwing tail twists as the moth flies, returning a strong, flickering echo. In Barber's flight-room trials, bats aimed about half their attacks at the tails, and moths with tails removed were caught far more often. The bat gets a scrap of wing; the moth flies on.",
+  "move": "The cheapest defence is a target you can afford to lose.",
+  "keywords": [
+    "luna moth",
+    "moth tails",
+    "acoustic decoy",
+    "big brown bat"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barber et al., PNAS, 2015",
+  "source_kind": "paper",
+  "reference": "Barber et al., Moth tails divert bat attack: evolution of acoustic deflection, PNAS, 2015",
+  "written": "2026-09-27"
+}

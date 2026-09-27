@@ -1,0 +1,33 @@
+{
+  "id": "economics-container-ships-7",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did container freight rates rise about sevenfold in 2021 while the volume of trade grew only modestly?",
+  "answer": "Because ships take years to build and port queues trapped the ones afloat. With part of the fleet idle at anchor, extra demand met no extra ships, so price adjusted instead: Drewry's index rose from about $1,420 in 2019 to $10,377 in September 2021. The ships ordered then arrived from 2023, into a slump.",
+  "move": "When supply cannot move, a small shift in demand moves the price enormously.",
+  "keywords": [
+    "freight rates",
+    "port congestion",
+    "drewry index",
+    "shipbuilding",
+    "pandemic"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Drewry World Container Index",
+  "source_kind": "company",
+  "reference": "Drewry Supply Chain Advisors, World Container Index, weekly composite assessments 2019-2023, 2023",
+  "written": "2026-09-27"
+}

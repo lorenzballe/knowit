@@ -1,0 +1,45 @@
+{
+  "id": "philosophy-zeno-9",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A ball falls for 1 s. Its bounces last 1.6 s, then 0.8 times as long each time. Total time before it stops, in seconds?",
+  "value": 9,
+  "unit": "seconds",
+  "answer": "1 + 8 = 9 seconds, after infinitely many bounces.",
+  "move": "Count the steps and the time separately; endless steps can fit in seconds.",
+  "trap": "Assuming infinitely many bounces must take an infinite time.",
+  "hint": "Add the endless bounces as one shrinking series, then add the fall.",
+  "steps": [
+    "Bounce times: 1.6 + 1.28 + 1.024 + ... without end.",
+    "A shrinking series sums to first term / (1 - ratio).",
+    "1.6 / (1 - 0.8) = 8 seconds of bouncing.",
+    "1 + 8 = 9 seconds, after infinitely many bounces."
+  ],
+  "keywords": [
+    "bouncing ball",
+    "zeno behaviour",
+    "geometric series",
+    "hybrid systems"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Lee & Seshia, Introduction to Embedded Systems",
+  "source_kind": "book",
+  "reference": "Lee & Seshia, Introduction to Embedded Systems: A Cyber-Physical Systems Approach, 2nd ed., MIT Press, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "technology-oled-9",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: an OLED's seal must stop water vapour about a million times better than food-packaging film?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Traces of water ruin OLED materials and their reactive electrodes, so the target is about a millionth of a gram per square metre per day, while food films pass between a tenth of a gram and several grams. Thin-film seals stack ceramic and polymer layers so the next caps any pinhole.",
+  "move": "Size a barrier by how little of the threat does damage.",
+  "trap": "Judging from familiar packaging, a few times tighter seems plenty.",
+  "keywords": [
+    "thin-film encapsulation",
+    "water vapour",
+    "oled",
+    "barrier films",
+    "packaging"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewis & Weaver, IEEE JSTQE, 2004",
+  "source_kind": "paper",
+  "reference": "Lewis & Weaver, Thin-film permeation-barrier technology for flexible organic light-emitting devices, IEEE Journal of Selected Topics in Quantum Electronics 10(1), 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-forums-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did The WELL's founding rule, You own your own words, let members do to old threads?",
+  "answer": "Erase themselves from them. The WELL, a conferencing system founded near San Francisco in 1985 by Stewart Brand and Larry Brilliant, made members answerable for their own posts and gave them a command, scribble, to delete them later. When someone scribbled years of posts, replies stayed, answering nothing. Ownership meant the right to leave holes.",
+  "move": "Giving people control of their words also lets them unmake the record.",
+  "keywords": [
+    "the well",
+    "stewart brand",
+    "online community",
+    "scribble",
+    "ownership"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hafner, The Well, 2001",
+  "source_kind": "book",
+  "reference": "Katie Hafner, The Well: A Story of Love, Death and Real Life in the Seminal Online Community, Carroll & Graf, 2001",
+  "written": "2026-09-27"
+}

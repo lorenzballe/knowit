@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-stoics-8",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What rank did the Stoics give to health among the things worth having?",
+  "options": [
+    "A good, though below virtue",
+    "Preferred, but not good at all",
+    "Worthless, and to be scorned"
+  ],
+  "correct": 1,
+  "answer": "Preferred, but not good at all. For Zeno and Chrysippus only virtue is good; health, wealth and reputation are preferred indifferents, naturally worth choosing but irrelevant to happiness. Aristotle's heirs called them lesser goods; the Cynics scorned them. One word apart, and it decides whether a sage on a sickbed can be perfectly happy.",
+  "move": "Worth choosing and worth being unhappy without are different measures.",
+  "trap": "Ranking health as a smaller good, the common-sense Aristotelian view.",
+  "keywords": [
+    "preferred indifferents",
+    "stoic ethics",
+    "health",
+    "virtue"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cicero, On Ends, book III",
+  "source_kind": "primary_document",
+  "reference": "Cicero, On Moral Ends, trans. Woolf, ed. Annas, Cambridge University Press, 2001",
+  "written": "2026-09-27"
+}

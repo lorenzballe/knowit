@@ -1,0 +1,33 @@
+{
+  "id": "nature-ancient-trees-6",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the rings of two old Japanese cedars reveal about the year 774?",
+  "answer": "A sudden burst of radiation from space. Miyake's team found carbon-14 in the ring for 774–775 rose about 1.2% in one year, roughly 20 times the usual yearly change; a huge solar storm is the likeliest cause. Such spikes pin dates: Norse timber in Newfoundland was dated to 1021 by a later one, from 993.",
+  "move": "A single odd year, recorded everywhere at once, can date all the rest.",
+  "keywords": [
+    "tree rings",
+    "carbon-14",
+    "solar storm",
+    "japanese cedar",
+    "radiocarbon dating"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Miyake et al., Nature, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature11123",
+  "written": "2026-09-27"
+}

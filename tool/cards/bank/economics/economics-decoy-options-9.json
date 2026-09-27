@@ -1,0 +1,39 @@
+{
+  "id": "economics-decoy-options-9",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Pooling decades of decoy experiments, which kind of brand gains share when a decoy is aimed at it?",
+  "options": [
+    "Budget brands, rarely premium ones",
+    "Premium brands, rarely budget ones",
+    "Both kinds, about equally"
+  ],
+  "correct": 1,
+  "answer": "Premium brands, rarely budget ones. Heath and Chatterjee's 1995 meta-analysis found decoys raised a target's share mainly when the target was the higher-quality brand. Aimed at a lower-quality brand, they seldom helped it, and they took more share from budget rivals than from premium ones. The trick flatters quality far more easily than cheapness.",
+  "move": "A tactic that lifts the strong may do nothing for the weak.",
+  "trap": "Assuming a trick that works one way must work both ways.",
+  "keywords": [
+    "meta-analysis",
+    "brand quality",
+    "asymmetric dominance",
+    "market share"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heath and Chatterjee, JCR, 1995",
+  "source_kind": "paper",
+  "reference": "https://academic.oup.com/jcr/article-abstract/22/3/268/1791719",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-france-6",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When French peasants attacked châteaux in the summer of 1789, what did they most often go looking for?",
+  "answer": "The paperwork. Rioters demanded the terriers, the registers of what each household owed its lord in rents, dues and labour, and burned them in the courtyard, often sparing the house and the family. Without the record, a claim was hard to prove. Some lords were made to sign away their rights on the spot.",
+  "move": "Where a debt exists only on paper, the paper becomes the target.",
+  "keywords": [
+    "great fear",
+    "peasants",
+    "manorial records",
+    "seigneurial dues",
+    "châteaux"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lefebvre, The Great Fear of 1789",
+  "source_kind": "book",
+  "reference": "Lefebvre, The Great Fear of 1789: Rural Panic in Revolutionary France, trans. White, New Left Books, 1973",
+  "written": "2026-09-27"
+}

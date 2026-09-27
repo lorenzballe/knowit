@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sneakers-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who kept the Nike Air Force 1 alive after the company planned to drop it in 1984?",
+  "answer": "Three Baltimore shoe shops. Their customers kept asking for the 1982 basketball shoe, so the retailers persuaded Nike to keep making it in colours sold only through them, a new one each month. Buyers travelled from New York to get them, and Nike reissued the shoe nationally in 1986. Demand was proved at three counters.",
+  "move": "Before a product is cancelled, ask the people who sell it every day.",
+  "keywords": [
+    "air force 1",
+    "nike",
+    "baltimore",
+    "retailers",
+    "colourways"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Garcia, Where'd You Get Those?, 2003",
+  "source_kind": "book",
+  "reference": "Bobbito Garcia, Where'd You Get Those? New York City's Sneaker Culture: 1960-1987, Testify Books, 2003",
+  "written": "2026-09-27"
+}

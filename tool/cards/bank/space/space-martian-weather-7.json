@@ -1,0 +1,39 @@
+{
+  "id": "space-martian-weather-7",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "When the 2018 global dust storm darkened the sky over Curiosity, what happened to the air temperature there?",
+  "options": [
+    "Colder by day and by night",
+    "Cooler days and warmer nights",
+    "Warmer by day and by night"
+  ],
+  "correct": 1,
+  "answer": "Cooler days and warmer nights. Dust high in the air absorbed sunlight, so less reached the ground by day, then gave off heat downwards after dark. The daily swing, normally around 60 °C, shrank by about 30 °C. The storm did not freeze the surface; it flattened the day.",
+  "move": "A layer that blocks the light can also hold in the heat.",
+  "trap": "Picturing a nuclear winter, where blotted-out sunlight means cold round the clock.",
+  "keywords": [
+    "global dust storm",
+    "curiosity",
+    "diurnal temperature",
+    "2018 storm"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guzewich et al., Geophysical Research Letters, 2019",
+  "source_kind": "paper",
+  "reference": "Guzewich et al., Mars Science Laboratory Observations of the 2018/Mars Year 34 Global Dust Storm, Geophysical Research Letters, 2019",
+  "written": "2026-09-27"
+}

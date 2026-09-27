@@ -1,0 +1,41 @@
+{
+  "id": "human_body-gut-and-mood-8",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Two years after a water outbreak, 36% of infected townspeople had irritable bowel syndrome, as did 10% of the uninfected. Extra cases per 1,000 infected?",
+  "value": 260,
+  "unit": "cases",
+  "answer": "360 - 100 = 260 extra cases.",
+  "move": "Subtract what would have happened anyway before crediting a cause.",
+  "trap": "Blaming the infection for all 360 cases, ignoring the background rate.",
+  "hint": "Some infected people would have developed the condition without any outbreak.",
+  "steps": [
+    "Cases among 1,000 infected: 36% of 1,000 = 360.",
+    "Cases expected anyway, at the uninfected rate: 10% of 1,000 = 100.",
+    "360 - 100 = 260 extra cases."
+  ],
+  "keywords": [
+    "irritable bowel syndrome",
+    "walkerton",
+    "gastroenteritis",
+    "background rate"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marshall et al., Gastroenterology, 2006",
+  "source_kind": "paper",
+  "reference": "Marshall, Thabane, Garg et al., Incidence and epidemiology of irritable bowel syndrome after a large waterborne outbreak of bacterial dysentery, Gastroenterology, 2006",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-rust-6",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A drop of salt water sits on clean iron. Where under it does the iron dissolve fastest?",
+  "options": [
+    "Under the centre of the drop",
+    "At the rim, where air gets in",
+    "Evenly under the whole drop"
+  ],
+  "correct": 0,
+  "answer": "Under the centre. Oxygen reaches the thin rim easily, so the rim becomes where oxygen takes up electrons, and those electrons come from iron dissolving under the oxygen-starved middle. Rust then settles in a ring between the two. U. R. Evans showed it in the 1920s with indicator dyes: blue at the centre, pink at the edge.",
+  "move": "Damage often shows up where a resource is missing, not where it arrives.",
+  "trap": "At the rim, since rusting needs oxygen and that is where it enters.",
+  "keywords": [
+    "differential aeration",
+    "evans drop",
+    "corrosion cell",
+    "iron",
+    "oxygen"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans, The Corrosion and Oxidation of Metals, 1960",
+  "source_kind": "book",
+  "reference": "Evans, The Corrosion and Oxidation of Metals: Scientific Principles and Practical Applications, Edward Arnold, 1960",
+  "written": "2026-09-27"
+}

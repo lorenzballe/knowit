@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fan-clubs-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Teenagers and K-pop fans claimed to have booked vast numbers of free tickets to a 2020 Trump rally in Tulsa. Did that keep supporters out?",
+  "options": [
+    "Yes: fans held most of the seats",
+    "No: sign-ups did not reserve seats",
+    "Partly: fans took about half the seats"
+  ],
+  "correct": 1,
+  "answer": "No. Entry was first come, first served, and registering reserved no seat, so a fake sign-up could not block a real supporter. What the pranks inflated was the campaign's forecast: it boasted of over a million requests, yet the fire department counted about 6,200 people inside a 19,000-seat arena. The empty seats had other causes.",
+  "move": "Before crediting a cause, check it could have produced the effect.",
+  "trap": "Crediting the prank because it came just before the empty seats.",
+  "keywords": [
+    "k-pop fans",
+    "tiktok",
+    "tulsa rally",
+    "ticket requests"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, 21 June 2020",
+  "source_kind": "news_archive",
+  "reference": "Taylor Lorenz, Kellen Browning and Sheera Frenkel, TikTok Teens and K-Pop Stans Say They Sank Trump Rally, The New York Times, 21 June 2020",
+  "written": "2026-09-27"
+}

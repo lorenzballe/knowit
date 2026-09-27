@@ -1,0 +1,39 @@
+{
+  "id": "space-landing-sites-6",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "India's Chandrayaan-3, hailed in 2023 as the first landing near the Moon's south pole, set down at 69° south. Roughly how far from the pole?",
+  "options": [
+    "About 60 km",
+    "About 600 km",
+    "About 2,000 km"
+  ],
+  "correct": 1,
+  "answer": "About 600 km. The Moon's circumference is some 10,900 km, so each degree of latitude spans about 30 km, and the 21° between 69° south and the pole make roughly 630 km: farther than London to Edinburgh. The regions studied for crewed landings lie within 6° of the pole itself.",
+  "move": "Before trusting near or far, turn the angle into a distance.",
+  "trap": "Taking near the pole, in the headlines, to mean a few dozen kilometres.",
+  "keywords": [
+    "chandrayaan-3",
+    "lunar south pole",
+    "latitude",
+    "vikram lander"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Indian Space Research Organisation, 2023",
+  "source_kind": "institution",
+  "reference": "Indian Space Research Organisation, Chandrayaan-3 mission: Vikram lander touchdown at 69.37° S, 32.32° E, 23 August 2023",
+  "written": "2026-09-27"
+}

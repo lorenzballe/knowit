@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-celebrity-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Why did a US appeals court rule in 2012 that Marilyn Monroe's heirs could not control commercial use of her image?",
+  "options": [
+    "Copyright in her photographs had expired",
+    "California gives the dead no such right",
+    "Her estate had called her a New Yorker"
+  ],
+  "correct": 2,
+  "answer": "Her estate had called her a New Yorker. After her death in 1962 its executors told tax authorities she lived in New York, which gave no rights over a dead person's image. Decades later the heirs claimed California domicile to use its law. The court held them to their earlier word.",
+  "move": "What you claimed once to save money can bind you later.",
+  "trap": "Mixing up a photographer's copyright with control over the face pictured.",
+  "keywords": [
+    "marilyn monroe",
+    "right of publicity",
+    "estate",
+    "domicile",
+    "ninth circuit"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ninth Circuit, Milton H. Greene Archives, 2012",
+  "source_kind": "primary_document",
+  "reference": "Milton H. Greene Archives, Inc. v. Marilyn Monroe LLC, 692 F.3d 983, 9th Circuit, 2012",
+  "written": "2026-09-27"
+}

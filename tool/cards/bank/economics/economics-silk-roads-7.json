@@ -1,0 +1,36 @@
+{
+  "id": "economics-silk-roads-7",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "also": [
+    "history.empires.mongol"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a Florentine merchant's handbook of about 1340 warn would happen to silver taken to China?",
+  "answer": "That the ruler's officials would take it and hand over paper money instead, which merchants then used to buy silk and everything else. Francesco Pegolotti's Pratica della mercatura also costed the route from Tana, on the Sea of Azov, stage by stage. Europe printed its own first banknotes in Stockholm in 1661.",
+  "move": "A trade route also carries ideas about what money can be.",
+  "keywords": [
+    "pegolotti",
+    "paper money",
+    "yuan dynasty",
+    "merchant handbook",
+    "silver"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pegolotti, La Pratica della Mercatura, c. 1340",
+  "source_kind": "primary_document",
+  "reference": "Pegolotti, La Pratica della Mercatura, ed. Allan Evans, Medieval Academy of America, 1936",
+  "written": "2026-09-27"
+}

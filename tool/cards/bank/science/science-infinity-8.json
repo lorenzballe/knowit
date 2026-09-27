@@ -1,0 +1,39 @@
+{
+  "id": "science-infinity-8",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A solid ball can, in theory, be cut up and reassembled into two balls of the same size. How few pieces suffice?",
+  "options": [
+    "Infinitely many",
+    "Several thousand",
+    "Five"
+  ],
+  "correct": 2,
+  "answer": "Five. Raphael Robinson proved in 1947 that five suffice and no fewer will do; one can be a single point. The pieces are so scattered they have no volume at all, and building them needs the axiom of choice, which picks from infinitely many sets without saying how. No knife could cut them.",
+  "move": "Find the one ingredient a strange result rests on before doubting the rest.",
+  "trap": "Infinitely many, since a finite set of cuts seems unable to create volume.",
+  "keywords": [
+    "banach-tarski paradox",
+    "axiom of choice",
+    "raphael robinson",
+    "non-measurable sets"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robinson, Fundamenta Mathematicae, 1947",
+  "source_kind": "paper",
+  "reference": "Robinson, On the decomposition of spheres, Fundamenta Mathematicae, 1947",
+  "written": "2026-09-27"
+}

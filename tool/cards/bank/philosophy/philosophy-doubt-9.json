@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-doubt-9",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: Hilary Putnam argued that a brain always kept in a vat cannot truly think 'I am a brain in a vat'?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Putnam argued in 1981 that words refer through causal contact with their objects. A brain always in a vat means by vat the images its computer feeds it, so its thought is false; outside a vat, the thought is false anyway. The argument fails for a brain envatted last night.",
+  "move": "Before doubting everything, ask what your words could refer to if you were right.",
+  "trap": "Assuming words mean the same whatever the speaker has ever touched.",
+  "keywords": [
+    "brain in a vat",
+    "hilary putnam",
+    "reference",
+    "scepticism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Putnam, Reason, Truth and History, 1981",
+  "source_kind": "book",
+  "reference": "Putnam, Reason, Truth and History, Cambridge University Press, 1981, chapter 1",
+  "written": "2026-09-27"
+}

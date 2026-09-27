@@ -1,0 +1,38 @@
+{
+  "id": "psychology-flow-10",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: Chinese students, like American ones, felt most intrinsically motivated when a task's challenge matched their skill?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Moneta's 2004 study of students in Hong Kong, intrinsic motivation peaked when skill exceeded challenge, a comfortable state the flow model calls relaxation, not in the matched high zone that American samples favoured. A model built on one population had been read as a law of minds.",
+  "move": "Before calling a finding universal, ask who was in the room.",
+  "trap": "True, because a model of optimal experience sounds like a human universal.",
+  "keywords": [
+    "flow model",
+    "cross-cultural psychology",
+    "hong kong",
+    "intrinsic motivation"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moneta, Journal of Happiness Studies, 2004",
+  "source_kind": "paper",
+  "reference": "Moneta, The flow model of intrinsic motivation in Chinese: cultural and personal moderators, Journal of Happiness Studies, 2004",
+  "written": "2026-09-27"
+}

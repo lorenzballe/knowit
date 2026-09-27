@@ -1,0 +1,33 @@
+{
+  "id": "space-colours-of-stars-6",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can colour tell a 5,000 K star from a 10,000 K one, but not a 40,000 K star from a 100,000 K one?",
+  "answer": "Because the eye sees only the tail of a very hot star's glow. Such stars pour most of their light out in the ultraviolet, and the visible slice keeps almost the same blend of colours whatever the temperature. All of them look the same pale blue; their spectral lines, not their colour, give the temperature.",
+  "move": "A gauge near the end of its scale stops telling cases apart.",
+  "keywords": [
+    "hot stars",
+    "colour temperature",
+    "ultraviolet",
+    "spectral lines",
+    "blackbody"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wyszecki & Stiles, Color Science, 1982",
+  "source_kind": "book",
+  "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd ed., Wiley, 1982",
+  "written": "2026-09-27"
+}

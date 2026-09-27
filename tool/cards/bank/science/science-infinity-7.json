@@ -1,0 +1,39 @@
+{
+  "id": "science-infinity-7",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "Write 4 as 2², swap each 2 for a 3, subtract 1, then repeat with bases 4, 5, 6… Where does it end?",
+  "options": [
+    "It reaches zero",
+    "It grows without end",
+    "It falls into a repeating loop"
+  ],
+  "correct": 0,
+  "answer": "It reaches zero. The values climb for an absurdly long time, but every such sequence ends at zero, as Reuben Goodstein proved in 1944; from 4 it takes about 3 × 2^402,653,211 steps. In 1982 Kirby and Paris showed ordinary arithmetic cannot prove it: the proof must count past every whole number.",
+  "move": "However long a trend has run, ask what could force it to turn.",
+  "trap": "It grows forever, since every term checked is bigger than the last.",
+  "keywords": [
+    "goodstein sequences",
+    "peano arithmetic",
+    "ordinals",
+    "unprovable theorems"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kirby & Paris, Bull. London Math. Soc., 1982",
+  "source_kind": "paper",
+  "reference": "Kirby & Paris, Accessible independence results for Peano arithmetic, Bulletin of the London Mathematical Society, 1982",
+  "written": "2026-09-27"
+}

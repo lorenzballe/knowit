@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-responsibility-6",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.responsibility",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who was Daniel M'Naghten trying to kill when his 1843 shooting gave the law its insanity test?",
+  "answer": "The Prime Minister, Robert Peel. M'Naghten shot Peel's secretary, Edward Drummond, by mistake, and was acquitted as insane. Amid outcry the House of Lords put abstract questions to the judges, and their answers became the rules: did he know what he was doing, or that it was wrong? The test was drafted in no courtroom.",
+  "move": "A rule born of public outrage can outlast the outrage by centuries.",
+  "keywords": [
+    "daniel m'naghten",
+    "insanity defence",
+    "robert peel",
+    "m'naghten rules"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moran, Knowing Right from Wrong, 1981",
+  "source_kind": "book",
+  "reference": "Moran, Knowing Right from Wrong: The Insanity Defense of Daniel McNaughtan, Free Press, 1981",
+  "written": "2026-09-27"
+}

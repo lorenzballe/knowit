@@ -1,0 +1,41 @@
+{
+  "id": "pop_culture-fan-clubs-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "After Holmes was killed off in 1893, about 20,000 readers reportedly cancelled The Strand, which sold roughly 500,000 copies. What percentage quit?",
+  "value": 4,
+  "unit": "per cent",
+  "answer": "4 / 100 = 4 per cent.",
+  "move": "A big count of complaints means little until you know the crowd.",
+  "trap": "Treating 20,000 as a revolt without asking out of how many.",
+  "hint": "Divide the cancellations by the magazine's sales, then read it as a percentage.",
+  "steps": [
+    "20,000 / 500,000: divide both by 5,000.",
+    "That leaves 4 / 100.",
+    "4 / 100 = 4 per cent."
+  ],
+  "keywords": [
+    "sherlock holmes",
+    "the strand magazine",
+    "conan doyle",
+    "cancellations"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Stashower, Teller of Tales, 1999",
+  "source_kind": "book",
+  "reference": "Daniel Stashower, Teller of Tales: The Life of Arthur Conan Doyle, Henry Holt, 1999",
+  "written": "2026-09-27"
+}

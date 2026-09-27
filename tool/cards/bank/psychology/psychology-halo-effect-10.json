@@ -1,0 +1,41 @@
+{
+  "id": "psychology-halo-effect-10",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Plain-looking workers earn roughly 5 to 10% less. Taking 7.5% of a £30,000 salary over 40 years, what is the gap in thousands of pounds?",
+  "value": 90,
+  "unit": "thousand pounds",
+  "answer": "£90,000 = 90 thousand pounds.",
+  "move": "A small percentage that follows someone every year becomes a large sum.",
+  "hint": "Find one year's gap first, then stretch it across a career.",
+  "steps": [
+    "7.5% of £30,000 = £2,250 a year.",
+    "Over 40 working years: 2,250 x 40 = £90,000.",
+    "£90,000 = 90 thousand pounds."
+  ],
+  "keywords": [
+    "beauty premium",
+    "earnings",
+    "daniel hamermesh",
+    "labour market",
+    "appearance"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamermesh & Biddle, American Economic Review, 1994",
+  "source_kind": "paper",
+  "reference": "Hamermesh & Biddle, Beauty and the labor market, American Economic Review, 1994",
+  "written": "2026-09-27"
+}

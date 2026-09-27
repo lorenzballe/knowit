@@ -1,0 +1,42 @@
+{
+  "id": "nature-ancient-trees-7",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "also": [
+    "weird_facts.records.oldest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the trunk of a Swedish spruce whose roots date back about 9,500 years is itself under 1,000 years old?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Kullman radiocarbon-dated wood beneath Old Tjikko, on Fulufjället, at about 9,500 years, but the trunk standing today is a few centuries old. For millennia it survived as a low shrub, rooting new stems wherever branches touched the ground. What is ancient is the clone, assumed to be one plant, not any wood in sight.",
+  "move": "Before comparing ages, ask what exactly is being dated.",
+  "trap": "Taking a tree's age to be the age of its trunk.",
+  "keywords": [
+    "old tjikko",
+    "norway spruce",
+    "clonal trees",
+    "radiocarbon dating",
+    "layering"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Öberg & Kullman, Arctic, 2011",
+  "source_kind": "paper",
+  "reference": "Öberg & Kullman, Ancient subalpine clonal spruces (Picea abies): sources of postglacial vegetation history in the Swedish Scandes, Arctic, 2011",
+  "written": "2026-09-27"
+}

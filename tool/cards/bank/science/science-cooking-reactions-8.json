@@ -1,0 +1,33 @@
+{
+  "id": "science-cooking-reactions-8",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does vitamin C on a cut apple delay browning rather than simply slow it?",
+  "answer": "Because it undoes the damage instead of stopping it. The apple's enzyme keeps turning phenols into quinones, which link up into brown pigment; vitamin C converts each quinone back and is used up doing so. While any remains the flesh stays pale; once it runs out, browning starts at full speed.",
+  "move": "A shield that is used up by its work buys time, not safety.",
+  "keywords": [
+    "enzymatic browning",
+    "vitamin c",
+    "apples",
+    "polyphenol oxidase",
+    "quinones"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nicolas et al., Crit. Rev. Food Sci., 1994",
+  "source_kind": "paper",
+  "reference": "Nicolas, Richard-Forget, Goupy, Amiot & Aubert, Enzymatic browning reactions in apple and apple products, Critical Reviews in Food Science and Nutrition 34, 109, 1994",
+  "written": "2026-09-27"
+}

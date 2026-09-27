@@ -1,0 +1,41 @@
+{
+  "id": "science-fire-8",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 1 mm layer of dust weighing 500 kg per cubic metre is blown up through a 4 m high room. Grams per cubic metre?",
+  "value": 125,
+  "unit": "grams per cubic metre",
+  "answer": "Spread through 4 m of height: 500 / 4 = 125 grams per cubic metre.",
+  "move": "Before calling a layer harmless, ask what it becomes once airborne.",
+  "trap": "Judging a film thin enough to write a name in too slight to matter.",
+  "hint": "Work per square metre of floor: weigh the dust, then find the air it spreads into.",
+  "steps": [
+    "Each square metre of floor holds 1 mm × 1 m² = 1 litre of dust.",
+    "1 litre at 500 kg per cubic metre weighs 500 g.",
+    "Spread through 4 m of height: 500 / 4 = 125 grams per cubic metre."
+  ],
+  "keywords": [
+    "dust explosions",
+    "combustible dust",
+    "dust layers",
+    "industrial safety"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eckhoff, Dust Explosions in the Process Industries",
+  "source_kind": "book",
+  "reference": "Eckhoff, Dust Explosions in the Process Industries, 3rd edition, Gulf Professional Publishing, 2003",
+  "written": "2026-09-27"
+}

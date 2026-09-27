@@ -1,0 +1,40 @@
+{
+  "id": "human_body-heartbeat-9",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Endurance athletes' pulses stay slow even when drugs block every nerve signal to the heart. What mainly explains it?",
+  "options": [
+    "Their pacemaker cells fire more slowly",
+    "A larger heart pumping more per beat",
+    "Less adrenaline circulating in the blood"
+  ],
+  "correct": 0,
+  "answer": "Their pacemaker cells fire more slowly. With nerves blocked, the heart runs at its own rate, and in athletes that rate is lower. D'Souza and colleagues found training cut rats' HCN4 channels, which carry the current setting the pacemaker's tick. The big heart comes from the same training; it does not set the tempo.",
+  "move": "Two changes caused by one habit need not cause each other.",
+  "trap": "Crediting the athlete's big heart, which training built alongside the slow rate.",
+  "keywords": [
+    "athlete's heart",
+    "resting heart rate",
+    "sinus node",
+    "hcn4 channels",
+    "endurance training"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "D'Souza et al., Nature Communications, 2014",
+  "source_kind": "paper",
+  "reference": "D'Souza et al., Exercise training reduces resting heart rate via downregulation of the funny channel HCN4, Nature Communications, 2014",
+  "written": "2026-09-27"
+}

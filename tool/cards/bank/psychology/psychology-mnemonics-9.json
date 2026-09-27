@@ -1,0 +1,42 @@
+{
+  "id": "psychology-mnemonics-9",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Under which condition do bizarre mental images reliably beat ordinary ones for later recall?",
+  "options": [
+    "When every image in the list is bizarre",
+    "When bizarre images are mixed with ordinary ones",
+    "When recall is delayed by a week"
+  ],
+  "correct": 1,
+  "answer": "When mixed with ordinary ones. McDaniel and Einstein found bizarre sentences recalled better than plain ones only when both kinds sat in the same list. In lists made entirely of bizarre images the advantage vanished. Strangeness works by standing out, and nothing stands out in a room where everything is strange.",
+  "move": "What makes a thing memorable is how it differs from its neighbours.",
+  "trap": "When every image is bizarre, since more strangeness should mean more memory.",
+  "keywords": [
+    "bizarreness effect",
+    "mental imagery",
+    "distinctiveness",
+    "recall"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-mnemonics-1"
+  ],
+  "figure": "none",
+  "source": "McDaniel & Einstein, JEP: Learning, Memory, Cognition, 1986",
+  "source_kind": "paper",
+  "reference": "McDaniel & Einstein, Bizarre imagery as an effective memory aid: the importance of distinctiveness, Journal of Experimental Psychology: Learning, Memory, and Cognition, 1986",
+  "written": "2026-09-27"
+}

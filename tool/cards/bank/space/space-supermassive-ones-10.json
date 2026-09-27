@@ -1,0 +1,38 @@
+{
+  "id": "space-supermassive-ones-10",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: the more massive a galaxy's central black hole, the more violently it tears apart a star that strays too close?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Above about 100 million suns, a star like the Sun is swallowed whole, without a flare. The stretching force near the horizon weakens as the hole grows, while the horizon itself widens, so the star is inside before it can be torn. Only lighter holes, or fast spinners, shred Sun-like stars in view.",
+  "move": "A bigger version of a thing can lose the very effect it is known for.",
+  "trap": "Assuming a bigger hole must have a stronger grip on everything nearby.",
+  "keywords": [
+    "tidal disruption",
+    "hills mass",
+    "supermassive black holes",
+    "stars"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hills, Nature, 1975",
+  "source_kind": "paper",
+  "reference": "Hills, Possible power source of Seyfert galaxies and QSOs, Nature, 1975",
+  "written": "2026-09-27"
+}

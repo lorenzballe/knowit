@@ -1,0 +1,32 @@
+{
+  "id": "psychology-streaks-9",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When paid gym visits had built a habit in students, what largely erased it?",
+  "answer": "The winter holiday. Acland and Levy found that paying students to attend left a real rise in visits after the money stopped, but much of it was gone after the break. The students had also predicted they would go far more than they did. A month away cut the run the cash had started.",
+  "move": "Plan the restart before a break, not after it.",
+  "keywords": [
+    "gym attendance",
+    "winter break",
+    "habit decay",
+    "projection bias"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Acland & Levy, Management Science, 2015",
+  "source_kind": "paper",
+  "reference": "Acland & Levy, Naiveté, projection bias, and habit formation in gym attendance, Management Science, 2015",
+  "written": "2026-09-27"
+}

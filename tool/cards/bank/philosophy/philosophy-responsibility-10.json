@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-responsibility-10",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.responsibility",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "P. F. Strawson defended blame. Why did his son Galen argue that nobody can be truly responsible?",
+  "answer": "Because nobody makes themselves. People act from how they are; to answer ultimately for that, they must have chosen how they are, which needs an earlier self fit to choose, and so on forever. Galen Strawson's 1994 Basic Argument adds that chance helps no one. Every chain of blame runs back to a cradle.",
+  "move": "Ask who shaped the chooser before blaming the choice.",
+  "keywords": [
+    "galen strawson",
+    "basic argument",
+    "ultimate responsibility",
+    "self-creation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "G. Strawson, Philosophical Studies, 1994",
+  "source_kind": "paper",
+  "reference": "Galen Strawson, The Impossibility of Moral Responsibility, Philosophical Studies 75, 1994",
+  "written": "2026-09-27"
+}

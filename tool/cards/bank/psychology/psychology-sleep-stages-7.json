@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sleep-stages-7",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In which stage of sleep does sleepwalking begin, and why does that matter?",
+  "answer": "Deep non-REM sleep, mostly early in the night, not the dreaming stage. In REM the muscles are held slack; in slow-wave sleep they are not, so a brain whose motor regions stir while the rest stays asleep can walk, talk or eat. Sleepwalkers seldom recall a dream: they are not acting one out.",
+  "move": "Ask what state allows a behaviour before asking what story explains it.",
+  "keywords": [
+    "sleepwalking",
+    "slow-wave sleep",
+    "non-rem sleep",
+    "muscle atonia",
+    "parasomnia"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zadra et al., Lancet Neurology, 2013",
+  "source_kind": "paper",
+  "reference": "Zadra, Desautels, Petit & Montplaisir, Somnambulism: clinical aspects and pathophysiological hypotheses, Lancet Neurology, 2013",
+  "written": "2026-09-27"
+}

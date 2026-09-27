@@ -1,0 +1,39 @@
+{
+  "id": "human_body-circulation-7",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "At rest, which part of the circulation holds the most blood?",
+  "options": [
+    "The capillaries",
+    "The arteries",
+    "The veins"
+  ],
+  "correct": 2,
+  "answer": "The veins, about two thirds of it. Their walls are thin and stretchy, so they fill like soft bags at low pressure and serve as a reservoir; the arteries hold under a fifth and the capillaries well under a tenth. When blood is lost, the veins tighten and push their reserve back towards the heart.",
+  "move": "The part that stores a thing is often not the part that uses it.",
+  "trap": "Picturing the vast capillary network as the body's main store.",
+  "keywords": [
+    "veins",
+    "blood volume",
+    "capacitance",
+    "circulation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Mohrman & Heller, Cardiovascular Physiology",
+  "source_kind": "book",
+  "reference": "Mohrman & Heller, Cardiovascular Physiology, 9th edition, McGraw-Hill, 2018",
+  "written": "2026-09-27"
+}

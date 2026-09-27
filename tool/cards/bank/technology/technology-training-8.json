@@ -1,0 +1,39 @@
+{
+  "id": "technology-training-8",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "The computing power used to train leading AI models has grown about 4 to 5 times a year. What is that over five years?",
+  "options": [
+    "About 25 times",
+    "About 100 times",
+    "About 2,000 times"
+  ],
+  "correct": 2,
+  "answer": "About 2,000 times. Growth of 4.5 times a year compounds: 4.5 multiplied by itself five times is about 1,850. Epoch AI's range of 4 to 5 a year gives 1,000 to 3,000 times over five years. Five doublings would give 32; five quadruplings already give 1,024.",
+  "move": "Multiply growth rates together; never multiply them by the years.",
+  "trap": "Multiplying the yearly rate by the number of years: five times five.",
+  "keywords": [
+    "training compute",
+    "epoch ai",
+    "growth rate",
+    "frontier models"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Epoch AI, 2024",
+  "source_kind": "institution",
+  "reference": "https://epoch.ai/publications/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year",
+  "written": "2026-09-27"
+}

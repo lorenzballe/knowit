@@ -1,0 +1,43 @@
+{
+  "id": "history-clothes-9",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "also": [
+    "economics.work_and_wages.gig_work"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "When the sewing machine cut the time to stitch a shirt several-fold after 1850, what happened to home seamstresses' pay per shirt?",
+  "options": [
+    "It fell, as piece rates were cut",
+    "It rose, as each woman made more",
+    "It held steady, fixed by custom"
+  ],
+  "correct": 0,
+  "answer": "It fell, as piece rates were cut. More shirts per hour meant more shirts on the market and more women able to make them, so merchants lowered the rate for each. Outworkers often bought their machines on instalments, carrying the debt themselves. By the 1880s London's clothing outwork was Parliament's model case of sweated labour.",
+  "move": "A faster tool pays whoever controls the price of the work.",
+  "trap": "Assuming the gain from a faster tool goes to its user.",
+  "keywords": [
+    "sewing machine",
+    "seamstresses",
+    "piece rates",
+    "sweated labour",
+    "outwork"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schmiechen, Sweated Industries and Sweated Labor, 1984",
+  "source_kind": "book",
+  "reference": "Schmiechen, Sweated Industries and Sweated Labor: The London Clothing Trades, 1860–1914, University of Illinois Press, 1984",
+  "written": "2026-09-27"
+}

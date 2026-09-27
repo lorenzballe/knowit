@@ -1,0 +1,33 @@
+{
+  "id": "nature-rainforests-10",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What sets off the mass flowering of Borneo's dipterocarp forests, after years of near silence?",
+  "answer": "A signal from the Pacific. Every few years hundreds of species bloom within weeks of one another, and these general flowerings follow El Niño; the exact cue is debated, a run of cooler nights or a dry spell. Fruiting all at once swamps the pigs, birds and insects that eat seeds, so some escape.",
+  "move": "Scarcity punctuated by glut can beat a steady supply that feeds your enemies.",
+  "keywords": [
+    "dipterocarps",
+    "mast fruiting",
+    "el niño",
+    "borneo",
+    "seed predators"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ashton, Givnish & Appanah, American Naturalist, 1988",
+  "source_kind": "paper",
+  "reference": "Ashton, Givnish & Appanah, Staggered flowering in the Dipterocarpaceae: new insights into floral induction and the evolution of mast fruiting in the aseasonal tropics, American Naturalist, 1988",
+  "written": "2026-09-27"
+}

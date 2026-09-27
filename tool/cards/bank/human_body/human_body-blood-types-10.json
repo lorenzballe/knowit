@@ -1,0 +1,39 @@
+{
+  "id": "human_body-blood-types-10",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Early 2020 studies tied blood group A to severe COVID-19 and group O to protection. What did a study of 107,796 people find?",
+  "options": [
+    "No link to infection or severity",
+    "The same link, about as strong",
+    "Group O at the higher risk"
+  ],
+  "correct": 0,
+  "answer": "No link to infection or severity. Anderson and colleagues followed everyone tested in a Utah health system: blood group made no difference to testing positive, hospital admission or intensive care. Early, smaller studies are the likeliest to report striking effects, which shrink as numbers grow; genetic studies still find at most a small effect.",
+  "move": "Expect a striking first result to shrink when a bigger study checks it.",
+  "trap": "Expecting an effect reported by several early studies to hold at full strength.",
+  "keywords": [
+    "covid-19",
+    "abo blood groups",
+    "effect size",
+    "replication"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anderson et al., JAMA Network Open, 2021",
+  "source_kind": "paper",
+  "reference": "https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2778155",
+  "written": "2026-09-27"
+}

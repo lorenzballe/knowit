@@ -1,0 +1,38 @@
+{
+  "id": "human_body-fingerprints-8",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: on a smooth, dry surface, the ridges of a fingertip increase its grip?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2009 Warman and Ennos pulled a fingertip across a smooth sheet of Perspex and found the ridges lowered friction: skin grips roughly in proportion to the area in contact, and ridges touch only with their crests. Their job may lie in wet or rough grip, or in touch, instead.",
+  "move": "An explanation repeated for a century can still be untested.",
+  "trap": "Treating ridges like tyre treads, a story assumed rather than tested.",
+  "keywords": [
+    "fingerprint ridges",
+    "friction",
+    "grip",
+    "skin"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Warman & Ennos, J Exp Biol, 2009",
+  "source_kind": "paper",
+  "reference": "Warman & Ennos, Fingerprints are unlikely to increase the friction of primate fingerpads, Journal of Experimental Biology, 2009",
+  "written": "2026-09-27"
+}

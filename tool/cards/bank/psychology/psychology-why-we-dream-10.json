@@ -1,0 +1,39 @@
+{
+  "id": "psychology-why-we-dream-10",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: rehearsing a rewritten version of a recurring nightmare while awake makes it return less often?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In imagery rehearsal therapy, patients write a changed version of the nightmare and rehearse it for minutes a day. In a 2001 trial with 168 sexual assault survivors, nightmares fell markedly against a waiting-list group given nothing yet. The waking mind edited the script, and the sleeping mind often used the new version.",
+  "move": "Rehearse the version you want, and the old one gets less airtime.",
+  "trap": "Assuming nothing done by day can reach what happens in dreams.",
+  "keywords": [
+    "nightmares",
+    "imagery rehearsal therapy",
+    "barry krakow",
+    "post-traumatic stress",
+    "randomised trial"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krakow et al., JAMA, 2001",
+  "source_kind": "paper",
+  "reference": "Krakow, Hollifield, Johnston et al., Imagery rehearsal therapy for chronic nightmares in sexual assault survivors with posttraumatic stress disorder: a randomized controlled trial, JAMA, 2001",
+  "written": "2026-09-27"
+}

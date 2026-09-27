@@ -1,0 +1,40 @@
+{
+  "id": "technology-dns-9",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "In October 2021 Facebook vanished for about six hours because its DNS servers became unreachable. What made them unreachable?",
+  "options": [
+    "Their own automatic safety check",
+    "A faulty DNS record pushed live",
+    "An outside attack on the servers"
+  ],
+  "correct": 0,
+  "answer": "Their own automatic safety check. A maintenance command accidentally cut every link in Facebook's backbone network. Its DNS servers were built to withdraw their route announcements whenever they lost touch with the data centres, and did so, leaving the internet no path to them while they kept running. Engineers had to reach routers in person.",
+  "move": "When everything fails at once, look for the one thing they share.",
+  "trap": "DNS failed, so a DNS error looks like the cause.",
+  "keywords": [
+    "facebook outage",
+    "bgp",
+    "backbone network",
+    "dns servers",
+    "2021"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meta Engineering blog, October 2021",
+  "source_kind": "company",
+  "reference": "https://engineering.fb.com/2021/10/05/networking-traffic/outage-details/",
+  "written": "2026-09-27"
+}

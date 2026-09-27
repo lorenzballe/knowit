@@ -1,0 +1,42 @@
+{
+  "id": "human_body-taste-8",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Quinine can be tasted at about 0.008 millimolar, table sugar only from about 10 millimolar. How many times more sensitive is bitter taste?",
+  "value": 1250,
+  "unit": "times",
+  "answer": "10,000 / 8 = 1,250 times.",
+  "move": "Compare how little of each thing it takes, not how strong each feels.",
+  "trap": "Reading the tiny decimal as a gap of tens, not thousands.",
+  "hint": "Clear the decimal first: multiply both thresholds by 1,000.",
+  "steps": [
+    "Divide the sugar threshold by the quinine threshold: 10 / 0.008.",
+    "Multiply both by 1,000: 10 / 0.008 = 10,000 / 8.",
+    "10,000 / 8 = 1,250 times."
+  ],
+  "simply": "Bitter is an alarm for poisons, which harm in tiny doses; sweet is a fuel gauge that only needs to notice a meal.",
+  "keywords": [
+    "quinine",
+    "sucrose",
+    "taste thresholds",
+    "bitter taste"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guyton and Hall, Medical Physiology",
+  "source_kind": "book",
+  "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2020",
+  "written": "2026-09-27"
+}

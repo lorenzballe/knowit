@@ -1,0 +1,38 @@
+{
+  "id": "psychology-mnemonics-7",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: weeks of training in the memory palace narrowed the recall gap between adults in their twenties and in their seventies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It widened. Kliegl, Baltes and colleagues trained both age groups in the method of loci over dozens of sessions. Everyone improved, but the young improved more, until the two groups' scores barely overlapped. Even older graphic designers, practised at imagery, stayed below the young. Training revealed a limit that ordinary testing had hidden.",
+  "move": "Practice can widen a gap as easily as close it.",
+  "trap": "True, since the weaker group seems to have more room to improve.",
+  "keywords": [
+    "method of loci",
+    "ageing",
+    "cognitive plasticity",
+    "testing the limits"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baltes & Kliegl, Developmental Psychology, 1992",
+  "source_kind": "paper",
+  "reference": "Baltes & Kliegl, Further testing of limits of cognitive plasticity: negative age differences in a mnemonic skill are robust, Developmental Psychology, 1992",
+  "written": "2026-09-27"
+}

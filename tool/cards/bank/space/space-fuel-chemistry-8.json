@@ -1,0 +1,43 @@
+{
+  "id": "space-fuel-chemistry-8",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Kilogram for kilogram, how does kerosene mixed with its oxygen compare with TNT in the energy it releases?",
+  "options": [
+    "TNT releases about ten times more",
+    "Roughly the same amount",
+    "The propellant, two to three times more"
+  ],
+  "correct": 2,
+  "answer": "The propellant, two to three times more. Burned kerosene releases about 43 MJ per kilogram; spread over the oxygen it needs too, that is about 12 MJ per kilogram of mixture. TNT gives about 4.6. An explosive is fast, not rich: it carries its oxygen inside the molecule and lets go all at once.",
+  "move": "Violence is about speed; energy is a separate question.",
+  "trap": "Picturing explosives as the most energetic stuff by weight.",
+  "keywords": [
+    "kerosene",
+    "tnt",
+    "energy density",
+    "liquid oxygen",
+    "explosives"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "space-fuel-chemistry-1"
+  ],
+  "figure": "bars",
+  "source": "Cooper, Explosives Engineering, 1996",
+  "source_kind": "book",
+  "reference": "Cooper, Explosives Engineering, Wiley-VCH, 1996",
+  "written": "2026-09-27"
+}

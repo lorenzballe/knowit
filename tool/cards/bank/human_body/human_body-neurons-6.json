@@ -1,0 +1,42 @@
+{
+  "id": "human_body-neurons-6",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Bare axon speed rises with the square root of width. A 0.5 mm squid axon manages 25 m/s. What width gives 100 m/s, in mm?",
+  "value": 8,
+  "unit": "mm",
+  "answer": "16 x 0.5 mm = 8 mm.",
+  "move": "When returns grow as a square root, doubling the output costs four times the input.",
+  "trap": "Scaling width in step with speed and answering 2 mm.",
+  "hint": "Undo a square root by squaring the ratio of the speeds.",
+  "steps": [
+    "Target speed over current speed: 100 / 25 = 4.",
+    "Speed goes with the square root of width, so width must rise 4 x 4 = 16 times.",
+    "16 x 0.5 mm = 8 mm."
+  ],
+  "simply": "A human motor fibre about 0.02 mm across, wrapped in fatty myelin, already carries signals at roughly 100 m/s. Insulation does with one four-hundredth of the width what bare girth would need a pencil-thick cable for.",
+  "keywords": [
+    "myelin",
+    "squid giant axon",
+    "conduction velocity",
+    "axon diameter"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hartline & Colman, Current Biology, 2007",
+  "source_kind": "paper",
+  "reference": "Hartline & Colman, Rapid conduction and the evolution of giant axons and myelinated fibers, Current Biology, 2007",
+  "written": "2026-09-27"
+}

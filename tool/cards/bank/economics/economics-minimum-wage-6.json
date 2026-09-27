@@ -1,0 +1,39 @@
+{
+  "id": "economics-minimum-wage-6",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "After 138 US state minimum wage rises, jobs paying below each new minimum vanished. What happened to the total number of low-wage jobs?",
+  "options": [
+    "It stayed roughly the same",
+    "It fell by about as many",
+    "It rose, as spending grew"
+  ],
+  "correct": 0,
+  "answer": "It stayed roughly the same. Cengiz, Dube, Lindner and Zipperer counted jobs by wage band against states without rises: over five years, the jobs lost below each new minimum were matched by extra jobs at or just above it. Most of the missing jobs had not gone; their pay had crossed the line.",
+  "move": "Before counting what vanished below a line, count what appeared above it.",
+  "trap": "Counting the vanished low-paid jobs as losses without looking just above.",
+  "keywords": [
+    "minimum wage",
+    "low-wage jobs",
+    "employment",
+    "wage distribution"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Cengiz et al., QJE, 2019",
+  "source_kind": "paper",
+  "reference": "Cengiz, Dube, Lindner & Zipperer, The Effect of Minimum Wages on Low-Wage Jobs, Quarterly Journal of Economics, 2019",
+  "written": "2026-09-27"
+}

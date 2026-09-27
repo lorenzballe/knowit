@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-science-9",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "One hypothesis in 10 is true; studies catch 80% of true effects and flag 5% of false ones. What percentage of positive findings are true?",
+  "value": 64,
+  "unit": "per cent",
+  "answer": "80 / (80 + 45) = 64%.",
+  "move": "Finding what is there is not the same as what is found being there.",
+  "trap": "Reading the 80% detection rate as a finding's chance of being true.",
+  "hint": "Imagine 1,000 hypotheses and count the true and the false among the positives.",
+  "steps": [
+    "Take 1,000 hypotheses: 100 true, 900 false.",
+    "True ones detected: 100 x 0.8 = 80.",
+    "False alarms: 900 x 0.05 = 45.",
+    "80 / (80 + 45) = 64%."
+  ],
+  "keywords": [
+    "false positives",
+    "statistical power",
+    "john ioannidis",
+    "published findings"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Ioannidis, PLoS Medicine, 2005",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pmed.0020124",
+  "written": "2026-09-27"
+}

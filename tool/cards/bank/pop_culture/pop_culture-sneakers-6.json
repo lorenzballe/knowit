@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sneakers-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can trainers kept unworn in their box since the 1990s crumble the first time they are worn?",
+  "answer": "Because the midsole decays on the shelf. Many midsoles are polyurethane foam; moisture in the air slowly splits its polymer chains, a reaction called hydrolysis, worn or not. After a decade or two the foam turns brittle and gives way under a step. Collectors pay dearly for pairs that may not survive a walk.",
+  "move": "Unused is not the same as unaged; ask what decays just sitting still.",
+  "keywords": [
+    "polyurethane",
+    "hydrolysis",
+    "midsoles",
+    "deadstock",
+    "collectors"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shashoua, Conservation of Plastics, 2008",
+  "source_kind": "book",
+  "reference": "Yvonne Shashoua, Conservation of Plastics: Materials Science, Degradation and Preservation, Butterworth-Heinemann, 2008",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "nature-bees-10",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a honeybee swarm chooses a new home, who makes the choice, and what stops the debate dragging on?",
+  "answer": "A few hundred scouts, not the queen; fading enthusiasm ends it. Scouts dance for the cavities they find, longer for better ones, but each scout dances less every time she returns. When enough scouts gather at one site at once, the swarm lifts off. On Seeley's island, swarms usually chose the best nest box offered.",
+  "move": "Let support for an option decay unless fresh evidence keeps renewing it.",
+  "keywords": [
+    "swarming",
+    "nest site choice",
+    "waggle dance",
+    "quorum"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seeley, Honeybee Democracy, 2010",
+  "source_kind": "book",
+  "reference": "Seeley, Honeybee Democracy, Princeton University Press, 2010",
+  "written": "2026-09-27"
+}

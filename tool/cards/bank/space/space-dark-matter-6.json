@@ -1,0 +1,33 @@
+{
+  "id": "space-dark-matter-6",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did two theorists conclude in 1973 that spiral galaxies need heavy unseen halos, before rotation measurements settled it?",
+  "answer": "Because in their simulations a flat, spinning disc of stars on its own was unstable. Ostriker and Peebles found that it quickly twisted itself into a bar. Only a massive, roughly spherical halo, heavier than the disc, kept it calm. Real spirals are mostly calm discs, so something heavy and unseen held them.",
+  "move": "When a thing should fall apart and does not, look for a hidden support.",
+  "keywords": [
+    "ostriker",
+    "peebles",
+    "galactic halos",
+    "disc stability",
+    "spiral galaxies"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ostriker & Peebles, Astrophysical Journal, 1973",
+  "source_kind": "paper",
+  "reference": "Ostriker & Peebles, A Numerical Study of the Stability of Flattened Galaxies: or, can Cold Galaxies Survive?, The Astrophysical Journal 186, 467, 1973",
+  "written": "2026-09-27"
+}

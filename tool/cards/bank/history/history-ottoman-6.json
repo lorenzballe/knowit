@@ -1,0 +1,33 @@
+{
+  "id": "history-ottoman-6",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Ottoman treasury borrow from its own subjects before it ever borrowed abroad?",
+  "answer": "By selling slices of tax revenue. From 1775 the state sold esham: shares in the income of a tax source, such as a customs house, bought for a lump sum and paying a fixed annual amount for life. Holders could resell them. The first foreign loan came only in 1854, during the Crimean War.",
+  "move": "A state that cannot borrow openly will find another name for debt.",
+  "keywords": [
+    "esham",
+    "public debt",
+    "tax farming",
+    "crimean war",
+    "ottoman treasury"
+  ],
+  "era": "early_modern",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pamuk, A Monetary History of the Ottoman Empire",
+  "source_kind": "book",
+  "reference": "Pamuk, A Monetary History of the Ottoman Empire, Cambridge University Press, 2000",
+  "written": "2026-09-27"
+}

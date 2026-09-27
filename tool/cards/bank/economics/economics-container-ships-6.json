@@ -1,0 +1,36 @@
+{
+  "id": "economics-container-ships-6",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "also": [
+    "economics.trade_routes.chokepoints"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a cargo owner whose goods arrive undamaged still get a bill after a container ship's accident?",
+  "answer": "Because of general average, a maritime rule older than insurance: when a ship spends or sacrifices something to save the voyage, every cargo owner aboard shares the cost in proportion to value. Ever Given's owner declared it after the 2021 Suez grounding. Intact goods are released only once their owners post security.",
+  "move": "Sharing a risk means paying for other people's bad luck too.",
+  "keywords": [
+    "general average",
+    "ever given",
+    "cargo owners",
+    "salvage",
+    "york-antwerp rules"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "York-Antwerp Rules, Comité Maritime International",
+  "source_kind": "primary_document",
+  "reference": "Comité Maritime International, York-Antwerp Rules 2016, adopted at the CMI Conference in New York, 2016",
+  "written": "2026-09-27"
+}

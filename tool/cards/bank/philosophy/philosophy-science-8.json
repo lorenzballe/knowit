@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-science-8",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Every emerald yet seen is green, and also 'grue': green if seen before 2030, blue after. What did Nelson Goodman say licenses predicting green?",
+  "options": [
+    "Green's long record of use in predictions",
+    "Green, unlike grue, mentions no date",
+    "Green gives the simpler hypothesis"
+  ],
+  "correct": 0,
+  "answer": "Green's long record of use in predictions. The date is no difference: to a speaker of grue and its twin bleen, green is the word defined by a date, and grue fits every emerald seen as well. Green has entrenchment, generations of successful forecasts: a habit of language, not a law of logic.",
+  "move": "The same evidence can back two futures; ask what made you pick one.",
+  "trap": "Thinking green is timeless, when timelessness depends on the starting vocabulary.",
+  "keywords": [
+    "grue",
+    "nelson goodman",
+    "induction",
+    "entrenchment",
+    "emeralds"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goodman, Fact, Fiction, and Forecast, 1955",
+  "source_kind": "book",
+  "reference": "Goodman, Fact, Fiction, and Forecast, Harvard University Press, 1955, chapters 3 and 4",
+  "written": "2026-09-27"
+}

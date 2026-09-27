@@ -1,0 +1,39 @@
+{
+  "id": "human_body-plasticity-9",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: London bus drivers, who drive all day on fixed routes, show the same enlarged hippocampus as taxi drivers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Maguire's team compared the two because both drive all day in city traffic; only taxi drivers must hold the street plan in mind. Taxi drivers had more grey matter at the back of the hippocampus, less at the front, and were worse at recalling a new complex figure. Bus drivers showed neither.",
+  "move": "Find a group that shares everything except the thing you suspect.",
+  "trap": "Crediting the change to long hours of driving rather than navigating.",
+  "keywords": [
+    "taxi drivers",
+    "bus drivers",
+    "hippocampus",
+    "navigation",
+    "grey matter"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maguire, Woollett & Spiers, Hippocampus, 2006",
+  "source_kind": "paper",
+  "reference": "Maguire, Woollett & Spiers, London taxi drivers and bus drivers: a structural MRI and neuropsychological analysis, Hippocampus, 2006",
+  "written": "2026-09-27"
+}

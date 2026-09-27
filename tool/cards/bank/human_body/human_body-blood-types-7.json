@@ -1,0 +1,33 @@
+{
+  "id": "human_body-blood-types-7",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is one of the commonest human malaria parasites nearly absent from West and Central Africa?",
+  "answer": "Because most people there lack the door it uses. Plasmodium vivax enters red cells through a surface protein, the Duffy blood-group antigen, and in 1976 Miller and colleagues showed that Duffy-negative people resisted it; most West and Central Africans are Duffy-negative. The shield leaks: vivax has since been found infecting Duffy-negative people in Madagascar.",
+  "move": "Resistance can rest on a missing part rather than an added defence.",
+  "keywords": [
+    "duffy antigen",
+    "plasmodium vivax",
+    "malaria",
+    "red cells",
+    "west africa"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller et al., NEJM, 1976",
+  "source_kind": "paper",
+  "reference": "Miller, Mason, Clyde & McGinniss, The resistance factor to Plasmodium vivax in blacks: the Duffy-blood-group genotype, FyFy, New England Journal of Medicine, 1976",
+  "written": "2026-09-27"
+}

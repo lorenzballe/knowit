@@ -1,0 +1,33 @@
+{
+  "id": "economics-2008-6",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the decisive bank run of 2008 happen, since there were few queues at bank counters?",
+  "answer": "In the repo market, where banks borrowed overnight against bonds, and lenders lend less than the collateral's value: the haircut. Gorton and Metrick found the average haircut on collateral other than Treasury bonds went from about zero in early 2007 to nearly 50% in late 2008. Half the funding vanished without one depositor queuing.",
+  "move": "A run can happen wherever short-term lenders can quietly lend less.",
+  "keywords": [
+    "repo market",
+    "haircuts",
+    "shadow banking",
+    "collateral",
+    "bank run"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gorton & Metrick, Journal of Financial Economics, 2012",
+  "source_kind": "paper",
+  "reference": "Gorton & Metrick, Securitized banking and the run on repo, Journal of Financial Economics, 2012",
+  "written": "2026-09-27"
+}

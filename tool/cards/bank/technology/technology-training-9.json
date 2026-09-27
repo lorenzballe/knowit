@@ -1,0 +1,39 @@
+{
+  "id": "technology-training-9",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conjunction",
+  "question": "As language models grew, some skills seemed to appear suddenly at a certain size. What did a 2023 study mainly blame?",
+  "options": [
+    "All-or-nothing scoring of the answers",
+    "A size at which reasoning switches on",
+    "Test answers leaking into training text"
+  ],
+  "correct": 0,
+  "answer": "All-or-nothing scoring. If a model must get all 5 digits of an answer right, and its accuracy per digit climbs steadily from 50% to 90%, its score leaps from 3% to 59%. Given partial credit, the same models improved smoothly. The jump was in the ruler, not in the model.",
+  "move": "A score that needs every step right turns steady progress into a sudden leap.",
+  "trap": "Reading a sharp jump in scores as a sharp change in ability.",
+  "keywords": [
+    "emergent abilities",
+    "benchmarks",
+    "scoring metrics",
+    "scaling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schaeffer, Miranda & Koyejo, NeurIPS, 2023",
+  "source_kind": "paper",
+  "reference": "Schaeffer, Miranda & Koyejo, Are Emergent Abilities of Large Language Models a Mirage?, NeurIPS, 2023",
+  "written": "2026-09-27"
+}

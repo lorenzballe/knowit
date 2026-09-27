@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-certainty-9",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If someone truly knows a fact, why may they not simply ignore all later evidence against it?",
+  "answer": "Because the evidence can take the knowledge away. Saul Kripke's puzzle: if I know it, all counter-evidence is misleading, so I may disregard it. Gilbert Harman replied in 1973 that meeting the counter-evidence can leave you no longer knowing, and the argument's first premise is gone. A verdict stands only until the appeal.",
+  "move": "Being right today is no licence to stop listening tomorrow.",
+  "keywords": [
+    "dogmatism paradox",
+    "saul kripke",
+    "gilbert harman",
+    "misleading evidence"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harman, Thought, 1973",
+  "source_kind": "book",
+  "reference": "Harman, Thought, Princeton University Press, 1973, chapter 9",
+  "written": "2026-09-27"
+}

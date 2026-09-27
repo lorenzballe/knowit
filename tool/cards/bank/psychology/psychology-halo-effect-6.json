@@ -1,0 +1,33 @@
+{
+  "id": "psychology-halo-effect-6",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when performance raters were trained to stop giving people matching scores across different traits?",
+  "answer": "Their ratings became less accurate. John Bernardin and Elaine Pence found that training raters to avoid halo, scoring each trait separately, spread the numbers out but moved them further from the truth. Real strengths often do cluster: a diligent worker is frequently an accurate one too. Some of what looked like error was signal.",
+  "move": "Before removing a pattern as bias, check whether the world contains it too.",
+  "keywords": [
+    "rater training",
+    "performance ratings",
+    "halo error",
+    "accuracy",
+    "appraisal"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bernardin & Pence, Journal of Applied Psychology, 1980",
+  "source_kind": "paper",
+  "reference": "Bernardin & Pence, Effects of rater training: creating new response sets and decreasing accuracy, Journal of Applied Psychology, 1980",
+  "written": "2026-09-27"
+}

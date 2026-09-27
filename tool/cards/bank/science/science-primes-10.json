@@ -1,0 +1,32 @@
+{
+  "id": "science-primes-10",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does Euclid's proof that primes never run out show that 2 × 3 × 5 × 7 × 11 × 13 + 1 is prime?",
+  "answer": "No, and it is not: 30,031 = 59 × 509. Euclid's argument, in Book IX of the Elements, says only that such a number leaves remainder 1 when divided by each listed prime, so its prime factors lie outside the list. Those can be new primes smaller than it: 59 and 509 were missing.",
+  "move": "Read what a proof shows, not what its recipe seems to promise.",
+  "keywords": [
+    "euclid",
+    "infinitude of primes",
+    "primorials",
+    "proof"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Euclid, Elements, trans. Heath",
+  "source_kind": "book",
+  "reference": "Euclid, The Thirteen Books of Euclid's Elements, trans. Heath, Cambridge University Press, 1908",
+  "written": "2026-09-27"
+}

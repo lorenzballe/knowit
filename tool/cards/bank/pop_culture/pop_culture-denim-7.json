@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-denim-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does most stonewashing of jeans rely on today in place of the stones?",
+  "answer": "Enzymes. Cellulases, proteins that break down cellulose, nibble the surface of the cotton in the washing drum and loosen indigo much as pumice did, without stones that battered machines, clogged drains and left grit in pockets. Lasers now draw many of the worn patterns too. The word on the label has outlived the rock.",
+  "move": "A process can keep its name long after it has dropped its method.",
+  "keywords": [
+    "stonewashing",
+    "cellulase enzymes",
+    "pumice",
+    "denim finishing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paul (ed.), Denim, Woodhead Publishing, 2015",
+  "source_kind": "book",
+  "reference": "Roshan Paul (ed.), Denim: Manufacture, Finishing and Applications, Woodhead Publishing, 2015",
+  "written": "2026-09-27"
+}

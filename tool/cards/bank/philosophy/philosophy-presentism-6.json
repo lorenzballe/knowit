@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-presentism-6",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If only the present exists, what makes it true today that Caesar crossed the Rubicon?",
+  "answer": "A property the present world has now, some presentists answer: having once contained Caesar crossing. John Bigelow called these Lucretian properties in 1996, after Lucretius, for whom the Trojan War exists now only as something that happened to lands and peoples still here. The river is still there; the crossing lives in its history.",
+  "move": "When a claim seems to need something missing, ask what present fact could carry it.",
+  "keywords": [
+    "truthmakers",
+    "john bigelow",
+    "lucretius",
+    "past truths"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bigelow, Philosophical Perspectives, 1996",
+  "source_kind": "paper",
+  "reference": "Bigelow, Presentism and Properties, Philosophical Perspectives 10, 1996, pp. 35-52",
+  "written": "2026-09-27"
+}

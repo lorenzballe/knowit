@@ -1,0 +1,33 @@
+{
+  "id": "human_body-fingerprints-6",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What single change in the genes can leave a person with no fingerprints at all?",
+  "answer": "A mutation in SMARCAD1, traced in 2011 in a Swiss family. It hits a short version of the gene used only in skin, so carriers are otherwise healthy apart from fewer sweat glands on the hands; their fingertips are simply smooth. Border checks that demand prints gave the condition its nickname: immigration delay disease.",
+  "move": "One small switch can remove a feature that seems built from countless parts.",
+  "keywords": [
+    "adermatoglyphia",
+    "smarcad1",
+    "mutation",
+    "sweat glands",
+    "border checks"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nousbeck et al., AJHG, 2011",
+  "source_kind": "paper",
+  "reference": "Nousbeck et al., A mutation in a skin-specific isoform of SMARCAD1 causes autosomal-dominant adermatoglyphia, American Journal of Human Genetics, 2011",
+  "written": "2026-09-27"
+}

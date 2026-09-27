@@ -1,0 +1,43 @@
+{
+  "id": "history-hygiene-7",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "also": [
+    "medicine.medical_history.germ_theory"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "From 1848 London ordered its cesspools abolished and houses drained into sewers. What did that do to the city's drinking water?",
+  "options": [
+    "Cleaned it: cesspools stopped leaking into wells",
+    "Little change: supplies came from outside town",
+    "Fouled it: sewers emptied into the Thames"
+  ],
+  "correct": 2,
+  "answer": "Fouled it: sewers emptied into the Thames. They had been built for rainwater and ran straight to the river, and several water companies still drew their supply from the tidal Thames in town. Flushing toilets and the end of cesspools moved the city's excrement from under its houses into its water pipes.",
+  "move": "Ask where the waste goes after it leaves the house.",
+  "trap": "Assuming a sanitary reform must have made the water cleaner.",
+  "keywords": [
+    "cesspools",
+    "sewers",
+    "thames",
+    "drinking water",
+    "london"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halliday, The Great Stink of London, 1999",
+  "source_kind": "book",
+  "reference": "Halliday, The Great Stink of London: Sir Joseph Bazalgette and the Cleansing of the Victorian Metropolis, Sutton Publishing, 1999",
+  "written": "2026-09-27"
+}

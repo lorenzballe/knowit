@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-forums-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Reddit's 2023 API price was $0.24 per 1,000 calls. Apollo made about 7 billion calls monthly. Its yearly bill, in millions of dollars?",
+  "value": 20.16,
+  "unit": "million dollars a year",
+  "tolerance": 0.5,
+  "answer": "$1.68 million x 12 = about $20.2 million a year.",
+  "move": "Multiply a tiny unit price by the real volume before calling it cheap.",
+  "trap": "Skipping the per-thousand step and landing a thousand times too high.",
+  "hint": "Count the blocks of a thousand calls first, then price a month, then a year.",
+  "steps": [
+    "7 billion calls / 1,000 = 7 million blocks of 1,000.",
+    "7 million x $0.24 = $1.68 million a month.",
+    "$1.68 million x 12 = about $20.2 million a year."
+  ],
+  "keywords": [
+    "reddit",
+    "apollo",
+    "api pricing",
+    "third-party apps",
+    "2023 blackout"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christian Selig, r/apolloapp, May 2023",
+  "source_kind": "primary_document",
+  "reference": "Christian Selig, post to r/apolloapp on Reddit's API pricing, 31 May 2023",
+  "written": "2026-09-27"
+}

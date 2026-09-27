@@ -1,0 +1,44 @@
+{
+  "id": "philosophy-socrates-7",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Of Socrates' 500 jurors, 280 voted guilty; Diogenes Laertius says 80 more then voted for death. How many voted against death?",
+  "value": 140,
+  "unit": "jurors",
+  "answer": "Against death: 500 - 360 = 140.",
+  "move": "A second vote is a new count, not a rerun of the first.",
+  "trap": "Answering 220, as if every acquitting juror voted against death again.",
+  "hint": "Find the votes for death first, then take them from the whole jury.",
+  "steps": [
+    "Votes for death: 280 + 80 = 360.",
+    "So at least 80 jurors who had voted to acquit now voted to kill.",
+    "Against death: 500 - 360 = 140."
+  ],
+  "keywords": [
+    "trial of socrates",
+    "athenian jury",
+    "death penalty",
+    "diogenes laertius"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "philosophy-socrates-2"
+  ],
+  "figure": "bars",
+  "source": "Diogenes Laertius, Lives II.42",
+  "source_kind": "primary_document",
+  "reference": "Diogenes Laertius, Lives of Eminent Philosophers II.42, trans. Hicks, Loeb Classical Library, Harvard University Press, 1925",
+  "written": "2026-09-27"
+}

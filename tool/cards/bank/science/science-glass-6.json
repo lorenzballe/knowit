@@ -1,0 +1,35 @@
+{
+  "id": "science-glass-6",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "also": [
+    "technology.screens.touch"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How is phone cover glass made several times stronger without being quenched like toughened glass?",
+  "answer": "By swapping atoms. The glass soaks in molten potassium nitrate at around 400 °C, and potassium ions trade places with the smaller sodium ions near its surface. Crammed into sites built for smaller ions, the surface layer is squeezed tight, and a scratch must overcome that squeeze before it can open. The glass is stuffed, not chilled.",
+  "move": "Build in the opposite of the stress you expect to face.",
+  "keywords": [
+    "chemically strengthened glass",
+    "ion exchange",
+    "potassium nitrate",
+    "compressive stress"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Varshneya, Int. J. Applied Glass Science, 2010",
+  "source_kind": "paper",
+  "reference": "Varshneya, Chemical Strengthening of Glass: Lessons Learned and Yet To Be Learned, International Journal of Applied Glass Science, 2010",
+  "written": "2026-09-27"
+}

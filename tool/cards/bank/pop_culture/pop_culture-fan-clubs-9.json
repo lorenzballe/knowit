@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-fan-clubs-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who founded the Kiss Army in 1975, and whom did they first lay siege to?",
+  "answer": "Two teenagers in Terre Haute, Indiana, Bill Starkey and Jay Evans. They pestered a local rock station, WVTS, with letters and calls until it played Kiss, and the band then booked a concert in the town. Kiss soon took over the name for its official fan club, which went on to enrol members worldwide.",
+  "move": "A pressure group can become a brand if the brand adopts it quickly.",
+  "keywords": [
+    "kiss army",
+    "terre haute",
+    "radio stations",
+    "fan club"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sharp, Nothin' to Lose, 2013",
+  "source_kind": "book",
+  "reference": "Ken Sharp with Paul Stanley and Gene Simmons, Nothin' to Lose: The Making of KISS 1972-1975, It Books, 2013",
+  "written": "2026-09-27"
+}

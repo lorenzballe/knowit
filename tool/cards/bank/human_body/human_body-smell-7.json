@@ -1,0 +1,38 @@
+{
+  "id": "human_body-smell-7",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: some women with no visible olfactory bulbs, the brain's first relay for smell, smell as well as anyone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Israeli researchers found two left-handed women whose scans showed no bulbs, yet who scored normally on every smell test; a public brain-scan database held more, about 4% of its left-handed women. Missing bulbs had seemed to mean anosmia because the people whose bulbs get scanned are those who cannot smell.",
+  "move": "If you only look where things go wrong, everything you find looks broken.",
+  "trap": "Every known case without bulbs had lost the sense of smell.",
+  "keywords": [
+    "olfactory bulb",
+    "anosmia",
+    "brain scans",
+    "left-handedness"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weiss et al., Neuron, 2020",
+  "source_kind": "paper",
+  "reference": "Weiss, Soroka, Gorodisky et al., Human olfaction without apparent olfactory bulbs, Neuron, 2020",
+  "written": "2026-09-27"
+}

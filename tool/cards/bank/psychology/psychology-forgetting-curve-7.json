@@ -1,0 +1,39 @@
+{
+  "id": "psychology-forgetting-curve-7",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Once students could recall a Swahili word, which extra practice raised their recall of it a week later?",
+  "options": [
+    "Restudying it, without further tests",
+    "Retesting it, without further study",
+    "Either one, about equally"
+  ],
+  "correct": 1,
+  "answer": "Retesting it. In Karpicke and Roediger's study, words that kept being tested were recalled about 80% of the time a week later; words dropped from testing, about 35%, however often they were restudied. Restudying added nothing over dropping the word altogether. The students' own predictions barely differed between the conditions.",
+  "move": "Practise pulling the answer out, not putting it back in.",
+  "trap": "Restudying it, because seeing the answer again feels like learning.",
+  "keywords": [
+    "retrieval practice",
+    "testing effect",
+    "swahili vocabulary",
+    "restudying"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karpicke & Roediger, Science, 2008",
+  "source_kind": "paper",
+  "reference": "Karpicke & Roediger, The critical importance of retrieval for learning, Science, 2008",
+  "written": "2026-09-27"
+}

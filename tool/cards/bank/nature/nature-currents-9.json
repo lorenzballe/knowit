@@ -1,0 +1,43 @@
+{
+  "id": "nature-currents-9",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "The world's rivers deliver about 37,000 km³ of fresh water to the sea each year. How many million cubic metres is that per second?",
+  "value": 1.2,
+  "unit": "million m³ per second",
+  "withinFactor": 3,
+  "answer": "37 million million / 31.5 million ≈ 1.2 million m³ per second.",
+  "move": "Put a river and a sea current in one unit before comparing them.",
+  "trap": "Losing a factor of a thousand when turning km³ into m³.",
+  "hint": "Turn cubic kilometres into cubic metres, and a year into seconds.",
+  "steps": [
+    "37,000 km³ is 37,000 × 1,000,000,000 m³, or 37 million million m³.",
+    "A year has about 31.5 million seconds.",
+    "37 million million / 31.5 million ≈ 1.2 million m³ per second."
+  ],
+  "simply": "Oceanographers call a million cubic metres a second one sverdrup. Every river on Earth together makes about one; the Antarctic Circumpolar Current alone carries well over a hundred.",
+  "keywords": [
+    "river discharge",
+    "sverdrup",
+    "ocean currents",
+    "fresh water"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Dai & Trenberth, Journal of Hydrometeorology, 2002",
+  "source_kind": "paper",
+  "reference": "Dai & Trenberth, Estimates of freshwater discharge from continents: latitudinal and seasonal variations, Journal of Hydrometeorology, 2002",
+  "written": "2026-09-27"
+}

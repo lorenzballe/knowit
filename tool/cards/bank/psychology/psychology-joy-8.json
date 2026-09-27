@@ -1,0 +1,39 @@
+{
+  "id": "psychology-joy-8",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in German panel data, life satisfaction fully recovered once people who had lost their jobs found work again?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Following thousands of Germans for 15 years, Lucas and colleagues found life satisfaction fell sharply with unemployment and, on average, did not climb back to its earlier level even after re-employment. The set point, the level people supposedly drift back to, had itself moved. The job came back; the old satisfaction did not.",
+  "move": "Recovery from a blow is a claim to check, not a law to assume.",
+  "trap": "Assuming everyone drifts back to a fixed personal level of happiness.",
+  "keywords": [
+    "unemployment",
+    "set point",
+    "life satisfaction",
+    "german panel",
+    "adaptation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lucas et al., Psychological Science, 2004",
+  "source_kind": "paper",
+  "reference": "Lucas, Clark, Georgellis & Diener, Unemployment alters the set point for life satisfaction, Psychological Science, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "human_body-grey-hair-9",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Two vitiligo patches on one forearm, one with dark hairs and one with white hairs, get ultraviolet treatment. Which regains colour better?",
+  "options": [
+    "The patch with dark hairs",
+    "The patch with white hairs",
+    "Both about equally"
+  ],
+  "correct": 0,
+  "answer": "The patch with dark hairs. New colour in treated vitiligo mostly spreads outward as dots around hair follicles, from pigment stem cells that survived in the follicle. White hairs signal that this reservoir is gone too, so the patch has little to draw on. Hairless skin, such as fingertips, responds poorly for the same reason.",
+  "move": "Ask where the repairs will come from before predicting a recovery.",
+  "trap": "Assuming the colour of the hair says nothing about the skin.",
+  "keywords": [
+    "vitiligo",
+    "white hairs",
+    "phototherapy",
+    "hair follicles",
+    "stem cells"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Birlea, Goldstein & Norris, Dermatol Clin, 2017",
+  "source_kind": "paper",
+  "reference": "Birlea, Goldstein & Norris, Repigmentation through melanocyte regeneration in vitiligo, Dermatologic Clinics, 2017",
+  "written": "2026-09-27"
+}

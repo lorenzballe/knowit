@@ -1,0 +1,43 @@
+{
+  "id": "philosophy-determinism-9",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "also": [
+    "philosophy.ancient_thinkers.stoics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "If it is fated that a sick man recovers, calling a doctor seems pointless. How did Chrysippus answer?",
+  "options": [
+    "Effort is idle once the outcome is fixed",
+    "Fate stops where human choices begin",
+    "The doctor's visit is fated with the cure"
+  ],
+  "correct": 2,
+  "answer": "The doctor's visit is fated with the cure. Cicero reports Chrysippus's reply to the lazy argument: some events are co-fated: one comes only through the other. If recovery is fated, it is fated to come by way of the doctor. A wrestler fated to fight at Olympia is fated to have an opponent.",
+  "move": "An outcome being settled does not make the steps towards it optional.",
+  "trap": "Treating a fixed outcome as if it no longer needed its causes.",
+  "keywords": [
+    "lazy argument",
+    "chrysippus",
+    "fate",
+    "cicero",
+    "co-fated events"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cicero, On Fate 28-30",
+  "source_kind": "primary_document",
+  "reference": "Cicero, De Fato 28-30, in De Oratore III, De Fato, Paradoxa Stoicorum, De Partitione Oratoria, trans. Rackham, Loeb Classical Library, Harvard University Press, 1942",
+  "written": "2026-09-27"
+}

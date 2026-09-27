@@ -1,0 +1,42 @@
+{
+  "id": "space-tides-10",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Ancient eclipse records show the day lengthening 1.8 ms a century; the Moon's tides alone should add 2.3. What makes up the gap?",
+  "options": [
+    "Land still rising since the ice age",
+    "Errors in the ancient eclipse records",
+    "The Moon's pull weakening as it recedes"
+  ],
+  "correct": 0,
+  "answer": "Land still rising since the ice age. Freed of their ice sheets, Canada and Scandinavia are rebounding, so Earth grows less flattened; like a skater drawing in her arms, it spins faster, trimming about 0.6 ms a century. Babylonian and Chinese eclipse timings, checked against lunar laser ranging, record both effects at once.",
+  "move": "When a measurement falls short of theory, look for a second cause pulling back.",
+  "trap": "Blaming old records, when two real causes pull against each other.",
+  "keywords": [
+    "length of day",
+    "eclipse records",
+    "tidal braking",
+    "post-glacial rebound"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stephenson, Morrison & Hohenkerk, 2016",
+  "source_kind": "paper",
+  "reference": "Stephenson, Morrison & Hohenkerk, Measurement of the Earth's rotation: 720 BC to AD 2015, Proceedings of the Royal Society A, 2016",
+  "written": "2026-09-27"
+}

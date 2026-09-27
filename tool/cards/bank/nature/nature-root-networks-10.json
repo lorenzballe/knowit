@@ -1,0 +1,38 @@
+{
+  "id": "nature-root-networks-10",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: tree roots have been recorded more than 60 metres below the ground surface?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Canadell and colleagues' survey of 290 rooting records found roots of the shepherd's tree, Boscia albitrunca, at 68 m in the central Kalahari. That is the extreme: the average maximum depth across all records was 4.6 m. In dry country a few roots chase groundwater down while the rest spread near the surface.",
+  "move": "A rule about the bulk says nothing about how far the extremes reach.",
+  "trap": "Picturing roots as a shallow plate, never more than a few metres deep.",
+  "keywords": [
+    "rooting depth",
+    "shepherd's tree",
+    "kalahari",
+    "groundwater"
+  ],
+  "era": "timeless",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Canadell et al., Oecologia, 1996",
+  "source_kind": "paper",
+  "reference": "doi:10.1007/BF00329030",
+  "written": "2026-09-27"
+}

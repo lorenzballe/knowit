@@ -1,0 +1,38 @@
+{
+  "id": "nature-dinosaurs-9",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: living mammal species outnumber living dinosaur species?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Birds are dinosaurs, descended from small feathered theropods that came through the impact, and about 11,000 bird species live today against roughly 6,500 mammal species. By species count the age of dinosaurs never ended; it lost its giants. The pigeon on a windowsill is a dinosaur that made it.",
+  "move": "Before declaring a group gone, check what its descendants are called now.",
+  "trap": "Filing birds apart from dinosaurs, as older books and museums did.",
+  "keywords": [
+    "birds",
+    "theropods",
+    "mammal species",
+    "species counts"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Burgin et al., Journal of Mammalogy, 2018",
+  "source_kind": "paper",
+  "reference": "Burgin, Colella, Kahn & Upham, How many species of mammals are there?, Journal of Mammalogy, 2018",
+  "written": "2026-09-27"
+}

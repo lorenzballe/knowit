@@ -1,0 +1,44 @@
+{
+  "id": "psychology-insomnia-8",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A patient averages 5.5 hours of sleep. Her time in bed starts there and grows 15 minutes a week. How many weeks until 7 hours?",
+  "value": 6,
+  "unit": "weeks",
+  "answer": "90 / 15 = 6 weeks.",
+  "move": "A cure built from small steps is slow by design; plan for the wait.",
+  "hint": "Turn the gap into minutes, then count the 15-minute steps.",
+  "steps": [
+    "Target minus start: 7 - 5.5 = 1.5 hours.",
+    "1.5 hours = 90 minutes.",
+    "90 / 15 = 6 weeks."
+  ],
+  "keywords": [
+    "sleep restriction",
+    "sleep window",
+    "sleep efficiency",
+    "cognitive behavioural therapy",
+    "insomnia"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-insomnia-4"
+  ],
+  "figure": "none",
+  "source": "Spielman, Saskin & Thorpy, Sleep, 1987",
+  "source_kind": "paper",
+  "reference": "Spielman, Saskin & Thorpy, Treatment of chronic insomnia by restriction of time in bed, Sleep, 1987",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-currents-7",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Why do the strongest ocean currents, such as the Gulf Stream and the Kuroshio, run along the western sides of ocean basins?",
+  "options": [
+    "Winds blow harder over the west",
+    "Western coasts have deeper water",
+    "Spin deflects more near the poles"
+  ],
+  "correct": 2,
+  "answer": "Spin deflects more near the poles. Stommel showed in 1948 that if rotation's deflecting effect were the same everywhere, a wind-driven gyre would be symmetric. Because the effect grows poleward, the return flow is squeezed into a narrow, fast current on the western edge, while eastern sides get broad, slow drifts.",
+  "move": "When a pattern is lopsided, look for what changes across it.",
+  "trap": "Crediting the winds, which drive the gyre but not its lopsidedness.",
+  "keywords": [
+    "western intensification",
+    "coriolis effect",
+    "gulf stream",
+    "kuroshio",
+    "ocean gyres"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Stommel, Transactions AGU, 1948",
+  "source_kind": "paper",
+  "reference": "Stommel, The westward intensification of wind-driven ocean currents, Transactions, American Geophysical Union, 1948",
+  "written": "2026-09-27"
+}

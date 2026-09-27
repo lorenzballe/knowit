@@ -1,0 +1,32 @@
+{
+  "id": "technology-typewriters-6",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did IBM's 1961 Selectric print any of 88 characters without a single typebar?",
+  "answer": "By tilting and turning a ball. Its golf-ball element carried four rows of 22 characters; each key set a few latches, and linkages called whiffletrees summed them into one of four tilts and one of 22 turns, as binary digits sum to a number. No bars could clash, and fonts swapped in seconds.",
+  "move": "A choice among many can be built from a few small yes-or-no steps.",
+  "keywords": [
+    "ibm selectric",
+    "typeball",
+    "whiffletree",
+    "mechanical encoding"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beeching, Century of the Typewriter, 1974",
+  "source_kind": "book",
+  "reference": "Beeching, Century of the Typewriter, Heinemann, 1974",
+  "written": "2026-09-27"
+}

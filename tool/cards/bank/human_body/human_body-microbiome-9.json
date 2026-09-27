@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-9",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Of 38 published studies giving germ-free rodents a patient's gut microbes, 36 passed on the disease. What does that mostly show?",
+  "options": [
+    "Gut microbes drive most of these diseases",
+    "Rodents are more fragile than people",
+    "Mouse studies are biased towards positive results"
+  ],
+  "correct": 2,
+  "answer": "A bias towards positive results. Reviewing them in 2020, Walter and colleagues judged a 95% transfer rate implausible for diseases with many causes. Studies often used faeces from few donors, counted mice caged together as independent evidence, and needed a positive result to be published. The rodents received microbes; the causal claims were extrapolated.",
+  "move": "A near-perfect success rate is itself a reason to look for the failures.",
+  "trap": "Taking the published successes as the full record of attempts.",
+  "keywords": [
+    "germ-free mice",
+    "faecal transfer",
+    "publication bias",
+    "causality"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walter et al., Cell, 2020",
+  "source_kind": "paper",
+  "reference": "Walter, Armet, Finlay & Shanahan, Establishing or exaggerating causality for the gut microbiome: lessons from human microbiota-associated rodents, Cell, 2020",
+  "written": "2026-09-27"
+}

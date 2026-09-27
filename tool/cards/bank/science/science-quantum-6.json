@@ -1,0 +1,32 @@
+{
+  "id": "science-quantum-6",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why doesn't a lump of ordinary matter collapse under the electric attractions inside it?",
+  "answer": "Because electrons refuse to share a state. Freeman Dyson and Andrew Lenard proved in 1967 that electric forces alone cannot keep bulk matter stable; Pauli's rule barring two electrons from one quantum state is what holds it up. Without it, binding energy would outgrow the amount of matter: merging two lumps would release an explosion.",
+  "move": "A rule about what cannot happen can hold up more than any force.",
+  "keywords": [
+    "pauli exclusion principle",
+    "stability of matter",
+    "electrons",
+    "freeman dyson"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dyson & Lenard, J. Math. Phys., 1967",
+  "source_kind": "paper",
+  "reference": "Dyson & Lenard, Stability of Matter. I, Journal of Mathematical Physics 8, 423, 1967",
+  "written": "2026-09-27"
+}

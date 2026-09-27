@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-memes-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do heavily reshared meme images turn blotchy even when nobody edits them?",
+  "answer": "Because every save throws a little more away. JPEG compression splits a picture into 8-by-8 pixel blocks and discards detail the eye tends to miss; each screenshot or re-upload repeats the cut, and errors pile up as blocky edges and smeared colour. The grain on an old reaction image is its travel record.",
+  "move": "A copy of a copy keeps the losses of every copy before it.",
+  "keywords": [
+    "jpeg",
+    "compression",
+    "reaction images",
+    "deep-fried memes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITU-T Recommendation T.81, JPEG, 1992",
+  "source_kind": "primary_document",
+  "reference": "ITU-T Recommendation T.81, Digital compression and coding of continuous-tone still images, International Telecommunication Union, 1992",
+  "written": "2026-09-27"
+}

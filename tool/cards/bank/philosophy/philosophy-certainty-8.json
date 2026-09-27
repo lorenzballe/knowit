@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-certainty-8",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Laplace counted 5,000 years of unbroken daily sunrises. By his rule of succession, what odds did he give tomorrow's, in millions to one?",
+  "value": 1.83,
+  "unit": "million to one",
+  "tolerance": 0.02,
+  "answer": "1,826,200 + 1 = about 1.83 million to one.",
+  "move": "However long the record, a count of successes never adds up to certainty.",
+  "trap": "Answering certainty, because the sun has never once failed.",
+  "hint": "Count the sunrises first; the rule's odds are one more than that count, to one.",
+  "steps": [
+    "5,000 years x 365.24 days = about 1,826,200 sunrises.",
+    "After n successes in n tries the rule gives odds of n + 1 to 1.",
+    "1,826,200 + 1 = about 1.83 million to one."
+  ],
+  "keywords": [
+    "pierre-simon laplace",
+    "rule of succession",
+    "sunrise problem",
+    "induction"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laplace, Philosophical Essay on Probabilities",
+  "source_kind": "book",
+  "reference": "Laplace, A Philosophical Essay on Probabilities, trans. Truscott & Emory, Wiley, 1902",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-clouds-6",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Averaged over the whole globe and year, what do all of Earth's clouds together do to its energy balance?",
+  "options": [
+    "Cool it, clearly on balance",
+    "Roughly cancel out",
+    "Warm it, clearly on balance"
+  ],
+  "correct": 0,
+  "answer": "Cool it. Satellite budgets since the 1980s find clouds reflect about 45 watts per square metre of sunlight and trap about 30 of the heat leaving below: a net cooling of roughly 15 to 20. That is several times the warming added by carbon dioxide so far. From space, clouds are Earth's brightest mirrors.",
+  "move": "The effect you feel at night is not the one that runs all day.",
+  "trap": "Remembering warm cloudy nights and forgetting the sunlight clouds turn away.",
+  "keywords": [
+    "cloud radiative effect",
+    "energy budget",
+    "satellites",
+    "sunlight",
+    "infrared"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ramanathan et al., Science, 1989",
+  "source_kind": "paper",
+  "reference": "Ramanathan et al., Cloud-Radiative Forcing and Climate: Results from the Earth Radiation Budget Experiment, Science, 1989",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "philosophy-liar-10",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should logicians accept that the liar sentence is both true and false?",
+  "sides": [
+    "Yes, accept true contradictions",
+    "No, keep logic consistent"
+  ],
+  "answer": "Every consistent theory of truth so far has had to ban some sentence, restrict some word, or face a revenge version of the liar. Graham Priest argues the simpler answer is that some contradictions are true. Paraconsistent logics, in which a contradiction no longer proves everything, show this need not make every claim true.",
+  "move": "It turns on whether consistency is a fact about reality or a rule of reasoning.",
+  "counterpoint": "If contradictions can be true, disagreement loses its bite: an opponent may accept both a claim and its denial. Priest's logic also gives up familiar rules, such as inferring B from A or B together with not-A, and Curry's paradox still threatens it. Paying for one sentence with ordinary reasoning is a poor trade.",
+  "keywords": [
+    "dialetheism",
+    "graham priest",
+    "paraconsistent logic",
+    "contradiction"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Priest, In Contradiction, 1987",
+  "source_kind": "book",
+  "reference": "Priest, In Contradiction: A Study of the Transconsistent, Martinus Nijhoff, 1987",
+  "written": "2026-09-27"
+}

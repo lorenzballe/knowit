@@ -1,0 +1,37 @@
+{
+  "id": "pop_culture-celebrity-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a famous person's face and voice become free for anyone to use soon after they die?",
+  "sides": [
+    "Yes, after a short time",
+    "No, heirs should control them"
+  ],
+  "answer": "Yes. Fame is built from public attention, films, broadcasts and news, and should return to the public like an expired copyright. Long monopolies let heirs veto biographies, satire and art they dislike. New York recognised no such right over the dead until 2021, and its culture of biography and parody thrived regardless.",
+  "move": "Whichever side you took, it turns on whether a likeness is property or identity.",
+  "counterpoint": "No. A likeness is not an idea but a person's identity, and software can now make a dead star say or sell anything. California protects it for 70 years after death, so heirs can refuse a digital replica in an advert the star would have turned down. Without that, the most famous faces become the cheapest actors.",
+  "keywords": [
+    "right of publicity",
+    "digital replicas",
+    "estates",
+    "likeness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "California and New York publicity statutes",
+  "source_kind": "primary_document",
+  "reference": "California Civil Code section 3344.1, as amended 1999; New York Civil Rights Law section 50-f, 2021",
+  "written": "2026-09-27"
+}

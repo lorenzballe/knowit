@@ -1,0 +1,39 @@
+{
+  "id": "human_body-circulation-8",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Blood in the aorta moves at well under a metre a second. How fast does the pulse travel along the arteries?",
+  "options": [
+    "About 5 to 10 metres a second",
+    "About as fast as the blood",
+    "About 1,500 metres a second"
+  ],
+  "correct": 0,
+  "answer": "About 5 to 10 metres a second. The pulse is a pressure wave running along elastic walls, not blood arriving, so it reaches the wrist a fraction of a second after the beat, well ahead of the blood. Stiffer walls carry it faster: above about 10 m/s marks aged arteries.",
+  "move": "A signal travelling through a medium can outrun the medium itself.",
+  "trap": "Letting the blood's own slow speed set the speed of the pulse.",
+  "keywords": [
+    "pulse wave velocity",
+    "arterial stiffness",
+    "aorta",
+    "pressure wave"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laurent et al., European Heart Journal, 2006",
+  "source_kind": "paper",
+  "reference": "Laurent et al., Expert consensus document on arterial stiffness: methodological issues and clinical applications, European Heart Journal, 2006",
+  "written": "2026-09-27"
+}

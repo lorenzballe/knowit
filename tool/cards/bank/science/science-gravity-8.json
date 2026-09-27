@@ -1,0 +1,39 @@
+{
+  "id": "science-gravity-8",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the open ocean's surface, tides and waves aside, never strays more than a few metres from a perfect ellipsoid?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Still water settles along the geoid, the surface that gravity makes level, and gravity is uneven. South of India, over a deficit of mass deep below, the sea sits about 106 m under the ellipsoid; near New Guinea it stands about 85 m above. A ship crossing the dip feels perfectly level throughout.",
+  "move": "Level is defined by gravity, and gravity differs from place to place.",
+  "trap": "True, because sea level is the zero every height starts from.",
+  "keywords": [
+    "geoid",
+    "sea level",
+    "indian ocean",
+    "ellipsoid",
+    "gravity anomaly"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Pavlis et al., EGM2008, JGR, 2012",
+  "source_kind": "paper",
+  "reference": "Pavlis, Holmes, Kenyon & Factor, The development and evaluation of the Earth Gravitational Model 2008 (EGM2008), Journal of Geophysical Research: Solid Earth, 2012",
+  "written": "2026-09-27"
+}

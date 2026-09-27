@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-streaming-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Netflix's subscriber numbers fell after it began charging for shared passwords in 2023?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Paid sharing reached the United States in May 2023, amid loud anger online. Netflix then added 5.9 million members in the second quarter, 8.8 million in the third and 13.1 million in the fourth. Many borrowers opened accounts of their own. The people posting about cancelling were a small, noisy slice.",
+  "move": "The loudest reaction is a sample of the loud, not of everyone.",
+  "trap": "Taking the anger online as a sample of all subscribers.",
+  "keywords": [
+    "netflix",
+    "password sharing",
+    "subscribers",
+    "paid sharing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Netflix, Q3 2023 letter to shareholders",
+  "source_kind": "company",
+  "reference": "https://www.sec.gov/Archives/edgar/data/1065280/000106528023000272/ex991_q323.htm",
+  "written": "2026-09-27"
+}

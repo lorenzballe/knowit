@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-ship-of-theseus-7",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did Heraclitus really say that nobody can step into the same river twice?",
+  "answer": "Perhaps not. The fragment most scholars trust reads: on those stepping into the same rivers, other and other waters flow. That keeps the river the same through changing water, nearly the reverse of the famous version, known through Plato and Plutarch. Which is his is disputed. The river stays; its water moves on.",
+  "move": "Check the original wording before building on a famous paraphrase.",
+  "keywords": [
+    "heraclitus",
+    "river fragment",
+    "flux",
+    "identity through change"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kirk, Raven & Schofield, The Presocratic Philosophers",
+  "source_kind": "reference_work",
+  "reference": "Kirk, Raven & Schofield, The Presocratic Philosophers, 2nd ed., Cambridge University Press, 1983",
+  "written": "2026-09-27"
+}

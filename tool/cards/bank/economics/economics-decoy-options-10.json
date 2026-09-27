@@ -1,0 +1,35 @@
+{
+  "id": "economics-decoy-options-10",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where has the decoy effect shown up in real purchases worth thousands of dollars?",
+  "answer": "In online diamond sales. A diamond is sold as a table: carat, cut, colour, clarity, price. Wu and Cosguner found that a stone beaten on every count by another raised sales of the stone that beat it, and estimated a retailer could profit by placing such decoys on purpose. The lab's format, real money.",
+  "move": "Expect a lab effect to survive where the real choice looks like the lab.",
+  "keywords": [
+    "diamonds",
+    "online retail",
+    "dominated options",
+    "field evidence"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "economics-decoy-options-3"
+  ],
+  "figure": "none",
+  "source": "Wu and Cosguner, Marketing Science, 2020",
+  "source_kind": "paper",
+  "reference": "Wu & Cosguner, Profiting from the Decoy Effect: A Case Study of an Online Diamond Retailer, Marketing Science, 2020",
+  "written": "2026-09-27"
+}

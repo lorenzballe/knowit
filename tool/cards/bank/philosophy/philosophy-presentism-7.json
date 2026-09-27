@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-presentism-7",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did David Lewis dismiss the presentist's way of explaining how one person can be both bent and straight?",
+  "answer": "It discards the person's past and future along with the puzzle. Seated you are bent, standing straight; let only the present shape exist and the contradiction goes, but so does every other time to have a shape at. Nobody believes he has no future, Lewis wrote in 1986, unless at the moment of his execution.",
+  "move": "A solution that deletes what the problem was about has not solved it.",
+  "keywords": [
+    "david lewis",
+    "temporary intrinsics",
+    "persistence",
+    "change"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewis, On the Plurality of Worlds, 1986",
+  "source_kind": "book",
+  "reference": "Lewis, On the Plurality of Worlds, Blackwell, 1986, section 4.2",
+  "written": "2026-09-27"
+}

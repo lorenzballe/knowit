@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fast-fashion-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Of the used clothes arriving at Accra's Kantamanto market from richer countries, roughly how much leaves as waste?",
+  "options": [
+    "About 5%",
+    "About 40%",
+    "About 90%"
+  ],
+  "correct": 1,
+  "answer": "About 40%, by the OR Foundation's estimate. Traders buy sealed bales unseen, and roughly four in ten garments are unsellable, ending in dumps, drains and beaches. The racks in a charity shop show the clothes kept at home; the bales hold what was sorted out. About 15 million garments arrive each week.",
+  "move": "What you see on sale is the part that was picked to be seen.",
+  "trap": "Donated clothes on shop racks look wearable, so most exports seem so.",
+  "keywords": [
+    "kantamanto",
+    "ghana",
+    "second-hand clothing",
+    "textile waste",
+    "or foundation"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "The OR Foundation, Kantamanto research",
+  "source_kind": "institution",
+  "reference": "The OR Foundation, Dead White Man's Clothes: Kantamanto research, 2022",
+  "written": "2026-09-27"
+}

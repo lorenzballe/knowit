@@ -1,0 +1,40 @@
+{
+  "id": "history-cathedrals-9",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Who did most of the building work on the Gothic cathedrals of England and France?",
+  "options": [
+    "Pious volunteers giving their labour",
+    "Paid masons, carpenters and labourers",
+    "Serfs owed labour to the bishop"
+  ],
+  "correct": 1,
+  "answer": "Paid masons, carpenters and labourers. Fabric accounts, such as Exeter's rolls from 1279, list weekly wages beside stone, lime and timber, with lower pay in short winter days. Crowds did haul carts of stone at Chartres in the 1140s, and letters hailed it as a wonder. The everyday work ran on a payroll.",
+  "move": "Account books describe the ordinary; chronicles describe the unusual.",
+  "trap": "Recalling chronicles of crowds dragging carts to the building site.",
+  "keywords": [
+    "fabric accounts",
+    "exeter cathedral",
+    "masons",
+    "wages",
+    "cult of the carts"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Exeter Cathedral fabric accounts, 1279-1353",
+  "source_kind": "primary_document",
+  "reference": "Erskine (ed.), The Accounts of the Fabric of Exeter Cathedral, 1279-1353, Devon and Cornwall Record Society, 1981",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-supermassive-ones-6",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Fusion in stars turns 0.7% of mass into energy. Per kilogram, how does gas spiralling into a non-spinning black hole compare?",
+  "options": [
+    "Far less, as the hole swallows it",
+    "About the same, near 0.7%",
+    "Roughly ten times more"
+  ],
+  "correct": 2,
+  "answer": "Roughly ten times more. The energy leaves before the gas reaches the horizon: it heats as it spirals down to the last stable orbit and radiates about 6% of its mass. Around a hole spinning near its limit the gas gets closer still, and the yield climbs to about 30%, some 40 times fusion.",
+  "move": "Ask what a thing gives off on the way, not only where it ends.",
+  "trap": "Letting fusion's 0.7% set the scale for every source of energy.",
+  "keywords": [
+    "accretion",
+    "quasars",
+    "radiative efficiency",
+    "nuclear fusion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorne, Astrophysical Journal, 1974",
+  "source_kind": "paper",
+  "reference": "Thorne, Disk-accretion onto a black hole. II. Evolution of the hole, Astrophysical Journal, 1974",
+  "written": "2026-09-27"
+}

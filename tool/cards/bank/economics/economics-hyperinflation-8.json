@@ -1,0 +1,38 @@
+{
+  "id": "economics-hyperinflation-8",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: in a hyperinflation, prices rise faster than the quantity of money being printed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. As money loses value faster, people spend it the moment they receive it, so each note changes hands faster and the real value of all cash in circulation shrinks. Costantino Bresciani-Turroni documented it in Germany: by late 1923 people complained of a shortage of cash while the presses ran day and night.",
+  "move": "When people stop wanting to hold something, its price falls faster than its supply grows.",
+  "trap": "Assuming prices can only rise as fast as money is printed.",
+  "keywords": [
+    "velocity of money",
+    "real money balances",
+    "weimar germany",
+    "printing presses"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bresciani-Turroni, The Economics of Inflation",
+  "source_kind": "book",
+  "reference": "Bresciani-Turroni, The Economics of Inflation: A Study of Currency Depreciation in Post-War Germany, Allen & Unwin, 1937",
+  "written": "2026-09-27"
+}

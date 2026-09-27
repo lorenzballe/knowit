@@ -1,0 +1,32 @@
+{
+  "id": "nature-echolocation-8",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What call does a Mexican free-tailed bat make when a rival closes in on the same moth?",
+  "answer": "A jamming call. Corcoran and Conner recorded free-tailed bats giving a sweeping tone timed to overlap a competitor's final buzz of calls, the rapid burst that guides the strike. Played through speakers during real attacks, the tone made bats miss far more often. The moth-hunting arms race has a second front: hunters sabotaging each other.",
+  "move": "Rivals for one prize may gain more by spoiling each other's aim.",
+  "keywords": [
+    "mexican free-tailed bat",
+    "sonar jamming",
+    "feeding buzz",
+    "competition"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corcoran & Conner, Science, 2014",
+  "source_kind": "paper",
+  "reference": "Corcoran & Conner, Bats jamming bats: food competition through sonar interference, Science, 2014",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-neurons-7",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a nerve fibre whose sodium pumps are poisoned keep firing for hours?",
+  "answer": "Because each impulse spends almost none of the stored charge. A spike lets in only enough sodium to shift the inside concentration by a tiny fraction, so the pump recharges a battery rather than paying for each shot. In 1955 Hodgkin and Keynes stopped squid axons' pumps with dinitrophenol, and the impulses kept running.",
+  "move": "Ask whether a cost is paid on each use or out of savings.",
+  "keywords": [
+    "sodium pump",
+    "action potential",
+    "squid axon",
+    "dinitrophenol",
+    "ion gradients"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hodgkin & Keynes, Journal of Physiology, 1955",
+  "source_kind": "paper",
+  "reference": "Hodgkin & Keynes, Active transport of cations in giant axons from Sepia and Loligo, Journal of Physiology, 1955",
+  "written": "2026-09-27"
+}

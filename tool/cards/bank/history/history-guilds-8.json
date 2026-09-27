@@ -1,0 +1,40 @@
+{
+  "id": "history-guilds-8",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Of the apprentices bound to London's livery companies in the 1500s, what share went on to become freemen?",
+  "options": [
+    "About 90%",
+    "About 40%",
+    "About 10%"
+  ],
+  "correct": 1,
+  "answer": "About 40%. Steve Rappaport's study of company records from 1490 to 1599 found only about 41% took up the freedom of the City. Others died, ran away, went home or finished without paying to join. The masters in company records are the minority who came through a filter of seven years or more.",
+  "move": "Count the ones who started, not only the ones who finished.",
+  "trap": "Judging apprenticeship by the masters, the ones the records remember.",
+  "keywords": [
+    "apprentices",
+    "livery companies",
+    "freedom of the city",
+    "london",
+    "steve rappaport"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Rappaport, Worlds within Worlds, 1989",
+  "source_kind": "book",
+  "reference": "Rappaport, Worlds within Worlds: Structures of Life in Sixteenth-Century London, Cambridge University Press, 1989",
+  "written": "2026-09-27"
+}

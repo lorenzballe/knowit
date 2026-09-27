@@ -1,0 +1,32 @@
+{
+  "id": "nature-migration-8",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do moths migrating high above Britain at night keep the wind that carries them from blowing them off course?",
+  "answer": "They choose their night, height and heading. Radar studies by Chapman and colleagues found silver Y moths leaving in autumn mostly on northerly winds, climbing to where those winds blew fastest, and angling their bodies against any crosswind. They covered several hundred kilometres a night, far more than their own flight allows.",
+  "move": "To ride a current well, choose when to board, where, and which way to face.",
+  "keywords": [
+    "silver y moth",
+    "radar entomology",
+    "tailwinds",
+    "night migration"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chapman et al., Science, 2010",
+  "source_kind": "paper",
+  "reference": "Chapman et al., Flight orientation behaviors promote optimal migration trajectories in high-flying insects, Science, 2010",
+  "written": "2026-09-27"
+}

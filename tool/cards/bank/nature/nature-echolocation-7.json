@@ -1,0 +1,45 @@
+{
+  "id": "nature-echolocation-7",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A bat calling at 85 kHz flies at 5 m/s towards a wall; sound travels 340 m/s. How much higher is the echo, in kHz?",
+  "value": 2.5,
+  "unit": "kHz",
+  "tolerance": 0.1,
+  "answer": "85 × 10 / 340 ≈ 2.5 kHz.",
+  "move": "Before reading a returning signal, subtract what your own motion did to it.",
+  "trap": "Counting the shift once, as if only the call moved: 1.25.",
+  "hint": "The bat is a moving source on the way out and a moving listener on the way back.",
+  "steps": [
+    "Each leg shifts the pitch by the bat's speed over the speed of sound: 5 / 340.",
+    "The bat moves both as caller and as listener, so the shift doubles: 10 / 340.",
+    "85 × 10 / 340 ≈ 2.5 kHz."
+  ],
+  "keywords": [
+    "doppler shift",
+    "horseshoe bats",
+    "echoes",
+    "call frequency"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Neuweiler, The Biology of Bats, 2000",
+  "source_kind": "book",
+  "reference": "Neuweiler, The Biology of Bats, Oxford University Press, 2000",
+  "written": "2026-09-27"
+}

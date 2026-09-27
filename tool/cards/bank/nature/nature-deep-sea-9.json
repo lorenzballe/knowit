@@ -1,0 +1,32 @@
+{
+  "id": "nature-deep-sea-9",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a small explosion about 1 km deep in the ocean be heard thousands of kilometres away?",
+  "answer": "It is trapped in a sound channel. Sound slows as water cools with depth, then speeds up again as pressure mounts, so it is slowest near 1,000 m. Waves straying up or down bend back towards that layer, as light does in a lens. Ewing and Worzel heard small charges across an ocean basin.",
+  "move": "A path that bends everything back towards itself becomes a channel.",
+  "keywords": [
+    "sofar channel",
+    "speed of sound",
+    "ocean acoustics",
+    "pressure"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ewing & Worzel, Geological Society of America, 1948",
+  "source_kind": "paper",
+  "reference": "Ewing & Worzel, Long-range sound transmission, Geological Society of America Memoir 27, 1948",
+  "written": "2026-09-27"
+}

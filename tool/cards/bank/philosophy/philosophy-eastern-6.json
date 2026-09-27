@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-eastern-6",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Zhuangzi answer Huizi's challenge that, not being a fish, he could not know fish are happy?",
+  "answer": "By turning the question round. Huizi had asked how Zhuangzi knew; so, says Zhuangzi, Huizi already granted that he knew and was asking only how. The answer: from here, above the river Hao. Whether a quibble or a point about knowing by being there, the exchange ends with two men on a bridge, watching fish.",
+  "move": "Before demanding how someone knows, notice what the demand already concedes.",
+  "keywords": [
+    "zhuangzi",
+    "huizi",
+    "happy fish",
+    "other minds"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zhuangzi, chapter 17, Autumn Floods",
+  "source_kind": "primary_document",
+  "reference": "Zhuangzi, The Complete Works of Zhuangzi, trans. Watson, Columbia University Press, 2013",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-zeno-7",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: if time came in indivisible instants, two blocks moving in opposite directions could pass without ever being side by side?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. This is Zeno's moving rows. Let each row shift one place per smallest instant, in opposite directions. Their relative shift is two places per instant, so a block goes from just before its opposite number to just past it, with no instant between. Atoms of time leave the passing nowhere to happen.",
+  "move": "A model built from smallest steps can skip what seemed unskippable.",
+  "trap": "Assuming that passing always has a moment when the two line up.",
+  "keywords": [
+    "stadium paradox",
+    "moving rows",
+    "discrete time",
+    "atomism"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huggett, Space from Zeno to Einstein, 1999",
+  "source_kind": "book",
+  "reference": "Huggett (ed.), Space from Zeno to Einstein: Classic Readings with a Contemporary Commentary, MIT Press, 1999",
+  "written": "2026-09-27"
+}

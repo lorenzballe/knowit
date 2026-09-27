@@ -1,0 +1,43 @@
+{
+  "id": "psychology-forgetting-curve-8",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Ebbinghaus's savings were 44% an hour after learning, 25% after six days. What percentage of the six-day loss came within the first hour?",
+  "value": 75,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "56 / 75 ≈ 75%.",
+  "move": "Ask when the loss happened, not only how large it grew.",
+  "trap": "Comparing 44 with 25 and concluding most of the loss came later.",
+  "hint": "Savings start near 100% at the moment the list is mastered.",
+  "steps": [
+    "Just after learning, savings are close to 100%.",
+    "Lost in the first hour: 100 − 44 = 56 points.",
+    "Lost over six days: 100 − 25 = 75 points.",
+    "56 / 75 ≈ 75%."
+  ],
+  "keywords": [
+    "ebbinghaus",
+    "savings",
+    "relearning",
+    "nonsense syllables"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ebbinghaus, Memory, 1885, trans. 1913",
+  "source_kind": "book",
+  "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",
+  "written": "2026-09-27"
+}

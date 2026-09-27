@@ -1,0 +1,32 @@
+{
+  "id": "human_body-gut-and-mood-6",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How quickly can the gut tell the brain that sugar has arrived, and by what route?",
+  "answer": "Within a fraction of a second, by a synapse. Some sensory cells in the gut lining, called neuropod cells, touch vagus nerve fibres directly and signal with glutamate, a fast nerve messenger. In 2018 they were shown to pass on sugar's arrival within milliseconds, while gut hormones need minutes to travel through the blood.",
+  "move": "Before assuming a message is slow, check for a direct line.",
+  "keywords": [
+    "neuropod cells",
+    "vagus nerve",
+    "glutamate",
+    "sugar sensing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kaelberer et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "Kaelberer, Buchanan, Klein et al., A gut-brain neural circuit for nutrient sensory transduction, Science, 2018",
+  "written": "2026-09-27"
+}

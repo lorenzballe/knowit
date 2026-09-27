@@ -1,0 +1,39 @@
+{
+  "id": "nature-ancient-trees-9",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.ancient_trees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: seeds from ginkgo trees about 600 years old germinate markedly worse than seeds from young ginkgos?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Comparing ginkgos aged 15 to 667 years, Wang and colleagues found trees up to about 600 had similar leaf area, photosynthetic efficiency and seed germination, and their growing layer under the bark showed no programmed decline. Old trees do die, but mostly from outside: drought, fungi, storms and wounds piled up over centuries.",
+  "move": "When something fails late, ask whether time wore it out or merely exposed it.",
+  "trap": "Reading death at great age as decline from within, not damage piling up.",
+  "keywords": [
+    "ginkgo",
+    "senescence",
+    "vascular cambium",
+    "seed germination",
+    "tree ageing"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wang et al., PNAS, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1916548117",
+  "written": "2026-09-27"
+}

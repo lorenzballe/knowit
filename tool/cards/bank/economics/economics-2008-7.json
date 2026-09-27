@@ -1,0 +1,39 @@
+{
+  "id": "economics-2008-7",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "True or false: the rise in American mortgage defaults after 2007 was concentrated among low-income borrowers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Adelino, Schoar and Severino found defaults rose across all incomes and credit scores, and the share owed by middle-income, high-income and prime borrowers jumped. Subprime loans failed at higher rates, but prime loans were far more numerous, so a lower rate on a bigger base supplied much of the losses.",
+  "move": "A modest rate across many can outweigh a high rate among few.",
+  "trap": "Equating the group with the worst default rate with most defaults.",
+  "keywords": [
+    "mortgage defaults",
+    "subprime",
+    "middle class",
+    "credit scores",
+    "housing bust"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Adelino, Schoar & Severino, RFS, 2016",
+  "source_kind": "paper",
+  "reference": "https://www.nber.org/papers/w20848",
+  "written": "2026-09-27"
+}

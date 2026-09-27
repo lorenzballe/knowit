@@ -1,0 +1,33 @@
+{
+  "id": "science-gravity-6",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Earth's gravity in metres per second squared, 9.81, so close to π squared, 9.87?",
+  "answer": "Because the metre nearly was a pendulum. A pendulum whose single swing takes one second is g/π² metres long, and in 1791 the French Academy weighed it as the new unit. It chose instead a ten-millionth of the pole-to-equator arc, since gravity varies with latitude; that arc landed within 0.6% of the pendulum.",
+  "move": "When two numbers match too well, look for a shared history before calling it luck.",
+  "keywords": [
+    "metre",
+    "seconds pendulum",
+    "pi squared",
+    "french academy",
+    "units"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alder, The Measure of All Things, 2002",
+  "source_kind": "book",
+  "reference": "Alder, The Measure of All Things: The Seven-Year Odyssey and Hidden Error That Transformed the World, Free Press, 2002",
+  "written": "2026-09-27"
+}

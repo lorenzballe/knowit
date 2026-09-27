@@ -1,0 +1,38 @@
+{
+  "id": "nature-ants-9",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: ant workers stolen as pupae and raised in a raiding species' nest never harm that colony's young?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Temnothorax workers taken by the raiding ant Protomognathus americanus tend their captors' brood, yet Achenbach and Foitzik found the captives killing many of the raiders' female pupae. The captives cannot escape or breed, but every pupa they kill is one fewer future raider attacking nearby nests, which are full of their relatives.",
+  "move": "Where open revolt is impossible, look for quiet sabotage.",
+  "trap": "Assuming ants raised in a nest cannot tell it is foreign.",
+  "keywords": [
+    "slave-making ants",
+    "temnothorax",
+    "social parasites",
+    "brood killing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Achenbach & Foitzik, Evolution, 2009",
+  "source_kind": "paper",
+  "reference": "Achenbach & Foitzik, First evidence for slave rebellion: enslaved ant workers systematically kill the brood of their social parasite Protomognathus americanus, Evolution, 2009",
+  "written": "2026-09-27"
+}

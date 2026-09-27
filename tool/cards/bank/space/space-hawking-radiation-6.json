@@ -1,0 +1,35 @@
+{
+  "id": "space-hawking-radiation-6",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Hawking at first reject the idea that a black hole has a temperature?",
+  "answer": "Because anything with a temperature must glow, and nothing escapes a black hole. A graduate student, Jacob Bekenstein, had argued that a horizon's area measures its entropy; Hawking and colleagues replied in 1973 that the likeness was only formal. His own quantum calculation, published in 1974, found that black holes do glow, and gave Bekenstein's rule its exact number.",
+  "move": "A calculation meant to refute an idea is also the best test of it.",
+  "keywords": [
+    "jacob bekenstein",
+    "black hole entropy",
+    "horizon area",
+    "temperature"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bekenstein, Physical Review D, 1973",
+  "source_kind": "paper",
+  "reference": "Bekenstein, Black Holes and Entropy, Physical Review D, 1973",
+  "written": "2026-09-27"
+}

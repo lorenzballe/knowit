@@ -1,0 +1,41 @@
+{
+  "id": "nature-echolocation-9",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "True or false: a 230-decibel click underwater carries the same intensity as a 230-decibel sound in air?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Underwater decibels are measured against 1 micropascal, air decibels against 20, a 26 dB gap; and because water is so much denser and stiffer, equal intensity needs about 36 dB more pressure. Subtract roughly 62 dB to compare. A sperm whale's click, near 230 dB in water, is immensely loud, but on another scale.",
+  "move": "A decibel is a ratio; ask what it is a ratio to.",
+  "trap": "Reading a decibel figure as one absolute scale, whatever the medium.",
+  "keywords": [
+    "decibels",
+    "sperm whale",
+    "underwater sound",
+    "acoustic intensity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Au & Hastings, Principles of Marine Bioacoustics, 2008",
+  "source_kind": "book",
+  "reference": "Au & Hastings, Principles of Marine Bioacoustics, Springer, 2008; Møhl et al., The monopulsed nature of sperm whale clicks, Journal of the Acoustical Society of America, 2003",
+  "written": "2026-09-27"
+}

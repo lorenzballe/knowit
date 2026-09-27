@@ -1,0 +1,32 @@
+{
+  "id": "psychology-forgetting-curve-9",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a nine-year study of foreign vocabulary, what let half the review sessions do the work of twice as many?",
+  "answer": "Wider gaps between them. Four Bahricks, a psychologist and his family, relearned 300 word pairs over years. Five years after training ended, 13 sessions held 56 days apart had kept about as many words as 26 sessions held 14 days apart. Words had partly faded before each session, and relearning them then counted for more.",
+  "move": "Let some of it fade before going over it again.",
+  "keywords": [
+    "spacing effect",
+    "foreign vocabulary",
+    "bahrick family",
+    "review sessions"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bahrick et al., Psychological Science, 1993",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1467-9280.1993.tb00571.x",
+  "written": "2026-09-27"
+}

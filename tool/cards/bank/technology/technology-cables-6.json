@@ -1,0 +1,33 @@
+{
+  "id": "technology-cables-6",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Soviet Union find the American tap on its undersea military cable in 1981?",
+  "answer": "It was told. From 1971 US submarines kept a pod on a Soviet cable in the Sea of Okhotsk that read its signals by induction, without cutting in; divers collected its tapes. In 1980 Ronald Pelton, a former NSA employee, sold the secret to the Soviets for about $35,000. The pod was lifted soon after.",
+  "move": "The weak point of a secret is usually a person, not the hardware.",
+  "keywords": [
+    "operation ivy bells",
+    "cable tapping",
+    "sea of okhotsk",
+    "ronald pelton",
+    "submarines"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sontag & Drew, Blind Man's Bluff, 1998",
+  "source_kind": "book",
+  "reference": "Sontag & Drew, Blind Man's Bluff: The Untold Story of American Submarine Espionage, PublicAffairs, 1998",
+  "written": "2026-09-27"
+}

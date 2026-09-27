@@ -1,0 +1,39 @@
+{
+  "id": "technology-data-centres-9",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: in Google's 2009 fleet study, most memory errors were one-off bit flips from cosmic rays?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The study of Google's servers found errors far commoner than lab tests suggested, with more than 8% of memory modules hit each year, and dominated by hard errors: faults in the chips themselves, which recur. A module that had erred once was far likelier to err again. Swapping repeat offenders beat blaming the sky.",
+  "move": "If failures keep striking the same place, stop calling them bad luck.",
+  "trap": "Cosmic rays are the famous cause, and they strike at random.",
+  "keywords": [
+    "memory errors",
+    "dram",
+    "cosmic rays",
+    "google servers",
+    "hardware faults"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schroeder, Pinheiro & Weber, ACM SIGMETRICS, 2009",
+  "source_kind": "paper",
+  "reference": "Schroeder, Pinheiro & Weber, DRAM Errors in the Wild: A Large-Scale Field Study, ACM SIGMETRICS, 2009",
+  "written": "2026-09-27"
+}

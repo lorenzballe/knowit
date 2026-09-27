@@ -1,0 +1,39 @@
+{
+  "id": "psychology-sleep-stages-9",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most of a healthy adult's night is spent in deep sleep or REM sleep combined?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Stage N2, a light but stable sleep marked by bursts of brainwaves called spindles, fills roughly half the night on its own. Deep sleep takes perhaps 15 to 20% in young adults and less later, and REM about a fifth to a quarter. The unglamorous middle stage is where most sleeping happens.",
+  "move": "The stage everyone talks about is rarely the one taking up the time.",
+  "trap": "Picturing sleep through its two famous stages, REM and deep sleep.",
+  "keywords": [
+    "n2 sleep",
+    "sleep spindles",
+    "sleep architecture",
+    "rem sleep",
+    "deep sleep"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ohayon et al., Sleep, 2004",
+  "source_kind": "paper",
+  "reference": "Ohayon, Carskadon, Guilleminault & Vitiello, Meta-analysis of quantitative sleep parameters from childhood to old age in healthy individuals, Sleep, 2004",
+  "written": "2026-09-27"
+}

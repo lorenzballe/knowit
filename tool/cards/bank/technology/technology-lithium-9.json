@@ -1,0 +1,39 @@
+{
+  "id": "technology-lithium-9",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "From 1992 to 2016, lithium-ion cell prices fell about 13% a year. By roughly what factor overall?",
+  "options": [
+    "About 30-fold",
+    "About 3-fold",
+    "About 300-fold"
+  ],
+  "correct": 0,
+  "answer": "About 30-fold. Each year kept 87% of the year before, and 0.87 multiplied by itself 24 times leaves about 3.5% of the starting price. Ziegler and Trancik, rebuilding the record from original sources, put the real fall since 1991 at about 97%. Twenty-four modest cuts left a cell at one-thirtieth of its price.",
+  "move": "Small steady cuts, repeated for decades, remove almost everything.",
+  "trap": "Adding up small yearly cuts instead of multiplying them.",
+  "keywords": [
+    "battery prices",
+    "learning curve",
+    "compounding",
+    "lithium-ion cells"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Ziegler & Trancik, Energy & Environmental Science, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1039/d0ee02681f",
+  "written": "2026-09-27"
+}

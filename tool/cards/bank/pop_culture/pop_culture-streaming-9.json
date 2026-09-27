@@ -1,0 +1,45 @@
+{
+  "id": "pop_culture-streaming-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "also": [
+    "pop_culture.tv.sitcoms"
+  ],
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "HBO Max reportedly paid $425 million for five years of Friends, 236 episodes. Roughly what is that per episode per year, in thousands of dollars?",
+  "value": 360,
+  "unit": "thousand dollars",
+  "withinFactor": 3,
+  "answer": "$85 million / 240 = about $350 thousand.",
+  "move": "A big total shrinks fast once you divide it by what it buys.",
+  "trap": "Stopping at $425 million and judging it a reckless sum.",
+  "hint": "Spread the price over the years first, then over the episodes.",
+  "steps": [
+    "$425 million / 5 years = $85 million a year.",
+    "Round 236 episodes to about 240.",
+    "$85 million / 240 = about $350 thousand."
+  ],
+  "keywords": [
+    "friends",
+    "hbo max",
+    "licence fees",
+    "warnermedia"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reported licence fee for Friends, 2019",
+  "source_kind": "news_archive",
+  "reference": "WarnerMedia's five-year Friends streaming deal for HBO Max, reported by The Wall Street Journal, July 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "history-cathedrals-6",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What job do the heavy stone pinnacles on top of Gothic buttresses do?",
+  "answer": "They add weight. A stone vault pushes outwards as well as down, and that thrust runs through the flying buttress into the pier. A heavy pinnacle loading the pier's top bends the path of the thrust downwards, keeping it inside the masonry, where stone works squeezed rather than pulled apart. The ornament is ballast.",
+  "move": "Sometimes the answer to a sideways push is more weight on top.",
+  "keywords": [
+    "pinnacles",
+    "flying buttresses",
+    "line of thrust",
+    "gothic vaults",
+    "masonry"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heyman, The Stone Skeleton, 1995",
+  "source_kind": "book",
+  "reference": "Heyman, The Stone Skeleton: Structural Engineering of Masonry Architecture, Cambridge University Press, 1995",
+  "written": "2026-09-27"
+}

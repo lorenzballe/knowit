@@ -1,0 +1,39 @@
+{
+  "id": "human_body-smell-8",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Androstenone, a steroid found in boar sweat, is sniffed by a room of volunteers. How do they describe it?",
+  "options": [
+    "Nearly all call it sweaty and foul",
+    "Nearly all call it faintly musky",
+    "Some foul, some sweet, some smell nothing"
+  ],
+  "correct": 2,
+  "answer": "Some foul, some sweet, some smell nothing. Variants of one receptor gene, OR7D4, predict much of the split: people with two copies of the common version tend to find it strong and offensive, while carriers of certain variants find it weaker and less unpleasant. One molecule reaches different noses as different smells.",
+  "move": "Before arguing over a sensation, check that both people receive it.",
+  "trap": "Assuming one molecule gives one smell, since its chemistry is fixed.",
+  "keywords": [
+    "androstenone",
+    "or7d4",
+    "odour receptors",
+    "genetic variation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keller et al., Nature, 2007",
+  "source_kind": "paper",
+  "reference": "Keller, Zhuang, Chi, Vosshall & Matsunami, Genetic variation in a human odorant receptor alters odour perception, Nature, 2007",
+  "written": "2026-09-27"
+}

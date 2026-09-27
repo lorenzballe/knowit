@@ -1,0 +1,39 @@
+{
+  "id": "economics-interest-6",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A 40-year bond paying 0.5% a year was bought at par. If market rates rise to 4.5%, roughly how much of its price is lost?",
+  "options": [
+    "About a tenth",
+    "About a third",
+    "About three-quarters"
+  ],
+  "correct": 2,
+  "answer": "About three-quarters. Money compounding at 4.5% grows almost sixfold in 40 years, so £100 due then is worth about £17 today. The tiny coupons add about £9. The price falls from £100 to roughly £26. Britain's 0.5% gilt due 2061 fell by roughly this much after 2021.",
+  "move": "The longer the wait for money, the harder a rate change reprices it.",
+  "trap": "Guessing a tenth, as if four points of rate cost four percent.",
+  "keywords": [
+    "bonds",
+    "gilts",
+    "interest rate risk",
+    "discounting"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hull, Options, Futures, and Other Derivatives",
+  "source_kind": "book",
+  "reference": "Hull, Options, Futures, and Other Derivatives, 10th edition, Pearson, 2018",
+  "written": "2026-09-27"
+}

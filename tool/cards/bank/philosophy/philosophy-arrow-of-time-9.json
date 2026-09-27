@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-arrow-of-time-9",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "also": [
+    "space.black_holes.hawking_radiation"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where does most of the observable universe's entropy, its measure of disorder, reside?",
+  "options": [
+    "The cosmic background radiation",
+    "Stars and interstellar gas",
+    "Black holes at galaxy centres"
+  ],
+  "correct": 2,
+  "answer": "Black holes at galaxy centres. Egan and Lineweaver estimated in 2010 that supermassive black holes hold about 3 x 10^104 units of entropy, against about 10^89 in the background radiation: a factor of a thousand trillion. Black hole entropy grows with horizon area: the one at the Milky Way's centre outweighs all its stars together.",
+  "move": "Tally the biggest items first; they often outweigh everything else put together.",
+  "trap": "The background radiation, the famous afterglow that comes first to mind.",
+  "keywords": [
+    "entropy",
+    "supermassive black holes",
+    "cosmic microwave background",
+    "bekenstein-hawking entropy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Egan & Lineweaver, Astrophysical Journal, 2010",
+  "source_kind": "paper",
+  "reference": "Egan & Lineweaver, A Larger Estimate of the Entropy of the Universe, Astrophysical Journal 710 (2), 2010, pp. 1825-1834",
+  "written": "2026-09-27"
+}

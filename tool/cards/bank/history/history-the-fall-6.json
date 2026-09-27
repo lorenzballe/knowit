@@ -1,0 +1,39 @@
+{
+  "id": "history-the-fall-6",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Romulus Augustulus, deposed in 476, was the last western emperor Constantinople recognised?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Constantinople never recognised him. Its western colleague was Julius Nepos, driven out of Italy in 475 by Romulus's father Orestes, who went on ruling from Salona in Dalmatia. Odoacer even struck coins in Nepos's name until Nepos was murdered in 480. For four years the West's lawful emperor lived across the Adriatic.",
+  "move": "Ask who recognised a ruler before calling him the last one.",
+  "trap": "Taking the textbook's last emperor to be the lawful one.",
+  "keywords": [
+    "julius nepos",
+    "romulus augustulus",
+    "odoacer",
+    "dalmatia",
+    "zeno"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malchus, fragment 14, ed. Blockley",
+  "source_kind": "primary_document",
+  "reference": "Blockley, The Fragmentary Classicising Historians of the Later Roman Empire, vol. 2, Francis Cairns, 1983",
+  "written": "2026-09-27"
+}

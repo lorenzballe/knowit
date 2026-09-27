@@ -1,0 +1,39 @@
+{
+  "id": "space-fuel-chemistry-10",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: nitrous oxide, the laughing gas used by dentists, can explode with no fuel present?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Nitrous oxide breaks down into nitrogen and oxygen, giving off heat, so a hot spot can set off a runaway decomposition inside the tank itself. In 2007 a nitrous flow test at Scaled Composites in Mojave, with no fuel present, exploded and killed three workers.",
+  "move": "Check whether a harmless ingredient can react with itself.",
+  "trap": "Treating an oxidiser as inert until a fuel is added.",
+  "keywords": [
+    "nitrous oxide",
+    "decomposition",
+    "hybrid rockets",
+    "scaled composites",
+    "oxidiser"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karabeyoglu et al., AIAA, 2008",
+  "source_kind": "paper",
+  "reference": "Karabeyoglu, Dyer, Stevens & Cantwell, Modeling of N2O Decomposition Events, AIAA 2008-4933, 44th Joint Propulsion Conference, 2008",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-night-vision-7",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "House cats have vertical slit pupils; lions and tigers have round ones. What best predicts which kind a hunter gets?",
+  "options": [
+    "Hunting mainly by night",
+    "The size of its usual prey",
+    "How high its eyes sit"
+  ],
+  "correct": 2,
+  "answer": "How high its eyes sit. Across 214 land species, Banks's team found vertical slits mostly in ambush predators with eyes near the ground, such as house cats and many snakes. A vertical slit sharpens the blur cues that judge distance, which pays most low down. Lions, eyes higher up, gain little.",
+  "move": "When a trait tracks two things, find cases where they come apart.",
+  "trap": "Crediting night hunting, though lions hunt by night as well.",
+  "keywords": [
+    "pupil shape",
+    "house cats",
+    "ambush predators",
+    "depth perception"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Banks et al., Science Advances, 2015",
+  "source_kind": "paper",
+  "reference": "Banks, Sprague, Schmoll, Parnell & Love, Why do animal eyes have pupils of different shapes?, Science Advances, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "psychology-focus-9",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Checking 30 items one at a time at 40 ms each, stopping at the target: how many ms longer is 'absent' than an average 'present'?",
+  "value": 600,
+  "unit": "milliseconds",
+  "answer": "1,200 − 600 = 600 ms.",
+  "move": "Proving something is absent takes far longer than finding it.",
+  "trap": "No difference, as if each answer required checking every item.",
+  "hint": "Ask how far through the display the target turns up on average.",
+  "steps": [
+    "'Absent' needs every item checked: 30 × 40 = 1,200 ms.",
+    "'Present' finds the target halfway on average: 15 × 40 = 600 ms.",
+    "1,200 − 600 = 600 ms."
+  ],
+  "keywords": [
+    "serial search",
+    "feature integration",
+    "target absent",
+    "search slope"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Treisman & Gelade, Cognitive Psychology, 1980",
+  "source_kind": "paper",
+  "reference": "Treisman & Gelade, A feature-integration theory of attention, Cognitive Psychology, 1980",
+  "written": "2026-09-27"
+}

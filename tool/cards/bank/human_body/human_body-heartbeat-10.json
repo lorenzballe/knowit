@@ -1,0 +1,33 @@
+{
+  "id": "human_body-heartbeat-10",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If the heart's natural pacemaker fails, what keeps the heart beating?",
+  "answer": "Backups lower down, each slower than the last. Cells around the AV node, the gate to the lower chambers, fire on their own at about 40 to 60 a minute; the ventricles' fibres at about 20 to 40. Normally the fastest site sets every beat. A slower drummer takes over when the lead stops.",
+  "move": "The fastest voice in a system can hide the backups waiting behind it.",
+  "keywords": [
+    "pacemaker",
+    "sinus node",
+    "escape rhythm",
+    "av node",
+    "ventricles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Katz, Physiology of the Heart, 2011",
+  "source_kind": "book",
+  "reference": "Katz, Physiology of the Heart, 5th edition, Lippincott Williams & Wilkins, 2011",
+  "written": "2026-09-27"
+}

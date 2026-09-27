@@ -1,0 +1,39 @@
+{
+  "id": "history-roads-7",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: when the Via Appia opened in 312 BC, it was paved with fitted stone blocks?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Appius Claudius's road began as a levelled, drained track without a stone pavement. Livy records the paving arriving piece by piece: in 293 BC blocks of hard volcanic stone were laid from the temple of Mars, just outside Rome, to Bovillae. The polished blocks visitors walk on today belong to the road's later life.",
+  "move": "The version that survives is rarely the version that was first built.",
+  "trap": "Picturing the paved road that survives today as the original.",
+  "keywords": [
+    "via appia",
+    "appius claudius",
+    "paving",
+    "livy",
+    "volcanic stone"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Livy, History of Rome, book 10",
+  "source_kind": "primary_document",
+  "reference": "Livy, History of Rome, Books 8-10, trans. B. O. Foster, Loeb Classical Library, Harvard University Press, 1926",
+  "written": "2026-09-27"
+}

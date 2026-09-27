@@ -1,0 +1,32 @@
+{
+  "id": "psychology-cues-7",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When students moved to a new university, what decided whether an old exercise habit carried on?",
+  "answer": "Whether the setting still looked like the old one. Wood, Tam and Witt followed transfer students. Where cues stayed similar, such as the same kind of place, the habit continued whatever the students now intended. Where cues changed, behaviour followed intentions again. A new gym put the choice back in their hands.",
+  "move": "A change of scenery hands the decision back to the person.",
+  "keywords": [
+    "context change",
+    "transfer students",
+    "exercise habits",
+    "intentions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood, Tam & Witt, JPSP, 2005",
+  "source_kind": "paper",
+  "reference": "Wood, Tam & Witt, Changing circumstances, disrupting habits, Journal of Personality and Social Psychology, 2005",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-reusable-boosters-10",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: SpaceX's advertised price for a Falcon 9 launch fell once its boosters began flying again?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The list price was about $62 million when reflown boosters entered service in 2017, and in 2022 SpaceX raised it to $67 million, citing inflation. Reuse cut SpaceX's own costs; the savings went into margin and into flying more often. A price is set by the next-cheapest rival, not by the factory floor.",
+  "move": "A falling cost becomes a falling price only when a rival forces it.",
+  "trap": "Assuming a cheaper way to build means a cheaper price to buy.",
+  "keywords": [
+    "falcon 9",
+    "launch prices",
+    "spacex",
+    "booster reuse",
+    "profit margin"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SpaceNews, March 2022",
+  "source_kind": "news_archive",
+  "reference": "Foust, SpaceX raises prices for launches and rideshare missions, SpaceNews, 22 March 2022",
+  "written": "2026-09-27"
+}

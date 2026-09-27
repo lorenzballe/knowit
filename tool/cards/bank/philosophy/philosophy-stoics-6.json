@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-stoics-6",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What small condition did Stoics attach to every plan, so that failure could not wound them?",
+  "answer": "If nothing prevents it. Seneca says the wise man undertakes everything with a reservation: I will sail, unless something stops me; I will become praetor, unless something stands in the way. What he staked was the effort, never the result. A storm that cancels the voyage cancels nothing the Stoic had promised himself.",
+  "move": "Promise the effort in full and the outcome only on conditions.",
+  "keywords": [
+    "reserve clause",
+    "seneca",
+    "plans",
+    "dichotomy of control"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seneca, On Benefits 4.34",
+  "source_kind": "primary_document",
+  "reference": "Seneca, On Benefits, trans. Griffin & Inwood, University of Chicago Press, 2011",
+  "written": "2026-09-27"
+}

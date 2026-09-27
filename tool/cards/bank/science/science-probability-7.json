@@ -1,0 +1,39 @@
+{
+  "id": "science-probability-7",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A gambler bets £1 at a time on red at a single-zero wheel, until £100 becomes £200 or nothing. Chance of reaching £200?",
+  "options": [
+    "About 49%",
+    "About 25%",
+    "Under 1%"
+  ],
+  "correct": 2,
+  "answer": "Under 1%: about 0.45%. The house's small edge compounds bet after bet: the odds against doubling grow with 19/18, losing chances over winning ones, raised to the 100th power, about 223. One £100 bet on red wins 18 times in 37. That bold bet is over a hundred times likelier to double the money.",
+  "move": "When the odds lean slightly against you, play as few rounds as possible.",
+  "trap": "About 49%, since each bet is nearly a coin toss.",
+  "keywords": [
+    "gambler's ruin",
+    "roulette",
+    "bold play",
+    "house edge"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Dubins & Savage, bold play, 1965",
+  "source_kind": "book",
+  "reference": "Dubins & Savage, How to Gamble If You Must: Inequalities for Stochastic Processes, McGraw-Hill, 1965",
+  "written": "2026-09-27"
+}

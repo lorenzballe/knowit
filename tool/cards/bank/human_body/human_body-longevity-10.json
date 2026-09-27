@@ -1,0 +1,32 @@
+{
+  "id": "human_body-longevity-10",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people who reach 110 spend more of their lives ill than people who die around 90?",
+  "answer": "Less, on the evidence so far. Studying centenarians and supercentenarians in 2012, Andersen and colleagues found that the older the age at death, the later major diseases such as heart disease, stroke and cancer began. Among those reaching 110, illness was squeezed into the final years: a long life, mostly healthy, then a short decline.",
+  "move": "Those who go furthest may be those who break down latest, not slowest.",
+  "keywords": [
+    "supercentenarians",
+    "compression of morbidity",
+    "healthspan",
+    "centenarians"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Andersen et al., J Gerontol A, 2012",
+  "source_kind": "paper",
+  "reference": "Andersen, Sebastiani, Dworkis, Feldman & Perls, Health span approximates life span among many supercentenarians: compression of morbidity at the approximate limit of life span, Journals of Gerontology Series A, 2012",
+  "written": "2026-09-27"
+}

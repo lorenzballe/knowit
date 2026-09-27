@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-arrow-of-time-10",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: the second law of thermodynamics forbids a system's entropy from falling, even for a moment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The law is a statement about large numbers. In 2002, Wang and colleagues dragged a single latex bead through water with a laser trap and saw it take heat from its surroundings, running against the law, over stretches of up to about two seconds. The fewer the molecules, the more often the arrow wobbles.",
+  "move": "A law about crowds can fail for a handful and still be a law.",
+  "trap": "Treating a rule that holds for trillions of molecules as absolute for a few.",
+  "keywords": [
+    "second law",
+    "fluctuation theorem",
+    "optical tweezers",
+    "entropy"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wang et al., Physical Review Letters, 2002",
+  "source_kind": "paper",
+  "reference": "Wang, Sevick, Mittag, Searles & Evans, Experimental Demonstration of Violations of the Second Law of Thermodynamics for Small Systems and Short Time Scales, Physical Review Letters 89, 050601, 2002",
+  "written": "2026-09-27"
+}

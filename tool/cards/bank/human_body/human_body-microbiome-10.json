@@ -1,0 +1,37 @@
+{
+  "id": "human_body-microbiome-10",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should babies born by caesarean section be swabbed with their mother's vaginal fluid at birth?",
+  "sides": [
+    "Yes, swab them",
+    "No, not outside trials"
+  ],
+  "answer": "Caesarean babies start life colonised by skin and hospital microbes instead of their mother's vaginal and gut bacteria, and caesarean birth is linked to higher rates of asthma and obesity. A 2016 pilot found swabbed babies' microbes shifted partway towards those of vaginally born infants. The swab is cheap and uses the mother's own bacteria.",
+  "move": "Whichever side you took, whether the early difference lasts is the hinge.",
+  "counterpoint": "The largest study, of about 600 British babies in 2019, found most birth-mode differences had faded by six to nine months, and the missing bacteria came mainly from the mother's gut, not her vagina. Vaginal fluid can carry group B streptococcus or herpes, which can kill a newborn. Obstetric bodies advise against it outside research.",
+  "keywords": [
+    "caesarean section",
+    "vaginal seeding",
+    "infant microbiome",
+    "newborns"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shao et al., Nature, 2019",
+  "source_kind": "paper",
+  "reference": "Shao, Forster, Tsaliki et al., Stunted microbiota and opportunistic pathogen colonization in caesarean-section birth, Nature, 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-tabloids-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 2014 drugs trial of the singer Tulisa Contostavlos collapse before the jury could decide?",
+  "answer": "Because the reporter behind the sting was found to have probably lied. Mazher Mahmood of The Sun on Sunday, known as the Fake Sheikh, had posed as a film producer and drawn her into a cocaine deal. His driver's statement had been altered at his urging; in 2016 Mahmood was jailed for 15 months.",
+  "move": "Whoever builds the trap has reasons to describe the catch generously.",
+  "keywords": [
+    "mazher mahmood",
+    "tulisa contostavlos",
+    "sting",
+    "sun on sunday"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Guardian, Mahmood sentencing report, 2016",
+  "source_kind": "news_archive",
+  "reference": "The Guardian, report of Mazher Mahmood's sentencing at the Old Bailey for conspiracy to pervert the course of justice, October 2016",
+  "written": "2026-09-27"
+}

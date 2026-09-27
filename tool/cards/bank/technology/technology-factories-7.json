@@ -1,0 +1,43 @@
+{
+  "id": "technology-factories-7",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A plant holds 600 engines in progress and finishes 50 a day. How many must it shed for each to spend 4 days inside?",
+  "value": 400,
+  "unit": "engines",
+  "answer": "600 − 200 = 400 engines.",
+  "move": "To shorten a wait without working faster, let fewer things in.",
+  "trap": "Reaching for faster machines when the queue itself is the delay.",
+  "hint": "Stock, output and time inside are tied: stock equals output times time inside.",
+  "steps": [
+    "Time inside = work in progress / output, which is Little's law.",
+    "Today: 600 / 50 = 12 days inside.",
+    "At 4 days and 50 a day, work in progress = 4 × 50 = 200.",
+    "600 − 200 = 400 engines."
+  ],
+  "keywords": [
+    "little's law",
+    "work in progress",
+    "lead time",
+    "throughput",
+    "queues"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Little, Operations Research, 1961",
+  "source_kind": "paper",
+  "reference": "Little, A Proof for the Queuing Formula: L = λW, Operations Research 9(3), 1961",
+  "written": "2026-09-27"
+}

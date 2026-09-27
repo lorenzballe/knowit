@@ -1,0 +1,40 @@
+{
+  "id": "economics-groceries-8",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Toilet paper is cheapest per roll in big packs and on promotion. Which American households use those savings least?",
+  "options": [
+    "High-income households",
+    "Middle-income households",
+    "Low-income households"
+  ],
+  "correct": 2,
+  "answer": "Low-income households. Orhun and Palazzolo followed the toilet paper bought by over 100,000 families for seven years. The poorest bought small packs and missed sales, paying about 5.5% more per roll than if they shopped like richer families, although cheap brands saved them 11%. Bulk takes spare cash today and cupboard space.",
+  "move": "A discount you need money to reach is not open to everyone.",
+  "trap": "Assuming the rich skip bargains because they can afford to.",
+  "keywords": [
+    "bulk buying",
+    "toilet paper",
+    "poverty premium",
+    "liquidity",
+    "promotions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Orhun & Palazzolo, Journal of Marketing Research, 2019",
+  "source_kind": "paper",
+  "reference": "Orhun & Palazzolo, Frugality Is Hard to Afford, Journal of Marketing Research, 2019",
+  "written": "2026-09-27"
+}

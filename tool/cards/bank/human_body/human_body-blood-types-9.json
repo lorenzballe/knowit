@@ -1,0 +1,42 @@
+{
+  "id": "human_body-blood-types-9",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "If 16% of people are Rh-negative and couples pair at random, what % of pregnancies pair an Rh-negative mother with an Rh-positive baby?",
+  "value": 9.6,
+  "unit": "%",
+  "tolerance": 0.5,
+  "answer": "0.16 x 0.6 = 0.096, about 9.6%.",
+  "move": "A parent showing a trait is not the same as passing it on.",
+  "trap": "Multiplying 16% by 84% Rh-positive fathers, as if each passes it on.",
+  "hint": "Not every Rh-positive father passes the gene on; start from how common the gene is.",
+  "steps": [
+    "Rh-negative means two copies of the d gene, so d's share is the square root of 0.16 = 0.4.",
+    "A random father passes on the Rh-positive gene with chance 1 - 0.4 = 0.6.",
+    "0.16 x 0.6 = 0.096, about 9.6%."
+  ],
+  "keywords": [
+    "rhesus factor",
+    "pregnancy",
+    "hardy-weinberg",
+    "inheritance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hartl & Clark, Principles of Population Genetics",
+  "source_kind": "book",
+  "reference": "Hartl & Clark, Principles of Population Genetics, 4th edition, Sinauer Associates, 2007",
+  "written": "2026-09-27"
+}

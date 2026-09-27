@@ -1,0 +1,40 @@
+{
+  "id": "space-tides-8",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "nature.oceans.currents"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in parts of the open North Sea, the Moon raises almost no tide at all?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The tide there does not rise and fall as one bulge; it wheels round points called amphidromes, like water swirling in a tilted bowl. At each centre the level barely changes, while coasts around it see metres. The North Sea has three such points, and the crest takes about 12 hours to circle each.",
+  "move": "A turning pattern can have a still centre that everything moves around.",
+  "trap": "Picturing the tide as one bulge lifting every sea alike.",
+  "keywords": [
+    "amphidromic points",
+    "north sea",
+    "tidal range"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Proudman & Doodson, Philosophical Transactions, 1924",
+  "source_kind": "paper",
+  "reference": "Proudman & Doodson, The principal constituent of the tides of the North Sea, Philosophical Transactions of the Royal Society A, 1924",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-ship-of-theseus-6",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.ship_of_theseus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How has Japan's Ise shrine kept its ancient form when none of its wood is more than 20 years old?",
+  "answer": "By being rebuilt every 20 years on the empty plot beside it, identical to the joint, before the old one comes down. The rite goes back about 1,300 years, though it lapsed for over a century during the civil wars of the 1400s and 1500s. What endures is the carpenters' knowledge, not the timber.",
+  "move": "Some things last by being remade, not by being kept.",
+  "keywords": [
+    "ise shrine",
+    "ritual rebuilding",
+    "japanese carpentry",
+    "authenticity"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tange & Kawazoe, Ise, 1965",
+  "source_kind": "book",
+  "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965",
+  "written": "2026-09-27"
+}

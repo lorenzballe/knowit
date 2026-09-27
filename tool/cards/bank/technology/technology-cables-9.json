@@ -1,0 +1,43 @@
+{
+  "id": "technology-cables-9",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "On a new transatlantic cable, what caps how much data it can carry?",
+  "options": [
+    "How much light glass fibre can carry",
+    "The electrical power sent from shore",
+    "How many fibres fit inside the cable"
+  ],
+  "correct": 1,
+  "answer": "The electrical power sent from shore. Seabed amplifiers run on current fed down the cable at up to about 15 kilovolts, and turn only around 1% of it into light. So designers spread the power thinly: Google's Dunant cable of 2021 runs 12 fibre pairs, each below its own limit, sharing pump lasers.",
+  "move": "Find the scarcest input; everything else gets rationed around it.",
+  "trap": "Glass seems the bottleneck, since light is what carries the data.",
+  "keywords": [
+    "dunant cable",
+    "repeaters",
+    "power feeding",
+    "fibre pairs",
+    "capacity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "technology-cables-2"
+  ],
+  "figure": "none",
+  "source": "SubCom, Dunant ready-for-service release, 2021",
+  "source_kind": "company",
+  "reference": "https://www.subcom.com/documents/2021/Dunant_RFS_Final_3FEBRUARY2021.pdf",
+  "written": "2026-09-27"
+}

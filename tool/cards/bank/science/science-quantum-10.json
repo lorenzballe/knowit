@@ -1,0 +1,38 @@
+{
+  "id": "science-quantum-10",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did Google's 2019 Sycamore chip do something no classical computer could practically match?",
+  "sides": [
+    "Yes, it did",
+    "No, not yet"
+  ],
+  "answer": "Yes. Sycamore sampled a random 53-qubit circuit in about 200 seconds, a job Google put at 10,000 years on the best supercomputer. Later classical tricks cut that estimate, but each needed enormous resources to catch one 2019 chip, and larger quantum chips have since moved the target out of reach again.",
+  "move": "Whichever side you took, the hinge is whether an advantage must outlast better classical methods.",
+  "counterpoint": "No. The claim was a moving target from the start: within days IBM argued that using disk storage would bring the classical time down to about 2.5 days, and in 2022 a Chinese team reproduced the sampling in about 15 hours on 512 graphics chips. A task chosen only for being hard, and matched anyway, shows no lasting advantage.",
+  "keywords": [
+    "quantum supremacy",
+    "sycamore",
+    "google",
+    "random circuit sampling",
+    "supercomputers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arute et al., Nature, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-019-1666-5",
+  "written": "2026-09-27"
+}

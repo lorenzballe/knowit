@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-celebrity-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Star A is known by 90% of people, star B by 20%. Each is named a favourite by 10%. Whose Q Score is higher?",
+  "options": [
+    "Star B, the less known",
+    "Star A, the better known",
+    "Neither: they tie"
+  ],
+  "correct": 0,
+  "answer": "Star B. The US research firm Marketing Evaluations computes a Q Score as the share naming someone a favourite divided by the share who know them. Star A scores 10 / 90, about 11; star B scores 10 / 20, or 50. It measures how well recognition turns into affection, not how famous someone is.",
+  "move": "Ask what a rate is divided by before comparing two of them.",
+  "trap": "Counting only the fans and ignoring who had heard of each.",
+  "keywords": [
+    "q score",
+    "marketing evaluations",
+    "familiarity",
+    "favourites",
+    "celebrity ratings"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marketing Evaluations Inc., Q Scores",
+  "source_kind": "company",
+  "reference": "Marketing Evaluations Inc., Performer Q methodology, The Q Scores Company, founded 1963",
+  "written": "2026-09-27"
+}

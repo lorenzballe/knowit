@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-determinism-6",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1986, what did a leading British mathematician apologise for on behalf of his whole field?",
+  "answer": "For a false promise. Sir James Lighthill told the Royal Society that experts in mechanics had misled the educated public into equating Newton's determinism with predictability. Work on chaos after 1960 showed that many Newtonian systems are fully determined yet impossible to forecast. A whole discipline said sorry for its most famous boast.",
+  "move": "An expert's confident promise can outlive the evidence that once supported it.",
+  "keywords": [
+    "james lighthill",
+    "predictability",
+    "chaos",
+    "newtonian mechanics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lighthill, Proceedings of the Royal Society, 1986",
+  "source_kind": "paper",
+  "reference": "Lighthill, The recently recognized failure of predictability in Newtonian dynamics, Proceedings of the Royal Society of London A 407, 1986",
+  "written": "2026-09-27"
+}

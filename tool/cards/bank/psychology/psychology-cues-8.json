@@ -1,0 +1,37 @@
+{
+  "id": "psychology-cues-8",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should shops be barred from placing sweets and crisps at the checkout?",
+  "sides": [
+    "Yes, bar them",
+    "No, leave placement free"
+  ],
+  "answer": "The till is a cue placed where a queue, a bored child and an empty hand meet. Ejlerskov and colleagues found British households bought about 15% fewer small packs of sweets and crisps a year after their supermarkets cleared checkouts. England restricted such placement from 2022. Few measures reach so many shoppers so cheaply.",
+  "move": "Whichever side you took, the hinge is whether removed cues cut intake or relocate it.",
+  "counterpoint": "Moving the sweets may only move the purchase. That study counted small packs, not total sugar eaten, and a family can buy a larger bag in the next aisle. A rule on placement burdens small shops, invites loopholes, and targets a cue that a shopping list or a snack from home already removes.",
+  "keywords": [
+    "checkout sweets",
+    "food placement",
+    "supermarkets",
+    "public health regulation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ejlerskov et al., PLoS Medicine, 2018",
+  "source_kind": "paper",
+  "reference": "Ejlerskov, Sharp, Stead, Adamson, White & Adams, Supermarket policies on less-healthy food at checkouts: natural experimental evaluation using interrupted time series analyses of purchases, PLoS Medicine, 2018",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "human_body-longevity-6",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Adult death rates double about every 8 years of age. If a treatment halved them at every age, how much longer would people live?",
+  "options": [
+    "About 8 years",
+    "About 40 years",
+    "About 1 year"
+  ],
+  "correct": 0,
+  "answer": "About 8 years. With risk doubling every 8 years, halving it at every age gives each person the risk of someone 8 years younger, which shifts the whole adult curve 8 years later. Because the risk keeps doubling, the gain is soon used up: the treated die of the same rising risk, only later.",
+  "move": "Against a risk that doubles, halving it buys one doubling time.",
+  "trap": "Reading half the risk of dying as roughly double the remaining life.",
+  "keywords": [
+    "gompertz law",
+    "mortality",
+    "life expectancy",
+    "doubling time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "human_body-longevity-1"
+  ],
+  "figure": "doubling",
+  "source": "Finch, Longevity, Senescence, and the Genome",
+  "source_kind": "book",
+  "reference": "Finch, Longevity, Senescence, and the Genome, University of Chicago Press, 1990",
+  "written": "2026-09-27"
+}

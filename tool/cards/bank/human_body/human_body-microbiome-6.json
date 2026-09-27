@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-6",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "How much do all the bacteria living in an adult's body weigh together?",
+  "options": [
+    "About 200 grams",
+    "About 2 kilograms",
+    "About 20 grams"
+  ],
+  "correct": 0,
+  "answer": "About 200 grams. A 2016 recount put the bacteria in a 70 kg man at about 38 trillion, nearly all in the colon, close to his 30 trillion human cells. Being tiny, they weigh about 0.2 kg, near 0.3% of the body. One bowel movement empties a quarter to a third of them.",
+  "move": "Before repeating a striking figure, ask when someone last measured it.",
+  "trap": "The figure of one to two kilograms, repeated for decades.",
+  "keywords": [
+    "gut bacteria",
+    "bacterial mass",
+    "cell count",
+    "colon"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sender, Fuchs & Milo, PLOS Biology, 2016",
+  "source_kind": "paper",
+  "reference": "https://journals.plos.org/plosbiology/article?id=10.1371%2Fjournal.pbio.1002533",
+  "written": "2026-09-27"
+}

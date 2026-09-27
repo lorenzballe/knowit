@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-tabloids-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conjunction",
+  "question": "True or false: News of the World hackers were shown to have deleted Milly Dowler's voicemails, giving her family false hope?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Her phone was hacked in 2002, and her family later received £2 million in settlement. But in December 2011 police told the Leveson Inquiry the deletions that raised her parents' hopes were probably automatic, not the hackers' doing, and The Guardian corrected its report. The plain charge was true; the vivid detail was not.",
+  "move": "Each vivid detail added to a charge is one more thing to prove.",
+  "trap": "Believing the detailed version because it was the one most repeated.",
+  "keywords": [
+    "milly dowler",
+    "phone hacking",
+    "news of the world",
+    "leveson inquiry"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davies, Hack Attack, 2014",
+  "source_kind": "book",
+  "reference": "Nick Davies, Hack Attack: How the Truth Caught Up with Rupert Murdoch, Chatto & Windus, 2014",
+  "written": "2026-09-27"
+}

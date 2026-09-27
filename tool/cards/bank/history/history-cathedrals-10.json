@@ -1,0 +1,33 @@
+{
+  "id": "history-cathedrals-10",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do giant inverted arches stand in the crossing of Wells Cathedral?",
+  "answer": "They are a fourteenth-century emergency repair. After the central tower was raised in the early 1300s, the added weight made the crossing piers settle and crack. From 1338 the master mason William Joy inserted scissor arches, braces shaped like an X, on three sides of the crossing. They look like design; they are a splint.",
+  "move": "What looks like style is sometimes a repair everyone got used to.",
+  "keywords": [
+    "wells cathedral",
+    "scissor arches",
+    "william joy",
+    "crossing tower",
+    "structural repair"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Colchester, Wells Cathedral: A History, 1982",
+  "source_kind": "book",
+  "reference": "Colchester (ed.), Wells Cathedral: A History, Open Books, 1982",
+  "written": "2026-09-27"
+}

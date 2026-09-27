@@ -1,0 +1,33 @@
+{
+  "id": "psychology-insomnia-7",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do all people with chronic insomnia face the same raised health risks?",
+  "answer": "No: the risk gathers in those who sleep short when measured. In Pennsylvania cohort studies, people with insomnia who slept under six hours in the laboratory had more hypertension, diabetes and deaths; those sleeping six hours or more looked much like good sleepers. Two people can complain identically and carry different risks.",
+  "move": "Split a diagnosis by what can be measured before assuming one risk fits all.",
+  "keywords": [
+    "short sleep",
+    "insomnia phenotype",
+    "hypertension",
+    "alexandros vgontzas",
+    "cohort study"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vgontzas et al., Sleep Medicine Reviews, 2013",
+  "source_kind": "paper",
+  "reference": "Vgontzas, Fernandez-Mendoza, Liao & Bixler, Insomnia with objective short sleep duration: the most biologically severe phenotype of the disorder, Sleep Medicine Reviews, 2013",
+  "written": "2026-09-27"
+}

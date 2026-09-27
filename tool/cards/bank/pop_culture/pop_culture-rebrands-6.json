@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-rebrands-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Jaguar's European registrations fell 97.5% in April 2025, months after its much-mocked rebrand. What mainly explains the fall?",
+  "options": [
+    "The rebrand drove buyers away",
+    "New tariffs on British-built cars",
+    "It had almost no cars to sell"
+  ],
+  "correct": 2,
+  "answer": "It had almost no cars to sell. Jaguar stopped building its petrol and diesel models in late 2024 to relaunch as electric-only, with no new car due until 2026. That one decision caused both the new identity and the empty showrooms. Europe registered 49 that April, against 1,961 a year earlier.",
+  "move": "Before blaming the loudest change, check what else stopped at the same time.",
+  "trap": "A mocked rebrand followed by collapse reads as cause and effect.",
+  "keywords": [
+    "jaguar",
+    "rebrand",
+    "car registrations",
+    "electric cars",
+    "europe"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Autoblog, Jaguar's April sales in Europe, 2025",
+  "source_kind": "news_archive",
+  "reference": "https://www.autoblog.com/news/jaguar-europe-sales-decline",
+  "written": "2026-09-27"
+}

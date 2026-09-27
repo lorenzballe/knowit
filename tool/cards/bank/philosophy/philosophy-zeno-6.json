@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-zeno-6",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Bertrand Russell say a flying arrow is doing at any single instant?",
+  "answer": "Nothing but being where it is. Russell granted Zeno that at each instant the arrow is at rest in one place, and denied that motion needs more: to move is to be at different places at different times. No state of moving hides inside an instant. Flight is a list of positions and times.",
+  "move": "Ask whether a change needs anything beyond different states at different times.",
+  "keywords": [
+    "arrow paradox",
+    "bertrand russell",
+    "at-at theory",
+    "instants"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Russell, The Principles of Mathematics, 1903",
+  "source_kind": "book",
+  "reference": "Russell, The Principles of Mathematics, chapter 54, Cambridge University Press, 1903",
+  "written": "2026-09-27"
+}

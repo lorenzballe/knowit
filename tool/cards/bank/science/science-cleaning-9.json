@@ -1,0 +1,39 @@
+{
+  "id": "science-cleaning-9",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: mixing bicarbonate of soda with vinegar makes a stronger cleaner than vinegar alone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The fizz is the two cancelling out: acid meets base and leaves carbon dioxide, water and sodium acetate, a mild salt. Whichever is in excess is all that still cleans. Vinegar alone dissolves limescale; bicarbonate alone scours and lifts grease. Poured together, they send bubbling salty water down the drain.",
+  "move": "Before crediting the dramatic step, compare it with the plain one alone.",
+  "trap": "True, because the vigorous fizzing looks like cleaning at work.",
+  "keywords": [
+    "bicarbonate of soda",
+    "vinegar",
+    "neutralisation",
+    "sodium acetate",
+    "drains"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Atkins & Jones, Chemical Principles, 2010",
+  "source_kind": "book",
+  "reference": "Atkins & Jones, Chemical Principles: The Quest for Insight, 5th edition, W. H. Freeman, 2010",
+  "written": "2026-09-27"
+}

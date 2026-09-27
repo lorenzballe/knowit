@@ -1,0 +1,40 @@
+{
+  "id": "technology-mainframes-8",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Early FORTRAN ignored anything punched in columns 73 to 80 of an 80-column card. Why?",
+  "options": [
+    "To leave room for numbering the cards",
+    "The 704's card reader read only 72 columns",
+    "Printers then were 72 characters wide"
+  ],
+  "correct": 1,
+  "answer": "The IBM 704's reader read only 72. It took each row of holes into two 36-bit words, 72 bits, so eight columns were never seen. Programmers then filled the blind columns with sequence numbers, so a dropped deck could be re-sorted. The use came after the cause, and fixed-form Fortran still ignores them.",
+  "move": "What a leftover space is used for rarely explains why it was left.",
+  "trap": "Taking what the spare columns were used for as why they existed.",
+  "keywords": [
+    "fortran",
+    "ibm 704",
+    "punched cards",
+    "column 72",
+    "sequence numbers"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Backus et al., Western Joint Computer Conference, 1957",
+  "source_kind": "paper",
+  "reference": "Backus et al., The FORTRAN Automatic Coding System, Proceedings of the Western Joint Computer Conference, 1957",
+  "written": "2026-09-27"
+}

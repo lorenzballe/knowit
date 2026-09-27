@@ -1,0 +1,33 @@
+{
+  "id": "human_body-digestion-6",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does fat absorbed from a meal bypass the liver, when sugars and amino acids go straight there?",
+  "answer": "Because it is packaged too large for blood capillaries. Gut cells wrap digested fat into chylomicrons, droplets too big to pass into the capillaries of the villi, so they enter lymph vessels instead. The lymph drains into a vein near the left collarbone, and muscles and fat tissue get first pick.",
+  "move": "The route a delivery takes decides who gets first pick of it.",
+  "keywords": [
+    "chylomicrons",
+    "lymphatic system",
+    "fat absorption",
+    "liver",
+    "villi"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trevaskis et al., Advanced Drug Delivery Reviews, 2008",
+  "source_kind": "paper",
+  "reference": "Trevaskis, Charman & Porter, Lipid-based delivery systems and intestinal lymphatic drug transport: a mechanistic update, Advanced Drug Delivery Reviews, 2008",
+  "written": "2026-09-27"
+}

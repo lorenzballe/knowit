@@ -1,0 +1,41 @@
+{
+  "id": "nature-migration-10",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "also": [
+    "nature.extinction.recent_losses"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a moth that once migrated in billions to Australian mountain caves is now listed as endangered?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The IUCN listed the Bogong moth as endangered in 2021, after its numbers in the alpine caves collapsed during the drought of 2017 to 2019. Mountain pygmy possums, which fatten on the resting moths each spring, lost their main food. Cave walls once shingled with moths stood nearly bare.",
+  "move": "Abundance you remember is no guarantee of abundance now.",
+  "trap": "Assuming anything once seen in billions is too common to be at risk.",
+  "keywords": [
+    "bogong moth",
+    "iucn red list",
+    "mountain pygmy possum",
+    "drought"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Australian Conservation Foundation, 2021",
+  "source_kind": "institution",
+  "reference": "https://www.acf.org.au/news/bogong-moth-added-to-red-list",
+  "written": "2026-09-27"
+}

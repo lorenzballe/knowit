@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fast-fashion-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Roughly what share of the world's new textile fibre production in 2023 was polyester?",
+  "options": [
+    "About a fifth",
+    "More than half",
+    "About four-fifths"
+  ],
+  "correct": 1,
+  "answer": "More than half: about 57%, by Textile Exchange's count, against roughly a fifth for cotton. Polyester is cheap, strong and made from oil at any scale, and its share has climbed for decades. Most fleece, sportswear and stretch blends depend on it. A wardrobe that looks like cotton is often mostly plastic.",
+  "move": "Check the label before trusting the fibre your hand expects.",
+  "trap": "Cotton is the fibre everyone pictures, so it seems to dominate.",
+  "keywords": [
+    "polyester",
+    "cotton",
+    "textile fibres",
+    "synthetic fibres"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Textile Exchange, Materials Market Report 2024",
+  "source_kind": "statistics",
+  "reference": "Textile Exchange, Materials Market Report, 2024",
+  "written": "2026-09-27"
+}

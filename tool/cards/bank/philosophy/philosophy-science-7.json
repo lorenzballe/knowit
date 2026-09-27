@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-science-7",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "Logic says a white shoe supports 'all ravens are black'. How much, on the standard probabilistic answer?",
+  "options": [
+    "Not at all, it is irrelevant",
+    "As much as a black raven does",
+    "A real but minute amount"
+  ],
+  "correct": 2,
+  "answer": "A real but minute amount. 'All ravens are black' is logically equivalent to 'all non-black things are non-ravens', which a white shoe fits, as Hempel noted in 1945. But non-black things vastly outnumber ravens, so checking one of them risks almost nothing. A black raven could have come out white; the shoe never could.",
+  "move": "Evidence counts for as much as the chance it had of going the other way.",
+  "trap": "Weighing a shoe like a raven, forgetting how many non-black things exist.",
+  "keywords": [
+    "raven paradox",
+    "carl hempel",
+    "confirmation",
+    "bayesian reasoning"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Hempel, Mind, 1945",
+  "source_kind": "paper",
+  "reference": "Hempel, Studies in the Logic of Confirmation, Mind 54 (213), 1945, pp. 1-26; Hosiasson-Lindenbaum, On Confirmation, Journal of Symbolic Logic 5 (4), 1940",
+  "written": "2026-09-27"
+}

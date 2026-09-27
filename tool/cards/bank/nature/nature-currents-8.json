@@ -1,0 +1,39 @@
+{
+  "id": "nature-currents-8",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: most deep floats set adrift in the boundary current off Labrador rode it south along the North American coast?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Bower and colleagues tracked floats released in the deep current off Labrador, and few stayed in it: most peeled off into the open ocean, looping through eddies on their way south. The tidy picture of a deep conveyor belt hugging the coast had been drawn largely from instruments moored along that very coast.",
+  "move": "An instrument placed on the expected route will find the expected route.",
+  "trap": "Trusting the conveyor-belt picture, drawn from instruments on the coastal route.",
+  "keywords": [
+    "deep western boundary current",
+    "labrador sea",
+    "floats",
+    "conveyor belt",
+    "overturning circulation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Bower et al., Nature, 2009",
+  "source_kind": "paper",
+  "reference": "Bower et al., Interior pathways of the North Atlantic meridional overturning circulation, Nature, 2009",
+  "written": "2026-09-27"
+}

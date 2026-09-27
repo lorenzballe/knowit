@@ -1,0 +1,40 @@
+{
+  "id": "history-mongol-7",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 1206 Chinggis Khan organised every Mongol fighting man into units of a thousand. Roughly how many men?",
+  "options": [
+    "About 100,000",
+    "About 1 million",
+    "About 400,000"
+  ],
+  "correct": 0,
+  "answer": "About 100,000. The Secret History, the Mongols' own chronicle, names 95 commanders of a thousand in 1206: at most some 95,000 men, if every unit was full. Behind them stood a people of perhaps a million. Conquered nomads swelled later armies, but the force that broke the Jin of northern China began as this core.",
+  "move": "Fear inflates numbers; count the units, not the rumours.",
+  "trap": "Trusting enemy chroniclers' pictures of endless hordes.",
+  "keywords": [
+    "chinggis khan",
+    "secret history",
+    "mongol army",
+    "decimal units",
+    "army size"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Secret History, trans. de Rachewiltz",
+  "source_kind": "primary_document",
+  "reference": "de Rachewiltz (trans.), The Secret History of the Mongols: A Mongolian Epic Chronicle of the Thirteenth Century, Brill, 2004",
+  "written": "2026-09-27"
+}

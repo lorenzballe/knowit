@@ -1,0 +1,43 @@
+{
+  "id": "human_body-gut-and-mood-9",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "also": [
+    "human_body.senses.taste"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Mice bred unable to taste sweetness are offered sugar water and sweetener water for days. Which do they come to prefer?",
+  "options": [
+    "Neither; they cannot tell them apart",
+    "The sugar water",
+    "The sweetener water"
+  ],
+  "correct": 1,
+  "answer": "The sugar water. In 2008, mice lacking a channel essential for sweet taste drank both alike at first, then shifted to sugar, which carries calories, over the calorie-free sweetener. Sugar also raised dopamine in their brains' reward centre with no taste involved. The gut and metabolism report calories to the brain, and liking follows.",
+  "move": "Liking can be taught by consequences the senses never notice.",
+  "trap": "Assuming the preference for sugar is built on its sweet taste.",
+  "keywords": [
+    "sugar preference",
+    "dopamine",
+    "sweet taste",
+    "calories",
+    "mice"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "de Araujo et al., Neuron, 2008",
+  "source_kind": "paper",
+  "reference": "de Araujo, Oliveira-Maia, Sotnikova et al., Food reward in the absence of taste receptor signaling, Neuron, 2008",
+  "written": "2026-09-27"
+}

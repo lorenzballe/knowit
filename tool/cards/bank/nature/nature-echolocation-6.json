@@ -1,0 +1,40 @@
+{
+  "id": "nature-echolocation-6",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.echolocation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "A 2013 genome scan linked nearly 200 genes to convergence between echolocating bats and dolphins. What did later control comparisons find?",
+  "options": [
+    "As much convergence in non-echolocating pairs",
+    "Convergence confined to hearing genes",
+    "Even stronger convergence than reported"
+  ],
+  "correct": 0,
+  "answer": "As much convergence in non-echolocating pairs. Thomas and Hahn, and separately Zou and Zhang, ran the same test on mammals with no sonar in common and found as many shared changes or more; across thousands of genes, chance and shared constraints throw up matches. What survives is narrower, such as the hearing protein prestin.",
+  "move": "Search enough places and matches appear; ask how many chance alone would give.",
+  "trap": "Trusting hits from a scan of thousands of genes without a baseline.",
+  "keywords": [
+    "convergent evolution",
+    "bats",
+    "dolphins",
+    "genome scan",
+    "prestin"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thomas & Hahn, Molecular Biology and Evolution, 2015",
+  "source_kind": "paper",
+  "reference": "Thomas & Hahn, Determining the null model for detecting adaptive convergence from genomic data: a case study using echolocating mammals, Molecular Biology and Evolution, 2015; Parker et al., Genome-wide signatures of convergent evolution in echolocating mammals, Nature, 2013",
+  "written": "2026-09-27"
+}

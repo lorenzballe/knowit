@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-denim-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Where have many of the oldest surviving Levi's jeans been found?",
+  "options": [
+    "In the company's own archive",
+    "In wealthy families' attics",
+    "In abandoned mines"
+  ],
+  "correct": 2,
+  "answer": "In abandoned mines. Work trousers were worn until they fell apart, then thrown out; pairs left in dry, dark mine tunnels escaped rot and light. The company's early records burned in the 1906 San Francisco earthquake and fire, and in 2001 it paid $46,532 at auction for an 1880s pair from a Nevada mining town.",
+  "move": "Ask what conditions let the old examples survive before reading history from them.",
+  "trap": "A maker seems the obvious keeper of its own past.",
+  "keywords": [
+    "vintage jeans",
+    "levi strauss",
+    "mines",
+    "1906 san francisco fire",
+    "archive"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Downey, Levi Strauss & Co., Arcadia, 2007",
+  "source_kind": "book",
+  "reference": "Lynn Downey, Levi Strauss & Co., Images of America, Arcadia Publishing, 2007",
+  "written": "2026-09-27"
+}

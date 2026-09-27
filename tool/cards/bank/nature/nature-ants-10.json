@@ -1,0 +1,32 @@
+{
+  "id": "nature-ants-10",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What convinced biologists that ants leading a nestmate to food are genuinely teaching it?",
+  "answer": "The leader pays for it. In tandem running, a leader walks ahead while a follower taps her legs and body; when the taps stop, she waits. Franks and Richardson found leaders moving about four times slower than alone, while followers found the food faster than by searching. The lesson moves at the pupil's pace.",
+  "move": "Call it teaching only when the one who knows slows down for the learner.",
+  "keywords": [
+    "tandem running",
+    "teaching",
+    "temnothorax",
+    "foraging"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Franks & Richardson, Nature, 2006",
+  "source_kind": "paper",
+  "reference": "Franks & Richardson, Teaching in tandem-running ants, Nature, 2006",
+  "written": "2026-09-27"
+}

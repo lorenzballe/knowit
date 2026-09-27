@@ -1,0 +1,39 @@
+{
+  "id": "technology-charging-10",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Two cars use identical cells; one pack holds 40 kWh, the other 80. At a 350 kW charger, which adds range faster?",
+  "options": [
+    "The 40 kWh car, with less to fill",
+    "Both alike, the charger sets it",
+    "The 80 kWh car, about twice as fast"
+  ],
+  "correct": 2,
+  "answer": "The 80 kWh car. Each cell can safely take only so much current, and the big pack has twice as many cells sharing the load, so it draws about twice the power. Both reach 80% in roughly the same minutes, but the big pack banks twice the energy. The small battery charges slower.",
+  "move": "More channels working at once fill a bigger store in the same time.",
+  "trap": "Thinking a smaller battery fills faster because less space is empty.",
+  "keywords": [
+    "charging power",
+    "battery size",
+    "c-rate",
+    "fast chargers"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Plett, Battery Management Systems, 2015",
+  "source_kind": "book",
+  "reference": "Plett, Battery Management Systems, Volume I: Battery Modeling, Artech House, 2015",
+  "written": "2026-09-27"
+}

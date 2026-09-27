@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eastern-8",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Sri Lankan tradition dates the Buddha's death to 544 BC. Where do many specialists now place it?",
+  "options": [
+    "About 480 BC",
+    "About 400 BC",
+    "About 250 BC"
+  ],
+  "correct": 1,
+  "answer": "About 400 BC. Western scholars long used about 480, a correction of the Sri Lankan chronicles; after a 1988 symposium in Göttingen led by Heinz Bechert, many moved to a shorter chronology near 400. The field is still split. On the late date, the Buddha and Socrates died within a few years of each other.",
+  "move": "Correcting a traditional number once does not make the corrected number right.",
+  "trap": "Settling on 480 BC, the long-standing scholarly correction of tradition.",
+  "keywords": [
+    "buddha",
+    "chronology",
+    "heinz bechert",
+    "dating"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bechert (ed.), The Dating of the Historical Buddha",
+  "source_kind": "book",
+  "reference": "Bechert (ed.), The Dating of the Historical Buddha, Vandenhoeck & Ruprecht, 1991-1992",
+  "written": "2026-09-27"
+}

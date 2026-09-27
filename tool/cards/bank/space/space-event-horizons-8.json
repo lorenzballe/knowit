@@ -1,0 +1,40 @@
+{
+  "id": "space-event-horizons-8",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "M87's black hole weighs 6.5 billion suns; horizon radius is 3 km per sun. How many Earth–Sun distances (150 million km) is that?",
+  "value": 130,
+  "unit": "Earth–Sun distances",
+  "answer": "19.5 billion km / 150 million km = 130.",
+  "move": "Compact describes how tightly packed something is, never how big it is.",
+  "trap": "Picturing a black hole as small because it is compact.",
+  "hint": "Multiply the mass by the radius per sun, then divide by the Earth–Sun distance.",
+  "steps": [
+    "6.5 billion suns x 3 km = 19.5 billion km of radius.",
+    "19.5 billion km / 150 million km = 130."
+  ],
+  "keywords": [
+    "m87",
+    "event horizon",
+    "schwarzschild radius",
+    "astronomical unit"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Event Horizon Telescope Collaboration, 2019",
+  "source_kind": "paper",
+  "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters, 2019",
+  "written": "2026-09-27"
+}

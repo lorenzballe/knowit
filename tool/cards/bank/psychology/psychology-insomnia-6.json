@@ -1,0 +1,33 @@
+{
+  "id": "psychology-insomnia-6",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can telling a person with insomnia to try to stay awake help them fall asleep?",
+  "answer": "Because the effort to sleep is part of what keeps them awake. Sleep comes when arousal drops, and straining for it raises arousal: clock-watching, counting hours left, willing the body off. Told to lie in the dark and keep their eyes open, many relax the effort and drift off. Chasing sleep scares it away.",
+  "move": "Some states arrive only when you stop trying to produce them.",
+  "keywords": [
+    "paradoxical intention",
+    "sleep effort",
+    "arousal",
+    "insomnia treatment",
+    "clock-watching"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morgenthaler et al., Sleep, 2006",
+  "source_kind": "paper",
+  "reference": "Morgenthaler, Kramer, Alessi et al., Practice parameters for the psychological and behavioral treatment of insomnia: an update, Sleep, 2006",
+  "written": "2026-09-27"
+}

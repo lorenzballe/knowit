@@ -1,0 +1,43 @@
+{
+  "id": "technology-mainframes-10",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "How tall, in metres, would a stack of 80-column punched cards holding one megabyte of text be?",
+  "value": 2.2,
+  "unit": "metres",
+  "withinFactor": 3,
+  "answer": "12,500 × 0.18 mm = about 2.2 metres.",
+  "move": "Turn an abstract quantity into a pile you could stand beside.",
+  "trap": "Picturing a megabyte as a small box of cards.",
+  "hint": "Count the cards first: each column holds one character.",
+  "steps": [
+    "One card holds 80 characters, one per column.",
+    "1,000,000 / 80 = 12,500 cards for a megabyte.",
+    "Each card is about 0.18 mm thick.",
+    "12,500 × 0.18 mm = about 2.2 metres."
+  ],
+  "keywords": [
+    "punched cards",
+    "megabyte",
+    "data storage",
+    "mainframes"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ceruzzi, A History of Modern Computing, 2003",
+  "source_kind": "book",
+  "reference": "Ceruzzi, A History of Modern Computing, 2nd edition, MIT Press, 2003",
+  "written": "2026-09-27"
+}

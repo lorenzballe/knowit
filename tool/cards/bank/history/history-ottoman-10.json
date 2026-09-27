@@ -1,0 +1,40 @@
+{
+  "id": "history-ottoman-10",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The Ottoman census of 1831, the empire's first modern count of people, recorded whom?",
+  "options": [
+    "Every member of each household",
+    "Only Muslims, of both sexes",
+    "Only males, Muslim and non-Muslim"
+  ],
+  "correct": 2,
+  "answer": "Only males, Muslim and non-Muslim. It was taken to find conscripts for the new army and payers of the poll tax levied on non-Muslims, so women were left out entirely. Historians turning it into a population must multiply by an assumed ratio of women to men. Half the empire is a guess in that count.",
+  "move": "Ask why a count was taken; the purpose decides who was left out.",
+  "trap": "Assuming a census counts everyone, as modern ones try to.",
+  "keywords": [
+    "ottoman census",
+    "1831",
+    "conscription",
+    "poll tax",
+    "demography"
+  ],
+  "era": "nineteenth",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karpat, Ottoman Population, 1830-1914",
+  "source_kind": "book",
+  "reference": "Karpat, Ottoman Population, 1830-1914: Demographic and Social Characteristics, University of Wisconsin Press, 1985",
+  "written": "2026-09-27"
+}

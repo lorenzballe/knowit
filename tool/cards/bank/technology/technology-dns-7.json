@@ -1,0 +1,36 @@
+{
+  "id": "technology-dns-7",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "also": [
+    "history.maps_and_borders.lost_countries"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can people still register new .su domains, more than three decades after the Soviet Union dissolved?",
+  "answer": "Because its code was never fully retired. Country endings follow ISO's list of country codes; when a country goes, its code is withdrawn and its domain is meant to wind down, as Yugoslavia's .yu did in 2010. SU was only marked transitionally reserved, and a Russian foundation has kept .su open to newcomers ever since.",
+  "move": "Rules written for tidy endings rarely say who pulls the plug.",
+  "keywords": [
+    "soviet domain",
+    "country code domains",
+    "iso 3166",
+    "soviet union",
+    "yugoslavia"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 3166-1 country code standard",
+  "source_kind": "standard",
+  "reference": "ISO 3166-1:2020, Codes for the representation of names of countries and their subdivisions, Part 1: Country code, International Organization for Standardization, 2020",
+  "written": "2026-09-27"
+}

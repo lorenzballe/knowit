@@ -1,0 +1,32 @@
+{
+  "id": "economics-printing-cash-6",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the US Federal Reserve began losing money in 2022, where did the losses go?",
+  "answer": "Into a 'deferred asset', in effect an IOU to itself. The Fed pays interest on banks' reserves; once that bill exceeded its bond income, it stopped sending profits to the Treasury and booked the shortfall against future profits. The balance passed $200 billion by 2025. The Treasury is paid again only after it is cleared.",
+  "move": "Ask where a loss is recorded before deciding who bears it.",
+  "keywords": [
+    "federal reserve",
+    "deferred asset",
+    "interest on reserves",
+    "treasury remittances"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Reserve Board, H.4.1 release",
+  "source_kind": "statistics",
+  "reference": "Board of Governors of the Federal Reserve System, Factors Affecting Reserve Balances (H.4.1), weekly statistical release, 2025",
+  "written": "2026-09-27"
+}

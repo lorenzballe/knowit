@@ -1,0 +1,42 @@
+{
+  "id": "science-quantum-8",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A tunnelling microscope's current falls about tenfold per 0.1 nm of gap. Widen the gap by 0.3 nm: by what factor?",
+  "value": 1000,
+  "unit": "times",
+  "answer": "10 x 10 x 10 = 1,000 times smaller.",
+  "move": "When each step multiplies, the nearest point does nearly all the work.",
+  "trap": "Three times smaller, reading the gap change as proportional.",
+  "hint": "Count the tenfold steps first, then multiply them.",
+  "steps": [
+    "0.3 nm is three steps of 0.1 nm.",
+    "Each step divides the current by 10.",
+    "10 x 10 x 10 = 1,000 times smaller."
+  ],
+  "simply": "The tip is a blunt mountain, but the one atom at its summit sits about 0.3 nm closer to the surface than its neighbours, so it carries roughly a thousand times their current. That is why a rough tip can still see single atoms.",
+  "keywords": [
+    "scanning tunnelling microscope",
+    "quantum tunnelling",
+    "atoms",
+    "exponential decay"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Binnig & Rohrer, Reviews of Modern Physics, 1987",
+  "source_kind": "paper",
+  "reference": "Binnig & Rohrer, Scanning tunneling microscopy: from birth to adolescence, Reviews of Modern Physics 59, 615, 1987",
+  "written": "2026-09-27"
+}

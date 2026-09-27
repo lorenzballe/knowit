@@ -1,0 +1,39 @@
+{
+  "id": "nature-recent-losses-6",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of all the animal extinctions recorded since 1500, which group accounts for the largest number?",
+  "options": [
+    "Molluscs, mostly land snails",
+    "Birds, mostly on islands",
+    "Mammals, mostly large ones"
+  ],
+  "correct": 0,
+  "answer": "Molluscs, mostly land snails. The IUCN Red List counts about 300 extinct mollusc species, far more than birds, and Régnier and colleagues argued that hundreds more went unlisted because nobody checked. Over 70% of the known losses were on oceanic islands. The typical recorded extinction is a small shell in a museum drawer.",
+  "move": "The best-told losses are rarely the most numerous ones.",
+  "trap": "Picking birds, because the dodo and its kind fill the stories.",
+  "keywords": [
+    "land snails",
+    "molluscs",
+    "iucn red list",
+    "island extinctions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Régnier, Fontaine & Bouchet, Conservation Biology, 2009",
+  "source_kind": "paper",
+  "reference": "Régnier, Fontaine & Bouchet, Not knowing, not recording, not listing: numerous unnoticed mollusk extinctions, Conservation Biology, 2009",
+  "written": "2026-09-27"
+}

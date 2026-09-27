@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-sneakers-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Jordan Brand made about $5.1 billion in fiscal 2022. A reported 5% royalty is how many times Jordan's $94 million career NBA salaries?",
+  "value": 2.7,
+  "unit": "times",
+  "tolerance": 0.2,
+  "answer": "255 / 94 = about 2.7 times his NBA career salaries.",
+  "move": "A small cut of a large, recurring sum can beat a large one-off.",
+  "trap": "Assuming the playing salaries must dwarf a small percentage.",
+  "hint": "Find one year's royalty first, then divide by the salaries.",
+  "steps": [
+    "5% of $5,100 million is 0.05 x 5,100.",
+    "0.05 x 5,100 = $255 million in one year.",
+    "255 / 94 = about 2.7 times his NBA career salaries."
+  ],
+  "keywords": [
+    "michael jordan",
+    "jordan brand",
+    "royalties",
+    "nike",
+    "nba salaries"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Forbes, on Jordan's Nike income, 2022",
+  "source_kind": "news_archive",
+  "reference": "Forbes, estimate of Michael Jordan's earnings from Nike, 2022",
+  "written": "2026-09-27"
+}

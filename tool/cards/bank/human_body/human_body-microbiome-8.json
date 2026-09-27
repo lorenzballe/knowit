@@ -1,0 +1,39 @@
+{
+  "id": "human_body-microbiome-8",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "regression",
+  "question": "Early studies tied obesity to a higher ratio of Firmicutes to Bacteroidetes bacteria. What did later pooled analyses find?",
+  "options": [
+    "A strong and consistent link",
+    "A weak link, inconsistent across studies",
+    "The reverse: lean people carry more Firmicutes"
+  ],
+  "correct": 1,
+  "answer": "A weak link, inconsistent across studies. The ratio came from mice and from a dozen dieting volunteers in 2006. When Walters and colleagues in 2014, and Sze and Schloss in 2016, pooled larger human data sets, the ratio did not reliably separate lean from obese people. Microbial diversity gave a small, steadier signal.",
+  "move": "The first measurement of an effect tends to be its biggest.",
+  "trap": "Trusting the first vivid result, from small studies, as the settled size.",
+  "keywords": [
+    "firmicutes",
+    "bacteroidetes",
+    "obesity",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sze & Schloss, mBio, 2016",
+  "source_kind": "paper",
+  "reference": "Sze & Schloss, Looking for a signal in the noise: revisiting obesity and the microbiome, mBio, 2016",
+  "written": "2026-09-27"
+}

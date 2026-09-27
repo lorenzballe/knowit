@@ -1,0 +1,39 @@
+{
+  "id": "science-cleaning-8",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a typical home, which of these usually carries the densest crowd of bacteria?",
+  "options": [
+    "The toilet seat",
+    "The kitchen sponge",
+    "The front door handle"
+  ],
+  "correct": 1,
+  "answer": "The kitchen sponge. A 2017 German study of used sponges found up to 54 billion bacterial cells per cubic centimetre, a density otherwise met in faeces. Warm, wet and fed with food scraps, its foam offers a vast surface to live on. A toilet seat, dry and regularly wiped, is sparse by comparison.",
+  "move": "The thing that disgusts you most is rarely where the risk lives.",
+  "trap": "The toilet seat, because it is the dirtiest thing to picture.",
+  "keywords": [
+    "kitchen sponge",
+    "bacteria",
+    "household hygiene",
+    "toilet seat"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cardinale et al., Scientific Reports, 2017",
+  "source_kind": "paper",
+  "reference": "Cardinale, Kaiser, Lueders, Schnell & Egert, Microbiome analysis and confocal microscopy of used kitchen sponges reveal massive colonization by Acinetobacter, Moraxella and Chryseobacterium species, Scientific Reports 7, 5791, 2017",
+  "written": "2026-09-27"
+}

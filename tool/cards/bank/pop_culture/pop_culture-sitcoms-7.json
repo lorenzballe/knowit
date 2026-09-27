@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-sitcoms-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: The Simpsons clip of Donald Trump riding an escalator aired before he launched his 2016 campaign?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Trump rode down the Trump Tower escalator to announce his run on 16 June 2015; the animated short Trumptastic Voyage, showing a similar descent, came out in July 2015. A 2000 episode did joke about a President Trump, but the famous clip followed the event it seemed to foresee.",
+  "move": "Check the date on a prophecy before admiring its accuracy.",
+  "trap": "Trusting a clip because it matches the later event so exactly.",
+  "keywords": [
+    "the simpsons",
+    "donald trump",
+    "predictions",
+    "escalator"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Simpsons, Trumptastic Voyage, 2015",
+  "source_kind": "primary_document",
+  "reference": "The Simpsons, Trumptastic Voyage, animated short, Fox, July 2015; and Bart to the Future, season 11, Fox, 2000",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-arrow-of-time-7",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.arrow_of_time",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Earth sheds the energy it absorbs. Sunlight comes from a 5,800 K surface; Earth glows at 255 K. How many photons leave per photon arriving?",
+  "value": 23,
+  "unit": "photons",
+  "withinFactor": 3,
+  "answer": "Energy out equals energy in, so about 23 photons leave for each one that arrives.",
+  "move": "A living system runs on the quality of its energy, not just the quantity.",
+  "trap": "Assuming energy in equals energy out means photons in equal photons out.",
+  "hint": "The energy balances; ask how much each photon carries at each temperature.",
+  "steps": [
+    "A photon's typical energy is proportional to the temperature of its source.",
+    "Sun's surface about 5,800 K, Earth about 255 K: 5,800 / 255 = about 23.",
+    "Energy out equals energy in, so about 23 photons leave for each one that arrives."
+  ],
+  "keywords": [
+    "entropy",
+    "sunlight",
+    "infrared radiation",
+    "roger penrose"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Penrose, Cycles of Time, 2010",
+  "source_kind": "book",
+  "reference": "Penrose, Cycles of Time: An Extraordinary New View of the Universe, Bodley Head, 2010, part 1",
+  "written": "2026-09-27"
+}

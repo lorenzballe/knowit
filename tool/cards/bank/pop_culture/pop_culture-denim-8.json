@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-denim-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Levi Strauss & Co. called its riveted trousers overalls, not jeans, until about 1960?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. For almost nine decades it sold them as waist overalls: work trousers held at the waist, without a bib. Jeans was the buyers' word, spread by students and teenagers after the war, and Levi's adopted it in its own marketing around 1960. The world's name for them came from customers.",
+  "move": "Check who first used a name before crediting whoever owns it now.",
+  "trap": "Assuming a firm always called its product by today's name.",
+  "keywords": [
+    "levi strauss",
+    "waist overalls",
+    "jeans",
+    "marketing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "McClendon, Denim: Fashion's Frontier, 2016",
+  "source_kind": "book",
+  "reference": "Emma McClendon, Denim: Fashion's Frontier, Yale University Press, 2016",
+  "written": "2026-09-27"
+}

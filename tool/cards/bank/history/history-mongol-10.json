@@ -1,0 +1,42 @@
+{
+  "id": "history-mongol-10",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Under Ögedei, loans at lamb interest doubled every year. How many ingots would 1 ingot owe after 10 unpaid years?",
+  "value": 1024,
+  "unit": "ingots",
+  "answer": "After 10 years: 32 x 32 = 1,024 ingots.",
+  "move": "Ask whether a debt adds or multiplies before agreeing to its terms.",
+  "trap": "Adding one ingot a year and answering about 11.",
+  "hint": "Work out five years first; ten years is five years done twice.",
+  "steps": [
+    "Each year the debt doubles.",
+    "After 5 years: 2 x 2 x 2 x 2 x 2 = 32 ingots.",
+    "After 10 years: 32 x 32 = 1,024 ingots."
+  ],
+  "keywords": [
+    "lamb interest",
+    "ogedei",
+    "ortogh merchants",
+    "debt",
+    "compound interest"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Allsen, Asia Major, 1989",
+  "source_kind": "paper",
+  "reference": "Allsen, Mongolian Princes and Their Merchant Partners, 1200-1260, Asia Major, third series, 2, 1989, 83-126",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-music-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How did the big record labels keep US CD prices high in the late 1990s, by the regulators' account?",
+  "options": [
+    "They pressed deliberately fewer copies",
+    "They withheld ad money from discounters",
+    "They set a legal minimum retail price"
+  ],
+  "correct": 1,
+  "answer": "They withheld advertising money from discounters. Under minimum advertised price rules, a shop that advertised a CD below the label's floor lost its share of promotional funds. In 2000 the Federal Trade Commission estimated buyers had overpaid about $480 million since 1997, and the five major labels agreed to drop the policies.",
+  "move": "A price can be fixed without anyone ever naming the price.",
+  "trap": "Assuming a price floor must be written openly, which the law forbade.",
+  "keywords": [
+    "cd prices",
+    "minimum advertised price",
+    "federal trade commission",
+    "record labels"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Trade Commission, CD pricing settlement, 2000",
+  "source_kind": "institution",
+  "reference": "Federal Trade Commission, Record Companies Settle FTC Charges of Restraining Competition in CD Music Market, 10 May 2000",
+  "written": "2026-09-27"
+}

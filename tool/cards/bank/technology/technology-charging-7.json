@@ -1,0 +1,33 @@
+{
+  "id": "technology-charging-7",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Tesla tell owners of its iron-phosphate battery cars to charge to 100% at least weekly?",
+  "answer": "So the car can tell how full the battery is. Iron phosphate cells hold an almost flat voltage, about 3.2 to 3.3 volts, across most of their charge, so voltage says little about the level. Only near full does it climb steeply, giving the gauge a fixed point. Without it, the range estimate drifts.",
+  "move": "A gauge that reads the wrong quantity needs regular fixed points to reset.",
+  "keywords": [
+    "lithium iron phosphate",
+    "state of charge",
+    "battery gauge",
+    "voltage curve",
+    "tesla"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tesla, Model 3 Owner's Manual",
+  "source_kind": "company",
+  "reference": "Tesla, Model 3 Owner's Manual, section Charging Instructions, 2023",
+  "written": "2026-09-27"
+}

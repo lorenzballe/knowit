@@ -1,0 +1,35 @@
+{
+  "id": "space-event-horizons-10",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of a fast-spinning black hole's mass could, in principle, be taken out again as energy?",
+  "answer": "Up to about 29%. The spin's energy sits outside the horizon, where space itself is dragged round; a particle split there can send one half out with more energy than it brought. What stays is the irreducible mass, fixed by the horizon's area. For a maximal spinner it is 1/√2 of the whole.",
+  "move": "Separate what a system stores from what it can give back.",
+  "keywords": [
+    "penrose process",
+    "ergosphere",
+    "black hole spin",
+    "irreducible mass"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christodoulou, Physical Review Letters, 1970",
+  "source_kind": "paper",
+  "reference": "Christodoulou, Reversible and irreversible transformations in black-hole physics, Physical Review Letters, 1970",
+  "written": "2026-09-27"
+}

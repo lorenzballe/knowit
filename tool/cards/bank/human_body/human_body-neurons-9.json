@@ -1,0 +1,39 @@
+{
+  "id": "human_body-neurons-9",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: each neuron releases just one kind of chemical messenger from its endings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Many neurons release two or more: a fast transmitter such as glutamate or GABA alongside slower signalling peptides, and some dopamine neurons release glutamate. The one-transmitter idea misreads Dale's principle, which claimed only that a neuron releases the same messengers at every ending. One ending can hold small and large vesicles side by side.",
+  "move": "Check what a famous rule literally says before quoting its nickname.",
+  "trap": "Recalling the neat rule of one neuron, one transmitter.",
+  "keywords": [
+    "neurotransmitters",
+    "co-transmission",
+    "dale's principle",
+    "dopamine",
+    "neuropeptides"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kandel et al., Principles of Neural Science",
+  "source_kind": "book",
+  "reference": "Kandel, Schwartz, Jessell, Siegelbaum & Hudspeth, Principles of Neural Science, 5th edition, McGraw-Hill, 2013",
+  "written": "2026-09-27"
+}

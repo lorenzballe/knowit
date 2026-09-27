@@ -1,0 +1,40 @@
+{
+  "id": "psychology-halo-effect-9",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Thousands of managers were each rated by bosses, peers and subordinates. How much of the variation in scores came from the raters themselves?",
+  "options": [
+    "About a tenth",
+    "About a third",
+    "More than half"
+  ],
+  "correct": 2,
+  "answer": "More than half. Steven Scullen, Michael Mount and Maynard Goff found each rater's own tendencies, general impression and leniency included, outweighed the managers' actual performance, which explained only about a fifth. Bosses, peers and subordinates each had their quirks. A rating is largely a portrait of the person holding the pen.",
+  "move": "Before reading a score as a measure of someone, ask who wrote it.",
+  "trap": "Assuming a rating mostly measures the person being rated.",
+  "keywords": [
+    "360-degree feedback",
+    "performance ratings",
+    "rater effects",
+    "managers",
+    "appraisal"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scullen et al., Journal of Applied Psychology, 2000",
+  "source_kind": "paper",
+  "reference": "Scullen, Mount & Goff, Understanding the latent structure of job performance ratings, Journal of Applied Psychology, 2000",
+  "written": "2026-09-27"
+}

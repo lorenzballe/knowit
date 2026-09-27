@@ -1,0 +1,32 @@
+{
+  "id": "technology-recycling-6",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What would a recycler gain by keeping a worn cathode's crystal intact instead of dissolving it?",
+  "answer": "The cost of making it again. Smelting and acid leaching reduce a cathode to metal salts, from which a factory must rebuild the precise crystal with heat and energy. Direct recycling instead tops up the lithium the crystal lost and reuses it. For cheap iron phosphate, the crystal is most of the value.",
+  "move": "Sometimes the value lies in the arrangement, not in the ingredients.",
+  "keywords": [
+    "direct recycling",
+    "cathode",
+    "hydrometallurgy",
+    "iron phosphate"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Argonne National Laboratory, ReCell Center",
+  "source_kind": "institution",
+  "reference": "Gaines, Dai, Vaughey & Gibson, Direct Recycling R&D at the ReCell Center, Recycling, 2021",
+  "written": "2026-09-27"
+}

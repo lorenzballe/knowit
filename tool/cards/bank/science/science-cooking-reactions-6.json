@@ -1,0 +1,33 @@
+{
+  "id": "science-cooking-reactions-6",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the cream of tartar in a baker's cupboard come from?",
+  "answer": "From wine. As grape juice ferments and alcohol builds up, potassium bitartrate, a salt of tartaric acid, grows less soluble and crystallises on the insides of vats and barrels and in the sediment. Scraped off and purified, it becomes the acid half of many baking powders and the pinch that steadies whisked egg whites.",
+  "move": "Before asking how an ingredient is made, ask whose leftover it might be.",
+  "keywords": [
+    "cream of tartar",
+    "potassium bitartrate",
+    "wine",
+    "baking powder",
+    "tartaric acid"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ribéreau-Gayon et al., Handbook of Enology, 2006",
+  "source_kind": "book",
+  "reference": "Ribéreau-Gayon, Glories, Maujean & Dubourdieu, Handbook of Enology, Volume 2: The Chemistry of Wine, Stabilization and Treatments, 2nd edition, Wiley, 2006",
+  "written": "2026-09-27"
+}

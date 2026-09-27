@@ -1,0 +1,44 @@
+{
+  "id": "space-tides-9",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "nature.oceans.coral"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Devonian corals, about 400 million years old, laid down some 400 daily growth lines a year. How many hours long was a day?",
+  "value": 21.9,
+  "unit": "hours",
+  "tolerance": 0.1,
+  "answer": "8,766 hours / 400 days ≈ 21.9 hours.",
+  "move": "When a ratio changes, check which side of it moved.",
+  "trap": "Assuming the year, not the day, must have changed.",
+  "hint": "The year's length in hours has barely changed; only the number of days that fill it.",
+  "steps": [
+    "A year lasts about 365.25 x 24 = 8,766 hours, then as now.",
+    "8,766 hours / 400 days ≈ 21.9 hours."
+  ],
+  "keywords": [
+    "devonian corals",
+    "growth lines",
+    "length of day",
+    "tidal braking"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells, Nature, 1963",
+  "source_kind": "paper",
+  "reference": "Wells, Coral growth and geochronometry, Nature, 1963",
+  "written": "2026-09-27"
+}

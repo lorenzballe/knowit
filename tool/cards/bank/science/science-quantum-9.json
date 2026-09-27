@@ -1,0 +1,39 @@
+{
+  "id": "science-quantum-9",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.quantum",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "In 1922 Stern and Gerlach split a beam of silver atoms in two, as the old quantum theory predicted. What had they really seen?",
+  "options": [
+    "Proof of the electron orbits",
+    "An artefact of the magnet",
+    "Electron spin, not yet proposed"
+  ],
+  "correct": 2,
+  "answer": "Electron spin, not yet proposed. The orbit theory forecast two beams for the wrong reason: silver's outer electron has no orbital motion to split. The split came from spin, first proposed in 1925. The silver traces were so faint that Stern's cigar breath, rich in sulphur, blackened them into view.",
+  "move": "Matching the forecast does not prove the forecaster understood why.",
+  "trap": "Proof of the orbits, since the result matched the prediction.",
+  "keywords": [
+    "stern-gerlach experiment",
+    "electron spin",
+    "silver atoms",
+    "old quantum theory"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Friedrich & Herschbach, Physics Today, 2003",
+  "source_kind": "paper",
+  "reference": "Friedrich & Herschbach, Stern and Gerlach: How a Bad Cigar Helped Reorient Atomic Physics, Physics Today 56(12), 53, 2003",
+  "written": "2026-09-27"
+}

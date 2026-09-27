@@ -1,0 +1,41 @@
+{
+  "id": "technology-lithium-10",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "also": [
+    "technology.where_things_come_from.factories"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a new lithium-ion cell is assembled with its lithium already packed into the graphite?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cells are built empty, their lithium held in the metal oxide of the positive electrode; graphite full of lithium reacts with air and moisture. The first slow charges move it across, using some to build a protective film. Wetting and formation take 3 to 7 days, then ageing up to two weeks.",
+  "move": "Products are often built in their safest state, not their useful one.",
+  "trap": "Assuming a battery is assembled the way it is sold, holding charge.",
+  "keywords": [
+    "cell manufacturing",
+    "formation charging",
+    "graphite anode",
+    "positive electrode"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood, Li & An, Joule, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/j.joule.2019.11.002",
+  "written": "2026-09-27"
+}

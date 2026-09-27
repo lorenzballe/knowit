@@ -1,0 +1,39 @@
+{
+  "id": "human_body-balance-6",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Flying in cloud, a pilot holds a steady turn for half a minute, then rolls level. What do the inner ears report?",
+  "options": [
+    "A turn the opposite way",
+    "Level flight, correctly",
+    "The original turn continuing"
+  ],
+  "correct": 0,
+  "answer": "A turn the opposite way. The canals sense changes in rotation, not rotation itself; after 20 seconds or so of steady turning the turn feels level. Stopping it is a change in rotation, read as a new turn. A pilot who leans back into the old turn can enter a descending spiral.",
+  "move": "A sensor that reports change calls the return to normal a change too.",
+  "trap": "Assuming the wings being level is what the body feels.",
+  "keywords": [
+    "semicircular canals",
+    "spatial disorientation",
+    "graveyard spiral",
+    "pilots"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAA, Pilot's Handbook of Aeronautical Knowledge",
+  "source_kind": "institution",
+  "reference": "Federal Aviation Administration, Pilot's Handbook of Aeronautical Knowledge, FAA-H-8083-25B, 2016",
+  "written": "2026-09-27"
+}

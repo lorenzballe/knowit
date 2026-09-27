@@ -1,0 +1,38 @@
+{
+  "id": "human_body-circulation-10",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.circulation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The lungs weigh about a kilogram. True or false: they receive as much blood each minute as the rest of the body combined?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The circulation is two loops in series: every drop the right ventricle pumps must cross the lungs before the left ventricle can send it anywhere else. So the lungs take the heart's whole output, about 5 litres a minute, while brain, gut, kidneys and muscles share the equal flow on the other side.",
+  "move": "In a chain, every link carries the full load.",
+  "trap": "Sizing an organ's blood supply by its weight, as for other organs.",
+  "keywords": [
+    "pulmonary circulation",
+    "cardiac output",
+    "lungs",
+    "right ventricle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West & Luks, Respiratory Physiology, 2016",
+  "source_kind": "book",
+  "reference": "West & Luks, West's Respiratory Physiology: The Essentials, 10th edition, Wolters Kluwer, 2016",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "economics-anchoring-10",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should employers be barred from asking job candidates what they earned before?",
+  "sides": [
+    "Yes, bar the question",
+    "No, allow it"
+  ],
+  "answer": "A past salary anchors every offer after it, so one badly paid job or a career break follows a worker from employer to employer, and pay gaps compound. Since Massachusetts's ban took effect in 2018 many US states have followed, and several studies of job-changers there find pay rose, most for women and Black workers.",
+  "move": "It turns on whether a banned question removes the anchor or only hides it.",
+  "counterpoint": "Silence does not stop employers guessing; it changes what they guess from. Well-paid candidates volunteer their salary anyway, so those who stay quiet are read as cheap and the anchor returns by inference. Without the figure, employers lean harder on age, career gaps and old job titles, signals that can carry the same biases less visibly.",
+  "keywords": [
+    "salary history bans",
+    "pay gaps",
+    "job offers",
+    "wage negotiation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Agan, Cowgill & Gee, AEA Papers, 2020",
+  "source_kind": "paper",
+  "reference": "Agan, Cowgill & Gee, Do Workers Comply with Salary History Bans? A Survey on Voluntary Disclosure, Adverse Selection, and Unraveling, AEA Papers and Proceedings, 2020",
+  "written": "2026-09-27"
+}

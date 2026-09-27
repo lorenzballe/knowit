@@ -1,0 +1,42 @@
+{
+  "id": "science-rust-10",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Carbonation creeps into concrete as the square root of time: 10 mm after 16 years. When does it reach steel 30 mm deep?",
+  "value": 144,
+  "unit": "years",
+  "answer": "9 x 16 = 144 years.",
+  "move": "When progress slows as it goes, extra distance costs far more time.",
+  "trap": "48 years, tripling the time to triple the depth.",
+  "hint": "Ask how much the time must grow for the depth to triple.",
+  "steps": [
+    "30 mm is three times 10 mm.",
+    "Tripling the depth takes three squared, 9 times the time.",
+    "9 x 16 = 144 years."
+  ],
+  "simply": "Concrete keeps steel from rusting because it is strongly alkaline. Carbon dioxide from the air slowly neutralises it from the surface inward; when that front reaches the reinforcing bars, they start to rust, swell and push the concrete off.",
+  "keywords": [
+    "concrete carbonation",
+    "reinforcing steel",
+    "square root law",
+    "alkalinity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Neville, Properties of Concrete, 2011",
+  "source_kind": "book",
+  "reference": "Neville, Properties of Concrete, 5th edition, Pearson, 2011",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "history-roads-9",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A Roman milestone bears the name and titles of an emperor who reigned 275 to 276. What does it date securely?",
+  "options": [
+    "When the stone was set up",
+    "When that road was built",
+    "When the road was last repaired"
+  ],
+  "correct": 0,
+  "answer": "When the stone was set up. In the third century towns often raised milestones to greet each new emperor, with no roadwork behind them, and some stones were recut for a successor. One road can carry stones naming emperors across three centuries. The inscription is a loyalty card, not a building record.",
+  "move": "A name on a monument tells you who was honoured, not who worked.",
+  "trap": "Reading an emperor's name on a road as proof he built it.",
+  "keywords": [
+    "milestones",
+    "inscriptions",
+    "roman emperors",
+    "dating",
+    "road building"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laurence, The Roads of Roman Italy, 1999",
+  "source_kind": "book",
+  "reference": "Laurence, The Roads of Roman Italy: Mobility and Cultural Change, Routledge, 1999",
+  "written": "2026-09-27"
+}

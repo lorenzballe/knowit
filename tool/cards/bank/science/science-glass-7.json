@@ -1,0 +1,38 @@
+{
+  "id": "science-glass-7",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "True or false: a thin glass fibre can bear far more load per square millimetre than a thick glass rod?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Glass breaks at its worst flaw, a microscopic scratch where stress gathers, and a thick rod has far more surface in which a bad one can lurk. Alan Griffith showed this around 1920 with fibres he drew himself: the thinner and fresher, the stronger. Pristine glass fibre can be about a hundred times stronger than window glass.",
+  "move": "The more places something can fail, the likelier one of them will.",
+  "trap": "False, since strength per square millimetre belongs to the material.",
+  "keywords": [
+    "griffith cracks",
+    "glass fibres",
+    "fracture",
+    "size effect"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffith, Philosophical Transactions A, 1921",
+  "source_kind": "paper",
+  "reference": "Griffith, The Phenomena of Rupture and Flow in Solids, Philosophical Transactions of the Royal Society of London A, 1921",
+  "written": "2026-09-27"
+}

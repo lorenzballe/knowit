@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-sitcoms-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the BBC's broadcasts of M*A*S*H sound quieter than the American ones?",
+  "answer": "The BBC dropped the laugh track. The show's makers, Larry Gelbart and Gene Reynolds, never wanted canned laughter; CBS insisted, and the compromise kept it out of the operating-room scenes. British broadcasts ran without it altogether. The same episodes played as comedy in Ohio and nearer to drama in Leeds.",
+  "move": "The same material changes genre when you change what surrounds it.",
+  "keywords": [
+    "mash",
+    "laugh track",
+    "bbc",
+    "larry gelbart",
+    "cbs"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gelbart, Laughing Matters, 1998",
+  "source_kind": "book",
+  "reference": "Larry Gelbart, Laughing Matters: On Writing M*A*S*H, Tootsie, Oh, God!, and a Few Other Funny Things, Random House, 1998",
+  "written": "2026-09-27"
+}

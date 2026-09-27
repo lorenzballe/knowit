@@ -1,0 +1,38 @@
+{
+  "id": "history-hygiene-9",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in 1951, more than a third of households in England and Wales had no fixed bath?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The 1951 census found well over a third of households without a fixed bath, and many shared an outside lavatory. For millions the weekly bath was a tin tub by the fire, filled from the kettle. Most gained a bathroom only through the slum clearances and improvement grants of the next two decades.",
+  "move": "Judge how a decade lived from its census, not its advertisements.",
+  "trap": "Picturing post-war Britain from its new towns and advertisements.",
+  "keywords": [
+    "baths",
+    "census",
+    "housing",
+    "england and wales"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "General Register Office, Census 1951 Housing Report",
+  "source_kind": "primary_document",
+  "reference": "General Register Office, Census 1951 England and Wales: Housing Report, HMSO, 1956",
+  "written": "2026-09-27"
+}

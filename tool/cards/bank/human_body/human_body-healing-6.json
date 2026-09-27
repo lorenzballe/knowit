@@ -1,0 +1,32 @@
+{
+  "id": "human_body-healing-6",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a wound in the skin of a foetus, early in pregnancy, heal without a scar?",
+  "answer": "The skin itself heals differently, not the womb around it. Until roughly 24 weeks of pregnancy, foetal wounds refill with collagen in its normal woven pattern, with hair follicles and glands, and little of the inflammation that drives adult scarring. When adult sheep skin was grafted onto foetal lambs and then wounded, it scarred anyway.",
+  "move": "To tell the tissue from its setting, swap one and keep the other.",
+  "keywords": [
+    "foetal skin",
+    "scarless healing",
+    "collagen",
+    "inflammation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Larson, Longaker & Lorenz, 2010",
+  "source_kind": "paper",
+  "reference": "Larson, Longaker & Lorenz, Scarless fetal wound healing: a basic science review, Plastic and Reconstructive Surgery, 2010",
+  "written": "2026-09-27"
+}
