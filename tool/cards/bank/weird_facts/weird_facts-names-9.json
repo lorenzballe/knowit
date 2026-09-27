@@ -39,8 +39,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Statistics Korea, via The Korea Times",
-  "source_kind": "news_archive",
-  "reference": "https://www.koreatimes.co.kr/southkorea/20160917/kim-lee-park-remain-three-most-common-surnames",
+  "source": "Statistics Korea, 2015 census",
+  "source_kind": "statistics",
+  "reference": "Statistics Korea, 2015 Population and Housing Census: surnames and family origins, 2016",
   "written": "2026-09-27"
 }

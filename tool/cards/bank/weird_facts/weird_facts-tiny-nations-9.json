@@ -10,10 +10,10 @@
   "options": [
     "Over half its workers live abroad",
     "The prince's fortune counts as output",
-    "Its tiny size rounds figures up"
+    "Its banks' foreign assets count as output"
   ],
   "correct": 0,
-  "answer": "Over half its workers live abroad. Liechtenstein has more jobs than its roughly 41,000 residents; about 57% of employees commute in from Switzerland and Austria. Their work counts in output, but not in the population it is divided by. Every morning, output arrives by bus from people the statistic never counts.",
+  "answer": "Over half its workers live abroad. Liechtenstein has more jobs than its roughly 40,000 residents; more than half of employees commute in from Switzerland and Austria. Their work counts in output, but not in the population it is divided by. Every morning, output arrives by bus from people the statistic never counts.",
   "move": "Before comparing per-head figures, check who the heads are.",
   "trap": "Crediting the prince's wealth, the most famous fortune in the country.",
   "keywords": [

@@ -13,7 +13,7 @@
     "The painkiller given with each cycle"
   ],
   "correct": 1,
-  "answer": "The steroid given against nausea. Dexamethasone rides along with many chemotherapy regimens, so its hiccups get blamed on the cancer drugs. In a 2017 crossover trial, switching to another steroid, methylprednisolone, cut hiccup intensity without worsening nausea, and the hiccups came back when dexamethasone did. The culprit was the passenger, not the driver.",
+  "answer": "The steroid given against nausea. Dexamethasone rides along with many chemotherapy regimens, so its hiccups get blamed on the cancer drugs. In a 2017 crossover trial, switching to another steroid, methylprednisolone, cut hiccup intensity without worsening nausea, and hiccups returned in cycles given dexamethasone. The culprit was the passenger, not the driver.",
   "move": "When two things always arrive together, test them separately before blaming one.",
   "trap": "Blaming the chemotherapy, the drug that is always there when hiccups start.",
   "keywords": [

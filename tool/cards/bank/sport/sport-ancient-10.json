@@ -33,9 +33,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "sport-ancient-4"
-  ],
   "figure": "timeline",
   "source": "Bickerman, Chronology of the Ancient World",
   "source_kind": "book",

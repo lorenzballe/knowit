@@ -10,7 +10,7 @@
   "options": [
     "The whole body is a valid target",
     "Épée touches are scored without electricity",
-    "Épée blades are too stiff to need it"
+    "Épée's scoring was electrified first"
   ],
   "correct": 0,
   "answer": "The whole body is a valid target. The scoring box only learns that a tip pressed on something; the conductive jacket, called a lamé, tells it whether that was valid target. It covers the torso in foil and everything above the waist in sabre. In épée every touch counts, so nothing needs sorting.",
@@ -35,6 +35,6 @@
   "figure": "none",
   "source": "FIE, Material Rules",
   "source_kind": "standard",
-  "reference": "Fédération Internationale d'Escrime, Rules for Competitions, Book 3: Material Rules, 2023",
+  "reference": "Fédération Internationale d'Escrime, Material Rules, 2023",
   "written": "2026-09-27"
 }

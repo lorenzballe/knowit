@@ -8,7 +8,7 @@
   ],
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "baseRate",
+  "principle": "conditional",
   "question": "True or false: gooseflesh on a body recovered from water is good evidence that the person drowned?",
   "options": [
     "True",

@@ -8,7 +8,7 @@
   ],
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "conditional",
+  "principle": "baseRate",
   "question": "A man paralysed from the neck down gets gooseflesh on his legs and a pounding headache. What is the likeliest trigger?",
   "options": [
     "A cold draught on his legs",

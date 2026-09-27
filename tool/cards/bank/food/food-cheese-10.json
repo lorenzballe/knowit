@@ -9,14 +9,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "survivorship",
-  "question": "What is the oldest direct evidence of cheesemaking yet found, dating back about 7,000 years?",
+  "question": "Which of these three is the oldest evidence of cheesemaking found so far?",
   "options": [
     "Milk fats in pottery sieves in Poland",
     "A cheese lump in an Egyptian tomb",
     "Curds buried with mummies in China"
   ],
   "correct": 0,
-  "answer": "Milk fats in pottery sieves in Poland. Chemists found dairy fat residues in perforated pots from Kuyavia, about 7,000 years old, the kind of strainer used to drain curds from whey. The famous lumps from an Egyptian tomb and from Chinese desert graves are only about 3,200 to 3,600 years old; dry sand preserved them.",
+  "answer": "Milk fats in pottery sieves in Poland. Chemists found dairy fat in perforated pots from Kuyavia, about 7,000 years old, strainers for draining curds from whey; similar finds in Croatia are as old. The famous lumps from an Egyptian tomb and Chinese desert graves are only 3,200 to 3,600 years old; dry sand preserved them.",
   "move": "The oldest thing that survived is not the oldest thing that existed.",
   "trap": "Picking the preserved lumps, the finds that made the headlines.",
   "keywords": [

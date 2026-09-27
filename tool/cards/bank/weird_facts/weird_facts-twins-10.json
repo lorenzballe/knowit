@@ -11,9 +11,9 @@
     "Yes, they overstate it",
     "No, the estimates hold"
   ],
-  "answer": "Twin studies assume identical twins share their surroundings no more than fraternal twins do. They do not: identical twins are dressed alike, treated alike and any extra likeness from that is booked as genetic. Studies using DNA from unrelated people often find far lower heritability, a shortfall known as missing heritability.",
+  "answer": "Twin studies assume identical twins share their surroundings no more than fraternal twins do. They do not: identical twins are dressed alike and treated alike, and any extra likeness from that is booked as genetic. Studies using DNA from unrelated people often find far lower heritability, a shortfall known as missing heritability.",
   "move": "Whichever side you took, it turns on whether similar treatment follows similar genes.",
-  "counterpoint": "The assumption has been tested and mostly survives. Twins whose parents were wrong about whether they were identical resemble each other according to their real genes, not the label. Adoption studies, which need no such assumption, also find substantial heritability. And DNA-based estimates keep rising towards twin figures as samples grow into the millions.",
+  "counterpoint": "The assumption has been tested and mostly survives. Twins whose parents were wrong about whether they were identical resemble each other according to their real genes, not the label. Adoption studies, which need no such assumption, also find substantial heritability. For height, DNA-based estimates from millions of people have closed most of the gap with twin figures.",
   "keywords": [
     "twin studies",
     "heritability",
