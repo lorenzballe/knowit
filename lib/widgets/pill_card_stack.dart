@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../analytics.dart';
 import '../models/pill.dart';
 import 'flip_card.dart';
 import 'pill_card.dart';
@@ -126,7 +127,12 @@ class _PillCardStackState extends State<PillCardStack>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
+    _upAt = DateTime.now();
   }
+
+  /// When the card in front came up, so a turn can say how long the front
+  /// held the reader before they wanted the back.
+  DateTime? _upAt;
 
   @override
   void didUpdateWidget(covariant PillCardStack old) {
@@ -135,6 +141,7 @@ class _PillCardStackState extends State<PillCardStack>
       _drag = Offset.zero;
       _flipped = false;
       _answeredHere = false;
+      _upAt = DateTime.now();
     }
   }
 
@@ -262,6 +269,18 @@ class _PillCardStackState extends State<PillCardStack>
     }
     HapticFeedback.selectionClick();
     setState(() => _flipped = !_flipped);
+    // The turn itself: a card read, or read back. How long the front held
+    // them first is the one number the day's other events do not carry.
+    if (_flipped) {
+      final DateTime? upAt = _upAt;
+      Analytics.capture('card flipped', {
+        'pill_id': top.id,
+        'topic': top.topic,
+        'ms_to_flip': upAt == null
+            ? null
+            : DateTime.now().difference(upAt).inMilliseconds,
+      });
+    }
   }
 
   Future<void> _animateTo(Offset target) async {

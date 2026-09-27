@@ -50,20 +50,55 @@ The tests need no project: `data/bank.json` is copied from the repository
 by `npm run data`, and `data/genres.json` is dumped from
 `lib/data/genres.dart` by `tool/cards/genres.py`.
 
+## The numbers
+
+Every constant is one line with its reason beside it, in the source. The
+ones that shape a reader's day:
+
+| Where        | Number                 | Why                                                                                    |
+|--------------|------------------------|----------------------------------------------------------------------------------------|
+| profile.ts   | `TASTE_LEAN` ±0.08     | a like or a throw on: one gesture moves a tag by less than a tenth, ten of them by most of the clamp |
+| profile.ts   | save/said/share +0.05, open +0.03, read +0.02, flip +0.01 | the smaller the gesture, the smaller the move: a flip is curiosity, a save is a decision |
+| profile.ts   | dwell +0.02 / −0.03    | a card held past twice the median took; one thrown on in under a third did not — and a throw says more |
+| profile.ts   | unopened −0.01         | shown on a shelf and never opened: the weakest signal, but the most frequent            |
+| profile.ts   | `DWELL_FLOOR` 5        | under five timed cards the median is a coin; dwell says nothing until then              |
+| profile.ts   | `RECENT_MS` 14 days    | the second week of the trace counts half; the first week is what the reader is now      |
+| profile.ts   | `CLAMP` 0.6            | no tag ever more than ±0.6: a hundred likes must not make one strand the whole deck     |
+| profile.ts   | `RECENT_STRAND_DAYS` 7 | a strand looked at this week is met again later, not tomorrow                           |
+| deal.ts      | `RECENT_STRAND_WEIGHT` 0.5 | ...at half its weight, not none: a liking is still a liking                          |
+| deal.ts      | `EXPLORER_SHARE` 0.5   | about every other day one read is from a strand never met, on level alone; seeded by reader and date, so every server agrees |
+| deal.ts      | fit 1.5/1.0/0.7, 0.5–3.0 | the phone's own ladder (`lib/data/pills_repository.dart`): a read below the level first, a hard ask only once the level is there |
+| deal.ts      | `OWN_WELCOME` 4, `OWN_FREE` 1, `WELCOME_DAYS` 7 | the welcome week, and the shared day after it (see the root README)          |
+| serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
+| explore.ts   | the crowd, `popularity` | the launch crowd, the phone's numbers bit for bit (`lib/sync/tally.dart`)              |
+
+The draw itself is an exponential race (`-ln(u) / weight`), so every card
+keeps a chance in proportion to its weight and no two readers with the same
+profile get the same day. Nothing is a hard rank.
+
 ## Deploying it
 
 Once, in the Firebase console, put the project on the **Blaze** plan —
 functions do not run on Spark — and enable Cloud Functions, Cloud Build and
-Artifact Registry when the first deploy asks. Then, from the repository:
+Artifact Registry when the first deploy asks.
+
+**From GitHub** (`.github/workflows/cloud-deploy.yml`): add one repository
+secret, `FIREBASE_SERVICE_ACCOUNT`, holding the JSON key of a service
+account on the project (Firebase console → Project settings → Service
+accounts → *Generate new private key* gives the default one, which has
+enough), then run *Cloud deploy* from the Actions tab. It runs the tests
+first and deploys the functions, the rules and the indexes; nothing
+deploys on a push.
+
+**From a machine** that is logged in (`firebase login`):
 
     npm --prefix functions run build
     firebase deploy --only functions,firestore:rules,firestore:indexes
 
 `firebase.json` at the root names the codebase, the runtime and the rules.
 The first deploy of a scheduled function also creates its Cloud Scheduler
-job. To deploy from CI, add a service account key as a repository secret
-and run the same command with `FIREBASE_TOKEN` or `GOOGLE_APPLICATION_CREDENTIALS`
-set; the workflow `cloud-check.yml` runs the tests but does not deploy.
+job. The workflow `cloud-check.yml` runs the tests on every push but does
+not deploy.
 
 ## What it costs
 

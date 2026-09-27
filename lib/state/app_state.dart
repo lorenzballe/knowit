@@ -1197,6 +1197,16 @@ class AppState extends ChangeNotifier {
       'gave_reason': reason != null && reason.trim().isNotEmpty,
       'review': existing != null,
       'review_stage': existing?.stage,
+      // Which option, or what number: the shape of the wrong answers is
+      // what tells a trap from a slip. A number, never the reason.
+      'response_index': pill?.challenge is PickOne
+          ? int.tryParse(response)
+          : null,
+      'response_value':
+          pill?.challenge is PickOne || pill?.challenge is TakeASide
+          ? null
+          : double.tryParse(response.replaceAll(',', '.')),
+      'hint_available': pill?.hasHint,
     });
     await _noteClimb();
     notifyListeners();

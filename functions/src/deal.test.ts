@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { Bank, asks, graded, editionOf, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
-import { arrangeDay, commonOfEdition, dealDay, questionOfEdition, OWN_WELCOME, OWN_FREE, PILLS_PER_DAY, WELCOME_DAYS } from './deal.js';
+import { arrangeDay, commonOfEdition, dealDay, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_WELCOME, OWN_FREE, PILLS_PER_DAY, WELCOME_DAYS } from './deal.js';
 import { ALL_TIME_SEED, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
@@ -99,6 +99,44 @@ test('the trace moves the taste: what held the reader, what they threw on, what 
   assert.ok(read.taste['strand:sport.rules_and_why.offside'] < 0);
   assert.ok(read.taste['strand:food.spices.chilli'] < 0);
   assert.ok(Object.values(read.taste).every((v) => Math.abs(v) <= 0.6));
+  // The strands looked at this week, and every card met, for the day to steer round.
+  assert.ok(read.recentStrands.has('space.black_holes.event_horizons'));
+  assert.ok(read.met.has(shown.id));
+  // Under five timed cards, the median means nothing yet.
+  const few = readTrace(new Map([[DAY, events.slice(4)]]), bank, NOW);
+  assert.equal(few.medianMs, 0);
+});
+
+test('a strand looked at this week comes round less; every other day one read explores a strand never met', () => {
+  const p = profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space', 'thinking'] });
+  const first = dealDay(bank, p, DAY, 'r');
+  const strand = bank.byId.get(first.own[0])?.strand as string;
+  const viewed = profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space', 'thinking'] }, [{ t: NOW - 1000, e: 'view', c: first.own[0] }]);
+  assert.ok(viewed.recentStrands.has(strand));
+  assert.ok(viewed.metStrands.has(strand));
+  let withView = 0, without = 0;
+  for (let i = 0; i < 30; i++) {
+    const date = shiftDate(DAY, i);
+    withView += dealDay(bank, viewed, date, 'r').own.filter((id) => bank.byId.get(id)?.strand === strand).length;
+    without += dealDay(bank, p, date, 'r').own.filter((id) => bank.byId.get(id)?.strand === strand).length;
+  }
+  assert.ok(withView < without, `${withView} < ${without}`);
+  // The explorer: seeded, about half the days, and never a strand the reader has met.
+  const days = Array.from({ length: 60 }, (_, i) => shiftDate(DAY, i));
+  const exploring = days.filter((d) => explorerDay('r', d)).length;
+  assert.ok(exploring > 60 * EXPLORER_SHARE * 0.5 && exploring < 60 * EXPLORER_SHARE * 1.5, `${exploring}`);
+  assert.deepEqual(days.map((d) => explorerDay('r', d)), days.map((d) => explorerDay('r', d)));
+  const metAll = profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space', 'thinking'], seenIds: bank.live.filter((c) => c.topic === 'space').slice(0, 40).map((c) => c.id) });
+  for (const d of days) {
+    const dealt = dealDay(bank, metAll, d, 'r');
+    if (!explorerDay('r', d)) { assert.equal(dealt.explorer, null); continue; }
+    if (!dealt.explorer) continue;
+    const card = bank.byId.get(dealt.explorer)!;
+    assert.ok(!asks(card));
+    assert.ok(!metAll.metStrands.has(card.strand as string), card.id);
+    assert.ok(dealt.own.includes(card.id));
+  }
+  assert.ok(days.some((d) => dealDay(bank, metAll, d, 'r').explorer));
 });
 
 test('the level is measured once there is something to measure', () => {

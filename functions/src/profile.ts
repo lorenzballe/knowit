@@ -85,6 +85,10 @@ export interface Profile {
   lastCompletionDate?: string;
   plus: boolean;
   tz: number;
+  recentStrands: Set<string>;
+  met: Set<string>;
+  /** Every strand the reader has met at all, by a card seen on the phone or in the trace: the explorer avoids these. */
+  metStrands: Set<string>;
   /** How the trace was read, for the record. */
   signals: { events: number; days: number; medianMs: number };
 }
@@ -212,6 +216,7 @@ export function measuredLevels(judgements: JudgementJson[], bank: Bank, start: R
 
 /** How much each gesture moves the traits of its card, in the like's currency. */
 const MOVES: Record<string, number> = {
+  flip: 0.01,
   like: TASTE_LEAN,
   unlike: -TASTE_LEAN,
   skip: -TASTE_LEAN,
@@ -239,11 +244,21 @@ const UNOPENED = -0.01;
 /** Never more than this, either way, on one trait: a hundred likes should not make one strand the whole deck. */
 const CLAMP = 0.6;
 
+/** Under this many timed cards, "long" and "short" mean nothing yet: the median of three is a coin. */
+const DWELL_FLOOR = 5;
+
+/** A card looked at within the last week: its strand is met again later, not tomorrow. */
+export const RECENT_STRAND_DAYS = 7;
+
 export interface TraceReading {
   taste: Record<string, number>;
   events: number;
   days: number;
   medianMs: number;
+  /** The strands of the cards looked at in the last week, for the day to steer round. */
+  recentStrands: Set<string>;
+  /** Every card the trace shows the reader met, on the day or on a shelf, for the explorer to steer round. */
+  met: Set<string>;
 }
 
 export function readTrace(days: Map<string, Event[]>, bank: Bank, now: number): TraceReading {
@@ -263,7 +278,18 @@ export function readTrace(days: Map<string, Event[]>, bank: Bank, now: number): 
 
   // How long a card usually holds this reader, so long and short are theirs.
   const dwell = all.filter((e) => e.e === 'next' && typeof e.ms === 'number' && e.ms > 0).map((e) => e.ms as number).sort((a, b) => a - b);
-  const medianMs = dwell.length ? dwell[Math.floor(dwell.length / 2)] : 0;
+  const medianMs = dwell.length >= DWELL_FLOOR ? dwell[Math.floor(dwell.length / 2)] : 0;
+
+  const recentStrands = new Set<string>();
+  const met = new Set<string>();
+  const weekAgo = now - RECENT_STRAND_DAYS * 86_400_000;
+  for (const e of all) {
+    if (!e.c) continue;
+    const card = bank.byId.get(e.c);
+    if (!card) continue;
+    if (e.e === 'view' || e.e === 'open' || e.e === 'read' || e.e === 'seen' || e.e === 'next') met.add(card.id);
+    if ((e.e === 'view' || e.e === 'next' || e.e === 'open' || e.e === 'read') && e.t >= weekAgo && card.strand) recentStrands.add(card.strand);
+  }
 
   const opened = new Set<string>();
   for (const e of all) {
@@ -286,7 +312,7 @@ export function readTrace(days: Map<string, Event[]>, bank: Bank, now: number): 
   for (const k of Object.keys(taste)) {
     taste[k] = Math.max(-CLAMP, Math.min(CLAMP, taste[k]));
   }
-  return { taste, events: all.length, days: days.size, medianMs };
+  return { taste, events: all.length, days: days.size, medianMs, recentStrands, met };
 }
 
 function dayOf(t: number): string {
@@ -358,6 +384,9 @@ export function buildProfile(snapshot: Snapshot, activity: Map<string, Event[]>,
     lastCompletionDate: snapshot.lastCompletionDate,
     plus: presence.plus === true,
     tz: typeof presence.tz === 'number' ? presence.tz : 0,
+    recentStrands: traced.recentStrands,
+    met: traced.met,
+    metStrands: metStrandsOf(bank, [...(snapshot.seenIds ?? []), ...traced.met]),
     signals: { events: traced.events, days: traced.days, medianMs: traced.medianMs },
   };
 }
@@ -415,3 +444,13 @@ export function facts(profile: Profile): Record<string, unknown> {
 }
 
 export { genreOf };
+
+/** The strands of the given cards, for what the reader has met. */
+function metStrandsOf(bank: Bank, ids: Iterable<string>): Set<string> {
+  const out = new Set<string>();
+  for (const id of ids) {
+    const strand = bank.byId.get(id)?.strand;
+    if (strand) out.add(strand);
+  }
+  return out;
+}

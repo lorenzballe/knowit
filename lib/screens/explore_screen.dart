@@ -68,6 +68,7 @@ class ExploreScreenState extends State<ExploreScreen> {
     // itself, and main asks again once they are.
     Tallies.instance.refresh();
     Served.instance.explore();
+    _shelves.addListener(_scrolled);
   }
 
   /// What the server found for the query being typed, and for which query,
@@ -137,6 +138,22 @@ class ExploreScreenState extends State<ExploreScreen> {
   /// per visit: a card shown and not opened is a thing the dealer can learn
   /// from, the way a feed learns from what you scrolled past.
   final Set<String> _shown = {};
+
+  /// How far down the shelves the reader went, in tenths, said once per
+  /// tenth per visit: what a feed calls depth, and the difference between
+  /// a reader who found the top list and one who never saw it.
+  final Set<int> _depths = {};
+
+  void _scrolled() {
+    if (!_shelves.hasClients) return;
+    final ScrollPosition pos = _shelves.position;
+    if (pos.maxScrollExtent <= 0) return;
+    final int tenth = (pos.pixels / pos.maxScrollExtent * 10)
+        .clamp(0, 10)
+        .round();
+    if (!_depths.add(tenth)) return;
+    Trace.instance.note('explore scrolled', {'depth': tenth * 10});
+  }
 
   void _seen(String shelf, Pill pill) {
     if (!_shown.add('$shelf:${pill.id}')) return;

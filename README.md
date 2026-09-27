@@ -1308,9 +1308,12 @@ where the thing that decides can read it. So:
 
 **The trace** (`lib/sync/trace.dart`). Every gesture the app already
 measures passes through `Analytics.capture` with its facts; the trace keeps
-the ones that matter — card shown, opened, turned, answered with its
-confidence and time, liked, saved, said, shared, thrown down, the shelves
-looked at, the day started and finished — compacts them, and writes them in
+the ones that matter — card shown, opened, turned (and how long the front
+held them first), a hint asked for, answered with its confidence, its time
+and *which* option or number (the shape of the wrong answers tells a trap
+from a slip), liked, saved, said, shared, thrown down, the shelves looked
+at and how far down, the day started and finished, how long the app was
+open — compacts them, and writes them in
 batches to `readers/{uid}/activity/{UTC day}`, with the reader's presence
 (their clock, whether they hold Astute+) at `presence/{uid}`. It is
 batched (25 events or 20 seconds, and when the app leaves the screen), it
@@ -1325,8 +1328,19 @@ level per subject, measured where there is something to measure; a taste
 over every tag, moved by likes and throws and — new — by dwell (a card that
 held the reader twice their median is a card that took; one thrown on in a
 third of it did not) and by cards shown and never opened; and the mix as
-leaned. From that it deals the day by the phone's own rules, card for
-card in what is everybody's (the question of the day and the edition's
+leaned. Two things keep that taste honest. A strand looked at within the
+week is dealt at half its weight, so a liking is met again later rather
+than tomorrow; and on about every other day (a coin seeded by reader and
+date, the same on every server) one of the day's reads is an *explorer*: a
+card from a strand the reader has never met, chosen on level alone with
+the taste set aside, and named in the day (`explorer`), so the next
+morning's trace says whether it took. A taste that only confirms itself
+narrows to nothing; the server can only learn from what it showed. Every
+number in this is one line with its reason beside it — the dwell signals
+are trusted only from five timed cards, the taste never moves past 0.6 on
+one tag, the trace of the last three weeks with the second week at half —
+and `functions/README.md` lists them. From that it deals the day by the
+phone's own rules, card for card in what is everybody's (the question of the day and the edition's
 common cards are read off the calendar `bundle.py` freezes, on both sides),
 and writes it whole to `readers/{uid}/days/{date}`. A phone asks for
 tomorrow the evening it finishes today, and the nightly pass deals every
@@ -1353,10 +1367,12 @@ everyone ("readers who kept this also kept that"), which the trace and the
 totals already hold everything for, and a store webhook so the server is
 sure of Astute+ rather than told.
 
-**To turn it on:** put the Firebase project on the Blaze plan, deploy the
-functions and the rules (`firebase deploy --only
-functions,firestore:rules,firestore:indexes`), and the privacy policy is
-already updated for it. Until then every phone deals for itself, as it did,
+**To turn it on:** with the Firebase project on the Blaze plan, run the
+*Cloud deploy* workflow from the Actions tab (it needs one repository
+secret, `FIREBASE_SERVICE_ACCOUNT`, the JSON key of a service account on
+the project — `functions/README.md` says which), or `firebase deploy
+--only functions,firestore:rules,firestore:indexes` from a machine that is
+logged in. The privacy policy is already updated for it. Until then every phone deals for itself, as it did,
 and writes its trace for the day the server reads it.
 
 ## The shape of a day

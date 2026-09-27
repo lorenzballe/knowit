@@ -264,6 +264,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     _account.watch(_app);
     _lifecycle = AppLifecycleListener(
       onPause: () {
+        // How long the app was open this time: the one number a daily
+        // habit is measured by, said before the flush that carries it.
+        Analytics.capture('app paused', {'ms_in_app': Analytics.msSinceLaunch});
         _account.flush();
         Trace.instance.flush();
       },

@@ -4,6 +4,7 @@ import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
 
+import '../analytics.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import 'hold_to_keep.dart';
@@ -533,7 +534,15 @@ class _AskFaceState extends State<_AskFace> {
                 else
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
-                    onTap: () => setState(() => _hintOpen = true),
+                    onTap: () {
+                      setState(() => _hintOpen = true);
+                      // Asked for help: a card that needed a hint sat
+                      // above the reader, and the dealer can hear that.
+                      Analytics.capture('hint shown', {
+                        'pill_id': widget.pill.id,
+                        'topic': widget.pill.topic,
+                      });
+                    },
                     child: Row(
                       children: [
                         Icon(

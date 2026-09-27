@@ -35,6 +35,13 @@ void main() {
     expect(trace.waiting, 2);
     trace.note('explore searched', {'length': 5, 'found': 3, 'query': 'why'});
     expect(trace.waiting, 3);
+    // The finer gestures: the turn timed, the hint asked for, the answer's
+    // shape, how far down Explore went, how long the app was open.
+    trace.note('card flipped', {'pill_id': 'space-2', 'ms_to_flip': 3100});
+    trace.note('hint shown', {'pill_id': 'space-2'});
+    trace.note('explore scrolled', {'depth': 70});
+    trace.note('app paused', {'ms_in_app': 91000});
+    expect(trace.waiting, 7);
   });
 
   test('flushes after the batch, or when the app leaves, by UTC day, and '

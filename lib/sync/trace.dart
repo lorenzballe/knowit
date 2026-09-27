@@ -82,6 +82,10 @@ class Trace extends ChangeNotifier {
   /// not here is measurement only.
   static const Map<String, String> kept = {
     'app started': 'app',
+    'app paused': 'pause',
+    'card flipped': 'flip',
+    'hint shown': 'hint',
+    'explore scrolled': 'xd',
     'day started': 'day',
     'day completed': 'done',
     'card viewed': 'view',
@@ -115,6 +119,12 @@ class Trace extends ChangeNotifier {
     'pill_id': 'c',
     'ms_on_card': 'ms',
     'ms_to_answer': 'ms',
+    'ms_to_flip': 'ms',
+    'ms_in_app': 'ms',
+    'response_index': 'a',
+    'response_value': 'v',
+    'hint_available': 'h',
+    'depth': 'd',
     'correct': 'ok',
     'confidence': 'cf',
     'review': 'rv',

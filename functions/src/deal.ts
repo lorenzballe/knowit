@@ -100,12 +100,32 @@ export function fit(card: Card, level: number | undefined): number {
   return hard ? 3.0 : 1.2;
 }
 
+/** A strand looked at within the week is dealt at this much of its weight: met again later, not tomorrow. */
+export const RECENT_STRAND_WEIGHT = 0.5;
+
+/**
+ * How often one of the day's reads is an explorer: a card from a strand
+ * the reader has never met, dealt on level alone with the taste set aside.
+ * About every other day. A taste that only ever confirms itself narrows
+ * to nothing, and the trace can only learn from what it was shown: this
+ * is where the evidence for a new liking comes from, and the answer to
+ * "will they like it?" is written into the trace the next morning.
+ */
+export const EXPLORER_SHARE = 0.5;
+
 export interface OwnOptions {
   seed: string;
   count: number;
   asking: number;
   exclude: Set<string>;
   strandsDealt: Set<string>;
+  /** Whether one read may be an explorer today. */
+  explore?: boolean;
+}
+
+/** Whether [date] is an explorer's day for the reader: the same coin on every server. */
+export function explorerDay(uid: string, date: string): boolean {
+  return rng(seedOf(`explore:${uid}:${date}`))() < EXPLORER_SHARE;
 }
 
 /**
@@ -116,6 +136,11 @@ export interface OwnOptions {
  * over subject weight, level fit and taste.
  */
 export function ownCards(bank: Bank, profile: Profile, weights: Record<string, number>, o: OwnOptions): Card[] {
+  return dealOwn(bank, profile, weights, o).cards;
+}
+
+/** The reader's own cards, with the explorer named apart so the day can record it. */
+export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, number>, o: OwnOptions): { cards: Card[]; explorer: Card | null } {
   const next = rng(seedOf(o.seed));
   const pool = shuffle([...bank.live], next);
   const wanted = new Set(profile.topics);
@@ -134,7 +159,8 @@ export function ownCards(bank: Bank, profile: Profile, weights: Record<string, n
 
   const ordered = tiers.map((tier) => {
     const keyedCards = tier.map((c) => {
-      const w = (weights[c.topic] ?? (Object.keys(weights).length === 0 ? 1 : 0)) * fit(c, profile.levels[c.topic]) * leanOf(c, profile.taste);
+      const recent = c.strand && profile.recentStrands.has(c.strand) ? RECENT_STRAND_WEIGHT : 1;
+      const w = (weights[c.topic] ?? (Object.keys(weights).length === 0 ? 1 : 0)) * fit(c, profile.levels[c.topic]) * leanOf(c, profile.taste) * recent;
       const weight = w <= 0 ? 1e-6 : w;
       const u = Math.max(1e-12, Math.min(1, next()));
       return { key: -Math.log(u) / weight, c };
@@ -175,15 +201,31 @@ export function ownCards(bank: Bank, profile: Profile, weights: Record<string, n
     return got;
   };
   const asking = take(o.asking, asks);
-  const reads = take(o.count - asking.length, (c) => !asks(c));
-  const deck = [...asking, ...reads];
+  let wantReads = o.count - asking.length;
+  // The explorer: one read from a strand the reader has never met, on the
+  // mix, taken by level alone — the taste, which would never have chosen
+  // it, set aside. It goes last of the reads and is marked, so tomorrow's
+  // trace says whether it took.
+  const explorer: Card[] = [];
+  if (o.explore && wantReads > 0) {
+    const never = ordered.slice(0, 2).flat().filter((c) => !asks(c) && !picked.includes(c) && c.strand && !profile.met.has(c.id) && !strands.has(c.strand) && !profile.metStrands.has(c.strand));
+    const byFit = never.map((c) => ({ c, k: -Math.log(Math.max(1e-12, next())) / Math.max(1e-6, (weights[c.topic] ?? 1) * fit(c, profile.levels[c.topic])) })).sort((a, b) => a.k - b.k);
+    if (byFit.length) {
+      explorer.push(byFit[0].c);
+      picked.push(byFit[0].c);
+      if (byFit[0].c.strand) strands.add(byFit[0].c.strand);
+      wantReads -= 1;
+    }
+  }
+  const reads = take(wantReads, (c) => !asks(c));
+  const deck = [...asking, ...reads, ...explorer];
   if (deck.length < o.count) {
     for (const c of ordered.flat()) {
       if (deck.length >= o.count) break;
       if (!deck.includes(c)) deck.push(c);
     }
   }
-  return deck;
+  return { cards: deck, explorer: explorer[0] ?? null };
 }
 
 /** Gives a day a shape rather than a sort order: opens on a read, alternates, the hardest early, a debate to close. */
@@ -216,6 +258,8 @@ export interface Deal {
   own: string[];
   question: string | null;
   reviews: string[];
+  /** The one read dealt from a strand never met, taste set aside, or null: tomorrow's trace says whether it took. */
+  explorer: string | null;
   ownCount: number;
   welcome: boolean;
   day: number;
@@ -256,8 +300,9 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
   const ownAsks = Math.max(0, asking - (question ? 1 : 0));
   const reading = readOnboarding(profile.weights, profile.genresOff, profile.strandsOff);
   const weights = weightsOn(reading, day, profile.weights);
-  const rest = ownCards(bank, profile, weights, {
+  const { cards: rest, explorer } = dealOwn(bank, profile, weights, {
     seed: `${uid}:${date}`,
+    explore: !whole && explorerDay(uid, date),
     count: Math.max(0, count - dealt - reviews.length),
     asking: Math.max(0, ownAsks - reviews.length),
     exclude: taken,
@@ -271,6 +316,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
     own: mine.map((c) => c.id),
     question: question?.id ?? null,
     reviews: reviews.map((c) => c.id),
+    explorer: explorer?.id ?? null,
     ownCount: own,
     welcome: !profile.plus && inWelcomeWeek(day),
     day,
