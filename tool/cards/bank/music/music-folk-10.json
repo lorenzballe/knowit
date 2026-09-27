@@ -4,7 +4,7 @@
   "genre": "music.genres",
   "strand": "music.genres.folk",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "availability",
   "question": "Danny Boy is sung to an old Irish tune, the Londonderry Air. Who wrote its words?",
   "options": [

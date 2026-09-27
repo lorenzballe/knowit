@@ -10,21 +10,21 @@
   "value": 6.1,
   "unit": "thousand kcal",
   "withinFactor": 3,
-  "answer": "4,900 + 1,600 = about 6.5 thousand kcal.",
+  "answer": "4,500 + 1,500 = about 6 thousand kcal.",
   "move": "Turn effort into watts and hours, and the calories follow.",
   "trap": "Starting from a normal 2,500 kcal day and merely doubling it.",
   "hint": "Start from the power a rider holds and the hours in the saddle.",
   "steps": [
-    "Riding: about 5 hours at 250 watts = 250 x 18,000 s = 4.5 million joules of work.",
-    "Muscles are about 22% efficient: 4.5 / 0.22 = about 20.5 million joules burnt.",
-    "20.5 million / 4,184 joules per kcal = about 4,900 kcal.",
-    "4,900 + 1,600 = about 6.5 thousand kcal."
+    "Riding: 250 watts x 5 hours x 3,600 s = 4,500 kJ of work.",
+    "Muscles turn about a quarter of food energy into work, so 1 kJ of work costs about 1 kcal: 4,500 kcal.",
+    "The other 19 hours, resting and digesting: about 1,500 kcal.",
+    "4,500 + 1,500 = about 6 thousand kcal."
   ],
   "keywords": [
     "tour de france",
     "energy expenditure",
     "kilocalories",
-    "doubly labelled water",
+    "muscle efficiency",
     "cycling power"
   ],
   "era": "twentieth",

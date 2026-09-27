@@ -3,29 +3,32 @@
   "topic": "music",
   "genre": "music.sound_itself",
   "strand": "music.sound_itself.frequencies",
+  "also": [
+    "technology.old_machines.telephones"
+  ],
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "reflection",
-  "question": "Of the octave, the fifth and the major third, which does equal temperament put furthest from its pure ratio?",
+  "question": "A phone line passes nothing below about 300 Hz. A man speaks with a fundamental of 120 Hz. What pitch do listeners hear?",
   "options": [
-    "The major third",
-    "The fifth",
-    "The octave"
+    "His usual pitch, about 120 Hz",
+    "About 360 Hz, the lowest left",
+    "No steady pitch, only buzz"
   ],
   "correct": 0,
-  "answer": "The major third. A pure third, 5 to 4, is about 386 cents, a cent being a hundredth of an equal semitone; the tempered third is 400, some 14 cents wide, enough to make a held chord beat. The tempered fifth is 2 cents narrow; the octave is exact. String quartets often pull thirds lower.",
-  "move": "The part everyone talks about fixing is not always the part that suffers.",
-  "trap": "The fifth, because tuning stories are usually about tempering fifths.",
+  "answer": "His usual pitch, about 120 Hz. The line strips the fundamental but keeps the harmonics at 360, 480, 600 Hz and up, spaced 120 Hz apart, and the brain reads pitch from that spacing: the missing fundamental. The same trick lets a laptop speaker that cannot play 100 Hz still carry a bass line.",
+  "move": "A pattern can reveal a missing piece that no single part contains.",
+  "trap": "Pitch seems to be the lowest frequency present, and that was cut.",
   "keywords": [
-    "equal temperament",
-    "major third",
-    "cents",
-    "tuning",
-    "just intonation"
+    "missing fundamental",
+    "pitch",
+    "harmonics",
+    "telephone",
+    "voice"
   ],
   "era": "timeless",
   "region": "none",
-  "hook": "misconception",
+  "hook": "mechanism",
   "mood": "wonder",
   "numeracy": 2,
   "abstraction": "mixed",
@@ -33,8 +36,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Benson, Music: A Mathematical Offering",
+  "source": "Plack, The Sense of Hearing, 2014",
   "source_kind": "book",
-  "reference": "Benson, Music: A Mathematical Offering, Cambridge University Press, 2006",
+  "reference": "Plack, The Sense of Hearing, 2nd edition, Psychology Press, 2014",
   "written": "2026-09-27"
 }

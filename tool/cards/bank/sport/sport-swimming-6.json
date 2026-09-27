@@ -12,9 +12,9 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The pad on the block signals slightly before the swimmer leaves it, about 0.025 seconds early in the timing maker's tests, so the rules allow a reading of up to 0.03 seconds before the touch. A swimmer shown leaving 0.02 early may still have been on the block when the hand hit the wall.",
+  "answer": "False. The block and wall sensors do not fire at the exact instant of the events they record, so the rules allow a reading of up to 0.03 seconds before the touch. A swimmer shown leaving 0.02 early may still have been on the block when the hand hit the wall.",
   "move": "Before judging by an instrument, learn which way it errs.",
-  "trap": "Taking the sensor's reading as the moment the swimmer left.",
+  "trap": "Taking the sensor reading as the exact moment the swimmer left.",
   "keywords": [
     "relay takeover",
     "touchpad",

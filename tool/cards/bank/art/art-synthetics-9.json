@@ -13,7 +13,7 @@
   ],
   "answer": "Cadmium is a toxic metal that builds up in soil and in the kidneys of people who eat what grows there. Painters rinse brushes into sinks, and the cadmium passes through sewage works into sludge spread on farmland. Safer yellows and reds exist. A persistent poison should not go down the drain for a shade.",
   "move": "Whichever side you took, the size of this source against all the others decides it.",
-  "counterpoint": "The cadmium in paint is locked in a sulphide or selenide that barely dissolves, and artists' paint is a tiny share of the cadmium reaching farmland, far below what phosphate fertiliser brings. In 2014 Europe's chemicals agency's committees judged a ban unjustified by the risk. Substitutes still fall short on opacity and lightfastness.",
+  "counterpoint": "The cadmium in paint is locked in a sulphide or selenide that barely dissolves, and artists' paint is a tiny share of the cadmium reaching farmland, far below what phosphate fertiliser brings. In 2014 the EU chemicals agency's risk committee found no risk that justified a ban. Substitutes still fall short on opacity and lightfastness.",
   "keywords": [
     "cadmium pigments",
     "european chemicals agency",
@@ -33,6 +33,6 @@
   "figure": "none",
   "source": "European Chemicals Agency, 2014",
   "source_kind": "institution",
-  "reference": "European Chemicals Agency, RAC and SEAC opinions on the Swedish proposal to restrict cadmium and its compounds in artists' paints, 2014",
+  "reference": "European Chemicals Agency, Committee for Risk Assessment opinion on the Swedish proposal to restrict cadmium and its compounds in artists' paints, 2014",
   "written": "2026-09-27"
 }

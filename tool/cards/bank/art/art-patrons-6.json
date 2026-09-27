@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "In 1436 Florence finally gave the mercenary John Hawkwood the monument voted for him in 1393. What was it?",
+  "question": "Florence voted the mercenary John Hawkwood a marble tomb in 1393. What honours him in its cathedral today?",
   "options": [
     "A painted horse and rider",
     "A bronze horse and rider",
     "A marble tomb with his effigy"
   ],
   "correct": 0,
-  "answer": "A painted horse and rider. Paolo Uccello frescoed a fictive statue on its plinth in greenish earth on the cathedral wall. The marble tomb voted in 1393 was never built, and the cathedral works made Uccello repaint his first horse. The commune honoured its general for the price of a wall.",
+  "answer": "A painted horse and rider. The tomb was never built; a painted substitute went up in the 1390s, and in 1436 Paolo Uccello replaced it with a fictive statue on its plinth, frescoed in greenish earth on the cathedral wall. The works made him repaint his first horse. The commune honoured its general for the price of a wall.",
   "move": "An honour can be kept cheaply by imitating the expensive version.",
   "trap": "Picturing a bronze like the equestrian statues Italy soon raised.",
   "keywords": [

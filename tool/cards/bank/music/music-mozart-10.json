@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "exponential",
-  "question": "A dice game printed under Mozart's name in 1792 picks each of 16 bars by throwing two dice. Roughly how many minuets?",
+  "question": "A dice game printed under Mozart's name in 1792 picks each of 16 bars by throwing two dice. Roughly how many possible throw sequences?",
   "options": [
     "About 176",
     "About 46 quadrillion",
     "About 2 million"
   ],
   "correct": 1,
-  "answer": "About 46 quadrillion. Two dice give 11 totals, 2 to 12, and each total points to a different bar in a table, so the choices multiply: 11 to the 16th power, about 4.6 × 10^16. Played at one a minute, they would outlast the universe so far. The attribution to Mozart is doubtful.",
+  "answer": "About 46 quadrillion. Two dice give 11 totals, 2 to 12, and each total points to a bar in a table, so the choices multiply: 11 to the 16th power, about 4.6 × 10^16. Some tables repeat a bar, so distinct minuets are fewer, yet one a minute would still outlast the universe so far.",
   "move": "When choices chain, multiply them; adding is how intuition fails.",
   "trap": "Adding 11 choices for each of 16 bars gives 176.",
   "keywords": [

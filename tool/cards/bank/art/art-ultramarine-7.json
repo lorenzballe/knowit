@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "anchoring",
-  "question": "Ghirlandaio's 1485 contract priced ultramarine at 4 florins per 28 g ounce. At 3.5 g of gold a florin, grams of gold per gram?",
+  "question": "Ghirlandaio's 1485 contract priced ultramarine at 4 florins per 28 g ounce. At 3.5 g of gold a florin, grams of gold per gram of blue?",
   "value": 0.5,
   "unit": "grams of gold",
   "tolerance": 0.05,
