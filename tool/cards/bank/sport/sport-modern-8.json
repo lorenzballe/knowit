@@ -1,0 +1,40 @@
+{
+  "id": "sport-modern-8",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The first athlete disqualified from an Olympics for doping, at Mexico City in 1968, was caught with what?",
+  "options": [
+    "Anabolic steroids",
+    "Alcohol",
+    "Amphetamines"
+  ],
+  "correct": 1,
+  "answer": "Alcohol. Hans-Gunnar Liljenwall, a Swedish modern pentathlete, reportedly drank beer to steady his hand before the shooting; his test was over the limit and Sweden lost its team bronze. Mexico City was the first Games with drug tests, and steroids were not screened for until Montreal in 1976.",
+  "move": "What a test can detect decides what gets caught first.",
+  "trap": "Picturing the steroid scandals that later came to define doping.",
+  "keywords": [
+    "doping",
+    "hans-gunnar liljenwall",
+    "modern pentathlon",
+    "alcohol",
+    "1968 mexico city"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wallechinsky & Loucky, Complete Book of the Olympics",
+  "source_kind": "book",
+  "reference": "Wallechinsky & Loucky, The Complete Book of the Olympics, Aurum Press, 2012",
+  "written": "2026-09-27"
+}

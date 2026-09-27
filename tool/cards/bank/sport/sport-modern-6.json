@@ -1,0 +1,33 @@
+{
+  "id": "sport-modern-6",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Wyndham Halswelle come to win the 1908 Olympic 400 m final running entirely alone?",
+  "answer": "By walkover, after a row over whose rules applied. British judges ruled that the American John Carpenter had blocked Halswelle, which American rules allowed and British ones did not, and ordered a rerun without him. The other two finalists, both American, refused to start. Halswelle ran the rerun alone, and gave up racing soon after.",
+  "move": "Agree whose rules apply before the contest, not after it.",
+  "keywords": [
+    "wyndham halswelle",
+    "1908 london",
+    "400 m",
+    "john carpenter",
+    "walkover"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Official Report, London 1908",
+  "source_kind": "primary_document",
+  "reference": "Cook, The Fourth Olympiad: Being the Official Report of the Olympic Games of 1908, British Olympic Council, 1909",
+  "written": "2026-09-27"
+}

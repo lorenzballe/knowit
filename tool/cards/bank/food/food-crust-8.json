@@ -1,0 +1,39 @@
+{
+  "id": "food-crust-8",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "One loaf bakes 25 minutes at 250 °C, its twin 40 minutes at 210 °C, both fully baked. Which has the thicker crust?",
+  "options": [
+    "The hotter, shorter bake",
+    "The cooler, longer bake",
+    "Both about the same"
+  ],
+  "correct": 1,
+  "answer": "The cooler, longer bake. Crust is the layer that has dried out, and the drying front creeps inward with time. A hot oven browns the surface quickly, but the bake ends before much depth has dried. Long, moderate bakes give the thick, chewy crust of country loaves; hot, short ones a thin, crackling shell.",
+  "move": "Colour records how hot it got; depth records how long it lasted.",
+  "trap": "Equating a darker, hotter surface with a deeper crust.",
+  "keywords": [
+    "crust thickness",
+    "baking time",
+    "oven temperature",
+    "drying front"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cauvain, Baking Problems Solved, 2017",
+  "source_kind": "book",
+  "reference": "Cauvain, Baking Problems Solved, 2nd edition, Woodhead Publishing, 2017",
+  "written": "2026-09-27"
+}

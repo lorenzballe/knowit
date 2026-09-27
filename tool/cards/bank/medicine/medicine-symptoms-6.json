@@ -1,0 +1,33 @@
+{
+  "id": "medicine-symptoms-6",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A famous 1965 study found a third of patients diagnosed with hysteria later proved to have physical disease. What did later studies find?",
+  "answer": "Far fewer: about 4%. A 2005 review of 27 studies by Jon Stone and colleagues found that misdiagnosis of such functional symptoms, real but without structural damage, fell from 29% in the 1950s to about 4% from the 1970s on. That is no worse than for other neurological and psychiatric diagnoses.",
+  "move": "An old error rate can outlive the conditions that produced it.",
+  "keywords": [
+    "functional disorders",
+    "hysteria",
+    "misdiagnosis",
+    "neurology",
+    "eliot slater"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Stone et al., BMJ, 2005",
+  "source_kind": "paper",
+  "reference": "Stone et al., Systematic review of misdiagnosis of conversion symptoms and hysteria, BMJ, 2005",
+  "written": "2026-09-27"
+}

@@ -33,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "High Country News, 2015",
-  "source_kind": "news_archive",
-  "reference": "https://www.hcn.org/articles/the-u-s-s-only-rare-earth-mine-files-bankruptcy/",
+  "source": "Molycorp, Form 10-Q, SEC, 2015",
+  "source_kind": "primary_document",
+  "reference": "https://www.sec.gov/Archives/edgar/data/0001489137/000148913715000065/mcp630201510q.htm",
   "written": "2026-09-27"
 }

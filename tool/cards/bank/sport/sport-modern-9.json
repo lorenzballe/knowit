@@ -1,0 +1,39 @@
+{
+  "id": "sport-modern-9",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "The United States topped the medal table at St Louis in 1904. Roughly what share of all competitors were American?",
+  "options": [
+    "About a third",
+    "About half",
+    "About four in five"
+  ],
+  "correct": 2,
+  "answer": "About four in five. Few Europeans made the long, costly trip to Missouri, so most events were contests among Americans, and several were national championships in all but name. The host's huge medal haul measured the entry list more than the athletes. A table ranks only those who turned up.",
+  "move": "Before praising a winner, ask who else was able to enter.",
+  "trap": "Assuming an Olympic field was international, as today's fields are.",
+  "keywords": [
+    "1904 st louis",
+    "medal table",
+    "united states",
+    "competitors"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Mallon, The 1904 Olympic Games",
+  "source_kind": "book",
+  "reference": "Mallon, The 1904 Olympic Games: Results for All Competitors in All Events, McFarland, 1999",
+  "written": "2026-09-27"
+}

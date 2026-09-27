@@ -1,0 +1,39 @@
+{
+  "id": "cinema-music-cues-9",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Les Misérables, 2012, had its cast sing live on set. How was the orchestra matched to them?",
+  "options": [
+    "Recorded afterwards, following the singers",
+    "Played live, just off the set",
+    "Recorded first, fed into their ears"
+  ],
+  "correct": 0,
+  "answer": "Recorded afterwards, following the singers. Each actor heard a pianist, playing live out of shot, through a hidden earpiece, and was free to slow down, break or hold a note. The orchestra was recorded later to fit the voices, reversing the usual order in which singers mime to a track laid down first. The conductor followed the actors.",
+  "move": "When one performance matters most, make everything else follow it.",
+  "trap": "Assuming the usual playback method, with singers keeping time to a recording.",
+  "keywords": [
+    "les misérables",
+    "live singing",
+    "earpieces",
+    "orchestral recording"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hooper, Les Misérables, 2012",
+  "source_kind": "primary_document",
+  "reference": "Hooper (director), Les Misérables, Working Title Films and Universal Pictures, 2012",
+  "written": "2026-09-27"
+}

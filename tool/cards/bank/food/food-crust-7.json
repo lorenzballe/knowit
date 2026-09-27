@@ -1,0 +1,43 @@
+{
+  "id": "food-crust-7",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The cracker-like smell of fresh bread crust comes mainly from one molecule. What else is scented by it?",
+  "options": [
+    "Caramelised sugar",
+    "Toasted oak barrels",
+    "Basmati rice"
+  ],
+  "correct": 2,
+  "answer": "Basmati rice. The molecule, 2-acetyl-1-pyrroline, forms in the hot crust when the amino acid proline meets fragments of sugar, so sugar alone cannot make it. The nose detects it at about a tenth of a millionth of a gram per litre of water. Pandan leaves and fresh popcorn owe their scent to it too.",
+  "move": "A smell is a molecule, and one molecule can turn up in many foods.",
+  "trap": "Crediting browned sugar, the flavour everyone links with browning.",
+  "keywords": [
+    "2-acetyl-1-pyrroline",
+    "bread crust",
+    "aroma",
+    "basmati rice",
+    "proline"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schieberle & Grosch, Z. Lebensm. Unters. Forsch., 1987",
+  "source_kind": "paper",
+  "reference": "Schieberle & Grosch, Evaluation of the flavour of wheat and rye bread crusts by aroma extract dilution analysis, Zeitschrift für Lebensmittel-Untersuchung und -Forschung, 1987",
+  "written": "2026-09-27"
+}

@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Creso, released in 1974 by Italian state nuclear researchers, came from crossing a line that descended from irradiated Cappelli wheat, which gave it shorter, sturdier stalks. It became for years Italy's most sown durum. Mutation breeding needs no labelling, unlike genetic engineering, so much pasta sold as traditional grew from X-rayed seed lines.",
+  "answer": "True. Creso, released in 1974 by Italian state nuclear researchers, came from crossing a line that descended from irradiated Cappelli wheat, which gave it shorter, sturdier stalks. It became for years Italy's most sown durum. Mutation breeding needs no labelling, unlike genetic engineering, so much pasta sold as traditional grew from irradiated lines.",
   "move": "Check how a traditional product was bred before calling it untouched.",
   "trap": "False, as radiation breeding sounds like the modern tampering Italy resists.",
   "keywords": [

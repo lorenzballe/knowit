@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-hiccups-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might premature babies spend around 15 minutes a day hiccupping?",
+  "answer": "Possibly to map their own breathing muscles. Recording 13 newborns, Kimberley Whitehead and colleagues at UCL found that each hiccup's sharp contraction of the diaphragm set off a large wave of brain activity, which may help the cortex learn where those muscles are. Preterm infants hiccup about 1% of the time. The jolt may be a lesson.",
+  "move": "A glitch in a young system may be how it calibrates itself.",
+  "keywords": [
+    "newborns",
+    "premature babies",
+    "diaphragm",
+    "brain development"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whitehead et al., Clin Neurophysiol, 2019",
+  "source_kind": "statistics",
+  "reference": "Whitehead et al., Event-related potentials following contraction of respiratory muscles in pre-term and full-term infants, Clinical Neurophysiology, 2019",
+  "written": "2026-09-27"
+}

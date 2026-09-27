@@ -1,0 +1,32 @@
+{
+  "id": "cinema-music-cues-6",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does an orchestra recording to picture know exactly when a hit is coming?",
+  "answer": "It watches a line cross the screen. A streamer is a vertical stripe that sweeps across the projected picture over two or three seconds and ends in a punch, a brief flash on the exact frame of the hit. The conductor sees it coming from the edge of the frame and lands the downbeat on the flash.",
+  "move": "A countdown people can see beats one they have to count.",
+  "keywords": [
+    "streamers",
+    "punches",
+    "conducting to picture",
+    "hit points"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karlin and Wright, On the Track, 2004",
+  "source_kind": "book",
+  "reference": "Karlin and Wright, On the Track: A Guide to Contemporary Film Scoring, 2nd edition, Routledge, 2004",
+  "written": "2026-09-27"
+}

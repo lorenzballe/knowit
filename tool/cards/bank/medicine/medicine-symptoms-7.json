@@ -1,0 +1,38 @@
+{
+  "id": "medicine-symptoms-7",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "True or false: when a patient consults a GP about a headache, the chance it comes from a brain tumour is under 1 in 1,000?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Using UK primary care records of 3,505 brain tumour patients and 17,173 controls, Hamilton and Kernick put the risk behind a headache consultation at 0.09%, about 1 in 1,100. Headache is common and brain tumours rare, so tumour headaches sit among thousands of ordinary ones. New neurological signs shift the odds far more.",
+  "move": "A sign common in a rare disease can still say almost nothing alone.",
+  "trap": "False, because headache is the textbook first sign of a tumour.",
+  "keywords": [
+    "headache",
+    "brain tumour",
+    "primary care",
+    "positive predictive value"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Hamilton & Kernick, Br J Gen Pract, 2007",
+  "source_kind": "paper",
+  "reference": "https://bjgp.org/content/57/542/695.short",
+  "written": "2026-09-27"
+}

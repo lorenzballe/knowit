@@ -8,12 +8,12 @@
   "principle": "conditional",
   "question": "Surgeons make a small wound on an axolotl's arm. What must they add for a whole extra limb to grow there?",
   "options": [
-    "A nerve plus skin from the limb's opposite side",
-    "A nerve rerouted into the wound, nothing more",
-    "Stem cells taken from a regrowing limb"
+    "A nerve plus skin from the other side",
+    "A rerouted nerve and nothing more",
+    "Stem cells from a regrowing limb"
   ],
   "correct": 0,
-  "answer": "A nerve plus skin from the limb's opposite side. In Endo, Bryant and Gardiner's model, a rerouted nerve alone raises only a bud that stalls. Skin grafted from the far side of the limb brings cells that record a different position; where front meets back, a complete extra limb grows. A limb is built out of a disagreement about location.",
+  "answer": "A nerve plus skin from the other side of the limb. In Endo, Bryant and Gardiner's model, a rerouted nerve alone raises a bud that stalls. Grafted skin brings cells that record a different position; where front meets back, a complete extra limb grows. A limb is built from a disagreement about location.",
   "move": "A condition that is needed is not yet a condition that is enough.",
   "trap": "Knowing nerves are required for regrowth and assuming they suffice.",
   "keywords": [

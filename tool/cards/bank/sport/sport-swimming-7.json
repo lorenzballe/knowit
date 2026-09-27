@@ -1,0 +1,33 @@
+{
+  "id": "sport-swimming-7",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In elite freestyle races, what separates faster swimmers: more strokes per minute or more distance per stroke?",
+  "answer": "Distance per stroke. Filming swimmers at the US Olympic trials, Craig and colleagues found the faster ones travelled farther with each stroke, and that swimmers slowed late in a race mainly because each stroke carried them less far, not because their arms turned over more slowly. The winner often takes the fewest strokes per length.",
+  "move": "Count how much each repetition achieves before counting the repetitions.",
+  "keywords": [
+    "stroke rate",
+    "distance per stroke",
+    "freestyle",
+    "olympic trials",
+    "fatigue"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Craig et al., Med Sci Sports Exerc, 1985",
+  "source_kind": "paper",
+  "reference": "Craig, Skehan, Pawelczyk & Boomer, Velocity, stroke rate, and distance per stroke during elite swimming competition, Medicine & Science in Sports & Exercise, 1985",
+  "written": "2026-09-27"
+}

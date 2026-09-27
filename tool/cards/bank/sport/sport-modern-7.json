@@ -1,0 +1,32 @@
+{
+  "id": "sport-modern-7",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Olympics stop awarding medals for painting, music and literature after 1948?",
+  "answer": "Because the artists were professionals. Art contests ran from 1912 to 1948, but Olympic rules then barred anyone who earned a living from their event, and painters, composers and writers lived by selling their work. The IOC swapped the contests for exhibitions without medals. The art medals no longer appear in national medal totals.",
+  "move": "A rule written for one kind of competitor can shut out another by accident.",
+  "keywords": [
+    "art competitions",
+    "amateurism",
+    "ioc",
+    "olympic medals"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stanton, The Forgotten Olympic Art Competitions",
+  "source_kind": "book",
+  "reference": "Stanton, The Forgotten Olympic Art Competitions, Trafford, 2000",
+  "written": "2026-09-27"
+}

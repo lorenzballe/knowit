@@ -1,0 +1,38 @@
+{
+  "id": "sport-modern-10",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.modern",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: Paris 2024, officially the Games of the XXXIII Olympiad, was only the 30th Summer Games ever held?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. An Olympiad is a four-year period, and it keeps its number whether or not Games take place. The Games of 1916, 1940 and 1944 were cancelled by war, yet the VI, XII and XIII Olympiads still count. Take those three away from 33 and Paris was the 30th Summer Games held.",
+  "move": "Check whether a number counts the events or the slots they could fill.",
+  "trap": "Taking the Roman numeral as a count of Games actually held.",
+  "keywords": [
+    "olympiad",
+    "paris 2024",
+    "cancelled games",
+    "olympic charter"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "International Olympic Committee, Olympic Charter",
+  "source_kind": "primary_document",
+  "reference": "International Olympic Committee, Olympic Charter, 2023",
+  "written": "2026-09-27"
+}

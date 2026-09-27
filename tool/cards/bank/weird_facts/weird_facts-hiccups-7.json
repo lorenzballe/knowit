@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-hiccups-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What makes the sound of a hiccup?",
+  "options": [
+    "The diaphragm's sudden jerk",
+    "The vocal cords snapping shut",
+    "Air bursting up from the stomach"
+  ],
+  "correct": 1,
+  "answer": "The vocal cords snapping shut. The diaphragm and rib muscles jerk first and pull in a gulp of air; about 35 milliseconds later the glottis, the gap between the vocal cords, slams shut on the incoming rush. The spasm itself is silent. What is heard is air hitting a closed door.",
+  "move": "The part that moves first is not always the part you hear.",
+  "trap": "Crediting the diaphragm, the muscle every account of hiccups names.",
+  "keywords": [
+    "hiccups",
+    "glottis",
+    "vocal cords",
+    "diaphragm"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahrilas and Shi, Gut, 1997",
+  "source_kind": "reference_work",
+  "reference": "Kahrilas and Shi, Why do we hiccup?, Gut, 1997",
+  "written": "2026-09-27"
+}

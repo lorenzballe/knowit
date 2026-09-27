@@ -1,0 +1,33 @@
+{
+  "id": "cinema-hitchcock-6",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In which country did Hitchcock direct his first completed feature, The Pleasure Garden of 1925?",
+  "answer": "Germany. Gainsborough Pictures co-produced it with the Munich studio Emelka, so the young Englishman shot in Munich and on location in Italy. A year earlier, as an art director at UFA near Berlin, he had watched F. W. Murnau making The Last Laugh, told almost without intertitles. His first lessons in telling stories through pictures were German.",
+  "move": "Look for where a style was learned before calling it a native one.",
+  "keywords": [
+    "alfred hitchcock",
+    "the pleasure garden",
+    "munich",
+    "ufa",
+    "f. w. murnau"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, Hitch, 1978",
+  "source_kind": "book",
+  "reference": "Taylor, Hitch: The Life and Times of Alfred Hitchcock, Pantheon, 1978",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-swimming-10",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were sloped ledges fitted to pool walls for backstroke starts from 2014?",
+  "answer": "Because feet slipped. Backstrokers start in the water, pushing off a wet vertical wall, and a foot sliding at the signal could lose a race before it began. The ledge is a narrow anti-slip step angled at 10 degrees for the toes to push against; the swimming federation approved Omega's version in December 2014.",
+  "move": "When the start decides too much, fix the footing before the athletes.",
+  "keywords": [
+    "backstroke",
+    "starts",
+    "backstroke ledge",
+    "omega",
+    "starting wall"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swiss Timing, OBL2 Pro backstroke ledge",
+  "source_kind": "company",
+  "reference": "https://www.swisstiming.com/fileadmin/Resources/Data/Datasheets/DOCM_AQ_OBL2_Pro_1015_EN.pdf",
+  "written": "2026-09-27"
+}

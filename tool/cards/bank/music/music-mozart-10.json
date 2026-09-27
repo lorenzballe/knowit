@@ -1,0 +1,39 @@
+{
+  "id": "music-mozart-10",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A dice game printed under Mozart's name in 1792 picks each of 16 bars by throwing two dice. Roughly how many minuets?",
+  "options": [
+    "About 176",
+    "About 46 quadrillion",
+    "About 2 million"
+  ],
+  "correct": 1,
+  "answer": "About 46 quadrillion. Two dice give 11 totals, 2 to 12, and each total points to a different bar in a table, so the choices multiply: 11 to the 16th power, about 4.6 × 10^16. Played at one a minute, they would outlast the universe so far. The attribution to Mozart is doubtful.",
+  "move": "When choices chain, multiply them; adding is how intuition fails.",
+  "trap": "Adding 11 choices for each of 16 bars gives 176.",
+  "keywords": [
+    "dice game",
+    "minuet",
+    "combinatorics",
+    "musikalisches würfelspiel"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Hedges, Music & Letters, 1978",
+  "source_kind": "paper",
+  "reference": "Hedges, Dice Music in the Eighteenth Century, Music & Letters, 1978",
+  "written": "2026-09-27"
+}

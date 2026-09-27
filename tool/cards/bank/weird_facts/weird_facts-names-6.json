@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-names-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did Dutch families pick absurd surnames in 1811 to mock Napoleon's order to register one?",
+  "answer": "Mostly not. The 1811 decree required fixed surnames, but most Dutch families already had one, and the famous jokes predate the joke: Naaktgeboren, born naked, was in use long before Napoleon was born. Leendert Brouwer of the Meertens Institute traced them. The prank story fits the names, not the registers.",
+  "move": "When a story explains an oddity too neatly, check the dates first.",
+  "keywords": [
+    "dutch surnames",
+    "napoleon",
+    "naaktgeboren",
+    "meertens institute"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brouwer, Meertens Instituut, 2006",
+  "source_kind": "institution",
+  "reference": "Brouwer, De naammythe van Napoleon, Respons: Mededelingen van het Meertens Instituut 8, 2006",
+  "written": "2026-09-27"
+}

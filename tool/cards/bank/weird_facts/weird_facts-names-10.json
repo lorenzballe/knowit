@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-names-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the state be able to refuse the name parents choose for a child?",
+  "sides": [
+    "Yes, it may refuse",
+    "No, parents decide"
+  ],
+  "answer": "A name is imposed on someone who cannot object and follows them into every classroom. In 2008 a New Zealand court made a nine-year-old girl a ward of court so she could shed the name Talula Does The Hula From Hawaii. Registrars refusing a handful of names a year protect children at almost no cost.",
+  "move": "Whichever side you took, it turns on who judges harm, and how often.",
+  "counterpoint": "Naming is among the most personal choices a family makes, and officials are poor judges of what will embarrass. Iceland's naming committee rejected names that broke its grammar rules; in 2013 a girl named Blær won a court case to keep her name, after years registered simply as Stúlka, girl. Rules made for oddities end up policing ordinary families.",
+  "keywords": [
+    "baby names",
+    "naming laws",
+    "iceland",
+    "new zealand",
+    "parental rights"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Iceland Personal Names Act, 1996",
+  "source_kind": "primary_document",
+  "reference": "Personal Names Act No. 45/1996 (Lög um mannanöfn), Althingi, Iceland, 1996",
+  "written": "2026-09-27"
+}

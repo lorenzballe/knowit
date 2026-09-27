@@ -1,0 +1,42 @@
+{
+  "id": "sport-swimming-9",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "World Aquatics points are 1,000 × (base time ÷ swim time) cubed. A swim 10% slower than base time scores how many points?",
+  "value": 751,
+  "unit": "points",
+  "answer": "Points: 1,000 x 0.751 = 751.",
+  "move": "When a score is raised to a power, small gaps become large ones.",
+  "trap": "Taking 10% off 1,000 and answering 900.",
+  "hint": "Work out the ratio of the two times before cubing it.",
+  "steps": [
+    "Ratio: 1 / 1.1 = 0.909.",
+    "Cubed: 0.909 x 0.909 x 0.909 = 0.751.",
+    "Points: 1,000 x 0.751 = 751."
+  ],
+  "keywords": [
+    "world aquatics points",
+    "scoring formula",
+    "base time",
+    "cube",
+    "swimming rankings"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Aquatics Points Table",
+  "source_kind": "standard",
+  "reference": "World Aquatics, Points Table: calculation of World Aquatics points, 2024",
+  "written": "2026-09-27"
+}
