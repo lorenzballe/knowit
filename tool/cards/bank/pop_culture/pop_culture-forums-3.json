@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. In 2005 Steve Huffman and Alexis Ohanian built a submission form that created a new account with each post, so an empty site looked busy. Huffman has said nearly all submissions in the first weeks were theirs. The links they chose set the tone that the first real users copied.",
+  "answer": "True. In 2005 Steve Huffman and Alexis Ohanian gave their own submission page a hidden field that registered any new username they typed, so an empty site looked busy. Huffman has said nearly all submissions in the first weeks were theirs. The links they chose set the tone that the first real users copied.",
   "move": "A crowd you can count by name is not yet a crowd of people.",
   "trap": "False: a front page full of different names reads as independent agreement.",
   "keywords": [

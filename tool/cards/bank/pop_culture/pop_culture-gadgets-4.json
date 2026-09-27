@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Furby had no recording chip. Its vocabulary was fixed at the factory; as it was played with, it gradually swapped its own babble, Furbish, for English words it already stored. Children heard new words soon after saying them. The US National Security Agency still banned it from its offices in 1999.",
+  "answer": "False. Furby had no recording chip. Its vocabulary was fixed at the factory; as it was played with, it gradually swapped its own babble, Furbish, for English words it already stored. Children heard new words soon after saying them. The US National Security Agency still banned it from its offices that winter.",
   "move": "Something that says many things will sometimes say what you just said.",
   "trap": "It said new words after people spoke nearby, so it must listen.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "BBC News archive, January 1999",
+  "source": "The Washington Post, 13 January 1999",
   "source_kind": "news_archive",
-  "reference": "BBC News, Furby toy or Furby spy?, January 1999",
+  "reference": "https://www.washingtonpost.com/archive/politics/1999/01/13/a-toy-story-of-hairy-espionage/edb69b8a-1b41-47f8-8166-b8839cd637f3/",
   "written": "2026-09-26"
 }

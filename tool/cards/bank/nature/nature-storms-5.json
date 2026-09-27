@@ -27,6 +27,6 @@
   "figure": "none",
   "source": "NOAA National Hurricane Center",
   "source_kind": "institution",
-  "reference": "https://www.nhc.noaa.gov/aboutsshws.php",
+  "reference": "Schott et al., The Saffir-Simpson Hurricane Wind Scale, National Hurricane Center, NOAA, 2012",
   "written": "2026-09-26"
 }

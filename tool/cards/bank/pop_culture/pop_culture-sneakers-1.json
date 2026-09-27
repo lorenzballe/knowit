@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The league's 1984 letter objected to a black-and-red Nike Air Ship, worn before his own shoe was ready, for breaking its uniform rules. Nike's 1985 television advert for the Air Jordan 1 told the story as if the new shoe were the one banned, and that version stuck to the product on sale.",
+  "answer": "False. The league's February 1985 letter objected to a black-and-red Nike Air Ship, worn in October 1984 before his own shoe was ready, under its uniform rules. Nike's 1985 television advert for the Air Jordan 1 told the story as if the new shoe were the one banned, and that version stuck.",
   "move": "The version of a story that sells is the version that gets retold.",
   "trap": "True: the Air Jordan 1 is the shoe the famous advert showed.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "NBA letter to Nike, 1984",
+  "source": "NBA letter to Nike, 1985",
   "source_kind": "primary_document",
-  "reference": "National Basketball Association, letter to Nike on the black-and-red Air Ship, October 1984",
+  "reference": "National Basketball Association, letter to Nike on the black-and-red Air Ship, 25 February 1985",
   "written": "2026-09-26"
 }

@@ -13,7 +13,7 @@
     "Los Angeles"
   ],
   "correct": 1,
-  "answer": "South Korea. Scripts, voices and storyboards are made in the United States; studios such as AKOM in Seoul turn them into finished animation. A 2004 report found Korean artists doing the work for a fraction of American rates. Springfield is drawn in Seoul.",
+  "answer": "South Korea. Scripts, voices and storyboards are made in the United States; studios such as AKOM in Seoul turn them into finished animation. A 2005 report found Korean artists doing the work for a fraction of American rates. Springfield is drawn in Seoul.",
   "move": "Ask where the labour is done, not where the credits are written.",
   "trap": "Japan comes first because its animation industry is the famous one.",
   "keywords": [
@@ -32,7 +32,7 @@
   "mature": false,
   "language": "en",
   "figure": "map",
-  "source": "NBC News, 2004",
+  "source": "NBC News, 2005",
   "source_kind": "news_archive",
   "reference": "https://www.today.com/popculture/simpsons-rides-seoul-train-wbna7069645",
   "written": "2026-09-26"
