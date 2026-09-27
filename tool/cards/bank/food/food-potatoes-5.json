@@ -1,0 +1,43 @@
+{
+  "id": "food-potatoes-5",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "also": [
+    "economics.everyday_costs.groceries"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By one careful estimate, what share of Old World population growth between 1700 and 1900 did the potato explain?",
+  "options": [
+    "About 2%",
+    "About a quarter",
+    "About three-quarters"
+  ],
+  "correct": 1,
+  "answer": "About a quarter. Nunn and Qian compared regions whose soil and climate suited potatoes with regions that did not, before and after the crop arrived. Suitable regions grew faster once it spread, enough to explain roughly a quarter of the growth in population and cities across Europe, Asia and Africa over two centuries.",
+  "move": "Compare the places a change could reach with those it could not.",
+  "trap": "Letting Ireland's vivid potato-fed boom stand for the whole Old World.",
+  "keywords": [
+    "nunn and qian",
+    "population growth",
+    "urbanisation",
+    "old world",
+    "crop suitability"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Nunn & Qian, Quarterly Journal of Economics, 2011",
+  "source_kind": "paper",
+  "reference": "Nunn & Qian, The Potato's Contribution to Population and Urbanization: Evidence from a Historical Experiment, Quarterly Journal of Economics, 2011",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-potatoes-3",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Andean farmers make potatoes keep for years, centuries before refrigeration?",
+  "answer": "By freeze-drying them outdoors. Above 3,500 metres, potatoes are left to freeze on clear nights and thaw in the sun by day; people then tread on them to squeeze out the water. After a few cycles the result, chuño, is light, hard and keeps for years, which let Inca storehouses feed armies.",
+  "move": "Where the climate is harsh, look for the process that uses the harshness.",
+  "keywords": [
+    "chuño",
+    "andes",
+    "freeze-drying",
+    "inca",
+    "food storage"
+  ],
+  "era": "medieval",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reader, Potato: A History",
+  "source_kind": "book",
+  "reference": "Reader, Potato: A History of the Propitious Esculent, Yale University Press, 2009",
+  "written": "2026-09-26"
+}

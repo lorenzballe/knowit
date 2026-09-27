@@ -1,0 +1,33 @@
+{
+  "id": "food-beer-2",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does canned stout need a rattling plastic capsule inside to pour with a thick, creamy head?",
+  "answer": "Because its foam relies on nitrogen, which barely dissolves in beer. The capsule fills with gas and beer under pressure at canning; when the can opens, pressure drops and it squirts a jet through a tiny hole, shaking bubbles out all at once. A pub tap does the same, forcing stout through a plate of fine holes.",
+  "move": "When something will not start on its own, give it a place to begin.",
+  "keywords": [
+    "widget",
+    "nitrogen",
+    "stout",
+    "foam",
+    "bubbles"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bamforth, Beer: Tap into the Art and Science",
+  "source_kind": "book",
+  "reference": "Bamforth, Beer: Tap into the Art and Science of Brewing, 3rd edition, Oxford University Press, 2009",
+  "written": "2026-09-26"
+}

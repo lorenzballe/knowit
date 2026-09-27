@@ -1,0 +1,42 @@
+{
+  "id": "food-kimchi-4",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "also": [
+    "economics.everyday_costs.groceries"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in 2024 South Korea spent more buying kimchi from abroad than it earned selling kimchi abroad?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Exports hit a record $163.6 million, but imports, almost all from China, reached $189.9 million, and Korea has run a kimchi deficit most years since 2010. Chinese factory kimchi costs far less, so it fills the free, endlessly refilled side dishes of Korean restaurants.",
+  "move": "Where a thing is famous from and where it is made are separate questions.",
+  "trap": "Assuming the dish's homeland must sell more of it than it buys.",
+  "keywords": [
+    "kimchi trade",
+    "china",
+    "imports",
+    "exports",
+    "restaurants"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "The Korea Herald, 2025",
+  "source_kind": "news_archive",
+  "reference": "https://www.koreaherald.com/article/10622311",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-kimchi-5",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What set off Korea's campaign in the 1990s for an international definition of kimchi?",
+  "answer": "Japanese kimuchi. Japanese makers sold cabbage in chilli seasoning, often soured with added acid instead of fermented, and in 1996 Japan pressed its version at Codex, the international food-standards body. The standard adopted in 2001 calls kimchi ripened by lactic acid made at low temperature, yet still permits added citric and acetic acid.",
+  "move": "A definition written to settle a dispute usually carries a compromise inside it.",
+  "keywords": [
+    "kimuchi",
+    "codex alimentarius",
+    "japan",
+    "food standards",
+    "lactic fermentation"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Journal of Ethnic Foods, 2023",
+  "source_kind": "paper",
+  "reference": "https://link.springer.com/article/10.1186/s42779-023-00171-w",
+  "written": "2026-09-26"
+}

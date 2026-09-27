@@ -444,7 +444,9 @@ gets a third card, and offers the writer the three thinnest principles
 rather than one, so the principle fits the strand instead of being forced
 onto it. The 170 cards written before the tags existed were tagged by hand
 and sit under the nearest strand; `tool/cards/tag.py` asks the model to tag
-whatever has none.
+whatever has none. In September 2026 the bank was grown by hand to at least
+five cards on every strand (see *The first hand-written set* in
+`tool/cards/README.md`).
 
 On the phone the tags are read three ways. A genre or strand the reader
 turned off in the mix goes behind every card that is on, never out of the
@@ -501,8 +503,9 @@ The question of the day (`lib/data/daily.dart`) is one edition a day from
 the first of September 2026, chained so the same question does not come
 round again for months, and dealt from the first edition on every phone
 that holds the same pool, which is what makes it the same question
-everywhere. It costs the mix nothing. Every card that asks and can be
-marked lives under Thinking, and Thinking was never off anybody's deck.
+everywhere. It costs the mix nothing. The question of the day is always a
+Thinking card (the app and `bundle.py` both draw it from Thinking alone),
+and Thinking was never off anybody's deck.
 What the shared question buys is a common object — the card a friend can
 be asked about ("did you get it?"), the one the morning notification can
 quote a fortnight ahead, the one square in the shared grid that means the

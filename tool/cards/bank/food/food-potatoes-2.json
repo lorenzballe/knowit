@@ -1,0 +1,33 @@
+{
+  "id": "food-potatoes-2",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Prussia's king push reluctant peasants to grow potatoes in the 1750s?",
+  "answer": "By decree, again and again. Frederick II's circular of 24 March 1756 told Silesian officials to have potatoes planted on spare ground and to teach people to eat them, and similar orders followed for years. The tale of guards posted to tempt thieves is later legend. The famine of 1770 to 1772 finished the job.",
+  "move": "Where a crop spreads by order, look for the hunger that made it stick.",
+  "keywords": [
+    "frederick the great",
+    "prussia",
+    "potato orders",
+    "silesia",
+    "famine"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Earle, Feeding the People",
+  "source_kind": "book",
+  "reference": "Earle, Feeding the People: The Politics of the Potato, Cambridge University Press, 2020",
+  "written": "2026-09-26"
+}
