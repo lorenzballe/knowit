@@ -61,12 +61,15 @@ void main() {
       'then by id — over the week or the month, narrowed as asked', () async {
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(0): {'a': 3, 'b': 1},
-        ago(2): {'c': 3, 'b': 1},
-        ago(6): {'d': 2},
-        ago(7): {'e': 9},
-        ago(29): {'f': 1},
-        ago(30): {'g': 50},
+        // Today and yesterday are still open: never on the list.
+        ago(0): {'z': 99},
+        ago(1): {'z': 99},
+        ago(2): {'a': 3, 'b': 1},
+        ago(4): {'c': 3, 'b': 1},
+        ago(8): {'d': 2},
+        ago(9): {'e': 9},
+        ago(31): {'f': 1},
+        ago(32): {'g': 50},
       }),
       clock: () => now,
     );
@@ -75,7 +78,8 @@ void main() {
 
     List<String> ids(List<Ranked> list) => [for (final r in list) r.id];
 
-    // a and c both have three; a was counted today, c two days ago.
+    // a and c both have three; a was counted on the last closed day, c two
+    // days before it.
     expect(ids(tallies.top(7)), ['a', 'c', 'b', 'd']);
     expect(tallies.top(7)[2].readers, 2, reason: 'b over two days');
 
@@ -93,7 +97,10 @@ void main() {
     final Tallies tallies = Tallies(storeOverride: store, clock: () => clock);
 
     await tallies.refresh();
-    expect(store.asked.single, hasLength(Tallies.monthDays));
+    expect(
+      store.asked.single,
+      hasLength(Tallies.closedAfter + Tallies.monthDays),
+    );
 
     // Ten minutes is fresh: nothing is asked for.
     clock = now.add(const Duration(minutes: 5));
@@ -166,7 +173,7 @@ void main() {
         'and the real readers rank on top of it', () async {
       final Tallies seeded = Tallies(
         storeOverride: MemoryTallyStore({
-          ago(0): {'card-real': 500},
+          ago(Tallies.closedAfter): {'card-real': 500},
         }),
         seed: TopSeed(ids: () => ids),
         clock: () => now,
@@ -193,5 +200,25 @@ void main() {
       expect(Tallies().ready, isFalse);
       expect(Tallies().top(30), isEmpty);
     });
+  });
+
+  test('the list is fixed for the day: a like today moves nothing until '
+      'its day has closed', () async {
+    DateTime clock = now;
+    final MemoryTallyStore store = MemoryTallyStore({
+      ago(3): {'science-2': 2},
+    });
+    final Tallies tallies = Tallies(storeOverride: store, clock: () => clock);
+    await tallies.refresh();
+    await tallies.held('science-1');
+    await tallies.held('science-1');
+    await _landed();
+    List<String> ids() => [for (final r in tallies.top(7)) r.id];
+    expect(ids(), ['science-2'], reason: 'today is still open');
+
+    // Two midnights later the day has closed, on every phone at once.
+    clock = now.add(const Duration(days: 2));
+    await tallies.refresh(force: true);
+    expect(ids(), ['science-2', 'science-1']);
   });
 }

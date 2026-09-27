@@ -286,7 +286,7 @@ class Tallies extends ChangeNotifier {
     if (!force && readAt != null && now.difference(readAt) < _fresh) return;
 
     final List<String> month = [
-      for (var i = 0; i < monthDays; i++)
+      for (var i = 0; i < closedAfter + monthDays; i++)
         tallyDay(now.subtract(Duration(days: i))),
     ];
     final List<String> open = month.take(_openDays).toList();
@@ -330,11 +330,24 @@ class Tallies extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// The list for the last [days] days: most readers first; then the card
-  /// counted most recently, so a card that is rising beats one that was;
-  /// then by id, so the order never shuffles between two readings of the
-  /// same numbers. [where] narrows it — to cards the app has, and to a
-  /// subject.
+  /// How many of the most recent UTC days are left out of the list because
+  /// they can still be added to. The rules take a count for a day until two
+  /// days after it began (`isRecentDay`), so from midnight UTC the day
+  /// before yesterday is closed: its numbers are final, and the same on
+  /// every phone that reads them.
+  static const int closedAfter = 2;
+
+  /// The list for the [days] days that closed most recently: most readers
+  /// first; then the card counted most recently, so a card that is rising
+  /// beats one that was; then by id, so the order never shuffles between
+  /// two readings of the same numbers. [where] narrows it — to cards the app
+  /// has, and to a subject.
+  ///
+  /// Closed days only, so the list is one list: identical on every phone,
+  /// and fixed from one midnight UTC to the next. A list that counted today
+  /// would move under the reader all day, and differently on each phone —
+  /// a phone sees its own like at once and everybody else's ten minutes
+  /// later. The price is two days of lag, which a top of the week can pay.
   List<Ranked> top(
     int days, {
     bool Function(String id)? where,
@@ -343,7 +356,7 @@ class Tallies extends ChangeNotifier {
     final DateTime now = _clock();
     final Map<String, int> readers = {};
     final Map<String, int> latest = {};
-    for (var i = 0; i < days; i++) {
+    for (var i = closedAfter; i < closedAfter + days; i++) {
       final String day = tallyDay(now.subtract(Duration(days: i)));
       final Map<String, int>? real = _days[day];
       final Map<String, int>? seeded = seed?.on(day);

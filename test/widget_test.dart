@@ -434,8 +434,8 @@ void main() {
     final Pill other = PillBank.cards.firstWhere((p) => p.topic != 'Economics');
     final Tallies tallies = Tallies(
       storeOverride: MemoryTallyStore({
-        ago(0): {other.id: 9, econ.id: 4},
-        ago(12): {econToo.id: 30},
+        ago(Tallies.closedAfter): {other.id: 9, econ.id: 4},
+        ago(Tallies.closedAfter + 12): {econToo.id: 30},
       }),
     );
     Tallies.useForTest(tallies);

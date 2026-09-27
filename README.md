@@ -264,6 +264,15 @@ list's own height so nothing jumps when the cards arrive. A first version
 hid the shelf until the counts were read, and so on every phone where they
 could not be it was a feature nobody could find.
 
+**One list, fixed for the day.** The list counts closed days only: the
+rules take a count for a day until two days after it began, so from
+midnight UTC the day before yesterday is final, and the week is the seven
+days up to it. That makes it the same list on every phone, and one that
+does not move from one midnight UTC to the next — a list that counted today
+would shift under the reader all day, and differently on each phone, since
+a phone sees its own like at once and everybody else's only on its next
+reading. Two days of lag is the price, and a top of the week can pay it.
+
 **The launch crowd.** A top list opened as three empty places, on every
 phone, for the weeks before anybody had held on to anything — so for now
 it is seeded (`TopSeed`, installed in `main.dart`). About one card in seven
