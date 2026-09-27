@@ -15,7 +15,7 @@ tool/cards/
   domains.txt              sites blocked, sites never a reference, sites trusted per subject
   generate.py              scout, reader, writer, gate, critic, files
   tag.py                   tags for cards that have none
-  bundle.py                bank → lib/data/embedded_bank.dart + web/cards/cards.json
+  bundle.py                bank → lib/data/embedded_bank.dart + web/cards/cards.json + version.json
   test_cards.py            the pipeline without the model
 ```
 
@@ -63,8 +63,9 @@ tool/cards/
    **pull request** opens with the cards, their strands, their sites and
    the receipt in its body.
 9. A person reads the pull request. **Merging is the review.** The deploy
-   workflow then publishes `web/cards/cards.json`; the app downloads it at
-   start, keeps it, and deals from it the next morning.
+   workflow then publishes `web/cards/cards.json` and `version.json`; the
+   app asks the version at start, downloads the bank only when it is newer,
+   keeps it, and deals from it the next morning.
 
 Thinking cards are arithmetic: they skip the scout and the reader, and the
 critic redoes their numbers. With `--batch`, which the nightly run uses,

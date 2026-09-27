@@ -156,7 +156,10 @@ class ExploreScreenState extends State<ExploreScreen> {
           child: _searching
               ? _found(context)
               : ListenableBuilder(
-                  listenable: Tallies.instance,
+                  // The counts, and what the reader has read: a card read
+                  // here leaves the shelves for finding things as soon as
+                  // the reader is back on them.
+                  listenable: Listenable.merge([Tallies.instance, widget.app]),
                   builder: (context, _) => _shelfList(context),
                 ),
         ),
@@ -169,15 +172,21 @@ class ExploreScreenState extends State<ExploreScreen> {
     // Today's shelf is the same for everybody and changes at midnight —
     // which is what the canvas means by "written this morning". Nothing
     // here is dealt from the reader's own mix.
+    // The shelves for finding things hold only cards the reader has not
+    // read — a card already read is not a find. The top list is the one
+    // shelf that keeps them, marked, because it is one list for everybody.
+    bool unread(Pill p) => !widget.app.seenIds.contains(p.id);
+
     final List<Pill> fresh = _only(
-      pickedPills(seed: daySeed(DateTime.now()), count: 24),
-    ).take(8).toList();
+      pickedPills(seed: daySeed(DateTime.now()), count: 60),
+    ).where(unread).take(8).toList();
 
     // The canvas ranks this shelf by what everyone saved. Saves are counted
     // now, and they rank the top list above it; this shelf stays ranked by
     // what the cards ask, which is a different question and the order it
     // was always in.
-    final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 40))
+    final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 120))
+        .where(unread)
         .take(6)
         .toList();
 
@@ -204,8 +213,25 @@ class ExploreScreenState extends State<ExploreScreen> {
     // page with nowhere to scroll to, which is not this screen.
     final (String title, String line, String subject) = _thirdShelf();
     final List<Pill> mine = _only(
-      pickedPills(seed: monthSeed(DateTime.now()), count: 40, topic: subject),
-    ).take(8).toList();
+      pickedPills(seed: monthSeed(DateTime.now()), count: 120, topic: subject),
+    ).where(unread).take(8).toList();
+
+    // Loved since the start, and not read yet: where somebody who arrived
+    // late finds the best of what came before them, and somebody who has
+    // been here two years still finds the next one they missed.
+    final List<Pill> loved = [
+      if (tallies.ready)
+        for (final Ranked place in tallies.allTime(
+          where: (id) {
+            final Pill? pill = pillById(id);
+            return pill != null &&
+                unread(pill) &&
+                (_subject == null || pill.topic == _subject);
+          },
+          limit: 8,
+        ))
+          pillById(place.id)!,
+    ];
 
     return Stack(
       children: [
@@ -251,6 +277,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                   ? const _TopGhost()
                   : _TopRow(
                       ranked: top,
+                      isRead: (p) => !unread(p),
                       onOpen: (i) {
                         Analytics.capture('explore top opened', {
                           'rank': i + 1,
@@ -262,6 +289,25 @@ class ExploreScreenState extends State<ExploreScreen> {
                       },
                     ),
             ),
+            if (loved.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                title: _subject != null
+                    ? context.l10n.lovedIn(_subject!)
+                    : context.l10n.lovedSinceTheStart,
+                line: context.l10n.lovedLine,
+                child: _SmallRow(
+                  pills: loved,
+                  onOpen: (shelf, pill) {
+                    Analytics.capture('explore loved opened', {
+                      'rank': shelf.indexOf(pill) + 1,
+                      'subject': _subject ?? 'all',
+                    });
+                    _open(shelf, pill);
+                  },
+                ),
+              ),
+            ],
             if (asking.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
@@ -411,6 +457,8 @@ class ExploreScreenState extends State<ExploreScreen> {
       shelf,
       _subject ?? context.l10n.tabExplore,
       initialIndex: shelf.indexOf(pill),
+      // Nothing here was dealt: a card read here is read.
+      countsAsRead: true,
     );
   }
 }
@@ -1017,10 +1065,18 @@ class _WindowSwitch extends StatelessWidget {
 
 /// The top list: each card standing on its place, the number behind it.
 class _TopRow extends StatelessWidget {
-  const _TopRow({required this.ranked, required this.onOpen});
+  const _TopRow({
+    required this.ranked,
+    required this.onOpen,
+    required this.isRead,
+  });
 
   final List<(Pill, int)> ranked;
   final ValueChanged<int> onOpen;
+
+  /// Whether the reader has read a card already. The list is the same for
+  /// everybody, so a card read stays on its place, marked.
+  final bool Function(Pill) isRead;
 
   @override
   Widget build(BuildContext context) {
@@ -1035,6 +1091,7 @@ class _TopRow extends StatelessWidget {
           rank: i + 1,
           pill: ranked[i].$1,
           readers: ranked[i].$2,
+          read: isRead(ranked[i].$1),
           onTap: () => onOpen(i),
         ),
       ),
@@ -1133,12 +1190,16 @@ class _Placed extends StatelessWidget {
     required this.pill,
     required this.readers,
     required this.onTap,
+    this.read = false,
   });
 
   final int rank;
   final Pill pill;
   final int readers;
   final VoidCallback onTap;
+
+  /// Read already: a tick by the subject, and the word under the count.
+  final bool read;
 
   @override
   Widget build(BuildContext context) {
@@ -1175,6 +1236,18 @@ class _Placed extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (read) ...[
+                    const SizedBox(width: 6),
+                    Semantics(
+                      label: context.l10n.readMark,
+                      child: Icon(
+                        Icons.check_circle_rounded,
+                        key: ValueKey('top-read-${pill.id}'),
+                        size: 14,
+                        color: pill.ink.withValues(alpha: 0.8),
+                      ),
+                    ),
+                  ],
                 ],
               ),
               Expanded(
@@ -1196,7 +1269,9 @@ class _Placed extends StatelessWidget {
                 ),
               ),
               Text(
-                context.l10n.topReaders(readers),
+                read
+                    ? '${context.l10n.readMark} · ${context.l10n.topReaders(readers)}'
+                    : context.l10n.topReaders(readers),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.body(

@@ -397,5 +397,11 @@
  "topWeek": "Tydzień",
  "topMonth": "Miesiąc",
  "topReaders": "{n, plural, =1{1 czytelnik} few{{n} czytelnicy} many{{n} czytelników} other{{n} czytelnika}}",
- "topEmpty": "Na liście jeszcze nic nie ma. Liczy się każda karta, którą polubisz, zachowasz lub opowiesz."
+ "topEmpty": "Na liście jeszcze nic nie ma. Liczy się każda karta, którą polubisz, zachowasz lub opowiesz.",
+ "readMark": "Przeczytana",
+ "lovedSinceTheStart": "Najbardziej lubiane od początku",
+ "lovedIn": "Najbardziej lubiane: {subject}",
+ "lovedLine": "To, co czytelnicy zachowywali najczęściej, a ty jeszcze nie czytałeś",
+ "welcomeDaysLeft": "{n, plural, =1{Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.} few{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.} many{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.} other{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.}}",
+ "welcomeWeekEnds": "Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra jedna z pięciu jest twoja, a trzy są wspólne; z Astute+ wszystkie pięć zostają twoje."
 }

@@ -397,5 +397,11 @@
  "topWeek": "Settimana",
  "topMonth": "Mese",
  "topReaders": "{n, plural, =1{1 lettore} other{{n} lettori}}",
- "topEmpty": "Ancora niente in classifica. Ogni carta che ti piace, salvi o racconti conta."
+ "topEmpty": "Ancora niente in classifica. Ogni carta che ti piace, salvi o racconti conta.",
+ "readMark": "Letta",
+ "lovedSinceTheStart": "Le più amate da sempre",
+ "lovedIn": "Le più amate in {subject}",
+ "lovedLine": "Quelle che i lettori hanno tenuto di più, e che non hai ancora letto",
+ "welcomeDaysLeft": "{n, plural, =1{La tua prima settimana: domani è l'ultimo giorno, quattro delle cinque sono tue.} other{La tua prima settimana: ancora {n} giorni con quattro delle cinque tue.}}",
+ "welcomeWeekEnds": "La tua prima settimana finisce stasera. Da domani una delle cinque è tua e tre sono di tutti; Astute+ le tiene tutte e cinque tue."
 }

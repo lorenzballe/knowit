@@ -1736,4 +1736,35 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get topEmpty =>
       'Noch nichts auf der Liste. Jede Karte, die du magst, behältst oder erzählst, zählt.';
+
+  @override
+  String get readMark => 'Gelesen';
+
+  @override
+  String get lovedSinceTheStart => 'Seit Beginn am meisten geliebt';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Am meisten geliebt in $subject';
+  }
+
+  @override
+  String get lovedLine =>
+      'Was Leser am häufigsten behalten haben und du noch nicht gelesen hast';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Deine erste Woche: noch $n Tage, an denen vier der fünf deine sind.',
+      one: 'Deine erste Woche: morgen ist ihr letzter Tag, vier der fünf sind deine.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Deine erste Woche endet heute Abend. Ab morgen ist eine der fünf deine und drei gehören allen; mit Astute+ bleiben alle fünf deine.';
 }

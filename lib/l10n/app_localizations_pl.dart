@@ -1782,4 +1782,39 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get topEmpty =>
       'Na liście jeszcze nic nie ma. Liczy się każda karta, którą polubisz, zachowasz lub opowiesz.';
+
+  @override
+  String get readMark => 'Przeczytana';
+
+  @override
+  String get lovedSinceTheStart => 'Najbardziej lubiane od początku';
+
+  @override
+  String lovedIn(String subject) {
+    return 'Najbardziej lubiane: $subject';
+  }
+
+  @override
+  String get lovedLine =>
+      'To, co czytelnicy zachowywali najczęściej, a ty jeszcze nie czytałeś';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other:
+          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+      many:
+          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+      few:
+          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+      one: 'Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      'Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra jedna z pięciu jest twoja, a trzy są wspólne; z Astute+ wszystkie pięć zostają twoje.';
 }

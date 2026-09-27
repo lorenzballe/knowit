@@ -397,5 +397,11 @@
  "topWeek": "周",
  "topMonth": "月",
  "topReaders": "{n, plural, other{{n} 位读者}}",
- "topEmpty": "榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。"
+ "topEmpty": "榜单还是空的。你喜欢、收藏或讲给别人听的每张卡片都会计入。",
+ "readMark": "已读",
+ "lovedSinceTheStart": "自开始以来最受喜爱",
+ "lovedIn": "{subject}中最受喜爱",
+ "lovedLine": "读者保留最多、而你还没读过的卡片",
+ "welcomeDaysLeft": "{n, plural, other{你的第一周：五张中有四张是你的，还剩{n}天。}}",
+ "welcomeWeekEnds": "你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。"
 }

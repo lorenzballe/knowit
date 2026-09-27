@@ -15,6 +15,14 @@ class _Refusing implements TallyStore {
   @override
   Future<Map<String, Map<String, int>>> read(List<String> days) async =>
       throw StateError('permission-denied');
+
+  @override
+  Future<void> addTotal(String pillId) async =>
+      throw StateError('permission-denied');
+
+  @override
+  Future<Map<String, int>> readTotals() async =>
+      throw StateError('permission-denied');
 }
 
 /// Lets the write that [Tallies.held] sends off land.
@@ -220,5 +228,41 @@ void main() {
     clock = now.add(const Duration(days: 2));
     await tallies.refresh(force: true);
     expect(ids(), ['science-2', 'science-1']);
+  });
+
+  test('loved since the start: the counts for good, over the launch crowd, '
+      'narrowed as asked', () async {
+    final MemoryTallyStore store = MemoryTallyStore();
+    final Tallies tallies = Tallies(storeOverride: store, clock: () => now);
+    await tallies.held('science-1');
+    await _landed();
+    expect(store.totals, {'science-1': 1});
+    store.totals['space-2'] = 40;
+    await tallies.refresh(force: true);
+    expect([for (final r in tallies.allTime()) r.id], ['space-2', 'science-1']);
+    expect(
+      [for (final r in tallies.allTime(where: (id) => id != 'space-2')) r.id],
+      ['science-1'],
+    );
+    // With the crowd, cards nobody has held yet are there too, the ones
+    // readers did hold ranked by both.
+    final Tallies seeded = Tallies(
+      storeOverride: store,
+      seed: TopSeed(ids: () => [for (var i = 0; i < 400; i++) 'card-$i']),
+      clock: () => now,
+    );
+    await seeded.refresh();
+    expect(seeded.allTime(limit: 400).length, greaterThan(2));
+  });
+
+  test('a card read in Explore is read: the day never deals it', () async {
+    final AppState app = AppState();
+    await app.init();
+    final String id = PillBank.cards.last.id;
+    await app.markReadElsewhere(id);
+    expect(app.seenIds, contains(id));
+    final AppState again = AppState();
+    await again.init();
+    expect(again.seenIds, contains(id), reason: 'kept across a restart');
   });
 }

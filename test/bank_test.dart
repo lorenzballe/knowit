@@ -225,11 +225,15 @@ void main() {
     test('stores what it downloads only when it is newer', () async {
       final prefs = await SharedPreferences.getInstance();
       final newer = PillBank.embedded.version + 1;
+      final asked = <String>[];
       PillBank.fetch = (url) async {
-        expect(url, kBankUrl);
-        return bundle(version: newer, cards: [read('space-9')]);
+        asked.add(url);
+        return url == kBankVersionUrl
+            ? '{"version": $newer, "cards": 1}'
+            : bundle(version: newer, cards: [read('space-9')]);
       };
       expect(await PillBank.refresh(prefs), isTrue);
+      expect(asked, [kBankVersionUrl, kBankUrl]);
       expect(prefs.getString('knowit.bank'), isNotNull);
       // Not adopted mid-run: the table is not re-dealt under the reader.
       expect(PillBank.version, PillBank.embedded.version);
@@ -239,6 +243,33 @@ void main() {
           bundle(version: 1, cards: [read('space-9')]);
       expect(await PillBank.refresh(prefs), isFalse);
       expect(prefs.getString('knowit.bank'), isNull);
+    });
+
+    test('asks the version first, and a phone already holding it downloads '
+        'nothing else', () async {
+      final prefs = await SharedPreferences.getInstance();
+      final asked = <String>[];
+      PillBank.fetch = (url) async {
+        asked.add(url);
+        return url == kBankVersionUrl
+            ? '{"version": ${PillBank.version}, "cards": 1}'
+            : bundle(version: PillBank.version + 1, cards: [read('space-9')]);
+      };
+      expect(await PillBank.refresh(prefs), isFalse);
+      expect(asked, [kBankVersionUrl], reason: 'the bank was not fetched');
+      expect(prefs.getString('knowit.bank'), isNull);
+
+      // No version to read, as on a site from before it existed: the bank
+      // itself is asked for.
+      asked.clear();
+      PillBank.fetch = (url) async {
+        asked.add(url);
+        return url == kBankVersionUrl
+            ? null
+            : bundle(version: PillBank.version + 1, cards: [read('space-9')]);
+      };
+      expect(await PillBank.refresh(prefs), isTrue);
+      expect(asked, [kBankVersionUrl, kBankUrl]);
     });
 
     test('shrugs at no signal, a bad body, or a server that is down', () async {

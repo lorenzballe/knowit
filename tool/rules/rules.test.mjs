@@ -85,6 +85,21 @@ await check('only a day that is today on some clock', async () => {
   await assertFails(reader().doc('tallies/2026-13-40').set({ k: 'science-1', n: { 'science-1': inc(1) } }, { merge: true }));
 });
 
+await check('a total: one at a time, to one card, in its own shard', async () => {
+  const db = reader();
+  await assertSucceeds(db.doc('totals/science').set({ k: 'science-1', n: { 'science-1': inc(1) } }, { merge: true }));
+  await assertSucceeds(db.doc('totals/science').set({ k: 'science-1', n: { 'science-1': inc(1) } }, { merge: true }));
+  await assertSucceeds(db.doc('totals/weird_facts').set({ k: 'weird_facts-names-1', n: { 'weird_facts-names-1': inc(1) } }, { merge: true }));
+  assert.deepEqual((await db.doc('totals/science').get()).data().n, { 'science-1': 2 });
+  await assertSucceeds(db.collection('totals').get());
+  await assertFails(db.doc('totals/space').set({ k: 'science-1', n: { 'science-1': inc(1) } }, { merge: true }));
+  await assertFails(db.doc('totals/science').set({ k: 'science-1', n: { 'science-1': inc(3) } }, { merge: true }));
+  await assertFails(db.doc('totals/science').set({ k: 'science-1', n: { 'science-1': inc(1), 'science-2': inc(1) } }, { merge: true }));
+  await assertFails(db.doc('totals/science').set({ k: 'science-1', n: { 'science-1': inc(-1) } }, { merge: true }));
+  await assertFails(db.doc('totals/science').delete());
+  await assertFails(stranger().doc('totals/science').get());
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());

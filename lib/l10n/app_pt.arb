@@ -397,5 +397,11 @@
  "topWeek": "Semana",
  "topMonth": "Mês",
  "topReaders": "{n, plural, =1{1 leitor} other{{n} leitores}}",
- "topEmpty": "Ainda nada na lista. Cada carta de que gostas, que guardas ou que contas entra na conta."
+ "topEmpty": "Ainda nada na lista. Cada carta de que gostas, que guardas ou que contas entra na conta.",
+ "readMark": "Lida",
+ "lovedSinceTheStart": "As mais amadas desde o início",
+ "lovedIn": "As mais amadas em {subject}",
+ "lovedLine": "O que os leitores mais guardaram e tu ainda não leste",
+ "welcomeDaysLeft": "{n, plural, =1{A tua primeira semana: amanhã é o último dia, quatro das cinco são tuas.} other{A tua primeira semana: mais {n} dias com quatro das cinco tuas.}}",
+ "welcomeWeekEnds": "A tua primeira semana acaba esta noite. A partir de amanhã, uma das cinco é tua e três são de todos; o Astute+ mantém as cinco tuas."
 }

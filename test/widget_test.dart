@@ -70,11 +70,13 @@ List<Pill> get _todaysFive {
   // read by ReaderProfile as having said nothing, so it opens on the
   // subjects that hook most people, a notch above.
   final ReaderProfile untold = ReaderProfile.read(weights: const {});
+  // And a welcome day: four of the five the reader's own.
   return dealDay(
     date: DateTime.now(),
     topics: kTopicOrder.toSet(),
     weights: untold.weightsOn(0, const {}),
     levels: untold.levelsUnder(const {}),
+    own: kOwnCardsWelcome,
   ).cards;
 }
 
@@ -1666,7 +1668,7 @@ void main() {
     expect(find.text('Day 1 · five read'), findsOneWidget);
   });
 
-  testWidgets('the free day marks the two cards that are the reader\'s own', (
+  testWidgets('the free day marks the cards that are the reader\'s own', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues(_installed());
@@ -1675,7 +1677,8 @@ void main() {
 
     final app = AppState();
     await app.init();
-    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    // A first day is a welcome day: four of the five the reader's own.
+    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
     expect(app.todaysDeck, hasLength(kPillsPerDay));
     // The question of the day is dealt, and it is nobody's own.
     final question = questionOfTheDay(DateTime.now());
@@ -1704,7 +1707,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
-    expect(marked, kOwnCardsFree);
+    expect(marked, kOwnCardsWelcome);
   });
 
   testWidgets(
@@ -1787,7 +1790,7 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('The other 4, yours.'), findsOneWidget);
+        expect(find.text('Make all five yours.'), findsOneWidget);
         expect(find.text('Try 7 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         await tester.pump(const Duration(seconds: 6));
@@ -1888,7 +1891,7 @@ void main() {
       // Past the fifth: the offer, at the front, and the counter gives way
       // to the plan's name. No skip here — a swipe is the way back.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('The other 4, yours.'), findsOneWidget);
+      expect(find.text('Make all five yours.'), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);

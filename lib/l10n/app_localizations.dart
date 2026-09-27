@@ -2507,6 +2507,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing on the list yet. Every card you like, save or say counts.'**
   String get topEmpty;
+
+  /// No description provided for @readMark.
+  ///
+  /// In en, this message translates to:
+  /// **'Read'**
+  String get readMark;
+
+  /// No description provided for @lovedSinceTheStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Loved since the start'**
+  String get lovedSinceTheStart;
+
+  /// No description provided for @lovedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Loved in {subject}'**
+  String lovedIn(String subject);
+
+  /// No description provided for @lovedLine.
+  ///
+  /// In en, this message translates to:
+  /// **'What readers kept most, and you have not read yet'**
+  String get lovedLine;
+
+  /// No description provided for @welcomeDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}'**
+  String welcomeDaysLeft(int n);
+
+  /// No description provided for @welcomeWeekEnds.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.'**
+  String get welcomeWeekEnds;
 }
 
 class _AppLocalizationsDelegate

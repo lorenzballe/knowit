@@ -142,6 +142,37 @@ void main() {
       expect(kTopics['thinking']!.name, question.topic);
     });
 
+    test('the welcome week: four of the five the reader\'s own, then the '
+        'shared day', () {
+      for (var d = 0; d < kWelcomeDays; d++) {
+        expect(ownCardsFor(plus: false, streak: 0, day: d), kOwnCardsWelcome);
+        expect(inWelcomeWeek(d), isTrue);
+      }
+      expect(
+        ownCardsFor(plus: false, streak: 0, day: kWelcomeDays),
+        kOwnCardsFree,
+      );
+      expect(inWelcomeWeek(kWelcomeDays), isFalse);
+      // The week kept is rewarded after the welcome, not during it.
+      expect(ownCardsFor(plus: false, streak: 7, day: 7), kOwnCardsRewarded);
+      expect(ownCardsFor(plus: true, streak: 0, day: 0), kPillsPerDay);
+
+      final day = DateTime(2026, 10, 14);
+      final deal = dealDay(date: day, own: kOwnCardsWelcome);
+      expect(deal.cards, hasLength(kPillsPerDay));
+      expect(deal.own, hasLength(kOwnCardsWelcome));
+      // Only the question of the day is everybody's.
+      expect(deal.question?.id, questionOfTheDay(day).id);
+      expect(
+        deal.cards.where((p) => !deal.own.contains(p.id)).map((p) => p.id),
+        [deal.question!.id],
+      );
+      expect(
+        deal.cards.where((p) => p.asksSomething).length,
+        asksInADay(kPillsPerDay),
+      );
+    });
+
     test('a week kept makes two of the five the reader\'s own', () {
       expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
       expect(ownCardsFor(plus: false, streak: 6), kOwnCardsFree);

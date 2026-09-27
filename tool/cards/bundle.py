@@ -31,6 +31,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 EMBEDDED = ROOT / "lib" / "data" / "embedded_bank.dart"
 PUBLISHED = ROOT / "web" / "cards" / "cards.json"
+# What a phone asks first: the published bundle's version and nothing else,
+# a few dozen bytes, so an app already holding it never downloads the whole
+# bank again to find that out.
+VERSION = PUBLISHED.parent / "version.json"
 
 # Edition 1. The same date as kEpoch in lib/data/daily.dart.
 EPOCH = dt.date(2026, 9, 1)
@@ -103,6 +107,21 @@ def same_content(a: dict | None, b: dict) -> bool:
     return a.get("cards") == b.get("cards") and a.get("editions") == b.get("editions")
 
 
+def version_note(bundle: dict) -> str:
+    return json.dumps({"version": bundle["version"], "cards": len(bundle["cards"])}) + "\n"
+
+
+def version_current() -> bool:
+    """Whether version.json names the version cards.json holds."""
+    if not (PUBLISHED.exists() and VERSION.exists()):
+        return False
+    try:
+        return json.loads(VERSION.read_text(encoding="utf-8")) == json.loads(
+            version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))))
+    except (json.JSONDecodeError, KeyError):
+        return False
+
+
 def read_embedded() -> dict | None:
     if not EMBEDDED.exists():
         return None
@@ -150,22 +169,27 @@ def main(argv: list[str] | None = None) -> int:
     current = same_content(read_embedded(), bundle)
     published = PUBLISHED.exists() and same_content(json.loads(PUBLISHED.read_text(encoding="utf-8")), bundle)
     if args.check:
-        if current and published:
+        if current and published and version_current():
             print(f"{len(cards)} cards, {len(editions)} editions: both copies current")
             return 0
-        print("stale:" + ("" if current else " lib/data/embedded_bank.dart") + ("" if published else " web/cards/cards.json"))
+        print("stale:" + ("" if current else " lib/data/embedded_bank.dart") + ("" if published else " web/cards/cards.json")
+              + ("" if version_current() else " web/cards/version.json"))
         print("run python3 tool/cards/bundle.py")
         return 1
 
     if current and published:
+        if not version_current():
+            VERSION.write_text(version_note(json.loads(PUBLISHED.read_text(encoding="utf-8"))), encoding="utf-8")
+            print(f"wrote {VERSION.relative_to(ROOT)}")
         print(f"{len(cards)} cards, {len(editions)} editions: nothing to do")
         return 0
     check.EDITIONS.write_text(json.dumps(editions, indent=2) + "\n", encoding="utf-8")
     EMBEDDED.write_text(render_dart(text), encoding="utf-8")
     PUBLISHED.parent.mkdir(parents=True, exist_ok=True)
     PUBLISHED.write_text(text, encoding="utf-8")
+    VERSION.write_text(version_note(bundle), encoding="utf-8")
     print(f"{len(cards)} cards, {len(editions)} editions, version {bundle['version']}")
-    print(f"wrote {EMBEDDED.relative_to(ROOT)} and {PUBLISHED.relative_to(ROOT)}")
+    print(f"wrote {EMBEDDED.relative_to(ROOT)}, {PUBLISHED.relative_to(ROOT)} and {VERSION.relative_to(ROOT)}")
     return 0
 
 

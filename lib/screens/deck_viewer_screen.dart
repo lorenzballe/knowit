@@ -35,6 +35,11 @@ class DeckViewerScreen extends StatefulWidget {
   /// answer until the reader commits, the way it did the first time.
   final bool answering;
 
+  /// True when these are cards nobody dealt the reader — Explore's — so a
+  /// card turned past, or the one open when the viewer closes, counts as
+  /// read (see [AppState.markReadElsewhere]).
+  final bool countsAsRead;
+
   const DeckViewerScreen({
     super.key,
     required this.app,
@@ -42,6 +47,7 @@ class DeckViewerScreen extends StatefulWidget {
     required this.title,
     this.initialIndex = 0,
     this.answering = false,
+    this.countsAsRead = false,
   });
 
   @override
@@ -50,6 +56,19 @@ class DeckViewerScreen extends StatefulWidget {
 
 class _DeckViewerScreenState extends State<DeckViewerScreen> {
   late int _index = widget.initialIndex;
+
+  void _read(int index) {
+    if (!widget.countsAsRead || widget.deck.isEmpty) return;
+    widget.app.markReadElsewhere(widget.deck[index].id);
+  }
+
+  @override
+  void dispose() {
+    // The card open when the viewer closes was read too: most visits from
+    // Explore are one card, opened, turned over and closed.
+    _read(_index);
+    super.dispose();
+  }
 
   /// Which face is showing now lives inside the deck, so the line under it
   /// no longer tries to say — it names the gesture the card does not already
@@ -134,9 +153,12 @@ class _DeckViewerScreenState extends State<DeckViewerScreen> {
                   child: PillCardStack(
                     deck: widget.deck,
                     index: _index,
-                    onAdvance: () => setState(
-                      () => _index = (_index + 1) % widget.deck.length,
-                    ),
+                    onAdvance: () {
+                      _read(_index);
+                      setState(
+                        () => _index = (_index + 1) % widget.deck.length,
+                      );
+                    },
                     reviewIds: widget.answering
                         ? {for (final p in widget.deck) p.id}
                         : const {},
@@ -195,6 +217,7 @@ Future<void> openDeckViewer(
   List<Pill> deck,
   String title, {
   int initialIndex = 0,
+  bool countsAsRead = false,
 }) {
   return Navigator.of(context).push(
     MaterialPageRoute(
@@ -203,6 +226,7 @@ Future<void> openDeckViewer(
         deck: deck,
         title: title,
         initialIndex: initialIndex,
+        countsAsRead: countsAsRead,
       ),
     ),
   );

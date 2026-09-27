@@ -240,6 +240,25 @@ the order they were always in. The third one the app can say for real,
 because the mix is the reader's own: **Because Space sits at full**, from
 the subject they pushed furthest up.
 
+**Read or not.** A card read anywhere is read: a card opened in Explore
+and turned past, or open when the viewer closes, counts like one read in
+the day (`markReadElsewhere`), so the day never hands it back as a daily
+card months later. Explore then treats its shelves by what they are for.
+The top list is one list for everybody, so a card the reader has read stays
+on its place, with a tick and *Read* under it. The shelves for finding
+things — today's, *loved since the start*, the ones that ask the most,
+*because Space* — hold only cards the reader has not read, because a card
+already read is not a find. Somebody who arrived late finds the best of
+what came before them; somebody who has been here two years finds the next
+one they missed, never a list of old news.
+
+**Loved since the start** sits under the top list: the cards readers held
+on to most over all time — the counts kept for good at `totals/{shard}`
+(the part of a card's id before its first dash), plus the launch crowd's
+average since the first of September 2026 — minus what the reader has
+read. It is not closed day by day like the top list: it is a shelf for
+finding what you missed, not a ranking to quote.
+
 **The top of the week and of the month** sit under today's shelf: the cards
 readers liked, saved and said most in the last 7 or 30 days, with a Week /
 Month switch level with the name, narrowed by the subject row like every
@@ -291,6 +310,26 @@ Rules → paste `firestore.rules` → Publish (or `firebase deploy --only
 firestore:rules`). The write is anonymous but not unforgeable — someone with
 a script could add to a card over and over — which at this scale is a risk
 the list can carry; per-reader limits would need a server.
+
+**What is online, and what is on the phone.** Two kinds of thing, kept
+two ways on purpose:
+
+- **The cards are on the phone.** The bank is small — 1,813 cards is
+  2.5 MB, about 640 KB compressed — and the day has to open on a train, in
+  a lift, on a plane: a daily habit that fails without signal is a streak
+  lost to a tunnel. So the app carries the bank, and on every start asks
+  the site one tiny file, `cards/version.json` (a few dozen bytes); only
+  when it names a newer bank does it download `cards/cards.json`, and it
+  uses it from the next start, never mid-day. Dealing on the phone also
+  means the server never learns what anybody reads. A server that dealt
+  each reader's cards on request would buy nothing the calendar and the
+  version file do not already give — every phone deals the same day from
+  the same bank — and would cost a request, a failure mode and a privacy
+  question per card.
+- **The counts are online.** Likes, saves and says go to Firestore as they
+  happen; the lists are read from it, at most every ten minutes. What the
+  phone keeps of them is only the days that are closed and cannot change,
+  so a list seen offline is the list as it stands, not a guess.
 
 The **Archive** is artboard 70e — its head too: the name, the lens on the
 right and the count under it, with the way back beside the title, which is
@@ -534,7 +573,22 @@ days until the pool runs dry.
 
 ## The day, and whose it is
 
-A day is five cards on both plans. On the free plan one of them is the
+A day is five cards on both plans.
+
+**The welcome week.** A free reader's first seven days — days read, not days
+since the install — hold four cards of their own and the question of the
+day (`kWelcomeDays`, `kOwnCardsWelcome`). The first week is when an app is
+judged, and the onboarding has just asked the reader what they like: a
+first morning of four cards they did not choose would answer that the
+question was for show. So the first week is theirs, dealt by the reading of
+their onboarding, a notch above, opening on what they came for. Every
+evening of it the finished day says how many welcome days are left, and on
+the seventh it says the week ends tonight, what tomorrow looks like, and
+what Astute+ keeps — so the eighth morning is a thing they were told, not
+one they notice. Through the week the card after the fifth offers to *make
+all five yours*, since four already are.
+
+From the eighth day, on the free plan one of them is the
 reader's own — dealt from the mix, from the subjects and strands they kept
 on, at the level the onboarding was read to start them at (see *Reading
 the onboarding*) — and four are everybody's: the

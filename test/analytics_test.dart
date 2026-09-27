@@ -161,7 +161,8 @@ void main() {
       expect(day, isNotNull);
       expect(day!['cards'], 5);
       expect(day['reviews'], 0);
-      expect(day['own'], kOwnCardsFree);
+      expect(day['own'], kOwnCardsWelcome, reason: 'a first day welcomes');
+      expect(day['welcome'], isTrue);
       expect(day['is_plus'], false);
     });
 

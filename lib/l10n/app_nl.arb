@@ -397,5 +397,11 @@
  "topWeek": "Week",
  "topMonth": "Maand",
  "topReaders": "{n, plural, =1{1 lezer} other{{n} lezers}}",
- "topEmpty": "Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee."
+ "topEmpty": "Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee.",
+ "readMark": "Gelezen",
+ "lovedSinceTheStart": "Het meest geliefd sinds het begin",
+ "lovedIn": "Het meest geliefd in {subject}",
+ "lovedLine": "Wat lezers het vaakst bewaarden en jij nog niet hebt gelezen",
+ "welcomeDaysLeft": "{n, plural, =1{Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.} other{Je eerste week: nog {n} dagen met vier van de vijf van jou.}}",
+ "welcomeWeekEnds": "Je eerste week eindigt vanavond. Vanaf morgen is één van de vijf van jou en drie zijn van iedereen; met Astute+ blijven alle vijf van jou."
 }

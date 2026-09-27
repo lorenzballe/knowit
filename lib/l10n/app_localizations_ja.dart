@@ -1672,4 +1672,32 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get topEmpty => 'まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。';
+
+  @override
+  String get readMark => '既読';
+
+  @override
+  String get lovedSinceTheStart => 'はじまりから愛されたカード';
+
+  @override
+  String lovedIn(String subject) {
+    return '$subjectで愛されたカード';
+  }
+
+  @override
+  String get lovedLine => '読者がいちばん残したカードで、あなたがまだ読んでいないもの';
+
+  @override
+  String welcomeDaysLeft(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '最初の1週間：5枚中4枚があなたのカードの日が、あと$n日。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeWeekEnds =>
+      '最初の1週間は今夜で終わり。明日からは5枚中1枚があなたのカード、3枚はみんなのカード。Astute+なら5枚すべてあなたのまま。';
 }

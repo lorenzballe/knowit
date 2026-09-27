@@ -36,6 +36,19 @@ abstract class TallyStore {
   /// The counts on each of [days] that has any: day, then card, then how
   /// many readers.
   Future<Map<String, Map<String, int>>> read(List<String> days);
+
+  /// Adds one to [pillId]'s count for good.
+  Future<void> addTotal(String pillId);
+
+  /// Every card's count for good: card, then how many readers.
+  Future<Map<String, int>> readTotals();
+}
+
+/// Where a card's count for good is kept: the part of its id before the
+/// first dash, so a shard holds one subject's cards and stays small.
+String totalShard(String pillId) {
+  final int dash = pillId.indexOf('-');
+  return dash < 0 ? pillId : pillId.substring(0, dash);
 }
 
 /// One document per day at tallies/{day}: a count per card, and `k`, the
@@ -55,6 +68,21 @@ class FirestoreTallyStore implements TallyStore {
     'k': pillId,
     'n': {pillId: FieldValue.increment(1)},
   }, SetOptions(merge: true));
+
+  CollectionReference<Map<String, dynamic>> get _totals =>
+      _db.collection('totals');
+
+  @override
+  Future<void> addTotal(String pillId) => _totals.doc(totalShard(pillId)).set({
+    'k': pillId,
+    'n': {pillId: FieldValue.increment(1)},
+  }, SetOptions(merge: true));
+
+  @override
+  Future<Map<String, int>> readTotals() async {
+    final QuerySnapshot<Map<String, dynamic>> snap = await _totals.get();
+    return {for (final doc in snap.docs) ...countsOf(doc.data()['n'])};
+  }
 
   @override
   Future<Map<String, Map<String, int>>> read(List<String> days) async {
@@ -84,6 +112,9 @@ class MemoryTallyStore implements TallyStore {
 
   final Map<String, Map<String, int>> days;
 
+  /// The counts for good.
+  final Map<String, int> totals = {};
+
   /// Every set of days asked for, in order, so a test can see what was read.
   final List<List<String>> asked = [];
 
@@ -92,6 +123,13 @@ class MemoryTallyStore implements TallyStore {
     final Map<String, int> counts = days.putIfAbsent(day, () => {});
     counts[pillId] = (counts[pillId] ?? 0) + 1;
   }
+
+  @override
+  Future<void> addTotal(String pillId) async =>
+      totals[pillId] = (totals[pillId] ?? 0) + 1;
+
+  @override
+  Future<Map<String, int>> readTotals() async => Map.of(totals);
 
   @override
   Future<Map<String, Map<String, int>>> read(List<String> wanted) async {
@@ -157,6 +195,20 @@ class TopSeed {
     final double u = unit('seed:$id');
     if (u < 0.85) return 0;
     return 0.3 + 4.5 * math.pow((u - 0.85) / 0.15, 2.5);
+  }
+
+  /// When the crowd started: the first day of the calendar.
+  static final DateTime launched = DateTime.utc(2026, 9, 1);
+
+  /// A card's seeded count for good, [at] a moment: what its days add up
+  /// to on average — its daily following times the days since [launched],
+  /// the season and the day's luck both averaging one.
+  int total(String id, DateTime at) {
+    final double p = popularity(id);
+    if (p == 0) return 0;
+    final int days = at.toUtc().difference(launched).inDays;
+    if (days <= 0) return 0;
+    return (p * appeal(id) * days).floor();
   }
 
   /// The seeded counts for [day] (`yyyy-mm-dd`).
@@ -235,6 +287,7 @@ class Tallies extends ChangeNotifier {
   static const Duration _fresh = Duration(minutes: 10);
 
   final Map<String, Map<String, int>> _days = {};
+  final Map<String, int> _totals = {};
   bool _answered = false;
   DateTime? _readAt;
   Future<void>? _reading;
@@ -269,6 +322,11 @@ class Tallies extends ChangeNotifier {
     unawaited(
       store.add(day, pillId).catchError((Object error) {
         debugPrint('Could not count $pillId: $error');
+      }),
+    );
+    unawaited(
+      store.addTotal(pillId).catchError((Object error) {
+        debugPrint('Could not count $pillId for good: $error');
       }),
     );
   }
@@ -308,6 +366,16 @@ class Tallies extends ChangeNotifier {
     } catch (error) {
       debugPrint('Could not read the counts: $error');
       return;
+    }
+    // The totals are a nicety on top of the list: when they cannot be read
+    // the week and the month still stand.
+    try {
+      final Map<String, int> totals = await store.readTotals();
+      _totals
+        ..clear()
+        ..addAll(totals);
+    } catch (error) {
+      debugPrint('Could not read the totals: $error');
     }
 
     _days
@@ -383,6 +451,33 @@ class Tallies extends ChangeNotifier {
         final int newest = latest[a.key]!.compareTo(latest[b.key]!);
         if (newest != 0) return newest;
         return a.key.compareTo(b.key);
+      });
+    return [for (final e in order.take(limit)) Ranked(e.key, e.value)];
+  }
+
+  /// The cards readers held on to most since the start: the counts for
+  /// good, and the launch crowd's under them. Live rather than closed —
+  /// it is a shelf for finding what you missed, not a ranking to quote,
+  /// and it moves too slowly for a day's likes to show. [where] narrows it.
+  List<Ranked> allTime({bool Function(String id)? where, int limit = 40}) {
+    final DateTime now = _clock();
+    final Map<String, int> readers = {};
+    void add(String id, int n) {
+      if (n <= 0 || (where != null && !where(id))) return;
+      readers[id] = (readers[id] ?? 0) + n;
+    }
+
+    _totals.forEach(add);
+    final TopSeed? seed = this.seed;
+    if (seed != null) {
+      for (final String id in seed.ids()) {
+        add(id, seed.total(id, now));
+      }
+    }
+    final List<MapEntry<String, int>> order = readers.entries.toList()
+      ..sort((a, b) {
+        final int most = b.value.compareTo(a.value);
+        return most != 0 ? most : a.key.compareTo(b.key);
       });
     return [for (final e in order.take(limit)) Ranked(e.key, e.value)];
   }

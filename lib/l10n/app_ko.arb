@@ -397,5 +397,11 @@
  "topWeek": "주",
  "topMonth": "월",
  "topReaders": "{n, plural, other{{n}명}}",
- "topEmpty": "아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요."
+ "topEmpty": "아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요.",
+ "readMark": "읽음",
+ "lovedSinceTheStart": "처음부터 가장 사랑받은 카드",
+ "lovedIn": "{subject}에서 가장 사랑받은 카드",
+ "lovedLine": "독자들이 가장 많이 간직한 카드 중 아직 읽지 않은 것",
+ "welcomeDaysLeft": "{n, plural, other{첫 주: 다섯 장 중 네 장이 당신의 카드인 날이 {n}일 남았어요.}}",
+ "welcomeWeekEnds": "첫 주가 오늘 밤 끝나요. 내일부터 다섯 장 중 한 장은 당신의 카드, 세 장은 모두의 카드예요. Astute+는 다섯 장 모두 당신의 카드로 지켜 줘요."
 }

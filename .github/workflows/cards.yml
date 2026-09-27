@@ -114,4 +114,5 @@ jobs:
             tool/cards/editions.json
             lib/data/embedded_bank.dart
             web/cards/cards.json
+            web/cards/version.json
           labels: "${{ inputs.fake == true && 'cards, dry-run' || 'cards' }}"

@@ -1,8 +1,8 @@
 rules_version = '2';
 
 // Astute stores one document per reader, one board per reader that a
-// friend may look at, and a count per card per day of how many readers held
-// on to it. The policy: you may read and write your own, anyone signed in
+// friend may look at, a count per card per day of how many readers held on
+// to it, and the same count kept for good. The policy: you may read and write your own, anyone signed in
 // may read a board or a day's counts and add one to a count, and nothing
 // else exists.
 //
@@ -82,6 +82,31 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['k', 'n'])
         && isCardId(request.resource.data.k)
         && request.resource.data.n.size() <= 2000
+        && request.resource.data.n.diff(resource.data.n).affectedKeys()
+             .hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k]
+             == resource.data.n.get(request.resource.data.k, 0) + 1;
+      allow delete: if false;
+    }
+
+    // The same counts kept for good: one document per shard — the part of
+    // a card's id before its first dash, so science-2 is under science —
+    // one number per card, nothing about who. Explore's "loved since the
+    // start" is read off them. The same one-at-a-time rule as the days,
+    // without the clock: a total is never over, and never taken back.
+    match /totals/{shard} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.k.split('-')[0] == shard
+        && request.resource.data.n.keys().hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k] == 1;
+      allow update: if request.auth != null
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.k.split('-')[0] == shard
+        && request.resource.data.n.size() <= 5000
         && request.resource.data.n.diff(resource.data.n).affectedKeys()
              .hasOnly([request.resource.data.k])
         && request.resource.data.n[request.resource.data.k]

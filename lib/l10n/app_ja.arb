@@ -397,5 +397,11 @@
  "topWeek": "週",
  "topMonth": "月",
  "topReaders": "{n, plural, other{{n}人}}",
- "topEmpty": "まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。"
+ "topEmpty": "まだランキングはありません。いいね・保存・話したカードがすべてカウントされます。",
+ "readMark": "既読",
+ "lovedSinceTheStart": "はじまりから愛されたカード",
+ "lovedIn": "{subject}で愛されたカード",
+ "lovedLine": "読者がいちばん残したカードで、あなたがまだ読んでいないもの",
+ "welcomeDaysLeft": "{n, plural, other{最初の1週間：5枚中4枚があなたのカードの日が、あと{n}日。}}",
+ "welcomeWeekEnds": "最初の1週間は今夜で終わり。明日からは5枚中1枚があなたのカード、3枚はみんなのカード。Astute+なら5枚すべてあなたのまま。"
 }

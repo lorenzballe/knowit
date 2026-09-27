@@ -1,10 +1,12 @@
 /// The day: what is the reader's own in it, and what is everybody's.
 ///
-/// A day is five cards. On the free plan two of them are the reader's own —
-/// dealt from their mix, at the level they said they were — and three are
-/// everybody's: the question of the day, and two more that every free
-/// reader in the world meets on the same day. The day after a full week
-/// kept, three are the reader's own and two are everybody's.
+/// A day is five cards. On the free plan one of them is the reader's own —
+/// dealt from their mix, at the level the onboarding was read to start them
+/// at — and four are everybody's: the question of the day, and three more
+/// that every free reader meets on the same day, the ones on their mix
+/// first. The day after a full week kept, two are the reader's own. And
+/// through the welcome week, the first seven days read, four are the
+/// reader's own and only the question of the day is everybody's.
 ///
 /// With Astute+ all five are the reader's own: from the strands they keep
 /// on, at the level the app has measured rather than the one they said,
@@ -33,6 +35,20 @@ final DateTime kEpoch = DateTime(2026, 9, 1);
 /// question of the day and three of the edition's. Astute+ makes it five.
 const int kOwnCardsFree = 1;
 
+/// The welcome week: a free reader's first [kWelcomeDays] days — days
+/// actually read, not days since the install — hold [kOwnCardsWelcome] of
+/// their own beside the question of the day.
+///
+/// The first week is when an app is judged, and the onboarding has just
+/// asked the reader what they like: a first morning of four cards they did
+/// not choose would answer that the question was for show. So the first
+/// week is theirs — read by `ReaderProfile`, a notch above their level,
+/// opening on what they came for — and from the eighth day the free day is
+/// the shared one: the question of the day, three of the edition's, one of
+/// their own. The finished day says so the evening before it changes.
+const int kWelcomeDays = 7;
+const int kOwnCardsWelcome = 4;
+
 /// How many are the reader's own the day after a full week kept: the
 /// streak's own reward, and the thing Astute+ has more of, tasted once a
 /// week by a reader who has not paid for it.
@@ -40,14 +56,24 @@ const int kOwnCardsRewarded = 2;
 
 /// How many of a day's [kPillsPerDay] are the reader's own.
 ///
-/// All of them on Astute+. On the free plan [kOwnCardsFree], or
+/// All of them on Astute+. On the free plan [kOwnCardsWelcome] through the
+/// welcome week — [day] is the reader's day, 0 for the first, counted by
+/// the days they finished — and after it [kOwnCardsFree], or
 /// [kOwnCardsRewarded] on the morning after the streak reaches a multiple
-/// of seven — nothing to redeem and nothing to press: the deck simply has
+/// of seven: nothing to redeem and nothing to press, the deck simply has
 /// one more.
-int ownCardsFor({required bool plus, required int streak}) {
+int ownCardsFor({
+  required bool plus,
+  required int streak,
+  int day = kWelcomeDays,
+}) {
   if (plus) return kPillsPerDay;
+  if (day >= 0 && day < kWelcomeDays) return kOwnCardsWelcome;
   return streak > 0 && streak % 7 == 0 ? kOwnCardsRewarded : kOwnCardsFree;
 }
+
+/// True when [day] (0 for the reader's first) is in the welcome week.
+bool inWelcomeWeek(int day) => day >= 0 && day < kWelcomeDays;
 
 /// Which edition a date is: the first day is 1, and every day after it one
 /// more. Days before the calendar started come out at zero and below, and

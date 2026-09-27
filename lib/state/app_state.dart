@@ -396,7 +396,25 @@ class AppState extends ChangeNotifier {
   /// How many of a day's cards are the reader's own: all five on Astute+;
   /// two on the free plan, and three on the morning after a full week
   /// kept — the streak's own reward, tasted once a week.
-  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
+  int get ownCardsToday =>
+      ownCardsFor(plus: isPlus, streak: liveStreak, day: dayNumberOf(today));
+
+  /// True through the reader's first [kWelcomeDays] days read, when four of
+  /// the free day's five are their own. See [kOwnCardsWelcome].
+  bool get inWelcome => !isPlus && inWelcomeWeek(dayNumberOf(today));
+
+  /// How many welcome days are left after today, on the free plan.
+  int get welcomeDaysLeftAfterToday {
+    final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    final int day = dayNumberOf(tomorrow);
+    return isPlus || !inWelcomeWeek(day) ? 0 : kWelcomeDays - day;
+  }
+
+  /// True the evening the welcome week ends: today was a welcome day, and
+  /// tomorrow is the first shared one. Said once, the night before, so the
+  /// change is a thing the reader was told rather than one they notice.
+  bool get welcomeEndsTonight =>
+      inWelcome && welcomeDaysLeftAfterToday == 0 && todayCompleted;
 
   /// The onboarding's answers, read as a person rather than a form: a
   /// starting level a notch above for every subject, the strands picked by
@@ -494,6 +512,8 @@ class AppState extends ChangeNotifier {
       // re-asking. The whole claim of the plan is the first number; the
       // whole claim of the review ladder is the second.
       'own': ownIdsToday.length,
+      // The welcome week: the first seven days read, four of five their own.
+      'welcome': inWelcome,
       'reviews': reviewIdsToday.length,
       'topics': pickedTopics.length,
       'streak_days': streak,
@@ -543,7 +563,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0),
+      own: ownCardsFor(plus: isPlus, streak: 0, day: dayNumberOf(day)),
     ).cards;
   }
 
@@ -718,6 +738,18 @@ class AppState extends ChangeNotifier {
   }
 
   // ── Reading ───────────────────────────────────────────────────────────
+
+  /// A card read outside the day — opened in Explore and turned past or
+  /// closed on. It counts as read like any other: the day never deals it
+  /// again, and Explore's shelves for finding things stop offering it. A
+  /// card met in Explore and handed back as a daily card months later is
+  /// the one thing that would make Explore feel like a spoiler.
+  Future<void> markReadElsewhere(String pillId) async {
+    if (!seenIds.add(pillId)) return;
+    await _prefs.setStringList(_kSeenIds, seenIds.toList());
+    Analytics.capture('card read elsewhere', cardFacts(pillId));
+    notifyListeners();
+  }
 
   Future<void> advance() async {
     if (todayCompleted) return;
@@ -1175,7 +1207,11 @@ class AppState extends ChangeNotifier {
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-      own: ownCardsFor(plus: isPlus, streak: liveStreak),
+      own: ownCardsFor(
+        plus: isPlus,
+        streak: liveStreak,
+        day: dayNumberOf(tomorrow),
+      ),
     ).cards;
   }
 
@@ -1183,7 +1219,12 @@ class AppState extends ChangeNotifier {
   /// three cards of the reader's own instead of two. Astute+ has five every
   /// day, so there it is nothing to say.
   bool get tomorrowIsRewarded =>
-      !isPlus && liveStreak > 0 && liveStreak % 7 == 0;
+      !isPlus &&
+      liveStreak > 0 &&
+      liveStreak % 7 == 0 &&
+      !inWelcomeWeek(
+        dayNumberOf(DateTime(today.year, today.month, today.day + 1)),
+      );
 
   /// The card a morning opens on — for the reminder that quotes it and the
   /// widget that shows it. The question of the day on the free plan, where
