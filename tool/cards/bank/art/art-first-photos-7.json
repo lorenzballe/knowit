@@ -13,7 +13,7 @@
     "The mercury fumes reversed the silver image"
   ],
   "correct": 1,
-  "answer": "The plate was viewed from its lens side. A lens turns the image upside down, which is only a rotation: turn the plate and it is fixed. A negative is printed face to face onto paper, which flips it back; a daguerreotype never had that second step.",
+  "answer": "The plate was viewed from its lens side. A lens turns the image upside down, which is only a rotation: turn the plate round and it reads upright. A negative is printed face to face onto paper, which flips it back; a daguerreotype never had that second step.",
   "move": "Check whether a fault comes from the tool or from a missing step.",
   "trap": "Blaming the lens, the part known to invert the picture.",
   "keywords": [

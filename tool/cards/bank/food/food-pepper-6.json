@@ -1,0 +1,39 @@
+{
+  "id": "food-pepper-6",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a green peppercorn turns black mainly through its own enzymes, not through scorching by the sun?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Drying breaks the berry's cells, and an enzyme, polyphenol oxidase, then oxidises a phenolic compound in the skin into dark pigments, much as a cut apple browns. Growers dip berries in hot water for a minute to crack the cells and speed it. Green peppercorns are made by killing that enzyme first.",
+  "move": "What happens during a process is not always what the process does.",
+  "trap": "The berries blacken while lying in the sun, so the sun gets credit.",
+  "keywords": [
+    "black pepper",
+    "green peppercorns",
+    "enzymatic browning",
+    "polyphenol oxidase",
+    "drying"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Molecules, 2018, on pepper blackening",
+  "source_kind": "paper",
+  "reference": "doi:10.3390/molecules23020370",
+  "written": "2026-09-27"
+}

@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "exponential",
-  "question": "By the luthier's rule of 18, each fret takes 1/18 of the string left. On a 648 mm scale, where is fret 2, in mm from the nut?",
+  "question": "If each fret takes 1/18 of the string left, where does fret 2 sit on a 648 mm scale, in mm from the nut?",
   "value": 70,
   "unit": "mm",
   "answer": "36 + 34 = 70 mm.",

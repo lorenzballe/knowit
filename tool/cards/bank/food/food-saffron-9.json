@@ -1,0 +1,43 @@
+{
+  "id": "food-saffron-9",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "also": [
+    "medicine.pain.placebo"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Pooled trials suggest saffron eases mild depression. What chiefly keeps psychiatrists cautious?",
+  "options": [
+    "The effects found were too small",
+    "The trials were small, from one country",
+    "It was never tested against placebo"
+  ],
+  "correct": 1,
+  "answer": "The trials were small and nearly all run in Iran, many by one research network. Pooled, they show effects close to standard antidepressants, larger than a herb usually earns. Reviews rate the certainty low because a few dozen patients per arm, from one setting, cannot show whether the result travels to other clinics.",
+  "move": "A strong result from one place is a lead, not yet a finding.",
+  "trap": "Too small an effect, the usual failing of herbal remedies.",
+  "keywords": [
+    "saffron",
+    "depression",
+    "clinical trials",
+    "meta-analysis",
+    "iran"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Khaksarian et al., PRBM, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.2147/PRBM.S199343",
+  "written": "2026-09-27"
+}

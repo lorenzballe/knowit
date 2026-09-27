@@ -10,7 +10,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What was the charge-coupled device, the sensor in early digital cameras, first invented to do?",
-  "answer": "To store data. In 1969 Willard Boyle and George Smith at Bell Labs designed it as a memory, passing packets of charge along a chip like buckets in a line. Light also frees charge in silicon, so the same bucket brigade could read out an image. The memory never caught on; the camera sensor earned them the 2009 Nobel Prize.",
+  "answer": "To store data. In 1969 Willard Boyle and George Smith at Bell Labs designed it as a memory that passed packets of charge along a chip like buckets in a line. Light frees charge in silicon, so the chip could also read an image. The memory failed; the sensor won them a 2009 Nobel Prize.",
   "move": "An invention often succeeds at a job it was never designed for.",
   "keywords": [
     "charge-coupled device",

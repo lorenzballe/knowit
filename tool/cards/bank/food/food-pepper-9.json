@@ -1,0 +1,33 @@
+{
+  "id": "food-pepper-9",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can an English contract still be made binding by a single peppercorn?",
+  "answer": "Because English courts ask whether something was given in exchange, not whether it was worth enough. In Chappell v Nestlé, 1960, the House of Lords held that chocolate wrappers binned on receipt counted, and remarked that a peppercorn stays good payment to someone who dislikes pepper. Leases still charge one peppercorn a year.",
+  "move": "A court that refuses to weigh a price leaves the bargain to the bargainers.",
+  "keywords": [
+    "peppercorn rent",
+    "consideration",
+    "chappell v nestle",
+    "contract law",
+    "house of lords"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chappell v Nestlé, House of Lords, 1960",
+  "source_kind": "primary_document",
+  "reference": "Chappell & Co Ltd v Nestlé Co Ltd, House of Lords, [1960] AC 87, 1959",
+  "written": "2026-09-27"
+}

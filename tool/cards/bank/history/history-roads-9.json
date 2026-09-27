@@ -8,12 +8,12 @@
   "principle": "conditional",
   "question": "A Roman milestone bears the name and titles of an emperor who reigned 275 to 276. What does it date securely?",
   "options": [
-    "When the stone was set up",
+    "When its inscription was cut",
     "When that road was built",
     "When the road was last repaired"
   ],
   "correct": 0,
-  "answer": "When the stone was set up. In the third century towns often raised milestones to greet each new emperor, with no roadwork behind them, and some stones were recut for a successor. One road can carry stones naming emperors across three centuries. The inscription is a loyalty card, not a building record.",
+  "answer": "When its inscription was cut. In the third century towns often raised milestones to greet each new emperor, with no roadwork behind them, and some stones were recut for a successor. One road can carry stones naming emperors across three centuries. The inscription is a loyalty card, not a building record.",
   "move": "A name on a monument tells you who was honoured, not who worked.",
   "trap": "Reading an emperor's name on a road as proof he built it.",
   "keywords": [

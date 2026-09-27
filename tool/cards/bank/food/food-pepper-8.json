@@ -1,0 +1,40 @@
+{
+  "id": "food-pepper-8",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "In Pliny's Rome, around AD 77, which pepper cost the most per pound?",
+  "options": [
+    "Black pepper",
+    "White pepper",
+    "Long pepper"
+  ],
+  "correct": 2,
+  "answer": "Long pepper, at 15 denarii a pound, against 7 for white and 4 for black. It came from a different plant, Piper longum, whose catkin-like fruit Romans valued most. Europe later lost the taste for it as chillies arrived. Today it is a specialist's curiosity, and black pepper, the cheap one, conquered the table.",
+  "move": "Today's staple may have been yesterday's budget option.",
+  "trap": "White pepper, because the extra processing looks like it must add cost.",
+  "keywords": [
+    "long pepper",
+    "pliny the elder",
+    "roman prices",
+    "denarii",
+    "white pepper"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pliny the Elder, Natural History, Book 12",
+  "source_kind": "primary_document",
+  "reference": "https://www.attalus.org/pliny/hn12a.html",
+  "written": "2026-09-27"
+}

@@ -13,7 +13,7 @@
     "The strings sit nearer one coil"
   ],
   "correct": 0,
-  "answer": "The coils' magnets face opposite ways. Hum from outside induces the same voltage in both coils, and the reversed wiring subtracts it. A moving string changes the field through each coil in opposite directions, because of the flipped magnets, so the reversed wiring flips it back and the two add. Seth Lover's design, patented in 1959, reverses twice.",
+  "answer": "The coils' magnets face opposite ways. Outside hum induces the same voltage in both coils, and the reversed wiring subtracts it. A moving string changes the field through each coil in opposite directions, because of the flipped magnets, so the reversed wiring flips it back and the two add. Seth Lover's 1959 patent reverses twice.",
   "move": "When one reversal cancels noise, a second reversal can rescue the signal.",
   "trap": "Assuming cancellation picks out pitches, the way a tone filter does.",
   "keywords": [
