@@ -1020,8 +1020,13 @@ These are declared in the UI rather than faked:
   the bank is built and tested against a canned model; the first real night
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
   allowed to open pull requests. The bank itself no longer waits on it: in
-  September 2026 it was grown by hand to 1,790 live cards, at least five on
-  every one of the 324 strands.
+  September 2026 it was grown by hand to 3,410 live cards, at least ten on
+  every one of the 324 strands — five from a first round, and five from a
+  second, harder one written for a reader who has already read the first
+  five (ids `-6` to `-10`, written 2026-09-27; 40% of its cards that ask are
+  `hard`). Every half-subject of the second round was checked by a critic;
+  the claims nobody could confirm from a source are listed in
+  `tool/cards/UNVERIFIED.md`, to be checked first.
 - **The kept signing key.** Optional. Without it `codemagic.yaml` signs as it
   always has: it revokes every distribution certificate in the account and
   mints a new one, which needs nothing set up but fails, with ITMS-90035,
@@ -1036,11 +1041,12 @@ These are declared in the UI rather than faked:
   build leaves the group out rather than failing at signing: today's card
   shows the question of the day from the web instead of the reader's own,
   and the streak and the five ask for the app to be opened.
-- **Depth under every strand.** Every strand now holds at least five live
+- **Depth under every strand.** Every strand now holds at least ten live
   cards, so a reader who turns everything off but *Space · Rockets* is dealt
-  five of their own before the dealer reaches for whatever is nearest. Five
-  is a floor, not a library: a strand that narrow still runs dry in a few
-  days, and the generator writes towards the thinnest strands first.
+  ten of their own before the dealer reaches for whatever is nearest. Ten
+  is a floor, not a library: a strand that narrow still runs dry in a
+  couple of weeks, and the generator writes towards the thinnest strands
+  first.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with

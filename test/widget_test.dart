@@ -3688,6 +3688,9 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text(pill.counterpoint), findsNothing);
+      // A long question can push the button itself below the fold.
+      await tester.ensureVisible(find.text('What the other side says'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
       // A long debate pushes the other side below the fold, and a list
@@ -3774,9 +3777,12 @@ void main() {
       final app = AppState();
       await app.init();
 
-      final cards = PillBank.cards
+      final all = PillBank.cards
           .where((p) => p.principle == Principle.baseRate)
           .toList();
+      // The two answered here are multiple choice, so one can be right and
+      // one plainly wrong; the principle is also trained by number cards.
+      final cards = all.where((p) => p.challenge is PickOne).toList();
       expect(cards.length, greaterThanOrEqualTo(2));
 
       final right = (cards.first.challenge as PickOne).correct;
@@ -3786,7 +3792,7 @@ void main() {
       final m = app.masteryOf(Principle.baseRate);
       expect(m.met, 2);
       expect(m.right, 1);
-      expect(m.contexts, cards.length);
+      expect(m.contexts, all.length);
       expect(m.isSettled, isTrue);
     });
   });
