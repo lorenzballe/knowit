@@ -1,0 +1,42 @@
+{
+  "id": "food-salt-10",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A ready meal's label lists 1.2 g of sodium. What percentage of WHO's 5 g daily salt limit is that?",
+  "value": 60,
+  "unit": "% of the daily limit",
+  "answer": "3 / 5 = 0.6, or 60%.",
+  "move": "Check what a label counts before comparing it with a limit.",
+  "trap": "Reading 1.2 g as salt and answering 24%.",
+  "hint": "Salt is sodium chloride: sodium is only part of its weight.",
+  "steps": [
+    "Sodium is 23 of the 58.5 units of weight in salt, so salt = sodium x 2.5.",
+    "1.2 g sodium x 2.5 = 3 g of salt.",
+    "3 / 5 = 0.6, or 60%."
+  ],
+  "keywords": [
+    "sodium",
+    "salt",
+    "food labels",
+    "who guideline",
+    "molar mass"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO guideline on sodium intake, 2012",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Guideline: Sodium intake for adults and children, WHO, 2012",
+  "written": "2026-09-27"
+}

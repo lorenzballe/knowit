@@ -1,0 +1,35 @@
+{
+  "id": "music-autotune-6",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does correcting a vocal by a semitone not make the singer sound like a sped-up tape?",
+  "answer": "Because the software moves the note and leaves the vowels alone. A voice is a buzz at the sung pitch, shaped by resonances of the throat and mouth, called formants, that make each vowel. Speeding tape shifts both. Correction keeps the formants in place. Push it several semitones and the throat seems to shrink.",
+  "move": "Before changing one quality of a thing, check what else is tied to it.",
+  "keywords": [
+    "formants",
+    "pitch shifting",
+    "vowels",
+    "tape speed"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zölzer (ed.), DAFX, 2011",
+  "source_kind": "book",
+  "reference": "Zölzer (ed.), DAFX: Digital Audio Effects, 2nd edn, Wiley, 2011",
+  "written": "2026-09-27"
+}

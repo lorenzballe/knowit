@@ -9,8 +9,8 @@
   "question": "Microelectrode recordings suggested cortical neurons fire briskly. Why did later methods find many of them nearly silent?",
   "options": [
     "Electrodes find cells by their firing",
-    "Anaesthesia had sped the cells up",
-    "Imaging light slows neurons down"
+    "Later studies used deeper anaesthesia",
+    "Early electrodes counted noise as spikes"
   ],
   "correct": 0,
   "answer": "Electrodes find cells by their firing. An experimenter lowers an electrode until a cell crackles on the loudspeaker, so quiet neurons are passed by unrecorded. Methods that sample blind, such as patching onto cells or imaging hundreds at once, found many cortical neurons firing less than once a second, and some hardly at all.",

@@ -1,0 +1,33 @@
+{
+  "id": "food-salt-9",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was salt, rather than bread or milk, chosen to carry iodine into diets?",
+  "answer": "Because nearly everyone eats a steady few grams a day in every season and class, and it comes from a handful of producers. Dosing a few salt works beats policing thousands of bakers. Switzerland began in 1922; WHO advises 20 to 40 mg of iodine per kilogram of salt. The shaker became a medicine.",
+  "move": "To reach everyone, pick the thing everyone already uses in the same amount.",
+  "keywords": [
+    "iodised salt",
+    "iodine deficiency",
+    "goitre",
+    "switzerland",
+    "fortification"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO, UNICEF & ICCIDD, 2007",
+  "source_kind": "institution",
+  "reference": "WHO, UNICEF & ICCIDD, Assessment of iodine deficiency disorders and monitoring their elimination, 3rd edition, World Health Organization, 2007",
+  "written": "2026-09-27"
+}

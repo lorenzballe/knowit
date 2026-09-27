@@ -1,0 +1,33 @@
+{
+  "id": "language-prestige-accents-8",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the throaty r spread from Paris to Berlin, Copenhagen and Bergen while skipping the countryside between?",
+  "answer": "By hopping from city to city. The uvular r, made at the back of the throat, gained prestige among Parisians, probably by the 1700s, though its origin is contested. Educated townspeople elsewhere copied it, and only later did it seep from each city into the villages around. Early maps show it as islands.",
+  "move": "Status travels between hubs first and reaches the ground between them last.",
+  "keywords": [
+    "uvular r",
+    "paris",
+    "copenhagen",
+    "diffusion",
+    "prestige"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Chambers & Trudgill, Dialectology, 1998",
+  "source_kind": "book",
+  "reference": "Chambers & Trudgill, Dialectology, 2nd ed., Cambridge University Press, 1998",
+  "written": "2026-09-27"
+}

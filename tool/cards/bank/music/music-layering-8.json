@@ -1,0 +1,37 @@
+{
+  "id": "music-layering-8",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a touring band use backing tracks to reproduce its layered studio sound on stage?",
+  "sides": [
+    "Yes, use the tracks",
+    "No, play only what is played"
+  ],
+  "answer": "A modern record is dozens of layers: stacked vocals, doubled guitars, synth pads. Four people cannot play forty parts, and an audience paid to hear the songs it knows. Tracks let a small band deliver the arrangement faithfully every night, while the players and the singer stay genuinely live on top of them.",
+  "move": "Whichever side you took, it turns on whether a ticket buys songs or performance.",
+  "counterpoint": "A concert is worth attending because it can differ from the record. Tracks lock every song to a click, so the band cannot stretch a chorus or follow the crowd. When they fail, the illusion collapses, as when the wrong vocal track played for Ashlee Simpson on Saturday Night Live in 2004.",
+  "keywords": [
+    "backing tracks",
+    "live performance",
+    "click track",
+    "concerts"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saturday Night Live, NBC, 2004",
+  "source_kind": "primary_document",
+  "reference": "Saturday Night Live, NBC, broadcast 23 October 2004",
+  "written": "2026-09-27"
+}

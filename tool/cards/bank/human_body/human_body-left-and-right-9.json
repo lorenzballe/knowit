@@ -5,7 +5,7 @@
   "strand": "human_body.the_brain.left_and_right",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "confounding",
+  "principle": "reflection",
   "question": "Left-handers are about one person in ten but a far larger share of top fencers. What best explains the excess?",
   "options": [
     "A right-hemisphere edge in spatial skill",

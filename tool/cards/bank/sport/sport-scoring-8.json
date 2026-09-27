@@ -1,0 +1,42 @@
+{
+  "id": "sport-scoring-8",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Diving drops the top two and bottom two of seven marks: 8, 8, 8.5, 8.5, 9, 9, 9.5. Points lost if one 8 becomes 3?",
+  "value": 0,
+  "unit": "points",
+  "answer": "Same marks counted, so the dive loses 0 points.",
+  "move": "A trimmed average shrugs off one wild judge; that is what it is for.",
+  "trap": "Averaging all seven marks, as if every judge's number counted.",
+  "hint": "Sort both sets of marks and see which three survive each time.",
+  "steps": [
+    "Before: drop 8, 8, 9 and 9.5; the middle three are 8.5, 8.5, 9.",
+    "After: drop 3, 8, 9 and 9.5; the middle three are still 8.5, 8.5, 9.",
+    "Same marks counted, so the dive loses 0 points."
+  ],
+  "keywords": [
+    "diving",
+    "judges",
+    "trimmed mean",
+    "scoring",
+    "outliers"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Aquatics, Diving Rules",
+  "source_kind": "standard",
+  "reference": "World Aquatics, Competition Regulations: Diving Rules, 2023",
+  "written": "2026-09-27"
+}

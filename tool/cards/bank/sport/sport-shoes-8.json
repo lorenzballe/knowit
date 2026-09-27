@@ -1,0 +1,39 @@
+{
+  "id": "sport-shoes-8",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "At 14.5 km/h, how did impact forces in thick maximalist running shoes compare with those in conventional running shoes?",
+  "options": [
+    "About 10% lower",
+    "About the same",
+    "About 10% higher"
+  ],
+  "correct": 2,
+  "answer": "About 10% higher. Kulmala's team measured the impact peak 10.7% higher and the loading rate 12.3% higher in the highly cushioned shoe. Runners met the softer sole by stiffening their legs, so the body came down harder on top of the foam. A mattress under the foot changed the leg above it.",
+  "move": "Expect people to adjust when a device takes over part of their job.",
+  "trap": "Assuming a softer sole must mean a softer landing for the body.",
+  "keywords": [
+    "maximalist shoes",
+    "cushioning",
+    "impact loading",
+    "leg stiffness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kulmala et al., Scientific Reports, 2018",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/s41598-018-35980-6",
+  "written": "2026-09-27"
+}

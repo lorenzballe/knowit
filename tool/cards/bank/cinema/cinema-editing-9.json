@@ -1,0 +1,42 @@
+{
+  "id": "cinema-editing-9",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Apocalypse Now exposed 1,250,000 feet of film, at 90 feet a minute, for a 147-minute cut. Minutes shot per minute used?",
+  "value": 94.5,
+  "unit": "minutes shot per minute used",
+  "tolerance": 2,
+  "answer": "13,900 / 147 = about 94.5 minutes shot per minute used.",
+  "move": "Count what was thrown away to learn what the finished thing really cost.",
+  "trap": "Guessing about 10 to 1, as if most footage made the cut.",
+  "hint": "Turn the footage into minutes first, then set it against the running time.",
+  "steps": [
+    "1,250,000 / 90 = about 13,900 minutes of film, some 230 hours.",
+    "The released cut keeps 147 of those minutes.",
+    "13,900 / 147 = about 94.5 minutes shot per minute used."
+  ],
+  "keywords": [
+    "apocalypse now",
+    "shooting ratio",
+    "walter murch",
+    "footage"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murch, In the Blink of an Eye",
+  "source_kind": "book",
+  "reference": "Murch, In the Blink of an Eye: A Perspective on Film Editing, 2nd edn, Silman-James Press, 2001",
+  "written": "2026-09-27"
+}

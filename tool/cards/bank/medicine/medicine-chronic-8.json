@@ -1,0 +1,39 @@
+{
+  "id": "medicine-chronic-8",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Diagnosed by pressing tender points, fibromyalgia patients were about 90% women. Once symptom questionnaires replaced the pressure test, what did the ratio become?",
+  "options": [
+    "Still about 9 women to 1 man",
+    "About 2 women to 1 man",
+    "About 1 woman to 1 man"
+  ],
+  "correct": 1,
+  "answer": "About 2 women to 1 man. The 1990 criteria required pain at 11 of 18 pressed points, and women on average feel pressure as pain at lower force. Many men with the same widespread pain never reached 11. The diagnosis had been partly sorting patients by the pressure of a thumb.",
+  "move": "Ask whether the test used to find a group decided who was found.",
+  "trap": "Taking a disease's sex ratio as fixed biology rather than a measurement.",
+  "keywords": [
+    "fibromyalgia",
+    "tender points",
+    "diagnostic criteria",
+    "sex ratio"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolfe et al., PLOS One, 2018",
+  "source_kind": "paper",
+  "reference": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0203755",
+  "written": "2026-09-27"
+}

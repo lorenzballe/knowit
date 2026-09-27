@@ -1,0 +1,43 @@
+{
+  "id": "medicine-anaesthesia-8",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "also": [
+    "human_body.blood_and_heart.circulation"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Core temperature often drops about 1 °C in the first hour of general anaesthesia. Where does most of that heat go?",
+  "options": [
+    "Out through the open wound",
+    "Into the patient's own arms and legs",
+    "Into the cold air of the theatre"
+  ],
+  "correct": 1,
+  "answer": "Into the patient's own arms and legs. Awake, the body keeps warm blood in its core by narrowing vessels in the limbs. Anaesthetics switch that reflex off, so core heat floods outwards, a redistribution behind most of the first hour's fall. Loss to the room dominates later. Warming patients before induction blunts the drop.",
+  "move": "Before blaming a loss on leakage, check whether it simply moved inside.",
+  "trap": "Blaming the open wound, the obvious place for heat to escape.",
+  "keywords": [
+    "perioperative hypothermia",
+    "heat redistribution",
+    "vasoconstriction",
+    "core temperature",
+    "prewarming"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sessler, Anesthesiology, 2000",
+  "source_kind": "paper",
+  "reference": "Sessler, Perioperative heat balance, Anesthesiology, 2000",
+  "written": "2026-09-27"
+}

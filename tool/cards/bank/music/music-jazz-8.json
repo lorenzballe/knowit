@@ -1,0 +1,39 @@
+{
+  "id": "music-jazz-8",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the word jazz first appeared in print describing music in New Orleans?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The earliest printed uses are Californian sports slang: in 1912 the Los Angeles Times described a pitcher's jazz ball, a pitch said to wobble, and San Francisco papers used the word for pep and energy in 1913. Printed uses for music follow only from about 1915, and not from New Orleans.",
+  "move": "The first written record of a word rarely shows where it was born.",
+  "trap": "The music came from New Orleans, so its name must have too.",
+  "keywords": [
+    "jazz",
+    "etymology",
+    "baseball",
+    "slang",
+    "newspapers"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Los Angeles Times, 2 April 1912",
+  "source_kind": "news_archive",
+  "reference": "Los Angeles Times, Ben's Jazz Curve, 2 April 1912",
+  "written": "2026-09-27"
+}

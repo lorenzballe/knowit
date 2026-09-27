@@ -1,0 +1,33 @@
+{
+  "id": "sport-scoring-6",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a rugby try once count for less than the kick at goal that followed it?",
+  "answer": "Because it was only a licence to kick. Grounding the ball earned a try at goal, and goals decided matches. Once points came in, a try scored 1 and a conversion 2 until 1891. The try rose to 3 in 1893, 4 in 1971 and 5 in 1992, tilting value from boot to hands.",
+  "move": "A name often preserves what a thing was worth before the rules changed.",
+  "keywords": [
+    "rugby union",
+    "try",
+    "conversion",
+    "points values",
+    "1992"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Rugby365, Scoring down the years",
+  "source_kind": "news_archive",
+  "reference": "https://rugby365.com/laws-referees/news/scoring-down-the-years/",
+  "written": "2026-09-27"
+}

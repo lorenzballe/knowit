@@ -1,0 +1,39 @@
+{
+  "id": "sport-fouls-8",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a defender who drags back a striker through on goal escapes every card if the referee plays on and the striker scores?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Denying an obvious goal-scoring opportunity normally costs a red card. But if the referee plays advantage and the goal is scored anyway, the Law imposes no disciplinary sanction: the foul ended up denying nothing. If advantage is played and no goal follows, the defender is booked when the ball next goes out.",
+  "move": "Ask whether a penalty punishes the act or the harm it did.",
+  "trap": "Assuming the punishment is fixed the moment the foul is committed.",
+  "keywords": [
+    "advantage",
+    "red card",
+    "goal-scoring opportunity",
+    "law 12",
+    "caution"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 12",
+  "source_kind": "primary_document",
+  "reference": "https://www.theifab.com/laws/latest/fouls-and-misconduct/",
+  "written": "2026-09-27"
+}

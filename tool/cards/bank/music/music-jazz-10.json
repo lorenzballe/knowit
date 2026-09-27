@@ -1,0 +1,42 @@
+{
+  "id": "music-jazz-10",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 78 side held about three minutes. A band plays a 32-bar tune in 4/4 at 200 beats a minute. How many whole choruses fit?",
+  "value": 4,
+  "unit": "choruses",
+  "answer": "So 4 whole choruses fit.",
+  "move": "A fixed container quietly writes the form of whatever goes into it.",
+  "trap": "Rounding 4.7 up to 5, though a chorus cannot stop halfway.",
+  "hint": "Count the beats in one chorus, then divide by the tempo.",
+  "steps": [
+    "One chorus: 32 × 4 = 128 beats.",
+    "128 ÷ 200 = 0.64 minutes a chorus.",
+    "3 ÷ 0.64 = about 4.7 choruses.",
+    "So 4 whole choruses fit."
+  ],
+  "keywords": [
+    "78 rpm record",
+    "chorus",
+    "tempo",
+    "recording time"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Day, A Century of Recorded Music, 2000",
+  "source_kind": "book",
+  "reference": "Day, A Century of Recorded Music: Listening to Musical History, Yale University Press, 2000",
+  "written": "2026-09-27"
+}

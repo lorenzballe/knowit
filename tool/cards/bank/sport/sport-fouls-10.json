@@ -1,0 +1,40 @@
+{
+  "id": "sport-fouls-10",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "In NHL games, once one team has been called for a penalty, which team is more likely to be called for the next?",
+  "options": [
+    "The same team, already rattled",
+    "Either team, with even odds",
+    "The other team"
+  ],
+  "correct": 2,
+  "answer": "The other team. Studying NHL penalties from 1995 to 2002, Abrevaya and McCulloch found that nearly two-thirds of first and second penalties went to opposite teams, even after allowing for score, time and home side. Later work found referees track the running total: the side with fewer penalties tends to receive the next.",
+  "move": "Judges who keep count of their own calls are not judging each call alone.",
+  "trap": "Treating each call as judged on its merits, apart from the last.",
+  "keywords": [
+    "nhl",
+    "penalties",
+    "make-up calls",
+    "referees",
+    "ice hockey"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abrevaya & McCulloch, JQAS, 2014",
+  "source_kind": "paper",
+  "reference": "Abrevaya & McCulloch, Reversal of fortune: a statistical analysis of penalty calls in the National Hockey League, Journal of Quantitative Analysis in Sports, 2014",
+  "written": "2026-09-27"
+}

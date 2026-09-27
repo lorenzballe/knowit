@@ -5,7 +5,7 @@
   "strand": "music.why_songs_work.chord_loops",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "conditional",
   "question": "In 17th-century Venetian opera, a bass repeating four steps down from the home note usually signalled what?",
   "options": [
     "A lament",

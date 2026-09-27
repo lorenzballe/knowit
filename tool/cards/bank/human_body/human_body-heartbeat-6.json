@@ -10,17 +10,17 @@
   "value": 2900,
   "unit": "million beats",
   "withinFactor": 3,
-  "answer": "37 million x 80 = about 2,900 million beats.",
+  "answer": "36.5 million x 80 = about 2,900 million beats.",
   "move": "Carry a small rate through every unit of time before judging its total.",
   "trap": "Recalling the billion heartbeats said to be every mammal's allowance.",
   "hint": "Start from beats a minute and scale up to a year.",
   "steps": [
     "About 70 beats a minute x 60 = 4,200 an hour.",
     "4,200 x 24 = about 100,000 a day.",
-    "100,000 x 365 = about 37 million a year.",
-    "37 million x 80 = about 2,900 million beats."
+    "100,000 x 365 = about 36.5 million a year.",
+    "36.5 million x 80 = about 2,900 million beats."
   ],
-  "simply": "Across mammals from mouse to whale, Levine found lifetimes of under a billion beats: fast hearts, short lives. A human heart runs about three times past that pattern.",
+  "simply": "Across mammals from mouse to whale, Levine found lifetimes averaging under a billion beats: fast hearts, short lives. A human heart runs about three times past that pattern.",
   "keywords": [
     "heart rate",
     "lifetime heartbeats",

@@ -1,0 +1,33 @@
+{
+  "id": "medicine-anaesthesia-7",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must an opened vial of propofol, the milky anaesthetic, be used within hours and never shared between patients?",
+  "answer": "Because it is food for bacteria. Propofol will not dissolve in water, so it is carried in an emulsion of soybean oil and egg lecithin, hence the milky look. Stray germs multiply in it. In 1990, infections after surgery at seven US hospitals were traced to syringes drawn up ahead and reused.",
+  "move": "What makes a medicine easy to deliver can also make it easy to spoil.",
+  "keywords": [
+    "propofol",
+    "lipid emulsion",
+    "bacterial contamination",
+    "surgical infections",
+    "syringes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bennett et al., NEJM, 1995",
+  "source_kind": "paper",
+  "reference": "Bennett et al., Postoperative infections traced to contamination of an intravenous anesthetic, propofol, New England Journal of Medicine, 1995",
+  "written": "2026-09-27"
+}

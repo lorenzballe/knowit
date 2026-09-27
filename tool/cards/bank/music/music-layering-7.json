@@ -1,0 +1,48 @@
+{
+  "id": "music-layering-7",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "How many singers, each as loud as a soloist and not in lockstep, does it take to sound twice as loud?",
+  "value": 10,
+  "unit": "singers",
+  "answer": "10 times the power takes 10 singers.",
+  "move": "When perception runs on ratios, doubling the effect costs far more than doubling the effort.",
+  "trap": "Two singers, as if two voices made twice the sound.",
+  "hint": "Perceived loudness doubles for roughly every 10 decibels added.",
+  "steps": [
+    "Perceived loudness doubles for about every 10 dB added.",
+    "Voices not in lockstep add their power.",
+    "+10 dB is 10 times the power.",
+    "10 times the power takes 10 singers."
+  ],
+  "keywords": [
+    "loudness",
+    "decibels",
+    "choirs",
+    "sones"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "music-layering-2"
+  ],
+  "figure": "none",
+  "source": "Stevens, JASA, 1955",
+  "source_kind": "paper",
+  "reference": "Stevens, The Measurement of Loudness, Journal of the Acoustical Society of America, 1955",
+  "written": "2026-09-27"
+}

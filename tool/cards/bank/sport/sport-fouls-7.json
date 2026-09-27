@@ -1,0 +1,33 @@
+{
+  "id": "sport-fouls-7",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did football's lawmakers retreat, after two seasons, from disallowing every goal that followed an accidental attacking handball?",
+  "answer": "Because it punished bad luck. From 2019 any accidental touch on an attacker's arm just before a goal wiped the goal out, even when the ball had struck a team-mate's arm in the build-up. From 2021 only the scorer's own accidental handling, immediately before scoring, cancels the goal; a team-mate's no longer does.",
+  "move": "A rule written to remove all doubt often removes the innocent too.",
+  "keywords": [
+    "handball",
+    "accidental handball",
+    "ifab",
+    "disallowed goal",
+    "law 12"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game 2021/22",
+  "source_kind": "primary_document",
+  "reference": "International Football Association Board, Laws of the Game 2021/22, Law 12 Fouls and Misconduct, Handling the ball",
+  "written": "2026-09-27"
+}

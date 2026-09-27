@@ -1,0 +1,41 @@
+{
+  "id": "language-dialects-9",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "From 1879, Georg Wenker had German schoolteachers render 40 set sentences in local dialect. Over 44,000 forms came back. How many sentences, in millions?",
+  "value": 1.76,
+  "unit": "million sentences",
+  "tolerance": 0.05,
+  "answer": "1,760,000 = 1.76 million sentences.",
+  "move": "A huge sample written by one kind of person still carries that person's ear.",
+  "hint": "Multiply the forms by the sentences on each one.",
+  "steps": [
+    "44,000 forms x 40 sentences = 1,760,000 sentences.",
+    "1,760,000 = 1.76 million sentences."
+  ],
+  "keywords": [
+    "georg wenker",
+    "german dialects",
+    "questionnaires",
+    "schoolteachers",
+    "dialect atlas"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forschungszentrum Deutscher Sprachatlas, Marburg",
+  "source_kind": "institution",
+  "reference": "https://regionalsprache.de/en/contents-wenker-questionnaires.aspx",
+  "written": "2026-09-27"
+}

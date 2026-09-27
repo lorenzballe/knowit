@@ -1,0 +1,42 @@
+{
+  "id": "music-autotune-9",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "also": [
+    "technology.ai.limits"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "A detector is 95% right on corrected and natural vocals alike. If 1 vocal in 20 is natural, how often is a natural verdict right?",
+  "options": [
+    "About 95% of the time",
+    "About half the time",
+    "About 5% of the time"
+  ],
+  "correct": 1,
+  "answer": "About half the time. Among 1,000 vocals, 50 are natural and the detector calls 47 or 48 of them natural. It also wrongly calls 5% of the 950 corrected ones natural: another 47 or 48. Half its natural verdicts are false: each real find stands beside an impostor.",
+  "move": "The rarer the thing you hunt, the more your alarms point at impostors.",
+  "trap": "Reading 95% accuracy as a 95% chance that each verdict is right.",
+  "keywords": [
+    "pitch correction",
+    "detection",
+    "false positives",
+    "bayes theorem"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Bayes' theorem",
+  "source_kind": "arithmetic",
+  "reference": "Gigerenzer, Calculated Risks: How to Know When Numbers Deceive You, Simon & Schuster, 2002",
+  "written": "2026-09-27"
+}

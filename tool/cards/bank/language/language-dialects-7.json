@@ -1,0 +1,40 @@
+{
+  "id": "language-dialects-7",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The Survey of English Dialects, run from 1950 to 1961, chose whom to record in each village?",
+  "options": [
+    "A random sample of adult residents",
+    "Elderly men who had rarely moved",
+    "Schoolchildren and their parents"
+  ],
+  "correct": 1,
+  "answer": "Elderly men who had rarely moved. Fieldworkers sought people over 60, born locally, often farm workers, in 313 mostly rural places, to catch the oldest forms before they vanished; linguists later called the type NORMs, non-mobile older rural males. The maps show a countryside of grandfathers, with most towns left out.",
+  "move": "Before trusting a map of how people speak, ask who was asked.",
+  "trap": "Assuming a national survey recorded a fair cross-section of the nation.",
+  "keywords": [
+    "survey of english dialects",
+    "norms",
+    "fieldwork",
+    "informants",
+    "rural speech"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chambers & Trudgill, Dialectology, 1998",
+  "source_kind": "book",
+  "reference": "Chambers & Trudgill, Dialectology, 2nd ed., Cambridge University Press, 1998",
+  "written": "2026-09-27"
+}

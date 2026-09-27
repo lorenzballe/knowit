@@ -1,0 +1,42 @@
+{
+  "id": "medicine-chronic-6",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "On an ordinary day in 2020, roughly how many people worldwide were living with low back pain, in millions?",
+  "value": 619,
+  "unit": "million people",
+  "withinFactor": 3,
+  "answer": "7,800 x 0.08 = about 620 million people.",
+  "move": "A small daily share of a huge population is never a small number.",
+  "trap": "Picturing only the bedridden cases and guessing a few tens of millions.",
+  "hint": "Start from the world's population and the share in pain on any one day.",
+  "steps": [
+    "World population in 2020: about 7,800 million people.",
+    "On any given day about 1 person in 13 has low back pain, roughly 8%.",
+    "7,800 x 0.08 = about 620 million people."
+  ],
+  "keywords": [
+    "low back pain",
+    "global burden of disease",
+    "prevalence",
+    "fermi estimate"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GBD collaborators, Lancet Rheumatology, 2023",
+  "source_kind": "paper",
+  "reference": "GBD 2021 Low Back Pain Collaborators, Global, regional, and national burden of low back pain, 1990-2020, and projections to 2050, The Lancet Rheumatology, 2023",
+  "written": "2026-09-27"
+}

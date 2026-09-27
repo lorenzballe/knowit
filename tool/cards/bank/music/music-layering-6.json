@@ -1,0 +1,36 @@
+{
+  "id": "music-layering-6",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "also": [
+    "technology.ai.training"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could Revolver be remixed in 2022 with instruments that four-track tape had merged in 1966?",
+  "answer": "By having software pull them apart. To fit Revolver onto four-track tape, engineers bounced several parts onto one track, merging them for good. Peter Jackson's team built a machine-learning tool for the Get Back film that separates instruments and voices in one recording; Giles Martin used it. The layers came back out of the mix.",
+  "move": "A merge once final can become reversible when a new tool arrives.",
+  "keywords": [
+    "revolver",
+    "demixing",
+    "giles martin",
+    "four-track tape",
+    "machine learning"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Louder, 2022",
+  "source_kind": "news_archive",
+  "reference": "https://www.loudersound.com/features/breaking-down-the-beatles-giles-martin-and-the-miracle-of-the-revolver-de-mix",
+  "written": "2026-09-27"
+}

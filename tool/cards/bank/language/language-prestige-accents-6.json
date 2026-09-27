@@ -1,0 +1,39 @@
+{
+  "id": "language-prestige-accents-6",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Received Pronunciation ruled BBC announcing for decades. Roughly what share of Britons did Peter Trudgill estimate spoke it?",
+  "options": [
+    "About a quarter",
+    "About 3 per cent",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About 3 per cent. Trudgill reached the figure in the 1970s, generalising from his Norwich survey, and later said he would not object to 5. The accent heard daily from announcers, judges and officers belonged to a thin upper layer; most people who could imitate it never used it at home.",
+  "move": "How often a voice is heard says little about how many share it.",
+  "trap": "Judging how common an accent is by how often it is broadcast.",
+  "keywords": [
+    "received pronunciation",
+    "peter trudgill",
+    "bbc",
+    "social class"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trudgill, The Sociolinguistics of Modern RP",
+  "source_kind": "paper",
+  "reference": "https://www.phon.ucl.ac.uk/home/estuary/trudgill.htm",
+  "written": "2026-09-27"
+}

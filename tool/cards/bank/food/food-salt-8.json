@@ -1,0 +1,33 @@
+{
+  "id": "food-salt-8",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can two boxes both labelled kosher salt differ almost twofold in saltiness per spoonful?",
+  "answer": "Crystal shape. Diamond Crystal grows hollow, flaky pyramids in open pans; Morton rolls dense cubes into flat flakes. A teaspoon of the first weighs about 3 g, of the second about 5, and both are nearly pure sodium chloride. A recipe tested with one and cooked with the other comes out oversalted or bland.",
+  "move": "Measure by weight whenever the shape of the thing varies.",
+  "keywords": [
+    "kosher salt",
+    "diamond crystal",
+    "morton",
+    "crystal shape",
+    "measuring"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nosrat, Salt Fat Acid Heat, 2017",
+  "source_kind": "book",
+  "reference": "Nosrat, Salt, Fat, Acid, Heat: Mastering the Elements of Good Cooking, Simon & Schuster, 2017",
+  "written": "2026-09-27"
+}

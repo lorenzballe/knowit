@@ -1,0 +1,40 @@
+{
+  "id": "medicine-new-ones-8",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Zosurabalpin, a new antibiotic class reported in 2024, jams the machinery that builds bacteria's outer coat. Which bacteria does it kill?",
+  "options": [
+    "Most bacteria that have an outer coat",
+    "Essentially only Acinetobacter baumannii",
+    "Only bacteria without an outer coat"
+  ],
+  "correct": 1,
+  "answer": "Essentially only Acinetobacter baumannii. It blocks the transporter that carries lipopolysaccharide, the fat-and-sugar molecule of the outer coat, to the surface, and fits only Acinetobacter's version, a drug-resistant hospital killer. The narrowness spares gut bacteria. It also means doctors must identify the culprit before they can prescribe it.",
+  "move": "A shared part is not a shared weakness if every version is shaped differently.",
+  "trap": "Expecting a drug aimed at a common structure to hit every owner.",
+  "keywords": [
+    "zosurabalpin",
+    "acinetobacter baumannii",
+    "lipopolysaccharide",
+    "narrow-spectrum antibiotics",
+    "new antibiotic class"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zampaloni et al., Nature, 2024",
+  "source_kind": "paper",
+  "reference": "Zampaloni et al., A novel antibiotic class targeting the lipopolysaccharide transporter, Nature, 2024",
+  "written": "2026-09-27"
+}

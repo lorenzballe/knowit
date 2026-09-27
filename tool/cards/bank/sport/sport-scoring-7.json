@@ -1,0 +1,40 @@
+{
+  "id": "sport-scoring-7",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In the decathlon, is cutting 0.1 seconds from a 100 m worth more points to a 10.2-second sprinter or an 11.2-second one?",
+  "options": [
+    "To the 10.2-second sprinter",
+    "To the 11.2-second sprinter",
+    "The same to both"
+  ],
+  "correct": 0,
+  "answer": "To the 10.2-second sprinter. The table awards 25.4347 × (18 − time)^1.81 points; an exponent above 1 makes the curve steepen as times fall, so 0.1 seconds is worth about 24 points at 10.2 but about 22 at 11.2. Every event's table bends this way: strong events pay more than weak ones repaired.",
+  "move": "Before fixing a weakness, check whether the scoring pays more for strengths.",
+  "trap": "Assuming diminishing returns, as if the faster man sits near a ceiling.",
+  "keywords": [
+    "decathlon",
+    "scoring tables",
+    "100 m",
+    "combined events",
+    "points formula"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IAAF Scoring Tables for Combined Events",
+  "source_kind": "standard",
+  "reference": "International Association of Athletics Federations, Scoring Tables for Combined Events, 2001",
+  "written": "2026-09-27"
+}

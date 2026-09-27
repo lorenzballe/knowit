@@ -12,7 +12,7 @@
   "question": "With 1 mmHg equal to 13.6 mm of water, how much higher is arterial pressure at ankles 1.2 m below the heart, in mmHg?",
   "value": 88.2,
   "unit": "mmHg",
-  "tolerance": 1,
+  "tolerance": 2,
   "answer": "About 88 mmHg higher than at the heart.",
   "move": "In any column of fluid, ask how high it stands before comparing pressures.",
   "trap": "Assuming the heart sets one pressure for the whole body.",

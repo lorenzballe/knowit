@@ -1,0 +1,33 @@
+{
+  "id": "sport-scoring-10",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a tennis tie-break change server after the first point and then after every two?",
+  "answer": "To share the server's edge evenly. Top players win most points on serve, so the order runs A, BB, AA, BB: after every even number of points both have served the same number, and at any moment the gap is at most one. Neither player can take the tie-break by holding serve alone.",
+  "move": "To judge whether a sequence is fair, check who leads at every step.",
+  "keywords": [
+    "tie-break",
+    "serve",
+    "tennis",
+    "service order",
+    "fairness"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITF, Rules of Tennis, Rule 5",
+  "source_kind": "primary_document",
+  "reference": "International Tennis Federation, Rules of Tennis 2024, Rule 5 Score in a set",
+  "written": "2026-09-27"
+}

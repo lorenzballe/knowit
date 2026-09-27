@@ -1,0 +1,39 @@
+{
+  "id": "medicine-new-ones-10",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: in the first randomised trial of phage therapy for infected burns, the viruses did worse than the standard cream?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. PhagoBurn, in French and Belgian burn units, assigned 27 patients to a cocktail of 12 viruses that kill Pseudomonas or to silver sulfadiazine cream. Bacteria fell more slowly under phages; the trial stopped early. The cocktail had lost most of its strength before use, so patients got a far weaker dose than planned.",
+  "move": "Rescues get published; quiet failures of the same method rarely do.",
+  "trap": "Trusting the steady stream of case reports of patients rescued by phages.",
+  "keywords": [
+    "phage therapy",
+    "bacteriophages",
+    "phagoburn",
+    "burn wounds",
+    "pseudomonas"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jault et al., Lancet Infectious Diseases, 2019",
+  "source_kind": "paper",
+  "reference": "Jault et al., Efficacy and tolerability of a cocktail of bacteriophages to treat burn wounds infected by Pseudomonas aeruginosa (PhagoBurn): a randomised, controlled, double-blind phase 1/2 trial, The Lancet Infectious Diseases, 2019",
+  "written": "2026-09-27"
+}

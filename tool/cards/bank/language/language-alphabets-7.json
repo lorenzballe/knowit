@@ -5,7 +5,7 @@
   "strand": "language.writing_systems.alphabets",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "reflection",
+  "principle": "availability",
   "question": "Mongolian script descends from right-to-left Aramaic and was turned to run vertically. Which way do its columns go?",
   "options": [
     "Top to bottom, left to right",

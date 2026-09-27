@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "In atrial fibrillation the upper chambers quiver 400 or more times a minute. How fast do the ventricles beat, untreated?",
+  "question": "In atrial fibrillation the upper chambers quiver 400 or more times a minute. How fast do the ventricles typically beat, untreated?",
   "options": [
-    "Under 40 a minute",
     "Over 400 a minute",
-    "Often 100 to 180 a minute"
+    "About 60 to 90 a minute",
+    "About 100 to 180 a minute"
   ],
   "correct": 2,
-  "answer": "Often 100 to 180 a minute, fast and irregular. The AV node, the one electrical gate between upper and lower chambers, needs time to recover after each impulse, so most chaotic impulses arrive while it is still shut. The ventricles beat only when a signal slips through: quickly, and never in rhythm.",
+  "answer": "Typically 100 to 180 a minute, and irregularly. The AV node, the one electrical gate between upper and lower chambers, needs time to recover after each impulse, so most chaotic impulses arrive while it is still shut. The ventricles beat only when a signal slips through: quickly, and never in rhythm.",
   "move": "A gate that needs time to reset sets the pace behind it.",
   "trap": "Assuming the lower chambers simply follow the upper ones beat for beat.",
   "keywords": [
