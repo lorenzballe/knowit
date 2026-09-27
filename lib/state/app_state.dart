@@ -9,6 +9,7 @@ import 'package:intl/date_symbols.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
+import '../data/card_json.dart';
 import '../data/daily.dart';
 import '../data/genres.dart';
 import '../data/pill_bank.dart';
@@ -20,7 +21,9 @@ import '../models/pill.dart';
 import '../models/reminder.dart';
 import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
+import '../sync/served.dart';
 import '../sync/tally.dart';
+import '../sync/trace.dart';
 import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
 import 'progress.dart';
@@ -79,6 +82,10 @@ class AppState extends ChangeNotifier {
   static const _kPlus = 'knowit.plus';
   static const _kSeenIds = 'knowit.seenIds';
   static const _kDeckIds = 'knowit.todayDeckIds';
+
+  /// Today's cards whole, as the server dealt them: a card the phone's own
+  /// bank has not got yet still comes back after a restart.
+  static const _kDeckCards = 'knowit.todayDeckCards';
   static const _kDeckHistory = 'knowit.deckHistory';
   static const _kDayStartRung = 'knowit.dayStartRung';
   static const _kDayStartScore = 'knowit.dayStartScore';
@@ -289,6 +296,7 @@ class AppState extends ChangeNotifier {
     notifyTime = _prefs.getString(_kNotifyHour) ?? '08:30';
     name = _prefs.getString(_kName) ?? 'You';
     isPlus = _prefs.getBool(_kPlus) ?? false;
+    Trace.instance.plus = isPlus;
     themeMode = _decodeTheme(_prefs.getString(_kTheme));
     seenIds = (_prefs.getStringList(_kSeenIds) ?? []).toSet();
     ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
@@ -310,7 +318,7 @@ class AppState extends ChangeNotifier {
     if (storedDay == dateKey(today) && storedDeck.isNotEmpty) {
       // Restore the exact deck this day started with: recomputing it would
       // shuffle under the reader as their history grows.
-      todaysDeck = pillsByIds(storedDeck);
+      todaysDeck = _storedCards(storedDeck);
       todayIndex = _prefs.getInt(_kTodayIndex) ?? 0;
       reviewIdsToday = {
         for (final p in todaysDeck)
@@ -448,6 +456,31 @@ class AppState extends ChangeNotifier {
     return completedDates.where((d) => d.compareTo(key) < 0).length;
   }
 
+  /// Who dealt today: `server`, `server-cached` or `phone`. For the record
+  /// and the debug section.
+  String dealtBy = 'phone';
+
+  /// Today's cards back from the phone: whole, as they were stored, or
+  /// looked up in the bank by id for a day stored by an older build.
+  List<Pill> _storedCards(List<String> ids) {
+    final String? raw = _prefs.getString(_kDeckCards);
+    if (raw != null) {
+      try {
+        final Object? decoded = jsonDecode(raw);
+        if (decoded is List) {
+          final cards = <Pill>[
+            for (final c in decoded)
+              if (c is Map) cardFromJson(Map<String, Object?>.from(c)),
+          ];
+          if (cards.map((p) => p.id).toList().join(',') == ids.join(',')) {
+            return cards;
+          }
+        }
+      } catch (_) {}
+    }
+    return pillsByIds(ids);
+  }
+
   /// Deals a day for this reader. See [dealDay] for what a day is.
   ///
   /// On Astute+ the cards are dealt at the level the app has measured,
@@ -482,16 +515,33 @@ class AppState extends ChangeNotifier {
   /// entertaining: on Astute+ a card that came due takes an asking slot
   /// before any fresh question does.
   Future<void> _startNewDay() async {
-    final reviews = dueReviews;
-    final Deal deal = _deal(
-      today,
-      exclude: seenIds,
-      reviews: reviews,
-      own: ownCardsToday,
-    );
-    todaysDeck = deal.cards;
-    ownIdsToday = deal.own;
-    final dealtReviews = reviews.map((p) => p.id).toSet();
+    // The server's day first: dealt from what the reader did, not only from
+    // what they said. It is usually on the phone already — asked for the
+    // evening before, or dealt by the nightly pass and read from the
+    // store's own cache — and the wait for it is bounded. Failing that, the
+    // phone deals as it always did, from the same calendar.
+    final ServedDay? served = await Served.instance.dayFor(today);
+    final Set<String> dealtReviews;
+    if (served != null && served.cards.length >= kPillsPerDay) {
+      todaysDeck = served.cards;
+      ownIdsToday = served.own.intersection(
+        todaysDeck.map((p) => p.id).toSet(),
+      );
+      dealtReviews = served.reviews;
+      dealtBy = served.fromCache ? 'server-cached' : 'server';
+    } else {
+      final reviews = dueReviews;
+      final Deal deal = _deal(
+        today,
+        exclude: seenIds,
+        reviews: reviews,
+        own: ownCardsToday,
+      );
+      todaysDeck = deal.cards;
+      ownIdsToday = deal.own;
+      dealtReviews = reviews.map((p) => p.id).toSet();
+      dealtBy = 'phone';
+    }
     reviewIdsToday = {
       for (final p in todaysDeck)
         if (dealtReviews.contains(p.id) || answers.containsKey(p.id)) p.id,
@@ -504,10 +554,17 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kDayStartRung, rungAtDayStart);
     await _prefs.setInt(_kDayStartScore, scoreAtDayStart);
     await _prefs.setStringList(_kDeckIds, todaysDeck.map((p) => p.id).toList());
+    await _prefs.setString(
+      _kDeckCards,
+      jsonEncode([for (final p in todaysDeck) cardToJson(p)]),
+    );
     await _prefs.setStringList(_kOwnIds, ownIdsToday.toList());
     await _noteDealt(today, todaysDeck);
     Analytics.capture('day started', {
       'cards': todaysDeck.length,
+      // Who dealt it: the server, the server's copy on the phone, or the
+      // phone itself. The whole claim of the server is this number.
+      'dealt_by': dealtBy,
       // How much of the day is the reader's own, and how much of it is a
       // re-asking. The whole claim of the plan is the first number; the
       // whole claim of the review ladder is the second.
@@ -836,6 +893,20 @@ class AppState extends ChangeNotifier {
     await _prefs.setInt(_kBestStreak, bestStreak);
     await _prefs.setString(_kLastCompletion, lastCompletionDate!);
     await _prefs.setStringList(_kCompletedDates, completedDates);
+    // Tomorrow, asked for tonight, so the morning is one read: the trace of
+    // today goes first, so tomorrow is dealt from a day that includes it.
+    unawaited(
+      Trace.instance
+          .flush()
+          .then(
+            (_) => Served.instance.prefetch(today.add(const Duration(days: 1))),
+          )
+          .then((ServedDay? day) {
+            if (day == null) return;
+            servedTomorrow = day;
+            notifyListeners();
+          }),
+    );
     Analytics.capture('day completed', {
       'streak_days': streak,
       'best_streak': bestStreak,
@@ -1203,6 +1274,8 @@ class AppState extends ChangeNotifier {
   /// tonight can say what opens the morning and the morning will agree.
   List<Pill> get tomorrowsDeck {
     final tomorrow = DateTime(today.year, today.month, today.day + 1);
+    final ServedDay? kept = servedTomorrow;
+    if (kept != null) return kept.cards;
     return _deal(
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
@@ -1214,6 +1287,10 @@ class AppState extends ChangeNotifier {
       ),
     ).cards;
   }
+
+  /// Tomorrow as the server dealt it, when the evening's ask came back.
+  /// Read synchronously off the last answer kept in memory.
+  ServedDay? servedTomorrow;
 
   /// True when tomorrow is the morning after a full week kept, and so has
   /// three cards of the reader's own instead of two. Astute+ has five every
@@ -1965,6 +2042,7 @@ class AppState extends ChangeNotifier {
   /// only flips a stored flag — the paywall says as much when it calls it.
   Future<void> startPlusTrial() async {
     isPlus = true;
+    Trace.instance.plus = true;
     await _prefs.setBool(_kPlus, true);
     Analytics.capture('trial started');
     Analytics.register('is_plus', true);
@@ -1978,6 +2056,7 @@ class AppState extends ChangeNotifier {
   Future<void> applyEntitlement(bool active) async {
     if (isPlus == active) return;
     isPlus = active;
+    Trace.instance.plus = active;
     await _prefs.setBool(_kPlus, active);
     // What the store said, not what a screen hoped: this is the one place
     // the plan actually changes, so it is the one place it is counted.
@@ -1988,6 +2067,7 @@ class AppState extends ChangeNotifier {
 
   Future<void> endPlus() async {
     isPlus = false;
+    Trace.instance.plus = false;
     await _prefs.setBool(_kPlus, false);
     Analytics.register('is_plus', false);
     notifyListeners();

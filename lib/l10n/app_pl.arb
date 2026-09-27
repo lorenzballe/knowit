@@ -403,5 +403,8 @@
  "lovedIn": "Najbardziej lubiane: {subject}",
  "lovedLine": "To, co czytelnicy zachowywali najczęściej, a ty jeszcze nie czytałeś",
  "welcomeDaysLeft": "{n, plural, =1{Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.} few{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.} many{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.} other{Twój pierwszy tydzień: jeszcze {n} dni, w których cztery z pięciu są twoje.}}",
- "welcomeWeekEnds": "Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra jedna z pięciu jest twoja, a trzy są wspólne; z Astute+ wszystkie pięć zostają twoje."
+ "welcomeWeekEnds": "Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra jedna z pięciu jest twoja, a trzy są wspólne; z Astute+ wszystkie pięć zostają twoje.",
+ "forYouShelf": "Dla ciebie",
+ "forYouLine": "To, co twoje czytanie stawia na pierwszym miejscu",
+ "exploreOffline": "Jesteś offline. To Odkrywaj w wersji z ostatniego odczytu."
 }

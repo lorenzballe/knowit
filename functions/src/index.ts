@@ -8,8 +8,9 @@
 //   for tomorrow, so the morning is instant.
 // - `nightly` (every hour): for every reader here in the last fortnight,
 //   their local today — and from the late afternoon their tomorrow — dealt
-//   if not yet, and Explore's shelf of their own refreshed. So a reader who
-//   never asks still finds the day waiting.
+//   if not yet, Explore's shelf of their own refreshed once a day, and the
+//   trace older than the profile reads cleared. So a reader who never asks
+//   still finds the day waiting.
 // - `buildExplore` (every hour, at :05): Explore as everybody sees it, from
 //   the counts, written to explore/latest. Hourly for the crowd under the
 //   top list and today's shelf, which turn with the UTC day.
@@ -33,7 +34,7 @@ import { logger } from 'firebase-functions';
 import { Bank, currentBank, dateKey, parseDate } from './bank.js';
 import { Tallies, buildGlobalExplore, CLOSED_AFTER, MONTH_DAYS } from './explore.js';
 import { search as searchBank } from './search.js';
-import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, readReader, serveDay, serveExplore } from './serve.js';
+import { ACTIVE_DAYS, askableDate, datesToPrepare, forgetReader, pruneReader, readReader, serveDay, serveExplore } from './serve.js';
 
 initializeApp();
 setGlobalOptions({ region: 'europe-west1', maxInstances: 20, memory: '512MiB' });
@@ -105,6 +106,9 @@ export const nightly = onSchedule({ schedule: 'every 60 minutes', timeoutSeconds
           if (typeof at !== 'number' || nowMs - at > 20 * 3_600_000) {
             await serveExplore(db, bank, reader, nowMs);
             shelves++;
+            // Once a day with the shelf: what is older than the profile
+            // reads goes, as the privacy policy says it does.
+            await pruneReader(db, uid, nowMs);
           }
         } catch (error) {
           failed++;

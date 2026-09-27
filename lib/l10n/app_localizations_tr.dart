@@ -1749,4 +1749,14 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan biri senin, üçü herkesin; Astute+ ile beşi de senin kalır.';
+
+  @override
+  String get forYouShelf => 'Senin için';
+
+  @override
+  String get forYouLine => 'Okumanın öne çıkardıkları';
+
+  @override
+  String get exploreOffline =>
+      'Çevrimdışısın. Bu, Keşfet\'in en son okunduğu hâli.';
 }

@@ -9,6 +9,7 @@ import '../state/app_state.dart';
 import 'board.dart';
 import 'identity.dart';
 import 'reader_snapshot.dart';
+import 'served.dart';
 import 'trace.dart';
 import 'reader_store.dart';
 import 'subscription.dart';
@@ -412,8 +413,10 @@ class Account extends ChangeNotifier {
   Future<void> signOut() async {
     _pending?.cancel();
     _pending = null;
-    // What was written down for this reader goes with them.
+    // What was written down for this reader, and what was dealt them, go
+    // with them.
     await Trace.instance.reset();
+    await Served.instance.reset();
     await _firebase?.signOut();
     notifyListeners();
   }

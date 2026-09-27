@@ -13,6 +13,8 @@ import '../debug_flags.dart';
 import '../state/app_state.dart';
 import '../state/progress.dart';
 import '../sync/identity.dart';
+import '../sync/served.dart';
+import '../sync/trace.dart';
 import '../sync/account.dart';
 import '../sync/subscription.dart';
 import '../utils/reminders.dart';
@@ -606,6 +608,20 @@ class ProfileScreen extends StatelessWidget {
                   : 'none',
             ),
             _DebugLine('Account id', account.uid ?? '—'),
+            // Whether the day came from the server, and whether what the
+            // reader does is reaching it: the two numbers that say the
+            // server is doing its job.
+            _DebugLine('Today dealt by', app.dealtBy),
+            _DebugLine(
+              'Trace',
+              '${Trace.instance.written} written · ${Trace.instance.waiting} waiting',
+            ),
+            _DebugLine(
+              'Explore',
+              Served.instance.lastExplore == null
+                  ? 'assembled here'
+                  : 'served${Served.instance.lastExplore!.fromCache ? ' (cached)' : ''} for ${Served.instance.lastExplore!.day}',
+            ),
             // Which sign-in code this build carries, and which road the last
             // attempt actually took. Between them a screenshot answers "is
             // this the new build, and did it use the phone's own sheet" —

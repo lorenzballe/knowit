@@ -311,25 +311,21 @@ firestore:rules`). The write is anonymous but not unforgeable — someone with
 a script could add to a card over and over — which at this scale is a risk
 the list can carry; per-reader limits would need a server.
 
-**What is online, and what is on the phone.** Two kinds of thing, kept
-two ways on purpose:
-
-- **The cards are on the phone.** The bank is small — 1,813 cards is
-  2.5 MB, about 640 KB compressed — and the day has to open on a train, in
-  a lift, on a plane: a daily habit that fails without signal is a streak
-  lost to a tunnel. So the app carries the bank, and on every start asks
-  the site one tiny file, `cards/version.json` (a few dozen bytes); only
-  when it names a newer bank does it download `cards/cards.json`, and it
-  uses it from the next start, never mid-day. Dealing on the phone also
-  means the server never learns what anybody reads. A server that dealt
-  each reader's cards on request would buy nothing the calendar and the
-  version file do not already give — every phone deals the same day from
-  the same bank — and would cost a request, a failure mode and a privacy
-  question per card.
-- **The counts are online.** Likes, saves and says go to Firestore as they
-  happen; the lists are read from it, at most every ten minutes. What the
-  phone keeps of them is only the days that are closed and cannot change,
-  so a list seen offline is the list as it stands, not a guess.
+**What is online, and what is on the phone.** The way the apps that feel
+like they know you do it, in proportion. *The server decides.* What the
+reader does is written down with their account (the trace, below), the
+server reads it and deals their day and their Explore shelf from it, and
+the phone reads one document for each. *Only what is needed travels.* A day
+is five cards whole; Explore is the shelves whole; the search is asked on
+the server. The phone still carries a bank, but downloads a new one only
+when `cards/version.json` names it, and uses it for the one thing the
+server cannot do — deal a day when it is not there. *Offline shows what
+was last read.* The server's day is kept on the phone the evening it
+arrives; Explore as last read is shown with a line saying so, and the
+counts the phone keeps are the closed days only, so nothing offline is a
+guess. What the server cannot do in time, the phone does as it always did:
+the morning waits four seconds for the day, eight for one dealt on the
+spot, and then deals from the same calendar. See *The server*, below.
 
 The **Archive** is artboard 70e — its head too: the name, the lens on the
 right and the count under it, with the way back beside the title, which is
@@ -1300,6 +1296,68 @@ same subjects still share the same three.
 `onboarding completed` carries the reading's shape — how many subjects were
 claimed and started solid, how many strands were picked by hand — never
 which.
+
+## The server
+
+The phone dealt its own day from what the reader *said* — the mix, what
+was pruned, what they liked — and read Explore off the bank it carried. It
+never used what the reader *did*: how long a card held them, what they
+threw on in a second, what a shelf showed them that they never opened. The
+apps that feel like they know you are built on exactly that record, kept
+where the thing that decides can read it. So:
+
+**The trace** (`lib/sync/trace.dart`). Every gesture the app already
+measures passes through `Analytics.capture` with its facts; the trace keeps
+the ones that matter — card shown, opened, turned, answered with its
+confidence and time, liked, saved, said, shared, thrown down, the shelves
+looked at, the day started and finished — compacts them, and writes them in
+batches to `readers/{uid}/activity/{UTC day}`, with the reader's presence
+(their clock, whether they hold Astute+) at `presence/{uid}`. It is
+batched (25 events or 20 seconds, and when the app leaves the screen), it
+waits offline, and it carries no prose: never a reason typed on a card, never
+a search. It is the reader's: nobody else may read it, it is cleared after
+three weeks, and it goes with the account.
+
+**The profile and the day** (`functions/`, Cloud Functions in
+europe-west1). The server reads the backup, the trace and the presence into
+the same three things the phone's own reading produced, only sharper: a
+level per subject, measured where there is something to measure; a taste
+over every tag, moved by likes and throws and — new — by dwell (a card that
+held the reader twice their median is a card that took; one thrown on in a
+third of it did not) and by cards shown and never opened; and the mix as
+leaned. From that it deals the day by the phone's own rules, card for
+card in what is everybody's (the question of the day and the edition's
+common cards are read off the calendar `bundle.py` freezes, on both sides),
+and writes it whole to `readers/{uid}/days/{date}`. A phone asks for
+tomorrow the evening it finishes today, and the nightly pass deals every
+active reader's local today and tomorrow ahead of them; the morning reads
+one document, from the phone's own cache in milliseconds. `dealt_by` on
+`day started` says who dealt it.
+
+**Explore** is assembled once an hour for everybody (`explore/latest`:
+today's shelf, the ones that ask the most, the top of the week and the
+month over closed days, loved since the start, per subject) and once a day
+for each reader (`readers/{uid}/explore/current`: the subject that is theirs,
+and *For you* — what the profile puts first, one card per strand, at most
+two per subject). The search runs on the server over the newest bank; the
+phone answers from its own first and swaps in the server's.
+
+**The hashes are the phone's, bit for bit.** The crowd under the top list
+and the order the shelves turn in are computed on both sides from the
+same functions (`functions/src/rng.ts` against `lib/sync/tally.dart` and
+`lib/data/pills_repository.dart`), and a test holds the server to numbers
+the phone printed.
+
+**What is not built yet** is in `functions/README.md`: learning from
+everyone ("readers who kept this also kept that"), which the trace and the
+totals already hold everything for, and a store webhook so the server is
+sure of Astute+ rather than told.
+
+**To turn it on:** put the Firebase project on the Blaze plan, deploy the
+functions and the rules (`firebase deploy --only
+functions,firestore:rules,firestore:indexes`), and the privacy policy is
+already updated for it. Until then every phone deals for itself, as it did,
+and writes its trace for the day the server reads it.
 
 ## The shape of a day
 

@@ -1712,4 +1712,13 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       '첫 주가 오늘 밤 끝나요. 내일부터 다섯 장 중 한 장은 당신의 카드, 세 장은 모두의 카드예요. Astute+는 다섯 장 모두 당신의 카드로 지켜 줘요.';
+
+  @override
+  String get forYouShelf => '당신을 위해';
+
+  @override
+  String get forYouLine => '당신의 읽기가 앞세우는 것';
+
+  @override
+  String get exploreOffline => '오프라인 상태예요. 마지막으로 불러온 탐색 화면이에요.';
 }

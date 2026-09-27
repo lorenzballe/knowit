@@ -1701,4 +1701,13 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       '你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。';
+
+  @override
+  String get forYouShelf => '为你推荐';
+
+  @override
+  String get forYouLine => '你的阅读最先带来的内容';
+
+  @override
+  String get exploreOffline => '你已离线。这是上次读取的\"探索\"页面。';
 }

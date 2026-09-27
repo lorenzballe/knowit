@@ -1700,4 +1700,13 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       '最初の1週間は今夜で終わり。明日からは5枚中1枚があなたのカード、3枚はみんなのカード。Astute+なら5枚すべてあなたのまま。';
+
+  @override
+  String get forYouShelf => 'あなたへ';
+
+  @override
+  String get forYouLine => 'あなたの読み方が最初に置くもの';
+
+  @override
+  String get exploreOffline => 'オフラインです。これは最後に読み込んだ「探す」です。';
 }

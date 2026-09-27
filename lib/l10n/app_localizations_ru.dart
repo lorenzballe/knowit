@@ -1811,4 +1811,14 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       'Ваша первая неделя заканчивается сегодня вечером. С завтрашнего дня одна из пяти карточек ваша, а три — общие; с Astute+ все пять остаются вашими.';
+
+  @override
+  String get forYouShelf => 'Для вас';
+
+  @override
+  String get forYouLine => 'То, что ваше чтение ставит на первое место';
+
+  @override
+  String get exploreOffline =>
+      'Вы офлайн. Это раздел «Обзор» в том виде, в каком он был прочитан в последний раз.';
 }

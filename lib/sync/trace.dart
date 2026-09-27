@@ -73,6 +73,11 @@ class Trace extends ChangeNotifier {
   /// What has been written since the trace started, for the debug section.
   int written = 0;
 
+  /// Whether the reader holds Astute+, as the phone knows it: the server
+  /// deals five of their own on it. Said with the presence; a phone that
+  /// lied would get four more of its own cards and nothing else.
+  bool plus = false;
+
   /// The events kept, and the short name each goes out under. Everything
   /// not here is measurement only.
   static const Map<String, String> kept = {
@@ -165,6 +170,10 @@ class Trace extends ChangeNotifier {
     }
     _queue.add(compact);
     if (_queue.length > cap) _queue.removeRange(0, _queue.length - cap);
+    // Nowhere to write yet — no account, a test — and nothing is armed: the
+    // events wait in memory for the next note that finds a store, or for
+    // the flush the app makes when it leaves the screen.
+    if (_store == null) return;
     // What the last launch left comes in first; until it has, this launch's
     // events are not written down over it.
     unawaited(_load().then((_) => _persist()));
@@ -221,6 +230,7 @@ class Trace extends ChangeNotifier {
       await store.presence(uid, {
         'tz': _clock().timeZoneOffset.inMinutes,
         'lastSeen': _clock().millisecondsSinceEpoch,
+        'plus': plus,
       });
     } catch (error) {
       // Kept for the next flush: the phone is offline, or the rules are not

@@ -23,6 +23,7 @@ import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
+import 'sync/served.dart';
 import 'sync/tally.dart';
 import 'sync/trace.dart';
 import 'utils/home_widget.dart';
@@ -798,7 +799,10 @@ class _AstutoShellState extends State<AstutoShell>
     Analytics.capture('tab opened', {'tab': names[tab], 'by': by});
     // Explore's top list, read again on the way in when it is ten minutes
     // old; the call says so itself when it is not.
-    if (names[tab] == 'explore') Tallies.instance.refresh();
+    if (names[tab] == 'explore') {
+      Tallies.instance.refresh();
+      Served.instance.explore();
+    }
   }
 
   @override

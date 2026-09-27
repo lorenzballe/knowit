@@ -10,6 +10,7 @@ import '../data/pill_bank.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../sync/served.dart';
 import '../sync/tally.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
@@ -66,7 +67,13 @@ class ExploreScreenState extends State<ExploreScreen> {
     // Nothing to read before the reader is signed in; the call says so
     // itself, and main asks again once they are.
     Tallies.instance.refresh();
+    Served.instance.explore();
   }
+
+  /// What the server found for the query being typed, and for which query,
+  /// so a slow answer to an old query never lands under a new one.
+  List<Pill>? _serverHits;
+  String _serverHitsFor = '';
 
   /// A search is said once the reader stops typing, not at every letter —
   /// and only what shape it had: how long, and how much it found. What was
@@ -76,12 +83,25 @@ class ExploreScreenState extends State<ExploreScreen> {
   void _typed(String q) {
     setState(() => _query = q);
     _searchSettle?.cancel();
-    if (!Analytics.ready || q.trim().isEmpty) return;
-    _searchSettle = Timer(const Duration(milliseconds: 1200), () {
+    if (q.trim().isEmpty) return;
+    // The phone answers at once from the bank it holds; the server, which
+    // holds the newest bank, answers a moment after the typing stops, and
+    // its answer replaces the phone's for the same query.
+    _searchSettle = Timer(const Duration(milliseconds: 500), () async {
+      final String asked = q.trim();
+      final List<Pill>? hits = await Served.instance.search(asked);
+      if (!mounted || _query.trim() != asked) return;
+      if (hits != null) {
+        setState(() {
+          _serverHits = hits;
+          _serverHitsFor = asked;
+        });
+      }
+      if (!Analytics.ready) return;
       Analytics.capture('explore searched', {
-        'query_length': q.trim().length,
-        'words': q.trim().split(RegExp(r'\s+')).length,
-        'results': searchPills(q).length,
+        'query_length': asked.length,
+        'words': asked.split(RegExp(r'\s+')).length,
+        'results': (hits ?? searchPills(asked)).length,
       });
     });
   }
@@ -170,7 +190,11 @@ class ExploreScreenState extends State<ExploreScreen> {
                   // The counts, and what the reader has read: a card read
                   // here leaves the shelves for finding things as soon as
                   // the reader is back on them.
-                  listenable: Listenable.merge([Tallies.instance, widget.app]),
+                  listenable: Listenable.merge([
+                    Tallies.instance,
+                    Served.instance,
+                    widget.app,
+                  ]),
                   builder: (context, _) => _shelfList(context),
                 ),
         ),
@@ -188,18 +212,45 @@ class ExploreScreenState extends State<ExploreScreen> {
     // shelf that keeps them, marked, because it is one list for everybody.
     bool unread(Pill p) => !widget.app.seenIds.contains(p.id);
 
-    final List<Pill> fresh = _only(
-      pickedPills(seed: daySeed(DateTime.now()), count: 60),
-    ).where(unread).take(8).toList();
+    // Explore as the server assembled it, when it has: the same shelves,
+    // from the newest bank, and one more that is the reader's own. Without
+    // it — no account, the web preview, a project not yet on the plan —
+    // the phone assembles the same shelves from the bank it holds.
+    final ServedExplore? served = Served.instance.lastExplore;
+    final String? subjectKey = _subject == null
+        ? null
+        : kTopics.entries
+              .where((e) => e.value.name == _subject)
+              .map((e) => e.key)
+              .firstOrNull;
+    List<(Pill, int)> resolve(List<(String, int)> ids) => [
+      for (final (id, n) in ids)
+        if (pillById(id) case final Pill p) (p, n),
+    ];
+
+    final List<Pill> fresh =
+        (served != null
+                ? _only(served.today)
+                : _only(pickedPills(seed: daySeed(DateTime.now()), count: 60)))
+            .where(unread)
+            .take(8)
+            .toList();
+
+    final List<Pill> forYou = served == null
+        ? const []
+        : _only(served.forYou).where(unread).take(8).toList();
 
     // The canvas ranks this shelf by what everyone saved. Saves are counted
     // now, and they rank the top list above it; this shelf stays ranked by
     // what the cards ask, which is a different question and the order it
     // was always in.
-    final List<Pill> asking = _only(pickedPills(seed: allTimeSeed, count: 120))
-        .where(unread)
-        .take(6)
-        .toList();
+    final List<Pill> asking =
+        (served != null
+                ? _only(served.asking)
+                : _only(pickedPills(seed: allTimeSeed, count: 120)))
+            .where(unread)
+            .take(6)
+            .toList();
 
     // The top list, narrowed by the subject row like every other shelf.
     // The shelf is always there: until the counts have been read — or
@@ -207,42 +258,82 @@ class ExploreScreenState extends State<ExploreScreen> {
     // places empty, with the line that says what puts a card on one. A
     // shelf that hid itself was a feature nobody could find.
     final Tallies tallies = Tallies.instance;
-    final List<(Pill, int)> top = [
-      if (tallies.ready)
-        for (final Ranked place in tallies.top(
-          _topMonth ? Tallies.monthDays : Tallies.weekDays,
-          where: (id) {
-            final Pill? pill = pillById(id);
-            return pill != null && (_subject == null || pill.topic == _subject);
-          },
-        ))
-          (pillById(place.id)!, place.readers),
-    ];
+    final List<(Pill, int)> top = served != null
+        ? (subjectKey == null
+              ? [
+                  for (final r
+                      in (_topMonth ? served.topMonth : served.topWeek))
+                    (r.pill, r.readers),
+                ]
+              : resolve(
+                  _topMonth
+                      ? served.bySubject[subjectKey]?.month ?? const []
+                      : served.bySubject[subjectKey]?.week ?? const [],
+                ))
+        : [
+            if (tallies.ready)
+              for (final Ranked place in tallies.top(
+                _topMonth ? Tallies.monthDays : Tallies.weekDays,
+                where: (id) {
+                  final Pill? pill = pillById(id);
+                  return pill != null &&
+                      (_subject == null || pill.topic == _subject);
+                },
+              ))
+                (pillById(place.id)!, place.readers),
+          ];
 
     // The third shelf is about the reader, and it is always there. An
     // install that never dragged the mix used to get two shelves and a
     // page with nowhere to scroll to, which is not this screen.
-    final (String title, String line, String subject) = _thirdShelf();
-    final List<Pill> mine = _only(
-      pickedPills(seed: monthSeed(DateTime.now()), count: 120, topic: subject),
-    ).where(unread).take(8).toList();
+    final (String title, String line, String subject) = served?.because != null
+        ? (
+            context.l10n.becauseSitsAtFull(
+              kTopics[served!.because]?.name ?? served.because!,
+            ),
+            context.l10n.olderFromTurnedUp,
+            kTopics[served.because]?.name ?? served.because!,
+          )
+        : _thirdShelf();
+    final List<Pill> mine =
+        (served != null && served.mine.isNotEmpty
+                ? _only(served.mine)
+                : _only(
+                    pickedPills(
+                      seed: monthSeed(DateTime.now()),
+                      count: 120,
+                      topic: subject,
+                    ),
+                  ))
+            .where(unread)
+            .take(8)
+            .toList();
 
     // Loved since the start, and not read yet: where somebody who arrived
     // late finds the best of what came before them, and somebody who has
     // been here two years still finds the next one they missed.
-    final List<Pill> loved = [
-      if (tallies.ready)
-        for (final Ranked place in tallies.allTime(
-          where: (id) {
-            final Pill? pill = pillById(id);
-            return pill != null &&
-                unread(pill) &&
-                (_subject == null || pill.topic == _subject);
-          },
-          limit: 8,
-        ))
-          pillById(place.id)!,
-    ];
+    final List<Pill> loved = served != null
+        ? [
+            for (final p
+                in subjectKey == null
+                    ? served.loved.map((r) => r.pill)
+                    : resolve(served.bySubject[subjectKey]?.loved ?? const [])
+                          .map((t) => t.$1))
+              if (unread(p)) p,
+          ].take(8).toList()
+        : [
+            if (tallies.ready)
+              for (final Ranked place in tallies.allTime(
+                where: (id) {
+                  final Pill? pill = pillById(id);
+                  return pill != null &&
+                      unread(pill) &&
+                      (_subject == null || pill.topic == _subject);
+                },
+                limit: 8,
+              ))
+                pillById(place.id)!,
+          ];
 
     return Stack(
       children: [
@@ -258,6 +349,27 @@ class ExploreScreenState extends State<ExploreScreen> {
                   style: AppText.body(size: 14, color: context.p.inkMuted),
                 ),
               ),
+            if (served?.fromCache == true)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 14),
+                child: Text(
+                  context.l10n.exploreOffline,
+                  key: const ValueKey('explore-offline'),
+                  style: AppText.body(size: 12.5, color: context.p.inkMuted),
+                ),
+              ),
+            if (forYou.isNotEmpty) ...[
+              _Shelf(
+                title: context.l10n.forYouShelf,
+                line: context.l10n.forYouLine,
+                child: _SmallRow(
+                  pills: forYou,
+                  onOpen: _open,
+                  onShown: (p) => _seen('foryou', p),
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
             if (fresh.isNotEmpty)
               _Shelf(
                 title: context.l10n.todaysShelf,
@@ -433,6 +545,8 @@ class ExploreScreenState extends State<ExploreScreen> {
   Widget _found(BuildContext context) {
     final List<Pill> rows = _query.trim().isEmpty
         ? const []
+        : _serverHitsFor == _query.trim() && _serverHits != null
+        ? _serverHits!
         : searchPills(_query);
     if (_query.trim().isEmpty) {
       return Padding(

@@ -1764,4 +1764,14 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       'Je eerste week eindigt vanavond. Vanaf morgen is één van de vijf van jou en drie zijn van iedereen; met Astute+ blijven alle vijf van jou.';
+
+  @override
+  String get forYouShelf => 'Voor jou';
+
+  @override
+  String get forYouLine => 'Wat je lezen vooropzet';
+
+  @override
+  String get exploreOffline =>
+      'Je bent offline. Dit is Verkennen zoals het het laatst gelezen is.';
 }

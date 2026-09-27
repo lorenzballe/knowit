@@ -403,5 +403,8 @@
  "lovedIn": "{subject}中最受喜爱",
  "lovedLine": "读者保留最多、而你还没读过的卡片",
  "welcomeDaysLeft": "{n, plural, other{你的第一周：五张中有四张是你的，还剩{n}天。}}",
- "welcomeWeekEnds": "你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。"
+ "welcomeWeekEnds": "你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。",
+ "forYouShelf": "为你推荐",
+ "forYouLine": "你的阅读最先带来的内容",
+ "exploreOffline": "你已离线。这是上次读取的\"探索\"页面。"
 }

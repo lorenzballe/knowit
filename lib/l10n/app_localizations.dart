@@ -2543,6 +2543,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.'**
   String get welcomeWeekEnds;
+
+  /// No description provided for @forYouShelf.
+  ///
+  /// In en, this message translates to:
+  /// **'For you'**
+  String get forYouShelf;
+
+  /// No description provided for @forYouLine.
+  ///
+  /// In en, this message translates to:
+  /// **'What your reading puts first'**
+  String get forYouLine;
+
+  /// No description provided for @exploreOffline.
+  ///
+  /// In en, this message translates to:
+  /// **'You are offline. This is Explore as it was last read.'**
+  String get exploreOffline;
 }
 
 class _AppLocalizationsDelegate

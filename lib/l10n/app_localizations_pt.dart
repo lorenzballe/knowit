@@ -1766,4 +1766,14 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get welcomeWeekEnds =>
       'A tua primeira semana acaba esta noite. A partir de amanhã, uma das cinco é tua e três são de todos; o Astute+ mantém as cinco tuas.';
+
+  @override
+  String get forYouShelf => 'Para ti';
+
+  @override
+  String get forYouLine => 'O que a tua leitura põe em primeiro';
+
+  @override
+  String get exploreOffline =>
+      'Estás sem ligação. Este é o Explorar tal como foi lido da última vez.';
 }

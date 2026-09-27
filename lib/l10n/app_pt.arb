@@ -403,5 +403,8 @@
  "lovedIn": "As mais amadas em {subject}",
  "lovedLine": "O que os leitores mais guardaram e tu ainda não leste",
  "welcomeDaysLeft": "{n, plural, =1{A tua primeira semana: amanhã é o último dia, quatro das cinco são tuas.} other{A tua primeira semana: mais {n} dias com quatro das cinco tuas.}}",
- "welcomeWeekEnds": "A tua primeira semana acaba esta noite. A partir de amanhã, uma das cinco é tua e três são de todos; o Astute+ mantém as cinco tuas."
+ "welcomeWeekEnds": "A tua primeira semana acaba esta noite. A partir de amanhã, uma das cinco é tua e três são de todos; o Astute+ mantém as cinco tuas.",
+ "forYouShelf": "Para ti",
+ "forYouLine": "O que a tua leitura põe em primeiro",
+ "exploreOffline": "Estás sem ligação. Este é o Explorar tal como foi lido da última vez."
 }
