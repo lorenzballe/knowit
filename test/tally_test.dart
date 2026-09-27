@@ -150,4 +150,48 @@ void main() {
       expect(store.days[day], {a: 1, b: 1});
     },
   );
+
+  group('The launch crowd', () {
+    final List<String> ids = [for (var i = 0; i < 2000; i++) 'card-$i'];
+
+    test('is the same on every phone, and seeds about one card in seven', () {
+      final a = TopSeed(ids: () => ids).on('2026-10-02');
+      final b = TopSeed(ids: () => ids).on('2026-10-02');
+      expect(a, b);
+      final seeded = ids.where((id) => TopSeed.popularity(id) > 0).length;
+      expect(seeded, inInclusiveRange(220, 380));
+    });
+
+    test('gives the list something to show before any count is read, '
+        'and the real readers rank on top of it', () async {
+      final Tallies seeded = Tallies(
+        storeOverride: MemoryTallyStore({
+          ago(0): {'card-real': 500},
+        }),
+        seed: TopSeed(ids: () => ids),
+        clock: () => now,
+      );
+      expect(seeded.answered, isFalse);
+      expect(seeded.ready, isTrue);
+      final List<Ranked> before = seeded.top(7);
+      expect(before, isNotEmpty);
+      expect(before.first.readers, greaterThan(before.last.readers - 1));
+
+      await seeded.refresh();
+      expect(seeded.top(7).first.id, 'card-real');
+      expect(seeded.top(7).first.readers, greaterThanOrEqualTo(500));
+      // The month holds at least what the week does, card for card.
+      final Map<String, int> month = {
+        for (final r in seeded.top(30, limit: 5000)) r.id: r.readers,
+      };
+      for (final r in seeded.top(7, limit: 5000)) {
+        expect(month[r.id], greaterThanOrEqualTo(r.readers), reason: r.id);
+      }
+    });
+
+    test('is off unless asked for', () {
+      expect(Tallies().ready, isFalse);
+      expect(Tallies().top(30), isEmpty);
+    });
+  });
 }

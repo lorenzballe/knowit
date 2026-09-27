@@ -256,13 +256,24 @@ or says a card, their phone adds one to that card's count for the day, at
 Once per card per phone, ever, so a count is a count of readers, and
 liking, unliking and liking again is not a way up the list. Explore reads
 the last 30 days, at most every ten minutes; days older than three are
-settled and read once, then kept on the phone. Until the counts have been
-read — or where they cannot be, offline, on the web preview, or before the
-rules are published — nothing is ranked: the shelf shows its first three
+settled and read once, then kept on the phone. Without the launch crowd
+below, until the counts have been read — or where they cannot be, offline,
+on the web preview, or before the rules are published — nothing is ranked: the shelf shows its first three
 places numbered and empty, the first saying what puts a card there, at the
 list's own height so nothing jumps when the cards arrive. A first version
 hid the shelf until the counts were read, and so on every phone where they
 could not be it was a feature nobody could find.
+
+**The launch crowd.** A top list opened as three empty places, on every
+phone, for the weeks before anybody had held on to anything — so for now
+it is seeded (`TopSeed`, installed in `main.dart`). About one card in seven
+is given a believable daily following, heavy-tailed the way real lists are
+and turning over month by month, tilted to what readers keep (a question
+over a fact, a debate over both, the hard ones); the real counts are added
+on top and rank above it as they come. It is the same list on every phone,
+because it is computed from the card ids and the day. It is a stand-in and
+says nothing true about readers: construct `Tallies.instance` without a seed
+to retire it once the real counts can carry the list alone.
 
 `firestore.rules` holds every write to one card, plus one, on a day that is
 today on some clock, and lets nothing be taken back. **The rules have to be
@@ -516,7 +527,8 @@ days until the pool runs dry.
 
 A day is five cards on both plans. On the free plan one of them is the
 reader's own — dealt from the mix, from the subjects and strands they kept
-on, at the level they said they were — and four are everybody's: the
+on, at the level the onboarding was read to start them at (see *Reading
+the onboarding*) — and four are everybody's: the
 question of the day, and three more from the day's edition, the same for
 every free reader in the world (`commonOfEdition`, chained so a card does
 not come round for weeks, never two of one subject; a reader who has
@@ -1172,6 +1184,59 @@ judgement away.
   every card becomes an excuse to write the first one badly.
 - **What the other side says** — on a debate, the strongest case against
   whichever side you took.
+
+## Reading the onboarding
+
+The onboarding asks two things — how much of each subject (a handle per
+subject, pushed up or down) and, one layer down, which genres and strands
+to leave out — and never what the reader knows. `ReaderProfile`
+(`lib/data/reader_profile.dart`) reads those two answers the way a person
+would, rather than at face value:
+
+- **The gap, not the number.** A mix left at the top everywhere says
+  nothing. One subject held at the top while others came down says *this
+  one is mine*: the subject is **claimed**.
+- **Pruning is expertise.** Somebody who opens Space, turns off the Moon and
+  keeps black holes knows the field well enough to have an opinion inside
+  it. A subject pruned from inside is claimed too, and the strands left on
+  in a pruned genre are the most precise thing the reader has said.
+- **How many stayed.** Four subjects or fewer is a specialist, who wants
+  depth, and every one of them counts as chosen; twelve or more is a
+  generalist, who wants range.
+- **Whether anything moved.** A reader who walked straight through told the
+  app nothing, and it does not pretend they did.
+
+Three things follow, on both plans:
+
+1. **Everybody starts a notch above.** Nobody starts as a beginner: every
+   subject in the mix starts at *some*, and a claimed one at *solid*. The
+   dealer pitches each level above itself (`_fit`): at *some* a hard
+   question is as welcome as a medium one; at *solid* hard comes well
+   before medium; only a subject measured *curious* is mostly told and
+   asked at medium. The first card an app puts in front of somebody decides
+   whether it is taken seriously — a stretch reads as respect, an easy
+   quiz as a toy. The measured level (`measuredLevels`) replaces the start
+   as soon as a subject has four judgements.
+2. **Hand-picked strands lean the draw** — the strands kept in a pruned
+   genre by as much as about four likes, the genres kept whole in a pruned
+   subject a little — from the first card, not the tenth.
+3. **The first week opens on what they came for.** The first three days
+   sharpen the mix towards its top (the weights cubed, squared, then to the
+   power 1.5); from the fourth day the mix is exactly what was set, and the
+   range they asked for arrives. A reader who said nothing opens instead on
+   the subjects that hook most people — the mind, space, the body, the
+   strange, the past — then gets the whole spread. That list is a
+   judgement; replace it with what `mix set` shows readers push up.
+
+The edition's everyday cards follow the mix too: an edition carries eight,
+never two of a subject, and a free day takes the three on the reader's
+mix first, so somebody who dragged Sport to nothing is not handed a Sport
+card three mornings a week because it was everybody's. Readers with the
+same subjects still share the same three.
+
+`onboarding completed` carries the reading's shape — how many subjects were
+claimed and started solid, how many strands were picked by hand — never
+which.
 
 ## The shape of a day
 

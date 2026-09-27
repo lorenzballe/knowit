@@ -188,7 +188,7 @@ class ExploreScreenState extends State<ExploreScreen> {
     // shelf that hid itself was a feature nobody could find.
     final Tallies tallies = Tallies.instance;
     final List<(Pill, int)> top = [
-      if (tallies.answered)
+      if (tallies.ready)
         for (final Ranked place in tallies.top(
           _topMonth ? Tallies.monthDays : Tallies.weekDays,
           where: (id) {

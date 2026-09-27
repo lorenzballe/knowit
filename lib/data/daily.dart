@@ -137,8 +137,11 @@ Pill _ask(int edition) {
 }
 
 /// How many cards an edition holds in common besides its question: the three
-/// a free day deals, and two spares for a reader who has already read one.
-const int kCommonSpares = 5;
+/// a free day deals, and spares — for a reader who has already read one, and
+/// for a reader whose mix leaves some of the edition's subjects out. Eight of
+/// eighteen subjects, so a reader who kept even a handful usually finds three
+/// of their own among them.
+const int kCommonSpares = 8;
 
 /// The cards that are everybody's on an edition, besides the question of
 /// the day, in the order a free day takes them.
@@ -148,7 +151,8 @@ const int kCommonSpares = 5;
 /// of the ones before it, so the same card does not come round for weeks,
 /// and never two of one subject in the same edition. A free day takes the
 /// first [kOwnCardsFree]-ish it has not already read, so two readers who
-/// have read different things still mostly share the same three.
+/// have read different things still mostly share the same three. A day
+/// takes the ones on the reader's mix first (see [dealDay]).
 List<Pill> commonOfEdition(int edition) {
   _followTheBank();
   final cached = _commons[edition];
@@ -237,7 +241,20 @@ Deal dealDay({
   final common = <Pill>[];
   if (!whole) {
     final int wanted = max(0, count - 1 - own);
-    for (final p in commonOfEdition(editionOf(date))) {
+    // The edition's cards in the edition's order, the ones on the reader's
+    // mix first: a reader who dragged Sport to nothing should not be handed
+    // a Sport card three mornings a week because it was everybody's. Two
+    // readers with the same subjects still share the same three, and the
+    // subjects left out come back only when the mix cannot fill the day.
+    final Set<String> mix = {
+      for (final key in topics ?? const <String>{}) ?kTopics[key]?.name,
+    };
+    bool onMix(Pill p) => mix.isEmpty || mix.contains(p.topic);
+    final List<Pill> spares = commonOfEdition(editionOf(date));
+    for (final p in [
+      ...spares.where(onMix),
+      ...spares.where((p) => !onMix(p)),
+    ]) {
       if (common.length >= wanted) break;
       if (!taken.add(p.id)) continue;
       common.add(p);

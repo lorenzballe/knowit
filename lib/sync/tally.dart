@@ -103,6 +103,78 @@ class MemoryTallyStore implements TallyStore {
   }
 }
 
+/// A launch's worth of readers under the real ones.
+///
+/// A top list is only worth having once people have held on to things, and
+/// on the first day nobody has: the list opened as three numbered empty
+/// places, on every phone, for weeks. So until the real counts are enough
+/// to stand alone, the list is seeded — a steady, believable crowd laid
+/// under whatever real readers add, and the real ones rank on top of it.
+///
+/// Deterministic: the same card on the same day always gets the same
+/// number on every phone, so two friends see the same list. About one card
+/// in seven is ever seeded, enough for a subject's own list to fill,
+/// heavy-tailed the way real lists are (a few cards far ahead, a long run
+/// behind), and turning over month by month so the month list is not the
+/// week's forever. [appeal] tilts it towards what readers
+/// actually keep — questions over facts, a debate over both — and away from
+/// nothing.
+///
+/// To retire it, construct [Tallies.instance] without a seed in `main.dart`.
+class TopSeed {
+  TopSeed({required this.ids, double Function(String id)? appeal})
+    : appeal = appeal ?? _flat;
+
+  /// Every card that may be seeded: the live bank.
+  final Iterable<String> Function() ids;
+
+  /// How much readers take to a card, around 1.
+  final double Function(String id) appeal;
+
+  static double _flat(String _) => 1;
+
+  final Map<String, Map<String, int>> _days = {};
+
+  /// A number in [0, 1) from [text], the same everywhere.
+  static double unit(String text) {
+    var h = 0x811c9dc5;
+    for (final int c in text.codeUnits) {
+      h = ((h ^ c) * 0x01000193) & 0xFFFFFFFF;
+    }
+    // FNV alone leaves ids that differ by a digit close together; the
+    // murmur finaliser spreads them over the whole range.
+    h ^= h >> 16;
+    h = (h * 0x85ebca6b) & 0xFFFFFFFF;
+    h ^= h >> 13;
+    h = (h * 0xc2b2ae35) & 0xFFFFFFFF;
+    h ^= h >> 16;
+    return h / 0x100000000;
+  }
+
+  /// How many readers a card has on an ordinary day: nothing for most, and
+  /// from a third of a reader to about five for about one card in seven.
+  static double popularity(String id) {
+    final double u = unit('seed:$id');
+    if (u < 0.85) return 0;
+    return 0.3 + 4.5 * math.pow((u - 0.85) / 0.15, 2.5);
+  }
+
+  /// The seeded counts for [day] (`yyyy-mm-dd`).
+  Map<String, int> on(String day) => _days.putIfAbsent(day, () {
+    final String month = day.substring(0, 7);
+    final Map<String, int> out = {};
+    for (final String id in ids()) {
+      final double p = popularity(id);
+      if (p == 0) continue;
+      final double season = 0.4 + 1.2 * unit('$month:$id');
+      final double today = 0.5 + unit('$day:$id');
+      final int n = (p * season * today * appeal(id)).floor();
+      if (n > 0) out[id] = n;
+    }
+    return out;
+  });
+}
+
 /// One place on the list: a card, and how many readers held on to it.
 @immutable
 class Ranked {
@@ -122,8 +194,16 @@ class Ranked {
 /// number is a number of readers — and liking, unliking and liking again is
 /// not a way up the list.
 class Tallies extends ChangeNotifier {
-  Tallies({this.storeOverride, DateTime Function()? clock})
+  Tallies({this.storeOverride, this.seed, DateTime Function()? clock})
     : _clock = clock ?? DateTime.now;
+
+  /// The launch crowd under the real counts, or null for real counts only.
+  /// See [TopSeed].
+  final TopSeed? seed;
+
+  /// True when the list has something to show: the counts have been read,
+  /// or there is a seed to show until they are.
+  bool get ready => answered || seed != null;
 
   /// A singleton for the same reason the store's subscription is one: the
   /// app has one list, and tests replace it rather than thread it through
@@ -264,8 +344,18 @@ class Tallies extends ChangeNotifier {
     final Map<String, int> readers = {};
     final Map<String, int> latest = {};
     for (var i = 0; i < days; i++) {
-      final Map<String, int>? counts =
-          _days[tallyDay(now.subtract(Duration(days: i)))];
+      final String day = tallyDay(now.subtract(Duration(days: i)));
+      final Map<String, int>? real = _days[day];
+      final Map<String, int>? seeded = seed?.on(day);
+      final Map<String, int>? counts = seeded == null
+          ? real
+          : real == null
+          ? seeded
+          : {
+              ...seeded,
+              for (final e in real.entries)
+                e.key: (seeded[e.key] ?? 0) + e.value,
+            };
       if (counts == null) continue;
       counts.forEach((id, n) {
         if (where != null && !where(id)) return;

@@ -13,6 +13,7 @@ import '../data/daily.dart';
 import '../data/genres.dart';
 import '../data/pill_bank.dart';
 import '../data/pills_repository.dart';
+import '../data/reader_profile.dart';
 import '../data/topics.dart';
 import '../l10n/app_localizations.dart';
 import '../models/pill.dart';
@@ -397,13 +398,48 @@ class AppState extends ChangeNotifier {
   /// kept — the streak's own reward, tasted once a week.
   int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
 
+  /// The onboarding's answers, read as a person rather than a form: a
+  /// starting level a notch above for every subject, the strands picked by
+  /// hand, and a first week that opens on what the reader came for. See
+  /// [ReaderProfile]. Read again whenever the mix changes.
+  ReaderProfile get profile {
+    final key = Object.hashAll([
+      ...topicWeights.entries.map((e) => '${e.key}=${e.value}'),
+      ...genresOff,
+      '|',
+      ...strandsOff,
+    ]);
+    if (_profileKey != key) {
+      _profileKey = key;
+      _profile = ReaderProfile.read(
+        weights: topicWeights,
+        genresOff: genresOff,
+        strandsOff: strandsOff,
+      );
+    }
+    return _profile;
+  }
+
+  int? _profileKey;
+  ReaderProfile _profile = ReaderProfile.blank;
+
+  /// Which of the reader's days [date] is: 0 for the first, counted by the
+  /// days finished before it.
+  int dayNumberOf(DateTime date) {
+    final String key = dateKey(date);
+    return completedDates.where((d) => d.compareTo(key) < 0).length;
+  }
+
   /// Deals a day for this reader. See [dealDay] for what a day is.
   ///
   /// On Astute+ the cards are dealt at the level the app has measured,
   /// leaned by what the reader held and threw down, with a card that came
   /// due for review. On the free plan they are dealt at the level the
-  /// reader said, from the subjects and strands they kept on — the mix is
-  /// everybody's — and what came due waits after the day instead.
+  /// onboarding was read as (a notch above, see [ReaderProfile]), leaned
+  /// only by the strands picked by hand, from the subjects and strands
+  /// they kept on — the mix is everybody's — and what came due waits after
+  /// the day instead. On both, the first three days lean to the top of the
+  /// mix.
   Deal _deal(
     DateTime date, {
     required Set<String> exclude,
@@ -412,9 +448,9 @@ class AppState extends ChangeNotifier {
   }) => dealDay(
     date: date,
     topics: pickedTopics,
-    weights: leanedWeights,
-    levels: isPlus ? measuredLevels : topicLevels,
-    taste: isPlus ? taste : const {},
+    weights: profile.weightsOn(dayNumberOf(date), leanedWeights),
+    levels: isPlus ? measuredLevels : profile.levelsUnder(topicLevels),
+    taste: isPlus ? profile.tasteWith(taste) : profile.lean,
     genresOff: genresOff,
     strandsOff: strandsOff,
     exclude: exclude,
@@ -980,9 +1016,10 @@ class AppState extends ChangeNotifier {
   /// [kLevelFloor] of them, set its level — three in four right is solid,
   /// two in five or fewer is curious, between is some — over whatever the
   /// reader said. A subject they have not been asked about keeps what they
-  /// said, or the middle.
+  /// said, or where the onboarding was read to start it ([ReaderProfile]):
+  /// solid for a subject claimed, some for the rest.
   Map<String, int> get measuredLevels {
-    final out = Map<String, int>.from(topicLevels);
+    final out = profile.levelsUnder(topicLevels);
     final keyOf = {for (final e in kTopics.entries) e.value.name: e.key};
     final recent = <String, List<bool>>{};
     for (final j in judgements.reversed) {
@@ -1438,7 +1475,10 @@ class AppState extends ChangeNotifier {
   Future<void> completeOnboarding() async {
     onboarded = true;
     await _prefs.setBool(_kOnboarded, true);
-    Analytics.capture('onboarding completed', {'topics': pickedTopics.length});
+    Analytics.capture('onboarding completed', {
+      'topics': pickedTopics.length,
+      ...profile.facts,
+    });
     notifyListeners();
   }
 

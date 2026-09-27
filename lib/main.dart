@@ -7,9 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'analytics.dart';
 import 'cloud.dart';
+import 'data/pill_bank.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
 import 'l10n/l10n.dart';
+import 'models/pill.dart';
 import 'screens/genres_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
@@ -25,6 +27,33 @@ import 'sync/tally.dart';
 import 'utils/home_widget.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
+
+/// The seeded crowd for Explore's top list: the live bank, tilted to what
+/// readers keep — a question over a fact, a debate over both, the hard ones,
+/// and the subjects people pass on.
+TopSeed launchCrowd() => TopSeed(
+  ids: () => PillBank.cards.map((p) => p.id),
+  appeal: (id) {
+    final Pill? p = PillBank.byId(id);
+    if (p == null) return 0;
+    var a = 1.0;
+    if (p.challenge is TakeASide) {
+      a *= 1.3;
+    } else if (p.asksSomething) {
+      a *= 1.2;
+    }
+    if (p.difficulty == Difficulty.hard) a *= 1.2;
+    if (const {
+      'Weird facts',
+      'Psychology',
+      'Space',
+      'Human body',
+    }.contains(p.topic)) {
+      a *= 1.2;
+    }
+    return a;
+  },
+);
 
 Future<void> main() async {
   Analytics.launched();
@@ -44,6 +73,9 @@ Future<void> main() async {
     'ms': cloudMs,
     'failure': Cloud.failure == null ? null : Analytics.short(Cloud.failure!),
   });
+  // Explore's top list, with the launch crowd under the real counts until
+  // there are enough of them. See TopSeed.
+  Tallies.instance = Tallies(seed: launchCrowd());
   // Session replay takes its pictures from under this widget. Only where
   // measurement is running and the platform records at all.
   runApp(

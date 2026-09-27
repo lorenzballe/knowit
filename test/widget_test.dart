@@ -12,6 +12,7 @@ import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
+import 'package:astuto/data/reader_profile.dart';
 import 'package:astuto/l10n/l10n.dart';
 import 'package:astuto/legal.dart';
 import 'package:astuto/main.dart';
@@ -64,7 +65,18 @@ Future<void> _finishDay(WidgetTester tester) async {
 /// What a fresh install on the free plan is dealt today: every subject,
 /// nothing read — the question of the day, two of the edition's, and two of
 /// the reader's own from the whole pool.
-List<Pill> get _todaysFive => dealDay(date: DateTime.now()).cards;
+List<Pill> get _todaysFive {
+  // A first day as the app deals it to a reader who never set the mix:
+  // read by ReaderProfile as having said nothing, so it opens on the
+  // subjects that hook most people, a notch above.
+  final ReaderProfile untold = ReaderProfile.read(weights: const {});
+  return dealDay(
+    date: DateTime.now(),
+    topics: kTopicOrder.toSet(),
+    weights: untold.weightsOn(0, const {}),
+    levels: untold.levelsUnder(const {}),
+  ).cards;
+}
 
 /// The paywall's headline, which is what a gate opens onto.
 final Finder _paywallHeadline = find.text('Every card, chosen for you.');
