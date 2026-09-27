@@ -1,0 +1,33 @@
+{
+  "id": "sport-suits-6",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do judo officials measure the sleeves of each fighter's jacket before a contest begins?",
+  "answer": "Because a jacket that is hard to grip is hard to throw. Fighters learned to wear tight, stiff, short-sleeved jackets that left opponents little cloth to hold. Judo's federation now requires sleeves reaching the wrist, loose around the arm, checked with a gauge. A fighter in a narrow jacket is sent to change.",
+  "move": "Anything an opponent must hold can be made harder to hold.",
+  "keywords": [
+    "judo",
+    "judogi",
+    "sleeves",
+    "grip",
+    "international judo federation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Judo Federation, Judogi Rules",
+  "source_kind": "standard",
+  "reference": "International Judo Federation, IJF Judogi Rules, 2022",
+  "written": "2026-09-27"
+}

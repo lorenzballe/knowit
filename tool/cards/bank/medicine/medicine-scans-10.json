@@ -1,0 +1,39 @@
+{
+  "id": "medicine-scans-10",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What mainly limits how fast an MRI scanner may switch its gradient magnetic fields on and off?",
+  "options": [
+    "Twitching the patient's nerves",
+    "Heating the patient's tissue",
+    "Noise damaging the patient's hearing"
+  ],
+  "correct": 0,
+  "answer": "Twitching the patient's nerves. A magnetic field that changes quickly induces electric currents in the body, and past a threshold they fire peripheral nerves, felt as tingling or twitches. The IEC safety standard caps the rate of change well below levels that could stimulate the heart. Heating limits the scanner's radio pulses, not its gradients.",
+  "move": "The limit on a machine is often the body it is pointed at.",
+  "trap": "Heating the tissue, the best-known safety limit of MRI.",
+  "keywords": [
+    "mri",
+    "gradient fields",
+    "peripheral nerve stimulation",
+    "safety standard"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IEC 60601-2-33 MRI safety standard",
+  "source_kind": "standard",
+  "reference": "International Electrotechnical Commission, IEC 60601-2-33: Particular requirements for the basic safety and essential performance of magnetic resonance equipment for medical diagnosis, 2010",
+  "written": "2026-09-27"
+}

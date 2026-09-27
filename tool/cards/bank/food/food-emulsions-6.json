@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "A mayonnaise turns so stiff and greasy that more oil will not go in. What lets it take more?",
   "options": [
-    "Another egg yolk",
     "A spoonful of water",
+    "Another egg yolk",
     "A splash of more oil, faster"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "A spoonful of water. The limit is room, not emulsifier: every droplet needs a film of water round it, and packed tighter the films thin until droplets merge. One yolk carries emulsifier for far more oil than recipes use. Add water or lemon juice little by little and the same yolk keeps swallowing oil.",
   "move": "Find which ingredient has run out before adding more of the famous one.",
   "trap": "Another yolk, because the yolk is the emulsifier everyone names.",

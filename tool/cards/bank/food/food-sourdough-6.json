@@ -1,0 +1,33 @@
+{
+  "id": "food-sourdough-6",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the yeast and the bacteria in a San Francisco-style sourdough starter not fight over its sugar?",
+  "answer": "They eat different sugars. The bacterium named after the city, Lactobacillus sanfranciscensis, feeds on maltose, the sugar flour enzymes cut from starch, and releases part of it as glucose. Its usual partner, the yeast Kazachstania humilis, cannot use maltose at all, so it lives on that spilt glucose. One diner's leftovers are the other's meal.",
+  "move": "Two rivals sharing one place may simply be eating different things.",
+  "keywords": [
+    "sourdough starter",
+    "lactobacillus sanfranciscensis",
+    "kazachstania humilis",
+    "maltose",
+    "glucose"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gänzle, Vermeulen & Vogel, Food Microbiology, 2007",
+  "source_kind": "paper",
+  "reference": "Gänzle, Vermeulen & Vogel, Carbohydrate, peptide and lipid metabolism of lactic acid bacteria in sourdough, Food Microbiology, 2007",
+  "written": "2026-09-27"
+}

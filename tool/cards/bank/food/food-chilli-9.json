@@ -12,10 +12,10 @@
   "question": "A one-hour patch holding 8% capsaicin can ease nerve pain for about three months. How?",
   "options": [
     "It releases endorphins that dull pain",
-    "Pain-fibre endings retreat from the skin",
-    "It blocks nerves like a local anaesthetic"
+    "It blocks nerves like a local anaesthetic",
+    "Pain-fibre endings retreat from the skin"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Pain-fibre endings retreat from the skin. A massive dose overloads the TRPV1 nerve endings, and their terminals in the outer skin withdraw; biopsies show fewer fibres there for weeks. The endings regrow, so relief fades after roughly 12 weeks. The patch first burns, then leaves the skin with fewer wires to carry pain.",
   "move": "A relief that lasts months points to a structure changed, not a signal blocked.",
   "trap": "Endorphins, the popular explanation for the chilli-eater's high.",

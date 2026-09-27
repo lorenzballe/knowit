@@ -1,0 +1,38 @@
+{
+  "id": "cinema-foley-10",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in most wildlife documentaries, the animals' footsteps and chewing were recorded on location?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Wildlife is filmed with long lenses from far away, and no microphone zooms like a lens; close sound would also carry wind, engines and crew. So footsteps, chewing and panting are usually performed later by Foley artists in a studio. An elephant's tread might be rocks pressed into a tub of straw and earth.",
+  "move": "Check which parts of a record were captured and which were added.",
+  "trap": "Trusting that a documentary records its sound the way it records pictures.",
+  "keywords": [
+    "wildlife documentaries",
+    "foley",
+    "telephoto lenses",
+    "nature filmmaking"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Conversation, nature documentary sound, 2024",
+  "source_kind": "news_archive",
+  "reference": "https://theconversation.com/the-animal-sounds-in-most-nature-documentaries-are-made-by-humans-heres-how-they-do-it-and-why-it-matters-220713",
+  "written": "2026-09-27"
+}

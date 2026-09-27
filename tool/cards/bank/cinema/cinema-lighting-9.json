@@ -1,0 +1,38 @@
+{
+  "id": "cinema-lighting-9",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: a lamp scoring 95 out of 100 on the colour rendering index can still turn skin wrong on camera?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The standard index averages how eight pale, pastel test colours look under the lamp, judged by a model of the human eye. Saturated reds are left out of that average, and camera sensors respond differently from eyes. In 2016 the film Academy published a Spectral Similarity Index built for cameras instead.",
+  "move": "Before trusting a score, ask which cases were averaged to make it.",
+  "trap": "Trusting a high score without asking what the test sampled.",
+  "keywords": [
+    "colour rendering index",
+    "led lighting",
+    "skin tones",
+    "spectral similarity index"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy Science and Technology Council, 2016",
+  "source_kind": "institution",
+  "reference": "Academy of Motion Picture Arts and Sciences, Science and Technology Council, Spectral Similarity Index (SSI), 2016",
+  "written": "2026-09-27"
+}

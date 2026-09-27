@@ -1,0 +1,40 @@
+{
+  "id": "sport-suits-7",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Foil and sabre fencers wear a metallic jacket over their whites, but épée fencers do not. Why?",
+  "options": [
+    "The whole body is a valid target",
+    "Épée touches are scored without electricity",
+    "Épée blades are too stiff to need it"
+  ],
+  "correct": 0,
+  "answer": "The whole body is a valid target. The scoring box only learns that a tip pressed on something; the conductive jacket, called a lamé, tells it whether that was valid target. It covers the torso in foil and everything above the waist in sabre. In épée every touch counts, so nothing needs sorting.",
+  "move": "Equipment that sorts right from wrong is needed only where wrong exists.",
+  "trap": "Assuming épée alone kept the old scoring by judges' eyes.",
+  "keywords": [
+    "fencing",
+    "epee",
+    "lame jacket",
+    "electric scoring",
+    "target area"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FIE, Material Rules",
+  "source_kind": "standard",
+  "reference": "Fédération Internationale d'Escrime, Rules for Competitions, Book 3: Material Rules, 2023",
+  "written": "2026-09-27"
+}

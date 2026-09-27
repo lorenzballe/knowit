@@ -8,11 +8,11 @@
   "principle": "confirmation",
   "question": "Appalachian mountain speech is often called living Elizabethan English. What do dialect historians find it to be?",
   "options": [
-    "Shakespeare's English, largely preserved",
     "Settler speech of the 1700s, since changed",
+    "Shakespeare's English, largely preserved",
     "Scots Gaelic carried over into English"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Settler speech of the 1700s, since changed. Most families arrived in the 18th century, many from Ulster, long after Elizabeth I, and the dialect has kept innovating. Old features such as a-hunting and afeared are real, but the Elizabethan label came from writers who collected those and passed over the rest.",
   "move": "A handful of antiques in a house does not make the house antique.",
   "trap": "Hearing a few old-sounding words and taking them for the whole dialect.",

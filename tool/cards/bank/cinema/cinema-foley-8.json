@@ -1,0 +1,32 @@
+{
+  "id": "cinema-foley-8",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a knife driven into a cabbage pass for a stabbing on screen?",
+  "answer": "Because timing, not likeness, does the work. Michel Chion called it synchresis: the mind welds any sound that lands exactly on a visible impact to that impact, provided its weight is roughly right. A wet crunch on the frame of the blow becomes flesh. Heard with no picture, it is plainly a vegetable.",
+  "move": "What arrives at the same instant gets read as one event.",
+  "keywords": [
+    "synchresis",
+    "michel chion",
+    "foley props",
+    "sound and image"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chion, Audio-Vision, 1994",
+  "source_kind": "book",
+  "reference": "Chion, Audio-Vision: Sound on Screen, trans. Gorbman, Columbia University Press, 1994",
+  "written": "2026-09-27"
+}

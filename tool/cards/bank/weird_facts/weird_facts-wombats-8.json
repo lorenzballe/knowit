@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-wombats-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a wombat's teeth have no roots and keep growing throughout its life?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Wombats are the only living marsupials whose teeth are all rootless and ever-growing, a trait better known from rodents and rabbits. Tough, gritty grasses grind the crowns down, and steady growth replaces what wears away. When upper and lower teeth stop meeting squarely, nothing grinds them and they overgrow.",
+  "move": "Whatever wears away every day has to be rebuilt every day.",
+  "trap": "Linking ever-growing teeth only with rodents, the familiar example.",
+  "keywords": [
+    "wombat teeth",
+    "rootless teeth",
+    "grazing",
+    "tooth wear"
+  ],
+  "era": "timeless",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Triggs, Wombats, CSIRO Publishing",
+  "source_kind": "reference_work",
+  "reference": "Triggs, Wombats, Australian Natural History Series, CSIRO Publishing, 2009",
+  "written": "2026-09-27"
+}

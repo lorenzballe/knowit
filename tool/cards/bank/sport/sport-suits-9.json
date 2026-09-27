@@ -1,0 +1,39 @@
+{
+  "id": "sport-suits-9",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: lab tests found that the shark-skin texture of Speedo's Fastskin swimsuit fabric cut drag as real shark skin does?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Oeffner and Lauder flapped shark skin and the swimsuit fabric on flexible foils in flowing water. Shark skin, with its tiny toothlike scales, helped the foil swim faster; the fabric's surface gave no measurable gain. Any gain such suits gave swimmers came from elsewhere, such as squeezing the body. The likeness was skin deep.",
+  "move": "A resemblance to nature is a hypothesis, not a result.",
+  "trap": "Trusting the likeness to shark skin instead of a test against plain fabric.",
+  "keywords": [
+    "shark skin",
+    "fastskin",
+    "speedo",
+    "drag",
+    "biomimicry"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oeffner & Lauder, J. Experimental Biology, 2012",
+  "source_kind": "paper",
+  "reference": "Oeffner & Lauder, The hydrodynamic function of shark skin and two biomimetic applications, Journal of Experimental Biology, 2012",
+  "written": "2026-09-27"
+}

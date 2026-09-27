@@ -1,0 +1,33 @@
+{
+  "id": "sport-sprint-8",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a sprint time measured to the thousandth of a second become the hundredths in the record book?",
+  "answer": "Always upwards. Under World Athletics rules, a fully automatic time not ending in zero goes to the next longer hundredth: 10.041 becomes 10.05, while 10.040 stays 10.04. No runner is credited with time they did not run, and places come from the photo, so two runners can share a time but not a place.",
+  "move": "When rounding, ask which direction protects the claim being made.",
+  "keywords": [
+    "photo finish",
+    "timing",
+    "rounding",
+    "hundredths",
+    "world athletics"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Athletics Technical Rules, TR 19",
+  "source_kind": "standard",
+  "reference": "World Athletics, Competition and Technical Rules, 2024 edition, TR 19 Timing and Photo Finish",
+  "written": "2026-09-27"
+}

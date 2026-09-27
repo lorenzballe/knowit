@@ -1,0 +1,42 @@
+{
+  "id": "food-sourdough-9",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Fresh dough sits near pH 6.0 and a ripe sourdough near 4.0. How many times more hydrogen ions does the sourdough hold?",
+  "value": 100,
+  "unit": "times",
+  "answer": "10 × 10 = 100 times more.",
+  "move": "On a scale of powers, a small step in the number is a giant change.",
+  "trap": "Reading a fall from 6 to 4 as a third more acidic.",
+  "hint": "Each whole step on the pH scale is a multiplication, not an addition.",
+  "steps": [
+    "pH counts hydrogen ions on a scale of powers of ten.",
+    "6.0 − 4.0 = 2 steps on that scale.",
+    "10 × 10 = 100 times more."
+  ],
+  "keywords": [
+    "ph",
+    "acidity",
+    "hydrogen ions",
+    "sourdough",
+    "logarithmic scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "De Vuyst & Neysens, Trends in Food Science",
+  "source_kind": "paper",
+  "reference": "De Vuyst & Neysens, The sourdough microflora: biodiversity and metabolic interactions, Trends in Food Science & Technology, 2005",
+  "written": "2026-09-27"
+}

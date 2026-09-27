@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-wombats-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the wombat's widely quoted top speed of 40 km/h comes from a timed field study?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It surfaced in a 1984 guide to Australian mammals, credited to a zoologist who later said he did not recall anyone timing a wombat with a stopwatch. Only decades later did a biologist report his car's speedometer touching 40 km/h beside fleeing southern hairy-nosed wombats: the number first, a rough check afterwards.",
+  "move": "A figure repeated in every book can still have no measurement underneath it.",
+  "trap": "Assuming a number printed everywhere must have been measured once.",
+  "keywords": [
+    "wombat speed",
+    "southern hairy-nosed wombat",
+    "mammal guides",
+    "field measurement"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ABC News, April 2024",
+  "source_kind": "news_archive",
+  "reference": "https://www.abc.net.au/news/science/2024-04-13/how-fast-can-a-womat-actually-run-faster-than-usain-bolt/103648118",
+  "written": "2026-09-27"
+}

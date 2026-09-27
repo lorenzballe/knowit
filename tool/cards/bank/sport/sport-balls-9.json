@@ -1,0 +1,38 @@
+{
+  "id": "sport-balls-9",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a dry leather football from the 1950s weighed about the same as the ball used in today's game?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The laws have set nearly the same dry weight for most of a century; today it is 410 to 450 g. The old ball earned its reputation in the rain: untreated leather soaked up water and grew markedly heavier as a wet match went on. That is the ball players remember heading.",
+  "move": "The worst days of anything are the ones that get remembered.",
+  "trap": "Remembering the heavy ball of wet days as the ball of every day.",
+  "keywords": [
+    "leather football",
+    "ball weight",
+    "laws of the game",
+    "rain"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 2",
+  "source_kind": "standard",
+  "reference": "The International Football Association Board, Laws of the Game 2024/25, Law 2: The Ball, 2024",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "medicine-transplants-7",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "also": [
+    "human_body.blood_and_heart.blood_types"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Of blood groups O, A and AB, which waits longest on average for a kidney from a deceased donor?",
+  "options": [
+    "Group AB, the rarest of the three",
+    "Group O, the commonest of the three",
+    "Group A, the middle one"
+  ],
+  "correct": 1,
+  "answer": "Group O. An O kidney is compatible with patients of every group, but an O patient can accept only an O kidney. Left alone, other groups drain the O supply, so allocation schemes now reserve O kidneys mostly for O patients. AB patients can take any group and wait least.",
+  "move": "Whoever can give to everyone may be the one left waiting.",
+  "trap": "Picking AB, reasoning that the rarest group is hardest to match.",
+  "keywords": [
+    "blood groups",
+    "kidney allocation",
+    "waiting list",
+    "abo compatibility",
+    "deceased donors"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NHS Blood and Transplant, kidney transplantation report",
+  "source_kind": "statistics",
+  "reference": "NHS Blood and Transplant, Annual Report on Kidney Transplantation 2022/23, 2023",
+  "written": "2026-09-27"
+}

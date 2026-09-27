@@ -8,11 +8,11 @@
   "principle": "availability",
   "question": "What has traditionally dyed the brownish-orange robes of Thai forest monks?",
   "options": [
-    "Saffron threads",
     "Jackfruit heartwood",
+    "Saffron threads",
     "Annatto seeds"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Jackfruit heartwood. Monks chip the wood, boil it into a dye and soak the cloth repeatedly. Saffron, at roughly 150 hand-picked flowers a gram, was never a cloth dye for the poor, let alone for men living on alms. The robes are called saffron for their colour, the way oranges name a shade.",
   "move": "A colour's name is a comparison, not a list of ingredients.",
   "trap": "Saffron threads, because the robes are known by that name.",

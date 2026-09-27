@@ -1,0 +1,41 @@
+{
+  "id": "cinema-foley-7",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "At 24 frames a second, a Foley footstep lands 6 frames late. At 340 m/s, how far away does it sound, in metres?",
+  "value": 85,
+  "unit": "metres",
+  "answer": "340 × 0.25 = 85 metres.",
+  "move": "A delay the world produces naturally is one the ear forgives.",
+  "trap": "Treating a late sound as a mistake rather than as a sign of distance.",
+  "hint": "Turn the frames into seconds, then ask how far sound travels in that time.",
+  "steps": [
+    "One frame lasts 1/24 of a second.",
+    "6 frames late = 6/24 = 0.25 seconds late.",
+    "340 × 0.25 = 85 metres."
+  ],
+  "keywords": [
+    "foley",
+    "synchronisation",
+    "speed of sound",
+    "frame rate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frame rate and the speed of sound",
+  "source_kind": "arithmetic",
+  "reference": "Holman, Sound for Film and Television, 3rd edition, Focal Press, 2010",
+  "written": "2026-09-27"
+}

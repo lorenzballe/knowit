@@ -1,0 +1,46 @@
+{
+  "id": "medicine-transplants-8",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Each sibling has a 1 in 4 chance of matching a patient's tissue type exactly. With three siblings, what percentage chance of any match?",
+  "value": 57.8,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "1 - 27/64 = 37/64, about 57.8%.",
+  "move": "Chances of at least one success never simply add; multiply the failures instead.",
+  "trap": "Adding 25% three times and arriving at 75%.",
+  "hint": "Work out the chance that every one of the siblings fails to match.",
+  "steps": [
+    "Chance one sibling does not match: 3/4.",
+    "Chance none of the three match: 3/4 x 3/4 x 3/4 = 27/64.",
+    "1 - 27/64 = 37/64, about 57.8%."
+  ],
+  "keywords": [
+    "hla matching",
+    "siblings",
+    "tissue typing",
+    "inheritance",
+    "living donors"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Janeway's Immunobiology, 9th edition, 2016",
+  "source_kind": "book",
+  "reference": "Murphy & Weaver, Janeway's Immunobiology, 9th edition, Garland Science, 2016",
+  "written": "2026-09-27"
+}

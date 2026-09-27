@@ -4,20 +4,20 @@
   "genre": "food.cooking_science",
   "strand": "food.cooking_science.maillard",
   "also": [
-    "medicine.diagnosis.blood_tests"
+    "human_body.ageing.longevity"
   ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What does the HbA1c blood test for diabetes share with the crust on a steak?",
-  "answer": "Its first chemical step. Blood glucose binds slowly to haemoglobin's amino groups, the opening move of the Maillard reaction, with no heat and no browning. Red cells live about 120 days, so the share of haemoglobin carrying glucose records roughly the last three months of blood sugar. The body keeps its own slow browning log.",
-  "move": "A slow, steady reaction can serve as a clock for whatever feeds it.",
+  "question": "What links the crust on a seared steak to the slow yellowing of the eye's lens with age?",
+  "answer": "The same chemistry, run at body heat for decades. Sugars bond to proteins' amino groups, as in the Maillard reaction, and slowly form brown, cross-linked products. Lens proteins are never replaced, so they collect them for life. Monnier and Cerami proposed in 1981 that such browning is part of ageing: an old lens is faintly toasted.",
+  "move": "Whatever is never replaced keeps a record of every slow reaction.",
   "keywords": [
-    "hba1c",
     "glycation",
-    "haemoglobin",
-    "diabetes",
-    "amadori product"
+    "eye lens",
+    "crystallins",
+    "ageing",
+    "advanced glycation end products"
   ],
   "era": "timeless",
   "region": "none",
@@ -29,8 +29,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Nathan et al., Diabetes Care, 2008",
+  "source": "Monnier & Cerami, Science, 1981",
   "source_kind": "paper",
-  "reference": "Nathan, Kuenen, Borg, Zheng, Schoenfeld & Heine, Translating the A1C assay into estimated average glucose values, Diabetes Care, 2008",
+  "reference": "Monnier & Cerami, Nonenzymatic browning in vivo: possible process for aging of long-lived proteins, Science, 1981",
   "written": "2026-09-27"
 }

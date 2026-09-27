@@ -9,10 +9,10 @@
   "question": "The Survey of English Dialects, run from 1950 to 1961, chose whom to record in each village?",
   "options": [
     "A random sample of adult residents",
-    "Elderly men who had rarely moved",
-    "Schoolchildren and their parents"
+    "Schoolchildren and their parents",
+    "Elderly men who had rarely moved"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Elderly men who had rarely moved. Fieldworkers sought people over 60, born locally, often farm workers, in 313 mostly rural places, to catch the oldest forms before they vanished; linguists later called the type NORMs, non-mobile older rural males. The maps show a countryside of grandfathers, with most towns left out.",
   "move": "Before trusting a map of how people speak, ask who was asked.",
   "trap": "Assuming a national survey recorded a fair cross-section of the nation.",

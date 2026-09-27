@@ -1,0 +1,35 @@
+{
+  "id": "cinema-foley-6",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a Foley stage built to sound like no room at all?",
+  "answer": "So the mixer can choose the room later. Foley stages are heavily damped and the microphone sits close, so each sound comes out dry, with almost no echo of its own. The mixer then adds the reverberation of the scene's space: a cathedral, a car, a corridor. One pair of shoes can be placed anywhere.",
+  "move": "Record things plain when you do not yet know where they will be used.",
+  "keywords": [
+    "foley stage",
+    "reverberation",
+    "acoustics",
+    "sound mixing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Viers, The Sound Effects Bible, 2008",
+  "source_kind": "book",
+  "reference": "Viers, The Sound Effects Bible: How to Create and Record Hollywood Style Sound Effects, Michael Wiese Productions, 2008",
+  "written": "2026-09-27"
+}

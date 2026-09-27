@@ -3,9 +3,6 @@
   "topic": "music",
   "genre": "music.studio_tricks",
   "strand": "music.studio_tricks.layering",
-  "also": [
-    "psychology.bias.confirmation"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confounding",

@@ -1,0 +1,33 @@
+{
+  "id": "music-folk-6",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did Francis James Child find most of the 305 ballads in his English and Scottish Popular Ballads?",
+  "answer": "In libraries and manuscripts, not from singers. Child, a Harvard professor, published the collection in parts from 1882 to 1898, working mainly from printed books, broadsides and old manuscripts such as the Percy Folio, plus texts sent by correspondents. His oldest item, Judas, comes from a manuscript of the 13th century.",
+  "move": "Ask whether a collection was gathered in the field or at a desk.",
+  "keywords": [
+    "francis james child",
+    "child ballads",
+    "manuscripts",
+    "percy folio",
+    "broadsides"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Child, English and Scottish Popular Ballads",
+  "source_kind": "book",
+  "reference": "Child (ed.), The English and Scottish Popular Ballads, 5 volumes, Dover reprint, 1965",
+  "written": "2026-09-27"
+}

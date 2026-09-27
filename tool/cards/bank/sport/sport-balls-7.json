@@ -1,0 +1,39 @@
+{
+  "id": "sport-balls-7",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Compared with a smooth sphere of the same size and speed, what does a tennis ball's felt do to air drag?",
+  "options": [
+    "Lowers it, like golf-ball dimples",
+    "Raises it",
+    "Leaves it unchanged"
+  ],
+  "correct": 1,
+  "answer": "Raises it. Dimples cut a golf ball's drag by making the airflow cling longer, but a tennis ball's fibres stick out into the stream, each a tiny obstacle with drag of its own. Mehta and Pallis measured drag coefficients well above a smooth sphere's. Part of what slows a tennis ball is its own coat.",
+  "move": "An analogy borrowed from a neighbouring case needs its own evidence.",
+  "trap": "Borrowing the golf-ball lesson that a rough surface always cuts drag.",
+  "keywords": [
+    "tennis ball",
+    "felt",
+    "air drag",
+    "dimples"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mehta & Pallis, Sports Engineering, 2001",
+  "source_kind": "paper",
+  "reference": "Mehta & Pallis, The aerodynamics of a tennis ball, Sports Engineering, 2001",
+  "written": "2026-09-27"
+}

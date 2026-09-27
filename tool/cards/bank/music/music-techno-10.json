@@ -1,0 +1,38 @@
+{
+  "id": "music-techno-10",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When new flats go up beside an established techno club, should the developer pay for the soundproofing?",
+  "sides": [
+    "Yes, the newcomer pays",
+    "No, the club adapts"
+  ],
+  "answer": "The club was there first, and its noise was part of what the flat buyers knowingly took on. Without the rule, one complaint from a new neighbour can close a venue that ran legally for decades. Britain wrote this principle, that whoever brings the change pays for it, into national planning policy in 2018.",
+  "move": "Whichever side you took, the hinge is whether arriving first creates a right.",
+  "counterpoint": "Residents' right to sleep does not lapse because a club came earlier, and cities need housing near transport, which is often where the clubs are. Loading every acoustic cost on new homes makes them dearer and fewer, and freezes land use around whatever happened to open first, however many people it now keeps awake.",
+  "keywords": [
+    "agent of change",
+    "noise complaints",
+    "nightclubs",
+    "planning policy",
+    "housing"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Planning Policy Framework, 2018",
+  "source_kind": "primary_document",
+  "reference": "Ministry of Housing, Communities and Local Government, National Planning Policy Framework, 2018",
+  "written": "2026-09-27"
+}

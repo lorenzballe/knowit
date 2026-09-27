@@ -1,0 +1,39 @@
+{
+  "id": "cinema-budgets-9",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Jack Nicholson took a reduced $6 million fee to play the Joker in 1989's Batman. Roughly what did the role earn him?",
+  "options": [
+    "About $10 million",
+    "Over $50 million",
+    "About $20 million"
+  ],
+  "correct": 1,
+  "answer": "Over $50 million, by most estimates; some reach $90 million. Nicholson swapped a higher fee for a share of the gross takings and of merchandise bearing the Joker, and the film took over $400 million worldwide. The small figure was only the floor of the deal. Every Joker T-shirt sold paid him a little more.",
+  "move": "Price a deal by its share of the upside, not by its headline sum.",
+  "trap": "Letting the $6 million fee set the scale for the whole payday.",
+  "keywords": [
+    "jack nicholson",
+    "batman",
+    "gross participation",
+    "merchandising"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SlashFilm on Nicholson's Batman deal",
+  "source_kind": "news_archive",
+  "reference": "https://www.slashfilm.com/1155076/box-office-smash-batman-likely-never-made-a-profit-and-it-was-the-jokers-fault/",
+  "written": "2026-09-27"
+}

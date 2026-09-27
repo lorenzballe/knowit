@@ -1,0 +1,40 @@
+{
+  "id": "food-sourdough-7",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A baker wants a sharper, more vinegary sourdough. Which change to the starter tilts its acids towards acetic acid?",
+  "options": [
+    "A stiffer starter kept cool",
+    "A wetter starter kept warm",
+    "A longer final proof at 35 °C"
+  ],
+  "correct": 0,
+  "answer": "A stiffer starter kept cool. Warm, wet dough speeds lactic acid most, so heat and water mainly add mild, yogurt-like sourness. Cool, firm dough slows lactic acid more than acetic acid, the sharp acid of vinegar, and the balance shifts towards it. Bakers set a loaf's tang with the starter's water and the thermostat.",
+  "move": "When one source makes two products, ask which one each condition favours.",
+  "trap": "Assuming warmth and moisture make every kind of sourness stronger.",
+  "keywords": [
+    "acetic acid",
+    "lactic acid",
+    "levain",
+    "hydration",
+    "fermentation temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gobbetti & Gänzle, Handbook on Sourdough Biotechnology",
+  "source_kind": "book",
+  "reference": "Gobbetti & Gänzle (eds), Handbook on Sourdough Biotechnology, Springer, 2013",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cinema-budgets-6",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "also": [
+    "economics.work_and_wages.gig_work"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did New Zealand's Parliament rewrite within days in 2010 to keep The Hobbit films from leaving?",
+  "answer": "Its employment law. After an actors' union dispute, Warner Bros. executives flew to Wellington amid talk of moving the shoot abroad. Parliament then passed, under urgency, an amendment making film workers contractors rather than employees unless their contracts said otherwise, and the government raised its subsidy. A national labour law was reshaped around one production.",
+  "move": "When one buyer can walk away, the rules tend to bend towards it.",
+  "keywords": [
+    "the hobbit",
+    "new zealand",
+    "employment law",
+    "warner bros.",
+    "film subsidies"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "New Zealand Parliament, 2010",
+  "source_kind": "primary_document",
+  "reference": "Employment Relations (Film Production Work) Amendment Act 2010, New Zealand Parliament, 2010",
+  "written": "2026-09-27"
+}

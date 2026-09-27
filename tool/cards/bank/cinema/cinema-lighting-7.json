@@ -1,0 +1,39 @@
+{
+  "id": "cinema-lighting-7",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A softbox 1 m from an actor's face is moved back to 4 m. What happens to the shadows?",
+  "options": [
+    "They get harder-edged",
+    "They get softer",
+    "They stay the same"
+  ],
+  "correct": 0,
+  "answer": "They get harder-edged. Softness depends on how large the source looks from the face, not on its fabric. At four times the distance the box spans a quarter of the angle, so it acts more like a point. The sun, enormous but tiny in the sky, casts some of the hardest shadows there are.",
+  "move": "Judge a source by how big it looks from where the subject stands.",
+  "trap": "Thinking distance spreads and diffuses light, the way fog does.",
+  "keywords": [
+    "softbox",
+    "hard light",
+    "soft light",
+    "shadows"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hunter, Biver & Fuqua, Light: Science and Magic",
+  "source_kind": "book",
+  "reference": "Hunter, Biver & Fuqua, Light: Science and Magic, 3rd edn, Focal Press, 2007",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-scans-8",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Kidney injury often follows a CT scan with contrast dye. Compared with matched patients scanned without dye, how often does it happen?",
+  "options": [
+    "About ten times as often",
+    "About twice as often",
+    "About equally often"
+  ],
+  "correct": 2,
+  "answer": "About equally often. McDonald and colleagues at the Mayo Clinic matched thousands of patients on illness and kidney function and found no difference in kidney injury, dialysis or death. People who need an urgent CT are often very ill, and ill kidneys falter anyway. Caution now centres on patients whose kidneys are already badly failing.",
+  "move": "Before blaming what came first, ask what brought the person there.",
+  "trap": "About twice as often, blaming the dye for injuries that merely followed it.",
+  "keywords": [
+    "contrast dye",
+    "acute kidney injury",
+    "ct scan",
+    "propensity matching"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McDonald et al., Radiology, 2013",
+  "source_kind": "paper",
+  "reference": "McDonald et al., Intravenous contrast material-induced nephropathy: causal or coincident phenomenon?, Radiology, 2013",
+  "written": "2026-09-27"
+}

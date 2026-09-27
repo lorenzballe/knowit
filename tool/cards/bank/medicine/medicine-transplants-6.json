@@ -1,0 +1,33 @@
+{
+  "id": "medicine-transplants-6",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Boston surgeons check that two brothers were truly identical before the first lasting kidney transplant, in 1954?",
+  "answer": "Among other tests, by grafting a patch of skin from one brother onto the other. Skin from anyone else was rejected within weeks, so a graft that took meant neither immune system saw a stranger. Blood groups were matched and police compared fingerprints. Joseph Murray's patient, Richard Herrick, lived eight more years.",
+  "move": "Check compatibility on something small before risking something vital.",
+  "keywords": [
+    "identical twins",
+    "kidney transplant",
+    "skin graft",
+    "joseph murray",
+    "rejection"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Merrill et al., JAMA, 1956",
+  "source_kind": "paper",
+  "reference": "Merrill, Murray, Harrison & Guild, Successful homotransplantation of the human kidney between identical twins, Journal of the American Medical Association, 1956",
+  "written": "2026-09-27"
+}

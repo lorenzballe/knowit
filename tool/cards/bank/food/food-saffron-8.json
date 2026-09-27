@@ -9,10 +9,10 @@
   "question": "Saffron is graded by how strongly an extract absorbs blue light at 440 nm. Which cheap additive fools that test best?",
   "options": [
     "Tartrazine, a synthetic yellow dye",
-    "Gardenia fruit extract",
-    "Ground turmeric root"
+    "Ground turmeric root",
+    "Gardenia fruit extract"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Gardenia fruit extract. The fruit of Gardenia jasminoides makes many of the same crocin pigments as saffron, so the reading rises exactly as real saffron would make it rise. Synthetic dyes have their own check in the standard. Catching gardenia needs chromatography hunting for geniposide, a compound saffron never makes.",
   "move": "A test that confirms the right ingredient cannot say whose it is.",
   "trap": "Tartrazine, since a laboratory dye seems the most sophisticated forgery.",

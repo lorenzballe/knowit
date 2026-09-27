@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-wombats-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were some of the rarest wombats moved to a second refuge in southern Queensland from 2009?",
+  "answer": "So that one disaster could not end the species. Every northern hairy-nosed wombat lived at Epping Forest, where a single fire, flood or outbreak could wipe them out. From July 2009, 15 were moved in several transfers to Richard Underwood Nature Refuge near St George; the first joey there was confirmed in 2011.",
+  "move": "Keep a second copy of anything a single accident could destroy.",
+  "keywords": [
+    "northern hairy-nosed wombat",
+    "translocation",
+    "richard underwood nature refuge",
+    "extinction risk"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Australian Wildlife Conservancy",
+  "source_kind": "institution",
+  "reference": "https://www.australianwildlife.org/sanctuaries/richard-underwood-nature-refuge",
+  "written": "2026-09-27"
+}

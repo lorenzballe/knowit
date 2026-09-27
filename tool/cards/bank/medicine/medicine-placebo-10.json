@@ -1,0 +1,43 @@
+{
+  "id": "medicine-placebo-10",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Volunteers took the painkiller ketorolac for two days, then a dummy pill that still eased their pain. Which drug switched that relief off?",
+  "options": [
+    "Naloxone, which blocks opioid receptors",
+    "Rimonabant, which blocks cannabinoid receptors",
+    "Neither, learnt relief resists both"
+  ],
+  "correct": 1,
+  "answer": "Rimonabant. In Benedetti's 2011 experiment with tourniquet pain, a placebo that followed morphine was blocked by naloxone, but one that followed ketorolac, which is not an opioid, was not; the cannabinoid blocker stopped it instead. The brain had learnt to echo the drug it had been given, by a different chemical route each time.",
+  "move": "A learnt response can copy the path of whatever taught it.",
+  "trap": "Naloxone, because placebo pain relief is known to run on opioids.",
+  "keywords": [
+    "placebo analgesia",
+    "cannabinoids",
+    "naloxone",
+    "conditioning",
+    "ketorolac"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "medicine-placebo-3"
+  ],
+  "figure": "none",
+  "source": "Benedetti et al., Nature Medicine, 2011",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/nm.2435",
+  "written": "2026-09-27"
+}

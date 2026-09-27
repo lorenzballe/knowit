@@ -8,38 +8,35 @@
   ],
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "sampling",
-  "question": "An impulse response is recorded in an empty concert hall for a convolution reverb. How does it err, if at all?",
+  "principle": "anchoring",
+  "question": "A vocal reverb has a 2-second decay, under a dense mix that hides anything 30 dB quieter. How long is the tail audible?",
   "options": [
-    "Too long: no bodies to absorb",
-    "Too short: no bodies to reflect",
-    "Neither: padded seats stand in for people"
+    "About 1 second",
+    "About 2 seconds",
+    "About 4 seconds"
   ],
   "correct": 0,
-  "answer": "Too long. Each seated listener soaks up sound, most at middle and high frequencies, so a full house shortens the tail. Leo Beranek's hall measurements show occupied times shorter than empty ones. Padded seats narrow the gap, which is why halls choose them, but do not close it. The recording captures a rehearsal.",
-  "move": "A measurement taken in quiet conditions describes the quiet conditions.",
-  "trap": "Assuming well-padded seats absorb exactly what the people would.",
+  "answer": "About 1 second. A reverb's decay time is how long its tail takes to fall 60 decibels, to a millionth of its energy. The tail loses a steady number of decibels each second, 30 here, so the mix swallows it halfway. Soloed, the same vocal would trail on for the full two seconds.",
+  "move": "Ask what threshold a quoted duration is measured to before planning around it.",
+  "trap": "Taking the 2 seconds on the dial as the time the tail is heard.",
   "keywords": [
-    "impulse response",
-    "audience absorption",
-    "concert halls",
-    "leo beranek"
+    "decay time",
+    "decibels",
+    "masking",
+    "mixing"
   ],
   "era": "timeless",
   "region": "none",
-  "hook": "mechanism",
+  "hook": "puzzle",
   "mood": "practical",
-  "numeracy": 0,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "music-reverb-3"
-  ],
   "figure": "none",
-  "source": "Beranek, Concert Halls and Opera Houses, 2004",
+  "source": "Izhaki, Mixing Audio, 2008",
   "source_kind": "book",
-  "reference": "Beranek, Concert Halls and Opera Houses: Music, Acoustics, and Architecture, 2nd edn, Springer, 2004",
+  "reference": "Izhaki, Mixing Audio: Concepts, Practices and Tools, Focal Press, 2008",
   "written": "2026-09-27"
 }

@@ -1,0 +1,33 @@
+{
+  "id": "sport-balls-6",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must a legal golf ball fly the same way however it is placed on the tee?",
+  "answer": "Because of a ball that tamed slices. The Polara, designed by two physicists in the 1970s, had normal dimples in a band round its middle and shallow ones elsewhere; teed correctly, it spun steadily and curved far less. The USGA answered with a symmetry rule in 1981, and later settled Polara's lawsuit for $1.375 million.",
+  "move": "A rule written against one product often reads like a portrait of it.",
+  "keywords": [
+    "golf ball",
+    "polara",
+    "dimples",
+    "symmetry rule",
+    "usga"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USGA and R&A, Equipment Rules",
+  "source_kind": "primary_document",
+  "reference": "USGA and The R&A, Equipment Rules, Part 4: The Ball, 2019",
+  "written": "2026-09-27"
+}

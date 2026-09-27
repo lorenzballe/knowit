@@ -1,0 +1,42 @@
+{
+  "id": "medicine-scans-7",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "About how many standard chest X-rays deliver the same radiation dose as one CT scan of the abdomen?",
+  "value": 400,
+  "unit": "chest X-rays",
+  "withinFactor": 3,
+  "answer": "8 / 0.02 = 400 chest X-rays.",
+  "move": "Put two risks in the same unit before calling them similar.",
+  "trap": "Guessing a handful, picturing both as one quick picture.",
+  "hint": "Put both doses in millisieverts, the unit of radiation dose, then divide.",
+  "steps": [
+    "A single chest X-ray taken from behind: about 0.02 mSv.",
+    "A CT scan of the abdomen: about 8 mSv.",
+    "8 / 0.02 = 400 chest X-rays."
+  ],
+  "keywords": [
+    "radiation dose",
+    "ct scan",
+    "chest x-ray",
+    "millisievert"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Mettler et al., Radiology, 2008",
+  "source_kind": "paper",
+  "reference": "Mettler, Huda, Yoshizumi & Mahesh, Effective doses in radiology and diagnostic nuclear medicine: a catalog, Radiology, 2008",
+  "written": "2026-09-27"
+}

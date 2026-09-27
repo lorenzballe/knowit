@@ -1,0 +1,40 @@
+{
+  "id": "cinema-budgets-7",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Coming to America brought in about $288 million. Under Paramount's contract definition, how much net profit did it make?",
+  "options": [
+    "About $200 million",
+    "About $60 million",
+    "None at all"
+  ],
+  "correct": 2,
+  "answer": "None at all. Before any net profit, Paramount's formula deducted distribution fees of about 30%, overheads, interest and the stars' shares of the gross, so costs grew with the takings. The columnist whose idea it used sued for his share; in 1990 a Los Angeles judge called the formula unconscionable. Paramount later settled for $900,000.",
+  "move": "Before accepting a share of the profit, read who gets to define it.",
+  "trap": "Subtracting the budget from the takings and calling the rest profit.",
+  "keywords": [
+    "coming to america",
+    "net profit",
+    "profit participation",
+    "paramount",
+    "hollywood accounting"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "O'Donnell & McDougal, Fatal Subtraction, 1992",
+  "source_kind": "book",
+  "reference": "O'Donnell & McDougal, Fatal Subtraction: The Inside Story of Buchwald v. Paramount, Doubleday, 1992",
+  "written": "2026-09-27"
+}

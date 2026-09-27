@@ -1,0 +1,37 @@
+{
+  "id": "sport-suits-10",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should elite swimming require every racer at a championship to wear one identical, officially issued suit?",
+  "sides": [
+    "Yes, one issued suit",
+    "No, let makers compete"
+  ],
+  "answer": "Yes. The 2008–09 bodysuits proved that fabric can move times more than a year of training, and approval lists always trail the latest cut. One issued suit, like a regulation ball, would make every record a record of swimmers. It would also close the gap between sponsored athletes and the rest.",
+  "move": "Whichever side you took, the hinge is whether one suit fits every body equally.",
+  "counterpoint": "No. Bodies differ, and one cut would fit some swimmers far better than others, handing out advantage by lottery instead of by research. Makers' competition also pays for much of the sport. The 2010 textile rules already capped the gains: within those limits, suits now differ by fractions, not by the seconds of the bodysuit years.",
+  "keywords": [
+    "swimsuits",
+    "equipment rules",
+    "standardisation",
+    "world aquatics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Aquatics, Swimwear Approval Requirements",
+  "source_kind": "standard",
+  "reference": "World Aquatics, Requirements for Swimwear Approval (FRSA), 2023",
+  "written": "2026-09-27"
+}

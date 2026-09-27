@@ -1,0 +1,42 @@
+{
+  "id": "cinema-budgets-10",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A studio feature has a 110-page script. Roughly how many shooting days will it need?",
+  "value": 44,
+  "unit": "shooting days",
+  "withinFactor": 3,
+  "answer": "110 / 2.5 = about 44 shooting days.",
+  "move": "Break a schedule into the unit the planners themselves count in.",
+  "trap": "Guessing a week or two, forgetting each minute needs many setups.",
+  "hint": "Start from how many script pages a crew gets through in a day.",
+  "steps": [
+    "A script page runs about one minute on screen.",
+    "A studio unit typically shoots 2 to 3 pages a day; take 2.5.",
+    "110 / 2.5 = about 44 shooting days."
+  ],
+  "keywords": [
+    "shooting schedule",
+    "script pages",
+    "shooting days",
+    "production planning"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Singleton, Film Scheduling, 1991",
+  "source_kind": "book",
+  "reference": "Singleton, Film Scheduling: Or, How Long Will It Take to Shoot Your Movie?, 2nd edn, Lone Eagle, 1991",
+  "written": "2026-09-27"
+}

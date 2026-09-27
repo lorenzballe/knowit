@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-wombats-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the largest marsupial that ever lived, and how is it related to wombats?",
+  "answer": "Diprotodon, a member of the vombatiforms, the group that holds wombats and koalas. It weighed up to about 2,700 kg, the size of a rhinoceros, and grazed across Australia until roughly 40,000 years ago. The burrowing wombat is the small survivor of a lineage that once included the heaviest marsupials known.",
+  "move": "A small survivor may be the last branch of a family of giants.",
+  "keywords": [
+    "diprotodon",
+    "vombatiforms",
+    "megafauna",
+    "wombats",
+    "koalas"
+  ],
+  "era": "ancient",
+  "region": "oceania",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wroe et al., Proc. Royal Society B, 2004",
+  "source_kind": "primary_document",
+  "reference": "Wroe, Crowther, Dortch & Chong, The size of the largest marsupial and why it matters, Proceedings of the Royal Society B, 2004",
+  "written": "2026-09-27"
+}

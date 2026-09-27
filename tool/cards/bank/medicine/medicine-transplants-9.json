@@ -1,0 +1,41 @@
+{
+  "id": "medicine-transplants-9",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "also": [
+    "philosophy.ethics.duty"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should living kidney donors be paid a fixed, state-regulated sum to shorten transplant waiting lists?",
+  "sides": [
+    "Yes, pay donors",
+    "No, keep it unpaid"
+  ],
+  "answer": "Patients die on waiting lists while donation barely rises. Surgeons, hospitals and drug makers are all paid; only the donor is not. Iran has paid living unrelated donors through a regulated scheme since 1988 and reported clearing its kidney waiting list by 1999. A fixed state price shuts out brokers and bidding.",
+  "move": "The decider is whether a regulated price can protect the sellers it recruits.",
+  "counterpoint": "Payment recruits the poor. In a study of kidney sellers in Chennai, 96% sold to pay debts, most reported worse health afterwards and few would recommend it. A price turns a gift into a job for those with fewest choices, and once a sale is legal, families and lenders can press for it.",
+  "keywords": [
+    "kidney sales",
+    "iran",
+    "living donors",
+    "organ markets",
+    "waiting lists"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghods & Savaj, CJASN, 2006",
+  "source_kind": "paper",
+  "reference": "Ghods & Savaj, Iranian model of paid and regulated living-unrelated kidney donation, Clinical Journal of the American Society of Nephrology, 2006",
+  "written": "2026-09-27"
+}
