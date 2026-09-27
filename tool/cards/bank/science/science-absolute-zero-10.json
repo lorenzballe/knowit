@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Below about 0.3 K, liquid helium-3 is squeezed until part of it freezes. What happens to its temperature?",
+  "question": "In a sealed, insulated cell below about 0.3 K, liquid helium-3 is squeezed until part of it freezes. What happens to its temperature?",
   "options": [
     "It rises, as freezing releases heat",
     "It holds steady while freezing",

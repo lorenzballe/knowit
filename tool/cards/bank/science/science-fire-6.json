@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How do fire laboratories measure how much heat a burning sofa gives off?",
-  "answer": "By the oxygen it uses up. Wood, foam, plastics and petrol all release about 13.1 megajoules per kilogram of oxygen consumed, within about 5%, as Clayton Huggett showed in 1980. So labs burn the sofa under a hood, measure how much oxygen the exhaust has lost, and multiply. The flames are never measured directly.",
+  "answer": "By the oxygen it uses up. Wood, foam, plastics and petrol all release about 13.1 megajoules per kilogram of oxygen consumed, give or take 5%, as Clayton Huggett showed in 1980. So labs burn the sofa under a hood, measure the oxygen missing from the exhaust, and multiply: the heat is read from the air.",
   "move": "When an output scatters everywhere, measure the input it cannot avoid using.",
   "keywords": [
     "oxygen consumption calorimetry",

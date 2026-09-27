@@ -13,7 +13,7 @@
     "Five"
   ],
   "correct": 2,
-  "answer": "Five. Raphael Robinson proved in 1947 that five suffice and no fewer will do; one can be a single point. The pieces are so scattered they have no volume at all, and building them needs the axiom of choice, which picks from infinitely many sets without saying how. No knife could cut them.",
+  "answer": "Five. Raphael Robinson proved in 1947 that five suffice and no fewer will do; one can be a single point. The pieces are so scattered that no volume can be assigned to them, and building them needs the axiom of choice, which picks from infinitely many sets without saying how. No knife could cut them.",
   "move": "Find the one ingredient a strange result rests on before doubting the rest.",
   "trap": "Infinitely many, since a finite set of cuts seems unable to create volume.",
   "keywords": [
