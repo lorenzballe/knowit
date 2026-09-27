@@ -3,9 +3,6 @@
   "topic": "medicine",
   "genre": "medicine.vaccines",
   "strand": "medicine.vaccines.doubt",
-  "also": [
-    "history.empires.british"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",

@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "Les Misérables, 2012, had its cast sing live on set. How was the orchestra matched to them?",
   "options": [
-    "Recorded afterwards, following the singers",
     "Played live, just off the set",
-    "Recorded first, fed into their ears"
+    "Recorded first, fed into their ears",
+    "Recorded afterwards, following the singers"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "Recorded afterwards, following the singers. Each actor heard a live pianist through a hidden earpiece, and was free to slow down, break or hold a note. The orchestra was recorded later to fit the voices, reversing the usual order in which singers mime to a track laid down first. The conductor followed the actors.",
   "move": "When one performance matters most, make everything else follow it.",
   "trap": "Assuming the usual playback method, with singers keeping time to a recording.",

@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "A TB cavity holds 10^8 bacteria; 1 in 10^6 resist drug A, 1 in 10^8 B. How many million cavities per bacterium resisting both?",
+  "question": "A TB cavity holds 10^8 bacteria; 1 in 10^6 resist drug A, 1 in 10^8 B. One bacterium resisting both per how many million cavities?",
   "value": 1,
   "unit": "million cavities",
   "answer": "So one cavity in 10^6, that is 1 million.",

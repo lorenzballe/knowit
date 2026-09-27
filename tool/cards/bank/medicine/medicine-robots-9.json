@@ -12,7 +12,7 @@
   "withinFactor": 3,
   "answer": "Per operation: 364,000 / 300 = about 1,200 dollars.",
   "move": "Spread a big purchase over every use before calling it cheap or dear.",
-  "trap": "Forgetting the servicing, which costs nearly as much yearly as the purchase.",
+  "trap": "Forgetting the servicing, which adds about 70% to each year's cost.",
   "hint": "Turn the price into a yearly cost first, then share the year's cost out.",
   "steps": [
     "Purchase spread over 7 years: 1,500,000 / 7 = about 214,000 a year.",

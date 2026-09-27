@@ -5,7 +5,7 @@
   "strand": "medicine.surgery.robots",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "anchoring",
+  "principle": "reflection",
   "question": "A da Vinci robot's wristed instruments carry a chip that counts their uses. Roughly how many operations before one stops working?",
   "options": [
     "About 10 to 20",

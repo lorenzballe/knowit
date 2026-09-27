@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "How does cefiderocol, approved in 2019, get inside bacteria whose outer membrane keeps most antibiotics out?",
-  "answer": "By posing as an iron carrier. One end of the molecule grips iron as the bacteria's own iron-scavenging molecules do, and bacteria starved of iron in the body pull it in through their iron-import channels. The trick copies albomycin, a natural antibiotic from soil bacteria. Mutations in those channels already let some strains resist it.",
+  "answer": "By posing as an iron carrier. One end of the molecule grips iron as the bacteria's own iron-scavenging molecules do, and bacteria starved of iron in the body pull it in through their iron-import channels. Soil bacteria got there first with albomycin. Mutations in those channels already let some strains resist it.",
   "move": "The easiest way through a guarded door is to look like a delivery.",
   "keywords": [
     "cefiderocol",

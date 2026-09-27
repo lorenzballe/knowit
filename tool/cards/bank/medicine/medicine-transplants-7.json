@@ -8,7 +8,7 @@
   ],
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "conditional",
+  "principle": "reflection",
   "question": "Of blood groups O, A and AB, which waits longest on average for a kidney from a deceased donor?",
   "options": [
     "Group AB, the rarest of the three",
