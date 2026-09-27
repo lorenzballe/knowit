@@ -10,14 +10,14 @@
   "value": 150,
   "unit": "flowers",
   "withinFactor": 3,
-  "answer": "1,000 mg / 6.5 mg = about 150 flowers.",
+  "answer": "1,000 mg / 6.6 mg = about 150 flowers.",
   "move": "Price a luxury by counting the hands that touch each gram.",
   "trap": "Picturing a gram as a pinch from a handful of flowers.",
   "hint": "Count the threads in one flower, then ask what a single dried thread weighs.",
   "steps": [
     "Each flower carries 3 red stigmas, the only part kept.",
-    "A dried stigma weighs about 2 mg, so a flower yields about 6.5 mg.",
-    "1,000 mg / 6.5 mg = about 150 flowers."
+    "3 stigmas x about 2.2 mg dried = about 6.6 mg per flower.",
+    "1,000 mg / 6.6 mg = about 150 flowers."
   ],
   "keywords": [
     "saffron harvest",

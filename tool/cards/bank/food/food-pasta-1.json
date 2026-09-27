@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Where did the story that Marco Polo brought pasta home from China come from?",
-  "answer": "From an American trade magazine. In 1929 the Macaroni Journal, voice of the US pasta makers, ran a tale in which a sailor on Polo's voyage learns noodle-making in China. The sailor was named Spaghetti. Sicily was shipping dried pasta a century before Polo sailed, but the trade story outlived the records.",
+  "answer": "From an American trade magazine. In 1929 the Macaroni Journal, voice of the US pasta makers, ran a tale in which a sailor on Polo's voyage learns noodle-making in China. The sailor was named Spaghetti. Yet a Genoese inventory of 1279 already lists a basket of macaroni, sixteen years before Polo came home.",
   "move": "Trace a charming origin story to its first printing before repeating it.",
   "keywords": [
     "marco polo",
@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Gambero Rosso, food myths",
-  "source_kind": "news_archive",
-  "reference": "https://www.gamberorossointernational.com/news/from-marco-polos-spaghetti-to-risotto-alla-milanese-myths-and-fake-news-about-food-that-have-been-circulating-for-centuries/",
+  "source": "Dickie, Delizia!, 2007",
+  "source_kind": "book",
+  "reference": "Dickie, Delizia! The Epic History of the Italians and Their Food, Hodder & Stoughton, 2007",
   "written": "2026-09-26"
 }

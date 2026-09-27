@@ -15,7 +15,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Its pigment, crocin, is a carotenoid, the family of carrots and paprika, which are fat-soluble; but crocin carries sugar groups at both ends that make it dissolve in water. That is why saffron is steeped in warm water or stock, and why a risotto turns gold while the oil that paprika reddens stays clear.",
+  "answer": "True. Its pigment, crocin, comes from a carotenoid, the fat-soluble family of carrots and paprika, but it carries sugar groups at both ends that make it dissolve in water. That is why saffron is steeped in warm water or stock: a risotto turns gold, while oil stirred with saffron stays nearly clear.",
   "move": "Check how a colour dissolves before choosing the liquid to carry it.",
   "trap": "Assuming saffron behaves like paprika, whose red runs into fat.",
   "keywords": [
