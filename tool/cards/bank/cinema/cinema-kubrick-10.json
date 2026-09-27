@@ -3,31 +3,29 @@
   "topic": "cinema",
   "genre": "cinema.directors",
   "strand": "cinema.directors.kubrick",
-  "also": [
-    "cinema.special_effects.practical"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "Stanley Kubrick won a single competitive Oscar in his whole career. For what?",
+  "question": "To earn an R rating in America, how was the orgy scene in Kubrick's Eyes Wide Shut, 1999, altered?",
   "options": [
-    "Visual effects for 2001",
-    "Directing Barry Lyndon",
-    "Adapting A Clockwork Orange"
+    "Digital figures were added in front",
+    "About a minute of it was cut",
+    "Its shots were darkened and blurred"
   ],
   "correct": 0,
-  "answer": "Visual effects for 2001: A Space Odyssey, in 1969. Credited as designer and director of the special effects, Kubrick alone received the statuette, although Douglas Trumbull, Wally Veevers, Con Pederson and Tom Howard supervised much of the work. He was nominated for directing four times and never won.",
-  "move": "Check whose name sits on an award before crediting the work to it.",
-  "trap": "Picking a directing prize, since directing is what he is famous for.",
+  "answer": "Digital figures were added in front. Rather than cut shots, Warner Bros. placed computer-generated cloaked onlookers between the camera and the most explicit action, so the scene kept its length and rhythm. Kubrick had died that March. Europe saw the scene unaltered; American viewers saw it only on a later unrated home release.",
+  "move": "Something can be hidden by adding to it as well as by cutting.",
+  "trap": "Assuming a censor's demand is met by cutting, as it usually is.",
   "keywords": [
-    "stanley kubrick",
-    "academy awards",
-    "visual effects",
-    "douglas trumbull"
+    "eyes wide shut",
+    "film rating",
+    "digital figures",
+    "censorship",
+    "warner bros."
   ],
   "era": "twentieth",
   "region": "americas",
-  "hook": "misconception",
+  "hook": "story",
   "mood": "sober",
   "numeracy": 0,
   "abstraction": "concrete",
@@ -35,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Academy Awards Database, 1969",
-  "source_kind": "institution",
-  "reference": "Academy of Motion Picture Arts and Sciences, Academy Awards Database, 41st Academy Awards, 1969",
+  "source": "Kolker & Abrams, Eyes Wide Shut, 2019",
+  "source_kind": "book",
+  "reference": "Kolker & Abrams, Eyes Wide Shut: Stanley Kubrick and the Making of His Final Film, Oxford University Press, 2019",
   "written": "2026-09-27"
 }

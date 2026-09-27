@@ -10,7 +10,7 @@
   "options": [
     "Longer than 6 seconds",
     "Shorter than 6 seconds",
-    "Exactly 6 seconds"
+    "About the same, 6 seconds"
   ],
   "correct": 1,
   "answer": "Shorter than 6 seconds. Shot lengths are lopsided: most shots are brief, and a few long takes drag the average up. Barry Salt's counts, begun in the 1970s, show this long tail film after film. One two-minute take adds as much running time as twenty 6-second shots.",

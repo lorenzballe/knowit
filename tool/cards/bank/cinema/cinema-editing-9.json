@@ -9,7 +9,7 @@
   "question": "Apocalypse Now exposed 1,250,000 feet of film, at 90 feet a minute, for a 147-minute cut. Minutes shot per minute used?",
   "value": 94.5,
   "unit": "minutes shot per minute used",
-  "tolerance": 2,
+  "tolerance": 5,
   "answer": "13,900 / 147 = about 94.5 minutes shot per minute used.",
   "move": "Count what was thrown away to learn what the finished thing really cost.",
   "trap": "Guessing about 10 to 1, as if most footage made the cut.",
