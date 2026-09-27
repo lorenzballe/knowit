@@ -1,0 +1,40 @@
+{
+  "id": "medicine-resistance-9",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A ward has a record 12 resistant-bacteria infections one year, launches a hand-gel campaign, then has 6 the next. What does that show?",
+  "options": [
+    "The campaign roughly halved infections",
+    "Little, since record years tend to fall back",
+    "The campaign failed, as 6 is still many"
+  ],
+  "correct": 1,
+  "answer": "Little, on its own. A campaign launched after a record year starts at a peak, and peaks are partly bad luck, so the next year tends to be lower anyway. With counts this small, 12 to 6 is within chance. The test is a similar ward without the campaign, over several years.",
+  "move": "Measure a fix started at a peak against places that did nothing.",
+  "trap": "Crediting the campaign because it followed the worst year on record.",
+  "keywords": [
+    "regression to the mean",
+    "hospital infections",
+    "hand hygiene",
+    "infection control",
+    "evaluation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barnett et al., Int J Epidemiology, 2005",
+  "source_kind": "paper",
+  "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005",
+  "written": "2026-09-27"
+}

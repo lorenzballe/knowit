@@ -1,0 +1,43 @@
+{
+  "id": "language-lost-scripts-6",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The Linear A corpus holds about 1,400 inscriptions with about 7,400 signs in all. How many signs per inscription, on average?",
+  "value": 5.3,
+  "unit": "signs per inscription",
+  "tolerance": 0.3,
+  "answer": "7,400 / 1,400 = about 5.3 signs per inscription.",
+  "move": "Count the words in the pile, not just the number of pages.",
+  "trap": "Hearing 1,400 inscriptions and picturing a large body of text.",
+  "hint": "Divide the signs by the objects that carry them.",
+  "steps": [
+    "Total signs: about 7,400.",
+    "Inscriptions: about 1,400.",
+    "7,400 / 1,400 = about 5.3 signs per inscription."
+  ],
+  "keywords": [
+    "linear a",
+    "minoan crete",
+    "inscriptions",
+    "corpus size",
+    "undeciphered"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salgarella & Castellan, SigLA database",
+  "source_kind": "institution",
+  "reference": "https://sigla.phis.me/paper.html",
+  "written": "2026-09-27"
+}

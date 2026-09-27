@@ -1,0 +1,42 @@
+{
+  "id": "medicine-resistance-7",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A TB cavity holds 10^8 bacteria; 1 in 10^6 resist drug A, 1 in 10^8 B. How many million cavities per bacterium resisting both?",
+  "value": 1,
+  "unit": "million cavities",
+  "answer": "So one cavity in 10^6, that is 1 million.",
+  "move": "Two independent locks multiply the difficulty only if both are used together.",
+  "trap": "Seeing 100 resisters to drug A per cavity and expecting double ones.",
+  "hint": "Resistance to each drug arises separately, so the chances multiply.",
+  "steps": [
+    "Chance one bacterium resists both: 10^-6 x 10^-8 = 10^-14.",
+    "Expected per cavity: 10^8 x 10^-14 = 10^-6.",
+    "So one cavity in 10^6, that is 1 million."
+  ],
+  "keywords": [
+    "tuberculosis",
+    "combination therapy",
+    "isoniazid",
+    "rifampicin",
+    "mutation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Iseman, A Clinician's Guide to Tuberculosis, 2000",
+  "source_kind": "book",
+  "reference": "Iseman, A Clinician's Guide to Tuberculosis, Lippincott Williams & Wilkins, 2000",
+  "written": "2026-09-27"
+}

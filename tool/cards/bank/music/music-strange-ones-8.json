@@ -1,0 +1,42 @@
+{
+  "id": "music-strange-ones-8",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "also": [
+    "history.revolutions.industrial"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: electrically generated music was piped to paying subscribers over New York telephone lines before 1910?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From 1906 Thaddeus Cahill's Telharmonium, about 180 tonnes of spinning dynamos, played from Telharmonic Hall at 39th Street and Broadway to hotels, restaurants and homes; receivers wore paper horns. It folded, the machine was scrapped, and no recording of it is known. Electronic music's first broadcast left nothing to play back.",
+  "move": "The history that gets told begins where the surviving evidence begins.",
+  "trap": "Electronic music seems to begin with the theremin, which left records.",
+  "keywords": [
+    "telharmonium",
+    "thaddeus cahill",
+    "telephone",
+    "new york",
+    "dynamos"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weidenaar, Magic Music from the Telharmonium, 1995",
+  "source_kind": "book",
+  "reference": "Weidenaar, Magic Music from the Telharmonium, Scarecrow Press, 1995",
+  "written": "2026-09-27"
+}

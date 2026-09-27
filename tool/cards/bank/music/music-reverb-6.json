@@ -1,0 +1,32 @@
+{
+  "id": "music-reverb-6",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the first computer reverbs ring with a faint metallic pitch, and how was it tamed?",
+  "answer": "Because a single repeating delay is a note. Manfred Schroeder built reverb from delays fed back into themselves; an echo returning every 30 milliseconds buzzes at about 33 hertz. He ran several in parallel, their lengths chosen to share no common rhythm, then smeared the result through further filters. Clashing repeats add up to a wash.",
+  "move": "Repeat one pattern and it becomes a signal; mix mismatched ones and it becomes texture.",
+  "keywords": [
+    "manfred schroeder",
+    "digital reverb",
+    "comb filter",
+    "delay"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schroeder, JAES, 1962",
+  "source_kind": "paper",
+  "reference": "Schroeder, 'Natural' Sounding Artificial Reverberation, Journal of the Audio Engineering Society, 1962",
+  "written": "2026-09-27"
+}

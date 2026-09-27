@@ -4,7 +4,7 @@
   "genre": "psychology.bias",
   "strand": "psychology.bias.halo_effect",
   "kind": "number",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "computation",
   "question": "Plain-looking workers earn roughly 5 to 10% less. Taking 7.5% of a £30,000 salary over 40 years, what is the gap in thousands of pounds?",
   "value": 90,

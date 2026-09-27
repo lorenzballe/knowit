@@ -1,0 +1,45 @@
+{
+  "id": "music-strange-ones-10",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 0.5 mm wind-harp string is tuned to 160 Hz. In 4 m/s wind, eddies shed at 0.2 × speed ÷ thickness. Which harmonic sounds?",
+  "value": 10,
+  "unit": "harmonic number",
+  "answer": "The string locks onto its 10th harmonic.",
+  "move": "When a push has its own rhythm, the thing pushed answers in that rhythm.",
+  "trap": "Expecting the string to sound its tuned 160 Hz note in any wind.",
+  "hint": "Work out how many eddies leave the string each second, then compare with its note.",
+  "steps": [
+    "0.5 mm = 0.0005 m.",
+    "Eddies: 0.2 x 4 / 0.0005 = 1,600 a second.",
+    "1,600 / 160 = 10.",
+    "The string locks onto its 10th harmonic."
+  ],
+  "keywords": [
+    "aeolian harp",
+    "vortex shedding",
+    "harmonics",
+    "wind"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rayleigh, The Theory of Sound",
+  "source_kind": "book",
+  "reference": "Rayleigh, The Theory of Sound, vol. 2, Dover, 1945",
+  "written": "2026-09-27"
+}

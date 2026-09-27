@@ -1,0 +1,33 @@
+{
+  "id": "medicine-resistance-6",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a hospital sink pass resistant bacteria to patients who never use it?",
+  "answer": "Through its drain. Bacteria settle in the slime lining the U-bend and grow up the pipe, about 2.5 cm a day in a 2017 Virginia study. Once the film reaches the strainer, a running tap splashes it up to 76 cm onto whatever sits beside the basin. Some outbreaks ended only when pipes were replaced.",
+  "move": "Look for the reservoir that cleaning never reaches.",
+  "keywords": [
+    "hospital sinks",
+    "drain biofilm",
+    "carbapenem resistance",
+    "infection control",
+    "splash"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kotay et al., Applied and Environmental Microbiology, 2017",
+  "source_kind": "paper",
+  "reference": "Kotay, Chai, Guilford, Barry & Mathers, Spread from the sink to the patient: in situ study using green fluorescent protein (GFP)-expressing Escherichia coli to model bacterial dissemination from hand-washing sink-trap reservoirs, Applied and Environmental Microbiology, 2017",
+  "written": "2026-09-27"
+}

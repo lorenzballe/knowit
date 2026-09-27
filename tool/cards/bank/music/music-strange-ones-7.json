@@ -1,0 +1,35 @@
+{
+  "id": "music-strange-ones-7",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a one-string bowed instrument with no frets come to be called the marine trumpet?",
+  "answer": "By playing only a trumpet's notes. The tromba marina's player touches its long string lightly at its still points, drawing out harmonics, the same series a valveless trumpet plays. A shoe-shaped bridge with one loose leg drums against the soundboard, adding a brassy rattle. Why marina, nobody knows; German convents called it the nuns' fiddle.",
+  "move": "Two instruments that share a limit can end up sharing a voice.",
+  "keywords": [
+    "tromba marina",
+    "harmonics",
+    "bridge",
+    "nonnengeige"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adkins & Dickinson, Trumpet Marine, 1991",
+  "source_kind": "book",
+  "reference": "Adkins & Dickinson, A Trumpet by Any Other Name: A History of the Trumpet Marine, Frits Knuf, 1991",
+  "written": "2026-09-27"
+}

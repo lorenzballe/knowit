@@ -1,0 +1,37 @@
+{
+  "id": "sport-offside-9",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should an attacker be offside only when there is clear daylight between him and the defender?",
+  "sides": [
+    "Yes, require daylight",
+    "No, keep the fine line"
+  ],
+  "answer": "Offside exists to stop goal-hanging, not to cancel goals over a toenail. Camera frames, and a kick point that can be misjudged by one frame, cannot honestly separate bodies a few centimetres apart. A daylight rule would restore the benefit of the doubt, keep celebrations spontaneous and make attackers gamble on early runs again.",
+  "move": "Whichever side you took, whether any margin just creates a new borderline decides it.",
+  "counterpoint": "Daylight only moves the line: there will still be a sliver between some daylight and none, and defenders would lose the offside trap, since holding a line would no longer catch a runner half a body ahead. With video review, one study found key refereeing decisions rose from about 92% to about 98% correct.",
+  "keywords": [
+    "offside",
+    "daylight rule",
+    "video assistant referee",
+    "margin of error"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spitz et al., Journal of Sports Sciences, 2021",
+  "source_kind": "paper",
+  "reference": "Spitz, Wagemans, Memmert, Williams & Helsen, Video assistant referees (VAR): the impact of technology on decision making in association football referees, Journal of Sports Sciences, 2021",
+  "written": "2026-09-27"
+}

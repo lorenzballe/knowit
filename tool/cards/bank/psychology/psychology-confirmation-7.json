@@ -32,9 +32,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "psychology-confirmation-3"
-  ],
   "figure": "none",
   "source": "Evans & Lynch, British Journal of Psychology, 1973",
   "source_kind": "paper",

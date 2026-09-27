@@ -1,0 +1,39 @@
+{
+  "id": "music-reverb-8",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "In a mix, which change to a vocal's reverb most makes the singer seem farther from the listener?",
+  "options": [
+    "A longer reverb tail",
+    "Less dry voice against the reverb",
+    "A longer gap before the reverb"
+  ],
+  "correct": 1,
+  "answer": "Less dry voice against the reverb. As a source moves away, its direct sound fades while the room's reverberation stays roughly constant, so their ratio tracks distance. Tail length describes the room, not the distance. A longer gap before the reverb does the opposite: it implies nearby walls far behind, and the singer steps forward.",
+  "move": "When two cues usually arrive together, find out which one the judgement truly reads.",
+  "trap": "Big distant sounds are heard in big spaces, so length seems like distance.",
+  "keywords": [
+    "direct-to-reverberant ratio",
+    "distance perception",
+    "pre-delay",
+    "mixing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zahorik, Brungart & Bronkhorst, 2005",
+  "source_kind": "paper",
+  "reference": "Zahorik, Brungart & Bronkhorst, Auditory distance perception in humans: A summary of past and present research, Acta Acustica united with Acustica, 2005",
+  "written": "2026-09-27"
+}

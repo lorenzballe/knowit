@@ -1,0 +1,45 @@
+{
+  "id": "music-reverb-9",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "An impulse response is recorded in an empty concert hall for a convolution reverb. How does it err, if at all?",
+  "options": [
+    "Too long: no bodies to absorb",
+    "Too short: no bodies to reflect",
+    "Neither: padded seats stand in for people"
+  ],
+  "correct": 0,
+  "answer": "Too long. Each seated listener soaks up sound, most at middle and high frequencies, so a full house shortens the tail. Leo Beranek's hall measurements show occupied times shorter than empty ones. Padded seats narrow the gap, which is why halls choose them, but do not close it. The recording captures a rehearsal.",
+  "move": "A measurement taken in quiet conditions describes the quiet conditions.",
+  "trap": "Assuming well-padded seats absorb exactly what the people would.",
+  "keywords": [
+    "impulse response",
+    "audience absorption",
+    "concert halls",
+    "leo beranek"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "music-reverb-3"
+  ],
+  "figure": "none",
+  "source": "Beranek, Concert Halls and Opera Houses, 2004",
+  "source_kind": "book",
+  "reference": "Beranek, Concert Halls and Opera Houses: Music, Acoustics, and Architecture, 2nd edn, Springer, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-offside-7",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Until 1990, what happened to an attacker standing exactly level with the second-last defender?",
+  "answer": "He was offside. The Law treated level as ahead until 1990, when the International Football Association Board, which writes the Laws, made level onside. The change moved the benefit of the doubt: an equal position now favours the attacker, so a line drawn through two matching heels lets the goal stand.",
+  "move": "When a rule decides ties, look at which side it hands them to.",
+  "keywords": [
+    "offside",
+    "level",
+    "ifab",
+    "1990",
+    "benefit of the doubt"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, 1990",
+  "source_kind": "primary_document",
+  "reference": "International Football Association Board, Laws of the Game 1990, Law XI Off-side",
+  "written": "2026-09-27"
+}

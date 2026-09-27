@@ -1,0 +1,39 @@
+{
+  "id": "sport-offside-10",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a defender who steps off the pitch no longer counts when judging offside?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A defender who leaves the field without the referee's permission is treated as standing on his own goal line or touchline, until play stops or his side clears the ball towards halfway and out of its penalty area. Stepping behind the goal to strand a forward keeps that forward onside.",
+  "move": "A rule that could be dodged by walking away usually has a clause for it.",
+  "trap": "Assuming a player off the field has left the game's geometry.",
+  "keywords": [
+    "offside",
+    "defender",
+    "touchline",
+    "goal line",
+    "law 11"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 11",
+  "source_kind": "primary_document",
+  "reference": "International Football Association Board, Laws of the Game 2025/26, Law 11 Offside",
+  "written": "2026-09-27"
+}

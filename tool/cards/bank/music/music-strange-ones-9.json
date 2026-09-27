@@ -1,0 +1,38 @@
+{
+  "id": "music-strange-ones-9",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the wailing, sliding high line in the Beach Boys' Good Vibrations was played on a theremin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Trombonist Paul Tanner played an Electro-Theremin, built with Bob Whitsell: a pure-tone oscillator whose pitch followed a handle slid along a marked scale, so exact notes were easy to find, unlike the air-played original. It only imitated a theremin. Pop's most famous theremin part was played with a hand on a slider.",
+  "move": "The famous name for a sound is not always the thing that made it.",
+  "trap": "The theremin is the one eerie electronic instrument everyone can name.",
+  "keywords": [
+    "electro-theremin",
+    "paul tanner",
+    "good vibrations",
+    "beach boys"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NPR, All Songs Considered, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://www.npr.org/sections/allsongs/2013/02/07/171385175/no-it-wasn-t-a-theremin-on-good-vibrations-remembering-paul-tanner",
+  "written": "2026-09-27"
+}

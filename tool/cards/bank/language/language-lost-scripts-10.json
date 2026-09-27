@@ -1,0 +1,36 @@
+{
+  "id": "language-lost-scripts-10",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "By 1915 Hittite cuneiform could be sounded out but not understood. Which sentence showed the language was Indo-European?",
+  "answer": "One about bread and water. Bedřich Hrozný read nu NINDA-an ezzateni watar-ma ekuteni. NINDA was a known Sumerian sign for bread, ezza- recalled German essen, eat, and watar looked like water: now you will eat bread and drink water. Hittite became the oldest recorded Indo-European language, written from about 1650 BC.",
+  "move": "One secure word can unlock the grammar around it.",
+  "keywords": [
+    "hittite",
+    "bedrich hrozny",
+    "cuneiform",
+    "indo-european",
+    "decipherment"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "language-lost-scripts-4"
+  ],
+  "figure": "none",
+  "source": "Hrozný, Die Sprache der Hethiter, 1917",
+  "source_kind": "book",
+  "reference": "Hrozný, Die Sprache der Hethiter: ihr Bau und ihre Zugehörigkeit zum indogermanischen Sprachstamm, J. C. Hinrichs, 1917",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-lost-scripts-9",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "In 2024 wood from a rongorongo tablet was radiocarbon-dated to about 1493 to 1509. What does that date establish?",
+  "options": [
+    "The tablet was carved around 1500",
+    "The tree was felled before Europeans came",
+    "The script existed before Europeans came"
+  ],
+  "correct": 1,
+  "answer": "The tree was felled before Europeans came. Radiocarbon dates when the wood stopped growing, not when it was carved, and on an island short of trees wood was kept and reused: another tablet is cut into a European oar. Europeans arrived in 1722; the authors think the script older, but the wood cannot prove it.",
+  "move": "Date the act you care about, not the material it was done on.",
+  "trap": "Letting the striking 1400s date stand for the date of the writing.",
+  "keywords": [
+    "rongorongo",
+    "rapa nui",
+    "radiocarbon dating",
+    "easter island",
+    "wooden tablets"
+  ],
+  "era": "early_modern",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ferrara et al., Scientific Reports, 2024",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/s41598-024-53063-7",
+  "written": "2026-09-27"
+}

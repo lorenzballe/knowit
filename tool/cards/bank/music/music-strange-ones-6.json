@@ -1,0 +1,32 @@
+{
+  "id": "music-strange-ones-6",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.strange_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were some ondes Martenot loudspeakers built with strings or a gong in place of a paper cone?",
+  "answer": "To give an electronic tone an acoustic halo. The ondes, an early electronic keyboard of 1928, fed its oscillator to a choice of speakers: the palme carried strings tuned to every semitone, which rang in sympathy, and the métallique drove a gong. The circuit made the note; the speaker lent it strings and metal.",
+  "move": "Where a sound comes out can matter as much as how it is made.",
+  "keywords": [
+    "ondes martenot",
+    "maurice martenot",
+    "loudspeakers",
+    "sympathetic strings"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holmes, Electronic and Experimental Music, 2016",
+  "source_kind": "book",
+  "reference": "Holmes, Electronic and Experimental Music: Technology, Music, and Culture, 5th edn, Routledge, 2016",
+  "written": "2026-09-27"
+}
