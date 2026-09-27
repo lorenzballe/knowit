@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Walt Disney Company, quarterly report, 2012",
-  "source_kind": "company",
-  "reference": "The Walt Disney Company, Form 10-Q for the quarter ended 31 March 2012, US Securities and Exchange Commission, 2012",
+  "source": "Bloomberg, 19 March 2012",
+  "source_kind": "news_archive",
+  "reference": "https://www.bloomberg.com/news/articles/2012-03-19/disney-sees-200-million-john-carter-loss-for-film-studio",
   "written": "2026-09-26"
 }

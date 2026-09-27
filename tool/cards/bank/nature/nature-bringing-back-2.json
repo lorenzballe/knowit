@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. In 2003 a clone of Celia, the last bucardo, a Pyrenean wild goat that died in 2000, was born in Spain to a hybrid goat mother. The only one of dozens of implanted embryos to reach birth, it died within minutes of a malformed lung. The subspecies was extinct, revived and extinct again.",
+  "answer": "True. In 2003 a clone of Celia, the last bucardo, a Pyrenean wild goat that died in 2000, was born in Spain to a hybrid goat mother. The only one of 208 transferred embryos to reach birth, it died within minutes of a malformed lung. The subspecies was extinct, revived and extinct again.",
   "move": "The first success can be brief; ask how long it lasted.",
   "trap": "De-extinction is always reported as something coming, not something done.",
   "keywords": [
