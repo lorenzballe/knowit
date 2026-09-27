@@ -13,7 +13,7 @@
     "Neither, learnt relief resists both"
   ],
   "correct": 1,
-  "answer": "Rimonabant. In Benedetti's 2011 experiment with tourniquet pain, a placebo that followed morphine was blocked by naloxone, but one that followed ketorolac, which is not an opioid, was not; the cannabinoid blocker stopped it instead. The brain had learnt to echo the drug it had been given, by a different chemical route each time.",
+  "answer": "Rimonabant. In Benedetti's tourniquet-pain experiments, naloxone blocked a placebo that followed morphine but not one that followed ketorolac, which is not an opioid. In 2011 the cannabinoid blocker switched that one off instead. The brain had learnt to echo the drug it had been given, by a different chemical route each time.",
   "move": "A learnt response can copy the path of whatever taught it.",
   "trap": "Naloxone, because placebo pain relief is known to run on opioids.",
   "keywords": [

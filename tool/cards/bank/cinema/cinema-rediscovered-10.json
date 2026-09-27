@@ -1,0 +1,39 @@
+{
+  "id": "cinema-rediscovered-10",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Of the American silent features that survive in any form, what share were found in other countries?",
+  "options": [
+    "About a quarter",
+    "Under one in twenty",
+    "About three quarters"
+  ],
+  "correct": 0,
+  "answer": "About a quarter. David Pierce's 2013 survey for the Library of Congress counted more than 3,300 surviving features; 26% were found abroad, and most of those have since been brought home. Prints shipped overseas were rarely sent back to be melted down. For many films, the best chance was to have been exported.",
+  "move": "What travelled far from home often outlived what stayed there.",
+  "trap": "Assuming American films survived mainly in American vaults.",
+  "keywords": [
+    "silent films",
+    "film repatriation",
+    "library of congress",
+    "foreign archives"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Pierce, Library of Congress and CLIR, 2013",
+  "source_kind": "institution",
+  "reference": "https://www.loc.gov/static/programs/national-film-preservation-board/documents/pub158.final_version_sept_2013.pdf",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-rediscovered-9",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Kodak's edge date symbols repeat every 20 years. A nitrate reel carries the symbol also used in 1921. When could it date from?",
+  "options": [
+    "1921 only",
+    "1921 or 1941",
+    "1921, 1941 or 1961"
+  ],
+  "correct": 1,
+  "answer": "1921 or 1941. The same edge symbol was printed in 1921, 1941, 1961 and 1981, but Kodak stopped making nitrate base in 1951, so a nitrate reel cannot be from 1961. Archivists then weigh the rest: style, titles, laboratory marks. Twenty years apart, a silent comedy and a wartime newsreel can share a code.",
+  "move": "Use every clue at once; each rules out part of the rest.",
+  "trap": "Applying the 20-year cycle but forgetting that the base is nitrate.",
+  "keywords": [
+    "edge codes",
+    "nitrate film",
+    "kodak",
+    "film dating"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Kodak, identifying year of manufacture",
+  "source_kind": "company",
+  "reference": "https://www.kodak.com/content/products-brochures/Film/Guide-to-Identifying-Year-of-Manufacture-for-KODAK-Motion-Picture-Films.pdf",
+  "written": "2026-09-27"
+}

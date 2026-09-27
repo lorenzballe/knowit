@@ -1,0 +1,38 @@
+{
+  "id": "cinema-rediscovered-8",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the long-lost 1916 Sherlock Holmes film starring William Gillette turned up in 2014 inside a major film archive?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The only filmed record of Gillette's famous stage Holmes was found at the Cinémathèque française in Paris, which had held it without knowing: the reels carried French titles and had been wrongly labelled. It was restored and shown again in 2015. The film had spent decades hidden on an archive's own shelves.",
+  "move": "Search what is already catalogued before searching the attics.",
+  "trap": "Picturing the usual rescue from an attic, a barn or a closed cinema.",
+  "keywords": [
+    "william gillette",
+    "sherlock holmes",
+    "cinémathèque française",
+    "mislabelled reels"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BFI news, 2014",
+  "source_kind": "news_archive",
+  "reference": "https://www.bfi.org.uk/news/cinematheque-francaise-discovers-1916-sherlock-holmes-film",
+  "written": "2026-09-27"
+}

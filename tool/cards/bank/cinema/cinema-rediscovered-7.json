@@ -1,0 +1,32 @@
+{
+  "id": "cinema-rediscovered-7",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a found print of Orson Welles's Too Much Johnson sit unrecognised for four years?",
+  "answer": "Because nobody knew what it was. Welles shot the untitled comic footage in 1938 to be projected during a stage play; it was never shown, and his own copy was said to have burned in 1970. Reels found in 2008 in a shipping firm's warehouse in Pordenone, Italy, were only identified in December 2012.",
+  "move": "A find only counts once someone knows what they are holding.",
+  "keywords": [
+    "too much johnson",
+    "orson welles",
+    "pordenone",
+    "lost footage"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood, New York Review of Books, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://www.nybooks.com/articles/2013/12/19/discovering-orson-welles/",
+  "written": "2026-09-27"
+}
