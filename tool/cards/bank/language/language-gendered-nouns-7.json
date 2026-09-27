@@ -1,0 +1,40 @@
+{
+  "id": "language-gendered-nouns-7",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "German das Mädchen, the girl, is grammatically neuter. Which word referring back to her most readily turns feminine?",
+  "options": [
+    "A personal pronoun a sentence later",
+    "A relative pronoun right after the noun",
+    "None: German agreement never bends"
+  ],
+  "correct": 0,
+  "answer": "A personal pronoun a sentence later. Greville Corbett's agreement hierarchy predicts that the further a word sits from the noun, the likelier it follows meaning rather than grammar. Das Mädchen, das lacht keeps the neuter; the next sentence often switches to sie, she. The grammar holds tight up close and loosens across a full stop.",
+  "move": "The further a rule reaches from its source, the weaker its grip.",
+  "trap": "Picking the relative pronoun, because any pronoun seems to track meaning.",
+  "keywords": [
+    "mädchen",
+    "agreement hierarchy",
+    "german",
+    "pronouns",
+    "greville corbett"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corbett, Agreement, Cambridge University Press, 2006",
+  "source_kind": "book",
+  "reference": "Corbett, Agreement, Cambridge Textbooks in Linguistics, Cambridge University Press, 2006",
+  "written": "2026-09-27"
+}

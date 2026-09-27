@@ -1,0 +1,33 @@
+{
+  "id": "food-maillard-10",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Louis-Camille Maillard described sugars browning with amino acids in 1912. Who first mapped how it works?",
+  "answer": "John Hodge, a chemist at the US Department of Agriculture, in 1953. For forty years the reaction had a name and no mechanism. Hodge, prompted by browning in wartime dried foods, laid out its stages in one diagram: early bonding, a middle of fragments, a late stage of brown polymers. Chemists still teach from his chart.",
+  "move": "A name on a discovery says who noticed it, not who explained it.",
+  "keywords": [
+    "john hodge",
+    "louis-camille maillard",
+    "reaction mechanism",
+    "usda",
+    "dried foods"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hodge, J Agric Food Chem, 1953",
+  "source_kind": "paper",
+  "reference": "Hodge, Dehydrated foods: chemistry of browning reactions in model systems, Journal of Agricultural and Food Chemistry, 1953",
+  "written": "2026-09-27"
+}

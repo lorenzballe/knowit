@@ -1,0 +1,39 @@
+{
+  "id": "language-gendered-nouns-8",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: Hittite, the oldest written Indo-European language, had masculine, feminine and neuter nouns like Latin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Hittite, written in the second millennium BC, sorts nouns into two genders, common and neuter, with no feminine. Many scholars think the feminine arose later, from an ending for collectives; others think Hittite's branch lost it. Latin, Greek and Sanskrit all agree on three, so three looks original until the oldest witness speaks.",
+  "move": "Ask whether your best-known examples are also your oldest ones.",
+  "trap": "Assuming the ancestor matched the famous daughter languages that agree.",
+  "keywords": [
+    "hittite",
+    "indo-european",
+    "feminine gender",
+    "anatolian",
+    "neuter"
+  ],
+  "era": "ancient",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fortson, Indo-European Language and Culture, 2010",
+  "source_kind": "book",
+  "reference": "Fortson, Indo-European Language and Culture: An Introduction, 2nd edition, Wiley-Blackwell, 2010",
+  "written": "2026-09-27"
+}
