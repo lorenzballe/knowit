@@ -1,0 +1,40 @@
+{
+  "id": "technology-touch-7",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A touch sensor reads each row and each column on its own. Two fingers land at once. How many possible touch points can it compute?",
+  "options": [
+    "Four, two of them ghosts",
+    "Two, one for each finger",
+    "Only one, their midpoint"
+  ],
+  "correct": 0,
+  "answer": "Four, two of them ghosts. Two rows and two columns register, and they cross at four places; the sensor cannot tell which diagonal pair is real. Such grids manage one reliable touch. Phones instead measure every crossing of a row and a column, a mutual-capacitance scan, so each finger appears where it is.",
+  "move": "Totals for the rows and the columns do not fix what sits inside.",
+  "trap": "Two fingers seem to make two readings, one each.",
+  "keywords": [
+    "multi-touch",
+    "ghost touches",
+    "self-capacitance",
+    "mutual capacitance",
+    "sensor grid"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Walker, Journal of the SID, 2012",
+  "source_kind": "paper",
+  "reference": "Walker, A review of technologies for sensing contact location on the surface of a display, Journal of the Society for Information Display 20(8), 2012",
+  "written": "2026-09-27"
+}

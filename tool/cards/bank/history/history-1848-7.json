@@ -1,0 +1,32 @@
+{
+  "id": "history-1848-7",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Czech historian František Palacký refuse a seat in the German national parliament at Frankfurt in 1848?",
+  "answer": "Because he was no German, and feared a German nation-state. Palacký replied that he was a Czech of Slav descent, and argued that a reformed, federal Austria was the best shield for the small peoples of central Europe against Russia and a united Germany. In June he presided over a Slav Congress in Prague instead.",
+  "move": "One people's national unity can look like annexation to its neighbours.",
+  "keywords": [
+    "františek palacký",
+    "frankfurt parliament",
+    "austroslavism",
+    "slav congress"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sked, Decline and Fall of the Habsburg Empire",
+  "source_kind": "book",
+  "reference": "Sked, The Decline and Fall of the Habsburg Empire, 1815–1918, Longman, 1989",
+  "written": "2026-09-27"
+}

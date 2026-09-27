@@ -4,7 +4,7 @@
   "genre": "nature.weather",
   "strand": "nature.weather.forecasting",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "computation",
   "question": "Covering an orchard against frost costs €1,000; an uncovered frost destroys €5,000 of fruit. Above what forecast chance of frost should the grower cover?",
   "options": [

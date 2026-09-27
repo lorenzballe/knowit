@@ -1,0 +1,39 @@
+{
+  "id": "technology-refresh-rates-10",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a film projector running at 24 frames a second flashes light onto the screen 24 times a second?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A spinning shutter blanks the light while each frame is pulled into place, and extra blades interrupt each frame again while it stands still, so the screen flashes 48 or 72 times a second. Twenty-four images a second is enough for motion but not for flicker: at 24 flashes the picture would visibly throb.",
+  "move": "Two thresholds that sound alike can sit far apart.",
+  "trap": "Assuming one frame on film means one flash of light.",
+  "keywords": [
+    "film projector",
+    "shutter blades",
+    "flicker",
+    "frame rate",
+    "cinema"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Happé, Basic Motion Picture Technology, 1971",
+  "source_kind": "book",
+  "reference": "Happé, Basic Motion Picture Technology, Focal Press, 1971",
+  "written": "2026-09-27"
+}

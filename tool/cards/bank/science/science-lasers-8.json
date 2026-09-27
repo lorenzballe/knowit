@@ -1,0 +1,38 @@
+{
+  "id": "science-lasers-8",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: shining bright enough light on a collection of two-level atoms can put most of them in the upper level?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Light that lifts atoms up also stimulates excited ones to drop back, equally likely per atom. However bright the light, the populations only approach half and half, where the material turns transparent. That is why every laser uses three or four energy levels, pumping by one route and lasing on another.",
+  "move": "If a push also undoes itself, more push buys only a stalemate.",
+  "trap": "True, since more light should keep pushing more atoms up.",
+  "keywords": [
+    "population inversion",
+    "stimulated emission",
+    "two-level atom",
+    "laser physics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Siegman, Lasers, 1986",
+  "source_kind": "book",
+  "reference": "Siegman, Lasers, University Science Books, 1986",
+  "written": "2026-09-27"
+}

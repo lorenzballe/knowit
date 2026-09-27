@@ -1,0 +1,39 @@
+{
+  "id": "space-cosmic-background-10",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Why can the largest patterns on the cosmic background never be measured much more precisely than they are now?",
+  "options": [
+    "Only one sky exists to sample",
+    "Galactic dust hides them for good",
+    "No detector is big enough"
+  ],
+  "correct": 0,
+  "answer": "Only one sky exists to sample. The largest patterns span a quarter of the sky or more, so there are only a handful: five at the very largest scale. Measured perfectly, they are still five draws from chance. Planck has reached that limit; an odd pattern there can never be retested on a fresh sky.",
+  "move": "When the sample is everything there is, no instrument adds certainty.",
+  "trap": "Blaming foreground dust, which better maps could in principle remove.",
+  "keywords": [
+    "cosmic variance",
+    "planck",
+    "large-scale anomalies",
+    "cosmic background"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dodelson & Schmidt, Modern Cosmology, 2020",
+  "source_kind": "book",
+  "reference": "Dodelson & Schmidt, Modern Cosmology, 2nd ed., Academic Press, 2020",
+  "written": "2026-09-27"
+}

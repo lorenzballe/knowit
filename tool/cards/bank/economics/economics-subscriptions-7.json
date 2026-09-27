@@ -1,0 +1,42 @@
+{
+  "id": "economics-subscriptions-7",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Each month, 4 in every 100 members cancel, however long they have belonged. What is the average length of a membership, in months?",
+  "value": 25,
+  "unit": "months",
+  "answer": "1 / 0.04 = 25 months.",
+  "move": "Halfway gone and gone on average are different moments; ask which is meant.",
+  "trap": "Giving the 17 months after which half have gone, not the average.",
+  "hint": "If the chance of leaving never changes, think of how long an average wait for a 1-in-25 event lasts.",
+  "steps": [
+    "Each month a member has a 4 in 100, or 1 in 25, chance of leaving.",
+    "With a fixed chance each month, the average wait is 1 divided by that chance.",
+    "1 / 0.04 = 25 months."
+  ],
+  "keywords": [
+    "churn",
+    "customer lifetime",
+    "memberships",
+    "retention",
+    "averages"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Gupta, Lehmann & Stuart, JMR, 2004",
+  "source_kind": "paper",
+  "reference": "Gupta, Lehmann & Stuart, Valuing Customers, Journal of Marketing Research, 2004",
+  "written": "2026-09-27"
+}

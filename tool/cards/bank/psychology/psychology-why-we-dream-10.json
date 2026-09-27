@@ -5,7 +5,7 @@
   "strand": "psychology.sleep_and_dreams.why_we_dream",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "counterfactual",
+  "principle": "reflection",
   "question": "True or false: rehearsing a rewritten version of a recurring nightmare while awake makes it return less often?",
   "options": [
     "True",

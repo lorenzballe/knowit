@@ -1,0 +1,32 @@
+{
+  "id": "history-lost-countries-6",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the new Austrian republic declare itself to be on the day it was founded, in November 1918?",
+  "answer": "A part of Germany. On 12 November 1918 its provisional assembly declared German-Austria a democratic republic and a component of the German Republic. The Allies forbade it: the Treaty of Saint-Germain bound Austria to independence and made it drop German from its name. In 1921 unofficial votes in Tyrol and Salzburg still backed union massively.",
+  "move": "An independence imposed from outside is not the same as one chosen.",
+  "keywords": [
+    "german-austria",
+    "treaty of saint-germain",
+    "anschluss",
+    "austria"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Treaty of Saint-Germain, 1919, Article 88",
+  "source_kind": "primary_document",
+  "reference": "Treaty of Peace between the Allied and Associated Powers and Austria, Saint-Germain-en-Laye, 1919, Article 88",
+  "written": "2026-09-27"
+}

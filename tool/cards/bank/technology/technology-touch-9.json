@@ -1,0 +1,43 @@
+{
+  "id": "technology-touch-9",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many times a day does a typical smartphone user tap, swipe or type on the screen?",
+  "value": 2617,
+  "unit": "touches",
+  "withinFactor": 3,
+  "answer": "76 × 35 ≈ 2,660 touches a day.",
+  "move": "Count the small repeated acts; they dwarf the memorable ones.",
+  "trap": "Counting pick-ups and forgetting that each holds dozens of touches.",
+  "hint": "Count the sessions in a day, then the touches in a typical session.",
+  "steps": [
+    "People pick up their phones in about 76 separate sessions a day.",
+    "Checking, scrolling and typing run to a few dozen touches a session, say 35.",
+    "76 × 35 ≈ 2,660 touches a day."
+  ],
+  "keywords": [
+    "smartphone use",
+    "touches",
+    "sessions",
+    "dscout",
+    "habits"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "dscout, Mobile Touches study, 2016",
+  "source_kind": "company",
+  "reference": "https://blog.dscout.com/mobile-touches",
+  "written": "2026-09-27"
+}

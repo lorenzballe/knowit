@@ -8,11 +8,11 @@
   "principle": "anchoring",
   "question": "How many identical dots, drifting among identical decoys, can a person keep track of at once?",
   "options": [
-    "About four, a fixed limit",
     "Up to eight, or as few as one",
+    "About four, a fixed limit",
     "Seven, give or take two"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Up to eight, or as few as one. Alvarez and Franconeri found observers tracked about eight dots when they moved slowly, and only one when they moved fast. Franconeri later argued that speed matters mainly by bringing targets close to decoys. The limit belongs to the display as much as to the mind.",
   "move": "Before quoting a capacity, ask under what conditions it was measured.",
   "trap": "About four, the capacity figure textbooks give for tracking.",

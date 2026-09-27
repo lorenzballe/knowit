@@ -1,0 +1,32 @@
+{
+  "id": "science-plastics-6",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the widely quoted figure of 450 years for a plastic bottle to break down come from?",
+  "answer": "From no experiment anyone can find. Collin Ward and Christopher Reddy traced it in 2020: about three quarters of the lifetimes quoted for a bottle were 450 years, repeated from infographics by NOAA and others, with no study behind them. Real rates depend on sunlight, heat and shape; no bottle has been watched that long.",
+  "move": "Ask where a round number was measured before repeating it.",
+  "keywords": [
+    "plastic bottles",
+    "degradation",
+    "infographics",
+    "collin ward"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ward & Reddy, PNAS, 2020",
+  "source_kind": "paper",
+  "reference": "https://www.pnas.org/content/117/26/14618",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "science-steel-7",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "also": [
+    "science.chemistry_at_home.rust"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where does a stainless steel fitting in seawater usually corrode first?",
+  "options": [
+    "Where the water flows fastest",
+    "In tight gaps starved of oxygen",
+    "Where waves splash it with air"
+  ],
+  "correct": 1,
+  "answer": "In tight gaps starved of oxygen. Stainless steel is guarded by a chromium oxide film nanometres thick that repairs itself with oxygen. Under a gasket or a barnacle the oxygen runs out, the film cannot heal, and chloride from the salt turns the trapped water acidic. The splashed surface stays bright while the joint rots.",
+  "move": "If protection needs feeding, look where the supply is cut off.",
+  "trap": "Where waves splash it, since ordinary iron rusts fastest with air.",
+  "keywords": [
+    "stainless steel",
+    "crevice corrosion",
+    "passive film",
+    "chloride"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sedriks, Corrosion of Stainless Steels",
+  "source_kind": "book",
+  "reference": "Sedriks, Corrosion of Stainless Steels, 2nd edition, Wiley, 1996",
+  "written": "2026-09-27"
+}

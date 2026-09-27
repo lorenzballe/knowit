@@ -1,0 +1,39 @@
+{
+  "id": "science-rainbows-7",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Water drops make a rainbow 42° from your head's shadow. Tiny glass beads bend light more strongly. Where does their bow sit?",
+  "options": [
+    "Also at 42°",
+    "Farther out, near 60°",
+    "Closer in, near 23°"
+  ],
+  "correct": 2,
+  "answer": "Closer in, near 23°. Stronger bending turns each ray further round inside the bead, sending it back closer to the way it came, so the bright ring tightens around your shadow. For glass, with a refractive index near 1.5 against water's 1.33, the arithmetic gives about 23°. The same rainbow, drawn tighter.",
+  "move": "A famous number belongs to its material; change the material and recheck it.",
+  "trap": "Also at 42°, as if the angle were a rule of geometry.",
+  "keywords": [
+    "rainbow angle",
+    "refractive index",
+    "glass beads",
+    "refraction"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adam, Physics Reports, 2002",
+  "source_kind": "paper",
+  "reference": "Adam, The mathematical physics of rainbows and glories, Physics Reports 356, 229, 2002",
+  "written": "2026-09-27"
+}

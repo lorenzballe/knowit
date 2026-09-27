@@ -1,0 +1,32 @@
+{
+  "id": "science-rainbows-10",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the Sun is low, what shape does a dewbow, the rainbow in dew on a lawn, draw on the grass?",
+  "answer": "A hyperbola, its arms sweeping away from you. Every rainbow is a cone of light opening 42° around the line from the Sun through your eye. Distant rain shows that cone as a circle. Flat ground slices it at a slant, and with the Sun lower than 42° the slice is a hyperbola.",
+  "move": "The same shape looks different depending on the surface that catches it.",
+  "keywords": [
+    "dewbow",
+    "hyperbola",
+    "conic section",
+    "dew"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walker, The Flying Circus of Physics, 2007",
+  "source_kind": "book",
+  "reference": "Walker, The Flying Circus of Physics, 2nd edition, Wiley, 2007",
+  "written": "2026-09-27"
+}

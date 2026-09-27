@@ -1,0 +1,38 @@
+{
+  "id": "nature-bringing-back-8",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: new northern white rhino embryos are still being made, though only two females survive and neither can carry a calf?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Vets collect eggs from Fatu, the younger female, and fertilise them in the laboratory with sperm frozen from four dead males. By 2025 the BioRescue team had made about 29 pure northern white embryos. Southern white rhinos are meant to carry them to term. The species waits in a freezer for a surrogate.",
+  "move": "A population that cannot breed may still hold what breeding needs.",
+  "trap": "Assuming that with no breeding pair, no new offspring can exist.",
+  "keywords": [
+    "northern white rhino",
+    "ivf",
+    "embryos",
+    "surrogate mothers"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BioRescue project, 2025",
+  "source_kind": "institution",
+  "reference": "https://www.biorescue.org/en/news/biorescue-scientists-produced-three-new-embryos-and-began-using-northern-white-rhino-embryos",
+  "written": "2026-09-27"
+}

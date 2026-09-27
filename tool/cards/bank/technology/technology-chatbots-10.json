@@ -1,0 +1,38 @@
+{
+  "id": "technology-chatbots-10",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should conversations with a chatbot get legal confidentiality, like those with a doctor or a lawyer?",
+  "sides": [
+    "Yes, protect them",
+    "No, leave them open"
+  ],
+  "answer": "People now tell chatbots about symptoms, debts and marriages in the tone they would use with a doctor or lawyer. Without protection those words can be demanded in court: in 2025 a US judge ordered OpenAI to keep users' ChatGPT logs, deleted ones included, for a copyright case. Candour needs a shield.",
+  "move": "The hinge is whether privilege follows the listener's duties or the speaker's trust.",
+  "counterpoint": "Privilege exists because doctors and lawyers are licensed, owe duties and can lose their careers for betraying a client; a chatbot company owes nothing like that. Blanket protection would hide evidence of fraud, stalking and planned violence, and let firms shelter their own records. Better to limit what is stored than to seal it.",
+  "keywords": [
+    "privacy",
+    "legal privilege",
+    "chat logs",
+    "openai",
+    "courts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times v. OpenAI, S.D.N.Y., 2025",
+  "source_kind": "primary_document",
+  "reference": "The New York Times Co. v. Microsoft Corp. et al., No. 23-cv-11195, preservation order on output log data, S.D.N.Y., 2025",
+  "written": "2026-09-27"
+}

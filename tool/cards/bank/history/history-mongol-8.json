@@ -4,7 +4,7 @@
   "genre": "history.empires",
   "strand": "history.empires.mongol",
   "kind": "pickOne",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "availability",
   "question": "True or false: the Mongol Empire had split into rival khanates before it reached its greatest extent?",
   "options": [

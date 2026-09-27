@@ -4,7 +4,7 @@
   "genre": "economics.work_and_wages",
   "strand": "economics.work_and_wages.minimum_wage",
   "kind": "number",
-  "difficulty": "medium",
+  "difficulty": "hard",
   "principle": "computation",
   "question": "The US federal minimum of $7.25 took effect in July 2009; prices have since risen about 50%. Its worth in 2009 dollars?",
   "value": 4.83,

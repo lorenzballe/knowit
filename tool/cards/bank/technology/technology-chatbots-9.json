@@ -1,0 +1,40 @@
+{
+  "id": "technology-chatbots-9",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A chatbot's attention step compares every word-piece with every other. Going from 1,000 to 8,000 word-pieces multiplies that work by how many times?",
+  "value": 64,
+  "unit": "times",
+  "answer": "Pairs to compare grow with length squared: 8 × 8 = 64.",
+  "move": "When everything is compared with everything, doubling the size quadruples the work.",
+  "trap": "Scaling the work in step with the length: eight times.",
+  "hint": "Count pairs, not items: each new word-piece meets all the others.",
+  "steps": [
+    "The text grows 8,000 / 1,000 = 8 times longer.",
+    "Pairs to compare grow with length squared: 8 × 8 = 64."
+  ],
+  "keywords": [
+    "attention",
+    "context window",
+    "transformers",
+    "quadratic cost"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vaswani et al., NeurIPS, 2017",
+  "source_kind": "paper",
+  "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",
+  "written": "2026-09-27"
+}

@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "A hand warmer holds 20 g of iron powder. Rusting frees about 7 kJ per gram of iron. At 3 watts, how many hours of heat?",
+  "question": "A hand warmer holds 20 g of iron powder; rusting frees about 7 kJ per gram. At 3 watts, how many hours of heat?",
   "value": 13,
   "unit": "hours",
   "tolerance": 1,

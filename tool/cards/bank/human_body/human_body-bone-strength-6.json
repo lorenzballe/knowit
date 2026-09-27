@@ -1,0 +1,40 @@
+{
+  "id": "human_body-bone-strength-6",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Tennis and squash players carry extra bone in the hitting arm. When does starting the sport roughly double that gain?",
+  "options": [
+    "Before or around puberty",
+    "In the early twenties",
+    "Starting age makes little difference"
+  ],
+  "correct": 0,
+  "answer": "Before or around puberty. Kannus and colleagues compared the two arms of female national-level players: those who began before or around their first period had two to three times the side-to-side difference of those who began later. Growing bone can widen as well as densify, and a wider tube resists bending far better.",
+  "move": "The same effort buys most while the thing is still being built.",
+  "trap": "Assuming bone answers exercise about equally well at any age.",
+  "keywords": [
+    "tennis",
+    "bone mass",
+    "puberty",
+    "exercise",
+    "dominant arm"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kannus et al., Annals of Internal Medicine, 1995",
+  "source_kind": "paper",
+  "reference": "Kannus et al., Effect of starting age of physical activity on bone mass in the dominant arm of tennis and squash players, Annals of Internal Medicine, 1995",
+  "written": "2026-09-27"
+}

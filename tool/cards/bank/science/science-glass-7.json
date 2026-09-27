@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Glass breaks at its worst flaw, a microscopic scratch where stress gathers, and a thick rod has far more surface in which a bad one can lurk. Alan Griffith showed this around 1920 with fibres he drew himself: the thinner and fresher, the stronger. Pristine glass fibre can be about a hundred times stronger than window glass.",
+  "answer": "True. Glass breaks at its worst flaw, a microscopic scratch where stress gathers, and a thick rod has far more surface for a bad one to lurk in. Alan Griffith showed it around 1920 with fibres he drew himself: thinner and fresher meant stronger. Pristine fibre can be a hundred times stronger than window glass.",
   "move": "The more places something can fail, the likelier one of them will.",
   "trap": "False, since strength per square millimetre belongs to the material.",
   "keywords": [

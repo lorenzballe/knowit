@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Pooling trial data submitted to the US drug regulator, Huedo-Medina and colleagues found that placebo groups improved by a substantial share of what the drug groups gained. People join trials after a run of bad nights, which tend to ease anyway; expectation helps too. The pill gets credit for much of the recovery.",
   "move": "Ask how people who got nothing fared before crediting the treatment.",
-  "trap": "Assuming a dummy pill cannot change anything as physical as sleep.",
+  "trap": "Forgetting that people enrol at their worst, and bad runs ease anyway.",
   "keywords": [
     "placebo",
     "sleeping pills",

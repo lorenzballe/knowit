@@ -13,14 +13,14 @@
     "One"
   ],
   "correct": 2,
-  "answer": "One. Itiel Dror and colleagues gave the experts prints they had themselves identified, with the story that these came from the FBI's mistaken match in the 2004 Madrid bombings. Three now declared the prints did not match and one could not decide. Same ridges, same examiners, different verdicts, steered by what they expected to find.",
+  "answer": "One. Itiel Dror and colleagues gave the experts prints they had themselves identified, with the story that these were a famous wrongful match by the FBI. Three now declared the prints did not match and one could not decide. Same ridges, same examiners, different verdicts, steered by what they expected to find.",
   "move": "Hide the story from whoever checks the evidence until the checking is done.",
   "trap": "Trusting experts to read their own verified work the same way twice.",
   "keywords": [
     "fingerprints",
     "forensic science",
     "itiel dror",
-    "madrid bombings",
+    "misidentification",
     "context effects"
   ],
   "era": "recent",

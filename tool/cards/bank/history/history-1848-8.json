@@ -1,0 +1,38 @@
+{
+  "id": "history-1848-8",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the National Workshops of Paris in 1848 put Louis Blanc's plan for workers' cooperatives into practice?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Blanc wanted self-governing social workshops; the National Workshops were public relief under the minister of public works, Marie, no friend of Blanc's, paying men to dig and level ground. Enrolment passed 100,000 by June. Their closure that month set off the June Days, and Blanc took blame for a scheme he had disowned.",
+  "move": "A borrowed name can hide a very different design.",
+  "trap": "Matching the name to Blanc's famous call to organise labour.",
+  "keywords": [
+    "national workshops",
+    "louis blanc",
+    "june days",
+    "paris"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Price, The French Second Republic, 1972",
+  "source_kind": "book",
+  "reference": "Price, The French Second Republic: A Social History, Batsford, 1972",
+  "written": "2026-09-27"
+}

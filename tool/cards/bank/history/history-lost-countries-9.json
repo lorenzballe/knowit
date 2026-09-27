@@ -1,0 +1,39 @@
+{
+  "id": "history-lost-countries-9",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Studying every state since 1816, Tanisha Fazal asked which were likeliest to be conquered or absorbed. Which were?",
+  "options": [
+    "The smallest states by area",
+    "States far from any great power",
+    "Buffer states between two rivals"
+  ],
+  "correct": 2,
+  "answer": "Buffer states between two rivals. Fazal found that states lying between competing powers died far more often, because each rival preferred to seize the buffer before the other could. Position mattered more than size: tiny Luxembourg and Liechtenstein survived, while Hanover and Hesse-Kassel, caught between Prussia and Austria, were annexed in 1866.",
+  "move": "Where something stands can matter more than how big it is.",
+  "trap": "Assuming small states died because they were small.",
+  "keywords": [
+    "state death",
+    "buffer states",
+    "conquest",
+    "tanisha fazal"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Fazal, State Death, 2007",
+  "source_kind": "book",
+  "reference": "Fazal, State Death: The Politics and Geography of Conquest, Occupation, and Annexation, Princeton University Press, 2007",
+  "written": "2026-09-27"
+}

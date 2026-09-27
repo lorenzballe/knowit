@@ -1,0 +1,39 @@
+{
+  "id": "history-british-8",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the British Empire reached its greatest extent after the First World War?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The peace settlement gave Britain League of Nations mandates over former German and Ottoman lands, among them Tanganyika, Palestine, Transjordan and Iraq, so it was largest in the early 1920s, covering about a quarter of the world's land. Southern Ireland left at the same moment. The widest map was drawn as the edges frayed.",
+  "move": "The peak of a thing's size is rarely the peak of its strength.",
+  "trap": "Picturing the Victorian heyday as the moment of greatest size.",
+  "keywords": [
+    "league of nations mandates",
+    "first world war",
+    "tanganyika",
+    "iraq",
+    "palestine"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Darwin, The Empire Project, 2009",
+  "source_kind": "book",
+  "reference": "Darwin, The Empire Project: The Rise and Fall of the British World-System, 1830-1970, Cambridge University Press, 2009",
+  "written": "2026-09-27"
+}

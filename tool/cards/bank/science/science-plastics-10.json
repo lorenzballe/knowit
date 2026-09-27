@@ -1,0 +1,37 @@
+{
+  "id": "science-plastics-10",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should plastic turned back into oil by chemical recycling count towards official recycling targets?",
+  "sides": [
+    "Yes, count it",
+    "No, exclude it"
+  ],
+  "answer": "Mechanical recycling, melting and remoulding, suits only clean, sorted waste of one polymer; films, layered packets and dirty mixtures get burned or buried. Chemical recycling breaks them into oil or building blocks that make plastic as good as new, food-grade included. Excluding it removes any reason to build plants for waste nothing else handles.",
+  "move": "Whichever side you took, it turns on how much output truly becomes plastic again.",
+  "counterpoint": "Pyrolysis, the commonest method, turns much of its input into fuel that is simply burned, and plants need steady clean feedstock, heat and money. Counting their output as recycled rests on accounting that spreads recycled content on paper across a refinery's products. Targets exist to keep material in use; counting fuel lets companies claim circularity while burning plastic.",
+  "keywords": [
+    "chemical recycling",
+    "pyrolysis",
+    "mechanical recycling",
+    "recycling targets"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vollmer et al., Angewandte Chemie, 2020",
+  "source_kind": "paper",
+  "reference": "Vollmer et al., Beyond Mechanical Recycling: Giving New Life to Plastic Waste, Angewandte Chemie International Edition, 2020",
+  "written": "2026-09-27"
+}

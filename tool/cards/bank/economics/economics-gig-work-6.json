@@ -1,0 +1,43 @@
+{
+  "id": "economics-gig-work-6",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "California's Prop 22 guarantees app drivers 120% of the $16.50 minimum wage for engaged time only. Engaged 60% of logged-in time, what's the hourly floor?",
+  "value": 11.88,
+  "unit": "dollars per logged-in hour",
+  "tolerance": 0.05,
+  "answer": "$19.80 x 0.6 = $11.88 per logged-in hour.",
+  "move": "Before comparing a pay floor, ask which hours it counts.",
+  "trap": "Reading 120% of the minimum wage as pay for every hour online.",
+  "hint": "Waiting for a request counts as logged in but not as engaged.",
+  "steps": [
+    "120% of $16.50 = $19.80 per engaged hour.",
+    "Only 60% of logged-in time is engaged.",
+    "$19.80 x 0.6 = $11.88 per logged-in hour."
+  ],
+  "keywords": [
+    "proposition 22",
+    "california",
+    "ride-hailing",
+    "engaged time",
+    "pay floor"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "California Proposition 22, 2020",
+  "source_kind": "primary_document",
+  "reference": "California Proposition 22, Protect App-Based Drivers and Services Act, Business and Professions Code sections 7448-7467, 2020",
+  "written": "2026-09-27"
+}

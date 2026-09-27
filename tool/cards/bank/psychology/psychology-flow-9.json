@@ -8,11 +8,11 @@
   "principle": "availability",
   "question": "Students rated flow reached alone and flow reached with other people. Which kind did they rate as more enjoyable?",
   "options": [
-    "Flow reached alone",
     "Flow reached with others",
+    "Flow reached alone",
     "Neither, both about equal"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Flow reached with others. Walker compared flow in solitary activities, in ones done alongside others, and in ones needing interaction, like a team game. Social flow was rated more enjoyable than solitary flow, and interactive flow most of all. Picture a band locked into a groove.",
   "move": "The picture that comes to mind first is not a survey of the cases.",
   "trap": "Flow reached alone, because absorption calls up the lone painter or coder.",

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-bone-strength-8",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "In ageing spongy bone, losing a cross-strut doubles the free length of an upright strut. How much of its buckling strength remains?",
+  "options": [
+    "About half",
+    "About three quarters",
+    "About a quarter"
+  ],
+  "correct": 2,
+  "answer": "About a quarter. A slender strut buckles at a load that falls with the square of its free length, Euler's rule, so doubling the length leaves a quarter. So losing a few horizontal struts cuts strength far more than the small drop in density suggests. Vertebrae, mostly spongy bone, crumble under loads they once carried.",
+  "move": "When a length enters squared, doubling it quarters the result.",
+  "trap": "Assuming strength falls in step with length, so half remains.",
+  "keywords": [
+    "trabecular bone",
+    "buckling",
+    "euler's rule",
+    "osteoporosis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gibson, Journal of Biomechanics, 1985",
+  "source_kind": "paper",
+  "reference": "Gibson, The mechanical behaviour of cancellous bone, Journal of Biomechanics, 1985",
+  "written": "2026-09-27"
+}

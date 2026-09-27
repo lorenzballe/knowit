@@ -1,0 +1,40 @@
+{
+  "id": "technology-touch-8",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "How did the PLATO IV teaching terminals of 1972 tell where a student's finger touched the screen?",
+  "options": [
+    "The finger's effect on an electric field",
+    "Beams of infrared light it interrupted",
+    "Pressure pushing two conductive sheets together"
+  ],
+  "correct": 1,
+  "answer": "Beams of infrared light it interrupted. A frame round the plasma screen shone a 16 by 16 grid of infrared beams across its face; a fingertip broke one beam each way, fixing its square. Illinois students answered lessons by pointing, decades before phones. Many large kiosks and whiteboards still work this way.",
+  "move": "The method that won is rarely the first one that worked.",
+  "trap": "Today's phones sense a finger's charge, so that method comes to mind.",
+  "keywords": [
+    "plato iv",
+    "infrared touch",
+    "university of illinois",
+    "plasma display",
+    "touchscreen history"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sherwood, Status of PLATO IV, ACM, 1972",
+  "source_kind": "paper",
+  "reference": "doi:10.1145/965887.965888",
+  "written": "2026-09-27"
+}

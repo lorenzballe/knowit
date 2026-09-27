@@ -1,0 +1,39 @@
+{
+  "id": "history-1848-10",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "The Chartists said their petition of April 1848 carried 5.7 million signatures. Roughly how many did Commons clerks count?",
+  "options": [
+    "About 5.5 million",
+    "About 2 million",
+    "About 200,000"
+  ],
+  "correct": 1,
+  "answer": "About 2 million. The clerks counted 1,975,496 names and found many invented or joking entries, such as Victoria Rex and Punch, which the press mocked for years. Yet nearly 2 million names was still a vast petition. The ridicule of the padding buried the size of the real support.",
+  "move": "When a claim is exposed as padded, measure what remains before dismissing it.",
+  "trap": "Staying near the claimed 5.7 million because it was the only figure given.",
+  "keywords": [
+    "chartists",
+    "petition",
+    "kennington common",
+    "signatures"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Chase, Chartism: A New History, 2007",
+  "source_kind": "book",
+  "reference": "Chase, Chartism: A New History, Manchester University Press, 2007",
+  "written": "2026-09-27"
+}

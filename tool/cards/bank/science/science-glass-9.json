@@ -13,7 +13,7 @@
     "About half"
   ],
   "correct": 0,
-  "answer": "About a quarter. Each 10% of recycled glass, called cullet, cuts furnace energy by about 2.5 to 3%. Cullet skips the chemistry of breaking down soda ash and limestone, but it must still be heated to around 1,500 °C and melted again. Aluminium saves about 95% because it skips freeing metal from ore; glass has no such step.",
+  "answer": "About a quarter. Each 10% of recycled glass, called cullet, cuts furnace energy by about 2.5 to 3%. Cullet skips breaking down soda ash and limestone, but must still be melted again at around 1,500 °C. Aluminium saves about 95% because it skips freeing metal from ore; glass has no such step.",
   "move": "A saving is only as large as the step it lets you skip.",
   "trap": "About 90%, by analogy with the famous saving on recycled aluminium.",
   "keywords": [

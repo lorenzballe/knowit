@@ -1,0 +1,32 @@
+{
+  "id": "technology-limits-8",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the software packages that coding chatbots invent a security risk, not just a nuisance?",
+  "answer": "Because the invented names repeat. In a 2025 study of 16 code models, about a fifth of suggested packages did not exist, and 43% of those fake names came back every time the same prompt was rerun. An attacker can register a recurring name, fill it with malware and wait for someone to install it.",
+  "move": "A mistake that repeats predictably is an opening someone else can use.",
+  "keywords": [
+    "package hallucination",
+    "software supply chain",
+    "malware",
+    "code assistants"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spracklen et al., USENIX Security, 2025",
+  "source_kind": "paper",
+  "reference": "Spracklen et al., We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs, USENIX Security Symposium, 2025",
+  "written": "2026-09-27"
+}

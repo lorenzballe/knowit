@@ -1,0 +1,39 @@
+{
+  "id": "science-lasers-7",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 1988 Bill Phillips's team compared laser-cooled sodium atoms with theory's lowest possible temperature, 240 microkelvin. What did they find?",
+  "options": [
+    "Hotter than the limit, as expected",
+    "About six times colder than the limit",
+    "Right at the predicted limit"
+  ],
+  "correct": 1,
+  "answer": "About six times colder, roughly 40 microkelvin. The accepted theory treated each atom as a simple two-level system, which set a floor. Real sodium has more levels, and in light whose polarisation varies across space they open cooling routes nobody had counted. Theory caught up within a year; Phillips shared the 1997 Nobel Prize.",
+  "move": "A limit derived from a simplified model limits only the model.",
+  "trap": "Right at the limit, since a well-tested theory sets the floor.",
+  "keywords": [
+    "laser cooling",
+    "doppler limit",
+    "sodium atoms",
+    "bill phillips"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lett et al., Physical Review Letters, 1988",
+  "source_kind": "paper",
+  "reference": "Lett, Watts, Westbrook, Phillips, Gould & Metcalf, Observation of Atoms Laser Cooled below the Doppler Limit, Physical Review Letters 61, 169, 1988",
+  "written": "2026-09-27"
+}

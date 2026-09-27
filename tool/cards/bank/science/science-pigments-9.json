@@ -1,0 +1,33 @@
+{
+  "id": "science-pigments-9",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a blue jay's feather lose its blue when it is crushed to powder?",
+  "answer": "Because the blue was never a pigment. The feather's barbs hold a spongy keratin with air pockets a few hundred nanometres apart, spaced so that light scattered from them adds up for blue and cancels for other colours. Crush the structure and the order goes: what remains is the grey-brown of the melanin beneath.",
+  "move": "Some properties live in the arrangement, and grinding destroys them.",
+  "keywords": [
+    "structural colour",
+    "blue jay",
+    "feathers",
+    "keratin",
+    "melanin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prum, in Bird Coloration, 2006",
+  "source_kind": "book",
+  "reference": "Prum, Anatomy, Physics, and Evolution of Structural Colors, in Hill & McGraw (eds), Bird Coloration, vol. 1, Harvard University Press, 2006",
+  "written": "2026-09-27"
+}

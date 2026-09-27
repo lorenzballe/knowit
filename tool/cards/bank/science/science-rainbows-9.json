@@ -1,0 +1,42 @@
+{
+  "id": "science-rainbows-9",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "also": [
+    "nature.weather.forecasting"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "In Britain's prevailing westerly weather, which rainbow is the better sign that rain is heading your way?",
+  "options": [
+    "An evening rainbow",
+    "A morning rainbow",
+    "Neither: timing tells you nothing"
+  ],
+  "correct": 1,
+  "answer": "A morning rainbow. A rainbow always lies opposite the Sun, so in the morning it hangs in the west: the shower is upwind, and weather there drifts east towards you. An evening rainbow sits in the east, where the rain has already passed. The old sailors' rhyme about morning warnings has geometry behind it.",
+  "move": "Where a sign appears can tell you more than the sign itself.",
+  "trap": "Neither, since weather rhymes sound like folklore.",
+  "keywords": [
+    "rainbow",
+    "weather lore",
+    "westerly winds",
+    "forecasting"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lynch & Livingston, Color and Light in Nature",
+  "source_kind": "book",
+  "reference": "Lynch & Livingston, Color and Light in Nature, 2nd edition, Cambridge University Press, 2001",
+  "written": "2026-09-27"
+}

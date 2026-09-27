@@ -1,0 +1,39 @@
+{
+  "id": "technology-limits-7",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A language model is handed 20 documents, one holding the answer. Where in the pile is it worst at using it?",
+  "options": [
+    "In the middle",
+    "At the very start",
+    "At the very end"
+  ],
+  "correct": 0,
+  "answer": "In the middle. Liu and colleagues found accuracy highest when the key document came first or last and lowest in between, a U-shaped curve; in some tests a model did worse with the answer mid-pile than with no documents. People recall lists in a similar curve. A long window is not an evenly read one.",
+  "move": "Having something in front of you is not the same as attending to it.",
+  "trap": "Assuming the earliest text, furthest back, is the most forgotten.",
+  "keywords": [
+    "long context",
+    "retrieval",
+    "lost in the middle",
+    "language models"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Liu et al., Transactions of the ACL, 2024",
+  "source_kind": "paper",
+  "reference": "Liu et al., Lost in the Middle: How Language Models Use Long Contexts, Transactions of the Association for Computational Linguistics, 2024",
+  "written": "2026-09-27"
+}

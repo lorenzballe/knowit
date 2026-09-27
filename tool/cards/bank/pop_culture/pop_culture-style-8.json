@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-style-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: tattooing was illegal in New York City until 1997?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The city banned it in 1961, blaming a hepatitis outbreak, and for 36 years tattooists worked in back rooms and flats or across the river in New Jersey. The City Council lifted the ban in 1997, just as tattoos went mainstream. Oklahoma kept its ban until 2006.",
+  "move": "The law and the street can disagree for decades.",
+  "trap": "Assuming a city full of tattoos must have allowed tattooing.",
+  "keywords": [
+    "tattoos",
+    "new york city",
+    "health code",
+    "hepatitis",
+    "tattoo ban"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "New York City Council, tattoo law, 1997",
+  "source_kind": "primary_document",
+  "reference": "New York City Council, local law amending the Health Code to license tattooing, 1997",
+  "written": "2026-09-27"
+}

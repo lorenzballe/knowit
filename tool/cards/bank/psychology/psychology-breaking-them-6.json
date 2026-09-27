@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "coincidence",
-  "question": "Suppose each unaided attempt to quit smoking has a 4% chance of lasting. What is the chance, in percent, that one of 15 attempts succeeds?",
+  "question": "If each unaided attempt to quit smoking has a 4% chance of lasting, what is the percentage chance that at least one of 15 succeeds?",
   "value": 45,
   "unit": "percent",
   "tolerance": 2,

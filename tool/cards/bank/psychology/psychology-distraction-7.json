@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "In a driving simulator, which conversation hurt driving more: one with a passenger, or one on a hands-free phone?",
   "options": [
-    "The passenger conversation",
     "The hands-free phone conversation",
+    "The passenger conversation",
     "Neither, they were about equal"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "The hands-free phone call. Drews, Pasupathi and Strayer asked talking drivers to leave the motorway at a rest stop. Those on the phone missed the exit far more often. A passenger sees the road too, pausing the talk when traffic thickens and sometimes pointing out the exit. The caller talks on, blind to the lorry.",
   "move": "A helper who shares the view is worth more than one who shares the words.",
   "trap": "Neither, since a conversation seems equally demanding wherever the other person sits.",

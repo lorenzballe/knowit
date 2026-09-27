@@ -1,0 +1,38 @@
+{
+  "id": "technology-limits-9",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: tuning GPT-4 into a chat assistant made its confidence a worse guide to whether it was right?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. On a multiple-choice test, OpenAI found the raw pre-trained model well calibrated: answers it gave 70% probability were right about 70% of the time. After training it into a helpful assistant, confidence and accuracy matched far less well. The version people talk to knows less about its own reliability than the one beneath it.",
+  "move": "Improving how something performs can damage how well it knows itself.",
+  "trap": "Assuming the tuning that makes answers better improves every measure.",
+  "keywords": [
+    "calibration",
+    "gpt-4",
+    "confidence",
+    "post-training"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OpenAI, GPT-4 Technical Report, 2023",
+  "source_kind": "company",
+  "reference": "OpenAI, GPT-4 Technical Report, arXiv:2303.08774, 2023",
+  "written": "2026-09-27"
+}

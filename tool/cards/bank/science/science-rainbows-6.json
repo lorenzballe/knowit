@@ -1,0 +1,38 @@
+{
+  "id": "science-rainbows-6",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.rainbows",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: tilting polarised sunglasses can make parts of a rainbow almost vanish?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Reflected inside each drop near the angle that polarises light most, rainbow light leaves about 96% polarised, vibrating along the arc. A polarising lens passes it one way and blocks it turned a quarter circle. Ordinary sunglasses, built to cut glare from the ground, erase the top of the arch and leave its ends.",
+  "move": "A filter that seems neutral can quietly choose what you get to see.",
+  "trap": "False, because sunglasses dim all light evenly.",
+  "keywords": [
+    "rainbow",
+    "polarisation",
+    "sunglasses",
+    "internal reflection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Können, Polarized Light in Nature, 1985",
+  "source_kind": "book",
+  "reference": "Können, Polarized Light in Nature, Cambridge University Press, 1985",
+  "written": "2026-09-27"
+}

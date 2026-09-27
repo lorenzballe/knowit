@@ -1,0 +1,40 @@
+{
+  "id": "history-british-7",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the 1870s and 1880s, roughly what share of British India's government revenue came from opium?",
+  "options": [
+    "About 1%",
+    "About a sixth",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About a sixth, varying by year. After land tax, opium was the Raj's biggest revenue: the state held a monopoly on the poppy in Bengal and taxed opium from the princely states of western India, mostly for China. A drug China had fought two wars to keep out helped pay for governing India.",
+  "move": "To judge what a government depends on, read its revenue table.",
+  "trap": "Treating opium as a side trade beside land, cotton and tea.",
+  "keywords": [
+    "opium",
+    "british india",
+    "government revenue",
+    "bengal",
+    "china trade"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Richards, Modern Asian Studies, 1981",
+  "source_kind": "paper",
+  "reference": "Richards, The Indian Empire and Peasant Production of Opium in the Nineteenth Century, Modern Asian Studies 15, 1981, 59-82",
+  "written": "2026-09-27"
+}

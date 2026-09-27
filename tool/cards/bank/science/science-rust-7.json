@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why were the nails at the heart of a Roman hoard buried in Scotland almost free of rust?",
-  "answer": "Because the outer nails used up the oxygen. Leaving the fortress of Inchtuthil around AD 87, the Roman army buried some 875,000 iron nails, weighing several tonnes, rather than abandon them. Dug up in 1960, the outer layer had rusted into a solid crust that sealed out air; inside, nails lay almost as they were forged.",
+  "answer": "Because the outer nails used up the oxygen. Leaving its fortress at Inchtuthil around AD 87, the Roman army buried some 875,000 iron nails, weighing several tonnes, rather than leave them. Dug up in 1960, the outer layer had rusted into a solid crust that sealed out air; inside, nails lay almost as forged.",
   "move": "The first part to fail can end up protecting the rest.",
   "keywords": [
     "inchtuthil",
@@ -26,7 +26,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Angus, Brown & Cleere, J. Iron Steel Inst., 1962",
+  "source": "Angus et al., J. Iron Steel Inst., 1962",
   "source_kind": "paper",
   "reference": "Angus, Brown & Cleere, The iron nails from the Roman legionary fortress at Inchtuthil, Perthshire, Journal of the Iron and Steel Institute 200, 956, 1962",
   "written": "2026-09-27"

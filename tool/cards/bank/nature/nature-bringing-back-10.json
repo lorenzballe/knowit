@@ -1,0 +1,33 @@
+{
+  "id": "nature-bringing-back-10",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were giant tortoises from Aldabra shipped to a small island off Mauritius, where they had never lived?",
+  "answer": "To do the job of Mauritius's own giant tortoises, eaten out by sailors centuries ago. On Île aux Aigrettes, Griffiths and colleagues found the newcomers eating the fruit of a rare native ebony and passing seeds that germinated well, spreading a tree that had lost its disperser. An ebony forest now relies on imports.",
+  "move": "When the original is gone, ask whether another can do its job.",
+  "keywords": [
+    "aldabra giant tortoises",
+    "mauritius",
+    "ebony",
+    "rewilding",
+    "seed dispersal"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffiths et al., Current Biology, 2011",
+  "source_kind": "paper",
+  "reference": "Griffiths, Hansen, Jones, Zuël & Harris, Resurrecting extinct interactions with extant substitutes, Current Biology, 2011",
+  "written": "2026-09-27"
+}

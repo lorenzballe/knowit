@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "After hearing nurse, hospital, sick, medicine and similar words, which group most often recalls the unheard word doctor?",
   "options": [
-    "Children of about five",
     "Adults",
+    "Children of about five",
     "All ages about equally"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Adults. Brainerd, Reyna and Ceci reviewed studies in which false recall of the unheard theme word rose with age, from early childhood into adulthood. The error comes from grasping the meaning that links the list, and five-year-olds extract that gist less readily. The same children remain more suggestible when an interviewer leads them.",
   "move": "A weakness in one skill can be armour against a particular error.",
   "trap": "Children of about five, since young children are the most suggestible.",

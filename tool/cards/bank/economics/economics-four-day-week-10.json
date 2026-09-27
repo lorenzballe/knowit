@@ -1,0 +1,32 @@
+{
+  "id": "economics-four-day-week-10",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Belgian workers won a legal right to request a four-day week in 2022. How many fewer hours does it give them?",
+  "answer": "None. The 2022 law lets a full-time employee ask to fit the same 38 hours into four longer days of up to 9.5 hours, and the employer may refuse with written reasons. It changes the shape of the week, not its length. The long weekend is paid for with four long days.",
+  "move": "Ask whether a reform shortens the work or only rearranges it.",
+  "keywords": [
+    "belgium",
+    "compressed hours",
+    "four-day week",
+    "labour law"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Belgian Labour Deal law, 2022",
+  "source_kind": "primary_document",
+  "reference": "Loi portant des dispositions diverses relatives au travail (Labour Deal), 3 October 2022, Moniteur belge, 2022",
+  "written": "2026-09-27"
+}

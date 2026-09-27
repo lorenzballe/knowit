@@ -1,0 +1,32 @@
+{
+  "id": "human_body-bone-strength-10",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a crack running across a bone struggle more the further it grows?",
+  "answer": "Because bone's structure keeps turning it aside. Dense bone is built from osteons, cylinders around blood channels, bound by weak cement lines that deflect and twist a crossing crack. Koester, Ager and Ritchie found that after just half a millimetre, breaking across bone took over five times the driving force of splitting along it.",
+  "move": "Weak joints in the right places can make a whole harder to break.",
+  "keywords": [
+    "cortical bone",
+    "fracture toughness",
+    "osteons",
+    "cracks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koester, Ager & Ritchie, Nature Materials, 2008",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nmat2221",
+  "written": "2026-09-27"
+}

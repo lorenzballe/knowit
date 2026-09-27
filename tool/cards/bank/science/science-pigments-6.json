@@ -1,0 +1,40 @@
+{
+  "id": "science-pigments-6",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "White paint hides what lies beneath with grains of titanium dioxide. What grain size scatters light best?",
+  "options": [
+    "About a quarter of a micrometre",
+    "A few nanometres across",
+    "About 25 micrometres across"
+  ],
+  "correct": 0,
+  "answer": "About a quarter of a micrometre, roughly half the wavelength of visible light. Much bigger grains offer fewer scattering surfaces per gram; much smaller ones are too small for light waves to notice, and let them pass. Nanoscale titanium dioxide, the same compound, scatters so weakly that sunscreens made with it rub in clear.",
+  "move": "More of a good thing works only until the scale changes the rules.",
+  "trap": "A few nanometres, since finer grinding always means more surfaces.",
+  "keywords": [
+    "titanium dioxide",
+    "white paint",
+    "light scattering",
+    "particle size",
+    "sunscreen"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Braun et al., Progress in Organic Coatings, 1992",
+  "source_kind": "paper",
+  "reference": "Braun, Baidins & Marganski, TiO2 pigment technology: a review, Progress in Organic Coatings 20, 105, 1992",
+  "written": "2026-09-27"
+}

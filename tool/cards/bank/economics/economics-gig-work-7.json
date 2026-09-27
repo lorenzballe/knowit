@@ -1,0 +1,39 @@
+{
+  "id": "economics-gig-work-7",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Uber raised fares in some US cities, lifting drivers' pay per trip. Within a few months, what had happened to their hourly earnings?",
+  "options": [
+    "Up roughly in line with fares",
+    "Down, as riders took fewer trips",
+    "Back near where they started"
+  ],
+  "correct": 2,
+  "answer": "Back near where they started. Hall, Horton and Knoepfle found that higher fares drew more drivers online, each waited longer between trips, and hourly earnings drifted back towards their old level. Anyone can log on, so a better rate per trip is shared out as idle time. The rise bought emptier cars, not richer drivers.",
+  "move": "Where anyone can join, a better rate draws more people to share it.",
+  "trap": "Assuming a higher rate per trip means more pay per hour.",
+  "keywords": [
+    "uber",
+    "fares",
+    "driver earnings",
+    "free entry"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, Horton and Knoepfle, 2017",
+  "source_kind": "paper",
+  "reference": "Hall, Horton & Knoepfle, Labor Market Equilibration: Evidence from Uber, working paper, 2017",
+  "written": "2026-09-27"
+}

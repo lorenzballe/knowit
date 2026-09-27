@@ -1,0 +1,43 @@
+{
+  "id": "science-steel-8",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Carbon strips the oxygen from iron ore, Fe₂O₃, and leaves as CO₂. At minimum, how many tonnes of CO₂ per tonne of iron?",
+  "value": 0.59,
+  "unit": "tonnes of CO₂",
+  "tolerance": 0.02,
+  "answer": "13.4 thousand moles × 44 g ≈ 590 kg, about 0.59 tonnes of CO₂.",
+  "move": "When emissions come from the chemistry itself, cleaner energy cannot remove them.",
+  "trap": "Guessing near zero, as if the carbon were only fuel for heat.",
+  "hint": "Count atoms: iron weighs 56 per atom, CO₂ 44 per molecule, and Fe₂O₃ sets the oxygen per iron.",
+  "steps": [
+    "1 tonne of iron is 1,000,000 g ÷ 56 g ≈ 17.9 thousand moles of iron atoms.",
+    "Fe₂O₃ holds 1.5 oxygen atoms per iron atom: 17.9 × 1.5 ≈ 26.8 thousand moles of oxygen.",
+    "Each CO₂ carries off 2 oxygens: 26.8 ÷ 2 = 13.4 thousand moles of CO₂.",
+    "13.4 thousand moles × 44 g ≈ 590 kg, about 0.59 tonnes of CO₂."
+  ],
+  "keywords": [
+    "ironmaking",
+    "carbon dioxide",
+    "iron ore",
+    "blast furnace"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allwood & Cullen, Sustainable Materials",
+  "source_kind": "book",
+  "reference": "Allwood & Cullen, Sustainable Materials: With Both Eyes Open, UIT Cambridge, 2012",
+  "written": "2026-09-27"
+}

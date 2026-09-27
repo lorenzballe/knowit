@@ -1,0 +1,39 @@
+{
+  "id": "history-1848-9",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.1848",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The Frankfurt Parliament of 1848 is nicknamed the parliament of professors. What was its largest occupational group?",
+  "options": [
+    "University professors and teachers",
+    "Merchants and manufacturers",
+    "Civil servants, judges and officials"
+  ],
+  "correct": 2,
+  "answer": "Civil servants, judges and officials. They formed the biggest block of its roughly 800 members, with lawyers next; university professors numbered a few dozen, prominent in debate and in memoirs. Businessmen were few, and artisans and peasants almost absent. It was first of all a parliament of the German states' own employees.",
+  "move": "The loudest members of a group are rarely a fair sample of it.",
+  "trap": "Trusting a nickname built on the members who made the speeches.",
+  "keywords": [
+    "frankfurt parliament",
+    "civil servants",
+    "professors",
+    "german revolution"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Siemann, The German Revolution of 1848–49",
+  "source_kind": "book",
+  "reference": "Siemann, The German Revolution of 1848–49, trans. Walker, Macmillan, 1998",
+  "written": "2026-09-27"
+}

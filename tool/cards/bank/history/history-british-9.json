@@ -1,0 +1,39 @@
+{
+  "id": "history-british-9",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.british",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: as independence approached, British colonial officials were told to destroy or ship home embarrassing files?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From the late 1950s, officials in colony after colony were ordered to burn or remove papers that might embarrass Britain. Thousands of removed files, including records of the Kenya Emergency, sat unlisted at Hanslope Park until 2011, when a High Court case brought by Kenyan claimants forced them into view.",
+  "move": "An archive is what someone decided to keep, not what happened.",
+  "trap": "Assuming the archives left behind are a complete record.",
+  "keywords": [
+    "migrated archives",
+    "hanslope park",
+    "kenya emergency",
+    "decolonisation",
+    "records"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anderson, History Workshop Journal, 2015",
+  "source_kind": "paper",
+  "reference": "Anderson, Guilty Secrets: Deceit, Denial, and the Discovery of Kenya's Migrated Archive, History Workshop Journal 80, 2015",
+  "written": "2026-09-27"
+}

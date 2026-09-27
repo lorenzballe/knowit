@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "reflection",
-  "question": "Four cards show A, K, 2 and 3. Checking the rule if A then not 2, which cards do most people turn?",
+  "question": "Cards show A, K, 2 and 3. To test the rule that an A never has a 2 behind it, which do most people turn?",
   "options": [
     "A and 2, the ones named",
     "A and 3, which fit the rule",

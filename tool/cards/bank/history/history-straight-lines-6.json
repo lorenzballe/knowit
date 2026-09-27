@@ -1,0 +1,33 @@
+{
+  "id": "history-straight-lines-6",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Colorado's western border runs near 109°03′ west of Greenwich. Why such an untidy number for a ruler-straight line?",
+  "answer": "Because Congress measured it from Washington, not Greenwich. The 1861 act creating Colorado Territory set its sides at 37° and 41° north and at 25° and 32° west of the Washington meridian, which runs about 77° west of Greenwich. 32 plus 77 is 109. Greenwich became the world's zero only in 1884.",
+  "move": "When a number looks untidy, ask what zero it was measured from.",
+  "keywords": [
+    "colorado",
+    "washington meridian",
+    "greenwich",
+    "longitude",
+    "state borders"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Van Zandt, Boundaries of the United States, 1966",
+  "source_kind": "reference_work",
+  "reference": "Van Zandt, Boundaries of the United States and the Several States, US Geological Survey Bulletin 1212, 1966",
+  "written": "2026-09-27"
+}
