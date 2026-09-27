@@ -10,12 +10,12 @@
   "options": [
     "Whether the chorus simply got louder",
     "Which instrument the layer doubles",
-    "Nothing: the ear has already judged"
+    "How the layer sounds in mono"
   ],
   "correct": 0,
   "answer": "Whether the chorus simply got louder. Side by side, the louder of two otherwise identical versions tends to sound fuller and clearer, even by a decibel, so any added layer starts with an unfair edge. Mastering engineers match levels before comparing. Turned down to the old level, many layers stop earning their place.",
   "move": "Before crediting a change, check whether it also changed the amount.",
-  "trap": "Trusting the ear's verdict, when extra level alone flatters any version.",
+  "trap": "Looking at what the layer plays, as if its content caused the lift.",
   "keywords": [
     "loudness bias",
     "mixing",

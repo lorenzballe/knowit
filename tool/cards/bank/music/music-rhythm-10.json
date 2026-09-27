@@ -3,19 +3,16 @@
   "topic": "music",
   "genre": "music.why_songs_work",
   "strand": "music.why_songs_work.rhythm",
-  "also": [
-    "human_body.the_brain.neurons"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: a train of identical, evenly spaced clicks makes the brain respond more strongly to alternate clicks?",
+  "question": "True or false: in a train of identical, evenly spaced tones, the brain treats alternate tones as if accented?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. Renaud Brochard and colleagues recorded brain waves while people heard perfectly identical tones at a steady rate: responses to the odd-numbered tones were larger, as if accented. The listener imposes the strong-weak grouping; the sound carries none. The tick-tock of a clock is written by the brain, not the clock.",
+  "answer": "True. Renaud Brochard and colleagues recorded brain waves during a steady train of identical tones, now and then making one quieter: the brain reacted more strongly to that change on odd-numbered tones, as if those were accented. The listener imposes the strong-weak grouping. The tick-tock of a clock is written by the brain, not the clock.",
   "move": "Before crediting a pattern to the source, check whether the observer supplies it.",
   "trap": "Identical sounds should produce identical responses, so no accent can exist.",
   "keywords": [

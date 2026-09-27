@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did Norway's 2020 call for a national dugnad, communal volunteer work, land unevenly with its residents?",
-  "answer": "Because the word carries a duty only insiders hear. Dugnad is unpaid work for the community, voluntary in name and expected in fact; NRK viewers voted it Norway's national word in 2004. A 2024 interview study found many immigrants missed what the appeals asked. Where neighbours hear a summons, a newcomer hears a noun.",
+  "answer": "Because the word carries a duty only insiders hear. Dugnad is unpaid work for the community, voluntary in name and expected in fact; NRK viewers voted it Norway's national word in 2004. A 2024 interview study found many immigrants unsure what the appeals asked of them. Where neighbours hear a summons, a newcomer hears a noun.",
   "move": "An appeal that runs on shared expectation fails where the expectation is missing.",
   "keywords": [
     "dugnad",
@@ -26,7 +26,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Archives of Public Health, 2024",
+  "source": "Herrero-Arias et al., Archives of Public Health, 2024",
   "source_kind": "paper",
   "reference": "doi:10.1186/s13690-024-01237-0",
   "written": "2026-09-27"

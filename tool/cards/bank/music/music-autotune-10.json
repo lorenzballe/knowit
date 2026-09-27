@@ -3,9 +3,6 @@
   "topic": "music",
   "genre": "music.studio_tricks",
   "strand": "music.studio_tricks.autotune",
-  "also": [
-    "human_body.the_brain.neurons"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",

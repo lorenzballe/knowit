@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. The Cabinet Office counts anyone who, for six months or more and not because of illness, leaves home only for hobbies or a nearby convenience store. On that definition its 2023 survey estimated about 1.46 million people aged 15 to 64. The total includes the shopper buying one rice ball at midnight.",
+  "answer": "True. The Cabinet Office counts anyone who, for six months or more and not because of illness, leaves home only for hobbies or a nearby convenience store. On that definition its survey published in 2023 estimated about 1.46 million people aged 15 to 64. The total includes the shopper buying one rice ball at midnight.",
   "move": "Before quoting a count, read the definition that did the counting.",
   "trap": "Picturing the locked bedroom that made the word famous.",
   "keywords": [
@@ -33,6 +33,6 @@
   "figure": "none",
   "source": "Cabinet Office of Japan, survey, 2023",
   "source_kind": "primary_document",
-  "reference": "https://www.nippon.com/en/japan-data/h00463/survey-findings-suggest-japan-has-more-than-1-million-hikikomori.html",
+  "reference": "Cabinet Office of Japan, Kodomo wakamono no ishiki to seikatsu ni kansuru chōsa (Survey on the Attitudes and Lives of Children and Young People), Tokyo, 2023",
   "written": "2026-09-27"
 }

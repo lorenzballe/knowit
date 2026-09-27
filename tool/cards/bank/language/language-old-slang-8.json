@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Researchers searching digitised newspapers found the whole nine yards in an Indiana paper of 1912, and the whole six yards in Kentucky in 1907. That rules out the vivid explanations, a fighter plane's 8-metre ammunition belt among them. The number seems to have grown for emphasis. Nobody knows which yards were meant.",
+  "answer": "False. Researchers searching digitised newspapers found the whole nine yards in an Indiana paper in 1908, and a variant, the whole six yards, in Kentucky in 1912. That rules out the vivid explanations, a fighter plane's 8-metre ammunition belt among them. With six and nine both in use, no fixed length explains it. Nobody knows which yards were meant.",
   "move": "A story with more details is not a story with more evidence.",
   "trap": "The wartime tale of ammunition belts feels too specific to be invented.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Mitchell Commercial, Indiana, 1912",
-  "source_kind": "primary_document",
-  "reference": "The Mitchell Commercial, Mitchell, Indiana, 1912",
+  "source": "Wilton, Wordorigins.org, whole nine yards",
+  "source_kind": "reference_work",
+  "reference": "https://www.wordorigins.org/big-list-entries/whole-nine-yards",
   "written": "2026-09-27"
 }

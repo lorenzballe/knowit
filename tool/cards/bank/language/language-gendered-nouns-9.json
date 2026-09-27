@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "computation",
-  "question": "German's word for the marks 4 cases across masculine, feminine, neuter and plural. How many distinct forms does it use?",
+  "question": "German's definite article marks 4 cases across masculine, feminine, neuter and plural. How many distinct forms does it use?",
   "value": 6,
   "unit": "forms",
   "answer": "4 + 1 + 1 = 6 forms.",

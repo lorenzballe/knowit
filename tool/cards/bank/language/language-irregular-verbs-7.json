@@ -13,9 +13,9 @@
     "Neither: both move in step"
   ],
   "correct": 1,
-  "answer": "American English. Counts across millions of books and tweets show American usage regularising these verbs further and faster, with British English following behind. The United States also spread a few new irregulars such as snuck, which makes the pattern easy to misread. In a British bakery the toast is still burnt.",
+  "answer": "American English. Counts across millions of books and tweets show American usage regularising these verbs further, with British English following behind. The United States also spread a few new irregulars such as dove, which makes the pattern easy to misread. In a British bakery the toast is still burnt.",
   "move": "A few memorable exceptions can hide which way the bulk is moving.",
-  "trap": "Thinking of snuck and dove and crediting Americans with irregulars.",
+  "trap": "Thinking of dove and gotten and crediting Americans with irregulars.",
   "keywords": [
     "regularisation",
     "american english",
@@ -33,7 +33,7 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Gray, Danforth & Dodds, PLOS One, 2018",
+  "source": "Gray et al., PLOS One, 2018",
   "source_kind": "paper",
   "reference": "https://arxiv.org/pdf/1803.09745",
   "written": "2026-09-27"

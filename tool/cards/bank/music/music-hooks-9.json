@@ -3,9 +3,6 @@
   "topic": "music",
   "genre": "music.why_songs_work",
   "strand": "music.why_songs_work.hooks",
-  "also": [
-    "psychology.memory.forgetting_curve"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
