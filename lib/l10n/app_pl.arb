@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, =1{1 nadal dobrze po powrocie} other{{n} nadal dobrze po powrocie}}",
   "nothingBackYet": "Nic jeszcze nie wróciło. Karta wraca po trzech dniach, potem po tygodniu, potem po miesiącu — a to, co wtedy trafisz, naprawdę wiesz.",
   "weekKeptTwoOwn": "Tydzień z rzędu: jutro dwie z pięciu są twoje.",
-  "perkJourneyLine": "Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem."
+  "perkJourneyLine": "Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem.",
+ "topOfTheWeek": "Top tygodnia",
+ "topOfTheMonth": "Top miesiąca",
+ "topIn": "Top: {subject}",
+ "topLineWeek": "Najczęściej lubiane, zachowane i opowiadane w ostatnich 7 dniach",
+ "topLineMonth": "Najczęściej lubiane, zachowane i opowiadane w ostatnich 30 dniach",
+ "topWeek": "Tydzień",
+ "topMonth": "Miesiąc",
+ "topReaders": "{n, plural, =1{1 czytelnik} few{{n} czytelnicy} many{{n} czytelników} other{{n} czytelnika}}",
+ "topEmpty": "Na liście jeszcze nic nie ma. Liczy się każda karta, którą polubisz, zachowasz lub opowiesz."
 }

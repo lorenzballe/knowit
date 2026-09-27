@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, other{{n}장은 돌아와도 정답}}",
   "nothingBackYet": "아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.",
   "weekKeptTwoOwn": "일주일 달성: 내일은 다섯 장 중 두 장이 당신의 카드.",
-  "perkJourneyLine": "당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드."
+  "perkJourneyLine": "당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드.",
+ "topOfTheWeek": "이번 주 인기 카드",
+ "topOfTheMonth": "이번 달 인기 카드",
+ "topIn": "{subject} 인기 카드",
+ "topLineWeek": "지난 7일 동안 가장 많이 좋아요·보관·이야기한 카드",
+ "topLineMonth": "지난 30일 동안 가장 많이 좋아요·보관·이야기한 카드",
+ "topWeek": "주",
+ "topMonth": "월",
+ "topReaders": "{n, plural, other{{n}명}}",
+ "topEmpty": "아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요."
 }

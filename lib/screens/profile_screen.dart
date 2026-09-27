@@ -1322,6 +1322,11 @@ class _PlusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The card is a piece of the other theme, so what sits on it comes from
+    // the other theme too. The button and the badge were drawn in the card's
+    // own colour, which left a label floating on a ledge and a badge with no
+    // edge at all — in both themes.
+    final Palette other = context.p.isDark ? Palette.light : Palette.dark;
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 18),
       decoration: BoxDecoration(
@@ -1336,7 +1341,7 @@ class _PlusCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
                 decoration: BoxDecoration(
-                  color: context.p.inverse,
+                  color: context.p.onInverse.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
@@ -1384,8 +1389,11 @@ class _PlusCard extends StatelessWidget {
           ChunkyButton(
             label: context.l10n.seeThePlans,
             height: 48,
-            fill: context.p.inverse,
-            ink: context.p.onInverse,
+            fill: other.inverse,
+            ink: other.onInverse,
+            // The paywall's own edge for a cream face, so the two read as
+            // one button.
+            edge: other.isDark ? const Color(0xFFA8A59D) : null,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) =>

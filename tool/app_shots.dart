@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/main.dart';
+import 'package:astuto/sync/tally.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 
 Future<void> _loadFonts() async {
@@ -60,6 +61,46 @@ void _wellUsed() {
     'knowit.streak': 13,
     'knowit.savedIds': read.take(6).toList(),
   });
+}
+
+/// The camera's own list in place of the app's, behind the same single
+/// ignore as [_installed], for the same reason.
+void _useTallies(Tallies tallies) {
+  // ignore: invalid_use_of_visible_for_testing_member
+  Tallies.useForTest(tallies);
+}
+
+/// What readers kept over a month, made up for the photograph: counts on
+/// cards the bank has, across the subjects, so the top list is seen with
+/// something on it. Nothing here reaches the app.
+Future<void> _counted(WidgetTester tester) async {
+  final DateTime now = DateTime.now();
+  String ago(int days) => tallyDay(now.subtract(Duration(days: days)));
+  final Map<String, List<String>> bySubject = {};
+  for (final pill in PillBank.cards) {
+    bySubject.putIfAbsent(pill.topic, () => []).add(pill.id);
+  }
+  final List<String> heads = [for (final ids in bySubject.values) ids.first];
+  final List<String> economics = bySubject['Economics'] ?? const [];
+  const List<int> week = [48, 41, 37, 30, 26, 19, 14, 11, 8, 5];
+  final Tallies tallies = Tallies(
+    storeOverride: MemoryTallyStore({
+      ago(0): {
+        for (var i = 0; i < heads.length && i < week.length; i++)
+          heads[i]: week[i] - week[i] ~/ 3,
+      },
+      ago(3): {
+        for (var i = 0; i < heads.length && i < week.length; i++)
+          heads[i]: week[i] ~/ 3,
+      },
+      ago(12): {
+        for (var i = 0; i < economics.length && i < 5; i++)
+          economics[economics.length - 1 - i]: 34 - i * 6,
+      },
+    }),
+  );
+  _useTallies(tallies);
+  await tester.runAsync(tallies.refresh);
 }
 
 void main() {
@@ -113,6 +154,40 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Profile')));
     await settle(tester);
     await shoot(tester, 'profile');
+  });
+
+  testWidgets("Explore's top list, both ways and by subject", (tester) async {
+    _installed();
+    await _counted(tester);
+    addTearDown(() => _useTallies(Tallies()));
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await settle(tester);
+    await shoot(tester, 'top');
+
+    await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('top-month-off')));
+    await settle(tester);
+    await shoot(tester, 'top-topic');
+  });
+
+  testWidgets("Explore's top list on paper", (tester) async {
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.theme': 'light',
+    });
+    await _counted(tester);
+    addTearDown(() => _useTallies(Tallies()));
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await settle(tester);
+    await shoot(tester, 'top-light');
   });
 
   testWidgets('the record of somebody who has been reading', (tester) async {

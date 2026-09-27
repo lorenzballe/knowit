@@ -1,8 +1,10 @@
 rules_version = '2';
 
-// Astute stores one document per reader, and one board per reader that a
-// friend may look at. The policy: you may read and write your own, anyone
-// signed in may read a board, and nothing else exists.
+// Astute stores one document per reader, one board per reader that a
+// friend may look at, and a count per card per day of how many readers held
+// on to it. The policy: you may read and write your own, anyone signed in
+// may read a board or a day's counts and add one to a count, and nothing
+// else exists.
 //
 // Deploy with:  firebase deploy --only firestore:rules
 service cloud.firestore {
@@ -10,6 +12,21 @@ service cloud.firestore {
 
     function isOwner(uid) {
       return request.auth != null && request.auth.uid == uid;
+    }
+
+    // A card's id as the bank writes them: science-2, thinking-d14.
+    function isCardId(k) {
+      return k is string && k.matches('^[a-z0-9_-]{1,64}$');
+    }
+
+    // A day as the app files it, YYYY-MM-DD in UTC, that is today on some
+    // clock near now: from the day before it starts to two days after.
+    function isRecentDay(day) {
+      let parts = day.split('-');
+      let start = timestamp.date(int(parts[0]), int(parts[1]), int(parts[2]));
+      return day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+        && request.time > start - duration.value(1, 'd')
+        && request.time < start + duration.value(2, 'd');
     }
 
     match /readers/{uid} {
@@ -45,6 +62,31 @@ service cloud.firestore {
         request.resource.data.uid == request.auth.uid;
       // Its owner takes it down when they delete their account.
       allow delete: if isOwner(resource.data.uid);
+    }
+
+    // What readers held on to, counted by day: one document per UTC day,
+    // one number per card, and nothing about who. Anyone signed in may read
+    // the days, and add one — exactly one, to exactly one card — to a day
+    // that is today on some clock. `k` names the card a write adds to, so
+    // the rule can check that that card moved by one and nothing else moved
+    // at all. No write takes anything away, and a week that is over cannot
+    // be rewritten.
+    match /tallies/{day} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && isRecentDay(day)
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.n.keys().hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k] == 1;
+      allow update: if request.auth != null && isRecentDay(day)
+        && request.resource.data.keys().hasOnly(['k', 'n'])
+        && isCardId(request.resource.data.k)
+        && request.resource.data.n.size() <= 2000
+        && request.resource.data.n.diff(resource.data.n).affectedKeys()
+             .hasOnly([request.resource.data.k])
+        && request.resource.data.n[request.resource.data.k]
+             == resource.data.n.get(request.resource.data.k, 0) + 1;
+      allow delete: if false;
     }
 
     // Anything not named above is closed, including reads of other readers.

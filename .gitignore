@@ -50,3 +50,7 @@ app.*.map.json
 # The venv for tool/illustrations, if it is made in the repo rather than beside it.
 tool/illustrations/.venv/
 tool/illustrations/**/__pycache__/
+
+# The rules test's tools, installed on demand.
+tool/rules/node_modules/
+tool/rules/package-lock.json

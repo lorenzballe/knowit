@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, =1{1 ancora giusta al ritorno} other{{n} ancora giuste al ritorno}}",
   "nothingBackYet": "Non è ancora tornato niente. Una carta torna dopo tre giorni, poi una settimana, poi un mese — e quello che azzecchi allora è quello che sai davvero.",
   "weekKeptTwoOwn": "Una settimana di fila: domani due delle cinque sono tue.",
-  "perkJourneyLine": "Il tuo livello, ogni materia filone per filone, cosa ti è rimasto, e la carta da dire stasera."
+  "perkJourneyLine": "Il tuo livello, ogni materia filone per filone, cosa ti è rimasto, e la carta da dire stasera.",
+ "topOfTheWeek": "Top della settimana",
+ "topOfTheMonth": "Top del mese",
+ "topIn": "Top in {subject}",
+ "topLineWeek": "Le più piaciute, salvate e raccontate negli ultimi 7 giorni",
+ "topLineMonth": "Le più piaciute, salvate e raccontate negli ultimi 30 giorni",
+ "topWeek": "Settimana",
+ "topMonth": "Mese",
+ "topReaders": "{n, plural, =1{1 lettore} other{{n} lettori}}",
+ "topEmpty": "Ancora niente in classifica. Ogni carta che ti piace, salvi o racconti conta."
 }

@@ -1652,4 +1652,36 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드.';
+
+  @override
+  String get topOfTheWeek => '이번 주 인기 카드';
+
+  @override
+  String get topOfTheMonth => '이번 달 인기 카드';
+
+  @override
+  String topIn(String subject) {
+    return '$subject 인기 카드';
+  }
+
+  @override
+  String get topLineWeek => '지난 7일 동안 가장 많이 좋아요·보관·이야기한 카드';
+
+  @override
+  String get topLineMonth => '지난 30일 동안 가장 많이 좋아요·보관·이야기한 카드';
+
+  @override
+  String get topWeek => '주';
+
+  @override
+  String get topMonth => '월';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n명');
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty => '아직 순위가 없어요. 좋아요·보관·이야기한 카드가 모두 집계돼요.';
 }

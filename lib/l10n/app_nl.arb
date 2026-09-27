@@ -388,5 +388,14 @@
   "nKeptOnReturn": "{n, plural, =1{1 nog goed bij terugkomst} other{{n} nog goed bij terugkomst}}",
   "nothingBackYet": "Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.",
   "weekKeptTwoOwn": "Een week volgehouden: morgen zijn twee van de vijf van jou.",
-  "perkJourneyLine": "Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen."
+  "perkJourneyLine": "Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen.",
+ "topOfTheWeek": "Top van de week",
+ "topOfTheMonth": "Top van de maand",
+ "topIn": "Top in {subject}",
+ "topLineWeek": "Het meest geliket, bewaard en verteld in de afgelopen 7 dagen",
+ "topLineMonth": "Het meest geliket, bewaard en verteld in de afgelopen 30 dagen",
+ "topWeek": "Week",
+ "topMonth": "Maand",
+ "topReaders": "{n, plural, =1{1 lezer} other{{n} lezers}}",
+ "topEmpty": "Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee."
 }

@@ -1679,4 +1679,44 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get perkJourneyLine =>
       'Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart.';
+
+  @override
+  String get topOfTheWeek => 'Haftanın en iyileri';
+
+  @override
+  String get topOfTheMonth => 'Ayın en iyileri';
+
+  @override
+  String topIn(String subject) {
+    return '$subject: en iyiler';
+  }
+
+  @override
+  String get topLineWeek =>
+      'Son 7 günde en çok beğenilen, saklanan ve anlatılanlar';
+
+  @override
+  String get topLineMonth =>
+      'Son 30 günde en çok beğenilen, saklanan ve anlatılanlar';
+
+  @override
+  String get topWeek => 'Hafta';
+
+  @override
+  String get topMonth => 'Ay';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n okur',
+      one: '1 okur',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty =>
+      'Listede henüz bir şey yok. Beğendiğin, sakladığın ya da anlattığın her kart sayılır.';
 }

@@ -1694,4 +1694,44 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get perkJourneyLine =>
       'Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen.';
+
+  @override
+  String get topOfTheWeek => 'Top van de week';
+
+  @override
+  String get topOfTheMonth => 'Top van de maand';
+
+  @override
+  String topIn(String subject) {
+    return 'Top in $subject';
+  }
+
+  @override
+  String get topLineWeek =>
+      'Het meest geliket, bewaard en verteld in de afgelopen 7 dagen';
+
+  @override
+  String get topLineMonth =>
+      'Het meest geliket, bewaard en verteld in de afgelopen 30 dagen';
+
+  @override
+  String get topWeek => 'Week';
+
+  @override
+  String get topMonth => 'Maand';
+
+  @override
+  String topReaders(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n lezers',
+      one: '1 lezer',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get topEmpty =>
+      'Nog niets op de lijst. Elke kaart die je liket, bewaart of vertelt telt mee.';
 }
