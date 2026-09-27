@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "EU law tells makers of baby biscuits what to add to curb acrylamide from browning. What?",
+  "question": "EU acrylamide rules name one ingredient that biscuit makers, baby biscuits included, should add where they can. Which?",
   "options": [
     "An enzyme that breaks down asparagine",
     "An antioxidant such as rosemary extract",
-    "Extra sugar to finish the bake sooner"
+    "Ammonium bicarbonate as the raising agent"
   ],
   "correct": 0,
-  "answer": "An enzyme, asparaginase. It turns asparagine, the amino acid that becomes acrylamide during browning, into aspartic acid, which cannot. In dough it can cut acrylamide by well over half without changing the bake. Regulation 2017/2158 made it the rule for baby biscuits: one ingredient of the reaction is gone before the oven is lit.",
+  "answer": "An enzyme, asparaginase. It turns asparagine, the amino acid that becomes acrylamide during browning, into aspartic acid, which cannot. In dough it often cuts acrylamide by half or more without changing the bake. Regulation 2017/2158 lists it for biscuit makers where it works: one ingredient of the reaction is gone before the oven is lit.",
   "move": "To stop an unwanted product, starve the reaction of its raw material.",
   "trap": "An antioxidant, the usual remedy for anything linked to cancer.",
   "keywords": [

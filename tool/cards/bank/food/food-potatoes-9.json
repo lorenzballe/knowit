@@ -3,9 +3,6 @@
   "topic": "food",
   "genre": "food.food_history",
   "strand": "food.food_history.potatoes",
-  "also": [
-    "history.everyday_life.food"
-  ],
   "kind": "number",
   "difficulty": "hard",
   "principle": "counterfactual",

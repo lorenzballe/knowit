@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What did the famous Minoan fresco of a saffron gatherer at Knossos turn out to show?",
-  "answer": "A blue monkey. Arthur Evans's restorers pieced the fragments together around 1900 as a boy picking crocuses, giving him a human head. Later scholars noticed that Minoan painters never coloured human skin blue and found a scrap of tail. Re-restored, it now hangs in Heraklion as a monkey gathering flowers in a crocus field.",
+  "answer": "A blue monkey. Arthur Evans's restorers pieced the fragments together soon after 1900 as a boy picking crocuses, giving him a human head. Later scholars noticed that Minoan painters coloured monkeys blue, never people, and that the fragments held a tail. The figure is now read as a monkey gathering flowers in a crocus field.",
   "move": "A reconstruction shows what the restorer expected as much as what was found.",
   "keywords": [
     "knossos",
@@ -26,8 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Heraklion Archaeological Museum, fresco T32A",
-  "source_kind": "institution",
-  "reference": "https://ca.heraklionmuseum.gr/ca/pawtucket/index.php/Detail/objects/847",
+  "source": "Immerwahr, Aegean Painting, 1990",
+  "source_kind": "book",
+  "reference": "Immerwahr, Aegean Painting in the Bronze Age, Pennsylvania State University Press, 1990",
   "written": "2026-09-27"
 }

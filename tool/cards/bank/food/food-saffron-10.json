@@ -13,7 +13,7 @@
     "Annatto seeds"
   ],
   "correct": 0,
-  "answer": "Jackfruit heartwood. Monks chip the wood, boil it into a dye and soak the cloth repeatedly. Saffron, at roughly 150 hand-picked flowers a gram, was never a cloth dye for the poor, let alone for men living on alms. The robes are called saffron for their colour, the way oranges name a shade.",
+  "answer": "Jackfruit heartwood. Monks chip the wood, boil it into a dye and soak the cloth again and again, so each robe's shade drifts with the tree. Saffron, dearer per gram than silver, was never a dye for men living on alms. The robes are called saffron for their colour, as oranges name a shade.",
   "move": "A colour's name is a comparison, not a list of ingredients.",
   "trap": "Saffron threads, because the robes are known by that name.",
   "keywords": [
@@ -27,7 +27,7 @@
   "region": "asia",
   "hook": "misconception",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 0,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,

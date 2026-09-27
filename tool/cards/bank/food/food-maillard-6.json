@@ -4,7 +4,7 @@
   "genre": "food.cooking_science",
   "strand": "food.cooking_science.maillard",
   "kind": "pickOne",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "reflection",
   "question": "True or false: ordinary table sugar can join the Maillard reaction just as it is, without first breaking apart?",
   "options": [

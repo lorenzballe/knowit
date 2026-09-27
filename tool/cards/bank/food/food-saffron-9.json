@@ -3,9 +3,6 @@
   "topic": "food",
   "genre": "food.spices",
   "strand": "food.spices.saffron",
-  "also": [
-    "medicine.pain.placebo"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "sampling",

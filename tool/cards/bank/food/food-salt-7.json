@@ -32,9 +32,6 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "food-salt-5"
-  ],
   "figure": "none",
   "source": "Cobb et al., Circulation, AHA advisory, 2014",
   "source_kind": "paper",

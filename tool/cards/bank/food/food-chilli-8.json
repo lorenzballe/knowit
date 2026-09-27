@@ -3,14 +3,11 @@
   "topic": "food",
   "genre": "food.spices",
   "strand": "food.spices.chilli",
-  "also": [
-    "science.chemistry_at_home.cooking_reactions"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did the Nobel-winning chemistry of vitamin C depend on the paprika fields of Szeged?",
-  "answer": "Because paprika, a mild Capsicum, turned out to be one of the richest sources known. In the early 1930s Albert Szent-Györgyi had only grams of his hexuronic acid, extracted laboriously from adrenal glands. Testing local peppers in Szeged, he extracted more than three kilograms, enough for Haworth to work out the structure in 1933.",
+  "answer": "Because paprika, a mild Capsicum, turned out to be one of the richest sources known. In the early 1930s Albert Szent-Györgyi had only small amounts of his hexuronic acid, extracted laboriously from adrenal glands. Testing local peppers in Szeged, he soon purified enough to send Haworth, who worked out its structure in 1933.",
   "move": "The limit on a discovery is often the supply of raw material.",
   "keywords": [
     "vitamin c",
@@ -23,7 +20,7 @@
   "region": "europe",
   "hook": "story",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 0,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
