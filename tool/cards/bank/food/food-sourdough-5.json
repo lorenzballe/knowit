@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "exponential",
-  "question": "A 100 g starter is fed its own weight in flour and water daily, never discarded. After 10 days, how many tonnes?",
+  "question": "Each day a starter, begun at 100 g, is fed its weight in flour and its weight in water, never discarded. Tonnes after 10 days?",
   "value": 5.9,
   "unit": "tonnes",
   "tolerance": 0.1,

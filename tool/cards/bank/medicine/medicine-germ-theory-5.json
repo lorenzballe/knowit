@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Joseph Bazalgette and his board acted on the theory that disease rose from foul air; the Great Stink of 1858 pushed the plan through Parliament. By carrying sewage away from the river by the city, they also kept it out of drinking water. Its success could be read as proof of the bad-air theory.",
+  "answer": "False. Joseph Bazalgette and his board acted on the theory that disease rose from foul air; the Great Stink of 1858 pushed the plan through Parliament. By carrying sewage away from the river by the city, they also kept it further from drinking water. Its success could be read as proof of the bad-air theory.",
   "move": "A plan that works is not proof its reasoning was right.",
   "trap": "Assuming a measure that stopped cholera was built on the right theory.",
   "keywords": [
