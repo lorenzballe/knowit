@@ -1,0 +1,187 @@
+# Astute — iOS build & TestFlight on a GitHub Mac, no Mac of our own.
+#
+# The same pipeline as codemagic.yaml, step for step: Codemagic's own tools
+# (`app-store-connect`, `keychain`, `xcode-project`) are the open-source
+# codemagic-cli-tools package and run on any Mac, this runner included. On a
+# public repository the runner costs nothing. Run by hand from the Actions
+# tab: a build on TestFlight is a decision, not a side effect of a push.
+#
+# Three repository secrets, the same key Codemagic used (App Store Connect →
+# Users and Access → Integrations → App Store Connect API):
+#   APP_STORE_CONNECT_ISSUER_ID       the Issuer ID shown above the table
+#   APP_STORE_CONNECT_KEY_IDENTIFIER  the key's ID (10 characters)
+#   APP_STORE_CONNECT_PRIVATE_KEY     the whole AuthKey_XXXXXXXXXX.p8 file
+# And one optional, CERTIFICATE_PRIVATE_KEY: an RSA private key kept between
+# builds, so the distribution certificate is reused rather than revoked and
+# minted anew each time (see the note in codemagic.yaml on why that matters).
+# Without it the build still works, as Codemagic's always did.
+name: iOS · TestFlight
+
+on:
+  workflow_dispatch: {}
+
+concurrency:
+  group: ios-testflight
+  cancel-in-progress: false
+
+env:
+  APP_STORE_APPLE_ID: "6806852300"
+  BUNDLE_ID: com.astuto.app
+  WIDGET_BUNDLE_ID: com.astuto.app.AstutWidget
+  APP_GROUP: group.com.astuto.app
+  # Public SDK keys: they name the app and grant nothing (see codemagic.yaml).
+  REVENUECAT_IOS_KEY: appl_HWZZHYAnvPnnzHgAtscRyFDUhPs
+  POSTHOG_KEY: phc_tEhSptLL46d7zJTJqMDssKzBSySEFF6XQ3rYwETEPaFF
+  POSTHOG_HOST: https://eu.i.posthog.com
+  # What codemagic-cli-tools reads its credentials from.
+  APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+  APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ secrets.APP_STORE_CONNECT_KEY_IDENTIFIER }}
+  APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+  CERTIFICATE_PRIVATE_KEY: ${{ secrets.CERTIFICATE_PRIVATE_KEY }}
+
+jobs:
+  testflight:
+    runs-on: macos-15
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the secrets are there
+        run: |
+          for v in APP_STORE_CONNECT_ISSUER_ID APP_STORE_CONNECT_KEY_IDENTIFIER APP_STORE_CONNECT_PRIVATE_KEY; do
+            if [ -z "${!v}" ]; then echo "The repository secret $v is not set"; exit 1; fi
+          done
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Codemagic's tools
+        run: pip3 install --quiet codemagic-cli-tools
+
+      - name: Get Flutter packages
+        run: flutter pub get
+
+      - name: Let the App IDs grant what the entitlements ask for
+        run: |
+          set -e
+          for ID in "$BUNDLE_ID" "$WIDGET_BUNDLE_ID"; do
+            BUNDLE_UUID=$(app-store-connect bundle-ids list \
+              --bundle-id-identifier "$ID" \
+              --strict-match-identifier --json 2>/dev/null \
+              | jq -r 'if type=="array" then (.[0].id // empty) else (.id // empty) end' 2>/dev/null || true)
+            if [ -z "$BUNDLE_UUID" ]; then
+              echo "No App ID registered for $ID yet — fetch-signing-files will create one."
+              continue
+            fi
+            echo "App ID $ID is $BUNDLE_UUID"
+            if [ "$ID" = "$BUNDLE_ID" ]; then
+              app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
+                --capability "Sign In with Apple" \
+                || echo "  Sign in with Apple was already enabled, or could not be changed."
+            fi
+            app-store-connect bundle-ids enable-capabilities "$BUNDLE_UUID" \
+              --capability "App Groups" \
+              || echo "  App Groups was already enabled, or could not be changed."
+            app-store-connect bundle-ids profiles --bundle-ids "$BUNDLE_UUID" \
+              --type IOS_APP_STORE --json 2>/dev/null \
+              | jq -r 'if type=="array" then .[].id else .id end' 2>/dev/null \
+              | while read -r pid; do
+                  if [ -n "$pid" ]; then
+                    echo "  dropping stale App Store profile $pid"
+                    app-store-connect profiles delete "$pid" --ignore-not-found || true
+                  fi
+                done
+          done
+
+      - name: Signing — as before, or with the kept key when there is one
+        run: |
+          set -e
+          keychain initialize
+          if [ -n "${CERTIFICATE_PRIVATE_KEY:-}" ]; then
+            echo "Signing with the kept key; no certificate is revoked."
+            KEY_ARG="--certificate-key=@env:CERTIFICATE_PRIVATE_KEY"
+          else
+            echo "No kept key: revoking the distribution certificates and minting one."
+            for T in IOS_DISTRIBUTION DISTRIBUTION; do
+              app-store-connect certificates list --type "$T" --json 2>/dev/null | jq -r '.[].id' 2>/dev/null || true
+            done | sort -u | while read -r cid; do
+              if [ -n "$cid" ]; then
+                echo "  revoking certificate $cid"
+                app-store-connect certificates delete "$cid" || true
+              fi
+            done
+            openssl genrsa -out "$RUNNER_TEMP/cert_key.pem" 2048
+            KEY_ARG="--certificate-key=@file:$RUNNER_TEMP/cert_key.pem"
+          fi
+          for B in "$BUNDLE_ID" "$WIDGET_BUNDLE_ID"; do
+            app-store-connect fetch-signing-files "$B" \
+              --type IOS_APP_STORE \
+              "$KEY_ARG" \
+              --create
+          done
+          keychain add-certificates
+          xcode-project use-profiles
+
+      - name: The widget's App Group, or the widget without it
+        run: |
+          set -e
+          carries() {
+            for dir in "$HOME/Library/MobileDevice/Provisioning Profiles" \
+                       "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+              for p in "$dir"/*.mobileprovision; do
+                [ -e "$p" ] || continue
+                plist=$(mktemp)
+                security cms -D -i "$p" > "$plist" 2>/dev/null || continue
+                id=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$plist" 2>/dev/null || true)
+                case "$id" in
+                  *".$1")
+                    if grep -q "$APP_GROUP" "$plist"; then
+                      echo yes
+                      return
+                    fi
+                    ;;
+                esac
+              done
+            done
+            echo no
+          }
+          app=$(carries "$BUNDLE_ID")
+          widget=$(carries "$WIDGET_BUNDLE_ID")
+          echo "$APP_GROUP on the app's profile: $app, on the widget's: $widget"
+          if [ "$app" = yes ] && [ "$widget" = yes ]; then
+            echo "The widget shares the app's data."
+          else
+            echo "Building without $APP_GROUP: the widget shows its fixed line."
+            for f in ios/Runner/Runner.entitlements ios/AstutWidget/AstutWidget.entitlements; do
+              /usr/libexec/PlistBuddy -c 'Delete :com.apple.security.application-groups' "$f" || true
+            done
+          fi
+
+      - name: Install CocoaPods dependencies
+        run: find . -name "Podfile" -execdir pod install \;
+
+      - name: Build signed IPA (build number = latest TestFlight + 1)
+        run: |
+          set -e
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_APPLE_ID" 2>/dev/null || echo "0")
+          echo "Latest TestFlight build: $LATEST; this one is $((LATEST + 1))"
+          flutter build ipa --release \
+            --build-number=$((LATEST + 1)) \
+            --dart-define=REVENUECAT_IOS_KEY=$REVENUECAT_IOS_KEY \
+            --dart-define=POSTHOG_KEY=$POSTHOG_KEY \
+            --dart-define=POSTHOG_HOST=$POSTHOG_HOST \
+            --export-options-plist="$HOME/export_options.plist"
+
+      - name: Upload to TestFlight
+        run: app-store-connect publish --path 'build/ios/ipa/*.ipa' --testflight-submit
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ipa-and-logs
+          path: |
+            build/ios/ipa/*.ipa
+            /tmp/xcodebuild_logs/*.log
+          if-no-files-found: ignore
