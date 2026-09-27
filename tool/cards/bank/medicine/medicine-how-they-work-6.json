@@ -1,0 +1,40 @@
+{
+  "id": "medicine-how-they-work-6",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "Pfizer's 2020 trial reported 95% efficacy against Covid. Roughly what share of its vaccinated volunteers fell ill with it?",
+  "options": [
+    "About 5%",
+    "About 0.04%",
+    "About 1%"
+  ],
+  "correct": 1,
+  "answer": "About 0.04%. Of about 18,200 vaccinated volunteers, 8 caught symptomatic Covid in the trial's first months, against 162 of about 18,300 on placebo. Efficacy compares the two groups: 8 against 162 is a 95% cut. It says nothing about how many would have fallen ill anyway, and under 1% of the placebo group did.",
+  "move": "A percentage cut means little until you know what it was cut from.",
+  "trap": "Reading 95% efficacy as 5% of vaccinated people still falling ill.",
+  "keywords": [
+    "covid vaccine",
+    "vaccine efficacy",
+    "relative risk",
+    "placebo group",
+    "clinical trial"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Polack et al., NEJM, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1056/NEJMoa2034577",
+  "written": "2026-09-27"
+}

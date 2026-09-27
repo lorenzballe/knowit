@@ -1,0 +1,39 @@
+{
+  "id": "music-rhythm-8",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Two tones sound together on every beat; now and then one arrives early. Which one do tapping hands correct for more?",
+  "options": [
+    "The higher tone",
+    "Whichever is louder",
+    "The lower tone"
+  ],
+  "correct": 2,
+  "answer": "The lower tone. Michael Hove and colleagues found early low tones drew larger brain responses and larger tapping corrections than early high ones. A model of the inner ear traced the edge to the ear itself. It may be why bass and kick drum, not the melody, lay down the beat.",
+  "move": "Ask which channel carries the timing before trusting the one that carries the tune.",
+  "trap": "The higher tone, since melodies sit high and draw the attention.",
+  "keywords": [
+    "bass",
+    "pitch",
+    "timing",
+    "sensorimotor synchronisation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hove et al., PNAS, 2014",
+  "source_kind": "paper",
+  "reference": "Hove, Marie, Bruce & Trainor, Superior time perception for lower musical pitch explains why bass-ranged instruments lay down musical rhythms, PNAS, 2014",
+  "written": "2026-09-27"
+}

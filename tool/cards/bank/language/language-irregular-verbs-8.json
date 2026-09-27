@@ -1,0 +1,33 @@
+{
+  "id": "language-irregular-verbs-8",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does English say molten lava but melted butter?",
+  "answer": "Because molten is the old past participle of melt, stranded when the verb went regular. Old English melt changed its vowel like sing; melted took over the verb, and molten survived only as an adjective for things melted by great heat. Sodden, from seethe, is another such fossil. Iron gates are still called wrought.",
+  "move": "Old forms survive longest where they have hardened into set phrases.",
+  "keywords": [
+    "molten",
+    "strong verbs",
+    "old english",
+    "past participles",
+    "fossil words"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hogg & Fulk, Grammar of Old English",
+  "source_kind": "book",
+  "reference": "Hogg & Fulk, A Grammar of Old English, Volume 2: Morphology, Wiley-Blackwell, 2011",
+  "written": "2026-09-27"
+}

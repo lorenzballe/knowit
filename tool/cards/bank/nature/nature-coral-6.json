@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "NOAA adds °C × weeks, ignoring water under 1 °C above normal. How many °C-weeks do 8 weeks at +0.9 then 4 at +1.5 make?",
+  "question": "NOAA sums °C × weeks above summer peak, skipping any under 1 °C. How many °C-weeks: 8 weeks at +0.9, then 4 at +1.5?",
   "value": 6,
   "unit": "°C-weeks",
   "answer": "4 × 1.5 = 6 °C-weeks.",

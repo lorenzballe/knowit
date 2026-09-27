@@ -6,11 +6,11 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "survivorship",
-  "question": "Two churchyard yews: one solid, with 800 rings; one hollow, its remaining shell holding 500. Which is probably older?",
+  "question": "Two churchyard yews: one solid, with 600 rings; one hollow, its remaining shell holding 500. Which is probably older?",
   "options": [
-    "The solid one, by 300 years",
+    "The solid one, by 100 years",
     "The hollow one",
-    "Both about 650 years old"
+    "Both about 550 years old"
   ],
   "correct": 1,
   "answer": "The hollow one. Yew heartwood rots out after some centuries, so the rings missing from a hollow tree are exactly its oldest ones; 500 is a floor, not an age. Hollowing itself comes with great age. That is why Britain's oldest yews have no ring-counted age at all, only estimates that differ by centuries.",

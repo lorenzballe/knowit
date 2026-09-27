@@ -1,0 +1,40 @@
+{
+  "id": "medicine-how-they-work-7",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Flu vaccines are reformulated every year. Why has measles vaccine, grown from a 1954 virus sample, never needed updating?",
+  "options": [
+    "Its RNA copies itself with few errors",
+    "Its surface proteins cannot change and still work",
+    "It targets proteins hidden inside the virus"
+  ],
+  "correct": 1,
+  "answer": "Its surface proteins cannot change and still work. Measles mutates like other RNA viruses, but a 2015 study found that changes to the sites antibodies bind on its H protein mostly broke its grip on the receptors it needs to enter cells. A strain from a Boston schoolboy still covers every genotype.",
+  "move": "When something never changes, ask whether it can afford to.",
+  "trap": "Assuming a vaccine that never ages means a virus that never mutates.",
+  "keywords": [
+    "measles",
+    "antigenic drift",
+    "influenza",
+    "edmonston strain",
+    "haemagglutinin"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fulton et al., Cell Reports, 2015",
+  "source_kind": "paper",
+  "reference": "Fulton et al., Mutational analysis of measles virus suggests constraints on antigenic variation of the glycoproteins, Cell Reports, 2015",
+  "written": "2026-09-27"
+}

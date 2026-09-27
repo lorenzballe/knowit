@@ -1,0 +1,33 @@
+{
+  "id": "medicine-how-they-work-10",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a single dose of HPV vaccine give protection that most protein vaccines need several doses for?",
+  "answer": "Because of its shape. Its protein, L1, assembles itself into empty virus shells, each carrying 360 copies in a tight, repeating lattice. That pattern cross-links the receptors on antibody-making B cells and recruits long-lived ones. In 2022 the WHO endorsed one-dose schedules; a Kenyan trial had found about 97% efficacy 18 months after one dose.",
+  "move": "How a signal is arranged can matter as much as how strong it is.",
+  "keywords": [
+    "hpv vaccine",
+    "virus-like particles",
+    "b cells",
+    "single dose",
+    "cervical cancer"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schiller & Lowy, Vaccine, 2018",
+  "source_kind": "paper",
+  "reference": "Schiller & Lowy, Explanations for the high potency of HPV prophylactic vaccines, Vaccine, 2018",
+  "written": "2026-09-27"
+}

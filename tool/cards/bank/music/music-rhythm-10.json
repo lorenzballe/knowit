@@ -1,0 +1,41 @@
+{
+  "id": "music-rhythm-10",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a train of identical, evenly spaced clicks makes the brain respond more strongly to alternate clicks?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Renaud Brochard and colleagues recorded brain waves while people heard perfectly identical tones at a steady rate: responses to the odd-numbered tones were larger, as if accented. The listener imposes the strong-weak grouping; the sound carries none. The tick-tock of a clock is written by the brain, not the clock.",
+  "move": "Before crediting a pattern to the source, check whether the observer supplies it.",
+  "trap": "Identical sounds should produce identical responses, so no accent can exist.",
+  "keywords": [
+    "subjective rhythm",
+    "brain waves",
+    "accent",
+    "isochronous sequences"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brochard et al., Psychological Science, 2003",
+  "source_kind": "paper",
+  "reference": "Brochard, Abecasis, Potter, Ragot & Drake, The ticktock of our internal clock: Direct brain evidence of subjective accents in isochronous sequences, Psychological Science, 2003",
+  "written": "2026-09-27"
+}

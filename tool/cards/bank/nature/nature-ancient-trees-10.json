@@ -4,7 +4,7 @@
   "genre": "nature.trees_and_forests",
   "strand": "nature.trees_and_forests.ancient_trees",
   "kind": "number",
-  "difficulty": "hard",
+  "difficulty": "medium",
   "principle": "computation",
   "question": "A living tree has 4,800 rings; a dead trunk, 3,000, its outer 400 matching the living tree's inner 400. How many years do they span?",
   "value": 7400,

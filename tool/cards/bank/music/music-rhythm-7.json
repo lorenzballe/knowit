@@ -1,0 +1,42 @@
+{
+  "id": "music-rhythm-7",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "also": [
+    "human_body.blood_and_heart.heartbeat"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Listeners tapping along to music most readily settle on a beat near which rate per minute?",
+  "options": [
+    "About 70, like a resting heart",
+    "About 120",
+    "About 200"
+  ],
+  "correct": 1,
+  "answer": "About 120, a beat every half second. Leon van Noorden and Dirk Moelants found tapping resonates around 2 beats a second, and Moelants found recorded music's tempos cluster near it. Walking cadence sits close by; the resting heart does not. Dance floors run at about the pace of a brisk walk.",
+  "move": "The rhythm nearest to mind is not always the one the body keeps.",
+  "trap": "The heartbeat is the body's most famous rhythm, so it sets the tempo.",
+  "keywords": [
+    "preferred tempo",
+    "tapping",
+    "walking pace",
+    "heartbeat"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Noorden & Moelants, JNMR, 1999",
+  "source_kind": "paper",
+  "reference": "van Noorden & Moelants, Resonance in the perception of musical pulse, Journal of New Music Research, 1999",
+  "written": "2026-09-27"
+}

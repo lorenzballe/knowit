@@ -1,0 +1,39 @@
+{
+  "id": "language-irregular-verbs-6",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "About 180 English verbs are irregular, against thousands of regular ones. In running text, what share of past-tense verbs are irregular?",
+  "options": [
+    "About 5%",
+    "About a third",
+    "About two thirds"
+  ],
+  "correct": 2,
+  "answer": "About two thirds. Counted by entries, irregulars are a few per cent of verbs; counted by use, they dominate, because be, have, do, say, go, get and make are all irregular. A study of two centuries of American texts found 65 to 70% of past-tense tokens irregular throughout. The dictionary and the page disagree.",
+  "move": "Count what is used, not what is listed, before calling something rare.",
+  "trap": "Reading the share in the dictionary as the share in speech.",
+  "keywords": [
+    "irregular verbs",
+    "word frequency",
+    "corpus",
+    "past tense"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Cuskley et al., PLOS One, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0102882",
+  "written": "2026-09-27"
+}

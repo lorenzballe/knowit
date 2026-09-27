@@ -3,6 +3,9 @@
   "topic": "philosophy",
   "genre": "philosophy.free_will",
   "strand": "philosophy.free_will.choice",
+  "also": [
+    "philosophy.free_will.responsibility"
+  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
@@ -13,7 +16,7 @@
     "Neither, since both are compelled"
   ],
   "correct": 0,
-  "answer": "The one who welcomes it. In his 1971 paper Frankfurt calls the unwilling addict a helpless bystander to a desire he rejects. The willing addict could not resist either, but he endorses the craving and makes it his own will, so he may be morally responsible. Same craving, same drug: only one man is on its side.",
+  "answer": "The one who welcomes it. In his 1971 paper Frankfurt calls the unwilling addict a helpless bystander to a desire he rejects. The willing addict could not resist either, but he endorses the craving and makes it his own, so he may be morally responsible. Same craving, same drug: only one is on its side.",
   "move": "Ask not only what someone wants, but whether they want to want it.",
   "trap": "Assuming nobody answers for an act they could not have resisted.",
   "keywords": [

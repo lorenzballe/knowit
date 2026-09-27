@@ -1,0 +1,39 @@
+{
+  "id": "medicine-how-they-work-8",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in most years since 2017, the vaccine's own virus has paralysed more children than wild polio?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Oral polio vaccine is a live, weakened virus that passes between children. Where too few are immunised it circulates for months and can regain the power to paralyse. In 2021 there were 6 wild cases and about 700 vaccine-derived ones, mostly type 2, a strain whose wild form was declared eradicated in 2015.",
+  "move": "A fix that spreads by itself also spreads where nobody is watching.",
+  "trap": "Wild polio makes the news, so it seems the main cause.",
+  "keywords": [
+    "polio",
+    "oral polio vaccine",
+    "vaccine-derived poliovirus",
+    "eradication",
+    "paralysis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Global Polio Eradication Initiative, strategy 2022–2026",
+  "source_kind": "institution",
+  "reference": "Global Polio Eradication Initiative, Polio Eradication Strategy 2022–2026: Delivering on a Promise, World Health Organization, 2021",
+  "written": "2026-09-27"
+}
