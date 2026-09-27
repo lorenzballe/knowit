@@ -1,0 +1,35 @@
+{
+  "id": "cinema-silence-9",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "also": [
+    "music.composers.film_scores"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much music does No Country for Old Men contain, and why do viewers miss it?",
+  "answer": "About 16 minutes, by Carter Burwell, and most of it barely sounds like music. He wrote long sustained tones that blend into wind, engine hum and the drone of motel rooms, so the score passes for ambience. Many viewers leave sure the film has none. Part of the dread they felt was scored.",
+  "move": "What was made to go unnoticed cannot be measured by who noticed it.",
+  "keywords": [
+    "coen brothers",
+    "carter burwell",
+    "film score",
+    "ambience"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coen brothers, No Country for Old Men, 2007",
+  "source_kind": "primary_document",
+  "reference": "Coen and Coen (directors), Burwell (music), No Country for Old Men, Miramax and Paramount Vantage, 2007",
+  "written": "2026-09-27"
+}

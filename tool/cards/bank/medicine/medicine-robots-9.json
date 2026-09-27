@@ -1,0 +1,43 @@
+{
+  "id": "medicine-robots-9",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A $1.5 million robot lasts 7 years, needs $150,000 of servicing yearly and does 300 operations a year. Fixed cost per operation, in dollars?",
+  "value": 1214,
+  "unit": "dollars",
+  "withinFactor": 3,
+  "answer": "Per operation: 364,000 / 300 = about 1,200 dollars.",
+  "move": "Spread a big purchase over every use before calling it cheap or dear.",
+  "trap": "Forgetting the servicing, which costs nearly as much yearly as the purchase.",
+  "hint": "Turn the price into a yearly cost first, then share the year's cost out.",
+  "steps": [
+    "Purchase spread over 7 years: 1,500,000 / 7 = about 214,000 a year.",
+    "Add servicing: 214,000 + 150,000 = about 364,000 a year.",
+    "Per operation: 364,000 / 300 = about 1,200 dollars."
+  ],
+  "keywords": [
+    "robot costs",
+    "capital costs",
+    "service contracts",
+    "hospital budgets",
+    "cost per operation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barbash & Glied, NEJM, 2010",
+  "source_kind": "paper",
+  "reference": "Barbash & Glied, New technology and health care costs: the case of robot-assisted surgery, New England Journal of Medicine, 2010",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "sport-marathon-9",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a warm day slow the back of a marathon field more than the runners at the front?",
+  "answer": "Partly because slower runners are out in the heat longer. Analysing years of results from several big-city marathons, Ely and colleagues found times rose steadily as heat stress increased, and the slowdown grew down the field: smallest for the leaders, largest for the slowest. Two hours of warm air is a smaller dose than five.",
+  "move": "Measure exposure in hours, not just in degrees.",
+  "keywords": [
+    "heat",
+    "marathon",
+    "weather",
+    "finishing times",
+    "heat stress"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ely et al., Med Sci Sports Exerc, 2007",
+  "source_kind": "paper",
+  "reference": "Ely, Cheuvront, Roberts & Montain, Impact of weather on marathon-running performance, Medicine & Science in Sports & Exercise, 2007",
+  "written": "2026-09-27"
+}

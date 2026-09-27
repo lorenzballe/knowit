@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The EU Batteries Regulation sets 6% for lithium from 2031, rising to 12% from 2036; nickel starts at 6%, cobalt at 16%. Higher shares would be impossible, because few batteries have yet come back. Lead, whose recycling loop has run for a century, gets 85% from the same year.",
+  "answer": "False. The EU Batteries Regulation sets 6% for lithium from 2031, rising to 12% from 2036; nickel starts at 6%, cobalt at 16%. Higher shares would outrun supply, because few batteries have yet come back. Lead, whose recycling loop has run for a century, gets 85% from the same year.",
   "move": "A target reveals what supply the rule-makers believe exists.",
   "trap": "Assuming a green law would demand a large recycled share at once.",
   "keywords": [

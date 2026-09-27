@@ -5,25 +5,26 @@
   "strand": "technology.batteries.recycling",
   "kind": "number",
   "difficulty": "medium",
-  "principle": "computation",
-  "question": "Iron phosphate cathode powder is LiFePO4. With atomic masses Li 7, Fe 56, P 31, O 16, what percentage is lithium?",
-  "value": 4.4,
-  "unit": "per cent",
-  "tolerance": 0.1,
-  "answer": "About 4.4 per cent.",
-  "move": "The ingredient a thing is named after may be the smallest part of it.",
-  "trap": "Expecting the metal on the label to be a large share of the powder.",
-  "hint": "Add the masses of every atom in the formula, then take lithium's slice.",
+  "principle": "reflection",
+  "question": "Hard-rock lithium ore often holds about 0.5% lithium. How many times richer is LiFePO4 cathode powder (Li 7, Fe 56, P 31, O 16)?",
+  "value": 8.8,
+  "unit": "times",
+  "tolerance": 0.3,
+  "answer": "4.4% / 0.5% = 8.8 times richer.",
+  "move": "Judge a waste stream as an ore: its grade matters more than its origin.",
+  "trap": "Assuming a battery's waste must be poorer in metal than a mine.",
+  "hint": "Work out lithium's share of the powder's mass first.",
   "steps": [
     "Molar mass: 7 + 56 + 31 + 4 × 16 = 158.",
-    "Lithium's share: 7 / 158 = 0.044.",
-    "About 4.4 per cent."
+    "Lithium's share: 7 / 158 = about 4.4%.",
+    "4.4% / 0.5% = 8.8 times richer."
   ],
   "keywords": [
     "lithium iron phosphate",
-    "cathode",
-    "atomic mass",
-    "lithium recovery"
+    "ore grade",
+    "spodumene",
+    "urban mining",
+    "cathode powder"
   ],
   "era": "timeless",
   "region": "none",
@@ -35,8 +36,8 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "LiFePO4 molar mass",
-  "source_kind": "arithmetic",
-  "reference": "Prohaska et al., Standard atomic weights of the elements 2021 (IUPAC Technical Report), Pure and Applied Chemistry, 2022",
+  "source": "Kesler et al., Ore Geology Reviews, 2012",
+  "source_kind": "paper",
+  "reference": "Kesler, Gruber, Medina, Keoleian, Everson & Wallington, Global lithium resources: Relative importance of pegmatite, brine and other deposits, Ore Geology Reviews, 2012",
   "written": "2026-09-27"
 }

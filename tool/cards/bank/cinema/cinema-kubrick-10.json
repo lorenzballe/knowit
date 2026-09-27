@@ -1,0 +1,42 @@
+{
+  "id": "cinema-kubrick-10",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "also": [
+    "cinema.special_effects.practical"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Stanley Kubrick won a single competitive Oscar in his whole career. For what?",
+  "options": [
+    "Visual effects for 2001",
+    "Directing Barry Lyndon",
+    "Adapting A Clockwork Orange"
+  ],
+  "correct": 0,
+  "answer": "Visual effects for 2001: A Space Odyssey, in 1969. Credited as designer and director of the special effects, Kubrick alone received the statuette, although Douglas Trumbull, Wally Veevers, Con Pederson and Tom Howard supervised much of the work. He was nominated for directing four times and never won.",
+  "move": "Check whose name sits on an award before crediting the work to it.",
+  "trap": "Picking a directing prize, since directing is what he is famous for.",
+  "keywords": [
+    "stanley kubrick",
+    "academy awards",
+    "visual effects",
+    "douglas trumbull"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy Awards Database, 1969",
+  "source_kind": "institution",
+  "reference": "Academy of Motion Picture Arts and Sciences, Academy Awards Database, 41st Academy Awards, 1969",
+  "written": "2026-09-27"
+}

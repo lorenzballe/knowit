@@ -31,9 +31,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "weird_facts-4"
-  ],
   "figure": "none",
   "source": "Notteboom & Vernimmen, Journal of Transport Geography, 2009",
   "source_kind": "paper",

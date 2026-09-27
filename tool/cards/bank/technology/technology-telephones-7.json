@@ -6,13 +6,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: digital calls between North America and Europe must be converted between two different ways of encoding voice?",
+  "question": "True or false: on the classic digital phone network, calls between North America and Europe must be converted between two voice encodings?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. Both sides sample voice 8,000 times a second in 8 bits, but compress loudness differently: North America and Japan use mu-law, Europe and most of the world A-law. Each spaces its steps unevenly, fine for whispers and coarse for shouts. Gateways between the two regions convert every sample.",
+  "answer": "True. Both squeeze loudness onto a curve, with fine steps for whispers and coarse ones for shouts, but on different curves: North America and Japan use mu-law, Europe and most of the world A-law. Every sample crossing between the two regions is translated at a gateway, millions a second on a busy route.",
   "move": "Something that works seamlessly may be hiding a translator in the middle.",
   "trap": "Assuming a network that connects everyone must share one format.",
   "keywords": [

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-blood-tests-9",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Patients chosen because one cholesterol reading was high are retested a week later, untreated. What will their average be?",
+  "options": [
+    "Lower than the first reading",
+    "About the same as before",
+    "Higher than the first reading"
+  ],
+  "correct": 0,
+  "answer": "Lower. Any single reading is a person's usual level plus day-to-day variation and lab error. Choosing people for one high reading picks many caught on a high day, and their next result drifts back. Barnett and colleagues show that drift can pass for a treatment effect in any study that recruits on one measurement.",
+  "move": "Anyone picked for an extreme will look more ordinary the next time.",
+  "trap": "About the same, since nothing was done to change it.",
+  "keywords": [
+    "regression to the mean",
+    "cholesterol",
+    "repeat testing",
+    "measurement error"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barnett et al., Int J Epidemiology, 2005",
+  "source_kind": "paper",
+  "reference": "Barnett, van der Pols & Dobson, Regression to the mean: what it is and how to deal with it, International Journal of Epidemiology, 2005",
+  "written": "2026-09-27"
+}

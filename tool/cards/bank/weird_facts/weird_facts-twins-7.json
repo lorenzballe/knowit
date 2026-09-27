@@ -1,0 +1,45 @@
+{
+  "id": "weird_facts-twins-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "Of 1,000 twin pairs, 340 are boy–girl. Fraternal pairs come out mixed-sex about half the time. How many pairs are identical?",
+  "value": 320,
+  "unit": "pairs",
+  "answer": "Identical: 1,000 − 680 = 320 pairs.",
+  "move": "Use the cases you can identify to count the ones that look alike.",
+  "trap": "Counting all 660 same-sex pairs as identical, as if fraternal twins were always mixed.",
+  "hint": "Mixed-sex pairs can only be fraternal; ask how many fraternal pairs hide among the same-sex ones.",
+  "steps": [
+    "Fraternal pairs split evenly between mixed-sex and same-sex.",
+    "So same-sex fraternal pairs also number about 340.",
+    "Fraternal total: 340 + 340 = 680 pairs.",
+    "Identical: 1,000 − 680 = 320 pairs."
+  ],
+  "keywords": [
+    "weinberg's rule",
+    "fraternal twins",
+    "identical twins",
+    "sex of twins"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fellman and Eriksson, Human Biology, 2006",
+  "source_kind": "statistics",
+  "reference": "Fellman and Eriksson, Weinberg's differential rule reconsidered, Human Biology, 2006",
+  "written": "2026-09-27"
+}

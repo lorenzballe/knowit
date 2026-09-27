@@ -1,0 +1,32 @@
+{
+  "id": "music-bach-7",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could Bach's Mass in B minor not be heard complete in any church service of his time?",
+  "answer": "It was too long for any liturgy. Leipzig's Lutherans sang only a Latin Kyrie and Gloria; Bach wrote those two parts in 1733 for the Catholic court at Dresden, to back a request for a title. He added the rest in 1748 and 1749, largely from older music. The first recorded complete performance came in 1859.",
+  "move": "A work can be finished long before any occasion exists for it.",
+  "keywords": [
+    "mass in b minor",
+    "dresden",
+    "lutheran liturgy",
+    "kyrie and gloria"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stauffer, Bach: The Mass in B Minor",
+  "source_kind": "book",
+  "reference": "Stauffer, Bach: The Mass in B Minor: The Great Catholic Mass, Yale University Press, 2003",
+  "written": "2026-09-27"
+}

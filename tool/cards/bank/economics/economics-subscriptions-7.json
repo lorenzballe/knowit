@@ -5,7 +5,7 @@
   "strand": "economics.everyday_costs.subscriptions",
   "kind": "number",
   "difficulty": "hard",
-  "principle": "independence",
+  "principle": "exponential",
   "question": "Each month, 4 in every 100 members cancel, however long they have belonged. What is the average length of a membership, in months?",
   "value": 25,
   "unit": "months",

@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "US District Court, seizure warrant, 2021",
-  "source_kind": "primary_document",
-  "reference": "United States District Court for the Northern District of California, Application and Affidavit for Seizure Warrant (Colonial Pipeline ransom), 7 June 2021",
+  "source": "US Department of Justice, 2021",
+  "source_kind": "institution",
+  "reference": "US Department of Justice, Department of Justice Seizes $2.3 Million in Cryptocurrency Paid to the Ransomware Extortionists Darkside, press release, 7 June 2021",
   "written": "2026-09-27"
 }

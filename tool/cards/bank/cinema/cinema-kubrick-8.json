@@ -1,0 +1,39 @@
+{
+  "id": "cinema-kubrick-8",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "Danny's Apollo 11 sweater in The Shining is cited as proof of a hidden Moon-landing confession. How strong is that evidence?",
+  "options": [
+    "Strong, since Kubrick controlled every detail",
+    "Weak, since some detail fits any theory",
+    "Moderate, since the sweater appears once"
+  ],
+  "correct": 1,
+  "answer": "Weak. The Shining holds hundreds of props, patterns and posters, and readers hunting for the Moon landings, for genocide or for the Minotaur have each found their clues, as the 2012 documentary Room 237 shows. Every theory finds its sweater; the misses are never counted.",
+  "move": "The more places a theory may look, the less its finds are worth.",
+  "trap": "Taking Kubrick's control of detail as proof each detail is a message.",
+  "keywords": [
+    "the shining",
+    "room 237",
+    "apollo 11",
+    "fan theories"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ascher, Room 237, 2012",
+  "source_kind": "primary_document",
+  "reference": "Ascher (dir.), Room 237, IFC Midnight, 2012",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-yeast-7",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a brioche dough rich in sugar rise more slowly than a plain one made with the same yeast?",
+  "answer": "Sugar pulls water out of the yeast. A concentrated sugar solution draws water across the cell's membrane, so the cells shrink and slow down. Above roughly 10% sugar on the flour's weight, ordinary baker's yeast struggles. Suppliers sell osmotolerant strains for sweet doughs: cells that pile up glycerol inside to hold on to their water.",
+  "move": "Past a point, more of the food can starve the eater of something else.",
+  "keywords": [
+    "brioche",
+    "sugar",
+    "osmotic stress",
+    "osmotolerant yeast",
+    "glycerol"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cauvain & Young, Baked Products, 2006",
+  "source_kind": "book",
+  "reference": "Cauvain & Young, Baked Products: Science, Technology and Practice, Blackwell Publishing, 2006",
+  "written": "2026-09-27"
+}

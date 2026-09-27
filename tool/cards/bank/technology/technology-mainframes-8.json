@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "reflection",
-  "question": "Early FORTRAN ignored anything punched in columns 73 to 80 of an 80-column card. Why?",
+  "question": "Early FORTRAN, on the 36-bit IBM 704, ignored anything punched in columns 73 to 80 of an 80-column card. Why?",
   "options": [
     "To leave room for numbering the cards",
     "The 704's card reader read only 72 columns",

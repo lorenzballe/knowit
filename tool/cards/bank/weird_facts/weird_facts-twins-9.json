@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-twins-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "also": [
+    "human_body.blood_and_heart.blood_types"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a fraternal twin can carry the other twin's blood cells for life?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Fraternal twins whose circulations join in the womb can swap blood stem cells, which settle in each other's marrow. With a sensitive test, van Dijk and colleagues found mixed blood groups in 8% of twin pairs and 21% of triplet sets. One sample from such a twin can show two blood groups.",
+  "move": "A boundary drawn at birth may have been crossed long before it.",
+  "trap": "Picturing each fraternal twin with its own sealed-off circulation from the start.",
+  "keywords": [
+    "chimerism",
+    "fraternal twins",
+    "blood groups",
+    "stem cells"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Dijk et al., 1996",
+  "source_kind": "statistics",
+  "reference": "van Dijk, Boomsma and de Man, Blood group chimerism in human multiple births is not rare, American Journal of Medical Genetics, 1996",
+  "written": "2026-09-27"
+}

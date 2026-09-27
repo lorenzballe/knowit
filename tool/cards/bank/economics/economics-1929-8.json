@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False, once dividends and falling prices are counted. The Dow's price regained its 1929 high only in 1954, but by Mark Hulbert's reckoning, the average stock bought at the peak, dividends reinvested, was back to even in real terms by late 1936. At the 1932 low, dividends yielded close to 14%, while prices kept falling.",
+  "answer": "False, once dividends and falling prices are counted. The Dow's price regained its 1929 high only in 1954, but by Mark Hulbert's reckoning a Dow portfolio bought at the peak, dividends reinvested, was back to even in real terms by late 1936. Deflation made every dividend cheque buy more.",
   "move": "An index of prices is not a record of what owners earned.",
   "trap": "Reading the Dow's price chart as an investor's wealth.",
   "keywords": [
@@ -34,6 +34,6 @@
   "figure": "none",
   "source": "Hulbert, The New York Times, 2009",
   "source_kind": "news_archive",
-  "reference": "Hulbert, 25 Years to Break Even? Not Really, The New York Times, 25 April 2009",
+  "reference": "Hulbert, 25 Years to Break Even? Not Really, The New York Times, April 2009",
   "written": "2026-09-27"
 }

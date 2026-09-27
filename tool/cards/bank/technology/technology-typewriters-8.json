@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "confirmation",
-  "question": "True or false: the custom of leaving two spaces after a full stop was born with the typewriter?",
+  "question": "True or false: leaving a wider gap after a full stop than between words began with the typewriter?",
   "options": [
     "True",
     "False"

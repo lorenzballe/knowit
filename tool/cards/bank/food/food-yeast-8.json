@@ -1,0 +1,40 @@
+{
+  "id": "food-yeast-8",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Yeast makes the gas that raises bread. Where do the loaf's bubbles themselves begin?",
+  "options": [
+    "Around each yeast cell",
+    "Where bran particles sit",
+    "In air pockets from mixing"
+  ],
+  "correct": 2,
+  "answer": "In air pockets from mixing. Carbon dioxide dissolves in the dough's water and cannot easily start a new bubble; it diffuses into the tiny air cells folded in during kneading. Yeast only inflates them. Baker and Mize showed in 1941 that dough mixed under a vacuum gives a dense, poorly risen loaf.",
+  "move": "Where something grows depends on where it can start, not on who feeds it.",
+  "trap": "Picturing each yeast cell blowing a little bubble of its own.",
+  "keywords": [
+    "gas cells",
+    "mixing",
+    "carbon dioxide",
+    "crumb structure",
+    "nucleation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker & Mize, Cereal Chemistry, 1941",
+  "source_kind": "paper",
+  "reference": "Baker & Mize, The origin of the gas cell in bread dough, Cereal Chemistry, 1941",
+  "written": "2026-09-27"
+}

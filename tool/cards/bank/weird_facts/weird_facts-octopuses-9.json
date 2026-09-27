@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-octopuses-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should octopus farming be banned outright, as Washington and California did in 2024?",
+  "sides": [
+    "Yes, ban it",
+    "No, regulate it"
+  ],
+  "answer": "Octopuses are solitary, curious animals that explore, learn and escape, and a crowded tank denies them all of it. A 2021 review for the UK government found strong evidence that cephalopods can suffer, and no humane way of killing them at scale has been established. Banning an industry before it exists costs almost no jobs.",
+  "move": "Whichever side you took, whether humane farming is possible at all decides it.",
+  "counterpoint": "Octopus is already eaten in large quantities, and nearly all of it comes from wild catches that deplete populations and kill with no welfare rules at all. Farms could be licensed, inspected and held to written standards that a fishing boat never meets. A ban does not end demand; it hands supply to fisheries and to countries with weaker rules.",
+  "keywords": [
+    "octopus farming",
+    "animal sentience",
+    "aquaculture",
+    "washington",
+    "california"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Birch et al., LSE sentience review, 2021",
+  "source_kind": "primary_document",
+  "reference": "Birch, Schnell, Clayton et al., Review of the Evidence of Sentience in Cephalopod Molluscs and Decapod Crustaceans, LSE Consulting, 2021",
+  "written": "2026-09-27"
+}

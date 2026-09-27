@@ -1,0 +1,46 @@
+{
+  "id": "weird_facts-dates-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "coincidence",
+  "question": "How many other people must be in a room for an even chance that one of them shares your birthday?",
+  "value": 253,
+  "unit": "people",
+  "answer": "0.693 × 365 ≈ 253 people.",
+  "move": "A match with anyone comes quickly; a match with you comes slowly.",
+  "trap": "Answering 23, the number for any two people sharing a birthday.",
+  "hint": "Work out the chance that every one of them misses your date.",
+  "steps": [
+    "Each person misses your birthday with probability 364/365.",
+    "You need (364/365) to the power n to fall to one half.",
+    "That needs n × (1/365) ≈ 0.693, the natural log of 2.",
+    "0.693 × 365 ≈ 253 people."
+  ],
+  "simply": "Twenty-three people form 253 pairs, which is why any-pair matches arrive so soon.",
+  "keywords": [
+    "birthday problem",
+    "probability",
+    "shared birthdays",
+    "coincidence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feller, Probability Theory, 1968",
+  "source_kind": "reference_work",
+  "reference": "Feller, An Introduction to Probability Theory and Its Applications, vol. 1, 3rd edition, Wiley, 1968",
+  "written": "2026-09-27"
+}

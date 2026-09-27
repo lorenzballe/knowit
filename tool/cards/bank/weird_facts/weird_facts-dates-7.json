@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-dates-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Shakespeare and Cervantes, both recorded as dying on 23 April 1616, died on the same day?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. England still used the Julian calendar and Spain the Gregorian, which ran 10 days ahead. Shakespeare's 23 April was 3 May in Spain, while Cervantes probably died on 22 April, Spanish records giving the burial date. The deaths were 11 days apart, yet UNESCO's World Book Day honours both on one date.",
+  "move": "Before matching two dates, check that they come from the same calendar.",
+  "trap": "Reading two identical written dates as one moment in time.",
+  "keywords": [
+    "shakespeare",
+    "cervantes",
+    "julian calendar",
+    "gregorian calendar",
+    "world book day"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Folger Shakespeare Library, 2016",
+  "source_kind": "institution",
+  "reference": "https://www.folger.edu/blogs/shakespeare-and-beyond/shakespeare-and-cervantes-400-years/",
+  "written": "2026-09-27"
+}

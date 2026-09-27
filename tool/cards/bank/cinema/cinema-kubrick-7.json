@@ -1,0 +1,38 @@
+{
+  "id": "cinema-kubrick-7",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: the old 4:3 television version of The Shining shows more picture than audiences saw in cinemas?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Kubrick shot on the full, nearly square frame and had cinemas mask the top and bottom to a wide 1.85 to 1. For video he approved the unmasked frame, so viewers at home saw extra ceiling and floor. The usual cropping for television ran the other way here.",
+  "move": "Before assuming something was cut away, ask how it was first captured.",
+  "trap": "Assuming the full-screen version cropped a wide picture, as usual.",
+  "keywords": [
+    "the shining",
+    "aspect ratio",
+    "open matte",
+    "home video"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Castle, The Stanley Kubrick Archives",
+  "source_kind": "book",
+  "reference": "Castle (ed.), The Stanley Kubrick Archives, Taschen, 2005",
+  "written": "2026-09-27"
+}

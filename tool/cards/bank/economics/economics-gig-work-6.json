@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "California's Prop 22 guarantees app drivers 120% of the $16.50 minimum wage for engaged time only. Engaged 60% of logged-in time, what's the hourly floor?",
+  "question": "Prop 22 pays California drivers 120% of the $16.50 minimum for engaged time only. Excluding mileage, what is that per logged-in hour at 60% engagement?",
   "value": 11.88,
   "unit": "dollars per logged-in hour",
   "tolerance": 0.05,

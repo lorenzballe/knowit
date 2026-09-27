@@ -1,0 +1,40 @@
+{
+  "id": "medicine-robots-7",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A da Vinci robot's wristed instruments carry a chip that counts their uses. Roughly how many operations before one stops working?",
+  "options": [
+    "About 10 to 20",
+    "About 100 to 200",
+    "About 1,000 to 2,000"
+  ],
+  "correct": 0,
+  "answer": "About 10 to 20. The maker programs each instrument with a fixed number of lives, long about 10 and later raised for some, after which the robot refuses it. Firms that reset the counters for hospitals have fought the maker in US antitrust courts. A clamp can retire with nothing wrong with it.",
+  "move": "Ask whether a tool wears out or is simply told to stop.",
+  "trap": "Picturing robotic tools lasting like ordinary steel instruments, resterilised for years.",
+  "keywords": [
+    "da vinci",
+    "surgical instruments",
+    "usage limits",
+    "hospital costs",
+    "antitrust"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Intuitive Surgical, Form 10-K annual report",
+  "source_kind": "company",
+  "reference": "Intuitive Surgical, Inc., Annual Report on Form 10-K for fiscal year 2023, US Securities and Exchange Commission, 2024",
+  "written": "2026-09-27"
+}

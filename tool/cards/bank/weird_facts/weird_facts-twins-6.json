@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-twins-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a DNA test tell apart identical twins, whose genomes are supposed to match letter for letter?",
+  "answer": "Sometimes. Sequencing 381 identical pairs, Jonsson and colleagues found they differ on average by 5.2 mutations that arose in the early embryo, and in about 15% of pairs one twin carries many that the other lacks. Sequenced deeply enough, a crime-scene sample need not point equally at both twins.",
+  "move": "Identical describes where two things started, not everything that happened since.",
+  "keywords": [
+    "identical twins",
+    "mutations",
+    "genome sequencing",
+    "forensic dna"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jonsson et al., Nature Genetics, 2021",
+  "source_kind": "statistics",
+  "reference": "doi:10.1038/s41588-020-00755-1",
+  "written": "2026-09-27"
+}

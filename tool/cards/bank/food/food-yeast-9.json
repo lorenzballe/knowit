@@ -1,0 +1,42 @@
+{
+  "id": "food-yeast-9",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "True or false: by weight, a rising bread dough makes more alcohol than carbon dioxide?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Yeast splits each glucose molecule into two of ethanol and two of carbon dioxide. Ethanol weighs 46 units a molecule, carbon dioxide 44, so 180 g of glucose yields about 92 g of alcohol and 88 g of gas. The gas shows; the alcohol mostly boils off in the oven.",
+  "move": "The product nobody sees may outweigh the one everybody watches.",
+  "trap": "Counting only the product that visibly lifts the dough.",
+  "keywords": [
+    "fermentation",
+    "ethanol",
+    "carbon dioxide",
+    "glucose",
+    "stoichiometry"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nelson & Cox, Lehninger Principles of Biochemistry",
+  "source_kind": "book",
+  "reference": "Nelson & Cox, Lehninger Principles of Biochemistry, 7th edition, W. H. Freeman, 2017",
+  "written": "2026-09-27"
+}

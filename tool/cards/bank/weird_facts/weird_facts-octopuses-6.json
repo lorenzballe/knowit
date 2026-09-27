@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-octopuses-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the octopus heart that supplies its body stops beating while the animal jet-swims?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Of its three hearts, two push blood through the gills and one, the systemic heart, sends it round the body. Wells and colleagues found that in swimming common octopuses the systemic heart halts, as the squeezing mantle chokes the blood returning to it. Bottom-living octopuses crawl far more than they swim.",
+  "move": "Check whether the effort itself cuts off the supply it depends on.",
+  "trap": "Assuming three hearts must give extra power for bursts of speed.",
+  "keywords": [
+    "octopus hearts",
+    "jet propulsion",
+    "circulation",
+    "common octopus"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells et al., J. Exp. Biology, 1987",
+  "source_kind": "primary_document",
+  "reference": "Wells, Duthie, Houlihan, Smith & Wells, Blood flow and pressure changes in exercising octopuses (Octopus vulgaris), Journal of Experimental Biology, 1987",
+  "written": "2026-09-27"
+}

@@ -13,7 +13,7 @@
     "Back near where they started"
   ],
   "correct": 2,
-  "answer": "Back near where they started. Hall, Horton and Knoepfle found that higher fares drew more drivers online, each waited longer between trips, and hourly earnings drifted back towards their old level. Anyone can log on, so a better rate per trip is shared out as idle time. The rise bought emptier cars, not richer drivers.",
+  "answer": "Back near where they started. Hall, Horton and Knoepfle found that after fare rises drivers worked more hours while riders took fewer trips, so each driver waited longer. Within about two months hourly earnings were back at their old level. The better rate per trip went on idle time: emptier cars, not richer drivers.",
   "move": "Where anyone can join, a better rate draws more people to share it.",
   "trap": "Assuming a higher rate per trip means more pay per hour.",
   "keywords": [
@@ -32,8 +32,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Hall, Horton and Knoepfle, 2017",
+  "source": "Hall, Horton and Knoepfle, NBER, 2023",
   "source_kind": "paper",
-  "reference": "Hall, Horton & Knoepfle, Labor Market Equilibration: Evidence from Uber, working paper, 2017",
+  "reference": "Hall, Horton & Knoepfle, Ride-Sharing Markets Re-Equilibrate, NBER Working Paper 30883, 2023",
   "written": "2026-09-27"
 }

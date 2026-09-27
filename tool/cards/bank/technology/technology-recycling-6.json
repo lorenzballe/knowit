@@ -7,13 +7,13 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What would a recycler gain by keeping a worn cathode's crystal intact instead of dissolving it?",
-  "answer": "The cost of making it again. Smelting and acid leaching reduce a cathode to metal salts, from which a factory must rebuild the precise crystal with heat and energy. Direct recycling instead tops up the lithium the crystal lost and reuses it. For cheap iron phosphate, the crystal is most of the value.",
+  "answer": "The cost of making it again. Smelting and acid leaching reduce a cathode to metal salts, from which a factory must rebuild the precise layered crystal, baking it for hours above 600 °C. Direct recycling instead tops up the lithium the worn crystal lost and reuses it. The long bake is skipped.",
   "move": "Sometimes the value lies in the arrangement, not in the ingredients.",
   "keywords": [
     "direct recycling",
     "cathode",
     "hydrometallurgy",
-    "iron phosphate"
+    "calcination"
   ],
   "era": "recent",
   "region": "none",
@@ -25,8 +25,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Argonne National Laboratory, ReCell Center",
-  "source_kind": "institution",
-  "reference": "Gaines, Dai, Vaughey & Gibson, Direct Recycling R&D at the ReCell Center, Recycling, 2021",
+  "source": "Gaines et al., Recycling, 2021",
+  "source_kind": "paper",
+  "reference": "Gaines et al., Direct Recycling R&D at the ReCell Center, Recycling, 2021",
   "written": "2026-09-27"
 }

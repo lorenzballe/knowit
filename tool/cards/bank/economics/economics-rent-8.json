@@ -8,12 +8,12 @@
   "principle": "reflection",
   "question": "In the 1990s France extended housing benefit to many more renters. Of each extra euro of benefit, how much went into higher rents?",
   "options": [
-    "About 80 cents",
-    "About 50 cents",
-    "About 20 cents"
+    "Most of it",
+    "About a quarter",
+    "Almost none"
   ],
   "correct": 0,
-  "answer": "About 80 cents. Gabrielle Fack found each extra euro of benefit raised the rent paid by new claimants by 78 cents, leaving 22 cents for the tenant. Flats barely grew in number while the reform drew students into renting alone. A subsidy to buyers in a market that cannot expand ends up with the sellers.",
+  "answer": "Most of it. Gabrielle Fack estimated that between 50 and 80 cents of each extra euro ended up as higher rent for low-income tenants. Flats barely grew in number while the reform drew students into renting alone. A subsidy to buyers in a market that cannot expand ends up with the sellers.",
   "move": "Before subsidising buyers, ask whether sellers can make any more.",
   "trap": "Assuming the benefit stays with the tenant it is paid to.",
   "keywords": [

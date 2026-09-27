@@ -13,7 +13,7 @@
     "To AIG's shareholders"
   ],
   "correct": 1,
-  "answer": "To banks that had bought its protection. AIG had sold credit default swaps, insurance-like contracts on mortgage bonds, and owed collateral it lacked. The rescue paid them in full, 100 cents on the dollar. Goldman Sachs, Société Générale and Deutsche Bank each received more than $11 billion. Saving one firm saved its creditors.",
+  "answer": "To banks that had bought its protection. AIG had sold credit default swaps, insurance-like contracts on mortgage bonds, and owed collateral it lacked. The rescue let those banks be paid in full, 100 cents on the dollar: Goldman Sachs, Société Générale and Deutsche Bank each received more than $11 billion. Saving AIG saved its creditors.",
   "move": "When a rescue is announced, ask whose debts it pays.",
   "trap": "Assuming an insurer's rescue mainly protects its policyholders.",
   "keywords": [

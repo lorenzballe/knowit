@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Under the Hague-Visby Rules, used for much of the world's sea cargo, a carrier's liability is capped at 666.67 special drawing rights, an IMF unit worth a little over a dollar, per package, or 2 per kilogram if higher, unless a higher value was declared. A pallet of phones is one package.",
+  "answer": "False. Under the Hague-Visby Rules, used for much of the world's sea cargo, liability is capped at 666.67 special drawing rights, an IMF unit worth roughly $1.35, per package, or 2 per kilogram if higher, unless a value was declared. A container whose cartons are not listed counts as one package.",
   "move": "Read the cap before counting on the compensation.",
   "trap": "Assuming whoever loses the goods must pay their full value.",
   "keywords": [

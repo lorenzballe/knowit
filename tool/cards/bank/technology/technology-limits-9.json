@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. On a multiple-choice test, OpenAI found the raw pre-trained model well calibrated: answers it gave 70% probability were right about 70% of the time. After training it into a helpful assistant, confidence and accuracy matched far less well. The version people talk to knows less about its own reliability than the one beneath it.",
+  "answer": "True. On a multiple-choice test, OpenAI found the raw pre-trained model well calibrated: its answers given 70% probability were right about 70% of the time. After training it into a helpful assistant, confidence and accuracy matched far less well. The assistant people talk to knows less about its own reliability.",
   "move": "Improving how something performs can damage how well it knows itself.",
   "trap": "Assuming the tuning that makes answers better improves every measure.",
   "keywords": [

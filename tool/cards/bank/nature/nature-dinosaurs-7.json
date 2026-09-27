@@ -8,12 +8,12 @@
   "principle": "reflection",
   "question": "Ruthenium isotopes in the impact layer reveal what kind of body struck Chicxulub. What was it?",
   "options": [
-    "A carbon-rich asteroid from beyond Jupiter",
+    "A carbon-rich asteroid formed beyond Jupiter",
     "An icy comet from the outer solar system",
     "A stony asteroid from the inner belt"
   ],
   "correct": 0,
-  "answer": "A carbon-rich asteroid from beyond Jupiter. Fischer-Gödde and colleagues found ruthenium in the boundary clay matching carbonaceous meteorites, which formed in the outer solar system before settling into the asteroid belt, and not comets or the stony asteroids common near Earth. The killer was a dark rock from the belt's cold outer reaches.",
+  "answer": "A carbon-rich asteroid formed beyond Jupiter. Fischer-Gödde and colleagues found ruthenium in the boundary clay matching carbonaceous meteorites, which formed in the outer solar system before settling into the asteroid belt, and not comets or the stony asteroids common near Earth. The killer was a dark rock from the belt's cold outer reaches.",
   "move": "An origin far away does not settle what kind of thing arrived.",
   "trap": "Linking an outer solar system origin with comets rather than asteroids.",
   "keywords": [

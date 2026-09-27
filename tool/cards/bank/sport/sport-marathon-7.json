@@ -1,0 +1,40 @@
+{
+  "id": "sport-marathon-7",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "At 6 m/s, close to world-record marathon pace, about how much energy does running 1 m behind another runner save?",
+  "options": [
+    "About 1%",
+    "About 6%",
+    "About 25%"
+  ],
+  "correct": 1,
+  "answer": "About 6%. In Griffith Pugh's wind-tunnel treadmill tests, pushing through the air took about 7.5% of a runner's energy at 6 m/s, and running 1 m behind another removed roughly 80% of that. Small beside cycling, but a few per cent of energy is minutes over 42 km, which is why record attempts hire pacemakers.",
+  "move": "Borrow a number from another setting only after checking what drives it.",
+  "trap": "Borrowing the big savings cyclists get from riding in a bunch.",
+  "keywords": [
+    "drafting",
+    "air resistance",
+    "pacemakers",
+    "griffith pugh",
+    "wind tunnel"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pugh, Journal of Physiology, 1971",
+  "source_kind": "paper",
+  "reference": "Pugh, The influence of wind resistance in running and walking and the mechanical efficiency of work against horizontal or vertical forces, Journal of Physiology, 1971",
+  "written": "2026-09-27"
+}

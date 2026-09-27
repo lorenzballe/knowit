@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did New York City get the area code 212 in 1947, rather than, say, 909?",
-  "answer": "Because 212 was among the quickest to dial. A rotary dial sends one pulse per unit, ten for 0, so 2-1-2 took five pulses against 28 for 9-0-9. The 1947 plan gave big cities the fastest: Los Angeles 213, Chicago 312. Each had 0 or 1 in the middle, which no local exchange used.",
+  "answer": "Because 212 was among the quickest to dial. A rotary dial sends one pulse per unit, ten for 0, so 2-1-2 took five pulses against 28 for 9-0-9. The 1947 plan gave big cities the fastest: Los Angeles 213, Chicago 312. Each had 0 or 1 in the middle, unlike any local exchange code.",
   "move": "Where every user pays a small cost, give the cheapest option to the most users.",
   "keywords": [
     "area codes",

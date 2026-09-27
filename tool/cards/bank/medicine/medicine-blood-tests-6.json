@@ -1,0 +1,39 @@
+{
+  "id": "medicine-blood-tests-6",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A D-dimer blood test for clots comes back normal. For which patient does that reliably rule out a clot in the lung?",
+  "options": [
+    "One judged unlikely to have one",
+    "One judged very likely to have one",
+    "Any patient, whatever the suspicion"
+  ],
+  "correct": 0,
+  "answer": "One judged unlikely to have one. D-dimer, a fragment released as clots break down, rises with nearly every clot, and with infection, cancer, pregnancy and age. In a low-suspicion patient a normal result settles it. In a high-suspicion patient its rare misses become too likely, so NICE sends them straight to a scan.",
+  "move": "A clean result is only as reassuring as the doubt you started with.",
+  "trap": "Any patient, since the test catches almost every clot.",
+  "keywords": [
+    "d-dimer",
+    "pulmonary embolism",
+    "pretest probability",
+    "blood clots"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NICE guideline NG158, 2020",
+  "source_kind": "institution",
+  "reference": "https://www.nice.org.uk/guidance/ng158",
+  "written": "2026-09-27"
+}

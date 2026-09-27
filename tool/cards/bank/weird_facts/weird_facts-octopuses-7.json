@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-octopuses-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "What is the heaviest giant Pacific octopus ever reliably weighed?",
+  "options": [
+    "About 270 kg",
+    "About 15 kg",
+    "About 70 kg"
+  ],
+  "correct": 2,
+  "answer": "About 70 kg. The best-documented giant, weighed alive, came in at 71 kg with an arm span of about 4 m. The 272 kg figure that circulates rests on an anecdotal report nobody checked on a scale. Most adults weigh a few tens of kilograms: the size of a large dog, not a small car.",
+  "move": "A record figure with no scale behind it should be weighed as a rumour.",
+  "trap": "Reaching for the famous 272 kg figure because it circulates widely.",
+  "keywords": [
+    "giant pacific octopus",
+    "body mass",
+    "size records",
+    "anecdotal reports"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cosgrove & McDaniel, Super Suckers, 2009",
+  "source_kind": "reference_work",
+  "reference": "Cosgrove & McDaniel, Super Suckers: The Giant Pacific Octopus and Other Cephalopods of the Pacific Coast, Harbour Publishing, 2009",
+  "written": "2026-09-27"
+}

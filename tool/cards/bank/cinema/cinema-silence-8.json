@@ -1,0 +1,38 @@
+{
+  "id": "cinema-silence-8",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: audiences first heard Charlie Chaplin's voice on film in 1936, singing in nonsense words?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Modern Times, 1936, has a recorded score and sound effects but no spoken lines from the Tramp until he performs a café song. The lyrics, written on his cuff, fly off, and he improvises gibberish mixing French and Italian. Chaplin's first real talking picture came four years later, with The Great Dictator.",
+  "move": "Before crediting the famous occasion, look for a smaller one before it.",
+  "trap": "Remembering The Great Dictator's famous speech as the first time he spoke.",
+  "keywords": [
+    "charlie chaplin",
+    "modern times",
+    "the great dictator",
+    "talkies"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robinson, Chaplin: His Life and Art",
+  "source_kind": "book",
+  "reference": "Robinson, Chaplin: His Life and Art, McGraw-Hill, 1985",
+  "written": "2026-09-27"
+}

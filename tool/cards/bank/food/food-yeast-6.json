@@ -1,0 +1,33 @@
+{
+  "id": "food-yeast-6",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can dough made with old or badly stored dried yeast turn slack and sticky, not merely slow?",
+  "answer": "Dead yeast cells leak glutathione, a small sulphur-bearing molecule that cuts the sulphur bridges linking gluten proteins into a stretchy network, so the dough loosens and tears. Every packet of dried yeast holds some dead cells; that is why it is sealed airless. Inactive yeast is sold on purpose to relax stiff pizza doughs.",
+  "move": "A dead ingredient is not an absent one: it can still act.",
+  "keywords": [
+    "dried yeast",
+    "glutathione",
+    "gluten",
+    "disulphide bonds",
+    "dough relaxer"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pyler & Gorton, Baking Science and Technology",
+  "source_kind": "book",
+  "reference": "Pyler & Gorton, Baking Science and Technology, 4th edition, Sosland Publishing, 2008",
+  "written": "2026-09-27"
+}

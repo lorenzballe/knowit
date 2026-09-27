@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-dates-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Visa and refugee records show a huge spike of birthdays on 1 January. What mainly produces it?",
+  "options": [
+    "Clerks filling in an unknown birth date",
+    "Couples conceiving in the spring holidays",
+    "Families timing births for tax years"
+  ],
+  "correct": 0,
+  "answer": "Clerks filling in an unknown birth date. Where births went unregistered, as in Afghanistan through decades of war, forms still demand a date, and 1 January is the default; the US State Department has assigned it to more than 200,000 refugees since the Vietnam War. These birthdays mark a form being filled in, not a delivery.",
+  "move": "Before explaining a pattern in records, ask how the records were filled in.",
+  "trap": "Seeking a biological or seasonal cause for what is a filing habit.",
+  "keywords": [
+    "birthdays",
+    "refugees",
+    "afghanistan",
+    "birth registration"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Washington Post, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://www.washingtonpost.com/world/in-afghanistan-its-everyones-birthday/2013/12/31/81c18700-7224-11e3-bc6b-712d770c3715_story.html",
+  "written": "2026-09-27"
+}

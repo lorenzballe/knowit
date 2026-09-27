@@ -1,0 +1,39 @@
+{
+  "id": "medicine-robots-10",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: in a 2018 trial for early cervical cancer, women given keyhole or robotic surgery died more often than after open surgery?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The LACC trial randomised 631 women to open or minimally invasive radical hysterectomy, one in six of the latter by robot. At three years 99.0% of the open group were alive, against 93.8%, and cancer returned more often. In 2019 the FDA warned that robots were unproven for such cancer operations.",
+  "move": "A gentler way in can still be worse at the job itself.",
+  "trap": "Assuming smaller cuts can only mean smaller harm.",
+  "keywords": [
+    "cervical cancer",
+    "lacc trial",
+    "radical hysterectomy",
+    "minimally invasive surgery",
+    "survival"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ramirez et al., NEJM, 2018",
+  "source_kind": "paper",
+  "reference": "Ramirez et al., Minimally invasive versus abdominal radical hysterectomy for cervical cancer, New England Journal of Medicine, 2018",
+  "written": "2026-09-27"
+}

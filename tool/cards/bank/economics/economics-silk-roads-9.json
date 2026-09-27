@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "exponential",
-  "question": "Pliny wrote that Indian goods sold in Rome at a hundred times their cost. If each middleman doubled the price, how many middlemen?",
+  "question": "Pliny wrote that Indian goods sold in Rome at a hundred times their cost. If each middleman doubled the price, at least how many middlemen?",
   "value": 7,
   "unit": "middlemen",
   "answer": "A seventh: 64 x 2 = 128, so 7 middlemen are enough.",

@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-octopuses-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "An octopus has about 500 million neurons, two-thirds of them in its eight arms. How many million per arm?",
+  "value": 41.7,
+  "unit": "million neurons",
+  "tolerance": 1,
+  "answer": "333 million / 8 arms ≈ 41.7 million per arm.",
+  "move": "Where the neurons sit tells you where the decisions get made.",
+  "trap": "Dividing all 500 million by eight and forgetting the brain's share.",
+  "hint": "Take the arms' share of the total first, then split it eight ways.",
+  "steps": [
+    "Two-thirds of 500 million is about 333 million neurons in the arms.",
+    "333 million / 8 arms ≈ 41.7 million per arm."
+  ],
+  "keywords": [
+    "octopus arms",
+    "neurons",
+    "nervous system",
+    "distributed control"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hochner, Current Biology, 2012",
+  "source_kind": "primary_document",
+  "reference": "Hochner, An embodied view of octopus neurobiology, Current Biology, 2012",
+  "written": "2026-09-27"
+}

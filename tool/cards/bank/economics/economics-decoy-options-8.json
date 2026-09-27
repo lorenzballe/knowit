@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "anchoring",
-  "question": "True or false: marking one option as sold out can shift which of the remaining options people choose?",
+  "question": "True or false: when a strong option is shown as sold out, choices shift towards the remaining option most like it?",
   "options": [
     "True",
     "False"

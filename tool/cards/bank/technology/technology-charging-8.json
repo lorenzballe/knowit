@@ -5,7 +5,7 @@
   "strand": "technology.batteries.charging",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "confounding",
+  "principle": "availability",
   "question": "True or false: the battery memory effect was first noticed in batteries aboard satellites?",
   "options": [
     "True",
@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Nickel-cadmium cells in orbit were drained the same shallow amount on every pass through Earth's shadow, then recharged in sunlight, and came to give little below that depth. Such exact repetition is rare on the ground; much that users later blamed on memory was ordinary wear or overcharging. Lithium-ion shows only a faint trace.",
   "move": "A named effect gets blamed for whatever happens near it.",
-  "trap": "Assuming the effect was found by users whose gadgets kept fading.",
+  "trap": "Picturing consumer gadgets, where the effect's name became familiar.",
   "keywords": [
     "memory effect",
     "nickel-cadmium",
