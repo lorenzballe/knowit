@@ -197,6 +197,9 @@ class TheGate(unittest.TestCase):
             thinking_card(id="thinking-b"),
             read_card(id="space-r"),
         ]
+        self.assertEqual(check.check_commons({"1": ["space-r"], "2": []}, cards), [])
+        self.assertTrue(any("asks" in p for p in check.check_commons({"1": ["thinking-a"]}, cards)))
+        self.assertTrue(any("comes back" in p for p in check.check_commons({"1": ["space-r"], "2": ["space-r"]}, cards)))
         self.assertEqual(check.check_editions({"1": "thinking-a", "2": "thinking-b"}, cards), [])
         self.assertTrue(any("cannot be marked" in p for p in check.check_editions({"1": "space-r"}, cards)))
         self.assertTrue(any("comes back" in p for p in check.check_editions({"1": "thinking-a", "2": "thinking-a"}, cards)))

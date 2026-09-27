@@ -11,6 +11,7 @@ import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
 import '../sync/tally.dart';
+import '../sync/trace.dart';
 import '../theme.dart';
 import '../widgets/scaled_text.dart';
 import '../widgets/subject_icon.dart';
@@ -111,6 +112,16 @@ class ExploreScreenState extends State<ExploreScreen> {
   List<Pill> _only(List<Pill> pills) => _subject == null
       ? pills
       : pills.where((p) => p.topic == _subject).toList();
+
+  /// What the shelves put in front of the reader, once per card per shelf
+  /// per visit: a card shown and not opened is a thing the dealer can learn
+  /// from, the way a feed learns from what you scrolled past.
+  final Set<String> _shown = {};
+
+  void _seen(String shelf, Pill pill) {
+    if (!_shown.add('$shelf:${pill.id}')) return;
+    Trace.instance.note('card shown', {'pill_id': pill.id, 'shelf': shelf});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +262,11 @@ class ExploreScreenState extends State<ExploreScreen> {
               _Shelf(
                 title: context.l10n.todaysShelf,
                 line: context.l10n.sameForEveryone,
-                child: _BigRow(pills: fresh, onOpen: _open),
+                child: _BigRow(
+                  pills: fresh,
+                  onOpen: _open,
+                  onShown: (p) => _seen('today', p),
+                ),
               ),
             const SizedBox(height: 24),
             _Shelf(
@@ -278,6 +293,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                   : _TopRow(
                       ranked: top,
                       isRead: (p) => !unread(p),
+                      onShown: (p) => _seen('top', p),
                       onOpen: (i) {
                         Analytics.capture('explore top opened', {
                           'rank': i + 1,
@@ -298,6 +314,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.lovedLine,
                 child: _SmallRow(
                   pills: loved,
+                  onShown: (p) => _seen('loved', p),
                   onOpen: (shelf, pill) {
                     Analytics.capture('explore loved opened', {
                       'rank': shelf.indexOf(pill) + 1,
@@ -313,7 +330,11 @@ class ExploreScreenState extends State<ExploreScreen> {
               _Shelf(
                 title: context.l10n.onesThatAskTheMost,
                 line: context.l10n.acrossEveryone,
-                child: _RowList(pills: asking, onOpen: _open),
+                child: _RowList(
+                  pills: asking,
+                  onOpen: _open,
+                  onShown: (p) => _seen('asking', p),
+                ),
               ),
             ],
             if (mine.isNotEmpty) ...[
@@ -321,7 +342,11 @@ class ExploreScreenState extends State<ExploreScreen> {
               _Shelf(
                 title: title,
                 line: line,
-                child: _SmallRow(pills: mine, onOpen: _open),
+                child: _SmallRow(
+                  pills: mine,
+                  onOpen: _open,
+                  onShown: (p) => _seen('mine', p),
+                ),
               ),
             ],
           ],
@@ -741,10 +766,11 @@ class _Shelf extends StatelessWidget {
 
 /// The top shelf: cards at a size you can read across the room.
 class _BigRow extends StatelessWidget {
-  const _BigRow({required this.pills, required this.onOpen});
+  const _BigRow({required this.pills, required this.onOpen, this.onShown});
 
   final List<Pill> pills;
   final void Function(List<Pill>, Pill) onOpen;
+  final ValueChanged<Pill>? onShown;
 
   @override
   Widget build(BuildContext context) {
@@ -757,6 +783,7 @@ class _BigRow extends StatelessWidget {
         separatorBuilder: (_, _) => const SizedBox(width: 10),
         itemBuilder: (context, i) {
           final pill = pills[i];
+          onShown?.call(pill);
           final Color sub = pill.ink.withValues(alpha: 0.66);
           return GestureDetector(
             key: ValueKey('explore-${pill.id}'),
@@ -837,13 +864,18 @@ class _BigRow extends StatelessWidget {
 
 /// The middle shelf: rows, with the subject's colour carrying its mark.
 class _RowList extends StatelessWidget {
-  const _RowList({required this.pills, required this.onOpen});
+  const _RowList({required this.pills, required this.onOpen, this.onShown});
 
   final List<Pill> pills;
   final void Function(List<Pill>, Pill) onOpen;
+  final ValueChanged<Pill>? onShown;
 
   @override
   Widget build(BuildContext context) {
+    // A column shows all of its rows at once.
+    for (final pill in pills) {
+      onShown?.call(pill);
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -936,10 +968,11 @@ class _CardRow extends StatelessWidget {
 /// The bottom shelf: smaller cards, because by here the reader is looking
 /// rather than reading.
 class _SmallRow extends StatelessWidget {
-  const _SmallRow({required this.pills, required this.onOpen});
+  const _SmallRow({required this.pills, required this.onOpen, this.onShown});
 
   final List<Pill> pills;
   final void Function(List<Pill>, Pill) onOpen;
+  final ValueChanged<Pill>? onShown;
 
   @override
   Widget build(BuildContext context) {
@@ -952,6 +985,7 @@ class _SmallRow extends StatelessWidget {
         separatorBuilder: (_, _) => const SizedBox(width: 10),
         itemBuilder: (context, i) {
           final pill = pills[i];
+          onShown?.call(pill);
           return GestureDetector(
             key: ValueKey('explore-${pill.id}'),
             behavior: HitTestBehavior.opaque,
@@ -1069,10 +1103,12 @@ class _TopRow extends StatelessWidget {
     required this.ranked,
     required this.onOpen,
     required this.isRead,
+    this.onShown,
   });
 
   final List<(Pill, int)> ranked;
   final ValueChanged<int> onOpen;
+  final ValueChanged<Pill>? onShown;
 
   /// Whether the reader has read a card already. The list is the same for
   /// everybody, so a card read stays on its place, marked.
@@ -1087,13 +1123,16 @@ class _TopRow extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
         itemCount: ranked.length,
         separatorBuilder: (_, _) => const SizedBox(width: 4),
-        itemBuilder: (context, i) => _Placed(
-          rank: i + 1,
-          pill: ranked[i].$1,
-          readers: ranked[i].$2,
-          read: isRead(ranked[i].$1),
-          onTap: () => onOpen(i),
-        ),
+        itemBuilder: (context, i) {
+          onShown?.call(ranked[i].$1);
+          return _Placed(
+            rank: i + 1,
+            pill: ranked[i].$1,
+            readers: ranked[i].$2,
+            read: isRead(ranked[i].$1),
+            onTap: () => onOpen(i),
+          );
+        },
       ),
     );
   }

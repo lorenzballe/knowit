@@ -52,12 +52,18 @@ class BankBundle {
   final Set<String> retired;
   final Map<int, String> editions;
 
+  /// The cards everybody meets on an edition besides its question, frozen
+  /// like the question (see `commonOfEdition`). Empty on a bundle from
+  /// before they were frozen, and the app then chains its own.
+  final Map<int, List<String>> commons;
+
   const BankBundle({
     required this.version,
     required this.built,
     required this.cards,
     required this.retired,
     required this.editions,
+    this.commons = const {},
   });
 
   /// Reads a bundle. Throws [FormatException] on a document the app could
@@ -102,12 +108,28 @@ class BankBundle {
         editions[n] = id;
       }
     }
+    final commons = <int, List<String>>{};
+    final rawCommons = doc['commons'];
+    if (rawCommons is Map) {
+      for (final e in rawCommons.entries) {
+        final n = int.tryParse('${e.key}');
+        final ids = e.value;
+        if (n == null || ids is! List) {
+          throw FormatException('edition ${e.key} has no common cards');
+        }
+        commons[n] = [
+          for (final id in ids)
+            if (id is String && seen.contains(id)) id,
+        ];
+      }
+    }
     return BankBundle(
       version: version,
       built: doc['built'] is String ? doc['built'] as String : '',
       cards: cards,
       retired: retired,
       editions: editions,
+      commons: commons,
     );
   }
 }
@@ -140,6 +162,9 @@ class PillBank {
   /// The question of the day, by edition, as the bank froze it. Editions
   /// past the end of the calendar are dealt by the app itself.
   static Map<int, String> get editions => _bundle.editions;
+
+  /// The frozen common cards, by edition. See [BankBundle.commons].
+  static Map<int, List<String>> get commons => _bundle.commons;
 
   /// The stamp of the bundle in use; higher is newer.
   static int get version => _bundle.version;

@@ -173,9 +173,10 @@ const int kCommonSpares = 8;
 /// the day, in the order a free day takes them.
 ///
 /// Cards that tell rather than ask, from the whole bank rather than any
-/// mix — that is what makes them everybody's — each edition chained clear
-/// of the ones before it, so the same card does not come round for weeks,
-/// and never two of one subject in the same edition. A free day takes the
+/// mix — that is what makes them everybody's — frozen in the bank's
+/// calendar by `bundle.py`, and past its end chained clear of the ones
+/// before, so the same card does not come round for weeks, and never two
+/// of one subject in the same edition. A free day takes the
 /// first [kOwnCardsFree]-ish it has not already read, so two readers who
 /// have read different things still mostly share the same three. A day
 /// takes the ones on the reader's mix first (see [dealDay]).
@@ -185,9 +186,23 @@ List<Pill> commonOfEdition(int edition) {
   if (cached != null) return cached;
   final int start = edition < 1 ? edition : 1;
   for (var e = start; e <= edition; e++) {
-    _commons[e] ??= _tell(e);
+    _commons[e] ??= _frozenCommons(e) ?? _tell(e);
   }
   return _commons[edition]!;
+}
+
+/// The edition's common cards as the bank froze them, or null past the end
+/// of the calendar or on a bank from before they were frozen. Frozen, like
+/// the question, so a phone that deals its own day and a server that deals
+/// it for the reader (see `functions/`) hand out the same three.
+List<Pill>? _frozenCommons(int edition) {
+  final List<String>? ids = PillBank.commons[edition];
+  if (ids == null) return null;
+  final List<Pill> cards = [
+    for (final id in ids)
+      if (PillBank.byId(id) case final Pill p when !p.asksSomething) p,
+  ];
+  return cards.isEmpty ? null : cards;
 }
 
 List<Pill> _tell(int edition) {

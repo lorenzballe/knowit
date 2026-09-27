@@ -100,6 +100,36 @@ await check('a total: one at a time, to one card, in its own shard', async () =>
   await assertFails(stranger().doc('totals/science').get());
 });
 
+await check('the trace: the reader writes and reads their own days, nobody else', async () => {
+  const me = env.authenticatedContext('alice').firestore();
+  const ev = [{ t: 1, e: 'view', c: 'science-1' }];
+  await assertSucceeds(me.doc('readers/alice/activity/2026-10-03').set({ ev, n: 1, at: new Date() }, { merge: true }));
+  await assertSucceeds(me.doc('readers/alice/activity/2026-10-03').get());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice/activity/2026-10-03').get());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice/activity/2026-10-03').set({ ev, n: 1, at: new Date() }));
+  await assertFails(me.doc('readers/alice/activity/notaday').set({ ev, n: 1, at: new Date() }));
+  await assertFails(me.doc('readers/alice/activity/2026-10-03').set({ ev, n: 1, at: new Date(), who: 'x' }));
+  await assertSucceeds(me.doc('presence/alice').set({ uid: 'alice', tz: 120, lastSeen: 1, at: new Date() }));
+  await assertFails(env.authenticatedContext('bob').firestore().doc('presence/alice').get());
+});
+
+await check('what the server dealt is read by its reader and written by nobody', async () => {
+  const me = env.authenticatedContext('alice').firestore();
+  await assertFails(me.doc('readers/alice/days/2026-10-04').set({ cards: [] }));
+  await assertFails(me.doc('readers/alice/profile/current').set({ a: 1 }));
+  await assertFails(me.doc('readers/alice/explore/current').set({ a: 1 }));
+  await assertFails(me.doc('explore/latest').set({ a: 1 }));
+  await env.withSecurityRulesDisabled(async (ctx) => {
+    await ctx.firestore().doc('readers/alice/days/2026-10-04').set({ cards: [] });
+    await ctx.firestore().doc('explore/latest').set({ shelves: [] });
+  });
+  await assertSucceeds(me.doc('readers/alice/days/2026-10-04').get());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice/days/2026-10-04').get());
+  await assertSucceeds(me.doc('explore/latest').get());
+  await assertSucceeds(env.authenticatedContext('bob').firestore().doc('explore/latest').get());
+  await assertFails(stranger().doc('explore/latest').get());
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());

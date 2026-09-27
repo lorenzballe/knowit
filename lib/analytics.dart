@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'sync/trace.dart';
 import 'utils/analytics_boot.dart';
 
 /// The PostHog project key, and the one thing that decides whether the app is
@@ -222,12 +223,20 @@ class Analytics {
   static Future<void> capture(
     String event, [
     Map<String, Object?> properties = const {},
-  ]) => _guard(
-    () => _sink?.capture(event, {
-      for (final e in properties.entries)
-        if (e.value != null) e.key: e.value!,
-    }),
-  );
+  ]) {
+    // The reader's own copy first, whether or not the app is measured: what
+    // they did is what they are dealt from (see Trace). It keeps the
+    // events it wants and drops the rest.
+    try {
+      Trace.instance.note(event, properties);
+    } catch (_) {}
+    return _guard(
+      () => _sink?.capture(event, {
+        for (final e in properties.entries)
+          if (e.value != null) e.key: e.value!,
+      }),
+    );
+  }
 
   /// Which screen the reader is on. Named by hand rather than taken from the
   /// route, because the app's screens are tabs of one route: a navigator

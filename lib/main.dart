@@ -24,6 +24,7 @@ import 'sync/account.dart';
 import 'sync/push.dart';
 import 'sync/subscription.dart';
 import 'sync/tally.dart';
+import 'sync/trace.dart';
 import 'utils/home_widget.dart';
 import 'theme.dart';
 import 'widgets/ambient.dart';
@@ -261,8 +262,14 @@ class _AstutoRootState extends State<AstutoRoot> {
     super.initState();
     _account.watch(_app);
     _lifecycle = AppLifecycleListener(
-      onPause: _account.flush,
-      onDetach: _account.flush,
+      onPause: () {
+        _account.flush();
+        Trace.instance.flush();
+      },
+      onDetach: () {
+        _account.flush();
+        Trace.instance.flush();
+      },
       // Coming back to the foreground re-arms tomorrow's nudge with today's
       // streak in it, and quietly — no prompt ever comes from here.
       onResume: () {
