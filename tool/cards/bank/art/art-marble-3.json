@@ -10,7 +10,7 @@
   "value": 5.6,
   "unit": "tonnes",
   "withinFactor": 3,
-  "answer": "Marble weighs about 2.7 tonnes per m³: 1.9 × 2.7 ≈ 5 tonnes.",
+  "answer": "Marble weighs about 2.7 tonnes per m³: 1.9 × 2.7 ≈ 5 tonnes, close to the usual 5.6.",
   "move": "Triple every dimension of a thing and its weight rises twenty-seven times.",
   "trap": "Scaling the weight by three, as the height is, instead of by twenty-seven.",
   "hint": "Start from the weight of a man, then scale him up in all three directions.",
@@ -18,7 +18,7 @@
     "A 1.75 m man weighs about 70 kg: about 0.07 m³ of water.",
     "David is about 3 times taller, so 3 × 3 × 3 = 27 times the volume.",
     "0.07 × 27 ≈ 1.9 m³.",
-    "Marble weighs about 2.7 tonnes per m³: 1.9 × 2.7 ≈ 5 tonnes."
+    "Marble weighs about 2.7 tonnes per m³: 1.9 × 2.7 ≈ 5 tonnes, close to the usual 5.6."
   ],
   "keywords": [
     "david",

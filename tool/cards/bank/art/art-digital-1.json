@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is the first digital image scanned into a computer only a small head of a baby?",
-  "answer": "Because the machine could hold no more. In 1957 Russell Kirsch at the US National Bureau of Standards fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. It could handle an array of 176 by 176 pixels, so the picture was cropped to the face.",
+  "question": "Why was the first photograph scanned into a computer, in 1957, so small and coarse?",
+  "answer": "Because the machine could hold no more. At the US National Bureau of Standards, Russell Kirsch fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. The image it could store was 176 pixels on a side, about 31,000 dots in all: enough for one small face.",
   "move": "Early versions of a technology are shaped by what the machine could hold.",
   "keywords": [
     "russell kirsch",
