@@ -1,0 +1,40 @@
+{
+  "id": "food-origins-7",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Kona coffee in Hawaii grows below 1,000 m, yet rivals high-mountain coffees. What does altitude mostly stand in for?",
+  "options": [
+    "Thinner air around the plant",
+    "Stronger sunlight on the leaves",
+    "Cooler temperatures that slow ripening"
+  ],
+  "correct": 2,
+  "answer": "Cooler temperatures that slow ripening. Arabica does best at mean temperatures of about 18 to 21 °C, and slow ripening lets beans build more sugars and acids. Near the equator that climate begins around 1,200 to 2,000 m. Kona, at about 19° north, finds it far lower: height was standing in for temperature.",
+  "move": "Before crediting a factor, ask what else changes along with it.",
+  "trap": "Crediting the height itself, as if thin air made the flavour.",
+  "keywords": [
+    "altitude",
+    "kona",
+    "temperature",
+    "latitude",
+    "arabica"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "DaMatta & Ramalho, Braz. J. Plant Physiol., 2006",
+  "source_kind": "paper",
+  "reference": "DaMatta & Ramalho, Impacts of drought and temperature stress on coffee physiology and production: a review, Brazilian Journal of Plant Physiology, 2006",
+  "written": "2026-09-27"
+}

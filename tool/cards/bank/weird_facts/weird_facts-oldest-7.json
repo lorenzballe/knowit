@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-oldest-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What is the oldest dated fragment of Earth's own crust?",
+  "options": [
+    "A zircon crystal from Western Australia",
+    "A grey rock outcrop in northern Canada",
+    "A basalt boulder from Greenland"
+  ],
+  "correct": 0,
+  "answer": "A zircon crystal from Western Australia. A grain from the Jack Hills, a fraction of a millimetre across, was confirmed in 2014 at about 4.37 billion years old. The oldest whole rocks with undisputed ages, in Canada, are around 4 billion. The early crust was melted and recycled; zircon, hard and chemically stubborn, came through.",
+  "move": "Where everything gets recycled, the oldest survivor is the hardest crumb.",
+  "trap": "Assuming the oldest piece of Earth must be a whole rock.",
+  "keywords": [
+    "jack hills",
+    "zircon",
+    "earth's crust",
+    "geochronology",
+    "acasta gneiss"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Valley et al., Nature Geoscience, 2014",
+  "source_kind": "primary_document",
+  "reference": "Valley et al., Hadean age for a post-magma-ocean zircon confirmed by atom-probe tomography, Nature Geoscience, 2014",
+  "written": "2026-09-27"
+}

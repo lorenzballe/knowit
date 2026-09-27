@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-oldest-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Carbon-14 halves every 5,730 years. In a 57,300-year-old bone, what percentage of the original carbon-14 remains?",
+  "value": 0.1,
+  "unit": "percent",
+  "tolerance": 0.01,
+  "answer": "1 / 1,024 ≈ 0.1%.",
+  "move": "Ten halvings leave a thousandth; twenty leave a millionth.",
+  "trap": "Taking away a fixed share each interval instead of halving what is left.",
+  "hint": "Count the half-lives first, then halve that many times.",
+  "steps": [
+    "57,300 / 5,730 = 10 half-lives.",
+    "Ten halvings leave 1 / 2^10 = 1 / 1,024 of the original.",
+    "1 / 1,024 ≈ 0.1%."
+  ],
+  "keywords": [
+    "radiocarbon dating",
+    "carbon-14",
+    "half-life",
+    "dating limit"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Godwin, Nature, 1962",
+  "source_kind": "arithmetic",
+  "reference": "Godwin, Half-life of Radiocarbon, Nature, 1962",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "food-origins-8",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: robusta, now around two-fifths of the world's coffee, was barely farmed before 1900?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Botanists described Coffea canephora, the robusta plant, from Congo only in the 1890s. Planters took it up after leaf rust wrecked arabica in the lowlands of Java, where the Dutch replanted with the tougher species in the early 1900s. The crop that now fills most instant coffee is younger than the motor car.",
+  "move": "A thing's present size says nothing about its age.",
+  "trap": "Assuming a crop this widespread must have an ancient history.",
+  "keywords": [
+    "robusta",
+    "coffea canephora",
+    "java",
+    "leaf rust",
+    "congo"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wrigley, Coffee, Longman, 1988",
+  "source_kind": "book",
+  "reference": "Wrigley, Coffee, Tropical Agriculture Series, Longman Scientific & Technical, 1988",
+  "written": "2026-09-27"
+}

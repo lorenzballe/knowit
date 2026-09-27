@@ -1,0 +1,39 @@
+{
+  "id": "cinema-flops-10",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "It's a Wonderful Life lost money in 1946. What made it a Christmas television fixture decades later?",
+  "options": [
+    "Its copyright lapsed, so showing it cost nothing",
+    "A 1970s cinema reissue found a new audience",
+    "Critics voted it among the best American films"
+  ],
+  "correct": 0,
+  "answer": "Its copyright lapsed. It was not renewed in 1974, so for years any station could broadcast the film free, and many did, over and over each December. By the 1980s it was playing on dozens of channels every Christmas. Repetition, not rediscovery by critics, turned a money-loser into the season's default film.",
+  "move": "What people see most often is often what costs least to show.",
+  "trap": "Crediting its fame to merit finally recognised, not to a price of zero.",
+  "keywords": [
+    "it's a wonderful life",
+    "copyright",
+    "public domain",
+    "television"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Basinger, The It's a Wonderful Life Book",
+  "source_kind": "book",
+  "reference": "Basinger, The It's a Wonderful Life Book, Alfred A. Knopf, 1986",
+  "written": "2026-09-27"
+}

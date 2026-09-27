@@ -1,0 +1,38 @@
+{
+  "id": "cinema-flops-8",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: Carolco Pictures filed for bankruptcy only after its pirate epic Cutthroat Island flopped?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Carolco filed for Chapter 11 protection on 10 November 1995, six weeks before Cutthroat Island opened on 22 December. Years of costly films and heavy debts had already broken it. The flop finished the company off, and the story later shrank to one film sinking a studio. The bankruptcy papers came first.",
+  "move": "Check the dates before blaming the last event for the collapse.",
+  "trap": "Assuming the famous flop caused the collapse it is remembered for.",
+  "keywords": [
+    "carolco pictures",
+    "cutthroat island",
+    "bankruptcy",
+    "chapter 11"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Variety, Cutthroat Island book excerpt, 2024",
+  "source_kind": "news_archive",
+  "reference": "https://variety.com/2024/film/global/cutthroat-island-lost-fortune-renny-harlin-geena-davis-box-office-poison-book-excerpt-1236193554/",
+  "written": "2026-09-27"
+}

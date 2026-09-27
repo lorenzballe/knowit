@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. The phrase Ecclesia abhorret a sanguine appears in none of its canons; 18th-century French writers, notably the surgeon François Quesnay, spread the attribution. The real restriction came at the Fourth Lateran Council in 1215, and it barred only priests, deacons and subdeacons from surgery that cut or burned. The famous line was written six centuries late.",
+  "answer": "False. The phrase Ecclesia abhorret a sanguine appears in none of its canons; 18th-century French writers, notably the surgeon François Quesnay, spread it. The real restriction came at the Fourth Lateran Council in 1215, barring only priests, deacons and subdeacons from surgery that cut or burned. The famous line was written six centuries late.",
   "move": "A quotation that fits the story perfectly is the first one to check.",
   "trap": "True, since it fits the story of a Church hostile to cutting bodies.",
   "keywords": [

@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-oldest-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were the ancient human footprints at White Sands, New Mexico, dated a second time?",
+  "answer": "Because the first dates came from water plants. Seeds of ditch grass in the layers gave ages of 21,000 to 23,000 years, and critics argued that aquatic plants absorb old carbon from dissolved rock, which makes them look older. In 2023, pollen from land plants and quartz grains gave consistent ages. The oldest footprints in the Americas passed a second test.",
+  "move": "When a date rests on one material, ask what that material absorbs.",
+  "keywords": [
+    "white sands",
+    "footprints",
+    "peopling of the americas",
+    "radiocarbon",
+    "pollen"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pigati et al., Science, 2023",
+  "source_kind": "primary_document",
+  "reference": "Pigati et al., Independent age estimates resolve the controversy of ancient human footprints at White Sands, Science, 2023",
+  "written": "2026-09-27"
+}
