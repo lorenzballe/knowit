@@ -8,12 +8,12 @@
   "principle": "anchoring",
   "question": "In 2024 wood from a rongorongo tablet was radiocarbon-dated to about 1493 to 1509. What does that date establish?",
   "options": [
-    "The tree was felled before Europeans came",
+    "The wood grew before Europeans came",
     "The tablet was carved around 1500",
     "The script existed before Europeans came"
   ],
   "correct": 0,
-  "answer": "The tree was felled before Europeans came. Radiocarbon dates when the wood stopped growing, not when it was carved, and on an island short of trees wood was kept and reused: another tablet is cut into a European oar. Europeans arrived in 1722; the authors think the script older, but the wood cannot prove it.",
+  "answer": "The wood grew before Europeans came. Radiocarbon dates when the wood grew, not when it was carved, and on an island short of trees wood was kept and reused: another tablet is cut into a European oar. Europeans arrived in 1722; the authors think the script older, but the wood cannot prove it.",
   "move": "Date the act you care about, not the material it was done on.",
   "trap": "Letting the striking 1400s date stand for the date of the writing.",
   "keywords": [

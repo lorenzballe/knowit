@@ -9,7 +9,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Japan's 1978 computer character set held dozens of characters no dictionary recorded. Where did one of them, 妛, come from?",
+  "question": "Japan's 1978 computer character set held characters that no dictionary recorded. Where did one of them, 妛, come from?",
   "answer": "From a paste-up. A place name wrote 山 stacked above 女 as a single character. Compilers pasted the two printed pieces onto a sheet, and on the copy the edge where the paper met read as a stroke. So 妛 entered the standard, and later Unicode: a character born from a paper edge.",
   "move": "An official list can preserve a clerk's error as faithfully as a fact.",
   "keywords": [

@@ -32,9 +32,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "language-how-they-form-4"
-  ],
   "figure": "none",
   "source": "Payne, in Locating Language, 1980",
   "source_kind": "paper",
