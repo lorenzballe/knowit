@@ -3,6 +3,9 @@
   "topic": "pop_culture",
   "genre": "pop_culture.internet_culture",
   "strand": "pop_culture.internet_culture.memes",
+  "also": [
+    "pop_culture.internet_culture.forums"
+  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
@@ -29,8 +32,5 @@
   "source": "Godwin, Wired, October 1994",
   "source_kind": "news_archive",
   "reference": "Mike Godwin, Meme, Counter-meme, Wired, issue 2.10, October 1994",
-  "written": "2026-09-26",
-  "also": [
-    "pop_culture.internet_culture.forums"
-  ]
+  "written": "2026-09-26"
 }

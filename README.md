@@ -913,11 +913,12 @@ These are declared in the UI rather than faked:
 - **Email sign-in.** Apple and Google are wired; the email button says plainly
   that it is not connected. Firebase's email link needs a domain of ours with
   universal links, since Dynamic Links was retired.
-- **The bank is still the first hundred and seventy.** The pipeline that
-  grows it is built and tested against a canned model; the first real night
+- **The nightly pipeline has not run for real.** The pipeline that grows
+  the bank is built and tested against a canned model; the first real night
   needs an `ANTHROPIC_API_KEY` in the repository's secrets and Actions
-  allowed to open pull requests. Until then sixty cards that tell, at three
-  a day, is twenty days of new reading.
+  allowed to open pull requests. The bank itself no longer waits on it: in
+  September 2026 it was grown by hand to 1,790 live cards, at least five on
+  every one of the 324 strands.
 - **The kept signing key.** Optional. Without it `codemagic.yaml` signs as it
   always has: it revokes every distribution certificate in the account and
   mints a new one, which needs nothing set up but fails, with ITMS-90035,
@@ -932,12 +933,11 @@ These are declared in the UI rather than faked:
   build leaves the group out rather than failing at signing: today's card
   shows the question of the day from the web instead of the reader's own,
   and the streak and the five ask for the app to be opened.
-- **Depth under every strand.** Every card is tagged with a strand and the
-  dealer honours the switches, but 170 cards over 324 strands is a card
-  under half of them and nothing under the rest; a reader who turns
-  everything off but *Space · Rockets* is dealt those cards and then
-  whatever is nearest. The generator writes towards the thinnest strands
-  first, so this closes at the pace of the nightly run.
+- **Depth under every strand.** Every strand now holds at least five live
+  cards, so a reader who turns everything off but *Space · Rockets* is dealt
+  five of their own before the dealer reaches for whatever is nearest. Five
+  is a floor, not a library: a strand that narrow still runs dry in a few
+  days, and the generator writes towards the thinnest strands first.
 
 Since the sections above were first written, three of the things listed here
 stopped being true and are now real: accounts (anonymous, Apple, Google, with

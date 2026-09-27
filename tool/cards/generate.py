@@ -325,9 +325,13 @@ def plan(bank: list[dict], count: int, *, topics: list[str] | None = None, seed:
     def asks(t: str) -> int:
         return sum(by_topic[t][k] for k in check.GRADED)
 
+    def reads_target(t: str) -> int:
+        # Thinking is the principle in the open: it asks, it never tells.
+        return 0 if t == "thinking" else TARGET_READS
+
     def deficit(t: str) -> int:
         k = by_topic[t]
-        return (max(0, TARGET_READS - k["read"]) + max(0, TARGET_ASKS - asks(t))
+        return (max(0, reads_target(t) - k["read"]) + max(0, TARGET_ASKS - asks(t))
                 + max(0, TARGET_DEBATES - k["debate"])
                 + sum(max(0, STRAND_TARGET - per_strand[s.id]) for s in genres.strands_of(t)))
 
@@ -345,7 +349,7 @@ def plan(bank: list[dict], count: int, *, topics: list[str] | None = None, seed:
             k = by_topic[t]
             # Shortfalls relative to their targets: a subject with no graded
             # question gets one before its thirty-sixth read.
-            short_read = max(0, TARGET_READS - k["read"]) / TARGET_READS
+            short_read = max(0, reads_target(t) - k["read"]) / TARGET_READS
             short_ask = max(0, TARGET_ASKS - asks(t)) / TARGET_ASKS
             short_debate = max(0, TARGET_DEBATES - k["debate"]) / TARGET_DEBATES
             strand = thinnest_strand(t, per_strand, rng)
