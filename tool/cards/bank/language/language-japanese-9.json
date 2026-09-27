@@ -1,0 +1,39 @@
+{
+  "id": "language-japanese-9",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Sontaku became Japan's buzzword of 2017 through a scandal over a land sale. What does it describe officials doing?",
+  "options": [
+    "Following orders passed down in writing",
+    "Accepting gifts as seasonal courtesy",
+    "Acting on wishes nobody voiced"
+  ],
+  "correct": 2,
+  "answer": "Acting on wishes nobody voiced. Sontaku means surmising a superior's feelings and acting on them unasked. Officials who sold state land cheaply to Moritomo Gakuen, a school operator linked to Prime Minister Abe's wife, were suspected of exactly that. Since no order had to exist, investigators could find none.",
+  "move": "The most useful order is the one that never had to be given.",
+  "trap": "Assuming a scandal needs someone who gave an order.",
+  "keywords": [
+    "sontaku",
+    "moritomo gakuen",
+    "bureaucracy",
+    "shinzo abe"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carlson, Public Administration and Policy, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1108/PAP-11-2019-0033",
+  "written": "2026-09-27"
+}

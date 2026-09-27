@@ -1,0 +1,38 @@
+{
+  "id": "language-japanese-7",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Japan's official hikikomori count includes people who still walk to a nearby convenience store?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Cabinet Office counts anyone who, for six months or more and not because of illness, leaves home only for hobbies or a nearby convenience store. On that definition its 2023 survey estimated about 1.46 million people aged 15 to 64. The total includes the shopper buying one rice ball at midnight.",
+  "move": "Before quoting a count, read the definition that did the counting.",
+  "trap": "Picturing the locked bedroom that made the word famous.",
+  "keywords": [
+    "hikikomori",
+    "social withdrawal",
+    "cabinet office survey",
+    "japan"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cabinet Office of Japan, survey, 2023",
+  "source_kind": "primary_document",
+  "reference": "https://www.nippon.com/en/japan-data/h00463/survey-findings-suggest-japan-has-more-than-1-million-hikikomori.html",
+  "written": "2026-09-27"
+}

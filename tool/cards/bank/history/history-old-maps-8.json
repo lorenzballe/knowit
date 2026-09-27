@@ -1,0 +1,39 @@
+{
+  "id": "history-old-maps-8",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "The Ottoman admiral Piri Reis's world map of 1513 bends its southern coast sharply east. What best explains the bend?",
+  "options": [
+    "South America bent to fit the skin",
+    "An ice-free Antarctica from ancient sources",
+    "A secret Portuguese voyage far south"
+  ],
+  "correct": 0,
+  "answer": "South America bent to fit the skin. The surviving fragment is drawn on gazelle-skin parchment, and its coast turns east where the parchment ran out. Antarctica's coast had lain under ice for millions of years. Compare enough wandering coastlines with enough real shores and some pair will look alike.",
+  "move": "Among thousands of shapes, some match by chance; count the misses too.",
+  "trap": "Treating a close match of shapes as evidence of a hidden source.",
+  "keywords": [
+    "piri reis",
+    "antarctica",
+    "parchment",
+    "coastlines"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "McIntosh, The Piri Reis Map of 1513, 2000",
+  "source_kind": "book",
+  "reference": "McIntosh, The Piri Reis Map of 1513, University of Georgia Press, 2000",
+  "written": "2026-09-27"
+}

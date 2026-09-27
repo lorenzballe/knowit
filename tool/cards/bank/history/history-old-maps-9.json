@@ -1,0 +1,38 @@
+{
+  "id": "history-old-maps-9",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: explorers eventually found the Mountains of Kong, the West African range on maps for most of the 1800s, roughly where drawn?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The range first appeared on James Rennell's map of 1798, drawn from hearsay to fit his theory of the Niger, and map after map copied it for nearly a century. In 1888 the French officer Louis-Gustave Binger reached Kong and found no mountains. Dozens of agreeing maps were one guess, repeated.",
+  "move": "Ten copies of one source are still one source.",
+  "trap": "Taking many maps that agree as many separate confirmations.",
+  "keywords": [
+    "mountains of kong",
+    "james rennell",
+    "niger",
+    "phantom features"
+  ],
+  "era": "nineteenth",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Bassett & Porter, Journal of African History, 1991",
+  "source_kind": "paper",
+  "reference": "Bassett & Porter, From the Best Authorities: The Mountains of Kong in the Cartography of West Africa, Journal of African History, 1991",
+  "written": "2026-09-27"
+}

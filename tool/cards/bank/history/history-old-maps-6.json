@@ -1,0 +1,32 @@
+{
+  "id": "history-old-maps-6",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the first map published by Britain's Ordnance Survey, in 1801, a map of Kent?",
+  "answer": "Because Kent was where a French invasion was expected. The Survey was a military body, set up under the Board of Ordnance in 1791, and its first sheet covered the coast facing France, so commanders could plan roads, batteries and lines of retreat. Britain's walking maps began as a defence plan for one county.",
+  "move": "Much civilian infrastructure began as a military worry about one place.",
+  "keywords": [
+    "ordnance survey",
+    "kent",
+    "invasion",
+    "board of ordnance"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seymour, A History of the Ordnance Survey, 1980",
+  "source_kind": "book",
+  "reference": "Seymour (ed.), A History of the Ordnance Survey, Dawson, 1980",
+  "written": "2026-09-27"
+}
