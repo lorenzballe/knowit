@@ -1,0 +1,42 @@
+{
+  "id": "sport-set-pieces-8",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "also": [
+    "psychology.emotions.fear"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "In major-tournament shoot-outs, how did kicks that would win the match compare with kicks that had to score to avoid defeat?",
+  "options": [
+    "Kicks to win scored far more",
+    "About the same rate",
+    "Kicks to survive scored more"
+  ],
+  "correct": 0,
+  "answer": "Kicks to win scored far more often: about 92% against 62%, in Jordet and Hartman's study of World Cup, European Championship and Copa América shoot-outs. Same spot, same goal, same kind of kicker; only what a miss would mean had changed. The goal was the same width; the stakes were not.",
+  "move": "The same task changes odds when failure, not success, is on the line.",
+  "trap": "Assuming a penalty is a penalty, whatever hangs on it.",
+  "keywords": [
+    "penalty shoot-out",
+    "choking",
+    "pressure",
+    "geir jordet"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Jordet & Hartman, JSEP, 2008",
+  "source_kind": "paper",
+  "reference": "Jordet & Hartman, Avoidance motivation and choking under pressure in soccer penalty shootouts, Journal of Sport & Exercise Psychology, 2008",
+  "written": "2026-09-27"
+}

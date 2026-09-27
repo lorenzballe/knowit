@@ -3,29 +3,26 @@
   "topic": "science",
   "genre": "science.cold_and_heat",
   "strand": "science.cold_and_heat.absolute_zero",
-  "also": [
-    "science.light_and_colour.lasers"
-  ],
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: in 1988, laser-cooled sodium atoms measured about five times colder than theory said lasers could reach?",
+  "question": "True or false: near absolute zero, a crystal gets easier to warm by a given step the colder it already is?",
   "options": [
     "True",
     "False"
   ],
   "correct": 0,
-  "answer": "True. Theory set a floor, the Doppler limit, at 240 millionths of a kelvin for sodium, because each photon absorbed or emitted kicks the atom at random. A US team measured 43, confirmed several ways. The theory had pictured a simpler atom; real sodium was climbing hills of light, shedding energy at each top.",
-  "move": "A proven limit is only as real as the model it was proved in.",
-  "trap": "Taking a floor derived from theory as a floor set by nature.",
+  "answer": "True. The heat needed to raise its temperature one degree falls with the cube of temperature in an insulating crystal, as Peter Debye showed in 1912: ten times colder, a thousand times easier to warm. Particle detectors use this: held at a hundredth of a kelvin, a crystal warms measurably from one particle's energy.",
+  "move": "A small input looks large wherever there is little to absorb it.",
+  "trap": "False, picturing the heat per degree as fixed for each material.",
   "keywords": [
-    "laser cooling",
-    "doppler limit",
-    "sodium atoms",
-    "sub-doppler cooling"
+    "heat capacity",
+    "debye law",
+    "crystals",
+    "cryogenic detectors"
   ],
-  "era": "twentieth",
-  "region": "americas",
+  "era": "timeless",
+  "region": "none",
   "hook": "paradox",
   "mood": "wonder",
   "numeracy": 2,
@@ -34,8 +31,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Lett et al., Physical Review Letters, 1988",
-  "source_kind": "paper",
-  "reference": "doi:10.1103/PhysRevLett.61.169",
+  "source": "Kittel, Introduction to Solid State Physics",
+  "source_kind": "book",
+  "reference": "Kittel, Introduction to Solid State Physics, 8th edition, Wiley, 2005",
   "written": "2026-09-27"
 }

@@ -3,16 +3,13 @@
   "topic": "science",
   "genre": "science.materials",
   "strand": "science.materials.glass",
-  "also": [
-    "science.cold_and_heat.insulation"
-  ],
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "conjunction",
   "question": "Each glass surface reflects about 4% of light striking it head-on. What share passes straight through a double-glazed window?",
   "options": [
     "About 96%",
-    "About 99%",
+    "About 92%",
     "About 85%"
   ],
   "correct": 2,

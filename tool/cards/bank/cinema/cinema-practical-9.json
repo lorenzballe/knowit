@@ -1,0 +1,39 @@
+{
+  "id": "cinema-practical-9",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Forced perspective, which makes the nearer actor look bigger, normally forbids camera moves. How did The Fellowship of the Ring move anyway?",
+  "options": [
+    "Moving shots became digital composites",
+    "Part of the set moved with the camera",
+    "Wide lenses hid the distance change"
+  ],
+  "correct": 1,
+  "answer": "Part of the set moved with the camera. When a camera moves, near and far things shift at different rates and the trick shows. Weta put one actor's section of the set on a motorised platform that moved with the camera, keeping the distances in proportion. Gandalf and Frodo could share moving shots.",
+  "move": "When a trick breaks under movement, move part of the trick too.",
+  "trap": "Assuming an epic released in 2001 did its moving shots digitally.",
+  "keywords": [
+    "forced perspective",
+    "lord of the rings",
+    "motion control",
+    "weta"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sibley, The Making of the Movie Trilogy",
+  "source_kind": "book",
+  "reference": "Sibley, The Lord of the Rings: The Making of the Movie Trilogy, Houghton Mifflin, 2002",
+  "written": "2026-09-27"
+}

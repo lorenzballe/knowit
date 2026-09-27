@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Cantor proved it in 1877, in letters to Dedekind. Pair each point of the square with one number by interleaving the digits of its two coordinates; with care over decimals like 0.1999…, which equals 0.2, the pairing works exactly. A solid cube, or all of space, holds no more points than a line segment.",
+  "answer": "True. Cantor proved it in 1877, in letters to Dedekind. Interleaving the digits of a point's two coordinates gives one number on the side; Dedekind spotted a snag with decimals like 0.1999…, which equals 0.2, and Cantor repaired the pairing so it matched exactly. A solid cube holds no more points than a line segment.",
   "move": "Bigger in size and more in number are different questions.",
   "trap": "Thinking a square must hold more, since it holds whole lines of points.",
   "keywords": [

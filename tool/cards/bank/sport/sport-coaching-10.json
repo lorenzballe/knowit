@@ -1,0 +1,37 @@
+{
+  "id": "sport-coaching-10",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a basketball coach call plays to feed the player who has just hit several shots in a row?",
+  "sides": [
+    "Yes, feed the hot hand",
+    "No, stick to the plan"
+  ],
+  "answer": "Yes. The famous finding that the hot hand is an illusion rested on a subtle bias: in short sequences, the share of hits right after a streak is expected to fall below average even for a coin. Miller and Sanjurjo corrected for it and found a real, modest effect in the same data. A shooter in rhythm deserves the ball.",
+  "move": "Whichever side you took, the hinge is what the effect survives once defences react.",
+  "counterpoint": "No. Even the corrected effect is a few percentage points. Tracking data from the NBA show that players on a streak take harder shots and draw tighter defence, which roughly cancels their improvement. Plays built for one man become predictable. The better bet is the best available shot, whoever takes it.",
+  "keywords": [
+    "hot hand",
+    "streaks",
+    "basketball",
+    "miller and sanjurjo"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller & Sanjurjo, Econometrica, 2018",
+  "source_kind": "paper",
+  "reference": "Miller & Sanjurjo, Surprised by the Streak: Detecting the Hot Hand Fallacy? A Truth in the Law of Small Numbers, Econometrica, 2018",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-kimchi-7",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does ISO 24220, the 2020 pickle standard some Chinese media hailed as a kimchi standard, say about kimchi?",
+  "answer": "That it does not apply to kimchi. The standard covers pao cai, Sichuan's salted fermented vegetables, and says so in its scope. Headlines calling it a global benchmark for kimchi set off an online row between the two countries, and in 2021 Seoul issued guidance to write kimchi as xinqi in Chinese, not paocai.",
+  "move": "A headline about a document is not the document.",
+  "keywords": [
+    "iso 24220",
+    "pao cai",
+    "kimchi naming",
+    "food standards",
+    "xinqi"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 24220:2020, Pao cai specification",
+  "source_kind": "standard",
+  "reference": "ISO 24220:2020, Pao cai (salted fermented vegetables) — Specification and test methods, International Organization for Standardization, 2020",
+  "written": "2026-09-27"
+}

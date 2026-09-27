@@ -1,0 +1,36 @@
+{
+  "id": "cinema-new-wave-6",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "also": [
+    "cinema.how_films_are_made.lighting"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could Breathless shoot at night on Paris streets in 1959 with almost no film lights?",
+  "answer": "On film made for still cameras. Raoul Coutard loaded Ilford HPS, a fast stock sold to photographers in short lengths, spliced it into rolls long enough for a movie camera, and had the laboratory push the development to gain more speed. Street lamps and shop windows did the lighting.",
+  "move": "When the proper supply is missing, look at what a neighbouring trade sells.",
+  "keywords": [
+    "breathless",
+    "raoul coutard",
+    "ilford hps",
+    "film stock",
+    "paris"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Andrew, Breathless, 1987",
+  "source_kind": "book",
+  "reference": "Andrew (ed.), Breathless: Jean-Luc Godard, Director, Rutgers University Press, 1987",
+  "written": "2026-09-27"
+}

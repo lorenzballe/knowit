@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-tiny-nations-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Which statistical quirk does most to make Liechtenstein's economic output per resident look so high?",
+  "options": [
+    "Over half its workers live abroad",
+    "The prince's fortune counts as output",
+    "Its tiny size rounds figures up"
+  ],
+  "correct": 0,
+  "answer": "Over half its workers live abroad. Liechtenstein has more jobs than its roughly 41,000 residents; about 57% of employees commute in from Switzerland and Austria. Their work counts in output, but not in the population it is divided by. Every morning, output arrives by bus from people the statistic never counts.",
+  "move": "Before comparing per-head figures, check who the heads are.",
+  "trap": "Crediting the prince's wealth, the most famous fortune in the country.",
+  "keywords": [
+    "liechtenstein",
+    "gdp per capita",
+    "cross-border commuters",
+    "denominator"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Liechtenstein, Economic and Financial Data, 2024",
+  "source_kind": "statistics",
+  "reference": "https://finance.li/wp-content/uploads/2024/09/PDF-Economic-and-Financial-Data-Liechtenstein-2024.pdf",
+  "written": "2026-09-27"
+}

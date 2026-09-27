@@ -1,0 +1,33 @@
+{
+  "id": "sport-set-pieces-6",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a goal scored straight from a corner kick called an olympic goal in Latin American football?",
+  "answer": "Because the first famous one beat Olympic champions. Scoring direct from a corner became legal in 1924, and that October Cesáreo Onzari of Argentina curled one in against Uruguay, who had just won football gold in Paris. The name honours the victims. Such goals stay rare: the ball must beat a keeper already in place.",
+  "move": "Names often record who was beaten, not who did the beating.",
+  "keywords": [
+    "olympic goal",
+    "corner kick",
+    "cesareo onzari",
+    "uruguay",
+    "argentina"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galeano, Football in Sun and Shadow",
+  "source_kind": "book",
+  "reference": "Galeano, Football in Sun and Shadow, trans. Mark Fried, Fourth Estate, 1997",
+  "written": "2026-09-27"
+}

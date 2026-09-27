@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "anchoring",
-  "question": "The LHC raises protons from 450 GeV to 7,000 GeV, about a fifteenfold jump in energy. How much faster do they go?",
+  "question": "The LHC was built to raise protons from 450 GeV to 7,000 GeV, about a fifteenfold jump in energy. How much faster do they go?",
   "options": [
     "About 0.0002% faster",
     "About four times faster",

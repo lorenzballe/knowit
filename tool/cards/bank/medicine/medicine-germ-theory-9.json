@@ -1,0 +1,32 @@
+{
+  "id": "medicine-germ-theory-9",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the stomach bacterium behind most ulcers refuse to grow in the lab until Easter 1982?",
+  "answer": "Because the plates were thrown away too soon. Robin Warren had seen curved bacteria in stomach biopsies, but Barry Marshall's cultures in Perth were discarded after two days, the routine for throat swabs. Over the long Easter weekend one batch sat for five days, and colonies of Helicobacter pylori appeared. It simply grew slowly.",
+  "move": "A search that stops too early reports that nothing is there.",
+  "keywords": [
+    "helicobacter pylori",
+    "stomach ulcers",
+    "barry marshall",
+    "bacterial culture"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marshall, Nobel Lecture, 2005",
+  "source_kind": "primary_document",
+  "reference": "Marshall, Helicobacter connections, Nobel Lecture, Nobel Foundation, 2005",
+  "written": "2026-09-27"
+}

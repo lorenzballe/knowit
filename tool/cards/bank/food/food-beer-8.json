@@ -1,0 +1,40 @@
+{
+  "id": "food-beer-8",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Lager yeast is a hybrid, and one parent loves the cold. Where was that parent first found in the wild, in 2011?",
+  "options": [
+    "Bavarian monastery cellars",
+    "Bohemian hop gardens",
+    "Patagonian beech forests"
+  ],
+  "correct": 2,
+  "answer": "Patagonian beech forests. Saccharomyces eubayanus turned up on southern beech trees and the fungal galls they carry in Argentina, far from any medieval brewery. Searches around European breweries had missed it for a century. Later surveys found close relatives in Tibet and China, and how it reached Bavaria is still argued over.",
+  "move": "Where you choose to look decides what you are able to find.",
+  "trap": "Assuming the ancestor lived where the product was perfected.",
+  "keywords": [
+    "saccharomyces eubayanus",
+    "lager yeast",
+    "hybrid",
+    "patagonia",
+    "nothofagus"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Libkind et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Libkind, Hittinger, Valério et al., Microbe domestication and the identification of the wild genetic stock of lager-brewing yeast, Proceedings of the National Academy of Sciences, 2011",
+  "written": "2026-09-27"
+}

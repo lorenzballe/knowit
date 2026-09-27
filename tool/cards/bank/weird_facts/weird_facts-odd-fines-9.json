@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-odd-fines-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.odd_fines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What share of Ferguson, Missouri's general fund did its 2015 budget expect to raise from fines and fees?",
+  "options": [
+    "About 2%",
+    "About 23%",
+    "About 60%"
+  ],
+  "correct": 1,
+  "answer": "About 23%. The Justice Department's 2015 investigation found the share had nearly doubled from 12% in 2010, as city officials pressed police and the court to raise more. Missed payments brought arrest warrants and fresh fees. In a town of about 21,000 people, the municipal court had become a revenue office.",
+  "move": "When a punishment funds its enforcer, expect more of it.",
+  "trap": "Assuming fines are a small side income for any town.",
+  "keywords": [
+    "ferguson",
+    "municipal fines",
+    "court fees",
+    "justice department",
+    "revenue"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Department of Justice, Ferguson report, 2015",
+  "source_kind": "primary_document",
+  "reference": "https://www.justice.gov/sites/default/files/opa/press-releases/attachments/2015/03/04/ferguson_police_department_report.pdf",
+  "written": "2026-09-27"
+}

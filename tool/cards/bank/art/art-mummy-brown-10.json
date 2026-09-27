@@ -1,0 +1,38 @@
+{
+  "id": "art-mummy-brown-10",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the surviving tubes and jars of mummy brown in collections be buried or returned to Egypt?",
+  "sides": [
+    "Yes, bury or return them",
+    "No, keep them as evidence"
+  ],
+  "answer": "Each tube may hold part of a person who was dug up and sold without anyone's consent. Museums now return ancestral remains on request, and a body is no less a body for being ground to powder. Keeping it on a shelf beside cadmium yellow and chrome green treats a stranger's remains as stock.",
+  "move": "Whichever side you took, whether an unidentifiable powder still counts as a person decides it.",
+  "counterpoint": "The tubes are the only reference samples of a vanished material. Without them, no laboratory can learn what mummy brown looks like under analysis, so paintings suspected of holding it can never be tested. The individuals cannot be identified, so return has no destination. Careful storage and study respect them more than a burial nobody can attend.",
+  "keywords": [
+    "mummy brown",
+    "human remains",
+    "repatriation",
+    "pigment collections",
+    "museum ethics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harvard Crimson, 2022",
+  "source_kind": "news_archive",
+  "reference": "https://www.thecrimson.com/article/2022/11/8/funerary-portraits-harvard-art-museums-2022-exhibit-article/",
+  "written": "2026-09-27"
+}

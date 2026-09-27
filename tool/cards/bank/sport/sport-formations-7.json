@@ -1,0 +1,39 @@
+{
+  "id": "sport-formations-7",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Bodyline relied on a packed leg-side field. How many fielders may cricket's laws now place behind square on that side?",
+  "options": [
+    "No more than two",
+    "No more than four",
+    "None at all"
+  ],
+  "correct": 0,
+  "answer": "No more than two. Bodyline ringed the leg side with catchers while fast bowlers aimed at the batter's body, so any fend-off lobbed to a fielder. A law of 1957 allows at most two fielders, besides the wicket-keeper, behind the batter's crease on that side. Short bowling survived; the net waiting for it did not.",
+  "move": "To stop a tactic, remove the piece that makes it pay.",
+  "trap": "Guessing none at all, as if the whole leg-side ring were banned.",
+  "keywords": [
+    "bodyline",
+    "field placing",
+    "leg side",
+    "laws of cricket"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "MCC, Laws of Cricket, Law 28",
+  "source_kind": "standard",
+  "reference": "Marylebone Cricket Club, The Laws of Cricket, 2017 Code, Law 28.4, 2017",
+  "written": "2026-09-27"
+}

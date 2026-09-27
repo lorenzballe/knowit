@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. It is puddled iron, a wrought iron made by stirring molten pig iron to burn out its carbon, then hammering out the slag. Cheap Bessemer steel existed, but Eiffel's firm had built its viaducts in wrought iron and knew how it behaved. Some 2.5 million rivets hold its 7,300 tonnes together.",
+  "answer": "False. It is puddled iron, a wrought iron made by stirring molten pig iron to burn out its carbon, then hammering out the slag. Bessemer steel existed, but its quality still varied, and Eiffel's firm had built its viaducts in wrought iron. Some 2.5 million rivets hold its 7,300 tonnes together.",
   "move": "Builders reach for the material they know, not the newest one on offer.",
   "trap": "True, since a landmark of 1889 sounds like a steel-age showpiece.",
   "keywords": [

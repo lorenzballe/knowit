@@ -1,0 +1,32 @@
+{
+  "id": "cinema-marketing-8",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did The Blair Witch Project get audiences to half-believe its footage was real?",
+  "answer": "By marketing the fiction as fact for months before release. Its website posted police reports and missing-person details for the three student film-makers, and in July 1999 the Sci-Fi Channel aired Curse of the Blair Witch, a mock documentary about their disappearance. Some viewers walked in expecting the last tapes of three missing students.",
+  "move": "The frame around a story decides how far the story is believed.",
+  "keywords": [
+    "blair witch project",
+    "viral marketing",
+    "mock documentary",
+    "found footage"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Telotte, Film Quarterly, 2001",
+  "source_kind": "paper",
+  "reference": "Telotte, The Blair Witch Project Project: Film and the Internet, Film Quarterly, 2001",
+  "written": "2026-09-27"
+}

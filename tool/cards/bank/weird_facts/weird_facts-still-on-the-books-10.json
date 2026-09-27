@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-still-on-the-books-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an 1873 US law against mailing obscene material matter to abortion pills today?",
+  "answer": "Because it still bans mailing any article designed or intended for producing abortion. The Comstock Act went unenforced on this for decades. In December 2022 the Justice Department's Office of Legal Counsel advised that mailing abortion drugs breaks it only when the sender intends unlawful use. Another administration could read the same words differently.",
+  "move": "A dormant law is a tool waiting for a new reader.",
+  "keywords": [
+    "comstock act",
+    "abortion pills",
+    "mifepristone",
+    "us postal law",
+    "office of legal counsel"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Office of Legal Counsel, December 2022",
+  "source_kind": "primary_document",
+  "reference": "https://www.justice.gov/olc/opinion/application-comstock-act-mailing-prescription-drugs-can-be-used-abortions",
+  "written": "2026-09-27"
+}

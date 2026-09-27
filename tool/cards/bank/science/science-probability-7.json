@@ -13,7 +13,7 @@
     "Under 1%"
   ],
   "correct": 2,
-  "answer": "Under 1%: about 0.45%. The house's small edge compounds bet after bet: the odds against doubling grow with 19/18, losing chances over winning ones, raised to the 100th power, about 223. One £100 bet on red wins 18 times in 37. That bold bet is over a hundred times likelier to double the money.",
+  "answer": "Under 1%: about 0.45%. The house's small edge compounds bet after bet: the odds against doubling come to 19/18, losing chances over winning ones, to the 100th power, about 223 to 1. One £100 bet on red wins 18 times in 37. That bold bet is over a hundred times likelier to double the money.",
   "move": "When the odds lean slightly against you, play as few rounds as possible.",
   "trap": "About 49%, since each bet is nearly a coin toss.",
   "keywords": [

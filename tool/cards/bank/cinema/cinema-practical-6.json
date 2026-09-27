@@ -1,0 +1,32 @@
+{
+  "id": "cinema-practical-6",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Fred Astaire dance up the walls and across the ceiling in Royal Wedding, 1951?",
+  "answer": "The room turned, not Astaire. The set was built inside a huge rotating drum, with the furniture bolted down and the camera fixed to the room, turning with it. On screen the room stays level, so as it rolled, Astaire, simply dancing on whatever surface was beneath him, seemed to climb the walls.",
+  "move": "When everything in the frame moves together, the frame itself may be moving.",
+  "keywords": [
+    "royal wedding",
+    "fred astaire",
+    "rotating set",
+    "camera rig"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mueller, Astaire Dancing, 1985",
+  "source_kind": "book",
+  "reference": "Mueller, Astaire Dancing: The Musical Films, Knopf, 1985",
+  "written": "2026-09-27"
+}

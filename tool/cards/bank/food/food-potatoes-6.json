@@ -1,0 +1,40 @@
+{
+  "id": "food-potatoes-6",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Europe's first potatoes, brought from the Andes, cropped poorly for generations. What chiefly held them back?",
+  "options": [
+    "Peasants' suspicion of the new crop",
+    "Soils lacking the Andean fungi",
+    "They formed tubers only as days shortened"
+  ],
+  "correct": 2,
+  "answer": "Day length. Andean potatoes evolved near the equator, where days stay near 12 hours, and set tubers only when nights grow long. Under Europe's 16-hour summer days they made leaves until autumn, when frost cut the crop short. Herbarium DNA shows Chilean types, already suited to long days, spreading through Europe in the 1800s.",
+  "move": "Before blaming people for rejecting a tool, check whether the tool worked.",
+  "trap": "Peasant suspicion, the story every history of the potato tells.",
+  "keywords": [
+    "day length",
+    "andean potato",
+    "chilean potato",
+    "tuber formation",
+    "herbarium dna"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ames & Spooner, American Journal of Botany, 2008",
+  "source_kind": "paper",
+  "reference": "Ames & Spooner, DNA from herbarium specimens settles a controversy about origins of the European potato, American Journal of Botany, 2008",
+  "written": "2026-09-27"
+}

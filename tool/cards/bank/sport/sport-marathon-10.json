@@ -9,10 +9,10 @@
   "question": "Across millions of marathon results, how does the number of finishers change just either side of four hours?",
   "options": [
     "A smooth slope, no jump",
-    "A spike just under four hours",
-    "A spike just over four hours"
+    "A spike just over four hours",
+    "A spike just under four hours"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "A spike just under four hours. Allen, Dechow, Pope and Wu studied nearly 10 million finishing times and found runners bunched just below round numbers, most sharply at 4:00: far more finish at 3:59 than at 4:01. The target is arbitrary, yet runners find extra speed in the final kilometres to beat it.",
   "move": "Expect people to bend their effort towards round numbers.",
   "trap": "Expecting millions of runners to smooth away any single number.",

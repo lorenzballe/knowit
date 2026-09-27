@@ -1,0 +1,36 @@
+{
+  "id": "food-beer-7",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "also": [
+    "food.bread_and_baking.yeast"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Carlsberg do with the pure lager yeast its laboratory isolated in 1883?",
+  "answer": "Gave it away. Emil Christian Hansen grew a brewing yeast from a single cell, ending the spoiled batches that wild yeasts, hidden in brewers' mixed cultures, kept causing. Jacobsen, Carlsberg's founder, declined to patent the method and sent the strain to breweries abroad. Many lager strains still in use descend from that one cell.",
+  "move": "A method given away can shape an industry more than a patent.",
+  "keywords": [
+    "carlsberg",
+    "emil christian hansen",
+    "pure culture",
+    "lager yeast",
+    "patents"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Glamann, Jacobsen of Carlsberg, 1991",
+  "source_kind": "book",
+  "reference": "Glamann, Jacobsen of Carlsberg: Brewer and Philanthropist, Gyldendal, 1991",
+  "written": "2026-09-27"
+}

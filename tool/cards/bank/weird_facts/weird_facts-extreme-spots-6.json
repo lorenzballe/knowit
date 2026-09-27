@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-extreme-spots-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which Siberian town holds records for both extreme cold and Arctic heat?",
+  "answer": "Verkhoyansk. It recorded about −68°C in February 1892, among the coldest readings in the Northern Hemisphere, and 38°C on 20 June 2020, which the UN's weather agency accepted in 2021 as the highest temperature measured north of the Arctic Circle. Far from any sea, nothing softens either season: a range of over 100°C.",
+  "move": "Distance from anything that moderates widens every extreme at once.",
+  "keywords": [
+    "verkhoyansk",
+    "siberia",
+    "temperature records",
+    "arctic"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Meteorological Organization, 2021",
+  "source_kind": "institution",
+  "reference": "World Meteorological Organization, Weather and Climate Extremes Archive: highest temperature north of the Arctic Circle, 2021",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "food-potatoes-10",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: an Irish famine a century before the Great Famine may have killed a larger share of the people?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the Great Frost of 1739–40 potatoes froze in the ground and in storage pits, and a cold, wet year followed. Estimates put deaths in 1740–41 at 13% to 20% of about 2.4 million people, against roughly 12% in 1845–52. Irish speakers called it Bliain an Áir, the year of slaughter.",
+  "move": "The disaster everyone remembers is not always the worst of its kind.",
+  "trap": "False, since the 1840s famine is the one every history names.",
+  "keywords": [
+    "great frost",
+    "famine of 1740",
+    "bliain an air",
+    "potato storage",
+    "mortality"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dickson, Arctic Ireland, 1997",
+  "source_kind": "book",
+  "reference": "Dickson, Arctic Ireland: The Extraordinary Story of the Great Frost and Forgotten Famine of 1740-41, White Row Press, 1997",
+  "written": "2026-09-27"
+}

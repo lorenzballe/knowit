@@ -14,7 +14,7 @@
   "trap": "Dividing 2.3 by 0.3 and answering about eight.",
   "hint": "Each whole unit of density cuts the light passing through by a factor of ten.",
   "steps": [
-    "Density is the base-10 logarithm of how much light is blocked.",
+    "Density is the base-10 logarithm of incident over transmitted light.",
     "The difference is 2.3 − 0.3 = 2.0.",
     "10 to the power 2.0 = 100 times."
   ],

@@ -1,0 +1,40 @@
+{
+  "id": "art-mummy-brown-7",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A lab finds calcium phosphate, the mineral of bone, in a Victorian brown paint. What does that say about mummy?",
+  "options": [
+    "Very little on its own",
+    "It is almost certainly mummy",
+    "It rules mummy out"
+  ],
+  "correct": 0,
+  "answer": "Very little on its own. Ground mummy would contain bone, but so does bone black, charred animal bone and one of the commonest dark pigments of the century, often mixed into browns. The finding is likely with mummy and just as likely without it. Only embalming markers, such as bitumen and resins alongside the bone, begin to narrow it.",
+  "move": "Evidence that is common without the cause cannot prove the cause.",
+  "trap": "Reading bone in the paint as proof of a human body.",
+  "keywords": [
+    "calcium phosphate",
+    "bone black",
+    "paint analysis",
+    "mummy brown",
+    "embalming resins"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eastaugh et al., Pigment Compendium, 2004",
+  "source_kind": "reference_work",
+  "reference": "Nicholas Eastaugh, Valentine Walsh, Tracey Chaplin and Ruth Siddall, Pigment Compendium: A Dictionary of Historical Pigments, Elsevier Butterworth-Heinemann, 2004",
+  "written": "2026-09-27"
+}

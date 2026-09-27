@@ -1,0 +1,39 @@
+{
+  "id": "cinema-hits-8",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A Hollywood film grosses $300 million in China and $200 million in North America. Which market pays the studio more?",
+  "options": [
+    "China, by about half again",
+    "North America, by about a third",
+    "Both pay about the same"
+  ],
+  "correct": 1,
+  "answer": "North America, by about a third. Under the 2012 US–China film deal, a foreign studio receives 25% of Chinese ticket sales: $75 million here. At home it keeps roughly half: about $100 million. Three fifths of the gross came from China; most of the studio's money did not.",
+  "move": "Rank sources by what reaches you, not by what passes through.",
+  "trap": "Ranking markets by ticket sales rather than by the studio's share of them.",
+  "keywords": [
+    "china box office",
+    "revenue sharing",
+    "import quota",
+    "north america"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Kokas, Hollywood Made in China, 2017",
+  "source_kind": "book",
+  "reference": "Kokas, Hollywood Made in China, University of California Press, 2017",
+  "written": "2026-09-27"
+}

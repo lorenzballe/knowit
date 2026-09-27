@@ -1,0 +1,33 @@
+{
+  "id": "art-mummy-brown-6",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Victorian art manuals warn against mummy brown even when the mummy in it was genuine?",
+  "answer": "Because it made poor paint. Jules Adeline's art dictionary of 1891 granted it a rich colour but said it dried with difficulty, was not permanent, and might contain ammonia and particles of fat. Embalming resins and bitumen stay soft in oil. Buyers of the real thing were paying for a glaze that might never fully set.",
+  "move": "Judge a material by how it behaves, not by the story attached.",
+  "keywords": [
+    "mummy brown",
+    "jules adeline",
+    "bitumen",
+    "drying",
+    "permanence"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adeline's Art Dictionary, 1891",
+  "source_kind": "reference_work",
+  "reference": "Jules Adeline, Adeline's Art Dictionary, D. Appleton and Company, New York, 1891",
+  "written": "2026-09-27"
+}

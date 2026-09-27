@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why do cadmium yellows and reds have such clean, sharp colours?",
-  "answer": "Because they are semiconductors. Cadmium sulphide absorbs every photon energetic enough to lift an electron across its band gap and reflects the rest, so its colour stops at a sharp edge: blue and violet go, yellow onwards returns. Swapping some sulphur for selenium narrows the gap, sliding the edge through orange to deep red.",
+  "answer": "Because they are semiconductors. Cadmium sulphide absorbs every photon energetic enough to lift an electron across its band gap and reflects the rest, so its colour stops at a sharp edge: blue and violet go, longer waves return. Swapping some sulphur for selenium narrows the gap, sliding the edge through orange to deep red.",
   "move": "A clean boundary in what comes out often means a threshold inside.",
   "keywords": [
     "cadmium pigments",

@@ -1,0 +1,46 @@
+{
+  "id": "food-potatoes-9",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Ireland counted 7.8 million people in 1831, 8.2 million in 1841, 6.6 million in 1851. Had 1830s growth continued, how many millions were missing?",
+  "value": 2.0,
+  "unit": "million people",
+  "tolerance": 0.2,
+  "answer": "8.6 - 6.6 = 2.0 million missing.",
+  "move": "Measure a loss against the path things were on, not the starting point.",
+  "trap": "Answering 1.6 million, the plain drop between two censuses.",
+  "hint": "First find the growth over the 1830s as a ratio, then carry it one decade further.",
+  "steps": [
+    "Growth in the 1830s: 8.2 / 7.8 = about 1.05 per decade.",
+    "Expected in 1851: 8.2 x 1.05 = about 8.6 million.",
+    "8.6 - 6.6 = 2.0 million missing."
+  ],
+  "keywords": [
+    "irish census",
+    "great famine",
+    "population",
+    "emigration",
+    "excess mortality"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ó Gráda, Black '47 and Beyond, 1999",
+  "source_kind": "book",
+  "reference": "Ó Gráda, Black '47 and Beyond: The Great Irish Famine in History, Economy, and Memory, Princeton University Press, 1999",
+  "written": "2026-09-27"
+}

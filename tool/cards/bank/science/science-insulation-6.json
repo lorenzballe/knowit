@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do spacecraft insulation blankets use dozens of foil layers that must not touch each other?",
+  "question": "Why do spacecraft insulation blankets stack many thin metal-coated layers that must not touch each other?",
   "answer": "In a vacuum heat crosses only as radiation, and each shiny layer reflects most of it back, so more layers mean proportionally less flow. Layers that touch conduct heat, so fine netting keeps them apart. Stitched, pinned and pressed at the edges, a fitted blanket often does several times worse than a flat sample.",
   "move": "Extra layers help only while each one stays apart from the next.",
   "keywords": [

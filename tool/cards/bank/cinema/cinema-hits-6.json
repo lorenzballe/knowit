@@ -1,0 +1,39 @@
+{
+  "id": "cinema-hits-6",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A film opens in four big-city cinemas at $100,000 a screen. Widened to 2,000 screens, what happens to that average?",
+  "options": [
+    "It falls far below that",
+    "It stays close to that",
+    "It rises as word spreads"
+  ],
+  "correct": 0,
+  "answer": "It falls far below that. A platform release starts in the few cinemas best suited to the film, in cities full of its likeliest fans, and sells out their shows. Each wider ring adds screens where fewer people want it. A record per-screen average in week one describes those four rooms, not the country.",
+  "move": "The first places anything is tried were chosen, not drawn at random.",
+  "trap": "Treating the first four cinemas as a fair sample of the country.",
+  "keywords": [
+    "platform release",
+    "per-screen average",
+    "limited release",
+    "arthouse cinemas"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vogel, Entertainment Industry Economics, 2015",
+  "source_kind": "book",
+  "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
+  "written": "2026-09-27"
+}

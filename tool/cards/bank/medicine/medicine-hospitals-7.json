@@ -1,0 +1,38 @@
+{
+  "id": "medicine-hospitals-7",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: England's NHS had fewer than half as many hospital beds in 2019-20 as in 1987-88?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Beds fell from about 299,000 to about 141,000 while admissions rose. Stays became much shorter, much surgery became day surgery, and long-stay wards for mental illness and learning disability closed as care moved into the community. Many patients who once spent a week on a ward now go home the same evening.",
+  "move": "Count what a place does, not only how big it is.",
+  "trap": "False, since halving the beds sounds like a collapsed service.",
+  "keywords": [
+    "hospital beds",
+    "nhs",
+    "length of stay",
+    "day surgery"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "The King's Fund, NHS bed numbers, 2020",
+  "source_kind": "institution",
+  "reference": "The King's Fund, NHS hospital bed numbers: past, present, future, 2020",
+  "written": "2026-09-27"
+}

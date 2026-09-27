@@ -1,0 +1,40 @@
+{
+  "id": "food-potatoes-8",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.potatoes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "An Irish family in 1845 planted potatoes in ten plots scattered across their townland. How much did scattering protect them?",
+  "options": [
+    "Enough to save most plots",
+    "Almost not at all",
+    "About half the plots, by chance"
+  ],
+  "correct": 1,
+  "answer": "Almost not at all. Much of Ireland's poor grew one variety, the Lumper, planted from cut tubers, so every plot held copies with the same weakness. Blight spores travel kilometres on wind and rain. Scattering guards against hail or flood, which strike one spot; against a disease that reaches every clone, ten fields are one.",
+  "move": "Spreading a bet helps only if the risks do not travel together.",
+  "trap": "About half, as if each plot were a separate throw of the dice.",
+  "keywords": [
+    "lumper",
+    "potato blight",
+    "clones",
+    "irish famine",
+    "risk spreading"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bourke, The Visitation of God?, 1993",
+  "source_kind": "book",
+  "reference": "Bourke, The Visitation of God? The Potato and the Great Irish Famine, Lilliput Press, 1993",
+  "written": "2026-09-27"
+}

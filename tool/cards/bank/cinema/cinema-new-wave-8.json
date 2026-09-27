@@ -1,0 +1,39 @@
+{
+  "id": "cinema-new-wave-8",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "How was the dialogue of Godard's Breathless, shot on Paris streets in 1959, recorded?",
+  "options": [
+    "Afterwards, dubbed in a studio",
+    "Live, on a portable Nagra recorder",
+    "Live, with microphones hidden on set"
+  ],
+  "correct": 0,
+  "answer": "Afterwards, dubbed in a studio. Coutard's Cameflex camera was light enough to hold by hand but far too noisy for sound, so the film was shot silent, with Godard often calling out lines during takes. The actors re-recorded every word later. The street talk that sounds so spontaneous was all post-synchronised.",
+  "move": "What looks improvised on screen may have been rebuilt piece by piece.",
+  "trap": "Linking the handheld street look to the era's portable sound recorders.",
+  "keywords": [
+    "breathless",
+    "post-synchronisation",
+    "cameflex",
+    "dubbing"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Neupert, French New Wave Cinema, 2002",
+  "source_kind": "book",
+  "reference": "Neupert, A History of the French New Wave Cinema, University of Wisconsin Press, 2002",
+  "written": "2026-09-27"
+}

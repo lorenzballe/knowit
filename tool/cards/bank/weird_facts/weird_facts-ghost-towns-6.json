@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-ghost-towns-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the French village of Oradour-sur-Glane never rebuilt after 1944?",
+  "answer": "Because the state chose to keep it. On 10 June 1944 an SS unit killed about 640 inhabitants and burned the village; in 1946 France classified the ruins as a historic monument and built a new Oradour nearby. Burnt cars and sewing machines still sit where they were left. The emptiness is deliberate testimony.",
+  "move": "Leaving damage in place can be a decision, not neglect.",
+  "keywords": [
+    "oradour-sur-glane",
+    "massacre",
+    "memorial",
+    "second world war"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farmer, Martyred Village, 1999",
+  "source_kind": "reference_work",
+  "reference": "Farmer, Martyred Village: Commemorating the 1944 Massacre at Oradour-sur-Glane, University of California Press, 1999",
+  "written": "2026-09-27"
+}

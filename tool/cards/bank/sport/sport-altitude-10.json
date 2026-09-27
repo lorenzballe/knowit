@@ -1,0 +1,42 @@
+{
+  "id": "sport-altitude-10",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Top oxygen uptake, VO2max, falls about 6.3% per 1,000 m above 300 m. How much lower is it at 2,300 m, in percent?",
+  "value": 12.6,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "Two lots of 1,000 m: 2 x 6.3 = 12.6%.",
+  "move": "Before multiplying a rate, check where its counting starts.",
+  "trap": "Counting from sea level and answering about 14.5%.",
+  "hint": "Check the height the 1,000 m steps are counted from.",
+  "steps": [
+    "Height above the starting point: 2,300 - 300 = 2,000 m.",
+    "Two lots of 1,000 m: 2 x 6.3 = 12.6%."
+  ],
+  "keywords": [
+    "vo2max",
+    "altitude",
+    "oxygen uptake",
+    "hypobaric chamber",
+    "endurance athletes"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wehrlin & Hallén, Eur J Appl Physiol, 2006",
+  "source_kind": "paper",
+  "reference": "doi:10.1007/s00421-005-0081-9",
+  "written": "2026-09-27"
+}

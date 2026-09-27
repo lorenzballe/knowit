@@ -7,8 +7,8 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does gooseflesh come with the start of a fever rather than with its end?",
-  "answer": "Because the brain raises its thermostat first. Signals from the immune system push the hypothalamus's set point up, so a body still at 37°C now registers as too cold: skin vessels close, hairs rise and muscles shiver until the new target is reached. When the fever breaks, the set point falls and sweating starts. The chill is the heating coming on.",
-  "move": "A body resisting a change may be obeying a new target, not failing an old one.",
+  "answer": "Because the brain raises its thermostat first. Immune signals push the hypothalamus's set point up, so a body at 37°C now registers as too cold: skin vessels close, hairs rise, muscles shiver. When the fever breaks, the set point falls and sweating starts. The chill is the heating coming on.",
+  "move": "A body fighting a change may be obeying a new target.",
   "keywords": [
     "fever",
     "hypothalamus",

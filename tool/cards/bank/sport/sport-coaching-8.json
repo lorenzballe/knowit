@@ -1,0 +1,40 @@
+{
+  "id": "sport-coaching-8",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "An ice hockey team trails by one goal. By one analysis of NHL data, when should it pull its goalie for an extra skater?",
+  "options": [
+    "With about 1 minute left",
+    "With about 6 minutes left",
+    "With about 15 minutes left"
+  ],
+  "correct": 1,
+  "answer": "With about 6 minutes left. Asness and Brown weighed the extra skater's chance of scoring against the risk of conceding into an empty net and found that, one goal down, pulling at around six minutes gave the best chance of tying. Coaches had usually waited for the last minute or two. Losing by two counts the same as losing by one.",
+  "move": "When losing is already likely, a bigger loss costs almost nothing.",
+  "trap": "Treating the familiar final-minute pull as the careful, proven choice.",
+  "keywords": [
+    "pulling the goalie",
+    "ice hockey",
+    "nhl",
+    "empty net",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Asness & Brown, Pulling the Goalie, 2018",
+  "source_kind": "paper",
+  "reference": "Asness & Brown, Pulling the Goalie: Hockey and Investment Implications, AQR Capital Management working paper, 2018",
+  "written": "2026-09-27"
+}

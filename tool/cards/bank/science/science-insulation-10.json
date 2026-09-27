@@ -13,7 +13,7 @@
     "Denser deep water draws heat away faster"
   ],
   "correct": 1,
-  "answer": "Pressure crushes the gas bubbles in the foam. Neoprene insulates because it is mostly trapped gas; the water film inside does little. Total pressure doubles by 10 metres and triples by 20, so bubbles shrink, the suit thins and conducts more. Drysuit divers add gas to their suits while descending for that reason.",
+  "answer": "Pressure crushes the gas bubbles in the foam. Neoprene insulates because it is mostly trapped gas; the water film inside does little. Total pressure doubles by 10 metres and triples by 20, so bubbles shrink, the suit thins and conducts more. Drysuit divers add gas as they descend to stop that squeeze.",
   "move": "Find what a material's virtue is made of, then ask what squeezes it.",
   "trap": "Blaming the water inside the suit, the part divers are told warms them.",
   "keywords": [
@@ -22,7 +22,7 @@
     "diving",
     "water pressure"
   ],
-  "era": "recent",
+  "era": "timeless",
   "region": "none",
   "hook": "mechanism",
   "mood": "practical",

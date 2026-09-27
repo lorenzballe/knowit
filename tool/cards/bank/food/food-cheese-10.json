@@ -1,0 +1,43 @@
+{
+  "id": "food-cheese-10",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "What is the oldest direct evidence of cheesemaking yet found, dating back about 7,000 years?",
+  "options": [
+    "Milk fats in pottery sieves in Poland",
+    "A cheese lump in an Egyptian tomb",
+    "Curds buried with mummies in China"
+  ],
+  "correct": 0,
+  "answer": "Milk fats in pottery sieves in Poland. Chemists found dairy fat residues in perforated pots from Kuyavia, about 7,000 years old, the kind of strainer used to drain curds from whey. The famous lumps from an Egyptian tomb and from Chinese desert graves are only about 3,200 to 3,600 years old; dry sand preserved them.",
+  "move": "The oldest thing that survived is not the oldest thing that existed.",
+  "trap": "Picking the preserved lumps, the finds that made the headlines.",
+  "keywords": [
+    "archaeology",
+    "cheese sieves",
+    "kuyavia",
+    "milk residues",
+    "neolithic"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salque et al., Nature, 2013",
+  "source_kind": "paper",
+  "reference": "Salque, Bogucki, Pyzel et al., Earliest evidence for cheese making in the sixth millennium BC in northern Europe, Nature, 2013",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sport-formations-9",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Leicester City won the 2015–16 Premier League with a counter-attacking 4-4-2. Roughly what was its average share of possession?",
+  "options": [
+    "About 42%",
+    "About 55%",
+    "About 65%"
+  ],
+  "correct": 0,
+  "answer": "About 42%, among the lowest in the league. Leicester conceded the ball, defended in two compact banks of four and broke fast into the space behind. Possession follows quality, and teams that are losing tend to hold more of it, so it says little about who wins. The champions spent the season watching others pass.",
+  "move": "Ask what else raises a number before treating it as the goal.",
+  "trap": "Treating possession as the cause of winning rather than its companion.",
+  "keywords": [
+    "leicester city",
+    "possession",
+    "4-4-2",
+    "premier league",
+    "counter-attack"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cox, The Mixer",
+  "source_kind": "book",
+  "reference": "Cox, The Mixer: The Story of Premier League Tactics, from Route One to False Nines, HarperCollins, 2017",
+  "written": "2026-09-27"
+}

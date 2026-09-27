@@ -1,0 +1,33 @@
+{
+  "id": "sport-diet-10",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do endurance sports drinks mix glucose with fructose instead of simply adding more glucose?",
+  "answer": "Because the gut absorbs them through different doors. The transporter that carries glucose across the intestine saturates at about 60 g an hour; fructose uses a separate one. Mixing the two lets athletes absorb and burn roughly 90 g of carbohydrate an hour, where extra glucose alone would sit in the gut and cause distress.",
+  "move": "When one route is full, look for a second route, not a bigger load.",
+  "keywords": [
+    "glucose",
+    "fructose",
+    "sports drinks",
+    "intestinal transporters",
+    "carbohydrate intake"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jeukendrup, Curr Opin Clin Nutr Metab Care, 2010",
+  "source_kind": "paper",
+  "reference": "Jeukendrup, Carbohydrate and exercise performance: the role of multiple transportable carbohydrates, Current Opinion in Clinical Nutrition and Metabolic Care, 2010",
+  "written": "2026-09-27"
+}

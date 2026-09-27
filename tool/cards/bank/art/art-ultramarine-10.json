@@ -1,0 +1,42 @@
+{
+  "id": "art-ultramarine-10",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: Guimet was the only chemist to make artificial ultramarine in 1828, the year the French prize was won?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Christian Gmelin, a chemistry professor in Tübingen, made it independently that year and published his method, while Guimet kept his secret. Chemists had already noticed blue deposits in soda furnaces in the 1810s and matched them to ultramarine. The prize fixed the price, but the recipe was ripe for anyone to find.",
+  "move": "Before crediting a reward, ask who was about to succeed without it.",
+  "trap": "Crediting the prize alone, as if nobody else was close.",
+  "keywords": [
+    "guimet",
+    "christian gmelin",
+    "synthetic ultramarine",
+    "prize",
+    "simultaneous invention"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "art-ultramarine-2"
+  ],
+  "figure": "none",
+  "source": "Plesters, Artists' Pigments, 1993",
+  "source_kind": "book",
+  "reference": "Joyce Plesters, Ultramarine Blue, Natural and Artificial, in Artists' Pigments vol. 2, ed. Ashok Roy, National Gallery of Art, Washington, 1993",
+  "written": "2026-09-27"
+}

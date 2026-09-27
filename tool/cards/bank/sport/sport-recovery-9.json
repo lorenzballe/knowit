@@ -8,11 +8,11 @@
   "principle": "confirmation",
   "question": "Compared with simply resting, what does massage do to the clearance of lactate from a hard-worked muscle?",
   "options": [
-    "Speeds it up",
     "Slows it down",
+    "Speeds it up",
     "Makes no difference"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Slows it down. Measuring forearm blood flow after hard handgrip exercise, Wiltshire and colleagues found massage mechanically impeded flow into the muscle, and lactate cleared more slowly than with passive rest; gentle active exercise cleared it fastest. The flushing story lasted because massage feels good, and feeling good was taken as the proof.",
   "move": "A treatment that feels good has passed one test, not every test.",
   "trap": "Speeds it up: the familiar picture of massage flushing out waste.",

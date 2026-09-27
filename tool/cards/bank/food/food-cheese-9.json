@@ -1,0 +1,38 @@
+{
+  "id": "food-cheese-9",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in the European Union, a German-made hard cheese may not be sold under the name parmesan?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2008 the European Court of Justice held that parmesan evokes Parmigiano Reggiano, a protected designation of origin, so within the EU the word belongs to cheese made to its rules in a zone around Parma and Reggio Emilia. Outside Europe it is widely treated as generic: an American supermarket shelf holds dozens.",
+  "move": "A name that is common in one market can be property in another.",
+  "trap": "Treating the English word as generic because it is everywhere.",
+  "keywords": [
+    "parmesan",
+    "parmigiano reggiano",
+    "protected designation of origin",
+    "european court of justice"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Court of Justice, Case C-132/05, 2008",
+  "source_kind": "primary_document",
+  "reference": "Case C-132/05, Commission v Germany, Court of Justice of the European Communities, judgment of 26 February 2008",
+  "written": "2026-09-27"
+}

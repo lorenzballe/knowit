@@ -1,0 +1,39 @@
+{
+  "id": "cinema-new-wave-10",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Cahiers du cinéma's December 1962 New Wave issue listed French directors with a first feature since 1959. About how many?",
+  "options": [
+    "About 160",
+    "About 15",
+    "About 1,600"
+  ],
+  "correct": 0,
+  "answer": "About 160: its dictionary ran to 162 entries, a few of them older mentors. The names still taught, Truffaut, Godard, Chabrol, Rohmer, Rivette, Varda, Resnais, are a small fraction of that list. Most debutants made one or two films and faded, and the wave is remembered through the handful who kept working.",
+  "move": "Count the ones who started, not only the ones still standing.",
+  "trap": "Counting the dozen names that survived into the film histories.",
+  "keywords": [
+    "new wave",
+    "cahiers du cinéma",
+    "first features",
+    "forgotten directors"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cahiers du cinéma 138, December 1962",
+  "source_kind": "primary_document",
+  "reference": "Cahiers du cinéma, no. 138, special issue Nouvelle Vague, December 1962",
+  "written": "2026-09-27"
+}

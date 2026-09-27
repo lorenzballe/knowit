@@ -1,0 +1,40 @@
+{
+  "id": "food-kimchi-8",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Cabbage for kimchi soaks for hours in brine of around 10% salt. How salty is the finished kimchi?",
+  "options": [
+    "About 10%, like the brine",
+    "About 2 to 3%",
+    "Under 0.5%"
+  ],
+  "correct": 1,
+  "answer": "About 2 to 3%. Brining is short: salt draws water out and wilts the leaves, but little gets in before the cabbage is rinsed and drained. At that level lactic bacteria thrive while most spoilage microbes are held back. Salted harder, it turns harsh and ferments sluggishly; too little, it softens and spoils.",
+  "move": "The strength of a treatment is not the strength of what it leaves behind.",
+  "trap": "Assuming the cabbage ends as salty as the brine it soaked in.",
+  "keywords": [
+    "brining",
+    "salt content",
+    "napa cabbage",
+    "lactic acid bacteria",
+    "osmosis"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cheigh & Park, Crit. Rev. Food Sci., 1994",
+  "source_kind": "paper",
+  "reference": "Cheigh & Park, Biochemical, microbiological, and nutritional aspects of kimchi (Korean fermented vegetable products), Critical Reviews in Food Science and Nutrition, 1994",
+  "written": "2026-09-27"
+}

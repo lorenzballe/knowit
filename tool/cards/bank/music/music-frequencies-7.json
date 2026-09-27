@@ -1,0 +1,40 @@
+{
+  "id": "music-frequencies-7",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Of the octave, the fifth and the major third, which does equal temperament put furthest from its pure ratio?",
+  "options": [
+    "The major third",
+    "The fifth",
+    "The octave"
+  ],
+  "correct": 0,
+  "answer": "The major third. A pure third, 5 to 4, is about 386 cents, a cent being a hundredth of an equal semitone; the tempered third is 400, some 14 cents wide, enough to make a held chord beat. The tempered fifth is 2 cents narrow; the octave is exact. String quartets often pull thirds lower.",
+  "move": "The part everyone talks about fixing is not always the part that suffers.",
+  "trap": "The fifth, because tuning stories are usually about tempering fifths.",
+  "keywords": [
+    "equal temperament",
+    "major third",
+    "cents",
+    "tuning",
+    "just intonation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Benson, Music: A Mathematical Offering",
+  "source_kind": "book",
+  "reference": "Benson, Music: A Mathematical Offering, Cambridge University Press, 2006",
+  "written": "2026-09-27"
+}

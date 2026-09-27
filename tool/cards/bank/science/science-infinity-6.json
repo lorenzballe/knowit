@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "What did Galileo conclude in 1638 on noticing that the square numbers pair off with all whole numbers?",
-  "answer": "That equal, greater and less do not apply to infinite quantities. Squares thin out, 10 below 100 and only 100 below 10,000, yet every number n pairs with its square n². Galileo took the clash as a reason to stop comparing. Cantor, 240 years later, took the pairing itself as the meaning of equal size.",
+  "answer": "That equal, greater and less do not apply to infinite quantities. Squares thin out, 10 up to 100 and only 100 up to 10,000, yet every number n pairs with its square n². Galileo therefore stopped comparing. Cantor, some 240 years later, took the pairing itself as the meaning of equal size.",
   "move": "When a word stops working, choose between dropping it and redefining it.",
   "keywords": [
     "galileo",

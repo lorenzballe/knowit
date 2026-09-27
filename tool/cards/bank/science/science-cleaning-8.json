@@ -5,22 +5,23 @@
   "strand": "science.chemistry_at_home.cleaning",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "availability",
-  "question": "In a typical home, which of these usually carries the densest crowd of bacteria?",
+  "principle": "counterfactual",
+  "question": "Kitchen sponges their owners regularly boiled or microwaved were compared with uncleaned ones. How did their bacteria compare?",
   "options": [
-    "The toilet seat",
-    "The kitchen sponge",
-    "The front door handle"
+    "Far fewer bacteria",
+    "About as many bacteria",
+    "Almost no bacteria"
   ],
   "correct": 1,
-  "answer": "The kitchen sponge. A 2017 German study of used sponges found up to 54 billion bacterial cells per cubic centimetre, a density otherwise met in faeces. Warm, wet and fed with food scraps, its foam offers a vast surface to live on. A toilet seat, dry and regularly wiped, is sparse by comparison.",
-  "move": "The thing that disgusts you most is rarely where the risk lives.",
-  "trap": "The toilet seat, because it is the dirtiest thing to picture.",
+  "answer": "About as many. In a 2017 German study of 14 used sponges, those regularly heated held no significantly fewer bacteria, and more of the kinds linked to bad smells. Heat kills most cells, but survivors regrow within days in warm, wet, food-fed foam. The authors advised replacing sponges weekly instead.",
+  "move": "Judge a fix by the state a week later, not the moment after.",
+  "trap": "Far fewer, because boiling and microwaving kill bacteria.",
   "keywords": [
     "kitchen sponge",
     "bacteria",
-    "household hygiene",
-    "toilet seat"
+    "microwave",
+    "sanitising",
+    "regrowth"
   ],
   "era": "recent",
   "region": "europe",

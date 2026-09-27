@@ -1,0 +1,40 @@
+{
+  "id": "food-beer-9",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "After wet harvests, some beers foam out of the bottle the moment it opens, though carbonation is normal. What is to blame?",
+  "options": [
+    "Fungal proteins from mouldy barley",
+    "Yeast still fermenting in the bottle",
+    "Wild bacteria in the brewery pipes"
+  ],
+  "correct": 0,
+  "answer": "Fungal proteins from mouldy barley. Fusarium fungi thrive on damp grain and make hydrophobins, small proteins that coat microscopic gas bubbles and stop them dissolving. They survive malting and brewing, then seed countless bubbles at once when the cap comes off. Checking the yeast, the obvious suspect, finds nothing wrong.",
+  "move": "When the amount is normal, look at what sets it free.",
+  "trap": "Blaming extra gas from yeast, the usual cause of bursting bottles.",
+  "keywords": [
+    "gushing",
+    "hydrophobins",
+    "fusarium",
+    "malt",
+    "carbonation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sarlin et al., J. Inst. Brew., 2005",
+  "source_kind": "paper",
+  "reference": "Sarlin, Nakari-Setälä, Linder, Penttilä & Haikara, Fungal hydrophobins as predictors of the gushing activity of malt, Journal of the Institute of Brewing, 2005",
+  "written": "2026-09-27"
+}

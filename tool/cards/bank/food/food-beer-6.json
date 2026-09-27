@@ -1,0 +1,36 @@
+{
+  "id": "food-beer-6",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In fifteenth-century England, what separated a drink called ale from one called beer?",
+  "answer": "Hops. Ale was the native malt drink, brewed without them and drunk fresh. Beer, hopped, arrived with brewers from the Low Countries; hops kept it longer and let brewers make it from less malt. English writers attacked it as a foreign drink for generations, yet by the 1600s hopped beer had won.",
+  "move": "When two names cover one product, look for the ingredient that divides them.",
+  "keywords": [
+    "ale",
+    "hops",
+    "low countries",
+    "medieval brewing",
+    "england"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Unger, Beer in the Middle Ages, 2004",
+  "source_kind": "book",
+  "reference": "Unger, Beer in the Middle Ages and the Renaissance, University of Pennsylvania Press, 2004",
+  "written": "2026-09-27"
+}

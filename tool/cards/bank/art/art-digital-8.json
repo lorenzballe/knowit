@@ -5,7 +5,7 @@
   "strand": "art.photography.digital",
   "kind": "pickOne",
   "difficulty": "hard",
-  "principle": "sampling",
+  "principle": "reflection",
   "question": "Light is scarce and noise dominates. Quadruple the light reaching each pixel: how much cleaner does the image get?",
   "options": [
     "Four times cleaner",

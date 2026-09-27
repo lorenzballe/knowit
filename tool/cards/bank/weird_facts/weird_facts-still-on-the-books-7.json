@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-still-on-the-books-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: publishing a call to replace the British monarchy with a republic is still, on paper, punishable by life imprisonment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Section 3 of the Treason Felony Act 1848 punishes publishing an intent to depose the monarch with up to life, and nobody had been prosecuted under it since 1883. In 2003 the House of Lords, asked by The Guardian's editor, called it a relic no peaceful republican need fear, and left the section standing.",
+  "move": "A promise not to enforce a law is not the same as repealing it.",
+  "trap": "Assuming Parliament must have repealed such an obviously dead offence.",
+  "keywords": [
+    "treason felony act 1848",
+    "monarchy",
+    "republicanism",
+    "house of lords",
+    "free expression"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "R (Rusbridger) v Attorney General, 2003",
+  "source_kind": "primary_document",
+  "reference": "https://publications.parliament.uk/pa/ld200203/ldjudgmt/jd030626/rus-1.htm",
+  "written": "2026-09-27"
+}

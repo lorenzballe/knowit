@@ -1,0 +1,33 @@
+{
+  "id": "food-kimchi-6",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What had to be done to kimchi before a Korean astronaut could take it to the space station in 2008?",
+  "answer": "Its bacteria had to be stopped. Live lactic bacteria keep fermenting, and gas swelling a sealed pouch in orbit could burst it inside the cabin. Korea's atomic energy research institute spent years on a version sterilised by radiation that kept its taste and crunch. Yi So-yeon, the first Korean in space, flew with it.",
+  "move": "Before moving something alive, ask what it will keep doing on the way.",
+  "keywords": [
+    "space kimchi",
+    "yi so-yeon",
+    "food irradiation",
+    "international space station",
+    "fermentation gas"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, 2008",
+  "source_kind": "news_archive",
+  "reference": "Choe Sang-Hun, Starship Kimchi: A Bold Taste Goes Where It Has Never Gone Before, The New York Times, 24 February 2008",
+  "written": "2026-09-27"
+}

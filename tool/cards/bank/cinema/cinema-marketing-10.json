@@ -1,0 +1,32 @@
+{
+  "id": "cinema-marketing-10",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the weekend box-office figures announced on Sunday partly a forecast?",
+  "answer": "Because Sunday is not over. Studios report the weekend on Sunday, projecting that evening's shows from the pattern of earlier weekends, and publish actual takings on Monday. The gap is usually small but runs both ways, and a close race for first place can flip. The Sunday estimate is the figure the headlines keep.",
+  "move": "The first figure published is the one remembered, so look for the correction.",
+  "keywords": [
+    "weekend box office",
+    "sunday estimates",
+    "box office reporting",
+    "studios"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vogel, Entertainment Industry Economics, 2015",
+  "source_kind": "book",
+  "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
+  "written": "2026-09-27"
+}

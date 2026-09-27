@@ -1,0 +1,38 @@
+{
+  "id": "sport-altitude-9",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should altitude tents be banned, since they raise red cell mass without the athlete leaving home?",
+  "sides": [
+    "Yes, ban them",
+    "No, allow them"
+  ],
+  "answer": "Anti-doping rules target methods that enhance performance against the spirit of sport, and a tent manufacturing thin air in a bedroom aims at the same result as an EPO injection: more red cells. It favours athletes who can afford the equipment, and in 2006 the World Anti-Doping Agency seriously considered prohibiting it.",
+  "move": "Whichever side you took, whether the means or the result defines cheating decides it.",
+  "counterpoint": "The body does only what it would do in any mountain town: no drug enters the blood, and the gain is capped by physiology rather than by dose. A ban could not be enforced in private homes, and athletes born at altitude carry the same advantage all their lives. The agency left the tents legal.",
+  "keywords": [
+    "altitude tents",
+    "hypoxic tents",
+    "wada",
+    "anti-doping",
+    "red cell mass"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levine, Scand J Med Sci Sports, 2006",
+  "source_kind": "paper",
+  "reference": "Levine, Should artificial high altitude environments be considered doping?, Scandinavian Journal of Medicine & Science in Sports, 2006",
+  "written": "2026-09-27"
+}

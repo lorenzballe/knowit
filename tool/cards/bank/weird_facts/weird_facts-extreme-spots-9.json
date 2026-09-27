@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-extreme-spots-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: more people have now reached the floor of the Challenger Deep than have walked on the Moon?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. For decades only three had: Piccard and Walsh in 1960, James Cameron in 2012. From 2019 the explorer Victor Vescovo's reusable submersible, Limiting Factor, began carrying passengers 10,900 m down, and within a few years the count passed the 12 Apollo moonwalkers. The deepest point on Earth now keeps a guest list.",
+  "move": "A record of who has done something expires whenever someone does it again.",
+  "trap": "Trusting the famous comparison, which held until only a few years ago.",
+  "keywords": [
+    "challenger deep",
+    "mariana trench",
+    "victor vescovo",
+    "submersible",
+    "moon landings"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Young, Expedition Deep Ocean, 2020",
+  "source_kind": "reference_work",
+  "reference": "Young, Expedition Deep Ocean: The First Descent to the Bottom of All Five Oceans, Pegasus Books, 2020",
+  "written": "2026-09-27"
+}

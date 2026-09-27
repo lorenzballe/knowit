@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-local-bans-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "From 1989 Mexico City banned each car from driving one weekday a week, by number plate. What happened to air quality?",
+  "options": [
+    "No measurable improvement was found",
+    "It improved markedly within a year",
+    "It improved, then slowly slipped back"
+  ],
+  "correct": 0,
+  "answer": "No measurable improvement was found. Davis compared pollution just before and after the rule began, across pollutants, and saw no drop. Vehicle numbers rose instead, as households bought second cars, often older and dirtier, for the banned day. A rule meant to take a fifth of cars off the road each weekday added cars.",
+  "move": "Before counting what a ban removes, ask what people buy to escape it.",
+  "trap": "Assuming a fifth fewer cars each day means a fifth less smog.",
+  "keywords": [
+    "hoy no circula",
+    "mexico city",
+    "driving restrictions",
+    "air pollution",
+    "second cars"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Journal of Political Economy, 2008",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1086/529398",
+  "written": "2026-09-27"
+}

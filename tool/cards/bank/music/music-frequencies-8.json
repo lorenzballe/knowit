@@ -1,0 +1,42 @@
+{
+  "id": "music-frequencies-8",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A string beats 3 times a second with a 440 Hz fork. Tightened slightly, it beats 4 times. What was its frequency in Hz?",
+  "value": 443,
+  "unit": "Hz",
+  "answer": "So the string was at 443 Hz.",
+  "move": "A difference tells you how far, not which way; find a second clue.",
+  "trap": "Guessing 437 Hz, as if the beats alone said which side.",
+  "hint": "Beats give the size of the gap; the tightening gives its direction.",
+  "steps": [
+    "Beats count the gap: the string is 437 or 443 Hz.",
+    "Tightening a string raises its pitch.",
+    "The gap widened as the pitch rose, so it started above 440.",
+    "So the string was at 443 Hz."
+  ],
+  "keywords": [
+    "beats",
+    "tuning fork",
+    "string tuning",
+    "interference"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, Musical Acoustics, 2002",
+  "source_kind": "book",
+  "reference": "Hall, Musical Acoustics, 3rd edition, Brooks/Cole, 2002",
+  "written": "2026-09-27"
+}

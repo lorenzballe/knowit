@@ -1,0 +1,32 @@
+{
+  "id": "sport-formations-6",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the Chicago Bears' 73–0 win in the 1940 NFL Championship game do to American football formations?",
+  "answer": "It made the T-formation standard. The Bears set their quarterback directly behind the centre and sent a back running sideways before the snap, a man in motion, hiding where the play would go. Washington had beaten them weeks earlier. Within about a decade almost every professional and college team ran some version of the T.",
+  "move": "One lopsided result can convert a field faster than years of argument.",
+  "keywords": [
+    "t-formation",
+    "chicago bears",
+    "1940 nfl championship",
+    "man in motion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peterson, Pigskin: The Early Years",
+  "source_kind": "book",
+  "reference": "Peterson, Pigskin: The Early Years of Pro Football, Oxford University Press, 1997",
+  "written": "2026-09-27"
+}

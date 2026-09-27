@@ -1,0 +1,38 @@
+{
+  "id": "food-kimchi-10",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: sour, over-ripe kimchi holds more live lactic bacteria than kimchi at its best?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Lactic bacteria multiply to hundreds of millions per gram as kimchi reaches its best, then the acid they have made starts to kill them. By the time it is sharply sour, their counts are falling. The acid records past growth, not the present population: the sourest jar is partly a graveyard.",
+  "move": "A trace left behind measures past activity, not present numbers.",
+  "trap": "Reading sourness as a count of how many bacteria are alive.",
+  "keywords": [
+    "lactic acid bacteria",
+    "over-ripe kimchi",
+    "acidity",
+    "bacterial counts"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hutkins, Fermented Foods, 2019",
+  "source_kind": "book",
+  "reference": "Hutkins, Microbiology and Technology of Fermented Foods, 2nd edition, Wiley-Blackwell, 2019",
+  "written": "2026-09-27"
+}

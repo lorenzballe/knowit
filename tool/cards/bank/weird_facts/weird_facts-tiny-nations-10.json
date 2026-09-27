@@ -1,0 +1,38 @@
+{
+  "id": "weird_facts-tiny-nations-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Sealand, the wartime sea fort declared a principality in 1967, lies outside British territorial waters?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 1968 an English court ruled the fort beyond its jurisdiction, because Britain then claimed only about 5.5 km of sea. The Territorial Sea Act 1987 extended the limit to about 22 km, and the fort, some 12 km off Suffolk, has been inside ever since. The famous ruling expired with the old map.",
+  "move": "A ruling rests on the law of its day; check what changed since.",
+  "trap": "Relying on the 1968 ruling that every account of Sealand repeats.",
+  "keywords": [
+    "sealand",
+    "territorial waters",
+    "micronation",
+    "roughs tower"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Territorial Sea Act 1987",
+  "source_kind": "primary_document",
+  "reference": "Territorial Sea Act 1987, Parliament of the United Kingdom, 1987",
+  "written": "2026-09-27"
+}

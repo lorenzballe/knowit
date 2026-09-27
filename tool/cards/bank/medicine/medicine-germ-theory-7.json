@@ -1,0 +1,40 @@
+{
+  "id": "medicine-germ-theory-7",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Koch's rules demand that a disease's germ be grown pure in the laboratory. Which of these has never been grown on lab media?",
+  "options": [
+    "The tuberculosis bacillus",
+    "The leprosy bacillus",
+    "The cholera bacterium"
+  ],
+  "correct": 1,
+  "answer": "The leprosy bacillus. Gerhard Armauer Hansen saw it in 1873, one of the first bacteria linked to a human disease, but it has never grown on artificial media. It survives only in living tissue, and laboratories raise it in mouse footpads and armadillos. By the letter of Koch's rules, its guilt was never formally proved.",
+  "move": "A rule for proving guilt can fail on the most obvious culprit.",
+  "trap": "The tuberculosis bacillus, notorious for taking weeks to grow.",
+  "keywords": [
+    "leprosy",
+    "koch's postulates",
+    "bacterial culture",
+    "armadillos",
+    "hansen"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scollard et al., Clinical Microbiology Reviews, 2006",
+  "source_kind": "paper",
+  "reference": "Scollard et al., The continuing challenges of leprosy, Clinical Microbiology Reviews, 2006",
+  "written": "2026-09-27"
+}

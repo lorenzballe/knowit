@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-extreme-spots-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "also": [
+    "nature.weather.storms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Africa holds most of Earth's 500 most lightning-struck spots. Where is the single most lightning-struck place?",
+  "options": [
+    "The Congo Basin, in Central Africa",
+    "The Florida peninsula, in the US",
+    "Lake Maracaibo, in Venezuela"
+  ],
+  "correct": 2,
+  "answer": "Lake Maracaibo, in Venezuela. Satellite data give it about 233 flashes per km² a year: warm lake water meets cool air sliding off the Andes, building storms most nights. Africa has 283 of the top 500 spots, and the Congo topped older, coarser maps. Sailors have long steered by it.",
+  "move": "The strongest group does not have to hold the strongest member.",
+  "trap": "Choosing the Congo, because Africa dominates the list and held the old title.",
+  "keywords": [
+    "lightning",
+    "lake maracaibo",
+    "venezuela",
+    "satellite data",
+    "congo basin"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Albrecht et al., BAMS, 2016",
+  "source_kind": "statistics",
+  "reference": "Albrecht et al., Where are the lightning hotspots on Earth?, Bulletin of the American Meteorological Society, 2016",
+  "written": "2026-09-27"
+}

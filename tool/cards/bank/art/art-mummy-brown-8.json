@@ -1,0 +1,40 @@
+{
+  "id": "art-mummy-brown-8",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "A London colourman ground mummy only as orders came in. How long did he say one mummy supplied his customers?",
+  "options": [
+    "About three months",
+    "About two years",
+    "About twenty years"
+  ],
+  "correct": 2,
+  "answer": "About twenty years. He told the chemist Arthur Church so, and Church printed it in his handbook on paint of 1890. Mummy was a glazing brown, brushed thinly into shadows, and one dried body grinds to kilograms of powder. For a single shop, that is five bodies a century.",
+  "move": "Before picturing an industry, ask how much each customer actually used.",
+  "trap": "Picturing warehouses of mummies ground by the tonne for artists.",
+  "keywords": [
+    "mummy brown",
+    "colourman",
+    "arthur church",
+    "glazing",
+    "demand"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Church, The Chemistry of Paints and Painting, 1890",
+  "source_kind": "book",
+  "reference": "A. H. Church, The Chemistry of Paints and Painting, Seeley and Co., London, 1890",
+  "written": "2026-09-27"
+}

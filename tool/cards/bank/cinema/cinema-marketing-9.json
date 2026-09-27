@@ -1,0 +1,37 @@
+{
+  "id": "cinema-marketing-9",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should studio spending on Oscar campaigns be capped?",
+  "sides": [
+    "Yes, cap it",
+    "No, leave it open"
+  ],
+  "answer": "Awards campaigns turn a vote on artistic merit into a contest of budgets. Studios spend millions on screenings, dinners, advertising and consultants to reach a few thousand voters, and small films cannot match that. The Academy already limits parties and mailings, which admits the problem. A cap would let the films, not the chequebooks, compete.",
+  "move": "Whichever side you took, it turns on whether exposure or money is deciding votes.",
+  "counterpoint": "Campaigns are how small films get seen at all. Voters cannot watch everything, and screenings and advertising put a modest independent film in front of them. A cap would be hard to police, since publicity, press tours and festival screenings blur together, and it would favour films already famous before the season began.",
+  "keywords": [
+    "oscar campaigns",
+    "academy awards",
+    "awards season",
+    "film marketing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy campaign regulations",
+  "source_kind": "primary_document",
+  "reference": "Academy of Motion Picture Arts and Sciences, Awards Campaign Promotional Regulations, 2024",
+  "written": "2026-09-27"
+}

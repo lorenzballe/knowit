@@ -1,0 +1,43 @@
+{
+  "id": "art-ultramarine-8",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Ground in egg, ultramarine glows; ground in linseed oil, the same powder looks dark and dull. Why?",
+  "options": [
+    "The oil yellows over the blue",
+    "The oil bends light like the grains",
+    "The oil dissolves some of the blue"
+  ],
+  "correct": 1,
+  "answer": "The oil bends light like the grains. Lazurite, the blue mineral, and linseed oil both have a refractive index near 1.5, so light crosses each grain's edge without scattering back. Lean egg tempera leaves air around the grains, and every edge shines. A thick ultramarine layer in oil reads almost black, so painters often laid it over white.",
+  "move": "What surrounds a particle can matter as much as the particle.",
+  "trap": "Blaming yellowed oil, the usual suspect when old paint looks wrong.",
+  "keywords": [
+    "ultramarine",
+    "linseed oil",
+    "refractive index",
+    "egg tempera",
+    "lazurite"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gettens and Stout, Painting Materials, 1942",
+  "source_kind": "reference_work",
+  "reference": "Rutherford J. Gettens and George L. Stout, Painting Materials: A Short Encyclopaedia, Van Nostrand, 1942",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "art-ultramarine-9",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Yves Klein patented the blue named after him, International Klein Blue?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 1960 Klein lodged a sealed description with France's patent office in a Soleau envelope, which proves a date but grants no monopoly. What it described was a binder, a synthetic resin in solvents, not a new pigment. The blue was ordinary synthetic ultramarine, held so lightly it kept the velvet of dry powder.",
+  "move": "Ask what exactly a registration protects before calling it ownership.",
+  "trap": "Repeating the famous story that an artist once patented a colour.",
+  "keywords": [
+    "yves klein",
+    "international klein blue",
+    "soleau envelope",
+    "binder",
+    "synthetic ultramarine"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weitemeier, Yves Klein, 1994",
+  "source_kind": "book",
+  "reference": "Hannah Weitemeier, Yves Klein 1928-1962: International Klein Blue, Taschen, 1994",
+  "written": "2026-09-27"
+}

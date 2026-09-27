@@ -1,0 +1,33 @@
+{
+  "id": "sport-diet-7",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can rinsing a sports drink round the mouth and spitting it out improve a one-hour time trial?",
+  "answer": "Because the mouth reports carbohydrate to the brain. Carter, Jeukendrup and Jones found cyclists rode a one-hour time trial almost 3% faster after rinsing with a carbohydrate solution than with a placebo, though none was swallowed. Brain scans later showed such rinses light up reward areas: the legs work harder when the brain expects fuel.",
+  "move": "Some signals change behaviour before the thing they announce arrives.",
+  "keywords": [
+    "mouth rinse",
+    "carbohydrate",
+    "time trial",
+    "brain",
+    "cyclists"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carter et al., Med Sci Sports Exerc, 2004",
+  "source_kind": "paper",
+  "reference": "Carter, Jeukendrup & Jones, The effect of carbohydrate mouth rinse on 1-h cycle time trial performance, Medicine & Science in Sports & Exercise, 2004",
+  "written": "2026-09-27"
+}

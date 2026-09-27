@@ -1,0 +1,39 @@
+{
+  "id": "sport-set-pieces-7",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In top-level football, roughly what share of direct free kicks shot at goal end up in the net?",
+  "options": [
+    "About 1 in 15",
+    "About 1 in 4",
+    "About 1 in 2"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 15; most analyses put it around 5 to 7%. A wall covers much of the goal, the kick is usually 20 m or more out, and the keeper sets himself first. The replays show the ones that curl in, not the dozens that hit the wall or clear the bar.",
+  "move": "A highlight reel is a list of exceptions.",
+  "trap": "Judging the rate from replays, which show mostly the ones that score.",
+  "keywords": [
+    "free kicks",
+    "conversion rate",
+    "defensive wall",
+    "football analytics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Anderson & Sally, The Numbers Game",
+  "source_kind": "book",
+  "reference": "Anderson & Sally, The Numbers Game: Why Everything You Know About Football Is Wrong, Viking, 2013",
+  "written": "2026-09-27"
+}

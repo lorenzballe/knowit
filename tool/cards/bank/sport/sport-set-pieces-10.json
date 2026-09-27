@@ -1,0 +1,41 @@
+{
+  "id": "sport-set-pieces-10",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A penalty is struck at 100 km/h from 11 m. How many seconds does the ball take to reach the goal line?",
+  "value": 0.4,
+  "unit": "seconds",
+  "tolerance": 0.05,
+  "answer": "Rounded, about 0.4 seconds.",
+  "move": "When reacting takes longer than the event, decide before it starts.",
+  "hint": "Turn km/h into metres per second by dividing by 3.6.",
+  "steps": [
+    "100 km/h ÷ 3.6 ≈ 28 m/s.",
+    "11 m ÷ 28 m/s ≈ 0.39 s.",
+    "Rounded, about 0.4 seconds."
+  ],
+  "keywords": [
+    "penalty kick",
+    "ball speed",
+    "goalkeeper",
+    "reaction time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game, Law 14",
+  "source_kind": "standard",
+  "reference": "The International Football Association Board, Laws of the Game 2024/25, Law 14: The Penalty Kick, 2024",
+  "written": "2026-09-27"
+}

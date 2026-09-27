@@ -1,0 +1,32 @@
+{
+  "id": "music-film-scores-6",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 1920s cinema pianist find music for a new silent feature on its first night?",
+  "answer": "From a cue sheet and a mood book. Distributors sent sheets listing each scene, its timing and suggested pieces, and anthologies such as Ernő Rapée's Motion Picture Moods of 1924 sorted short pieces by mood, with the moods listed in every page margin. A player could jump between them as the reels ran.",
+  "move": "A library sorted by use lets a stranger sound prepared.",
+  "keywords": [
+    "silent film",
+    "cue sheets",
+    "motion picture moods",
+    "cinema pianist"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rapée, Motion Picture Moods, 1924",
+  "source_kind": "primary_document",
+  "reference": "Rapée, Motion Picture Moods for Pianists and Organists, G. Schirmer, 1924",
+  "written": "2026-09-27"
+}

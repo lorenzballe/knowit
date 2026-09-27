@@ -1,0 +1,32 @@
+{
+  "id": "cinema-hits-9",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a study of some 2,000 films find stars do to a film's box-office risk?",
+  "answer": "Almost nothing reliable. Arthur De Vany and David Walls found film revenues have such extreme tails that a few titles take most of the money and averages mislead. Star vehicles earned somewhat more on average, but flopped too; no name made a hit likely. Studios pay millions for odds that barely move.",
+  "move": "When outcomes swing wildly, a good average can still hide ruin.",
+  "keywords": [
+    "star power",
+    "box office risk",
+    "heavy tails",
+    "arthur de vany"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "De Vany and Walls, 1999",
+  "source_kind": "paper",
+  "reference": "De Vany and Walls, Uncertainty in the Movie Industry: Does Star Power Reduce the Terror of the Box Office?, Journal of Cultural Economics, 1999",
+  "written": "2026-09-27"
+}

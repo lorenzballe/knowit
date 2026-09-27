@@ -1,0 +1,40 @@
+{
+  "id": "sport-altitude-6",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Cyclists slept four weeks in rooms thinned to match 3,000 m or in normal air, with nobody told which. The result?",
+  "options": [
+    "Neither group improved more than the other",
+    "Only the thin-air group got faster",
+    "Both improved, thin air twice as much"
+  ],
+  "correct": 0,
+  "answer": "Neither group improved more than the other. In Siebenmann and colleagues' double-blind trial, 16 hours a day in air matching 3,000 m, for four weeks, did not improve endurance performance beyond placebo. Earlier open trials had reported gains, but there the athletes knew they were sleeping high and expected to benefit.",
+  "move": "Hide the treatment from the people who hope it works.",
+  "trap": "Crediting thin air with gains that expectation and training could explain.",
+  "keywords": [
+    "live high train low",
+    "placebo",
+    "double-blind trial",
+    "hypoxic rooms",
+    "cyclists"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Siebenmann et al., J Appl Physiol, 2012",
+  "source_kind": "paper",
+  "reference": "Siebenmann et al., Live high-train low using normobaric hypoxia: a double-blinded, placebo-controlled study, Journal of Applied Physiology, 2012",
+  "written": "2026-09-27"
+}

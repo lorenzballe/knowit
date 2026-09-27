@@ -1,0 +1,40 @@
+{
+  "id": "medicine-germ-theory-6",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which was the first disease shown by experiment to be caused by a living microbe passing from host to host?",
+  "options": [
+    "Anthrax in cattle",
+    "A disease of silkworms",
+    "Cholera in people"
+  ],
+  "correct": 1,
+  "answer": "A disease of silkworms. In 1835 Agostino Bassi, an Italian trained in law, showed that muscardine, which was ruining silk farms, was caused by a fungus that spread from sick worms to healthy ones by contact. That was over 40 years before Koch's work on anthrax. The fungus now carries his name: Beauveria bassiana.",
+  "move": "The famous founder of an idea usually had a forgotten predecessor.",
+  "trap": "Anthrax, the disease Koch used to launch bacteriology in 1876.",
+  "keywords": [
+    "agostino bassi",
+    "silkworms",
+    "muscardine",
+    "fungus",
+    "contagion"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ainsworth, Introduction to the History of Mycology, 1976",
+  "source_kind": "book",
+  "reference": "Ainsworth, Introduction to the History of Mycology, Cambridge University Press, 1976",
+  "written": "2026-09-27"
+}

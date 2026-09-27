@@ -1,0 +1,40 @@
+{
+  "id": "cinema-new-wave-7",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Why does Godard's Contempt, 1963, open with Brigitte Bardot lying naked, asking which parts of her body are loved?",
+  "options": [
+    "Godard's riposte to the French censor",
+    "A scene taken from Moravia's novel",
+    "The producers demanded more nudity"
+  ],
+  "correct": 2,
+  "answer": "The producers demanded more nudity. Joseph E. Levine and Carlo Ponti, paying for a Bardot film, found the first cut too chaste, and Godard shot a new opening in response. He filmed it through red and blue filters as a flat inventory of her body, which critics read as a dry reply to the order.",
+  "move": "Before reading intent into a scene, ask who asked for it.",
+  "trap": "Reading every scene of an auteur's film as his free choice.",
+  "keywords": [
+    "contempt",
+    "jean-luc godard",
+    "brigitte bardot",
+    "joseph e. levine",
+    "producers"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MacCabe, Godard, 2003",
+  "source_kind": "book",
+  "reference": "MacCabe, Godard: A Portrait of the Artist at Seventy, Bloomsbury, 2003",
+  "written": "2026-09-27"
+}

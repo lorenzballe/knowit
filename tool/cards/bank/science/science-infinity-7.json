@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "confirmation",
-  "question": "Write 4 as 2², swap each 2 for a 3, subtract 1, then repeat with bases 4, 5, 6… Where does it end?",
+  "question": "Write 4 as 2², change each 2 to 3, subtract 1; rewrite in base 3, exponents too, and repeat upwards. Where does it end?",
   "options": [
     "It reaches zero",
     "It grows without end",

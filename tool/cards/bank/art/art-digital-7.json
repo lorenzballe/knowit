@@ -34,6 +34,9 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
+  "builds_on": [
+    "technology-4"
+  ],
   "figure": "none",
   "source": "Fraser & Schewe, Real World Camera Raw, 2005",
   "source_kind": "book",

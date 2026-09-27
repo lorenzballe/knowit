@@ -1,0 +1,39 @@
+{
+  "id": "food-kimchi-9",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.kimchi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the WHO's cancer research agency lists traditional Asian pickled vegetables as possibly carcinogenic?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1993 the International Agency for Research on Cancer put traditional Asian pickled vegetables in Group 2B, possibly carcinogenic to humans, chiefly on studies of stomach and oesophageal cancer in China, Japan and Korea. Heavy salt, nitrosamines and moulds are the suspects. The probiotic halo and the cancer list describe the same jars.",
+  "move": "Test a food's good name against the evidence that could sink it.",
+  "trap": "Trusting the health halo that fermented foods carry.",
+  "keywords": [
+    "iarc",
+    "pickled vegetables",
+    "stomach cancer",
+    "salt",
+    "nitrosamines"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IARC Monographs, Volume 56, 1993",
+  "source_kind": "institution",
+  "reference": "IARC Monographs on the Evaluation of Carcinogenic Risks to Humans, Volume 56: Some Naturally Occurring Substances, International Agency for Research on Cancer, 1993",
+  "written": "2026-09-27"
+}
