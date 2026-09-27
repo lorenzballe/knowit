@@ -6,15 +6,15 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "confounding",
-  "question": "True or false: in trials of drugs for nerve pain from 1990 to 2013, placebo responses grew in American trials but not elsewhere?",
+  "question": "True or false: in trials of drugs for nerve pain from 1990 to 2013, placebo responses grew in European and Asian trials as in American ones?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 0,
-  "answer": "True. Tuttle and colleagues found placebo groups in US trials improving more and more while drug groups stayed flat, so the drugs' advantage shrank. European and Asian trials showed no such rise. US trials had grown larger and longer over those years, which points to how trials were run, not to more suggestible patients.",
+  "correct": 1,
+  "answer": "False. Tuttle and colleagues found the rise only in US trials, where placebo groups improved more and more while drug groups stayed flat, so the drugs' advantage shrank. Trials elsewhere showed no such rise. US trials had grown larger and longer over those years, which points to how trials were run, not to more suggestible patients.",
   "move": "When a result drifts over time, check what changed in how it was measured.",
-  "trap": "Treating the placebo response as a fixed property of a sugar pill.",
+  "trap": "True, treating the placebo response as a fixed property of a pill.",
   "keywords": [
     "placebo response",
     "neuropathic pain",

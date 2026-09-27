@@ -13,7 +13,7 @@
     "About half a second"
   ],
   "correct": 0,
-  "answer": "About 50 milliseconds. Sound covers about 343 metres a second, so 17 metres takes a twentieth of a second, a lag players can hear. Played strictly by ear, the back of the orchestra would drag behind the front. So players watch the conductor's beat, and those at the back learn to play slightly ahead of what they hear.",
+  "answer": "About 50 milliseconds. Sound covers about 343 metres a second, so 17 metres takes a twentieth of a second. Played strictly by ear, the back of the orchestra would drag behind the front. So players watch the conductor's beat, and those at the back play slightly ahead of what they hear.",
   "move": "Over distance, trust the shared signal you see, not the one you hear.",
   "trap": "Sound feels instant across a room, so the lag seems negligible.",
   "keywords": [

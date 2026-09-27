@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does bass coming straight from the stage weaken as it skims low over rows of seated listeners?",
-  "answer": "Because the rows act as a filter. Sound grazing across seat backs and heads sets up resonances in the gaps between rows, and the direct sound loses a band of low frequencies, roughly 100 to 200 Hz, often by more than 10 decibels. Two teams measured this seat dip in 1964. Reflections arriving from the ceiling, above the seats, restore the bass.",
+  "answer": "Because the rows act as a filter. Sound grazing over seats and heads sets up resonances in the gaps between rows, and the direct sound loses a band of low frequencies, roughly 100 to 200 Hz, often by over 10 decibels. The seat dip was measured in 1964. Reflections from the ceiling restore the bass.",
   "move": "Before blaming the source, look at what the signal crossed.",
   "keywords": [
     "seat dip effect",

@@ -6,14 +6,14 @@
   "kind": "pickOne",
   "difficulty": "hard",
   "principle": "conditional",
-  "question": "With a runner on first and nobody out, a sacrifice bunt moves him to second at the cost of an out. What happens to expected runs?",
+  "question": "Runner on first, nobody out: a sacrifice bunt moves him to second at the cost of an out. What happens to expected runs?",
   "options": [
     "They fall",
     "They rise",
     "They stay level"
   ],
   "correct": 0,
-  "answer": "They fall, by roughly a quarter in run-expectancy tables going back to Lindsey's in 1963. An out is worth more than one base. Yet the chance of scoring at least one run barely moves, so late in a close game, when a single run decides it, the bunt is close to break-even. The verdict hangs on what is being counted.",
+  "answer": "They fall, by roughly a quarter in run-expectancy tables since Lindsey's in 1963: an out is worth more than a base. Yet the chance of scoring at least one run barely moves, so late in a close game, when one run decides it, the bunt is near break-even.",
   "move": "Before judging a move, ask whether the goal is many points or one.",
   "trap": "Assuming a runner in scoring position must be worth the out.",
   "keywords": [

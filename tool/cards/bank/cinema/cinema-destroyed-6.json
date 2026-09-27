@@ -1,0 +1,38 @@
+{
+  "id": "cinema-destroyed-6",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: colour films from the 1940s often survive in truer colour than films from the 1970s?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Three-strip Technicolor recorded each scene on three black-and-white negatives, one per primary colour, and silver images barely fade. From the 1950s most films used single-strip Eastmancolor, whose dyes decay; many 1970s prints and negatives have faded towards pink. A 1939 film can be reprinted from its separations with its colour intact.",
+  "move": "Newer is not sturdier; ask what the thing is made of.",
+  "trap": "Assuming newer film stock must have kept its colour better.",
+  "keywords": [
+    "technicolor",
+    "eastmancolor",
+    "colour fading",
+    "film preservation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Read and Meyer, Restoration of Motion Picture Film",
+  "source_kind": "book",
+  "reference": "Read and Meyer, Restoration of Motion Picture Film, Butterworth-Heinemann, 2000",
+  "written": "2026-09-27"
+}

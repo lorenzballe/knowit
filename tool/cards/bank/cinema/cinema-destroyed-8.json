@@ -1,0 +1,39 @@
+{
+  "id": "cinema-destroyed-8",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "RKO cut more than 40 minutes from Welles's The Magnificent Ambersons in 1942. What happened to the cut footage?",
+  "options": [
+    "It burned in a vault fire",
+    "It was destroyed to free space",
+    "It rotted, uncopied, in storage"
+  ],
+  "correct": 1,
+  "answer": "It was destroyed to free space. With the short version released, RKO had no use for the trims of Welles's longer cut, and nitrate took costly, dangerous vault room, so the footage was junked. The last hope is a rough-cut print sent to Welles in Brazil in 1942, which has never turned up.",
+  "move": "Before blaming an accident, ask who had a reason to throw it away.",
+  "trap": "Blaming a vault fire, the vivid and familiar way nitrate films vanished.",
+  "keywords": [
+    "magnificent ambersons",
+    "orson welles",
+    "rko",
+    "nitrate film"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carringer, The Magnificent Ambersons, 1993",
+  "source_kind": "book",
+  "reference": "Carringer, The Magnificent Ambersons: A Reconstruction, University of California Press, 1993",
+  "written": "2026-09-27"
+}
