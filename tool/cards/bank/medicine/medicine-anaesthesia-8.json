@@ -11,11 +11,11 @@
   "principle": "reflection",
   "question": "Core temperature often drops about 1 °C in the first hour of general anaesthesia. Where does most of that heat go?",
   "options": [
-    "Out through the open wound",
     "Into the patient's own arms and legs",
+    "Out through the open wound",
     "Into the cold air of the theatre"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Into the patient's own arms and legs. Awake, the body keeps warm blood in its core by narrowing vessels in the limbs. Anaesthetics switch that reflex off, so core heat floods outwards, a redistribution behind most of the first hour's fall. Loss to the room dominates later. Warming patients before induction blunts the drop.",
   "move": "Before blaming a loss on leakage, check whether it simply moved inside.",
   "trap": "Blaming the open wound, the obvious place for heat to escape.",

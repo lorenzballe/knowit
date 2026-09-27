@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-axolotls-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does an adult axolotl's skin do differently after a deep cut?",
+  "answer": "It heals without a scar. Seifert and colleagues cut full-thickness wounds in adult axolotls and watched the skin rebuild its layers, glands and pigment with no lasting scar tissue. In mammals, cells called fibroblasts pack such a wound with dense collagen, which stays as a scar. On the axolotl the cut fades back into ordinary skin.",
+  "move": "A repair that leaves no trace needs a different crew, not a faster one.",
+  "keywords": [
+    "axolotl",
+    "skin",
+    "scar-free healing",
+    "fibroblasts",
+    "collagen"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seifert et al., PLoS ONE, 2012",
+  "source_kind": "primary_document",
+  "reference": "Seifert, Monaghan, Voss & Maden, Skin regeneration in adult axolotls: a blueprint for scar-free healing in vertebrates, PLoS ONE, 2012",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-pasta-10",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do villages in Emilia serve free pasta every 25 July?",
+  "answer": "To repeat the Cervi family's feast. On 25 July 1943, when Mussolini was deposed, the Cervi farmers of Campegine cooked huge pots of buttered pasta and fed their whole village. That December the seven Cervi brothers, active in the Resistance, were shot by Fascists. The pastasciutta antifascista returns each summer, a plate of noodles as a political act.",
+  "move": "A shared meal can carry a memory longer than any monument.",
+  "keywords": [
+    "cervi brothers",
+    "pastasciutta antifascista",
+    "resistance",
+    "mussolini",
+    "campegine"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alcide Cervi, I miei sette figli, 1955",
+  "source_kind": "book",
+  "reference": "Cervi, I miei sette figli, ed. Renato Nicolai, Editori Riuniti, 1955",
+  "written": "2026-09-27"
+}

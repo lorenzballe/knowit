@@ -9,10 +9,10 @@
   "question": "Zosurabalpin, a new antibiotic class reported in 2024, jams the machinery that builds bacteria's outer coat. Which bacteria does it kill?",
   "options": [
     "Most bacteria that have an outer coat",
-    "Essentially only Acinetobacter baumannii",
-    "Only bacteria without an outer coat"
+    "Only bacteria without an outer coat",
+    "Essentially only Acinetobacter baumannii"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Essentially only Acinetobacter baumannii. It blocks the transporter that carries lipopolysaccharide, the fat-and-sugar molecule of the outer coat, to the surface, and fits only Acinetobacter's version, a drug-resistant hospital killer. The narrowness spares gut bacteria. It also means doctors must identify the culprit before they can prescribe it.",
   "move": "A shared part is not a shared weakness if every version is shaped differently.",
   "trap": "Expecting a drug aimed at a common structure to hit every owner.",

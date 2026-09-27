@@ -1,0 +1,33 @@
+{
+  "id": "food-pasta-7",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Renaissance Italian recipe books usually dress a dish of macaroni?",
+  "answer": "With grated cheese, butter, sugar and cinnamon. Cookbooks such as Bartolomeo Scappi's of 1570 seasoned pasta the way they seasoned meat, sweet and spiced, as a rich man's dish. Tomatoes had barely reached Italy, and the first printed recipe for pasta with tomato came from Naples in the 1830s. A Pope's cook sprinkled his macaroni like a dessert.",
+  "move": "Today's pairing of two foods is usually younger than either food.",
+  "keywords": [
+    "macaroni",
+    "bartolomeo scappi",
+    "renaissance cookery",
+    "cinnamon",
+    "tomato sauce"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Serventi & Sabban, Pasta: The Story of a Universal Food",
+  "source_kind": "book",
+  "reference": "Serventi & Sabban, Pasta: The Story of a Universal Food, Columbia University Press, 2002",
+  "written": "2026-09-27"
+}

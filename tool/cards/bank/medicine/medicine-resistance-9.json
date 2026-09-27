@@ -9,10 +9,10 @@
   "question": "A ward has a record 12 resistant-bacteria infections one year, launches a hand-gel campaign, then has 6 the next. What does that show?",
   "options": [
     "The campaign roughly halved infections",
-    "Little, since record years tend to fall back",
-    "The campaign failed, as 6 is still many"
+    "The campaign failed, as 6 is still many",
+    "Little, since record years tend to fall back"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Little, on its own. A campaign launched after a record year starts at a peak, and peaks are partly bad luck, so the next year tends to be lower anyway. With counts this small, 12 to 6 is within chance. The test is a similar ward without the campaign, over several years.",
   "move": "Measure a fix started at a peak against places that did nothing.",
   "trap": "Crediting the campaign because it followed the worst year on record.",

@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-axolotls-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: axolotls stay aquatic larvae for life because their tissues cannot respond to thyroid hormone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Their tissues respond readily: small doses of thyroxine, the hormone that drives amphibian metamorphosis, turn an axolotl into a land-dwelling adult within weeks. The block sits upstream, in weak signalling from the hypothalamus and pituitary to the thyroid gland. The machinery for adulthood is intact, waiting for an order that never comes.",
+  "move": "When something never changes, ask whether the signal or the receiver failed.",
+  "trap": "Assuming a missing response means the tissue cannot hear the signal.",
+  "keywords": [
+    "axolotl",
+    "metamorphosis",
+    "thyroxine",
+    "pituitary",
+    "neoteny"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenkilde & Ussing, Int. J. Dev. Biology, 1996",
+  "source_kind": "primary_document",
+  "reference": "Rosenkilde & Ussing, What mechanisms control neoteny and regulate induced metamorphosis in urodeles?, International Journal of Developmental Biology, 1996",
+  "written": "2026-09-27"
+}
