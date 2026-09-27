@@ -1,0 +1,38 @@
+{
+  "id": "language-how-they-form-9",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can watching television spread accent features to the people who watch it?",
+  "sides": [
+    "Yes, it can",
+    "No, contact does"
+  ],
+  "answer": "In Glasgow, adolescents most emotionally engaged with the London soap EastEnders used more of London's f for th, as in fink for think, even after other factors were weighed. Television does not work alone, but it makes a feature familiar and attractive, and viewers then take it up from friends who already use it.",
+  "move": "Whichever side you took, whether a screen can stand in for a friend decides it.",
+  "counterpoint": "Decades of national broadcasting have not flattened American or British accents; the Northern Cities Shift grew in the age of network news, moving away from the voices on screen. Sound changes spread through people who talk to each other. The Glasgow result is a correlation from one city, and cannot show which came first.",
+  "keywords": [
+    "television",
+    "eastenders",
+    "glasgow",
+    "th-fronting",
+    "media influence"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stuart-Smith et al., Language, 2013",
+  "source_kind": "paper",
+  "reference": "Stuart-Smith, Pryce, Timmins & Gunter, Television can also be a factor in language change: evidence from an urban dialect, Language 89(3), 2013",
+  "written": "2026-09-27"
+}

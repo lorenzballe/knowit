@@ -1,0 +1,43 @@
+{
+  "id": "language-how-they-form-8",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In a Philadelphia suburb, which incoming children fully mastered the city's intricate rule for the short a vowel?",
+  "options": [
+    "Those who arrived before age eight",
+    "Mainly those with Philadelphia-born parents",
+    "All who had lived there six years"
+  ],
+  "correct": 1,
+  "answer": "Mainly those with Philadelphia-born parents. In Arvilla Payne's study, children of out-of-state parents picked up the simpler local vowels, especially if they arrived young, but rarely the short a rule, which works word by word: mad and bad take one vowel, sad another. It had to be heard at home.",
+  "move": "What has to be learned case by case passes through close contact.",
+  "trap": "Trusting early arrival alone to give a child the full local accent.",
+  "keywords": [
+    "philadelphia",
+    "short a",
+    "children",
+    "arvilla payne",
+    "dialect acquisition"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "language-how-they-form-4"
+  ],
+  "figure": "none",
+  "source": "Payne, in Locating Language, 1980",
+  "source_kind": "paper",
+  "reference": "Payne, Factors controlling the acquisition of the Philadelphia dialect by out-of-state children, in Labov (ed.), Locating Language in Time and Space, Academic Press, 1980",
+  "written": "2026-09-27"
+}

@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why did the first computer reverbs ring with a faint metallic pitch, and how was it tamed?",
-  "answer": "Because a single repeating delay is a note. Manfred Schroeder built reverb from delays fed back into themselves; an echo returning every 30 milliseconds buzzes at about 33 hertz. He ran several in parallel, their lengths chosen to share no common rhythm, then smeared the result through further filters. Clashing repeats add up to a wash.",
+  "answer": "Because one repeating delay is a note. Manfred Schroeder built reverb from delays fed back into themselves; an echo returning every 30 milliseconds buzzes at about 33 hertz. He ran several in parallel, their lengths chosen to share no common rhythm, then smeared the result with further filters. Clashing repeats blur into a wash.",
   "move": "Repeat one pattern and it becomes a signal; mix mismatched ones and it becomes texture.",
   "keywords": [
     "manfred schroeder",

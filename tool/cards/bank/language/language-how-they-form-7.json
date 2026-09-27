@@ -1,0 +1,40 @@
+{
+  "id": "language-how-they-form-7",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Many Canadians say writer and rider with the same quick flapped middle consonant. What still tells the two words apart?",
+  "options": [
+    "They sound exactly the same",
+    "A faint t kept in writer",
+    "The vowel before the flap"
+  ],
+  "correct": 2,
+  "answer": "The vowel before the flap. Canadian English raises the vowel of write before voiceless sounds such as t, and writer keeps that raised vowel even after its t has turned into the flap it shares with rider. The same raising gives about its Canadian vowel, which is not the aboot of the jokes.",
+  "move": "When two things match at one point, look at what came just before.",
+  "trap": "Assuming words with identical consonants must end up sounding identical.",
+  "keywords": [
+    "canadian raising",
+    "writer",
+    "rider",
+    "flapping",
+    "canadian english"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chambers, Canadian Journal of Linguistics, 1973",
+  "source_kind": "paper",
+  "reference": "Chambers, Canadian Raising, Canadian Journal of Linguistics 18(2), 1973",
+  "written": "2026-09-27"
+}

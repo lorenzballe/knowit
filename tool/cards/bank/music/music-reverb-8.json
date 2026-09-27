@@ -13,7 +13,7 @@
     "A longer gap before the reverb"
   ],
   "correct": 1,
-  "answer": "Less dry voice against the reverb. As a source moves away, its direct sound fades while the room's reverberation stays roughly constant, so their ratio tracks distance. Tail length describes the room, not the distance. A longer gap before the reverb does the opposite: it implies nearby walls far behind, and the singer steps forward.",
+  "answer": "Less dry voice against the reverb. As a source moves away, its direct sound fades while the room's reverberation stays roughly constant, so their ratio tracks distance. Tail length describes the room, not the distance. A longer gap before the reverb does the opposite: the voice arrives well ahead of the room, as a close singer's does.",
   "move": "When two cues usually arrive together, find out which one the judgement truly reads.",
   "trap": "Big distant sounds are heard in big spaces, so length seems like distance.",
   "keywords": [
