@@ -1,0 +1,33 @@
+{
+  "id": "art-darkroom-6",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did two chemists in Widnes publish in 1890 that turned darkroom craft into measurement?",
+  "answer": "The characteristic curve. Ferdinand Hurter and Vero Charles Driffield exposed plates in measured steps, measured how dark each developed patch became, and plotted density against the logarithm of exposure. The S-shaped curve made a plate's speed, contrast and latitude into numbers. Their H&D speed ratings were printed on plate boxes for decades.",
+  "move": "A craft becomes a science the day someone plots its results.",
+  "keywords": [
+    "hurter and driffield",
+    "characteristic curve",
+    "sensitometry",
+    "film speed",
+    "density"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hurter & Driffield, Photographic Researches, 1920",
+  "source_kind": "paper",
+  "reference": "W. B. Ferguson (ed), The Photographic Researches of Ferdinand Hurter & Vero C. Driffield, Royal Photographic Society, 1920",
+  "written": "2026-09-27"
+}

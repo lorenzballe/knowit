@@ -1,0 +1,39 @@
+{
+  "id": "language-borrowed-words-8",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the English term loanword was itself translated piece by piece from another language?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It is a calque, a borrowing by translation, of German Lehnwort, from Lehn, loan, and Wort, word, and appears in English in the 1870s, when German scholars led historical linguistics. English holds many such hidden imports: superman renders Übermensch, while skyscraper was itself copied abroad as French gratte-ciel and Spanish rascacielos.",
+  "move": "Something assembled from local parts can still follow a foreign design.",
+  "trap": "Assuming a word built from plain English parts must be native.",
+  "keywords": [
+    "loanword",
+    "calque",
+    "lehnwort",
+    "superman",
+    "skyscraper"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oxford English Dictionary, entry loan-word",
+  "source_kind": "reference_work",
+  "reference": "Simpson & Weiner (eds), The Oxford English Dictionary, 2nd ed., entry loan-word, Clarendon Press, 1989",
+  "written": "2026-09-27"
+}

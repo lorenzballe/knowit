@@ -1,0 +1,40 @@
+{
+  "id": "art-darkroom-10",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A light meter reading at night calls for a 30-second exposure on black-and-white film. What does the film need?",
+  "options": [
+    "30 seconds, as the meter says",
+    "Much longer, often a few minutes",
+    "Less, since light keeps adding up"
+  ],
+  "correct": 1,
+  "answer": "Much longer, often a few minutes. Film obeys the rule that half the light for twice the time gives the same result only over short exposures. In dim light each silver grain collects photons too slowly to hold a stable latent image, and some effect is lost. Night photographers carry correction tables.",
+  "move": "A rule that holds in the usual range may fail at the extremes.",
+  "trap": "Trusting the meter, which assumes light and time trade evenly.",
+  "keywords": [
+    "reciprocity failure",
+    "long exposures",
+    "schwarzschild",
+    "night photography",
+    "film"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwarzschild, Astrophysical Journal, 1900",
+  "source_kind": "paper",
+  "reference": "Karl Schwarzschild, On the deviations from the law of reciprocity for bromide of silver gelatine, Astrophysical Journal, 1900",
+  "written": "2026-09-27"
+}

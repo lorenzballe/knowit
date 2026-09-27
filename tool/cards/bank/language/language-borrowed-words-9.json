@@ -1,0 +1,33 @@
+{
+  "id": "language-borrowed-words-9",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the English word Christmas turn into Kalikimaka when Hawaiian borrowed it?",
+  "answer": "By being rebuilt from Hawaiian sounds. Hawaiian has eight consonants, p, k, h, l, m, n, w and a glottal stop, and no clusters: every syllable ends in a vowel. So r became l, s became k, and vowels were slipped between the consonants: ka-li-ki-ma-ka. Merry became mele by the same rules.",
+  "move": "Every listener hears a foreign word through the sounds they already have.",
+  "keywords": [
+    "hawaiian",
+    "kalikimaka",
+    "loan adaptation",
+    "consonants",
+    "syllables"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elbert & Pukui, Hawaiian Grammar, 1979",
+  "source_kind": "book",
+  "reference": "Elbert & Pukui, Hawaiian Grammar, University Press of Hawaii, 1979",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-cold-chain-9",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: a clinic fridge that read 2 to 8 °C at every twice-daily check has probably not frozen its vaccines?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Two readings a day sample two moments; a dip below zero between them leaves no trace. In a Connecticut study, freeze indicators on vaccine boxes tripped in 40 of 45 clinic fridges over 24 weeks. Logs showed 2 to 8 °C before all but one event, and a thermometer caught just one freeze.",
+  "move": "A check made at fixed times sees nothing that happens between them.",
+  "trap": "Treating a clean logbook as proof the fridge stayed in range.",
+  "keywords": [
+    "vaccine fridge",
+    "temperature log",
+    "freeze indicator",
+    "monitoring",
+    "connecticut"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Infectious Diseases in Clinical Practice, freeze study",
+  "source_kind": "paper",
+  "reference": "doi:10.1097/IPC.0000000000000253",
+  "written": "2026-09-27"
+}

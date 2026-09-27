@@ -1,0 +1,39 @@
+{
+  "id": "language-latin-roots-7",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In classical Latin, what was the plural of virus, the word for poison or slime?",
+  "options": [
+    "Viri, like fungi",
+    "Virii, with two i's",
+    "None that survives"
+  ],
+  "correct": 2,
+  "answer": "None that survives. Virus was a rare neuter noun ending in -us, like vulgus, crowd, and it named a substance, as water does, so Roman authors never needed a plural. A regular neuter plural would have been vira. Virii fits no Latin pattern at all: it is a modern invention dressed as Latin.",
+  "move": "A rule learned from a few examples may not cover the rest.",
+  "trap": "Applying the cactus and cacti rule to every Latin word in -us.",
+  "keywords": [
+    "virus",
+    "latin plurals",
+    "neuter nouns",
+    "vulgus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allen & Greenough, New Latin Grammar, 1903",
+  "source_kind": "reference_work",
+  "reference": "Allen & Greenough, New Latin Grammar for Schools and Colleges, Ginn & Company, 1903",
+  "written": "2026-09-27"
+}

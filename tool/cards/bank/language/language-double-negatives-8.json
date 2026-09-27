@@ -1,0 +1,33 @@
+{
+  "id": "language-double-negatives-8",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does standard Afrikaans need two negatives in a sentence such as ek praat nie Afrikaans nie?",
+  "answer": "Nobody knows for certain. Word for word, I speak not Afrikaans not; the standard requires it, though Dutch, its parent, does not. Linguists split between an emphatic habit of Dutch dialects that hardened and contact with Khoekhoe or a Portuguese-based creole at the Cape. The second nie closes the sentence like a bracket.",
+  "move": "When two explanations fit the same outcome, ask what evidence would separate them.",
+  "keywords": [
+    "afrikaans",
+    "negation",
+    "dutch",
+    "language contact",
+    "creole"
+  ],
+  "era": "early_modern",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Den Besten, Double negation and Afrikaans, 1986",
+  "source_kind": "book",
+  "reference": "Den Besten, Double negation and the genesis of Afrikaans, in Muysken & Smith (eds.), Substrata versus Universals in Creole Genesis, John Benjamins, 1986",
+  "written": "2026-09-27"
+}

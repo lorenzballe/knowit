@@ -1,0 +1,40 @@
+{
+  "id": "medicine-cold-chain-8",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Dried measles vaccine must survive a week at 37 °C. Mixed with its diluent at room temperature, how soon does it lose half its potency?",
+  "options": [
+    "In about a week",
+    "In about an hour",
+    "In about a day"
+  ],
+  "correct": 1,
+  "answer": "In about an hour. Freeze-drying holds the live virus in a dry cake; water lets it fall apart. At 20 to 25 °C the mixed vaccine loses half its potency, so it sits on ice and is discarded hours after mixing. Powder that passed a week-long heat test can spoil in one morning clinic.",
+  "move": "Ask what state a thing is in before trusting its tested limits.",
+  "trap": "Letting the powder's week of heat tolerance set the guess.",
+  "keywords": [
+    "measles vaccine",
+    "reconstitution",
+    "freeze-drying",
+    "potency",
+    "diluent"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO, Temperature sensitivity of vaccines, 2006",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Temperature sensitivity of vaccines, WHO/IVB/06.10, 2006",
+  "written": "2026-09-27"
+}

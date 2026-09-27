@@ -1,0 +1,39 @@
+{
+  "id": "art-darkroom-8",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: portrait photographers were retouching negatives to smooth sitters' skin before 1860?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. At the Paris Exposition Universelle of 1855 the Munich photographer Franz Hanfstaengl showed the same portrait negative before and after retouching. Retouchers worked on the glass with pencil and etching knife, softening wrinkles and freckles. Flattering the face is as old as the studio.",
+  "move": "A new tool for altering pictures rarely brings the first altered pictures.",
+  "trap": "Assuming smoothing skin began with software, where the complaints are loudest.",
+  "keywords": [
+    "retouching",
+    "hanfstaengl",
+    "negatives",
+    "portrait studios",
+    "exposition universelle"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gernsheim, The History of Photography, 1955",
+  "source_kind": "book",
+  "reference": "Helmut Gernsheim & Alison Gernsheim, The History of Photography, Oxford University Press, 1955",
+  "written": "2026-09-27"
+}

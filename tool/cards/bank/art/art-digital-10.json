@@ -1,0 +1,41 @@
+{
+  "id": "art-digital-10",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "also": [
+    "technology.ai.limits"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "If a phone adds lunar detail learned from other photographs, is its moon shot still a photograph?",
+  "sides": [
+    "Yes, still a photograph",
+    "No, it is an illustration"
+  ],
+  "answer": "Yes. Every digital image is already computed: colours are interpolated, noise is removed and frames are merged. Recognising the moon and restoring texture that optics and shake destroyed is one more step on that line. The moon shows the same face to Earth every night, so the added detail is what was really there, rendered faithfully.",
+  "move": "Whichever side you took, it turns on whether a photograph must come from the light.",
+  "counterpoint": "No. In 2023 a user photographed a deliberately blurred image of the moon on a monitor, and a Samsung phone returned craters that were not in the blurred source. A photograph records light from the scene; this one supplied detail from a trained model's memory. Accurate or not, it shows what the moon generally looks like, not what the lens saw.",
+  "keywords": [
+    "computational photography",
+    "samsung",
+    "moon photos",
+    "ai enhancement",
+    "authenticity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Samsung Newsroom, moon photography explained, 2023",
+  "source_kind": "company",
+  "reference": "Samsung Newsroom, How Samsung Galaxy Cameras Combine Super Resolution Technologies With AI Technologies to Produce High-Quality Images of the Moon, March 2023",
+  "written": "2026-09-27"
+}

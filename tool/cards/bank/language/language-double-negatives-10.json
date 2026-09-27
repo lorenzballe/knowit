@@ -1,0 +1,32 @@
+{
+  "id": "language-double-negatives-10",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a warning that says no head injury is too trivial to be ignored literally tell a nurse to do?",
+  "answer": "Ignore every head injury. Too trivial to be ignored would mean so trivial it cannot be ignored; denying that of every injury leaves all of them ignorable. Wason and Reich showed in 1979 that nearly everyone reads the sentence the other way. Readers repair stacked negatives into the only sensible warning unawares.",
+  "move": "When a sentence stacks negatives, work it out instead of trusting the gist.",
+  "keywords": [
+    "verbal illusion",
+    "negation",
+    "sentence processing",
+    "wason"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wason & Reich, QJEP, 1979",
+  "source_kind": "paper",
+  "reference": "Wason & Reich, A verbal illusion, Quarterly Journal of Experimental Psychology, 1979",
+  "written": "2026-09-27"
+}

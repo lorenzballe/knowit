@@ -1,0 +1,39 @@
+{
+  "id": "language-double-negatives-6",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Standard English forbids nobody didn't come. In a world sample of 206 languages, how many share that ban?",
+  "options": [
+    "Most of them",
+    "About a third",
+    "About one in twenty"
+  ],
+  "correct": 2,
+  "answer": "About one in twenty. In the World Atlas of Language Structures, 11 of 206 languages bar the verb's own negative beside words like nobody; about 170, Russian among them, require it. Standard English and German are the outliers. A Russian who says nobody nothing not-knows is speaking perfectly correct Russian.",
+  "move": "Check whether your own case is the rule or the exception.",
+  "trap": "Treating the rule of standard English as the rule of logic.",
+  "keywords": [
+    "negative concord",
+    "language atlas",
+    "russian",
+    "typology"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Haspelmath, WALS chapter 115, 2013",
+  "source_kind": "reference_work",
+  "reference": "https://wals.info/chapter/115",
+  "written": "2026-09-27"
+}

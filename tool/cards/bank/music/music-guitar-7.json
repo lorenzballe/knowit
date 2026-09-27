@@ -1,0 +1,40 @@
+{
+  "id": "music-guitar-7",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A humbucker wires its two coils in opposite senses so mains hum cancels. Why doesn't the string's signal cancel too?",
+  "options": [
+    "The coils' magnets face opposite ways",
+    "String notes are too high to cancel",
+    "The strings sit nearer one coil"
+  ],
+  "correct": 0,
+  "answer": "The coils' magnets face opposite ways. Hum from outside induces the same voltage in both coils, and the reversed wiring subtracts it. A moving string changes the field through each coil in opposite directions, because of the flipped magnets, so the reversed wiring flips it back and the two add. Seth Lover's design, patented in 1959, reverses twice.",
+  "move": "When one reversal cancels noise, a second reversal can rescue the signal.",
+  "trap": "Assuming cancellation picks out pitches, the way a tone filter does.",
+  "keywords": [
+    "humbucker",
+    "pickups",
+    "mains hum",
+    "seth lover",
+    "gibson"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lover, US Patent 2,896,491, 1959",
+  "source_kind": "primary_document",
+  "reference": "Lover, Magnetic pickup for stringed musical instrument, US Patent 2,896,491, 1959",
+  "written": "2026-09-27"
+}

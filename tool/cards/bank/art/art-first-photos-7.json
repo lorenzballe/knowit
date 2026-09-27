@@ -1,0 +1,40 @@
+{
+  "id": "art-first-photos-7",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Why do shop signs in many daguerreotypes read backwards, though negatives made later photographs read true?",
+  "options": [
+    "The lens flipped the picture left to right",
+    "The plate was viewed from its lens side",
+    "The mercury fumes reversed the silver image"
+  ],
+  "correct": 1,
+  "answer": "The plate was viewed from its lens side. A lens turns the image upside down, which is only a rotation: turn the plate and it is fixed. A negative is printed face to face onto paper, which flips it back; a daguerreotype never had that second step.",
+  "move": "Check whether a fault comes from the tool or from a missing step.",
+  "trap": "Blaming the lens, the part known to invert the picture.",
+  "keywords": [
+    "daguerreotype",
+    "mirror image",
+    "lens inversion",
+    "negative",
+    "printing"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barger & White, The Daguerreotype, 1991",
+  "source_kind": "book",
+  "reference": "M. Susan Barger & William B. White, The Daguerreotype: Nineteenth-Century Technology and Modern Science, Smithsonian Institution Press, 1991",
+  "written": "2026-09-27"
+}

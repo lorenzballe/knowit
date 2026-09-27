@@ -1,0 +1,40 @@
+{
+  "id": "language-brand-names-10",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a 1975 court survey, what share of Americans called Teflon a brand name rather than a common name?",
+  "options": [
+    "Nearly all",
+    "About two-thirds",
+    "About a third"
+  ],
+  "correct": 1,
+  "answer": "About two-thirds: 68 per cent said brand, 31 per cent common name. Interviewers first explained the difference with Chevrolet and automobile, then mixed in known generics such as margarine and refrigerator to check people had understood. The court held that a name stays a brand while that is its main meaning to the public.",
+  "move": "How often a word is misused says little about how many misuse it.",
+  "trap": "Hearing teflon used for every non-stick pan and assuming most think it generic.",
+  "keywords": [
+    "teflon",
+    "genericness survey",
+    "dupont",
+    "margarine",
+    "trademark"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "DuPont v. Yoshida, E.D.N.Y. 1975",
+  "source_kind": "primary_document",
+  "reference": "https://law.justia.com/cases/federal/district-courts/FSupp/393/502/1452659/",
+  "written": "2026-09-27"
+}

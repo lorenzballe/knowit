@@ -1,0 +1,33 @@
+{
+  "id": "art-darkroom-9",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a black-and-white print that was properly fixed still turn yellow years later?",
+  "answer": "Because the fixer was not washed out. Fibre-based paper soaks up thiosulphate, the fixing agent, and holds it in its fibres. Left there, it slowly breaks down and attacks the silver image, forming yellow-brown silver sulphide, first in the highlights. Hence long washes. Stains can surface decades after a print looked perfect.",
+  "move": "Cleaning up after a process is part of the process.",
+  "keywords": [
+    "fixer",
+    "thiosulphate",
+    "washing",
+    "silver sulphide",
+    "fibre paper"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stroebel et al., Basic Photographic Materials, 2000",
+  "source_kind": "book",
+  "reference": "Leslie Stroebel, John Compton, Ira Current & Richard Zakia, Basic Photographic Materials and Processes, 2nd edition, Focal Press, 2000",
+  "written": "2026-09-27"
+}

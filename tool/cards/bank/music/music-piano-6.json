@@ -1,0 +1,39 @@
+{
+  "id": "music-piano-6",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: on a modern grand, the pedal marked una corda makes each hammer strike just one string?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. On most notes it strikes two of three. The pedal slides the keyboard and action sideways, so each hammer misses one string and meets the others with less worn felt, changing colour as well as volume. The name dates from early pianos, whose shift could reach a single string.",
+  "move": "An old name can outlive the thing it once described exactly.",
+  "trap": "Una corda means one string, so one string it must be.",
+  "keywords": [
+    "una corda",
+    "soft pedal",
+    "hammers",
+    "grand piano",
+    "felt"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Palmieri (ed.), The Piano: An Encyclopedia, 2003",
+  "source_kind": "reference_work",
+  "reference": "Palmieri (ed.), The Piano: An Encyclopedia, 2nd edn, Routledge, 2003",
+  "written": "2026-09-27"
+}

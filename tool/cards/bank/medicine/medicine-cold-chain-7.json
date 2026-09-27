@@ -1,0 +1,36 @@
+{
+  "id": "medicine-cold-chain-7",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a health worker tell whether a normal-looking vial of tetanus vaccine was once frozen?",
+  "answer": "By freezing another vial on purpose. In the shake test, a vial from the same batch is frozen solid, thawed and shaken beside the suspect one. Ice clumps the aluminium particles into heavy flakes that sink fast, leaving clear liquid above. A suspect vial that clears as fast as the control is thrown away.",
+  "move": "When damage is invisible, make a known-damaged sample to compare against.",
+  "keywords": [
+    "shake test",
+    "freeze damage",
+    "aluminium adjuvant",
+    "tetanus vaccine",
+    "sedimentation"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "medicine-cold-chain-2"
+  ],
+  "figure": "none",
+  "source": "Kartoglu et al., Bulletin of the WHO, 2010",
+  "source_kind": "paper",
+  "reference": "Kartoglu, Özgüler, Wolfson & Kurzatkowski, Validation of the shake test for detecting freeze damage to adsorbed vaccines, Bulletin of the World Health Organization, 2010",
+  "written": "2026-09-27"
+}

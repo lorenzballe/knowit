@@ -1,0 +1,39 @@
+{
+  "id": "language-brand-names-7",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: DuPont named nylon after New York and London, the cities of its launch?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. DuPont's own accounts describe a hunt for a word that sounded right: an early candidate was no-run, dropped because the stockings did run, and the name passed through forms like nuron and nilon. The ending echoes cotton and rayon. DuPont registered no trademark on purpose, so nylon was generic from the first day.",
+  "move": "Any word can be split to spell a story, and that proves nothing.",
+  "trap": "Finding NY and LON in the letters and taking it as design.",
+  "keywords": [
+    "nylon",
+    "dupont",
+    "stockings",
+    "folk etymology",
+    "trademark"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Handley, Nylon, 1999",
+  "source_kind": "book",
+  "reference": "Handley, Nylon: The Story of a Fashion Revolution, Johns Hopkins University Press, 1999",
+  "written": "2026-09-27"
+}

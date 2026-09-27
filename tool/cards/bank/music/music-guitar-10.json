@@ -1,0 +1,32 @@
+{
+  "id": "music-guitar-10",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is one gap in standard guitar tuning a major third when every other is a fourth?",
+  "answer": "So the hand can reach the chords and the outer strings agree. Tuning E, A, D, G, B, E breaks the fourths once, between G and B; all fourths would end on F, clashing with the low E. The habit is older than the guitar: lutes and vihuelas also tuned in fourths with one third among them.",
+  "move": "An exception inside a regular pattern usually pays for something elsewhere.",
+  "keywords": [
+    "standard tuning",
+    "major third",
+    "lute",
+    "vihuela"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tyler & Sparks, The Guitar and Its Music, 2002",
+  "source_kind": "book",
+  "reference": "Tyler & Sparks, The Guitar and Its Music: From the Renaissance to the Classical Era, Oxford University Press, 2002",
+  "written": "2026-09-27"
+}

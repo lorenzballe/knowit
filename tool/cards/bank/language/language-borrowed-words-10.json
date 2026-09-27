@@ -1,0 +1,40 @@
+{
+  "id": "language-borrowed-words-10",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Languages that got tea by sea mostly say te; by land, cha. Why does seafaring Portugal say chá?",
+  "options": [
+    "It borrowed Persian chay on the way",
+    "Its sailors learned it in Goa",
+    "Its traders bought tea through Macau"
+  ],
+  "correct": 2,
+  "answer": "Its traders bought tea through Macau. The real divide is not sea against land but which Chinese speech supplied the word. Dutch ships loaded at Hokkien-speaking ports, where tea is te, and spread thé and Tee across Europe. Macau speaks Cantonese, where it is cha, so Portuguese took chá.",
+  "move": "When a rule has an exception, look for what really drove the rule.",
+  "trap": "Reading cha as proof of a land route, and so through Persia.",
+  "keywords": [
+    "tea",
+    "macau",
+    "hokkien",
+    "cantonese",
+    "dutch trade"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Dahl, World Atlas of Language Structures, 2013",
+  "source_kind": "reference_work",
+  "reference": "Dahl, Tea, in Dryer & Haspelmath (eds), The World Atlas of Language Structures Online, chapter 138, Max Planck Institute for Evolutionary Anthropology, 2013",
+  "written": "2026-09-27"
+}

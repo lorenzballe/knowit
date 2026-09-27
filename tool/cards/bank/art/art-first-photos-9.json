@@ -1,0 +1,40 @@
+{
+  "id": "art-first-photos-9",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which was the first book to be illustrated with photographs?",
+  "options": [
+    "Talbot's The Pencil of Nature",
+    "Daguerre's own manual of 1839",
+    "Anna Atkins's British Algae"
+  ],
+  "correct": 2,
+  "answer": "Anna Atkins's British Algae. From October 1843 she issued Photographs of British Algae in parts, each page a cyanotype: seaweed laid directly on paper coated with iron salts and printed blue by sunlight. Talbot's followed in June 1844; Daguerre's manual had engraved plates only. The first photographic book needed no camera.",
+  "move": "The version everyone cites is the famous one, not always the first.",
+  "trap": "Talbot's book, because histories of the medium name it first.",
+  "keywords": [
+    "anna atkins",
+    "cyanotype",
+    "british algae",
+    "talbot",
+    "photobooks"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schaaf, Sun Gardens, 1985",
+  "source_kind": "book",
+  "reference": "Larry J. Schaaf, Sun Gardens: Victorian Photograms by Anna Atkins, Aperture, 1985",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "medicine-cold-chain-6",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a vaccine carried outside the cold chain need a second heat sticker besides the vial monitor?",
+  "answer": "Because the vial monitor sums heat over days and barely registers a short spike. The controlled temperature chain, first licensed in 2012 for a meningitis A vaccine at up to 40 °C for four days, adds a peak threshold indicator that changes once 40 °C is passed. Benin's first such campaign reached 155,000 people.",
+  "move": "A running total and a hard ceiling guard against different failures.",
+  "keywords": [
+    "controlled temperature chain",
+    "menafrivac",
+    "peak threshold indicator",
+    "meningitis a",
+    "benin"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "medicine-cold-chain-1"
+  ],
+  "figure": "none",
+  "source": "WHO, Controlled temperature chain roadmap, 2017",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Controlled Temperature Chain: Strategic Roadmap for Priority Vaccines 2017–2020, 2017",
+  "written": "2026-09-27"
+}

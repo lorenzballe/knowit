@@ -1,0 +1,33 @@
+{
+  "id": "art-digital-9",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is one of image compression's most-used test pictures cropped from a 1972 magazine centrefold?",
+  "answer": "Because it was to hand in 1973. Engineers at the University of Southern California needed a fresh glossy image to scan for a paper, and tore the top off a Playboy page. The 512-pixel square, a woman's face and shoulder, became the standard because everyone could compare results on it. IEEE journals announced in 2023 they would stop accepting it.",
+  "move": "Whatever becomes the benchmark stays long after anyone would choose it again.",
+  "keywords": [
+    "test images",
+    "image compression",
+    "benchmarks",
+    "university of southern california",
+    "ieee"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Munson, IEEE Transactions on Image Processing, 1996",
+  "source_kind": "paper",
+  "reference": "David C. Munson Jr., A note on Lena, IEEE Transactions on Image Processing, 1996",
+  "written": "2026-09-27"
+}
