@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { Bank, asks, graded, editionOf, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
-import { arrangeDay, commonOfEdition, dealDay, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_WELCOME, OWN_FREE, PILLS_PER_DAY, WELCOME_DAYS } from './deal.js';
+import { arrangeDay, commonOfEdition, dealDay, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_WELCOME, OWN_FREE, OWN_REWARDED, PILLS_PER_DAY, WELCOME_DAYS } from './deal.js';
 import { ALL_TIME_SEED, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
@@ -150,14 +150,17 @@ test('the level is measured once there is something to measure', () => {
 
 // ── The day ──────────────────────────────────────────────────────────────
 
-test('a free reader\'s first day is a welcome day: four of their own and the question of the day', () => {
+test('a free reader\'s first day is a welcome day: four of their own and one at random', () => {
   const p = profileOf({ topicWeights: { space: 1, science: 0.5 }, pickedTopics: ['space', 'science', 'thinking'] });
   const d = dealDay(bank, p, DAY, 'reader-1');
   assert.equal(d.cards.length, PILLS_PER_DAY);
   assert.equal(new Set(d.cards.map((c) => c.id)).size, PILLS_PER_DAY);
   assert.equal(d.own.length, OWN_WELCOME);
   assert.equal(d.welcome, true);
-  assert.equal(d.question, questionOfEdition(bank, editionOf(DAY))?.id);
+  const chance = d.cards.filter((c) => !d.own.includes(c.id));
+  assert.equal(chance.length, 1);
+  assert.equal(asks(chance[0]), false, 'the one at random tells');
+  assert.ok(['space', 'science'].includes(chance[0].topic), `${chance[0].id} is on the mix`);
   assert.equal(d.cards.filter(asks).length, 2);
   assert.equal(asks(d.cards[0]), false, 'opens on a read');
   for (const id of d.own) {
@@ -169,28 +172,42 @@ test('a free reader\'s first day is a welcome day: four of their own and the que
   assert.notDeepEqual(dealDay(bank, p, DAY, 'reader-2').own, d.own);
 });
 
-test('after the welcome week the shared day: the question, three of the edition\'s on the mix first, one own', () => {
+test('after the welcome week: two of their own, and three at random from the mix as it was set', () => {
   const done = Array.from({ length: WELCOME_DAYS }, (_, i) => shiftDate('2026-09-20', i));
-  const p = profileOf({ topicWeights: { space: 1, science: 0.5 }, pickedTopics: ['space', 'science', 'thinking'], completedDates: done });
+  const snapshot = { topicWeights: { space: 1, science: 0.5 }, pickedTopics: ['space', 'science', 'thinking'], completedDates: done, seenIds: ['space-2'] };
+  const p = profileOf(snapshot);
   assert.equal(dayNumberOf(p, DAY), WELCOME_DAYS);
   const d = dealDay(bank, p, DAY, 'reader-1');
+  assert.equal(OWN_FREE, 2);
   assert.equal(d.own.length, OWN_FREE);
   assert.equal(d.welcome, false);
-  const commons = d.cards.filter((c) => !d.own.includes(c.id) && c.id !== d.question).map((c) => c.id);
-  assert.equal(commons.length, 3);
-  const spares = bank.commons.get(editionOf(DAY)) as string[];
-  for (const id of commons) assert.ok(spares.includes(id), `${id} is the edition's`);
+  // The reader's own hold the questions; the three at random tell.
+  assert.ok(d.own.every((id) => asks(bank.byId.get(id) as typeof bank.live[0])));
+  const chance = d.cards.filter((c) => !d.own.includes(c.id));
+  assert.equal(chance.length, 3);
+  for (const c of chance) {
+    assert.equal(asks(c), false, c.id);
+    assert.ok(['space', 'science'].includes(c.topic), `${c.id} is on the mix`);
+    assert.notEqual(c.id, 'space-2', 'never one already read');
+  }
+  // Nothing is the calendar's, and nothing is everybody's: another reader is dealt other cards.
+  assert.ok(!d.cards.some((c) => c.id === questionOfEdition(bank, editionOf(DAY))?.id));
+  const other = dealDay(bank, profileOf(snapshot), DAY, 'reader-2');
+  assert.notDeepEqual(other.cards.filter((c) => !other.own.includes(c.id)).map((c) => c.id), chance.map((c) => c.id));
+  // The same again: deterministic in the reader and the date.
+  assert.deepEqual(dealDay(bank, profileOf(snapshot), DAY, 'reader-1').cards.map((c) => c.id), d.cards.map((c) => c.id));
 });
 
 test('a week kept is rewarded after the welcome, never during; Astute+ has five own and a review', () => {
   const done = Array.from({ length: 14 }, (_, i) => shiftDate('2026-09-19', i));
   const kept = profileOf({ topicWeights: even(), completedDates: done, streak: 14, lastCompletionDate: '2026-10-02' });
-  assert.equal(dealDay(bank, kept, DAY, 'r').own.length, 2);
+  assert.equal(dealDay(bank, kept, DAY, 'r').own.length, OWN_REWARDED);
+  assert.equal(OWN_REWARDED, 3);
   const due = bank.live.find((c) => c.topic === 'thinking' && graded(c)) as typeof bank.live[0];
   const plus = profileOf({ topicWeights: even(), completedDates: done, answers: { [due.id]: { r: '1', c: 60, s: 0, d: '2026-10-01' } } }, [], true);
   const d = dealDay(bank, plus, DAY, 'r');
   assert.equal(d.own.length, 5);
-  assert.equal(d.question, null);
+  assert.deepEqual(d.cards.map((c) => c.id).sort(), [...d.own].sort(), 'nothing at random');
   assert.equal(d.reviews.length, 1);
   const review = bank.byId.get(d.reviews[0]) as typeof bank.live[0];
   assert.equal(review.principle, due.principle, 'a fresh card of the same principle');

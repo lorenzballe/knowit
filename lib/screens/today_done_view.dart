@@ -34,6 +34,10 @@ import '../widgets/subject_icon.dart';
 ///
 /// Which card is at the front belongs to the screen above, because the
 /// header's dot and the glow behind everything take that card's colour.
+/// The margin between the finished day's header and the shelf under it.
+/// The line about the plan, on the evenings there is one, starts inside it.
+const double kShelfHeaderGap = 15;
+
 class TodayDoneView extends StatefulWidget {
   final AppState app;
 
@@ -41,11 +45,22 @@ class TodayDoneView extends StatefulWidget {
   final int at;
   final ValueChanged<int> onPick;
 
+  /// The line about the plan, on the free plan's evenings that have one:
+  /// its key and its words. It sits under the header's line, in the room
+  /// the header's margin and the eyebrow over the shelf take on every other
+  /// evening, and the eyebrow gives way to it: the eyebrow says what the
+  /// header and the dots already say, and the cards keep every point they
+  /// have. Only a line longer than that room takes more, and then only
+  /// what it needs. The caller leaves out the header's margin when it
+  /// passes one (see [kShelfHeaderGap]).
+  final (String, String)? plan;
+
   const TodayDoneView({
     super.key,
     required this.app,
     required this.at,
     required this.onPick,
+    this.plan,
   });
 
   @override
@@ -93,7 +108,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardHeight = _artHeight;
 
   /// Whether the shelf ends on the card that offers the rest of the day.
-  /// It does on the free plan, where three of the five were everybody's,
+  /// It does on the free plan, where three of the five came at random,
   /// and never on Astute+, so nobody is sold what they already have.
   bool get _offer => !widget.app.isPlus;
 
@@ -249,45 +264,82 @@ class _TodayDoneViewState extends State<TodayDoneView>
     final int at = widget.at.clamp(0, count - 1);
     final Color ink = context.p.ink;
 
+    final Widget eyebrow = Padding(
+      padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
+        children: [
+          Expanded(
+            child: Text(
+              context.l10n.shelfEyebrow(
+                context.l10n.countWord('${deck.length}').toUpperCase(),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.label(
+                size: 10.5,
+                weight: FontWeight.w700,
+                spacing: 1.6,
+                color: ink.withValues(alpha: 0.4),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Text(
+            at < deck.length
+                ? '${_two(at + 1)} / ${_two(deck.length)}'
+                : context.l10n.plusNameCaps,
+            style: AppText.label(
+              size: 10.5,
+              weight: FontWeight.w700,
+              spacing: 1.2,
+              color: ink.withValues(alpha: 0.28),
+            ),
+          ),
+        ],
+      ),
+    );
+    final (String, String)? plan = widget.plan;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
+        if (plan == null)
+          eyebrow
+        else
+          Stack(
             children: [
-              Expanded(
-                child: Text(
-                  context.l10n.shelfEyebrow(
-                    context.l10n.countWord('${deck.length}').toUpperCase(),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.label(
-                    size: 10.5,
-                    weight: FontWeight.w700,
-                    spacing: 1.6,
-                    color: ink.withValues(alpha: 0.4),
-                  ),
+              // The room the header's margin and the eyebrow take on every
+              // other evening, kept whole whatever the phone's text size:
+              // the eyebrow is still laid out, and only not drawn.
+              Visibility(
+                visible: false,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: kShelfHeaderGap),
+                  child: eyebrow,
                 ),
               ),
-              const SizedBox(width: 12),
-              Text(
-                at < deck.length
-                    ? '${_two(at + 1)} / ${_two(deck.length)}'
-                    : context.l10n.plusNameCaps,
-                style: AppText.label(
-                  size: 10.5,
-                  weight: FontWeight.w700,
-                  spacing: 1.2,
-                  color: ink.withValues(alpha: 0.28),
+              // Under the header's line and level with its words, past the
+              // dot: 24 of margin, 8 of dot and 10 between.
+              Padding(
+                padding: const EdgeInsets.fromLTRB(42, 4, 24, 0),
+                child: Text(
+                  plan.$2,
+                  key: ValueKey(plan.$1),
+                  style: AppText.body(
+                    size: 12.5,
+                    weight: FontWeight.w600,
+                    height: 1.35,
+                    color: ink.withValues(alpha: 0.8),
+                  ),
                 ),
               ),
             ],
           ),
-        ),
         Expanded(child: _shelf(context, deck, at)),
         _Dots(deck: deck, count: count, at: at, onPick: _goTo),
         // Close under the dots: they count the deck, but they read as
@@ -295,12 +347,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // the one about tomorrow.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
-          child: _Tomorrow(
-            lead: _tomorrowsLead(app),
-            rewarded: app.tomorrowIsRewarded,
-            welcomeLeft: app.welcomeDaysLeftAfterToday,
-            welcomeEnds: app.welcomeEndsTonight,
-          ),
+          child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
         if (app.reviewsWaiting.isNotEmpty)
           Padding(
@@ -463,8 +510,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
   static String _two(int n) => n.toString().padLeft(2, '0');
 }
 
-/// The cards that came due and found no room in the five — the day has
-/// two asking slots and one is everybody's — waiting to be answered again.
+/// The cards that came due and found no room in the five — Astute+ takes
+/// one a day at most, and the free day none — waiting to be answered again.
 class _ReviewLine extends StatelessWidget {
   const _ReviewLine({required this.app});
 
@@ -1195,30 +1242,10 @@ class _Dots extends StatelessWidget {
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({
-    required this.lead,
-    this.rewarded = false,
-    this.welcomeLeft = 0,
-    this.welcomeEnds = false,
-  });
+  const _Tomorrow({required this.lead});
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
-
-  /// True the evening a week is kept on the free plan: tomorrow has three
-  /// cards of the reader's own instead of two, and this is where it is
-  /// said — once, the night before, where it reads as a reward rather
-  /// than as a rule.
-  final bool rewarded;
-
-  /// Welcome days still to come after today, on the free plan: said every
-  /// evening of the week, so four of five being theirs reads as a welcome
-  /// with an end rather than as the rule.
-  final int welcomeLeft;
-
-  /// True the evening the welcome week ends: tomorrow is the first shared
-  /// day, and the reader hears it tonight, with what Astute+ keeps.
-  final bool welcomeEnds;
 
   @override
   Widget build(BuildContext context) {
@@ -1245,45 +1272,16 @@ class _Tomorrow extends StatelessWidget {
           const SizedBox(width: 12),
         ],
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                lead == null
-                    ? context.l10n.tomorrowsFiveOpenIn(when)
-                    : context.l10n.topicOpensTomorrow(lead.topic, when),
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w500,
-                  height: 1.35,
-                  color: context.p.ink.withValues(alpha: 0.6),
-                ),
-              ),
-              if (rewarded || welcomeEnds || welcomeLeft > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Text(
-                    welcomeEnds
-                        ? context.l10n.welcomeWeekEnds
-                        : welcomeLeft > 0
-                        ? context.l10n.welcomeDaysLeft(welcomeLeft)
-                        : context.l10n.weekKeptTwoOwn,
-                    key: ValueKey(
-                      welcomeEnds
-                          ? 'welcome-ends'
-                          : welcomeLeft > 0
-                          ? 'welcome-left'
-                          : 'week-reward',
-                    ),
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w600,
-                      height: 1.35,
-                      color: context.p.ink.withValues(alpha: 0.8),
-                    ),
-                  ),
-                ),
-            ],
+          child: Text(
+            lead == null
+                ? context.l10n.tomorrowsFiveOpenIn(when)
+                : context.l10n.topicOpensTomorrow(lead.topic, when),
+            style: AppText.body(
+              size: 13.5,
+              weight: FontWeight.w500,
+              height: 1.35,
+              color: context.p.ink.withValues(alpha: 0.6),
+            ),
           ),
         ),
       ],

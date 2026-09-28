@@ -1444,7 +1444,7 @@
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "everyCardForYou": "Every card, chosen for you.",
  "perkOwnTitle": "Five cards a day, all yours",
- "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you one.",
+ "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you two.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
@@ -1486,7 +1486,7 @@
   }
  },
  "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
- "weekKeptTwoOwn": "A week kept: tomorrow two of the five are yours.",
+ "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
@@ -1506,7 +1506,7 @@
  "lovedLine": "What readers kept most, and you have not read yet",
  "welcomeDaysLeft": "{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}",
  "@welcomeDaysLeft": {"placeholders": {"n": {"type": "int"}}},
- "welcomeWeekEnds": "Your first week ends tonight. From tomorrow one of the five is yours and three are everybody's; Astute+ keeps all five yours.",
+ "welcomeWeekEnds": "Your first week ends tonight. From tomorrow, two of the five are yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
  "exploreOffline": "You are offline. This is Explore as it was last read."

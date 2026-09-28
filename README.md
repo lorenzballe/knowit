@@ -121,9 +121,9 @@ daily nudge), the come-back screen after a lapsed streak, and the disclosure
 page on how pills are written.
 
 **Astute+** — three things, all delivered, and everything else the same on
-both plans. **Five cards a day, all yours**: on the free plan one of the
-five is dealt from the reader's mix and four are everybody's — the
-question of the day and three more from the day's edition — and with Astute+
+both plans. **Five cards a day, all yours**: on the free plan two of the
+five are chosen for the reader and three are dealt at random from the
+subjects they kept on, and with Astute+
 all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
@@ -148,8 +148,21 @@ it names is the one that will actually be on top in the morning. A card
 that came due and found no room in the five waits here too. The way on is
 **Your journey** — the day just went somewhere on the ladder, and that is
 the one thing worth a button at the end of it; Explore is a tab already.
-The evening a week is kept, the line about tomorrow says that three of
-tomorrow's five are the reader's own instead of two.
+On the free plan the header has a second line, under the day's own, for
+the one thing about the plan worth saying tonight: every evening of the
+welcome week how many of its days are left, the seventh evening that the
+week ends tonight, and the evening a week is kept that three of tomorrow's
+five are the reader's own instead of two. It sits under "Day 2 · five
+read" rather than down by the line about tomorrow, because that is the
+line read first, and it takes no room from the cards: it is drawn in the
+room the header's margin and the eyebrow over the shelf ("Today's five ·
+01 / 05") take on every other evening, and the eyebrow, which says what
+the header and the dots already say, gives way to it. The card is where
+it is and as big as it is on every evening, which a test on a phone holds
+it to, and every one of these lines fits in two lines in all thirteen
+languages on a 360-point phone, which a second test holds them to. The
+evening the week ends says only the fact; what Astute+ keeps is on the
+card after the fifth.
 
 ## The sixth card
 
@@ -545,7 +558,10 @@ draw. And no two of a day's cards share a strand while the same tier of
 the pool can help it; a card that builds on another waits for it.
 
 The question of the day travels with the bank as a calendar, edition to
-card id, frozen when written and extended a year ahead every night. Before
+card id, with the edition's eight reads beside it, frozen when written and
+extended a year ahead every night. No day deals them any more (see *The
+day, and whose it is*); the site and the widget's fallback read the
+question, and the phone and the server keep reading the same calendar. Before
 the calendar existed it was computed from the pool on the fly, and a card
 added anywhere re-dealt every day since the epoch; now the app only
 computes past the calendar's end.
@@ -572,10 +588,10 @@ days until the pool runs dry.
 A day is five cards on both plans.
 
 **The welcome week.** A free reader's first seven days — days read, not days
-since the install — hold four cards of their own and the question of the
-day (`kWelcomeDays`, `kOwnCardsWelcome`). The first week is when an app is
+since the install — hold four cards of their own and one dealt at random
+(`kWelcomeDays`, `kOwnCardsWelcome`). The first week is when an app is
 judged, and the onboarding has just asked the reader what they like: a
-first morning of four cards they did not choose would answer that the
+first morning of cards they did not choose would answer that the
 question was for show. So the first week is theirs, dealt by the reading of
 their onboarding, a notch above, opening on what they came for. Every
 evening of it the finished day says how many welcome days are left, and on
@@ -584,53 +600,54 @@ what Astute+ keeps — so the eighth morning is a thing they were told, not
 one they notice. Through the week the card after the fifth offers to *make
 all five yours*, since four already are.
 
-From the eighth day, on the free plan one of them is the
-reader's own — dealt from the mix, from the subjects and strands they kept
-on, at the level the onboarding was read to start them at (see *Reading
-the onboarding*) — and four are everybody's: the
-question of the day, and three more from the day's edition, the same for
-every free reader in the world (`commonOfEdition`, chained so a card does
-not come round for weeks, never two of one subject; a reader who has
-already read one takes the edition's next spare). The morning after the
-streak reaches a multiple of seven, two of the five are the reader's own
-— nothing to redeem, the deck simply has one more (`ownCardsFor`). With
-Astute+ all five are the reader's own: at the level the app has measured
-rather than the one they said, leaned by what they held and threw down,
-with a card that came due for review in an asking slot — and no question
-of the day, because there is nothing left in the day that is not theirs.
-`dealDay` returns a `Deal`: the cards, and which of them are the reader's
-own, which the free day marks on the card ("FOR YOU") so the difference is
-visible every morning rather than described once on a paywall.
+From the eighth day, on the free plan two of them are the reader's own —
+dealt from the mix, from the subjects and strands they kept on, at the
+level the onboarding was read to start them at (see *Reading the
+onboarding*) — and three are dealt at random (`pillsAtRandom`): from the
+subjects they kept on, as much of each as the mix as they set it asks for,
+never a genre or a strand they turned off, never a card already read, and
+a subject the day already holds only when every other subject on the mix
+is in it too. Nothing else about the reader goes into those three: no
+level, no taste, no review. The morning after the streak reaches a
+multiple of seven, three of the five are the reader's own — nothing to
+redeem, the deck simply has one more (`ownCardsFor`). With Astute+ all
+five are the reader's own: at the level the app has measured rather than
+the one they said, leaned by what they held and threw down, with a card
+that came due for review in an asking slot. `dealDay` returns a `Deal`:
+the cards, and which of them are the reader's own, which the free day
+marks on the card ("FOR YOU") so the difference is visible every morning
+rather than described once on a paywall.
 
-The question of the day (`lib/data/daily.dart`) is one edition a day from
-the first of September 2026, chained so the same question does not come
-round again for months, and dealt from the first edition on every phone
-that holds the same pool, which is what makes it the same question
-everywhere. It costs the mix nothing. The question of the day is always a
-Thinking card (the app and `bundle.py` both draw it from Thinking alone),
-and Thinking was never off anybody's deck.
-What the shared question buys is a common object — the card a friend can
-be asked about ("did you get it?"), the one the morning notification can
-quote a fortnight ahead, the one square in the shared grid that means the
-same thing on every phone. A subscriber's morning opens on one of their
-own instead, and the reminder and the widget quote that one (`leadOn`),
-dealt the way the morning will deal it for a reader who has been away.
+Nothing in a day is everybody's any more. There used to be a question of
+the day, the same Thinking question on every free phone, and three reads
+from the day's edition beside it; with Astute+ all five were the reader's
+own, so the one card two friends could compare was the one a subscriber
+never saw, and the free plan had a feature that paying took away. The
+calendar is still kept — `editions.json` and `commons.json`, frozen by
+`bundle.py`, read the same way on the phone and the server — because the
+site shows its question, the widget falls back on it before the app has
+spoken to it, and a card of the day may come back in Explore. No day deals
+it. The reminder and the widget quote the first question of the reader's
+own day instead (`leadOn`), dealt the way the morning will deal it for a
+reader who has been away.
 
 **Two of five ask.** It was four, on the evidence that only answering
 trains anything, and the evidence has not changed — but a day that is four
 decisions long is a day that gets put off, and a day put off trains
 nothing. Two questions is still two judgements with a confidence on each,
 which is what the calibration record is made of; the other three are the
-reason to open the app before coffee. The ladder is paced to that. On the
-free plan the question of the day takes the first asking slot and the
-second is the reader's own. With Astute+ a card that came due for review
+reason to open the app before coffee. The ladder is paced to that. The
+asking slots go to the reader's own before they go to chance, on both
+plans: a question at the reader's level trains, and one drawn at random
+only quizzes. So on the free plan both questions are the reader's own and
+the three at random are reads. With Astute+ a card that came due for review
 takes an asking slot before any fresh question does — one at most, so a
 day always has one question it has never asked. What came due and found
 no room waits after the five, on the finished day, on either plan.
 
 **Share my day.** Five squares — read, right, wrong, a side taken, passed —
-the edition, the streak, how the question of the day went ("right, 80%
-sure"), and the day's line. Nothing a friend could be spoiled by, because
+the edition, the streak, how the questions went and how sure the reader
+was, and the day's line. Nothing a friend could be spoiled by, because
 it names no card. On a phone it goes to the share sheet; in a browser it is
 copied.
 
@@ -651,9 +668,10 @@ not it. Likes and throws travel with the account.
 ## Friends
 
 What a friend sees of a reader is the shape of the habit — the streak, the
-weeks kept, how far off the confidence runs, today's five as squares once
-the day is done, and how the question of the day went — and never a
-question's text or an answer. A board is
+weeks kept, how far off the confidence runs, and today's five as squares
+once the day is done — and never a question's text or an answer. A board
+published by a build that still dealt the question of the day carries how
+it went, and the friends screen still shows it; this build publishes none. A board is
 published with every backup, under six letters worked from the account id
 (`friendCodeOf`, no O or 0, no I or 1) that nobody can read the id back
 from; a friend types them and sees the board. The week is compared by
@@ -667,8 +685,8 @@ by their owner.
 Three, drawn in the app's own type and colours, and each opens the app when
 tapped:
 
-- **Today's card** — the card the morning opens on: the question of the day
-  on the free plan, one of the reader's own with Astute+, on the subject's
+- **Today's card** — the card the morning opens on: the first question of
+  the reader's own day, on either plan, on the subject's
   colour, with the subject as an eyebrow, the question set large and the
   streak in the foot. Small, medium, large (with a dot for each of the
   five), and the lock-screen rectangle on iOS 16+.
@@ -936,8 +954,8 @@ where they happened.
 card's own tags (`AppState.cardFacts`): its subject, genre and strand, the
 principle it teaches, its difficulty and kind of question, era, region, hook,
 mood, numeracy, abstraction and shelf life — and, when it is one of today's,
-its place in the five and why it was dealt (the question of the day, the
-reader's own, the edition's, or a review). A card is *viewed* when it comes
+its place in the five and why it was dealt (the reader's own, at random, or
+a review). A card is *viewed* when it comes
 up and *advanced* with how long it held the reader; answered with how long it
 took. The day says which slot each card fills; the end of the day how many
 were right and wrong. A streak that breaks is said once, milestones and
@@ -1214,9 +1232,9 @@ a reader is already looking at what a day came to.
 that is a message about the app's counter. The reminder is the first
 question of the deck waiting, which is a message about the reader's own
 head. The app plans a fortnight of them at a time (`reminderPlan`), each
-with the question of the morning it lands on: the question of the day,
-which is everybody's, or with Astute+ the reader's own lead, dealt the way
-that morning will deal it for a reader who has been away. On the days a lapse reaches it says something about the reader
+with the first question of the morning it lands on, which on either plan is
+the reader's own, dealt the way that morning will deal it for a reader who
+has been away. On the days a lapse reaches it says something about the reader
 instead of the app — day two, that the freeze is holding; day seven, the
 card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
@@ -1287,11 +1305,10 @@ Three things follow, on both plans:
    strange, the past — then gets the whole spread. That list is a
    judgement; replace it with what `mix set` shows readers push up.
 
-The edition's everyday cards follow the mix too: an edition carries eight,
-never two of a subject, and a free day takes the three on the reader's
-mix first, so somebody who dragged Sport to nothing is not handed a Sport
-card three mornings a week because it was everybody's. Readers with the
-same subjects still share the same three.
+The cards a free day deals at random follow the mix too: from the subjects
+kept on, as much of each as the mix as it was set asks for, so somebody who
+dragged Sport to nothing is not handed a Sport card at random, and somebody
+who turned it down meets it less.
 
 `onboarding completed` carries the reading's shape — how many subjects were
 claimed and started solid, how many strands were picked by hand — never
@@ -1340,9 +1357,9 @@ number in this is one line with its reason beside it — the dwell signals
 are trusted only from five timed cards, the taste never moves past 0.6 on
 one tag, the trace of the last three weeks with the second week at half —
 and `functions/README.md` lists them. From that it deals the day by the
-phone's own rules, card for card in what is everybody's (the question of the day and the edition's
-common cards are read off the calendar `bundle.py` freezes, on both sides),
-and writes it whole to `readers/{uid}/days/{date}`. A phone asks for
+phone's own rules — the reader's own first, then on the free plan the rest
+at random from the mix as it was set, seeded by reader and date so every
+server agrees with itself — and writes it whole to `readers/{uid}/days/{date}`. A phone asks for
 tomorrow the evening it finishes today, and the nightly pass deals every
 active reader's local today and tomorrow ahead of them; the morning reads
 one document, from the phone's own cache in milliseconds. `dealt_by` on
@@ -1392,7 +1409,7 @@ A day is now arranged rather than sorted:
 
 Two of the five ask, and at least one of those can be marked: a debate is
 ungraded on purpose, so a day of opinions would measure nothing. The
-reasoning is under *The question of the day*.
+reasoning is under *The day, and whose it is*.
 
 Every puzzle is either arithmetic the reader can redo or a result that has held
 up under repeated testing. Famous psychology that failed replication — ego

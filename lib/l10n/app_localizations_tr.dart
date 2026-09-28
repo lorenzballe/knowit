@@ -1613,7 +1613,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde bir.';
+      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
 
   @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
@@ -1674,7 +1674,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.';
 
   @override
-  String get weekKeptTwoOwn => 'Bir hafta tamam: yarın beşten ikisi senin.';
+  String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
 
   @override
   String get perkJourneyLine =>
@@ -1748,7 +1748,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get welcomeWeekEnds =>
-      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan biri senin, üçü herkesin; Astute+ ile beşi de senin kalır.';
+      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
 
   @override
   String get forYouShelf => 'Senin için';

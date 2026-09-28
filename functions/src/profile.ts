@@ -73,6 +73,8 @@ export interface Profile {
   taste: Record<string, number>;
   /** The mix as the dealer uses it, leaned by likes and throws. */
   weights: Record<string, number>;
+  /** The mix as the reader set it, for the cards a free day deals at random. Empty spreads them evenly. */
+  mix: Record<string, number>;
   shape: Shape;
   claimed: string[];
   genresOff: Set<string>;
@@ -372,6 +374,7 @@ export function buildProfile(snapshot: Snapshot, activity: Map<string, Event[]>,
     levels,
     taste,
     weights,
+    mix: { ...weightsSaid },
     shape: reading.shape,
     claimed: reading.claimed,
     genresOff,

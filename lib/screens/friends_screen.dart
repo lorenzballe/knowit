@@ -327,8 +327,9 @@ class _FriendRow extends StatelessWidget {
         : (b.edition == today && b.squares.isNotEmpty
               ? b.squares
               : l.notYetToday);
-    // The one card in common, said plainly: this is what two friends can
-    // actually compare.
+    // How the question of the day went, from a friend on a build that
+    // still dealt it. No day deals it now, so a board published by this
+    // build never carries it and the line is simply not there.
     final String? question = b != null && b.edition == today
         ? _questionLine(l, b.questionRight, b.questionSure)
         : null;

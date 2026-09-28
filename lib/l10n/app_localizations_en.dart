@@ -1623,7 +1623,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'From your strands, at your level, never one you have read. Free days give you one.';
+      'From your strands, at your level, never one you have read. Free days give you two.';
 
   @override
   String get plusCardHeadline => 'Make all five yours.';
@@ -1684,8 +1684,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'A week kept: tomorrow two of the five are yours.';
+  String get weekKeptThreeOwn =>
+      'A week kept: tomorrow three of the five are yours.';
 
   @override
   String get perkJourneyLine =>
@@ -1756,7 +1756,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get welcomeWeekEnds =>
-      'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.';
+      'Your first week ends tonight. From tomorrow, two of the five are yours.';
 
   @override
   String get forYouShelf => 'For you';

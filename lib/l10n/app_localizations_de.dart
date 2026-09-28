@@ -1629,7 +1629,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Aus deinen Strängen, auf deinem Niveau, nie eine schon gelesene. Gratis ist es eine am Tag.';
+      'Aus deinen Strängen, auf deinem Niveau, nie eine schon gelesene. Gratis sind es zwei am Tag.';
 
   @override
   String get plusCardHeadline => 'Alle fünf, deine.';
@@ -1690,8 +1690,8 @@ class AppLocalizationsDe extends AppLocalizations {
       'Noch ist nichts zurückgekommen. Eine Karte kommt nach drei Tagen wieder, dann nach einer Woche, dann nach einem Monat — und was du dann richtig hast, weißt du wirklich.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'Eine Woche gehalten: morgen sind zwei der fünf deine.';
+  String get weekKeptThreeOwn =>
+      'Eine Woche gehalten: morgen sind drei der fünf deine.';
 
   @override
   String get perkJourneyLine =>
@@ -1766,7 +1766,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get welcomeWeekEnds =>
-      'Deine erste Woche endet heute Abend. Ab morgen ist eine der fünf deine und drei gehören allen; mit Astute+ bleiben alle fünf deine.';
+      'Deine erste Woche endet heute Abend. Ab morgen sind zwei der fünf deine.';
 
   @override
   String get forYouShelf => 'Für dich';

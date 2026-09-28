@@ -61,8 +61,8 @@ List<Pill> pillsForDate(
   Set<String> genresOff = const {},
   Set<String> strandsOff = const {},
 
-  /// Strands already on the table today — the question of the day's, a
-  /// review's — so the four do not double up on them either.
+  /// Strands already on the table today, a review's, so the rest do not
+  /// double up on them either.
   Set<String> strandsDealt = const {},
 
   /// How many of the [count] should ask, when the caller has already dealt
@@ -197,6 +197,151 @@ List<Pill> pillsForDate(
     );
   }
   return arrangeDay(deck);
+}
+
+/// Cards dealt at random: what is left of a free day once the reader's own
+/// are dealt.
+///
+/// Nothing about the reader goes into them but what the reader set: the
+/// subjects they kept on, as much of each as the mix asks for, and never a
+/// genre or a strand they turned off. The mix is theirs on either plan.
+/// No level, no taste and no review, which is the difference with the
+/// cards chosen for them, and the reason it can be seen every morning.
+///
+/// Never a card already read while one is unread, never a card before the
+/// one it builds on, and a subject or a strand the day already holds only
+/// when nothing else on the mix will do. Reading cards, unless [asking]
+/// says the day still wants a question; never a debate, because a day has
+/// one at most and the reader's own may hold it.
+///
+/// Seeded by the date and the reading history, like the rest of the day:
+/// the same morning dealt twice is the same morning, and two readers who
+/// have read different things are dealt different cards.
+List<Pill> pillsAtRandom(
+  DateTime date, {
+  required int count,
+  int asking = 0,
+  Set<String>? topics,
+
+  /// The mix as the reader set it, 0..1 by topic key. Empty spreads the
+  /// subjects evenly.
+  Map<String, double> weights = const {},
+  Set<String> genresOff = const {},
+  Set<String> strandsOff = const {},
+  Set<String> exclude = const {},
+
+  /// Subjects and strands the day already holds, by the name a card
+  /// carries and by strand id.
+  Set<String> topicsDealt = const {},
+  Set<String> strandsDealt = const {},
+}) {
+  if (count <= 0) return const [];
+  // Summed rather than chained, so the order the history is held in
+  // cannot change the seed.
+  var seed = _stableHash(dateKey(date));
+  for (final id in exclude) {
+    seed = (seed + _stableHash(id)) & 0x1FFFFFFF;
+  }
+  final rng = Random(seed);
+  final pool = List<Pill>.from(PillBank.cards)..shuffle(rng);
+
+  final wanted = <String>{
+    for (final key in topics ?? const <String>{}) ?kTopics[key]?.name,
+  };
+  bool onTopic(Pill p) => wanted.isEmpty || wanted.contains(p.topic);
+  bool strandOn(String strand) =>
+      !strandsOff.contains(strand) &&
+      !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
+  bool onMix(Pill p) =>
+      onTopic(p) && (p.strands.isEmpty || p.strands.any(strandOn));
+  bool ready(Pill p) => p.buildsOn.every(exclude.contains);
+
+  // The same tiers as the reader's own: unread before read, and inside
+  // each on the mix and ready, on the mix but waiting, on the subject
+  // under a genre turned off, off the subject altogether.
+  int tierOf(Pill p) {
+    final int read = exclude.contains(p.id) ? 4 : 0;
+    if (onMix(p)) return read + (ready(p) ? 0 : 1);
+    if (onTopic(p)) return read + 2;
+    return read + 3;
+  }
+
+  // Inside a tier, the exponential race on the mix alone: every card keeps
+  // a chance in proportion to how much of its subject the reader asked for.
+  final Map<String, double> mixByName = {
+    for (final entry in kTopics.entries)
+      entry.value.name: weights.isEmpty ? 1.0 : weights[entry.key] ?? 0.0,
+  };
+  final tiers = List.generate(8, (_) => <(double, Pill)>[]);
+  for (final p in pool) {
+    final double w = mixByName[p.topic] ?? (weights.isEmpty ? 1.0 : 0.0);
+    final double u = rng.nextDouble().clamp(1e-12, 1.0);
+    tiers[tierOf(p)].add((-math.log(u) / (w <= 0 ? 1e-6 : w), p));
+  }
+  final ordered = [
+    for (final tier in tiers)
+      [
+        for (final entry in tier..sort((a, b) => a.$1.compareTo(b.$1)))
+          entry.$2,
+      ],
+  ];
+
+  final picked = <Pill>[];
+  final heldTopics = {...topicsDealt};
+  final heldStrands = {...strandsDealt};
+  // 0: a subject and a strand the day has not got yet; 1: a strand it has
+  // not got; 2: anything.
+  int repeatOf(Pill p) {
+    if (p.strand.isNotEmpty && heldStrands.contains(p.strand)) return 2;
+    return heldTopics.contains(p.topic) ? 1 : 0;
+  }
+
+  void admit(Pill p) {
+    picked.add(p);
+    heldTopics.add(p.topic);
+    if (p.strand.isNotEmpty) heldStrands.add(p.strand);
+  }
+
+  // A tier at a time, and inside it the freshest cards first: a reader who
+  // kept one subject gets a second card of it before a card of a subject
+  // they turned off.
+  void take(int n, bool Function(Pill) wants) {
+    var got = 0;
+    for (final tier in ordered) {
+      for (var allowed = 0; allowed <= 2 && got < n; allowed++) {
+        for (final p in tier) {
+          if (got >= n) break;
+          if (!wants(p) || picked.contains(p) || repeatOf(p) > allowed) {
+            continue;
+          }
+          admit(p);
+          got++;
+        }
+      }
+      if (got >= n) break;
+    }
+  }
+
+  bool debate(Pill p) => p.challenge is TakeASide;
+  take(min(asking, count), (p) => p.asksSomething && !debate(p));
+  take(count - picked.length, (p) => !p.asksSomething);
+  if (picked.length < count) {
+    for (final p in ordered.expand((tier) => tier)) {
+      if (picked.length >= count) break;
+      if (!picked.contains(p) && !debate(p)) admit(p);
+    }
+  }
+  return picked;
+}
+
+/// A hash that is the same on every run and every platform, which
+/// `String.hashCode` does not promise.
+int _stableHash(String text) {
+  var hash = 0;
+  for (final unit in text.codeUnits) {
+    hash = (hash * 31 + unit) & 0x1FFFFFFF;
+  }
+  return hash;
 }
 
 /// Gives a day a shape rather than a sort order.

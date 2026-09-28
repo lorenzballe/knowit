@@ -20,15 +20,12 @@ class ShareDay extends StatelessWidget {
   @visibleForTesting
   static Future<bool> Function(String text) share = shareText;
 
-  /// What goes into the chat. The edition rather than the reader's day
-  /// count, because the edition is the thing two readers have in common.
+  /// What goes into the chat: the squares, how the questions went and how
+  /// sure the reader was. The edition rather than the reader's day count,
+  /// because the date is the thing two readers have in common.
   static String text(BuildContext context, AppState app) {
     final l = context.l10n;
     final d = app.daySummary;
-    // The question of the day on its own line: it is the one card the
-    // reader and the friend have in common, so it is the one line that
-    // can be compared.
-    final String? question = questionLine(l, d.questionRight, d.questionSure);
     final verdict = [
       if (d.asked > 0) l.rightOfAsked(d.right, d.asked),
       if (d.sure != null) l.saidSure(d.sure!.round()),
@@ -36,17 +33,9 @@ class ShareDay extends StatelessWidget {
     return [
       'Astute #${d.edition}${d.streak > 0 ? ' · \u{1f525}${d.streak}' : ''}',
       d.squares,
-      if (question != null) '${l.todaysQuestion}: $question',
       if (verdict.isNotEmpty) verdict,
       'astutetheapp.com',
     ].join('\n');
-  }
-
-  /// "right, 80% sure" — or null when the question was not answered.
-  static String? questionLine(AppLocalizations l, bool? right, int? sure) {
-    if (right == null) return null;
-    if (sure == null) return right ? l.right : l.wrong;
-    return right ? l.rightAtSure(sure) : l.wrongAtSure(sure);
   }
 
   Future<void> _share(BuildContext context) async {
