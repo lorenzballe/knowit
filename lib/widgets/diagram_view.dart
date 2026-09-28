@@ -165,6 +165,8 @@ double pop(double t, double a, double b) {
 /// A number the way a person would say it on a card: commas under a
 /// million, words above, three significant figures at most.
 String sayNumber(double v) {
+  // A true minus sign, not a hyphen.
+  if (v < 0) return '−${sayNumber(-v)}';
   final a = v.abs();
   if (a >= 1e15) {
     // Past trillions, words stop helping: a power of ten.
@@ -744,9 +746,9 @@ class _ScalePainter extends _DiagramPainter {
         );
       }
     }
-    if (d.unit.length > 1) {
-      // Under the tick numbers, clear of the bracket that comes later. A
-      // bare sign (\$, %) is already on every item and would sit alone.
+    if (d.unit.length > 10) {
+      // Only a long unit, which the items leave out, is written here, once,
+      // under the tick numbers and clear of the bracket that comes later.
       final unit = layoutText(
         d.unit,
         size: 10,
@@ -1430,7 +1432,8 @@ class _LinePainter extends _DiagramPainter {
             ..lineTo(tip.dx, bottom)
             ..lineTo(pts.first.dx, bottom)
             ..close();
-          canvas.drawPath(wash, fill(inkAt(0.07)));
+          // It fades in as the pen gets going, so its first sliver is not a bar.
+          canvas.drawPath(wash, fill(inkAt(0.07 * phase(p, 0.08, 0.4))));
         }
       }
       canvas.drawPath(
