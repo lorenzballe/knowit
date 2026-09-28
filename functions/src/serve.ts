@@ -56,7 +56,6 @@ export function dayDocument(deal: Deal, bank: Bank, profile: Profile, nowMs: num
     edition: deal.edition,
     cards: deal.cards,
     own: deal.own,
-    question: deal.question,
     reviews: deal.reviews,
     ownCount: deal.ownCount,
     welcome: deal.welcome,

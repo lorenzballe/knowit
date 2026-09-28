@@ -68,7 +68,7 @@ ones that shape a reader's day:
 | deal.ts      | `RECENT_STRAND_WEIGHT` 0.5 | ...at half its weight, not none: a liking is still a liking                          |
 | deal.ts      | `EXPLORER_SHARE` 0.5   | about every other day one read is from a strand never met, on level alone; seeded by reader and date, so every server agrees |
 | deal.ts      | fit 1.5/1.0/0.7, 0.5–3.0 | the phone's own ladder (`lib/data/pills_repository.dart`): a read below the level first, a hard ask only once the level is there |
-| deal.ts      | `OWN_WELCOME` 4, `OWN_FREE` 1, `WELCOME_DAYS` 7 | the welcome week, and the shared day after it (see the root README)          |
+| deal.ts      | `OWN_WELCOME` 4, `OWN_FREE` 2, `OWN_REWARDED` 3, `WELCOME_DAYS` 7 | the welcome week, the free day after it and the morning after a week kept; the rest of a free day at random (`dealRandom`, see the root README) |
 | serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
 | explore.ts   | the crowd, `popularity` | the launch crowd, the phone's numbers bit for bit (`lib/sync/tally.dart`)              |
 

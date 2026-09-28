@@ -2379,7 +2379,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkOwnLine.
   ///
   /// In en, this message translates to:
-  /// **'From your strands, at your level, never one you have read. Free days give you one.'**
+  /// **'From your strands, at your level, never one you have read. Free days give you two.'**
   String get perkOwnLine;
 
   /// No description provided for @plusCardHeadline.
@@ -2442,11 +2442,11 @@ abstract class AppLocalizations {
   /// **'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.'**
   String get nothingBackYet;
 
-  /// No description provided for @weekKeptTwoOwn.
+  /// No description provided for @weekKeptThreeOwn.
   ///
   /// In en, this message translates to:
-  /// **'A week kept: tomorrow two of the five are yours.'**
-  String get weekKeptTwoOwn;
+  /// **'A week kept: tomorrow three of the five are yours.'**
+  String get weekKeptThreeOwn;
 
   /// No description provided for @perkJourneyLine.
   ///
@@ -2541,7 +2541,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeWeekEnds.
   ///
   /// In en, this message translates to:
-  /// **'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.'**
+  /// **'Your first week ends tonight. From tomorrow, two of the five are yours.'**
   String get welcomeWeekEnds;
 
   /// No description provided for @forYouShelf.

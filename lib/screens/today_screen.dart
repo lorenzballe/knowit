@@ -178,13 +178,15 @@ class _TodayScreenState extends State<TodayScreen> {
               deck: app.todaysDeck,
               index: app.todayIndex,
               // After the last pill, on the free plan, the card that offers
-              // the rest of the day: the cards that were everybody's, the
-              // reader's own instead. It is thrown like the rest.
+              // the rest of the day: the cards dealt at random, the reader's
+              // own instead. It is thrown like the rest, and it says where
+              // the reader's week has got to.
               trailing: app.isPlus
                   ? null
                   : MagicCard(
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
+                      note: weekNoteOf(context, app),
                       // Through the welcome week four of five are already
                       // theirs: what Astute+ offers is that they stay so.
                       headline: app.inWelcome

@@ -1627,7 +1627,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er één per dag.';
+      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
 
   @override
   String get plusCardHeadline => 'Alle vijf van jou.';
@@ -1688,8 +1688,8 @@ class AppLocalizationsNl extends AppLocalizations {
       'Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'Een week volgehouden: morgen zijn twee van de vijf van jou.';
+  String get weekKeptThreeOwn =>
+      'Een week volgehouden: morgen zijn drie van de vijf van jou.';
 
   @override
   String get perkJourneyLine =>
@@ -1763,7 +1763,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get welcomeWeekEnds =>
-      'Je eerste week eindigt vanavond. Vanaf morgen is één van de vijf van jou en drie zijn van iedereen; met Astute+ blijven alle vijf van jou.';
+      'Je eerste week eindigt vanavond. Vanaf morgen zijn twee van de vijf van jou.';
 
   @override
   String get forYouShelf => 'Voor jou';

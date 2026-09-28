@@ -52,9 +52,10 @@ class BankBundle {
   final Set<String> retired;
   final Map<int, String> editions;
 
-  /// The cards everybody meets on an edition besides its question, frozen
-  /// like the question (see `commonOfEdition`). Empty on a bundle from
-  /// before they were frozen, and the app then chains its own.
+  /// The cards the calendar keeps for an edition besides its question,
+  /// frozen like the question (see `commonOfEdition`). No day deals them.
+  /// Empty on a bundle from before they were frozen, and the app then
+  /// chains its own.
   final Map<int, List<String>> commons;
 
   const BankBundle({

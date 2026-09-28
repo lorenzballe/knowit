@@ -51,8 +51,8 @@ class PillCardStack extends StatefulWidget {
   /// Which of these cards are back for another go.
   final Set<String> reviewIds;
 
-  /// Which of these cards were dealt from the reader's own mix, where the
-  /// day marks them — on the free plan, where the others are everybody's.
+  /// Which of these cards were chosen for the reader, where the day marks
+  /// them — on the free plan, where the others came at random.
   final Set<String> ownIds;
 
   /// True while a card is under the finger, so the chrome can step out of

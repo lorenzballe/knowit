@@ -134,23 +134,20 @@ void main() {
       );
     });
 
-    test('the edition\'s cards on the reader\'s mix come first', () {
+    test('the cards at random keep to the reader\'s mix too', () {
       final day = DateTime(2026, 10, 14);
-      final spares = commonOfEdition(editionOf(day));
-      // Keep only the subjects of the edition's last spares: the day
-      // should take those over the ones before them.
-      final wanted = spares.skip(spares.length - 3).map((p) => p.topic);
-      final keys = {
-        for (final e in kTopics.entries)
-          if (wanted.contains(e.value.name)) e.key,
-      };
-      final deal = dealDay(date: day, topics: keys);
-      final common = deal.cards.where(
-        (p) => !deal.own.contains(p.id) && p.id != deal.question!.id,
-      );
-      expect(common, hasLength(3));
-      for (final p in common) {
-        expect(wanted, contains(p.topic), reason: p.id);
+      const keys = {'nature', 'art', 'sport', 'thinking'};
+      final wanted = {for (final k in keys) kTopics[k]!.name};
+      for (var d = 0; d < 10; d++) {
+        final deal = dealDay(
+          date: day.add(Duration(days: d)),
+          topics: keys,
+        );
+        final chance = deal.cards.where((p) => !deal.own.contains(p.id));
+        expect(chance, hasLength(3));
+        for (final p in chance) {
+          expect(wanted, contains(p.topic), reason: p.id);
+        }
       }
     });
   });

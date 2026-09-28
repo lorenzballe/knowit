@@ -285,9 +285,9 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Eyebrow(context.l10n.yourTopics),
-              // The mix is everybody's: it is what the two cards of the
-              // reader's own are dealt from on the free plan, so gating it
-              // would gate the one thing the free day has to show.
+              // The mix is everybody's: it is what the free day's cards
+              // are dealt from, the reader's own and the ones at random, so
+              // gating it would gate the one thing the free day has to show.
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => _editTopics(context),

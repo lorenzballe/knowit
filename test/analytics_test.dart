@@ -266,10 +266,7 @@ void main() {
         expect(seen, isNotNull);
         expect(seen!['position'], 1);
         expect(seen['of'], app.todaysDeck.length);
-        expect(
-          seen['slot'],
-          isIn(['question_of_day', 'own', 'common', 'review']),
-        );
+        expect(seen['slot'], isIn(['own', 'random', 'review']));
         expect(
           seen['challenge'],
           isIn(['fact', 'pick_one', 'type_number', 'estimate', 'take_a_side']),

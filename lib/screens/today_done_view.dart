@@ -34,6 +34,28 @@ import '../widgets/subject_icon.dart';
 ///
 /// Which card is at the front belongs to the screen above, because the
 /// header's dot and the glow behind everything take that card's colour.
+/// What the card after the fifth says about the plan tonight, on the
+/// free plan, with a key for each thing it can say: every evening of the
+/// welcome week how many of its days are left, so four of five being the
+/// reader's own reads as a welcome with an end rather than as the rule;
+/// the evening it ends, what tomorrow looks like; and the evening a week
+/// is kept, that tomorrow has one more of their own, said once, where it
+/// reads as a reward rather than a rule. It is said on the card that makes
+/// the offer, beside what Astute+ keeps, and only once the day is done,
+/// because until then tonight has not happened.
+(String, String)? weekNoteOf(BuildContext context, AppState app) {
+  if (app.isPlus || !app.todayCompleted) return null;
+  if (app.welcomeEndsTonight) {
+    return ('welcome-ends', context.l10n.welcomeWeekEnds);
+  }
+  final int left = app.welcomeDaysLeftAfterToday;
+  if (left > 0) return ('welcome-left', context.l10n.welcomeDaysLeft(left));
+  if (app.tomorrowIsRewarded) {
+    return ('week-reward', context.l10n.weekKeptThreeOwn);
+  }
+  return null;
+}
+
 class TodayDoneView extends StatefulWidget {
   final AppState app;
 
@@ -93,7 +115,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardHeight = _artHeight;
 
   /// Whether the shelf ends on the card that offers the rest of the day.
-  /// It does on the free plan, where three of the five were everybody's,
+  /// It does on the free plan, where three of the five came at random,
   /// and never on Astute+, so nobody is sold what they already have.
   bool get _offer => !widget.app.isPlus;
 
@@ -295,12 +317,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // the one about tomorrow.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
-          child: _Tomorrow(
-            lead: _tomorrowsLead(app),
-            rewarded: app.tomorrowIsRewarded,
-            welcomeLeft: app.welcomeDaysLeftAfterToday,
-            welcomeEnds: app.welcomeEndsTonight,
-          ),
+          child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
         if (app.reviewsWaiting.isNotEmpty)
           Padding(
@@ -450,6 +467,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       height: _cardHeight,
       child: MagicCard(
         eyebrow: l.plusNameCaps,
+        note: weekNoteOf(context, app),
         headline: app.inWelcome
             ? l.plusCardHeadline
             : l.theOthersYours(app.todaysDeck.length - app.ownIdsToday.length),
@@ -463,8 +481,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
   static String _two(int n) => n.toString().padLeft(2, '0');
 }
 
-/// The cards that came due and found no room in the five — the day has
-/// two asking slots and one is everybody's — waiting to be answered again.
+/// The cards that came due and found no room in the five — Astute+ takes
+/// one a day at most, and the free day none — waiting to be answered again.
 class _ReviewLine extends StatelessWidget {
   const _ReviewLine({required this.app});
 
@@ -1195,30 +1213,10 @@ class _Dots extends StatelessWidget {
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({
-    required this.lead,
-    this.rewarded = false,
-    this.welcomeLeft = 0,
-    this.welcomeEnds = false,
-  });
+  const _Tomorrow({required this.lead});
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
-
-  /// True the evening a week is kept on the free plan: tomorrow has three
-  /// cards of the reader's own instead of two, and this is where it is
-  /// said — once, the night before, where it reads as a reward rather
-  /// than as a rule.
-  final bool rewarded;
-
-  /// Welcome days still to come after today, on the free plan: said every
-  /// evening of the week, so four of five being theirs reads as a welcome
-  /// with an end rather than as the rule.
-  final int welcomeLeft;
-
-  /// True the evening the welcome week ends: tomorrow is the first shared
-  /// day, and the reader hears it tonight, with what Astute+ keeps.
-  final bool welcomeEnds;
 
   @override
   Widget build(BuildContext context) {
@@ -1245,45 +1243,16 @@ class _Tomorrow extends StatelessWidget {
           const SizedBox(width: 12),
         ],
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                lead == null
-                    ? context.l10n.tomorrowsFiveOpenIn(when)
-                    : context.l10n.topicOpensTomorrow(lead.topic, when),
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w500,
-                  height: 1.35,
-                  color: context.p.ink.withValues(alpha: 0.6),
-                ),
-              ),
-              if (rewarded || welcomeEnds || welcomeLeft > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Text(
-                    welcomeEnds
-                        ? context.l10n.welcomeWeekEnds
-                        : welcomeLeft > 0
-                        ? context.l10n.welcomeDaysLeft(welcomeLeft)
-                        : context.l10n.weekKeptTwoOwn,
-                    key: ValueKey(
-                      welcomeEnds
-                          ? 'welcome-ends'
-                          : welcomeLeft > 0
-                          ? 'welcome-left'
-                          : 'week-reward',
-                    ),
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w600,
-                      height: 1.35,
-                      color: context.p.ink.withValues(alpha: 0.8),
-                    ),
-                  ),
-                ),
-            ],
+          child: Text(
+            lead == null
+                ? context.l10n.tomorrowsFiveOpenIn(when)
+                : context.l10n.topicOpensTomorrow(lead.topic, when),
+            style: AppText.body(
+              size: 13.5,
+              weight: FontWeight.w500,
+              height: 1.35,
+              color: context.p.ink.withValues(alpha: 0.6),
+            ),
           ),
         ),
       ],

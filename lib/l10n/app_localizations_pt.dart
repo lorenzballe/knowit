@@ -1629,7 +1629,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Dos teus fios, ao teu nível, nunca uma já lida. Grátis tens uma por dia.';
+      'Dos teus fios, ao teu nível, nunca uma já lida. Grátis tens duas por dia.';
 
   @override
   String get plusCardHeadline => 'As cinco, tuas.';
@@ -1690,8 +1690,8 @@ class AppLocalizationsPt extends AppLocalizations {
       'Ainda não voltou nada. Uma carta volta ao fim de três dias, depois uma semana, depois um mês — e o que acertas então é o que sabes mesmo.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'Uma semana seguida: amanhã duas das cinco são tuas.';
+  String get weekKeptThreeOwn =>
+      'Uma semana seguida: amanhã três das cinco são tuas.';
 
   @override
   String get perkJourneyLine =>
@@ -1765,7 +1765,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get welcomeWeekEnds =>
-      'A tua primeira semana acaba esta noite. A partir de amanhã, uma das cinco é tua e três são de todos; o Astute+ mantém as cinco tuas.';
+      'A tua primeira semana acaba esta noite. A partir de amanhã, duas das cinco são tuas.';
 
   @override
   String get forYouShelf => 'Para ti';
