@@ -30,6 +30,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "sold week one",
+        "value": 40
+      },
+      {
+        "label": "sold week two",
+        "value": 24,
+        "hi": true
+      },
+      {
+        "label": "left",
+        "value": 36
+      }
+    ],
+    "caption": "The second 40% is of the 60% left, so it clears 24, not 40."
+  },
   "source": "Successive proportions",
   "source_kind": "arithmetic",
   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"

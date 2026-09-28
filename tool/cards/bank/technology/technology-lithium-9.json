@@ -32,6 +32,86 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "year",
+      "min": 1992,
+      "max": 2016
+    },
+    "y": {
+      "label": "price, % of 1992",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "13% cheaper each year",
+        "hi": true,
+        "points": [
+          [
+            1992,
+            100
+          ],
+          [
+            1994,
+            75.7
+          ],
+          [
+            1996,
+            57.3
+          ],
+          [
+            1998,
+            43.4
+          ],
+          [
+            2000,
+            32.8
+          ],
+          [
+            2002,
+            24.8
+          ],
+          [
+            2004,
+            18.8
+          ],
+          [
+            2006,
+            14.2
+          ],
+          [
+            2008,
+            10.8
+          ],
+          [
+            2010,
+            8.2
+          ],
+          [
+            2012,
+            6.2
+          ],
+          [
+            2014,
+            4.7
+          ],
+          [
+            2016,
+            3.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2016,
+        "y": 3.5,
+        "label": "3.5%: a thirtieth"
+      }
+    ]
+  },
   "source": "Ziegler & Trancik, Energy & Environmental Science, 2021",
   "source_kind": "paper",
   "reference": "doi:10.1039/d0ee02681f",

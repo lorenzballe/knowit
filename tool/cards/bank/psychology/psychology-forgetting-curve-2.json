@@ -25,6 +25,68 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "hours after learning",
+      "min": 0.2,
+      "max": 1000,
+      "log": true
+    },
+    "y": {
+      "label": "% saved",
+      "min": 0,
+      "max": 60
+    },
+    "series": [
+      {
+        "label": "Ebbinghaus, 1885",
+        "hi": true,
+        "points": [
+          [
+            0.33,
+            58.2
+          ],
+          [
+            1,
+            44.2
+          ],
+          [
+            8.8,
+            35.8
+          ],
+          [
+            24,
+            33.7
+          ],
+          [
+            48,
+            27.8
+          ],
+          [
+            144,
+            25.4
+          ],
+          [
+            744,
+            21.1
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 8.8,
+        "y": 35.8,
+        "label": "9 hours: 36%"
+      },
+      {
+        "x": 24,
+        "y": 33.7,
+        "label": "a day: 34%"
+      }
+    ]
+  },
   "source": "Murre & Dros, PLOS ONE, 2015",
   "source_kind": "paper",
   "reference": "doi:10.1371/journal.pone.0120644",

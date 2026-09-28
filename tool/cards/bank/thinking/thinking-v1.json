@@ -28,7 +28,23 @@
   "shelf_life": "years",
   "mature": true,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "deaths a year worldwide",
+    "items": [
+      {
+        "label": "homicide",
+        "value": 460000
+      },
+      {
+        "label": "suicide",
+        "value": 700000,
+        "hi": true
+      }
+    ],
+    "caption": "The cause covered less kills about half as many again."
+  },
   "source": "WHO, 2021; UNODC, 2023",
   "source_kind": "statistics",
   "reference": "WHO, Suicide worldwide in 2019: Global Health Estimates, 2021; UNODC, Global Study on Homicide, 2023"

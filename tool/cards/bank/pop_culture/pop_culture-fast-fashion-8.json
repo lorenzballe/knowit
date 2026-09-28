@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Polyester",
+        "value": 57,
+        "hi": true
+      },
+      {
+        "label": "Cotton",
+        "value": 20
+      },
+      {
+        "label": "Everything else",
+        "value": 23
+      }
+    ],
+    "caption": "New fibre made in 2023, by kind (Textile Exchange)."
+  },
   "source": "Textile Exchange, Materials Market Report 2024",
   "source_kind": "statistics",
   "reference": "Textile Exchange, Materials Market Report, 2024",

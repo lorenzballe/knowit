@@ -30,6 +30,34 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 10000,
+    "label": "athletes tested",
+    "branches": [
+      {
+        "n": 10,
+        "label": "use it, test positive",
+        "hi": true
+      },
+      {
+        "n": 9990,
+        "label": "clean",
+        "branches": [
+          {
+            "n": 100,
+            "label": "test positive anyway",
+            "hi": true
+          },
+          {
+            "n": 9890,
+            "label": "test negative"
+          }
+        ]
+      }
+    ],
+    "caption": "Of about 110 positives, only 10 use the drug: nine in ten are clean."
+  },
   "source": "Screening for rare conditions",
   "source_kind": "arithmetic",
   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"

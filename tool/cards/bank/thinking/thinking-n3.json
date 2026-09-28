@@ -32,6 +32,139 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "years",
+      "min": 0,
+      "max": 13
+    },
+    "y": {
+      "label": "height, m",
+      "min": 0,
+      "max": 5.5
+    },
+    "series": [
+      {
+        "label": "+60 cm, then -40 cm",
+        "hi": true,
+        "points": [
+          [
+            0,
+            2.0
+          ],
+          [
+            0.5,
+            2.6
+          ],
+          [
+            1,
+            2.2
+          ],
+          [
+            1.5,
+            2.8
+          ],
+          [
+            2,
+            2.4
+          ],
+          [
+            2.5,
+            3.0
+          ],
+          [
+            3,
+            2.6
+          ],
+          [
+            3.5,
+            3.2
+          ],
+          [
+            4,
+            2.8
+          ],
+          [
+            4.5,
+            3.4
+          ],
+          [
+            5,
+            3.0
+          ],
+          [
+            5.5,
+            3.6
+          ],
+          [
+            6,
+            3.2
+          ],
+          [
+            6.5,
+            3.8
+          ],
+          [
+            7,
+            3.4
+          ],
+          [
+            7.5,
+            4.0
+          ],
+          [
+            8,
+            3.6
+          ],
+          [
+            8.5,
+            4.2
+          ],
+          [
+            9,
+            3.8
+          ],
+          [
+            9.5,
+            4.4
+          ],
+          [
+            10,
+            4.0
+          ],
+          [
+            10.5,
+            4.6
+          ],
+          [
+            11,
+            4.2
+          ],
+          [
+            11.5,
+            4.8
+          ],
+          [
+            12,
+            4.4
+          ],
+          [
+            12.5,
+            5.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 12.5,
+        "y": 5.0,
+        "label": "13th summer: 5 m"
+      }
+    ],
+    "caption": "Each year nets only 20 cm, but the last summer's 60 cm reaches the top."
+  },
   "source": "Net-progress problems",
   "source_kind": "arithmetic",
   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
