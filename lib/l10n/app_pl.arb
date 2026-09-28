@@ -380,7 +380,6 @@
   "mixFull": "Maksymalnie",
   "forYouChip": "DLA CIEBIE",
   "againChip": "ZNOWU",
-  "theOthersYours": "{n, plural, =1{Ta druga, twoja.} other{Pozostałe {n}, twoje.}}",
   "magicLine": "Pięć kart dziennie wybranych dla ciebie: z twojego miksu, na twoim poziomie, nigdy już przeczytana. Od jutra.",
   "everyCardForYou": "Każda karta wybrana dla ciebie.",
   "perkOwnTitle": "Pięć kart dziennie, wszystkie twoje",

@@ -1841,9 +1841,9 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        // A first day is like any free day: three of the five were dealt at
-        // random, and the card offers those too.
-        expect(find.text('The other 3, yours.'), findsOneWidget);
+        // A first day is like any free day: the card offers the whole day,
+        // all five the reader's own.
+        expect(find.text('Make all five yours.'), findsOneWidget);
         expect(find.text('Try 14 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
         // Nothing about the week yet: no week has been kept.
@@ -2012,7 +2012,7 @@ void main() {
       // Past the fifth: the offer, at the front, and the counter gives way
       // to the plan's name. No skip here — a swipe is the way back.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('The other 3, yours.'), findsOneWidget);
+      expect(find.text('Make all five yours.'), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);
@@ -3294,6 +3294,39 @@ void main() {
       expect(sizeOf(tester), 20);
       expect(find.byType(SingleChildScrollView), findsWidgets);
     });
+  });
+
+  testWidgets('a card read from a shelf stays on it, marked', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+
+    final Pill first = pickedPills(
+      seed: daySeed(DateTime.now()),
+      count: 12,
+    ).first;
+    expect(find.byKey(ValueKey('explore-${first.id}')), findsWidgets);
+    expect(find.byKey(ValueKey('explore-read-${first.id}')), findsNothing);
+
+    // Opened and closed: it counts as read, and the shelf it came from
+    // still holds it, where it was, with the tick the top list uses. Taken
+    // off the moment it was read, it went from under the reader's thumb.
+    final Offset before = tester.getTopLeft(
+      find.byKey(ValueKey('explore-${first.id}')).first,
+    );
+    await tester.tap(find.byKey(ValueKey('explore-${first.id}')).first);
+    await _settle(tester);
+    await tester.tap(find.bySemanticsLabel('Close'));
+    await _settle(tester);
+
+    expect(find.byKey(ValueKey('explore-${first.id}')), findsWidgets);
+    expect(find.byKey(ValueKey('explore-read-${first.id}')), findsWidgets);
+    expect(
+      tester.getTopLeft(find.byKey(ValueKey('explore-${first.id}')).first),
+      before,
+    );
   });
 
   testWidgets('a re-read card is the size of the one it re-reads', (
@@ -4960,40 +4993,35 @@ void main() {
       for (final Locale locale in AppLocalizations.supportedLocales) {
         final l = await AppLocalizations.delegate.load(locale);
         final String longest = l.weekKeptThreeOwn;
-        for (final String headline in [
-          l.theOthersYours(3),
-          l.theOthersYours(2),
-        ]) {
-          await tester.pumpWidget(
-            MaterialApp(
-              locale: locale,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              theme: buildAstutoTheme(Brightness.dark),
-              home: Scaffold(
-                body: Center(
-                  child: SizedBox.fromSize(
-                    size: card,
-                    child: MagicCard(
-                      eyebrow: l.plusNameCaps,
-                      note: ('note', longest),
-                      headline: headline,
-                      line: l.magicLine,
-                      action: l.magicUnlock(14),
-                      onAction: () {},
-                    ),
+        await tester.pumpWidget(
+          MaterialApp(
+            locale: locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: buildAstutoTheme(Brightness.dark),
+            home: Scaffold(
+              body: Center(
+                child: SizedBox.fromSize(
+                  size: card,
+                  child: MagicCard(
+                    eyebrow: l.plusNameCaps,
+                    note: ('note', longest),
+                    headline: l.plusCardHeadline,
+                    line: l.magicLine,
+                    action: l.magicUnlock(14),
+                    onAction: () {},
                   ),
                 ),
               ),
             ),
-          );
-          await tester.pump();
-          expect(
-            tester.takeException(),
-            isNull,
-            reason: '${locale.languageCode}: $headline / $longest',
-          );
-        }
+          ),
+        );
+        await tester.pump();
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${locale.languageCode}: ${l.plusCardHeadline} / $longest',
+        );
       }
     });
   });

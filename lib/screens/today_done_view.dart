@@ -479,9 +479,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
       child: MagicCard(
         eyebrow: l.plusNameCaps,
         note: weekNoteOf(context, app),
-        headline: l.theOthersYours(
-          app.todaysDeck.length - app.ownIdsToday.length,
-        ),
+        headline: l.plusCardHeadline,
         line: l.magicLine,
         action: plusActionOf(context),
         onAction: _sell,

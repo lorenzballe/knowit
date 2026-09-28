@@ -1478,14 +1478,6 @@
  "mixFull": "Full",
  "forYouChip": "FOR YOU",
  "againChip": "AGAIN",
- "theOthersYours": "{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}",
- "@theOthersYours": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "everyCardForYou": "Every card, chosen for you.",
  "perkOwnTitle": "Five cards a day, all yours",

@@ -1586,17 +1586,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get againChip => '再来一次';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '剩下的$n张，也为你。',
-      one: '剩下的一张，也为你。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
 
   @override

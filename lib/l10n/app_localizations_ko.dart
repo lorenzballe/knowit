@@ -1600,17 +1600,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get againChip => '다시';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '나머지 $n장도 당신의 것으로.',
-      one: '나머지 한 장도 당신의 것으로.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       '매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.';
 

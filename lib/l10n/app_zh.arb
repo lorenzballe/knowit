@@ -380,7 +380,6 @@
   "mixFull": "拉满",
   "forYouChip": "为你而选",
   "againChip": "再来一次",
-  "theOthersYours": "{n, plural, =1{剩下的一张，也为你。} other{剩下的{n}张，也为你。}}",
   "magicLine": "每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。",
   "everyCardForYou": "每一张卡片，都为你而选。",
   "perkOwnTitle": "每天五张，全部为你",

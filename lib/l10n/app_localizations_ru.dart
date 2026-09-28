@@ -1703,17 +1703,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get againChip => 'СНОВА';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Остальные $n — твои.',
-      one: 'Ещё одна — твоя.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Пять карточек в день, выбранных для тебя: из твоего микса, на твоём уровне, ни одной уже прочитанной. С завтрашнего дня.';
 

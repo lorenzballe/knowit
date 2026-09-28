@@ -1641,17 +1641,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get againChip => 'ENCORE';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Les $n autres, à toi.',
-      one: 'L\'autre, à toi.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Cinq cartes par jour choisies pour toi : de ton mix, à ton niveau, jamais une déjà lue. Dès demain.';
 

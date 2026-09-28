@@ -380,7 +380,6 @@
   "mixFull": "Vol",
   "forYouChip": "VOOR JOU",
   "againChip": "OPNIEUW",
-  "theOthersYours": "{n, plural, =1{De andere, van jou.} other{De andere {n}, van jou.}}",
   "magicLine": "Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.",
   "everyCardForYou": "Elke kaart, voor jou gekozen.",
   "perkOwnTitle": "Vijf kaarten per dag, allemaal van jou",

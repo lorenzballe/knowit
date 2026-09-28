@@ -1700,17 +1700,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get againChip => 'ZNOWU';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Pozostałe $n, twoje.',
-      one: 'Ta druga, twoja.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Pięć kart dziennie wybranych dla ciebie: z twojego miksu, na twoim poziomie, nigdy już przeczytana. Od jutra.';
 

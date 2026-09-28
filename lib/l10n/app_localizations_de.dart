@@ -1637,17 +1637,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get againChip => 'NOCHMAL';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Die anderen $n, deine.',
-      one: 'Die andere, deine.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Fünf Karten am Tag, für dich gewählt: aus deinem Mix, auf deinem Niveau, nie eine schon gelesene. Ab morgen.';
 
