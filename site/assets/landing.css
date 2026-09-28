@@ -152,7 +152,7 @@
 .hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
   gap: 40px;
   align-items: center;
   padding-top: clamp(40px, 6vw, 84px);
@@ -205,40 +205,347 @@
 .facts b { font: 500 28px/1 var(--font-display); font-variation-settings: 'opsz' 144; letter-spacing: -.02em; color: var(--cream); font-variant-numeric: tabular-nums; }
 @media (max-width: 480px) { .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; } }
 
-.hero-stage { position: relative; width: min(100%, 560px); height: 680px; margin: 0 auto; justify-self: center; }
+/* The stage beside the words: an iPhone with a card on it that can be
+   played, and four hard cards around it. The light behind takes the colour
+   of the card on top, as the app's own room does. */
+@property --glow-c { syntax: '<color>'; inherits: false; initial-value: rgb(43 92 255 / .42); }
+.hero-stage { --w: 300; --u: calc(var(--w) * 1px / 432); --glow: 43 92 255 / .42; --k: 1; --shift: 0px; position: relative; width: min(100%, 560px); height: calc(740px * var(--k)); margin: 0 auto; justify-self: center; translate: var(--shift) 0; }
+/* The whole stage is drawn at one size and scaled as a piece, so the cards
+   keep their places round the phone at every width. Where the page is two
+   columns, the scale and a nudge keep the cards clear of the words on one
+   side and of the window's edge on the other. */
+.stage-inner { position: absolute; left: 50%; top: 0; width: 560px; height: 740px; margin-left: -280px; transform: scale(var(--k)); transform-origin: 50% 0; }
+@media (min-width: 1400px) { .hero-stage { --shift: 32px; } }
+@media (min-width: 1280px) and (max-width: 1399px) { .hero-stage { --k: .88; } }
+@media (min-width: 1180px) and (max-width: 1279px) { .hero-stage { --k: .8; --shift: -10px; } }
+@media (min-width: 1120px) and (max-width: 1179px) { .hero-stage { --k: .72; } }
 .hero-glow {
+  --glow-c: rgb(var(--glow));
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 560px;
-  height: 560px;
+  top: 46%;
+  width: 620px;
+  height: 620px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(43, 92, 255, .42), rgba(43, 92, 255, 0));
+  background: radial-gradient(closest-side, var(--glow-c), rgb(0 0 0 / 0));
+  transition: --glow-c 1.4s ease;
   pointer-events: none;
 }
-.fan { position: absolute; inset: 0; }
-.fan-slot { position: absolute; left: 50%; top: 70px; width: 180px; height: 236px; margin-left: -90px; z-index: 1; }
-.fan-slot.s1 { transform: translate(-235px, 110px) rotate(-18deg); animation: fan1 1.1s var(--ease-out) .35s both; }
-.fan-slot.s2 { transform: translate(-150px, 26px) rotate(-7deg); animation: fan2 1.1s var(--ease-out) .2s both; }
-.fan-slot.s3 { transform: translate(150px, 26px) rotate(7deg); animation: fan3 1.1s var(--ease-out) .2s both; }
-.fan-slot.s4 { transform: translate(235px, 110px) rotate(18deg); animation: fan4 1.1s var(--ease-out) .35s both; }
-@keyframes fan1 { from { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(.94); } to { opacity: 1; transform: translate(-235px, 110px) rotate(-18deg); } }
-@keyframes fan2 { from { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(.94); } to { opacity: 1; transform: translate(-150px, 26px) rotate(-7deg); } }
-@keyframes fan3 { from { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(.94); } to { opacity: 1; transform: translate(150px, 26px) rotate(7deg); } }
-@keyframes fan4 { from { opacity: 0; transform: translate(0, 0) rotate(0deg) scale(.94); } to { opacity: 1; transform: translate(235px, 110px) rotate(18deg); } }
-.fan-card {
-  width: 100%;
-  height: 100%;
-  border-radius: 28px;
-  padding: 18px;
+
+/* The four around it. Each sits behind the phone, bobs, and turns over
+   under the pointer to show its answer. */
+.orbit { position: absolute; inset: 0; z-index: 1; transform: translate3d(var(--ox, 0px), calc(var(--oy, 0px) + var(--sy, 0px)), 0); }
+.orb { position: absolute; left: 50%; top: 0; width: 180px; height: 234px; margin-left: -90px; transform: translate(var(--x), var(--y)) rotate(var(--r)); animation: orb-in 1.2s var(--ease-out) var(--d, .3s) both; }
+.orb.o1 { --x: -236px; --y: 96px; --r: -7deg; }
+.orb.o2 { --x: -226px; --y: 396px; --r: 5deg; }
+.orb.o3 { --x: 250px; --y: 64px; --r: 8deg; }
+.orb.o4 { --x: 238px; --y: 368px; --r: -5deg; }
+@keyframes orb-in { from { opacity: 0; transform: translate(calc(var(--x) * .25), calc(var(--y) + 60px)) rotate(0deg) scale(.9); } }
+/* On a phone there is no room beside it: two cards fan out above its top
+   corners, showing what they are, and two stand behind it lower down,
+   showing only their colour. */
+@media (max-width: 599px) {
+  .hero-stage { height: calc(830px * var(--k)); }
+  .stage-inner { height: 830px; }
+  .hero-device { top: 104px; }
+  .orb.o1 { --x: -84px; --y: -14px; --r: -11deg; }
+  .orb.o3 { --x: 84px; --y: -22px; --r: 10deg; }
+  .orb.o2 { --x: -142px; --y: 480px; --r: -7deg; }
+  .orb.o4 { --x: 142px; --y: 462px; --r: 8deg; }
+  .orb-q, .o2 .orb-topic, .o4 .orb-topic { visibility: hidden; }
+}
+.orb-bob { width: 100%; height: 100%; perspective: 900px; animation: bob var(--bob, 7s) ease-in-out var(--bd, 0s) infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.orb-card { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .9s var(--ease); }
+@media (hover: hover) and (pointer: fine) { .orb:hover .orb-card { transform: rotateY(180deg); } }
+.orb.turned .orb-card { transform: rotateY(180deg); }
+.orb-face {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  color: #10100C;
-  animation: bob var(--bob, 7s) ease-in-out var(--bd, 0s) infinite;
+  padding: 16px 16px 17px;
+  border-radius: 25px;
+  background-color: var(--c);
+  color: rgb(var(--ink));
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
-@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-.fan-card .q { margin: auto 0 0; font: 600 19px/1.12 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 144; }
+.orb-back { transform: rotateY(180deg); }
+.orb-topic { display: flex; align-items: center; gap: 6px; margin: 0; font: 700 10px/1 var(--font-text); letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; opacity: .82; }
+.orb-topic svg, .pill-topic svg { flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.orb-topic svg { width: 14px; height: 14px; }
+.orb-hard { margin-left: 2px; padding: 3px 6px 3px 7px; border-radius: 999px; background: rgb(var(--ink) / .13); font: 700 8px/1 var(--font-text); letter-spacing: .12em; }
+.orb-q { margin: auto 0 0; font: 600 16px/1.16 var(--font-display); letter-spacing: -.015em; font-variation-settings: 'opsz' 30; text-wrap: pretty; }
+.orb-a { margin: auto 0 0; font: 600 20px/1.08 var(--font-display); letter-spacing: -.02em; font-variation-settings: 'opsz' 40; text-wrap: balance; }
+.orb-move { margin-top: 12px; padding: 10px 11px 11px; border-radius: 12px; background: rgb(var(--ink) / .1); }
+.orb-move p { margin: 0; font: 500 11.5px/1.35 var(--font-text); }
+.orb-move .k { margin-bottom: 5px; font: 700 8.5px/1 var(--font-text); letter-spacing: .14em; text-transform: uppercase; opacity: .65; }
+.orb-back > * { opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .5s var(--ease); }
+.orb-back > .orb-a { transition-delay: .35s; }
+.orb-back > .orb-move { transition-delay: .5s; }
+@media (hover: hover) and (pointer: fine) { .orb:hover .orb-back > * { opacity: 1; transform: none; } }
+.orb.turned .orb-back > * { opacity: 1; transform: none; }
+
+/* The phone: drawn in the phone's own units, 432 across the titanium, and
+   scaled with --w, its width in pixels. Two plates behind it give it a side,
+   which shows as the phone turns. Each plate is turned on its own, by the
+   same angles and pushed back, rather than all three kept in one 3D space:
+   in one, the card on the screen could not be tapped. */
+.hero-device { position: absolute; left: 50%; top: 22px; z-index: 2; margin-left: calc(var(--w) * -.5px); animation: rise 1s var(--ease) both; }
+@property --by { syntax: '<angle>'; inherits: true; initial-value: -13deg; }
+@property --bx { syntax: '<angle>'; inherits: true; initial-value: 4deg; }
+@property --bz { syntax: '<angle>'; inherits: true; initial-value: 1.2deg; }
+.float { --by: -13deg; --bx: 4deg; --bz: 1.2deg; position: relative; animation: float 6.5s ease-in-out 1.2s infinite; transition: --by .9s var(--ease), --bx .9s var(--ease), --bz .9s var(--ease); }
+/* Turned towards whoever is using it, so the card reads flat. */
+.float.facing { --by: 0deg; --bx: 0deg; --bz: 0deg; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+#hero-phone, .iphone-side { transform: perspective(1800px) rotateY(calc(var(--by) + var(--ry, 0deg))) rotateX(calc(var(--bx) + var(--rx, 0deg))) rotateZ(var(--bz)) translateZ(var(--z, 0px)); }
+.iphone {
+  position: relative;
+  width: calc(var(--u) * 432);
+  height: calc(var(--u) * 904);
+  border-radius: calc(var(--u) * 74);
+  /* The band of titanium round the glass, lit from the upper left. */
+  background: linear-gradient(138deg, #aaa69e 0%, #5d5b57 9%, #2f2f2e 24%, #1d1d1d 50%, #313130 76%, #5f5d59 91%, #b4b0a8 100%);
+  box-shadow: inset 0 0 0 calc(var(--u) * 1.4) rgba(255, 255, 255, .22), inset 0 0 0 calc(var(--u) * 3) rgba(0, 0, 0, .35);
+}
+.iphone-side { position: absolute; inset: 0; border-radius: calc(var(--u) * 74); pointer-events: none; }
+.iphone-side.mid { --z: calc(var(--u) * -22); background: linear-gradient(180deg, #7a7771, #45443f 50%, #6c6964); }
+.iphone-side.back {
+  --z: calc(var(--u) * -44);
+  background: #1b1b1b;
+  box-shadow: 0 60px 90px -30px rgba(0, 0, 0, .85), 0 20px 40px -20px rgba(0, 0, 0, .6);
+}
+.iphone-side .btn { position: absolute; width: calc(var(--u) * 5); border-radius: calc(var(--u) * 2.5); background: linear-gradient(90deg, #8a8781, #5a5853); }
+.iphone-side .action, .iphone-side .up, .iphone-side .down { left: calc(var(--u) * -3.5); }
+.iphone-side .power, .iphone-side .cam { right: calc(var(--u) * -3.5); }
+.iphone-side .action { top: 19.6%; height: 5.4%; }
+.iphone-side .up { top: 28.4%; height: 8.6%; }
+.iphone-side .down { top: 38.6%; height: 8.6%; }
+.iphone-side .power { top: 29.6%; height: 12.6%; }
+.iphone-side .cam { top: 57.5%; height: 8.4%; background: linear-gradient(90deg, #3c3b39, #262625); }
+.iphone-glass { position: absolute; inset: calc(var(--u) * 5); border-radius: calc(var(--u) * 69); background: #040405; box-shadow: inset 0 0 0 calc(var(--u) * 1) rgba(255, 255, 255, .08); }
+.iphone-screen { position: absolute; inset: calc(var(--u) * 10); border-radius: calc(var(--u) * 58); overflow: hidden; background: #000; }
+.iphone-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .11) 0%, rgba(255, 255, 255, .035) 19%, rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, 0) 72%, rgba(255, 255, 255, .03) 100%);
+  pointer-events: none;
+}
+
+/* The screen, in the app's own points: 402 by 874, as on the phone. */
+.ios {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 402px;
+  height: 874px;
+  transform: scale(calc(var(--w) / 432));
+  transform-origin: 0 0;
+  background: #000;
+  color: #F2F1EC;
+  font-family: var(--font-text);
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+:where(.ios) p { margin: 0; }
+.ios-status { position: absolute; z-index: 3; left: 0; top: 0; right: 0; display: flex; gap: 154px; padding: 21px 24px 19px; pointer-events: none; }
+.ios-status > span { flex: 1; height: 22px; display: flex; align-items: center; justify-content: center; }
+.ios-time { padding-top: 1.5px; font: 590 17px/22px -apple-system, 'SF Pro Text', var(--font-text); letter-spacing: -.2px; }
+.ios-icons { gap: 7px; padding-top: 1px; }
+.ios-icons svg { display: block; fill: currentColor; }
+.ios-island { position: absolute; z-index: 4; top: 11px; left: 138px; width: 126px; height: 37px; border-radius: 19px; background: linear-gradient(180deg, #111114, #000 72%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .075), 0 0 0 1px #000; }
+.ios-island i { position: absolute; right: 11px; top: 11.5px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 36% 33%, #56679c 0 7%, #1c2340 26%, #0b0d17 55%, #050507 75%); box-shadow: 0 0 0 1.5px #111115; }
+.ios-home { position: absolute; z-index: 5; left: 131.5px; bottom: 8px; width: 139px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .7); pointer-events: none; }
+.app { position: absolute; left: 0; right: 0; top: 62px; bottom: 104px; display: flex; flex-direction: column; padding: 10px 18px 8px; }
+.app-head { display: flex; align-items: center; height: 26px; padding: 0 6px; }
+.app-title { font: 600 20px/1.3 var(--font-display); letter-spacing: -.4px; font-variation-settings: 'opsz' 20; }
+.app-streak { display: inline-flex; align-items: center; gap: 6px; margin-left: 10px; padding: 6px 11px; border-radius: 999px; background: #1E1E22; font: 600 12px/1.2 var(--font-text); }
+.app-streak i { width: 6px; height: 6px; border-radius: 50%; background: #F2F1EC; }
+.app-bars { display: flex; gap: 5px; margin-top: 16px; padding: 0 6px; }
+.app-bars i { flex: 1; height: 3px; border-radius: 9px; background: #1E1E22; transition: background-color .4s ease; }
+.app-bars i.on { background: #F2F1EC; }
+.app-tabs { position: absolute; left: 18px; right: 18px; bottom: 42px; height: 58px; display: flex; align-items: center; border-radius: 26px; background: #121215; border: 1px solid #1E1E22; box-shadow: 0 8px 24px rgba(0, 0, 0, .5); }
+.app-tabs .tab { flex: 100; display: flex; justify-content: center; color: #6A6A72; }
+.app-tabs .tab.on { flex: 160; }
+.app-tabs svg { width: 19px; height: 19px; fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.app-tabs svg .ring { fill: none; stroke-width: 1.9; }
+.app-tabs svg path { stroke: none; }
+.app-tabs .tab-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 16px; background: #F2F1EC; color: #08080A; }
+.app-tabs .tab-pill svg path { stroke: currentColor; fill: none; }
+.app-tabs b { font: 700 13px/1 var(--font-text); }
+
+/* The deck: the card on top, the next under it at half strength, the rest
+   waiting. A card that has been read is thrown off to the left. */
+.deck { position: relative; flex: 1; margin-top: 16px; }
+.pill { position: absolute; left: 0; right: 0; top: 10px; bottom: 10px; z-index: 3; color: rgb(var(--ink)); transition: transform .5s var(--ease), opacity .5s ease; }
+.pill[data-depth="1"] { z-index: 2; transform: translateY(16px) scale(.965); opacity: .5; }
+.pill[data-depth="far"] { z-index: 1; transform: translateY(32px) scale(.93); opacity: 0; visibility: hidden; }
+.pill[data-depth="gone"] { z-index: 4; transform: translate(-128%, 3%) rotate(-15deg); visibility: hidden; transition: transform .55s cubic-bezier(.45, 0, .8, .45), visibility 0s .55s; }
+.deck.reset .pill { transition: none; }
+.pill-lift { position: absolute; inset: 0; perspective: 1600px; }
+.pill-turn { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .85s cubic-bezier(.3, .72, .18, 1); }
+.pill[data-step="turned"] .pill-turn { transform: rotateY(180deg); }
+.pill[data-step="turned"] .pill-lift { animation: lift .85s cubic-bezier(.3, .72, .18, 1); }
+@keyframes lift { 45% { transform: translateY(-10px) scale(1.035); } }
+.pill-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 28px;
+  border-radius: 34px;
+  background: var(--c);
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+}
+.pill-back { transform: rotateY(180deg); }
+.pill-topic { display: flex; align-items: center; gap: 8px; flex: none; height: 16px; font: 600 11px/1 var(--font-text); letter-spacing: 1.4px; text-transform: uppercase; color: rgb(var(--ink) / .72); }
+.pill-topic svg { width: 16px; height: 16px; color: rgb(var(--ink)); }
+.pill-tools { position: absolute; right: 20px; bottom: 18px; display: flex; gap: 4px; pointer-events: none; }
+.pill-tools svg { width: 40px; height: 40px; padding: 8.5px; fill: none; stroke: rgb(var(--ink) / .9); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* The front: the question in the top half, the answers under it, then how
+   sure, in the same place. */
+.pill-ask { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.pill-qbox { flex: none; height: 48%; display: flex; align-items: flex-end; }
+.pill-q { font: 600 28px/1.14 var(--font-display); letter-spacing: -.8px; font-variation-settings: 'opsz' 28; text-wrap: pretty; }
+.pill-input { display: grid; margin-top: 22px; }
+.pill-pick, .pill-sure { grid-area: 1 / 1; transition: opacity .3s ease, transform .45s var(--ease), visibility 0s; }
+.pill-opt, .pill-levels button {
+  position: relative;
+  border: 1px solid rgb(var(--ink) / .16);
+  background: rgb(var(--ink) / .09);
+  color: rgb(var(--ink));
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .16s ease;
+}
+.pill-opt { display: block; width: 100%; margin: 0 0 9px; padding: 14px 16px; border-radius: 14px; font: 500 14.5px/1.35 var(--font-text); text-align: left; }
+.pill-opt:last-child { margin-bottom: 0; }
+@media (hover: hover) { .pill-opt:hover, .pill-levels button:hover { background: rgb(var(--ink) / .16); } }
+.pill-opt:active, .pill-levels button:active { transform: scale(.97); }
+.pill-opt.taken { background: rgb(var(--ink) / .22); border-color: rgb(var(--ink) / .6); }
+.pill-sure { opacity: 0; transform: translateY(14px); visibility: hidden; }
+.pill:not([data-step="pick"]) .pill-pick { opacity: 0; transform: translateY(-12px); visibility: hidden; transition: opacity .22s ease, transform .35s var(--ease), visibility 0s .35s; }
+.pill:not([data-step="pick"]) .pill-sure { opacity: 1; transform: none; visibility: visible; transition-delay: .14s, .14s, 0s; }
+.pill-sure-q { margin-bottom: 14px; font: 600 19px/1.2 var(--font-display); letter-spacing: -.4px; font-variation-settings: 'opsz' 19; }
+.pill-levels { display: flex; flex-wrap: wrap; gap: 9px; }
+.pill-levels button { padding: 13px 18px; border-radius: 999px; font: 600 15px/1.2 var(--font-text); }
+.pill-levels button.taken { background: rgb(var(--ink)); border-color: rgb(var(--ink)); color: var(--c); }
+.pill-line { display: grid; margin-top: 14px; font: 500 12.5px/1.35 var(--font-text); color: rgb(var(--ink) / .55); }
+.pill-line span { grid-area: 1 / 1; transition: opacity .3s ease; }
+.pill-line .l-sure, .pill:not([data-step="pick"]) .l-pick { opacity: 0; }
+.pill:not([data-step="pick"]) .l-sure { opacity: 1; }
+
+/* A finger, for the card that plays itself once. */
+.pill-opt::after, .pill-levels button::after {
+  content: "";
+  position: absolute;
+  left: 72%;
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--ink) / .5), rgb(var(--ink) / .22) 62%, rgb(var(--ink) / 0) 72%);
+  box-shadow: 0 0 0 1.5px rgb(var(--ink) / .45);
+  opacity: 0;
+  pointer-events: none;
+}
+.pill-levels button::after { left: 50%; }
+.ghost::after { animation: ghost .8s ease both; }
+@keyframes ghost { 0% { opacity: 0; transform: scale(1.6); } 35% { opacity: 1; transform: scale(1); } 55% { opacity: 1; transform: scale(.8); } 100% { opacity: 0; transform: scale(1.15); } }
+
+/* The back, as the app has it: right or wrong, the question again, the
+   answer, the trap, the bar move and the source. Here it arrives in order,
+   the answer word by word with the words that matter lit. */
+.pill-read { flex: 1; min-height: 0; padding-top: 10px; }
+.pill-verdict { display: flex; align-items: center; gap: 8px; font: 600 11px/1.3 var(--font-text); letter-spacing: 1.2px; color: rgb(var(--ink) / .85); }
+.v-icon { position: relative; flex: none; width: 18px; height: 18px; }
+.v-icon svg { position: absolute; inset: 0; width: 18px; height: 18px; }
+.v-icon circle { fill: rgb(var(--ink)); }
+.v-icon path { fill: none; stroke: var(--c); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.pill:not(.right) .v-yes, .pill.right .v-no { display: none; }
+.spark { position: absolute; left: 50%; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; border-radius: 50%; background: var(--h); opacity: 0; animation: spark .9s cubic-bezier(.2, .7, .3, 1) .35s both; }
+@keyframes spark { 0% { opacity: 0; transform: rotate(var(--a)) translateY(0) scale(.3); } 20% { opacity: 1; } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-30px) scale(1); } }
+.pill-q2 { margin-top: 14px; font: 600 18px/1.28 var(--font-display); letter-spacing: -.4px; font-variation-settings: 'opsz' 18; }
+.pill-a { margin-top: 16px; font: 400 16px/1.5 var(--font-text); color: rgb(var(--ink) / .92); }
+.pill-a mark {
+  padding: 0 2px;
+  margin: 0 -2px;
+  border-radius: 3px;
+  color: rgb(var(--ink));
+  font-weight: 600;
+  background: linear-gradient(rgb(var(--ink) / .22), rgb(var(--ink) / .22)) no-repeat 0 90% / 0% 44%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.pill-trap { margin-top: 12px; font: 500 13.5px/1.45 var(--font-text); color: rgb(var(--ink) / .75); }
+.pill-move { position: relative; overflow: hidden; margin-top: 20px; padding: 13px 15px 14px; border-radius: 14px; background: rgb(var(--ink) / .09); }
+.pill-move .k { margin-bottom: 6px; font: 600 10.5px/1.2 var(--font-text); letter-spacing: 1.2px; text-transform: uppercase; color: rgb(var(--ink) / .6); }
+.pill-move p:last-child { font: 400 14px/1.45 var(--font-text); color: rgb(var(--ink) / .92); }
+.pill-move::after { content: ""; position: absolute; inset: 0; background: linear-gradient(105deg, rgb(var(--ink) / 0) 30%, rgb(var(--ink) / .2) 50%, rgb(var(--ink) / 0) 70%); transform: translateX(-100%); pointer-events: none; }
+.pill-src { margin-top: 13px; font: 400 11.5px/1.35 var(--font-text); color: rgb(var(--ink) / .6); }
+.pill-next { position: absolute; left: 28px; bottom: 18px; height: 40px; display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; font: 500 13px/1 var(--font-text); color: rgb(var(--ink) / .7); cursor: pointer; }
+.pill-next span { transition: transform .3s var(--ease); }
+@media (hover: hover) { .pill-next:hover span { transform: translateX(4px); } }
+.pill-back [data-r], .pill-a .wd { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+.pill-a .wd { display: inline-block; }
+.pill-back.in [data-r], .pill-back.in .pill-a .wd { opacity: 1; transform: none; filter: blur(0); transition: opacity .5s ease, transform .6s var(--ease), filter .5s ease; transition-delay: var(--rd, 0ms); }
+.pill-back.in .pill-a .wd { transition-delay: calc(240ms + var(--i, 0) * 12ms); }
+.pill-back.in .pill-a mark { background-size: 100% 44%; transition: background-size .9s var(--ease) .75s; }
+.pill-back.in .pill-verdict { animation: pop .7s cubic-bezier(.34, 1.56, .64, 1) 40ms both; }
+@keyframes pop { from { opacity: 0; transform: scale(.6); filter: blur(0); } to { opacity: 1; transform: none; filter: blur(0); } }
+.pill-back.in .pill-move::after { animation: sweep 1.3s ease var(--sd, 1.6s) both; }
+@keyframes sweep { to { transform: translateX(100%); } }
+
+/* After the fifth: the day, as a number. How sure against how right is the
+   whole of what the app measures. */
+@property --spin { syntax: '<angle>'; inherits: true; initial-value: 0deg; }
+.pill-end { color: #F2F1EC; animation: spin 2.8s linear infinite; }
+@keyframes spin { to { --spin: 360deg; } }
+.pill-end::before, .end-rim { content: ""; position: absolute; inset: 0; border-radius: 30px; background: conic-gradient(from var(--spin), #FFE600, #A6FF00, #00D451, #00E5A0, #00D9D9, #00A6FF, #2B5CFF, #4C6FFF, #6E3AFF, #9B5CFF, #C13AFF, #E040FB, #FF00A8, #FF3D7F, #FF2D5F, #FF3B30, #FF7A1A, #FFB000, #FFE600); }
+.pill-end::before { inset: -4px; filter: blur(16px); opacity: .5; }
+.end-body { position: absolute; inset: 3px; display: flex; flex-direction: column; padding: 26px 26px 22px; border-radius: 27px; background: #000; }
+.end-eyebrow { display: flex; align-items: center; gap: 8px; font: 700 11px/1 var(--font-text); letter-spacing: 1.6px; text-transform: uppercase; color: rgb(242 241 236 / .7); }
+.end-eyebrow svg { width: 15px; height: 15px; fill: #F2F1EC; }
+.end-score { margin-top: auto; font: 600 46px/1.02 var(--font-display); letter-spacing: -1.4px; font-variation-settings: 'opsz' 46; }
+.end-line { margin-top: 14px; font: 400 15px/1.4 var(--font-text); color: rgb(242 241 236 / .62); }
+.end-cta { margin-top: auto; display: flex; align-items: center; justify-content: center; height: 54px; border-radius: 16px; background: #F2F1EC; color: #08080A; font: 700 15px/1 var(--font-text); text-decoration: none; box-shadow: 0 4.5px 0 #c8c4b4; }
+.end-cta:hover { color: #08080A; }
+.end-again { align-self: center; margin-top: 6px; padding: 10px 16px; border: 0; background: none; font: 500 13px/1 var(--font-text); color: #9E9EA6; cursor: pointer; }
+.pill-end :focus-visible, .pill :focus-visible { outline: 3px solid rgb(var(--ink, 242 241 236)); outline-offset: 2px; }
+
+.phone-hint {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--w) * 904px / 432 + 34px);
+  z-index: 3;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 17px;
+  background: rgba(20, 20, 22, .72);
+  border: 1px solid rgba(242, 241, 236, .14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  font: 600 13px/1 var(--font-text);
+  color: var(--cream);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.phone-hint i { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: live 2s ease-out infinite; }
+.phone-hint.gone { opacity: 0; }
 
 /* The phone: a frame that scales with --w, the screen inside it. */
 .device {
@@ -265,38 +572,6 @@
 .device .side.l1 { left: -2px; top: 19.5%; height: 5%; }
 .device .side.l2 { left: -2px; top: 28.1%; height: 9.6%; }
 .device .side.l3 { left: -2px; top: 39.7%; height: 9.6%; }
-
-.hero-device { position: absolute; left: 50%; top: 24px; margin-left: -145px; z-index: 2; animation: rise 1s var(--ease) both; }
-.float { animation: float 6.5s ease-in-out 1.2s infinite; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
-#hero-phone { transform: perspective(1400px) rotateY(calc(9deg + var(--ry, 0deg))) rotateX(calc(2deg + var(--rx, 0deg))); will-change: transform; }
-[data-phone] { cursor: pointer; }
-[data-phone] .phone-back { opacity: 0; transform: scale(.985); transition: opacity .55s var(--ease), transform .55s var(--ease); }
-[data-phone][aria-pressed="true"] .phone-back { opacity: 1; transform: none; }
-.phone-hint {
-  position: absolute;
-  left: 50%;
-  bottom: -50px;
-  z-index: 3;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 34px;
-  padding: 0 14px;
-  border-radius: 17px;
-  background: rgba(20, 20, 22, .72);
-  border: 1px solid rgba(242, 241, 236, .14);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  font: 600 13px/1 var(--font-text);
-  color: var(--cream);
-  white-space: nowrap;
-  pointer-events: none;
-  transition: opacity .4s ease;
-}
-.phone-hint i { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: live 2s ease-out infinite; }
-.phone-hint.gone { opacity: 0; }
 .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); animation: live 2s ease-out infinite; flex: none; }
 @keyframes live { 0% { box-shadow: 0 0 0 0 rgba(45, 224, 210, .55); } 100% { box-shadow: 0 0 0 10px rgba(45, 224, 210, 0); } }
 
@@ -785,7 +1060,10 @@
 @media (prefers-reduced-motion: reduce) {
   .js [data-reveal] { opacity: 1; transform: none; filter: none; }
   .js .w > span, .js .rise-in { animation: none; }
-  .float, .shimmer, .plan-plus::before, .fan-card, .light, .scroll-cue i::after { animation: none; }
-  #hero-phone { transform: perspective(1400px) rotateY(9deg) rotateX(2deg); }
+  .float, .shimmer, .plan-plus::before, .orb, .orb-bob, .pill-end, .light, .scroll-cue i::after, .hero-device { animation: none; }
+  .hero-glow, .orb-card, .orb-back > *, .pill, .pill-turn, .pill-pick, .pill-sure, .pill-line span { transition: none; }
+  .pill[data-step="turned"] .pill-lift, .pill-back.in .pill-verdict, .pill-back.in .pill-move::after, .spark { animation: none; }
+  .pill-back [data-r], .pill-a .wd { opacity: 1; transform: none; filter: none; transition: none; }
+  .pill-a mark { background-size: 100% 44%; }
   [data-tilt] { transform: none; }
 }
