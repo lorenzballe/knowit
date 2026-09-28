@@ -208,7 +208,6 @@ class ServedDay {
     required this.cards,
     required this.own,
     required this.reviews,
-    this.welcome = false,
     this.fromCache = false,
   });
 
@@ -216,7 +215,6 @@ class ServedDay {
   final List<Pill> cards;
   final Set<String> own;
   final Set<String> reviews;
-  final bool welcome;
 
   /// Read from the phone's own copy of the store rather than the server:
   /// what it was when the phone last had signal.
@@ -243,7 +241,6 @@ class ServedDay {
         cards: cards,
         own: strings(raw['own']).toSet(),
         reviews: strings(raw['reviews']).toSet(),
-        welcome: raw['welcome'] == true,
         fromCache: fromCache,
       );
     } catch (error) {
@@ -257,7 +254,6 @@ class ServedDay {
     'cards': [for (final p in cards) cardToJson(p)],
     'own': own.toList(),
     'reviews': reviews.toList(),
-    'welcome': welcome,
   };
 }
 

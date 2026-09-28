@@ -1372,7 +1372,10 @@ class _PlusCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                context.l10n.sevenDaysFree,
+                switch (Subscription.instance.trialDays) {
+                  final int days => context.l10n.trialDaysFree(days),
+                  null => '',
+                },
                 style: AppText.body(
                   size: 12,
                   weight: FontWeight.w600,

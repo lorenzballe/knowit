@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
@@ -35,22 +36,22 @@ import '../widgets/subject_icon.dart';
 /// Which card is at the front belongs to the screen above, because the
 /// header's dot and the glow behind everything take that card's colour.
 /// What the card after the fifth says about the plan tonight, on the
-/// free plan, with a key for each thing it can say: every evening of the
-/// welcome, the first two weeks, how many of its days are left, so four of
-/// five being the reader's own reads as a welcome with an end rather than
-/// as the rule;
-/// the evening it ends, what tomorrow looks like; and the evening a week
-/// is kept, that tomorrow has one more of their own, said once, where it
-/// reads as a reward rather than a rule. It is said on the card that makes
-/// the offer, beside what Astute+ keeps, and only once the day is done,
-/// because until then tonight has not happened.
+/// free plan, with a key for what it says: the evening a week is kept,
+/// that tomorrow has one more of their own, said once, where it reads as a
+/// reward rather than a rule. It is said on the card that makes the offer,
+/// beside what Astute+ keeps, and only once the day is done, because until
+/// then tonight has not happened.
+/// What the offer's button says: the free days the store will give this
+/// reader, as many as it gives, or plainly Astute+ once they have had them
+/// — the store gives the trial once, and a button that promises it again
+/// is one Apple would charge through.
+String plusActionOf(BuildContext context) {
+  final int? days = Subscription.instance.trialDays;
+  return days == null ? context.l10n.getPlus : context.l10n.magicUnlock(days);
+}
+
 (String, String)? weekNoteOf(BuildContext context, AppState app) {
   if (app.isPlus || !app.todayCompleted) return null;
-  if (app.welcomeEndsTonight) {
-    return ('welcome-ends', context.l10n.welcomeWeekEnds);
-  }
-  final int left = app.welcomeDaysLeftAfterToday;
-  if (left > 0) return ('welcome-left', context.l10n.welcomeDaysLeft(left));
   if (app.tomorrowIsRewarded) {
     return ('week-reward', context.l10n.weekKeptThreeOwn);
   }
@@ -479,11 +480,11 @@ class _TodayDoneViewState extends State<TodayDoneView>
       child: MagicCard(
         eyebrow: l.plusNameCaps,
         note: weekNoteOf(context, app),
-        headline: app.inWelcome
-            ? l.plusCardHeadline
-            : l.theOthersYours(app.todaysDeck.length - app.ownIdsToday.length),
+        headline: l.theOthersYours(
+          app.todaysDeck.length - app.ownIdsToday.length,
+        ),
         line: l.magicLine,
-        action: l.magicUnlock,
+        action: plusActionOf(context),
         onAction: _sell,
       ),
     );

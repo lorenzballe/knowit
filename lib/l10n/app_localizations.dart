@@ -252,11 +252,17 @@ abstract class AppLocalizations {
   /// **'Explore today\'s best'**
   String get exploreTodaysBest;
 
-  /// No description provided for @magicUnlock.
+  /// The action on the card after the fifth for a reader the store will still give the free trial. {days} is the trial's length, as the store has it.
   ///
   /// In en, this message translates to:
-  /// **'Try 7 days free'**
-  String get magicUnlock;
+  /// **'Try {days} days free'**
+  String magicUnlock(int days);
+
+  /// The same action for a reader who has already had the free trial, which the store gives once.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Astute+'**
+  String get getPlus;
 
   /// No description provided for @nothingInYet.
   ///
@@ -1014,11 +1020,11 @@ abstract class AppLocalizations {
   /// **'ASTUTE+'**
   String get plusNameCaps;
 
-  /// No description provided for @sevenDaysFree.
+  /// No description provided for @trialDaysFree.
   ///
   /// In en, this message translates to:
-  /// **'7 days free'**
-  String get sevenDaysFree;
+  /// **'{days} days free'**
+  String trialDaysFree(int days);
 
   /// No description provided for @seeThePlans.
   ///
@@ -1419,8 +1425,8 @@ abstract class AppLocalizations {
   /// No description provided for @tryFreeThen.
   ///
   /// In en, this message translates to:
-  /// **'Try 7 days free, then {price}{suffix}'**
-  String tryFreeThen(String price, String suffix);
+  /// **'Try {days} days free, then {price}{suffix}'**
+  String tryFreeThen(int days, String price, String suffix);
 
   /// The paywall's button for a plan that starts without a free trial.
   ///
@@ -2573,18 +2579,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What readers kept most, and you have not read yet'**
   String get lovedLine;
-
-  /// No description provided for @welcomeDaysLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}'**
-  String welcomeDaysLeft(int n);
-
-  /// No description provided for @welcomeWeekEnds.
-  ///
-  /// In en, this message translates to:
-  /// **'Your first two weeks end tonight. From tomorrow, two of the five are yours.'**
-  String get welcomeWeekEnds;
 
   /// No description provided for @forYouShelf.
   ///

@@ -201,38 +201,13 @@ void main() {
       expect(again.cards.map((p) => p.id).toSet().intersection(read), isEmpty);
     });
 
-    test('the welcome: two weeks of four of the five the reader\'s own, '
-        'then two', () {
-      expect(kWelcomeDays, 14);
-      for (var d = 0; d < kWelcomeDays; d++) {
-        expect(ownCardsFor(plus: false, streak: 0, day: d), kOwnCardsWelcome);
-        expect(inWelcomeDays(d), isTrue);
-      }
-      expect(
-        ownCardsFor(plus: false, streak: 0, day: kWelcomeDays),
-        kOwnCardsFree,
-      );
-      expect(inWelcomeDays(kWelcomeDays), isFalse);
-      // A week kept is rewarded after the welcome, not during it.
-      expect(ownCardsFor(plus: false, streak: 7, day: 7), kOwnCardsWelcome);
-      expect(
-        ownCardsFor(plus: false, streak: 14, day: kWelcomeDays),
-        kOwnCardsRewarded,
-      );
-      expect(ownCardsFor(plus: true, streak: 0, day: 0), kPillsPerDay);
-
-      final day = DateTime(2026, 10, 14);
-      final deal = dealDay(date: day, own: kOwnCardsWelcome);
-      expect(deal.cards, hasLength(kPillsPerDay));
-      expect(deal.own, hasLength(kOwnCardsWelcome));
-      // One at random, and it tells.
-      final chance = deal.cards.where((p) => !deal.own.contains(p.id));
-      expect(chance, hasLength(1));
-      expect(chance.single.asksSomething, isFalse);
-      expect(
-        deal.cards.where((p) => p.asksSomething).length,
-        asksInADay(kPillsPerDay),
-      );
+    test('there is no welcome: the first free day is two of the five the '
+        'reader\'s own, like every other', () {
+      // The first week kept is rewarded like any other: there is no
+      // welcome in front of it any more.
+      expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
+      expect(ownCardsFor(plus: false, streak: 7), kOwnCardsRewarded);
+      expect(ownCardsFor(plus: true, streak: 0), kPillsPerDay);
     });
 
     test('a week kept makes three of the five the reader\'s own', () {
@@ -338,12 +313,7 @@ void main() {
     test('keeps two questions a day, whatever the pool and the plan', () {
       for (var d = 0; d < 60; d++) {
         final date = DateTime(2026, 9, 1).add(Duration(days: d));
-        for (final own in [
-          kOwnCardsFree,
-          kOwnCardsRewarded,
-          kOwnCardsWelcome,
-          kPillsPerDay,
-        ]) {
+        for (final own in [kOwnCardsFree, kOwnCardsRewarded, kPillsPerDay]) {
           final deck = dealDay(date: date, own: own).cards;
           final debates = deck.where((p) => p.challenge is TakeASide).length;
           expect(debates, lessThanOrEqualTo(1), reason: 'day $d own $own');

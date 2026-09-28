@@ -115,7 +115,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get exploreTodaysBest => 'Bugünün en iyilerini keşfet';
 
   @override
-  String get magicUnlock => '7 gün ücretsiz dene';
+  String magicUnlock(int days) {
+    return '$days gün ücretsiz dene';
+  }
+
+  @override
+  String get getPlus => 'Astute+\'a geç';
 
   @override
   String nothingInYet(String subject) {
@@ -657,7 +662,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 gün ücretsiz';
+  String trialDaysFree(int days) {
+    return '$days gün ücretsiz';
+  }
 
   @override
   String get seeThePlans => 'PLANLARI GÖR';
@@ -970,8 +977,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ ETKİN';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 gün ücretsiz, sonra $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days gün ücretsiz, sonra $price$suffix';
   }
 
   @override
@@ -1757,21 +1764,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get lovedLine =>
       'Okurların en çok sakladığı ve senin henüz okumadığın kartlar';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'İlk iki haftan: beş karttan dördünün senin olduğu $n gün daha.',
-      one: 'İlk iki haftan: yarın son gün, beş karttan dördü senin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'İlk iki haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
 
   @override
   String get forYouShelf => 'Senin için';

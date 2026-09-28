@@ -115,7 +115,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreTodaysBest => '今日のベストを見る';
 
   @override
-  String get magicUnlock => '7日間無料で試す';
+  String magicUnlock(int days) {
+    return '$days日間無料で試す';
+  }
+
+  @override
+  String get getPlus => 'Astute+にする';
 
   @override
   String nothingInYet(String subject) {
@@ -646,7 +651,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7日間無料';
+  String trialDaysFree(int days) {
+    return '$days日間無料';
+  }
 
   @override
   String get seeThePlans => 'プランを見る';
@@ -952,8 +959,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ 有効';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7日間無料で試す。その後$price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days日間無料で試す。その後$price$suffix';
   }
 
   @override
@@ -1709,19 +1716,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get lovedLine => '読者がいちばん残したカードで、あなたがまだ読んでいないもの';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '最初の2週間：5枚中4枚があなたのカードの日が、あと$n日。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds => '最初の2週間は今夜で終わり。明日からは5枚中2枚があなたのカード。';
 
   @override
   String get forYouShelf => 'あなたへ';

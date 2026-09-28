@@ -123,18 +123,16 @@ class _PaywallScreenState extends State<PaywallScreen> {
     return _euros(plan == Plan.year ? kYearlyCents : kMonthlyCents);
   }
 
-  /// Whether the plan starts with a free week. The store's word when it has
-  /// answered — its introductory offer at no charge — and otherwise the
-  /// plans as sold: the year starts free, the month is charged today. The
-  /// button and the line under it never promise a week the store will not
-  /// give.
-  bool _startsFree(Plan plan) {
-    final Package? package = plan == Plan.year ? _store.yearly : _store.monthly;
-    if (package != null) {
-      final IntroductoryPrice? intro = package.storeProduct.introductoryPrice;
-      return intro != null && intro.price == 0;
-    }
-    return plan == Plan.year;
+  /// How many days free the plan starts with for this reader, or null when
+  /// it is charged today. The store's word when it has answered — its
+  /// introductory offer at no charge, for a reader it will still give it to
+  /// — and otherwise the plans as sold: the year starts with [kTrialDays],
+  /// the month is charged today. The button and the line under it never
+  /// promise a day the store will not give.
+  int? _freeDays(Plan plan) {
+    if (plan == Plan.year) return _store.trialDays;
+    final Package? package = _store.monthly;
+    return package == null ? null : freeDaysOf(package);
   }
 
   String get _cta {
@@ -143,8 +141,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
         ? context.l10n.perYearShort
         : context.l10n.perMonthShort;
     final String price = _priceFor(_plan);
-    return _startsFree(_plan)
-        ? context.l10n.tryFreeThen(price, suffix)
+    final int? days = _freeDays(_plan);
+    return days != null
+        ? context.l10n.tryFreeThen(days, price, suffix)
         : context.l10n.subscribeFor(price, suffix);
   }
 
@@ -153,7 +152,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   /// be a lie, so that case says so instead.
   String get _terms {
     final l = context.l10n;
-    if (_startsFree(_plan)) return l.noChargeTodayCancel;
+    if (_freeDays(_plan) != null) return l.noChargeTodayCancel;
     return _package != null ? l.chargedTodayCancel : l.cancelAnyTimeNoPayment;
   }
 

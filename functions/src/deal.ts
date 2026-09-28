@@ -3,7 +3,7 @@
 // The same day the phone deals for itself (lib/data/daily.dart and
 // lib/data/pills_repository.dart), card for card in its rules — five cards,
 // two that ask, one debate at most, a fresh strand before a second card of
-// one, the hardest early, a debate to close, the welcome's two weeks, and on the
+// one, the hardest early, a debate to close, and on the
 // free plan the reader's own beside cards dealt at random from the mix —
 // but dealt from a profile the phone never had: what held the reader and
 // what they threw on, read off the trace. Where the phone's draw and this
@@ -19,20 +19,15 @@ export const PILLS_PER_DAY = 5;
 export const ASK_SHARE = 0.4;
 export const OWN_FREE = 2;
 export const OWN_REWARDED = 3;
-/** The welcome: a free reader's first two weeks read, four of the five their own (lib/data/daily.dart, kWelcomeDays). */
-export const WELCOME_DAYS = 14;
-export const OWN_WELCOME = 4;
 export const COMMON_SPARES = 8;
 
 export const asksInADay = (count: number): number => Math.round(count * ASK_SHARE);
 
-export function ownCardsFor(plus: boolean, streak: number, day: number): number {
+/** How many of the five are the reader's own: all on Astute+, two free, three the morning after a week kept (lib/data/daily.dart). */
+export function ownCardsFor(plus: boolean, streak: number): number {
   if (plus) return PILLS_PER_DAY;
-  if (day >= 0 && day < WELCOME_DAYS) return OWN_WELCOME;
   return streak > 0 && streak % 7 === 0 ? OWN_REWARDED : OWN_FREE;
 }
-
-export const inWelcomeDays = (day: number): boolean => day >= 0 && day < WELCOME_DAYS;
 
 // ── The calendar ─────────────────────────────────────────────────────────
 
@@ -350,7 +345,6 @@ export interface Deal {
   /** The one read dealt from a strand never met, taste set aside, or null: tomorrow's trace says whether it took. */
   explorer: string | null;
   ownCount: number;
-  welcome: boolean;
   day: number;
 }
 
@@ -358,7 +352,7 @@ export interface Deal {
 export function dealDay(bank: Bank, profile: Profile, date: string, uid: string): Deal {
   const edition = editionOf(date);
   const day = dayNumberOf(profile, date);
-  const own = ownCardsFor(profile.plus, streakOn(profile, date), day);
+  const own = ownCardsFor(profile.plus, streakOn(profile, date));
   const count = PILLS_PER_DAY;
   const asking = asksInADay(count);
   const ownCount = Math.min(own, count);
@@ -403,7 +397,6 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
     reviews: reviews.map((c) => c.id),
     explorer: explorer?.id ?? null,
     ownCount: own,
-    welcome: !profile.plus && inWelcomeDays(day),
     day,
   };
 }

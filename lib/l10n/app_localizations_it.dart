@@ -115,7 +115,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get exploreTodaysBest => 'Esplora il meglio di oggi';
 
   @override
-  String get magicUnlock => 'Prova 7 giorni gratis';
+  String magicUnlock(int days) {
+    return 'Prova $days giorni gratis';
+  }
+
+  @override
+  String get getPlus => 'Passa ad Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -663,7 +668,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 giorni gratis';
+  String trialDaysFree(int days) {
+    return '$days giorni gratis';
+  }
 
   @override
   String get seeThePlans => 'VEDI I PIANI';
@@ -978,8 +985,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ È ATTIVO';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 giorni gratis, poi $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days giorni gratis, poi $price$suffix';
   }
 
   @override
@@ -1774,22 +1781,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get lovedLine =>
       'Quelle che i lettori hanno tenuto di più, e che non hai ancora letto';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other:
-          'Le tue prime due settimane: ancora $n giorni con quattro delle cinque tue.',
-      one: 'Le tue prime due settimane: domani è l\'ultimo giorno, quattro delle cinque sono tue.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Le tue prime due settimane finiscono stasera. Da domani, due delle cinque sono tue.';
 
   @override
   String get forYouShelf => 'Per te';

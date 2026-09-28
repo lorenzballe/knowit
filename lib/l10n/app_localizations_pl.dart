@@ -117,7 +117,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get exploreTodaysBest => 'Odkryj to, co dziś najlepsze';
 
   @override
-  String get magicUnlock => 'Wypróbuj 7 dni za darmo';
+  String magicUnlock(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return 'Wypróbuj $_temp0 za darmo';
+  }
+
+  @override
+  String get getPlus => 'Przejdź na Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -674,7 +685,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 dni za darmo';
+  String trialDaysFree(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return '$_temp0 za darmo';
+  }
 
   @override
   String get seeThePlans => 'ZOBACZ PLANY';
@@ -1009,8 +1028,14 @@ class AppLocalizationsPl extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ JEST AKTYWNY';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 dni gratis, potem $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return '$_temp0 gratis, potem $price$suffix';
   }
 
   @override
@@ -1821,26 +1846,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get lovedLine =>
       'To, co czytelnicy zachowywali najczęściej, a ty jeszcze nie czytałeś';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other:
-          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      many:
-          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      few:
-          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      one: 'Twoje pierwsze dwa tygodnie: jutro ostatni dzień, cztery z pięciu są twoje.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Twoje pierwsze dwa tygodnie kończą się dziś wieczorem. Od jutra dwie z pięciu są twoje.';
 
   @override
   String get forYouShelf => 'Dla ciebie';

@@ -402,28 +402,10 @@ class AppState extends ChangeNotifier {
   }
 
   /// How many of a day's cards are the reader's own: all five on Astute+;
-  /// on the free plan four through the welcome's two weeks, then two, and three
-  /// on the morning after a full week kept — the streak's own reward,
-  /// tasted once a week. The rest are dealt at random.
-  int get ownCardsToday =>
-      ownCardsFor(plus: isPlus, streak: liveStreak, day: dayNumberOf(today));
-
-  /// True through the reader's first [kWelcomeDays] days read, when four of
-  /// the free day's five are their own. See [kOwnCardsWelcome].
-  bool get inWelcome => !isPlus && inWelcomeDays(dayNumberOf(today));
-
-  /// How many welcome days are left after today, on the free plan.
-  int get welcomeDaysLeftAfterToday {
-    final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    final int day = dayNumberOf(tomorrow);
-    return isPlus || !inWelcomeDays(day) ? 0 : kWelcomeDays - day;
-  }
-
-  /// True the evening the welcome ends: today was a welcome day, and
-  /// tomorrow is the first shared one. Said once, the night before, so the
-  /// change is a thing the reader was told rather than one they notice.
-  bool get welcomeEndsTonight =>
-      inWelcome && welcomeDaysLeftAfterToday == 0 && todayCompleted;
+  /// on the free plan two, and three on the morning after a full week kept
+  /// — the streak's own reward, tasted once a week. The rest are dealt at
+  /// random.
+  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
 
   /// The onboarding's answers, read as a person rather than a form: a
   /// starting level a notch above for every subject, the strands picked by
@@ -572,8 +554,6 @@ class AppState extends ChangeNotifier {
       // re-asking. The whole claim of the plan is the first number; the
       // whole claim of the review ladder is the second.
       'own': ownIdsToday.length,
-      // The welcome: the first two weeks read, four of five their own.
-      'welcome': inWelcome,
       'reviews': reviewIdsToday.length,
       'topics': pickedTopics.length,
       'streak_days': streak,
@@ -620,7 +600,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0, day: dayNumberOf(day)),
+      own: ownCardsFor(plus: isPlus, streak: 0),
     ).cards;
   }
 
@@ -1277,11 +1257,7 @@ class AppState extends ChangeNotifier {
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-      own: ownCardsFor(
-        plus: isPlus,
-        streak: liveStreak,
-        day: dayNumberOf(tomorrow),
-      ),
+      own: ownCardsFor(plus: isPlus, streak: liveStreak),
     ).cards;
   }
 
@@ -1293,12 +1269,7 @@ class AppState extends ChangeNotifier {
   /// three cards of the reader's own instead of two. Astute+ has five every
   /// day, so there it is nothing to say.
   bool get tomorrowIsRewarded =>
-      !isPlus &&
-      liveStreak > 0 &&
-      liveStreak % 7 == 0 &&
-      !inWelcomeDays(
-        dayNumberOf(DateTime(today.year, today.month, today.day + 1)),
-      );
+      !isPlus && liveStreak > 0 && liveStreak % 7 == 0;
 
   /// The card a morning opens on — for the reminder that quotes it and the
   /// widget that shows it: the first card of the day that asks, which on
@@ -1313,11 +1284,7 @@ class AppState extends ChangeNotifier {
             day,
             exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
             reviews: _reviewsDue(day),
-            own: ownCardsFor(
-              plus: isPlus,
-              streak: liveStreak,
-              day: dayNumberOf(day),
-            ),
+            own: ownCardsFor(plus: isPlus, streak: liveStreak),
           ).cards;
     if (deck.isEmpty) return questionOfTheDay(day);
     return deck.firstWhere((p) => p.asksSomething, orElse: () => deck.first);
