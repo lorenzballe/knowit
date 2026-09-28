@@ -12,7 +12,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/app-today.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="/assets/site.css">
 <link rel="stylesheet" href="/assets/landing.css">
 <script>document.documentElement.classList.add('js')</script>
@@ -96,27 +95,211 @@
         <li><b data-count="13" data-count-delay="1000">13</b>languages</li>
       </ul>
     </div>
-    <div class="hero-stage">
+    <div class="hero-stage"><div class="stage-inner">
       <div class="hero-glow" aria-hidden="true"></div>
-      <div class="fan" aria-hidden="true">
-        <div class="fan-slot s1"><div class="fan-card paper" style="background-color:#FFE600; --bob:7.5s; --bd:-2s"><p class="topic">Economics</p><p class="q">Should cities scrap rules requiring parking spaces?</p></div></div>
-        <div class="fan-slot s4"><div class="fan-card paper" style="background-color:#00D9D9; --bob:8s; --bd:-5s"><p class="topic">Language</p><p class="q">Is there a word every language shares?</p></div></div>
-        <div class="fan-slot s2"><div class="fan-card paper" style="background-color:#9B5CFF; color:#fff; --bob:6.5s; --bd:-1s"><p class="topic">Psychology</p><p class="q">Should schools sort pupils into classes by ability?</p></div></div>
-        <div class="fan-slot s3"><div class="fan-card paper" style="background-color:#00D451; --bob:7s; --bd:-3.5s"><p class="topic">Nature</p><p class="q">What fertilises the Amazon?</p></div></div>
+      <div class="orbit" aria-hidden="true">
+        <div class="orb o1" style="--d:.35s"><div class="orb-bob" style="--bob:7.5s; --bd:-2s"><div class="orb-card" style="--c:#FFE600; --ink:16 16 12">
+          <div class="orb-face paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16l5-5 3 3 7-7 M15 7h5v5"/></svg><span>Economics</span><b class="orb-hard">Hard</b></p><p class="orb-q">As a government prints money ever faster, what happens to the real resources it gains from printing?</p></div>
+          <div class="orb-face orb-back paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16l5-5 3 3 7-7 M15 7h5v5"/></svg><span>Economics</span></p><p class="orb-a">They rise, peak, then fall.</p><div class="orb-move"><p class="k">Bar move</p><p>A tax that shrinks what it taxes has a ceiling on what it raises.</p></div></div>
+        </div></div></div>
+        <div class="orb o2" style="--d:.5s"><div class="orb-bob" style="--bob:8s; --bd:-5s"><div class="orb-card" style="--c:#E040FB; --ink:255 255 255">
+          <div class="orb-face paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9L11 3z M19 4l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6L19 4z"/></svg><span>Weird facts</span><b class="orb-hard">Hard</b></p><p class="orb-q">Which animal holds the fastest speed yet measured in level, flapping flight?</p></div>
+          <div class="orb-face orb-back paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9L11 3z M19 4l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6L19 4z"/></svg><span>Weird facts</span></p><p class="orb-a">A bat: the Brazilian free-tailed, at about 160 km/h.</p><div class="orb-move"><p class="k">Bar move</p><p>Check whether a famous record was set under the conditions you mean.</p></div></div>
+        </div></div></div>
+        <div class="orb o3" style="--d:.25s"><div class="orb-bob" style="--bob:6.5s; --bd:-1s"><div class="orb-card" style="--c:#00E5A0; --ink:16 16 12">
+          <div class="orb-face paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6 M10 3v6l-5.2 8.4A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.6L14 9V3 M7.5 15h9"/></svg><span>Science</span><b class="orb-hard">Hard</b></p><p class="orb-q">Roughly one in how many 100-digit numbers is prime?</p></div>
+          <div class="orb-face orb-back paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6 M10 3v6l-5.2 8.4A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.6L14 9V3 M7.5 15h9"/></svg><span>Science</span></p><p class="orb-a">About one in 230.</p><div class="orb-move"><p class="k">Bar move</p><p>Thinning out slowly is not the same as running out.</p></div></div>
+        </div></div></div>
+        <div class="orb o4" style="--d:.45s"><div class="orb-bob" style="--bob:7s; --bd:-3.5s"><div class="orb-card" style="--c:#FF7A1A; --ink:16 16 12">
+          <div class="orb-face paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 4 0V3 M8 10v11 M17 3c-2 2-2 6 0 8v10"/></svg><span>Food</span><b class="orb-hard">Hard</b></p><p class="orb-q">Roughly how many litres of milk go into one 40 kg wheel of Parmigiano Reggiano?</p></div>
+          <div class="orb-face orb-back paper"><p class="orb-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v7a2 2 0 0 0 4 0V3 M8 10v11 M17 3c-2 2-2 6 0 8v10"/></svg><span>Food</span></p><p class="orb-a">About 480 litres.</p><div class="orb-move"><p class="k">Bar move</p><p>Size the output by the scarce part of the input, not its bulk.</p></div></div>
+        </div></div></div>
       </div>
       <div class="hero-device">
         <div class="float">
+          <i class="iphone-side back" aria-hidden="true"></i>
+          <i class="iphone-side mid" aria-hidden="true"><i class="btn action"></i><i class="btn up"></i><i class="btn down"></i><i class="btn power"></i><i class="btn cam"></i></i>
           <div id="hero-phone">
-            <div class="device" data-phone role="button" tabindex="0" aria-pressed="false" aria-label="Astute’s Today screen. Tap the card to turn it over.">
-              <img class="screen" fetchpriority="high" src="/assets/app-today.webp" width="840" height="1826" alt="Astute's Today screen on iPhone: a blue Space card asking 'What actually limits how far a probe can go?', with 'Tap to reveal' at the bottom">
-              <img class="screen phone-back" src="/assets/app-flipped.webp" width="840" height="1826" alt="The same card turned over: the answer about plutonium-238, a line to repeat tonight, and the source" loading="lazy" decoding="async">
-              <i class="island"></i><i class="glare"></i><i class="side r"></i><i class="side l1"></i><i class="side l2"></i><i class="side l3"></i>
+            <div class="iphone" data-demo role="group" aria-label="A card from Astute to try: pick an answer, say how sure you are, and turn it over">
+              <div class="iphone-glass">
+                <div class="iphone-screen">
+                  <div class="ios">
+                    <div class="ios-status" aria-hidden="true"><span class="ios-time">9:41</span><span class="ios-icons"><svg width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="7.5" width="3.2" height="4.5" rx=".7"/><rect x="4.8" y="5" width="3.2" height="7" rx=".7"/><rect x="9.6" y="2.5" width="3.2" height="9.5" rx=".7"/><rect x="14.4" y="0" width="3.2" height="12" rx=".7"/></svg><svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 3.2c2.3 0 4.4.9 5.9 2.4l1.1-1.1C13.7 2.7 11.2 1.5 8.5 1.5S3.3 2.7 1.5 4.5l1.1 1.1C4.1 4.1 6.2 3.2 8.5 3.2z"/><path d="M8.5 6.8c1.4 0 2.6.5 3.5 1.4l1.1-1.1C11.8 5.9 10.2 5.1 8.5 5.1S5.2 5.9 3.9 7.1L5 8.2c.9-.9 2.1-1.4 3.5-1.4z"/><circle cx="8.5" cy="10.5" r="1.5"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-opacity=".35"/><rect x="2" y="2" width="20" height="9" rx="2"/><path d="M25 4.5v4c.8-.3 1.5-1.3 1.5-2s-.7-1.7-1.5-2z" fill-opacity=".4"/></svg></span></div>
+                    <i class="ios-island" aria-hidden="true"><i></i></i>
+                    <div class="app">
+                      <div class="app-head" aria-hidden="true"><p class="app-title">Today</p><p class="app-streak"><i></i>12 days</p></div>
+                      <div class="app-bars" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+                      <div class="deck">
+                    <article class="pill" data-pill data-step="pick" data-depth="0" data-answer="2" data-glow="43 92 255 / .42" style="--c:#2B5CFF; --ink:255 255 255" aria-label="Space card, 1 of 5">
+                      <div class="pill-lift"><div class="pill-turn">
+                        <div class="pill-face pill-front">
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z M4.5 14.5c-2 1.5-2.8 3-2 3.9 1.4 1.6 7.3-.6 13.2-5s9.6-9.3 8.2-10.9c-.8-.9-2.4-.6-4.4.5"/></svg><span>Space</span></p>
+                          <div class="pill-ask">
+                            <div class="pill-qbox"><p class="pill-q">Averaged over the space inside its event horizon, how dense is a black hole of a billion suns?</p></div>
+                            <div class="pill-input">
+                              <div class="pill-pick" role="group" aria-label="Pick an answer"><button type="button" class="pill-opt">Denser than an atomic nucleus</button><button type="button" class="pill-opt">About as dense as rock</button><button type="button" class="pill-opt">Far less dense than water</button></div>
+                              <div class="pill-sure" role="group" aria-label="How sure are you?" inert><p class="pill-sure-q">How sure are you?</p><div class="pill-levels"><button type="button" data-level="50">50%</button><button type="button" data-level="60">60%</button><button type="button" data-level="70">70%</button><button type="button" data-level="80">80%</button><button type="button" data-level="90">90%</button></div></div>
+                            </div>
+                            <p class="pill-line"><span class="l-pick">Hard · commit before you turn it over.</span><span class="l-sure">Being right matters less than knowing how often you are.</span></p>
+                          </div>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                        <div class="pill-face pill-back" inert>
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z M4.5 14.5c-2 1.5-2.8 3-2 3.9 1.4 1.6 7.3-.6 13.2-5s9.6-9.3 8.2-10.9c-.8-.9-2.4-.6-4.4.5"/></svg><span>Space</span></p>
+                          <div class="pill-read">
+                            <p class="pill-verdict" data-r><span class="v-icon"><svg class="v-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.6 12.4l3 3 5.9-6.2"/></svg><svg class="v-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg></span><span class="v-line" aria-live="polite"></span></p>
+                            <p class="pill-q2" data-r>Averaged over the space inside its event horizon, how dense is a black hole of a billion suns?</p>
+                            <p class="pill-a"><mark>Far less dense than water</mark>: about 18 kg per cubic metre, about 15 times air. The horizon’s radius grows in step with the mass, so the volume inside grows with its cube, and the average density falls with the mass squared. A hole of one sun averages 80 times denser than a nucleus.</p>
+                            <p class="pill-trap" data-r>The trap: Picturing every black hole as matter crushed beyond nuclear density.</p>
+                            <div class="pill-move" data-r><p class="k">Bar move</p><p>When the container grows faster than its contents, the average thins out.</p></div>
+                            <p class="pill-src" data-r>Source · Carroll, Spacetime and Geometry, 2004</p>
+                          </div>
+                          <button type="button" class="pill-next" data-r>Next card <span aria-hidden="true">→</span></button>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                      </div></div>
+                    </article>
+                    <article class="pill" data-pill data-step="pick" data-depth="1" data-answer="2" data-glow="242 241 236 / .2" style="--c:#F2F1EC; --ink:16 16 12" aria-label="Thinking card, 2 of 5">
+                      <div class="pill-lift"><div class="pill-turn">
+                        <div class="pill-face pill-front">
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Thinking</span></p>
+                          <div class="pill-ask">
+                            <div class="pill-qbox"><p class="pill-q">A magnitude 8 earthquake against a magnitude 6: how much more energy does the bigger one release?</p></div>
+                            <div class="pill-input">
+                              <div class="pill-pick" role="group" aria-label="Pick an answer"><button type="button" class="pill-opt">About a third more</button><button type="button" class="pill-opt">About 100 times</button><button type="button" class="pill-opt">About 1,000 times</button></div>
+                              <div class="pill-sure" role="group" aria-label="How sure are you?" inert><p class="pill-sure-q">How sure are you?</p><div class="pill-levels"><button type="button" data-level="50">50%</button><button type="button" data-level="60">60%</button><button type="button" data-level="70">70%</button><button type="button" data-level="80">80%</button><button type="button" data-level="90">90%</button></div></div>
+                            </div>
+                            <p class="pill-line"><span class="l-pick">Hard · commit before you turn it over.</span><span class="l-sure">Being right matters less than knowing how often you are.</span></p>
+                          </div>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                        <div class="pill-face pill-back" inert>
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Thinking</span></p>
+                          <div class="pill-read">
+                            <p class="pill-verdict" data-r><span class="v-icon"><svg class="v-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.6 12.4l3 3 5.9-6.2"/></svg><svg class="v-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg></span><span class="v-line" aria-live="polite"></span></p>
+                            <p class="pill-q2" data-r>A magnitude 8 earthquake against a magnitude 6: how much more energy does the bigger one release?</p>
+                            <p class="pill-a"><mark>About 1,000 times.</mark> Each whole step on the magnitude scale is ten times the shaking recorded and about 32 times the energy, so two steps are roughly 32 × 32. A magnitude 8 releases in one event what a thousand magnitude 6 quakes would.</p>
+                            <p class="pill-trap" data-r>The trap: Knowing each step is ten times, and stopping at the shaking.</p>
+                            <div class="pill-move" data-r><p class="k">Bar move</p><p>On a scale that counts powers, one step is never one step.</p></div>
+                            <p class="pill-src" data-r>Source · Kanamori, Journal of Geophysical Research, 1977</p>
+                          </div>
+                          <button type="button" class="pill-next" data-r>Next card <span aria-hidden="true">→</span></button>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                      </div></div>
+                    </article>
+                    <article class="pill" data-pill data-step="pick" data-depth="far" data-answer="1" data-glow="0 212 81 / .3" style="--c:#00D451; --ink:16 16 12" aria-label="Nature card, 3 of 5">
+                      <div class="pill-lift"><div class="pill-turn">
+                        <div class="pill-face pill-front">
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14z M9 15l6-6"/></svg><span>Nature</span></p>
+                          <div class="pill-ask">
+                            <div class="pill-qbox"><p class="pill-q">If every pollinating animal vanished, by roughly how much would total world crop production fall?</p></div>
+                            <div class="pill-input">
+                              <div class="pill-pick" role="group" aria-label="Pick an answer"><button type="button" class="pill-opt">About a third</button><button type="button" class="pill-opt">Under a tenth</button><button type="button" class="pill-opt">About three quarters</button></div>
+                              <div class="pill-sure" role="group" aria-label="How sure are you?" inert><p class="pill-sure-q">How sure are you?</p><div class="pill-levels"><button type="button" data-level="50">50%</button><button type="button" data-level="60">60%</button><button type="button" data-level="70">70%</button><button type="button" data-level="80">80%</button><button type="button" data-level="90">90%</button></div></div>
+                            </div>
+                            <p class="pill-line"><span class="l-pick">Hard · commit before you turn it over.</span><span class="l-sure">Being right matters less than knowing how often you are.</span></p>
+                          </div>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                        <div class="pill-face pill-back" inert>
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14z M9 15l6-6"/></svg><span>Nature</span></p>
+                          <div class="pill-read">
+                            <p class="pill-verdict" data-r><span class="v-icon"><svg class="v-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.6 12.4l3 3 5.9-6.2"/></svg><svg class="v-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg></span><span class="v-line" aria-live="polite"></span></p>
+                            <p class="pill-q2" data-r>If every pollinating animal vanished, by roughly how much would total world crop production fall?</p>
+                            <p class="pill-a"><mark>Under a tenth.</mark> Three quarters of leading crop types benefit from animal pollination, but the staples that make most of the tonnage, wheat, rice and maize, are wind- or self-pollinated. Aizen and colleagues put the direct loss at 3 to 8% of output. Fruit, nuts and coffee would suffer; bread would not.</p>
+                            <p class="pill-trap" data-r>The trap: Treating every crop that bees help as a crop that needs them.</p>
+                            <div class="pill-move" data-r><p class="k">Bar move</p><p>Before crediting a helper with everything, ask what happens without it.</p></div>
+                            <p class="pill-src" data-r>Source · Aizen et al., Annals of Botany, 2009</p>
+                          </div>
+                          <button type="button" class="pill-next" data-r>Next card <span aria-hidden="true">→</span></button>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                      </div></div>
+                    </article>
+                    <article class="pill" data-pill data-step="pick" data-depth="far" data-answer="2" data-glow="255 59 48 / .32" style="--c:#FF3B30; --ink:255 255 255" aria-label="Medicine card, 4 of 5">
+                      <div class="pill-lift"><div class="pill-turn">
+                        <div class="pill-face pill-front">
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7V3z"/></svg><span>Medicine</span></p>
+                          <div class="pill-ask">
+                            <div class="pill-qbox"><p class="pill-q">Of blood groups O, A and AB, which waits longest on average for a kidney from a deceased donor?</p></div>
+                            <div class="pill-input">
+                              <div class="pill-pick" role="group" aria-label="Pick an answer"><button type="button" class="pill-opt">Group AB, the rarest of the three</button><button type="button" class="pill-opt">Group A, the middle one</button><button type="button" class="pill-opt">Group O, the commonest of the three</button></div>
+                              <div class="pill-sure" role="group" aria-label="How sure are you?" inert><p class="pill-sure-q">How sure are you?</p><div class="pill-levels"><button type="button" data-level="50">50%</button><button type="button" data-level="60">60%</button><button type="button" data-level="70">70%</button><button type="button" data-level="80">80%</button><button type="button" data-level="90">90%</button></div></div>
+                            </div>
+                            <p class="pill-line"><span class="l-pick">Hard · commit before you turn it over.</span><span class="l-sure">Being right matters less than knowing how often you are.</span></p>
+                          </div>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                        <div class="pill-face pill-back" inert>
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7V3z"/></svg><span>Medicine</span></p>
+                          <div class="pill-read">
+                            <p class="pill-verdict" data-r><span class="v-icon"><svg class="v-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.6 12.4l3 3 5.9-6.2"/></svg><svg class="v-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg></span><span class="v-line" aria-live="polite"></span></p>
+                            <p class="pill-q2" data-r>Of blood groups O, A and AB, which waits longest on average for a kidney from a deceased donor?</p>
+                            <p class="pill-a"><mark>Group O.</mark> An O kidney is compatible with patients of every group, but an O patient can accept only an O kidney. Left alone, other groups drain the O supply, so allocation schemes now reserve O kidneys mostly for O patients. AB patients can take any group and wait least.</p>
+                            <p class="pill-trap" data-r>The trap: Picking AB, reasoning that the rarest group is hardest to match.</p>
+                            <div class="pill-move" data-r><p class="k">Bar move</p><p>Whoever can give to everyone may be the one left waiting.</p></div>
+                            <p class="pill-src" data-r>Source · NHS Blood and Transplant, kidney transplantation report</p>
+                          </div>
+                          <button type="button" class="pill-next" data-r>Next card <span aria-hidden="true">→</span></button>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                      </div></div>
+                    </article>
+                    <article class="pill" data-pill data-step="pick" data-depth="far" data-answer="2" data-glow="193 58 255 / .36" style="--c:#C13AFF; --ink:255 255 255" aria-label="Music card, 5 of 5">
+                      <div class="pill-lift"><div class="pill-turn">
+                        <div class="pill-face pill-front">
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12 M9 18a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M19 16a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M9 9l10-2"/></svg><span>Music</span></p>
+                          <div class="pill-ask">
+                            <div class="pill-qbox"><p class="pill-q">A DJ pushes a vinyl turntable’s pitch fader to +8% to match tempos. What happens to the music’s key?</p></div>
+                            <div class="pill-input">
+                              <div class="pill-pick" role="group" aria-label="Pick an answer"><button type="button" class="pill-opt">Nothing; only the tempo changes</button><button type="button" class="pill-opt">It rises by about 0.1 semitones</button><button type="button" class="pill-opt">It rises by about 1.3 semitones</button></div>
+                              <div class="pill-sure" role="group" aria-label="How sure are you?" inert><p class="pill-sure-q">How sure are you?</p><div class="pill-levels"><button type="button" data-level="50">50%</button><button type="button" data-level="60">60%</button><button type="button" data-level="70">70%</button><button type="button" data-level="80">80%</button><button type="button" data-level="90">90%</button></div></div>
+                            </div>
+                            <p class="pill-line"><span class="l-pick">Hard · commit before you turn it over.</span><span class="l-sure">Being right matters less than knowing how often you are.</span></p>
+                          </div>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                        <div class="pill-face pill-back" inert>
+                          <p class="pill-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12 M9 18a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M19 16a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M9 9l10-2"/></svg><span>Music</span></p>
+                          <div class="pill-read">
+                            <p class="pill-verdict" data-r><span class="v-icon"><svg class="v-yes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M7.6 12.4l3 3 5.9-6.2"/></svg><svg class="v-no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8"/></svg></span><span class="v-line" aria-live="polite"></span></p>
+                            <p class="pill-q2" data-r>A DJ pushes a vinyl turntable’s pitch fader to +8% to match tempos. What happens to the music’s key?</p>
+                            <p class="pill-a"><mark>It rises by about 1.3 semitones.</mark> A turntable plays faster by spinning faster, so every frequency rises by 8%. A semitone is a ratio of about 1.06, so 1.08 is a semitone and a third. Two records matched in tempo this way can clash in key, so DJs learn to mix by key.</p>
+                            <p class="pill-trap" data-r>The trap: Tempo and pitch feel like separate controls, as on digital decks.</p>
+                            <div class="pill-move" data-r><p class="k">Bar move</p><p>When one dial moves several things, expect all of them to move.</p></div>
+                            <p class="pill-src" data-r>Source · Butler, Unlocking the Groove, 2006</p>
+                          </div>
+                          <button type="button" class="pill-next" data-r>Next card <span aria-hidden="true">→</span></button>
+                          <span class="pill-tools" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3.8h10a1.4 1.4 0 0 1 1.4 1.4v15.2L12 16.9l-6.4 3.5V5.2A1.4 1.4 0 0 1 7 3.8z"/></svg><svg viewBox="0 0 24 24"><path d="M12 3.6v11.2M8.3 7.3L12 3.6l3.7 3.7M8.6 10.2H7a1.2 1.2 0 0 0-1.2 1.2v8.4A1.2 1.2 0 0 0 7 21h10a1.2 1.2 0 0 0 1.2-1.2v-8.4a1.2 1.2 0 0 0-1.2-1.2h-1.6"/></svg></span>
+                        </div>
+                      </div></div>
+                    </article>
+                    <article class="pill pill-end" data-end data-glow="155 92 255 / .4" data-depth="far" aria-label="Day done">
+                      <div class="end-rim" aria-hidden="true"></div>
+                      <div class="end-body">
+                        <p class="end-eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l1.9 6.1 6.1 1.9-6.1 1.9-1.9 6.1-1.9-6.1-6.1-1.9 6.1-1.9z M19 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/></svg>Day done</p>
+                        <p class="end-score" aria-live="polite"><span data-sure>80%</span> sure.<br><span data-right>50%</span> right.</p>
+                        <p class="end-line" data-gap>The gap between the two is what Astute closes. Five new cards, every morning.</p>
+                        <p class="end-line" data-even hidden>Honest confidence. Keep it sharp: five new cards, every morning.</p>
+                        <a class="end-cta" href="https://apps.apple.com/app/id6806852300" data-store>Get Astute</a>
+                        <button type="button" class="end-again">Play again</button>
+                      </div>
+                    </article>
+                      </div>
+                    </div>
+                    <div class="app-tabs" aria-hidden="true"><span class="tab on"><span class="tab-pill"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.3"/><path d="M12 2.7v2M12 19.3v2M2.7 12h2M19.3 12h2M5.4 5.4l1.4 1.4M17.2 17.2l1.4 1.4M5.4 18.6l1.4-1.4M17.2 6.8l1.4-1.4"/></svg><b>Today</b></span></span><span class="tab"><svg viewBox="0 0 24 24"><circle class="ring" cx="12" cy="12" r="8.4"/><path d="M15.7 8.3l-2.3 5.1-5.1 2.3 2.3-5.1z"/></svg></span><span class="tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="4"/><path d="M4.5 19.3c0-2.8 5-4.4 7.5-4.4s7.5 1.6 7.5 4.4v1.2h-15z"/></svg></span></div>
+                    <i class="ios-home" aria-hidden="true"></i>
+                  </div>
+                </div>
+                <i class="iphone-glare" aria-hidden="true"></i>
+              </div>
             </div>
           </div>
         </div>
-        <p class="phone-hint" aria-hidden="true"><i></i>Tap the card</p>
+        <p class="phone-hint" aria-hidden="true"><i></i><span>Try it: pick an answer</span></p>
       </div>
-    </div>
+    </div></div>
   </div>
   <a class="scroll-cue" href="#how" aria-hidden="true" tabindex="-1"><i></i>Scroll</a>
 </section>

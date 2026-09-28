@@ -16,26 +16,32 @@ Every push to `main` builds and publishes **https://astutetheapp.com** from
 GitHub Pages (`.github/workflows/deploy.yml`):
 
 - `/` is the landing page, designed in Claude Design and written out as
-  plain HTML in `site/index.html`, on classes rather than inline styles, with
-  its sections laid out in `site/assets/landing.css`: the first screen with
-  its phone and its fanned cards, today's question, the day's row, the two
-  cream sheets laid on the night paper (calibration, the science), the
-  cards that flip, the subjects going by both ways, the app's five screens
-  in a row, the widgets, friends, the plans, the questions and the last
-  word. `site/assets/main.js` adds what moves: the menu, the nav that
-  floats and frosts and its progress line in the three lights' colours,
-  things that come into view as they are reached, numbers that count up, a
-  light that follows the pointer across a card, the phone that turns
-  towards the pointer and turns its card over when tapped, the rows that
-  scroll with their dots, the calibration chart you can drag, the cards
-  that flip, the plan picker and the questions. Today's question is shown
-  live from `/widget/days.json`, the file the widget reads, with the
-  edition in the first screen's kicker and the time to the next one. It
+  plain HTML in `site/index.html`, on classes rather than inline styles,
+  with its sections laid out in `site/assets/landing.css`: the first screen
+  with its phone — an iPhone drawn in CSS, island, status bar and titanium,
+  with the app's Today screen laid out in the app's own points rather than
+  pictured — and four hard cards from the bank around it, today's question,
+  the day's row, the two cream sheets laid on the night paper (calibration,
+  the science), the cards that flip, the subjects going by both ways, the
+  app's five screens in a row, the widgets, friends, the plans, the
+  questions and the last word. `site/assets/main.js` adds what moves: the
+  menu, the nav that floats and frosts and its progress line in the three
+  lights' colours, things that come into view as they are reached, numbers
+  that count up, a light that follows the pointer across a card, the phone
+  that turns towards the pointer and faces whoever reaches for it, five hard
+  cards on it that play as in the app (an answer, how sure, the card turned
+  over with the answer arriving word by word, and after the fifth how sure
+  against how right), the first of them playing itself once for anyone who
+  has not touched it, the cards around it that turn over under the pointer,
+  the rows that scroll with their dots, the calibration chart you can drag,
+  the cards that flip, the plan picker and the questions. Today's question
+  is shown live from `/widget/days.json`, the file the widget reads, with
+  the edition in the first screen's kicker and the time to the next one. It
   presents Astute on both stores, with Apple's and Google's own badges: a
-  phone's Download goes straight to its own store, a computer's to a code
-  to scan with the phone, which opens `/get` and from there the right
-  store. It reads fully without JavaScript, and without motion for anyone
-  who has asked their system for less. The screens in `site/assets/` are
+  phone's Download goes straight to its own store, a computer's to a code to
+  scan with the phone, which opens `/get` and from there the right store. It
+  reads fully without JavaScript, and without motion for anyone who has
+  asked their system for less. The screens in `site/assets/` are
   `tool/shots/` at 840×1826, as WebP.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,

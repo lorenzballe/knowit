@@ -2,9 +2,9 @@
 // framework. Every page reads without it; this adds the menu, the nav that
 // frosts and its progress line, things coming into view, the numbers that
 // count up, the light that follows the pointer across a card, the phone that
-// turns and reveals, today's question and the time to the next one, the
-// rows that scroll, the calibration chart, the cards that flip, the plan
-// picker, the questions that open, and the rail beside a long page.
+// turns and plays a day's cards, today's question and the time to the next
+// one, the rows that scroll, the calibration chart, the cards that flip, the
+// plan picker, the questions that open, and the rail beside a long page.
 (() => {
   const $ = (s, root = document) => root.querySelector(s);
   const $$ = (s, root = document) => Array.from(root.querySelectorAll(s));
@@ -149,10 +149,12 @@
   }
 
   // The phone in the first screen: it turns a little towards the pointer,
-  // the fanned cards drift with the scroll, and tapping it turns the card
-  // over, as in the app.
-  const phone = $('#hero-phone');
+  // the cards around it drift with the scroll and against the pointer, and
+  // the card on it plays as in the app — pick an answer, say how sure, turn
+  // it over — five times, and then the day as a number.
+  const phone = $('.float');
   const hero = phone && phone.closest('section');
+  const orbit = $('.orbit');
   if (phone && hero && finePointer && !still) {
     let tx = 0, ty = 0, x = 0, y = 0, running = false;
     const step = () => {
@@ -160,39 +162,260 @@
       y += (ty - y) * 0.08;
       phone.style.setProperty('--ry', x.toFixed(2) + 'deg');
       phone.style.setProperty('--rx', y.toFixed(2) + 'deg');
+      if (orbit) {
+        orbit.style.setProperty('--ox', (-x * 1.2).toFixed(1) + 'px');
+        orbit.style.setProperty('--oy', (y * 1.2).toFixed(1) + 'px');
+      }
       if (Math.abs(tx - x) > 0.01 || Math.abs(ty - y) > 0.01) requestAnimationFrame(step);
       else running = false;
     };
     const go = () => { if (!running) { running = true; requestAnimationFrame(step); } };
     hero.addEventListener('pointermove', e => {
       const r = hero.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * 12;
-      ty = -((e.clientY - r.top) / r.height - 0.5) * 8;
+      // Over the phone it all but stops: it has turned to face the reader.
+      const k = phone.classList.contains('facing') ? 0.2 : 1;
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 12 * k;
+      ty = -((e.clientY - r.top) / r.height - 0.5) * 8 * k;
       go();
     });
     hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; go(); });
   }
-  const fan = $('.fan');
-  if (fan && hero && !still) {
+  // The drift is for the page in two columns, where the phone is in the
+  // first screen; lower down a narrow page it would only pull the cards off
+  // their places.
+  const wide = window.matchMedia('(min-width: 1120px)');
+  if (orbit && hero && !still) {
     let queued = false;
     const drift = () => {
       queued = false;
-      const y = window.scrollY;
-      if (y < hero.offsetHeight) fan.style.transform = 'translate3d(0,' + (y * 0.09).toFixed(1) + 'px,0)';
+      const y = wide.matches ? window.scrollY : 0;
+      if (y < hero.offsetHeight) orbit.style.setProperty('--sy', (y * 0.09).toFixed(1) + 'px');
     };
     window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(drift); } }, { passive: true });
   }
-  const screen = $('[data-phone]');
-  if (screen) {
+  // Where there is no pointer to hover with, a tap turns a card round.
+  if (!finePointer) $$('.orb').forEach(orb => orb.addEventListener('click', () => orb.classList.toggle('turned')));
+
+  const demo = $('[data-demo]');
+  // The phone turns to face whoever reaches for it: under the pointer, and
+  // for good once a finger has touched it.
+  if (demo && phone && !still) {
+    demo.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') phone.classList.add('facing'); });
+    demo.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') phone.classList.remove('facing'); });
+    demo.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') phone.classList.add('facing'); });
+    demo.addEventListener('focusin', () => phone.classList.add('facing'));
+    demo.addEventListener('focusout', e => { if (!demo.contains(e.relatedTarget) && !demo.matches(':hover')) phone.classList.remove('facing'); });
+  }
+  if (demo) {
+    const deck = $('.deck', demo);
+    const cards = $$('.pill', demo);
+    const bars = $$('.app-bars i', demo);
+    const stage = demo.closest('.hero-stage');
     const hint = $('.phone-hint');
-    const turn = () => {
-      screen.setAttribute('aria-pressed', String(screen.getAttribute('aria-pressed') !== 'true'));
-      if (hint) hint.classList.add('gone');
-    };
-    screen.addEventListener('click', turn);
-    screen.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); turn(); }
+    const hintText = hint && $('span', hint);
+    const SPECTRUM = ['#FFE600', '#A6FF00', '#00D451', '#00D9D9', '#2B5CFF', '#9B5CFF', '#E040FB', '#FF3D7F', '#FF7A1A', '#FFB000'];
+    let at = 0;
+    let touched = false;
+    let tally = [];
+
+    // The answer arrives a word at a time: each word its own span, counted,
+    // so the words can come in one after another.
+    cards.forEach(card => {
+      const a = $('.pill-a', card);
+      if (!a) return;
+      let i = 0;
+      const split = node => {
+        Array.from(node.childNodes).forEach(child => {
+          if (child.nodeType === 1) { split(child); return; }
+          if (child.nodeType !== 3) return;
+          const bits = child.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          bits.forEach(bit => {
+            if (!bit) return;
+            if (/^\s+$/.test(bit)) { frag.appendChild(document.createTextNode(bit)); return; }
+            const w = document.createElement('span');
+            w.className = 'wd';
+            w.style.setProperty('--i', i++);
+            w.textContent = bit;
+            frag.appendChild(w);
+          });
+          child.replaceWith(frag);
+        });
+      };
+      split(a);
+      // What follows the answer waits for its last word.
+      const after = 240 + i * 12;
+      $$('.pill-trap', card).forEach(el => el.style.setProperty('--rd', after + 120 + 'ms'));
+      $$('.pill-move', card).forEach(el => { el.style.setProperty('--rd', after + 260 + 'ms'); el.style.setProperty('--sd', after + 900 + 'ms'); });
+      $$('.pill-src', card).forEach(el => el.style.setProperty('--rd', after + 400 + 'ms'));
+      $$('.pill-next', card).forEach(el => el.style.setProperty('--rd', after + 560 + 'ms'));
+      $$('.pill-q2', card).forEach(el => el.style.setProperty('--rd', '140ms'));
     });
+
+    const say = text => {
+      if (!hint || !hintText) return;
+      if (!text) { hint.classList.add('gone'); return; }
+      hintText.textContent = text;
+      hint.classList.remove('gone');
+    };
+    const place = () => {
+      cards.forEach((card, i) => {
+        const d = i - at;
+        card.dataset.depth = d < 0 ? 'gone' : d === 0 ? '0' : d === 1 ? '1' : 'far';
+        card.inert = d !== 0;
+      });
+      bars.forEach((bar, i) => bar.classList.toggle('on', i <= at));
+      if (stage && cards[at]) stage.style.setProperty('--glow', cards[at].dataset.glow);
+    };
+
+    const pick = (card, i, auto) => {
+      if (card.dataset.step !== 'pick') return;
+      const opts = $$('.pill-opt', card);
+      opts[i].classList.add('taken');
+      card.dataset.taken = i;
+      say('');
+      // Focus follows the answer only where it was: a reader on the keys
+      // goes on to how sure, and is not dropped back at the top of the page
+      // when the answers they were on stop taking input.
+      const held = !auto && card.contains(document.activeElement);
+      setTimeout(() => {
+        card.dataset.step = 'sure';
+        $('.pill-sure', card).inert = false;
+        const on = () => {
+          if (held) $('.pill-levels button', card).focus({ preventScroll: true });
+          $('.pill-pick', card).inert = true;
+        };
+        // The step shows on the next frame, and nothing hidden takes focus.
+        if (held) requestAnimationFrame(() => requestAnimationFrame(on));
+        else on();
+      }, still ? 0 : 200);
+    };
+
+    const sure = (card, level, auto) => {
+      if (card.dataset.step !== 'sure') return;
+      const right = Number(card.dataset.taken) === Number(card.dataset.answer);
+      $$('.pill-levels button', card).forEach(b => b.classList.toggle('taken', Number(b.dataset.level) === level));
+      card.classList.toggle('right', right);
+      if (!auto) tally.push({ right, level });
+      const icon = $('.v-icon', card);
+      $$('.spark', icon).forEach(s => s.remove());
+      if (right && !still) {
+        for (let k = 0; k < 12; k++) {
+          const s = document.createElement('i');
+          s.className = 'spark';
+          s.style.setProperty('--a', k * 30 + 'deg');
+          s.style.setProperty('--h', SPECTRUM[k % SPECTRUM.length]);
+          icon.appendChild(s);
+        }
+      }
+      const held = !auto && card.contains(document.activeElement);
+      setTimeout(() => {
+        card.dataset.step = 'turned';
+        const back = $('.pill-back', card);
+        back.inert = false;
+        if (held) $('.pill-next', card).focus({ preventScroll: true });
+        $('.pill-front', card).inert = true;
+        // Written once the back can be read, so that it is announced.
+        $('.v-line', card).textContent = (right ? 'You got it' : 'Almost everyone gets this wrong') + ' · you said ' + level + '% sure';
+        setTimeout(() => back.classList.add('in'), still ? 0 : 380);
+        say(at === 0 ? 'Tap the card for the next one' : '');
+      }, still ? 0 : 160);
+    };
+
+    const score = () => {
+      const end = $('[data-end]', demo);
+      if (!end) return;
+      const n = tally.length;
+      const sureAvg = n ? Math.round(tally.reduce((t, a) => t + a.level, 0) / n) : 0;
+      const rightPct = n ? Math.round(100 * tally.filter(a => a.right).length / n) : 0;
+      $('[data-sure]', end).textContent = sureAvg + '%';
+      $('[data-right]', end).textContent = rightPct + '%';
+      const even = Math.abs(sureAvg - rightPct) <= 5;
+      $('[data-gap]', end).hidden = even;
+      $('[data-even]', end).hidden = !even;
+    };
+
+    const next = () => {
+      if (at >= cards.length - 1) return;
+      const held = cards[at].contains(document.activeElement);
+      at += 1;
+      place();
+      if (cards[at].hasAttribute('data-end')) score();
+      say('');
+      if (held) $('.pill-opt, .end-cta', cards[at]).focus({ preventScroll: true });
+    };
+
+    const again = () => {
+      deck.classList.add('reset');
+      cards.forEach(card => {
+        card.dataset.step = 'pick';
+        card.classList.remove('right');
+        $$('.taken', card).forEach(el => el.classList.remove('taken'));
+        const back = $('.pill-back', card);
+        if (back) { back.classList.remove('in'); back.inert = true; }
+        const front = $('.pill-front', card);
+        if (front) front.inert = false;
+        const pickEl = $('.pill-pick', card);
+        if (pickEl) pickEl.inert = false;
+        const sureEl = $('.pill-sure', card);
+        if (sureEl) sureEl.inert = true;
+      });
+      tally = [];
+      at = 0;
+      place();
+      void deck.offsetWidth;
+      deck.classList.remove('reset');
+      const first = $('.pill-opt', cards[0]);
+      if (first) first.focus({ preventScroll: true });
+    };
+
+    demo.addEventListener('click', e => {
+      const card = e.target.closest('.pill');
+      if (!card || card.dataset.depth !== '0') return;
+      touched = true;
+      const opt = e.target.closest('.pill-opt');
+      const level = e.target.closest('.pill-levels button');
+      if (opt) pick(card, $$('.pill-opt', card).indexOf(opt), false);
+      else if (level) sure(card, Number(level.dataset.level), false);
+      else if (e.target.closest('.end-again')) again();
+      else if (card.dataset.step === 'turned' && !e.target.closest('a')) next();
+    });
+    demo.addEventListener('pointerdown', () => { touched = true; });
+    demo.addEventListener('keydown', () => { touched = true; });
+    place();
+
+    // Once, if nobody has touched it: the first card plays itself, the
+    // answer most people give, and how sure they are of it.
+    if (!still && 'IntersectionObserver' in window) {
+      let timer = 0;
+      const ghost = (el, then) => {
+        el.classList.remove('ghost');
+        void el.offsetWidth;
+        el.classList.add('ghost');
+        setTimeout(then, 420);
+        setTimeout(() => el.classList.remove('ghost'), 850);
+      };
+      const play = () => {
+        const card = cards[0];
+        if (touched || at !== 0 || card.dataset.step !== 'pick') return;
+        ghost($$('.pill-opt', card)[0], () => {
+          if (touched) return;
+          pick(card, 0, true);
+          setTimeout(() => {
+            if (touched) return;
+            const eighty = $('.pill-levels [data-level="80"]', card);
+            ghost(eighty, () => { if (!touched) sure(card, 80, true); });
+          }, 1100);
+        });
+      };
+      const seen = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          clearTimeout(timer);
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) timer = setTimeout(play, 2600);
+        });
+      }, { threshold: [0, 0.6] });
+      seen.observe(demo);
+    }
   }
 
   // Today's question, from the same file the home-screen widget reads, and
