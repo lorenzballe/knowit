@@ -4,6 +4,7 @@ import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
 import '../theme.dart';
+import 'diagram_view.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -78,6 +79,12 @@ class _RevealBodyState extends State<RevealBody> {
               color: widget.ink.withValues(alpha: 0.92),
             ),
           ),
+        // The picture comes right after the words it illustrates, and is
+        // drawn while they are being read.
+        if (pill.diagram != null) ...[
+          const SizedBox(height: 18),
+          DiagramView(diagram: pill.diagram!, ink: widget.ink),
+        ],
         if (pill.hasSimply) ...[
           const SizedBox(height: 14),
           if (_simplyOpen)

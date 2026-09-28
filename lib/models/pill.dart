@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'diagram.dart';
+
+export 'diagram.dart';
+
 /// What a card asks of the reader before it will turn over.
 ///
 /// Modelled as a sealed hierarchy rather than a kind flag with a drawer of
@@ -411,6 +415,10 @@ class Pill {
   /// The picture that would help, if one would.
   final String figure;
 
+  /// The picture itself, as data the app draws and animates, when the card
+  /// has one (see [Diagram]).
+  final Diagram? diagram;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -444,6 +452,7 @@ class Pill {
     this.language = 'en',
     this.buildsOn = const [],
     this.figure = '',
+    this.diagram,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card
