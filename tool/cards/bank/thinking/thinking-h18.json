@@ -30,6 +30,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "deaths a year in the EU",
+    "items": [
+      {
+        "label": "Road crashes",
+        "value": 20000
+      },
+      {
+        "label": "Air pollution, at least",
+        "value": 200000,
+        "hi": true
+      }
+    ],
+    "caption": "The deaths nobody photographs outnumber the crashes more than ten to one."
+  },
   "source": "Lelieveld et al., European Heart Journal, 2019",
   "source_kind": "paper",
   "reference": "Lelieveld et al., Cardiovascular disease burden from ambient air pollution in Europe reassessed using novel hazard ratio functions, European Heart Journal, 2019",

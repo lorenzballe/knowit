@@ -30,6 +30,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "€",
+    "parts": [
+      {
+        "label": "you pay",
+        "value": 50
+      },
+      {
+        "label": "the free item",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "The free item is €10 of a €60 bill: a sixth, not a third."
+  },
   "source": "Framing of multi-buy discounts",
   "source_kind": "arithmetic",
   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"

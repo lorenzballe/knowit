@@ -28,7 +28,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% chance",
+    "items": [
+      {
+        "label": "Win the first match",
+        "value": 70
+      },
+      {
+        "label": "Win the first two",
+        "value": 49
+      },
+      {
+        "label": "Win the first three",
+        "value": 34
+      },
+      {
+        "label": "Win all four",
+        "value": 24,
+        "hi": true
+      }
+    ],
+    "caption": "Favourite in every match, and about one chance in four of winning the lot."
+  },
   "source": "Multiplication rule of probability",
   "source_kind": "arithmetic",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",

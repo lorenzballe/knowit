@@ -30,6 +30,33 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 36,
+    "label": "equally likely pairs",
+    "branches": [
+      {
+        "n": 11,
+        "label": "at least one six",
+        "branches": [
+          {
+            "n": 1,
+            "label": "double six",
+            "hi": true
+          },
+          {
+            "n": 10,
+            "label": "just one six"
+          }
+        ]
+      },
+      {
+        "n": 25,
+        "label": "no six, ruled out"
+      }
+    ],
+    "caption": "The yes leaves 11 pairs, and only one of them is a double six."
+  },
   "source": "Conditional probability, counting outcomes",
   "source_kind": "arithmetic",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",

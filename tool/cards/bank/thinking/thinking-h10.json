@@ -30,6 +30,149 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "months",
+      "min": 0,
+      "max": 36
+    },
+    "y": {
+      "label": "€ owed",
+      "min": 0,
+      "max": 2200
+    },
+    "series": [
+      {
+        "label": "simple: €20 a month",
+        "points": [
+          [
+            0,
+            1000
+          ],
+          [
+            3,
+            1060
+          ],
+          [
+            6,
+            1120
+          ],
+          [
+            9,
+            1180
+          ],
+          [
+            12,
+            1240
+          ],
+          [
+            15,
+            1300
+          ],
+          [
+            18,
+            1360
+          ],
+          [
+            21,
+            1420
+          ],
+          [
+            24,
+            1480
+          ],
+          [
+            27,
+            1540
+          ],
+          [
+            30,
+            1600
+          ],
+          [
+            33,
+            1660
+          ],
+          [
+            36,
+            1720
+          ]
+        ]
+      },
+      {
+        "label": "2% on the growing debt",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1000
+          ],
+          [
+            3,
+            1061
+          ],
+          [
+            6,
+            1126
+          ],
+          [
+            9,
+            1195
+          ],
+          [
+            12,
+            1268
+          ],
+          [
+            15,
+            1346
+          ],
+          [
+            18,
+            1428
+          ],
+          [
+            21,
+            1516
+          ],
+          [
+            24,
+            1608
+          ],
+          [
+            27,
+            1707
+          ],
+          [
+            30,
+            1811
+          ],
+          [
+            33,
+            1922
+          ],
+          [
+            36,
+            2040
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 36,
+        "y": 2040,
+        "label": "€2,040"
+      },
+      {
+        "x": 36,
+        "y": 1720,
+        "label": "€1,720"
+      }
+    ],
+    "caption": "Interest on interest opens a €320 gap in three years."
+  },
   "source": "Compound interest, arithmetic",
   "source_kind": "arithmetic",
   "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978",

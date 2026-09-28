@@ -30,6 +30,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 1,
+        "label": "ill even with the pill"
+      },
+      {
+        "n": 1,
+        "label": "spared by the pill",
+        "hi": true
+      }
+    ],
+    "caption": "A thousand take the pill for a year; one of them is spared."
+  },
   "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
   "source_kind": "paper",
   "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",

@@ -30,6 +30,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "× a magnitude 6's energy",
+    "items": [
+      {
+        "label": "Magnitude 6",
+        "value": 1
+      },
+      {
+        "label": "Magnitude 7",
+        "value": 32
+      },
+      {
+        "label": "Magnitude 8",
+        "value": 1000,
+        "hi": true
+      }
+    ],
+    "caption": "Each step is about 32 times the energy, so two steps are a thousand."
+  },
   "source": "Kanamori, Journal of Geophysical Research, 1977",
   "source_kind": "paper",
   "reference": "Kanamori, The energy release in great earthquakes, Journal of Geophysical Research, 1977",
