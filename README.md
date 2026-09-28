@@ -561,6 +561,26 @@ The figures are checked from `test/figures_test.dart`, in this suite,
 because a picture produced in another language by a program running
 somewhere else is otherwise nobody's to break.
 
+**Diagrams.** A handful of cards, the ones whose point is a quantity the
+eye grasps faster than the sentence, carry a `diagram`: a few numbers and
+labels, never pixels, that the reveal draws live in the card's own ink
+and animates the way someone at a whiteboard would explain it — the frame,
+then the thing, then the comparison that is the point, with strokes laid
+down by a pen and figures counting up as the shapes that carry them grow.
+Tap it to watch again; with reduced motion it shows the last frame. There
+are eight kinds (`dots`, `bars`, `scale`, `area`, `split`, `line`,
+`timeline`, `tree`), in `lib/models/diagram.dart` and
+`lib/widgets/diagram_view.dart`, and every layout decision (where a label
+goes so that no label, leader or curve crosses another) is made in the
+painter, not by whoever writes the card. They are deliberately few: each
+was chosen because it shows the thing intuition gets wrong, and each
+number in it is the card's own. `tool/cards/diagrams.py` is the gate for
+them, run by `check.py`, and `test/diagram_preview_test.dart` renders them
+for a person to look at (three moments side by side, or every frame with
+`DIAGRAM_FPS` for a video). A native painter rather than rendered video:
+it follows the theme, stays sharp at any size, costs a few hundred bytes a
+card and works offline.
+
 Today's deck is dealt deterministically from the date and the reading
 history, so it does not reshuffle mid-day, and it is stored by id so a
 restart resumes the same five — a card retired from the bank since still
