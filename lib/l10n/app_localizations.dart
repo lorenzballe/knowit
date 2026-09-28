@@ -1248,6 +1248,48 @@ abstract class AppLocalizations {
   /// **'One notification, five cards, and a streak you will not want to break.'**
   String get introThirtyLine;
 
+  /// The time on the notification drawn in the intro's last scene. {time} is 8:30 in the reader's clock format.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow, {time}'**
+  String introNotifyWhen(String time);
+
+  /// The line of the notification drawn in the intro's last scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Your five are ready. Day 1.'**
+  String get introNotifyLine;
+
+  /// On the card drawn in the intro's last scene, after the subject: the first of the day's five. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'1 OF 5'**
+  String get introOneOfFive;
+
+  /// The day on the card drawn in the intro's last scene. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 1'**
+  String get introDayOne;
+
+  /// The foot of the card drawn in the intro's last scene: its answer opens tomorrow. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP TOMORROW TO FIND OUT'**
+  String get introTapTomorrow;
+
+  /// Under the fourteen days in the intro's last scene, at the left: day one is tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 1 · TOMORROW'**
+  String get introDayOneTomorrow;
+
+  /// Under the fourteen days in the intro's last scene, at the right: the seventh day is the first streak.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 7 · FIRST STREAK'**
+  String get introDaySevenStreak;
+
   /// No description provided for @continueWithApple.
   ///
   /// In en, this message translates to:
@@ -2535,13 +2577,13 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeDaysLeft.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}'**
+  /// **'{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}'**
   String welcomeDaysLeft(int n);
 
   /// No description provided for @welcomeWeekEnds.
   ///
   /// In en, this message translates to:
-  /// **'Your first week ends tonight. From tomorrow, two of the five are yours.'**
+  /// **'Your first two weeks end tonight. From tomorrow, two of the five are yours.'**
   String get welcomeWeekEnds;
 
   /// No description provided for @forYouShelf.

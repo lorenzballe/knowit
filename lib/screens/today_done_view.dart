@@ -36,8 +36,9 @@ import '../widgets/subject_icon.dart';
 /// header's dot and the glow behind everything take that card's colour.
 /// What the card after the fifth says about the plan tonight, on the
 /// free plan, with a key for each thing it can say: every evening of the
-/// welcome week how many of its days are left, so four of five being the
-/// reader's own reads as a welcome with an end rather than as the rule;
+/// welcome, the first two weeks, how many of its days are left, so four of
+/// five being the reader's own reads as a welcome with an end rather than
+/// as the rule;
 /// the evening it ends, what tomorrow looks like; and the evening a week
 /// is kept, that tomorrow has one more of their own, said once, where it
 /// reads as a reward rather than a rule. It is said on the card that makes
@@ -430,9 +431,19 @@ class _TodayDoneViewState extends State<TodayDoneView>
   Widget _card(int k, Pill pill, {required double glow, required bool front}) {
     final app = widget.app;
     final bool saved = app.isSaved(pill.id);
+    // The mark the card carried in the deck, kept on the shelf: the reader's
+    // own on the free plan, where the others came at random, and a card
+    // back for another go on either plan. One card, marked one way.
+    final String? chip = app.reviewIdsToday.contains(pill.id)
+        ? context.l10n.againChip
+        : !app.isPlus && app.ownIdsToday.contains(pill.id)
+        ? context.l10n.forYouChip
+        : null;
     Widget face(bool back) => _CardFace(
+      key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
       pill: pill,
       number: k + 1,
+      chip: chip,
       width: _cardWidth,
       height: _cardHeight,
       back: back,
@@ -604,8 +615,10 @@ class _Fade extends StatelessWidget {
 /// foot, so turning it over changes what you read and not where things are.
 class _CardFace extends StatelessWidget {
   const _CardFace({
+    super.key,
     required this.pill,
     required this.number,
+    this.chip,
     required this.width,
     required this.height,
     required this.back,
@@ -617,6 +630,10 @@ class _CardFace extends StatelessWidget {
 
   final Pill pill;
   final int number;
+
+  /// The deck's mark beside the subject, "For you" or "Again", when the
+  /// card carried one.
+  final String? chip;
   final double width;
   final double height;
   final bool back;
@@ -676,16 +693,45 @@ class _CardFace extends StatelessWidget {
               SubjectIcon(subject: pill.topic, size: 16 * s, ink: ink),
               SizedBox(width: 8 * s),
               Expanded(
-                child: Text(
-                  pill.topic.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.label(
-                    size: 9.5 * s,
-                    weight: FontWeight.w700,
-                    spacing: 1.4,
-                    color: sub,
-                  ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        pill.topic.toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.label(
+                          size: 9.5 * s,
+                          weight: FontWeight.w700,
+                          spacing: 1.4,
+                          color: sub,
+                        ),
+                      ),
+                    ),
+                    if (chip case final String chip) ...[
+                      SizedBox(width: 8 * s),
+                      // The deck's own chip, at the shelf's scale.
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7 * s,
+                          vertical: 2.5 * s,
+                        ),
+                        decoration: BoxDecoration(
+                          color: pill.wash,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          chip,
+                          maxLines: 1,
+                          style: AppText.label(
+                            size: 8.5 * s,
+                            spacing: 1,
+                            color: ink.withValues(alpha: 0.7),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
               Text(

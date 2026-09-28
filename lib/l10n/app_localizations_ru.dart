@@ -903,6 +903,29 @@ class AppLocalizationsRu extends AppLocalizations {
       'Одно уведомление, пять карточек и серия, которую не захочется прервать.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Завтра, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Ваши пять готовы. День 1.';
+
+  @override
+  String get introOneOfFive => '1 ИЗ 5';
+
+  @override
+  String get introDayOne => 'ДЕНЬ 1';
+
+  @override
+  String get introTapTomorrow => 'НАЖМИ ЗАВТРА, ЧТОБЫ УЗНАТЬ';
+
+  @override
+  String get introDayOneTomorrow => 'ДЕНЬ 1 · ЗАВТРА';
+
+  @override
+  String get introDaySevenStreak => 'ДЕНЬ 7 · ПЕРВАЯ СЕРИЯ';
+
+  @override
   String get continueWithApple => 'Продолжить с Apple';
 
   @override
@@ -1800,17 +1823,17 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
-      many: 'Ваша первая неделя: ещё $n дней, когда четыре из пяти ваши.',
-      few: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
-      one: 'Ваша первая неделя: завтра последний день, четыре из пяти карточек ваши.',
+      other: 'Ваши первые две недели: ещё $n дня, когда четыре из пяти ваши.',
+      many: 'Ваши первые две недели: ещё $n дней, когда четыре из пяти ваши.',
+      few: 'Ваши первые две недели: ещё $n дня, когда четыре из пяти ваши.',
+      one: 'Ваши первые две недели: завтра последний день, четыре из пяти карточек ваши.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Первая неделя заканчивается сегодня. С завтра две из пяти — ваши.';
+      'Первые две недели заканчиваются сегодня. С завтра две из пяти — ваши.';
 
   @override
   String get forYouShelf => 'Для вас';

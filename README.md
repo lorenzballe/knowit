@@ -130,7 +130,10 @@ every subject opened strand by strand, what stayed when a card came back,
 and the card to say tonight — the screen is Astute+; the profile keeps the
 record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 seven days free, offered once at the end of the onboarding with "continue
-free" written under it. The paywall is sheet 111a, with the app's own three
+free" written under it — to a reader who set their mix. One who skips the
+subjects goes straight to their first day: they have said nothing about
+what they want and seen no card, so they do not yet know what it would
+be selling them, and the card after the fifth offers it every evening. The paywall is sheet 111a, with the app's own three
 icon tiles; its button promises the free week only where the store's
 introductory offer gives one, and says "charged today" otherwise. The mix, the streak, the freezes, the friends, the
 sharing and the search are free: they are how the app spreads.
@@ -151,7 +154,10 @@ the one thing worth a button at the end of it; Explore is a tab already.
 The evenings there is something to say about the plan, it is said on the
 card after the fifth rather than on this screen (see *The sixth card*):
 the shelf is the day's five, and a line added over them would take room
-from the cards.
+from the cards. The cards on the shelf keep the mark they carried in the
+deck, beside the subject: *For you* on the free plan's own, *Again* on a
+card back for another go. One card, marked one way, whether it is being
+answered or read again.
 
 ## The sixth card
 
@@ -176,10 +182,10 @@ any deck is on the table, the sixth card included, because a throw and a
 swipe to the next tab are the same gesture and the deck has to win it.
 
 It is also where the week is said, under its eyebrow, once the day is done
-(`weekNoteOf`): every evening of the welcome week how many of its days are
-left, so four of five being the reader's own reads as a welcome with an end
-rather than as the rule; the seventh evening that the week ends tonight and
-what tomorrow looks like; and the evening a week is kept that tomorrow
+(`weekNoteOf`): every evening of the welcome, the first two weeks, how many
+of its days are left, so four of five being the reader's own reads as a
+welcome with an end rather than as the rule; the last evening that it ends
+tonight and what tomorrow looks like; and the evening a week is kept that tomorrow
 three of the five are the reader's own instead of two, said once, the night
 before, where it reads as a reward rather than a rule. The offer and where
 the week has got to are the same subject, so they share a card, and a test
@@ -587,20 +593,22 @@ days until the pool runs dry.
 
 A day is five cards on both plans.
 
-**The welcome week.** A free reader's first seven days — days read, not days
-since the install — hold four cards of their own and one dealt at random
-(`kWelcomeDays`, `kOwnCardsWelcome`). The first week is when an app is
-judged, and the onboarding has just asked the reader what they like: a
-first morning of cards they did not choose would answer that the
-question was for show. So the first week is theirs, dealt by the reading of
-their onboarding, a notch above, opening on what they came for. Every
-evening of it the card after the fifth says how many welcome days are
-left, and on the seventh that the week ends tonight and what tomorrow
-looks like, beside what Astute+ keeps — so the eighth morning is a thing
-they were told, not one they notice. Through the week the card after the fifth offers to *make
-all five yours*, since four already are.
+**The welcome.** A free reader's first two weeks — fourteen days read, not
+days since the install — hold four cards of their own and one dealt at
+random (`kWelcomeDays`, `kOwnCardsWelcome`). The first days are when an
+app is judged, and the onboarding has just asked the reader what they
+like: a first morning of cards they did not choose would answer that the
+question was for show. So the first two weeks are theirs, dealt by the
+reading of their onboarding, a notch above, opening on what they came
+for, and long enough to miss them when they stop. Every evening of it the
+card after the fifth says how many welcome days are left, and on the last
+that the welcome ends tonight and what tomorrow looks like, beside what
+Astute+ keeps — so the fifteenth morning is a thing they were told, not
+one they notice. Through the welcome the card after the fifth offers to
+*make all five yours*, since four already are. Four rather than five, so
+there is one at random every day to set them against.
 
-From the eighth day, on the free plan two of them are the reader's own —
+From the fifteenth day, on the free plan two of them are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
 level the onboarding was read to start them at (see *Reading the
 onboarding*) — and three are dealt at random (`pillsAtRandom`): from the

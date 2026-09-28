@@ -906,6 +906,29 @@ class AppLocalizationsPl extends AppLocalizations {
       'Jedno powiadomienie, pięć kart i seria, której nie będziesz chciał przerwać.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Jutro, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Twoja piątka jest gotowa. Dzień 1.';
+
+  @override
+  String get introOneOfFive => '1 Z 5';
+
+  @override
+  String get introDayOne => 'DZIEŃ 1';
+
+  @override
+  String get introTapTomorrow => 'DOTKNIJ JUTRO, BY SIĘ DOWIEDZIEĆ';
+
+  @override
+  String get introDayOneTomorrow => 'DZIEŃ 1 · JUTRO';
+
+  @override
+  String get introDaySevenStreak => 'DZIEŃ 7 · PIERWSZA SERIA';
+
+  @override
   String get continueWithApple => 'Kontynuuj z Apple';
 
   @override
@@ -1805,19 +1828,19 @@ class AppLocalizationsPl extends AppLocalizations {
       n,
       locale: localeName,
       other:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
       many:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
       few:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      one: 'Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
+      one: 'Twoje pierwsze dwa tygodnie: jutro ostatni dzień, cztery z pięciu są twoje.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra dwie z pięciu są twoje.';
+      'Twoje pierwsze dwa tygodnie kończą się dziś wieczorem. Od jutra dwie z pięciu są twoje.';
 
   @override
   String get forYouShelf => 'Dla ciebie';

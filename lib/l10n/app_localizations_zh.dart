@@ -850,6 +850,29 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introThirtyLine => '一条通知，五张卡片，和一段你不想中断的连续记录。';
 
   @override
+  String introNotifyWhen(String time) {
+    return '明天 $time';
+  }
+
+  @override
+  String get introNotifyLine => '今天的五张已就绪。第 1 天。';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '第 1 天';
+
+  @override
+  String get introTapTomorrow => '明天点按揭晓';
+
+  @override
+  String get introDayOneTomorrow => '第 1 天 · 明天';
+
+  @override
+  String get introDaySevenStreak => '第 7 天 · 第一段连续记录';
+
+  @override
   String get continueWithApple => '使用 Apple 继续';
 
   @override
@@ -1693,13 +1716,13 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '你的第一周：五张中有四张是你的，还剩$n天。',
+      other: '你的前两周：五张中有四张是你的，还剩$n天。',
     );
     return '$_temp0';
   }
 
   @override
-  String get welcomeWeekEnds => '你的第一周今晚结束。从明天起，五张中有两张是你的。';
+  String get welcomeWeekEnds => '你的前两周今晚结束。从明天起，五张中有两张是你的。';
 
   @override
   String get forYouShelf => '为你推荐';

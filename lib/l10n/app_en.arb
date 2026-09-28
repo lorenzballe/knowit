@@ -780,6 +780,39 @@
  "introMixLine": "Turn a topic down to see less of it, or off for good.",
  "introThirtyTitle": "Thirty seconds a day",
  "introThirtyLine": "One notification, five cards, and a streak you will not want to break.",
+ "introNotifyWhen": "Tomorrow, {time}",
+ "@introNotifyWhen": {
+  "description": "The time on the notification drawn in the intro's last scene. {time} is 8:30 in the reader's clock format.",
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "introNotifyLine": "Your five are ready. Day 1.",
+ "@introNotifyLine": {
+  "description": "The line of the notification drawn in the intro's last scene."
+ },
+ "introOneOfFive": "1 OF 5",
+ "@introOneOfFive": {
+  "description": "On the card drawn in the intro's last scene, after the subject: the first of the day's five. Capitals where the script has them."
+ },
+ "introDayOne": "DAY 1",
+ "@introDayOne": {
+  "description": "The day on the card drawn in the intro's last scene. Capitals where the script has them."
+ },
+ "introTapTomorrow": "TAP TOMORROW TO FIND OUT",
+ "@introTapTomorrow": {
+  "description": "The foot of the card drawn in the intro's last scene: its answer opens tomorrow. Capitals where the script has them."
+ },
+ "introDayOneTomorrow": "DAY 1 · TOMORROW",
+ "@introDayOneTomorrow": {
+  "description": "Under the fourteen days in the intro's last scene, at the left: day one is tomorrow."
+ },
+ "introDaySevenStreak": "DAY 7 · FIRST STREAK",
+ "@introDaySevenStreak": {
+  "description": "Under the fourteen days in the intro's last scene, at the right: the seventh day is the first streak."
+ },
  "continueWithApple": "Continue with Apple",
  "continueWithGoogle": "Continue with Google",
  "continueWithEmail": "Continue with Email",
@@ -1504,9 +1537,9 @@
  "lovedIn": "Loved in {subject}",
  "@lovedIn": {"placeholders": {"subject": {"type": "String"}}},
  "lovedLine": "What readers kept most, and you have not read yet",
- "welcomeDaysLeft": "{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}",
+ "welcomeDaysLeft": "{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}",
  "@welcomeDaysLeft": {"placeholders": {"n": {"type": "int"}}},
- "welcomeWeekEnds": "Your first week ends tonight. From tomorrow, two of the five are yours.",
+ "welcomeWeekEnds": "Your first two weeks end tonight. From tomorrow, two of the five are yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
  "exploreOffline": "You are offline. This is Explore as it was last read."

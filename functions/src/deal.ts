@@ -3,7 +3,7 @@
 // The same day the phone deals for itself (lib/data/daily.dart and
 // lib/data/pills_repository.dart), card for card in its rules — five cards,
 // two that ask, one debate at most, a fresh strand before a second card of
-// one, the hardest early, a debate to close, the welcome week, and on the
+// one, the hardest early, a debate to close, the welcome's two weeks, and on the
 // free plan the reader's own beside cards dealt at random from the mix —
 // but dealt from a profile the phone never had: what held the reader and
 // what they threw on, read off the trace. Where the phone's draw and this
@@ -19,7 +19,8 @@ export const PILLS_PER_DAY = 5;
 export const ASK_SHARE = 0.4;
 export const OWN_FREE = 2;
 export const OWN_REWARDED = 3;
-export const WELCOME_DAYS = 7;
+/** The welcome: a free reader's first two weeks read, four of the five their own (lib/data/daily.dart, kWelcomeDays). */
+export const WELCOME_DAYS = 14;
 export const OWN_WELCOME = 4;
 export const COMMON_SPARES = 8;
 
@@ -31,7 +32,7 @@ export function ownCardsFor(plus: boolean, streak: number, day: number): number 
   return streak > 0 && streak % 7 === 0 ? OWN_REWARDED : OWN_FREE;
 }
 
-export const inWelcomeWeek = (day: number): boolean => day >= 0 && day < WELCOME_DAYS;
+export const inWelcomeDays = (day: number): boolean => day >= 0 && day < WELCOME_DAYS;
 
 // ── The calendar ─────────────────────────────────────────────────────────
 
@@ -402,7 +403,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
     reviews: reviews.map((c) => c.id),
     explorer: explorer?.id ?? null,
     ownCount: own,
-    welcome: !profile.plus && inWelcomeWeek(day),
+    welcome: !profile.plus && inWelcomeDays(day),
     day,
   };
 }

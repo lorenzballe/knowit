@@ -876,6 +876,29 @@ class AppLocalizationsNl extends AppLocalizations {
       'Eén melding, vijf kaarten, en een reeks die je niet wilt breken.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Morgen, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Je vijf staan klaar. Dag 1.';
+
+  @override
+  String get introOneOfFive => '1 VAN 5';
+
+  @override
+  String get introDayOne => 'DAG 1';
+
+  @override
+  String get introTapTomorrow => 'TIK MORGEN OM HET TE ONTDEKKEN';
+
+  @override
+  String get introDayOneTomorrow => 'DAG 1 · MORGEN';
+
+  @override
+  String get introDaySevenStreak => 'DAG 7 · EERSTE REEKS';
+
+  @override
   String get continueWithApple => 'Doorgaan met Apple';
 
   @override
@@ -1755,15 +1778,15 @@ class AppLocalizationsNl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Je eerste week: nog $n dagen met vier van de vijf van jou.',
-      one: 'Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.',
+      other: 'Je eerste twee weken: nog $n dagen met vier van de vijf van jou.',
+      one: 'Je eerste twee weken: morgen is de laatste dag, vier van de vijf zijn van jou.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Je eerste week eindigt vanavond. Vanaf morgen zijn twee van de vijf van jou.';
+      'Je eerste twee weken eindigen vanavond. Vanaf morgen zijn twee van de vijf van jou.';
 
   @override
   String get forYouShelf => 'Voor jou';

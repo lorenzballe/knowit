@@ -857,6 +857,29 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introThirtyLine => '알림 하나, 카드 다섯 장, 그리고 끊고 싶지 않은 연속 기록.';
 
   @override
+  String introNotifyWhen(String time) {
+    return '내일 $time';
+  }
+
+  @override
+  String get introNotifyLine => '오늘의 다섯 장이 준비됐어요. 1일째.';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1일째';
+
+  @override
+  String get introTapTomorrow => '내일 탭해서 확인하세요';
+
+  @override
+  String get introDayOneTomorrow => '1일째 · 내일';
+
+  @override
+  String get introDaySevenStreak => '7일째 · 첫 연속 기록';
+
+  @override
   String get continueWithApple => 'Apple로 계속';
 
   @override
@@ -1704,13 +1727,13 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '첫 주: 다섯 장 중 네 장이 당신의 카드인 날이 $n일 남았어요.',
+      other: '첫 2주: 다섯 장 중 네 장이 당신의 카드인 날이 $n일 남았어요.',
     );
     return '$_temp0';
   }
 
   @override
-  String get welcomeWeekEnds => '첫 주가 오늘 밤 끝나요. 내일부터 다섯 장 중 두 장이 당신의 카드예요.';
+  String get welcomeWeekEnds => '첫 2주가 오늘 밤 끝나요. 내일부터 다섯 장 중 두 장이 당신의 카드예요.';
 
   @override
   String get forYouShelf => '당신을 위해';

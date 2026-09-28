@@ -187,7 +187,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
                       note: weekNoteOf(context, app),
-                      // Through the welcome week four of five are already
+                      // Through the welcome four of five are already
                       // theirs: what Astute+ offers is that they stay so.
                       headline: app.inWelcome
                           ? context.l10n.plusCardHeadline

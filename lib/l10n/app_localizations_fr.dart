@@ -880,6 +880,29 @@ class AppLocalizationsFr extends AppLocalizations {
       'Une notification, cinq cartes, et une série que tu ne voudras pas casser.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Demain, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Tes cinq sont prêtes. Jour 1.';
+
+  @override
+  String get introOneOfFive => '1 SUR 5';
+
+  @override
+  String get introDayOne => 'JOUR 1';
+
+  @override
+  String get introTapTomorrow => 'TOUCHE DEMAIN POUR SAVOIR';
+
+  @override
+  String get introDayOneTomorrow => 'JOUR 1 · DEMAIN';
+
+  @override
+  String get introDaySevenStreak => 'JOUR 7 · PREMIÈRE SÉRIE';
+
+  @override
   String get continueWithApple => 'Continuer avec Apple';
 
   @override
@@ -1762,15 +1785,15 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other:
-          'Ta première semaine : encore $n jours avec quatre des cinq à toi.',
-      one: 'Ta première semaine : demain est son dernier jour, quatre des cinq sont à toi.',
+          'Tes deux premières semaines : encore $n jours avec quatre des cinq à toi.',
+      one: 'Tes deux premières semaines : demain est le dernier jour, quatre des cinq sont à toi.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Ta première semaine se termine ce soir. Dès demain, deux des cinq sont à toi.';
+      'Tes deux premières semaines se terminent ce soir. Dès demain, deux des cinq sont à toi.';
 
   @override
   String get forYouShelf => 'Pour toi';

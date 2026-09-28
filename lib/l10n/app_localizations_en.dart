@@ -874,6 +874,29 @@ class AppLocalizationsEn extends AppLocalizations {
       'One notification, five cards, and a streak you will not want to break.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Tomorrow, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Your five are ready. Day 1.';
+
+  @override
+  String get introOneOfFive => '1 OF 5';
+
+  @override
+  String get introDayOne => 'DAY 1';
+
+  @override
+  String get introTapTomorrow => 'TAP TOMORROW TO FIND OUT';
+
+  @override
+  String get introDayOneTomorrow => 'DAY 1 · TOMORROW';
+
+  @override
+  String get introDaySevenStreak => 'DAY 7 · FIRST STREAK';
+
+  @override
   String get continueWithApple => 'Continue with Apple';
 
   @override
@@ -1748,15 +1771,15 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Your first week: $n more days with four of the five yours.',
-      one: 'Your first week: tomorrow is its last day, four of the five yours.',
+      other: 'Your first two weeks: $n more days with four of the five yours.',
+      one: 'Your first two weeks: tomorrow is the last day, four of the five yours.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Your first week ends tonight. From tomorrow, two of the five are yours.';
+      'Your first two weeks end tonight. From tomorrow, two of the five are yours.';
 
   @override
   String get forYouShelf => 'For you';

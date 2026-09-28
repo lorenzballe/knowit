@@ -1489,7 +1489,8 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
   });
 
-  testWidgets('skipping the mix still meets the offer once', (tester) async {
+  testWidgets('skipping the mix goes straight to the first day, with no '
+      'offer', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1498,10 +1499,11 @@ void main() {
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // The offer is not a reward for finishing a form.
-    await _continueFree(tester);
+    // A reader who has said nothing and seen no card is not sold anything
+    // yet: the first day, straight away.
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
-    // And it is not asked again.
+    // And the first run is not asked again.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
@@ -1739,6 +1741,42 @@ void main() {
     expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
   });
 
+  testWidgets('the shelf keeps the mark the reader\'s own cards had', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _finishDay(tester);
+
+    final app = AppState();
+    await app.init();
+    // A first day: four of the reader's own, one at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    var marked = 0;
+    for (var i = 0; i < kPillsPerDay; i++) {
+      final Pill front = app.todaysDeck[i];
+      expect(find.text(front.question), findsOneWidget, reason: front.id);
+      final bool own = app.ownIdsToday.contains(front.id);
+      if (own) marked++;
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('shelf-face-${front.id}-front')),
+          matching: find.text('FOR YOU'),
+        ),
+        own ? findsOneWidget : findsNothing,
+        reason: front.id,
+      );
+      await tester.fling(
+        find.byType(TodayDoneView),
+        const Offset(-300, 0),
+        900,
+      );
+      await _settle(tester);
+    }
+    expect(marked, kOwnCardsWelcome);
+  });
+
   testWidgets('the free plan is offered the upsell instead', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
@@ -1789,7 +1827,8 @@ void main() {
           find.descendant(
             of: find.byKey(const ValueKey('magic-card')),
             matching: find.text(
-              'Your first week: 6 more days with four of the five yours.',
+              'Your first two weeks: 13 more days with four of the five '
+              'yours.',
             ),
           ),
           findsOneWidget,
@@ -4594,11 +4633,15 @@ void main() {
           parts.add(mark);
         }
         if (scene == 4) {
-          // The ring is the streak's box: the count sits in its middle.
-          final Rect count = tester.getRect(find.text('13'));
-          parts.add(
-            Rect.fromCenter(center: count.center, width: 158, height: 158),
-          );
+          // Tomorrow morning: the notification, the first card and the
+          // fourteen days, each a box of its own.
+          for (final key in [
+            'intro-notice',
+            'intro-first-card',
+            'intro-fortnight',
+          ]) {
+            parts.add(tester.getRect(find.byKey(ValueKey(key))));
+          }
         }
         if (scene == 1) {
           // The cards' box stands on the band's foot and is its width, to
@@ -4631,6 +4674,130 @@ void main() {
             reason: 'scene ${scene + 1} draws under Skip',
           );
         }
+      }
+    });
+  });
+
+  group('the last scene of the intro', () {
+    // Outside the test body: FontLoader needs real asynchrony.
+    setUpAll(_loadRealFonts);
+
+    Future<void> pumpLastScene(
+      WidgetTester tester,
+      Size size,
+      EdgeInsets pad,
+    ) async {
+      tester.view.physicalSize = size * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: MediaQuery(
+            data: MediaQueryData(padding: pad, size: size),
+            child: IntroScreen(
+              key: ValueKey(size),
+              onContinue: () {},
+              onApple: () async => false,
+              onGoogle: () async => false,
+              onNotConnected: (_) {},
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      for (int scene = 1; scene < 5; scene++) {
+        await tester.fling(
+          find.byType(IntroScreen),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      expect(find.text('Thirty seconds a day'), findsOneWidget);
+    }
+
+    const List<String> parts = [
+      'intro-notice',
+      'intro-first-card',
+      'intro-fortnight',
+    ];
+
+    testWidgets('lines up with the buttons, clear of Skip, on every phone '
+        'tall enough for the whole band', (tester) async {
+      // The notification, the card and the days start and end where the
+      // buttons do — and the phones whose band starts right under Skip are
+      // the ones that matter, which is why this walks several.
+      const sizes = [
+        (Size(393, 852), EdgeInsets.only(top: 59, bottom: 34)),
+        (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
+        (Size(402, 874), EdgeInsets.only(top: 59, bottom: 34)),
+        (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
+      ];
+      for (final (Size size, EdgeInsets pad) in sizes) {
+        await pumpLastScene(tester, size, pad);
+        final String phone = '${size.width.toInt()} by ${size.height.toInt()}';
+        final Rect band = tester.getRect(
+          find.byKey(const ValueKey('intro-stage')),
+        );
+        final Rect skip = tester.getRect(find.text('Skip'));
+        final Rect apple = tester.getRect(
+          find
+              .ancestor(
+                of: find.text('Continue with Apple'),
+                matching: find.byType(Container),
+              )
+              .first,
+        );
+        for (final key in parts) {
+          final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+          expect(
+            part.left,
+            closeTo(apple.left, 0.5),
+            reason: 'on a $phone phone, $key starts off the buttons\' line',
+          );
+          expect(
+            part.right,
+            closeTo(apple.right, 0.5),
+            reason: 'on a $phone phone, $key ends off the buttons\' line',
+          );
+          expect(part.top, greaterThanOrEqualTo(band.top));
+          expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
+        }
+        // Skip keeps a clear line of its own over the notification.
+        final Rect notice = tester.getRect(
+          find.byKey(const ValueKey('intro-notice')),
+        );
+        expect(
+          notice.top - skip.bottom,
+          greaterThanOrEqualTo(12),
+          reason: 'on a $phone phone, the notification crowds Skip',
+        );
+      }
+    });
+
+    testWidgets('on a short phone shrinks with its band, centred and clear '
+        'of Skip', (tester) async {
+      // An SE: the band is shallower than the width wants, so the drawing
+      // is fitted to its height like every other scene, and stays in the
+      // middle — away from Skip in the corner.
+      await pumpLastScene(
+        tester,
+        const Size(375, 667),
+        const EdgeInsets.only(top: 20),
+      );
+      final Rect band = tester.getRect(
+        find.byKey(const ValueKey('intro-stage')),
+      );
+      final Rect skip = tester.getRect(find.text('Skip'));
+      for (final key in parts) {
+        final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+        expect(part.center.dx, closeTo(band.center.dx, 0.5));
+        expect(part.top, greaterThanOrEqualTo(band.top));
+        expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
+        expect(part.overlaps(skip), isFalse, reason: '$key draws under Skip');
       }
     });
   });

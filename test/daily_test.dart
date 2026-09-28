@@ -201,18 +201,24 @@ void main() {
       expect(again.cards.map((p) => p.id).toSet().intersection(read), isEmpty);
     });
 
-    test('the welcome week: four of the five the reader\'s own, then two', () {
+    test('the welcome: two weeks of four of the five the reader\'s own, '
+        'then two', () {
+      expect(kWelcomeDays, 14);
       for (var d = 0; d < kWelcomeDays; d++) {
         expect(ownCardsFor(plus: false, streak: 0, day: d), kOwnCardsWelcome);
-        expect(inWelcomeWeek(d), isTrue);
+        expect(inWelcomeDays(d), isTrue);
       }
       expect(
         ownCardsFor(plus: false, streak: 0, day: kWelcomeDays),
         kOwnCardsFree,
       );
-      expect(inWelcomeWeek(kWelcomeDays), isFalse);
-      // The week kept is rewarded after the welcome, not during it.
-      expect(ownCardsFor(plus: false, streak: 7, day: 7), kOwnCardsRewarded);
+      expect(inWelcomeDays(kWelcomeDays), isFalse);
+      // A week kept is rewarded after the welcome, not during it.
+      expect(ownCardsFor(plus: false, streak: 7, day: 7), kOwnCardsWelcome);
+      expect(
+        ownCardsFor(plus: false, streak: 14, day: kWelcomeDays),
+        kOwnCardsRewarded,
+      );
       expect(ownCardsFor(plus: true, streak: 0, day: 0), kPillsPerDay);
 
       final day = DateTime(2026, 10, 14);

@@ -870,6 +870,29 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bir bildirim, beş kart ve bozmak istemeyeceğin bir seri.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Yarın, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Beşin hazır. 1. gün.';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1. GÜN';
+
+  @override
+  String get introTapTomorrow => 'CEVAP İÇİN YARIN DOKUN';
+
+  @override
+  String get introDayOneTomorrow => '1. GÜN · YARIN';
+
+  @override
+  String get introDaySevenStreak => '7. GÜN · İLK SERİ';
+
+  @override
   String get continueWithApple => 'Apple ile devam et';
 
   @override
@@ -1740,15 +1763,15 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'İlk haftan: beş karttan dördünün senin olduğu $n gün daha.',
-      one: 'İlk haftan: yarın son günü, beş karttan dördü senin.',
+      other: 'İlk iki haftan: beş karttan dördünün senin olduğu $n gün daha.',
+      one: 'İlk iki haftan: yarın son gün, beş karttan dördü senin.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
+      'İlk iki haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
 
   @override
   String get forYouShelf => 'Senin için';
