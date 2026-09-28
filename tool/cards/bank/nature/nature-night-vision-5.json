@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "× full moon",
-    "items": [
-      {
-        "label": "Full moon",
-        "value": 1
-      },
-      {
-        "label": "Direct sunlight",
-        "value": 400000,
-        "hi": true
-      }
-    ],
-    "caption": "Moonlight feels merely dim, yet sunlight is 400,000 times brighter."
-  },
   "source": "Allen's Astrophysical Quantities, 2000",
   "source_kind": "reference_work",
   "reference": "Cox (ed.), Allen's Astrophysical Quantities, 4th edition, Springer, 2000",

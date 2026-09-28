@@ -25,19 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 81,
-        "label": "households with a kimchi fridge",
-        "hi": true
-      }
-    ],
-    "caption": "Sixteen years after launch, about four Korean homes in five had one."
-  },
+  "figure": "none",
   "source": "The Korea Times, 2011",
   "source_kind": "news_archive",
   "reference": "https://www.koreatimes.co.kr/business/tech-science/20111121/kimchi-refrigerator-maintains-taste-of-fermented-food",

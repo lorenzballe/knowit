@@ -31,22 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "scale",
-    "unit": "billion years",
-    "items": [
-      {
-        "label": "age of the universe",
-        "value": 13.8
-      },
-      {
-        "label": "smallest red dwarfs",
-        "value": 1000,
-        "hi": true
-      }
-    ],
-    "caption": "The smallest red dwarfs last trillions of years; the universe is 13.8 billion old."
-  },
   "source": "Adams & Laughlin, Five Ages of the Universe",
   "source_kind": "book",
   "reference": "Adams & Laughlin, The Five Ages of the Universe: Inside the Physics of Eternity, Free Press, 1999",

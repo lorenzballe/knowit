@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "reports from leisure",
-        "value": 18
-      },
-      {
-        "label": "reports from work",
-        "value": 54,
-        "hi": true
-      }
-    ],
-    "caption": "Flow turned up three times as often at work as in free time."
-  },
+  "figure": "none",
   "source": "Csikszentmihalyi & LeFevre, JPSP, 1989",
   "source_kind": "paper",
   "reference": "Csikszentmihalyi & LeFevre, Optimal experience in work and leisure, Journal of Personality and Social Psychology, 1989",

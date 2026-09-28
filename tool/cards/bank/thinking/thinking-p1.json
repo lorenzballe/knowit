@@ -29,27 +29,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "€",
-    "items": [
-      {
-        "label": "old price",
-        "value": 100
-      },
-      {
-        "label": "up 10%",
-        "value": 110
-      },
-      {
-        "label": "then 10% off",
-        "value": 99,
-        "hi": true
-      }
-    ],
-    "caption": "The 10% off is taken from €110, so you land at €99, not €100."
-  },
+  "figure": "none",
   "source": "Percentage change, arithmetic",
   "source_kind": "paper",
   "reference": "Frederick, Cognitive Reflection and Decision Making, Journal of Economic Perspectives, 2005"

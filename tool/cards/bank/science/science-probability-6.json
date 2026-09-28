@@ -24,26 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Two random points on the rim",
-        "value": 33.3
-      },
-      {
-        "label": "Random cut on a random radius",
-        "value": 50
-      },
-      {
-        "label": "Random midpoint anywhere",
-        "value": 25
-      }
-    ],
-    "caption": "One question, three sensible meanings of random, three answers."
-  },
+  "figure": "none",
   "source": "Jaynes, Foundations of Physics, 1973",
   "source_kind": "paper",
   "reference": "Jaynes, The Well-Posed Problem, Foundations of Physics, 1973",

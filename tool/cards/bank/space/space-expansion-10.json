@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "share of the distance",
-        "value": 35
-      },
-      {
-        "label": "share of the volume",
-        "value": 4.3,
-        "hi": true
-      }
-    ],
-    "caption": "Over a third of the way out holds under a twentieth of the volume."
-  },
   "source": "Davis & Lineweaver, PASA, 2004",
   "source_kind": "paper",
   "reference": "Davis & Lineweaver, Expanding Confusion: Common Misconceptions of Cosmological Horizons and the Superluminal Expansion of the Universe, Publications of the Astronomical Society of Australia 21, 97, 2004",

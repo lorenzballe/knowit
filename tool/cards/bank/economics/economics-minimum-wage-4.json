@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "$",
-    "parts": [
-      {
-        "label": "Employer's cash wage",
-        "value": 2.13
-      },
-      {
-        "label": "Left to tips",
-        "value": 5.12,
-        "hi": true
-      }
-    ],
-    "caption": "Of the $7.25 minimum, tips can be counted for $5.12."
-  },
   "source": "Fair Labor Standards Act, section 3(m)",
   "source_kind": "primary_document",
   "reference": "Fair Labor Standards Act of 1938, section 3(m)(2)(A), as amended in 1966 and 1996",

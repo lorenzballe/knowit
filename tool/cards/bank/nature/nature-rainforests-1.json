@@ -33,18 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 1000,
-    "groups": [
-      {
-        "n": 14,
-        "label": "species making half of all trees",
-        "hi": true
-      }
-    ],
-    "caption": "Of every 1,000 Amazon tree species, 14 supply half of all its trees."
-  },
   "source": "ter Steege et al., Science, 2013",
   "source_kind": "paper",
   "reference": "ter Steege et al., Hyperdominance in the Amazonian tree flora, Science, 2013",

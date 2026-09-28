@@ -30,34 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "tree",
-    "n": 100000,
-    "label": "travellers scanned",
-    "branches": [
-      {
-        "n": 1,
-        "label": "wanted, matched",
-        "hi": true
-      },
-      {
-        "n": 99999,
-        "label": "innocent",
-        "branches": [
-          {
-            "n": 1000,
-            "label": "false alarm",
-            "hi": true
-          },
-          {
-            "n": 98999,
-            "label": "waved through"
-          }
-        ]
-      }
-    ],
-    "caption": "About 1,001 alarms, and one of them is the wanted person."
-  },
   "source": "Base rate neglect applied to screening",
   "source_kind": "arithmetic",
   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"

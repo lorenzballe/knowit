@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "per million people",
-    "items": [
-      {
-        "label": "Europeans",
-        "value": 1
-      },
-      {
-        "label": "Indians",
-        "value": 100,
-        "hi": true
-      }
-    ],
-    "caption": "Bombay blood is a hundred times commoner in India than in Europe."
-  },
   "source": "Dean, Blood Groups and Red Cell Antigens, 2005",
   "source_kind": "book",
   "reference": "Dean, Blood Groups and Red Cell Antigens, National Center for Biotechnology Information, Bethesda, 2005",

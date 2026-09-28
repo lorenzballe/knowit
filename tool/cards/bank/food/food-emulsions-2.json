@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "area",
-    "unit": "µm²",
-    "items": [
-      {
-        "label": "Raw, 4 µm",
-        "value": 12.566
-      },
-      {
-        "label": "Homogenised",
-        "value": 0.7854,
-        "hi": true
-      }
-    ],
-    "caption": "Homogenised globules, 1 µm: a quarter the width, a sixteenth the area, sixteen times slower to rise."
-  },
   "source": "Walstra et al., Dairy Science and Technology, 2006",
   "source_kind": "book",
   "reference": "Walstra, Wouters & Geurts, Dairy Science and Technology, 2nd edition, CRC Press, 2006",

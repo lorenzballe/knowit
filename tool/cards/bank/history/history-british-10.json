@@ -37,26 +37,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "million",
-    "items": [
-      {
-        "label": "Britain and Ireland",
-        "value": 47
-      },
-      {
-        "label": "dominions and other colonies",
-        "value": 90
-      },
-      {
-        "label": "India",
-        "value": 320,
-        "hi": true
-      }
-    ],
-    "caption": "India alone held 320 of the empire's 457 million people."
-  },
   "source": "Census of India, 1921",
   "source_kind": "primary_document",
   "reference": "Marten, Census of India, 1921, Volume I: India, Part I, Report, Government of India, 1924",

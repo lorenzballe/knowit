@@ -38,19 +38,19 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "% of kicks missed",
+    "unit": "%",
     "items": [
       {
-        "label": "Before 2015",
+        "label": "Missed before 2015",
         "value": 0.7
       },
       {
-        "label": "After the kick moved back",
+        "label": "Missed after the kick moved back",
         "value": 5.8,
         "hi": true
       }
     ],
-    "caption": "Success fell only five points, but misses rose about eightfold."
+    "caption": "Success slipped from 99.3% to 94.2%, but misses rose from 0.7% to 5.8%: over eightfold."
   },
   "source": "Pro Football Reference, kicking statistics",
   "source_kind": "statistics",

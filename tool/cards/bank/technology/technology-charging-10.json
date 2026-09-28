@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "kWh",
-    "items": [
-      {
-        "label": "40 kWh pack, filled to 80%",
-        "value": 32
-      },
-      {
-        "label": "80 kWh pack, filled to 80%",
-        "value": 64,
-        "hi": true
-      }
-    ],
-    "caption": "In the same minutes, the bigger pack banks twice the energy."
-  },
   "source": "Plett, Battery Management Systems, 2015",
   "source_kind": "book",
   "reference": "Plett, Battery Management Systems, Volume I: Battery Modeling, Artech House, 2015",

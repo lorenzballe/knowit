@@ -47,7 +47,7 @@
         "hi": true
       }
     ],
-    "caption": "Eight times the text, sixty-four times the pairs to compare."
+    "caption": "Eight times the word-pieces, sixty-four times the pairs to compare."
   },
   "source": "Vaswani et al., NeurIPS, 2017",
   "source_kind": "paper",

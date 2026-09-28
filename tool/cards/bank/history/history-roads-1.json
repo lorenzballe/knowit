@@ -41,14 +41,9 @@
         "n": 27,
         "label": "route known for certain",
         "hi": true
-      },
-      {
-        "n": 74,
-        "label": "hypothetical",
-        "spread": true
       }
     ],
-    "caption": "Of every 1,000 km of Roman road, 27 follow a known course; most are placed from texts."
+    "caption": "Of every 1,000 km of mapped Roman road, only 27 follow a course known for certain."
   },
   "source": "de Soto et al., Scientific Data, 2025",
   "source_kind": "paper",

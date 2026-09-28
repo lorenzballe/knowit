@@ -30,7 +30,7 @@
     "x": {
       "label": "hours after learning",
       "min": 0.2,
-      "max": 1000,
+      "max": 800,
       "log": true
     },
     "y": {
@@ -40,7 +40,6 @@
     },
     "series": [
       {
-        "label": "Ebbinghaus, 1885",
         "hi": true,
         "points": [
           [
@@ -76,16 +75,17 @@
     ],
     "marks": [
       {
-        "x": 8.8,
-        "y": 35.8,
-        "label": "9 hours: 36%"
-      },
-      {
         "x": 24,
         "y": 33.7,
         "label": "a day: 34%"
+      },
+      {
+        "x": 8.8,
+        "y": 35.8,
+        "label": "9 hours: 36%"
       }
-    ]
+    ],
+    "caption": "Ebbinghaus's curve flattens overnight: 36% saved after nine hours, still 34% after a day."
   },
   "source": "Murre & Dros, PLOS ONE, 2015",
   "source_kind": "paper",

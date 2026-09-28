@@ -25,39 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1905,
-    "to": 2030,
-    "events": [
-      {
-        "at": 1912,
-        "label": "Wins pentathlon, decathlon"
-      },
-      {
-        "at": 1953,
-        "label": "Thorpe dies"
-      },
-      {
-        "at": 1982,
-        "label": "Restored as co-champion"
-      },
-      {
-        "at": 2022,
-        "label": "Sole champion",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1913,
-        "to": 1982,
-        "label": "stripped of his titles"
-      }
-    ],
-    "caption": "He became sole champion again 69 years after his death."
-  },
+  "figure": "none",
   "source": "IOC, Jim Thorpe decision, 2022",
   "source_kind": "institution",
   "reference": "International Olympic Committee, Jim Thorpe to be displayed as sole Olympic champion of 1912 pentathlon and decathlon, press release, 15 July 2022",

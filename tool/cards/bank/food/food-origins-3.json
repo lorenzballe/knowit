@@ -32,23 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1400,
-    "to": 1700,
-    "events": [
-      {
-        "at": 1450,
-        "label": "Coffee drunk in Yemen"
-      },
-      {
-        "at": 1671,
-        "label": "Goatherd tale in print",
-        "hi": true
-      }
-    ],
-    "caption": "The origin story arrived about two centuries after the drink."
-  },
   "source": "Ukers, All About Coffee, 1922",
   "source_kind": "book",
   "reference": "Ukers, All About Coffee, The Tea and Coffee Trade Journal Company, 1922",

@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% of adult density",
-    "items": [
-      {
-        "label": "Adult average",
-        "value": 100
-      },
-      {
-        "label": "Toddler, age 1 to 2",
-        "value": 150,
-        "hi": true
-      }
-    ],
-    "caption": "Frontal synapses peak about 50% above the adult level, then are pruned."
-  },
+  "figure": "none",
   "source": "Huttenlocher, Brain Research, 1979",
   "source_kind": "paper",
   "reference": "doi:10.1016/0006-8993(79)90349-4",

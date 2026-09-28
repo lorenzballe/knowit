@@ -26,26 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1740,
-    "to": 1820,
-    "events": [
-      {
-        "at": 1747,
-        "label": "Marggraf finds sugar in beet"
-      },
-      {
-        "at": 1801,
-        "label": "Achard's first beet factory"
-      },
-      {
-        "at": 1811,
-        "label": "Napoleon orders beet planted",
-        "hi": true
-      }
-    ]
-  },
   "source": "Abbott, Sugar: A Bittersweet History, 2008",
   "source_kind": "book",
   "reference": "Abbott, Sugar: A Bittersweet History, Duckworth, 2008",

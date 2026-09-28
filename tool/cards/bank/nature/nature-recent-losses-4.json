@@ -32,23 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 26,
-        "label": "cats involved",
-        "hi": true
-      },
-      {
-        "n": 32,
-        "label": "other invasive predators",
-        "hi": true
-      }
-    ],
-    "caption": "Invasive predators feature in 58 of every 100 extinctions; cats alone in about 26."
-  },
   "source": "Doherty et al., PNAS, 2016",
   "source_kind": "paper",
   "reference": "Doherty, Glen, Nimmo, Ritchie & Dickman, Invasive predators and global biodiversity loss, Proceedings of the National Academy of Sciences, 2016",

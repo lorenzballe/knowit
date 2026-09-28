@@ -32,18 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 75,
-        "label": "drag from the rider",
-        "hi": true
-      }
-    ],
-    "caption": "About three quarters of the drag comes from the rider, not the bike."
-  },
   "source": "Crouch et al., Sports Engineering, 2017",
   "source_kind": "paper",
   "reference": "Crouch, Burton, LaBry & Blair, Riding against the wind: a review of competition cycling aerodynamics, Sports Engineering, 2017",

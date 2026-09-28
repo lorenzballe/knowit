@@ -24,27 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% of unwounded strength",
-    "items": [
-      {
-        "label": "Unwounded skin",
-        "value": 100
-      },
-      {
-        "label": "Scar after a week",
-        "value": 10
-      },
-      {
-        "label": "Scar from three months on",
-        "value": 75,
-        "hi": true
-      }
-    ],
-    "caption": "Healed skin levels off at roughly 70 to 80% of its old strength."
-  },
+  "figure": "none",
   "source": "Robbins and Cotran Pathologic Basis of Disease, 2021",
   "source_kind": "book",
   "reference": "Kumar, Abbas & Aster, Robbins and Cotran Pathologic Basis of Disease, 10th edition, Elsevier, 2021",

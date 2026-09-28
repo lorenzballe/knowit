@@ -35,51 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "altitude, m",
-      "min": 0,
-      "max": 2300
-    },
-    "y": {
-      "label": "% of top VO2max",
-      "min": 0,
-      "max": 110
-    },
-    "series": [
-      {
-        "label": "6.3% lower per 1,000 m",
-        "hi": true,
-        "points": [
-          [
-            0,
-            100
-          ],
-          [
-            300,
-            100
-          ],
-          [
-            1300,
-            93.7
-          ],
-          [
-            2300,
-            87.4
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 2300,
-        "y": 87.4,
-        "label": "2,300 m: 12.6% lower"
-      }
-    ],
-    "caption": "The fall is counted from 300 m, so 2,300 m is only two steps of 1,000 m."
-  },
   "source": "Wehrlin & Hallén, Eur J Appl Physiol, 2006",
   "source_kind": "paper",
   "reference": "doi:10.1007/s00421-005-0081-9",

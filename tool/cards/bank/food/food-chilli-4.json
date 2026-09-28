@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "g",
-    "items": [
-      {
-        "label": "Capsaicin, 1 mg",
-        "value": 0.001
-      },
-      {
-        "label": "Water to dilute it",
-        "value": 16000,
-        "hi": true
-      }
-    ],
-    "caption": "One milligram needs sixteen million times its weight in water: 16 litres."
-  },
   "source": "Scoville, J. Am. Pharm. Assoc., 1912",
   "source_kind": "paper",
   "reference": "Scoville, Note on Capsicums, Journal of the American Pharmaceutical Association, 1912",

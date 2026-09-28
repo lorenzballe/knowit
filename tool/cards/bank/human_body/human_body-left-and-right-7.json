@@ -42,40 +42,40 @@
   "diagram": {
     "type": "tree",
     "n": 100,
-    "label": "random pairs of strangers",
+    "label": "pairs of strangers",
     "branches": [
       {
         "n": 90,
-        "label": "first right-handed",
+        "label": "first: right hand",
         "branches": [
           {
             "n": 81,
-            "label": "both right-handed",
+            "label": "both right",
             "hi": true
           },
           {
             "n": 9,
-            "label": "second left-handed"
+            "label": "one of each"
           }
         ]
       },
       {
         "n": 10,
-        "label": "first left-handed",
+        "label": "first: left hand",
         "branches": [
           {
             "n": 1,
-            "label": "both left-handed",
+            "label": "both left",
             "hi": true
           },
           {
             "n": 9,
-            "label": "second right-handed"
+            "label": "one of each"
           }
         ]
       }
     ],
-    "caption": "81 + 1 = 82 stranger pairs in 100 match: more than identical twins' 80."
+    "caption": "81 + 1 = 82 in 100 stranger pairs share handedness, more than identical twins' 80."
   },
   "source": "Pfeifer et al., BMC Psychology, 2022",
   "source_kind": "paper",

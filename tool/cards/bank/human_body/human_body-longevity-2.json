@@ -31,27 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% heritable",
-    "items": [
-      {
-        "label": "Older estimates, high end",
-        "value": 30
-      },
-      {
-        "label": "Older estimates, low end",
-        "value": 20
-      },
-      {
-        "label": "2018, allowing for mates",
-        "value": 7,
-        "hi": true
-      }
-    ],
-    "caption": "Once in-laws are counted, genes explain under 7% of lifespan, not 20 to 30%."
-  },
+  "figure": "none",
   "source": "Ruby et al., Genetics, 2018",
   "source_kind": "paper",
   "reference": "Ruby, Wright, Rand et al., Estimates of the heritability of human longevity are substantially inflated due to assortative mating, Genetics, 2018",

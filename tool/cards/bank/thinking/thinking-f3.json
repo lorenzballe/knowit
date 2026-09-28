@@ -30,22 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Crime fall, this city",
-        "value": 8
-      },
-      {
-        "label": "Crime fall, whole country",
-        "value": 12,
-        "hi": true
-      }
-    ],
-    "caption": "Against a 12% fall everywhere, the city's 8% is falling behind."
-  },
   "source": "Counterfactual reasoning",
   "source_kind": "paper",
   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"

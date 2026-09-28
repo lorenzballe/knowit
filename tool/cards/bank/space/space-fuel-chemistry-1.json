@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "kerosene",
-        "value": 30
-      },
-      {
-        "label": "liquid oxygen",
-        "value": 70,
-        "hi": true
-      }
-    ],
-    "caption": "A rocket carries its own oxygen: over two kilograms for every kilogram of fuel."
-  },
   "source": "Huzel & Huang, Liquid-Propellant Rocket Engines, 1992",
   "source_kind": "book",
   "reference": "Huzel & Huang, Modern Engineering for Design of Liquid-Propellant Rocket Engines, AIAA, 1992",

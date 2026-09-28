@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "W/m²",
-    "items": [
-      {
-        "label": "Sunlight reflected (cooling)",
-        "value": 45
-      },
-      {
-        "label": "Heat trapped (warming)",
-        "value": 30
-      },
-      {
-        "label": "Net cooling",
-        "value": 15,
-        "hi": true
-      }
-    ],
-    "caption": "Clouds reflect 45 and trap 30: a net cooling of roughly 15 to 20."
-  },
   "source": "Ramanathan et al., Science, 1989",
   "source_kind": "paper",
   "reference": "Ramanathan et al., Cloud-Radiative Forcing and Climate: Results from the Earth Radiation Budget Experiment, Science, 1989",

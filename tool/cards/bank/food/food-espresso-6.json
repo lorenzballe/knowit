@@ -29,27 +29,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1880,
-    "to": 1910,
-    "events": [
-      {
-        "at": 1884,
-        "label": "Moriondo's bulk brewer"
-      },
-      {
-        "at": 1901,
-        "label": "Bezzera's cup to order",
-        "hi": true
-      },
-      {
-        "at": 1906,
-        "label": "Milan fair: caffè espresso"
-      }
-    ],
-    "caption": "Seventeen years passed between the bulk brewer and the single cup."
-  },
   "source": "Morris, Coffee: A Global History, 2019",
   "source_kind": "book",
   "reference": "Morris, Coffee: A Global History, Reaktion Books, 2019",

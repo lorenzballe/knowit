@@ -32,26 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "scale",
-    "unit": "% of the energy",
-    "items": [
-      {
-        "label": "neutrinos",
-        "value": 99
-      },
-      {
-        "label": "the blast",
-        "value": 1
-      },
-      {
-        "label": "light, at most",
-        "value": 0.01,
-        "hi": true
-      }
-    ],
-    "caption": "The light that outshines a galaxy is a hundredth of a hundredth of the energy."
-  },
   "source": "Janka, Annual Review, 2012",
   "source_kind": "paper",
   "reference": "Janka, Explosion Mechanisms of Core-Collapse Supernovae, Annual Review of Nuclear and Particle Science 62, 407, 2012",

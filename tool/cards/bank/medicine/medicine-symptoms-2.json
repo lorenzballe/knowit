@@ -26,26 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "patients",
-    "parts": [
-      {
-        "label": "History alone",
-        "value": 66,
-        "hi": true
-      },
-      {
-        "label": "Examination",
-        "value": 7
-      },
-      {
-        "label": "Tests",
-        "value": 7
-      }
-    ],
-    "caption": "Of 80 diagnoses, 66 came from the letter and the patient's story."
-  },
   "source": "Hampton et al., BMJ, 1975",
   "source_kind": "paper",
   "reference": "https://pubmed.ncbi.nlm.nih.gov/1148666/",

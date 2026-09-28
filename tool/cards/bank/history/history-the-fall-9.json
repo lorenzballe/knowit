@@ -26,29 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 450,
-    "to": 650,
-    "events": [
-      {
-        "at": 476,
-        "label": "last emperor deposed"
-      },
-      {
-        "at": 603,
-        "label": "Senate's last known act",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 476,
-        "to": 603,
-        "label": "Senate still sits"
-      }
-    ]
-  },
   "source": "Cambridge Ancient History, vol. 14",
   "source_kind": "reference_work",
   "reference": "Humphries, Italy, A.D. 425-605, in Cameron, Ward-Perkins and Whitby (eds.), The Cambridge Ancient History, vol. 14, Cambridge University Press, 2000",

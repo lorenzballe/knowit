@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "m deep",
-    "items": [
-      {
-        "label": "Forbes's limit of life",
-        "value": 550
-      },
-      {
-        "label": "Cable raised crusted with corals",
-        "value": 2000,
-        "hi": true
-      }
-    ],
-    "caption": "Life was growing nearly four times deeper than it was thought to end."
-  },
+  "figure": "none",
   "source": "Rozwadowski, Fathoming the Ocean, 2005",
   "source_kind": "book",
   "reference": "Rozwadowski, Fathoming the Ocean: The Discovery and Exploration of the Deep Sea, Harvard University Press, 2005",

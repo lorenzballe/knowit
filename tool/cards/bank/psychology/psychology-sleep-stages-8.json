@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% of the night",
-    "items": [
-      {
-        "label": "Men aged 16 to 25",
-        "value": 18.9
-      },
-      {
-        "label": "Men aged 36 to 50",
-        "value": 3.4,
-        "hi": true
-      }
-    ],
-    "caption": "A drop of 15.5 points is a fall of 82% from where it started."
-  },
   "source": "Van Cauter, Leproult & Plat, JAMA, 2000",
   "source_kind": "paper",
   "reference": "Van Cauter, Leproult & Plat, Age-related changes in slow wave sleep and REM sleep and relationship with growth hormone and cortisol levels in healthy men, JAMA, 2000",

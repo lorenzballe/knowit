@@ -25,21 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Specific cause named",
-        "value": 10,
-        "hi": true
-      },
-      {
-        "label": "Non-specific",
-        "value": 90
-      }
-    ]
-  },
   "source": "Maher, Underwood & Buchbinder, The Lancet, 2017",
   "source_kind": "paper",
   "reference": "https://pubmed.ncbi.nlm.nih.gov/27745712/",

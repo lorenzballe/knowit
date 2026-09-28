@@ -26,26 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "bars",
-    "unit": "years",
-    "items": [
-      {
-        "label": "Gap between bleachings, early 1980s",
-        "value": 25
-      },
-      {
-        "label": "Fastest corals' recovery, at least",
-        "value": 10
-      },
-      {
-        "label": "Gap between bleachings, 2016",
-        "value": 6,
-        "hi": true
-      }
-    ],
-    "caption": "The gap between blows is now shorter than the time corals need to heal."
-  },
   "source": "Hughes et al., Science, 2018",
   "source_kind": "paper",
   "reference": "Hughes et al., Spatial and temporal patterns of mass bleaching of corals in the Anthropocene, Science, 2018",

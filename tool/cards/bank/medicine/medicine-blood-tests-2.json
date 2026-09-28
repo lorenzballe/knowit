@@ -40,7 +40,7 @@
     "type": "line",
     "x": {
       "label": "tests in the panel",
-      "min": 1,
+      "min": 0,
       "max": 20
     },
     "y": {
@@ -138,12 +138,17 @@
     ],
     "marks": [
       {
+        "x": 1,
+        "y": 5.0,
+        "label": "one test: 5%"
+      },
+      {
         "x": 20,
         "y": 64.2,
-        "label": "20 tests: 64%"
+        "label": "twenty tests: 64%"
       }
     ],
-    "caption": "Each test adds its own 5% chance of a false flag."
+    "caption": "One test flags 5% of healthy people; twenty tests flag 64%."
   },
   "source": "CLSI EP28-A3c, reference intervals standard",
   "source_kind": "standard",

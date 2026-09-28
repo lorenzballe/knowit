@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "cm of seam",
-    "items": [
-      {
-        "label": "2010 ball, 8 panels",
-        "value": 203
-      },
-      {
-        "label": "2014 ball, 6 panels",
-        "value": 327,
-        "hi": true
-      }
-    ],
-    "caption": "Two fewer panels, yet about 60% more seam."
-  },
+  "figure": "none",
   "source": "Goff, Asai & Hong, Proc IMechE, 2014",
   "source_kind": "paper",
   "reference": "Goff, Asai & Hong, A comparison of Jabulani and Brazuca non-spin aerodynamics, Proceedings of the Institution of Mechanical Engineers Part P, 2014",

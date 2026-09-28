@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "fat index",
-    "items": [
-      {
-        "label": "Germ-free mice, ate more",
-        "value": 100
-      },
-      {
-        "label": "Normal mice, ate less",
-        "value": 142,
-        "hi": true
-      }
-    ],
-    "caption": "Fat indexed to germ-free mice at 100: normal mice carried 42% more on less food."
-  },
+  "figure": "none",
   "source": "Bäckhed et al., PNAS, 2004",
   "source_kind": "paper",
   "reference": "Bäckhed, Ding, Wang et al., The gut microbiota as an environmental factor that regulates fat storage, PNAS, 2004",

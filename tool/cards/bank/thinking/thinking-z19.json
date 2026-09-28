@@ -30,21 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "bars",
-    "items": [
-      {
-        "label": "expected by chance, 30 ÷ 20",
-        "value": 1.5
-      },
-      {
-        "label": "significant results reported",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "Thirty measurements should throw up one or two flukes; two is exactly that."
-  },
   "source": "Multiple comparisons in trial reporting",
   "source_kind": "paper",
   "reference": "Goldacre et al., COMPare: a prospective cohort study correcting and monitoring 58 misreported trials in real time, Trials, 2019"

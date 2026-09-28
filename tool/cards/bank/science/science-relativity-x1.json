@@ -35,27 +35,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "microseconds a day",
-    "items": [
-      {
-        "label": "Gained: weaker gravity",
-        "value": 46
-      },
-      {
-        "label": "Lost: orbital speed",
-        "value": 7
-      },
-      {
-        "label": "Net drift",
-        "value": 38,
-        "hi": true
-      }
-    ],
-    "caption": "Gravity's gain outweighs speed's loss: 38 microseconds, about 11 km of error a day."
-  },
+  "figure": "none",
   "source": "Ashby, Living Reviews in Relativity, 2003",
   "source_kind": "paper",
   "reference": "doi:10.12942/lrr-2003-1",

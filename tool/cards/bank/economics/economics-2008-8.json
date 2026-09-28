@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "borrowed",
-        "value": 96.8
-      },
-      {
-        "label": "owners' equity",
-        "value": 3.2,
-        "hi": true
-      }
-    ],
-    "caption": "Equity was 1 part in 31 of assets: a 3.2% fall wipes it out."
-  },
   "source": "Lehman Brothers, Form 10-K, fiscal 2007",
   "source_kind": "company",
   "reference": "Lehman Brothers Holdings Inc., Annual Report on Form 10-K for the fiscal year ended 30 November 2007, 2008",

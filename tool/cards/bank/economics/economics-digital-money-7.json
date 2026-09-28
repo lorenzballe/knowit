@@ -24,23 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "bitcoin",
-    "items": [
-      {
-        "label": "Paid in ransom",
-        "value": 75
-      },
-      {
-        "label": "Traced and seized by the FBI",
-        "value": 63.7,
-        "hi": true
-      }
-    ],
-    "caption": "Followed along the public ledger, 63.7 of the 75 coins came back."
-  },
+  "figure": "none",
   "source": "US Department of Justice, 2021",
   "source_kind": "institution",
   "reference": "US Department of Justice, Department of Justice Seizes $2.3 Million in Cryptocurrency Paid to the Ransomware Extortionists Darkside, press release, 7 June 2021",

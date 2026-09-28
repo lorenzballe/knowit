@@ -31,27 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Aluminium from scrap",
-        "value": 5
-      },
-      {
-        "label": "Glass from sand and soda",
-        "value": 100
-      },
-      {
-        "label": "Glass from 100% cullet",
-        "value": 75,
-        "hi": true
-      }
-    ],
-    "caption": "Energy against making from raw: recycled glass still needs three quarters, aluminium a twentieth."
-  },
+  "figure": "none",
   "source": "Worrell et al., Lawrence Berkeley National Laboratory, 2008",
   "source_kind": "institution",
   "reference": "https://eta-publications.lbl.gov/sites/default/files/glass_guidebook_en.pdf",

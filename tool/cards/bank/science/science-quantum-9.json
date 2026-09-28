@@ -31,24 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1920,
-    "to": 1928,
-    "events": [
-      {
-        "at": 1922,
-        "label": "Stern and Gerlach split the beam"
-      },
-      {
-        "at": 1925,
-        "label": "Spin first proposed",
-        "hi": true
-      }
-    ],
-    "caption": "The split was seen three years before anyone proposed its cause."
-  },
+  "figure": "none",
   "source": "Friedrich & Herschbach, Physics Today, 2003",
   "source_kind": "paper",
   "reference": "Friedrich & Herschbach, Stern and Gerlach: How a Bad Cigar Helped Reorient Atomic Physics, Physics Today 56(12), 53, 2003",

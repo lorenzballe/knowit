@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "million dollars",
-    "items": [
-      {
-        "label": "Kimchi exports, 2024",
-        "value": 163.6
-      },
-      {
-        "label": "Kimchi imports, 2024",
-        "value": 189.9,
-        "hi": true
-      }
-    ],
-    "caption": "Korea bought $26 million more kimchi than it sold."
-  },
   "source": "The Korea Herald, 2025",
   "source_kind": "news_archive",
   "reference": "https://www.koreaherald.com/article/10622311",

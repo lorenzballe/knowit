@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Bees with the virus, before varroa",
-        "value": 10
-      },
-      {
-        "label": "After varroa reached Hawaii",
-        "value": 100,
-        "hi": true
-      }
-    ],
-    "caption": "The mite spread deformed wing virus to every bee, at a millionfold load."
-  },
+  "figure": "none",
   "source": "Martin et al., Science, 2012",
   "source_kind": "paper",
   "reference": "Martin et al., Global honey bee viral landscape altered by a parasitic mite, Science 336, 2012, pp. 1304-1306, doi:10.1126/science.1220941",

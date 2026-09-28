@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "hours",
-    "items": [
-      {
-        "label": "Andean day, near equator",
-        "value": 12
-      },
-      {
-        "label": "European summer day",
-        "value": 16,
-        "hi": true
-      }
-    ],
-    "caption": "Four extra hours of light kept Andean potatoes growing leaves, not tubers."
-  },
+  "figure": "none",
   "source": "Ames & Spooner, American Journal of Botany, 2008",
   "source_kind": "paper",
   "reference": "Ames & Spooner, DNA from herbarium specimens settles a controversy about origins of the European potato, American Journal of Botany, 2008",

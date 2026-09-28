@@ -55,7 +55,7 @@
         "label": "no six, ruled out"
       }
     ],
-    "caption": "The yes leaves 11 pairs, and only one of them is a double six."
+    "caption": "The yes leaves 11 pairs with a six, and only one of them is a double six."
   },
   "source": "Conditional probability, counting outcomes",
   "source_kind": "arithmetic",

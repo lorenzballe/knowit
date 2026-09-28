@@ -32,35 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "diagram": {
-    "type": "timeline",
-    "from": 1950,
-    "to": 2015,
-    "events": [
-      {
-        "at": 1950,
-        "label": "2 million t a year"
-      },
-      {
-        "at": 2015,
-        "label": "380 million t a year",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1950,
-        "to": 2002,
-        "label": "first half made"
-      },
-      {
-        "from": 2002,
-        "to": 2015,
-        "label": "second half"
-      }
-    ],
-    "caption": "52 years made half of all plastic; the last 13 made the other half."
-  },
   "source": "Geyer, Jambeck & Law, Science Advances, 2017",
   "source_kind": "paper",
   "reference": "Geyer, Jambeck & Law, Production, use, and fate of all plastics ever made, Science Advances, 2017",

@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "kinds of receptor",
-    "items": [
-      {
-        "label": "Cones for colour",
-        "value": 3
-      },
-      {
-        "label": "Odour receptors",
-        "value": 400,
-        "hi": true
-      }
-    ],
-    "caption": "Three sensors give every colour; smell works with about 400."
-  },
   "source": "Malnic, Godfrey & Buck, PNAS, 2004",
   "source_kind": "paper",
   "reference": "Malnic, Godfrey & Buck, The human olfactory receptor gene family, PNAS, 2004",

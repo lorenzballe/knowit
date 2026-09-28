@@ -35,16 +35,16 @@
     "unit": "seconds",
     "items": [
       {
-        "label": "1-in-10-million difference",
-        "value": 410000000
-      },
-      {
         "label": "gap observed",
         "value": 1.7,
         "hi": true
+      },
+      {
+        "label": "off by 1 in 10 million",
+        "value": 410000000
       }
     ],
-    "caption": "A tiny speed difference would have meant 13 years; the gap was 1.7 seconds."
+    "caption": "Speeds one part in ten million apart would mean 13 years; the gap was 1.7 seconds."
   },
   "source": "Abbott et al., Astrophysical Journal Letters, 2017",
   "source_kind": "paper",

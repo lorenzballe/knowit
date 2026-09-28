@@ -36,6 +36,22 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "area",
+    "unit": "×",
+    "items": [
+      {
+        "label": "f/1.4 lens",
+        "value": 1
+      },
+      {
+        "label": "f/0.7: twice as wide",
+        "value": 4,
+        "hi": true
+      }
+    ],
+    "caption": "Halve the f-number and the opening doubles in width but lets in four times the light."
+  },
   "source": "Alcott, American Cinematographer, 1976",
   "source_kind": "primary_document",
   "reference": "Alcott, Photographing Stanley Kubrick's Barry Lyndon, American Cinematographer, March 1976",

@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "kcal",
-    "items": [
-      {
-        "label": "Today's guideline",
-        "value": 2500
-      },
-      {
-        "label": "Westminster monk, c. 1500",
-        "value": 6000,
-        "hi": true
-      }
-    ],
-    "caption": "An ordinary day's allowance was well over twice today's guideline."
-  },
   "source": "Harvey, Living and Dying in England, 1993",
   "source_kind": "book",
   "reference": "Harvey, Living and Dying in England 1100–1540: The Monastic Experience, Clarendon Press, 1993",

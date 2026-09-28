@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "MWh a year",
-    "items": [
-      {
-        "label": "A British home",
-        "value": 2.7
-      },
-      {
-        "label": "100 MW data centre",
-        "value": 876000,
-        "hi": true
-      }
-    ],
-    "caption": "Running all 8,760 hours of the year, it uses what 324,000 homes do."
-  },
   "source": "Ofgem, Typical Domestic Consumption Values, 2023",
   "source_kind": "institution",
   "reference": "Ofgem, Review of Typical Domestic Consumption Values 2023, Ofgem, 2023",

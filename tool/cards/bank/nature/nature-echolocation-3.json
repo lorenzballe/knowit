@@ -32,27 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Moth at the first distance",
-        "value": 100
-      },
-      {
-        "label": "Twice as far, one way only",
-        "value": 25
-      },
-      {
-        "label": "Twice as far, out and back",
-        "value": 6.25,
-        "hi": true
-      }
-    ],
-    "caption": "The spreading loss applies on both legs: a quarter of a quarter."
-  },
+  "figure": "none",
   "source": "Au, The Sonar of Dolphins, 1993",
   "source_kind": "book",
   "reference": "Au, The Sonar of Dolphins, Springer-Verlag, 1993",

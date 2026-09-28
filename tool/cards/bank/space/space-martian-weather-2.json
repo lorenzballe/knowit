@@ -25,22 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Sunlight, Mars farthest",
-        "value": 100
-      },
-      {
-        "label": "Sunlight, Mars nearest",
-        "value": 145,
-        "hi": true
-      }
-    ]
-  },
+  "figure": "none",
   "source": "Zurek and Martin, Journal of Geophysical Research, 1993",
   "source_kind": "paper",
   "reference": "Zurek and Martin, Interannual variability of planet-encircling dust storms on Mars, Journal of Geophysical Research: Planets 98(E2), 1993",

@@ -39,22 +39,6 @@
     "space-fuel-chemistry-2"
   ],
   "figure": "bars",
-  "diagram": {
-    "type": "area",
-    "unit": "litres",
-    "items": [
-      {
-        "label": "6 kg of oxygen",
-        "value": 5.3
-      },
-      {
-        "label": "1 kg of hydrogen",
-        "value": 14.1,
-        "hi": true
-      }
-    ],
-    "caption": "A sixth of the mass needs nearly three times the tank."
-  },
   "source": "CRC Handbook of Chemistry and Physics, 2004",
   "source_kind": "reference_work",
   "reference": "Lide (ed.), CRC Handbook of Chemistry and Physics, 85th ed., CRC Press, 2004",

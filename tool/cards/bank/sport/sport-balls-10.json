@@ -34,23 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "kPa lost",
-    "items": [
-      {
-        "label": "Scaling the 86 kPa gauge",
-        "value": 3
-      },
-      {
-        "label": "Scaling the 187 kPa total",
-        "value": 7,
-        "hi": true
-      }
-    ],
-    "caption": "Scale from true zero and the loss more than doubles."
-  },
+  "figure": "none",
   "source": "Wells Report, NFL, 2015",
   "source_kind": "primary_document",
   "reference": "Wells, Karp & Reisner, Investigative Report Concerning Footballs Used During the AFC Championship Game on January 18, 2015, NFL, 2015",

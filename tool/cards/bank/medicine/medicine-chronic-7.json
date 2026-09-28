@@ -31,26 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Usual care (5 of 50)",
-        "value": 10
-      },
-      {
-        "label": "Saline injection (10 of 51)",
-        "value": 19.6
-      },
-      {
-        "label": "Reprocessing therapy (33 of 50)",
-        "value": 66,
-        "hi": true
-      }
-    ],
-    "caption": "Share nearly pain-free after four weeks: 33 of 50, against 10 of 51 on saline."
-  },
   "source": "Ashar et al., JAMA Psychiatry, 2022",
   "source_kind": "paper",
   "reference": "Ashar et al., Effect of Pain Reprocessing Therapy vs Placebo and Usual Care for Patients With Chronic Back Pain: A Randomized Clinical Trial, JAMA Psychiatry, 2022",

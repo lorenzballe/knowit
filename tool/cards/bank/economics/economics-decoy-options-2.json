@@ -32,30 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "$240, two on offer",
-        "value": 50
-      },
-      {
-        "label": "$240, with $470 added",
-        "value": 57
-      },
-      {
-        "label": "$170, two on offer",
-        "value": 50
-      },
-      {
-        "label": "$170, with $470 added",
-        "value": 22,
-        "hi": true
-      }
-    ],
-    "caption": "The same $170 camera fell from half the buyers to 22% once it became the cheap extreme."
-  },
   "source": "Simonson & Tversky, J. Marketing Research, 1992",
   "source_kind": "paper",
   "reference": "Simonson & Tversky, Choice in Context: Tradeoff Contrast and Extremeness Aversion, Journal of Marketing Research, 1992",

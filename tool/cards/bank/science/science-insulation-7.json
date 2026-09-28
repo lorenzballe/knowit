@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Infrared radiation",
-        "value": 67,
-        "hi": true
-      },
-      {
-        "label": "Carried by the air",
-        "value": 33
-      }
-    ],
-    "caption": "About two thirds of the heat crossing the gap travels as infrared."
-  },
   "source": "ISO 15099, window thermal calculations",
   "source_kind": "standard",
   "reference": "ISO 15099:2003, Thermal performance of windows, doors and shading devices — Detailed calculations",

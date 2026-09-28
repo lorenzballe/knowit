@@ -32,27 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1789,
-    "to": 1890,
-    "events": [
-      {
-        "at": 1791,
-        "label": "Le Chapelier law bans unions"
-      },
-      {
-        "at": 1864,
-        "label": "Strikes legal"
-      },
-      {
-        "at": 1884,
-        "label": "Trade unions legal",
-        "hi": true
-      }
-    ],
-    "caption": "Banned two years after the Bastille, unions became legal only in 1884, nearly a century on."
-  },
   "source": "Sewell, Work and Revolution in France, 1980",
   "source_kind": "book",
   "reference": "Sewell, Work and Revolution in France: The Language of Labor from the Old Regime to 1848, Cambridge University Press, 1980",

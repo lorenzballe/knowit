@@ -114,15 +114,15 @@
       {
         "x": 90,
         "y": 9,
-        "label": "90%: 9"
+        "label": "90% busy: 9"
       },
       {
         "x": 95,
         "y": 19,
-        "label": "95%: 19"
+        "label": "95% busy: 19"
       }
     ],
-    "caption": "The last few points of load cost more waiting than all the rest together."
+    "caption": "Ten more points of load, from 80% to 90% busy, more than double the wait."
   },
   "source": "Hopp & Spearman, Factory Physics, 2008",
   "source_kind": "book",

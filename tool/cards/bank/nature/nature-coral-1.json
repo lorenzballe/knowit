@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Reef crest",
-        "value": 86,
-        "hi": true
-      },
-      {
-        "label": "Rest of reef",
-        "value": 11
-      },
-      {
-        "label": "Reaches shore",
-        "value": 3
-      }
-    ],
-    "caption": "The crest alone takes 86% of the waves' energy; 3% reaches shore."
-  },
   "source": "Ferrario et al., Nature Communications, 2014",
   "source_kind": "paper",
   "reference": "Ferrario et al., The effectiveness of coral reefs for coastal hazard risk reduction and adaptation, Nature Communications, 2014",

@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "out of 10",
-    "items": [
-      {
-        "label": "Opioids",
-        "value": 4.0
-      },
-      {
-        "label": "Non-opioid painkillers",
-        "value": 3.5,
-        "hi": true
-      }
-    ],
-    "caption": "Pain after a year: slightly lower without opioids."
-  },
+  "figure": "none",
   "source": "Krebs et al., JAMA, 2018",
   "source_kind": "paper",
   "reference": "Krebs et al., Effect of Opioid vs Nonopioid Medications on Pain-Related Function in Patients With Chronic Back Pain or Hip or Knee Osteoarthritis Pain: The SPACE Randomized Clinical Trial, JAMA, 2018",

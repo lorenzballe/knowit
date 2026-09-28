@@ -146,12 +146,17 @@
         "label": "10 mm at 16 years"
       },
       {
+        "x": 48,
+        "y": 17.3,
+        "label": "triple the time: only 17 mm"
+      },
+      {
         "x": 144,
         "y": 30,
-        "label": "144 years"
+        "label": "30 mm at 144 years"
       }
     ],
-    "caption": "Three times the depth takes nine times as long."
+    "caption": "Three times the depth takes nine times as long: 16 years for 10 mm, 144 for 30 mm."
   },
   "source": "Neville, Properties of Concrete, 2011",
   "source_kind": "book",

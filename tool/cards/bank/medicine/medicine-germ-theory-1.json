@@ -34,7 +34,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "per 1,000",
+    "unit": "deaths per 1,000 mothers",
     "items": [
       {
         "label": "Midwives' ward",
@@ -42,15 +42,15 @@
       },
       {
         "label": "Doctors' ward, 1841–46",
-        "value": 99,
-        "hi": true
+        "value": 99
       },
       {
         "label": "Doctors' ward, after handwashing",
-        "value": 13
+        "value": 13,
+        "hi": true
       }
     ],
-    "caption": "Mothers dying per 1,000 births: the doctors' ward was worst until chlorine handwashing."
+    "caption": "The doctors' ward was the deadliest until chlorine handwashing cut it from 99 to 13."
   },
   "source": "Loudon, James Lind Library, 2013",
   "source_kind": "paper",

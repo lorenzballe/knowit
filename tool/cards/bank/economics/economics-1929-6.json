@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Darby: relief workers employed",
-        "value": 10
-      },
-      {
-        "label": "Lebergott: relief workers jobless",
-        "value": 17,
-        "hi": true
-      }
-    ],
-    "caption": "Same year, same private jobs: one column moves 1936 unemployment by seven points."
-  },
+  "figure": "none",
   "source": "Darby, Journal of Political Economy, 1976",
   "source_kind": "paper",
   "reference": "doi:10.1086/260407",

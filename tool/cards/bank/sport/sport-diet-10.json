@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "g an hour",
-    "items": [
-      {
-        "label": "Glucose alone",
-        "value": 60
-      },
-      {
-        "label": "Glucose plus fructose",
-        "value": 90,
-        "hi": true
-      }
-    ],
-    "caption": "A second transporter lets half as much again through the gut each hour."
-  },
+  "figure": "none",
   "source": "Jeukendrup, Curr Opin Clin Nutr Metab Care, 2010",
   "source_kind": "paper",
   "reference": "Jeukendrup, Carbohydrate and exercise performance: the role of multiple transportable carbohydrates, Current Opinion in Clinical Nutrition and Metabolic Care, 2010",

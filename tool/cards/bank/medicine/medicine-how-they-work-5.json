@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 93,
-        "label": "vaccinated and immune",
-        "hi": true
-      },
-      {
-        "n": 3,
-        "label": "vaccinated, still unprotected"
-      }
-    ],
-    "caption": "Vaccinate 96: the 3 unprotected and 4 unvaccinated leave 7 open, about 1 in 15."
-  },
   "source": "Fine, Eames & Heymann, Clinical Infectious Diseases, 2011",
   "source_kind": "paper",
   "reference": "Fine, Eames & Heymann, Herd immunity: a rough guide, Clinical Infectious Diseases, 2011",

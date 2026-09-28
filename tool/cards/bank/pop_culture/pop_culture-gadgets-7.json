@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "$",
+    "items": [
+      {
+        "label": "Cost to build",
+        "value": 5000000000.0
+      },
+      {
+        "label": "Sold for, 1999",
+        "value": 25000000.0,
+        "hi": true
+      }
+    ],
+    "caption": "Iridium cost over $5 billion and sold for $25 million: half a cent on the dollar."
+  },
   "source": "Air & Space, history of Iridium",
   "source_kind": "news_archive",
   "reference": "https://www.smithsonianmag.com/air-space-magazine/the-rise-and-fall-and-rise-of-iridium-5615034/",

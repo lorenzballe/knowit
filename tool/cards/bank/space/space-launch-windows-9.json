@@ -33,23 +33,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "km/s",
-    "items": [
-      {
-        "label": "leave the solar system",
-        "value": 12
-      },
-      {
-        "label": "fall into the Sun",
-        "value": 30,
-        "hi": true
-      }
-    ],
-    "caption": "Falling in means cancelling nearly all of Earth's 30 km/s; escaping takes 12 more."
-  },
+  "figure": "none",
   "source": "Fox et al., Space Science Reviews, 2016",
   "source_kind": "paper",
   "reference": "Fox et al., The Solar Probe Plus Mission: Humanity's First Visit to Our Star, Space Science Reviews 204, 7, 2016",

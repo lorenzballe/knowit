@@ -31,26 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "If digits were independent",
-        "value": 25
-      },
-      {
-        "label": "Next ends in 3, or in 7",
-        "value": 30
-      },
-      {
-        "label": "Next ends in 1 again",
-        "value": 18.5,
-        "hi": true
-      }
-    ],
-    "caption": "After a prime ending in 1, the next prime shies away from ending in 1 again."
-  },
   "source": "Lemke Oliver & Soundararajan, PNAS, 2016",
   "source_kind": "paper",
   "reference": "Lemke Oliver & Soundararajan, Unexpected biases in the distribution of consecutive primes, Proceedings of the National Academy of Sciences of the USA, 2016",

@@ -99,17 +99,12 @@
         "label": "a billion terms: 21"
       },
       {
-        "x": 26.7,
-        "y": 62,
-        "label": "since the Big Bang: 62"
-      },
-      {
         "x": 43.2,
         "y": 100,
-        "label": "a 44-digit count: 100"
+        "label": "100 takes 44 digits"
       }
     ],
-    "caption": "Every tenfold more terms adds only about 2.3 to the total."
+    "caption": "A billion terms reach only 21; passing 100 takes a number 44 digits long."
   },
   "source": "Havil, Gamma: Exploring Euler's Constant, 2003",
   "source_kind": "book",

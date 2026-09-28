@@ -49,12 +49,12 @@
         "value": 84
       },
       {
-        "label": "slowest",
+        "label": "slowest, projected",
         "value": 254,
         "hi": true
       }
     ],
-    "caption": "The famous 66 days is the middle case; the slowest ran far past the study."
+    "caption": "The quoted 66 days is only the median; the slowest habit needed an estimated 254."
   },
   "source": "Lally et al., European J Social Psychology, 2010",
   "source_kind": "paper",

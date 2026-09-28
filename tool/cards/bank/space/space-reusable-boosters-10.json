@@ -31,23 +31,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "tonnes to high orbit",
-    "items": [
-      {
-        "label": "booster thrown away",
-        "value": 8.3
-      },
-      {
-        "label": "booster landed",
-        "value": 5.5,
-        "hi": true
-      }
-    ],
-    "caption": "Saving the booster leaves a third of the payload behind."
-  },
+  "figure": "none",
   "source": "SpaceX, Falcon 9 capabilities, 2023",
   "source_kind": "institution",
   "reference": "SpaceX, Falcon 9 vehicle page, payload to geosynchronous transfer orbit, expendable and reusable, spacex.com/vehicles/falcon-9, 2023",

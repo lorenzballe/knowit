@@ -31,8 +31,7 @@
   "language": "en",
   "figure": "none",
   "diagram": {
-    "type": "scale",
-    "unit": "× a magnitude 6's energy",
+    "type": "area",
     "items": [
       {
         "label": "Magnitude 6",
@@ -48,7 +47,7 @@
         "hi": true
       }
     ],
-    "caption": "Each step is about 32 times the energy, so two steps are a thousand."
+    "caption": "Two steps up the scale, and the energy grows about a thousandfold: 32 × 32."
   },
   "source": "Kanamori, Journal of Geophysical Research, 1977",
   "source_kind": "paper",

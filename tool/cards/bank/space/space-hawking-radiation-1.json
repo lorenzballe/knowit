@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "billionths of a kelvin",
-    "items": [
-      {
-        "label": "Sun-mass black hole",
-        "value": 60,
-        "hi": true
-      },
-      {
-        "label": "Cosmic background",
-        "value": 2700000000
-      }
-    ],
-    "caption": "The sky is warmer than the hole, so heat flows in and it grows."
-  },
   "source": "Hawking, Communications in Mathematical Physics, 1975",
   "source_kind": "paper",
   "reference": "Hawking, Particle Creation by Black Holes, Communications in Mathematical Physics, 1975",

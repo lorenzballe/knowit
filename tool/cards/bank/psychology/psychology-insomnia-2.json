@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% new depression",
-    "items": [
-      {
-        "label": "Sleep education alone",
-        "value": 25.9
-      },
-      {
-        "label": "Therapy for insomnia",
-        "value": 12.2,
-        "hi": true
-      }
-    ],
-    "caption": "Over three years, new depression fell from 25.9% to 12.2%: roughly halved."
-  },
   "source": "Irwin et al., JAMA Psychiatry, 2022",
   "source_kind": "paper",
   "reference": "Irwin, Carrillo, Sadeghi et al., Prevention of incident and recurrent major depression in older adults with insomnia: a randomized clinical trial, JAMA Psychiatry, 2022",

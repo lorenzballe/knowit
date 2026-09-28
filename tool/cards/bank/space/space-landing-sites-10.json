@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Sunlit",
-        "value": 80
-      },
-      {
-        "label": "Dark",
-        "value": 20,
-        "hi": true
-      }
-    ],
-    "caption": "Even the best-lit ridges near Shackleton spend up to a fifth of the time dark."
-  },
   "source": "Mazarico et al., Icarus, 2011",
   "source_kind": "paper",
   "reference": "Mazarico, Neumann, Smith, Zuber & Torrence, Illumination conditions of the lunar polar regions using LOLA topography, Icarus, 2011",

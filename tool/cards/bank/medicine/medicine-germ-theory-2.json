@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "per 10,000 houses",
-    "items": [
-      {
-        "label": "Cleaner upstream water",
-        "value": 37
-      },
-      {
-        "label": "Sewage-laden Thames water",
-        "value": 315,
-        "hi": true
-      }
-    ],
-    "caption": "Cholera deaths on the same streets, by water company: over eight times as many."
-  },
   "source": "Snow on Cholera, reprint, 1936",
   "source_kind": "primary_document",
   "reference": "Snow on Cholera: Being a Reprint of Two Papers by John Snow, M.D., The Commonwealth Fund, 1936",

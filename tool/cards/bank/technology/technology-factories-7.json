@@ -35,23 +35,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "engines in progress",
-    "items": [
-      {
-        "label": "Today: 12 days inside",
-        "value": 600
-      },
-      {
-        "label": "Target: 4 days inside",
-        "value": 200,
-        "hi": true
-      }
-    ],
-    "caption": "At 50 finished a day, each engine waits as long as the pile takes to clear."
-  },
+  "figure": "none",
   "source": "Little, Operations Research, 1961",
   "source_kind": "paper",
   "reference": "Little, A Proof for the Queuing Formula: L = λW, Operations Research 9(3), 1961",

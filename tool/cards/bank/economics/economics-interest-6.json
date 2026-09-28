@@ -124,7 +124,7 @@
       {
         "x": 0.5,
         "y": 100,
-        "label": "bought at par: £100"
+        "label": "£100 at 0.5%"
       },
       {
         "x": 4.5,
@@ -132,7 +132,7 @@
         "label": "at 4.5%: about £26"
       }
     ],
-    "caption": "Four points on the rate take about three-quarters off a 40-year bond."
+    "caption": "Market rates rise from 0.5% to 4.5%, and the £100 bond falls to about £26."
   },
   "source": "Hull, Options, Futures, and Other Derivatives",
   "source_kind": "book",

@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "deaths",
-    "items": [
-      {
-        "label": "40 patients at the old rate",
-        "value": 18
-      },
-      {
-        "label": "40 patients with antisepsis",
-        "value": 6,
-        "hi": true
-      }
-    ],
-    "caption": "At the old rate of 16 in 35, forty patients lose 18: twelve more than 6."
-  },
   "source": "Tröhler, JRSM, 2015",
   "source_kind": "paper",
   "reference": "Tröhler, Statistics and the British controversy about the effects of Joseph Lister's system of antisepsis for surgery, 1867-1890, Journal of the Royal Society of Medicine, 2015",

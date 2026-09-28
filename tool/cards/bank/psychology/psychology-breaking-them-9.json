@@ -31,19 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 90,
-        "label": "slipped, then back to smoking",
-        "hi": true
-      }
-    ],
-    "caption": "Of quitters who lapsed, about nine in ten returned to regular smoking."
-  },
+  "figure": "none",
   "source": "Brandon et al., Addictive Behaviors, 1990",
   "source_kind": "paper",
   "reference": "Brandon, Tiffany, Obremski & Baker, Postcessation cigarette use: the process of relapse, Addictive Behaviors, 1990",

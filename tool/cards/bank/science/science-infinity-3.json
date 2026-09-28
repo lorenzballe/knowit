@@ -255,7 +255,7 @@
         "label": "half that: 0.347"
       }
     ],
-    "caption": "The same terms, reordered, settle on half the total."
+    "caption": "The same terms, reordered: the usual order settles near 0.693, one plus then two minus on half that."
   },
   "source": "Rudin, Principles of Mathematical Analysis, 1976",
   "source_kind": "book",

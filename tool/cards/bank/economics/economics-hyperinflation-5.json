@@ -50,7 +50,20 @@
     },
     "series": [
       {
-        "label": "50% a month",
+        "label": "rises added up",
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            12,
+            7
+          ]
+        ]
+      },
+      {
+        "label": "rises compounded, 50% a month",
         "hi": true,
         "points": [
           [
@@ -110,9 +123,9 @@
     ],
     "marks": [
       {
-        "x": 6,
-        "y": 11.39,
-        "label": "six months: ×11"
+        "x": 12,
+        "y": 7,
+        "label": "a year: ×7"
       },
       {
         "x": 12,
@@ -120,7 +133,7 @@
         "label": "a year: ×130"
       }
     ],
-    "caption": "Half the year's rise comes in the last two months."
+    "caption": "Adding twelve 50% rises gives ×7; compounding them gives ×130."
   },
   "source": "Cagan, Monetary Dynamics of Hyperinflation, 1956",
   "source_kind": "paper",

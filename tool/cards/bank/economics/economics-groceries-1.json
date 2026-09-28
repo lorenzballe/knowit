@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Richest fifth (under a tenth)",
-        "value": 10
-      },
-      {
-        "label": "Poorest fifth (about a third)",
-        "value": 33,
-        "hi": true
-      }
-    ],
-    "caption": "Share of income spent on food in the United States today."
-  },
   "source": "USDA Economic Research Service, Food Expenditure Series",
   "source_kind": "statistics",
   "reference": "USDA Economic Research Service, Food Expenditure Series: food spending as a share of income by quintile, 2024",

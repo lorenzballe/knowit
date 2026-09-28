@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "diagram": {
-    "type": "bars",
-    "unit": "million",
-    "items": [
-      {
-        "label": "Electric cars sold in 2014",
-        "value": 0.3
-      },
-      {
-        "label": "Electric cars sold in 2024",
-        "value": 17,
-        "hi": true
-      }
-    ],
-    "caption": "The cars due back for recycling come from a market over fifty times smaller."
-  },
   "source": "IEA, Global EV Outlook 2025",
   "source_kind": "institution",
   "reference": "International Energy Agency, Global EV Outlook 2025, 2025",

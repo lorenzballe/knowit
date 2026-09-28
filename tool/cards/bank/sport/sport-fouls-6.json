@@ -35,23 +35,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "points",
-    "items": [
-      {
-        "label": "Average possession",
-        "value": 1.1
-      },
-      {
-        "label": "Two throws at 45%",
-        "value": 0.9,
-        "hi": true
-      }
-    ],
-    "caption": "Each foul trades 1.1 expected points for 0.9: a saving of 0.2."
-  },
+  "figure": "none",
   "source": "Oliver, Basketball on Paper, 2004",
   "source_kind": "book",
   "reference": "Oliver, Basketball on Paper: Rules and Tools for Performance Analysis, Potomac Books, 2004",

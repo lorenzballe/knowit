@@ -24,23 +24,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "hours",
-    "items": [
-      {
-        "label": "Five days of 7.6 hours",
-        "value": 38
-      },
-      {
-        "label": "Four days of 9.5 hours",
-        "value": 38,
-        "hi": true
-      }
-    ],
-    "caption": "Same 38 hours, packed into four longer days."
-  },
+  "figure": "none",
   "source": "Belgian Labour Deal law, 2022",
   "source_kind": "primary_document",
   "reference": "Loi portant des dispositions diverses relatives au travail (Labour Deal), 3 October 2022, Moniteur belge, 2022",

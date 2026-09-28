@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Country practice",
-        "value": 10.8
-      },
-      {
-        "label": "Large hospitals",
-        "value": 40.9,
-        "hi": true
-      }
-    ],
-    "caption": "Amputations ending in death: 855 of 2,089 in hospitals, 226 of 2,098 in the country."
-  },
   "source": "Fitzharris, The Butchering Art, 2017",
   "source_kind": "book",
   "reference": "Fitzharris, The Butchering Art: Joseph Lister's Quest to Transform the Grisly World of Victorian Medicine, Farrar, Straus and Giroux, 2017",

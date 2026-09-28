@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% scored",
-    "items": [
-      {
-        "label": "Kick to win the match",
-        "value": 92
-      },
-      {
-        "label": "Kick to avoid defeat",
-        "value": 62,
-        "hi": true
-      }
-    ],
-    "caption": "Same spot, same goal: 92% scored to win, 62% to survive."
-  },
   "source": "Jordet & Hartman, JSEP, 2008",
   "source_kind": "paper",
   "reference": "Jordet & Hartman, Avoidance motivation and choking under pressure in soccer penalty shootouts, Journal of Sport & Exercise Psychology, 2008",

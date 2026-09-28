@@ -25,6 +25,35 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": -600,
+    "to": 0,
+    "unit": "ms",
+    "events": [
+      {
+        "at": -550,
+        "label": "brain's build-up begins"
+      },
+      {
+        "at": -200,
+        "label": "felt decision"
+      },
+      {
+        "at": 0,
+        "label": "wrist flicks",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": -100,
+        "to": 0,
+        "label": "veto window"
+      }
+    ],
+    "caption": "The brain starts 350 ms before the felt decision, leaving the mind only a late veto."
+  },
   "source": "Libet, Journal of Consciousness Studies, 1999",
   "source_kind": "paper",
   "reference": "Libet, Do We Have Free Will?, Journal of Consciousness Studies 6 (8-9), 1999",

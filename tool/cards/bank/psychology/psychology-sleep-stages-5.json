@@ -36,26 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "years",
-    "parts": [
-      {
-        "label": "awake",
-        "value": 55
-      },
-      {
-        "label": "other sleep",
-        "value": 20
-      },
-      {
-        "label": "REM",
-        "value": 5,
-        "hi": true
-      }
-    ],
-    "caption": "Of 80 years, about 25 go to sleep, and 5 of those to REM."
-  },
   "source": "Carskadon & Dement, Normal human sleep, 2011",
   "source_kind": "reference_work",
   "reference": "Carskadon & Dement, Normal human sleep: an overview, in Principles and Practice of Sleep Medicine, 5th edition, Elsevier, 2011",

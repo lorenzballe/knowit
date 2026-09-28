@@ -31,28 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1928,
-    "to": 1956,
-    "events": [
-      {
-        "at": 1929,
-        "label": "Buy at the peak"
-      },
-      {
-        "at": 1936,
-        "label": "Even, dividends reinvested",
-        "hi": true
-      },
-      {
-        "at": 1954,
-        "label": "Dow's price regains its peak"
-      }
-    ],
-    "caption": "Counting dividends and deflation, the wait was about seven years, not twenty-five."
-  },
+  "figure": "none",
   "source": "Hulbert, The New York Times, 2009",
   "source_kind": "news_archive",
   "reference": "Hulbert, 25 Years to Break Even? Not Really, The New York Times, April 2009",

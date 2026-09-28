@@ -38,16 +38,16 @@
     "unit": "survivors",
     "items": [
       {
-        "label": "99.999% disinfectant",
+        "label": "Kills 99.999%",
         "value": 10
       },
       {
-        "label": "99.9% spray",
+        "label": "Kills 99.9%",
         "value": 1000,
         "hi": true
       }
     ],
-    "caption": "From a million bacteria on a board: 10 survive one, 1,000 the other."
+    "caption": "From a million bacteria: 10 survive a 99.999% kill, 1,000 survive a 99.9% kill."
   },
   "source": "CEN, EN 1276 bactericidal suspension test",
   "source_kind": "standard",

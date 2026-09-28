@@ -33,31 +33,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "× the original",
-    "items": [
-      {
-        "label": "Height",
-        "value": 2
-      },
-      {
-        "label": "Bone cross-section (2 × 2)",
-        "value": 4
-      },
-      {
-        "label": "Weight (2 × 2 × 2)",
-        "value": 8
-      },
-      {
-        "label": "Stress on the thigh bone (8 / 4)",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "Weight grows 8 times, bone area only 4: each square millimetre bears double."
-  },
+  "figure": "none",
   "source": "Haldane, On Being the Right Size, 1927",
   "source_kind": "book",
   "reference": "Haldane, On Being the Right Size, in Possible Worlds and Other Essays, Chatto & Windus, 1927",

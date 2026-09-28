@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 13,
-        "label": "low estimate: 13%",
-        "hi": true
-      },
-      {
-        "n": 27,
-        "label": "high estimate: up to 40%"
-      }
-    ],
-    "caption": "Each dot is 1% of 1997's fossil-fuel carbon; the fires matched 13 to 40."
-  },
   "source": "Page et al., Nature, 2002",
   "source_kind": "paper",
   "reference": "Page, Siegert, Rieley, Boehm, Jaya & Limin, The amount of carbon released from peat and forest fires in Indonesia during 1997, Nature, 2002",

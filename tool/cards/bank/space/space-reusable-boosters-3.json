@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "million dollars",
-    "items": [
-      {
-        "label": "NASA's quoted cost",
-        "value": 450
-      },
-      {
-        "label": "programme averaged",
-        "value": 1500,
-        "hi": true
-      }
-    ],
-    "caption": "Counting design, orbiters, pads and staff more than triples the price of a flight."
-  },
   "source": "Pielke & Byerly, Nature, 2011",
   "source_kind": "paper",
   "reference": "doi:10.1038/472038d",

@@ -34,27 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "ms",
-    "items": [
-      {
-        "label": "Moon's tides alone",
-        "value": 2.3
-      },
-      {
-        "label": "Trimmed by land rebound",
-        "value": 0.5
-      },
-      {
-        "label": "Seen in ancient eclipses",
-        "value": 1.8,
-        "hi": true
-      }
-    ],
-    "caption": "Per century: tides add 2.3 ms, rebound takes back 0.5, eclipses show 1.8."
-  },
+  "figure": "none",
   "source": "Stephenson, Morrison & Hohenkerk, 2016",
   "source_kind": "paper",
   "reference": "Stephenson, Morrison & Hohenkerk, Measurement of the Earth's rotation: 720 BC to AD 2015, Proceedings of the Royal Society A, 2016",

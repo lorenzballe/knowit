@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Usual yearly carbon-14 rise",
-        "value": 0.06
-      },
-      {
-        "label": "Carbon-14 rise, 774 to 775",
-        "value": 1.2,
-        "hi": true
-      }
-    ],
-    "caption": "One year's jump was about twenty times the usual change."
-  },
   "source": "Miyake et al., Nature, 2012",
   "source_kind": "paper",
   "reference": "doi:10.1038/nature11123",

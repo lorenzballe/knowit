@@ -37,22 +37,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Wood left",
-        "value": 51
-      },
-      {
-        "label": "Bending strength left",
-        "value": 76,
-        "hi": true
-      }
-    ],
-    "caption": "The hollow takes half the wood but only a quarter of the strength."
-  },
   "source": "Mattheck & Breloer, Body Language of Trees",
   "source_kind": "book",
   "reference": "Mattheck & Breloer, The Body Language of Trees: A Handbook for Failure Analysis, HMSO, 1994",

@@ -25,23 +25,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Right diagnosis in top 20",
-        "value": 58
-      },
-      {
-        "label": "Right diagnosis first",
-        "value": 34,
-        "hi": true
-      }
-    ],
-    "caption": "How often symptom checkers got 45 test cases right."
-  },
+  "figure": "none",
   "source": "Semigran et al., BMJ, 2015",
   "source_kind": "paper",
   "reference": "Semigran, Linder, Gidengil & Mehrotra, Evaluation of symptom checkers for self diagnosis and triage: audit study, BMJ, 2015",

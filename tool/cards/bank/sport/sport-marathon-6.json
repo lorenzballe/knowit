@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "of 9 records",
-    "parts": [
-      {
-        "label": "Berlin",
-        "value": 8,
-        "hi": true
-      },
-      {
-        "label": "Chicago",
-        "value": 1
-      }
-    ],
-    "caption": "Eight of the nine men's records from 2003 to 2023 came on one course."
-  },
   "source": "World Athletics, men's marathon record progression",
   "source_kind": "statistics",
   "reference": "World Athletics, Records by event: men's marathon world record progression, 2024",

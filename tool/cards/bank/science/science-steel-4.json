@@ -35,61 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "°C",
-      "min": 0,
-      "max": 900
-    },
-    "y": {
-      "label": "% of full strength",
-      "min": 0,
-      "max": 100
-    },
-    "series": [
-      {
-        "label": "European design code",
-        "hi": true,
-        "points": [
-          [
-            0,
-            100
-          ],
-          [
-            400,
-            100
-          ],
-          [
-            600,
-            47
-          ],
-          [
-            700,
-            23
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 400,
-        "y": 100,
-        "label": "full strength to 400 °C"
-      },
-      {
-        "x": 600,
-        "y": 47,
-        "label": "600 °C: 47%"
-      },
-      {
-        "x": 700,
-        "y": 23,
-        "label": "700 °C: 23%"
-      }
-    ],
-    "caption": "Far below its melting point, hot steel has already lost half its strength."
-  },
   "source": "EN 1993-1-2, Eurocode 3 fire design",
   "source_kind": "standard",
   "reference": "EN 1993-1-2:2005, Eurocode 3: Design of steel structures — Part 1-2: General rules — Structural fire design",

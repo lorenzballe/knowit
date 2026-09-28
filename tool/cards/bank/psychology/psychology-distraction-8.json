@@ -30,27 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "× the errors",
-    "items": [
-      {
-        "label": "no interruption",
-        "value": 1
-      },
-      {
-        "label": "2.8-second interruption",
-        "value": 2
-      },
-      {
-        "label": "4.4-second interruption",
-        "value": 3,
-        "hi": true
-      }
-    ],
-    "caption": "Interruptions of a few seconds doubled, then tripled, errors on resuming."
-  },
+  "figure": "none",
   "source": "Altmann, Trafton & Hambrick, JEP: General, 2014",
   "source_kind": "paper",
   "reference": "Altmann, Trafton & Hambrick, Momentary interruptions can derail the train of thought, Journal of Experimental Psychology: General, 2014",

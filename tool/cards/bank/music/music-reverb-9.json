@@ -35,6 +35,84 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "seconds",
+      "min": 0,
+      "max": 2
+    },
+    "y": {
+      "label": "tail level, dB",
+      "min": -60,
+      "max": 0
+    },
+    "series": [
+      {
+        "label": "the mix",
+        "points": [
+          [
+            0,
+            -30
+          ],
+          [
+            2,
+            -30
+          ]
+        ]
+      },
+      {
+        "label": "reverb tail",
+        "hi": true,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.25,
+            -7.5
+          ],
+          [
+            0.5,
+            -15.0
+          ],
+          [
+            0.75,
+            -22.5
+          ],
+          [
+            1.0,
+            -30.0
+          ],
+          [
+            1.25,
+            -37.5
+          ],
+          [
+            1.5,
+            -45.0
+          ],
+          [
+            1.75,
+            -52.5
+          ],
+          [
+            2.0,
+            -60.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1,
+        "y": -30,
+        "label": "1 second: lost in the mix"
+      }
+    ],
+    "caption": "The tail falls 30 dB a second, so a mix 30 dB down swallows it halfway."
+  },
   "source": "Izhaki, Mixing Audio, 2008",
   "source_kind": "book",
   "reference": "Izhaki, Mixing Audio: Concepts, Practices and Tools, Focal Press, 2008",

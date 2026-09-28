@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Rest of 1890 output",
-        "value": 95
-      },
-      {
-        "label": "Railways, at most",
-        "value": 5,
-        "hi": true
-      }
-    ],
-    "caption": "Measured against canals and wagons, not against nothing, railways added under 5% of output."
-  },
   "source": "Fogel, Railroads and American Economic Growth, 1964",
   "source_kind": "book",
   "reference": "Fogel, Railroads and American Economic Growth: Essays in Econometric History, Johns Hopkins Press, 1964",

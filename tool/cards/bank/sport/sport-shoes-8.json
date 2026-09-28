@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% of conventional shoe",
-    "items": [
-      {
-        "label": "Conventional shoe",
-        "value": 100
-      },
-      {
-        "label": "Maximalist shoe",
-        "value": 110.7,
-        "hi": true
-      }
-    ],
-    "caption": "The softer sole brought a harder landing: impact peak 10.7% higher."
-  },
+  "figure": "none",
   "source": "Kulmala et al., Scientific Reports, 2018",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/s41598-018-35980-6",

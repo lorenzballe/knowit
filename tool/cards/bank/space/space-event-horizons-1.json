@@ -41,8 +41,7 @@
     "items": [
       {
         "label": "4-million-sun hole",
-        "value": 0.0001,
-        "hi": true
+        "value": 0.0001
       },
       {
         "label": "Earth's gravity",
@@ -50,10 +49,11 @@
       },
       {
         "label": "10-sun hole",
-        "value": 20000000
+        "value": 20000000,
+        "hi": true
       }
     ],
-    "caption": "The small hole stretches her twenty million g; the giant, a ten-thousandth of one."
+    "caption": "The small hole stretches her by 20 million g; the giant, by a ten-thousandth of one."
   },
   "source": "Thorne, The Science of Interstellar, 2014",
   "source_kind": "book",

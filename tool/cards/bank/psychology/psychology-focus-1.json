@@ -31,23 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 24,
-    "label": "radiologists",
-    "branches": [
-      {
-        "n": 4,
-        "label": "saw the gorilla"
-      },
-      {
-        "n": 20,
-        "label": "missed it",
-        "hi": true
-      }
-    ],
-    "caption": "A gorilla 48 times a nodule's size, and 20 of 24 experts missed it."
-  },
   "source": "Drew, Võ & Wolfe, Psychological Science, 2013",
   "source_kind": "paper",
   "reference": "Drew, Võ & Wolfe, The invisible gorilla strikes again: sustained inattentional blindness in expert observers, Psychological Science, 2013",

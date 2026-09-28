@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Veins",
-        "value": 67,
-        "hi": true
-      },
-      {
-        "label": "Everything else",
-        "value": 33
-      }
-    ],
-    "caption": "At rest, about two thirds of the blood sits in the veins."
-  },
   "source": "Mohrman & Heller, Cardiovascular Physiology",
   "source_kind": "book",
   "reference": "Mohrman & Heller, Cardiovascular Physiology, 9th edition, McGraw-Hill, 2018",

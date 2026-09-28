@@ -31,33 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 52,
-    "label": "patients on the drugs",
-    "branches": [
-      {
-        "n": 14,
-        "label": "grey hair darkened",
-        "branches": [
-          {
-            "n": 13,
-            "label": "cancer stable or shrinking",
-            "hi": true
-          },
-          {
-            "n": 1,
-            "label": "the other one"
-          }
-        ]
-      },
-      {
-        "n": 38,
-        "label": "no change"
-      }
-    ],
-    "caption": "Of the 14 whose hair darkened, 13 had cancer that was held or shrinking."
-  },
   "source": "Rivera et al., JAMA Dermatology, 2017",
   "source_kind": "paper",
   "reference": "Rivera, Boada, Bielsa et al., Hair repigmentation during immunotherapy treatment with an anti-programmed cell death 1 and anti-programmed cell death ligand 1 agent for lung cancer, JAMA Dermatology, 2017",

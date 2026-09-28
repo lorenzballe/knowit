@@ -33,23 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 8,
-        "label": "pain limits life most days",
-        "hi": true
-      },
-      {
-        "n": 12,
-        "label": "in pain, not held back",
-        "hi": true
-      }
-    ],
-    "caption": "One adult in five has pain most days; for 8 in 100 it limits life."
-  },
   "source": "Dahlhamer et al., CDC MMWR, 2018",
   "source_kind": "statistics",
   "reference": "https://www.cdc.gov/mmwr/volumes/67/wr/pdfs/mm6736a2-H.pdf",

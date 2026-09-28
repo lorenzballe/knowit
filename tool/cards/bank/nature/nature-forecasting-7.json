@@ -32,23 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "tree",
-    "n": 200,
-    "label": "tornado warnings",
-    "branches": [
-      {
-        "n": 60,
-        "label": "a tornado struck"
-      },
-      {
-        "n": 140,
-        "label": "false alarm",
-        "hi": true
-      }
-    ],
-    "caption": "Covering 60 tornadoes takes about 200 warnings; 140 of them are false alarms."
-  },
   "source": "Brooks & Correia, Weather and Forecasting, 2018",
   "source_kind": "paper",
   "reference": "Brooks & Correia, Long-Term Performance Metrics for National Weather Service Tornado Warnings, Weather and Forecasting, 2018",

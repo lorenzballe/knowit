@@ -35,33 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 1000,
-    "label": "pregnancies",
-    "branches": [
-      {
-        "n": 160,
-        "label": "Rh-negative mother",
-        "branches": [
-          {
-            "n": 96,
-            "label": "Rh-positive baby",
-            "hi": true
-          },
-          {
-            "n": 64,
-            "label": "Rh-negative baby"
-          }
-        ]
-      },
-      {
-        "n": 840,
-        "label": "Rh-positive mother"
-      }
-    ],
-    "caption": "96 in 1,000 pregnancies pair an Rh-negative mother with an Rh-positive baby."
-  },
   "source": "Hartl & Clark, Principles of Population Genetics",
   "source_kind": "book",
   "reference": "Hartl & Clark, Principles of Population Genetics, 4th edition, Sinauer Associates, 2007",

@@ -31,18 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 60,
-        "label": "threatened with extinction",
-        "hi": true
-      }
-    ],
-    "caption": "75 of the 124 known coffee species are threatened: about three in five."
-  },
   "source": "Davis et al., Science Advances, 2019",
   "source_kind": "paper",
   "reference": "doi:10.1126/sciadv.aav3473",

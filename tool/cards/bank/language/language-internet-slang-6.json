@@ -33,6 +33,30 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "haha",
+        "value": 51
+      },
+      {
+        "label": "emoji",
+        "value": 34
+      },
+      {
+        "label": "hehe",
+        "value": 13
+      },
+      {
+        "label": "lol",
+        "value": 1.9,
+        "hi": true
+      }
+    ],
+    "caption": "Of all typed laughs, lol was under 2%; plain haha was over half."
+  },
   "source": "Facebook Research, The Not-So-Universal Language of Laughter",
   "source_kind": "institution",
   "reference": "Weinsberg, Adamic & Develin, The Not-So-Universal Language of Laughter, Facebook Research, 2015",

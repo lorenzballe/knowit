@@ -34,23 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "Gbit/s",
-    "items": [
-      {
-        "label": "Forged queries sent",
-        "value": 2
-      },
-      {
-        "label": "Replies landing on the victim",
-        "value": 100,
-        "hi": true
-      }
-    ],
-    "caption": "Each 64-byte query draws a 3,200-byte reply: fifty times the traffic sent."
-  },
+  "figure": "none",
   "source": "CISA Alert TA14-017A, 2014",
   "source_kind": "institution",
   "reference": "https://www.cisa.gov/news-events/alerts/2014/01/17/udp-based-amplification-attacks",

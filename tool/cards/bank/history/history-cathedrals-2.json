@@ -26,30 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1450,
-    "to": 1900,
-    "events": [
-      {
-        "at": 1473,
-        "label": "work stops"
-      },
-      {
-        "at": 1814,
-        "label": "medieval plan found",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1473,
-        "to": 1868,
-        "label": "crane left on tower"
-      }
-    ],
-    "caption": "Four centuries idle, then the plan turned up and the cathedral was finished by 1880."
-  },
   "source": "Freies Deutsches Hochstift, Plan F",
   "source_kind": "institution",
   "reference": "https://www.guide.freies-deutsches-hochstift.de/en/mediaguide/romantik-ausstellung/3-obergeschoss/im-bilde-vollendet/wand-reproduktion/",

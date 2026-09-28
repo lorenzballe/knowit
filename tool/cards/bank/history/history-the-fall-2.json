@@ -33,30 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 0,
-    "to": 700,
-    "events": [
-      {
-        "at": 165,
-        "label": "plague: lead falls",
-        "hi": true
-      },
-      {
-        "at": 476,
-        "label": "last western emperor"
-      }
-    ],
-    "spans": [
-      {
-        "from": 165,
-        "to": 665,
-        "label": "lead stays low"
-      }
-    ],
-    "caption": "Smelting collapsed three centuries before the date the textbooks give."
-  },
   "source": "McConnell et al., PNAS, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1073/pnas.1721818115",

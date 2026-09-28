@@ -34,19 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 10,
-        "label": "still in pain months later",
-        "hi": true
-      }
-    ],
-    "caption": "Of 100 routine groin hernia repairs, about 10 leave lasting pain."
-  },
+  "figure": "none",
   "source": "Kehlet, Jensen & Woolf, The Lancet, 2006",
   "source_kind": "paper",
   "reference": "Kehlet, Jensen & Woolf, Persistent postsurgical pain: risk factors and prevention, The Lancet, 2006",

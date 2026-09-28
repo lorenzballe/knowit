@@ -34,27 +34,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "$",
-    "items": [
-      {
-        "label": "$7.25, face value",
-        "value": 7.25
-      },
-      {
-        "label": "Wrong: 50% subtracted",
-        "value": 3.63
-      },
-      {
-        "label": "Right: 7.25 ÷ 1.50, 2009 dollars",
-        "value": 4.83,
-        "hi": true
-      }
-    ],
-    "caption": "Prices up 50% cut the wage by a third, not by half."
-  },
+  "figure": "none",
   "source": "BLS, Consumer Price Index, 2025",
   "source_kind": "statistics",
   "reference": "US Bureau of Labor Statistics, Consumer Price Index for All Urban Consumers (CPI-U), 2025",

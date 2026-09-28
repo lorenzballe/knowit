@@ -34,22 +34,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "µm³",
-    "items": [
-      {
-        "label": "Droplet, 0.02 mm",
-        "value": 4188.79
-      },
-      {
-        "label": "Raindrop, 1 mm",
-        "value": 523598775,
-        "hi": true
-      }
-    ],
-    "caption": "Fifty times wider means 125,000 times the volume."
-  },
   "source": "Pruppacher & Klett, Microphysics of Clouds, 1997",
   "source_kind": "book",
   "reference": "Pruppacher & Klett, Microphysics of Clouds and Precipitation, Kluwer, 1997",

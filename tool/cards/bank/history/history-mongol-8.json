@@ -47,7 +47,7 @@
       },
       {
         "at": 1279,
-        "label": "Song China falls: greatest extent",
+        "label": "Song falls: greatest extent",
         "hi": true
       }
     ],
@@ -57,7 +57,8 @@
         "to": 1264,
         "label": "civil war"
       }
-    ]
+    ],
+    "caption": "The khanates were at war seventeen years before the empire reached its greatest extent."
   },
   "source": "Morgan, The Mongols, 2007",
   "source_kind": "book",

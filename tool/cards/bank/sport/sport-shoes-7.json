@@ -26,26 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% of energy returned",
-    "items": [
-      {
-        "label": "Nike EVA racing flat",
-        "value": 66
-      },
-      {
-        "label": "adidas Boost",
-        "value": 76
-      },
-      {
-        "label": "PEBA prototype",
-        "value": 87,
-        "hi": true
-      }
-    ],
-    "caption": "The prototype foam returned 87% of each squash, against 76% and 66%."
-  },
   "source": "Hoogkamer et al., Sports Medicine, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1007/s40279-017-0811-2",

@@ -41,7 +41,7 @@
     "unit": "m²",
     "items": [
       {
-        "label": "12 ml as one drop",
+        "label": "The oil as one drop",
         "value": 0.00253
       },
       {
@@ -50,7 +50,7 @@
         "hi": true
       }
     ],
-    "caption": "Split into droplets, one tablespoon of oil has over 2,800 times the surface."
+    "caption": "As one drop, 12 ml of oil has 25 cm² of surface; as 10 µm droplets, 7.2 m²."
   },
   "source": "McClements, Food Emulsions, 2015",
   "source_kind": "book",

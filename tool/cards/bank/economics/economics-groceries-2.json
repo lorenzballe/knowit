@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "split",
-    "unit": "cents",
-    "parts": [
-      {
-        "label": "reaches the farm",
-        "value": 15,
-        "hi": true
-      },
-      {
-        "label": "everything after it",
-        "value": 85
-      }
-    ],
-    "caption": "Restaurants, processing, packaging, transport and shops take the rest of the food dollar."
-  },
   "source": "USDA ERS, Food Dollar Series",
   "source_kind": "statistics",
   "reference": "Canning, A Revised and Expanded Food Dollar Series, USDA Economic Research Service, ERR-114, 2011",

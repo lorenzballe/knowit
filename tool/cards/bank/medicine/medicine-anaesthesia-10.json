@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "60% nitrous oxide",
-        "value": 58
-      },
-      {
-        "label": "0.85% sevoflurane",
-        "value": 42,
-        "hi": true
-      }
-    ],
-    "caption": "Nitrous oxide already gives 58% of the effect; sevoflurane only tops up the other 42%."
-  },
   "source": "Miller's Anesthesia, 9th edition, 2020",
   "source_kind": "reference_work",
   "reference": "Gropper (ed.), Miller's Anesthesia, 9th edition, Elsevier, 2020",

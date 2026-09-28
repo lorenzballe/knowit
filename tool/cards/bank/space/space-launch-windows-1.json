@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "months",
-    "items": [
-      {
-        "label": "Neptune",
-        "value": 12.1
-      },
-      {
-        "label": "Venus",
-        "value": 19
-      },
-      {
-        "label": "Mars",
-        "value": 26,
-        "hi": true
-      }
-    ],
-    "caption": "Earth gains on Mars slowest of all, so the neighbour keeps missions waiting longest."
-  },
   "source": "Curtis, Orbital Mechanics for Engineering Students, 2020",
   "source_kind": "book",
   "reference": "Curtis, Orbital Mechanics for Engineering Students, 4th ed., Butterworth-Heinemann, 2020",

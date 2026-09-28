@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% in REM",
-    "items": [
-      {
-        "label": "Adults",
-        "value": 20
-      },
-      {
-        "label": "Newborns",
-        "value": 50,
-        "hi": true
-      }
-    ],
-    "caption": "Half of a newborn's 16 hours: about eight hours of REM a day."
-  },
   "source": "Roffwarg, Muzio & Dement, Science, 1966",
   "source_kind": "paper",
   "reference": "Roffwarg, Muzio & Dement, Ontogenetic development of the human sleep-dream cycle, Science, 1966",

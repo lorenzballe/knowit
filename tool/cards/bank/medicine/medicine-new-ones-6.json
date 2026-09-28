@@ -25,26 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "items": [
-      {
-        "label": "Screening campaigns",
-        "value": 67
-      },
-      {
-        "label": "Hits",
-        "value": 16
-      },
-      {
-        "label": "Leads",
-        "value": 5,
-        "hi": true
-      }
-    ],
-    "caption": "Six years of genomic screening narrowed to five leads, and not one drug."
-  },
+  "figure": "none",
   "source": "Payne et al., Nature Reviews Drug Discovery, 2007",
   "source_kind": "paper",
   "reference": "Payne, Gwynn, Holmes & Pompliano, Drugs for bad bugs: confronting the challenges of antibacterial discovery, Nature Reviews Drug Discovery, 2007",

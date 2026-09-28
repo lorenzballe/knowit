@@ -29,31 +29,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1600,
-    "to": 1900,
-    "events": [
-      {
-        "at": 1614,
-        "label": "Chilli called poisonous",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1700,
-        "to": 1800,
-        "label": "chilli enters kimchi"
-      },
-      {
-        "from": 1800,
-        "to": 1900,
-        "label": "red kimchi spreads"
-      }
-    ],
-    "caption": "Red kimchi is a recent arrival: a century after chilli was first feared."
-  },
   "source": "Journal of Ethnic Foods, 2025",
   "source_kind": "paper",
   "reference": "https://journalofethnicfoods.biomedcentral.com/articles/10.1186/s42779-025-00271-9",

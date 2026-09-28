@@ -28,31 +28,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1550,
-    "to": 2030,
-    "events": [
-      {
-        "at": 1572,
-        "label": "Tycho sees the flash"
-      },
-      {
-        "at": 2008,
-        "label": "the echo's spectrum",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1572,
-        "to": 2008,
-        "label": "the echo's detour"
-      }
-    ],
-    "caption": "The bounced light arrived 436 years after the direct flash."
-  },
+  "figure": "none",
   "source": "Krause et al., Nature, 2008",
   "source_kind": "paper",
   "reference": "doi:10.1038/nature07608",

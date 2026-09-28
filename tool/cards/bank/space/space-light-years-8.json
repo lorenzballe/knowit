@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "light-years",
-    "items": [
-      {
-        "label": "Alpha Centauri today",
-        "value": 4.2
-      },
-      {
-        "label": "Gliese 710 at its closest",
-        "value": 0.2,
-        "hi": true
-      }
-    ],
-    "caption": "Gliese 710 will pass about twenty times closer than the nearest star is now."
-  },
+  "figure": "none",
   "source": "Bailer-Jones et al., Astronomy & Astrophysics, 2018",
   "source_kind": "paper",
   "reference": "Bailer-Jones, Rybizki, Andrae & Fouesneau, New stellar encounters discovered in the second Gaia data release, Astronomy & Astrophysics 616, A37, 2018",

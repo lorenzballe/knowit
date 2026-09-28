@@ -151,7 +151,7 @@
         "label": "100 servers: 63%"
       }
     ],
-    "caption": "A one-in-a-hundred delay per server becomes the usual case across a hundred."
+    "caption": "Each server lags once in 100, yet a search across 100 of them lags 63 times in 100."
   },
   "source": "Dean & Barroso, Communications of the ACM, 2013",
   "source_kind": "paper",

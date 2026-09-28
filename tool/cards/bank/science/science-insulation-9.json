@@ -39,16 +39,16 @@
     "unit": "%",
     "parts": [
       {
-        "label": "Insulated 99% of wall",
+        "label": "99% of wall, insulated",
         "value": 79.8
       },
       {
-        "label": "Fixings, 1% of wall",
+        "label": "1% of wall, fixings",
         "value": 20.2,
         "hi": true
       }
     ],
-    "caption": "Fixings on 1% of the wall carry a fifth of all its heat loss."
+    "caption": "Metal fixings cover 1% of the wall but carry a fifth of its heat loss."
   },
   "source": "ISO 6946, thermal transmittance calculation",
   "source_kind": "standard",

@@ -34,34 +34,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 64,
-    "label": "coins in the pot",
-    "branches": [
-      {
-        "n": 32,
-        "label": "leader wins round 4",
-        "hi": true
-      },
-      {
-        "n": 32,
-        "label": "trailer wins round 4",
-        "branches": [
-          {
-            "n": 16,
-            "label": "leader wins round 5",
-            "hi": true
-          },
-          {
-            "n": 16,
-            "label": "trailer wins round 5"
-          }
-        ]
-      }
-    ],
-    "caption": "Split the pot by the chances: the leader's 32 + 16 = 48 coins."
-  },
   "source": "Devlin, The Unfinished Game, 2008",
   "source_kind": "book",
   "reference": "Devlin, The Unfinished Game: Pascal, Fermat, and the Seventeenth-Century Letter That Made the World Modern, Basic Books, 2008",

@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Lithium in hard-rock ore",
-        "value": 0.5
-      },
-      {
-        "label": "Lithium in LiFePO4 powder",
-        "value": 4.4,
-        "hi": true
-      }
-    ],
-    "caption": "The spent cathode is almost nine times richer than the ore."
-  },
   "source": "Kesler et al., Ore Geology Reviews, 2012",
   "source_kind": "paper",
   "reference": "Kesler, Gruber, Medina, Keoleian, Everson & Wallington, Global lithium resources: Relative importance of pegmatite, brine and other deposits, Ore Geology Reviews, 2012",

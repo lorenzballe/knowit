@@ -31,26 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "bars",
-    "unit": "× crown radius",
-    "items": [
-      {
-        "label": "Edge of the crown",
-        "value": 1
-      },
-      {
-        "label": "Roots, shortest reach",
-        "value": 1.7
-      },
-      {
-        "label": "Roots, longest reach",
-        "value": 3.8,
-        "hi": true
-      }
-    ],
-    "caption": "Roots spread up to nearly four times as far as the shade."
-  },
   "source": "Gilman, Journal of Arboriculture, 1988",
   "source_kind": "paper",
   "reference": "Gilman, Predicting root spread from trunk diameter and branch spread, Journal of Arboriculture, 1988; Perry, The ecology of tree roots and the practical significance thereof, Journal of Arboriculture, 1982",

@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Bypass surgery, still 79",
-        "value": 7
-      },
-      {
-        "label": "Bypass surgery, just turned 80",
-        "value": 5.3,
-        "hi": true
-      }
-    ],
-    "caption": "A few weeks apart in age, 7% against 5.3% on the operating table."
-  },
+  "figure": "none",
   "source": "Olenski et al., NEJM, 2020",
   "source_kind": "paper",
   "reference": "doi:10.1056/NEJMc1911289",

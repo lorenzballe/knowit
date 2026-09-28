@@ -31,23 +31,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 1000,
-    "groups": [
-      {
-        "n": 7,
-        "label": "laser light on target"
-      },
-      {
-        "n": 10,
-        "label": "fusion energy out",
-        "hi": true
-      }
-    ],
-    "caption": "Each dot is 0.3 MJ from the grid: fusion beat the laser light, not the wall socket."
-  },
+  "figure": "none",
   "source": "Indirect Drive ICF Collaboration, PRL, 2024",
   "source_kind": "paper",
   "reference": "Abu-Shawareb et al. (Indirect Drive ICF Collaboration), Achievement of Target Gain Larger than Unity in an Inertial Fusion Experiment, Physical Review Letters 132, 065102, 2024",

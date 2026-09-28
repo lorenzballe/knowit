@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "hours",
-    "parts": [
-      {
-        "label": "on the task",
-        "value": 8.5
-      },
-      {
-        "label": "mind elsewhere",
-        "value": 7.5,
-        "hi": true
-      }
-    ],
-    "caption": "Minds wandered in 46.9% of samples: about 7.5 of 16 waking hours."
-  },
   "source": "Killingsworth & Gilbert, Science, 2010",
   "source_kind": "paper",
   "reference": "Killingsworth & Gilbert, A wandering mind is an unhappy mind, Science, 2010",

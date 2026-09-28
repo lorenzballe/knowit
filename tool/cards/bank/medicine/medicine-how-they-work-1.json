@@ -25,31 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1920,
-    "to": 2015,
-    "events": [
-      {
-        "at": 1926,
-        "label": "Glenny: alum boosts antibody"
-      },
-      {
-        "at": 2008,
-        "label": "An inflammation sensor proposed",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1926,
-        "to": 2008,
-        "label": "used, unexplained"
-      }
-    ],
-    "caption": "Eight decades of billions of doses before a mechanism was even proposed."
-  },
+  "figure": "none",
   "source": "Marrack, McKee & Munks, Nature Reviews Immunology, 2009",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/nri2510",

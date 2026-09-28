@@ -32,6 +32,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "items": [
+      {
+        "label": "People inside",
+        "value": 6200
+      },
+      {
+        "label": "Seats in the arena",
+        "value": 19000
+      },
+      {
+        "label": "Ticket requests boasted",
+        "value": 1000000,
+        "hi": true
+      }
+    ],
+    "caption": "The campaign boasted over a million requests; about 6,200 people came, to 19,000 seats."
+  },
   "source": "The New York Times, 21 June 2020",
   "source_kind": "news_archive",
   "reference": "Taylor Lorenz, Kellen Browning and Sheera Frenkel, TikTok Teens and K-Pop Stans Say They Sank Trump Rally, The New York Times, 21 June 2020",

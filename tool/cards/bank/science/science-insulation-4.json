@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "relative resistance",
-    "items": [
-      {
-        "label": "1 m of sandstone",
-        "value": 1
-      },
-      {
-        "label": "10 cm of mineral wool",
-        "value": 6,
-        "hi": true
-      }
-    ],
-    "caption": "A tenth of the thickness, six times the resistance: wool conducts 60 times less."
-  },
   "source": "ISO 10456, tabulated thermal values of materials",
   "source_kind": "standard",
   "reference": "ISO 10456:2007, Building materials and products — Hygrothermal properties — Tabulated design values and procedures for determining declared and design thermal values",

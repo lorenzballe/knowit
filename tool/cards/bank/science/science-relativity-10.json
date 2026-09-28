@@ -32,26 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "″ a century",
-    "parts": [
-      {
-        "label": "Earth's wobbling axis",
-        "value": 5026
-      },
-      {
-        "label": "other planets' pulls",
-        "value": 532
-      },
-      {
-        "label": "relativity",
-        "value": 43,
-        "hi": true
-      }
-    ],
-    "caption": "Newton explained all but 43 of the 5,600: relativity's share is under 1%."
-  },
   "source": "Clemence, Reviews of Modern Physics, 1947",
   "source_kind": "paper",
   "reference": "Clemence, The Relativity Effect in Planetary Motions, Reviews of Modern Physics 19, 361, 1947",

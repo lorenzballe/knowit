@@ -25,27 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1895,
-    "to": 1920,
-    "events": [
-      {
-        "at": 1898,
-        "label": "Vaccination Act: conscience clause",
-        "hi": true
-      },
-      {
-        "at": 1907,
-        "label": "A signed declaration suffices"
-      },
-      {
-        "at": 1916,
-        "label": "Conscription begins"
-      }
-    ]
-  },
+  "figure": "none",
   "source": "Durbach, Bodily Matters, 2005",
   "source_kind": "book",
   "reference": "Durbach, Bodily Matters: The Anti-Vaccination Movement in England, 1853–1907, Duke University Press, 2005",

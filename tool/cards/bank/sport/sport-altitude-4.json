@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Air pressure at sea level",
-        "value": 100
-      },
-      {
-        "label": "Air pressure at 2,500 m",
-        "value": 75,
-        "hi": true
-      }
-    ],
-    "caption": "Oxygen is 20.9% of the air at both; each breath simply holds a quarter fewer molecules."
-  },
   "source": "West, Schoene & Milledge, High Altitude Medicine, 2007",
   "source_kind": "book",
   "reference": "West, Schoene & Milledge, High Altitude Medicine and Physiology, Hodder Arnold, 2007",

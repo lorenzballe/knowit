@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "cents",
-    "parts": [
-      {
-        "label": "to rent, at least",
-        "value": 50,
-        "hi": true
-      },
-      {
-        "label": "rent, high estimate",
-        "value": 30
-      },
-      {
-        "label": "tenant keeps, at most",
-        "value": 20
-      }
-    ],
-    "caption": "Of each extra euro of benefit, 50 to 80 cents went on higher rents."
-  },
   "source": "Fack, Labour Economics, 2006",
   "source_kind": "paper",
   "reference": "Fack, Are housing benefit an effective way to redistribute income? Evidence from a natural experiment in France, Labour Economics, 2006",

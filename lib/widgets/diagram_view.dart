@@ -1210,7 +1210,18 @@ class _LinePainter extends _DiagramPainter {
     if (a.log) {
       final lo = (_log10(a.min) - 1e-9).ceil();
       final hi = (_log10(a.max) + 1e-9).floor();
-      return [for (var k = lo; k <= hi; k++) math.pow(10, k).toDouble()];
+      // Thinned when there are many decades, so the labels keep apart.
+      final every = hi - lo <= 7
+          ? 1
+          : (hi - lo) <= 14
+          ? 2
+          : (hi - lo) <= 28
+          ? 5
+          : 10;
+      return [
+        for (var k = lo; k <= hi; k++)
+          if ((k - lo) % every == 0) math.pow(10.0, k).toDouble(),
+      ];
     }
     final span = a.max - a.min;
     final raw = span / 4;
@@ -1270,8 +1281,10 @@ class _LinePainter extends _DiagramPainter {
     // or else the one the curves touch least.
     final all = <Offset>[
       ...candidates,
-      for (final c in candidates) c + Offset(0, c.dy < 0 ? -16 : 16),
-      for (final c in candidates) c + Offset(0, c.dy < 0 ? -32 : 32),
+      for (final dx in [0.0, -w * 0.6, w * 0.6])
+        for (final dy in const [-16.0, 16.0, -32.0, 32.0, 0.0])
+          if (dx != 0 || dy != 0)
+            for (final c in candidates) c + Offset(dx, dy),
     ];
     Rect? best;
     var bestScore = 1 << 30;
@@ -1374,6 +1387,11 @@ class _LinePainter extends _DiagramPainter {
     final curves = [
       for (final s in order) [for (final pt in s.points) at(pt.$1, pt.$2)],
     ];
+    // The wash under a curve reaches down to zero, not to an axis that
+    // starts below it: negative values must not read as area.
+    final floor = d.y.log || d.y.min >= 0 || d.y.max <= 0
+        ? bottom
+        : at(d.x.min, 0).dy;
     // Labels may use the strip above the plot, beside the y-axis title.
     final plot = Rect.fromLTRB(left + 4, 0, right, bottom - 2);
     final placed = <Rect>[
@@ -1455,8 +1473,8 @@ class _LinePainter extends _DiagramPainter {
         );
         if (tip != null) {
           final wash = Path.from(drawn)
-            ..lineTo(tip.dx, bottom)
-            ..lineTo(pts.first.dx, bottom)
+            ..lineTo(tip.dx, floor)
+            ..lineTo(pts.first.dx, floor)
             ..close();
           // It fades in as the pen gets going, so its first sliver is not a bar.
           canvas.drawPath(wash, fill(inkAt(0.07 * phase(p, 0.08, 0.4))));

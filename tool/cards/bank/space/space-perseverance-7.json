@@ -31,22 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "flights",
-    "items": [
-      {
-        "label": "Planned",
-        "value": 5
-      },
-      {
-        "label": "Flown",
-        "value": 72,
-        "hi": true
-      }
-    ]
-  },
+  "figure": "none",
   "source": "NASA JPL accident investigation, 2024",
   "source_kind": "institution",
   "reference": "https://www.jpl.nasa.gov/news/nasa-performs-first-aircraft-accident-investigation-on-another-world/",

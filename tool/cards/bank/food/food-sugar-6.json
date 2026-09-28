@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "pence",
-    "items": [
-      {
-        "label": "Molasses Act, 1733",
-        "value": 6
-      },
-      {
-        "label": "Sugar Act, 1764",
-        "value": 3,
-        "hi": true
-      }
-    ],
-    "caption": "Duty on a gallon of foreign molasses: the Sugar Act halved it."
-  },
+  "figure": "none",
   "source": "Morgan & Morgan, The Stamp Act Crisis, 1953",
   "source_kind": "book",
   "reference": "Morgan & Morgan, The Stamp Act Crisis: Prologue to Revolution, University of North Carolina Press, 1953",

@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Crumb",
-        "value": 81
-      },
-      {
-        "label": "Crust, 3 mm deep",
-        "value": 19,
-        "hi": true
-      }
-    ],
-    "caption": "A crust a tenth of the radius holds nearly a fifth of the volume."
-  },
   "source": "Geometry of a cylinder",
   "source_kind": "arithmetic",
   "reference": "Calvel, The Taste of Bread, trans. Wirtz, Aspen Publishers, 2001",

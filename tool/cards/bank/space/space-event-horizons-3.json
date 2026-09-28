@@ -37,19 +37,19 @@
   "figure": "none",
   "diagram": {
     "type": "area",
-    "unit": "(solar masses)²",
+    "unit": "%",
     "items": [
       {
-        "label": "36 + 29 suns, before",
-        "value": 2137
+        "label": "Pair: 36 + 29 suns",
+        "value": 100
       },
       {
-        "label": "62 suns, after",
-        "value": 3844,
+        "label": "Merged: 62 suns",
+        "value": 180,
         "hi": true
       }
     ],
-    "caption": "Area goes with mass squared: three suns lost, yet four fifths more horizon."
+    "caption": "Horizon area goes with mass squared: three suns lost, yet four fifths more area."
   },
   "source": "Isi et al., Physical Review Letters, 2021",
   "source_kind": "paper",

@@ -24,22 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% cured",
-    "items": [
-      {
-        "label": "Vancomycin: 4 of 13",
-        "value": 31
-      },
-      {
-        "label": "Donor faeces: 13 of 16",
-        "value": 81,
-        "hi": true
-      }
-    ]
-  },
+  "figure": "none",
   "source": "van Nood et al., NEJM, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1056/NEJMoa1205037",

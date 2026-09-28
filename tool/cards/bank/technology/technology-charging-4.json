@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "W",
-    "items": [
-      {
-        "label": "The charger's rating",
-        "value": 100
-      },
-      {
-        "label": "What a 25-watt phone draws",
-        "value": 25,
-        "hi": true
-      }
-    ],
-    "caption": "The phone orders 25 watts; the other 75 stay on the menu."
-  },
+  "figure": "none",
   "source": "USB-IF, USB Power Delivery Specification, 2021",
   "source_kind": "standard",
   "reference": "USB Implementers Forum, USB Power Delivery Specification, Revision 3.1, 2021",

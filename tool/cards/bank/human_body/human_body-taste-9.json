@@ -31,22 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "items": [
-      {
-        "label": "Kinds of sweet receptor",
-        "value": 1
-      },
-      {
-        "label": "Kinds of bitter receptor",
-        "value": 25,
-        "hi": true
-      }
-    ],
-    "caption": "A few sugars need one receptor; thousands of poisons need about 25."
-  },
+  "figure": "none",
   "source": "Meyerhof et al., Chemical Senses, 2010",
   "source_kind": "paper",
   "reference": "Meyerhof, Batram, Kuhn et al., The molecular receptive ranges of human TAS2R bitter taste receptors, Chemical Senses, 2010",

@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "Hz",
-    "items": [
-      {
-        "label": "Steady gaze: fuses by 50 to 90",
-        "value": 90
-      },
-      {
-        "label": "Sweeping eye: artefacts still at",
-        "value": 500,
-        "hi": true
-      }
-    ],
-    "caption": "A moving eye catches flicker more than five times faster than a still one."
-  },
+  "figure": "none",
   "source": "Davis, Hsieh & Lee, Scientific Reports, 2015",
   "source_kind": "paper",
   "reference": "doi:10.1038/srep07861",

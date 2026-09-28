@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "points won",
-    "items": [
-      {
-        "label": "Djokovic, champion",
-        "value": 204
-      },
-      {
-        "label": "Federer, runner-up",
-        "value": 218,
-        "hi": true
-      }
-    ],
-    "caption": "Federer won 14 more points, and 36 games to 32, yet lost in five sets."
-  },
   "source": "Tennis.com, 2019 top matches",
   "source_kind": "news_archive",
   "reference": "https://www.tennis.com/news/articles/2019-top-matches-no-1-djokovic-d-federer-wimbledon-final",

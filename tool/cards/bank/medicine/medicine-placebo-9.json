@@ -45,7 +45,7 @@
         "branches": [
           {
             "n": 30,
-            "label": "would ease on placebo"
+            "label": "would ease anyway"
           },
           {
             "n": 10,
@@ -59,7 +59,7 @@
         "label": "not relieved"
       }
     ],
-    "caption": "Of 40 relieved, only 10 owe it to the drug: 25%."
+    "caption": "Of 40 relieved, 30 would have eased on a dummy anyway: only 10 owe it to the drug."
   },
   "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
   "source_kind": "arithmetic",

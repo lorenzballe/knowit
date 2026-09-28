@@ -34,23 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "€",
-    "items": [
-      {
-        "label": "DM 4.50, converted",
-        "value": 2.3
-      },
-      {
-        "label": "New euro price",
-        "value": 2.49,
-        "hi": true
-      }
-    ],
-    "caption": "In one currency the cake went up 19 cents: about 8.3%."
-  },
+  "figure": "none",
   "source": "Council Regulation (EC) No 2866/98",
   "source_kind": "primary_document",
   "reference": "Council Regulation (EC) No 2866/98 of 31 December 1998 on the conversion rates between the euro and the currencies of the Member States adopting the euro, 1998",

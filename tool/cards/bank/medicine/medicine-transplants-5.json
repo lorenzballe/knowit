@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "hours",
-    "items": [
-      {
-        "label": "Heart",
-        "value": 6
-      },
-      {
-        "label": "Kidney",
-        "value": 36,
-        "hi": true
-      }
-    ],
-    "caption": "Upper limits: a heart has 4 to 6 hours on ice, a kidney commonly 24 to 36."
-  },
+  "figure": "none",
   "source": "Jing et al., Acta Pharmacologica Sinica, 2018",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/aps2017182",

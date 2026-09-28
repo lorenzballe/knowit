@@ -33,18 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 61,
-        "label": "red dwarfs",
-        "hi": true
-      }
-    ],
-    "caption": "Six in ten stars nearby are red dwarfs, and not one is easy to see unaided."
-  },
   "source": "Reylé et al., Astronomy & Astrophysics, 2021",
   "source_kind": "paper",
   "reference": "doi:10.1051/0004-6361/202140985",

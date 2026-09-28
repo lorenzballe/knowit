@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "drachmas",
-    "items": [
-      {
-        "label": "Isthmian victor",
-        "value": 100
-      },
-      {
-        "label": "Olympic victor",
-        "value": 500,
-        "hi": true
-      }
-    ],
-    "caption": "With a sheep worth one drachma, an Olympic win paid 500 sheep."
-  },
+  "figure": "none",
   "source": "Plutarch, Life of Solon, 23",
   "source_kind": "primary_document",
   "reference": "Plutarch, Lives, Volume I: Solon, trans. Bernadotte Perrin, Loeb Classical Library, Harvard, 1914",

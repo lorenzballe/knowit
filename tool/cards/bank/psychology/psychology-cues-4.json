@@ -37,16 +37,16 @@
     "total": 100,
     "groups": [
       {
+        "n": 33,
+        "label": "would have gone anyway"
+      },
+      {
         "n": 4,
         "label": "added by writing a date",
         "hi": true
-      },
-      {
-        "n": 33,
-        "label": "reminder alone was enough"
       }
     ],
-    "caption": "Of 37 in 100 vaccinated, 33 would have gone with just the reminder."
+    "caption": "Of 37 in 100 vaccinated, 33 would have gone anyway; writing a date added 4."
   },
   "source": "Milkman et al., PNAS, 2011",
   "source_kind": "paper",

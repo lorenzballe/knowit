@@ -32,18 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 7,
-        "label": "go in",
-        "hi": true
-      }
-    ],
-    "caption": "About 7 free kicks in 100 score: roughly one in 15."
-  },
   "source": "Anderson & Sally, The Numbers Game",
   "source_kind": "book",
   "reference": "Anderson & Sally, The Numbers Game: Why Everything You Know About Football Is Wrong, Viking, 2013",

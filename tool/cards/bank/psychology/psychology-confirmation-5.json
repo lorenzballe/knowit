@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% confirm",
-    "items": [
-      {
-        "label": "Standard papers (146 of 152)",
-        "value": 96
-      },
-      {
-        "label": "Registered Reports (31 of 71)",
-        "value": 44,
-        "hi": true
-      }
-    ],
-    "caption": "Once publication no longer hangs on a yes, confirmations fall from 96% to 44%."
-  },
   "source": "Scheel, Schijen & Lakens, AMPPS, 2021",
   "source_kind": "paper",
   "reference": "doi:10.1177/25152459211007467",

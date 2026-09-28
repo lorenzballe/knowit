@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "kg per cubic metre",
-    "items": [
-      {
-        "label": "Billion-sun hole",
-        "value": 18,
-        "hi": true
-      },
-      {
-        "label": "Water",
-        "value": 1000
-      }
-    ],
-    "caption": "Averaged inside its horizon, a billion-sun hole is 56 times thinner than water."
-  },
   "source": "Carroll, Spacetime and Geometry, 2004",
   "source_kind": "book",
   "reference": "Carroll, Spacetime and Geometry: An Introduction to General Relativity, Addison-Wesley, 2004",

@@ -30,20 +30,110 @@
   "language": "en",
   "figure": "bars",
   "diagram": {
-    "type": "bars",
-    "unit": "kcal",
-    "items": [
+    "type": "line",
+    "x": {
+      "label": "km run",
+      "min": 0,
+      "max": 42.195
+    },
+    "y": {
+      "label": "kcal",
+      "min": 0,
+      "max": 3200
+    },
+    "series": [
       {
-        "label": "Marathon, 70 kg runner",
-        "value": 2954
+        "label": "glycogen stored",
+        "points": [
+          [
+            0,
+            2000
+          ],
+          [
+            42.195,
+            2000
+          ]
+        ]
       },
       {
-        "label": "Glycogen stored",
-        "value": 2000,
-        "hi": true
+        "label": "cost, 70 kg runner",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            3,
+            210
+          ],
+          [
+            6,
+            420
+          ],
+          [
+            9,
+            630
+          ],
+          [
+            12,
+            840
+          ],
+          [
+            15,
+            1050
+          ],
+          [
+            18,
+            1260
+          ],
+          [
+            21,
+            1470
+          ],
+          [
+            24,
+            1680
+          ],
+          [
+            27,
+            1890
+          ],
+          [
+            30,
+            2100
+          ],
+          [
+            33,
+            2310
+          ],
+          [
+            36,
+            2520
+          ],
+          [
+            39,
+            2730
+          ],
+          [
+            42,
+            2940
+          ],
+          [
+            42.195,
+            2954
+          ]
+        ]
       }
     ],
-    "caption": "At 70 kcal a km, 2,000 kcal of glycogen runs out near 29 km."
+    "marks": [
+      {
+        "x": 28.6,
+        "y": 2000,
+        "label": "glycogen gone near 29 km"
+      }
+    ],
+    "caption": "At about 70 kcal a km, the 2,000 kcal of glycogen runs out near 29 km."
   },
   "source": "Rapoport, PLoS Computational Biology, 2010",
   "source_kind": "paper",

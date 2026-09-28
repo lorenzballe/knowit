@@ -34,23 +34,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "ms",
-    "items": [
-      {
-        "label": "target present, on average",
-        "value": 620
-      },
-      {
-        "label": "target absent",
-        "value": 1200,
-        "hi": true
-      }
-    ],
-    "caption": "Saying 'absent' means checking all 30 items: 580 ms longer than an average find."
-  },
+  "figure": "none",
   "source": "Treisman & Gelade, Cognitive Psychology, 1980",
   "source_kind": "paper",
   "reference": "Treisman & Gelade, A feature-integration theory of attention, Cognitive Psychology, 1980",

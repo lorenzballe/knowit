@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "bar",
-    "items": [
-      {
-        "label": "Espresso machine",
-        "value": 9
-      },
-      {
-        "label": "Moka pot, at most",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "A moka pot brews at under a quarter of an espresso machine's pressure."
-  },
+  "figure": "none",
   "source": "Navarini et al., Applied Thermal Engineering, 2009",
   "source_kind": "paper",
   "reference": "Navarini, Nobile, Pinto, Scheri & Suggi-Liverani, Experimental investigation of steam pressure coffee extraction in a stove-top coffee maker, Applied Thermal Engineering, 2009",

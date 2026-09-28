@@ -33,6 +33,46 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "survey year",
+      "min": 1998,
+      "max": 2014
+    },
+    "y": {
+      "label": "axolotls per km²",
+      "min": 0,
+      "max": 6000
+    },
+    "series": [
+      {
+        "hi": true,
+        "points": [
+          [
+            1998,
+            6000
+          ],
+          [
+            2008,
+            100
+          ],
+          [
+            2014,
+            35
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2014,
+        "y": 35,
+        "label": "2014: about 35"
+      }
+    ],
+    "caption": "From about 6,000 axolotls per km² to 35 in 16 years: over 99% gone."
+  },
   "source": "Scientific American, 2015",
   "source_kind": "news_archive",
   "reference": "https://www.scientificamerican.com/article/biologys-beloved-amphibian-the-axolotl-is-racing-toward-extinction1/",

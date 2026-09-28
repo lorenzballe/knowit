@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "× as fast",
-    "items": [
-      {
-        "label": "Left open to scab",
-        "value": 1
-      },
-      {
-        "label": "Kept moist under film",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "In Winter's pigs, moist wounds grew new skin across about twice as fast."
-  },
+  "figure": "none",
   "source": "Winter, Nature, 1962",
   "source_kind": "paper",
   "reference": "doi:10.1038/193293a0",

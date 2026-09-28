@@ -29,22 +29,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "euros",
-    "parts": [
-      {
-        "label": "cost",
-        "value": 100
-      },
-      {
-        "label": "kept",
-        "value": 50,
-        "hi": true
-      }
-    ],
-    "caption": "The €50 is half the cost but only a third of the €150 price."
-  },
   "source": "Markup and margin, arithmetic",
   "source_kind": "arithmetic",
   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",

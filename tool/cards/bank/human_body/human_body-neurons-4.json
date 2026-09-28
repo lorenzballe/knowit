@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "glia per neuron",
-    "items": [
-      {
-        "label": "The textbook ratio",
-        "value": 10
-      },
-      {
-        "label": "Direct counts",
-        "value": 1,
-        "hi": true
-      }
-    ],
-    "caption": "No count ever supported ten to one; direct counts point to about one each."
-  },
+  "figure": "none",
   "source": "von Bartheld et al., J Comp Neurol, 2016",
   "source_kind": "paper",
   "reference": "doi:10.1002/cne.24040",

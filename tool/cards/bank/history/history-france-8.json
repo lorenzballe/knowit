@@ -44,18 +44,31 @@
       "max": 100
     },
     "y": {
-      "label": "worth today, in years of dues",
+      "label": "worth now, in years of dues",
       "min": 0,
       "max": 22
     },
     "series": [
       {
-        "label": "paying the due, at 5%",
+        "label": "buy-out: 20 years' dues",
+        "points": [
+          [
+            0,
+            20
+          ],
+          [
+            100,
+            20
+          ]
+        ]
+      },
+      {
+        "label": "dues paid, valued at 5%",
         "hi": true,
         "points": [
           [
             0,
-            0.0
+            0
           ],
           [
             5,
@@ -142,12 +155,12 @@
     ],
     "marks": [
       {
-        "x": 100,
-        "y": 19.8,
-        "label": "for ever: 20, the buy-out"
+        "x": 20,
+        "y": 12.5,
+        "label": "20 years of dues: 12.5"
       }
     ],
-    "caption": "However long the dues run, at 5% they never add up to more than the buy-out."
+    "caption": "Twenty years of dues are worth only 12.5 now; even a century of them never reaches 20."
   },
   "source": "Jones, The Peasantry in the French Revolution",
   "source_kind": "book",

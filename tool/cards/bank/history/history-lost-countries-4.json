@@ -33,18 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 5,
-        "label": "survived as states to 1900",
-        "hi": true
-      }
-    ],
-    "caption": "About 500 political units in 1500, about 25 states in 1900: 1 in 20 survived."
-  },
   "source": "Tilly, The Formation of National States, 1975",
   "source_kind": "book",
   "reference": "Tilly (ed.), The Formation of National States in Western Europe, Princeton University Press, 1975",

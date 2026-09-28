@@ -34,22 +34,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "mm² per mm³",
-    "items": [
-      {
-        "label": "Fine root, 0.5 mm",
-        "value": 8
-      },
-      {
-        "label": "Thread, 0.005 mm",
-        "value": 800,
-        "hi": true
-      }
-    ],
-    "caption": "Per unit of tissue, the thread has 100 times the surface, not 10,000."
-  },
   "source": "Smith & Read, Mycorrhizal Symbiosis, 2008",
   "source_kind": "book",
   "reference": "Smith & Read, Mycorrhizal Symbiosis, 3rd edition, Academic Press, 2008",

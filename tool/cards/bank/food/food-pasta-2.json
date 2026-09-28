@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "map",
-  "diagram": {
-    "type": "timeline",
-    "from": 1100,
-    "to": 1700,
-    "events": [
-      {
-        "at": 1154,
-        "label": "al-Idrisi: Trabia exports pasta",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1600,
-        "to": 1700,
-        "label": "Naples, 1600s"
-      }
-    ],
-    "caption": "Sicily shipped dried pasta about 450 years before Naples took it up."
-  },
   "source": "Serventi & Sabban, Pasta, 2002",
   "source_kind": "book",
   "reference": "Serventi & Sabban, Pasta: The Story of a Universal Food, Columbia University Press, 2002",

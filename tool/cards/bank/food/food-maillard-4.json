@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "°C",
-    "items": [
-      {
-        "label": "Wet surface, held at",
-        "value": 100
-      },
-      {
-        "label": "Browning turns fast above",
-        "value": 140,
-        "hi": true
-      }
-    ],
-    "caption": "Until the water is gone the surface stays 40 °C short of browning."
-  },
+  "figure": "none",
   "source": "López-Alt, The Food Lab, 2015",
   "source_kind": "book",
   "reference": "López-Alt, The Food Lab: Better Home Cooking Through Science, W. W. Norton, 2015",

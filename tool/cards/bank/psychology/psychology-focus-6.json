@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "tracked",
-    "items": [
-      {
-        "label": "slow-moving dots",
-        "value": 8
-      },
-      {
-        "label": "fast-moving dots",
-        "value": 1,
-        "hi": true
-      }
-    ],
-    "caption": "The same observers tracked eight slow dots but only one fast one."
-  },
+  "figure": "none",
   "source": "Alvarez & Franconeri, Journal of Vision, 2007",
   "source_kind": "paper",
   "reference": "Alvarez & Franconeri, How many objects can you track? Evidence for a resource-limited attentive tracking mechanism, Journal of Vision, 2007",

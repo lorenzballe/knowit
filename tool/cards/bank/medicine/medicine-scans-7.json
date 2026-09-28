@@ -35,22 +35,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "scale",
-    "unit": "mSv",
-    "items": [
-      {
-        "label": "Chest X-ray",
-        "value": 0.02
-      },
-      {
-        "label": "Abdominal CT",
-        "value": 8,
-        "hi": true
-      }
-    ],
-    "caption": "One abdominal CT gives the dose of 400 chest X-rays."
-  },
   "source": "Mettler et al., Radiology, 2008",
   "source_kind": "paper",
   "reference": "Mettler, Huda, Yoshizumi & Mahesh, Effective doses in radiology and diagnostic nuclear medicine: a catalog, Radiology, 2008",

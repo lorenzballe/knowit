@@ -30,44 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "tree",
-    "n": 1000,
-    "label": "applicants",
-    "branches": [
-      {
-        "n": 50,
-        "label": "top performers",
-        "branches": [
-          {
-            "n": 40,
-            "label": "flagged",
-            "hi": true
-          },
-          {
-            "n": 10,
-            "label": "missed"
-          }
-        ]
-      },
-      {
-        "n": 950,
-        "label": "the rest",
-        "branches": [
-          {
-            "n": 190,
-            "label": "flagged anyway",
-            "hi": true
-          },
-          {
-            "n": 760,
-            "label": "not flagged"
-          }
-        ]
-      }
-    ],
-    "caption": "Of 230 flagged, 40 are top performers: under one in five."
-  },
   "source": "Base rate neglect in selection",
   "source_kind": "arithmetic",
   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"

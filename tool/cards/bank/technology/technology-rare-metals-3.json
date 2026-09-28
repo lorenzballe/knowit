@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "tonnes a year",
-    "items": [
-      {
-        "label": "Platinum",
-        "value": 180
-      },
-      {
-        "label": "Iridium",
-        "value": 7,
-        "hi": true
-      }
-    ],
-    "caption": "A year's iridium is about a twenty-fifth of the platinum from the same ores."
-  },
   "source": "Johnson Matthey, PGM Market Report, 2024",
   "source_kind": "company",
   "reference": "Johnson Matthey, PGM Market Report, May 2024",

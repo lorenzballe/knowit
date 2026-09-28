@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "$",
-    "items": [
-      {
-        "label": "US federal minimum wage",
-        "value": 7.25
-      },
-      {
-        "label": "Median Mechanical Turk worker",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "The median worker earned about $2 an hour; only 4% cleared $7.25."
-  },
+  "figure": "none",
   "source": "Hara et al., CHI, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1145/3173574.3174023",

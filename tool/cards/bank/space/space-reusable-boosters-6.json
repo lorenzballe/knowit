@@ -26,33 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1980,
-    "to": 1987,
-    "events": [
-      {
-        "at": 1981,
-        "label": "O-rings scorched"
-      },
-      {
-        "at": 1985.05,
-        "label": "worst soot"
-      },
-      {
-        "at": 1986,
-        "label": "Challenger lost",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1981,
-        "to": 1986,
-        "label": "5 years of burnt seals"
-      }
-    ]
-  },
   "source": "Rogers Commission report, 1986",
   "source_kind": "institution",
   "reference": "Presidential Commission on the Space Shuttle Challenger Accident, Report to the President, Washington DC, 1986",

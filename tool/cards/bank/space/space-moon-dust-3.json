@@ -25,23 +25,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "× the half moon",
-    "items": [
-      {
-        "label": "Lit area at full moon",
-        "value": 2
-      },
-      {
-        "label": "Brightness at full moon",
-        "value": 10,
-        "hi": true
-      }
-    ],
-    "caption": "Twice the lit area, ten times the light: the dust's shadows switch off."
-  },
+  "figure": "none",
   "source": "Hapke, Nelson & Smythe, Science, 1993",
   "source_kind": "paper",
   "reference": "Hapke, Nelson & Smythe, The Opposition Effect of the Moon: The Contribution of Coherent Backscatter, Science, 1993",

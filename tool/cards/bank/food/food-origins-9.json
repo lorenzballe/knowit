@@ -36,27 +36,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "g",
-    "items": [
-      {
-        "label": "Ripe cherries",
-        "value": 2000
-      },
-      {
-        "label": "Green beans",
-        "value": 400
-      },
-      {
-        "label": "Roasted coffee",
-        "value": 340,
-        "hi": true
-      }
-    ],
-    "caption": "A year's two kilos of cherries roast down to 340 g: about 35 cups."
-  },
+  "figure": "none",
   "source": "Clifford & Willson, Coffee: Botany, 1985",
   "source_kind": "book",
   "reference": "Clifford & Willson (eds), Coffee: Botany, Biochemistry and Production of Beans and Beverage, Croom Helm, 1985",

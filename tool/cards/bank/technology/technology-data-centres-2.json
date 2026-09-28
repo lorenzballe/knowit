@@ -25,22 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "W overhead per 100 W",
-    "items": [
-      {
-        "label": "Average data centre, 2024",
-        "value": 56
-      },
-      {
-        "label": "Google's fleet",
-        "value": 10,
-        "hi": true
-      }
-    ],
-    "caption": "For each 100 W of computing, the average site spends 56 W more; Google 10 W."
-  },
   "source": "Uptime Institute Global Data Center Survey, 2024",
   "source_kind": "institution",
   "reference": "https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",

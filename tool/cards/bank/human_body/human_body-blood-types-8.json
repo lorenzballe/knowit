@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% Rh-negative",
-    "items": [
-      {
-        "label": "Europeans",
-        "value": 15
-      },
-      {
-        "label": "Han Chinese (0.3–0.5%)",
-        "value": 0.4,
-        "hi": true
-      }
-    ],
-    "caption": "About 15% of Europeans are Rh-negative, but under 1% of Han Chinese."
-  },
+  "figure": "none",
   "source": "Daniels, Human Blood Groups, 2013",
   "source_kind": "book",
   "reference": "Daniels, Human Blood Groups, 3rd edition, Wiley-Blackwell, 2013",

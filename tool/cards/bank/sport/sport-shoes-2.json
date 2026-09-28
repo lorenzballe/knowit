@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Energy the shoe saves",
-        "value": 4
-      },
-      {
-        "label": "Saving lost, plate sawn",
-        "value": 0.5,
-        "hi": true
-      }
-    ],
-    "caption": "Sawing the plate gave back only an eighth of the saving."
-  },
+  "figure": "none",
   "source": "Healey & Hoogkamer, J Sport Health Sci, 2022",
   "source_kind": "paper",
   "reference": "https://www.sciencedirect.com/science/article/pii/S2095254621000739",

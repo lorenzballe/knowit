@@ -32,27 +32,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "€",
-    "items": [
-      {
-        "label": "Raised price, two weeks",
-        "value": 100
-      },
-      {
-        "label": "Lowest price in 30 days",
-        "value": 80
-      },
-      {
-        "label": "'30% off' sale price",
-        "value": 70,
-        "hi": true
-      }
-    ],
-    "caption": "Counted from €100 it is 30% off; from the €80 it really cost, 12.5%."
-  },
+  "figure": "none",
   "source": "EU Price Indication Directive, Article 6a",
   "source_kind": "primary_document",
   "reference": "Directive (EU) 2019/2161 of the European Parliament and of the Council, Article 2, inserting Article 6a into Directive 98/6/EC, 2019",

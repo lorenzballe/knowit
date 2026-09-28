@@ -30,19 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 5,
-        "label": "pass p < 0.05 by chance",
-        "hi": true,
-        "spread": true
-      }
-    ],
-    "caption": "Test 100 foods that do nothing and about five look significant: one in twenty."
-  },
   "source": "Multiple comparisons problem",
   "source_kind": "paper",
   "reference": "Ioannidis, Why Most Published Research Findings Are False, PLOS Medicine, 2005"

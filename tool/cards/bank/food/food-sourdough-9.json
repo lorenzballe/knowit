@@ -40,16 +40,16 @@
     "unit": "× hydrogen ions",
     "items": [
       {
-        "label": "Fresh dough, pH 6.0",
+        "label": "Fresh dough, pH 6",
         "value": 1
       },
       {
-        "label": "Sourdough, pH 4.0",
+        "label": "Sourdough, pH 4",
         "value": 100,
         "hi": true
       }
     ],
-    "caption": "Two steps down the pH scale is a hundred times the hydrogen ions."
+    "caption": "pH 6 to pH 4 feels like a small step; it is a hundred times the hydrogen ions."
   },
   "source": "De Vuyst & Neysens, Trends in Food Science",
   "source_kind": "paper",

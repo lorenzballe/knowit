@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "minutes",
-    "items": [
-      {
-        "label": "Room with older furniture",
-        "value": 30
-      },
-      {
-        "label": "Modern room (under 4)",
-        "value": 4,
-        "hi": true
-      }
-    ],
-    "caption": "Synthetic foam cut the time to escape from half an hour to minutes."
-  },
   "source": "Kerber, Fire Technology, 2012",
   "source_kind": "paper",
   "reference": "Kerber, Analysis of Changing Residential Fire Dynamics and Its Implications on Firefighter Operational Timeframes, Fire Technology, 2012",

@@ -25,34 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1925,
-    "to": 1990,
-    "events": [
-      {
-        "at": 1930,
-        "label": "Six-hour day begins"
-      },
-      {
-        "at": 1945,
-        "label": "Second World War ends"
-      },
-      {
-        "at": 1985,
-        "label": "Last six-hour holdouts end",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1930,
-        "to": 1985,
-        "label": "55 years"
-      }
-    ],
-    "caption": "The six-hour day lasted 55 years, shrinking department by department after the war."
-  },
   "source": "Hunnicutt, Kellogg's Six-Hour Day, 1996",
   "source_kind": "book",
   "reference": "Hunnicutt, Kellogg's Six-Hour Day, Temple University Press, 1996",

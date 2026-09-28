@@ -32,18 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 76,
-        "label": "can make light",
-        "hi": true
-      }
-    ],
-    "caption": "Three in four animals filmed from surface to 3,900 m could glow."
-  },
   "source": "Martini & Haddock, Scientific Reports, 2017",
   "source_kind": "paper",
   "reference": "Martini & Haddock, Quantification of bioluminescence from the surface to the deep sea demonstrates its predominance as an ecological trait, Scientific Reports, 2017",

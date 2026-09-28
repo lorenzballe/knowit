@@ -31,26 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "bars",
-    "unit": "boxes",
-    "items": [
-      {
-        "label": "The claim",
-        "value": 10000
-      },
-      {
-        "label": "2024, rerouted round the Cape",
-        "value": 576
-      },
-      {
-        "label": "Average year since 2008 (under)",
-        "value": 1500,
-        "hi": true
-      }
-    ],
-    "caption": "Under 1,500 lost a year, out of more than 250 million carried."
-  },
   "source": "World Shipping Council, Containers Lost at Sea",
   "source_kind": "statistics",
   "reference": "https://www.worldshipping.org/containers-lost-at-sea",

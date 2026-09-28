@@ -31,23 +31,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "ms round trip",
-    "items": [
-      {
-        "label": "Near-straight fibre, 2010",
-        "value": 13
-      },
-      {
-        "label": "Microwave tower chains",
-        "value": 9,
-        "hi": true
-      }
-    ],
-    "caption": "Microwave towers did it in under 9 ms: radio through air outruns light in glass."
-  },
+  "figure": "none",
   "source": "Laughlin, Aguirre & Grundfest, Financial Review, 2014",
   "source_kind": "paper",
   "reference": "Laughlin, Aguirre & Grundfest, Information Transmission between Financial Markets in Chicago and New York, Financial Review 49(2), 2014",

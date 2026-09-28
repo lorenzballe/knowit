@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "1992, with a double negative",
+        "value": 22
+      },
+      {
+        "label": "1994, asked plainly",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "Remove the double negative and 22% doubting the Holocaust shrinks to 1%."
+  },
   "source": "Smith, Public Opinion Quarterly, 1995",
   "source_kind": "paper",
   "reference": "Smith, The Polls: A Review. The Holocaust Denial Controversy, Public Opinion Quarterly, 1995",

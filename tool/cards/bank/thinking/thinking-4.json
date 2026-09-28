@@ -107,14 +107,9 @@
         "x": 1200,
         "y": 51.3,
         "label": "1,200 orders: even odds"
-      },
-      {
-        "x": 500000,
-        "y": 100,
-        "label": "the guess: half a million"
       }
     ],
-    "caption": "A repeat is all but certain by 3,000 orders, far short of half a million."
+    "caption": "Out of a million possible codes, a repeat is more likely than not by 1,200 orders."
   },
   "source": "The birthday bound, applied to identifiers",
   "source_kind": "arithmetic",

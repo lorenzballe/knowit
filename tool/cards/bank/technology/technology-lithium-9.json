@@ -110,7 +110,8 @@
         "y": 3.5,
         "label": "3.5%: a thirtieth"
       }
-    ]
+    ],
+    "caption": "Twenty-four yearly cuts of 13% leave a cell at a thirtieth of its 1992 price."
   },
   "source": "Ziegler & Trancik, Energy & Environmental Science, 2021",
   "source_kind": "paper",

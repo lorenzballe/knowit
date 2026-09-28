@@ -33,27 +33,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "£",
-    "items": [
-      {
-        "label": "Gap in one year",
-        "value": 2250
-      },
-      {
-        "label": "A year's salary",
-        "value": 30000
-      },
-      {
-        "label": "Gap over 40 years",
-        "value": 90000,
-        "hi": true
-      }
-    ],
-    "caption": "A 7.5% gap, kept for a career, adds up to three years' pay."
-  },
+  "figure": "none",
   "source": "Hamermesh & Biddle, American Economic Review, 1994",
   "source_kind": "paper",
   "reference": "Hamermesh & Biddle, Beauty and the labor market, American Economic Review, 1994",

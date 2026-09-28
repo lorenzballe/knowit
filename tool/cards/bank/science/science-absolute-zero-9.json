@@ -34,22 +34,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "J",
-    "parts": [
-      {
-        "label": "From the 3 K side",
-        "value": 1
-      },
-      {
-        "label": "Work you supply",
-        "value": 99,
-        "hi": true
-      }
-    ],
-    "caption": "Of the 100 joules dumped into the room, 99 are work you paid for."
-  },
   "source": "Pobell, Matter and Methods at Low Temperatures",
   "source_kind": "book",
   "reference": "Pobell, Matter and Methods at Low Temperatures, 3rd edition, Springer, 2007",

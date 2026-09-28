@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 65,
-        "label": "left side larger",
-        "hi": true
-      },
-      {
-        "n": 11,
-        "label": "right side larger"
-      }
-    ],
-    "caption": "In 100 brains: larger on the left in 65, the right in 11, equal in 24."
-  },
   "source": "Geschwind & Levitsky, Science, 1968",
   "source_kind": "paper",
   "reference": "Geschwind & Levitsky, Human brain: left-right asymmetries in temporal speech region, Science, 1968",

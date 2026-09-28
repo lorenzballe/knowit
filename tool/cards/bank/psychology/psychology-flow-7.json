@@ -25,22 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "genes",
-        "value": 30,
-        "hi": true
-      },
-      {
-        "label": "experiences not shared",
-        "value": 70
-      }
-    ],
-    "caption": "Twins put roughly 30% of the differences in flow down to genes."
-  },
   "source": "Mosing et al., Twin Res Hum Genet, 2012",
   "source_kind": "paper",
   "reference": "Mosing, Magnusson, Pedersen, Nakamura, Madison & Ullén, Heritability of proneness for psychological flow experiences, Twin Research and Human Genetics, 2012",

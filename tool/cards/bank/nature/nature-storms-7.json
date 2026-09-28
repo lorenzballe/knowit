@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "deaths",
-    "items": [
-      {
-        "label": "1991 cyclone",
-        "value": 138000
-      },
-      {
-        "label": "Cyclone Sidr, 2007",
-        "value": 3400,
-        "hi": true
-      }
-    ],
-    "caption": "Warnings, shelters and evacuations cut the toll about fortyfold."
-  },
   "source": "Haque et al., Bulletin of the WHO, 2012",
   "source_kind": "paper",
   "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3302549/",

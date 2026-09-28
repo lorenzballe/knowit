@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "targets in half the bags",
-        "value": 7
-      },
-      {
-        "label": "targets in 1% of bags",
-        "value": 30,
-        "hi": true
-      }
-    ],
-    "caption": "Share of targets missed: rare tools slipped through about four times as often."
-  },
+  "figure": "none",
   "source": "Wolfe, Horowitz & Kenner, Nature, 2005",
   "source_kind": "paper",
   "reference": "Wolfe, Horowitz & Kenner, Rare items often missed in visual searches, Nature, 2005",

@@ -25,61 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "cooling rounds",
-      "min": 0,
-      "max": 4
-    },
-    "y": {
-      "label": "millikelvin",
-      "min": 0.1,
-      "max": 1000,
-      "log": true
-    },
-    "series": [
-      {
-        "label": "÷ 10 a round",
-        "hi": true,
-        "points": [
-          [
-            0,
-            1000.0
-          ],
-          [
-            1,
-            100.0
-          ],
-          [
-            2,
-            10.0
-          ],
-          [
-            3,
-            1.0
-          ],
-          [
-            4,
-            0.1
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 1,
-        "y": 100,
-        "label": "0.1 K"
-      },
-      {
-        "x": 2,
-        "y": 10,
-        "label": "0.01 K"
-      }
-    ],
-    "caption": "Each round cuts the temperature tenfold; zero sits infinitely far down this axis."
-  },
   "source": "Blundell & Blundell, Concepts in Thermal Physics, 2010",
   "source_kind": "book",
   "reference": "Blundell & Blundell, Concepts in Thermal Physics, 2nd edition, Oxford University Press, 2010",

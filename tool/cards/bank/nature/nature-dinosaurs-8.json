@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "TJ",
-    "items": [
-      {
-        "label": "Hiroshima bomb",
-        "value": 60
-      },
-      {
-        "label": "Dinosaur-killing asteroid",
-        "value": 320000000000.0,
-        "hi": true
-      }
-    ],
-    "caption": "Half the mass times the speed squared: about five billion Hiroshimas."
-  },
   "source": "Collins et al., Meteoritics & Planetary Science, 2005",
   "source_kind": "paper",
   "reference": "Collins, Melosh & Marcus, Earth Impact Effects Program: A Web-based computer program for calculating the regional environmental consequences of a meteoroid impact on Earth, Meteoritics & Planetary Science, 2005",

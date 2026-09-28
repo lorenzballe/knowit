@@ -37,34 +37,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "L",
-    "parts": [
-      {
-        "label": "Food and drink",
-        "value": 2,
-        "hi": true
-      },
-      {
-        "label": "Saliva",
-        "value": 1.5
-      },
-      {
-        "label": "Stomach",
-        "value": 2
-      },
-      {
-        "label": "Bile and pancreas",
-        "value": 2
-      },
-      {
-        "label": "Intestinal wall",
-        "value": 1
-      }
-    ],
-    "caption": "Only 2 of the 8.5 litres come from outside; the body pours in the rest."
-  },
   "source": "Boron & Boulpaep, Medical Physiology",
   "source_kind": "book",
   "reference": "Boron & Boulpaep, Medical Physiology, 3rd edition, Elsevier, 2017",

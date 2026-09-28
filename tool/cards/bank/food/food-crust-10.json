@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "seconds",
-    "items": [
-      {
-        "label": "Home oven, 250 °C",
-        "value": 600
-      },
-      {
-        "label": "Neapolitan oven, 485 °C",
-        "value": 90,
-        "hi": true
-      }
-    ],
-    "caption": "Ten minutes at home; at most a minute and a half in a Neapolitan dome."
-  },
+  "figure": "none",
   "source": "EU Regulation 97/2010, Pizza Napoletana",
   "source_kind": "primary_document",
   "reference": "Commission Regulation (EU) No 97/2010 entering a name in the register of traditional specialities guaranteed (Pizza Napoletana (TSG)), 2010",

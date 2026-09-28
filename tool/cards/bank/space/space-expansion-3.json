@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "bars",
-    "unit": "billion years",
-    "items": [
-      {
-        "label": "age from today's rate",
-        "value": 14
-      },
-      {
-        "label": "the Earth",
-        "value": 4.5
-      },
-      {
-        "label": "age from Hubble's 1929 rate",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "A rate seven times too fast made the universe younger than the Earth."
-  },
   "source": "Kragh, Cosmology and Controversy, 1996",
   "source_kind": "book",
   "reference": "Kragh, Cosmology and Controversy: The Historical Development of Two Theories of the Universe, Princeton University Press, 1996",

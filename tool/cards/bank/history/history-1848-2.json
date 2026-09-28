@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "million men",
-    "items": [
-      {
-        "label": "Voters before March 1848",
-        "value": 0.25
-      },
-      {
-        "label": "Every man aged 21 or over",
-        "value": 9,
-        "hi": true
-      }
-    ],
-    "caption": "Overnight the electorate grew thirty-six-fold, from a quarter of a million to nine million."
-  },
   "source": "Agulhon, The Republican Experiment, 1983",
   "source_kind": "book",
   "reference": "Agulhon, The Republican Experiment, 1848–1852, Cambridge University Press, 1983",

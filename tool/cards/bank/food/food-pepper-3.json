@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Vietnam's share of the crop",
-        "value": 33
-      },
-      {
-        "label": "Vietnam's share of exports",
-        "value": 60,
-        "hi": true
-      }
-    ],
-    "caption": "A third of the pepper grown, but nearly three-fifths of the pepper sold abroad."
-  },
   "source": "International Pepper Community",
   "source_kind": "institution",
   "reference": "https://www.ipcnet.org/country/vietnam/",

@@ -35,23 +35,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "patients",
-    "items": [
-      {
-        "label": "Codeine 60 mg (NNT 12)",
-        "value": 10
-      },
-      {
-        "label": "Ibuprofen 400 mg (NNT 2.5)",
-        "value": 48,
-        "hi": true
-      }
-    ],
-    "caption": "Extra patients relieved beyond placebo, for every 120 treated."
-  },
+  "figure": "none",
   "source": "Moore et al., Cochrane overview, 2015",
   "source_kind": "paper",
   "reference": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD008659.pub3/full",

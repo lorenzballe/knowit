@@ -34,16 +34,12 @@
         "value": 600
       },
       {
-        "label": "World power capacity",
-        "value": 3
-      },
-      {
         "label": "Driving the winds",
         "value": 1.5,
         "hi": true
       }
     ],
-    "caption": "Only a quarter of one percent of the heat turns the winds."
+    "caption": "Of 600 terawatts of heat, 1.5 drive the winds: a quarter of one percent."
   },
   "source": "NOAA Hurricane Research Division",
   "source_kind": "institution",

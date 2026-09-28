@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "1950s",
-        "value": 29
-      },
-      {
-        "label": "1970s onwards",
-        "value": 4,
-        "hi": true
-      }
-    ],
-    "caption": "Functional diagnoses later found to be physical disease."
-  },
   "source": "Stone et al., BMJ, 2005",
   "source_kind": "paper",
   "reference": "Stone et al., Systematic review of misdiagnosis of conversion symptoms and hysteria, BMJ, 2005",

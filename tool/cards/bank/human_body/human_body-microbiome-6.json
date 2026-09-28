@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "kg",
-    "items": [
-      {
-        "label": "A 70 kg man",
-        "value": 70
-      },
-      {
-        "label": "All his bacteria",
-        "value": 0.2,
-        "hi": true
-      }
-    ],
-    "caption": "38 trillion bacteria, more than his 30 trillion cells, weigh 0.3% of him."
-  },
   "source": "Sender, Fuchs & Milo, PLOS Biology, 2016",
   "source_kind": "paper",
   "reference": "https://journals.plos.org/plosbiology/article?id=10.1371%2Fjournal.pbio.1002533",

@@ -31,23 +31,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "% with smell loss",
-    "items": [
-      {
-        "label": "All aged 40 and over",
-        "value": 12.4,
-        "hi": true
-      },
-      {
-        "label": "Aged 80 and over, over a third",
-        "value": 33.3
-      }
-    ],
-    "caption": "One in eight over 40 failed the test, and over a third past 80."
-  },
+  "figure": "none",
   "source": "Hoffman et al., Rev Endocr Metab Disord, 2016",
   "source_kind": "paper",
   "reference": "Hoffman, Rawal, Li & Duffy, New chemosensory component in the U.S. National Health and Nutrition Examination Survey (NHANES): first-year results for measured olfactory dysfunction, Reviews in Endocrine and Metabolic Disorders, 2016",

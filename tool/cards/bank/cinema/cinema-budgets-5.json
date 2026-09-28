@@ -35,6 +35,103 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "outdoor days",
+      "min": 0,
+      "max": 30
+    },
+    "y": {
+      "label": "% chance no day is lost",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "95% good weather each day",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            2,
+            90.2
+          ],
+          [
+            4,
+            81.5
+          ],
+          [
+            6,
+            73.5
+          ],
+          [
+            8,
+            66.3
+          ],
+          [
+            10,
+            59.9
+          ],
+          [
+            12,
+            54.0
+          ],
+          [
+            14,
+            48.8
+          ],
+          [
+            16,
+            44.0
+          ],
+          [
+            18,
+            39.7
+          ],
+          [
+            20,
+            35.8
+          ],
+          [
+            22,
+            32.4
+          ],
+          [
+            24,
+            29.2
+          ],
+          [
+            26,
+            26.4
+          ],
+          [
+            28,
+            23.8
+          ],
+          [
+            30,
+            21.5
+          ],
+          [
+            30,
+            21.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 30,
+        "y": 21.5,
+        "label": "30 days: about 21%"
+      }
+    ],
+    "caption": "Each day is 95% safe; thirty in a row come off only about one time in five."
+  },
   "source": "Honthaner, The Complete Film Production Handbook",
   "source_kind": "book",
   "reference": "Honthaner, The Complete Film Production Handbook, 4th edn, Focal Press, 2010",

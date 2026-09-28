@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Still air films",
-        "value": 98
-      },
-      {
-        "label": "4 mm of glass",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "Nearly all a single pane's resistance is the air clinging to it."
-  },
   "source": "EN 673, glazing thermal transmittance calculation",
   "source_kind": "standard",
   "reference": "EN 673:2011, Glass in building — Determination of thermal transmittance (U value) — Calculation method",

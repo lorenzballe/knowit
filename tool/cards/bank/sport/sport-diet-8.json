@@ -32,52 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "caffeine they were told, mg/kg",
-      "min": 0,
-      "max": 9
-    },
-    "y": {
-      "label": "% power vs baseline",
-      "min": -2,
-      "max": 4
-    },
-    "series": [
-      {
-        "label": "dummy capsules only",
-        "hi": true,
-        "points": [
-          [
-            0,
-            -1.4
-          ],
-          [
-            4.5,
-            1.3
-          ],
-          [
-            9,
-            3.1
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 0,
-        "y": -1.4,
-        "label": "told none: −1.4%"
-      },
-      {
-        "x": 9,
-        "y": 3.1,
-        "label": "told 9 mg/kg: +3.1%"
-      }
-    ],
-    "caption": "No capsule held caffeine, yet power rose with the dose the riders believed in."
-  },
   "source": "Beedie et al., Med Sci Sports Exerc, 2006",
   "source_kind": "paper",
   "reference": "Beedie, Stuart, Coleman & Foad, Placebo effects of caffeine on cycling performance, Medicine & Science in Sports & Exercise, 2006",

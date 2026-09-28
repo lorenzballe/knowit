@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Leading crop types that benefit",
-        "value": 75
-      },
-      {
-        "label": "World output lost, at most",
-        "value": 8,
-        "hi": true
-      }
-    ],
-    "caption": "Most crop types gain from pollinators, but the tonnage is mostly wind-pollinated staples."
-  },
   "source": "Aizen et al., Annals of Botany, 2009",
   "source_kind": "paper",
   "reference": "Aizen, Garibaldi, Cunningham & Klein, How much does agriculture depend on pollinators? Lessons from long-term trends in crop production, Annals of Botany, 2009",

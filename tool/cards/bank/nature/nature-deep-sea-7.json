@@ -34,16 +34,31 @@
   "language": "en",
   "figure": "nested_circles",
   "diagram": {
-    "type": "dots",
-    "total": 1000,
-    "groups": [
+    "type": "tree",
+    "n": 1000,
+    "label": "parts of carbon fixed",
+    "branches": [
       {
-        "n": 10,
-        "label": "reach the seafloor 4 km down",
-        "hi": true
+        "n": 900,
+        "label": "never sink out"
+      },
+      {
+        "n": 100,
+        "label": "sink below 100 m",
+        "branches": [
+          {
+            "n": 90,
+            "label": "eaten on the way"
+          },
+          {
+            "n": 10,
+            "label": "reach 4 km down",
+            "hi": true
+          }
+        ]
       }
     ],
-    "caption": "A tenth sinks out of the sunlit layer; only 10 in 1,000 reach the abyss."
+    "caption": "Of every 1,000 parts fixed in sunlit water, roughly 100 sink out and 10 reach the abyss."
   },
   "source": "Martin et al., Deep-Sea Research, 1987",
   "source_kind": "paper",

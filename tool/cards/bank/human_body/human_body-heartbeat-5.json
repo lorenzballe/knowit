@@ -25,22 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "ms",
-    "items": [
-      {
-        "label": "Leg muscle impulse",
-        "value": 2
-      },
-      {
-        "label": "Heart muscle impulse",
-        "value": 250,
-        "hi": true
-      }
-    ],
-    "caption": "The heart's impulse lasts nearly as long as the squeeze it triggers."
-  },
   "source": "Hall & Hall, Guyton and Hall Physiology, 2021",
   "source_kind": "book",
   "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",

@@ -25,26 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "days to travel a metre",
-    "items": [
-      {
-        "label": "Vesicles",
-        "value": 2.5
-      },
-      {
-        "label": "Proteins at best",
-        "value": 1000
-      },
-      {
-        "label": "Proteins at worst",
-        "value": 5000,
-        "hi": true
-      }
-    ],
-    "caption": "At 400 mm a day, under three days; at 0.2 to 1 mm, three to fourteen years."
-  },
   "source": "Roy, The Neuroscientist, 2014",
   "source_kind": "paper",
   "reference": "Roy, Seeing the unseen: the hidden world of slow axonal transport, The Neuroscientist, 2014",

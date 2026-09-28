@@ -32,18 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 1000,
-    "groups": [
-      {
-        "n": 36,
-        "label": "judged probably avoidable",
-        "hi": true
-      }
-    ],
-    "caption": "Of 1,000 hospital deaths, about 36 were judged more likely than not avoidable."
-  },
   "source": "Hogan et al., BMJ, 2015",
   "source_kind": "paper",
   "reference": "Hogan et al., Avoidability of hospital deaths and association with hospital-wide mortality ratios: retrospective case record review and regression analysis, BMJ, 2015",

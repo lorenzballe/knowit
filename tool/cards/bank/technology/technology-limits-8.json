@@ -25,33 +25,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 1000,
-    "label": "packages suggested",
-    "branches": [
-      {
-        "n": 800,
-        "label": "real"
-      },
-      {
-        "n": 200,
-        "label": "don't exist",
-        "branches": [
-          {
-            "n": 86,
-            "label": "same fake every rerun",
-            "hi": true
-          },
-          {
-            "n": 114,
-            "label": "name changes"
-          }
-        ]
-      }
-    ],
-    "caption": "Of every 1,000 suggestions, 86 are fake names an attacker can predict."
-  },
   "source": "Spracklen et al., USENIX Security, 2025",
   "source_kind": "paper",
   "reference": "Spracklen et al., We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs, USENIX Security Symposium, 2025",

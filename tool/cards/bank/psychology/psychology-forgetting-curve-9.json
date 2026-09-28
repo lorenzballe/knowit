@@ -24,23 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "sessions",
-    "items": [
-      {
-        "label": "every 14 days",
-        "value": 26
-      },
-      {
-        "label": "every 56 days",
-        "value": 13,
-        "hi": true
-      }
-    ],
-    "caption": "Half the sessions, spaced four times wider, kept about as many words five years on."
-  },
+  "figure": "none",
   "source": "Bahrick et al., Psychological Science, 1993",
   "source_kind": "paper",
   "reference": "doi:10.1111/j.1467-9280.1993.tb00571.x",

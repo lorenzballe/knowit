@@ -30,23 +30,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Who is Tom Cruise's mother?",
-        "value": 79
-      },
-      {
-        "label": "Who is Mary Lee Pfeiffer's son?",
-        "value": 33,
-        "hi": true
-      }
-    ],
-    "caption": "Answered right: the same fact, asked backwards, less than half as often."
-  },
+  "figure": "none",
   "source": "Berglund et al., ICLR, 2024",
   "source_kind": "paper",
   "reference": "Berglund, Tong, Kaufmann, Balesni, Stickland, Korbak & Evans, The Reversal Curse: LLMs trained on 'A is B' fail to learn 'B is A', ICLR, 2024",

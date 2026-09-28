@@ -30,23 +30,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 1,
-        "label": "paid $7.25 or less",
-        "hi": true
-      },
-      {
-        "n": 9,
-        "label": "the rest of 'one in ten'"
-      }
-    ],
-    "caption": "About one hourly worker in a hundred, not one in ten."
-  },
+  "figure": "none",
   "source": "BLS, Characteristics of Minimum Wage Workers",
   "source_kind": "statistics",
   "reference": "US Bureau of Labor Statistics, Characteristics of minimum wage workers, 2023, BLS Reports, 2024",

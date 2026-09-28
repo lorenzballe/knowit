@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Men",
-        "value": 31
-      },
-      {
-        "label": "Women",
-        "value": 42,
-        "hi": true
-      }
-    ],
-    "caption": "Heart-attack patients who arrived with no chest pain."
-  },
   "source": "Canto et al., JAMA, 2012",
   "source_kind": "paper",
   "reference": "https://jamanetwork.com/journals/jama/fullarticle/1355992",

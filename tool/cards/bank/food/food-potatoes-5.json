@@ -36,22 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Explained by potato",
-        "value": 25,
-        "hi": true
-      },
-      {
-        "label": "Everything else",
-        "value": 75
-      }
-    ],
-    "caption": "About a quarter of Old World growth, 1700 to 1900, traced to one crop."
-  },
   "source": "Nunn & Qian, Quarterly Journal of Economics, 2011",
   "source_kind": "paper",
   "reference": "Nunn & Qian, The Potato's Contribution to Population and Urbanization: Evidence from a Historical Experiment, Quarterly Journal of Economics, 2011",

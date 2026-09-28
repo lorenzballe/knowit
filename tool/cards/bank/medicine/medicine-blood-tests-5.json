@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "mg of biotin a day",
-    "items": [
-      {
-        "label": "Daily need",
-        "value": 0.03
-      },
-      {
-        "label": "Hair-and-nail pill",
-        "value": 10,
-        "hi": true
-      }
-    ],
-    "caption": "A hair-and-nail pill can hold over 300 times the daily need."
-  },
   "source": "US FDA, biotin interference communication",
   "source_kind": "institution",
   "reference": "https://www.fda.gov/medical-devices/in-vitro-diagnostics/biotin-interference-troponin-lab-tests-assays-subject-biotin-interference",

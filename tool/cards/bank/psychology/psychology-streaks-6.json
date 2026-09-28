@@ -131,7 +131,8 @@
         "y": 21.5,
         "label": "30 days: 21.5%"
       }
-    ]
+    ],
+    "caption": "Each day is 95% safe, yet fewer than one streak in four survives a month."
   },
   "source": "Feller, Probability Theory, 1968",
   "source_kind": "book",

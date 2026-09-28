@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "% chance of a fluke",
-    "items": [
-      {
-        "label": "a bump at 750 GeV alone",
-        "value": 0.005
-      },
-      {
-        "label": "a bump at any mass",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "Scanning many masses turned one in 20,000 into one in 50."
-  },
   "source": "ATLAS Experiment, CERN, 2016 briefing",
   "source_kind": "institution",
   "reference": "https://atlas.cern/updates/briefing/high-mass-di-photon-resonances-first-2016-atlas-results",

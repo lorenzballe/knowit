@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 2,
-        "label": "sheathing fungi (pine, oak)",
-        "hi": true
-      },
-      {
-        "n": 72,
-        "label": "fungi inside root cells"
-      }
-    ],
-    "caption": "Two plant species in a hundred carry the sheath, yet they rule northern forests."
-  },
   "source": "Brundrett & Tedersoo, New Phytologist, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1111/nph.14976",

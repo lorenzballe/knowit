@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "min",
-    "parts": [
-      {
-        "label": "uphill at 10 km/h",
-        "value": 36,
-        "hi": true
-      },
-      {
-        "label": "downhill at 30 km/h",
-        "value": 12
-      }
-    ],
-    "caption": "Three-quarters of the ride is the climb, so the average is 15, not 20."
-  },
   "source": "Averaging speeds over equal distances",
   "source_kind": "arithmetic",
   "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",

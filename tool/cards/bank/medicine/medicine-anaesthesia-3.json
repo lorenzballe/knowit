@@ -30,27 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "per million",
-    "items": [
-      {
-        "label": "No paralysing drug",
-        "value": 7.4
-      },
-      {
-        "label": "All general anaesthetics",
-        "value": 51
-      },
-      {
-        "label": "With a paralysing drug",
-        "value": 122,
-        "hi": true
-      }
-    ],
-    "caption": "Awareness is about 16 times commoner when the patient cannot move to signal it."
-  },
+  "figure": "none",
   "source": "Pandit et al., British Journal of Anaesthesia, 2014",
   "source_kind": "paper",
   "reference": "Pandit et al., 5th National Audit Project (NAP5) on accidental awareness during general anaesthesia: summary of main findings and risk factors, British Journal of Anaesthesia, 2014",

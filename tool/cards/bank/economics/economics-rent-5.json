@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "homes",
-    "items": [
-      {
-        "label": "California",
-        "value": 84000
-      },
-      {
-        "label": "All of England",
-        "value": 137000
-      },
-      {
-        "label": "Tokyo",
-        "value": 142000,
-        "hi": true
-      }
-    ],
-    "caption": "Housing starts in 2014: one city outbuilt a country four times its size."
-  },
   "source": "Japan MLIT housing starts statistics, 2014",
   "source_kind": "statistics",
   "reference": "Ministry of Land, Infrastructure, Transport and Tourism (Japan), Housing Starts Statistics, 2014",

@@ -31,28 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Great Famine, 1845–52",
-        "value": 12
-      },
-      {
-        "label": "1740–41, low estimate",
-        "value": 13,
-        "hi": true
-      },
-      {
-        "label": "1740–41, high estimate",
-        "value": 20,
-        "hi": true
-      }
-    ],
-    "caption": "Share of the people who died: the forgotten famine may have been worse."
-  },
+  "figure": "none",
   "source": "Dickson, Arctic Ireland, 1997",
   "source_kind": "book",
   "reference": "Dickson, Arctic Ireland: The Extraordinary Story of the Great Frost and Forgotten Famine of 1740-41, White Row Press, 1997",

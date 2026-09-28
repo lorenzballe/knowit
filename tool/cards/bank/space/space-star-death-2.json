@@ -33,23 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1600,
-    "to": 2025,
-    "events": [
-      {
-        "at": 1604,
-        "label": "Kepler's supernova"
-      },
-      {
-        "at": 1900,
-        "label": "G1.9+0.3, unseen",
-        "hi": true
-      }
-    ],
-    "caption": "At about two a century, some eight should have gone off since 1604."
-  },
   "source": "Rozwadowska, Vissani & Cappellaro, New Astronomy, 2021",
   "source_kind": "paper",
   "reference": "Rozwadowska, Vissani & Cappellaro, On the rate of core collapse supernovae in the Milky Way, New Astronomy 83, 101498, 2021",

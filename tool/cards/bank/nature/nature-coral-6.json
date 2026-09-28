@@ -34,64 +34,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "weeks",
-      "min": 0,
-      "max": 12
-    },
-    "y": {
-      "label": "°C above summer peak",
-      "min": 0,
-      "max": 2
-    },
-    "series": [
-      {
-        "label": "1 °C cut-off",
-        "points": [
-          [
-            0,
-            1
-          ],
-          [
-            12,
-            1
-          ]
-        ]
-      },
-      {
-        "label": "sea temperature",
-        "hi": true,
-        "points": [
-          [
-            0,
-            0.9
-          ],
-          [
-            8,
-            0.9
-          ],
-          [
-            8,
-            1.5
-          ],
-          [
-            12,
-            1.5
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 10,
-        "y": 1.5,
-        "label": "4 weeks × 1.5 = 6"
-      }
-    ],
-    "caption": "Eight weeks just under the cut-off add nothing; only the last four count."
-  },
   "source": "Liu et al., Remote Sensing, 2014",
   "source_kind": "paper",
   "reference": "Liu et al., Reef-scale thermal stress monitoring of coral ecosystems: new 5-km global products from NOAA Coral Reef Watch, Remote Sensing, 2014",

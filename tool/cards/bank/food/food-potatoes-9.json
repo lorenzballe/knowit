@@ -50,7 +50,7 @@
     },
     "series": [
       {
-        "label": "counted",
+        "label": "census count",
         "hi": true,
         "points": [
           [
@@ -85,15 +85,15 @@
       {
         "x": 1851,
         "y": 8.6,
-        "label": "expected 8.6"
+        "label": "trend: 8.6"
       },
       {
         "x": 1851,
         "y": 6.6,
-        "label": "counted 6.6"
+        "label": "census: 6.6"
       }
     ],
-    "caption": "Between the trend and the count, two million people are missing."
+    "caption": "The 1830s trend pointed to 8.6 million in 1851; the census found 6.6. Two million missing."
   },
   "source": "Ó Gráda, Black '47 and Beyond, 1999",
   "source_kind": "book",

@@ -29,23 +29,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "fewer defects, new supplier",
-        "value": 12
-      },
-      {
-        "label": "fewer defects, every line",
-        "value": 15,
-        "hi": true
-      }
-    ],
-    "caption": "If defects fell 15% everywhere, a 12% drop is worse than doing nothing."
-  },
+  "figure": "none",
   "source": "Counterfactual reasoning in operations",
   "source_kind": "paper",
   "reference": "Holland, Statistics and Causal Inference, Journal of the American Statistical Association, 1986"

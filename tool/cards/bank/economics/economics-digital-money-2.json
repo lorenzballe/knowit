@@ -26,38 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1980,
-    "to": 2012,
-    "events": [
-      {
-        "at": 1982,
-        "label": "Chaum's blind signatures"
-      },
-      {
-        "at": 1995,
-        "label": "A real bank issues eCash",
-        "hi": true
-      },
-      {
-        "at": 1998,
-        "label": "DigiCash goes bankrupt"
-      },
-      {
-        "at": 2009,
-        "label": "Bitcoin launches"
-      }
-    ],
-    "spans": [
-      {
-        "from": 1995,
-        "to": 1998,
-        "label": "eCash on sale"
-      }
-    ],
-    "caption": "Anonymous bank cash was spendable fourteen years before Bitcoin."
-  },
   "source": "Brunton, Digital Cash, Princeton University Press, 2019",
   "source_kind": "book",
   "reference": "Brunton, Digital Cash: The Unknown History of the Anarchists, Utopians, and Technologists Who Created Cryptocurrency, Princeton University Press, 2019",

@@ -32,30 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1885,
-    "to": 1910,
-    "events": [
-      {
-        "at": 1891,
-        "label": "Penalty kick introduced"
-      },
-      {
-        "at": 1902,
-        "label": "Penalty spot arrives",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1891,
-        "to": 1902,
-        "label": "kick from along a line"
-      }
-    ],
-    "caption": "For eleven years the penalty had no spot."
-  },
   "source": "Harvey, Football: The First Hundred Years, 2005",
   "source_kind": "book",
   "reference": "Harvey, Football: The First Hundred Years, The Untold Story, Routledge, 2005",

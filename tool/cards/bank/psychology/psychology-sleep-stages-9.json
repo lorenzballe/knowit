@@ -32,30 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "N2, light sleep",
-        "value": 50,
-        "hi": true
-      },
-      {
-        "label": "REM",
-        "value": 20
-      },
-      {
-        "label": "deep sleep",
-        "value": 20
-      },
-      {
-        "label": "everything else",
-        "value": 10
-      }
-    ],
-    "caption": "Roughly: N2 fills half the night; REM and deep sleep about a fifth each."
-  },
   "source": "Ohayon et al., Sleep, 2004",
   "source_kind": "paper",
   "reference": "Ohayon, Carskadon, Guilleminault & Vitiello, Meta-analysis of quantitative sleep parameters from childhood to old age in healthy individuals, Sleep, 2004",

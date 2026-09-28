@@ -32,60 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "line",
-    "x": {
-      "label": "glass surfaces passed",
-      "min": 0,
-      "max": 4
-    },
-    "y": {
-      "label": "% of light through",
-      "min": 80,
-      "max": 100
-    },
-    "series": [
-      {
-        "label": "4% lost at each",
-        "hi": true,
-        "points": [
-          [
-            0,
-            100.0
-          ],
-          [
-            1,
-            96.0
-          ],
-          [
-            2,
-            92.2
-          ],
-          [
-            3,
-            88.5
-          ],
-          [
-            4,
-            84.9
-          ]
-        ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 2,
-        "y": 92.2,
-        "label": "one pane: 92%"
-      },
-      {
-        "x": 4,
-        "y": 84.9,
-        "label": "double glazing: 85%"
-      }
-    ],
-    "caption": "Four surfaces take 15% of the light, not 4%."
-  },
   "source": "Hecht, Optics, 5th edition",
   "source_kind": "book",
   "reference": "Hecht, Optics, 5th edition, Pearson, 2017",

@@ -24,23 +24,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "effort saved relearning after a day",
-        "value": 33
-      },
-      {
-        "label": "effort saved relearning after a month",
-        "value": 20,
-        "hi": true
-      }
-    ],
-    "caption": "Lists he could no longer recite were still quicker to relearn a month on."
-  },
+  "figure": "none",
   "source": "Ebbinghaus, Memory, 1885, English edition 1913",
   "source_kind": "book",
   "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",

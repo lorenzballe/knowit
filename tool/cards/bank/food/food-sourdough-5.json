@@ -102,12 +102,17 @@
     ],
     "marks": [
       {
+        "x": 7,
+        "y": 218.7,
+        "label": "day 7: 219 kg"
+      },
+      {
         "x": 10,
         "y": 5904.9,
         "label": "day 10: 5.9 tonnes"
       }
     ],
-    "caption": "Tripling looks like nothing for a week, then buries the kitchen."
+    "caption": "Tripling from 100 g: 219 kg after a week, then 5.9 tonnes three days later."
   },
   "source": "Powers of three, 3^10",
   "source_kind": "arithmetic",

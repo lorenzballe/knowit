@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "people",
-    "items": [
-      {
-        "label": "Jobs to fill, 1913",
-        "value": 14000
-      },
-      {
-        "label": "People hired that year",
-        "value": 50000,
-        "hi": true
-      }
-    ],
-    "caption": "Keeping 14,000 places filled took about 50,000 hires in a year."
-  },
+  "figure": "none",
   "source": "Raff & Summers, Journal of Labor Economics, 1987",
   "source_kind": "paper",
   "reference": "Raff & Summers, Did Henry Ford Pay Efficiency Wages?, Journal of Labor Economics 5(4), 1987",

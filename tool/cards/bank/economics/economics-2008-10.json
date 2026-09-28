@@ -38,20 +38,16 @@
     "unit": "€",
     "items": [
       {
-        "label": "Cost of rescuing the banks",
-        "value": 64000000000.0
-      },
-      {
-        "label": "Ireland's output a year (under)",
+        "label": "Ireland's output a year, at most",
         "value": 190000000000.0
       },
       {
-        "label": "Bank debts guaranteed",
+        "label": "Bank debts the state guaranteed",
         "value": 400000000000.0,
         "hi": true
       }
     ],
-    "caption": "The promise covered more than twice what the whole economy made in a year."
+    "caption": "About €400 billion guaranteed by an economy making under €190 billion a year."
   },
   "source": "Oireachtas Banking Inquiry, 2016",
   "source_kind": "institution",

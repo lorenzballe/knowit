@@ -33,26 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "programming",
-        "value": 4,
-        "hi": true
-      },
-      {
-        "label": "advice, info, writing",
-        "value": 80
-      },
-      {
-        "label": "everything else",
-        "value": 16
-      }
-    ],
-    "caption": "Programming is about one message in twenty-five."
-  },
   "source": "Chatterji et al., NBER Working Paper 34255, 2025",
   "source_kind": "paper",
   "reference": "Chatterji, Cunningham, Deming, Hitzig, Ong, Shan & Wadman, How People Use ChatGPT, NBER Working Paper 34255, 2025",

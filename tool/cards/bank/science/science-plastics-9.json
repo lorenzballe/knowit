@@ -31,22 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Chlorine, from salt",
-        "value": 57,
-        "hi": true
-      },
-      {
-        "label": "From oil or gas",
-        "value": 43
-      }
-    ],
-    "caption": "More than half of PVC's weight is chlorine split from brine."
-  },
   "source": "Allsopp & Vianello, Ullmann's Encyclopedia, 2000",
   "source_kind": "reference_work",
   "reference": "Allsopp & Vianello, Poly(Vinyl Chloride), Ullmann's Encyclopedia of Industrial Chemistry, Wiley-VCH, 2000",

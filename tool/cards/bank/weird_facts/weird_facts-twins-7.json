@@ -38,6 +38,33 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "twin pairs",
+    "branches": [
+      {
+        "n": 340,
+        "label": "boy–girl, so fraternal"
+      },
+      {
+        "n": 660,
+        "label": "same-sex",
+        "branches": [
+          {
+            "n": 340,
+            "label": "fraternal"
+          },
+          {
+            "n": 320,
+            "label": "identical",
+            "hi": true
+          }
+        ]
+      }
+    ],
+    "caption": "Of 660 same-sex pairs, 340 are fraternal, as many as the mixed pairs; only 320 are identical."
+  },
   "source": "Fellman and Eriksson, Human Biology, 2006",
   "source_kind": "statistics",
   "reference": "Fellman and Eriksson, Weinberg's differential rule reconsidered, Human Biology, 2006",

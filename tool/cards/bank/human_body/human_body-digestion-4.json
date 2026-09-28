@@ -37,16 +37,16 @@
     "unit": "m²",
     "items": [
       {
-        "label": "Tennis court, as quoted",
+        "label": "Tennis court",
         "value": 261
       },
       {
-        "label": "Gut lining, measured",
+        "label": "Gut lining",
         "value": 32,
         "hi": true
       }
     ],
-    "caption": "The measured gut lining covers about an eighth of the tennis court it is often compared to."
+    "caption": "The measured gut lining, 32 m², is about an eighth of the tennis court often quoted."
   },
   "source": "Helander & Fändriks, Scand J Gastroenterol, 2014",
   "source_kind": "paper",

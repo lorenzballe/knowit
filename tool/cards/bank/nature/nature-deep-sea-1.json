@@ -32,23 +32,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "km down",
-    "items": [
-      {
-        "label": "Deepest trench",
-        "value": 10.9
-      },
-      {
-        "label": "Deepest fish filmed",
-        "value": 8.3,
-        "hi": true
-      }
-    ],
-    "caption": "The trench runs on for more than 2 km below the deepest fish."
-  },
+  "figure": "none",
   "source": "Yancey et al., PNAS, 2014; UWA, 2023",
   "source_kind": "paper",
   "reference": "Yancey et al., Marine fish may be biochemically constrained from inhabiting the deepest ocean depths, PNAS, 2014; University of Western Australia and Tokyo University of Marine Science and Technology, deepest fish filmed at 8,336 m, announced 2023",

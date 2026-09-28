@@ -33,22 +33,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "scale",
-    "unit": "base pairs",
-    "items": [
-      {
-        "label": "Adult loss in a year",
-        "value": 30
-      },
-      {
-        "label": "Gap between two newborns",
-        "value": 3000,
-        "hi": true
-      }
-    ],
-    "caption": "A normal gap at birth equals a century of adult wear."
-  },
   "source": "Benetos et al., Aging Cell, 2013",
   "source_kind": "paper",
   "reference": "Benetos, Kark, Susser et al., Tracking and fixed ranking of leukocyte telomere length across the adult life course, Aging Cell, 2013",

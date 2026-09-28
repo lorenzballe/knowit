@@ -32,18 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "dots",
-    "total": 100,
-    "groups": [
-      {
-        "n": 50,
-        "label": "could not afford a healthy diet",
-        "hi": true
-      }
-    ],
-    "caption": "Not a small minority: half the country could not afford a diet adequate for health."
-  },
   "source": "Boyd Orr, Food, Health and Income, 1936",
   "source_kind": "primary_document",
   "reference": "Boyd Orr, Food, Health and Income: Report on a Survey of Adequacy of Diet in Relation to Income, Macmillan, 1936",

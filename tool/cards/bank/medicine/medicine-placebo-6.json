@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "split",
-    "unit": "trials",
-    "parts": [
-      {
-        "label": "Sham worked as well",
-        "value": 27,
-        "hi": true
-      },
-      {
-        "label": "Real operation better",
-        "value": 26
-      }
-    ],
-    "caption": "Of 53 sham-controlled trials, 27 found the operation no better."
-  },
   "source": "Wartolowska et al., BMJ, 2014",
   "source_kind": "paper",
   "reference": "doi:10.1136/bmj.g3253",

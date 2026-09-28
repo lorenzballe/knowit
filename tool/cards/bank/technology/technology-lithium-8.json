@@ -37,26 +37,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "kWh",
-    "items": [
-      {
-        "label": "In 50 litres of petrol",
-        "value": 450
-      },
-      {
-        "label": "What the engine gets to the wheels",
-        "value": 112
-      },
-      {
-        "label": "What the battery must hold",
-        "value": 140,
-        "hi": true
-      }
-    ],
-    "caption": "Match what reaches the wheels, not the 450 kWh in the tank."
-  },
   "source": "US DOE and EPA, fueleconomy.gov",
   "source_kind": "institution",
   "reference": "https://www.fueleconomy.gov/feg/atv.shtml",

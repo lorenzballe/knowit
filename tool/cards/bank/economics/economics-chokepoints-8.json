@@ -34,23 +34,7 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "$",
-    "items": [
-      {
-        "label": "War cover before: 0.05%",
-        "value": 75000
-      },
-      {
-        "label": "War cover after: 0.7%",
-        "value": 1050000,
-        "hi": true
-      }
-    ],
-    "caption": "On a $150 million ship, each transit's cover rose fourteenfold, by $975,000."
-  },
+  "figure": "none",
   "source": "Policyholder Pulse, Red Sea premiums, 2024",
   "source_kind": "news_archive",
   "reference": "https://www.policyholderpulse.com/red-sea-transit-insurance-premiums-coverage-exclusions/",

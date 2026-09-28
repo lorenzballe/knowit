@@ -35,27 +35,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "min",
-    "items": [
-      {
-        "label": "midwinter hour",
-        "value": 45
-      },
-      {
-        "label": "modern hour",
-        "value": 60
-      },
-      {
-        "label": "midsummer hour",
-        "value": 75,
-        "hi": true
-      }
-    ],
-    "caption": "Daylight cut into twelve: 9 hours in winter, 15 in summer."
-  },
+  "figure": "none",
   "source": "Hannah, Time in Antiquity, 2009",
   "source_kind": "book",
   "reference": "Hannah, Time in Antiquity, Routledge, 2009",

@@ -30,23 +30,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "m deep",
-    "items": [
-      {
-        "label": "Average maximum root depth",
-        "value": 4.6
-      },
-      {
-        "label": "Shepherd's tree, Kalahari",
-        "value": 68,
-        "hi": true
-      }
-    ],
-    "caption": "The deepest roots on record reach fifteen times the average maximum."
-  },
+  "figure": "none",
   "source": "Canadell et al., Oecologia, 1996",
   "source_kind": "paper",
   "reference": "doi:10.1007/BF00329030",

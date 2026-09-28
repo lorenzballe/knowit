@@ -46,7 +46,7 @@
     },
     "series": [
       {
-        "label": "per hour: cube law",
+        "label": "per hour: speed cubed",
         "points": [
           [
             10,
@@ -95,7 +95,7 @@
         ]
       },
       {
-        "label": "per voyage: square law",
+        "label": "per voyage: speed squared",
         "hi": true,
         "points": [
           [
@@ -157,7 +157,7 @@
         "label": "per hour: 51%"
       }
     ],
-    "caption": "The slower ship burns less each hour but sails for longer, so the voyage saves less."
+    "caption": "At 16 knots each hour burns 51% of the fuel, but the longer voyage needs 64%."
   },
   "source": "Notteboom & Vernimmen, Journal of Transport Geography, 2009",
   "source_kind": "paper",

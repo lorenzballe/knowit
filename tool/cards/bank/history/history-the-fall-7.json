@@ -36,33 +36,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "tree",
-    "n": 80000,
-    "label": "Vandals and Alans",
-    "branches": [
-      {
-        "n": 40000,
-        "label": "female"
-      },
-      {
-        "n": 40000,
-        "label": "male",
-        "branches": [
-          {
-            "n": 20000,
-            "label": "fighting age",
-            "hi": true
-          },
-          {
-            "n": 20000,
-            "label": "too young or old"
-          }
-        ]
-      }
-    ],
-    "caption": "Of 80,000 who crossed, perhaps 20,000 could fight."
-  },
   "source": "Victor of Vita, History of the Vandal Persecution",
   "source_kind": "primary_document",
   "reference": "Victor of Vita, History of the Vandal Persecution, trans. John Moorhead, Liverpool University Press, 1992",

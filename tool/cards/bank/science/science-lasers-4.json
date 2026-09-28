@@ -26,29 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "timeline",
-    "from": 1950,
-    "to": 1985,
-    "events": [
-      {
-        "at": 1957,
-        "label": "Gould's notarised notebook"
-      },
-      {
-        "at": 1977,
-        "label": "His first patent granted",
-        "hi": true
-      }
-    ],
-    "spans": [
-      {
-        "from": 1957,
-        "to": 1977,
-        "label": "twenty years waiting"
-      }
-    ]
-  },
   "source": "Taylor, Laser, Simon & Schuster, 2000",
   "source_kind": "book",
   "reference": "Taylor, Laser: The Inventor, the Nobel Laureate, and the Thirty-Year Patent War, Simon & Schuster, 2000",

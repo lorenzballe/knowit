@@ -35,6 +35,44 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 10000,
+    "label": "vocals tested",
+    "branches": [
+      {
+        "n": 500,
+        "label": "natural",
+        "branches": [
+          {
+            "n": 475,
+            "label": "called natural",
+            "hi": true
+          },
+          {
+            "n": 25,
+            "label": "called corrected"
+          }
+        ]
+      },
+      {
+        "n": 9500,
+        "label": "corrected",
+        "branches": [
+          {
+            "n": 475,
+            "label": "called natural anyway",
+            "hi": true
+          },
+          {
+            "n": 9025,
+            "label": "called corrected"
+          }
+        ]
+      }
+    ],
+    "caption": "Of 950 vocals called natural, only 475 are: each real find stands beside an impostor."
+  },
   "source": "Bayes' theorem",
   "source_kind": "arithmetic",
   "reference": "Gigerenzer, Calculated Risks: How to Know When Numbers Deceive You, Simon & Schuster, 2002",

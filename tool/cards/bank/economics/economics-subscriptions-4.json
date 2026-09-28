@@ -32,23 +32,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "$",
-    "items": [
-      {
-        "label": "Pay-per-visit pass",
-        "value": 10
-      },
-      {
-        "label": "Monthly members, per visit",
-        "value": 17,
-        "hi": true
-      }
-    ],
-    "caption": "Over $70 a month, about four visits: roughly $17 a visit against $10."
-  },
+  "figure": "none",
   "source": "DellaVigna and Malmendier, AER, 2006",
   "source_kind": "paper",
   "reference": "DellaVigna & Malmendier, Paying Not to Go to the Gym, American Economic Review, 2006",

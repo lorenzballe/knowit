@@ -32,26 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "%",
-    "items": [
-      {
-        "label": "Synthetic textiles",
-        "value": 35
-      },
-      {
-        "label": "Tyres",
-        "value": 28
-      },
-      {
-        "label": "Microbeads",
-        "value": 2,
-        "hi": true
-      }
-    ],
-    "caption": "The banned microbeads were a sliver next to laundry and road wear."
-  },
   "source": "Boucher & Friot, IUCN, 2017",
   "source_kind": "institution",
   "reference": "Boucher & Friot, Primary Microplastics in the Oceans: A Global Evaluation of Sources, IUCN, 2017",

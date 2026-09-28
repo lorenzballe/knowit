@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202609271932,
- "built": "2026-09-27T19:32:41Z",
+ "version": 202609281359,
+ "built": "2026-09-28T13:59:31Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -1838,6 +1838,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "lots at auction",
+    "branches": [
+     {
+      "n": 20,
+      "label": "fake",
+      "branches": [
+       {
+        "n": 19,
+        "label": "flagged",
+        "hi": true
+       },
+       {
+        "n": 1,
+        "label": "missed"
+       }
+      ]
+     },
+     {
+      "n": 980,
+      "label": "genuine",
+      "branches": [
+       {
+        "n": 49,
+        "label": "flagged anyway",
+        "hi": true
+       },
+       {
+        "n": 931,
+        "label": "cleared"
+       }
+      ]
+     }
+    ],
+    "caption": "Of 68 lots flagged, only 19 are fake: about 28 per cent."
+   },
    "source": "Gigerenzer & Hoffrage, Psychological Review, 1995",
    "source_kind": "paper",
    "reference": "Gerd Gigerenzer & Ulrich Hoffrage, How to improve Bayesian reasoning without instruction: frequency formats, Psychological Review, 1995",
@@ -2744,6 +2782,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "× the light",
+    "items": [
+     {
+      "label": "Daguerre's lens, f/15",
+      "value": 1
+     },
+     {
+      "label": "Petzval's lens, f/3.6",
+      "value": 17.4,
+      "hi": true
+     }
+    ],
+    "caption": "An opening 4.17 times wider lets in 17.4 times the light."
+   },
    "source": "Kingslake, A History of the Photographic Lens, 1989",
    "source_kind": "book",
    "reference": "Rudolf Kingslake, A History of the Photographic Lens, Academic Press, 1989",
@@ -5530,6 +5584,96 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "metres of floor away",
+     "min": 0,
+     "max": 20
+    },
+    "y": {
+     "label": "cm below the horizon",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "drop = 150 ÷ distance",
+      "hi": true,
+      "points": [
+       [
+        1.5,
+        100.0
+       ],
+       [
+        2,
+        75.0
+       ],
+       [
+        2.5,
+        60.0
+       ],
+       [
+        3,
+        50.0
+       ],
+       [
+        4,
+        37.5
+       ],
+       [
+        5,
+        30.0
+       ],
+       [
+        6,
+        25.0
+       ],
+       [
+        7,
+        21.4
+       ],
+       [
+        8,
+        18.8
+       ],
+       [
+        10,
+        15.0
+       ],
+       [
+        12,
+        12.5
+       ],
+       [
+        15,
+        10.0
+       ],
+       [
+        17.5,
+        8.6
+       ],
+       [
+        20,
+        7.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 3,
+      "y": 50,
+      "label": "3 m away: 50 cm down"
+     },
+     {
+      "x": 15,
+      "y": 10,
+      "label": "15 m away: 10 cm down"
+     }
+    ],
+    "caption": "40 cm of picture holds 12 m of floor; the last 10 cm hold everything past 15 m."
+   },
    "source": "Field, The Invention of Infinity, 1997",
    "source_kind": "book",
    "reference": "J. V. Field, The Invention of Infinity: Mathematics and Art in the Renaissance, Oxford University Press, 1997",
@@ -6961,6 +7105,103 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "outdoor days",
+     "min": 0,
+     "max": 30
+    },
+    "y": {
+     "label": "% chance no day is lost",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "95% good weather each day",
+      "hi": true,
+      "points": [
+       [
+        0,
+        100.0
+       ],
+       [
+        2,
+        90.2
+       ],
+       [
+        4,
+        81.5
+       ],
+       [
+        6,
+        73.5
+       ],
+       [
+        8,
+        66.3
+       ],
+       [
+        10,
+        59.9
+       ],
+       [
+        12,
+        54.0
+       ],
+       [
+        14,
+        48.8
+       ],
+       [
+        16,
+        44.0
+       ],
+       [
+        18,
+        39.7
+       ],
+       [
+        20,
+        35.8
+       ],
+       [
+        22,
+        32.4
+       ],
+       [
+        24,
+        29.2
+       ],
+       [
+        26,
+        26.4
+       ],
+       [
+        28,
+        23.8
+       ],
+       [
+        30,
+        21.5
+       ],
+       [
+        30,
+        21.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 30,
+      "y": 21.5,
+      "label": "30 days: about 21%"
+     }
+    ],
+    "caption": "Each day is 95% safe; thirty in a row come off only about one time in five."
+   },
    "source": "Honthaner, The Complete Film Production Handbook",
    "source_kind": "book",
    "reference": "Honthaner, The Complete Film Production Handbook, 4th edn, Focal Press, 2010",
@@ -8343,6 +8584,109 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "weekend",
+     "min": 1,
+     "max": 8
+    },
+    "y": {
+     "label": "million dollars",
+     "min": 0,
+     "max": 60
+    },
+    "series": [
+     {
+      "label": "each weekend",
+      "points": [
+       [
+        1,
+        30.0
+       ],
+       [
+        2,
+        12.0
+       ],
+       [
+        3,
+        4.8
+       ],
+       [
+        4,
+        1.9
+       ],
+       [
+        5,
+        0.8
+       ],
+       [
+        6,
+        0.3
+       ],
+       [
+        7,
+        0.1
+       ],
+       [
+        8,
+        0.0
+       ]
+      ]
+     },
+     {
+      "label": "running total",
+      "hi": true,
+      "points": [
+       [
+        1,
+        30
+       ],
+       [
+        2,
+        42.0
+       ],
+       [
+        3,
+        46.8
+       ],
+       [
+        4,
+        48.7
+       ],
+       [
+        5,
+        49.5
+       ],
+       [
+        6,
+        49.8
+       ],
+       [
+        7,
+        49.9
+       ],
+       [
+        8,
+        50.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 1,
+      "y": 30,
+      "label": "opening: 30"
+     },
+     {
+      "x": 8,
+      "y": 50.0,
+      "label": "total: 50"
+     }
+    ],
+    "caption": "The opening weekend alone brings in 30 of the 50 million the film will ever take."
+   },
    "source": "Vogel, Entertainment Industry Economics",
    "source_kind": "book",
    "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",
@@ -9933,6 +10277,22 @@
    "mature": false,
    "language": "en",
    "figure": "nested_circles",
+   "diagram": {
+    "type": "area",
+    "unit": "×",
+    "items": [
+     {
+      "label": "f/1.4 lens",
+      "value": 1
+     },
+     {
+      "label": "f/0.7: twice as wide",
+      "value": 4,
+      "hi": true
+     }
+    ],
+    "caption": "Halve the f-number and the opening doubles in width but lets in four times the light."
+   },
    "source": "Alcott, American Cinematographer, 1976",
    "source_kind": "primary_document",
    "reference": "Alcott, Photographing Stanley Kubrick's Barry Lyndon, American Cinematographer, March 1976",
@@ -14113,6 +14473,18 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+     {
+      "n": 83,
+      "label": "later downgraded",
+      "hi": true
+     }
+    ],
+    "caption": "Of every 100 mortgage securities Moody's rated AAA in 2006, 83 were later downgraded."
+   },
    "source": "Financial Crisis Inquiry Commission, 2011",
    "source_kind": "primary_document",
    "reference": "Financial Crisis Inquiry Commission, The Financial Crisis Inquiry Report, US Government Printing Office, 2011",
@@ -14385,6 +14757,22 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "€",
+    "items": [
+     {
+      "label": "Ireland's output a year, at most",
+      "value": 190000000000.0
+     },
+     {
+      "label": "Bank debts the state guaranteed",
+      "value": 400000000000.0,
+      "hi": true
+     }
+    ],
+    "caption": "About €400 billion guaranteed by an economy making under €190 billion a year."
+   },
    "source": "Oireachtas Banking Inquiry, 2016",
    "source_kind": "institution",
    "reference": "https://inquiries.oireachtas.ie/banking/volume-1-report/chapter-7/",
@@ -14931,7 +15319,23 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "¢",
+    "items": [
+     {
+      "label": "Real rise, $4.99 to $5.00",
+      "value": 1
+     },
+     {
+      "label": "How shoppers react to it",
+      "value": 20,
+      "hi": true
+     }
+    ],
+    "caption": "Shoppers treat the one-cent step from $4.99 to $5.00 like a twenty-cent rise."
+   },
    "source": "Strulov-Shlain, Review of Economic Studies, 2023",
    "source_kind": "paper",
    "reference": "doi:10.1093/restud/rdac082",
@@ -15793,6 +16197,133 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "speed, knots",
+     "min": 10,
+     "max": 20
+    },
+    "y": {
+     "label": "% of fuel at 20 knots",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "per hour: speed cubed",
+      "points": [
+       [
+        10,
+        12.5
+       ],
+       [
+        11,
+        16.6
+       ],
+       [
+        12,
+        21.6
+       ],
+       [
+        13,
+        27.5
+       ],
+       [
+        14,
+        34.3
+       ],
+       [
+        15,
+        42.2
+       ],
+       [
+        16,
+        51.2
+       ],
+       [
+        17,
+        61.4
+       ],
+       [
+        18,
+        72.9
+       ],
+       [
+        19,
+        85.7
+       ],
+       [
+        20,
+        100.0
+       ]
+      ]
+     },
+     {
+      "label": "per voyage: speed squared",
+      "hi": true,
+      "points": [
+       [
+        10,
+        25.0
+       ],
+       [
+        11,
+        30.3
+       ],
+       [
+        12,
+        36.0
+       ],
+       [
+        13,
+        42.3
+       ],
+       [
+        14,
+        49.0
+       ],
+       [
+        15,
+        56.2
+       ],
+       [
+        16,
+        64.0
+       ],
+       [
+        17,
+        72.2
+       ],
+       [
+        18,
+        81.0
+       ],
+       [
+        19,
+        90.2
+       ],
+       [
+        20,
+        100.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 16,
+      "y": 64,
+      "label": "per voyage: 64%"
+     },
+     {
+      "x": 16,
+      "y": 51.2,
+      "label": "per hour: 51%"
+     }
+    ],
+    "caption": "At 16 knots each hour burns 51% of the fuel, but the longer voyage needs 64%."
+   },
    "source": "Notteboom & Vernimmen, Journal of Transport Geography, 2009",
    "source_kind": "paper",
    "reference": "Notteboom & Vernimmen, The effect of high fuel costs on liner service configuration in container shipping, Journal of Transport Geography, 2009",
@@ -17894,6 +18425,105 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "months",
+     "min": 0,
+     "max": 12
+    },
+    "y": {
+     "label": "prices, times over",
+     "min": 0,
+     "max": 140
+    },
+    "series": [
+     {
+      "label": "rises added up",
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        12,
+        7
+       ]
+      ]
+     },
+     {
+      "label": "rises compounded, 50% a month",
+      "hi": true,
+      "points": [
+       [
+        0,
+        1.0
+       ],
+       [
+        1,
+        1.5
+       ],
+       [
+        2,
+        2.25
+       ],
+       [
+        3,
+        3.38
+       ],
+       [
+        4,
+        5.06
+       ],
+       [
+        5,
+        7.59
+       ],
+       [
+        6,
+        11.39
+       ],
+       [
+        7,
+        17.09
+       ],
+       [
+        8,
+        25.63
+       ],
+       [
+        9,
+        38.44
+       ],
+       [
+        10,
+        57.67
+       ],
+       [
+        11,
+        86.5
+       ],
+       [
+        12,
+        129.75
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 12,
+      "y": 7,
+      "label": "a year: ×7"
+     },
+     {
+      "x": 12,
+      "y": 129.75,
+      "label": "a year: ×130"
+     }
+    ],
+    "caption": "Adding twelve 50% rises gives ×7; compounding them gives ×130."
+   },
    "source": "Cagan, Monetary Dynamics of Hyperinflation, 1956",
    "source_kind": "paper",
    "reference": "Cagan, The Monetary Dynamics of Hyperinflation, in Friedman (ed.), Studies in the Quantity Theory of Money, University of Chicago Press, 1956",
@@ -18298,6 +18928,108 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "market interest rate, %",
+     "min": 0,
+     "max": 5
+    },
+    "y": {
+     "label": "price per £100",
+     "min": 0,
+     "max": 110
+    },
+    "series": [
+     {
+      "label": "40-year 0.5% bond",
+      "hi": true,
+      "points": [
+       [
+        0.5,
+        100.0
+       ],
+       [
+        0.75,
+        91.4
+       ],
+       [
+        1.0,
+        83.6
+       ],
+       [
+        1.25,
+        76.5
+       ],
+       [
+        1.5,
+        70.1
+       ],
+       [
+        1.75,
+        64.3
+       ],
+       [
+        2.0,
+        59.0
+       ],
+       [
+        2.25,
+        54.2
+       ],
+       [
+        2.5,
+        49.8
+       ],
+       [
+        2.75,
+        45.8
+       ],
+       [
+        3.0,
+        42.2
+       ],
+       [
+        3.25,
+        38.9
+       ],
+       [
+        3.5,
+        35.9
+       ],
+       [
+        3.75,
+        33.2
+       ],
+       [
+        4.0,
+        30.7
+       ],
+       [
+        4.25,
+        28.5
+       ],
+       [
+        4.5,
+        26.4
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 0.5,
+      "y": 100,
+      "label": "£100 at 0.5%"
+     },
+     {
+      "x": 4.5,
+      "y": 26.4,
+      "label": "at 4.5%: about £26"
+     }
+    ],
+    "caption": "Market rates rise from 0.5% to 4.5%, and the £100 bond falls to about £26."
+   },
    "source": "Hull, Options, Futures, and Other Derivatives",
    "source_kind": "book",
    "reference": "Hull, Options, Futures, and Other Derivatives, 10th edition, Pearson, 2018",
@@ -22316,6 +23048,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "m²",
+    "items": [
+     {
+      "label": "The oil as one drop",
+      "value": 0.00253
+     },
+     {
+      "label": "As 10 µm droplets",
+      "value": 7.2,
+      "hi": true
+     }
+    ],
+    "caption": "As one drop, 12 ml of oil has 25 cm² of surface; as 10 µm droplets, 7.2 m²."
+   },
    "source": "McClements, Food Emulsions, 2015",
    "source_kind": "book",
    "reference": "McClements, Food Emulsions: Principles, Practices, and Techniques, 3rd edition, CRC Press, 2015",
@@ -24936,6 +25684,65 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "census year",
+     "min": 1830,
+     "max": 1852
+    },
+    "y": {
+     "label": "people, millions",
+     "min": 0,
+     "max": 10
+    },
+    "series": [
+     {
+      "label": "census count",
+      "hi": true,
+      "points": [
+       [
+        1831,
+        7.8
+       ],
+       [
+        1841,
+        8.2
+       ],
+       [
+        1851,
+        6.6
+       ]
+      ]
+     },
+     {
+      "label": "1830s growth continued",
+      "points": [
+       [
+        1841,
+        8.2
+       ],
+       [
+        1851,
+        8.6
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 1851,
+      "y": 8.6,
+      "label": "trend: 8.6"
+     },
+     {
+      "x": 1851,
+      "y": 6.6,
+      "label": "census: 6.6"
+     }
+    ],
+    "caption": "The 1830s trend pointed to 8.6 million in 1851; the census found 6.6. Two million missing."
+   },
    "source": "Ó Gráda, Black '47 and Beyond, 1999",
    "source_kind": "book",
    "reference": "Ó Gráda, Black '47 and Beyond: The Great Irish Famine in History, Economy, and Memory, Princeton University Press, 1999",
@@ -26110,7 +26917,27 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "g",
+    "items": [
+     {
+      "label": "WHO daily salt limit",
+      "value": 5
+     },
+     {
+      "label": "Sodium on the label",
+      "value": 1.2
+     },
+     {
+      "label": "That sodium as salt",
+      "value": 3,
+      "hi": true
+     }
+    ],
+    "caption": "1.2 g of sodium is 3 g of salt: 60% of the day's limit, not 24%."
+   },
    "source": "WHO guideline on sodium intake, 2012",
    "source_kind": "institution",
    "reference": "World Health Organization, Guideline: Sodium intake for adults and children, WHO, 2012",
@@ -26300,6 +27127,84 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "days of feeding",
+     "min": 0,
+     "max": 10
+    },
+    "y": {
+     "label": "kg of starter",
+     "min": 0,
+     "max": 6000
+    },
+    "series": [
+     {
+      "label": "tripling daily",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.1
+       ],
+       [
+        1,
+        0.3
+       ],
+       [
+        2,
+        0.9
+       ],
+       [
+        3,
+        2.7
+       ],
+       [
+        4,
+        8.1
+       ],
+       [
+        5,
+        24.3
+       ],
+       [
+        6,
+        72.9
+       ],
+       [
+        7,
+        218.7
+       ],
+       [
+        8,
+        656.1
+       ],
+       [
+        9,
+        1968.3
+       ],
+       [
+        10,
+        5904.9
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 7,
+      "y": 218.7,
+      "label": "day 7: 219 kg"
+     },
+     {
+      "x": 10,
+      "y": 5904.9,
+      "label": "day 10: 5.9 tonnes"
+     }
+    ],
+    "caption": "Tripling from 100 g: 219 kg after a week, then 5.9 tonnes three days later."
+   },
    "source": "Powers of three, 3^10",
    "source_kind": "arithmetic",
    "reference": "Hamelman, Bread: A Baker's Book of Techniques and Recipes, Wiley, 2004",
@@ -26457,6 +27362,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "× hydrogen ions",
+    "items": [
+     {
+      "label": "Fresh dough, pH 6",
+      "value": 1
+     },
+     {
+      "label": "Sourdough, pH 4",
+      "value": 100,
+      "hi": true
+     }
+    ],
+    "caption": "pH 6 to pH 4 feels like a small step; it is a hundred times the hydrogen ions."
+   },
    "source": "De Vuyst & Neysens, Trends in Food Science",
    "source_kind": "paper",
    "reference": "De Vuyst & Neysens, The sourdough microflora: biodiversity and metabolic interactions, Trends in Food Science & Technology, 2005",
@@ -26578,6 +27499,18 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+     {
+      "n": 4,
+      "label": "to the future US",
+      "hi": true
+     }
+    ],
+    "caption": "Of every hundred who survived the crossing, about four reached the future United States."
+   },
    "source": "Eltis & Richardson, Yale University Press, 2010",
    "source_kind": "book",
    "reference": "Eltis & Richardson, Atlas of the Transatlantic Slave Trade, Yale University Press, 2010",
@@ -27830,6 +28763,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "people",
+    "items": [
+     {
+      "label": "Indian Civil Service",
+      "value": 1000,
+      "hi": true
+     },
+     {
+      "label": "people it governed",
+      "value": 300000000
+     }
+    ],
+    "caption": "About 1,000 officers for nearly 300 million people: one for every 300,000."
+   },
    "source": "Gilmour, The Ruling Caste, 2005",
    "source_kind": "book",
    "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, John Murray, 2005",
@@ -29939,6 +30888,132 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "years of paying the due",
+     "min": 0,
+     "max": 100
+    },
+    "y": {
+     "label": "worth now, in years of dues",
+     "min": 0,
+     "max": 22
+    },
+    "series": [
+     {
+      "label": "buy-out: 20 years' dues",
+      "points": [
+       [
+        0,
+        20
+       ],
+       [
+        100,
+        20
+       ]
+      ]
+     },
+     {
+      "label": "dues paid, valued at 5%",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        5,
+        4.3
+       ],
+       [
+        10,
+        7.7
+       ],
+       [
+        15,
+        10.4
+       ],
+       [
+        20,
+        12.5
+       ],
+       [
+        25,
+        14.1
+       ],
+       [
+        30,
+        15.4
+       ],
+       [
+        35,
+        16.4
+       ],
+       [
+        40,
+        17.2
+       ],
+       [
+        45,
+        17.8
+       ],
+       [
+        50,
+        18.3
+       ],
+       [
+        55,
+        18.6
+       ],
+       [
+        60,
+        18.9
+       ],
+       [
+        65,
+        19.2
+       ],
+       [
+        70,
+        19.3
+       ],
+       [
+        75,
+        19.5
+       ],
+       [
+        80,
+        19.6
+       ],
+       [
+        85,
+        19.7
+       ],
+       [
+        90,
+        19.8
+       ],
+       [
+        95,
+        19.8
+       ],
+       [
+        100,
+        19.8
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 20,
+      "y": 12.5,
+      "label": "20 years of dues: 12.5"
+     }
+    ],
+    "caption": "Twenty years of dues are worth only 12.5 now; even a century of them never reaches 20."
+   },
    "source": "Jones, The Peasantry in the French Revolution",
    "source_kind": "book",
    "reference": "Jones, The Peasantry in the French Revolution, Cambridge University Press, 1988",
@@ -31097,6 +32172,22 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "scale",
+    "unit": "hours",
+    "items": [
+     {
+      "label": "Self-acting mule, 1825",
+      "value": 135
+     },
+     {
+      "label": "Spinning by hand",
+      "value": 50000,
+      "hi": true
+     }
+    ],
+    "caption": "The same 45 kg of yarn: about 14 working years by hand, under two weeks by machine."
+   },
    "source": "Allen, The British Industrial Revolution, 2009",
    "source_kind": "book",
    "reference": "Allen, The British Industrial Revolution in Global Perspective, Cambridge University Press, 2009, after Catling, The Spinning Mule, 1970",
@@ -31799,6 +32890,34 @@
    "mature": false,
    "language": "en",
    "figure": "map",
+   "diagram": {
+    "type": "timeline",
+    "from": 1250,
+    "to": 1290,
+    "events": [
+     {
+      "at": 1259,
+      "label": "Möngke dies"
+     },
+     {
+      "at": 1262,
+      "label": "Khanates at war"
+     },
+     {
+      "at": 1279,
+      "label": "Song falls: greatest extent",
+      "hi": true
+     }
+    ],
+    "spans": [
+     {
+      "from": 1260,
+      "to": 1264,
+      "label": "civil war"
+     }
+    ],
+    "caption": "The khanates were at war seventeen years before the empire reached its greatest extent."
+   },
    "source": "Morgan, The Mongols, 2007",
    "source_kind": "book",
    "reference": "Morgan, The Mongols, 2nd edition, Blackwell, 2007",
@@ -31879,6 +32998,84 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "years unpaid",
+     "min": 0,
+     "max": 10
+    },
+    "y": {
+     "label": "ingots owed",
+     "min": 0,
+     "max": 1100
+    },
+    "series": [
+     {
+      "label": "doubling every year",
+      "hi": true,
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        1,
+        2
+       ],
+       [
+        2,
+        4
+       ],
+       [
+        3,
+        8
+       ],
+       [
+        4,
+        16
+       ],
+       [
+        5,
+        32
+       ],
+       [
+        6,
+        64
+       ],
+       [
+        7,
+        128
+       ],
+       [
+        8,
+        256
+       ],
+       [
+        9,
+        512
+       ],
+       [
+        10,
+        1024
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 5,
+      "y": 32,
+      "label": "5 years: 32"
+     },
+     {
+      "x": 10,
+      "y": 1024,
+      "label": "10 years: 1,024"
+     }
+    ],
+    "caption": "After five years the debt is 32 ingots; the next five add almost a thousand."
+   },
    "source": "Allsen, Asia Major, 1989",
    "source_kind": "paper",
    "reference": "Allsen, Mongolian Princes and Their Merchant Partners, 1200-1260, Asia Major, third series, 2, 1989, 83-126",
@@ -33022,6 +34219,18 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+     {
+      "n": 27,
+      "label": "route known for certain",
+      "hi": true
+     }
+    ],
+    "caption": "Of every 1,000 km of mapped Roman road, only 27 follow a course known for certain."
+   },
    "source": "de Soto et al., Scientific Data, 2025",
    "source_kind": "paper",
    "reference": "https://www.nature.com/articles/s41597-025-06140-z",
@@ -35498,6 +36707,125 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "change in radius, %",
+     "min": -17,
+     "max": 19
+    },
+    "y": {
+     "label": "flow, % of before",
+     "min": 0,
+     "max": 210
+    },
+    "series": [
+     {
+      "label": "if flow followed the radius",
+      "points": [
+       [
+        -16.7,
+        83.3
+       ],
+       [
+        -12,
+        88
+       ],
+       [
+        -8,
+        92
+       ],
+       [
+        -4,
+        96
+       ],
+       [
+        0,
+        100
+       ],
+       [
+        4,
+        104
+       ],
+       [
+        8,
+        108
+       ],
+       [
+        12,
+        112
+       ],
+       [
+        16,
+        116
+       ],
+       [
+        19,
+        119
+       ]
+      ]
+     },
+     {
+      "label": "radius to the fourth power",
+      "hi": true,
+      "points": [
+       [
+        -16.7,
+        48.1
+       ],
+       [
+        -12,
+        60.0
+       ],
+       [
+        -8,
+        71.6
+       ],
+       [
+        -4,
+        84.9
+       ],
+       [
+        0,
+        100.0
+       ],
+       [
+        4,
+        117.0
+       ],
+       [
+        8,
+        136.0
+       ],
+       [
+        12,
+        157.4
+       ],
+       [
+        16,
+        181.1
+       ],
+       [
+        19,
+        200.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 19,
+      "y": 200.5,
+      "label": "19% wider: twice the flow"
+     },
+     {
+      "x": -16.7,
+      "y": 48.1,
+      "label": "a sixth narrower: half"
+     }
+    ],
+    "caption": "Flow goes with the radius to the fourth power: 19% wider doubles it, a sixth narrower halves it."
+   },
    "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
    "source_kind": "book",
    "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",
@@ -35876,6 +37204,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "m²",
+    "items": [
+     {
+      "label": "Tennis court",
+      "value": 261
+     },
+     {
+      "label": "Gut lining",
+      "value": 32,
+      "hi": true
+     }
+    ],
+    "caption": "The measured gut lining, 32 m², is about an eighth of the tennis court often quoted."
+   },
    "source": "Helander & Fändriks, Scand J Gastroenterol, 2014",
    "source_kind": "paper",
    "reference": "https://www.tandfonline.com/doi/full/10.3109/00365521.2014.898326",
@@ -37126,7 +38470,23 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "dots",
+   "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+     {
+      "n": 10,
+      "label": "would have had IBS anyway"
+     },
+     {
+      "n": 26,
+      "label": "extra cases after the illness",
+      "hi": true
+     }
+    ],
+    "caption": "Of 100 who fell ill, 36 got IBS; 10 would have anyway, so 26 are extra."
+   },
    "source": "Marshall et al., Gastroenterology, 2006",
    "source_kind": "paper",
    "reference": "Marshall, Thabane, Garg et al., Incidence and epidemiology of irritable bowel syndrome after a large waterborne outbreak of bacterial dysentery, Gastroenterology, 2006",
@@ -38194,6 +39554,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 100,
+    "label": "pairs of strangers",
+    "branches": [
+     {
+      "n": 90,
+      "label": "first: right hand",
+      "branches": [
+       {
+        "n": 81,
+        "label": "both right",
+        "hi": true
+       },
+       {
+        "n": 9,
+        "label": "one of each"
+       }
+      ]
+     },
+     {
+      "n": 10,
+      "label": "first: left hand",
+      "branches": [
+       {
+        "n": 1,
+        "label": "both left",
+        "hi": true
+       },
+       {
+        "n": 9,
+        "label": "one of each"
+       }
+      ]
+     }
+    ],
+    "caption": "81 + 1 = 82 in 100 stranger pairs share handedness, more than identical twins' 80."
+   },
    "source": "Pfeifer et al., BMC Psychology, 2022",
    "source_kind": "paper",
    "reference": "doi:10.1186/s40359-021-00695-3",
@@ -38346,6 +39744,84 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "age",
+     "min": 30,
+     "max": 70
+    },
+    "y": {
+     "label": "yearly risk, age 30 = 1",
+     "min": 0,
+     "max": 36
+    },
+    "series": [
+     {
+      "label": "doubling every 8 years",
+      "hi": true,
+      "points": [
+       [
+        30,
+        1.0
+       ],
+       [
+        34,
+        1.41
+       ],
+       [
+        38,
+        2.0
+       ],
+       [
+        42,
+        2.83
+       ],
+       [
+        46,
+        4.0
+       ],
+       [
+        50,
+        5.66
+       ],
+       [
+        54,
+        8.0
+       ],
+       [
+        58,
+        11.31
+       ],
+       [
+        62,
+        16.0
+       ],
+       [
+        66,
+        22.63
+       ],
+       [
+        70,
+        32.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 38,
+      "y": 2,
+      "label": "twice at 38"
+     },
+     {
+      "x": 70,
+      "y": 32,
+      "label": "32 times at 70"
+     }
+    ],
+    "caption": "Five doublings between 30 and 70 multiply the risk by 32; the last two do most."
+   },
    "source": "Kirkwood, Phil Trans R Soc B, 2015",
    "source_kind": "paper",
    "reference": "Kirkwood, Deciphering death: a commentary on Gompertz (1825), Philosophical Transactions of the Royal Society B, 2015",
@@ -39263,6 +40739,88 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "axon width, mm",
+     "min": 0,
+     "max": 8
+    },
+    "y": {
+     "label": "speed, m/s",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "speed goes as root of width",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        0.125,
+        12.5
+       ],
+       [
+        0.25,
+        17.7
+       ],
+       [
+        0.5,
+        25.0
+       ],
+       [
+        1,
+        35.4
+       ],
+       [
+        2,
+        50.0
+       ],
+       [
+        3,
+        61.2
+       ],
+       [
+        4,
+        70.7
+       ],
+       [
+        5,
+        79.1
+       ],
+       [
+        6,
+        86.6
+       ],
+       [
+        7,
+        93.5
+       ],
+       [
+        8,
+        100.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 0.5,
+      "y": 25,
+      "label": "squid, 0.5 mm: 25 m/s"
+     },
+     {
+      "x": 8,
+      "y": 100,
+      "label": "8 mm for 100 m/s"
+     }
+    ],
+    "caption": "From 25 to 100 m/s, four times the speed, the axon must grow sixteen times wider."
+   },
    "source": "Hartline & Colman, Current Biology, 2007",
    "source_kind": "paper",
    "reference": "Hartline & Colman, Rapid conduction and the evolution of giant axons and myelinated fibers, Current Biology, 2007",
@@ -43147,6 +44705,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+     {
+      "label": "1992, with a double negative",
+      "value": 22
+     },
+     {
+      "label": "1994, asked plainly",
+      "value": 1,
+      "hi": true
+     }
+    ],
+    "caption": "Remove the double negative and 22% doubting the Holocaust shrinks to 1%."
+   },
    "source": "Smith, Public Opinion Quarterly, 1995",
    "source_kind": "paper",
    "reference": "Smith, The Polls: A Review. The Holocaust Denial Controversy, Public Opinion Quarterly, 1995",
@@ -44220,6 +45794,30 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+     {
+      "label": "haha",
+      "value": 51
+     },
+     {
+      "label": "emoji",
+      "value": 34
+     },
+     {
+      "label": "hehe",
+      "value": 13
+     },
+     {
+      "label": "lol",
+      "value": 1.9,
+      "hi": true
+     }
+    ],
+    "caption": "Of all typed laughs, lol was under 2%; plain haha was over half."
+   },
    "source": "Facebook Research, The Not-So-Universal Language of Laughter",
    "source_kind": "institution",
    "reference": "Weinsberg, Adamic & Develin, The Not-So-Universal Language of Laughter, Facebook Research, 2015",
@@ -48484,6 +50082,120 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "tests in the panel",
+     "min": 0,
+     "max": 20
+    },
+    "y": {
+     "label": "% of healthy people flagged",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "each test: 5% false alarm",
+      "hi": true,
+      "points": [
+       [
+        1,
+        5.0
+       ],
+       [
+        2,
+        9.8
+       ],
+       [
+        3,
+        14.3
+       ],
+       [
+        4,
+        18.5
+       ],
+       [
+        5,
+        22.6
+       ],
+       [
+        6,
+        26.5
+       ],
+       [
+        7,
+        30.2
+       ],
+       [
+        8,
+        33.7
+       ],
+       [
+        9,
+        37.0
+       ],
+       [
+        10,
+        40.1
+       ],
+       [
+        11,
+        43.1
+       ],
+       [
+        12,
+        46.0
+       ],
+       [
+        13,
+        48.7
+       ],
+       [
+        14,
+        51.2
+       ],
+       [
+        15,
+        53.7
+       ],
+       [
+        16,
+        56.0
+       ],
+       [
+        17,
+        58.2
+       ],
+       [
+        18,
+        60.3
+       ],
+       [
+        19,
+        62.3
+       ],
+       [
+        20,
+        64.2
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 1,
+      "y": 5.0,
+      "label": "one test: 5%"
+     },
+     {
+      "x": 20,
+      "y": 64.2,
+      "label": "twenty tests: 64%"
+     }
+    ],
+    "caption": "One test flags 5% of healthy people; twenty tests flag 64%."
+   },
    "source": "CLSI EP28-A3c, reference intervals standard",
    "source_kind": "standard",
    "reference": "Clinical and Laboratory Standards Institute, EP28-A3c: Defining, Establishing, and Verifying Reference Intervals in the Clinical Laboratory, 2008",
@@ -49934,7 +51646,27 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "deaths per 1,000 mothers",
+    "items": [
+     {
+      "label": "Midwives' ward",
+      "value": 39
+     },
+     {
+      "label": "Doctors' ward, 1841–46",
+      "value": 99
+     },
+     {
+      "label": "Doctors' ward, after handwashing",
+      "value": 13,
+      "hi": true
+     }
+    ],
+    "caption": "The doctors' ward was the deadliest until chlorine handwashing cut it from 99 to 13."
+   },
    "source": "Loudon, James Lind Library, 2013",
    "source_kind": "paper",
    "reference": "https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/",
@@ -50865,6 +52597,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 36500,
+    "label": "volunteers",
+    "branches": [
+     {
+      "n": 18200,
+      "label": "vaccinated",
+      "branches": [
+       {
+        "n": 8,
+        "label": "fell ill",
+        "hi": true
+       },
+       {
+        "n": 18192,
+        "label": "stayed well"
+       }
+      ]
+     },
+     {
+      "n": 18300,
+      "label": "placebo",
+      "branches": [
+       {
+        "n": 162,
+        "label": "fell ill",
+        "hi": true
+       },
+       {
+        "n": 18138,
+        "label": "stayed well"
+       }
+      ]
+     }
+    ],
+    "caption": "95% efficacy means 8 ill against 162, not 5% of the vaccinated falling ill."
+   },
    "source": "Polack et al., NEJM, 2020",
    "source_kind": "paper",
    "reference": "doi:10.1056/NEJMoa2034577",
@@ -52472,6 +54242,33 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 100,
+    "label": "patients on the drug",
+    "branches": [
+     {
+      "n": 40,
+      "label": "relieved",
+      "branches": [
+       {
+        "n": 30,
+        "label": "would ease anyway"
+       },
+       {
+        "n": 10,
+        "label": "owe it to the drug",
+        "hi": true
+       }
+      ]
+     },
+     {
+      "n": 60,
+      "label": "not relieved"
+     }
+    ],
+    "caption": "Of 40 relieved, 30 would have eased on a dummy anyway: only 10 owe it to the drug."
+   },
    "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
    "source_kind": "arithmetic",
    "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",
@@ -53260,7 +55057,23 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "% dead at three years",
+    "items": [
+     {
+      "label": "Open surgery",
+      "value": 1.0
+     },
+     {
+      "label": "Keyhole or robotic",
+      "value": 6.2,
+      "hi": true
+     }
+    ],
+    "caption": "99.0% against 93.8% alive looks close; the deaths differ sixfold."
+   },
    "source": "Ramirez et al., NEJM, 2018",
    "source_kind": "paper",
    "reference": "Ramirez et al., Minimally invasive versus abdominal radical hysterectomy for cervical cancer, New England Journal of Medicine, 2018",
@@ -55316,6 +57129,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 10000,
+    "label": "vocals tested",
+    "branches": [
+     {
+      "n": 500,
+      "label": "natural",
+      "branches": [
+       {
+        "n": 475,
+        "label": "called natural",
+        "hi": true
+       },
+       {
+        "n": 25,
+        "label": "called corrected"
+       }
+      ]
+     },
+     {
+      "n": 9500,
+      "label": "corrected",
+      "branches": [
+       {
+        "n": 475,
+        "label": "called natural anyway",
+        "hi": true
+       },
+       {
+        "n": 9025,
+        "label": "called corrected"
+       }
+      ]
+     }
+    ],
+    "caption": "Of 950 vocals called natural, only 475 are: each real find stands beside an impostor."
+   },
    "source": "Bayes' theorem",
    "source_kind": "arithmetic",
    "reference": "Gigerenzer, Calculated Risks: How to Know When Numbers Deceive You, Simon & Schuster, 2002",
@@ -58609,6 +60460,120 @@
     "music-layering-2"
    ],
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "singers",
+     "min": 0,
+     "max": 10
+    },
+    "y": {
+     "label": "times one soloist",
+     "min": 0,
+     "max": 10
+    },
+    "series": [
+     {
+      "label": "sound power",
+      "points": [
+       [
+        1,
+        1
+       ],
+       [
+        2,
+        2
+       ],
+       [
+        3,
+        3
+       ],
+       [
+        4,
+        4
+       ],
+       [
+        5,
+        5
+       ],
+       [
+        6,
+        6
+       ],
+       [
+        7,
+        7
+       ],
+       [
+        8,
+        8
+       ],
+       [
+        9,
+        9
+       ],
+       [
+        10,
+        10
+       ]
+      ]
+     },
+     {
+      "label": "loudness heard",
+      "hi": true,
+      "points": [
+       [
+        1,
+        1.0
+       ],
+       [
+        2,
+        1.23
+       ],
+       [
+        3,
+        1.39
+       ],
+       [
+        4,
+        1.52
+       ],
+       [
+        5,
+        1.62
+       ],
+       [
+        6,
+        1.71
+       ],
+       [
+        7,
+        1.8
+       ],
+       [
+        8,
+        1.87
+       ],
+       [
+        9,
+        1.94
+       ],
+       [
+        10,
+        2.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 10,
+      "y": 2,
+      "label": "10 singers: twice as loud"
+     }
+    ],
+    "caption": "Ten singers give ten times the power of one, yet sound only twice as loud."
+   },
    "source": "Stevens, JASA, 1955",
    "source_kind": "paper",
    "reference": "Stevens, The Measurement of Loudness, Journal of the Acoustical Society of America, 1955",
@@ -59788,6 +61753,84 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "seconds",
+     "min": 0,
+     "max": 2
+    },
+    "y": {
+     "label": "tail level, dB",
+     "min": -60,
+     "max": 0
+    },
+    "series": [
+     {
+      "label": "the mix",
+      "points": [
+       [
+        0,
+        -30
+       ],
+       [
+        2,
+        -30
+       ]
+      ]
+     },
+     {
+      "label": "reverb tail",
+      "hi": true,
+      "points": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        0.25,
+        -7.5
+       ],
+       [
+        0.5,
+        -15.0
+       ],
+       [
+        0.75,
+        -22.5
+       ],
+       [
+        1.0,
+        -30.0
+       ],
+       [
+        1.25,
+        -37.5
+       ],
+       [
+        1.5,
+        -45.0
+       ],
+       [
+        1.75,
+        -52.5
+       ],
+       [
+        2.0,
+        -60.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 1,
+      "y": -30,
+      "label": "1 second: lost in the mix"
+     }
+    ],
+    "caption": "The tail falls 30 dB a second, so a mix 30 dB down swallows it halfway."
+   },
    "source": "Izhaki, Mixing Audio, 2008",
    "source_kind": "book",
    "reference": "Izhaki, Mixing Audio: Concepts, Practices and Tools, Focal Press, 2008",
@@ -62144,6 +64187,94 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "times bigger",
+     "min": 1,
+     "max": 100,
+     "log": true
+    },
+    "y": {
+     "label": "lifts × own weight",
+     "min": 0.1,
+     "max": 30,
+     "log": true
+    },
+    "series": [
+     {
+      "label": "strength ÷ weight",
+      "hi": true,
+      "points": [
+       [
+        1,
+        20.0
+       ],
+       [
+        1.5,
+        13.333
+       ],
+       [
+        2,
+        10.0
+       ],
+       [
+        3,
+        6.667
+       ],
+       [
+        5,
+        4.0
+       ],
+       [
+        7,
+        2.857
+       ],
+       [
+        10,
+        2.0
+       ],
+       [
+        15,
+        1.333
+       ],
+       [
+        20,
+        1.0
+       ],
+       [
+        30,
+        0.667
+       ],
+       [
+        50,
+        0.4
+       ],
+       [
+        70,
+        0.286
+       ],
+       [
+        100,
+        0.2
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 20,
+      "y": 1,
+      "label": "20× bigger: just itself"
+     },
+     {
+      "x": 100,
+      "y": 0.2,
+      "label": "100× bigger: 0.2×"
+     }
+    ],
+    "caption": "Scaled up 100 times, strength grows 10,000-fold but weight a millionfold: it lifts a fifth of itself."
+   },
    "source": "Schmidt-Nielsen, Scaling, 1984",
    "source_kind": "book",
    "reference": "Schmidt-Nielsen, Scaling: Why Is Animal Size So Important?, Cambridge University Press, 1984",
@@ -64341,6 +66472,33 @@
    "mature": false,
    "language": "en",
    "figure": "nested_circles",
+   "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "parts of carbon fixed",
+    "branches": [
+     {
+      "n": 900,
+      "label": "never sink out"
+     },
+     {
+      "n": 100,
+      "label": "sink below 100 m",
+      "branches": [
+       {
+        "n": 90,
+        "label": "eaten on the way"
+       },
+       {
+        "n": 10,
+        "label": "reach 4 km down",
+        "hi": true
+       }
+      ]
+     }
+    ],
+    "caption": "Of every 1,000 parts fixed in sunlit water, roughly 100 sink out and 10 reach the abyss."
+   },
    "source": "Martin et al., Deep-Sea Research, 1987",
    "source_kind": "paper",
    "reference": "Martin, Knauer, Karl & Broenkow, VERTEX: carbon cycling in the northeast Pacific, Deep-Sea Research, 1987",
@@ -65535,6 +67693,97 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "chance of frost, %",
+     "min": 0,
+     "max": 50
+    },
+    "y": {
+     "label": "expected cost, €",
+     "min": 0,
+     "max": 2500
+    },
+    "series": [
+     {
+      "label": "cover: €1,000",
+      "points": [
+       [
+        0,
+        1000
+       ],
+       [
+        50,
+        1000
+       ]
+      ]
+     },
+     {
+      "label": "don't: €5,000 × chance",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        5,
+        250
+       ],
+       [
+        10,
+        500
+       ],
+       [
+        15,
+        750
+       ],
+       [
+        20,
+        1000
+       ],
+       [
+        25,
+        1250
+       ],
+       [
+        30,
+        1500
+       ],
+       [
+        35,
+        1750
+       ],
+       [
+        40,
+        2000
+       ],
+       [
+        45,
+        2250
+       ],
+       [
+        50,
+        2500
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 20,
+      "y": 1000,
+      "label": "break-even at 20%"
+     },
+     {
+      "x": 30,
+      "y": 1500,
+      "label": "30%: €1,500 against €1,000"
+     }
+    ],
+    "caption": "Covers cost €1,000; frost costs €5,000 times its chance. Above 20%, covering is cheaper."
+   },
    "source": "Katz & Murphy, Economic Value of Weather Forecasts",
    "source_kind": "book",
    "reference": "Katz & Murphy (eds.), Economic Value of Weather and Climate Forecasts, Cambridge University Press, 1997",
@@ -66655,6 +68904,22 @@
     "nature-night-vision-5"
    ],
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "mm²",
+    "items": [
+     {
+      "label": "Pupil 2 mm across",
+      "value": 3.14
+     },
+     {
+      "label": "Pupil 8 mm across",
+      "value": 50.3,
+      "hi": true
+     }
+    ],
+    "caption": "Four times the width lets in sixteen times the light."
+   },
    "source": "Wyszecki & Stiles, Color Science, 1982",
    "source_kind": "book",
    "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd edition, Wiley, 1982",
@@ -67210,6 +69475,22 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "bars",
+    "unit": "species",
+    "items": [
+     {
+      "label": "Expected at the normal rate",
+      "value": 8
+     },
+     {
+      "label": "Gone or probably gone",
+      "value": 477,
+      "hi": true
+     }
+    ],
+    "caption": "Since 1900, 477 vertebrate species gone where 8 were expected: about 60 times the normal rate."
+   },
    "source": "Ceballos et al., Science Advances, 2015",
    "source_kind": "paper",
    "reference": "Ceballos et al., Accelerated modern human-induced species losses: Entering the sixth mass extinction, Science Advances, 2015",
@@ -67980,6 +70261,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "TW",
+    "items": [
+     {
+      "label": "Heat released by rain",
+      "value": 600
+     },
+     {
+      "label": "Driving the winds",
+      "value": 1.5,
+      "hi": true
+     }
+    ],
+    "caption": "Of 600 terawatts of heat, 1.5 drive the winds: a quarter of one percent."
+   },
    "source": "NOAA Hurricane Research Division",
    "source_kind": "institution",
    "reference": "https://www.aoml.noaa.gov/hrd-faq/",
@@ -69209,6 +71506,35 @@
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "diagram": {
+    "type": "timeline",
+    "from": -600,
+    "to": 0,
+    "unit": "ms",
+    "events": [
+     {
+      "at": -550,
+      "label": "brain's build-up begins"
+     },
+     {
+      "at": -200,
+      "label": "felt decision"
+     },
+     {
+      "at": 0,
+      "label": "wrist flicks",
+      "hi": true
+     }
+    ],
+    "spans": [
+     {
+      "from": -100,
+      "to": 0,
+      "label": "veto window"
+     }
+    ],
+    "caption": "The brain starts 350 ms before the felt decision, leaving the mind only a late veto."
+   },
    "source": "Libet, Journal of Consciousness Studies, 1999",
    "source_kind": "paper",
    "reference": "Libet, Do We Have Free Will?, Journal of Consciousness Studies 6 (8-9), 1999",
@@ -69820,6 +72146,26 @@
     "philosophy-determinism-5"
    ],
    "figure": "doubling",
+   "diagram": {
+    "type": "scale",
+    "unit": "m",
+    "items": [
+     {
+      "label": "Error today",
+      "value": 15
+     },
+     {
+      "label": "After 50 million years",
+      "value": 1500000.0
+     },
+     {
+      "label": "After 100 million years",
+      "value": 150000000000.0,
+      "hi": true
+     }
+    ],
+    "caption": "Tenfold every 10 million years turns 15 metres into the distance to the Sun."
+   },
    "source": "Laskar, Is the Solar System Stable?, 2013",
    "source_kind": "paper",
    "reference": "https://arxiv.org/pdf/1209.5996",
@@ -72787,6 +75133,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "hypotheses tested",
+    "branches": [
+     {
+      "n": 100,
+      "label": "true",
+      "branches": [
+       {
+        "n": 80,
+        "label": "found",
+        "hi": true
+       },
+       {
+        "n": 20,
+        "label": "missed"
+       }
+      ]
+     },
+     {
+      "n": 900,
+      "label": "false",
+      "branches": [
+       {
+        "n": 45,
+        "label": "false alarms",
+        "hi": true
+       },
+       {
+        "n": 855,
+        "label": "rejected"
+       }
+      ]
+     }
+    ],
+    "caption": "Of 125 positive findings, 45 are false alarms: only 64% are true."
+   },
    "source": "Ioannidis, PLoS Medicine, 2005",
    "source_kind": "paper",
    "reference": "doi:10.1371/journal.pmed.0020124",
@@ -76553,6 +78937,25 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "items": [
+     {
+      "label": "People inside",
+      "value": 6200
+     },
+     {
+      "label": "Seats in the arena",
+      "value": 19000
+     },
+     {
+      "label": "Ticket requests boasted",
+      "value": 1000000,
+      "hi": true
+     }
+    ],
+    "caption": "The campaign boasted over a million requests; about 6,200 people came, to 19,000 seats."
+   },
    "source": "The New York Times, 21 June 2020",
    "source_kind": "news_archive",
    "reference": "Taylor Lorenz, Kellen Browning and Sheera Frenkel, TikTok Teens and K-Pop Stans Say They Sank Trump Rally, The New York Times, 21 June 2020",
@@ -76961,6 +79364,26 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+     {
+      "label": "Polyester",
+      "value": 57,
+      "hi": true
+     },
+     {
+      "label": "Cotton",
+      "value": 20
+     },
+     {
+      "label": "Everything else",
+      "value": 23
+     }
+    ],
+    "caption": "In 2023 the world made nearly three times as much new polyester as cotton."
+   },
    "source": "Textile Exchange, Materials Market Report 2024",
    "source_kind": "statistics",
    "reference": "Textile Exchange, Materials Market Report, 2024",
@@ -77683,6 +80106,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "$",
+    "items": [
+     {
+      "label": "Cost to build",
+      "value": 5000000000.0
+     },
+     {
+      "label": "Sold for, 1999",
+      "value": 25000000.0,
+      "hi": true
+     }
+    ],
+    "caption": "Iridium cost over $5 billion and sold for $25 million: half a cent on the dollar."
+   },
    "source": "Air & Space, history of Iridium",
    "source_kind": "news_archive",
    "reference": "https://www.smithsonianmag.com/air-space-magazine/the-rise-and-fall-and-rise-of-iridium-5615034/",
@@ -82896,7 +85335,23 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "dots",
+   "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+     {
+      "n": 33,
+      "label": "would have gone anyway"
+     },
+     {
+      "n": 4,
+      "label": "added by writing a date",
+      "hi": true
+     }
+    ],
+    "caption": "Of 37 in 100 vaccinated, 33 would have gone anyway; writing a date added 4."
+   },
    "source": "Milkman et al., PNAS, 2011",
    "source_kind": "paper",
    "reference": "Milkman, Beshears, Choi, Laibson & Madrian, Using implementation intentions prompts to enhance influenza vaccination rates, Proceedings of the National Academy of Sciences, 2011",
@@ -85016,6 +87471,68 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "hours after learning",
+     "min": 0.2,
+     "max": 800,
+     "log": true
+    },
+    "y": {
+     "label": "% saved",
+     "min": 0,
+     "max": 60
+    },
+    "series": [
+     {
+      "hi": true,
+      "points": [
+       [
+        0.33,
+        58.2
+       ],
+       [
+        1,
+        44.2
+       ],
+       [
+        8.8,
+        35.8
+       ],
+       [
+        24,
+        33.7
+       ],
+       [
+        48,
+        27.8
+       ],
+       [
+        144,
+        25.4
+       ],
+       [
+        744,
+        21.1
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 24,
+      "y": 33.7,
+      "label": "a day: 34%"
+     },
+     {
+      "x": 8.8,
+      "y": 35.8,
+      "label": "9 hours: 36%"
+     }
+    ],
+    "caption": "Ebbinghaus's curve flattens overnight: 36% saved after nine hours, still 34% after a day."
+   },
    "source": "Murre & Dros, PLOS ONE, 2015",
    "source_kind": "paper",
    "reference": "doi:10.1371/journal.pone.0120644",
@@ -85965,6 +88482,33 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 300,
+    "label": "adults",
+    "branches": [
+     {
+      "n": 100,
+      "label": "report symptoms",
+      "branches": [
+       {
+        "n": 18,
+        "label": "meet the criteria",
+        "hi": true
+       },
+       {
+        "n": 82,
+        "label": "symptoms only"
+       }
+      ]
+     },
+     {
+      "n": 200,
+      "label": "no symptoms"
+     }
+    ],
+    "caption": "The 18 with the disorder are 6% of all adults but 18% of the symptomatic."
+   },
    "source": "Ohayon, Sleep Medicine Reviews, 2002",
    "source_kind": "paper",
    "reference": "Ohayon, Epidemiology of insomnia: what we know and what we still need to learn, Sleep Medicine Reviews, 2002",
@@ -86514,7 +89058,27 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "items",
+    "items": [
+     {
+      "label": "digit span before training",
+      "value": 7
+     },
+     {
+      "label": "digit span after training",
+      "value": 80
+     },
+     {
+      "label": "letter span after training",
+      "value": 6,
+      "hi": true
+     }
+    ],
+    "caption": "Eighty digits, but only six letters: the skill lived in his code for digits."
+   },
    "source": "Ericsson, Chase & Faloon, Science, 1980",
    "source_kind": "paper",
    "reference": "Ericsson, Chase & Faloon, Acquisition of a memory skill, Science, 1980",
@@ -87199,7 +89763,31 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "days",
+    "items": [
+     {
+      "label": "fastest",
+      "value": 18
+     },
+     {
+      "label": "median, the quoted figure",
+      "value": 66
+     },
+     {
+      "label": "length of the study",
+      "value": 84
+     },
+     {
+      "label": "slowest, projected",
+      "value": 254,
+      "hi": true
+     }
+    ],
+    "caption": "The quoted 66 days is only the median; the slowest habit needed an estimated 254."
+   },
    "source": "Lally et al., European J Social Psychology, 2010",
    "source_kind": "paper",
    "reference": "Lally, van Jaarsveld, Potts & Wardle, How are habits formed: modelling habit formation in the real world, European Journal of Social Psychology, 2010",
@@ -87382,6 +89970,104 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "days",
+     "min": 0,
+     "max": 30
+    },
+    "y": {
+     "label": "% chance, streak unbroken",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "95% each day",
+      "hi": true,
+      "points": [
+       [
+        0,
+        100.0
+       ],
+       [
+        2,
+        90.2
+       ],
+       [
+        4,
+        81.5
+       ],
+       [
+        6,
+        73.5
+       ],
+       [
+        8,
+        66.3
+       ],
+       [
+        10,
+        59.9
+       ],
+       [
+        12,
+        54.0
+       ],
+       [
+        14,
+        48.8
+       ],
+       [
+        16,
+        44.0
+       ],
+       [
+        18,
+        39.7
+       ],
+       [
+        20,
+        35.8
+       ],
+       [
+        22,
+        32.4
+       ],
+       [
+        24,
+        29.2
+       ],
+       [
+        26,
+        26.4
+       ],
+       [
+        28,
+        23.8
+       ],
+       [
+        30,
+        21.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 14,
+      "y": 48.8,
+      "label": "two weeks: 49%"
+     },
+     {
+      "x": 30,
+      "y": 21.5,
+      "label": "30 days: 21.5%"
+     }
+    ],
+    "caption": "Each day is 95% safe, yet fewer than one streak in four survives a month."
+   },
    "source": "Feller, Probability Theory, 1968",
    "source_kind": "book",
    "reference": "Feller, An Introduction to Probability Theory and Its Applications, Vol. 1, 3rd ed., Wiley, 1968",
@@ -89301,6 +91987,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "survivors",
+    "items": [
+     {
+      "label": "Kills 99.999%",
+      "value": 10
+     },
+     {
+      "label": "Kills 99.9%",
+      "value": 1000,
+      "hi": true
+     }
+    ],
+    "caption": "From a million bacteria: 10 survive a 99.999% kill, 1,000 survive a 99.9% kill."
+   },
    "source": "CEN, EN 1276 bactericidal suspension test",
    "source_kind": "standard",
    "reference": "European Committee for Standardization, EN 1276:2019, Chemical disinfectants and antiseptics, quantitative suspension test for bactericidal activity, 2019",
@@ -91122,6 +93824,237 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "terms added",
+     "min": 0,
+     "max": 24
+    },
+    "y": {
+     "label": "running total",
+     "min": 0,
+     "max": 1
+    },
+    "series": [
+     {
+      "label": "usual order",
+      "points": [
+       [
+        1,
+        1.0
+       ],
+       [
+        2,
+        0.5
+       ],
+       [
+        3,
+        0.833
+       ],
+       [
+        4,
+        0.583
+       ],
+       [
+        5,
+        0.783
+       ],
+       [
+        6,
+        0.617
+       ],
+       [
+        7,
+        0.76
+       ],
+       [
+        8,
+        0.635
+       ],
+       [
+        9,
+        0.746
+       ],
+       [
+        10,
+        0.646
+       ],
+       [
+        11,
+        0.737
+       ],
+       [
+        12,
+        0.653
+       ],
+       [
+        13,
+        0.73
+       ],
+       [
+        14,
+        0.659
+       ],
+       [
+        15,
+        0.725
+       ],
+       [
+        16,
+        0.663
+       ],
+       [
+        17,
+        0.722
+       ],
+       [
+        18,
+        0.666
+       ],
+       [
+        19,
+        0.719
+       ],
+       [
+        20,
+        0.669
+       ],
+       [
+        21,
+        0.716
+       ],
+       [
+        22,
+        0.671
+       ],
+       [
+        23,
+        0.714
+       ],
+       [
+        24,
+        0.673
+       ]
+      ]
+     },
+     {
+      "label": "one plus, two minus",
+      "hi": true,
+      "points": [
+       [
+        1,
+        1.0
+       ],
+       [
+        2,
+        0.5
+       ],
+       [
+        3,
+        0.25
+       ],
+       [
+        4,
+        0.583
+       ],
+       [
+        5,
+        0.417
+       ],
+       [
+        6,
+        0.292
+       ],
+       [
+        7,
+        0.492
+       ],
+       [
+        8,
+        0.392
+       ],
+       [
+        9,
+        0.308
+       ],
+       [
+        10,
+        0.451
+       ],
+       [
+        11,
+        0.38
+       ],
+       [
+        12,
+        0.317
+       ],
+       [
+        13,
+        0.428
+       ],
+       [
+        14,
+        0.373
+       ],
+       [
+        15,
+        0.323
+       ],
+       [
+        16,
+        0.414
+       ],
+       [
+        17,
+        0.368
+       ],
+       [
+        18,
+        0.327
+       ],
+       [
+        19,
+        0.404
+       ],
+       [
+        20,
+        0.365
+       ],
+       [
+        21,
+        0.329
+       ],
+       [
+        22,
+        0.396
+       ],
+       [
+        23,
+        0.363
+       ],
+       [
+        24,
+        0.331
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 24,
+      "y": 0.693,
+      "label": "about 0.693"
+     },
+     {
+      "x": 24,
+      "y": 0.347,
+      "label": "half that: 0.347"
+     }
+    ],
+    "caption": "The same terms, reordered: the usual order settles near 0.693, one plus then two minus on half that."
+   },
    "source": "Rudin, Principles of Mathematical Analysis, 1976",
    "source_kind": "book",
    "reference": "Rudin, Principles of Mathematical Analysis, 3rd edition, McGraw-Hill, 1976",
@@ -91200,6 +94133,80 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "terms, as a power of ten",
+     "min": 0,
+     "max": 44
+    },
+    "y": {
+     "label": "running total",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "1 + 1/2 + 1/3 + …",
+      "hi": true,
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        5,
+        12.1
+       ],
+       [
+        9,
+        21.3
+       ],
+       [
+        15,
+        35.1
+       ],
+       [
+        20,
+        46.6
+       ],
+       [
+        26.7,
+        62.1
+       ],
+       [
+        30,
+        69.7
+       ],
+       [
+        35,
+        81.2
+       ],
+       [
+        40,
+        92.7
+       ],
+       [
+        43.2,
+        100.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 9,
+      "y": 21.3,
+      "label": "a billion terms: 21"
+     },
+     {
+      "x": 43.2,
+      "y": 100,
+      "label": "100 takes 44 digits"
+     }
+    ],
+    "caption": "A billion terms reach only 21; passing 100 takes a number 44 digits long."
+   },
    "source": "Havil, Gamma: Exploring Euler's Constant, 2003",
    "source_kind": "book",
    "reference": "Havil, Gamma: Exploring Euler's Constant, Princeton University Press, 2003",
@@ -91731,6 +94738,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+     {
+      "label": "99% of wall, insulated",
+      "value": 79.8
+     },
+     {
+      "label": "1% of wall, fixings",
+      "value": 20.2,
+      "hi": true
+     }
+    ],
+    "caption": "Metal fixings cover 1% of the wall but carry a fifth of its heat loss."
+   },
    "source": "ISO 6946, thermal transmittance calculation",
    "source_kind": "standard",
    "reference": "ISO 6946:2017, Building components and building elements — Thermal resistance and thermal transmittance — Calculation methods",
@@ -93496,6 +96519,22 @@
    "mature": true,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "% chance of £200",
+    "items": [
+     {
+      "label": "£1 at a time",
+      "value": 0.45,
+      "hi": true
+     },
+     {
+      "label": "One £100 bet on red",
+      "value": 48.6
+     }
+    ],
+    "caption": "Betting £1 at a time reaches £200 just 0.45% of the time; one £100 bet, 48.6%."
+   },
    "source": "Dubins & Savage, bold play, 1965",
    "source_kind": "book",
    "reference": "Dubins & Savage, How to Gamble If You Must: Inequalities for Stochastic Processes, McGraw-Hill, 1965",
@@ -95128,6 +98167,129 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "years",
+     "min": 0,
+     "max": 144
+    },
+    "y": {
+     "label": "carbonation depth, mm",
+     "min": 0,
+     "max": 30
+    },
+    "series": [
+     {
+      "label": "depth grows as root of time",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        2,
+        3.5
+       ],
+       [
+        4,
+        5.0
+       ],
+       [
+        8,
+        7.1
+       ],
+       [
+        16,
+        10.0
+       ],
+       [
+        24,
+        12.2
+       ],
+       [
+        32,
+        14.1
+       ],
+       [
+        40,
+        15.8
+       ],
+       [
+        48,
+        17.3
+       ],
+       [
+        56,
+        18.7
+       ],
+       [
+        64,
+        20.0
+       ],
+       [
+        72,
+        21.2
+       ],
+       [
+        80,
+        22.4
+       ],
+       [
+        88,
+        23.5
+       ],
+       [
+        96,
+        24.5
+       ],
+       [
+        104,
+        25.5
+       ],
+       [
+        112,
+        26.5
+       ],
+       [
+        120,
+        27.4
+       ],
+       [
+        128,
+        28.3
+       ],
+       [
+        136,
+        29.2
+       ],
+       [
+        144,
+        30.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 16,
+      "y": 10,
+      "label": "10 mm at 16 years"
+     },
+     {
+      "x": 48,
+      "y": 17.3,
+      "label": "triple the time: only 17 mm"
+     },
+     {
+      "x": 144,
+      "y": 30,
+      "label": "30 mm at 144 years"
+     }
+    ],
+    "caption": "Three times the depth takes nine times as long: 16 years for 10 mm, 144 for 30 mm."
+   },
    "source": "Neville, Properties of Concrete, 2011",
    "source_kind": "book",
    "reference": "Neville, Properties of Concrete, 5th edition, Pearson, 2011",
@@ -96914,6 +100076,26 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "g of stretch at horizon",
+    "items": [
+     {
+      "label": "4-million-sun hole",
+      "value": 0.0001
+     },
+     {
+      "label": "Earth's gravity",
+      "value": 1
+     },
+     {
+      "label": "10-sun hole",
+      "value": 20000000,
+      "hi": true
+     }
+    ],
+    "caption": "The small hole stretches her by 20 million g; the giant, by a ten-thousandth of one."
+   },
    "source": "Thorne, The Science of Interstellar, 2014",
    "source_kind": "book",
    "reference": "Thorne, The Science of Interstellar, W. W. Norton, 2014",
@@ -96998,6 +100180,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "%",
+    "items": [
+     {
+      "label": "Pair: 36 + 29 suns",
+      "value": 100
+     },
+     {
+      "label": "Merged: 62 suns",
+      "value": 180,
+      "hi": true
+     }
+    ],
+    "caption": "Horizon area goes with mass squared: three suns lost, yet four fifths more area."
+   },
    "source": "Isi et al., Physical Review Letters, 2021",
    "source_kind": "paper",
    "reference": "Isi, Farr, Giesler, Scheel & Teukolsky, Testing the Black-Hole Area Law with GW150914, Physical Review Letters, 2021",
@@ -97192,6 +100390,26 @@
    "mature": false,
    "language": "en",
    "figure": "nested_circles",
+   "diagram": {
+    "type": "scale",
+    "unit": "Earth–Sun distances",
+    "items": [
+     {
+      "label": "Earth to Sun",
+      "value": 1
+     },
+     {
+      "label": "Neptune to Sun",
+      "value": 30
+     },
+     {
+      "label": "M87's horizon",
+      "value": 130,
+      "hi": true
+     }
+    ],
+    "caption": "M87's horizon alone reaches over four times as far out as Neptune's orbit."
+   },
    "source": "Event Horizon Telescope Collaboration, 2019",
    "source_kind": "paper",
    "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters, 2019",
@@ -99414,6 +102632,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "scale",
+    "unit": "seconds",
+    "items": [
+     {
+      "label": "gap observed",
+      "value": 1.7,
+      "hi": true
+     },
+     {
+      "label": "off by 1 in 10 million",
+      "value": 410000000
+     }
+    ],
+    "caption": "Speeds one part in ten million apart would mean 13 years; the gap was 1.7 seconds."
+   },
    "source": "Abbott et al., Astrophysical Journal Letters, 2017",
    "source_kind": "paper",
    "reference": "Abbott et al., Gravitational Waves and Gamma-Rays from a Binary Neutron Star Merger: GW170817 and GRB 170817A, The Astrophysical Journal Letters 848, L13, 2017",
@@ -100242,6 +103476,144 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "metres",
+     "min": 0,
+     "max": 6
+    },
+    "y": {
+     "label": "height, m",
+     "min": 0,
+     "max": 1.5
+    },
+    "series": [
+     {
+      "label": "Earth, 9.8 m/s²",
+      "points": [
+       [
+        0.0,
+        0
+       ],
+       [
+        0.08,
+        0.07
+       ],
+       [
+        0.15,
+        0.128
+       ],
+       [
+        0.23,
+        0.172
+       ],
+       [
+        0.31,
+        0.204
+       ],
+       [
+        0.38,
+        0.223
+       ],
+       [
+        0.46,
+        0.23
+       ],
+       [
+        0.54,
+        0.223
+       ],
+       [
+        0.61,
+        0.204
+       ],
+       [
+        0.69,
+        0.172
+       ],
+       [
+        0.77,
+        0.128
+       ],
+       [
+        0.84,
+        0.07
+       ],
+       [
+        0.92,
+        0
+       ]
+      ]
+     },
+     {
+      "label": "Moon, 1.6 m/s²",
+      "hi": true,
+      "points": [
+       [
+        0.0,
+        0
+       ],
+       [
+        0.47,
+        0.43
+       ],
+       [
+        0.94,
+        0.781
+       ],
+       [
+        1.41,
+        1.055
+       ],
+       [
+        1.87,
+        1.25
+       ],
+       [
+        2.34,
+        1.367
+       ],
+       [
+        2.81,
+        1.406
+       ],
+       [
+        3.28,
+        1.367
+       ],
+       [
+        3.75,
+        1.25
+       ],
+       [
+        4.22,
+        1.055
+       ],
+       [
+        4.69,
+        0.781
+       ],
+       [
+        5.16,
+        0.43
+       ],
+       [
+        5.62,
+        0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 5.62,
+      "y": 0,
+      "label": "5.6 m"
+     }
+    ],
+    "caption": "The same flick of dust: under a metre on Earth, 5.6 m on the Moon."
+   },
    "source": "Halliday, Resnick & Walker, Fundamentals of Physics",
    "source_kind": "book",
    "reference": "Halliday, Resnick & Walker, Fundamentals of Physics, Wiley, 2013",
@@ -101434,6 +104806,135 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "million years",
+     "min": 0,
+     "max": 805
+    },
+    "y": {
+     "label": "million suns",
+     "min": 0,
+     "max": 900
+    },
+    "series": [
+     {
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0001
+       ],
+       [
+        35,
+        0.0002
+       ],
+       [
+        70,
+        0.0004
+       ],
+       [
+        105,
+        0.0008
+       ],
+       [
+        140,
+        0.0016
+       ],
+       [
+        175,
+        0.0032
+       ],
+       [
+        210,
+        0.0064
+       ],
+       [
+        245,
+        0.0128
+       ],
+       [
+        280,
+        0.0256
+       ],
+       [
+        315,
+        0.0512
+       ],
+       [
+        350,
+        0.1024
+       ],
+       [
+        385,
+        0.2048
+       ],
+       [
+        420,
+        0.4096
+       ],
+       [
+        455,
+        0.8192
+       ],
+       [
+        490,
+        1.6
+       ],
+       [
+        525,
+        3.3
+       ],
+       [
+        560,
+        6.6
+       ],
+       [
+        595,
+        13.1
+       ],
+       [
+        630,
+        26.2
+       ],
+       [
+        665,
+        52.4
+       ],
+       [
+        700,
+        104.9
+       ],
+       [
+        735,
+        209.7
+       ],
+       [
+        770,
+        419.4
+       ],
+       [
+        805,
+        838.9
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 700,
+      "y": 104.9,
+      "label": "700 My: an eighth of it"
+     },
+     {
+      "x": 805,
+      "y": 838.9,
+      "label": "23 doublings"
+     }
+    ],
+    "caption": "Doubling every 35 My, little shows for 700 My; the last three doublings add seven eighths."
+   },
    "source": "Bañados et al., Nature, 2018",
    "source_kind": "paper",
    "reference": "Bañados et al., An 800-million-solar-mass black hole in a significantly neutral Universe at a redshift of 7.5, Nature, 2018",
@@ -105607,7 +109108,113 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "km run",
+     "min": 0,
+     "max": 42.195
+    },
+    "y": {
+     "label": "kcal",
+     "min": 0,
+     "max": 3200
+    },
+    "series": [
+     {
+      "label": "glycogen stored",
+      "points": [
+       [
+        0,
+        2000
+       ],
+       [
+        42.195,
+        2000
+       ]
+      ]
+     },
+     {
+      "label": "cost, 70 kg runner",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        3,
+        210
+       ],
+       [
+        6,
+        420
+       ],
+       [
+        9,
+        630
+       ],
+       [
+        12,
+        840
+       ],
+       [
+        15,
+        1050
+       ],
+       [
+        18,
+        1260
+       ],
+       [
+        21,
+        1470
+       ],
+       [
+        24,
+        1680
+       ],
+       [
+        27,
+        1890
+       ],
+       [
+        30,
+        2100
+       ],
+       [
+        33,
+        2310
+       ],
+       [
+        36,
+        2520
+       ],
+       [
+        39,
+        2730
+       ],
+       [
+        42,
+        2940
+       ],
+       [
+        42.195,
+        2954
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 28.6,
+      "y": 2000,
+      "label": "glycogen gone near 29 km"
+     }
+    ],
+    "caption": "At about 70 kcal a km, the 2,000 kcal of glycogen runs out near 29 km."
+   },
    "source": "Rapoport, PLoS Computational Biology, 2010",
    "source_kind": "paper",
    "reference": "Rapoport, Metabolic factors limiting performance in marathon runners, PLoS Computational Biology, 2010",
@@ -107093,6 +110700,92 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "three-point %",
+     "min": 0,
+     "max": 50
+    },
+    "y": {
+     "label": "points per shot",
+     "min": 0,
+     "max": 1.6
+    },
+    "series": [
+     {
+      "label": "a 50% two: 1 point",
+      "points": [
+       [
+        0,
+        1
+       ],
+       [
+        50,
+        1
+       ]
+      ]
+     },
+     {
+      "label": "a three: 3 × its %",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        5,
+        0.15
+       ],
+       [
+        10,
+        0.3
+       ],
+       [
+        15,
+        0.45
+       ],
+       [
+        20,
+        0.6
+       ],
+       [
+        25,
+        0.75
+       ],
+       [
+        30,
+        0.9
+       ],
+       [
+        35,
+        1.05
+       ],
+       [
+        40,
+        1.2
+       ],
+       [
+        45,
+        1.35
+       ],
+       [
+        50,
+        1.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 33.3,
+      "y": 1,
+      "label": "33.3%: level"
+     }
+    ],
+    "caption": "A three made one time in three scores as much per shot as a 50% two."
+   },
    "source": "Goldsberry, SprawlBall, 2019",
    "source_kind": "book",
    "reference": "Goldsberry, SprawlBall: A Visual Tour of the New Era of the NBA, Houghton Mifflin Harcourt, 2019",
@@ -107165,6 +110858,132 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "% of points won on serve",
+     "min": 0,
+     "max": 100
+    },
+    "y": {
+     "label": "% of service games won",
+     "min": 0,
+     "max": 110
+    },
+    "series": [
+     {
+      "label": "if a game were one point",
+      "points": [
+       [
+        0,
+        0
+       ],
+       [
+        100,
+        100
+       ]
+      ]
+     },
+     {
+      "label": "four points, two clear",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        5,
+        0.0
+       ],
+       [
+        10,
+        0.1
+       ],
+       [
+        15,
+        0.7
+       ],
+       [
+        20,
+        2.2
+       ],
+       [
+        25,
+        5.1
+       ],
+       [
+        30,
+        9.9
+       ],
+       [
+        35,
+        17.0
+       ],
+       [
+        40,
+        26.4
+       ],
+       [
+        45,
+        37.7
+       ],
+       [
+        50,
+        50.0
+       ],
+       [
+        55,
+        62.3
+       ],
+       [
+        60,
+        73.6
+       ],
+       [
+        65,
+        83.0
+       ],
+       [
+        70,
+        90.1
+       ],
+       [
+        75,
+        94.9
+       ],
+       [
+        80,
+        97.8
+       ],
+       [
+        85,
+        99.3
+       ],
+       [
+        90,
+        99.9
+       ],
+       [
+        95,
+        100.0
+       ],
+       [
+        100,
+        100.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 55,
+      "y": 62.3,
+      "label": "55% of points: 62%"
+     }
+    ],
+    "caption": "Winning 55% of points holds 62% of service games; 60% of points holds about 74%."
+   },
    "source": "Newton & Keller, Studies in Applied Mathematics, 2005",
    "source_kind": "paper",
    "reference": "Newton & Keller, Probability of winning at tennis I. Theory and data, Studies in Applied Mathematics, 2005",
@@ -107391,7 +111210,23 @@
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "% of kicks saved",
+    "items": [
+     {
+      "label": "Keeper dives",
+      "value": 13
+     },
+     {
+      "label": "Keeper stays in the centre",
+      "value": 33,
+      "hi": true
+     }
+    ],
+    "caption": "Keepers dived 94% of the time, yet staying put saved over twice as often."
+   },
    "source": "Bar-Eli et al., J Economic Psychology, 2007",
    "source_kind": "paper",
    "reference": "Bar-Eli, Azar, Ritov, Keidar-Levin & Schein, Action bias among elite soccer goalkeepers: The case of penalty kicks, Journal of Economic Psychology, 2007",
@@ -107468,6 +111303,22 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+     {
+      "label": "Missed before 2015",
+      "value": 0.7
+     },
+     {
+      "label": "Missed after the kick moved back",
+      "value": 5.8,
+      "hi": true
+     }
+    ],
+    "caption": "Success slipped from 99.3% to 94.2%, but misses rose from 0.7% to 5.8%: over eightfold."
+   },
    "source": "Pro Football Reference, kicking statistics",
    "source_kind": "statistics",
    "reference": "Pro-Football-Reference, NFL Kicking statistics, 2014 and 2015 seasons, 2015",
@@ -109171,6 +113022,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "bars",
+    "unit": "points",
+    "items": [
+     {
+      "label": "At base time",
+      "value": 1000
+     },
+     {
+      "label": "10% slower",
+      "value": 751,
+      "hi": true
+     }
+    ],
+    "caption": "Cubing turns a 10% gap in time into a 25% gap in points."
+   },
    "source": "World Aquatics Points Table",
    "source_kind": "standard",
    "reference": "World Aquatics, Points Table: calculation of World Aquatics points, 2024",
@@ -110412,6 +114279,22 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "unit": "million pairs",
+    "items": [
+     {
+      "label": "1,000 word-pieces",
+      "value": 1
+     },
+     {
+      "label": "8,000 word-pieces",
+      "value": 64,
+      "hi": true
+     }
+    ],
+    "caption": "Eight times the word-pieces, sixty-four times the pairs to compare."
+   },
    "source": "Vaswani et al., NeurIPS, 2017",
    "source_kind": "paper",
    "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",
@@ -111103,6 +114986,123 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "servers each search waits for",
+     "min": 0,
+     "max": 100
+    },
+    "y": {
+     "label": "% of searches slow",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "each server slow 1 time in 100",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        1,
+        1.0
+       ],
+       [
+        5,
+        4.9
+       ],
+       [
+        10,
+        9.6
+       ],
+       [
+        15,
+        14.0
+       ],
+       [
+        20,
+        18.2
+       ],
+       [
+        25,
+        22.2
+       ],
+       [
+        30,
+        26.0
+       ],
+       [
+        35,
+        29.7
+       ],
+       [
+        40,
+        33.1
+       ],
+       [
+        45,
+        36.4
+       ],
+       [
+        50,
+        39.5
+       ],
+       [
+        55,
+        42.5
+       ],
+       [
+        60,
+        45.3
+       ],
+       [
+        65,
+        48.0
+       ],
+       [
+        70,
+        50.5
+       ],
+       [
+        75,
+        52.9
+       ],
+       [
+        80,
+        55.2
+       ],
+       [
+        85,
+        57.4
+       ],
+       [
+        90,
+        59.5
+       ],
+       [
+        95,
+        61.5
+       ],
+       [
+        100,
+        63.4
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 100,
+      "y": 63.4,
+      "label": "100 servers: 63%"
+     }
+    ],
+    "caption": "Each server lags once in 100, yet a search across 100 of them lags 63 times in 100."
+   },
    "source": "Dean & Barroso, Communications of the ACM, 2013",
    "source_kind": "paper",
    "reference": "Dean & Barroso, The Tail at Scale, Communications of the ACM 56(2), 2013",
@@ -111867,6 +115867,97 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "% of the time busy",
+     "min": 0,
+     "max": 100
+    },
+    "y": {
+     "label": "average wait, relative",
+     "min": 0,
+     "max": 20
+    },
+    "series": [
+     {
+      "label": "load ÷ spare capacity",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        10,
+        0.11
+       ],
+       [
+        20,
+        0.25
+       ],
+       [
+        30,
+        0.43
+       ],
+       [
+        40,
+        0.67
+       ],
+       [
+        50,
+        1.0
+       ],
+       [
+        60,
+        1.5
+       ],
+       [
+        70,
+        2.33
+       ],
+       [
+        80,
+        4.0
+       ],
+       [
+        85,
+        5.67
+       ],
+       [
+        90,
+        9.0
+       ],
+       [
+        92.5,
+        12.33
+       ],
+       [
+        95,
+        19.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 80,
+      "y": 4,
+      "label": "80% busy: 4"
+     },
+     {
+      "x": 90,
+      "y": 9,
+      "label": "90% busy: 9"
+     },
+     {
+      "x": 95,
+      "y": 19,
+      "label": "95% busy: 19"
+     }
+    ],
+    "caption": "Ten more points of load, from 80% to 90% busy, more than double the wait."
+   },
    "source": "Hopp & Spearman, Factory Physics, 2008",
    "source_kind": "book",
    "reference": "Hopp & Spearman, Factory Physics, 3rd edition, McGraw-Hill, 2008",
@@ -112143,6 +116234,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "texts checked",
+    "branches": [
+     {
+      "n": 100,
+      "label": "AI-written",
+      "branches": [
+       {
+        "n": 26,
+        "label": "flagged",
+        "hi": true
+       },
+       {
+        "n": 74,
+        "label": "missed"
+       }
+      ]
+     },
+     {
+      "n": 900,
+      "label": "human",
+      "branches": [
+       {
+        "n": 81,
+        "label": "flagged anyway",
+        "hi": true
+       },
+       {
+        "n": 819,
+        "label": "cleared"
+       }
+      ]
+     }
+    ],
+    "caption": "Of 107 texts flagged, 81 were written by people: about three in four."
+   },
    "source": "OpenAI, AI text classifier, 2023",
    "source_kind": "company",
    "reference": "OpenAI, New AI classifier for indicating AI-written text, 2023",
@@ -112670,6 +116799,87 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "year",
+     "min": 1992,
+     "max": 2016
+    },
+    "y": {
+     "label": "price, % of 1992",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "13% cheaper each year",
+      "hi": true,
+      "points": [
+       [
+        1992,
+        100
+       ],
+       [
+        1994,
+        75.7
+       ],
+       [
+        1996,
+        57.3
+       ],
+       [
+        1998,
+        43.4
+       ],
+       [
+        2000,
+        32.8
+       ],
+       [
+        2002,
+        24.8
+       ],
+       [
+        2004,
+        18.8
+       ],
+       [
+        2006,
+        14.2
+       ],
+       [
+        2008,
+        10.8
+       ],
+       [
+        2010,
+        8.2
+       ],
+       [
+        2012,
+        6.2
+       ],
+       [
+        2014,
+        4.7
+       ],
+       [
+        2016,
+        3.5
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 2016,
+      "y": 3.5,
+      "label": "3.5%: a thirtieth"
+     }
+    ],
+    "caption": "Twenty-four yearly cuts of 13% leave a cell at a thirtieth of its 1992 price."
+   },
    "source": "Ziegler & Trancik, Energy & Environmental Science, 2021",
    "source_kind": "paper",
    "reference": "doi:10.1039/d0ee02681f",
@@ -115638,6 +119848,117 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "% right per digit",
+     "min": 50,
+     "max": 90
+    },
+    "y": {
+     "label": "% score",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "partial credit",
+      "points": [
+       [
+        50,
+        50
+       ],
+       [
+        55,
+        55
+       ],
+       [
+        60,
+        60
+       ],
+       [
+        65,
+        65
+       ],
+       [
+        70,
+        70
+       ],
+       [
+        75,
+        75
+       ],
+       [
+        80,
+        80
+       ],
+       [
+        85,
+        85
+       ],
+       [
+        90,
+        90
+       ]
+      ]
+     },
+     {
+      "label": "all 5 digits or nothing",
+      "hi": true,
+      "points": [
+       [
+        50,
+        3.1
+       ],
+       [
+        55,
+        5.0
+       ],
+       [
+        60,
+        7.8
+       ],
+       [
+        65,
+        11.6
+       ],
+       [
+        70,
+        16.8
+       ],
+       [
+        75,
+        23.7
+       ],
+       [
+        80,
+        32.8
+       ],
+       [
+        85,
+        44.4
+       ],
+       [
+        90,
+        59.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 50,
+      "y": 3.1,
+      "label": "3%"
+     },
+     {
+      "x": 90,
+      "y": 59,
+      "label": "59%"
+     }
+    ],
+    "caption": "The same steady gains per digit look like a sudden leap when all five must be right."
+   },
    "source": "Schaeffer, Miranda & Koyejo, NeurIPS, 2023",
    "source_kind": "paper",
    "reference": "Schaeffer, Miranda & Koyejo, Are Emergent Abilities of Large Language Models a Mirage?, NeurIPS, 2023",
@@ -116177,6 +120498,44 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 10000,
+    "label": "pupils screened",
+    "branches": [
+     {
+      "n": 20,
+      "label": "have it",
+      "branches": [
+       {
+        "n": 18,
+        "label": "flagged",
+        "hi": true
+       },
+       {
+        "n": 2,
+        "label": "missed"
+       }
+      ]
+     },
+     {
+      "n": 9980,
+      "label": "don't",
+      "branches": [
+       {
+        "n": 499,
+        "label": "flagged anyway",
+        "hi": true
+       },
+       {
+        "n": 9481,
+        "label": "cleared"
+       }
+      ]
+     }
+    ],
+    "caption": "Of 517 pupils flagged, 18 have it: about one in thirty."
+   },
    "source": "Base rate neglect in universal screening",
    "source_kind": "arithmetic",
    "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"
@@ -116285,6 +120644,87 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "orders",
+     "min": 100,
+     "max": 1000000,
+     "log": true
+    },
+    "y": {
+     "label": "% chance of a repeat",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "hi": true,
+      "points": [
+       [
+        100,
+        0.5
+       ],
+       [
+        200,
+        2.0
+       ],
+       [
+        400,
+        7.7
+       ],
+       [
+        700,
+        21.7
+       ],
+       [
+        1000,
+        39.3
+       ],
+       [
+        1200,
+        51.3
+       ],
+       [
+        1500,
+        67.5
+       ],
+       [
+        2000,
+        86.5
+       ],
+       [
+        3000,
+        98.9
+       ],
+       [
+        5000,
+        100.0
+       ],
+       [
+        10000,
+        100.0
+       ],
+       [
+        100000,
+        100.0
+       ],
+       [
+        1000000,
+        100.0
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 1200,
+      "y": 51.3,
+      "label": "1,200 orders: even odds"
+     }
+    ],
+    "caption": "Out of a million possible codes, a repeat is more likely than not by 1,200 orders."
+   },
    "source": "The birthday bound, applied to identifiers",
    "source_kind": "arithmetic",
    "reference": "Diaconis & Mosteller, Methods for Studying Coincidences, Journal of the American Statistical Association, 1989"
@@ -117518,6 +121958,25 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "area",
+    "items": [
+     {
+      "label": "Magnitude 6",
+      "value": 1
+     },
+     {
+      "label": "Magnitude 7",
+      "value": 32
+     },
+     {
+      "label": "Magnitude 8",
+      "value": 1000,
+      "hi": true
+     }
+    ],
+    "caption": "Two steps up the scale, and the energy grows about a thousandfold: 32 × 32."
+   },
    "source": "Kanamori, Journal of Geophysical Research, 1977",
    "source_kind": "paper",
    "reference": "Kanamori, The energy release in great earthquakes, Journal of Geophysical Research, 1977",
@@ -117702,6 +122161,84 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "steps, each 90% likely",
+     "min": 0,
+     "max": 10
+    },
+    "y": {
+     "label": "% chance all go right",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "0.9 × 0.9 × …",
+      "hi": true,
+      "points": [
+       [
+        0,
+        100.0
+       ],
+       [
+        1,
+        90.0
+       ],
+       [
+        2,
+        81.0
+       ],
+       [
+        3,
+        72.9
+       ],
+       [
+        4,
+        65.6
+       ],
+       [
+        5,
+        59.0
+       ],
+       [
+        6,
+        53.1
+       ],
+       [
+        7,
+        47.8
+       ],
+       [
+        8,
+        43.0
+       ],
+       [
+        9,
+        38.7
+       ],
+       [
+        10,
+        34.9
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 5,
+      "y": 59,
+      "label": "five steps: 59%"
+     },
+     {
+      "x": 10,
+      "y": 34.9,
+      "label": "ten steps: 35%"
+     }
+    ],
+    "caption": "Every step is safe, and five of them still fail two times in five."
+   },
    "source": "Tversky & Kahneman, Psychological Review, 1983",
    "source_kind": "paper",
    "reference": "Tversky & Kahneman, Extensional versus intuitive reasoning: the conjunction fallacy in probability judgment, Psychological Review, 1983",
@@ -117923,6 +122460,33 @@
    "mature": false,
    "language": "en",
    "figure": "dots",
+   "diagram": {
+    "type": "tree",
+    "n": 36,
+    "label": "equally likely pairs",
+    "branches": [
+     {
+      "n": 11,
+      "label": "at least one six",
+      "branches": [
+       {
+        "n": 1,
+        "label": "double six",
+        "hi": true
+       },
+       {
+        "n": 10,
+        "label": "just one six"
+       }
+      ]
+     },
+     {
+      "n": 25,
+      "label": "no six, ruled out"
+     }
+    ],
+    "caption": "The yes leaves 11 pairs with a six, and only one of them is a double six."
+   },
    "source": "Conditional probability, counting outcomes",
    "source_kind": "arithmetic",
    "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",
@@ -118546,6 +123110,124 @@
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "day",
+     "min": 1,
+     "max": 21
+    },
+    "y": {
+     "label": "€ thousands",
+     "min": 0,
+     "max": 1100
+    },
+    "series": [
+     {
+      "label": "doubling daily",
+      "hi": true,
+      "points": [
+       [
+        1,
+        0.0
+       ],
+       [
+        2,
+        0.0
+       ],
+       [
+        3,
+        0.0
+       ],
+       [
+        4,
+        0.0
+       ],
+       [
+        5,
+        0.0
+       ],
+       [
+        6,
+        0.0
+       ],
+       [
+        7,
+        0.1
+       ],
+       [
+        8,
+        0.1
+       ],
+       [
+        9,
+        0.3
+       ],
+       [
+        10,
+        0.5
+       ],
+       [
+        11,
+        1.0
+       ],
+       [
+        12,
+        2.0
+       ],
+       [
+        13,
+        4.1
+       ],
+       [
+        14,
+        8.2
+       ],
+       [
+        15,
+        16.4
+       ],
+       [
+        16,
+        32.8
+       ],
+       [
+        17,
+        65.5
+       ],
+       [
+        18,
+        131.1
+       ],
+       [
+        19,
+        262.1
+       ],
+       [
+        20,
+        524.3
+       ],
+       [
+        21,
+        1048.6
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 20,
+      "y": 524.3,
+      "label": "day 20: €524,288"
+     },
+     {
+      "x": 21,
+      "y": 1048.6,
+      "label": "day 21: €1,048,576"
+     }
+    ],
+    "caption": "For two weeks it barely leaves the floor; the last day alone adds €524,288."
+   },
    "source": "Powers of two",
    "source_kind": "arithmetic",
    "reference": "Bartlett, Forgotten Fundamentals of the Energy Crisis, American Journal of Physics, 1978"
@@ -120536,6 +125218,46 @@
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "survey year",
+     "min": 1998,
+     "max": 2014
+    },
+    "y": {
+     "label": "axolotls per km²",
+     "min": 0,
+     "max": 6000
+    },
+    "series": [
+     {
+      "hi": true,
+      "points": [
+       [
+        1998,
+        6000
+       ],
+       [
+        2008,
+        100
+       ],
+       [
+        2014,
+        35
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 2014,
+      "y": 35,
+      "label": "2014: about 35"
+     }
+    ],
+    "caption": "From about 6,000 axolotls per km² to 35 in 16 years: over 99% gone."
+   },
    "source": "Scientific American, 2015",
    "source_kind": "news_archive",
    "reference": "https://www.scientificamerican.com/article/biologys-beloved-amphibian-the-axolotl-is-racing-toward-extinction1/",
@@ -121086,6 +125808,201 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "line",
+    "x": {
+     "label": "people in the room",
+     "min": 0,
+     "max": 400
+    },
+    "y": {
+     "label": "% chance of a match",
+     "min": 0,
+     "max": 100
+    },
+    "series": [
+     {
+      "label": "Any two share a birthday",
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        5,
+        2.7
+       ],
+       [
+        10,
+        11.7
+       ],
+       [
+        15,
+        25.3
+       ],
+       [
+        20,
+        41.1
+       ],
+       [
+        23,
+        50.7
+       ],
+       [
+        25,
+        56.9
+       ],
+       [
+        30,
+        70.6
+       ],
+       [
+        35,
+        81.4
+       ],
+       [
+        40,
+        89.1
+       ],
+       [
+        45,
+        94.1
+       ],
+       [
+        50,
+        97.0
+       ],
+       [
+        60,
+        99.4
+       ],
+       [
+        70,
+        99.9
+       ],
+       [
+        80,
+        100.0
+       ],
+       [
+        100,
+        100.0
+       ],
+       [
+        150,
+        100.0
+       ],
+       [
+        200,
+        100.0
+       ],
+       [
+        250,
+        100.0
+       ],
+       [
+        300,
+        100.0
+       ],
+       [
+        350,
+        100.0
+       ],
+       [
+        400,
+        100.0
+       ]
+      ]
+     },
+     {
+      "label": "Someone shares yours",
+      "hi": true,
+      "points": [
+       [
+        0,
+        0.0
+       ],
+       [
+        25,
+        6.6
+       ],
+       [
+        50,
+        12.8
+       ],
+       [
+        75,
+        18.6
+       ],
+       [
+        100,
+        24.0
+       ],
+       [
+        125,
+        29.0
+       ],
+       [
+        150,
+        33.7
+       ],
+       [
+        175,
+        38.1
+       ],
+       [
+        200,
+        42.2
+       ],
+       [
+        225,
+        46.1
+       ],
+       [
+        253,
+        50.0
+       ],
+       [
+        275,
+        53.0
+       ],
+       [
+        300,
+        56.1
+       ],
+       [
+        325,
+        59.0
+       ],
+       [
+        350,
+        61.7
+       ],
+       [
+        375,
+        64.3
+       ],
+       [
+        400,
+        66.6
+       ]
+      ]
+     }
+    ],
+    "marks": [
+     {
+      "x": 23,
+      "y": 50.7,
+      "label": "23 people"
+     },
+     {
+      "x": 253,
+      "y": 50.0,
+      "label": "253 people"
+     }
+    ],
+    "caption": "An even chance of any shared birthday takes 23 people; of sharing yours, 253."
+   },
    "source": "Feller, Probability Theory, 1968",
    "source_kind": "reference_work",
    "reference": "Feller, An Introduction to Probability Theory and Its Applications, vol. 1, 3rd edition, Wiley, 1968",
@@ -126618,6 +131535,33 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "twin pairs",
+    "branches": [
+     {
+      "n": 340,
+      "label": "boy–girl, so fraternal"
+     },
+     {
+      "n": 660,
+      "label": "same-sex",
+      "branches": [
+       {
+        "n": 340,
+        "label": "fraternal"
+       },
+       {
+        "n": 320,
+        "label": "identical",
+        "hi": true
+       }
+      ]
+     }
+    ],
+    "caption": "Of 660 same-sex pairs, 340 are fraternal, as many as the mixed pairs; only 320 are identical."
+   },
    "source": "Fellman and Eriksson, Human Biology, 2006",
    "source_kind": "statistics",
    "reference": "Fellman and Eriksson, Weinberg's differential rule reconsidered, Human Biology, 2006",
@@ -127523,7 +132467,8 @@
   "424": "thinking-h11",
   "425": "thinking-h1",
   "426": "thinking-e2",
-  "427": "thinking-h4"
+  "427": "thinking-h4",
+  "428": "thinking-h9"
  },
  "commons": {
   "1": [
@@ -131795,6 +136740,16 @@
    "economics-2008-2",
    "cinema-miniatures-4",
    "space-cosmic-background-5"
+  ],
+  "428": [
+   "weird_facts-wombats-1",
+   "economics-digital-money-6",
+   "cinema-marketing-10",
+   "pop_culture-rebrands-8",
+   "language-irregular-verbs-8",
+   "psychology-streaks-9",
+   "art-florence-6",
+   "history-guilds-6"
   ]
  }
 }

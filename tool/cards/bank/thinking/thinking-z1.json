@@ -30,44 +30,6 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
-  "diagram": {
-    "type": "tree",
-    "n": 40000,
-    "label": "claims",
-    "branches": [
-      {
-        "n": 100,
-        "label": "fraud",
-        "branches": [
-          {
-            "n": 80,
-            "label": "flagged",
-            "hi": true
-          },
-          {
-            "n": 20,
-            "label": "missed"
-          }
-        ]
-      },
-      {
-        "n": 39900,
-        "label": "honest",
-        "branches": [
-          {
-            "n": 720,
-            "label": "flagged anyway",
-            "hi": true
-          },
-          {
-            "n": 39180,
-            "label": "not flagged"
-          }
-        ]
-      }
-    ],
-    "caption": "Of 800 flagged claims, 80 are fraud: about one in ten."
-  },
   "source": "Base rate neglect in claims screening",
   "source_kind": "arithmetic",
   "reference": "Bar-Hillel, The base-rate fallacy in probability judgments, Acta Psychologica, 1980"

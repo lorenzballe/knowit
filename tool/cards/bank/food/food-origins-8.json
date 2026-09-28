@@ -32,22 +32,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "diagram": {
-    "type": "split",
-    "unit": "%",
-    "parts": [
-      {
-        "label": "Robusta",
-        "value": 40,
-        "hi": true
-      },
-      {
-        "label": "Everything else",
-        "value": 60
-      }
-    ],
-    "caption": "A crop barely farmed before 1900 now makes about two-fifths of the world's coffee."
-  },
   "source": "Wrigley, Coffee, Longman, 1988",
   "source_kind": "book",
   "reference": "Wrigley, Coffee, Tropical Agriculture Series, Longman Scientific & Technical, 1988",

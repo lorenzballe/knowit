@@ -31,21 +31,6 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "items": [
-      {
-        "label": "all starlight and dust glow",
-        "value": 1
-      },
-      {
-        "label": "Big Bang afterglow",
-        "value": 10,
-        "hi": true
-      }
-    ],
-    "caption": "Ten to one or more: one early moment outshines 13 billion years of stars."
-  },
   "source": "Hauser & Dwek, Annual Review, 2001",
   "source_kind": "paper",
   "reference": "Hauser & Dwek, The Cosmic Infrared Background: Measurements and Implications, Annual Review of Astronomy and Astrophysics 39, 249, 2001",

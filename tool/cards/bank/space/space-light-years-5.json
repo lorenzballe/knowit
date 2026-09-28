@@ -31,23 +31,7 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "diagram": {
-    "type": "bars",
-    "unit": "million years",
-    "items": [
-      {
-        "label": "cosmic age seen, 2022 claim",
-        "value": 240
-      },
-      {
-        "label": "cosmic age seen, 2023 spectrum",
-        "value": 1200,
-        "hi": true
-      }
-    ],
-    "caption": "The record claim placed it five times too early in cosmic history."
-  },
+  "figure": "none",
   "source": "Arrabal Haro et al., Nature, 2023",
   "source_kind": "paper",
   "reference": "Arrabal Haro et al., Confirmation and refutation of very luminous galaxies in the early universe, Nature 622, 707, 2023",

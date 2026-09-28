@@ -26,22 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "diagram": {
-    "type": "split",
-    "unit": "billion years",
-    "parts": [
-      {
-        "label": "Nothing to burn",
-        "value": 4.12
-      },
-      {
-        "label": "Fire",
-        "value": 0.42,
-        "hi": true
-      }
-    ],
-    "caption": "Earth's 4.5 billion years: fire fills only the last tenth."
-  },
   "source": "Glasspool, Edwards & Axe, Geology, 2004",
   "source_kind": "paper",
   "reference": "Glasspool, Edwards & Axe, Charcoal in the Silurian as evidence for the earliest wildfire, Geology, 2004",
