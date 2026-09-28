@@ -687,7 +687,7 @@ class _ScalePainter extends _DiagramPainter {
   _ScalePainter(this.d, super.t, super.ink);
 
   @override
-  double heightFor(double width) => 200;
+  double heightFor(double width) => 186;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -700,7 +700,7 @@ class _ScalePainter extends _DiagramPainter {
     const pad = 14.0;
     // Room above for stacked labels; below for ticks, the bracket, its
     // factor and the unit.
-    final axisY = size.height - 100;
+    final axisY = size.height - 86;
     double xOf(double value) =>
         pad + (size.width - 2 * pad) * ((_log10(value) - kLo) / decades);
 
@@ -928,10 +928,15 @@ class _AreaPainter extends _DiagramPainter {
       final strongOne = !anyHighlight || items[i].highlight;
       // The outline is drawn first, then it fills.
       final ring = Path()..addOval(Rect.fromCircle(center: c, radius: r));
-      canvas.drawPath(
-        partial(ring, phase(g, 0, 0.6)),
-        stroke(strongOne ? strong : mid, 1.4),
-      );
+      // Not until the pen has somewhere to go: a sliver of an arc reads as
+      // a stray speck.
+      final pen = phase(g, 0, 0.6);
+      if (pen > 0.03) {
+        canvas.drawPath(
+          partial(ring, pen),
+          stroke(strongOne ? strong : mid, 1.4),
+        );
+      }
       final f = phase(g, 0.4, 1);
       if (f > 0) {
         canvas.drawCircle(c, r * f, fill(inkAt((strongOne ? 0.8 : 0.35) * f)));
