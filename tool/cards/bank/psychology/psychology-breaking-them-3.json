@@ -31,7 +31,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 60,
+        "label": "tried to quit and stopped",
+        "hi": true
+      }
+    ],
+    "caption": "Asked around two ordinary communities, about six in ten who tried had stopped."
+  },
   "source": "Schachter, American Psychologist, 1982",
   "source_kind": "paper",
   "reference": "Schachter, Recidivism and self-cure of smoking and obesity, American Psychologist, 1982",

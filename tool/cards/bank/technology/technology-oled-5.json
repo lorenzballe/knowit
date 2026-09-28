@@ -30,7 +30,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% battery saved, at most",
+    "items": [
+      {
+        "label": "Indoors, 30 to 50% brightness",
+        "value": 9
+      },
+      {
+        "label": "Full brightness",
+        "value": 47,
+        "hi": true
+      }
+    ],
+    "caption": "Dark mode saves 3 to 9% indoors; the big savings come only at full brightness."
+  },
   "source": "Dash & Hu, ACM MobiSys, 2021",
   "source_kind": "paper",
   "reference": "Dash & Hu, How much battery does dark mode save? An accurate OLED display power profiler for modern smartphones, ACM MobiSys, 2021",

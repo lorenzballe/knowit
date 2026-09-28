@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "°C",
+    "items": [
+      {
+        "label": "Oven air",
+        "value": 230
+      },
+      {
+        "label": "Centre of the crumb",
+        "value": 98,
+        "hi": true
+      }
+    ],
+    "caption": "While the crumb holds water, it stays near boiling, however hot the oven."
+  },
   "source": "Vanin et al., Trends Food Sci. Technol., 2009",
   "source_kind": "paper",
   "reference": "https://www.sciencedirect.com/science/article/abs/pii/S0924224409001307",

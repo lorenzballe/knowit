@@ -25,7 +25,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "",
+    "items": [
+      {
+        "label": "Pure water",
+        "value": 1
+      },
+      {
+        "label": "Most bacteria stop",
+        "value": 0.91
+      },
+      {
+        "label": "Staphylococcus aureus stops",
+        "value": 0.86
+      },
+      {
+        "label": "Saturated brine",
+        "value": 0.75,
+        "hi": true
+      }
+    ],
+    "caption": "Water activity: brine sits below the point where almost every microbe gives up."
+  },
   "source": "Jay, Modern Food Microbiology, 2005",
   "source_kind": "book",
   "reference": "Jay, Loessner & Golden, Modern Food Microbiology, 7th edition, Springer, 2005",

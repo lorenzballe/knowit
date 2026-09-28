@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "µg water per m² a day",
+    "items": [
+      {
+        "label": "OLED seal",
+        "value": 1,
+        "hi": true
+      },
+      {
+        "label": "Food-packaging film",
+        "value": 1000000
+      }
+    ],
+    "caption": "Food films pass a tenth of a gram to several grams; the OLED seal a millionth."
+  },
   "source": "Lewis & Weaver, IEEE JSTQE, 2004",
   "source_kind": "paper",
   "reference": "Lewis & Weaver, Thin-film permeation-barrier technology for flexible organic light-emitting devices, IEEE Journal of Selected Topics in Quantum Electronics 10(1), 2004",

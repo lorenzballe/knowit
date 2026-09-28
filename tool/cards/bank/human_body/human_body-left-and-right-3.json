@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% language on the right",
+    "items": [
+      {
+        "label": "Strong right-handers",
+        "value": 4
+      },
+      {
+        "label": "Strong left-handers",
+        "value": 27,
+        "hi": true
+      }
+    ],
+    "caption": "Even among strong left-handers, about three in four speak from the left hemisphere."
+  },
   "source": "Knecht et al., Brain, 2000",
   "source_kind": "paper",
   "reference": "doi:10.1093/brain/123.12.2512",

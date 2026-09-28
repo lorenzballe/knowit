@@ -32,14 +32,13 @@
   "figure": "dots",
   "diagram": {
     "type": "bars",
-    "unit": "significant results",
     "items": [
       {
-        "label": "chance alone, 30 ÷ 20",
+        "label": "expected by chance, 30 ÷ 20",
         "value": 1.5
       },
       {
-        "label": "reported as findings",
+        "label": "significant results reported",
         "value": 2,
         "hi": true
       }

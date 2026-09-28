@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "dropped from tests, restudied",
+        "value": 35
+      },
+      {
+        "label": "kept being tested",
+        "value": 80,
+        "hi": true
+      }
+    ],
+    "caption": "Recall a week later: testing, not restudying, kept the words."
+  },
   "source": "Karpicke & Roediger, Science, 2008",
   "source_kind": "paper",
   "reference": "Karpicke & Roediger, The critical importance of retrieval for learning, Science, 2008",

@@ -25,7 +25,30 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1905,
+    "to": 1960,
+    "events": [
+      {
+        "at": 1912,
+        "label": "Maillard describes browning"
+      },
+      {
+        "at": 1953,
+        "label": "Hodge draws the map",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1912,
+        "to": 1953,
+        "label": "a name, no map"
+      }
+    ]
+  },
   "source": "Hodge, J Agric Food Chem, 1953",
   "source_kind": "paper",
   "reference": "Hodge, Dehydrated foods: chemistry of browning reactions in model systems, Journal of Agricultural and Food Chemistry, 1953",

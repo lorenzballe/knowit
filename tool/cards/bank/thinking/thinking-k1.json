@@ -32,14 +32,14 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "% fewer defects",
+    "unit": "%",
     "items": [
       {
-        "label": "lines with the new supplier",
+        "label": "fewer defects, new supplier",
         "value": 12
       },
       {
-        "label": "every line that quarter",
+        "label": "fewer defects, every line",
         "value": 15,
         "hi": true
       }

@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% panicked",
+    "items": [
+      {
+        "label": "Healthy volunteers (3 of 12)",
+        "value": 25
+      },
+      {
+        "label": "Amygdala damage (3 of 3)",
+        "value": 100,
+        "hi": true
+      }
+    ],
+    "caption": "The patients who feared nothing outside all panicked; only a quarter of healthy volunteers did."
+  },
   "source": "Feinstein et al., Nature Neuroscience, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1038/nn.3323",

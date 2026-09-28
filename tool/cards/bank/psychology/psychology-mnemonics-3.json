@@ -24,7 +24,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "items",
+    "items": [
+      {
+        "label": "digit span before training",
+        "value": 7
+      },
+      {
+        "label": "digit span after training",
+        "value": 80
+      },
+      {
+        "label": "letter span after training",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "Eighty digits, but only six letters: the skill lived in his code for digits."
+  },
   "source": "Ericsson, Chase & Faloon, Science, 1980",
   "source_kind": "paper",
   "reference": "Ericsson, Chase & Faloon, Acquisition of a memory skill, Science, 1980",

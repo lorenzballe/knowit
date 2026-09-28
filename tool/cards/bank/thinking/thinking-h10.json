@@ -44,7 +44,7 @@
     },
     "series": [
       {
-        "label": "simple: €20 a month",
+        "label": "simple interest: €1,720",
         "points": [
           [
             0,
@@ -101,7 +101,7 @@
         ]
       },
       {
-        "label": "2% on the growing debt",
+        "label": "2% compounded: €2,040",
         "hi": true,
         "points": [
           [
@@ -157,18 +157,6 @@
             2040
           ]
         ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 36,
-        "y": 2040,
-        "label": "€2,040"
-      },
-      {
-        "x": 36,
-        "y": 1720,
-        "label": "€1,720"
       }
     ],
     "caption": "Interest on interest opens a €320 gap in three years."

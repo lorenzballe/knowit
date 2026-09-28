@@ -35,6 +35,116 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "speed to gain, km/s",
+      "min": 0,
+      "max": 9
+    },
+    "y": {
+      "label": "% of liftoff mass as propellant",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "exhaust at 3 km/s",
+        "hi": true,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            15.4
+          ],
+          [
+            1.0,
+            28.3
+          ],
+          [
+            1.5,
+            39.3
+          ],
+          [
+            2.0,
+            48.7
+          ],
+          [
+            2.5,
+            56.5
+          ],
+          [
+            3.0,
+            63.2
+          ],
+          [
+            3.5,
+            68.9
+          ],
+          [
+            4.0,
+            73.6
+          ],
+          [
+            4.5,
+            77.7
+          ],
+          [
+            5.0,
+            81.1
+          ],
+          [
+            5.5,
+            84.0
+          ],
+          [
+            6.0,
+            86.5
+          ],
+          [
+            6.5,
+            88.5
+          ],
+          [
+            7.0,
+            90.3
+          ],
+          [
+            7.5,
+            91.8
+          ],
+          [
+            8.0,
+            93.1
+          ],
+          [
+            8.5,
+            94.1
+          ],
+          [
+            9.0,
+            95.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 3,
+        "y": 63.2,
+        "label": "63%"
+      },
+      {
+        "x": 9,
+        "y": 95.0,
+        "label": "orbit: 95%"
+      }
+    ],
+    "caption": "Each extra 3 km/s divides what is left by e; orbit leaves 1 kg in 20."
+  },
   "source": "Tsiolkovsky, Nauchnoye Obozreniye, 1903",
   "source_kind": "paper",
   "reference": "Tsiolkovsky, Exploration of Outer Space by Means of Reaction Devices, Nauchnoye Obozreniye, 1903",

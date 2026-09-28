@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "area",
+    "unit": "GB per layer",
+    "items": [
+      {
+        "label": "DVD, 650 nm",
+        "value": 4.7
+      },
+      {
+        "label": "405 nm light alone",
+        "value": 12.2
+      },
+      {
+        "label": "Blu-ray, plus steeper lens",
+        "value": 25,
+        "hi": true
+      }
+    ],
+    "caption": "The shorter wavelength gives 2.6 times; the steeper lens takes it past five."
+  },
   "source": "Blu-ray Disc Association, BD-ROM white paper",
   "source_kind": "standard",
   "reference": "Blu-ray Disc Association, White Paper Blu-ray Disc Format: 1.C Physical Format Specifications for BD-ROM, 2010",

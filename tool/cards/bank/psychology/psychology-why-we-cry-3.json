@@ -26,6 +26,18 @@
   "mature": true,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 5,
+        "label": "shook, slapped or smothered",
+        "hi": true
+      }
+    ],
+    "caption": "About one parent in twenty had harmed their baby at least once over its crying."
+  },
   "source": "Reijneveld et al., The Lancet, 2004",
   "source_kind": "paper",
   "reference": "Reijneveld, van der Wal, Brugman, Hira Sing & Verloove-Vanhorick, Infant crying and abuse, The Lancet, 2004",

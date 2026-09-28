@@ -32,14 +32,14 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "deaths a year in the EU",
+    "unit": "deaths",
     "items": [
       {
-        "label": "Road crashes",
+        "label": "EU road crashes, a year",
         "value": 20000
       },
       {
-        "label": "Air pollution, at least",
+        "label": "EU air pollution, at least",
         "value": 200000,
         "hi": true
       }

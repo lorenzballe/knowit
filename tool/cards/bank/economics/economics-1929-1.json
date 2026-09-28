@@ -25,7 +25,22 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "items": [
+      {
+        "label": "A 1929 debt, in 1929 goods",
+        "value": 100
+      },
+      {
+        "label": "The same debt in 1933 goods",
+        "value": 133,
+        "hi": true
+      }
+    ],
+    "caption": "Prices fell a quarter, so the same dollars owed cost a third more in goods."
+  },
   "source": "Fisher, Econometrica, 1933",
   "source_kind": "paper",
   "reference": "Fisher, The Debt-Deflation Theory of Great Depressions, Econometrica, 1933",

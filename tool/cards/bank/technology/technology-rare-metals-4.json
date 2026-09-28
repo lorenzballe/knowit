@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "ppm of Earth's crust",
+    "items": [
+      {
+        "label": "Lead",
+        "value": 14
+      },
+      {
+        "label": "Neodymium",
+        "value": 41,
+        "hi": true
+      }
+    ],
+    "caption": "The 'rare' earth is about three times as common as lead."
+  },
   "source": "CRC Handbook of Chemistry and Physics, 2016",
   "source_kind": "book",
   "reference": "Haynes (ed.), CRC Handbook of Chemistry and Physics, 97th edition, Abundance of Elements in the Earth's Crust and in the Sea, CRC Press, 2016",

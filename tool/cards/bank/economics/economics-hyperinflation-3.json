@@ -32,6 +32,150 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "hours",
+      "min": 0,
+      "max": 120
+    },
+    "y": {
+      "label": "prices, times over",
+      "min": 1,
+      "max": 300,
+      "log": true
+    },
+    "series": [
+      {
+        "label": "Zimbabwe, 2008",
+        "points": [
+          [
+            0,
+            1.0
+          ],
+          [
+            10,
+            1.32
+          ],
+          [
+            20,
+            1.74
+          ],
+          [
+            30,
+            2.3
+          ],
+          [
+            40,
+            3.03
+          ],
+          [
+            50,
+            4.0
+          ],
+          [
+            60,
+            5.28
+          ],
+          [
+            70,
+            6.96
+          ],
+          [
+            80,
+            9.19
+          ],
+          [
+            90,
+            12.13
+          ],
+          [
+            100,
+            16.0
+          ],
+          [
+            110,
+            21.11
+          ],
+          [
+            120,
+            27.86
+          ]
+        ]
+      },
+      {
+        "label": "Hungary, 1946",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1.0
+          ],
+          [
+            10,
+            1.59
+          ],
+          [
+            20,
+            2.52
+          ],
+          [
+            30,
+            4.0
+          ],
+          [
+            40,
+            6.35
+          ],
+          [
+            50,
+            10.08
+          ],
+          [
+            60,
+            16.0
+          ],
+          [
+            70,
+            25.4
+          ],
+          [
+            80,
+            40.32
+          ],
+          [
+            90,
+            64.0
+          ],
+          [
+            100,
+            101.59
+          ],
+          [
+            110,
+            161.27
+          ],
+          [
+            120,
+            256.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 120,
+        "y": 256,
+        "label": "every 15 hours: ×256"
+      },
+      {
+        "x": 120,
+        "y": 27.86,
+        "label": "every 25 hours: ×28"
+      }
+    ],
+    "caption": "After five days, Hungary's prices had multiplied 256 times, Zimbabwe's 28."
+  },
   "source": "Hanke and Krus, World Hyperinflations, 2013",
   "source_kind": "paper",
   "reference": "Hanke & Krus, World Hyperinflations, in Routledge Handbook of Major Events in Economic History, Routledge, 2013",

@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% heads",
+    "items": [
+      {
+        "label": "Any single flip",
+        "value": 50
+      },
+      {
+        "label": "Flips after a head, averaged",
+        "value": 40.5,
+        "hi": true
+      }
+    ],
+    "caption": "Picking flips after a head in short runs drags the average to 17/42."
+  },
   "source": "Miller & Sanjurjo, Econometrica, 2018",
   "source_kind": "paper",
   "reference": "Miller & Sanjurjo, Surprised by the Hot Hand Fallacy? A Truth in the Law of Small Numbers, Econometrica, 2018",

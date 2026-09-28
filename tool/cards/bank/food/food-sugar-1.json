@@ -33,6 +33,52 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "year",
+      "min": 1700,
+      "max": 1900
+    },
+    "y": {
+      "label": "sugar a head, kg a year",
+      "min": 0,
+      "max": 40
+    },
+    "series": [
+      {
+        "label": "Britain",
+        "hi": true,
+        "points": [
+          [
+            1704,
+            2
+          ],
+          [
+            1800,
+            8
+          ],
+          [
+            1900,
+            40
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1704,
+        "y": 2,
+        "label": "under 2 kg"
+      },
+      {
+        "x": 1900,
+        "y": 40,
+        "label": "40 kg"
+      }
+    ],
+    "caption": "A twentyfold rise, most of it in the nineteenth century."
+  },
   "source": "Mintz, Sweetness and Power, 1985",
   "source_kind": "book",
   "reference": "Mintz, Sweetness and Power: The Place of Sugar in Modern History, Viking, 1985",

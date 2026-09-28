@@ -26,6 +26,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "word-pieces per number",
+    "items": [
+      {
+        "label": "Chinchilla rule",
+        "value": 20
+      },
+      {
+        "label": "Llama 3, 8 billion numbers",
+        "value": 1900,
+        "hi": true
+      }
+    ],
+    "caption": "Meta fed its small model nearly a hundred times the 'optimal' diet."
+  },
   "source": "Meta, Introducing Meta Llama 3, 2024",
   "source_kind": "company",
   "reference": "Meta, Introducing Meta Llama 3: The most capable openly available LLM to date, 2024",

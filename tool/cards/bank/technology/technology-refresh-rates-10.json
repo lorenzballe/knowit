@@ -31,7 +31,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "a second",
+    "items": [
+      {
+        "label": "New images",
+        "value": 24
+      },
+      {
+        "label": "Flashes, two-blade shutter",
+        "value": 48
+      },
+      {
+        "label": "Flashes, three-blade shutter",
+        "value": 72,
+        "hi": true
+      }
+    ],
+    "caption": "Each frame is flashed two or three times, fast enough to stop the throb."
+  },
   "source": "Happé, Basic Motion Picture Technology, 1971",
   "source_kind": "book",
   "reference": "Happé, Basic Motion Picture Technology, Focal Press, 1971",

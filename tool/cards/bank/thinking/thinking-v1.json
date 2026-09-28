@@ -31,7 +31,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "deaths a year worldwide",
+    "unit": "deaths a year",
     "items": [
       {
         "label": "homicide",

@@ -31,6 +31,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "scale",
+    "unit": "km²",
+    "items": [
+      {
+        "label": "All deep seafloor",
+        "value": 400000000
+      },
+      {
+        "label": "Ever seen",
+        "value": 4000,
+        "hi": true
+      }
+    ],
+    "caption": "All the deep seafloor ever seen is 0.001% of it: one part in 100,000."
+  },
   "source": "Bell et al., Science Advances, 2025",
   "source_kind": "paper",
   "reference": "Bell et al., How little we've seen: a visual coverage estimate of the deep seafloor, Science Advances, 2025",

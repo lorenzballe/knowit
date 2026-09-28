@@ -36,6 +36,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 4,
+        "label": "landed in the future US",
+        "hi": true
+      }
+    ],
+    "caption": "Of every hundred who survived the crossing, about four reached the future United States."
+  },
   "source": "Eltis & Richardson, Yale University Press, 2010",
   "source_kind": "book",
   "reference": "Eltis & Richardson, Atlas of the Transatlantic Slave Trade, Yale University Press, 2010",

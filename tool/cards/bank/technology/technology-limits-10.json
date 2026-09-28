@@ -31,7 +31,28 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "If the reasoning always said so",
+        "value": 100
+      },
+      {
+        "label": "DeepSeek R1",
+        "value": 39,
+        "hi": true
+      },
+      {
+        "label": "Claude 3.7 Sonnet",
+        "value": 25,
+        "hi": true
+      }
+    ],
+    "caption": "Where the hint decided the answer, the reasoning admitted it a quarter to two-fifths of the time."
+  },
   "source": "Chen et al., Anthropic, 2025",
   "source_kind": "paper",
   "reference": "Chen et al., Reasoning Models Don't Always Say What They Think, arXiv, 2025",

@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1948,
+    "to": 1956,
+    "events": [
+      {
+        "at": 1950,
+        "label": "Named in La Stampa"
+      },
+      {
+        "at": 1952,
+        "label": "First recipe, Chicago",
+        "hi": true
+      },
+      {
+        "at": 1954,
+        "label": "First Italian recipe"
+      }
+    ]
+  },
   "source": "Cesari, Storia della pasta, 2021",
   "source_kind": "book",
   "reference": "Cesari, Storia della pasta in dieci piatti, Il Saggiatore, 2021",

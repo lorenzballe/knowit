@@ -32,7 +32,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Hydrogen fusion",
+        "value": 0.75
+      },
+      {
+        "label": "Non-spinning hole",
+        "value": 6
+      },
+      {
+        "label": "Hole spinning near its limit",
+        "value": 30,
+        "hi": true
+      }
+    ],
+    "caption": "Spin lets gas sink deeper: five times the yield, 40 times fusion's."
+  },
   "source": "Thorne, Astrophysical Journal, 1974",
   "source_kind": "paper",
   "reference": "Thorne, Disk-accretion onto a black hole. II. Evolution of the hole, Astrophysical Journal, 1974",

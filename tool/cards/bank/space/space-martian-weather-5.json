@@ -35,7 +35,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "km/h",
+    "items": [
+      {
+        "label": "Gust on Mars",
+        "value": 100
+      },
+      {
+        "label": "Earth wind with the same push",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "Air 60 times thinner: a 100 km/h Martian gust pushes like a breeze."
+  },
   "source": "Haberle et al., Cambridge University Press, 2017",
   "source_kind": "book",
   "reference": "Haberle, Clancy, Forget, Smith and Zurek (eds), The Atmosphere and Climate of Mars, Cambridge University Press, 2017",

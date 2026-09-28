@@ -32,6 +32,21 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "polio cases in 2021",
+    "items": [
+      {
+        "label": "Wild virus",
+        "value": 6
+      },
+      {
+        "label": "Vaccine-derived",
+        "value": 700,
+        "hi": true
+      }
+    ]
+  },
   "source": "Global Polio Eradication Initiative, strategy 2022–2026",
   "source_kind": "institution",
   "reference": "Global Polio Eradication Initiative, Polio Eradication Strategy 2022–2026: Delivering on a Promise, World Health Organization, 2021",

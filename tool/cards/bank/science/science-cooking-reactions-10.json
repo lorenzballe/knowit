@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "mg of iron per 100 g",
+    "items": [
+      {
+        "label": "Tomato sauce before",
+        "value": 0.6
+      },
+      {
+        "label": "After simmering in cast iron",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "The pot gave up about ten times the iron the sauce began with."
+  },
   "source": "Brittin & Nossaman, J. Am. Diet. Assoc., 1986",
   "source_kind": "paper",
   "reference": "Brittin & Nossaman, Iron content of food cooked in iron utensils, Journal of the American Dietetic Association 86, 897, 1986",

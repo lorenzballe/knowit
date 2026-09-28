@@ -36,6 +36,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "¢",
+    "parts": [
+      {
+        "label": "Face value",
+        "value": 1
+      },
+      {
+        "label": "Loss on each coin",
+        "value": 2.69,
+        "hi": true
+      }
+    ],
+    "caption": "Each cent costs 3.69¢ to make; 2.69¢ lost, times 3.17 billion, is $85.27 million."
+  },
   "source": "US Mint, 2024 Annual Report",
   "source_kind": "institution",
   "reference": "United States Mint, Annual Report 2024",

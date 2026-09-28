@@ -33,6 +33,97 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "% of the time busy",
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "label": "average wait, relative",
+      "min": 0,
+      "max": 20
+    },
+    "series": [
+      {
+        "label": "load ÷ spare capacity",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            10,
+            0.11
+          ],
+          [
+            20,
+            0.25
+          ],
+          [
+            30,
+            0.43
+          ],
+          [
+            40,
+            0.67
+          ],
+          [
+            50,
+            1.0
+          ],
+          [
+            60,
+            1.5
+          ],
+          [
+            70,
+            2.33
+          ],
+          [
+            80,
+            4.0
+          ],
+          [
+            85,
+            5.67
+          ],
+          [
+            90,
+            9.0
+          ],
+          [
+            92.5,
+            12.33
+          ],
+          [
+            95,
+            19.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 80,
+        "y": 4,
+        "label": "80% busy: 4"
+      },
+      {
+        "x": 90,
+        "y": 9,
+        "label": "90%: 9"
+      },
+      {
+        "x": 95,
+        "y": 19,
+        "label": "95%: 19"
+      }
+    ],
+    "caption": "The last few points of load cost more waiting than all the rest together."
+  },
   "source": "Hopp & Spearman, Factory Physics, 2008",
   "source_kind": "book",
   "reference": "Hopp & Spearman, Factory Physics, 3rd edition, McGraw-Hill, 2008",

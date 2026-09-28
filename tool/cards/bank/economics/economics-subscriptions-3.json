@@ -36,6 +36,87 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "months",
+      "min": 0,
+      "max": 12
+    },
+    "y": {
+      "label": "% still subscribed",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "losing 5% a month",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            1,
+            95.0
+          ],
+          [
+            2,
+            90.2
+          ],
+          [
+            3,
+            85.7
+          ],
+          [
+            4,
+            81.5
+          ],
+          [
+            5,
+            77.4
+          ],
+          [
+            6,
+            73.5
+          ],
+          [
+            7,
+            69.8
+          ],
+          [
+            8,
+            66.3
+          ],
+          [
+            9,
+            63.0
+          ],
+          [
+            10,
+            59.9
+          ],
+          [
+            11,
+            56.9
+          ],
+          [
+            12,
+            54.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 12,
+        "y": 54,
+        "label": "a year on: 54%"
+      }
+    ],
+    "caption": "A small monthly loss compounds: after a year, nearly half have gone."
+  },
   "source": "Fader and Hardie, J. Interactive Marketing, 2007",
   "source_kind": "paper",
   "reference": "Fader & Hardie, How to Project Customer Retention, Journal of Interactive Marketing, 2007",

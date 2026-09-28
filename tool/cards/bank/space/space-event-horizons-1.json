@@ -35,6 +35,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "g of stretch at horizon",
+    "items": [
+      {
+        "label": "4-million-sun hole",
+        "value": 0.0001,
+        "hi": true
+      },
+      {
+        "label": "Earth's gravity",
+        "value": 1
+      },
+      {
+        "label": "10-sun hole",
+        "value": 20000000
+      }
+    ],
+    "caption": "The small hole stretches her twenty million g; the giant, a ten-thousandth of one."
+  },
   "source": "Thorne, The Science of Interstellar, 2014",
   "source_kind": "book",
   "reference": "Thorne, The Science of Interstellar, W. W. Norton, 2014",

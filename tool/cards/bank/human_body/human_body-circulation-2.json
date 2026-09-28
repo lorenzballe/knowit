@@ -25,6 +25,21 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "area",
+    "items": [
+      {
+        "label": "Aorta's cross-section",
+        "value": 1
+      },
+      {
+        "label": "Capillaries combined",
+        "value": 1000,
+        "hi": true
+      }
+    ],
+    "caption": "Same flow over a thousand times the area: from 30 cm to under 1 mm a second."
+  },
   "source": "Levick, Introduction to Cardiovascular Physiology, 2010",
   "source_kind": "book",
   "reference": "Levick, An Introduction to Cardiovascular Physiology, 5th edition, Hodder Arnold, 2010",

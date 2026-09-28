@@ -31,7 +31,7 @@
   "figure": "none",
   "diagram": {
     "type": "split",
-    "unit": "€",
+    "unit": "euros",
     "parts": [
       {
         "label": "cost",

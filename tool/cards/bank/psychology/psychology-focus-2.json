@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "high working-memory scorers",
+        "value": 20
+      },
+      {
+        "label": "low working-memory scorers",
+        "value": 65,
+        "hi": true
+      }
+    ],
+    "caption": "Share who heard their own name in the ear they were told to ignore."
+  },
   "source": "Conway, Cowan & Bunting, 2001",
   "source_kind": "paper",
   "reference": "Conway, Cowan & Bunting, The cocktail party phenomenon revisited: the importance of working memory capacity, Psychonomic Bulletin & Review, 2001",

@@ -32,7 +32,24 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1825,
+    "to": 1885,
+    "events": [
+      {
+        "at": 1835,
+        "label": "Bassi: silkworm fungus spreads",
+        "hi": true
+      },
+      {
+        "at": 1876,
+        "label": "Koch: anthrax"
+      }
+    ],
+    "caption": "The first microbe shown to pass between hosts came over 40 years before Koch."
+  },
   "source": "Ainsworth, Introduction to the History of Mycology, 1976",
   "source_kind": "book",
   "reference": "Ainsworth, Introduction to the History of Mycology, Cambridge University Press, 1976",

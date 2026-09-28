@@ -33,7 +33,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "euros a kilo",
+    "items": [
+      {
+        "label": "Green beans",
+        "value": 8
+      },
+      {
+        "label": "Roasted beans",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "Losing a fifth of the weight raises the price by a quarter."
+  },
   "source": "Sweet Maria's Coffee Library",
   "source_kind": "company",
   "reference": "https://library.sweetmarias.com/how-to-calculate-weight-loss-in-coffee-roasting/",

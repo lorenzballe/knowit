@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Energy saved",
+        "value": 4
+      },
+      {
+        "label": "Speed gained",
+        "value": 2.5,
+        "hi": true
+      }
+    ],
+    "caption": "A 4% saving in energy buys only about 2.5% more speed."
+  },
   "source": "Kipp, Kram & Hoogkamer, Frontiers in Physiology, 2019",
   "source_kind": "paper",
   "reference": "doi:10.3389/fphys.2019.00079",

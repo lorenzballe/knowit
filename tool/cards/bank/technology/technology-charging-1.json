@@ -26,6 +26,51 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "time, first 80% = 1",
+      "min": 0,
+      "max": 2
+    },
+    "y": {
+      "label": "% charged",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "hi": true,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            80
+          ],
+          [
+            2,
+            100
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1,
+        "y": 80,
+        "label": "80%: one stretch"
+      },
+      {
+        "x": 2,
+        "y": 100,
+        "label": "last 20%: as long again"
+      }
+    ],
+    "caption": "The last fifth can take as long as the first four-fifths."
+  },
   "source": "Linden's Handbook of Batteries, 2011",
   "source_kind": "book",
   "reference": "Reddy (ed.), Linden's Handbook of Batteries, 4th edition, McGraw-Hill, 2011",

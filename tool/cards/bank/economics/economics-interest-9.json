@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Interest",
+        "value": 83.4,
+        "hi": true
+      },
+      {
+        "label": "Paying off the loan",
+        "value": 16.6
+      }
+    ],
+    "caption": "Of the first $1,199 payment, $1,000 is interest."
+  },
   "source": "Brealey, Myers & Allen, Corporate Finance",
   "source_kind": "book",
   "reference": "Brealey, Myers & Allen, Principles of Corporate Finance, 13th edition, McGraw-Hill, 2020",

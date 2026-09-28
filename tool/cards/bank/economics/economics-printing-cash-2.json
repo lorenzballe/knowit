@@ -26,6 +26,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "£",
+    "items": [
+      {
+        "label": "Scottish tenner",
+        "value": 10
+      },
+      {
+        "label": "'Giant' note",
+        "value": 1000000
+      },
+      {
+        "label": "'Titan' note",
+        "value": 100000000,
+        "hi": true
+      }
+    ],
+    "caption": "One titan stands behind ten million tenners."
+  },
   "source": "Bank of England, Scottish and Northern Ireland banknotes",
   "source_kind": "institution",
   "reference": "Bank of England, Scottish and Northern Ireland banknotes: backing assets, giants and titans, 2024",

@@ -33,7 +33,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 65,
+        "label": "extra quitters, abrupt route",
+        "hi": true
+      },
+      {
+        "n": 155,
+        "label": "would quit either way (15.5%)"
+      }
+    ],
+    "caption": "Abrupt quitting adds 6.5 quitters per 100 smokers: one for about every 15."
+  },
   "source": "Lindson-Hawley et al., Annals of Internal Medicine, 2016",
   "source_kind": "paper",
   "reference": "Lindson-Hawley, Banting, West, Michie, Shinkins & Aveyard, Gradual versus abrupt smoking cessation: a randomized, controlled noninferiority trial, Annals of Internal Medicine, 2016",

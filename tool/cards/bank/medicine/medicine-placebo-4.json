@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Statin months",
+        "value": 100
+      },
+      {
+        "label": "Dummy-pill months",
+        "value": 90,
+        "hi": true
+      }
+    ],
+    "caption": "Symptoms as a share of statin months: dummy pills brought almost as much."
+  },
   "source": "Wood et al., NEJM, 2020",
   "source_kind": "paper",
   "reference": "https://www.nejm.org/doi/full/10.1056/NEJMc2031173",

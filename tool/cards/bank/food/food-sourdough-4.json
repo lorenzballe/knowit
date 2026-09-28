@@ -35,7 +35,28 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of phytate lost",
+    "items": [
+      {
+        "label": "Unsoured dough",
+        "value": 40
+      },
+      {
+        "label": "Soured by lactic acid",
+        "value": 70,
+        "hi": true
+      },
+      {
+        "label": "Soured by a starter",
+        "value": 70,
+        "hi": true
+      }
+    ],
+    "caption": "Plain acid does as much as a live starter: the grain's enzymes do the work."
+  },
   "source": "Leenhardt et al., J. Agric. Food Chem., 2005",
   "source_kind": "paper",
   "reference": "doi:10.1021/jf049193q",

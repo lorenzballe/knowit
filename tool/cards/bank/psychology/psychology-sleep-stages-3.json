@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 76,
+        "label": "have had sleep paralysis",
+        "hi": true
+      }
+    ],
+    "caption": "7.6% of people: about one in thirteen has woken unable to move."
+  },
   "source": "Sharpless & Barber, Sleep Medicine Reviews, 2011",
   "source_kind": "paper",
   "reference": "Sharpless & Barber, Lifetime prevalence rates of sleep paralysis: a systematic review, Sleep Medicine Reviews, 2011",

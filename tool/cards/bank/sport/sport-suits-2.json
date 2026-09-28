@@ -31,7 +31,28 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 2005,
+    "to": 2027,
+    "events": [
+      {
+        "at": 2009,
+        "label": "Biedermann's 1:42.00, Rome"
+      },
+      {
+        "at": 2010,
+        "label": "Bodysuits banned"
+      },
+      {
+        "at": 2025,
+        "label": "Record still stands",
+        "hi": true
+      }
+    ],
+    "caption": "The suits went in 2010; the record they helped set was still there in 2025."
+  },
   "source": "SwimSwam, oldest long-course world records",
   "source_kind": "news_archive",
   "reference": "https://swimswam.com/with-biedermanns-400-free-mark-broken-what-are-the-oldest-remaining-lcm-world-records/",

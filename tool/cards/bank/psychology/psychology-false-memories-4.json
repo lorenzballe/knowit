@@ -30,7 +30,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "words actually on the lists",
+        "value": 62
+      },
+      {
+        "label": "'sleep', never spoken",
+        "value": 55,
+        "hi": true
+      }
+    ],
+    "caption": "The unheard theme word came back almost as often as the words heard."
+  },
   "source": "Roediger & McDermott, 1995",
   "source_kind": "paper",
   "reference": "Roediger & McDermott, Creating false memories: remembering words not presented in lists, Journal of Experimental Psychology: Learning, Memory, and Cognition, 1995",

@@ -34,6 +34,71 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "days",
+      "min": 0,
+      "max": 250
+    },
+    "y": {
+      "label": "charges, % of loan",
+      "min": 0,
+      "max": 110
+    },
+    "series": [
+      {
+        "label": "0.8% a day, capped at 100%",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            50,
+            40
+          ],
+          [
+            75,
+            60
+          ],
+          [
+            100,
+            80
+          ],
+          [
+            125,
+            100
+          ],
+          [
+            150,
+            100
+          ],
+          [
+            200,
+            100
+          ],
+          [
+            250,
+            100
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 125,
+        "y": 100,
+        "label": "day 125: cap reached"
+      }
+    ],
+    "caption": "A small daily charge doubles the debt in 125 days."
+  },
   "source": "FCA, high-cost short-term credit price cap, 2015",
   "source_kind": "primary_document",
   "reference": "Financial Conduct Authority, PS14/16: Detailed rules for the price cap on high-cost short-term credit, 2014",

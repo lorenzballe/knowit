@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Cortex: share of brain mass",
+        "value": 82
+      },
+      {
+        "label": "Cortex: share of neurons",
+        "value": 19,
+        "hi": true
+      }
+    ],
+    "caption": "The cerebellum, about 150 g, holds 69 of the brain's 86 billion neurons."
+  },
   "source": "Azevedo et al., Journal of Comparative Neurology, 2009",
   "source_kind": "paper",
   "reference": "doi:10.1002/cne.21974",

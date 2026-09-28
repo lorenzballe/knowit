@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of kicks saved",
+    "items": [
+      {
+        "label": "Keeper dives",
+        "value": 13
+      },
+      {
+        "label": "Keeper stays in the centre",
+        "value": 33,
+        "hi": true
+      }
+    ],
+    "caption": "Keepers dived 94% of the time, yet staying put saved over twice as often."
+  },
   "source": "Bar-Eli et al., J Economic Psychology, 2007",
   "source_kind": "paper",
   "reference": "Bar-Eli, Azar, Ritov, Keidar-Levin & Schein, Action bias among elite soccer goalkeepers: The case of penalty kicks, Journal of Economic Psychology, 2007",

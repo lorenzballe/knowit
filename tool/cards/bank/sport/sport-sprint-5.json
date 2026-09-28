@@ -24,7 +24,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "m/s tailwind",
+    "items": [
+      {
+        "label": "Legal limit",
+        "value": 2
+      },
+      {
+        "label": "Triple-jump gauge nearby",
+        "value": 4.3,
+        "hi": true
+      }
+    ],
+    "caption": "The track gauge read exactly 0 while the one beside it logged over twice the limit."
+  },
   "source": "Daily Relay, oral history of the 10.49",
   "source_kind": "news_archive",
   "reference": "http://dailyrelay.com/the-wind-read-zero-an-oral-history-of-florence-griffith-joyners-100-meter-world-record/",

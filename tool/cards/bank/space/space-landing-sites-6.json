@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "diagram": {
+    "type": "bars",
+    "unit": "km",
+    "items": [
+      {
+        "label": "Crewed-landing regions, within 6°",
+        "value": 180
+      },
+      {
+        "label": "Chandrayaan-3, 21° out",
+        "value": 630,
+        "hi": true
+      }
+    ],
+    "caption": "At about 30 km a degree, 'near the pole' was 630 km away."
+  },
   "source": "Indian Space Research Organisation, 2023",
   "source_kind": "institution",
   "reference": "Indian Space Research Organisation, Chandrayaan-3 mission: Vikram lander touchdown at 69.37° S, 32.32° E, 23 August 2023",

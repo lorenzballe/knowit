@@ -26,6 +26,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 10,
+        "label": "strongly active at once",
+        "hi": true
+      }
+    ],
+    "caption": "Energy allows possibly fewer than 1 in 100 cortical neurons to fire hard together."
+  },
   "source": "Lennie, Current Biology, 2003",
   "source_kind": "paper",
   "reference": "Lennie, The cost of cortical computation, Current Biology, 2003",

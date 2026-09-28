@@ -32,6 +32,133 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "speed, knots",
+      "min": 10,
+      "max": 20
+    },
+    "y": {
+      "label": "% of fuel at 20 knots",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "per hour: cube law",
+        "points": [
+          [
+            10,
+            12.5
+          ],
+          [
+            11,
+            16.6
+          ],
+          [
+            12,
+            21.6
+          ],
+          [
+            13,
+            27.5
+          ],
+          [
+            14,
+            34.3
+          ],
+          [
+            15,
+            42.2
+          ],
+          [
+            16,
+            51.2
+          ],
+          [
+            17,
+            61.4
+          ],
+          [
+            18,
+            72.9
+          ],
+          [
+            19,
+            85.7
+          ],
+          [
+            20,
+            100.0
+          ]
+        ]
+      },
+      {
+        "label": "per voyage: square law",
+        "hi": true,
+        "points": [
+          [
+            10,
+            25.0
+          ],
+          [
+            11,
+            30.3
+          ],
+          [
+            12,
+            36.0
+          ],
+          [
+            13,
+            42.3
+          ],
+          [
+            14,
+            49.0
+          ],
+          [
+            15,
+            56.2
+          ],
+          [
+            16,
+            64.0
+          ],
+          [
+            17,
+            72.2
+          ],
+          [
+            18,
+            81.0
+          ],
+          [
+            19,
+            90.2
+          ],
+          [
+            20,
+            100.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 16,
+        "y": 64,
+        "label": "per voyage: 64%"
+      },
+      {
+        "x": 16,
+        "y": 51.2,
+        "label": "per hour: 51%"
+      }
+    ],
+    "caption": "The slower ship burns less each hour but sails for longer, so the voyage saves less."
+  },
   "source": "Notteboom & Vernimmen, Journal of Transport Geography, 2009",
   "source_kind": "paper",
   "reference": "Notteboom & Vernimmen, The effect of high fuel costs on liner service configuration in container shipping, Journal of Transport Geography, 2009",

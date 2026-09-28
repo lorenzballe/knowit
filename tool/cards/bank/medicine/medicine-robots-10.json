@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% dead at 3 years",
+    "items": [
+      {
+        "label": "Open surgery",
+        "value": 1.0
+      },
+      {
+        "label": "Keyhole or robotic",
+        "value": 6.2,
+        "hi": true
+      }
+    ],
+    "caption": "99.0% against 93.8% alive looks close; the deaths differ sixfold."
+  },
   "source": "Ramirez et al., NEJM, 2018",
   "source_kind": "paper",
   "reference": "Ramirez et al., Minimally invasive versus abdominal radical hysterectomy for cervical cancer, New England Journal of Medicine, 2018",

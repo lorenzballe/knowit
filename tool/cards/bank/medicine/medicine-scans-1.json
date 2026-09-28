@@ -36,6 +36,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 37,
+        "label": "disc degeneration, no pain",
+        "hi": true
+      }
+    ],
+    "caption": "Of 100 pain-free 20-year-olds, 37 show disc degeneration; by 80, 96 do."
+  },
   "source": "Brinjikji et al., AJNR, 2015",
   "source_kind": "paper",
   "reference": "https://pubmed.ncbi.nlm.nih.gov/25430861/",

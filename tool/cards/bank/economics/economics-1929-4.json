@@ -33,6 +33,30 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1929,
+    "to": 1938,
+    "events": [
+      {
+        "at": 1931,
+        "label": "Britain leaves gold"
+      },
+      {
+        "at": 1936,
+        "label": "France and the gold bloc leave",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1931,
+        "to": 1936,
+        "label": "gold bloc sliding"
+      }
+    ],
+    "caption": "Britain cut loose from gold five years before France and the gold bloc."
+  },
   "source": "Eichengreen and Sachs, J. Economic History, 1985",
   "source_kind": "paper",
   "reference": "Eichengreen & Sachs, Exchange Rates and Economic Recovery in the 1930s, Journal of Economic History, 1985",

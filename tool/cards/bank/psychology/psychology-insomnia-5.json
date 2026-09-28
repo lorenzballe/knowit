@@ -37,6 +37,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "bars",
+    "unit": "per 78 treated",
+    "items": [
+      {
+        "label": "Extra good sleepers",
+        "value": 6
+      },
+      {
+        "label": "Extra side effects",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "For every extra good sleeper, about two extra side effects."
+  },
   "source": "Glass et al., BMJ, 2005",
   "source_kind": "paper",
   "reference": "doi:10.1136/bmj.38623.768588.47",

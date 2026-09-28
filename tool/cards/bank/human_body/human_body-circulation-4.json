@@ -32,6 +32,124 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "change in radius, %",
+      "min": -17,
+      "max": 19
+    },
+    "y": {
+      "label": "flow, % of before",
+      "min": 0,
+      "max": 210
+    },
+    "series": [
+      {
+        "label": "if flow followed the radius",
+        "points": [
+          [
+            -16.7,
+            83.3
+          ],
+          [
+            -12,
+            88
+          ],
+          [
+            -8,
+            92
+          ],
+          [
+            -4,
+            96
+          ],
+          [
+            0,
+            100
+          ],
+          [
+            4,
+            104
+          ],
+          [
+            8,
+            108
+          ],
+          [
+            12,
+            112
+          ],
+          [
+            16,
+            116
+          ],
+          [
+            19,
+            119
+          ]
+        ]
+      },
+      {
+        "label": "radius to the fourth power",
+        "hi": true,
+        "points": [
+          [
+            -16.7,
+            48.1
+          ],
+          [
+            -12,
+            60.0
+          ],
+          [
+            -8,
+            71.6
+          ],
+          [
+            -4,
+            84.9
+          ],
+          [
+            0,
+            100.0
+          ],
+          [
+            4,
+            117.0
+          ],
+          [
+            8,
+            136.0
+          ],
+          [
+            12,
+            157.4
+          ],
+          [
+            16,
+            181.1
+          ],
+          [
+            19,
+            200.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 19,
+        "y": 200.5,
+        "label": "19% wider: twice the flow"
+      },
+      {
+        "x": -16.7,
+        "y": 48.1,
+        "label": "a sixth narrower: half"
+      }
+    ]
+  },
   "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
   "source_kind": "book",
   "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",

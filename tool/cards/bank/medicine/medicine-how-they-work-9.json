@@ -25,7 +25,22 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% fewer cases",
+    "items": [
+      {
+        "label": "Live-virus vaccine",
+        "value": 38
+      },
+      {
+        "label": "Shingrix, one protein + AS01",
+        "value": 90,
+        "hi": true
+      }
+    ]
+  },
   "source": "Cunningham et al., NEJM, 2016",
   "source_kind": "paper",
   "reference": "Cunningham et al., Efficacy of the herpes zoster subunit vaccine in adults 70 years of age or older, New England Journal of Medicine, 2016",

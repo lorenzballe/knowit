@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "m²",
+    "items": [
+      {
+        "label": "Tennis court, as quoted",
+        "value": 261
+      },
+      {
+        "label": "Gut lining, measured",
+        "value": 32,
+        "hi": true
+      }
+    ],
+    "caption": "The measured gut lining covers about an eighth of the tennis court it is often compared to."
+  },
   "source": "Helander & Fändriks, Scand J Gastroenterol, 2014",
   "source_kind": "paper",
   "reference": "https://www.tandfonline.com/doi/full/10.3109/00365521.2014.898326",

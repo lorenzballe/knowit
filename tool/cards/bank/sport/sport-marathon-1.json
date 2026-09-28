@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "m",
+    "items": [
+      {
+        "label": "Most a record course may drop",
+        "value": 42.2
+      },
+      {
+        "label": "Boston's drop",
+        "value": 140,
+        "hi": true
+      }
+    ],
+    "caption": "At 1 m per km a record course may fall 42 m; Boston falls over three times that."
+  },
   "source": "World Athletics, Competition and Technical Rules",
   "source_kind": "primary_document",
   "reference": "World Athletics, Competition and Technical Rules, Book C, 2023 edition",

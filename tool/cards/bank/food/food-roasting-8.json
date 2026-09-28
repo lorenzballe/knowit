@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Roasted bean",
+        "value": 85
+      },
+      {
+        "label": "Water already inside",
+        "value": 11,
+        "hi": true
+      },
+      {
+        "label": "Gases and volatiles",
+        "value": 4
+      }
+    ],
+    "caption": "Of the 15% lost, 11 points are the water the green bean held."
+  },
   "source": "Clarke & Macrae, Coffee: Chemistry, 1985",
   "source_kind": "book",
   "reference": "Clarke & Macrae (eds), Coffee, Volume 1: Chemistry, Elsevier Applied Science, 1985",

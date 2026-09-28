@@ -35,6 +35,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 61,
+        "label": "share no prime factor",
+        "hi": true
+      }
+    ],
+    "caption": "Of 100 random pairs, about 61 share no factor; 39 do."
+  },
   "source": "Apostol, Introduction to Analytic Number Theory",
   "source_kind": "book",
   "reference": "Apostol, Introduction to Analytic Number Theory, Springer, 1976",

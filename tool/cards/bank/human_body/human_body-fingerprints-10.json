@@ -30,7 +30,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "ridge-count correlation",
+    "items": [
+      {
+        "label": "Siblings",
+        "value": 0.5
+      },
+      {
+        "label": "Identical twins",
+        "value": 0.95,
+        "hi": true
+      }
+    ],
+    "caption": "Close to the share of genes each pair has in common: all, or half."
+  },
   "source": "Holt, The Genetics of Dermal Ridges, 1968",
   "source_kind": "book",
   "reference": "Holt, The Genetics of Dermal Ridges, Charles C Thomas, 1968",

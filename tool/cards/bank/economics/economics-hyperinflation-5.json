@@ -36,6 +36,92 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "months",
+      "min": 0,
+      "max": 12
+    },
+    "y": {
+      "label": "prices, times over",
+      "min": 0,
+      "max": 140
+    },
+    "series": [
+      {
+        "label": "50% a month",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1.0
+          ],
+          [
+            1,
+            1.5
+          ],
+          [
+            2,
+            2.25
+          ],
+          [
+            3,
+            3.38
+          ],
+          [
+            4,
+            5.06
+          ],
+          [
+            5,
+            7.59
+          ],
+          [
+            6,
+            11.39
+          ],
+          [
+            7,
+            17.09
+          ],
+          [
+            8,
+            25.63
+          ],
+          [
+            9,
+            38.44
+          ],
+          [
+            10,
+            57.67
+          ],
+          [
+            11,
+            86.5
+          ],
+          [
+            12,
+            129.75
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 6,
+        "y": 11.39,
+        "label": "six months: ×11"
+      },
+      {
+        "x": 12,
+        "y": 129.75,
+        "label": "a year: ×130"
+      }
+    ],
+    "caption": "Half the year's rise comes in the last two months."
+  },
   "source": "Cagan, Monetary Dynamics of Hyperinflation, 1956",
   "source_kind": "paper",
   "reference": "Cagan, The Monetary Dynamics of Hyperinflation, in Friedman (ed.), Studies in the Quantity Theory of Money, University of Chicago Press, 1956",

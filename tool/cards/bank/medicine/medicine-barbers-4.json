@@ -31,7 +31,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1600,
+    "to": 1820,
+    "events": [
+      {
+        "at": 1617,
+        "label": "Woodall: lemon juice",
+        "hi": true
+      },
+      {
+        "at": 1747,
+        "label": "Lind's trial"
+      },
+      {
+        "at": 1795,
+        "label": "Navy makes it standard"
+      }
+    ],
+    "spans": [
+      {
+        "from": 1617,
+        "to": 1795,
+        "label": "178 years"
+      }
+    ]
+  },
   "source": "Royal Museums Greenwich, The Surgeon's Mate",
   "source_kind": "institution",
   "reference": "https://www.rmg.co.uk/stories/maritime-history/library-archive/surgeons-mate-john-woodall",

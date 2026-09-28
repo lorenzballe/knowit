@@ -39,6 +39,71 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "siblings",
+      "min": 0,
+      "max": 3
+    },
+    "y": {
+      "label": "% chance of a match",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "adding 25% each: the trap",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            25
+          ],
+          [
+            2,
+            50
+          ],
+          [
+            3,
+            75
+          ]
+        ]
+      },
+      {
+        "label": "chance at least one matches",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            25
+          ],
+          [
+            2,
+            43.8
+          ],
+          [
+            3,
+            57.8
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 3,
+        "y": 57.8,
+        "label": "three siblings: 57.8%"
+      }
+    ]
+  },
   "source": "Janeway's Immunobiology, 9th edition, 2016",
   "source_kind": "book",
   "reference": "Murphy & Weaver, Janeway's Immunobiology, 9th edition, Garland Science, 2016",

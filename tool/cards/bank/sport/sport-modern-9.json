@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 80,
+        "label": "American competitors",
+        "hi": true
+      }
+    ],
+    "caption": "About four in five competitors at St Louis were American."
+  },
   "source": "Mallon, The 1904 Olympic Games",
   "source_kind": "book",
   "reference": "Mallon, The 1904 Olympic Games: Results for All Competitors in All Events, McFarland, 1999",

@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "hours",
+    "items": [
+      {
+        "label": "Heart: 4 to 6 hours",
+        "value": 6
+      },
+      {
+        "label": "Kidney: commonly 24 to 36",
+        "value": 36,
+        "hi": true
+      }
+    ],
+    "caption": "A heart has 4 to 6 hours; a kidney commonly 24 to 36."
+  },
   "source": "Jing et al., Acta Pharmacologica Sinica, 2018",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/aps2017182",

@@ -34,7 +34,19 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 8,
+        "label": "low back pain today",
+        "hi": true
+      }
+    ],
+    "caption": "About 1 person in 13 on any day: some 620 million worldwide."
+  },
   "source": "GBD collaborators, Lancet Rheumatology, 2023",
   "source_kind": "paper",
   "reference": "GBD 2021 Low Back Pain Collaborators, Global, regional, and national burden of low back pain, 1990-2020, and projections to 2050, The Lancet Rheumatology, 2023",

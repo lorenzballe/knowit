@@ -37,6 +37,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "kcal",
+    "parts": [
+      {
+        "label": "5 hours riding",
+        "value": 4500,
+        "hi": true
+      },
+      {
+        "label": "19 hours off the bike",
+        "value": 1500
+      }
+    ],
+    "caption": "Three quarters of the day's 6,000 kcal go on five hours in the saddle."
+  },
   "source": "Saris et al., Int J Sports Med, 1989",
   "source_kind": "paper",
   "reference": "Saris et al., Study on food intake and energy expenditure during extreme sustained exercise: the Tour de France, International Journal of Sports Medicine, 1989",

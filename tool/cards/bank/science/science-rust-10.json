@@ -35,6 +35,124 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "years",
+      "min": 0,
+      "max": 144
+    },
+    "y": {
+      "label": "carbonation depth, mm",
+      "min": 0,
+      "max": 30
+    },
+    "series": [
+      {
+        "label": "depth grows as root of time",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            2,
+            3.5
+          ],
+          [
+            4,
+            5.0
+          ],
+          [
+            8,
+            7.1
+          ],
+          [
+            16,
+            10.0
+          ],
+          [
+            24,
+            12.2
+          ],
+          [
+            32,
+            14.1
+          ],
+          [
+            40,
+            15.8
+          ],
+          [
+            48,
+            17.3
+          ],
+          [
+            56,
+            18.7
+          ],
+          [
+            64,
+            20.0
+          ],
+          [
+            72,
+            21.2
+          ],
+          [
+            80,
+            22.4
+          ],
+          [
+            88,
+            23.5
+          ],
+          [
+            96,
+            24.5
+          ],
+          [
+            104,
+            25.5
+          ],
+          [
+            112,
+            26.5
+          ],
+          [
+            120,
+            27.4
+          ],
+          [
+            128,
+            28.3
+          ],
+          [
+            136,
+            29.2
+          ],
+          [
+            144,
+            30.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 16,
+        "y": 10,
+        "label": "10 mm at 16 years"
+      },
+      {
+        "x": 144,
+        "y": 30,
+        "label": "144 years"
+      }
+    ],
+    "caption": "Three times the depth takes nine times as long."
+  },
   "source": "Neville, Properties of Concrete, 2011",
   "source_kind": "book",
   "reference": "Neville, Properties of Concrete, 5th edition, Pearson, 2011",

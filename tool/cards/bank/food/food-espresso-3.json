@@ -34,6 +34,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Dissolved into cup",
+        "value": 20,
+        "hi": true
+      },
+      {
+        "label": "Left in the puck",
+        "value": 80
+      }
+    ],
+    "caption": "Of the 18 g dose, only 3.6 g ends up in the cup."
+  },
   "source": "Illy & Viani, Espresso Coffee, 2005",
   "source_kind": "book",
   "reference": "Illy & Viani (eds.), Espresso Coffee: The Science of Quality, 2nd edition, Elsevier Academic Press, 2005",

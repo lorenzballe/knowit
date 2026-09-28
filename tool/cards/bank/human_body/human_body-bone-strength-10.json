@@ -24,7 +24,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "× force to split along",
+    "items": [
+      {
+        "label": "Splitting along the bone",
+        "value": 1
+      },
+      {
+        "label": "Breaking across it",
+        "value": 5,
+        "hi": true
+      }
+    ],
+    "caption": "After half a millimetre, crossing the grain took over five times the force."
+  },
   "source": "Koester, Ager & Ritchie, Nature Materials, 2008",
   "source_kind": "paper",
   "reference": "doi:10.1038/nmat2221",

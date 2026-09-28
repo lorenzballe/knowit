@@ -32,14 +32,14 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "% fall in crime",
+    "unit": "%",
     "items": [
       {
-        "label": "This city, new mayor",
+        "label": "Crime fall, this city",
         "value": 8
       },
       {
-        "label": "The whole country",
+        "label": "Crime fall, whole country",
         "value": 12,
         "hi": true
       }

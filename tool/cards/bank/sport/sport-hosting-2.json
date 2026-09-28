@@ -26,6 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1970,
+    "to": 2010,
+    "events": [
+      {
+        "at": 1976,
+        "label": "Montreal Games"
+      },
+      {
+        "at": 1987,
+        "label": "Roof finally fitted"
+      },
+      {
+        "at": 2006,
+        "label": "Last of the debt cleared",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1976,
+        "to": 2006,
+        "label": "paying off the debt"
+      }
+    ],
+    "caption": "A two-week Games took about thirty years to pay for."
+  },
   "source": "CBC News, 2006",
   "source_kind": "news_archive",
   "reference": "https://www.cbc.ca/news/canada/montreal/quebec-s-big-owe-stadium-debt-is-over-1.602530",

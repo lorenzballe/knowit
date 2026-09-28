@@ -32,6 +32,85 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "terms, as a power of ten",
+      "min": 0,
+      "max": 44
+    },
+    "y": {
+      "label": "running total",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "1 + 1/2 + 1/3 + …",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            5,
+            12.1
+          ],
+          [
+            9,
+            21.3
+          ],
+          [
+            15,
+            35.1
+          ],
+          [
+            20,
+            46.6
+          ],
+          [
+            26.7,
+            62.1
+          ],
+          [
+            30,
+            69.7
+          ],
+          [
+            35,
+            81.2
+          ],
+          [
+            40,
+            92.7
+          ],
+          [
+            43.2,
+            100.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 9,
+        "y": 21.3,
+        "label": "a billion terms: 21"
+      },
+      {
+        "x": 26.7,
+        "y": 62,
+        "label": "since the Big Bang: 62"
+      },
+      {
+        "x": 43.2,
+        "y": 100,
+        "label": "a 44-digit count: 100"
+      }
+    ],
+    "caption": "Every tenfold more terms adds only about 2.3 to the total."
+  },
   "source": "Havil, Gamma: Exploring Euler's Constant, 2003",
   "source_kind": "book",
   "reference": "Havil, Gamma: Exploring Euler's Constant, Princeton University Press, 2003",

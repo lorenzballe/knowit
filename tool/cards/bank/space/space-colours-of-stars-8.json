@@ -34,6 +34,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "white dwarfs' worth",
+    "items": [
+      {
+        "label": "one white dwarf",
+        "value": 1
+      },
+      {
+        "label": "the Sun",
+        "value": 625,
+        "hi": true
+      }
+    ],
+    "caption": "Twice as hot gives 16 times the light per patch, on a ten-thousandth of the surface."
+  },
   "source": "Carroll & Ostlie, Modern Astrophysics, 2007",
   "source_kind": "book",
   "reference": "Carroll & Ostlie, An Introduction to Modern Astrophysics, 2nd ed., Pearson Addison-Wesley, 2007",

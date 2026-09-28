@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Cyclones",
+        "value": 48
+      },
+      {
+        "label": "Crown-of-thorns",
+        "value": 42
+      },
+      {
+        "label": "Bleaching",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "Of the coral lost from 1985 to 2012, bleaching caused a tenth."
+  },
   "source": "De'ath et al., PNAS, 2012",
   "source_kind": "paper",
   "reference": "De'ath, Fabricius, Sweatman & Puotinen, The 27-year decline of coral cover on the Great Barrier Reef and its causes, PNAS, 2012",

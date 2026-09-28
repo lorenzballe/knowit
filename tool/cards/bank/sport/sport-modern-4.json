@@ -35,7 +35,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "micrometres",
+    "items": [
+      {
+        "label": "A human hair",
+        "value": 80
+      },
+      {
+        "label": "Gold on a Paris medal",
+        "value": 25,
+        "hi": true
+      }
+    ],
+    "caption": "The gold is about a third as thick as a hair: plainly measurable."
+  },
   "source": "Oxford Economics, Paris gold medal, 2024",
   "source_kind": "institution",
   "reference": "https://www.oxfordeconomics.com/resource/economists-notebook-how-much-is-a-paris-olympic-gold-medal-worth/",

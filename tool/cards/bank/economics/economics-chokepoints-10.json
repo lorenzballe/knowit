@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "$",
+    "items": [
+      {
+        "label": "Ransoms taken a year",
+        "value": 120000000.0
+      },
+      {
+        "label": "Yearly cost to shipping",
+        "value": 2000000000.0,
+        "hi": true
+      }
+    ],
+    "caption": "Guards, insurance, speed and detours cost about sixteen times what pirates took."
+  },
   "source": "Besley, Fetzer & Mueller, JEEA, 2015",
   "source_kind": "paper",
   "reference": "Besley, Fetzer & Mueller, The Welfare Cost of Lawlessness: Evidence from Somali Piracy, Journal of the European Economic Association, 2015",

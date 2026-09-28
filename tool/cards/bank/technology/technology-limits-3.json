@@ -35,7 +35,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Pneumonia, other two sites",
+        "value": 1
+      },
+      {
+        "label": "Pneumonia, the busy hospital",
+        "value": 34,
+        "hi": true
+      }
+    ],
+    "caption": "Recognising the hospital alone told the model where pneumonia was 34 times commoner."
+  },
   "source": "Zech et al., PLOS Medicine, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1371/journal.pmed.1002683",

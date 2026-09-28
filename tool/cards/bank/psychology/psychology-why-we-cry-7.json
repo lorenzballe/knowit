@@ -32,7 +32,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of Dutch",
+    "items": [
+      {
+        "label": "Dutch babies: bouts of crying",
+        "value": 100
+      },
+      {
+        "label": "Kung babies: bouts of crying",
+        "value": 100
+      },
+      {
+        "label": "Dutch babies: total crying time",
+        "value": 100
+      },
+      {
+        "label": "Kung babies: total crying time",
+        "value": 50,
+        "hi": true
+      }
+    ],
+    "caption": "As many bouts of crying, but about half the total time."
+  },
   "source": "Barr et al., Dev Med Child Neurol, 1991",
   "source_kind": "paper",
   "reference": "https://pubmed.ncbi.nlm.nih.gov/1879624/",

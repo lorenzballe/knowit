@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "€",
+    "items": [
+      {
+        "label": "Cost of rescuing the banks",
+        "value": 64000000000.0
+      },
+      {
+        "label": "Ireland's output a year (under)",
+        "value": 190000000000.0
+      },
+      {
+        "label": "Bank debts guaranteed",
+        "value": 400000000000.0,
+        "hi": true
+      }
+    ],
+    "caption": "The promise covered more than twice what the whole economy made in a year."
+  },
   "source": "Oireachtas Banking Inquiry, 2016",
   "source_kind": "institution",
   "reference": "https://inquiries.oireachtas.ie/banking/volume-1-report/chapter-7/",

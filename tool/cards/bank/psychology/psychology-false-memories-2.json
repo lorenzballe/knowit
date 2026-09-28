@@ -24,7 +24,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 26,
+        "label": "recalled it: the strict test",
+        "hi": true
+      },
+      {
+        "n": 44,
+        "label": "believed it, pictured little"
+      }
+    ],
+    "caption": "Of Shaw and Porter's 70 in 100, only 26 to 30 met a strict test."
+  },
   "source": "Wade, Garry & Pezdek, Psychological Science, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1177/0956797617703667",

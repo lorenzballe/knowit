@@ -32,7 +32,35 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "arcseconds",
+    "items": [
+      {
+        "label": "Newton's prediction",
+        "value": 0.87
+      },
+      {
+        "label": "Einstein's prediction",
+        "value": 1.75
+      },
+      {
+        "label": "First kept set",
+        "value": 1.98
+      },
+      {
+        "label": "Second kept set",
+        "value": 1.61
+      },
+      {
+        "label": "Rejected set, remeasured 1979",
+        "value": 1.55,
+        "hi": true
+      }
+    ],
+    "caption": "Remeasured, the plates set aside in 1919 land on Einstein's side."
+  },
   "source": "Kennefick, Physics Today, 2009",
   "source_kind": "paper",
   "reference": "https://physicstoday.aip.org/features/testing-relativity-from-the-1919-eclipse-a-question-of-bias",

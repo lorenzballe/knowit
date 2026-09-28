@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "wove each list into a story",
+        "value": 93
+      },
+      {
+        "label": "studied plainly, same time",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "On the final test of all twelve lists, the stories kept 93% against 13%."
+  },
   "source": "Bower & Clark, Psychonomic Science, 1969",
   "source_kind": "paper",
   "reference": "Bower & Clark, Narrative stories as mediators for serial learning, Psychonomic Science, 1969",

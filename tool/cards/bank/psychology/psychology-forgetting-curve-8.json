@@ -36,6 +36,52 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "hours after learning",
+      "min": 0,
+      "max": 144
+    },
+    "y": {
+      "label": "% saved",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "Ebbinghaus",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100
+          ],
+          [
+            1,
+            44
+          ],
+          [
+            144,
+            25
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1,
+        "y": 44,
+        "label": "1 hour: 44%"
+      },
+      {
+        "x": 144,
+        "y": 25,
+        "label": "6 days: 25%"
+      }
+    ],
+    "caption": "Of 75 points lost over six days, 56 went in the first hour."
+  },
   "source": "Ebbinghaus, Memory, 1885, trans. 1913",
   "source_kind": "book",
   "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",

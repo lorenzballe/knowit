@@ -32,6 +32,22 @@
   "mature": true,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "% chance of £200",
+    "items": [
+      {
+        "label": "£1 at a time",
+        "value": 0.45,
+        "hi": true
+      },
+      {
+        "label": "One £100 bet on red",
+        "value": 48.6
+      }
+    ],
+    "caption": "The bold single bet is over a hundred times likelier to double the money."
+  },
   "source": "Dubins & Savage, bold play, 1965",
   "source_kind": "book",
   "reference": "Dubins & Savage, How to Gamble If You Must: Inequalities for Stochastic Processes, McGraw-Hill, 1965",

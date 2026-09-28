@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "× Earth's pull",
+    "items": [
+      {
+        "label": "Earth",
+        "value": 1
+      },
+      {
+        "label": "Sun",
+        "value": 2.2,
+        "hi": true
+      }
+    ],
+    "caption": "333,000 times the mass, divided by 390 squared: the Sun still wins."
+  },
   "source": "Roy, Orbital Motion, 2005",
   "source_kind": "book",
   "reference": "Roy, Orbital Motion, 4th edition, Institute of Physics Publishing, 2005",

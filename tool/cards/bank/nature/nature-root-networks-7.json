@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Soil CO2, untouched plots",
+        "value": 100
+      },
+      {
+        "label": "Five days after ringing",
+        "value": 63
+      },
+      {
+        "label": "One to two months after",
+        "value": 46,
+        "hi": true
+      }
+    ],
+    "caption": "Cut the sugar supply and half the soil's breath stops within weeks."
+  },
   "source": "Högberg et al., Nature, 2001",
   "source_kind": "paper",
   "reference": "doi:10.1038/35081058",

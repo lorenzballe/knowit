@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "bars",
+    "unit": "GHz",
+    "items": [
+      {
+        "label": "Pentium 4, 2004",
+        "value": 3.8
+      },
+      {
+        "label": "If it had tripled",
+        "value": 11.4
+      },
+      {
+        "label": "Fastest desktop chips, 2025",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "Tripling would have meant 11.4 GHz; top clocks reached about 6, well under double."
+  },
   "source": "Dennard et al., IEEE JSSC, 1974",
   "source_kind": "paper",
   "reference": "Dennard, Gaensslen, Yu, Rideout, Bassous & LeBlanc, Design of ion-implanted MOSFET's with very small physical dimensions, IEEE Journal of Solid-State Circuits 9(5), 1974",

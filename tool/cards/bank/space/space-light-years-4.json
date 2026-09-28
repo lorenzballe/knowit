@@ -27,7 +27,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "billion light-years",
+    "items": [
+      {
+        "label": "distance when the light left",
+        "value": 2.7
+      },
+      {
+        "label": "distance today",
+        "value": 32
+      },
+      {
+        "label": "the headline: light's travel",
+        "value": 13.4,
+        "hi": true
+      }
+    ],
+    "caption": "The reported 13.4 is neither where the galaxy was nor where it is."
+  },
   "source": "Bunker et al., Astronomy & Astrophysics, 2023",
   "source_kind": "paper",
   "reference": "Bunker et al., JADES NIRSpec Spectroscopy of GN-z11, Astronomy & Astrophysics 677, A88, 2023",

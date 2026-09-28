@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "mg per 100 g",
+    "items": [
+      {
+        "label": "Light roast",
+        "value": 10
+      },
+      {
+        "label": "Very dark Italian roast",
+        "value": 40,
+        "hi": true
+      }
+    ],
+    "caption": "The darker the roast, the more trigonelline has turned into niacin."
+  },
   "source": "Adrian & Frangne, Adv. Exp. Med. Biol., 1991",
   "source_kind": "paper",
   "reference": "https://link.springer.com/chapter/10.1007/978-1-4899-2626-5_4",

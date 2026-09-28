@@ -28,6 +28,21 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Irreducible mass",
+        "value": 71
+      },
+      {
+        "label": "Spin, extractable",
+        "value": 29,
+        "hi": true
+      }
+    ]
+  },
   "source": "Christodoulou, Physical Review Letters, 1970",
   "source_kind": "paper",
   "reference": "Christodoulou, Reversible and irreversible transformations in black-hole physics, Physical Review Letters, 1970",

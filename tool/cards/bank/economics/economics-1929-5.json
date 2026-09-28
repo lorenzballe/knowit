@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "5¢ duty on a 20¢ item",
+        "value": 25
+      },
+      {
+        "label": "5¢ duty on a 10¢ item",
+        "value": 50,
+        "hi": true
+      }
+    ],
+    "caption": "The same 5-cent duty: halve the price and the rate doubles."
+  },
   "source": "Irwin, Peddling Protectionism, 2011",
   "source_kind": "book",
   "reference": "Irwin, Peddling Protectionism: Smoot-Hawley and the Great Depression, Princeton University Press, 2011",

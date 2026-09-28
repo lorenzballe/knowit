@@ -24,7 +24,24 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1270,
+    "to": 1300,
+    "events": [
+      {
+        "at": 1279,
+        "label": "Genoa lists macaroni",
+        "hi": true
+      },
+      {
+        "at": 1295,
+        "label": "Marco Polo comes home"
+      }
+    ],
+    "caption": "Macaroni was in a Genoese basket sixteen years before Polo returned."
+  },
   "source": "Dickie, The Epic History of the Italians, 2007",
   "source_kind": "book",
   "reference": "Dickie, Delizia! The Epic History of the Italians and Their Food, Hodder & Stoughton, 2007",

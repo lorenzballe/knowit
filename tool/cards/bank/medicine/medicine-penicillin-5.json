@@ -35,6 +35,91 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "minutes after the dose",
+      "min": 0,
+      "max": 180
+    },
+    "y": {
+      "label": "% of dose left",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "halving every 30 minutes",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            15,
+            70.7
+          ],
+          [
+            30,
+            50.0
+          ],
+          [
+            45,
+            35.4
+          ],
+          [
+            60,
+            25.0
+          ],
+          [
+            75,
+            17.7
+          ],
+          [
+            90,
+            12.5
+          ],
+          [
+            105,
+            8.8
+          ],
+          [
+            120,
+            6.2
+          ],
+          [
+            135,
+            4.4
+          ],
+          [
+            150,
+            3.1
+          ],
+          [
+            165,
+            2.2
+          ],
+          [
+            180,
+            1.6
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 30,
+        "y": 50,
+        "label": "30 min: half"
+      },
+      {
+        "x": 180,
+        "y": 1.6,
+        "label": "3 hours: 1.6%"
+      }
+    ]
+  },
   "source": "Goodman & Gilman's Pharmacological Basis of Therapeutics",
   "source_kind": "reference_work",
   "reference": "Brunton, Hilal-Dandan & Knollmann (eds), Goodman & Gilman's The Pharmacological Basis of Therapeutics, 13th edition, McGraw-Hill, 2018",

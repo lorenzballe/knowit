@@ -31,7 +31,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 75,
+        "label": "5+ hours outside 2 to 8 °C",
+        "hi": true
+      }
+    ],
+    "caption": "About three providers in four, despite logbooks that read in range at every check."
+  },
   "source": "US HHS Office of Inspector General, 2012",
   "source_kind": "primary_document",
   "reference": "Office of Inspector General, US Department of Health and Human Services, Vaccines for Children Program: Vulnerabilities in Vaccine Management, OEI-04-10-00430, 2012",

@@ -24,7 +24,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "ms each frame is lit",
+    "items": [
+      {
+        "label": "Tube: glows a ms or two",
+        "value": 2
+      },
+      {
+        "label": "LCD or OLED at 60 Hz",
+        "value": 16.7,
+        "hi": true
+      }
+    ],
+    "caption": "The flat screen holds each frame eight times as long, and a tracking eye smears it."
+  },
   "source": "Kurita, SID Symposium Digest, 2001",
   "source_kind": "paper",
   "reference": "Kurita, Moving picture quality improvement for hold-type AM-LCDs, SID Symposium Digest of Technical Papers 32, 2001",

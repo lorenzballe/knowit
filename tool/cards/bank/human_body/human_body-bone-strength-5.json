@@ -31,7 +31,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% with a fracture",
+    "items": [
+      {
+        "label": "Placebo",
+        "value": 6.0
+      },
+      {
+        "label": "2,000 units vitamin D a day",
+        "value": 5.9,
+        "hi": true
+      }
+    ],
+    "caption": "769 of 12,927 on vitamin D broke a bone, against 782 of 12,944 on placebo."
+  },
   "source": "LeBoff et al., NEJM, 2022",
   "source_kind": "paper",
   "reference": "doi:10.1056/NEJMoa2202106",

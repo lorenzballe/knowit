@@ -33,6 +33,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "months",
+      "min": 0,
+      "max": 36
+    },
+    "y": {
+      "label": "% of the loan",
+      "min": 0,
+      "max": 110
+    },
+    "series": [
+      {
+        "label": "interest charged on",
+        "points": [
+          [
+            0,
+            100
+          ],
+          [
+            36,
+            100
+          ]
+        ]
+      },
+      {
+        "label": "actually still owed",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100
+          ],
+          [
+            36,
+            0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 18,
+        "y": 50,
+        "label": "on average, half owed"
+      }
+    ],
+    "caption": "Flat 5% is charged on the full sum while half is owed on average: about 9.7% APR."
+  },
   "source": "Consumer Credit Act 1974, UK",
   "source_kind": "primary_document",
   "reference": "Consumer Credit Act 1974, section 20: total charge for credit",

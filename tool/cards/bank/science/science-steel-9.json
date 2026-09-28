@@ -37,6 +37,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "tonnes",
+    "parts": [
+      {
+        "label": "Buildings and networks",
+        "value": 10,
+        "hi": true
+      },
+      {
+        "label": "Vehicles",
+        "value": 1.5
+      },
+      {
+        "label": "Machines, appliances",
+        "value": 1.9
+      }
+    ],
+    "caption": "About 13 tonnes of steel a head, three quarters of it in buildings."
+  },
   "source": "Pauliuk et al., Resources, Conservation and Recycling, 2013",
   "source_kind": "paper",
   "reference": "Pauliuk, Wang & Müller, Steel all over the world: Estimating in-use stocks of iron for 200 countries, Resources, Conservation and Recycling, 2013",

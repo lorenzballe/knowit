@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "No pills",
+        "value": 35
+      },
+      {
+        "label": "Pills labelled placebo",
+        "value": 59,
+        "hi": true
+      }
+    ],
+    "caption": "Share reporting adequate relief after three weeks."
+  },
   "source": "Kaptchuk et al., PLOS ONE, 2010",
   "source_kind": "paper",
   "reference": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0015591",

@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "scale",
+    "unit": "mass per unit of light",
+    "items": [
+      {
+        "label": "stars alone",
+        "value": 2
+      },
+      {
+        "label": "Segue 1, measured",
+        "value": 3400,
+        "hi": true
+      }
+    ],
+    "caption": "Segue 1 weighs 1,700 times what its stars can account for."
+  },
   "source": "Simon et al., Astrophysical Journal, 2011",
   "source_kind": "paper",
   "reference": "Simon et al., A Complete Spectroscopic Survey of the Milky Way Satellite Segue 1: The Darkest Galaxy, The Astrophysical Journal 733, 46, 2011",

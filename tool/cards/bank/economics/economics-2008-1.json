@@ -26,6 +26,60 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "savings, £ thousand",
+      "min": 0,
+      "max": 35
+    },
+    "y": {
+      "label": "£ thousand",
+      "min": 0,
+      "max": 35
+    },
+    "series": [
+      {
+        "label": "what you saved",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            35,
+            35
+          ]
+        ]
+      },
+      {
+        "label": "what insurance paid",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            35,
+            31.7
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 35,
+        "y": 31.7,
+        "label": "paid £31,700: £3,300 short"
+      }
+    ],
+    "caption": "Above £2,000 only 90% was covered: £35,000 saved, £3,300 at risk."
+  },
   "source": "House of Commons Treasury Committee, 2008",
   "source_kind": "primary_document",
   "reference": "House of Commons Treasury Committee, The Run on the Rock, Fifth Report of Session 2007-08, HC 56, 2008",

@@ -214,6 +214,17 @@ String sayPower(int k) {
 }
 
 /// How many times bigger, as a factor to print beside a bracket.
+/// An amount with its unit, the way it is written: a currency sign before
+/// the number (€100), a per cent sign against it (57%), any other unit
+/// after it with a space (3.14 mm²).
+String sayAmount(double v, String unit) {
+  final u = unit.trim();
+  if (u.isEmpty) return sayNumber(v);
+  if (const {'€', r'$', '£', '¥', '₹'}.contains(u)) return '$u${sayNumber(v)}';
+  if (u == '%') return '${sayNumber(v)}%';
+  return '${sayNumber(v)} $u';
+}
+
 String sayFactor(double f) => '×${sayNumber(f)}';
 
 double _log10(double v) => math.log(v) / math.ln10;
@@ -512,7 +523,7 @@ class _BarsPainter extends _DiagramPainter {
     final anyHighlight = d.items.any((i) => i.highlight);
     // Room at the end of the longest bar for its number.
     final widest = d.items
-        .map((i) => layoutText('${sayNumber(i.value)} ${d.unit}'.trim(), size: 14, display: true).width)
+        .map((i) => layoutText(sayAmount(i.value, d.unit), size: 14, display: true).width)
         .reduce(math.max);
     final track = size.width - widest - 10;
 
@@ -535,9 +546,12 @@ class _BarsPainter extends _DiagramPainter {
           fill(colour),
         );
       }
-      final shown = item.value * grow;
+      // Counting up in the same steps as the final figure: whole numbers
+      // stay whole on the way.
+      final raw = item.value * grow;
+      final shown = item.value == item.value.roundToDouble() ? raw.roundToDouble() : raw;
       final value = layoutText(
-        '${sayNumber(shown)} ${d.unit}'.trim(),
+        sayAmount(shown, d.unit),
         size: 14,
         weight: FontWeight.w600,
         alpha: !anyHighlight || item.highlight ? 0.95 : 0.6,
@@ -615,7 +629,7 @@ class _ScalePainter extends _DiagramPainter {
       final name = layoutText(item.label, size: 11.5, alpha: 0.85, maxWidth: 110, maxLines: 2, align: TextAlign.center);
       // A long unit is written once, under the axis; beside each item it
       // would wrap and read badly in the singular ("1 Earth–Sun distances").
-      final said = d.unit.length <= 10 ? '${sayNumber(item.value)} ${d.unit}'.trim() : sayNumber(item.value);
+      final said = d.unit.length <= 10 ? sayAmount(item.value, d.unit) : sayNumber(item.value);
       final amount = layoutText(said, size: 10.5, alpha: 0.55, maxWidth: 110);
       final h = name.height + amount.height + 2;
       // Stack labels upwards until they clear what is already placed.
@@ -721,7 +735,7 @@ class _AreaPainter extends _DiagramPainter {
         canvas.drawCircle(c, r * f, fill(inkAt((strongOne ? 0.8 : 0.35) * f)));
       }
       final name = layoutText(items[i].label, size: 11.5, alpha: 0.85, maxWidth: math.min(140, room(i)), maxLines: 2, align: TextAlign.center);
-      final amount = layoutText('${sayNumber(items[i].value)} ${d.unit}'.trim(), size: 10.5, alpha: 0.55);
+      final amount = layoutText(sayAmount(items[i].value, d.unit), size: 10.5, alpha: 0.55);
       final o = phase(v, start + 0.15, start + 0.3);
       drawText(canvas, name, Offset(c.dx, base + 6), anchor: const Offset(0.5, 0), opacity: o);
       drawText(canvas, amount, Offset(c.dx, base + 7 + name.height), anchor: const Offset(0.5, 0), opacity: o);
@@ -779,7 +793,7 @@ class _SplitPainter extends _DiagramPainter {
     final rowEnds = [double.negativeInfinity, double.negativeInfinity];
     for (var i = 0; i < d.parts.length; i++) {
       final part = d.parts[i];
-      final share = d.unit == '%' ? '${_sig(part.value)}%' : '${sayNumber(part.value)} ${d.unit}'.trim();
+      final share = d.unit == '%' ? '${_sig(part.value)}%' : sayAmount(part.value, d.unit);
       final number = layoutText(share, size: 14, weight: FontWeight.w600, alpha: 0.95, display: true);
       final label = layoutText(part.label, size: 11, alpha: 0.72, maxWidth: 120, maxLines: 1);
       final bw = math.max(number.width, label.width);
@@ -920,7 +934,8 @@ class _LinePainter extends _DiagramPainter {
     final curves = [
       for (final s in order) [for (final pt in s.points) at(pt.$1, pt.$2)],
     ];
-    final plot = Rect.fromLTRB(left + 4, top, right, bottom - 2);
+    // Labels may use the strip above the plot, beside the y-axis title.
+    final plot = Rect.fromLTRB(left + 4, 0, right, bottom - 2);
     final placed = <Rect>[
       // The y-axis title sits in the top-left corner.
       if (d.y.label.isNotEmpty)
@@ -931,11 +946,17 @@ class _LinePainter extends _DiagramPainter {
       placed.add(Rect.fromCircle(center: o, radius: 6));
     }
 
+    // The dashed guides from each mark to the axes are obstacles too.
+    final obstacles = [
+      ...curves,
+      for (final o in dots) [Offset(o.dx, bottom), o],
+      for (final o in dots) [Offset(left, o.dy), o],
+    ];
     final markText = <TextPainter>[];
     final markBox = <Rect>[];
     for (var i = 0; i < d.marks.length; i++) {
       final o = dots[i];
-      final tp = layoutText(d.marks[i].label, size: 11.5, weight: FontWeight.w600, alpha: 0.92, maxWidth: 140, maxLines: 2);
+      final tp = layoutText(d.marks[i].label, size: 11.5, weight: FontWeight.w600, alpha: 0.92, maxWidth: 170, maxLines: 2);
       final w = tp.width;
       final h = tp.height;
       final box = _place([
@@ -947,7 +968,7 @@ class _LinePainter extends _DiagramPainter {
         o + Offset(-w / 2, 12), // below
         o + Offset(8, -30 - h), // higher still
         o + Offset(-8 - w, -30 - h),
-      ], w, h, plot, curves, placed);
+      ], w, h, plot, obstacles, placed);
       placed.add(box);
       markText.add(tp);
       markBox.add(box);
@@ -999,7 +1020,7 @@ class _LinePainter extends _DiagramPainter {
             ..add(q + Offset(-w - 4, -8 - h))
             ..add(q + Offset(-w - 4, 8));
         }
-        final box = _place(cands, w, h, plot, curves, placed);
+        final box = _place(cands, w, h, plot, obstacles, placed);
         placed.add(box);
         drawText(canvas, tp, box.topLeft, opacity: phase(v, start + 0.34, start + 0.46));
       }
@@ -1153,7 +1174,14 @@ class _TimelinePainter extends _DiagramPainter {
     return (boxes: boxes, whats: whats, whens: whens, spanBoxes: spanBoxes, spanText: spanText, rise: rise, fall: fall);
   }
 
-  static String year(double y) {
+  /// A point on the line as a reader says it: a year by default, or a
+  /// number of the diagram's own unit (12 min, day 3) when it has one.
+  String year(double y) {
+    if (d.unit.isNotEmpty) return sayAmount(y, d.unit);
+    return _year(y);
+  }
+
+  static String _year(double y) {
     final n = y.round();
     if (n < 0) return '${_commas(-n)} BC';
     if (n < 1000) return 'AD $n';

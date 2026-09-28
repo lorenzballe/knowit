@@ -36,7 +36,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "hours",
+    "items": [
+      {
+        "label": "Weeks 1 to 6, 2 h a day",
+        "value": 84
+      },
+      {
+        "label": "Weeks 7 to 12, 1.25 h a day",
+        "value": 53
+      },
+      {
+        "label": "First twelve weeks",
+        "value": 137,
+        "hi": true
+      }
+    ],
+    "caption": "About 140 hours in twelve weeks: nearly six whole days."
+  },
   "source": "Wolke, Bilgin & Samara, Journal of Pediatrics, 2017",
   "source_kind": "paper",
   "reference": "https://www.jpeds.com/article/S0022-3476(17)30218-4/fulltext",

@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "years to churn top 2 cm",
+    "items": [
+      {
+        "label": "Orbiter's new craters",
+        "value": 80000,
+        "hi": true
+      },
+      {
+        "label": "Older models",
+        "value": 8000000
+      }
+    ],
+    "caption": "New craters showed the soil churning a hundred times faster than models said."
+  },
   "source": "Speyerer et al., Nature, 2016",
   "source_kind": "paper",
   "reference": "Speyerer, Povilaitis, Robinson, Thomas & Wagner, Quantifying crater production and regolith overturn on the Moon with temporal imaging, Nature, 2016",

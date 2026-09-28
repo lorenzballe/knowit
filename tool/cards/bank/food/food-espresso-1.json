@@ -24,7 +24,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "bar",
+    "items": [
+      {
+        "label": "Steam bar machines, at most",
+        "value": 2
+      },
+      {
+        "label": "Gaggia's lever, 1948",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "Five times the pressure forced oils and gas into a lasting foam."
+  },
   "source": "Gaggia company history",
   "source_kind": "company",
   "reference": "https://www.gaggia.com/85-years-of-heritage-1938-1947/",

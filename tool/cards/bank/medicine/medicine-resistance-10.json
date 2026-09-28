@@ -32,7 +32,27 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% resistant",
+    "items": [
+      {
+        "label": "Parts of S. and E. Europe",
+        "value": 33.3
+      },
+      {
+        "label": "European average",
+        "value": 16.7
+      },
+      {
+        "label": "Netherlands",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "Search and destroy: 1 in 100 in the Netherlands against 1 in 6 across Europe."
+  },
   "source": "ECDC, EARS-Net annual report for 2019",
   "source_kind": "statistics",
   "reference": "European Centre for Disease Prevention and Control, Antimicrobial resistance in the EU/EEA (EARS-Net), Annual Epidemiological Report for 2019, 2020",

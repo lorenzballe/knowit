@@ -25,7 +25,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "millibars",
+    "items": [
+      {
+        "label": "Average Martian surface",
+        "value": 6
+      },
+      {
+        "label": "Lowest for liquid water",
+        "value": 6.1,
+        "hi": true
+      },
+      {
+        "label": "Floor of Hellas basin",
+        "value": 12
+      }
+    ],
+    "caption": "Most of Mars sits just under the line where liquid water can exist."
+  },
   "source": "Haberle et al., Journal of Geophysical Research, 2001",
   "source_kind": "paper",
   "reference": "Haberle, McKay, Schaeffer et al., On the possibility of liquid water on present-day Mars, Journal of Geophysical Research: Planets 106(E10), 2001",

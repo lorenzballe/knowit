@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Lanthanum and cerium",
+        "value": 75,
+        "hi": true
+      },
+      {
+        "label": "Every other rare earth",
+        "value": 25
+      }
+    ],
+    "caption": "In bastnäsite the magnet metals are under a fifth; every tonne brings mostly cerium and lanthanum."
+  },
   "source": "Binnemans & Jones, Journal of Sustainable Metallurgy, 2015",
   "source_kind": "paper",
   "reference": "doi:10.1007/s40831-014-0005-1",

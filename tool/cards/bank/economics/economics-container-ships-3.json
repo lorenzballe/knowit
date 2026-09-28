@@ -25,6 +25,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 20,
+        "label": "handled empty",
+        "hi": true
+      }
+    ],
+    "caption": "One box in five through the world's ports carries only air."
+  },
   "source": "Notteboom, Pallis and Rodrigue, Port Economics, 2022",
   "source_kind": "book",
   "reference": "https://porteconomicsmanagement.org/pemp/contents/part1/maritime-shipping-and-international-trade/world-container-throughput/",

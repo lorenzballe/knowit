@@ -59,7 +59,7 @@
         ]
       },
       {
-        "label": "halves every 6 hours",
+        "label": "halving: 25 mg after a day",
         "hi": true,
         "points": [
           [
@@ -115,13 +115,6 @@
             25.0
           ]
         ]
-      }
-    ],
-    "marks": [
-      {
-        "x": 24,
-        "y": 25,
-        "label": "25 mg a day later"
       }
     ],
     "caption": "Each halving takes less than the one before, so the level never reaches zero."

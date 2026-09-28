@@ -38,6 +38,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "bars",
+    "unit": "items",
+    "items": [
+      {
+        "label": "Found significant",
+        "value": 3
+      },
+      {
+        "label": "Chance alone: 68 × 5%",
+        "value": 3.4,
+        "hi": true
+      }
+    ],
+    "caption": "Test 68 items at 5% and chance alone passes about 3.4; the study found 3."
+  },
   "source": "Nawata, Japanese Journal of Psychology, 2014",
   "source_kind": "paper",
   "reference": "doi:10.4992/jjpsy.85.13016",

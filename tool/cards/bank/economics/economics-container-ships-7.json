@@ -26,6 +26,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "$",
+    "items": [
+      {
+        "label": "Drewry index, 2019",
+        "value": 1420
+      },
+      {
+        "label": "Drewry index, September 2021",
+        "value": 10377,
+        "hi": true
+      }
+    ],
+    "caption": "With ships stuck at anchor, the same box cost about seven times as much."
+  },
   "source": "Drewry World Container Index",
   "source_kind": "company",
   "reference": "Drewry Supply Chain Advisors, World Container Index, weekly composite assessments 2019-2023, 2023",

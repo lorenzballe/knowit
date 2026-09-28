@@ -34,7 +34,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 4,
+        "label": "prime: about 1 in 230",
+        "hi": true
+      }
+    ],
+    "caption": "Among a thousand 100-digit numbers, about four are prime."
+  },
   "source": "Hardy & Wright, Theory of Numbers, 2008",
   "source_kind": "book",
   "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, 6th edition, Oxford University Press, 2008",

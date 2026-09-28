@@ -27,7 +27,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "km",
+    "items": [
+      {
+        "label": "Horizon radius, one-sun hole",
+        "value": 3.1
+      },
+      {
+        "label": "Typical Hawking wavelength",
+        "value": 50,
+        "hi": true
+      }
+    ],
+    "caption": "The radiation's waves are 16 times the horizon's radius: too long to start at its edge."
+  },
   "source": "Giddings, Physics Letters B, 2016",
   "source_kind": "paper",
   "reference": "Giddings, Hawking radiation, the Stefan-Boltzmann law, and unitarization, Physics Letters B, 2016",

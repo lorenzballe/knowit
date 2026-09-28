@@ -32,6 +32,84 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "mirrors bounced off",
+      "min": 0,
+      "max": 10
+    },
+    "y": {
+      "label": "% of the light left",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "70% kept at each mirror",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            1,
+            70.0
+          ],
+          [
+            2,
+            49.0
+          ],
+          [
+            3,
+            34.3
+          ],
+          [
+            4,
+            24.0
+          ],
+          [
+            5,
+            16.8
+          ],
+          [
+            6,
+            11.8
+          ],
+          [
+            7,
+            8.2
+          ],
+          [
+            8,
+            5.8
+          ],
+          [
+            9,
+            4.0
+          ],
+          [
+            10,
+            2.8
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1,
+        "y": 70,
+        "label": "one mirror: 70%"
+      },
+      {
+        "x": 10,
+        "y": 2.8,
+        "label": "ten mirrors: about 3%"
+      }
+    ],
+    "caption": "Each mirror takes 30% of what is left, so ten leave under a thirtieth."
+  },
   "source": "Bakshi, EUV Lithography, SPIE Press, 2018",
   "source_kind": "book",
   "reference": "Bakshi (ed.), EUV Lithography, 2nd edition, SPIE Press, 2018",

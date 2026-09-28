@@ -55,7 +55,7 @@ def check_diagram(d) -> list[str]:
         "area": {"unit", "items"},
         "split": {"unit", "parts"},
         "line": {"x", "y", "series", "marks"},
-        "timeline": {"from", "to", "events", "spans"},
+        "timeline": {"from", "to", "unit", "events", "spans"},
         "tree": {"n", "label", "branches"},
     }[kind]
     for key in d:
@@ -192,6 +192,7 @@ def check_diagram(d) -> list[str]:
         if not (_num(a) and _num(b)) or a >= b:
             out.append("timeline: from comes before to")
             return out
+        unit_ok(d.get("unit"))
         events = d.get("events", [])
         spans = d.get("spans", [])
         if not events and not spans:

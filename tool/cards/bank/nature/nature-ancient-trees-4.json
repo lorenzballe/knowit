@@ -26,6 +26,23 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 13,
+    "label": "oldest baobabs",
+    "branches": [
+      {
+        "n": 9,
+        "label": "died or lost oldest stems",
+        "hi": true
+      },
+      {
+        "n": 4,
+        "label": "still standing"
+      }
+    ],
+    "caption": "Nine of the thirteen oldest failed within about 12 years."
+  },
   "source": "Patrut et al., Nature Plants, 2018",
   "source_kind": "paper",
   "reference": "Patrut et al., The demise of the largest and oldest African baobabs, Nature Plants, 2018",

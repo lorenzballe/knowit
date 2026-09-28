@@ -35,6 +35,88 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "axon width, mm",
+      "min": 0,
+      "max": 8
+    },
+    "y": {
+      "label": "speed, m/s",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "speed goes as root of width",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            0.125,
+            12.5
+          ],
+          [
+            0.25,
+            17.7
+          ],
+          [
+            0.5,
+            25.0
+          ],
+          [
+            1,
+            35.4
+          ],
+          [
+            2,
+            50.0
+          ],
+          [
+            3,
+            61.2
+          ],
+          [
+            4,
+            70.7
+          ],
+          [
+            5,
+            79.1
+          ],
+          [
+            6,
+            86.6
+          ],
+          [
+            7,
+            93.5
+          ],
+          [
+            8,
+            100.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 0.5,
+        "y": 25,
+        "label": "squid, 0.5 mm: 25 m/s"
+      },
+      {
+        "x": 8,
+        "y": 100,
+        "label": "8 mm for 100 m/s"
+      }
+    ],
+    "caption": "Four times the speed takes sixteen times the width."
+  },
   "source": "Hartline & Colman, Current Biology, 2007",
   "source_kind": "paper",
   "reference": "Hartline & Colman, Rapid conduction and the evolution of giant axons and myelinated fibers, Current Biology, 2007",

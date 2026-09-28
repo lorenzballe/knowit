@@ -31,6 +31,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Stomach, at most",
+        "value": 20
+      },
+      {
+        "label": "Small intestine and on",
+        "value": 80,
+        "hi": true
+      }
+    ],
+    "caption": "The acid bath starts the job; the small intestine does most of it."
+  },
   "source": "Guyton and Hall, Medical Physiology",
   "source_kind": "book",
   "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2020",

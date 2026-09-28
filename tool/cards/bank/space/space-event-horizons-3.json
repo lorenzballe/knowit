@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "(solar masses)²",
+    "items": [
+      {
+        "label": "36 + 29 suns, before",
+        "value": 2137
+      },
+      {
+        "label": "62 suns, after",
+        "value": 3844,
+        "hi": true
+      }
+    ],
+    "caption": "Area goes with mass squared: three suns lost, yet four fifths more horizon."
+  },
   "source": "Isi et al., Physical Review Letters, 2021",
   "source_kind": "paper",
   "reference": "Isi, Farr, Giesler, Scheel & Teukolsky, Testing the Black-Hole Area Law with GW150914, Physical Review Letters, 2021",

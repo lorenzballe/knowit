@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "grams lost a day",
+    "items": [
+      {
+        "label": "3% of the 3 g pool, once",
+        "value": 0.09
+      },
+      {
+        "label": "3% of 18 g, six passes",
+        "value": 0.54,
+        "hi": true
+      }
+    ],
+    "caption": "The leak is charged on every lap: six passes lose six times as much."
+  },
   "source": "Dawson & Karpen, Journal of Lipid Research, 2015",
   "source_kind": "paper",
   "reference": "Dawson & Karpen, Intestinal transport and metabolism of bile acids, Journal of Lipid Research, 2015",

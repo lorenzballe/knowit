@@ -25,6 +25,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "days to travel a metre",
+    "items": [
+      {
+        "label": "Vesicles, 400 mm/day",
+        "value": 2.5
+      },
+      {
+        "label": "Proteins, 1 mm/day",
+        "value": 1000
+      },
+      {
+        "label": "Proteins, 0.2 mm/day",
+        "value": 5000,
+        "hi": true
+      }
+    ],
+    "caption": "Under three days for the fastest cargo; up to fourteen years for the slowest."
+  },
   "source": "Roy, The Neuroscientist, 2014",
   "source_kind": "paper",
   "reference": "Roy, Seeing the unseen: the hidden world of slow axonal transport, The Neuroscientist, 2014",

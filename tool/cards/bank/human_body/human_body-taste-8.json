@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "millimolar",
+    "items": [
+      {
+        "label": "Sugar, tasted from",
+        "value": 10
+      },
+      {
+        "label": "Quinine, tasted from",
+        "value": 0.008,
+        "hi": true
+      }
+    ],
+    "caption": "Bitter is caught at a solution 1,250 times weaker than sweet."
+  },
   "source": "Guyton and Hall, Medical Physiology",
   "source_kind": "book",
   "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2020",

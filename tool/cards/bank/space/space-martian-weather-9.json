@@ -30,7 +30,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "Martian days",
+    "items": [
+      {
+        "label": "Southern spring",
+        "value": 142
+      },
+      {
+        "label": "Northern spring",
+        "value": 194,
+        "hi": true
+      }
+    ],
+    "caption": "Far from the Sun, Mars slows: northern spring lasts 52 days longer."
+  },
   "source": "Allison & McEwen, Planetary and Space Science, 2000",
   "source_kind": "paper",
   "reference": "Allison & McEwen, A post-Pathfinder evaluation of areocentric solar coordinates with improved timing recipes for Mars seasonal/diurnal climate studies, Planetary and Space Science, 2000",

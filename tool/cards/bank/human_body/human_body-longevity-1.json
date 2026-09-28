@@ -34,6 +34,83 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "age",
+      "min": 30,
+      "max": 70
+    },
+    "y": {
+      "label": "yearly risk, age 30 = 1",
+      "min": 0,
+      "max": 32
+    },
+    "series": [
+      {
+        "label": "doubling every 8 years",
+        "hi": true,
+        "points": [
+          [
+            30,
+            1.0
+          ],
+          [
+            34,
+            1.41
+          ],
+          [
+            38,
+            2.0
+          ],
+          [
+            42,
+            2.83
+          ],
+          [
+            46,
+            4.0
+          ],
+          [
+            50,
+            5.66
+          ],
+          [
+            54,
+            8.0
+          ],
+          [
+            58,
+            11.31
+          ],
+          [
+            62,
+            16.0
+          ],
+          [
+            66,
+            22.63
+          ],
+          [
+            70,
+            32.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 38,
+        "y": 2,
+        "label": "38: twice"
+      },
+      {
+        "x": 70,
+        "y": 32,
+        "label": "70: 32 times"
+      }
+    ]
+  },
   "source": "Kirkwood, Phil Trans R Soc B, 2015",
   "source_kind": "paper",
   "reference": "Kirkwood, Deciphering death: a commentary on Gompertz (1825), Philosophical Transactions of the Royal Society B, 2015",

@@ -31,7 +31,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "% chance",
+    "unit": "%",
     "items": [
       {
         "label": "Win the first match",

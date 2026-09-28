@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of bid budget",
+    "items": [
+      {
+        "label": "Promised in the bid",
+        "value": 100
+      },
+      {
+        "label": "A fifth over",
+        "value": 120
+      },
+      {
+        "label": "Average final cost",
+        "value": 272,
+        "hi": true
+      }
+    ],
+    "caption": "The average Games cost about 2.7 times what its bid promised."
+  },
   "source": "Flyvbjerg, Budzier & Lunn, 2021",
   "source_kind": "paper",
   "reference": "Flyvbjerg, Budzier & Lunn, Regression to the Tail: Why the Olympics Blow Up, Environment and Planning A: Economy and Space, 2021",

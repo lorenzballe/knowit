@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "minutes left",
+    "items": [
+      {
+        "label": "Usual: last minute or two",
+        "value": 2
+      },
+      {
+        "label": "Best, one goal down",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "The analysis pulled the goalie about three times earlier than coaches did."
+  },
   "source": "Asness & Brown, Pulling the Goalie, 2018",
   "source_kind": "paper",
   "reference": "Asness & Brown, Pulling the Goalie: Hockey and Investment Implications, AQR Capital Management working paper, 2018",

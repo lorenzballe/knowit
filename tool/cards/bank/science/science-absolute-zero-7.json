@@ -31,6 +31,119 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "temperature (K)",
+      "min": 0,
+      "max": 1
+    },
+    "y": {
+      "label": "heat per degree (1 K = 100)",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "falls with the cube",
+        "hi": true,
+        "points": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.05,
+            0.01
+          ],
+          [
+            0.1,
+            0.1
+          ],
+          [
+            0.15,
+            0.34
+          ],
+          [
+            0.2,
+            0.8
+          ],
+          [
+            0.25,
+            1.56
+          ],
+          [
+            0.3,
+            2.7
+          ],
+          [
+            0.35,
+            4.29
+          ],
+          [
+            0.4,
+            6.4
+          ],
+          [
+            0.45,
+            9.11
+          ],
+          [
+            0.5,
+            12.5
+          ],
+          [
+            0.55,
+            16.64
+          ],
+          [
+            0.6,
+            21.6
+          ],
+          [
+            0.65,
+            27.46
+          ],
+          [
+            0.7,
+            34.3
+          ],
+          [
+            0.75,
+            42.19
+          ],
+          [
+            0.8,
+            51.2
+          ],
+          [
+            0.85,
+            61.41
+          ],
+          [
+            0.9,
+            72.9
+          ],
+          [
+            0.95,
+            85.74
+          ],
+          [
+            1.0,
+            100.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 0.1,
+        "y": 0.1,
+        "label": "0.1 K: a thousandth"
+      }
+    ],
+    "caption": "Ten times colder, the crystal needs a thousandth of the heat to warm a degree."
+  },
   "source": "Kittel, Introduction to Solid State Physics",
   "source_kind": "book",
   "reference": "Kittel, Introduction to Solid State Physics, 8th edition, Wiley, 2005",

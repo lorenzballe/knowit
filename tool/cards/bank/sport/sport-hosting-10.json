@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "medals",
+    "items": [
+      {
+        "label": "London 2012, at home",
+        "value": 65
+      },
+      {
+        "label": "Rio 2016",
+        "value": 67,
+        "hi": true
+      }
+    ],
+    "caption": "Four years after hosting, Britain won two more medals, not fewer."
+  },
   "source": "IOC, Olympic results, Rio 2016",
   "source_kind": "statistics",
   "reference": "International Olympic Committee, Official Results Book, Rio 2016 Olympic Games, 2016",

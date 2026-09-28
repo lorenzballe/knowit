@@ -33,6 +33,17 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 83,
+        "label": "later downgraded",
+        "hi": true
+      }
+    ]
+  },
   "source": "Financial Crisis Inquiry Commission, 2011",
   "source_kind": "primary_document",
   "reference": "Financial Crisis Inquiry Commission, The Financial Crisis Inquiry Report, US Government Printing Office, 2011",

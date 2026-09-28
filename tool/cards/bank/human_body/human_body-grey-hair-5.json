@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 23,
+        "label": "half grey at 50, greyest group",
+        "hi": true
+      }
+    ],
+    "caption": "Half would be 50 dots; the greyest group reaches 23, the least grey only 6."
+  },
   "source": "Panhard, Lozano & Loussouarn, Br J Dermatol, 2012",
   "source_kind": "paper",
   "reference": "https://onlinelibrary.wiley.com/doi/10.1111/j.1365-2133.2012.11095.x",

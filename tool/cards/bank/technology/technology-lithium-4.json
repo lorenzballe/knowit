@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "g",
+    "items": [
+      {
+        "label": "Lithium stored",
+        "value": 1
+      },
+      {
+        "label": "Graphite needed to hold it",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "Each gram of lithium in the negative electrode needs about ten grams of graphite."
+  },
   "source": "IEA, critical minerals report, 2021",
   "source_kind": "institution",
   "reference": "International Energy Agency, The Role of Critical Minerals in Clean Energy Transitions, 2021",

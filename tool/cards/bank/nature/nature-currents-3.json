@@ -36,6 +36,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Fragments, share of pieces",
+        "value": 94
+      },
+      {
+        "label": "Fragments, share of weight",
+        "value": 8
+      },
+      {
+        "label": "Fishing nets, share of weight",
+        "value": 46,
+        "hi": true
+      }
+    ],
+    "caption": "Fragments are almost every piece but a sliver of the weight; nets are nearly half."
+  },
   "source": "Lebreton et al., Scientific Reports, 2018",
   "source_kind": "paper",
   "reference": "Lebreton et al., Evidence that the Great Pacific Garbage Patch is rapidly accumulating plastic, Scientific Reports, 2018",

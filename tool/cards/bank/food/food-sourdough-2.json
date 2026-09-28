@@ -25,6 +25,26 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "scale",
+    "unit": "per yeast cell",
+    "items": [
+      {
+        "label": "Yeast",
+        "value": 1
+      },
+      {
+        "label": "Bacteria, at least",
+        "value": 10
+      },
+      {
+        "label": "Bacteria, often",
+        "value": 100,
+        "hi": true
+      }
+    ],
+    "caption": "For every yeast cell, ten to a hundred lactic bacteria."
+  },
   "source": "Minervini et al., Applied and Environmental Microbiology, 2012",
   "source_kind": "paper",
   "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3273004/",

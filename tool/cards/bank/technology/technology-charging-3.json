@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 50,
+        "label": "drawn out at 4.2 V",
+        "hi": true
+      },
+      {
+        "n": 17,
+        "label": "more at 4.4 V, to two-thirds"
+      }
+    ],
+    "caption": "Even at 100% on the screen, half the lithium stays in the electrode."
+  },
   "source": "Manthiram, Nature Communications, 2020",
   "source_kind": "paper",
   "reference": "Manthiram, A reflection on lithium-ion battery cathode chemistry, Nature Communications, 2020",

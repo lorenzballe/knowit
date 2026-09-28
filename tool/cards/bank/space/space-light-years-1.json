@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "years",
+    "items": [
+      {
+        "label": "a short star life",
+        "value": 1000000
+      },
+      {
+        "label": "the light's trip here",
+        "value": 1000,
+        "hi": true
+      }
+    ],
+    "caption": "Even a short-lived star lasts a thousand times longer than its light takes to arrive."
+  },
   "source": "ESA Hipparcos Catalogue, 1997",
   "source_kind": "reference_work",
   "reference": "ESA, The Hipparcos and Tycho Catalogues, ESA SP-1200, 1997",

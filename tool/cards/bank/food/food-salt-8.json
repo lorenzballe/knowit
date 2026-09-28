@@ -25,7 +25,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "g",
+    "items": [
+      {
+        "label": "Diamond Crystal, 1 tsp",
+        "value": 3
+      },
+      {
+        "label": "Morton, 1 tsp",
+        "value": 5,
+        "hi": true
+      }
+    ],
+    "caption": "The same spoon, the same salt: two-thirds more by weight in one box."
+  },
   "source": "Nosrat, Salt Fat Acid Heat, 2017",
   "source_kind": "book",
   "reference": "Nosrat, Salt, Fat, Acid, Heat: Mastering the Elements of Good Cooking, Simon & Schuster, 2017",

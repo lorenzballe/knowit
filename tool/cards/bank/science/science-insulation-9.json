@@ -34,6 +34,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Insulated 99% of wall",
+        "value": 79.8
+      },
+      {
+        "label": "Fixings, 1% of wall",
+        "value": 20.2,
+        "hi": true
+      }
+    ],
+    "caption": "Fixings on 1% of the wall carry a fifth of all its heat loss."
+  },
   "source": "ISO 6946, thermal transmittance calculation",
   "source_kind": "standard",
   "reference": "ISO 6946:2017, Building components and building elements — Thermal resistance and thermal transmittance — Calculation methods",

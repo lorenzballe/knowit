@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": true,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 48,
+        "label": "froze to an extreme degree",
+        "hi": true
+      },
+      {
+        "n": 22,
+        "label": "froze, less extremely"
+      }
+    ],
+    "caption": "Seven in ten could not move; nearly half froze completely."
+  },
   "source": "Möller, Söndergaard & Helström, Acta Obstetricia, 2017",
   "source_kind": "paper",
   "reference": "doi:10.1111/aogs.13174",

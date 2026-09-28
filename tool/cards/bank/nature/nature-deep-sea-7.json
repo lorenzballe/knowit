@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 10,
+        "label": "reach the seafloor 4 km down",
+        "hi": true
+      }
+    ],
+    "caption": "A tenth sinks out of the sunlit layer; only 10 in 1,000 reach the abyss."
+  },
   "source": "Martin et al., Deep-Sea Research, 1987",
   "source_kind": "paper",
   "reference": "Martin, Knauer, Karl & Broenkow, VERTEX: carbon cycling in the northeast Pacific, Deep-Sea Research, 1987",

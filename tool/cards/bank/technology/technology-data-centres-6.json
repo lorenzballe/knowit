@@ -28,7 +28,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "kW per rack",
+    "items": [
+      {
+        "label": "Typical rack: under 10 kW",
+        "value": 10
+      },
+      {
+        "label": "Nvidia GB200 NVL72 rack",
+        "value": 120,
+        "hi": true
+      }
+    ],
+    "caption": "Twelve times the heat in the same rack space is more than air can carry."
+  },
   "source": "NVIDIA, GB200 NVL72 specifications",
   "source_kind": "company",
   "reference": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",

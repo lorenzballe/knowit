@@ -36,7 +36,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "hours",
+    "items": [
+      {
+        "label": "Today",
+        "value": 24
+      },
+      {
+        "label": "400 million years ago",
+        "value": 21.9,
+        "hi": true
+      }
+    ],
+    "caption": "Tides have braked Earth's spin: the Devonian day was about two hours shorter."
+  },
   "source": "Wells, Nature, 1963",
   "source_kind": "paper",
   "reference": "Wells, Coral growth and geochronometry, Nature, 1963",

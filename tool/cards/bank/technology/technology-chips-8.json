@@ -36,6 +36,23 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 37,
+        "label": "chips with no defect",
+        "hi": true
+      },
+      {
+        "n": 26,
+        "label": "chips with two or more",
+        "spread": true
+      }
+    ],
+    "caption": "One defect per chip on average, yet 37 in 100 come out clean."
+  },
   "source": "May & Spanos, Wiley-IEEE Press, 2006",
   "source_kind": "book",
   "reference": "May & Spanos, Fundamentals of Semiconductor Manufacturing and Process Control, Wiley-IEEE Press, 2006",

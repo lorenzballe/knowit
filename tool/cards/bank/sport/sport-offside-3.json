@@ -31,7 +31,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 26,
+        "label": "judged wrongly",
+        "hi": true
+      }
+    ],
+    "caption": "About one offside call in four was wrong, mostly flags raised against onside attackers."
+  },
   "source": "Helsen et al., Journal of Sports Sciences, 2006",
   "source_kind": "paper",
   "reference": "Helsen, Gilis & Weston, Errors in judging offside in association football: test of the optical error versus the perceptual flash-lag hypothesis, Journal of Sports Sciences, 2006",

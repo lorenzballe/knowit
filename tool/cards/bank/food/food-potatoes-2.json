@@ -25,7 +25,30 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1750,
+    "to": 1776,
+    "events": [
+      {
+        "at": 1756,
+        "label": "Frederick's potato circular"
+      }
+    ],
+    "spans": [
+      {
+        "from": 1756,
+        "to": 1770,
+        "label": "decree after decree"
+      },
+      {
+        "from": 1770,
+        "to": 1772,
+        "label": "famine"
+      }
+    ]
+  },
   "source": "Earle, Feeding the People",
   "source_kind": "book",
   "reference": "Earle, Feeding the People: The Politics of the Potato, Cambridge University Press, 2020",

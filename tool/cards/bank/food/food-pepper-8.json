@@ -32,7 +32,26 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "denarii",
+    "items": [
+      {
+        "label": "Black pepper, a pound",
+        "value": 4
+      },
+      {
+        "label": "White pepper",
+        "value": 7
+      },
+      {
+        "label": "Long pepper",
+        "value": 15,
+        "hi": true
+      }
+    ]
+  },
   "source": "Pliny, Natural History, Book 12",
   "source_kind": "primary_document",
   "reference": "Pliny the Elder, Natural History, Books 12–16, trans. H. Rackham, Loeb Classical Library, Harvard University Press, 1945",

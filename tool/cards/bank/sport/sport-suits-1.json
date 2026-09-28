@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "world records",
+    "items": [
+      {
+        "label": "Beijing Olympics, 2008",
+        "value": 25
+      },
+      {
+        "label": "Rome worlds, 2009",
+        "value": 43,
+        "hi": true
+      }
+    ],
+    "caption": "Rome's eight days beat Beijing's record glut by 18."
+  },
   "source": "Swimming World Magazine",
   "source_kind": "news_archive",
   "reference": "https://www.swimmingworldmagazine.com/news/eight-years-later-the-super-suit-era-still-plagues-the-record-books/",

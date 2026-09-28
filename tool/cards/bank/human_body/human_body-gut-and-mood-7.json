@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Up to the brain",
+        "value": 80,
+        "hi": true
+      },
+      {
+        "label": "Out to the organs",
+        "value": 20
+      }
+    ],
+    "caption": "Four in five vagal fibres carry news from the body, not commands to it."
+  },
   "source": "Berthoud & Neuhuber, Autonomic Neuroscience, 2000",
   "source_kind": "paper",
   "reference": "Berthoud & Neuhuber, Functional and chemical anatomy of the afferent vagal system, Autonomic Neuroscience, 2000",

@@ -37,7 +37,22 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "items": [
+      {
+        "label": "Moon's tide on Earth",
+        "value": 1
+      },
+      {
+        "label": "Earth's tide on the Moon",
+        "value": 21.9,
+        "hi": true
+      }
+    ],
+    "caption": "Earth stretches the Moon about 22 times harder than the Moon stretches Earth."
+  },
   "source": "Murray & Dermott, Solar System Dynamics, 1999",
   "source_kind": "book",
   "reference": "Murray & Dermott, Solar System Dynamics, Cambridge University Press, 1999",

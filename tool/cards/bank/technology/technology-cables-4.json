@@ -33,7 +33,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "ms round trip",
+    "items": [
+      {
+        "label": "If light kept its vacuum speed",
+        "value": 37.3
+      },
+      {
+        "label": "Light in glass, 200 km per ms",
+        "value": 56,
+        "hi": true
+      }
+    ],
+    "caption": "Over 5,600 km, glass alone adds almost 19 ms to every round trip."
+  },
   "source": "Agrawal, Fiber-Optic Communication Systems, 2010",
   "source_kind": "book",
   "reference": "Agrawal, Fiber-Optic Communication Systems, 4th edition, Wiley, 2010",

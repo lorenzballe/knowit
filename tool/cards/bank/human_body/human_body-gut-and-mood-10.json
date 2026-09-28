@@ -24,7 +24,28 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% relieved",
+    "items": [
+      {
+        "label": "Education only",
+        "value": 17
+      },
+      {
+        "label": "Hypnotherapy in groups",
+        "value": 33,
+        "hi": true
+      },
+      {
+        "label": "Hypnotherapy one to one",
+        "value": 41,
+        "hi": true
+      }
+    ],
+    "caption": "Both kinds of hypnotherapy beat education alone: 41% and 33% against 17%."
+  },
   "source": "Flik et al., Lancet Gastroenterol Hepatol, 2019",
   "source_kind": "paper",
   "reference": "doi:10.1016/S2468-1253(18)30310-8",

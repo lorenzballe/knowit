@@ -32,6 +32,21 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "items": [
+      {
+        "label": "Death rate, times 1993's",
+        "value": 1
+      },
+      {
+        "label": "Diagnoses, times 1993's",
+        "value": 15,
+        "hi": true
+      }
+    ],
+    "caption": "By 2011 diagnoses had risen fifteenfold; the death rate had not moved."
+  },
   "source": "Ahn, Kim & Welch, NEJM, 2014",
   "source_kind": "paper",
   "reference": "Ahn, Kim & Welch, Korea's thyroid-cancer epidemic: screening and overdiagnosis, New England Journal of Medicine, 2014",

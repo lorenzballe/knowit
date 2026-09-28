@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Leicester",
+        "value": 42,
+        "hi": true
+      },
+      {
+        "label": "opponents",
+        "value": 58
+      }
+    ],
+    "caption": "The champions had the ball less than their opponents."
+  },
   "source": "Cox, The Mixer",
   "source_kind": "book",
   "reference": "Cox, The Mixer: The Story of Premier League Tactics, from Route One to False Nines, HarperCollins, 2017",

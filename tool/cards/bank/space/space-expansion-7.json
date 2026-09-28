@@ -34,6 +34,26 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "area",
+    "unit": "times dimmer",
+    "items": [
+      {
+        "label": "each photon's energy",
+        "value": 4
+      },
+      {
+        "label": "and fewer photons",
+        "value": 16
+      },
+      {
+        "label": "per patch of sky",
+        "value": 256,
+        "hi": true
+      }
+    ],
+    "caption": "A stretch of 4 dims it four times over: energy, arrival rate, and both sides of the image."
+  },
   "source": "Lubin & Sandage, Astronomical Journal, 2001",
   "source_kind": "paper",
   "reference": "Lubin & Sandage, The Tolman Surface Brightness Test for the Reality of the Expansion. IV., The Astronomical Journal 122, 1084, 2001",

@@ -28,7 +28,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "V",
+    "items": [
+      {
+        "label": "Water splits",
+        "value": 1.23
+      },
+      {
+        "label": "Lead–acid cell",
+        "value": 2
+      },
+      {
+        "label": "Lithium-ion cell, full",
+        "value": 4.2,
+        "hi": true
+      }
+    ],
+    "caption": "A lithium-ion cell runs at over three times the voltage that splits water."
+  },
   "source": "Goodenough & Kim, Chemistry of Materials, 2010",
   "source_kind": "paper",
   "reference": "Goodenough & Kim, Challenges for Rechargeable Li Batteries, Chemistry of Materials, 2010",

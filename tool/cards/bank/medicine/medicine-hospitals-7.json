@@ -31,6 +31,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "beds",
+    "items": [
+      {
+        "label": "1987-88",
+        "value": 299000
+      },
+      {
+        "label": "2019-20",
+        "value": 141000,
+        "hi": true
+      }
+    ],
+    "caption": "NHS beds in England more than halved while admissions rose."
+  },
   "source": "The King's Fund, NHS bed numbers, 2020",
   "source_kind": "institution",
   "reference": "The King's Fund, NHS hospital bed numbers: past, present, future, 2020",

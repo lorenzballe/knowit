@@ -25,6 +25,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "perchlorate: oxygen",
+        "value": 70
+      },
+      {
+        "label": "aluminium: fuel",
+        "value": 16,
+        "hi": true
+      },
+      {
+        "label": "binder, also burns",
+        "value": 12
+      }
+    ],
+    "caption": "Most of the mass supplies oxygen; the powdered metal is what burns."
+  },
   "source": "NASA, NSTS News Reference Manual, 1988",
   "source_kind": "institution",
   "reference": "NASA, National Space Transportation System Reference, NSTS 1988 News Reference Manual, 1988",

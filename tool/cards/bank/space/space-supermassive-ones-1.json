@@ -33,6 +33,132 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "million years",
+      "min": 0,
+      "max": 805
+    },
+    "y": {
+      "label": "solar masses",
+      "min": 10,
+      "max": 1000000000,
+      "log": true
+    },
+    "series": [
+      {
+        "label": "doubling every 35 My",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100
+          ],
+          [
+            35,
+            200
+          ],
+          [
+            70,
+            400
+          ],
+          [
+            105,
+            800
+          ],
+          [
+            140,
+            1600
+          ],
+          [
+            175,
+            3200
+          ],
+          [
+            210,
+            6400
+          ],
+          [
+            245,
+            12800
+          ],
+          [
+            280,
+            25600
+          ],
+          [
+            315,
+            51200
+          ],
+          [
+            350,
+            102400
+          ],
+          [
+            385,
+            204800
+          ],
+          [
+            420,
+            409600
+          ],
+          [
+            455,
+            819200
+          ],
+          [
+            490,
+            1638400
+          ],
+          [
+            525,
+            3276800
+          ],
+          [
+            560,
+            6553600
+          ],
+          [
+            595,
+            13107200
+          ],
+          [
+            630,
+            26214400
+          ],
+          [
+            665,
+            52428800
+          ],
+          [
+            700,
+            104857600
+          ],
+          [
+            735,
+            209715200
+          ],
+          [
+            770,
+            419430400
+          ],
+          [
+            805,
+            838860800
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 805,
+        "y": 838860800,
+        "label": "23 doublings: 805 My"
+      }
+    ],
+    "caption": "From 100 suns to nearly a billion takes only 23 doublings."
+  },
   "source": "Bañados et al., Nature, 2018",
   "source_kind": "paper",
   "reference": "Bañados et al., An 800-million-solar-mass black hole in a significantly neutral Universe at a redshift of 7.5, Nature, 2018",

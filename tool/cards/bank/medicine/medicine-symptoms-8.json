@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Tested negative",
+        "value": 22
+      },
+      {
+        "label": "Tested positive",
+        "value": 65,
+        "hi": true
+      }
+    ],
+    "caption": "Loss of smell or taste among app users who were tested."
+  },
   "source": "Menni et al., Nature Medicine, 2020",
   "source_kind": "paper",
   "reference": "Menni et al., Real-time tracking of self-reported symptoms to predict potential COVID-19, Nature Medicine, 2020",

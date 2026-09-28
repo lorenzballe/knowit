@@ -108,6 +108,7 @@ sealed class Diagram {
         caption,
         from: r.number('from'),
         to: r.number('to'),
+        unit: r.text('unit'),
         events: r.objects('events', optional: true).map((e) {
           final er = _Reader(e, id);
           return TimelineEvent(
@@ -304,6 +305,10 @@ class LineMark {
 class TimelineDiagram extends Diagram {
   final double from;
   final double to;
+
+  /// Empty for years (the usual case, with BC and AD); otherwise what the
+  /// line counts, minutes or days or seconds, written after each number.
+  final String unit;
   final List<TimelineEvent> events;
   final List<TimelineSpan> spans;
   const TimelineDiagram(
@@ -311,6 +316,7 @@ class TimelineDiagram extends Diagram {
     super.caption, {
     required this.from,
     required this.to,
+    this.unit = '',
     required this.events,
     required this.spans,
   });

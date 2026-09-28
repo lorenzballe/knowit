@@ -30,7 +30,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Heating the rating forecast",
+        "value": 100
+      },
+      {
+        "label": "Heating actually used",
+        "value": 70,
+        "hi": true
+      }
+    ],
+    "caption": "Across 3,400 German homes, occupants burned 30% less than their ratings assumed."
+  },
   "source": "Sunikka-Blank & Galvin, Building Research & Information, 2012",
   "source_kind": "paper",
   "reference": "doi:10.1080/09613218.2012.690952",

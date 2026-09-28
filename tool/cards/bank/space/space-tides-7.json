@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "hours",
+    "items": [
+      {
+        "label": "Lunar tide's rhythm",
+        "value": 12.4
+      },
+      {
+        "label": "Bay's natural slosh",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "Two nearly equal rhythms: each tide pushes just as the water swings back."
+  },
   "source": "Garrett, Nature, 1972",
   "source_kind": "paper",
   "reference": "Garrett, Tidal Resonance in the Bay of Fundy and Gulf of Maine, Nature, 1972",

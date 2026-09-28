@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "plain 8-stamp card",
+        "value": 19
+      },
+      {
+        "label": "10 stamps, 2 already filled",
+        "value": 34,
+        "hi": true
+      }
+    ],
+    "caption": "Both cards needed eight more washes; the head start won 34% against 19%."
+  },
   "source": "Nunes & Drèze, Journal of Consumer Research, 2006",
   "source_kind": "paper",
   "reference": "Nunes & Drèze, The endowed progress effect: how artificial advancement increases effort, Journal of Consumer Research, 2006",

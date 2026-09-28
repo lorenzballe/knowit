@@ -35,7 +35,27 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "$",
+    "items": [
+      {
+        "label": "California minimum wage",
+        "value": 16.5
+      },
+      {
+        "label": "Prop 22, per engaged hour",
+        "value": 19.8
+      },
+      {
+        "label": "Prop 22, per logged-in hour",
+        "value": 11.88,
+        "hi": true
+      }
+    ],
+    "caption": "120% of the minimum on engaged time is $11.88 across every logged-in hour."
+  },
   "source": "California Proposition 22, 2020",
   "source_kind": "primary_document",
   "reference": "California Proposition 22, Protect App-Based Drivers and Services Act, Business and Professions Code sections 7448-7467, 2020",

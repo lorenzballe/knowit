@@ -32,6 +32,27 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1950,
+    "to": 1985,
+    "events": [
+      {
+        "at": 1956,
+        "label": "Melbourne, 1st boycott",
+        "hi": true
+      },
+      {
+        "at": 1976,
+        "label": "Montreal, 20+ nations"
+      },
+      {
+        "at": 1980,
+        "label": "Moscow, US-led"
+      }
+    ],
+    "caption": "Nations had walked out of the Games twice before Moscow."
+  },
   "source": "Guttmann, The Olympics, 2002",
   "source_kind": "book",
   "reference": "Guttmann, The Olympics: A History of the Modern Games, University of Illinois Press, 2002",

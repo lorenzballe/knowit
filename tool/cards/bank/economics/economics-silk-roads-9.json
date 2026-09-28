@@ -35,6 +35,85 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "middlemen",
+      "min": 0,
+      "max": 7
+    },
+    "y": {
+      "label": "times the cost",
+      "min": 0,
+      "max": 140
+    },
+    "series": [
+      {
+        "label": "Pliny's hundredfold",
+        "points": [
+          [
+            0,
+            100
+          ],
+          [
+            7,
+            100
+          ]
+        ]
+      },
+      {
+        "label": "each doubling the price",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            5,
+            32
+          ],
+          [
+            6,
+            64
+          ],
+          [
+            7,
+            128
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 6,
+        "y": 64,
+        "label": "six: ×64"
+      },
+      {
+        "x": 7,
+        "y": 128,
+        "label": "seven: ×128"
+      }
+    ],
+    "caption": "Six doublings stop at 64, short of 100; the seventh passes it."
+  },
   "source": "Pliny the Elder, Natural History, Book 6",
   "source_kind": "primary_document",
   "reference": "Pliny the Elder, Natural History, Book 6, trans. Rackham, Loeb Classical Library, Harvard University Press, 1942",

@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "years to Proxima",
+    "items": [
+      {
+        "label": "light",
+        "value": 4.2
+      },
+      {
+        "label": "Voyager 1",
+        "value": 74000,
+        "hi": true
+      }
+    ],
+    "caption": "At 17 km/s the trip light makes in 4.2 years takes 74,000."
+  },
   "source": "Bell, The Interstellar Age, 2015",
   "source_kind": "book",
   "reference": "Bell, The Interstellar Age: Inside the Forty-Year Voyager Mission, Dutton, 2015",

@@ -31,7 +31,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "days",
+    "items": [
+      {
+        "label": "fastest",
+        "value": 18
+      },
+      {
+        "label": "median, the quoted figure",
+        "value": 66
+      },
+      {
+        "label": "length of the study",
+        "value": 84
+      },
+      {
+        "label": "slowest",
+        "value": 254,
+        "hi": true
+      }
+    ],
+    "caption": "The famous 66 days is the middle case; the slowest ran far past the study."
+  },
   "source": "Lally et al., European J Social Psychology, 2010",
   "source_kind": "paper",
   "reference": "Lally, van Jaarsveld, Potts & Wardle, How are habits formed: modelling habit formation in the real world, European Journal of Social Psychology, 2010",

@@ -31,6 +31,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "The 1 in 100 guess",
+        "value": 1.0
+      },
+      {
+        "label": "Brain tumour: about 1 in 1,100",
+        "value": 0.09,
+        "hi": true
+      }
+    ],
+    "caption": "Chance a headache seen by a GP is a brain tumour: a tenth of the guess."
+  },
   "source": "Hamilton & Kernick, Br J Gen Pract, 2007",
   "source_kind": "paper",
   "reference": "https://bjgp.org/content/57/542/695.short",

@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "h",
+    "items": [
+      {
+        "label": "Dried, at 37 °C",
+        "value": 168
+      },
+      {
+        "label": "Mixed: half potency lost",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "The dried cake survives a week of heat; mixed, half is gone in an hour."
+  },
   "source": "WHO, Temperature sensitivity of vaccines, 2006",
   "source_kind": "institution",
   "reference": "World Health Organization, Temperature sensitivity of vaccines, WHO/IVB/06.10, 2006",

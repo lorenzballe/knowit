@@ -31,6 +31,26 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "ELIZA, 1966",
+        "value": 23
+      },
+      {
+        "label": "The real person",
+        "value": 27
+      },
+      {
+        "label": "GPT-4.5, playing a shy young adult",
+        "value": 73,
+        "hi": true
+      }
+    ],
+    "caption": "Share of chats where each was picked as the human."
+  },
   "source": "Jones & Bergen, UC San Diego, 2025",
   "source_kind": "paper",
   "reference": "Jones & Bergen, Large Language Models Pass the Turing Test, arXiv, 2025",

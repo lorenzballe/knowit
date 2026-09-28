@@ -33,6 +33,31 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1984,
+    "to": 2006,
+    "events": [
+      {
+        "at": 1987,
+        "label": "DuPont announces oxazolidinones"
+      },
+      {
+        "at": 1991,
+        "label": "Lilly halts daptomycin trials"
+      },
+      {
+        "at": 2000,
+        "label": "Linezolid reaches patients"
+      },
+      {
+        "at": 2003,
+        "label": "Daptomycin reaches patients",
+        "hi": true
+      }
+    ],
+    "caption": "Both new classes of the 2000s had been found, and shelved, in the 1980s."
+  },
   "source": "Eisenstein, Oleson & Baltz, Clinical Infectious Diseases, 2010",
   "source_kind": "paper",
   "reference": "Eisenstein, Oleson & Baltz, Daptomycin: from the mountain to the clinic, with essential help from Francis Tally, MD, Clinical Infectious Diseases, 2010",

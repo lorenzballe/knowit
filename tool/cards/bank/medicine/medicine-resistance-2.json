@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "million deaths",
+    "items": [
+      {
+        "label": "Projection for 2050",
+        "value": 10
+      },
+      {
+        "label": "2019: resistance played a part",
+        "value": 4.95
+      },
+      {
+        "label": "2019: caused by resistance",
+        "value": 1.27,
+        "hi": true
+      }
+    ],
+    "caption": "The famous 10 million is a forecast; the 2019 direct toll was 1.27 million."
+  },
   "source": "Murray et al., The Lancet, 2022",
   "source_kind": "paper",
   "reference": "Antimicrobial Resistance Collaborators (Murray et al.), Global burden of bacterial antimicrobial resistance in 2019: a systematic analysis, The Lancet, 2022",

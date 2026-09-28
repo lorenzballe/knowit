@@ -26,6 +26,87 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "months after assessment",
+      "min": 0,
+      "max": 3
+    },
+    "y": {
+      "label": "% of the tax's value",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "prices rising 50% a month",
+        "hi": true,
+        "points": [
+          [
+            0.0,
+            100.0
+          ],
+          [
+            0.25,
+            90.4
+          ],
+          [
+            0.5,
+            81.6
+          ],
+          [
+            0.75,
+            73.8
+          ],
+          [
+            1.0,
+            66.7
+          ],
+          [
+            1.25,
+            60.2
+          ],
+          [
+            1.5,
+            54.4
+          ],
+          [
+            1.75,
+            49.2
+          ],
+          [
+            2.0,
+            44.4
+          ],
+          [
+            2.25,
+            40.2
+          ],
+          [
+            2.5,
+            36.3
+          ],
+          [
+            2.75,
+            32.8
+          ],
+          [
+            3.0,
+            29.6
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 3,
+        "y": 29.6,
+        "label": "paid in June: under a third"
+      }
+    ],
+    "caption": "Assessed in March, paid in June: the same tax buys under a third."
+  },
   "source": "Tanzi, IMF Staff Papers, 1977",
   "source_kind": "paper",
   "reference": "Tanzi, Inflation, Lags in Collection, and the Real Value of Tax Revenue, IMF Staff Papers, 1977",

@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "¢",
+    "items": [
+      {
+        "label": "Real rise, $4.99 to $5.00",
+        "value": 1
+      },
+      {
+        "label": "How shoppers react to it",
+        "value": 20,
+        "hi": true
+      }
+    ],
+    "caption": "A one-cent step past the first digit lands like twenty cents."
+  },
   "source": "Strulov-Shlain, Review of Economic Studies, 2023",
   "source_kind": "paper",
   "reference": "doi:10.1093/restud/rdac082",

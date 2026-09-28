@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 75,
+        "label": "newly carry ESBL bacteria",
+        "hi": true
+      }
+    ],
+    "caption": "Healthy tourists back from southern Asia; across all Dutch travellers it was 34."
+  },
   "source": "Arcilla et al., Lancet Infectious Diseases, 2017",
   "source_kind": "paper",
   "reference": "Arcilla et al., Import and spread of extended-spectrum β-lactamase-producing Enterobacteriaceae by international travellers (COMBAT study): a prospective, multicentre cohort study, The Lancet Infectious Diseases, 2017",

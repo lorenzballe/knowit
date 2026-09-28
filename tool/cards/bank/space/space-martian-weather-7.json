@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "°C",
+    "items": [
+      {
+        "label": "Usual daily swing",
+        "value": 60
+      },
+      {
+        "label": "During the 2018 dust storm",
+        "value": 30,
+        "hi": true
+      }
+    ],
+    "caption": "Dust cooled the days and warmed the nights, halving the swing."
+  },
   "source": "Guzewich et al., Geophysical Research Letters, 2019",
   "source_kind": "paper",
   "reference": "Guzewich et al., Mars Science Laboratory Observations of the 2018/Mars Year 34 Global Dust Storm, Geophysical Research Letters, 2019",

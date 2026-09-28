@@ -36,6 +36,22 @@
     "space-fuel-chemistry-1"
   ],
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "MJ per kg",
+    "items": [
+      {
+        "label": "TNT (4.2 to 4.6)",
+        "value": 4.4
+      },
+      {
+        "label": "kerosene with its oxygen",
+        "value": 10,
+        "hi": true
+      }
+    ],
+    "caption": "Even counting its oxygen, kerosene carries over twice TNT's energy per kilogram."
+  },
   "source": "Cooper, Explosives Engineering, 1996",
   "source_kind": "book",
   "reference": "Cooper, Explosives Engineering, Wiley-VCH, 1996",

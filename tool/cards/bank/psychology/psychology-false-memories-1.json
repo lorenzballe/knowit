@@ -25,6 +25,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 30,
+        "label": "remembered the planted event",
+        "hi": true
+      },
+      {
+        "n": 23,
+        "label": "accepted it, recalled nothing"
+      }
+    ],
+    "caption": "About 30 in 100 formed a false memory; 23 more accepted the story without one."
+  },
   "source": "Scoboria et al., Memory, 2017",
   "source_kind": "paper",
   "reference": "Scoboria, Wade, Lindsay, Azad, Strange, Ost & Hyman, A mega-analysis of memory reports from eight peer-reviewed false memory implantation studies, Memory, 2017",

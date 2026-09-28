@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% agreement",
+    "items": [
+      {
+        "label": "All stages",
+        "value": 83
+      },
+      {
+        "label": "N1, the lightest stage",
+        "value": 63,
+        "hi": true
+      }
+    ],
+    "caption": "Trained scorers disagreed on one page in six overall, and more than one in three for N1."
+  },
   "source": "Rosenberg & Van Hout, JCSM, 2013",
   "source_kind": "paper",
   "reference": "Rosenberg & Van Hout, The American Academy of Sleep Medicine inter-scorer reliability program: sleep stage scoring, Journal of Clinical Sleep Medicine, 2013",

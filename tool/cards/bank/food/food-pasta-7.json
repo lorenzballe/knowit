@@ -25,7 +25,26 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1550,
+    "to": 1850,
+    "events": [
+      {
+        "at": 1570,
+        "label": "Scappi: cheese, sugar, cinnamon"
+      }
+    ],
+    "spans": [
+      {
+        "from": 1830,
+        "to": 1840,
+        "label": "tomato pasta"
+      }
+    ],
+    "caption": "Pasta went sweet and spiced for over 250 years before it met tomato."
+  },
   "source": "Serventi & Sabban, Pasta, 2002",
   "source_kind": "book",
   "reference": "Serventi & Sabban, Pasta: The Story of a Universal Food, Columbia University Press, 2002",

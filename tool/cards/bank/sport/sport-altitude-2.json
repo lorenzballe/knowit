@@ -28,6 +28,100 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "days spent high",
+      "min": 0,
+      "max": 28
+    },
+    "y": {
+      "label": "% more haemoglobin",
+      "min": 0,
+      "max": 8
+    },
+    "series": [
+      {
+        "label": "1% per 100 hours",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            2,
+            0.48
+          ],
+          [
+            4,
+            0.96
+          ],
+          [
+            6,
+            1.44
+          ],
+          [
+            8,
+            1.92
+          ],
+          [
+            10,
+            2.4
+          ],
+          [
+            12,
+            2.88
+          ],
+          [
+            14,
+            3.36
+          ],
+          [
+            16,
+            3.84
+          ],
+          [
+            18,
+            4.32
+          ],
+          [
+            20,
+            4.8
+          ],
+          [
+            22,
+            5.28
+          ],
+          [
+            24,
+            5.76
+          ],
+          [
+            26,
+            6.24
+          ],
+          [
+            28,
+            6.72
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 21,
+        "y": 5.04,
+        "label": "3 weeks: 5%"
+      },
+      {
+        "x": 28,
+        "y": 6.72,
+        "label": "4 weeks: 6.7%"
+      }
+    ],
+    "caption": "A four-week camp adds under 7%; a weekend barely registers."
+  },
   "source": "Gore et al., Br J Sports Med, 2013",
   "source_kind": "paper",
   "reference": "Gore et al., Altitude training and haemoglobin mass from the optimised carbon monoxide rebreathing method determined by a meta-analysis, British Journal of Sports Medicine, 2013",

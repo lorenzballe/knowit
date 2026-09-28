@@ -45,19 +45,6 @@
     },
     "series": [
       {
-        "label": "landfill full",
-        "points": [
-          [
-            0,
-            206.5
-          ],
-          [
-            40,
-            206.5
-          ]
-        ]
-      },
-      {
         "label": "7% growth a year",
         "points": [
           [
@@ -153,7 +140,7 @@
       {
         "x": 31.8,
         "y": 206.5,
-        "label": "full in 32 years"
+        "label": "10%: full in 32 years"
       }
     ],
     "caption": "Three points more growth fills the same hole eight years sooner."

@@ -33,6 +33,97 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "refresh rate, Hz",
+      "min": 0,
+      "max": 360
+    },
+    "y": {
+      "label": "ms between frames",
+      "min": 0,
+      "max": 35
+    },
+    "series": [
+      {
+        "label": "1,000 ms ÷ rate",
+        "hi": true,
+        "points": [
+          [
+            30,
+            33.3
+          ],
+          [
+            40,
+            25.0
+          ],
+          [
+            50,
+            20.0
+          ],
+          [
+            60,
+            16.7
+          ],
+          [
+            75,
+            13.3
+          ],
+          [
+            90,
+            11.1
+          ],
+          [
+            120,
+            8.3
+          ],
+          [
+            144,
+            6.9
+          ],
+          [
+            165,
+            6.1
+          ],
+          [
+            180,
+            5.6
+          ],
+          [
+            240,
+            4.2
+          ],
+          [
+            300,
+            3.3
+          ],
+          [
+            360,
+            2.8
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 30,
+        "y": 33.3,
+        "label": "30 Hz: 33.3 ms"
+      },
+      {
+        "x": 60,
+        "y": 16.7,
+        "label": "60 Hz: 16.7 ms"
+      },
+      {
+        "x": 360,
+        "y": 2.8,
+        "label": "360 Hz: 2.8 ms"
+      }
+    ],
+    "caption": "30 to 60 Hz saves 16.7 ms; the next 300 Hz saves only 13.9."
+  },
   "source": "Larrick & Soll, Science, 2008",
   "source_kind": "paper",
   "reference": "Larrick & Soll, The MPG Illusion, Science 320, 2008",

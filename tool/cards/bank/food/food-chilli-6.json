@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "SHU",
+    "items": [
+      {
+        "label": "Dried pod",
+        "value": 100000
+      },
+      {
+        "label": "Fresh pod, 80% water",
+        "value": 20000,
+        "hi": true
+      }
+    ],
+    "caption": "The same capsaicin spread over five times the mass: a fifth of the rating."
+  },
   "source": "Collins, Mayer Wasmund & Bosland, HortScience, 1995",
   "source_kind": "paper",
   "reference": "Collins, Mayer Wasmund & Bosland, Improved method for quantifying capsaicinoids in Capsicum using high-performance liquid chromatography, HortScience, 1995",

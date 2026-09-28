@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "The legend: 10% down",
+        "value": 10
+      },
+      {
+        "label": "Late 1929: 40 to 50% down",
+        "value": 45,
+        "hi": true
+      }
+    ],
+    "caption": "By late 1929 brokers wanted buyers to put down four or five times the legend."
+  },
   "source": "Rappoport & White, American Economic Review, 1994",
   "source_kind": "paper",
   "reference": "Rappoport & White, Was the Crash of 1929 Expected?, American Economic Review, 1994",

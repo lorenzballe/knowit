@@ -32,7 +32,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 80,
+        "label": "Iran, every estimate",
+        "hi": true
+      },
+      {
+        "n": 10,
+        "label": "Iran, higher estimates"
+      }
+    ],
+    "caption": "Of every hundred grams of saffron, Iran grows 80 to over 90."
+  },
   "source": "FAO, Qanat-based saffron farming, Gonabad",
   "source_kind": "institution",
   "reference": "https://www.fao.org/giahs/giahs-around-the-world/iran-qanat-based-saffron-system/en",

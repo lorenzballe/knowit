@@ -36,6 +36,79 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "days of feeding",
+      "min": 0,
+      "max": 10
+    },
+    "y": {
+      "label": "kg of starter",
+      "min": 0,
+      "max": 6000
+    },
+    "series": [
+      {
+        "label": "tripling daily",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.1
+          ],
+          [
+            1,
+            0.3
+          ],
+          [
+            2,
+            0.9
+          ],
+          [
+            3,
+            2.7
+          ],
+          [
+            4,
+            8.1
+          ],
+          [
+            5,
+            24.3
+          ],
+          [
+            6,
+            72.9
+          ],
+          [
+            7,
+            218.7
+          ],
+          [
+            8,
+            656.1
+          ],
+          [
+            9,
+            1968.3
+          ],
+          [
+            10,
+            5904.9
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 10,
+        "y": 5904.9,
+        "label": "day 10: 5.9 tonnes"
+      }
+    ],
+    "caption": "Tripling looks like nothing for a week, then buries the kitchen."
+  },
   "source": "Powers of three, 3^10",
   "source_kind": "arithmetic",
   "reference": "Hamelman, Bread: A Baker's Book of Techniques and Recipes, Wiley, 2004",

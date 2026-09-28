@@ -29,6 +29,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "km to 1% of the light",
+    "items": [
+      {
+        "label": "Kao's 1966 target",
+        "value": 1
+      },
+      {
+        "label": "Today's fibre",
+        "value": 100,
+        "hi": true
+      }
+    ],
+    "caption": "Today's fibre carries light a hundred times farther before only 1% is left."
+  },
   "source": "Royal Swedish Academy of Sciences, Nobel background, 2009",
   "source_kind": "institution",
   "reference": "Royal Swedish Academy of Sciences, Scientific Background on the Nobel Prize in Physics 2009: Two Revolutionary Optical Technologies, 2009",

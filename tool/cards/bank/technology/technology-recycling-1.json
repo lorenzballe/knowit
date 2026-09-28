@@ -26,6 +26,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 33,
+        "label": "blood lead of 5 µg/dL or more",
+        "hi": true
+      }
+    ],
+    "caption": "One child in three, by UNICEF and Pure Earth's 2020 estimate."
+  },
   "source": "UNICEF & Pure Earth, The Toxic Truth, 2020",
   "source_kind": "institution",
   "reference": "UNICEF & Pure Earth, The Toxic Truth: Children's Exposure to Lead Pollution Undermines a Generation of Future Potential, 2020",

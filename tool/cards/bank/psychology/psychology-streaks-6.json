@@ -36,6 +36,103 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "days",
+      "min": 0,
+      "max": 30
+    },
+    "y": {
+      "label": "% chance, streak unbroken",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "95% each day",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            2,
+            90.2
+          ],
+          [
+            4,
+            81.5
+          ],
+          [
+            6,
+            73.5
+          ],
+          [
+            8,
+            66.3
+          ],
+          [
+            10,
+            59.9
+          ],
+          [
+            12,
+            54.0
+          ],
+          [
+            14,
+            48.8
+          ],
+          [
+            16,
+            44.0
+          ],
+          [
+            18,
+            39.7
+          ],
+          [
+            20,
+            35.8
+          ],
+          [
+            22,
+            32.4
+          ],
+          [
+            24,
+            29.2
+          ],
+          [
+            26,
+            26.4
+          ],
+          [
+            28,
+            23.8
+          ],
+          [
+            30,
+            21.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 14,
+        "y": 48.8,
+        "label": "two weeks: 49%"
+      },
+      {
+        "x": 30,
+        "y": 21.5,
+        "label": "30 days: 21.5%"
+      }
+    ]
+  },
   "source": "Feller, Probability Theory, 1968",
   "source_kind": "book",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Vol. 1, 3rd ed., Wiley, 1968",

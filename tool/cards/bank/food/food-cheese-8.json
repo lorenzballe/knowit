@@ -36,7 +36,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "g of protein and fat",
+    "items": [
+      {
+        "label": "In a litre of milk",
+        "value": 50
+      },
+      {
+        "label": "In a kilo of Parmigiano",
+        "value": 600,
+        "hi": true
+      }
+    ],
+    "caption": "Twelve times as concentrated: 12 litres of milk for every kilo of cheese."
+  },
   "source": "Walstra, Wouters & Geurts, Dairy Science, 2006",
   "source_kind": "book",
   "reference": "Walstra, Wouters & Geurts, Dairy Science and Technology, 2nd edition, CRC Press, 2006",

@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "median days to recover",
+    "items": [
+      {
+        "label": "Dummy tablets",
+        "value": 16
+      },
+      {
+        "label": "Regular paracetamol",
+        "value": 17,
+        "hi": true
+      }
+    ],
+    "caption": "Recovery took just as long with the drug as without it."
+  },
   "source": "Williams et al., The Lancet, 2014",
   "source_kind": "paper",
   "reference": "Williams et al., Efficacy of paracetamol for acute low-back pain: a double-blind, randomised controlled trial, The Lancet, 2014",

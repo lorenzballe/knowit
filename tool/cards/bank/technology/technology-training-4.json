@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "English",
+        "value": 93,
+        "hi": true
+      },
+      {
+        "label": "every other language",
+        "value": 7
+      }
+    ],
+    "caption": "GPT-3's training text by word count."
+  },
   "source": "Brown et al., GPT-3 paper, 2020",
   "source_kind": "paper",
   "reference": "Brown et al., Language Models are Few-Shot Learners, Advances in Neural Information Processing Systems, 2020",

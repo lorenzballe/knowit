@@ -31,7 +31,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "of 50",
+    "items": [
+      {
+        "label": "asked about cars 'smashing'",
+        "value": 16
+      },
+      {
+        "label": "asked about cars 'hitting'",
+        "value": 7
+      },
+      {
+        "label": "asked nothing about speed",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "Even with no loaded question, 6 in 50 recalled broken glass that was never there."
+  },
   "source": "Loftus & Palmer, 1974",
   "source_kind": "paper",
   "reference": "Loftus & Palmer, Reconstruction of automobile destruction: an example of the interaction between language and memory, Journal of Verbal Learning and Verbal Behavior, 1974",

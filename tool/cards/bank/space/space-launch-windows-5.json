@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "million km",
+    "items": [
+      {
+        "label": "Mars at its closest",
+        "value": 56
+      },
+      {
+        "label": "the probe's route",
+        "value": 500,
+        "hi": true
+      }
+    ],
+    "caption": "Probes fly about nine times the closest distance, to meet Mars where it will be."
+  },
   "source": "Bate, Mueller & White, Fundamentals of Astrodynamics, 1971",
   "source_kind": "book",
   "reference": "Bate, Mueller & White, Fundamentals of Astrodynamics, Dover, 1971",

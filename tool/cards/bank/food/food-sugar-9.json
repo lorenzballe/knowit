@@ -36,6 +36,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Sugar recovered",
+        "value": 11,
+        "hi": true
+      },
+      {
+        "label": "Fibre, water, the rest",
+        "value": 87
+      },
+      {
+        "label": "Sugar left behind",
+        "value": 2
+      }
+    ],
+    "caption": "A tonne of cane holds 13% sucrose; mills keep about 11%, so nine tonnes per tonne."
+  },
   "source": "Hugot, Handbook of Cane Sugar Engineering",
   "source_kind": "book",
   "reference": "Hugot, Handbook of Cane Sugar Engineering, 3rd edition, Elsevier, 1986",

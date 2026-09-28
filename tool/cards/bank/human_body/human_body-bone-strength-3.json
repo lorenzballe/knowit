@@ -34,6 +34,177 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "times taller",
+      "min": 1,
+      "max": 2
+    },
+    "y": {
+      "label": "times the original",
+      "min": 0,
+      "max": 8
+    },
+    "series": [
+      {
+        "label": "weight (height³)",
+        "points": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.1,
+            1.33
+          ],
+          [
+            1.2,
+            1.73
+          ],
+          [
+            1.3,
+            2.2
+          ],
+          [
+            1.4,
+            2.74
+          ],
+          [
+            1.5,
+            3.38
+          ],
+          [
+            1.6,
+            4.1
+          ],
+          [
+            1.7,
+            4.91
+          ],
+          [
+            1.8,
+            5.83
+          ],
+          [
+            1.9,
+            6.86
+          ],
+          [
+            2.0,
+            8.0
+          ]
+        ]
+      },
+      {
+        "label": "bone area (height²)",
+        "points": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.1,
+            1.21
+          ],
+          [
+            1.2,
+            1.44
+          ],
+          [
+            1.3,
+            1.69
+          ],
+          [
+            1.4,
+            1.96
+          ],
+          [
+            1.5,
+            2.25
+          ],
+          [
+            1.6,
+            2.56
+          ],
+          [
+            1.7,
+            2.89
+          ],
+          [
+            1.8,
+            3.24
+          ],
+          [
+            1.9,
+            3.61
+          ],
+          [
+            2.0,
+            4.0
+          ]
+        ]
+      },
+      {
+        "label": "stress",
+        "hi": true,
+        "points": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.1,
+            1.1
+          ],
+          [
+            1.2,
+            1.2
+          ],
+          [
+            1.3,
+            1.3
+          ],
+          [
+            1.4,
+            1.4
+          ],
+          [
+            1.5,
+            1.5
+          ],
+          [
+            1.6,
+            1.6
+          ],
+          [
+            1.7,
+            1.7
+          ],
+          [
+            1.8,
+            1.8
+          ],
+          [
+            1.9,
+            1.9
+          ],
+          [
+            2.0,
+            2.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2,
+        "y": 2,
+        "label": "twice the stress"
+      }
+    ],
+    "caption": "Weight grows 8 times, bone area only 4: each square millimetre bears double."
+  },
   "source": "Haldane, On Being the Right Size, 1927",
   "source_kind": "book",
   "reference": "Haldane, On Being the Right Size, in Possible Worlds and Other Essays, Chatto & Windus, 1927",

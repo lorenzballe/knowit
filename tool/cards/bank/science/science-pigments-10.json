@@ -35,6 +35,67 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "crossings through glaze",
+      "min": 0,
+      "max": 6
+    },
+    "y": {
+      "label": "% of light left",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "70% passes each crossing",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            1,
+            70.0
+          ],
+          [
+            2,
+            49.0
+          ],
+          [
+            3,
+            34.3
+          ],
+          [
+            4,
+            24.0
+          ],
+          [
+            5,
+            16.8
+          ],
+          [
+            6,
+            11.8
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2,
+        "y": 49,
+        "label": "one glaze: 49%"
+      },
+      {
+        "x": 6,
+        "y": 11.8,
+        "label": "three glazes: 12%"
+      }
+    ]
+  },
   "source": "Kubelka & Munk, Z. techn. Physik, 1931",
   "source_kind": "paper",
   "reference": "Kubelka & Munk, Ein Beitrag zur Optik der Farbanstriche, Zeitschrift für technische Physik 12, 593, 1931",

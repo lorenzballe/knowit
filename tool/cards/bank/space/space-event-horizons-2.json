@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "bars",
+    "unit": "× horizon radius",
+    "items": [
+      {
+        "label": "Event horizon",
+        "value": 1
+      },
+      {
+        "label": "Dark centre in the image",
+        "value": 2.6,
+        "hi": true
+      }
+    ],
+    "caption": "Gravity bends light so hard the shadow is 2.6 times the horizon's radius."
+  },
   "source": "Falcke, Melia & Agol, Astrophysical Journal Letters, 2000",
   "source_kind": "paper",
   "reference": "Falcke, Melia & Agol, Viewing the Shadow of the Black Hole at the Galactic Center, Astrophysical Journal Letters, 2000",

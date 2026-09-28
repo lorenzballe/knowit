@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "km/s",
+    "items": [
+      {
+        "label": "raise the orbit 1,000 km",
+        "value": 0.5
+      },
+      {
+        "label": "tilt the orbit 10°",
+        "value": 1.3,
+        "hi": true
+      }
+    ],
+    "caption": "Turning redirects the whole orbital speed, so a small tilt costs more than a big climb."
+  },
   "source": "Vallado, Fundamentals of Astrodynamics and Applications, 2013",
   "source_kind": "book",
   "reference": "Vallado, Fundamentals of Astrodynamics and Applications, 4th ed., Microcosm Press, 2013",

@@ -33,6 +33,27 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 2022,
+    "to": 2030,
+    "events": [
+      {
+        "at": 2022,
+        "label": "launch window missed"
+      },
+      {
+        "at": 2026,
+        "label": "planned arrival, January"
+      },
+      {
+        "at": 2029.4,
+        "label": "actual arrival, August",
+        "hi": true
+      }
+    ],
+    "caption": "A 14-month slip at launch became three and a half years at the asteroid."
+  },
   "source": "NASA Psyche Independent Review Board, 2022",
   "source_kind": "institution",
   "reference": "NASA, Psyche Independent Review Board Final Report, 2022",

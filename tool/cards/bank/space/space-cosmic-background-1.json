@@ -26,6 +26,29 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1935,
+    "to": 1970,
+    "events": [
+      {
+        "at": 1941,
+        "label": "McKellar: cyanogen at about 2 K"
+      },
+      {
+        "at": 1965,
+        "label": "cosmic background found",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1941,
+        "to": 1965,
+        "label": "24 years unexplained"
+      }
+    ]
+  },
   "source": "McKellar, Publications of the Dominion Astrophysical Observatory, 1941",
   "source_kind": "paper",
   "reference": "McKellar, Molecular Lines from the Lowest States of Diatomic Molecules Composed of Atoms Probably Present in Interstellar Space, Publications of the Dominion Astrophysical Observatory 7, 251, 1941",

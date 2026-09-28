@@ -37,6 +37,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 5,
+        "label": "REM dreams remembered",
+        "hi": true
+      }
+    ],
+    "caption": "About 78 of some 1,640 REM periods a year are recalled: one in twenty."
+  },
   "source": "Schredl, Researching Dreams, 2018",
   "source_kind": "book",
   "reference": "Schredl, Researching Dreams: The Fundamentals, Palgrave Macmillan, 2018",

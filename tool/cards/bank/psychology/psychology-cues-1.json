@@ -25,6 +25,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 43,
+        "label": "done almost daily, same place",
+        "hi": true
+      }
+    ],
+    "caption": "About 43 in 100 diary entries were routines run by a stable setting."
+  },
   "source": "Wood, Quinn & Kashy, JPSP, 2002",
   "source_kind": "paper",
   "reference": "Wood, Quinn & Kashy, Habits in everyday life: thought, emotion, and action, Journal of Personality and Social Psychology, 2002",

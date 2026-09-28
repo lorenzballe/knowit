@@ -32,7 +32,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 33,
+        "label": "felt better afterwards",
+        "hi": true
+      }
+    ],
+    "caption": "About a third of cries brought relief; most left mood unchanged."
+  },
   "source": "Bylsma et al., J Research in Personality, 2011",
   "source_kind": "paper",
   "reference": "doi:10.1016/j.jrp.2011.04.007",

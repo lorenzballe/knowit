@@ -26,6 +26,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "mm wavelength",
+    "items": [
+      {
+        "label": "Bat call, 100 kHz",
+        "value": 3
+      },
+      {
+        "label": "Bat call, 20 kHz",
+        "value": 17
+      },
+      {
+        "label": "Oilbird click, 2 kHz",
+        "value": 170,
+        "hi": true
+      }
+    ],
+    "caption": "The oilbird's waves are ten to fifty times longer than a moth-hunter's."
+  },
   "source": "Konishi & Knudsen, Science, 1979",
   "source_kind": "paper",
   "reference": "Konishi & Knudsen, The oilbird: hearing and echolocation, Science, 1979",

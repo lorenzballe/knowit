@@ -31,7 +31,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "g",
+    "items": [
+      {
+        "label": "Specialty double basket",
+        "value": 18
+      },
+      {
+        "label": "Italian certified shot",
+        "value": 7,
+        "hi": true
+      }
+    ],
+    "caption": "The Italian standard shot uses well under half a specialty café's dose."
+  },
   "source": "Istituto Espresso Italiano",
   "source_kind": "standard",
   "reference": "https://iei.coffee/en/espresso-italiano-certificato/",

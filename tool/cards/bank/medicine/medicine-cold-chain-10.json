@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "doses",
+    "parts": [
+      {
+        "label": "given to 5 babies",
+        "value": 5,
+        "hi": true
+      },
+      {
+        "label": "thrown away",
+        "value": 15
+      }
+    ],
+    "caption": "One 20-dose vial per session: three doses in four go in the bin."
+  },
   "source": "WHO, Monitoring vaccine wastage, 2005",
   "source_kind": "institution",
   "reference": "World Health Organization, Monitoring vaccine wastage at country level: guidelines for programme managers, WHO/V&B/03.18 Rev.1, 2005",

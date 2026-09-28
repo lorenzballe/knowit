@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of August 2011",
+    "items": [
+      {
+        "label": "August 2011",
+        "value": 100
+      },
+      {
+        "label": "August 2012, Olympics",
+        "value": 95,
+        "hi": true
+      }
+    ],
+    "caption": "The Olympic month drew about 5% fewer overseas visits than a year before."
+  },
   "source": "ONS, Overseas Travel and Tourism, 2012",
   "source_kind": "statistics",
   "reference": "Office for National Statistics, Overseas Travel and Tourism, Monthly Release, October 2012",

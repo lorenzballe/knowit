@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Moon's tide",
+        "value": 100
+      },
+      {
+        "label": "Sun's tide",
+        "value": 46,
+        "hi": true
+      }
+    ],
+    "caption": "The Sun pulls 180 times harder yet raises under half the Moon's tide."
+  },
   "source": "Cartwright, Tides: A Scientific History, 1999",
   "source_kind": "book",
   "reference": "Cartwright, Tides: A Scientific History, Cambridge University Press, 1999",

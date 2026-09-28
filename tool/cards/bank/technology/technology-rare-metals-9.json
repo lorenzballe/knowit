@@ -37,6 +37,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "kg",
+    "items": [
+      {
+        "label": "Platinum won",
+        "value": 1
+      },
+      {
+        "label": "Ore mined for it",
+        "value": 400000,
+        "hi": true
+      }
+    ],
+    "caption": "At about 2.5 g recovered per tonne, one kilogram takes 400 tonnes of rock."
+  },
   "source": "Cawthorn, South African Journal of Science, 1999",
   "source_kind": "paper",
   "reference": "Cawthorn, The platinum and palladium resources of the Bushveld Complex, South African Journal of Science 95, 1999",

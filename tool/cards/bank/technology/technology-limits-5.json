@@ -37,6 +37,44 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "texts checked",
+    "branches": [
+      {
+        "n": 100,
+        "label": "AI-written",
+        "branches": [
+          {
+            "n": 26,
+            "label": "flagged",
+            "hi": true
+          },
+          {
+            "n": 74,
+            "label": "missed"
+          }
+        ]
+      },
+      {
+        "n": 900,
+        "label": "human",
+        "branches": [
+          {
+            "n": 81,
+            "label": "flagged anyway",
+            "hi": true
+          },
+          {
+            "n": 819,
+            "label": "cleared"
+          }
+        ]
+      }
+    ],
+    "caption": "Of 107 texts flagged, 81 were written by people: about three in four."
+  },
   "source": "OpenAI, AI text classifier, 2023",
   "source_kind": "company",
   "reference": "OpenAI, New AI classifier for indicating AI-written text, 2023",

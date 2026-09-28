@@ -34,6 +34,30 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": -800,
+    "to": 420,
+    "events": [
+      {
+        "at": -776,
+        "label": "First Olympiad"
+      },
+      {
+        "at": 393,
+        "label": "293rd Olympiad",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": -776,
+        "to": 393,
+        "label": "292 four-year gaps"
+      }
+    ],
+    "caption": "292 gaps between the ends, plus the first Games: 293."
+  },
   "source": "Bickerman, Chronology of the Ancient World",
   "source_kind": "book",
   "reference": "Bickerman, Chronology of the Ancient World, Thames and Hudson, 1968",

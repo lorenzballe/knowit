@@ -31,6 +31,31 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1896,
+    "to": 2024,
+    "events": [
+      {
+        "at": 1916,
+        "label": "VI: cancelled, war"
+      },
+      {
+        "at": 1940,
+        "label": "XII: cancelled"
+      },
+      {
+        "at": 1944,
+        "label": "XIII: cancelled"
+      },
+      {
+        "at": 2024,
+        "label": "Paris: XXXIII",
+        "hi": true
+      }
+    ],
+    "caption": "Three Olympiads lost to war still count, so XXXIII was the 30th Games held."
+  },
   "source": "International Olympic Committee, Olympic Charter",
   "source_kind": "primary_document",
   "reference": "International Olympic Committee, Olympic Charter, 2023",

@@ -24,7 +24,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "pulses",
+    "items": [
+      {
+        "label": "909",
+        "value": 28
+      },
+      {
+        "label": "312, Chicago",
+        "value": 6
+      },
+      {
+        "label": "213, Los Angeles",
+        "value": 6
+      },
+      {
+        "label": "212, New York",
+        "value": 5,
+        "hi": true
+      }
+    ],
+    "caption": "On a rotary dial, the biggest cities got the codes quickest to dial."
+  },
   "source": "Nunn, Bell System Technical Journal, 1952",
   "source_kind": "paper",
   "reference": "Nunn, Nationwide Numbering Plan, Bell System Technical Journal, 1952",

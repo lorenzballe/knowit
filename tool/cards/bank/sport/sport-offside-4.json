@@ -24,7 +24,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 20,
+        "label": "wrong",
+        "hi": true
+      }
+    ],
+    "caption": "40 of 200 real decisions were wrong: one in five, as the viewing angle predicted."
+  },
   "source": "Oudejans et al., Nature, 2000",
   "source_kind": "paper",
   "reference": "doi:10.1038/35003639",

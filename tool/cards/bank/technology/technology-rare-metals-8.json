@@ -33,6 +33,29 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 2010,
+    "to": 2016,
+    "events": [
+      {
+        "at": 2011,
+        "label": "China cuts quotas; prices soar"
+      },
+      {
+        "at": 2015.45,
+        "label": "Molycorp bankrupt, owing $1.7bn",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 2011,
+        "to": 2015.45,
+        "label": "about four years"
+      }
+    ]
+  },
   "source": "Molycorp, Form 10-Q, SEC, 2015",
   "source_kind": "primary_document",
   "reference": "https://www.sec.gov/Archives/edgar/data/0001489137/000148913715000065/mcp630201510q.htm",

@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "quark masses (Higgs)",
+        "value": 9
+      },
+      {
+        "label": "strong-force energy",
+        "value": 91,
+        "hi": true
+      }
+    ],
+    "caption": "Of a proton's mass, the Higgs accounts for about 9%."
+  },
   "source": "Yang et al., Physical Review Letters, 2018",
   "source_kind": "paper",
   "reference": "doi:10.1103/PhysRevLett.121.212001",

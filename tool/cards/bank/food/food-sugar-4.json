@@ -25,7 +25,28 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1960,
+    "to": 2020,
+    "events": [
+      {
+        "at": 1965,
+        "label": "Industry pays $6,500"
+      },
+      {
+        "at": 1967,
+        "label": "Review blames fat"
+      },
+      {
+        "at": 2016,
+        "label": "The letters published",
+        "hi": true
+      }
+    ],
+    "caption": "Half a century passed before readers learned who paid."
+  },
   "source": "Kearns, Schmidt & Glantz, JAMA Intern. Med., 2016",
   "source_kind": "paper",
   "reference": "Kearns, Schmidt & Glantz, Sugar industry and coronary heart disease research: a historical analysis of internal industry documents, JAMA Internal Medicine, 2016",

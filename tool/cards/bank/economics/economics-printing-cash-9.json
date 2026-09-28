@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "times",
+    "items": [
+      {
+        "label": "Base money, 2014 against 2008",
+        "value": 4
+      },
+      {
+        "label": "Broad money, 2014 against 2008",
+        "value": 1.49,
+        "hi": true
+      }
+    ],
+    "caption": "The base quadrupled; broad money grew by half, from $7.7 to $11.5 trillion."
+  },
   "source": "FRED, Federal Reserve Bank of St. Louis",
   "source_kind": "statistics",
   "reference": "Federal Reserve Bank of St. Louis, FRED series BOGMBASE and M2SL, 2025",

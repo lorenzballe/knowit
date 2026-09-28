@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% succeed",
+    "items": [
+      {
+        "label": "Told yes or no",
+        "value": 20
+      },
+      {
+        "label": "Told DAX or MED",
+        "value": 60,
+        "hi": true
+      }
+    ],
+    "caption": "Renaming the feedback took first-time success from one in five to three in five."
+  },
   "source": "Tweney et al., Quarterly J Experimental Psychology, 1980",
   "source_kind": "paper",
   "reference": "https://journals.sagepub.com/doi/10.1080/00335558008248237",

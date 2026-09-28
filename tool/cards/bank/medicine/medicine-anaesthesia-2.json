@@ -24,7 +24,28 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1840,
+    "to": 1851,
+    "events": [
+      {
+        "at": 1842,
+        "label": "Long operates under ether"
+      },
+      {
+        "at": 1846,
+        "label": "Morton's public demonstration",
+        "hi": true
+      },
+      {
+        "at": 1849,
+        "label": "Long finally reports his case"
+      }
+    ],
+    "caption": "Long was first to operate, but Boston was first in print by three years."
+  },
   "source": "Fenster, Ether Day, 2001",
   "source_kind": "book",
   "reference": "Fenster, Ether Day: The Strange Tale of America's Greatest Medical Discovery and the Haunted Men Who Made It, HarperCollins, 2001",

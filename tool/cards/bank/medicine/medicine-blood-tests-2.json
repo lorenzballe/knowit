@@ -36,6 +36,115 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "tests in the panel",
+      "min": 1,
+      "max": 20
+    },
+    "y": {
+      "label": "% of healthy people flagged",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "each test: 5% false alarm",
+        "hi": true,
+        "points": [
+          [
+            1,
+            5.0
+          ],
+          [
+            2,
+            9.8
+          ],
+          [
+            3,
+            14.3
+          ],
+          [
+            4,
+            18.5
+          ],
+          [
+            5,
+            22.6
+          ],
+          [
+            6,
+            26.5
+          ],
+          [
+            7,
+            30.2
+          ],
+          [
+            8,
+            33.7
+          ],
+          [
+            9,
+            37.0
+          ],
+          [
+            10,
+            40.1
+          ],
+          [
+            11,
+            43.1
+          ],
+          [
+            12,
+            46.0
+          ],
+          [
+            13,
+            48.7
+          ],
+          [
+            14,
+            51.2
+          ],
+          [
+            15,
+            53.7
+          ],
+          [
+            16,
+            56.0
+          ],
+          [
+            17,
+            58.2
+          ],
+          [
+            18,
+            60.3
+          ],
+          [
+            19,
+            62.3
+          ],
+          [
+            20,
+            64.2
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 20,
+        "y": 64.2,
+        "label": "20 tests: 64%"
+      }
+    ],
+    "caption": "Each test adds its own 5% chance of a false flag."
+  },
   "source": "CLSI EP28-A3c, reference intervals standard",
   "source_kind": "standard",
   "reference": "Clinical and Laboratory Standards Institute, EP28-A3c: Defining, Establishing, and Verifying Reference Intervals in the Clinical Laboratory, 2008",

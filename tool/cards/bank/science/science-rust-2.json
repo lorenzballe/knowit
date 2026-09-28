@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "corrosion damage",
+        "value": 3.4,
+        "hi": true
+      },
+      {
+        "label": "rest of world output",
+        "value": 96.6
+      }
+    ],
+    "caption": "US$2.5 trillion a year: 3.4% of everything the world produces."
+  },
   "source": "NACE International, IMPACT study, 2016",
   "source_kind": "institution",
   "reference": "Koch et al., International Measures of Prevention, Application, and Economics of Corrosion Technologies Study, NACE International, 2016",

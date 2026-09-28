@@ -34,6 +34,33 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 100,
+    "label": "patients on the drug",
+    "branches": [
+      {
+        "n": 40,
+        "label": "relieved",
+        "branches": [
+          {
+            "n": 30,
+            "label": "would ease on placebo"
+          },
+          {
+            "n": 10,
+            "label": "owe it to the drug",
+            "hi": true
+          }
+        ]
+      },
+      {
+        "n": 60,
+        "label": "not relieved"
+      }
+    ],
+    "caption": "Of 40 relieved, only 10 owe it to the drug: 25%."
+  },
   "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
   "source_kind": "arithmetic",
   "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",

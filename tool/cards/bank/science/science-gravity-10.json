@@ -27,7 +27,27 @@
   "builds_on": [
     "science-gravity-1"
   ],
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "G's uncertainty before 1998",
+        "value": 0.013
+      },
+      {
+        "label": "PTB's value above the rest",
+        "value": 0.6
+      },
+      {
+        "label": "G's uncertainty from 1998",
+        "value": 0.15,
+        "hi": true
+      }
+    ],
+    "caption": "One result sat 0.6% off, forty-six times the old error bars; the bars widened twelvefold."
+  },
   "source": "Mohr & Taylor, Reviews of Modern Physics, 2000",
   "source_kind": "paper",
   "reference": "Mohr & Taylor, CODATA recommended values of the fundamental physical constants: 1998, Reviews of Modern Physics 72, 351, 2000",

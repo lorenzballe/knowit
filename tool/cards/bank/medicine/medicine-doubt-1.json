@@ -25,7 +25,35 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1972,
+    "to": 1981,
+    "events": [
+      {
+        "at": 1974,
+        "label": "Report links vaccine to damage"
+      },
+      {
+        "at": 1978,
+        "label": "Uptake down from 80% to 30%",
+        "hi": true
+      },
+      {
+        "at": 1979,
+        "label": "Vaccine Damage Payments Act"
+      }
+    ],
+    "spans": [
+      {
+        "from": 1977,
+        "to": 1979,
+        "label": "epidemics: 100,000+"
+      }
+    ],
+    "caption": "Four years from one report to uptake collapsing and whooping cough returning."
+  },
   "source": "Baker, Vaccine, 2003",
   "source_kind": "paper",
   "reference": "Baker, The pertussis vaccine controversy in Great Britain, 1974-1986, Vaccine, 2003",

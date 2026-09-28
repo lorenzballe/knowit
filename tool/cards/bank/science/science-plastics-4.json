@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 6,
+        "label": "made into plastics",
+        "hi": true
+      }
+    ],
+    "caption": "Six in every hundred barrels of oil become plastic; most of the rest is burned."
+  },
   "source": "Ellen MacArthur Foundation, The New Plastics Economy, 2016",
   "source_kind": "institution",
   "reference": "World Economic Forum, Ellen MacArthur Foundation & McKinsey & Company, The New Plastics Economy: Rethinking the future of plastics, 2016",

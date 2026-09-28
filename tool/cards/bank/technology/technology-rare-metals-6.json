@@ -26,6 +26,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "China",
+        "value": 99,
+        "hi": true
+      },
+      {
+        "label": "Everyone else",
+        "value": 1
+      }
+    ],
+    "caption": "Primary gallium made in 2024, by country."
+  },
   "source": "USGS Mineral Commodity Summaries 2025: Gallium",
   "source_kind": "institution",
   "reference": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gallium.pdf",

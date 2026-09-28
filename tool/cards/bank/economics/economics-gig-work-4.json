@@ -31,6 +31,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 1,
+        "label": "did app jobs that week",
+        "hi": true
+      },
+      {
+        "n": 9,
+        "label": "the rest of 'one in ten'"
+      }
+    ],
+    "caption": "One worker in a hundred, not one in ten."
+  },
   "source": "BLS, Monthly Labor Review, September 2018",
   "source_kind": "statistics",
   "reference": "US Bureau of Labor Statistics, Electronically mediated work: new questions in the Contingent Worker Supplement, Monthly Labor Review, September 2018",

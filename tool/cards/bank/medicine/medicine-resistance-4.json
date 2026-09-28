@@ -25,7 +25,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of 1991",
+    "items": [
+      {
+        "label": "Both, in 1991",
+        "value": 100
+      },
+      {
+        "label": "Prescriptions by 1999",
+        "value": 3
+      },
+      {
+        "label": "Resistant E. coli by 1999",
+        "value": 115,
+        "hi": true
+      }
+    ],
+    "caption": "Prescribing fell 97%, yet resistance rose from 40% to 46% of E. coli."
+  },
   "source": "Enne et al., The Lancet, 2001",
   "source_kind": "paper",
   "reference": "Enne, Livermore, Stephens & Hall, Persistence of sulphonamide resistance in Escherichia coli in the UK despite national prescribing restriction, The Lancet, 2001",

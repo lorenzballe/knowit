@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "kg of oxygen",
+    "items": [
+      {
+        "label": "to burn 1 kg of hydrogen fully",
+        "value": 8
+      },
+      {
+        "label": "Shuttle, per kg of hydrogen",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "The Shuttle burned 6 kg of oxygen, not 8, leaving light hydrogen to speed the exhaust."
+  },
   "source": "Sutton & Biblarz, Rocket Propulsion Elements, 2017",
   "source_kind": "book",
   "reference": "Sutton & Biblarz, Rocket Propulsion Elements, 9th ed., Wiley, 2017",

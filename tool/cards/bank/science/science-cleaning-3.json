@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "survivors",
+    "items": [
+      {
+        "label": "99.999% disinfectant",
+        "value": 10
+      },
+      {
+        "label": "99.9% spray",
+        "value": 1000,
+        "hi": true
+      }
+    ],
+    "caption": "From a million bacteria on a board: 10 survive one, 1,000 the other."
+  },
   "source": "CEN, EN 1276 bactericidal suspension test",
   "source_kind": "standard",
   "reference": "European Committee for Standardization, EN 1276:2019, Chemical disinfectants and antiseptics, quantitative suspension test for bactericidal activity, 2019",

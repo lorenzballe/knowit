@@ -26,6 +26,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "what shops offer",
+        "value": 9,
+        "hi": true
+      },
+      {
+        "label": "everything else",
+        "value": 91
+      }
+    ],
+    "caption": "Of the nutrition gap between rich and poor, shops explain about 9%."
+  },
   "source": "Allcott, Diamond & Dubé, QJE, 2019",
   "source_kind": "paper",
   "reference": "Allcott, Diamond & Dubé, Food Deserts and the Causes of Nutritional Inequality, Quarterly Journal of Economics, 2019",

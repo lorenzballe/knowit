@@ -30,7 +30,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of drives a year",
+    "items": [
+      {
+        "label": "Datasheet, 1.5 million hours",
+        "value": 0.6
+      },
+      {
+        "label": "Typical site, 2 to 4%",
+        "value": 3
+      },
+      {
+        "label": "Worst site",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "A 1.5-million-hour rating implies 0.6% failing a year; real sites replaced several times that."
+  },
   "source": "Schroeder & Gibson, USENIX FAST, 2007",
   "source_kind": "paper",
   "reference": "Schroeder & Gibson, Disk failures in the real world: What does an MTTF of 1,000,000 hours mean to you?, USENIX FAST, 2007",

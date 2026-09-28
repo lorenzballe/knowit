@@ -31,7 +31,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "per 1,000",
+    "items": [
+      {
+        "label": "Midwives' ward",
+        "value": 39
+      },
+      {
+        "label": "Doctors' ward, 1841–46",
+        "value": 99,
+        "hi": true
+      },
+      {
+        "label": "Doctors' ward, after handwashing",
+        "value": 13
+      }
+    ],
+    "caption": "Mothers dying per 1,000 births: the doctors' ward was worst until chlorine handwashing."
+  },
   "source": "Loudon, James Lind Library, 2013",
   "source_kind": "paper",
   "reference": "https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/",

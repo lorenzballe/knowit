@@ -30,7 +30,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "nm",
+    "items": [
+      {
+        "label": "The name: '3 nm'",
+        "value": 3
+      },
+      {
+        "label": "Gates apart, about 45 to 48 nm",
+        "value": 45,
+        "hi": true
+      }
+    ],
+    "caption": "The gates sit some fifteen times further apart than the name suggests."
+  },
   "source": "Samuel K. Moore, IEEE Spectrum, 2020",
   "source_kind": "news_archive",
   "reference": "Samuel K. Moore, A Better Way to Measure Progress in Semiconductors, IEEE Spectrum, 2020",

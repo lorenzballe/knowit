@@ -30,7 +30,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "ms of lag",
+    "items": [
+      {
+        "label": "2012 devices, slowest",
+        "value": 200
+      },
+      {
+        "label": "2012 devices, fastest",
+        "value": 50
+      },
+      {
+        "label": "Added lag people noticed",
+        "value": 6,
+        "hi": true
+      }
+    ],
+    "caption": "People noticed about 6 ms of added lag; devices of the day lagged 50 to 200."
+  },
   "source": "Ng et al., ACM UIST, 2012",
   "source_kind": "paper",
   "reference": "Ng, Lepinski, Wigdor, Sanders & Dietz, Designing for Low-Latency Direct-Touch Input, ACM UIST, 2012",

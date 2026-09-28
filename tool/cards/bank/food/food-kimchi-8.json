@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% salt",
+    "items": [
+      {
+        "label": "Brine",
+        "value": 10
+      },
+      {
+        "label": "Finished kimchi",
+        "value": 2.5,
+        "hi": true
+      }
+    ],
+    "caption": "Soaked in 10% brine, the cabbage ends up at only 2 to 3% salt."
+  },
   "source": "Cheigh & Park, Crit. Rev. Food Sci., 1994",
   "source_kind": "paper",
   "reference": "Cheigh & Park, Biochemical, microbiological, and nutritional aspects of kimchi (Korean fermented vegetable products), Critical Reviews in Food Science and Nutrition, 1994",

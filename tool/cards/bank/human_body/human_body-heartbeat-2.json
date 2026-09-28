@@ -25,6 +25,96 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "age",
+      "min": 20,
+      "max": 80
+    },
+    "y": {
+      "label": "maximum beats a minute",
+      "min": 100,
+      "max": 210
+    },
+    "series": [
+      {
+        "label": "220 minus age (1971)",
+        "points": [
+          [
+            20,
+            200
+          ],
+          [
+            30,
+            190
+          ],
+          [
+            40,
+            180
+          ],
+          [
+            50,
+            170
+          ],
+          [
+            60,
+            160
+          ],
+          [
+            70,
+            150
+          ],
+          [
+            80,
+            140
+          ]
+        ]
+      },
+      {
+        "label": "208 minus 0.7 × age (2001)",
+        "hi": true,
+        "points": [
+          [
+            20,
+            194.0
+          ],
+          [
+            30,
+            187.0
+          ],
+          [
+            40,
+            180.0
+          ],
+          [
+            50,
+            173.0
+          ],
+          [
+            60,
+            166.0
+          ],
+          [
+            70,
+            159.0
+          ],
+          [
+            80,
+            152.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 80,
+        "y": 152,
+        "label": "152, not 140, at 80"
+      }
+    ],
+    "caption": "Two lines through scattered points; any one person can sit about 10 beats off either."
+  },
   "source": "Robergs & Landwehr, JEPonline, 2002",
   "source_kind": "paper",
   "reference": "Robergs & Landwehr, The surprising history of the HRmax=220-age equation, Journal of Exercise Physiology online, 2002",

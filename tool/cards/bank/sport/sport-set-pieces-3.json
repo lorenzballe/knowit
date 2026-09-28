@@ -36,6 +36,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of kicks missed",
+    "items": [
+      {
+        "label": "Before 2015",
+        "value": 0.7
+      },
+      {
+        "label": "After the kick moved back",
+        "value": 5.8,
+        "hi": true
+      }
+    ],
+    "caption": "Success fell only five points, but misses rose about eightfold."
+  },
   "source": "Pro Football Reference, kicking statistics",
   "source_kind": "statistics",
   "reference": "Pro-Football-Reference, NFL Kicking statistics, 2014 and 2015 seasons, 2015",

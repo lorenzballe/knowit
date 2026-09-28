@@ -34,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of hip bone lost",
+    "items": [
+      {
+        "label": "A year of ageing on Earth",
+        "value": 1
+      },
+      {
+        "label": "Six months in orbit",
+        "value": 9,
+        "hi": true
+      }
+    ],
+    "caption": "Six months in orbit take as much hip bone as nine years of ageing."
+  },
   "source": "Lang et al., JBMR, 2004",
   "source_kind": "paper",
   "reference": "doi:10.1359/JBMR.040307",

@@ -36,6 +36,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "dollars",
+    "parts": [
+      {
+        "label": "purchase, over 7 years",
+        "value": 714
+      },
+      {
+        "label": "servicing",
+        "value": 500,
+        "hi": true
+      }
+    ],
+    "caption": "Servicing adds $500 to the purchase's $714: about $1,200 an operation."
+  },
   "source": "Barbash & Glied, NEJM, 2010",
   "source_kind": "paper",
   "reference": "Barbash & Glied, New technology and health care costs: the case of robot-assisted surgery, New England Journal of Medicine, 2010",

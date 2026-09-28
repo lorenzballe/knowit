@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 3,
+        "label": "notes and coins",
+        "hi": true
+      }
+    ],
+    "caption": "Of every £100 held, about £3 is cash; the rest is bank deposits."
+  },
   "source": "McLeay, Radia & Thomas, Bank of England, 2014",
   "source_kind": "paper",
   "reference": "McLeay, Radia & Thomas, Money creation in the modern economy, Bank of England Quarterly Bulletin, 2014 Q1",

@@ -34,7 +34,27 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "g",
+    "items": [
+      {
+        "label": "WHO daily salt limit",
+        "value": 5
+      },
+      {
+        "label": "Sodium on the label",
+        "value": 1.2
+      },
+      {
+        "label": "Salt that means",
+        "value": 3,
+        "hi": true
+      }
+    ],
+    "caption": "1.2 g of sodium is 3 g of salt: 60% of the day's limit, not 24%."
+  },
   "source": "WHO guideline on sodium intake, 2012",
   "source_kind": "institution",
   "reference": "World Health Organization, Guideline: Sodium intake for adults and children, WHO, 2012",

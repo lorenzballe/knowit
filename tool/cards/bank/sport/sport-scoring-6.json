@@ -26,6 +26,68 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "year",
+      "min": 1890,
+      "max": 2000
+    },
+    "y": {
+      "label": "points for a try",
+      "min": 0,
+      "max": 5
+    },
+    "series": [
+      {
+        "label": "a try",
+        "hi": true,
+        "points": [
+          [
+            1891,
+            1
+          ],
+          [
+            1893,
+            3
+          ],
+          [
+            1971,
+            3
+          ],
+          [
+            1971,
+            4
+          ],
+          [
+            1992,
+            4
+          ],
+          [
+            1992,
+            5
+          ],
+          [
+            2000,
+            5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1891,
+        "y": 1,
+        "label": "1891: 1, a goal 2"
+      },
+      {
+        "x": 1992,
+        "y": 5,
+        "label": "1992: 5"
+      }
+    ],
+    "caption": "Worth half a conversion in 1891, the try reached 5 points by 1992."
+  },
   "source": "Rugby365, Scoring down the years",
   "source_kind": "news_archive",
   "reference": "https://rugby365.com/laws-referees/news/scoring-down-the-years/",

@@ -36,6 +36,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "£",
+    "parts": [
+      {
+        "label": "eaten",
+        "value": 4160
+      },
+      {
+        "label": "thrown away",
+        "value": 1040,
+        "hi": true
+      }
+    ],
+    "caption": "A fifth of a £5,200 year of food and drink goes in the bin."
+  },
   "source": "WRAP, household food waste, 2023",
   "source_kind": "institution",
   "reference": "https://www.wrap.ngo/media-centre/press-releases/urgent-action-needed-scale-tackle-food-waste-our-homes",

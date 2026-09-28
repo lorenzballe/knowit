@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "million pairs",
+    "items": [
+      {
+        "label": "1,000 word-pieces",
+        "value": 1
+      },
+      {
+        "label": "8,000 word-pieces",
+        "value": 64,
+        "hi": true
+      }
+    ],
+    "caption": "Eight times the text, sixty-four times the pairs to compare."
+  },
   "source": "Vaswani et al., NeurIPS, 2017",
   "source_kind": "paper",
   "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",

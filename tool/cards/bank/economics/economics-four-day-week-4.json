@@ -33,6 +33,119 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "year",
+      "min": 1930,
+      "max": 2030
+    },
+    "y": {
+      "label": "income, × 1930",
+      "min": 0,
+      "max": 8
+    },
+    "series": [
+      {
+        "label": "2% a year, compounded",
+        "hi": true,
+        "points": [
+          [
+            1930,
+            1.0
+          ],
+          [
+            1935,
+            1.1
+          ],
+          [
+            1940,
+            1.22
+          ],
+          [
+            1945,
+            1.35
+          ],
+          [
+            1950,
+            1.49
+          ],
+          [
+            1955,
+            1.64
+          ],
+          [
+            1960,
+            1.81
+          ],
+          [
+            1965,
+            2.0
+          ],
+          [
+            1970,
+            2.21
+          ],
+          [
+            1975,
+            2.44
+          ],
+          [
+            1980,
+            2.69
+          ],
+          [
+            1985,
+            2.97
+          ],
+          [
+            1990,
+            3.28
+          ],
+          [
+            1995,
+            3.62
+          ],
+          [
+            2000,
+            4.0
+          ],
+          [
+            2005,
+            4.42
+          ],
+          [
+            2010,
+            4.88
+          ],
+          [
+            2015,
+            5.38
+          ],
+          [
+            2020,
+            5.94
+          ],
+          [
+            2025,
+            6.56
+          ],
+          [
+            2030,
+            7.24
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2030,
+        "y": 7.24,
+        "label": "2030: about 7×"
+      }
+    ],
+    "caption": "Steady 2% growth lands inside Keynes's four-to-eightfold range within a century."
+  },
   "source": "Pecchi and Piga, Revisiting Keynes, MIT Press, 2008",
   "source_kind": "book",
   "reference": "Pecchi & Piga (eds.), Revisiting Keynes: Economic Possibilities for Our Grandchildren, MIT Press, 2008",

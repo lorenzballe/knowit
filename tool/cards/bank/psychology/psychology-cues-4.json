@@ -31,7 +31,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 4,
+        "label": "added by writing a date",
+        "hi": true
+      },
+      {
+        "n": 33,
+        "label": "reminder alone was enough"
+      }
+    ],
+    "caption": "Of 37 in 100 vaccinated, 33 would have gone with just the reminder."
+  },
   "source": "Milkman et al., PNAS, 2011",
   "source_kind": "paper",
   "reference": "Milkman, Beshears, Choi, Laibson & Madrian, Using implementation intentions prompts to enhance influenza vaccination rates, Proceedings of the National Academy of Sciences, 2011",

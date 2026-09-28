@@ -35,7 +35,23 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "years old",
+    "items": [
+      {
+        "label": "Egyptian and Chinese lumps, at most",
+        "value": 3600
+      },
+      {
+        "label": "Pottery sieves, Poland",
+        "value": 7000,
+        "hi": true
+      }
+    ],
+    "caption": "The sieves are nearly twice as old as the oldest surviving cheese."
+  },
   "source": "Salque et al., Nature, 2013",
   "source_kind": "paper",
   "reference": "Salque, Bogucki, Pyzel et al., Earliest evidence for cheese making in the sixth millennium BC in northern Europe, Nature, 2013",

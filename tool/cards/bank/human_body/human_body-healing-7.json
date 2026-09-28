@@ -25,7 +25,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "relative healing time",
+    "items": [
+      {
+        "label": "Burned by day",
+        "value": 1
+      },
+      {
+        "label": "Burned at night",
+        "value": 1.6,
+        "hi": true
+      }
+    ],
+    "caption": "In a burns database, night injuries took about 60% longer to heal."
+  },
   "source": "Hoyle et al., Science Translational Medicine, 2017",
   "source_kind": "paper",
   "reference": "doi:10.1126/scitranslmed.aal2774",

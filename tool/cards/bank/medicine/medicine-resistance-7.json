@@ -35,6 +35,30 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "in a million cavities",
+    "items": [
+      {
+        "label": "All bacteria",
+        "value": 100000000000000.0
+      },
+      {
+        "label": "Resist drug A",
+        "value": 100000000.0
+      },
+      {
+        "label": "Resist drug B",
+        "value": 1000000.0
+      },
+      {
+        "label": "Resist both",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "The chances multiply: a double resister turns up in one cavity in a million."
+  },
   "source": "Iseman, A Clinician's Guide to Tuberculosis, 2000",
   "source_kind": "book",
   "reference": "Iseman, A Clinician's Guide to Tuberculosis, Lippincott Williams & Wilkins, 2000",

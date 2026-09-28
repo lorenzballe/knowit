@@ -31,7 +31,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 2,
+        "label": "lifted out of extreme poverty",
+        "hi": true
+      }
+    ],
+    "caption": "About two Kenyan households in a hundred: real, and modest."
+  },
   "source": "Suri and Jack, Science, 2016",
   "source_kind": "paper",
   "reference": "Suri & Jack, The long-run poverty and gender impacts of mobile money, Science, 2016",

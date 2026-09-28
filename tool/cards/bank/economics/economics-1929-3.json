@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 13,
+        "label": "had an account with a broker",
+        "hi": true
+      }
+    ],
+    "caption": "About 1.5 million of 120 million Americans: roughly one in eighty."
+  },
   "source": "Galbraith, The Great Crash 1929, 1955",
   "source_kind": "book",
   "reference": "Galbraith, The Great Crash 1929, Houghton Mifflin, 1955",

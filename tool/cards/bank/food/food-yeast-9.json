@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "g",
+    "parts": [
+      {
+        "label": "Carbon dioxide",
+        "value": 88
+      },
+      {
+        "label": "Alcohol",
+        "value": 92,
+        "hi": true
+      }
+    ],
+    "caption": "From 180 g of glucose, alcohol outweighs the gas that raises the loaf."
+  },
   "source": "Nelson & Cox, Lehninger Principles of Biochemistry",
   "source_kind": "book",
   "reference": "Nelson & Cox, Lehninger Principles of Biochemistry, 7th edition, W. H. Freeman, 2017",
