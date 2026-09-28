@@ -247,8 +247,9 @@ String sayPower(int k, {int lowest = 0}) {
   // The app's fonts have no superscript minus, so a small power is written
   // as a fraction: 1/10⁶ for a millionth. When an axis goes that far down,
   // every decade below 1 is written the same way, so the notation holds.
-  if (k < 0 && (k < -2 || lowest < -2))
+  if (k < 0 && (k < -2 || lowest < -2)) {
     return k == -1 ? '1/10' : '1/10${sup(-k)}';
+  }
   if (k >= -2 && k <= 4) return sayNumber(math.pow(10.0, k).toDouble());
   return '10${sup(k)}';
 }
